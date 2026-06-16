@@ -34,142 +34,18 @@ logger = logging.getLogger(__name__)
 
 
 # ─────────────────────────────────────────────
-# Benchmark Questions
+# Benchmark Questions (imported from evaluation.questions)
 # ─────────────────────────────────────────────
-@dataclass
-class BenchmarkQuestion:
-    """One evaluation question with ground truth annotations."""
-    id: str
-    category: str
-    question: str
-    expected_source_types: List[str]
-    expected_min_citations: int
-    requires_analysis: bool = False
-    requires_reliability: bool = False
-
-
-BENCHMARK_QUESTIONS: List[BenchmarkQuestion] = [
-    # ── Single-source: CTD (3) ──
-    BenchmarkQuestion(
-        id="ctd_01",
-        category="Single-source (CTD)",
-        question="What is the temperature and salinity profile at Onagawa Bay in April 2024?",
-        expected_source_types=["ctd"],
-        expected_min_citations=1,
-    ),
-    BenchmarkQuestion(
-        id="ctd_02",
-        category="Single-source (CTD)",
-        question="How does dissolved oxygen vary with depth at Onagawa Bay?",
-        expected_source_types=["ctd"],
-        expected_min_citations=1,
-    ),
-    BenchmarkQuestion(
-        id="ctd_03",
-        category="Single-source (CTD)",
-        question="What is the chlorophyll-a concentration at the surface in Onagawa Bay during summer?",
-        expected_source_types=["ctd"],
-        expected_min_citations=1,
-    ),
-
-    # ── Single-source: Metagenome (3) ──
-    BenchmarkQuestion(
-        id="meta_01",
-        category="Single-source (Metagenome)",
-        question="What are the dominant microbial genera found in Ishinomaki Bay?",
-        expected_source_types=["metagenome"],
-        expected_min_citations=1,
-    ),
-    BenchmarkQuestion(
-        id="meta_02",
-        category="Single-source (Metagenome)",
-        question="How does microbial community composition differ between Kraken and MetaEuk classifiers?",
-        expected_source_types=["metagenome"],
-        expected_min_citations=1,
-    ),
-    BenchmarkQuestion(
-        id="meta_03",
-        category="Single-source (Metagenome)",
-        question="What metagenome samples are available from Matsushima Bay?",
-        expected_source_types=["metagenome"],
-        expected_min_citations=1,
-    ),
-
-    # ── Dual-source: CTD + SST (3) ──
-    BenchmarkQuestion(
-        id="dual_01",
-        category="Dual-source (CTD+SST)",
-        question="How does satellite SST compare to CTD surface temperature measurements at Onagawa Bay?",
-        expected_source_types=["ctd", "remote_sensing"],
-        expected_min_citations=2,
-    ),
-    BenchmarkQuestion(
-        id="dual_02",
-        category="Dual-source (CTD+SST)",
-        question="What is the seasonal temperature trend from both CTD profiles and satellite observations?",
-        expected_source_types=["ctd", "remote_sensing"],
-        expected_min_citations=2,
-    ),
-    BenchmarkQuestion(
-        id="dual_03",
-        category="Dual-source (CTD+SST)",
-        question="Compare the surface water temperature from in-situ CTD measurements and remote sensing SST data.",
-        expected_source_types=["ctd", "remote_sensing"],
-        expected_min_citations=2,
-    ),
-
-    # ── Analysis-dependent (3) ──
-    BenchmarkQuestion(
-        id="analysis_01",
-        category="Analysis-dependent",
-        question="What taxa show significant correlation with temperature changes across all bays?",
-        expected_source_types=["metagenome", "ctd"],
-        expected_min_citations=2,
-        requires_analysis=True,
-    ),
-    BenchmarkQuestion(
-        id="analysis_02",
-        category="Analysis-dependent",
-        question="How does microbial diversity vary seasonally between Onagawa and Ishinomaki bays?",
-        expected_source_types=["metagenome"],
-        expected_min_citations=2,
-        requires_analysis=True,
-    ),
-    BenchmarkQuestion(
-        id="analysis_03",
-        category="Analysis-dependent",
-        question="Are there co-occurrence patterns between dinoflagellates and diatoms in the ecosystem?",
-        expected_source_types=["metagenome"],
-        expected_min_citations=1,
-        requires_analysis=True,
-    ),
-
-    # ── Reliability-dependent (3) ──
-    BenchmarkQuestion(
-        id="reliability_01",
-        category="Reliability-dependent",
-        question="How reliable is our SST data when validated against in-situ CTD measurements?",
-        expected_source_types=["ctd", "remote_sensing"],
-        expected_min_citations=2,
-        requires_reliability=True,
-    ),
-    BenchmarkQuestion(
-        id="reliability_02",
-        category="Reliability-dependent",
-        question="Are there any anomalous diversity measurements that deviate from environmental predictions?",
-        expected_source_types=["metagenome"],
-        expected_min_citations=1,
-        requires_reliability=True,
-    ),
-    BenchmarkQuestion(
-        id="reliability_03",
-        category="Reliability-dependent",
-        question="What is the confidence level of cross-source corroboration for our observations?",
-        expected_source_types=["ctd", "metagenome"],
-        expected_min_citations=1,
-        requires_reliability=True,
-    ),
-]
+# Re-exported for backward compatibility — all consumers can
+# continue using: from evaluation.benchmark import BenchmarkQuestion, BENCHMARK_QUESTIONS
+from evaluation.questions import (  # noqa: F401
+    BENCHMARK_QUESTIONS,
+    QUESTION_CATEGORIES,
+    BenchmarkQuestion,
+    get_by_category,
+    get_question,
+    get_quick_subset,
+)
 
 
 # ─────────────────────────────────────────────
@@ -188,6 +64,58 @@ EVAL_MODES: List[EvalMode] = [
     EvalMode("+Analysis", True, False),
     EvalMode("+Reliability", False, True),
     EvalMode("Full", True, True),
+]
+
+
+# ─────────────────────────────────────────────
+# System Variants (7-variant ablation study)
+# ─────────────────────────────────────────────
+@dataclass
+class SystemVariant:
+    """One system configuration for the ablation study.
+
+    Extends EvalMode with source-coverage control:
+        source_coverage=0  → LLM-only (no retrieval)
+        source_coverage=1  → single source type
+        source_coverage=2  → two source types
+        source_coverage=3  → all source types
+    """
+    name: str
+    source_coverage: int
+    inject_analysis: bool
+    inject_reliability: bool
+    description: str
+
+
+SYSTEM_VARIANTS: List[SystemVariant] = [
+    SystemVariant(
+        "LLM-only", 0, False, False,
+        "Generation baseline without retrieval.",
+    ),
+    SystemVariant(
+        "Single-source RAG", 1, False, False,
+        "Isolated modality evidence.",
+    ),
+    SystemVariant(
+        "Two-source RAG", 2, False, False,
+        "Partial cross-source linking.",
+    ),
+    SystemVariant(
+        "Multi-source RAG", 3, False, False,
+        "Full heterogeneous retrieval without derived context.",
+    ),
+    SystemVariant(
+        "Multi-source + Analysis", 3, True, False,
+        "Effect of analytical memory.",
+    ),
+    SystemVariant(
+        "Multi-source + Reliability", 3, False, True,
+        "Effect of validation and reliability context.",
+    ),
+    SystemVariant(
+        "Full framework", 3, True, True,
+        "Complete proposed framework.",
+    ),
 ]
 
 
@@ -410,6 +338,207 @@ def run_single_evaluation(
 
 
 # ─────────────────────────────────────────────
+# Ablation: source-coverage-controlled retrieval
+# ─────────────────────────────────────────────
+def _filter_by_source_coverage(
+    retrieved: List[dict],
+    question: BenchmarkQuestion,
+    source_coverage: int,
+) -> List[dict]:
+    """Filter retrieved documents by allowed number of source types.
+
+    Args:
+        retrieved: Full retrieval results (all source types).
+        question: The benchmark question (used to pick which types to keep).
+        source_coverage: 0=none, 1=primary only, 2=two types, 3=all.
+
+    Returns:
+        Filtered list of retrieved documents.
+    """
+    if source_coverage == 0:
+        return []
+
+    if source_coverage >= 3:
+        return retrieved
+
+    # Determine which source types to allow
+    all_types = {"ctd", "metagenome", "remote_sensing"}
+    expected = list(question.expected_source_types)
+
+    if source_coverage == 1:
+        # Keep only the primary expected source type
+        allowed = {expected[0]}
+    elif source_coverage == 2:
+        if len(expected) >= 2:
+            allowed = set(expected[:2])
+        else:
+            # If question expects only 1 type, add next most relevant
+            allowed = set(expected)
+            remaining = sorted(all_types - allowed)
+            if remaining:
+                allowed.add(remaining[0])
+    else:
+        allowed = all_types
+
+    return [r for r in retrieved if r.get("source_type") in allowed]
+
+
+def run_single_ablation(
+    question: BenchmarkQuestion,
+    variant: SystemVariant,
+    *,
+    model: str = "qwen2.5:14b-instruct",
+    ollama_url: str = "http://localhost:11434",
+    top_k: int = 8,
+    temperature: float = 0.0,
+    num_ctx: int = 8192,
+) -> EvalResult:
+    """
+    Run one question through the RAG pipeline with source-coverage control.
+
+    This is the ablation-study version of run_single_evaluation(),
+    supporting the 7 system variants defined in SYSTEM_VARIANTS.
+    """
+    from orchestration.unified import retrieve
+
+    result = EvalResult(
+        question_id=question.id,
+        category=question.category,
+        question=question.question,
+        mode=variant.name,
+    )
+
+    try:
+        # 1. Retrieve (or skip for LLM-only)
+        if variant.source_coverage == 0:
+            retrieved = []
+        else:
+            retrieved = retrieve(question.question, k=top_k)
+            retrieved = _filter_by_source_coverage(
+                retrieved, question, variant.source_coverage,
+            )
+
+        result.n_retrieved = len(retrieved)
+
+        # Source types in retrieved docs
+        ret_types = set()
+        ret_ids = []
+        for r in retrieved:
+            st = r.get("source_type", "")
+            if st:
+                ret_types.add(st)
+            doc_id = r.get("doc_id", r.get("id", ""))
+            if doc_id:
+                ret_ids.append(doc_id)
+
+        result.retrieved_source_types = ",".join(sorted(ret_types))
+
+        # Retrieval precision
+        expected = set(question.expected_source_types)
+        if retrieved:
+            matching = sum(
+                1 for r in retrieved
+                if r.get("source_type", "") in expected
+            )
+            result.retrieval_precision = round(matching / len(retrieved), 4)
+        else:
+            result.retrieval_precision = 0.0
+
+        # Source coverage
+        if expected:
+            result.source_coverage = round(
+                len(ret_types & expected) / len(expected), 4
+            )
+        else:
+            result.source_coverage = 1.0
+
+        # 2. Build prompt with variant-specific injection
+        prompt_text = build_prompt(
+            question.question,
+            retrieved,
+            inject_analysis=variant.inject_analysis,
+            inject_reliability=variant.inject_reliability,
+        )
+
+        # Collect available context IDs for citation accuracy
+        analysis_ids = []
+        reliability_ids = []
+        if variant.inject_analysis:
+            adoc_path = config.ANALYSIS_DIR / "analysis_documents.jsonl"
+            if adoc_path.exists():
+                with open(adoc_path, encoding="utf-8") as f:
+                    for line in f:
+                        if line.strip():
+                            d = json.loads(line)
+                            analysis_ids.append(d.get("id", ""))
+
+        if variant.inject_reliability:
+            rdoc_path = config.RELIABILITY_DIR / "reliability_documents.jsonl"
+            if rdoc_path.exists():
+                with open(rdoc_path, encoding="utf-8") as f:
+                    for line in f:
+                        if line.strip():
+                            d = json.loads(line)
+                            reliability_ids.append(d.get("id", ""))
+
+        # 3. Call LLM
+        t0 = time.time()
+        full_response = ""
+        resp = requests.post(
+            f"{ollama_url}/api/chat",
+            json={
+                "model": model,
+                "messages": [{"role": "user", "content": prompt_text}],
+                "stream": True,
+                "options": {
+                    "temperature": temperature,
+                    "num_ctx": num_ctx,
+                },
+            },
+            stream=True, timeout=180,
+        )
+        resp.raise_for_status()
+        for line in resp.iter_lines():
+            if line:
+                chunk = json.loads(line)
+                token = chunk.get("message", {}).get("content", "")
+                full_response += token
+
+        result.latency_seconds = round(time.time() - t0, 2)
+        result.response = full_response
+
+        # 4. Extract citations
+        cited = extract_citations(full_response)
+        result.citation_count = len(cited)
+        result.cited_ids = ",".join(cited)
+
+        # Citation accuracy
+        result.citation_accuracy = round(
+            compute_citation_accuracy(cited, ret_ids, analysis_ids, reliability_ids),
+            4,
+        )
+
+        # Context utilization
+        result.analysis_cited = any(c.startswith("analysis_") for c in cited)
+        result.reliability_cited = any(c.startswith("reliability_") for c in cited)
+
+        util_checks = []
+        if variant.inject_analysis and analysis_ids:
+            util_checks.append(1.0 if result.analysis_cited else 0.0)
+        if variant.inject_reliability and reliability_ids:
+            util_checks.append(1.0 if result.reliability_cited else 0.0)
+        result.context_utilization = round(
+            float(np.mean(util_checks)) if util_checks else 0.0, 4
+        )
+
+    except Exception as e:
+        result.error = str(e)
+        logger.error("Ablation error for %s/%s: %s", question.id, variant.name, e)
+
+    return result
+
+
+# ─────────────────────────────────────────────
 # Full Benchmark Runner
 # ─────────────────────────────────────────────
 def run_full_benchmark(
@@ -453,6 +582,64 @@ def run_full_benchmark(
             logger.info("Evaluating [%d/%d] %s / %s", idx + 1, total, q.id, m.name)
             r = run_single_evaluation(
                 q, m,
+                model=model,
+                ollama_url=ollama_url,
+                top_k=top_k,
+                temperature=temperature,
+                num_ctx=num_ctx,
+            )
+            results.append(asdict(r))
+
+    if progress_callback:
+        progress_callback(total, total)
+
+    return pd.DataFrame(results)
+
+
+def run_ablation_benchmark(
+    *,
+    model: str = "qwen2.5:14b-instruct",
+    ollama_url: str = "http://localhost:11434",
+    top_k: int = 8,
+    temperature: float = 0.0,
+    num_ctx: int = 8192,
+    questions: Optional[List[BenchmarkQuestion]] = None,
+    variants: Optional[List[SystemVariant]] = None,
+    progress_callback: Optional[Any] = None,
+) -> pd.DataFrame:
+    """
+    Run the 7-variant ablation benchmark.
+
+    Args:
+        model: Ollama model name.
+        ollama_url: Ollama API base URL.
+        top_k: Number of documents to retrieve.
+        temperature: LLM temperature (0.0 for deterministic).
+        num_ctx: Context window size.
+        questions: Override default benchmark questions.
+        variants: Override default system variants.
+        progress_callback: Optional callable(current, total) for progress updates.
+
+    Returns:
+        DataFrame with one row per (question, variant) evaluation.
+    """
+    qs = questions or BENCHMARK_QUESTIONS
+    vs = variants or SYSTEM_VARIANTS
+    total = len(qs) * len(vs)
+
+    results = []
+    for i, q in enumerate(qs):
+        for j, v in enumerate(vs):
+            idx = i * len(vs) + j
+            if progress_callback:
+                progress_callback(idx, total)
+
+            logger.info(
+                "Ablation [%d/%d] %s / %s (coverage=%d)",
+                idx + 1, total, q.id, v.name, v.source_coverage,
+            )
+            r = run_single_ablation(
+                q, v,
                 model=model,
                 ollama_url=ollama_url,
                 top_k=top_k,

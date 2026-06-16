@@ -8,6 +8,9 @@ from evaluation.benchmark import (
     BENCHMARK_QUESTIONS,
     EVAL_MODES,
     EvalResult,
+    SYSTEM_VARIANTS,
+    SystemVariant,
+    _filter_by_source_coverage,
     extract_citations,
     compute_citation_accuracy,
     compute_summary_metrics,
@@ -231,3 +234,123 @@ class TestComputeSummaryMetrics:
         by_cat = summaries["by_category"]
         assert "Cat A" in by_cat.index
         assert "Cat B" in by_cat.index
+
+# ---------------------------------------------------------------------------
+# System Variants (ablation study)
+# ---------------------------------------------------------------------------
+class TestSystemVariants:
+    """Validate the 7 ablation study system variants."""
+
+    def test_has_7_variants(self):
+        assert len(SYSTEM_VARIANTS) == 7
+
+    def test_variant_names(self):
+        names = [v.name for v in SYSTEM_VARIANTS]
+        assert "LLM-only" in names
+        assert "Single-source RAG" in names
+        assert "Two-source RAG" in names
+        assert "Multi-source RAG" in names
+        assert "Multi-source + Analysis" in names
+        assert "Multi-source + Reliability" in names
+        assert "Full framework" in names
+
+    def test_unique_names(self):
+        names = [v.name for v in SYSTEM_VARIANTS]
+        assert len(names) == len(set(names))
+
+    def test_llm_only_variant(self):
+        v = SYSTEM_VARIANTS[0]
+        assert v.name == "LLM-only"
+        assert v.source_coverage == 0
+        assert v.inject_analysis is False
+        assert v.inject_reliability is False
+
+    def test_full_variant(self):
+        v = SYSTEM_VARIANTS[-1]
+        assert v.name == "Full framework"
+        assert v.source_coverage == 3
+        assert v.inject_analysis is True
+        assert v.inject_reliability is True
+
+    def test_source_coverage_progression(self):
+        """First 4 variants increase source coverage 0→1→2→3."""
+        coverages = [v.source_coverage for v in SYSTEM_VARIANTS[:4]]
+        assert coverages == [0, 1, 2, 3]
+
+    def test_injection_variants(self):
+        """Variants 4-6 all have source_coverage=3 with different injections."""
+        for v in SYSTEM_VARIANTS[3:]:
+            assert v.source_coverage == 3
+
+    def test_all_have_descriptions(self):
+        for v in SYSTEM_VARIANTS:
+            assert v.description, f"{v.name} has no description"
+
+    def test_backward_compatible_eval_modes(self):
+        """Original EVAL_MODES still have 4 entries."""
+        assert len(EVAL_MODES) == 4
+
+
+# ---------------------------------------------------------------------------
+# Source coverage filtering
+# ---------------------------------------------------------------------------
+class TestSourceCoverageFiltering:
+    """Validate _filter_by_source_coverage logic."""
+
+    def _make_question(self, expected_types):
+        from evaluation.benchmark import BenchmarkQuestion
+        return BenchmarkQuestion(
+            id="test_q",
+            question="Test?",
+            category="test",
+            expected_source_types=expected_types,
+            expected_min_citations=1,
+            requires_analysis=False,
+            requires_reliability=False,
+        )
+
+    def _make_docs(self):
+        return [
+            {"doc_id": "ctd_1", "source_type": "ctd"},
+            {"doc_id": "ctd_2", "source_type": "ctd"},
+            {"doc_id": "meta_1", "source_type": "metagenome"},
+            {"doc_id": "sst_1", "source_type": "remote_sensing"},
+            {"doc_id": "sst_2", "source_type": "remote_sensing"},
+        ]
+
+    def test_coverage_0_returns_empty(self):
+        q = self._make_question(["ctd"])
+        result = _filter_by_source_coverage(self._make_docs(), q, 0)
+        assert result == []
+
+    def test_coverage_1_single_type(self):
+        q = self._make_question(["ctd", "remote_sensing"])
+        result = _filter_by_source_coverage(self._make_docs(), q, 1)
+        assert all(r["source_type"] == "ctd" for r in result)
+        assert len(result) == 2
+
+    def test_coverage_2_two_types(self):
+        q = self._make_question(["ctd", "remote_sensing"])
+        result = _filter_by_source_coverage(self._make_docs(), q, 2)
+        types = {r["source_type"] for r in result}
+        assert types == {"ctd", "remote_sensing"}
+
+    def test_coverage_2_with_single_expected(self):
+        """If question expects 1 type, coverage=2 adds one more."""
+        q = self._make_question(["ctd"])
+        result = _filter_by_source_coverage(self._make_docs(), q, 2)
+        types = {r["source_type"] for r in result}
+        assert len(types) == 2
+        assert "ctd" in types
+
+    def test_coverage_3_returns_all(self):
+        q = self._make_question(["ctd"])
+        docs = self._make_docs()
+        result = _filter_by_source_coverage(docs, q, 3)
+        assert len(result) == len(docs)
+
+    def test_coverage_above_3_returns_all(self):
+        q = self._make_question(["ctd"])
+        docs = self._make_docs()
+        result = _filter_by_source_coverage(docs, q, 5)
+        assert len(result) == len(docs)

@@ -1816,257 +1816,886 @@ ORDER BY n_docs DESC;"""
 with tab_eval:
     st.subheader("RAG System Evaluation")
     st.caption(
-        "Benchmark the system with predefined questions across 5 categories and "
-        "4 evaluation modes. Measures retrieval precision, source coverage, "
-        "citation accuracy, context utilization, and response latency."
+        "Benchmark the system with 15 questions across 5 categories. "
+        "Supports the original 4-mode evaluation and the full 7-variant ablation study."
     )
 
     from evaluation.benchmark import (
         BENCHMARK_QUESTIONS, EVAL_MODES, EvalMode,
+        SYSTEM_VARIANTS, SystemVariant,
         run_full_benchmark, compute_summary_metrics,
-        run_single_evaluation, extract_citations,
+        run_single_evaluation, run_single_ablation, extract_citations,
+    )
+    from evaluation.questions import (
+        QUESTION_CATEGORIES, get_by_category, get_quick_subset, get_question,
+    )
+    from evaluation.reference_answers import REFERENCE_ANSWERS, get_reference
+
+    eval_sub1, eval_sub2, eval_sub3, eval_sub4 = st.tabs(
+        ["Standard Evaluation", "Ablation Study", "Compare Runs", "Questions Browser"]
     )
 
-    # ── Controls ──
-    eval_c1, eval_c2, eval_c3, eval_c4 = st.columns([2, 1, 1, 1])
-    with eval_c1:
-        eval_model = st.selectbox(
-            "Model",
-            [config.CHAT_MODEL, "qwen2.5:7b-instruct", "qwen2.5:3b",
-             "llama3.2:3b", "gemma3:4b"],
-            key="eval_model",
-        )
-    with eval_c2:
-        eval_top_k = st.number_input("Top-K", 4, 20, 8, key="eval_top_k")
-    with eval_c3:
-        eval_ctx = st.number_input("Context window", 2048, 32768, 8192, step=1024, key="eval_ctx")
-    with eval_c4:
-        eval_quick = st.checkbox("Quick eval (5 questions)", value=True, key="eval_quick")
+    # ──────────────────────────────────────────
+    # Sub-tab 1: Standard Evaluation (preserved)
+    # ──────────────────────────────────────────
+    with eval_sub1:
+        st.markdown("### Standard 4-Mode Evaluation")
+        st.caption("Original pipeline benchmark: Baseline → +Analysis → +Reliability → Full")
 
-    st.markdown("---")
+        # Controls
+        std_c1, std_c2, std_c3, std_c4 = st.columns([2, 1, 1, 1])
+        with std_c1:
+            eval_model = st.selectbox(
+                "Model",
+                [config.CHAT_MODEL, "qwen2.5:7b-instruct", "qwen2.5:3b",
+                 "llama3.2:3b", "gemma3:4b"],
+                key="eval_model",
+            )
+        with std_c2:
+            eval_top_k = st.number_input("Top-K", 4, 20, 8, key="eval_top_k")
+        with std_c3:
+            eval_ctx = st.number_input("Context window", 2048, 32768, 8192, step=1024, key="eval_ctx")
+        with std_c4:
+            eval_quick = st.checkbox("Quick (5 questions)", value=True, key="eval_quick")
 
-    # ── Benchmark Questions Preview ──
-    with st.expander("Benchmark Questions (15)", expanded=False):
-        q_data = []
-        for q in BENCHMARK_QUESTIONS:
-            q_data.append({
-                "ID": q.id,
-                "Category": q.category,
-                "Question": q.question,
-                "Expected Sources": ", ".join(q.expected_source_types),
-                "Min Citations": q.expected_min_citations,
-                "Needs Analysis": q.requires_analysis,
-                "Needs Reliability": q.requires_reliability,
-            })
-        st.dataframe(pd.DataFrame(q_data), width="stretch", hide_index=True)
+        st.markdown("---")
 
-    with st.expander("Evaluation Modes (4)", expanded=False):
-        m_data = []
-        for m in EVAL_MODES:
-            m_data.append({
-                "Mode": m.name,
-                "Pre-Analysis": "ON" if m.inject_analysis else "OFF",
-                "Reliability": "ON" if m.inject_reliability else "OFF",
-            })
-        st.dataframe(pd.DataFrame(m_data), width="stretch", hide_index=True)
-
-    # ── Run Button ──
-    if st.button("Run Evaluation", type="primary", key="run_eval"):
-        # Select questions
-        if eval_quick:
-            # 1 per category
-            seen_cats = set()
-            selected_qs = []
+        # Questions & modes previews
+        with st.expander("Benchmark Questions (15)", expanded=False):
+            q_data = []
             for q in BENCHMARK_QUESTIONS:
-                if q.category not in seen_cats:
-                    selected_qs.append(q)
-                    seen_cats.add(q.category)
+                q_data.append({
+                    "ID": q.id,
+                    "Category": q.category,
+                    "Question": q.question,
+                    "Expected Sources": ", ".join(q.expected_source_types),
+                    "Min Citations": q.expected_min_citations,
+                    "Needs Analysis": q.requires_analysis,
+                    "Needs Reliability": q.requires_reliability,
+                })
+            st.dataframe(pd.DataFrame(q_data), width="stretch", hide_index=True)
+
+        with st.expander("Evaluation Modes (4)", expanded=False):
+            m_data = []
+            for m in EVAL_MODES:
+                m_data.append({
+                    "Mode": m.name,
+                    "Pre-Analysis": "ON" if m.inject_analysis else "OFF",
+                    "Reliability": "ON" if m.inject_reliability else "OFF",
+                })
+            st.dataframe(pd.DataFrame(m_data), width="stretch", hide_index=True)
+
+        # Run
+        if st.button("Run Evaluation", type="primary", key="run_eval"):
+            if eval_quick:
+                seen_cats = set()
+                selected_qs = []
+                for q in BENCHMARK_QUESTIONS:
+                    if q.category not in seen_cats:
+                        selected_qs.append(q)
+                        seen_cats.add(q.category)
+            else:
+                selected_qs = BENCHMARK_QUESTIONS
+
+            total_evals = len(selected_qs) * len(EVAL_MODES)
+            st.info(f"Running {len(selected_qs)} questions × {len(EVAL_MODES)} modes = {total_evals} evaluations...")
+
+            progress_bar = st.progress(0)
+            status_text = st.empty()
+
+            def _progress(current, total):
+                progress_bar.progress(current / total if total > 0 else 1.0)
+                if current < total:
+                    q_idx = current // len(EVAL_MODES)
+                    m_idx = current % len(EVAL_MODES)
+                    if q_idx < len(selected_qs):
+                        status_text.caption(
+                            f"[{current+1}/{total}] {selected_qs[q_idx].id} / {EVAL_MODES[m_idx].name}"
+                        )
+
+            results_df = run_full_benchmark(
+                model=eval_model,
+                ollama_url=ollama_url,
+                top_k=eval_top_k,
+                temperature=0.0,
+                num_ctx=eval_ctx,
+                questions=selected_qs,
+                progress_callback=_progress,
+            )
+
+            progress_bar.progress(1.0)
+            status_text.caption("Evaluation complete.")
+            st.session_state["eval_results"] = results_df
+            st.session_state["eval_model_used"] = eval_model
+            st.rerun()
+
+        # Display results
+        if "eval_results" in st.session_state:
+            results_df = st.session_state["eval_results"]
+            eval_model_used = st.session_state.get("eval_model_used", "unknown")
+
+            st.markdown(f"### Results ({eval_model_used})")
+            st.caption(f"{len(results_df)} evaluations | {results_df['category'].nunique()} categories | "
+                        f"{results_df['mode'].nunique()} modes")
+
+            errors = results_df[results_df["error"] != ""]
+            if not errors.empty:
+                st.warning(f"{len(errors)} evaluations had errors.")
+
+            summaries = compute_summary_metrics(results_df)
+            by_mode = summaries["by_mode"]
+
+            st.markdown("#### Performance by Mode")
+            mode_display = by_mode.copy()
+            mode_display.columns = [
+                "Retrieval Precision", "Source Coverage",
+                "Avg Citations", "Citation Accuracy",
+                "Context Utilization", "Avg Latency (s)",
+            ]
+            st.dataframe(mode_display.style.format({
+                "Retrieval Precision": "{:.1%}",
+                "Source Coverage": "{:.1%}",
+                "Avg Citations": "{:.1f}",
+                "Citation Accuracy": "{:.1%}",
+                "Context Utilization": "{:.1%}",
+                "Avg Latency (s)": "{:.1f}",
+            }), width="stretch")
+
+            chart_cols = st.columns(3)
+            with chart_cols[0]:
+                st.markdown("**Retrieval Quality**")
+                fig1, ax1 = plt.subplots(figsize=(4, 3))
+                x = range(len(by_mode))
+                ax1.bar([i - 0.15 for i in x], by_mode["retrieval_precision"],
+                        width=0.3, label="Precision", color="#3b82f6")
+                ax1.bar([i + 0.15 for i in x], by_mode["source_coverage"],
+                        width=0.3, label="Coverage", color="#10b981")
+                ax1.set_xticks(list(x))
+                ax1.set_xticklabels(by_mode.index, fontsize=8)
+                ax1.set_ylim(0, 1.1)
+                ax1.legend(fontsize=7)
+                ax1.set_ylabel("Score")
+                fig1.tight_layout()
+                st.pyplot(fig1)
+                plt.close(fig1)
+
+            with chart_cols[1]:
+                st.markdown("**Citation Metrics**")
+                fig2, ax2 = plt.subplots(figsize=(4, 3))
+                ax2.bar(by_mode.index, by_mode["citation_count"], color="#8b5cf6")
+                ax2.set_ylabel("Avg Citations")
+                ax2.tick_params(axis="x", labelsize=8)
+                fig2.tight_layout()
+                st.pyplot(fig2)
+                plt.close(fig2)
+
+            with chart_cols[2]:
+                st.markdown("**Context Utilization**")
+                fig3, ax3 = plt.subplots(figsize=(4, 3))
+                ax3.bar(by_mode.index, by_mode["context_utilization"], color="#f59e0b")
+                ax3.set_ylabel("Utilization Rate")
+                ax3.set_ylim(0, 1.1)
+                ax3.tick_params(axis="x", labelsize=8)
+                fig3.tight_layout()
+                st.pyplot(fig3)
+                plt.close(fig3)
+
+            st.markdown("#### Performance by Category")
+            by_cat = summaries["by_category"]
+            cat_display = by_cat.copy()
+            cat_display.columns = [
+                "Retrieval Precision", "Source Coverage",
+                "Avg Citations", "Citation Accuracy",
+                "Context Utilization", "Avg Latency (s)",
+            ]
+            st.dataframe(cat_display.style.format({
+                "Retrieval Precision": "{:.1%}",
+                "Source Coverage": "{:.1%}",
+                "Avg Citations": "{:.1f}",
+                "Citation Accuracy": "{:.1%}",
+                "Context Utilization": "{:.1%}",
+                "Avg Latency (s)": "{:.1f}",
+            }), width="stretch")
+
+            st.markdown("#### Mode × Category Breakdown")
+            by_mc = summaries["by_mode_category"]
+            pivot_metric = st.selectbox(
+                "Metric to view",
+                ["retrieval_precision", "source_coverage", "citation_count",
+                 "citation_accuracy", "context_utilization", "latency_seconds"],
+                key="eval_pivot_metric",
+            )
+            pivot = by_mc[pivot_metric].unstack(level=0)
+            st.dataframe(pivot.style.format("{:.3f}").background_gradient(
+                cmap="YlGn", axis=None), width="stretch")
+
+            st.markdown("#### Per-Question Results")
+            for cat in results_df["category"].unique():
+                cat_df = results_df[results_df["category"] == cat]
+                with st.expander(f"{cat} ({len(cat_df)} evaluations)", expanded=False):
+                    for qid in cat_df["question_id"].unique():
+                        q_df = cat_df[cat_df["question_id"] == qid]
+                        question_text = q_df.iloc[0]["question"]
+                        st.markdown(f"**{qid}**: {question_text}")
+
+                        detail_data = []
+                        for _, row in q_df.iterrows():
+                            detail_data.append({
+                                "Mode": row["mode"],
+                                "Precision": f"{row['retrieval_precision']:.0%}",
+                                "Coverage": f"{row['source_coverage']:.0%}",
+                                "Citations": row["citation_count"],
+                                "Cit. Accuracy": f"{row['citation_accuracy']:.0%}",
+                                "Ctx Util": f"{row['context_utilization']:.0%}",
+                                "Latency": f"{row['latency_seconds']:.1f}s",
+                                "Sources": row["retrieved_source_types"],
+                            })
+                        st.dataframe(pd.DataFrame(detail_data), width="stretch", hide_index=True)
+
+                        full_row = q_df[q_df["mode"] == "Full"]
+                        if not full_row.empty:
+                            resp_text = full_row.iloc[0]["response"]
+                            if resp_text:
+                                st.caption("Response (Full mode):")
+                                st.markdown(resp_text[:500] + ("..." if len(resp_text) > 500 else ""))
+                        st.markdown("---")
+
+            st.markdown("#### Export")
+            csv = results_df.to_csv(index=False)
+            st.download_button(
+                "Download Results (CSV)",
+                csv,
+                file_name=f"eval_{eval_model_used}_{len(results_df)}.csv",
+                mime="text/csv",
+            )
+
+    # ──────────────────────────────────────────
+    # Sub-tab 2: Ablation Study (new)
+    # ──────────────────────────────────────────
+    with eval_sub2:
+        st.markdown("### 7-Variant Ablation Study")
+        st.caption(
+            "Systematic evaluation across 7 system configurations varying source "
+            "coverage (0–3), pre-analysis injection, and reliability injection."
+        )
+
+        # Variant matrix display
+        with st.expander("System Variant Matrix", expanded=True):
+            v_data = []
+            for v in SYSTEM_VARIANTS:
+                v_data.append({
+                    "Variant": v.name,
+                    "Source Coverage": v.source_coverage,
+                    "Analysis": "✅" if v.inject_analysis else "—",
+                    "Reliability": "✅" if v.inject_reliability else "—",
+                    "Description": v.description,
+                })
+            st.dataframe(pd.DataFrame(v_data), width="stretch", hide_index=True)
+
+        # Controls
+        abl_c1, abl_c2, abl_c3 = st.columns([2, 1, 1])
+        with abl_c1:
+            abl_model = st.selectbox(
+                "Model",
+                [config.CHAT_MODEL, "qwen2.5:7b-instruct", "qwen2.5:3b",
+                 "llama3.2:3b", "gemma3:4b"],
+                key="abl_model",
+            )
+        with abl_c2:
+            abl_top_k = st.number_input("Top-K", 4, 20, 8, key="abl_top_k")
+        with abl_c3:
+            abl_ctx = st.number_input("Context", 2048, 32768, 8192, step=1024, key="abl_ctx")
+
+        abl_o1, abl_o2, abl_o3 = st.columns(3)
+        with abl_o1:
+            abl_quick = st.checkbox("Quick mode (5 questions)", value=True, key="abl_quick")
+        with abl_o2:
+            abl_judge = st.checkbox("LLM-as-Judge scoring", value=False, key="abl_judge",
+                                     help="Adds ~2× evaluation time per question")
+        with abl_o3:
+            abl_repeats = st.number_input("Repetitions", 1, 5, 1, key="abl_repeats",
+                                           help="Multiple reps for statistical power")
+
+        # Variant selection
+        with st.expander("Select Variants", expanded=False):
+            selected_variants = []
+            v_cols = st.columns(4)
+            for i, v in enumerate(SYSTEM_VARIANTS):
+                with v_cols[i % 4]:
+                    if st.checkbox(v.name, value=True, key=f"abl_v_{i}"):
+                        selected_variants.append(v)
+            if not selected_variants:
+                selected_variants = list(SYSTEM_VARIANTS)
+
+        # Question count
+        if abl_quick:
+            abl_questions = get_quick_subset()
         else:
-            selected_qs = BENCHMARK_QUESTIONS
+            abl_questions = BENCHMARK_QUESTIONS
 
-        total_evals = len(selected_qs) * len(EVAL_MODES)
-        st.info(f"Running {len(selected_qs)} questions x {len(EVAL_MODES)} modes = {total_evals} evaluations...")
+        n_evals = len(abl_questions) * len(selected_variants) * abl_repeats
+        st.info(
+            f"**{len(abl_questions)} questions × {len(selected_variants)} variants "
+            f"× {abl_repeats} rep{'s' if abl_repeats > 1 else ''} = {n_evals} evaluations** "
+            f"(estimated {n_evals * 20 // 60}–{n_evals * 40 // 60} min)"
+        )
 
-        progress_bar = st.progress(0)
-        status_text = st.empty()
+        # Run ablation
+        if st.button("Run Ablation Study", type="primary", key="run_ablation"):
+            from dataclasses import asdict
 
-        def _progress(current, total):
-            progress_bar.progress(current / total if total > 0 else 1.0)
-            if current < total:
-                q_idx = current // len(EVAL_MODES)
-                m_idx = current % len(EVAL_MODES)
-                if q_idx < len(selected_qs):
-                    status_text.caption(
-                        f"[{current+1}/{total}] {selected_qs[q_idx].id} / {EVAL_MODES[m_idx].name}"
+            progress_bar = st.progress(0)
+            status_text = st.empty()
+            all_results = []
+            total = len(abl_questions) * len(selected_variants) * abl_repeats
+            current = 0
+
+            for rep in range(1, abl_repeats + 1):
+                for q in abl_questions:
+                    for v in selected_variants:
+                        current += 1
+                        progress_bar.progress(current / total)
+                        rep_label = f" (rep {rep})" if abl_repeats > 1 else ""
+                        status_text.caption(f"[{current}/{total}] {q.id} / {v.name}{rep_label}")
+
+                        result = run_single_ablation(
+                            q, v,
+                            model=abl_model,
+                            ollama_url=ollama_url,
+                            top_k=abl_top_k,
+                            temperature=0.0,
+                            num_ctx=abl_ctx,
+                        )
+                        all_results.append(asdict(result))
+
+            progress_bar.progress(1.0)
+
+            results_df = pd.DataFrame(all_results)
+
+            # Average across repetitions if multiple
+            if abl_repeats > 1:
+                group_cols = ["question_id", "category", "question", "mode"]
+                existing_group = [c for c in group_cols if c in results_df.columns]
+                numeric_cols = results_df.select_dtypes(include=[np.number]).columns.tolist()
+                results_df = results_df.groupby(existing_group, as_index=False)[numeric_cols].mean()
+
+            # Compute quality metrics (ROUGE-L, faithfulness, completeness)
+            status_text.caption("Computing answer quality metrics...")
+            quality_rows = []
+            for _, row in results_df.iterrows():
+                ref = get_reference(row["question_id"])
+                response = str(row.get("response", ""))
+
+                if ref and response.strip():
+                    from evaluation.quality_metrics import (
+                        compute_rouge_l, compute_faithfulness,
+                        compute_answer_completeness, compute_semantic_similarity,
                     )
+                    rouge = compute_rouge_l(response, ref.reference_text)
+                    faith = compute_faithfulness(response, [])
+                    compl = compute_answer_completeness(response, ref.key_facts)
+                    sem_sim = compute_semantic_similarity(
+                        response, ref.reference_text, ollama_url=ollama_url,
+                    )
+                    quality_rows.append({
+                        "question_id": row["question_id"],
+                        "mode": row["mode"],
+                        "rouge_l": rouge,
+                        "faithfulness": faith,
+                        "answer_completeness": compl,
+                        "semantic_similarity": sem_sim,
+                    })
+                else:
+                    quality_rows.append({
+                        "question_id": row["question_id"],
+                        "mode": row["mode"],
+                        "rouge_l": 0.0,
+                        "faithfulness": 0.0,
+                        "answer_completeness": 0.0,
+                        "semantic_similarity": 0.0,
+                    })
 
-        results_df = run_full_benchmark(
-            model=eval_model,
-            ollama_url=ollama_url,
-            top_k=eval_top_k,
-            temperature=0.0,
-            num_ctx=eval_ctx,
-            questions=selected_qs,
-            progress_callback=_progress,
+            quality_df = pd.DataFrame(quality_rows)
+            results_df = results_df.merge(quality_df, on=["question_id", "mode"], how="left")
+
+            status_text.caption("Ablation study complete!")
+            st.session_state["ablation_results"] = results_df
+            st.session_state["ablation_model"] = abl_model
+            st.session_state["ablation_variants"] = [v.name for v in selected_variants]
+            st.rerun()
+
+        # Display ablation results
+        if "ablation_results" in st.session_state:
+            abl_df = st.session_state["ablation_results"]
+            abl_model_used = st.session_state.get("ablation_model", "unknown")
+            abl_variant_names = st.session_state.get("ablation_variants", [])
+
+            st.markdown(f"### Ablation Results ({abl_model_used})")
+            st.caption(
+                f"{len(abl_df)} evaluations | "
+                f"{abl_df['question_id'].nunique()} questions | "
+                f"{abl_df['mode'].nunique()} variants"
+            )
+
+            # Error check
+            if "error" in abl_df.columns:
+                err_df = abl_df[abl_df["error"].notna() & (abl_df["error"] != "")]
+                if not err_df.empty:
+                    st.warning(f"{len(err_df)} evaluations had errors.")
+
+            # ── Summary table ──
+            st.markdown("#### Summary by Variant")
+
+            metric_cols = [c for c in [
+                "retrieval_precision", "source_coverage", "citation_count",
+                "citation_accuracy", "context_utilization", "latency_seconds",
+                "rouge_l", "semantic_similarity", "faithfulness", "answer_completeness",
+            ] if c in abl_df.columns]
+
+            abl_summary = abl_df.groupby("mode")[metric_cols].mean().round(4)
+
+            # Reorder to match variant order
+            variant_order = [v.name for v in SYSTEM_VARIANTS if v.name in abl_summary.index]
+            abl_summary = abl_summary.reindex(variant_order)
+
+            col_labels = {
+                "retrieval_precision": "Ret. Prec.",
+                "source_coverage": "Src. Cov.",
+                "citation_count": "Cit. Count",
+                "citation_accuracy": "Cit. Acc.",
+                "context_utilization": "Ctx. Util.",
+                "latency_seconds": "Latency (s)",
+                "rouge_l": "ROUGE-L",
+                "semantic_similarity": "Sem. Sim.",
+                "faithfulness": "Faith.",
+                "answer_completeness": "Compl.",
+            }
+            display_summary = abl_summary.rename(columns=col_labels)
+            st.dataframe(display_summary, width="stretch")
+
+            # ── Radar chart ──
+            st.markdown("#### Variant Comparison (Radar)")
+            try:
+                radar_metrics = [m for m in metric_cols if m not in ("latency_seconds", "citation_count")]
+                if len(radar_metrics) >= 3 and len(abl_summary) >= 2:
+                    import matplotlib.pyplot as plt
+
+                    norm_df = abl_summary.copy()
+                    for m in radar_metrics:
+                        col_min = norm_df[m].min()
+                        col_max = norm_df[m].max()
+                        if col_max > col_min:
+                            norm_df[m] = (norm_df[m] - col_min) / (col_max - col_min)
+                        else:
+                            norm_df[m] = 0.5
+
+                    N = len(radar_metrics)
+                    angles = np.linspace(0, 2 * np.pi, N, endpoint=False).tolist()
+                    angles += angles[:1]
+
+                    variant_colors = {
+                        "LLM-only": "#95a5a6", "Single-source RAG": "#3498db",
+                        "Two-source RAG": "#2980b9", "Multi-source RAG": "#2ecc71",
+                        "Multi-source + Analysis": "#e67e22",
+                        "Multi-source + Reliability": "#9b59b6",
+                        "Full framework": "#e74c3c",
+                    }
+                    short_names = {
+                        "LLM-only": "LLM", "Single-source RAG": "1-Src",
+                        "Two-source RAG": "2-Src", "Multi-source RAG": "3-Src",
+                        "Multi-source + Analysis": "+Ana",
+                        "Multi-source + Reliability": "+Rel",
+                        "Full framework": "Full",
+                    }
+
+                    fig, ax = plt.subplots(figsize=(7, 7), subplot_kw=dict(polar=True))
+                    for v_name in variant_order:
+                        if v_name not in norm_df.index:
+                            continue
+                        values = [norm_df.loc[v_name, m] for m in radar_metrics]
+                        values += values[:1]
+                        color = variant_colors.get(v_name, "#333")
+                        label = short_names.get(v_name, v_name)
+                        ax.plot(angles, values, "o-", linewidth=1.5, label=label, color=color)
+                        ax.fill(angles, values, alpha=0.06, color=color)
+
+                    ax.set_xticks(angles[:-1])
+                    ax.set_xticklabels([col_labels.get(m, m) for m in radar_metrics], size=8)
+                    ax.set_ylim(0, 1.05)
+                    ax.set_title("Variant Comparison (Normalized)", pad=20, fontweight="bold")
+                    ax.legend(loc="upper right", bbox_to_anchor=(1.35, 1.1), fontsize=8)
+                    fig.tight_layout()
+                    st.pyplot(fig, use_container_width=True)
+                    plt.close(fig)
+            except Exception as e:
+                st.warning(f"Radar chart error: {e}")
+
+            # ── Grouped bar chart ──
+            st.markdown("#### Metric Comparison (Bar Chart)")
+            try:
+                bar_metrics = [m for m in metric_cols if m not in ("latency_seconds", "citation_count")]
+                if bar_metrics and len(abl_summary) >= 2:
+                    import matplotlib.pyplot as plt
+
+                    x = np.arange(len(bar_metrics))
+                    width = 0.8 / len(variant_order)
+
+                    fig, ax = plt.subplots(figsize=(12, 5))
+                    for i, v_name in enumerate(variant_order):
+                        if v_name not in abl_summary.index:
+                            continue
+                        vals = [abl_summary.loc[v_name, m] for m in bar_metrics]
+                        color = variant_colors.get(v_name, "#333")
+                        label = short_names.get(v_name, v_name)
+                        offset = (i - len(variant_order) / 2 + 0.5) * width
+                        ax.bar(x + offset, vals, width * 0.9, label=label, color=color, edgecolor="white")
+
+                    ax.set_xticks(x)
+                    ax.set_xticklabels([col_labels.get(m, m) for m in bar_metrics], rotation=20, ha="right")
+                    ax.set_ylabel("Score")
+                    ax.set_title("Evaluation Metrics by System Variant", fontweight="bold")
+                    ax.legend(ncol=4, fontsize=7, loc="upper left")
+                    ax.set_ylim(0, ax.get_ylim()[1] * 1.15)
+                    fig.tight_layout()
+                    st.pyplot(fig, use_container_width=True)
+                    plt.close(fig)
+            except Exception as e:
+                st.warning(f"Bar chart error: {e}")
+
+            # ── Source coverage impact ──
+            st.markdown("#### Source Coverage Impact")
+            try:
+                coverage_variants = ["LLM-only", "Single-source RAG", "Two-source RAG", "Multi-source RAG"]
+                available_cv = [v for v in coverage_variants if v in abl_summary.index]
+                if len(available_cv) >= 2:
+                    import matplotlib.pyplot as plt
+
+                    impact_metrics = [m for m in metric_cols
+                                      if m not in ("latency_seconds", "citation_count")]
+                    x_vals = list(range(len(available_cv)))
+
+                    fig, ax = plt.subplots(figsize=(8, 4.5))
+                    for metric in impact_metrics:
+                        y_vals = [abl_summary.loc[v, metric] for v in available_cv]
+                        ax.plot(x_vals, y_vals, "o-", linewidth=2, markersize=6,
+                                label=col_labels.get(metric, metric))
+
+                    ax.set_xticks(x_vals)
+                    ax.set_xticklabels([f"{i}\n({short_names.get(v, v)})" for i, v in enumerate(available_cv)])
+                    ax.set_xlabel("Number of Source Types")
+                    ax.set_ylabel("Score")
+                    ax.set_title("Impact of Source Coverage", fontweight="bold")
+                    ax.legend(fontsize=8, loc="best")
+                    ax.grid(True, alpha=0.3)
+                    fig.tight_layout()
+                    st.pyplot(fig, use_container_width=True)
+                    plt.close(fig)
+            except Exception as e:
+                st.warning(f"Source coverage plot error: {e}")
+
+            # ── Latency comparison ──
+            if "latency_seconds" in abl_df.columns:
+                st.markdown("#### Latency Comparison")
+                try:
+                    import matplotlib.pyplot as plt
+
+                    lat_means = [abl_df[abl_df["mode"] == v]["latency_seconds"].mean()
+                                 for v in variant_order if v in abl_df["mode"].values]
+                    lat_stds = [abl_df[abl_df["mode"] == v]["latency_seconds"].std()
+                                for v in variant_order if v in abl_df["mode"].values]
+                    lat_labels = [short_names.get(v, v) for v in variant_order if v in abl_df["mode"].values]
+                    lat_colors = [variant_colors.get(v, "#333") for v in variant_order if v in abl_df["mode"].values]
+
+                    fig, ax = plt.subplots(figsize=(8, 4))
+                    bars = ax.bar(lat_labels, lat_means, yerr=lat_stds, color=lat_colors,
+                                  edgecolor="white", capsize=4, alpha=0.85)
+                    for bar, mean in zip(bars, lat_means):
+                        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.3,
+                                f"{mean:.1f}s", ha="center", va="bottom", fontsize=8)
+                    ax.set_ylabel("Latency (seconds)")
+                    ax.set_title("Response Latency by Variant", fontweight="bold")
+                    ax.grid(axis="y", alpha=0.3)
+                    fig.tight_layout()
+                    st.pyplot(fig, use_container_width=True)
+                    plt.close(fig)
+                except Exception as e:
+                    st.warning(f"Latency chart error: {e}")
+
+            # ── Statistical Analysis ──
+            st.markdown("#### Statistical Significance")
+            try:
+                from evaluation.statistical_analysis import (
+                    run_full_statistical_analysis, pairwise_to_dataframe,
+                )
+
+                stat_metrics = [m for m in metric_cols if m != "citation_count"]
+                stat_report = run_full_statistical_analysis(abl_df, metrics=stat_metrics)
+
+                # Friedman tests
+                if stat_report.friedman_tests:
+                    with st.expander("Friedman Omnibus Tests", expanded=True):
+                        fr_rows = []
+                        for fr in stat_report.friedman_tests:
+                            sig = "✅" if fr.significant else "—"
+                            fr_rows.append({
+                                "Metric": col_labels.get(fr.metric, fr.metric),
+                                "χ²": f"{fr.statistic:.4f}",
+                                "p-value": f"{fr.p_value:.6f}",
+                                "Significant": sig,
+                            })
+                        st.dataframe(pd.DataFrame(fr_rows), width="stretch", hide_index=True)
+
+                # Significant pairwise comparisons
+                sig_pairs = [pr for pr in stat_report.pairwise_tests if pr.significant]
+                if sig_pairs:
+                    with st.expander(f"Significant Pairwise Comparisons ({len(sig_pairs)})", expanded=True):
+                        pw_rows = []
+                        for pr in sig_pairs:
+                            pw_rows.append({
+                                "Metric": col_labels.get(pr.metric, pr.metric),
+                                "Variant A": pr.variant_a,
+                                "Variant B": pr.variant_b,
+                                "p-value": f"{pr.p_value:.6f}",
+                                "Cliff's δ": f"{pr.effect_size:.4f}",
+                                "Effect": pr.effect_category,
+                            })
+                        st.dataframe(pd.DataFrame(pw_rows), width="stretch", hide_index=True)
+                else:
+                    st.info("No statistically significant pairwise differences found (α=0.05).")
+
+                # Significance heatmap for a selected metric
+                hm_metric = st.selectbox(
+                    "Significance heatmap for",
+                    [m for m in stat_report.significance_matrix.keys()],
+                    key="abl_heatmap_metric",
+                )
+                if hm_metric in stat_report.significance_matrix:
+                    import matplotlib.pyplot as plt
+                    import seaborn as sns
+
+                    p_matrix = stat_report.significance_matrix[hm_metric]
+                    hm_variants = [v for v in variant_order if v in p_matrix.index]
+                    p_matrix = p_matrix.loc[hm_variants, hm_variants]
+
+                    annot = p_matrix.copy().astype(str)
+                    for i in range(len(hm_variants)):
+                        for j in range(len(hm_variants)):
+                            p = p_matrix.iloc[i, j]
+                            if i == j:
+                                annot.iloc[i, j] = "—"
+                            elif p < 0.001:
+                                annot.iloc[i, j] = f"{p:.3f}***"
+                            elif p < 0.01:
+                                annot.iloc[i, j] = f"{p:.3f}**"
+                            elif p < 0.05:
+                                annot.iloc[i, j] = f"{p:.3f}*"
+                            else:
+                                annot.iloc[i, j] = f"{p:.3f}"
+
+                    hm_labels = [short_names.get(v, v) for v in hm_variants]
+                    fig, ax = plt.subplots(figsize=(8, 6))
+                    sns.heatmap(
+                        p_matrix.values.astype(float),
+                        annot=annot.values, fmt="",
+                        xticklabels=hm_labels, yticklabels=hm_labels,
+                        cmap="RdYlGn_r", vmin=0, vmax=0.1,
+                        ax=ax, square=True, linewidths=0.5,
+                        cbar_kws={"label": "p-value"},
+                    )
+                    ax.set_title(
+                        f"Pairwise Significance — {col_labels.get(hm_metric, hm_metric)}",
+                        fontweight="bold",
+                    )
+                    fig.tight_layout()
+                    st.pyplot(fig, use_container_width=True)
+                    plt.close(fig)
+
+            except Exception as e:
+                st.warning(f"Statistical analysis error: {e}")
+
+            # ── Per-variant details ──
+            st.markdown("#### Per-Question Details")
+            for cat in sorted(abl_df["category"].unique()):
+                cat_df = abl_df[abl_df["category"] == cat]
+                with st.expander(f"{cat}", expanded=False):
+                    for qid in sorted(cat_df["question_id"].unique()):
+                        q_df = cat_df[cat_df["question_id"] == qid]
+                        st.markdown(f"**{qid}**: {q_df.iloc[0]['question']}")
+
+                        det = []
+                        for _, row in q_df.iterrows():
+                            entry = {
+                                "Variant": row["mode"],
+                                "Prec.": f"{row.get('retrieval_precision', 0):.0%}",
+                                "Cov.": f"{row.get('source_coverage', 0):.0%}",
+                                "Cit.": int(row.get("citation_count", 0)),
+                                "Acc.": f"{row.get('citation_accuracy', 0):.0%}",
+                                "Latency": f"{row.get('latency_seconds', 0):.1f}s",
+                            }
+                            if "rouge_l" in row:
+                                entry["ROUGE"] = f"{row['rouge_l']:.3f}"
+                            if "answer_completeness" in row:
+                                entry["Compl."] = f"{row['answer_completeness']:.2f}"
+                            det.append(entry)
+                        st.dataframe(pd.DataFrame(det), width="stretch", hide_index=True)
+
+                        # Show full framework response
+                        full_row = q_df[q_df["mode"] == "Full framework"]
+                        if full_row.empty:
+                            full_row = q_df[q_df["mode"] == "Multi-source RAG"]
+                        if not full_row.empty:
+                            resp = str(full_row.iloc[0].get("response", ""))
+                            if resp.strip():
+                                st.caption("Best variant response:")
+                                st.markdown(resp[:600] + ("..." if len(resp) > 600 else ""))
+                        st.markdown("---")
+
+            # ── Export ──
+            st.markdown("#### Export")
+            ec1, ec2 = st.columns(2)
+            with ec1:
+                csv_abl = abl_df.to_csv(index=False)
+                st.download_button(
+                    "Download Ablation CSV",
+                    csv_abl,
+                    file_name=f"ablation_{abl_model_used}_{len(abl_df)}.csv",
+                    mime="text/csv",
+                    key="dl_ablation_csv",
+                )
+            with ec2:
+                # Save to data/evaluation/
+                save_dir = config.DATA_DIR / "evaluation" / f"ablation_{abl_model_used}"
+                if st.button("Save to data/evaluation/", key="save_ablation"):
+                    save_dir.mkdir(parents=True, exist_ok=True)
+                    abl_df.to_csv(save_dir / "ablation_results.csv", index=False)
+                    import json
+                    meta = {
+                        "model": abl_model_used,
+                        "n_questions": int(abl_df["question_id"].nunique()),
+                        "n_variants": int(abl_df["mode"].nunique()),
+                        "n_evaluations": len(abl_df),
+                        "variants": abl_variant_names,
+                    }
+                    (save_dir / "ablation_meta.json").write_text(json.dumps(meta, indent=2))
+                    st.success(f"Saved to `{save_dir}`")
+
+    # ──────────────────────────────────────────
+    # Sub-tab 3: Compare Runs
+    # ──────────────────────────────────────────
+    with eval_sub3:
+        st.markdown("### Compare Evaluation Runs")
+        st.caption("Load and compare previous evaluation results.")
+
+        eval_dir = config.DATA_DIR / "evaluation"
+        if eval_dir.exists():
+            run_dirs = sorted([d for d in eval_dir.iterdir() if d.is_dir()], reverse=True)
+        else:
+            run_dirs = []
+
+        if not run_dirs:
+            st.info("No previous evaluation runs found in `data/evaluation/`.")
+        else:
+            cmp_c1, cmp_c2 = st.columns(2)
+            with cmp_c1:
+                run_a = st.selectbox("Run A", [d.name for d in run_dirs], key="cmp_run_a")
+            with cmp_c2:
+                run_b_options = [d.name for d in run_dirs if d.name != run_a] if run_dirs else []
+                run_b = st.selectbox("Run B", run_b_options, key="cmp_run_b") if run_b_options else None
+
+            if st.button("Compare", key="cmp_compare") and run_a and run_b:
+                try:
+                    # Load both runs
+                    def _load_run(name):
+                        rdir = eval_dir / name
+                        csv_files = list(rdir.glob("*.csv"))
+                        if csv_files:
+                            return pd.read_csv(csv_files[0])
+                        return pd.DataFrame()
+
+                    df_a = _load_run(run_a)
+                    df_b = _load_run(run_b)
+
+                    if df_a.empty or df_b.empty:
+                        st.error("Could not load one or both runs.")
+                    else:
+                        # Summary comparison
+                        compare_metrics = [c for c in [
+                            "retrieval_precision", "source_coverage",
+                            "citation_accuracy", "context_utilization", "latency_seconds",
+                            "rouge_l", "faithfulness", "answer_completeness",
+                        ] if c in df_a.columns and c in df_b.columns]
+
+                        if compare_metrics:
+                            sum_a = df_a.groupby("mode")[compare_metrics].mean()
+                            sum_b = df_b.groupby("mode")[compare_metrics].mean()
+
+                            st.markdown(f"**Run A: {run_a}**")
+                            st.dataframe(sum_a.round(4), width="stretch")
+
+                            st.markdown(f"**Run B: {run_b}**")
+                            st.dataframe(sum_b.round(4), width="stretch")
+
+                            # Delta table
+                            common_modes = set(sum_a.index) & set(sum_b.index)
+                            if common_modes:
+                                st.markdown("**Δ (B − A)**")
+                                delta = sum_b.loc[list(common_modes)] - sum_a.loc[list(common_modes)]
+                                st.dataframe(
+                                    delta.round(4).style.applymap(
+                                        lambda v: "color: green" if v > 0 else ("color: red" if v < 0 else "")
+                                    ),
+                                    width="stretch",
+                                )
+                except Exception as e:
+                    st.error(f"Comparison error: {e}")
+
+    # ──────────────────────────────────────────
+    # Sub-tab 4: Questions Browser
+    # ──────────────────────────────────────────
+    with eval_sub4:
+        st.markdown("### Benchmark Questions Browser")
+        st.caption("Browse all 15 benchmark questions with metadata and expert reference answers.")
+
+        # Category filter
+        cat_filter = st.selectbox(
+            "Filter by category",
+            ["All"] + QUESTION_CATEGORIES,
+            key="qb_category",
         )
 
-        progress_bar.progress(1.0)
-        status_text.caption("Evaluation complete.")
+        if cat_filter == "All":
+            display_qs = BENCHMARK_QUESTIONS
+        else:
+            display_qs = get_by_category(cat_filter)
 
-        # Store results in session state
-        st.session_state["eval_results"] = results_df
-        st.session_state["eval_model_used"] = eval_model
-        st.rerun()
+        st.info(f"Showing **{len(display_qs)}** questions")
 
-    # ── Display Results ──
-    if "eval_results" in st.session_state:
-        results_df = st.session_state["eval_results"]
-        eval_model_used = st.session_state.get("eval_model_used", "unknown")
+        for q in display_qs:
+            ref = get_reference(q.id)
 
-        st.markdown(f"### Results ({eval_model_used})")
-        st.caption(f"{len(results_df)} evaluations | {results_df['category'].nunique()} categories | "
-                    f"{results_df['mode'].nunique()} modes")
+            with st.expander(f"**{q.id}** — {q.category}", expanded=False):
+                st.markdown(f"### {q.question}")
 
-        # Check for errors
-        errors = results_df[results_df["error"] != ""]
-        if not errors.empty:
-            st.warning(f"{len(errors)} evaluations had errors.")
+                # Metadata
+                mc1, mc2, mc3, mc4 = st.columns(4)
+                mc1.metric("Expected Sources", ", ".join(q.expected_source_types))
+                mc2.metric("Min Citations", q.expected_min_citations)
+                mc3.metric("Needs Analysis", "Yes" if q.requires_analysis else "No")
+                mc4.metric("Needs Reliability", "Yes" if q.requires_reliability else "No")
 
-        # ── Summary by Mode ──
-        summaries = compute_summary_metrics(results_df)
-        by_mode = summaries["by_mode"]
-
-        st.markdown("#### Performance by Mode")
-        # Format for display
-        mode_display = by_mode.copy()
-        mode_display.columns = [
-            "Retrieval Precision", "Source Coverage",
-            "Avg Citations", "Citation Accuracy",
-            "Context Utilization", "Avg Latency (s)",
-        ]
-        st.dataframe(mode_display.style.format({
-            "Retrieval Precision": "{:.1%}",
-            "Source Coverage": "{:.1%}",
-            "Avg Citations": "{:.1f}",
-            "Citation Accuracy": "{:.1%}",
-            "Context Utilization": "{:.1%}",
-            "Avg Latency (s)": "{:.1f}",
-        }), width="stretch")
-
-        # ── Chart: Mode Comparison ──
-        chart_cols = st.columns(3)
-
-        with chart_cols[0]:
-            st.markdown("**Retrieval Quality**")
-            fig1, ax1 = plt.subplots(figsize=(4, 3))
-            x = range(len(by_mode))
-            ax1.bar([i - 0.15 for i in x], by_mode["retrieval_precision"],
-                    width=0.3, label="Precision", color="#3b82f6")
-            ax1.bar([i + 0.15 for i in x], by_mode["source_coverage"],
-                    width=0.3, label="Coverage", color="#10b981")
-            ax1.set_xticks(list(x))
-            ax1.set_xticklabels(by_mode.index, fontsize=8)
-            ax1.set_ylim(0, 1.1)
-            ax1.legend(fontsize=7)
-            ax1.set_ylabel("Score")
-            fig1.tight_layout()
-            st.pyplot(fig1)
-            plt.close(fig1)
-
-        with chart_cols[1]:
-            st.markdown("**Citation Metrics**")
-            fig2, ax2 = plt.subplots(figsize=(4, 3))
-            ax2.bar(by_mode.index, by_mode["citation_count"], color="#8b5cf6")
-            ax2.set_ylabel("Avg Citations")
-            ax2.tick_params(axis="x", labelsize=8)
-            fig2.tight_layout()
-            st.pyplot(fig2)
-            plt.close(fig2)
-
-        with chart_cols[2]:
-            st.markdown("**Context Utilization**")
-            fig3, ax3 = plt.subplots(figsize=(4, 3))
-            ax3.bar(by_mode.index, by_mode["context_utilization"], color="#f59e0b")
-            ax3.set_ylabel("Utilization Rate")
-            ax3.set_ylim(0, 1.1)
-            ax3.tick_params(axis="x", labelsize=8)
-            fig3.tight_layout()
-            st.pyplot(fig3)
-            plt.close(fig3)
-
-        # ── Summary by Category ──
-        st.markdown("#### Performance by Category")
-        by_cat = summaries["by_category"]
-        cat_display = by_cat.copy()
-        cat_display.columns = [
-            "Retrieval Precision", "Source Coverage",
-            "Avg Citations", "Citation Accuracy",
-            "Context Utilization", "Avg Latency (s)",
-        ]
-        st.dataframe(cat_display.style.format({
-            "Retrieval Precision": "{:.1%}",
-            "Source Coverage": "{:.1%}",
-            "Avg Citations": "{:.1f}",
-            "Citation Accuracy": "{:.1%}",
-            "Context Utilization": "{:.1%}",
-            "Avg Latency (s)": "{:.1f}",
-        }), width="stretch")
-
-        # ── Mode x Category Heatmap ──
-        st.markdown("#### Mode x Category Breakdown")
-        by_mc = summaries["by_mode_category"]
-        pivot_metric = st.selectbox(
-            "Metric to view",
-            ["retrieval_precision", "source_coverage", "citation_count",
-             "citation_accuracy", "context_utilization", "latency_seconds"],
-            key="eval_pivot_metric",
-        )
-        pivot = by_mc[pivot_metric].unstack(level=0)
-        st.dataframe(pivot.style.format("{:.3f}").background_gradient(
-            cmap="YlGn", axis=None), width="stretch")
-
-        # ── Per-Question Details ──
-        st.markdown("#### Per-Question Results")
-        for cat in results_df["category"].unique():
-            cat_df = results_df[results_df["category"] == cat]
-            with st.expander(f"{cat} ({len(cat_df)} evaluations)", expanded=False):
-                for qid in cat_df["question_id"].unique():
-                    q_df = cat_df[cat_df["question_id"] == qid]
-                    question_text = q_df.iloc[0]["question"]
-                    st.markdown(f"**{qid}**: {question_text}")
-
-                    detail_data = []
-                    for _, row in q_df.iterrows():
-                        detail_data.append({
-                            "Mode": row["mode"],
-                            "Precision": f"{row['retrieval_precision']:.0%}",
-                            "Coverage": f"{row['source_coverage']:.0%}",
-                            "Citations": row["citation_count"],
-                            "Cit. Accuracy": f"{row['citation_accuracy']:.0%}",
-                            "Ctx Util": f"{row['context_utilization']:.0%}",
-                            "Latency": f"{row['latency_seconds']:.1f}s",
-                            "Sources": row["retrieved_source_types"],
-                        })
-                    st.dataframe(pd.DataFrame(detail_data), width="stretch", hide_index=True)
-
-                    # Show response for Full mode
-                    full_row = q_df[q_df["mode"] == "Full"]
-                    if not full_row.empty:
-                        resp_text = full_row.iloc[0]["response"]
-                        if resp_text:
-                            st.caption("Response (Full mode):")
-                            st.markdown(resp_text[:500] + ("..." if len(resp_text) > 500 else ""))
+                if ref:
                     st.markdown("---")
+                    st.markdown("#### Expert Reference Answer")
+                    st.markdown(ref.reference_text)
 
-        # ── Export ──
-        st.markdown("#### Export")
-        csv = results_df.to_csv(index=False)
-        st.download_button(
-            "Download Results (CSV)",
-            csv,
-            file_name=f"eval_{eval_model_used}_{len(results_df)}.csv",
-            mime="text/csv",
-        )
+                    st.markdown("**Key Facts:**")
+                    st.markdown(", ".join(f"`{f}`" for f in ref.key_facts))
+
+                    if ref.expected_citation_patterns:
+                        st.markdown("**Expected Citation Patterns:**")
+                        st.markdown(", ".join(f"`{p}`" for p in ref.expected_citation_patterns))
+                else:
+                    st.warning("No reference answer available for this question.")
 
 
 # ═══════════════════════════════════════════

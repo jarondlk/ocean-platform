@@ -1,0 +1,15 @@
+{
+  "model": "qwen2.5:14b-instruct",
+  "n_questions": 15,
+  "n_variants": 7,
+  "n_evaluations": 105,
+  "variants": [
+    "LLM-only",
+    "Single-source RAG",
+    "Two-source RAG",
+    "Multi-source RAG",
+    "Multi-source + Analysis",
+    "Multi-source + Reliability",
+    "Full framework"
+  ]
+}
