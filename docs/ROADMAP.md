@@ -1,0 +1,163 @@
+# Improvement Roadmap
+
+This roadmap tracks practical improvements for turning the current research
+prototype into a cleaner local/server/cloud system. The near-term goal is not
+fully automatic ingestion; it is a reliable **manual scheduled batch update**
+workflow that can later become automated.
+
+## Current Baseline
+
+- Data ingestion is manual and batch-oriented.
+- `scripts/ingest.py` regenerates normalized Parquet outputs from the expected
+  raw CTD, metagenome, and SST inputs.
+- Follow-on scripts rebuild retrieval docs, analysis outputs, reliability
+  outputs, and the PostgreSQL/pgvector database.
+- The app reads previously generated artifacts and/or PostgreSQL. It does not
+  watch for new files or run ingestion during user sessions.
+- Repeated database loads are safest with `scripts/load_db.py --reset --embed`;
+  append/upsert semantics are not production-ready yet.
+
+## Near-Term Priority: Manual Scheduled Batch Updates
+
+Goal: make updates repeatable enough to run manually on a schedule, such as
+weekly or monthly, without making ingestion automatic yet.
+
+- [ ] Add a single orchestration command, for example `scripts/run_pipeline.py`,
+      that runs the full batch in order:
+
+  ```bash
+  python scripts/ingest.py
+  python scripts/build_retrieval_docs.py
+  python scripts/run_pre_analysis.py
+  python scripts/run_reliability.py
+  python scripts/load_db.py --reset --embed
+  ```
+
+- [ ] Add flags to the orchestration command:
+  `--skip-sst`, `--skip-embed`, `--validate-only`, `--no-reset`, and
+  `--tag RUN_NAME`.
+- [ ] Write a timestamped run log under `data/runs/` with command status,
+      input counts, output counts, and elapsed time.
+- [ ] Write a manifest snapshot for each run, including raw file paths,
+      SHA-256 hashes, row counts, and generated artifact paths.
+- [ ] Add a documented manual schedule, for example:
+
+  ```bash
+  # 1. Place updated raw files in data/raw/ and onagawa_sst_subset/
+  # 2. Run validation
+  python scripts/run_pipeline.py --validate-only
+
+  # 3. Run full scheduled batch
+  python scripts/run_pipeline.py --tag 2026-03-update
+  ```
+
+- [ ] Add a rollback note: keep the previous `data/` artifact snapshot and
+      PostgreSQL dump before each scheduled update.
+
+## Data Ingestion Improvements
+
+- [ ] Add stricter validation for expected raw columns, date ranges, sample ID
+      formats, and duplicate sample IDs before writing outputs.
+- [ ] Make `onagawa_sst_subset/` expectations explicit with a generated manifest
+      because the raw NetCDF tree is intentionally not tracked in git.
+- [ ] Add source-specific input reports:
+  CTD rows/casts, metagenome samples/runs/taxa, SST files/days.
+- [ ] Add row-count and sample-count diffing between the previous run and the
+      new run.
+- [ ] Keep provenance file-level for now, but document that CTD/metagenome TSV
+      changes are tracked by whole-file hash rather than per-row lineage.
+
+## Database Loading Improvements
+
+- [ ] Keep `--reset --embed` as the default reliable scheduled update path.
+- [ ] Add a database backup command before reset, using `pg_dump` or an
+      equivalent containerized backup command.
+- [ ] Add idempotent upsert support later for tables keyed by `sample_id`,
+      `doc_id`, `event_id`, and SST timestamps.
+- [ ] Add migration tooling, such as Alembic, if schemas begin changing often.
+- [ ] Add integration tests against a temporary PostgreSQL/pgvector container.
+
+## Containerization and Deployment
+
+- [x] Add `Containerfile` for the Streamlit app.
+- [x] Add `docker-compose.app.yml` for app + database.
+- [x] Add `docker-compose.ollama.yml` for optional containerized Ollama.
+- [ ] Add a server deployment guide with reverse proxy/TLS, backups, and
+      private-only Ollama networking.
+- [ ] Add a production `.env.example` variant for server deployments.
+- [ ] Decide where large raw and generated artifacts live on a server:
+      local volume, NAS, S3-compatible object storage, or managed bucket.
+
+## Future Cloud UI Replacement
+
+Streamlit is useful for local development, thesis demos, and internal data
+exploration. For a future cloud-facing deployment, plan to replace or wrap the
+Streamlit UI with a more conventional web architecture. Do not rush this while
+the data pipeline is still evolving.
+
+- [ ] Keep Streamlit as the current local/internal UI until the batch pipeline,
+      container stack, and database loading workflow are stable.
+- [ ] Extract reusable application logic from `app.py` into backend/service
+      modules before rebuilding the UI. The new UI should call APIs rather than
+      import Streamlit-specific functions.
+- [x] Prototype a small API layer first: query, retrieve, ask, evidence search,
+      dataset status, pipeline run status, and evaluation results.
+- [x] Start a Next.js + FastAPI proof of concept.
+
+Candidate directions:
+
+| Option | Fit | Tradeoff |
+| --- | --- | --- |
+| [Next.js](https://nextjs.org/docs) frontend + [FastAPI](https://fastapi.tiangolo.com/) backend | Best likely cloud-facing architecture; strong for auth, routing, polished UI, streaming chat, and API separation | Requires a TypeScript/React frontend |
+| FastAPI + server-rendered templates/HTMX | Simpler than React; keeps most code Python-side | Less rich for complex dashboards and interactive exploration |
+| [Dash](https://dash.plotly.com/) | Good for scientific dashboards and Plotly-heavy analytics | Less flexible for polished app/product UX than a custom frontend |
+| Keep Streamlit containerized | Fastest path for private/internal deployment | Less ideal for public cloud UX, auth, multi-user polish, and long-term frontend maintainability |
+
+Evaluation criteria:
+
+- [ ] Authentication and authorization story.
+- [ ] Streaming chat UX and source-citation rendering.
+- [ ] Evidence explorer tables, filters, charts, and downloads.
+- [ ] API contract between frontend and RAG backend.
+- [ ] Deployment simplicity on one server and on managed cloud.
+- [ ] Maintainability for a mostly Python codebase.
+- [ ] Ability to show pipeline freshness, database health, model health, and
+      evaluation reports clearly.
+
+Current migration direction: **Next.js + FastAPI**, with Streamlit kept as an
+internal research dashboard until the replacement reaches feature parity.
+
+## App and RAG Improvements
+
+- [ ] Split `app.py` into smaller Streamlit page modules when feature work
+      resumes.
+- [ ] Identify which parts of `app.py` are product UI, backend logic, data
+      loading, and visualization so a future non-Streamlit UI can be built
+      without rewriting the RAG core.
+- [ ] Surface pipeline freshness in the UI: latest run tag, latest raw data
+      date, database load time, and embedding count.
+- [ ] Add a health/status page for PostgreSQL, local JSONL fallback, Ollama,
+      model availability, and artifact presence.
+- [ ] Add clearer warnings when the app is using local BM25 fallback instead of
+      PostgreSQL/pgvector.
+
+## Evaluation and Quality
+
+- [ ] Run the full ablation study after each major data update.
+- [ ] Add a short scheduled-update QA checklist:
+  tests pass, pipeline completes, document counts look plausible, app starts,
+  representative questions retrieve expected sources.
+- [ ] Add LLM-as-judge scoring only after the baseline scheduled batch workflow
+      is stable.
+
+## Later: Incremental or Automatic Ingestion
+
+These are intentionally **not** the immediate plan.
+
+- [ ] Add incremental detection of new/changed raw files from manifests.
+- [ ] Add per-source incremental jobs for CTD, metagenome, and SST.
+- [ ] Add true database upserts and deletion handling.
+- [ ] Add a scheduler, such as cron/systemd timer, GitHub Actions self-hosted
+      runner, Airflow, Prefect, or cloud scheduled jobs.
+- [ ] Add file-watcher or object-storage event ingestion only if data arrival
+      becomes frequent enough to justify it.

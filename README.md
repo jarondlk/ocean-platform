@@ -98,7 +98,7 @@ flowchart TB
 
 ```bash
 # Install dependencies
-pip install streamlit pandas sqlalchemy psycopg2-binary pgvector \
+pip install streamlit pandas pyarrow sqlalchemy psycopg2-binary pgvector \
     xarray netcdf4 requests numpy matplotlib scipy
 
 # Start database
@@ -109,6 +109,23 @@ podman compose up -d              # PostgreSQL + pgvector on port 5433
 ollama pull nomic-embed-text
 ollama pull qwen2.5:14b-instruct
 ```
+
+### Clean Clone Data Notes
+
+This repository snapshot includes the tracked `data/` artifacts needed for tests,
+local evidence retrieval, and app data browsing. Newly generated data remains
+ignored by `.gitignore`.
+
+Ignored files/directories needed only for full regeneration:
+
+| Path | Needed for | Notes |
+| --- | --- | --- |
+| `onagawa_sst_subset/` | `python scripts/ingest.py` SST preprocessing | Local working copy has 1,848 NetCDF files, about 51 MB |
+| `himawari_raw/` | Optional raw Himawari `.DAT` parsing | Not required by the default pipeline |
+
+No `.env` file is required. `DATABASE_URL`, `OLLAMA_BASE_URL`,
+`EMBEDDING_MODEL`, and `CHAT_MODEL` can be supplied as optional environment
+overrides.
 
 ### Data Pipeline
 
@@ -126,9 +143,104 @@ python scripts/load_db.py --reset --embed  # 5. Populate DB + embed 323 docs
 streamlit run app.py
 ```
 
+### Containerized with Podman
+
+The compose files are layered so you can choose how much to containerize.
+
+| Command | Starts | LLM behavior |
+| --- | --- | --- |
+| `podman compose up -d` | PostgreSQL/pgvector only | Uses whatever app you run on your host |
+| `podman compose -f docker-compose.yml -f docker-compose.app.yml up -d --build` | PostgreSQL/pgvector + Streamlit app | App connects to Ollama running on your host |
+| `podman compose -f docker-compose.yml -f docker-compose.next.yml up -d --build` | PostgreSQL/pgvector + FastAPI + Next.js app | API connects to Ollama running on your host |
+| `OLLAMA_BASE_URL=http://ollama:11434 podman compose -f docker-compose.yml -f docker-compose.next.yml -f docker-compose.ollama.yml up -d --build` | PostgreSQL/pgvector + FastAPI + Next.js app + Ollama runtime | API connects to the `ollama` service inside the compose network |
+
+Recommended local macOS setup: containerize the app and database, but keep
+Ollama running on the host. That lets Ollama use the normal local runtime path;
+Ollama inside a Podman VM on macOS may be CPU-only and slower.
+
+```bash
+podman compose -f docker-compose.yml -f docker-compose.app.yml up -d --build
+```
+
+Then open:
+
+```text
+http://localhost:8501
+```
+
+For the Next.js migration stack:
+
+```bash
+podman compose -f docker-compose.yml -f docker-compose.next.yml up -d --build
+```
+
+Then open:
+
+```text
+http://localhost:3000
+```
+
+Useful commands:
+
+```bash
+podman compose -f docker-compose.yml -f docker-compose.app.yml logs -f app
+podman compose -f docker-compose.yml -f docker-compose.app.yml down
+podman compose -f docker-compose.yml -f docker-compose.app.yml up -d postgres
+```
+
+If you want the LLM runtime containerized too:
+
+```bash
+podman compose -f docker-compose.yml -f docker-compose.app.yml -f docker-compose.ollama.yml up -d --build
+podman exec -it onagawa_ollama ollama pull nomic-embed-text
+podman exec -it onagawa_ollama ollama pull qwen2.5:14b-instruct
+```
+
+The containers use these defaults:
+
+| Setting | Container Default | Why |
+| --- | --- | --- |
+| `DATABASE_URL` | `postgresql://onagawa:onagawa@postgres:5432/onagawa_rag` | Uses the compose service name and internal PostgreSQL port |
+| `OLLAMA_BASE_URL` | `http://host.containers.internal:11434` | Reaches Ollama running on your host from inside Podman |
+| `OLLAMA_BASE_URL` with `docker-compose.ollama.yml` | `http://ollama:11434` | Set this in the command or `.env` when using containerized Ollama |
+| `STREAMLIT_PORT` | `8501` | Host port mapped to the app container |
+| `NEXT_PORT` | `3000` | Host port mapped to the Next.js frontend |
+| `API_PORT` | `8000` | Host port mapped to FastAPI |
+| `API_BASE_URL` | `http://api:8000` | Internal compose URL used by the Next.js proxy |
+
+Copy `.env.example` to `.env` if you want to override these values locally.
+Do not expose Ollama's `11434` port publicly when moving this to a server.
+
 ---
 
 ## Application
+
+The forward UI migration path is a **Next.js academic interface** backed by a
+FastAPI service:
+
+| Route | Description |
+| --- | --- |
+| `/` | Corpus overview, source composition, backend signals |
+| `/chat` | Citation-grounded RAG query interface |
+| `/evidence` | Evidence catalogue with source and bay filters |
+| `/system` | API, database, Ollama, and artifact status |
+
+Local development:
+
+```bash
+uvicorn api.main:app --reload --port 8000
+cd frontend
+npm install
+npm run dev
+```
+
+Then open:
+
+```text
+http://localhost:3000
+```
+
+Streamlit remains available as the reference/internal research UI:
 
 The Streamlit interface has **8 tabs**:
 
@@ -175,7 +287,16 @@ The Streamlit interface has **8 tabs**:
 source_chat_agt/
 ├── app.py                              # Streamlit application (7 tabs, ~1,820 lines)
 ├── config.py                           # Paths, DB, models, thresholds
-├── docker-compose.yml                  # PostgreSQL + pgvector container
+├── Containerfile                       # Streamlit app container image
+├── Containerfile.api                   # FastAPI backend container image
+├── docker-compose.yml                  # PostgreSQL + pgvector service
+├── docker-compose.app.yml              # Optional Streamlit app service
+├── docker-compose.next.yml             # Optional FastAPI + Next.js services
+├── docker-compose.ollama.yml           # Optional Ollama service overlay
+├── .env.example                        # Local container env defaults
+│
+├── api/                                # FastAPI API layer for Next.js
+├── frontend/                           # Next.js academic UI
 │
 ├── preprocessing/
 │   ├── common.py                       # Sample ID parsing, TSV I/O
@@ -384,6 +505,10 @@ Key settings in [config.py](config.py):
 ---
 
 ## Testing
+
+For planned engineering work, including manual scheduled batch updates,
+deployment hardening, and future non-Streamlit cloud UI evaluation, see
+[docs/ROADMAP.md](docs/ROADMAP.md).
 
 ### Methodology
 

@@ -377,13 +377,17 @@ def documents_to_jsonl(docs: List[RetrievalDocument], path) -> None:
         for d in docs:
             obj = {
                 "id": d.doc_id,
+                "doc_id": d.doc_id,
                 "title": d.title,
                 "date": d.time or "",
+                "time": d.time or "",
                 "location": BAY_NAMES.get(d.bay, d.bay or "Onagawa region"),
                 "url": "",
                 "text": d.text,
                 "lat": d.lat,
                 "lon": d.lon,
+                "bay": d.bay,
+                "station": d.station,
                 "source_type": d.source_type,
                 "sample_id": d.sample_id,
                 "event_id": d.event_id,

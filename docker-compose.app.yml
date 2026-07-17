@@ -1,0 +1,25 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Containerfile
+    container_name: onagawa_source_chat
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql://onagawa:onagawa@postgres:5432/onagawa_rag}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.containers.internal:11434}
+      CHAT_MODEL: ${CHAT_MODEL:-qwen2.5:14b-instruct}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-nomic-embed-text}
+    ports:
+      - "${STREAMLIT_PORT:-8501}:8501"
+    volumes:
+      - .:/app:Z
+    command:
+      - streamlit
+      - run
+      - app.py
+      - --server.address=0.0.0.0
+      - --server.port=8501
+      - --server.headless=true

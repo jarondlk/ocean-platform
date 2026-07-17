@@ -25,6 +25,12 @@ import config
 
 logger = logging.getLogger(__name__)
 
+BAY_BY_LOCATION = {
+    "Onagawa Bay": "O",
+    "Ishinomaki Bay": "I",
+    "Matsushima Bay": "M",
+}
+
 
 # =====================================================================
 # BM25 (adapted from existing engines/rag_engine.py)
@@ -97,13 +103,46 @@ class LocalRetriever:
             return
 
         with open(jsonl_path, "r", encoding="utf-8") as f:
-            self.documents = [json.loads(line) for line in f if line.strip()]
+            self.documents = [
+                self._normalize_document(json.loads(line))
+                for line in f
+                if line.strip()
+            ]
 
         # Fit BM25
         texts = [d.get("text", "") for d in self.documents]
         self.bm25.fit(texts)
 
         logger.info("Loaded %d documents for local retrieval", len(self.documents))
+
+    @staticmethod
+    def _normalize_document(doc: dict) -> dict:
+        """Normalize legacy JSONL aliases to the canonical retrieval schema."""
+        normalized = doc.copy()
+
+        doc_id = normalized.get("doc_id") or normalized.get("id")
+        if doc_id:
+            normalized["doc_id"] = doc_id
+            normalized.setdefault("id", doc_id)
+
+        time_value = normalized.get("time") or normalized.get("date")
+        if time_value:
+            normalized["time"] = time_value
+            normalized.setdefault("date", time_value)
+
+        sample_id = normalized.get("sample_id")
+        if sample_id:
+            parts = str(sample_id).split("-")
+            if len(parts) >= 3 and not normalized.get("bay"):
+                normalized["bay"] = parts[2]
+            if len(parts) >= 4 and not normalized.get("station"):
+                normalized["station"] = parts[3]
+        elif not normalized.get("bay"):
+            location = normalized.get("location")
+            if normalized.get("source_type") != "remote_sensing":
+                normalized["bay"] = BAY_BY_LOCATION.get(location)
+
+        return normalized
 
     def ensure_embeddings(self) -> bool:
         """

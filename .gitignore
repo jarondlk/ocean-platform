@@ -227,6 +227,14 @@ __marimo__/
 .vscode/
 *.swp
 
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/tsconfig.tsbuildinfo
+!frontend/lib/
+!frontend/lib/**
+
 # Data (large files - not tracked in git)
 data/raw/
 data/normalized/
@@ -235,6 +243,8 @@ data/serving/
 data/analysis/
 data/reliability/
 data/provenance/
+data/pipeline_runs/
+data/evaluation/runs/
 onagawa_sst_subset/
 onagawa_sst_raw/
 himawari_test/
