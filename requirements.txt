@@ -31,5 +31,9 @@ seaborn>=0.13.0
 streamlit>=1.54.0
 
 # ── Testing ──
+# FastAPI/Starlette TestClient support:
+# Starlette 0.x uses httpx; Starlette 1.x uses httpx2.
+httpx>=0.28.0
+httpx2>=2.0.0
 pytest>=8.0.0
 pytest-cov>=5.0.0
