@@ -1,333 +1,518 @@
-# Handoff Document — Onagawa Source Chat (provenance-eco-rag)
+# Handoff Document - Onagawa Source Chat (provenance-eco-rag)
 
 > **Last updated**: 2026-07-17
 > **Project path**: `/Users/jaronchai/Documents/GitHub/provenance-eco-rag/`
-> **Status**: Next.js + FastAPI migration active; legacy Streamlit UI archived as reference
+> **Current status**: Active Next.js + FastAPI application, local-first RAG stack, manual batch ingestion only. Legacy Streamlit UI is archived for reference.
 
 ---
 
-## 1. What This Project Is
+## 1. Executive Summary
 
-A **provenance-aware Retrieval-Augmented Generation (RAG) system** for marine environmental monitoring in Miyagi Prefecture, Japan. It ingests three heterogeneous data sources — CTD water profiles, metagenome sequencing, and satellite SST — normalizes them, builds narrative retrieval documents, and serves citation-grounded answers through a local LLM.
+This repository contains a provenance-aware Retrieval-Augmented Generation
+system for marine environmental monitoring in Miyagi Prefecture, Japan. It
+combines CTD water profiles, metagenome sequencing outputs, and satellite SST
+observations into a citation-grounded question-answering system.
 
-**Key differentiators from a generic RAG:**
-- **Provenance tracking**: every file is registered with SHA-256 hashing before processing
-- **Anchor events**: spatiotemporal linking layer that connects observations from the same place/time across different modalities
-- **Reliability ensurance**: cross-source validation (SST↔CTD agreement, diversity anomaly detection, corroboration tiers)
-- **Context injection**: keyword-triggered injection of pre-computed analyses and reliability assessments into the LLM prompt
-- **Ablation Studies**: full 7-variant infrastructure to quantify the impact of multi-modal evidence and reliability pipelines
+The project has moved from a Streamlit-first research UI to a more cloud-ready
+application shape:
 
----
+- **Frontend**: Next.js academic UI in `frontend/`
+- **Backend**: FastAPI service in `api/`
+- **Database**: PostgreSQL 16 + pgvector through `docker-compose.yml`
+- **LLM runtime**: Ollama, usually host-run locally; optional compose overlay
+- **Ingestion**: manual batch-run pipeline scripts, not automatic ingestion
+- **Archive**: old Streamlit app and Streamlit container overlay preserved in
+  `archive/legacy-streamlit/`
 
-## 2. Technology Stack
-
-| Component | Technology |
-|---|---|
-| Language | Python 3.12 + TypeScript/React |
-| Database | PostgreSQL 16 + pgvector (cosine similarity) |
-| Container | Podman / Docker (`Containerfile.api`, `frontend/Containerfile`, layered compose files) |
-| LLM | Ollama (local) — `qwen2.5:14b-instruct` |
-| Embeddings | `nomic-embed-text` (768-dim) |
-| UI | Next.js academic UI + FastAPI API; archived Streamlit reference |
-| Search | pgvector cosine + tsvector FTS + Reciprocal Rank Fusion |
-| Testing | pytest + Next.js typecheck/build |
+The active development direction is now Next.js + FastAPI. Streamlit should be
+used only as historical reference and parity material.
 
 ---
 
-## 3. Architecture Overview
+## 2. What Changed Recently
 
-```
-Raw Data → Provenance → Preprocessing → Normalized Parquets
-                                            ↓
-                              Anchor Events + Cross-Source Links
-                                            ↓
-                              Retrieval Documents (323 narrative chunks)
-                                            ↓
-                              PostgreSQL (embeddings + FTS + relational)
-                                            ↓
-                              Hybrid Retrieval (Vector + FTS + RRF)
-                                  + Analysis injection
-                                  + Reliability injection
-                                            ↓
-                              LLM (provenance-aware prompting)
-```
+### Repository Structure Cleanup
+
+The old root-level Streamlit files were moved into an in-repo archive:
+
+| Old root path | New archive path | Reason |
+| --- | --- | --- |
+| `app.py` | `archive/legacy-streamlit/app.py` | Previous monolithic Streamlit UI; no longer active root entrypoint |
+| `Containerfile` | `archive/legacy-streamlit/Containerfile` | Streamlit-specific container image |
+| `docker-compose.app.yml` | `archive/legacy-streamlit/docker-compose.app.yml` | Streamlit-specific compose overlay |
+
+The archived Streamlit app was adjusted so it can still import project modules
+from the repository root when intentionally run from the archive path.
+
+### Documentation Updated
+
+- `README.md` now presents Next.js + FastAPI as the normal application path.
+- `README.md` keeps Streamlit documentation as an archived parity reference.
+- `README.md` testing notes now reflect the current 235-test suite.
+- `docs/ROADMAP.md` records the manual batch-ingestion direction and cloud UI
+  migration direction.
+- `archive/README.md` and `archive/legacy-streamlit/README.md` explain what is
+  archived and how to intentionally run it.
+
+### Active Stack Clarified
+
+The active root stack is:
+
+- `Containerfile.api` for FastAPI
+- `frontend/Containerfile` for Next.js
+- `docker-compose.yml` for PostgreSQL/pgvector
+- `docker-compose.next.yml` for FastAPI + Next.js
+- `docker-compose.ollama.yml` for optional containerized Ollama
+
+The root no longer contains a Streamlit entrypoint.
+
+### Local Artifacts Cleaned
+
+Ignored local clutter was removed during the final repo health check:
+
+- `.DS_Store`
+- `.pytest_cache/`
+- `__pycache__/`
+- `frontend/tsconfig.tsbuildinfo`
+
+The ignored `onagawa_sst_subset/` directory was intentionally left alone
+because it is the local SST raw-data source needed for full regeneration.
 
 ---
 
-## 4. Directory Structure
+## 3. Current Technology Stack
 
-```
-source_chat_agt/
+| Layer | Technology |
+| --- | --- |
+| Frontend | Next.js, React, TypeScript |
+| API | FastAPI, Pydantic schemas |
+| RAG orchestration | Python modules in `orchestration/` and `retrieval/` |
+| Database | PostgreSQL 16 + pgvector |
+| Search | pgvector cosine similarity + PostgreSQL full-text search + RRF |
+| LLM | Ollama, default `qwen2.5:14b-instruct` |
+| Embeddings | Ollama `nomic-embed-text`, 768 dimensions |
+| Data processing | pandas, Parquet, xarray, netCDF4, SciPy |
+| Containers | Podman/Docker compose overlays |
+| Tests | pytest backend/API/unit tests; Next.js typecheck/build |
+
+---
+
+## 4. Directory Map
+
+```text
+provenance-eco-rag/
+├── api/                              # FastAPI service and endpoint logic
 ├── archive/
-│   └── legacy-streamlit/           # Archived Streamlit UI and container overlay
-├── config.py                       # All paths, DB URL, model settings, thresholds
-├── Containerfile.api               # FastAPI backend image
-├── docker-compose.yml              # PostgreSQL + pgvector service
-├── docker-compose.next.yml         # Optional FastAPI + Next.js services
-├── docker-compose.ollama.yml       # Optional Ollama runtime service overlay
-├── .env.example                    # Local container env defaults
-├── requirements.txt                # Python deps with minimum version pins
-│
-├── api/                            # FastAPI API layer
-├── frontend/                       # Next.js academic UI
-│
-├── preprocessing/
-│   ├── common.py                   # Sample ID parsing, column canonicalization
-│   ├── ctd.py                      # CTD load → standardize → summaries
-│   ├── metagenome.py               # Kraken/MetaEuk abundance, QC, groups
-│   ├── remote_sensing.py           # NetCDF SST extraction
-│   ├── pre_analysis.py             # 5 ecological analyses → JSONL docs
-│   └── reliability_ensurance.py    # 4 cross-source validation engines → JSONL docs
-│
-├── ingestion/
-│   ├── provenance.py               # SHA-256 file registration (JSONL)
-│   └── file_inventory.py           # Directory scanner
-│
-├── schema/
-│   └── anchor_event.py             # Spatiotemporal linking (sample_id → lat/lon/time)
-│
-├── retrieval/
-│   ├── document_builder.py         # Raw data → narrative text chunks
-│   ├── cross_source_linker.py      # same_sample + time_match links
-│   ├── hybrid_retriever.py         # pgvector + FTS + RRF (primary backend)
-│   └── local_retriever.py          # BM25 + numpy fallback (no DB needed)
-│
-├── db/
-│   ├── models.py                   # 9 SQLAlchemy ORM tables
-│   ├── connection.py               # Engine, sessions, init_db
-│   └── vector_store.py             # Ollama embedding + cosine search
-│
-├── orchestration/
-│   ├── query_orchestrator.py       # Cross-source evidence expansion
-│   └── unified.py                  # Prompt builder + context injection
-│
-├── evaluation/
-│   ├── benchmark.py                # Core benchmark runner & 7 variants
-│   ├── questions.py                # 15 questions across 5 categories
-│   ├── reference_answers.py        # Expert answers for scoring
-│   ├── quality_metrics.py          # Answer scoring metrics
-│   ├── statistical_analysis.py     # Significance tests (Friedman/Wilcoxon)
-│   ├── visualization.py            # Radar/bar/heatmap generators
-│   └── report.py                   # Multi-run evaluation comparison
-│
-├── scripts/                        # CLI pipeline scripts (run in order)
-│   ├── ingest.py                   # 1. Ingestion pipeline
-│   ├── build_retrieval_docs.py     # 2. Documents + links
-│   ├── load_db.py                  # 3. Populate PostgreSQL + embeddings
-│   ├── run_pre_analysis.py         # 4. Pre-analysis pipeline
-│   ├── run_reliability.py          # 5. Reliability pipeline
-│   ├── run_evaluation.py           # 6. Automated evaluation benchmark (CLI)
-│   ├── run_ablation.py             # 7. 7-variant ablation study CLI
-│   └── compare_evaluations.py      # Multi-run evaluation comparison
-│
-├── tests/                          # 208 tests, all synthetic data
-│   ├── conftest.py                 # Shared fixtures
-│   ├── test_common.py              # 12 tests
-│   ├── test_provenance.py          # 7 tests
-│   ├── test_anchor_events.py       # 7 tests
-│   ├── test_reliability.py         # 16 tests
-│   ├── test_prompt_builder.py      # 13 tests
-│   ├── test_questions.py           # 20 tests
-│   ├── test_quality_metrics.py     # 15 tests
-│   ├── test_statistical_analysis.py# 29 tests
-│   ├── test_evaluation.py          # 26 tests
-│   └── test_report.py              # 18 tests
-│
-├── data/                           # All gitignored (large files)
-│   ├── raw/ctd/                    # CTD_Onagawa.tsv
-│   ├── raw/meta/                   # 11 metagenome files
-│   ├── normalized/                 # 16 parquet files
-│   ├── canonical/                  # anchor_events, cross_source_links
-│   ├── serving/                    # retrieval docs, registry
-│   ├── analysis/                   # 6 pre-analysis outputs + analysis_documents.jsonl
-│   ├── reliability/                # 5 reliability outputs + reliability_documents.jsonl
-│   ├── provenance/                 # provenance.jsonl
-│   └── evaluation/                 # Timestamped evaluation results (CSV + JSON + report)
-│
-├── onagawa_sst_subset/             # Satellite NetCDF files (~51MB, gitignored)
-└── docs/screenshots/               # 5 UI screenshots for README
+│   └── legacy-streamlit/             # Archived Streamlit app and overlay
+├── data/                             # Tracked clean-clone artifacts + ignored generated outputs
+├── db/                               # SQLAlchemy models, connection helpers, vector store
+├── docs/                             # Roadmap and screenshots
+├── evaluation/                       # Benchmark, questions, metrics, reports, statistics
+├── frontend/                         # Next.js academic UI
+├── ingestion/                        # File inventory and provenance registry
+├── orchestration/                    # Prompt construction and RAG context injection
+├── preprocessing/                    # CTD, metagenome, SST, pre-analysis, reliability
+├── retrieval/                        # Document builder, hybrid retriever, local fallback
+├── schema/                           # Anchor-event construction
+├── scripts/                          # Manual batch pipeline and evaluation CLIs
+├── tests/                            # 235 tests collected locally
+├── config.py                         # Paths, model defaults, thresholds
+├── Containerfile.api                 # FastAPI container
+├── docker-compose.yml                # PostgreSQL/pgvector
+├── docker-compose.next.yml           # FastAPI + Next.js overlay
+├── docker-compose.ollama.yml         # Optional Ollama overlay
+├── README.md                         # Public project guide
+└── requirements.txt                  # Python dependency set
+```
+
+### Archive Policy
+
+Keep active files in the root/module directories. Move only retired material
+that is still useful as reference into `archive/`.
+
+Current archive contents:
+
+- `archive/legacy-streamlit/app.py`
+- `archive/legacy-streamlit/Containerfile`
+- `archive/legacy-streamlit/docker-compose.app.yml`
+- `archive/legacy-streamlit/README.md`
+
+Do not archive generated caches. Delete them locally instead.
+
+---
+
+## 5. Current Application Surface
+
+The current UI is a practical academic interface. Avoid marketing-style pages,
+large copy blocks, decorative cards, or flashy layouts. The user persona is an
+expert researcher/operator who benefits from dense controls, transparent state,
+and reproducible run information.
+
+| Route | Purpose |
+| --- | --- |
+| `/` | Overview, corpus summary, tab feature map, backend signals |
+| `/explore` | Competent data exploration workspace with filters, summaries, charts, and sample detail |
+| `/data` | Source-specific CTD, metagenome, and SST browsing |
+| `/analysis` | Pre-analysis and reliability output review |
+| `/database` | Expert database explorer, schema inspection, read-only SQL/table tools |
+| `/pipeline` | Manual batch ingestion and corpus rebuild controls |
+| `/evaluation` | First-class evaluation suite with background jobs and detailed controls |
+| `/chat` | Citation-grounded RAG chat with expert model/retrieval knobs |
+| `/evidence` | Evidence catalog and source browsing |
+| `/system` | API, database, Ollama, artifacts, and runtime status |
+| `/debug` | Debug payloads and low-level diagnostics |
+
+Visual direction:
+
+- Default white backgrounds
+- Academic, practical, compact layouts
+- Baby-blue accents:
+  - `#56B4E9` for rules, focus, outgoing icons
+  - `#dceff8` for quiet dividers
+  - `#f3fbff` for code/debug backgrounds
+  - `#247fae` for high-contrast blue text
+- Expert controls are acceptable when clearly grouped and labeled
+- Hover help is preferable to visible explanatory copy for specialized knobs
+
+---
+
+## 6. FastAPI Surface
+
+The main backend file is `api/main.py`. Key endpoint groups:
+
+| Group | Endpoints |
+| --- | --- |
+| Health/statistics | `GET /health`, `GET /stats`, `GET /models` |
+| Pipeline | `GET /pipeline/status`, `POST /pipeline/jobs`, `GET /pipeline/jobs/{job_id}`, `GET /pipeline/jobs/{job_id}/log`, `POST /pipeline/jobs/{job_id}/cancel` |
+| Debug | `GET /debug` |
+| Data page | `GET /data/catalog`, `GET /data/ctd-profile/{sample_id}`, `GET /data/taxa/{sample_id}`, `GET /data/sst` |
+| Evaluation | `GET /evaluation/catalog`, `GET /evaluation/preflight`, `POST /evaluation/runs/standard`, `POST /evaluation/runs/ablation`, `GET /evaluation/jobs/{job_id}`, `POST /evaluation/jobs/{job_id}/cancel`, `GET /evaluation/runs`, `GET /evaluation/runs/{run_id}`, `GET /evaluation/runs/{run_id}/report`, `POST /evaluation/compare` |
+| Analysis | `GET /analysis` |
+| Database | `GET /database/schema`, `GET /database/table`, `POST /database/query` |
+| Explore | `GET /explore/catalog`, `GET /explore/table`, `GET /explore/summary`, `GET /explore/timeseries`, `GET /explore/sample/{sample_id}` |
+| Evidence/chat | `GET /documents`, `POST /retrieve`, `POST /chat` |
+
+The database query endpoint is intentionally read-only. Keep mutation blocking
+in place, and continue improving SQL identifier handling rather than broadening
+permissions.
+
+---
+
+## 7. Data Lifecycle
+
+The system currently supports manual batch ingestion and rebuilds. It does not
+yet support automatic watching, scheduled ingestion, or incremental cloud data
+sync.
+
+### Current Manual Lifecycle
+
+1. **New source files arrive**
+   - CTD TSV files go under `data/raw/ctd/`
+   - Metagenome TSV/TXT files go under `data/raw/meta/`
+   - SST NetCDF source files are local/ignored under `onagawa_sst_subset/`
+
+2. **Ingestion and normalization**
+   - Run `python scripts/ingest.py`
+   - Provenance is recorded with SHA-256 hashes
+   - Normalized parquet artifacts are written under `data/normalized/`
+
+3. **Anchor events and retrieval documents**
+   - Run `python scripts/build_retrieval_docs.py`
+   - Cross-source links and anchor events are generated under `data/canonical/`
+   - Retrieval documents are emitted under `data/serving/`
+
+4. **Pre-analysis**
+   - Run `python scripts/run_pre_analysis.py`
+   - Ecological analysis parquet outputs and `analysis_documents.jsonl` are
+     generated under `data/analysis/`
+
+5. **Reliability ensurance**
+   - Run `python scripts/run_reliability.py`
+   - Cross-source validation outputs and `reliability_documents.jsonl` are
+     generated under `data/reliability/`
+
+6. **Database load and embeddings**
+   - Run `python scripts/load_db.py --reset --embed`
+   - PostgreSQL tables are rebuilt
+   - Embeddings are generated via Ollama
+
+7. **Application use**
+   - Next.js calls FastAPI
+   - FastAPI uses PostgreSQL when available
+   - Retrieval falls back to local JSONL/BM25/numpy when PostgreSQL is down
+
+### Manual Batch Direction
+
+The planned next data workflow is a single manual batch command, not automatic
+ingestion. The intended future command shape is something like:
+
+```bash
+python scripts/run_pipeline.py --tag 2026-07-manual-refresh --reset-db --embed
+```
+
+That future command should orchestrate existing scripts, record manifests,
+capture row-count diffs, persist logs, and surface status in the `/pipeline`
+page.
+
+---
+
+## 8. Container and Runtime Modes
+
+### Database Only
+
+```bash
+podman compose up -d
+```
+
+Starts PostgreSQL/pgvector on host port `5433`.
+
+### Recommended Local App Stack
+
+```bash
+podman compose -f docker-compose.yml -f docker-compose.next.yml up -d --build
+```
+
+Starts PostgreSQL, FastAPI, and Next.js. FastAPI connects to Ollama on the host
+through `http://host.containers.internal:11434`.
+
+### Optional Containerized Ollama
+
+```bash
+OLLAMA_BASE_URL=http://ollama:11434 podman compose -f docker-compose.yml -f docker-compose.next.yml -f docker-compose.ollama.yml up -d --build
+```
+
+Use this only when the LLM runtime should live inside compose too. On macOS,
+host Ollama is usually faster and simpler than Ollama inside the Podman VM.
+
+### Archived Streamlit Parity Check
+
+```bash
+podman compose -f docker-compose.yml -f archive/legacy-streamlit/docker-compose.app.yml up -d --build
+```
+
+Use this only to compare historical Streamlit behavior with the Next.js UI.
+
+---
+
+## 9. Testing and Verification
+
+Latest local verification before this handoff update:
+
+| Check | Result |
+| --- | --- |
+| `pytest` | 235 passed, 1 expected SciPy RuntimeWarning |
+| `npm run typecheck` | Passed |
+| `npm run build` | Passed |
+| `git diff --check` | Passed |
+| `python -m py_compile archive/legacy-streamlit/app.py` | Passed |
+
+The SciPy warning comes from a deliberately degenerate statistical test case in
+`tests/test_statistical_analysis.py`.
+
+Current test modules:
+
+| Area | Files |
+| --- | --- |
+| API and UI backend contracts | `test_api_explore.py`, `test_api_pipeline.py`, `test_api_evaluation.py`, `test_api_schemas.py` |
+| Core data/provenance | `test_common.py`, `test_provenance.py`, `test_anchor_events.py` |
+| Retrieval/prompting | `test_local_retriever.py`, `test_prompt_builder.py` |
+| Evaluation/reliability | `test_reliability.py`, `test_evaluation.py`, `test_questions.py`, `test_quality_metrics.py`, `test_report.py`, `test_statistical_analysis.py` |
+
+Run before larger commits:
+
+```bash
+pytest
+cd frontend
+npm run typecheck
+npm run build
+```
+
+For docs-only commits, at minimum run:
+
+```bash
+git diff --check
 ```
 
 ---
 
-## 5. Key Files to Understand First
+## 10. Key Files To Understand First
 
 | Priority | File | Why |
-|---|---|---|
-| 1 | `config.py` | All paths, DB URL, model settings, thresholds — everything starts here |
-| 2 | `orchestration/unified.py` | The prompt builder — how retrieved docs, analysis, and reliability are assembled into an LLM prompt |
-| 3 | `api/main.py` | FastAPI surface for chat, exploration, pipeline, database, and evaluation |
-| 4 | `preprocessing/reliability_ensurance.py` | The novel contribution — SST↔CTD agreement, diversity prediction, corroboration |
-| 5 | `evaluation/benchmark.py` | The evaluation framework — handles `SystemVariant` execution for ablation |
-| 6 | `retrieval/local_retriever.py` | Fallback retriever that works without PostgreSQL |
+| --- | --- | --- |
+| 1 | `config.py` | Central paths, model names, thresholds, and DB defaults |
+| 2 | `api/main.py` | Active backend surface and orchestration for UI features |
+| 3 | `api/schemas.py` | Frontend/backend contracts and expert-control payloads |
+| 4 | `frontend/app/*/page.tsx` | Active UI routes |
+| 5 | `frontend/components/AppShell.tsx` | Navigation structure and page shell |
+| 6 | `orchestration/unified.py` | Prompt builder, retrieval dispatch, context injection |
+| 7 | `retrieval/hybrid_retriever.py` | PostgreSQL vector + FTS retrieval |
+| 8 | `retrieval/local_retriever.py` | Local fallback retrieval without PostgreSQL |
+| 9 | `preprocessing/reliability_ensurance.py` | Cross-source reliability layer |
+| 10 | `evaluation/benchmark.py` | System variants and benchmark execution |
 
 ---
 
-## 6. How to Run
+## 11. What Is Complete
 
-### Prerequisites
-- Python 3.12+, Podman/Docker, Ollama
+| Area | Status |
+| --- | --- |
+| Core data pipeline | CTD, metagenome, SST normalization and retrieval-document build path exist |
+| Provenance | SHA-256 file registry exists |
+| Anchor/cross-source linking | Anchor events and cross-source links exist |
+| Retrieval | PostgreSQL hybrid retrieval and local fallback exist |
+| Prompting | Provenance-aware citations plus analysis/reliability injection exist |
+| Evaluation | Standard/background runs, ablation controls, run browser, reports, comparison |
+| Pipeline UI | Manual batch job controls and logs exist |
+| Database UI | Schema, table browsing, and read-only query surface exist |
+| Data exploration | Explore/data/analysis pages exist for expert browsing |
+| System/debug | Status and debug surfaces exist |
+| Containerization | Database-only, Next/FastAPI, optional Ollama, and archived Streamlit modes exist |
+| Archive | Legacy Streamlit root files are preserved under `archive/legacy-streamlit/` |
 
-### Setup
+---
+
+## 12. Known Limitations
+
+| Limitation | Notes |
+| --- | --- |
+| Ingestion is manual | No automatic file watcher, scheduler, queue, or cloud object-store sync yet |
+| Batch orchestration is split | Existing scripts run separately; unified `run_pipeline.py` is planned |
+| Database load is reset-oriented | `scripts/load_db.py --reset --embed` is the reliable path; upsert/migrations are future work |
+| Cloud hardening not done | No reverse proxy/TLS guide, backup automation, auth, or production secret strategy yet |
+| Ollama is local-first | Host Ollama is preferred on macOS; containerized Ollama is optional and may be slower |
+| Streamlit is archived | Do not add new active features to `archive/legacy-streamlit/app.py` |
+| Screenshots are historical | `docs/screenshots/` are useful reference images, not necessarily current Next.js UI captures |
+| Integration tests are limited | Most tests are synthetic; a temporary PostgreSQL/pgvector integration suite is still needed |
+| CI status should be checked | If `.github/workflows/` is absent in a branch, add CI before relying on GitHub checks |
+
+---
+
+## 13. Recommended Next Work Order
+
+### 1. Manual Batch Pipeline Consolidation
+
+Create `scripts/run_pipeline.py` to orchestrate the current manual stages:
+
+1. `scripts/ingest.py`
+2. `scripts/build_retrieval_docs.py`
+3. `scripts/run_pre_analysis.py`
+4. `scripts/run_reliability.py`
+5. `scripts/load_db.py --reset --embed`
+
+Add:
+
+- Run tags
+- Run manifest JSON
+- Stage timing
+- Row-count diffs
+- Artifact freshness checks
+- Failure boundaries and resumability notes
+- UI status integration on `/pipeline`
+
+Keep this manual batch-run only for now.
+
+### 2. Pipeline Safety and Database Backups
+
+Before destructive reset loads:
+
+- Add optional `pg_dump` backup command
+- Show backup path in `/pipeline`
+- Make reset/embed consequences explicit in the UI
+- Add a dry-run/preflight mode that checks required artifacts and models
+
+### 3. Evaluation Suite Hardening
+
+Continue treating evaluation as first-class:
+
+- Add LLM-as-judge scoring with a separate judge model
+- Store judge prompts, scores, and rationale
+- Add report export/download affordances in the UI
+- Add regression comparison against a selected baseline run
+- Add charts for latency, citation accuracy, faithfulness, and source coverage
+
+### 4. Cloud-Ready App Architecture
+
+Next.js + FastAPI remains the preferred direction. Before server/cloud use:
+
+- Add authentication and authorization
+- Add production `.env.example`
+- Add reverse proxy/TLS deployment guide
+- Keep Ollama private to the app network
+- Decide artifact storage: local volume, NAS, S3-compatible object store, or managed bucket
+- Add backups for PostgreSQL and important generated artifacts
+- Add deployment health checks and log-retention policy
+
+### 5. Database and SQL Improvements
+
+- Add integration tests with temporary PostgreSQL/pgvector
+- Consider Alembic if schemas begin changing often
+- Add idempotent upsert support keyed by `sample_id`, `doc_id`, `event_id`, and SST timestamps
+- Continue tightening read-only SQL validation and identifier quoting
+
+### 6. UI Parity and Expert UX
+
+Use `archive/legacy-streamlit/app.py` only as parity reference. Implement all
+new work in Next.js/FastAPI.
+
+Potential parity checks:
+
+- Confirm all old Streamlit data views have Next.js equivalents
+- Replace historical screenshots with current Next.js screenshots when stable
+- Improve source-citation rendering and evidence inspection from chat
+- Add compact export/download controls for tables and evaluation reports
+- Add richer pipeline freshness and data lineage indicators
+
+---
+
+## 14. Operational Gotchas
+
+1. PostgreSQL uses host port `5433`, not default `5432`.
+2. `DATABASE_URL` differs inside compose vs on the host.
+3. `OLLAMA_BASE_URL` is usually `http://localhost:11434` on host and
+   `http://host.containers.internal:11434` from app containers.
+4. `docker-compose.next.yml` does not start Ollama unless combined with
+   `docker-compose.ollama.yml`.
+5. `onagawa_sst_subset/` is ignored but needed for full SST regeneration.
+6. `data/` includes tracked clean-clone artifacts, while many regenerated
+   outputs are ignored by `.gitignore`.
+7. Analysis and reliability JSONL files are prompt-injection bridges. If they
+   are missing, those contexts silently become empty.
+8. Evaluation temperature defaults to deterministic behavior. Raising it can
+   make run comparisons noisy.
+9. The local retriever fallback keeps the app useful without PostgreSQL, but it
+   is not equivalent to pgvector search.
+10. Archived Streamlit files should not be edited for new product behavior.
+
+---
+
+## 15. Commit Readiness Checklist
+
+Before committing larger code changes:
+
 ```bash
-pip install -r requirements.txt
-podman compose up -d                      # PostgreSQL + pgvector on port 5433
-ollama pull qwen2.5:14b-instruct          # LLM
-ollama pull nomic-embed-text              # Embeddings
-```
-
-### Pipeline (run in order)
-```bash
-python scripts/ingest.py                  # Register + normalize raw data
-python scripts/build_retrieval_docs.py    # Build 323 narrative documents
-python scripts/load_db.py                 # Load into PostgreSQL + embed
-python scripts/run_pre_analysis.py        # 5 ecological analyses
-python scripts/run_reliability.py         # 4 reliability validations
-```
-
-### Application
-
-Terminal 1:
-
-```bash
-uvicorn api.main:app --reload --port 8000
-```
-
-Terminal 2:
-
-```bash
+git status --short
+git diff --check
+pytest
 cd frontend
-npm install
-npm run dev                               # Opens at localhost:3000
+npm run typecheck
+npm run build
 ```
 
-### Containerized with Podman
-The compose files are intentionally layered:
-
-| Command | Starts | LLM behavior |
-|---|---|---|
-| `podman compose up -d` | PostgreSQL/pgvector only | Host-run app/CLI can connect to DB on `localhost:5433` |
-| `podman compose -f docker-compose.yml -f docker-compose.next.yml up -d --build` | PostgreSQL/pgvector + FastAPI + Next.js app | API connects to host Ollama at `http://host.containers.internal:11434` |
-| `OLLAMA_BASE_URL=http://ollama:11434 podman compose -f docker-compose.yml -f docker-compose.next.yml -f docker-compose.ollama.yml up -d --build` | PostgreSQL/pgvector + FastAPI + Next.js app + Ollama runtime | API connects to compose service `http://ollama:11434` |
-| `podman compose -f docker-compose.yml -f archive/legacy-streamlit/docker-compose.app.yml up -d --build` | PostgreSQL/pgvector + archived Streamlit reference UI | Reference-only parity check |
-
-For local macOS development, prefer host Ollama plus containerized app/database;
-Ollama inside the Podman Linux VM may be CPU-only and slower. If using the
-Ollama overlay, pull models into the Ollama container once:
+Before committing docs-only changes:
 
 ```bash
-podman exec -it onagawa_ollama ollama pull nomic-embed-text
-podman exec -it onagawa_ollama ollama pull qwen2.5:14b-instruct
+git status --short
+git diff --check
 ```
 
-### Tests
-```bash
-python -m pytest tests/ -v                # 208 tests, ~2.5s, no DB needed
-```
+Ignored local artifacts that can be deleted, not archived:
 
----
+- `.DS_Store`
+- `.pytest_cache/`
+- `__pycache__/`
+- `frontend/tsconfig.tsbuildinfo`
 
-## 7. Configuration Reference
+Ignored local artifacts that may be intentionally kept:
 
-All settings in `config.py`, overridable via environment variables:
-
-| Setting | Default | Env Var |
-|---|---|---|
-| Database URL | `postgresql://onagawa:onagawa@localhost:5433/onagawa_rag` | `DATABASE_URL` |
-| Ollama URL | `http://localhost:11434` | `OLLAMA_BASE_URL` |
-| Chat model | `qwen2.5:14b-instruct` | `CHAT_MODEL` |
-| Embedding model | `nomic-embed-text` | `EMBEDDING_MODEL` |
-| Embedding dim | 768 | `EMBEDDING_DIM` |
-| SST-CTD threshold | 2.0°C | `SST_CTD_THRESHOLD` |
-| Anomaly sigma | 2.0σ | `DIVERSITY_ANOMALY_SIGMA` |
-
----
-
-## 8. Data Flow Details
-
-### Retrieval Pipeline
-1. User query → `orchestration/unified.py:retrieve()` auto-detects PostgreSQL vs local
-2. PostgreSQL path: `hybrid_retriever.py` does vector search + FTS + RRF fusion
-3. Local path: `local_retriever.py` does BM25 + numpy cosine similarity
-4. Results → `unified.py:build_prompt()` assembles evidence block
-5. If keywords match → analysis/reliability JSONL docs are injected into prompt
-6. Prompt → Ollama streaming API → response with `[doc_id]` citations
-
-### Context Injection Keywords
-- **Analysis**: correlation, diversity, trend, seasonal, co-occurrence, community, taxa-environment
-- **Reliability**: reliable, reliability, confidence, agreement, validation, cross-source, corroboration, anomaly
-
----
-
-## 9. Testing Strategy
-
-- All tests use **synthetic in-memory data** — no database, Ollama, or real files needed
-- Fixtures in `conftest.py` create DataFrames and temp JSONL files on-the-fly
-- External dependencies mocked via `unittest.mock.patch`
-- `tmp_path` for file I/O, auto-cleaned
-
-### Test Coverage Focus
-| Module | Coverage | Notes |
-|---|---|---|
-| `ingestion/provenance.py` | High | Core provenance logic fully covered |
-| `schema/anchor_event.py` | High | Anchor creation + edge cases |
-| `evaluation/` | High | Scoring, variants, statistical models, questions decoupled |
-| `orchestration/unified.py` | High | Prompt builder covered; `retrieve()` is integration-level |
-
----
-
-## 10. Current State & What's Complete
-
-### Fully Working
-- [x] 9-layer data pipeline (ingestion → provenance → normalize → anchor → retrieval docs → embeddings → analysis → reliability → RAG)
-- [x] Archived 8-tab Streamlit UI for reference/parity checks
-- [x] Next.js + FastAPI academic UI migration scaffold and feature expansion
-- [x] Evaluation Tab with 4 sub-tabs: Standard, Ablation Study, Compare Runs, Questions Browser
-- [x] Full 7-variant ablation study CLI (`scripts/run_ablation.py`) & UI plotting
-- [x] 208 unit tests passing
-- [x] README with full architecture, testing docs, and project structure
-- [x] Automated evaluation CLI (`scripts/run_evaluation.py`) with multi-model support, result persistence, and markdown report generation
-- [x] Evaluation comparison CLI (`scripts/compare_evaluations.py`) for cross-run analysis
-
-### Known Limitations
-- `archive/legacy-streamlit/app.py` is a retained monolith and should be used only as reference material
-- Next.js + FastAPI is now the forward cloud-facing UI/backend split
-- SQL table browser uses f-strings for table names (safe because values come from `inspector.get_table_names()`, not user input)
-- CI/CD: GitHub Actions runs `pytest` on every push/PR to main (`.github/workflows/tests.yml`)
-
----
-
-## 11. Potential Next Steps
-
-Detailed planning lives in `docs/ROADMAP.md`. The current ingestion direction
-is **manual scheduled batch updates first**, not automatic ingestion yet.
-
-| Area | Task | Difficulty |
-|---|---|---|
-| **Data** | Add `scripts/run_pipeline.py` for a single manual scheduled batch command | Easy |
-| **Data** | Add run manifests, row-count diffs, and timestamped run logs | Medium |
-| **Cloud UI** | Expand the Next.js academic UI toward Streamlit feature parity | Medium |
-| **Cloud UI** | Continue extracting RAG/backend logic behind FastAPI endpoints | Medium |
-| **Evaluation** | Run the full 105-evaluation ablation study: `python scripts/run_ablation.py` | Easy |
-| **Evaluation** | Run multi-model comparison: `python scripts/run_evaluation.py --models model1,model2` | Easy |
-| **Evaluation** | Add LLM-as-judge scoring (use a second model to rate answer quality) | Medium |
-| **UI** | Mine `archive/legacy-streamlit/app.py` for any remaining parity gaps | Medium |
-| **Testing** | Add integration tests that run against a test database | Medium |
-| **Testing** | Set up GitHub Actions CI to run `pytest` on every push | Easy |
-| **Coverage** | Add tests for `preprocessing/pre_analysis.py` and `remote_sensing.py` | Medium |
-| **Security** | Parameterize SQL table browser queries with SQLAlchemy `quoted_name` | Easy |
-| **Data** | Add more study site data (additional bays, time periods) | Easy |
-| **Deployment** | Add production-grade reverse proxy/TLS and backup automation for the containerized stack | Medium |
-
----
-
-## 12. Gotchas & Things to Know
-
-1. **Port 5433**: PostgreSQL runs on 5433 (not default 5432) to avoid conflicts
-2. **Local fallback**: If PostgreSQL is down, the app silently falls back to `local_retriever.py` — no crash, but no vector search
-3. **`canonicalize_colname`** in `common.py`: runs `.lower()` before `.replace()`, so case-sensitive replacements (like `"SigmaT"→"sigma_t"`) happen on the lowercased string
-4. **Empty DataFrame guard**: `anchor_event.py` line 130 has a guard for empty DataFrames — removing it will cause `KeyError` on `event_id`
-5. **Analysis/Reliability JSONL**: These files in `data/analysis/` and `data/reliability/` are the bridge between pre-analysis and the RAG prompt — if they're missing, context injection silently returns empty strings
-6. **Evaluation temperature**: The benchmark uses `temperature=0.0` for determinism — changing this will make results non-reproducible
-7. **`onagawa_sst_subset/`**: This 51MB directory contains the actual satellite NetCDF files — it's gitignored but must exist locally for the SST pipeline to work
-8. **Container modes**: `docker-compose.next.yml` does not start Ollama by itself; it expects host Ollama. Add `docker-compose.ollama.yml` only when you want the LLM runtime containerized too
+- `onagawa_sst_subset/`
+- optional raw satellite staging directories
