@@ -15,8 +15,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import streamlit as st
 
-# Ensure project root is importable
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+# Ensure project root is importable when running from the archive path.
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 import config
 
 # ── Page config ──

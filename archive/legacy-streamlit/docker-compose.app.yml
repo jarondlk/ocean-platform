@@ -2,7 +2,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Containerfile
+      dockerfile: archive/legacy-streamlit/Containerfile
     container_name: onagawa_source_chat
     restart: unless-stopped
     depends_on:
@@ -19,7 +19,7 @@ services:
     command:
       - streamlit
       - run
-      - app.py
+      - archive/legacy-streamlit/app.py
       - --server.address=0.0.0.0
       - --server.port=8501
       - --server.headless=true

@@ -1,8 +1,8 @@
 # Handoff Document — Onagawa Source Chat (provenance-eco-rag)
 
-> **Last updated**: 2026-06-16  
-> **Project path**: `/Users/jaronchai/Desktop/source_chat_agt/`  
-> **Status**: Production-ready, thesis-grade, all tests passing
+> **Last updated**: 2026-07-17
+> **Project path**: `/Users/jaronchai/Documents/GitHub/provenance-eco-rag/`
+> **Status**: Next.js + FastAPI migration active; legacy Streamlit UI archived as reference
 
 ---
 
@@ -23,14 +23,14 @@ A **provenance-aware Retrieval-Augmented Generation (RAG) system** for marine en
 
 | Component | Technology |
 |---|---|
-| Language | Python 3.12 (54 files, ~14,200 lines) |
+| Language | Python 3.12 + TypeScript/React |
 | Database | PostgreSQL 16 + pgvector (cosine similarity) |
-| Container | Podman / Docker (`Containerfile`, layered compose files) |
+| Container | Podman / Docker (`Containerfile.api`, `frontend/Containerfile`, layered compose files) |
 | LLM | Ollama (local) — `qwen2.5:14b-instruct` |
 | Embeddings | `nomic-embed-text` (768-dim) |
-| UI | Streamlit (8 tabs including multi-mode evaluation) |
+| UI | Next.js academic UI + FastAPI API; archived Streamlit reference |
 | Search | pgvector cosine + tsvector FTS + Reciprocal Rank Fusion |
-| Testing | pytest (208 tests) |
+| Testing | pytest + Next.js typecheck/build |
 
 ---
 
@@ -58,18 +58,17 @@ Raw Data → Provenance → Preprocessing → Normalized Parquets
 
 ```
 source_chat_agt/
-├── app.py                          # Streamlit UI (8 tabs, ~2,600 lines)
+├── archive/
+│   └── legacy-streamlit/           # Archived Streamlit UI and container overlay
 ├── config.py                       # All paths, DB URL, model settings, thresholds
-├── Containerfile                   # Streamlit app image
 ├── Containerfile.api               # FastAPI backend image
 ├── docker-compose.yml              # PostgreSQL + pgvector service
-├── docker-compose.app.yml          # Optional Streamlit app service
 ├── docker-compose.next.yml         # Optional FastAPI + Next.js services
 ├── docker-compose.ollama.yml       # Optional Ollama runtime service overlay
 ├── .env.example                    # Local container env defaults
 ├── requirements.txt                # Python deps with minimum version pins
 │
-├── api/                            # FastAPI API layer for the Next.js migration
+├── api/                            # FastAPI API layer
 ├── frontend/                       # Next.js academic UI
 │
 ├── preprocessing/
@@ -157,7 +156,7 @@ source_chat_agt/
 |---|---|---|
 | 1 | `config.py` | All paths, DB URL, model settings, thresholds — everything starts here |
 | 2 | `orchestration/unified.py` | The prompt builder — how retrieved docs, analysis, and reliability are assembled into an LLM prompt |
-| 3 | `app.py` | The Streamlit UI — 8 tabs, sidebar controls, 4 evaluation sub-tabs |
+| 3 | `api/main.py` | FastAPI surface for chat, exploration, pipeline, database, and evaluation |
 | 4 | `preprocessing/reliability_ensurance.py` | The novel contribution — SST↔CTD agreement, diversity prediction, corroboration |
 | 5 | `evaluation/benchmark.py` | The evaluation framework — handles `SystemVariant` execution for ablation |
 | 6 | `retrieval/local_retriever.py` | Fallback retriever that works without PostgreSQL |
@@ -187,8 +186,19 @@ python scripts/run_reliability.py         # 4 reliability validations
 ```
 
 ### Application
+
+Terminal 1:
+
 ```bash
-streamlit run app.py                      # Opens at localhost:8501
+uvicorn api.main:app --reload --port 8000
+```
+
+Terminal 2:
+
+```bash
+cd frontend
+npm install
+npm run dev                               # Opens at localhost:3000
 ```
 
 ### Containerized with Podman
@@ -197,9 +207,9 @@ The compose files are intentionally layered:
 | Command | Starts | LLM behavior |
 |---|---|---|
 | `podman compose up -d` | PostgreSQL/pgvector only | Host-run app/CLI can connect to DB on `localhost:5433` |
-| `podman compose -f docker-compose.yml -f docker-compose.app.yml up -d --build` | PostgreSQL/pgvector + Streamlit app | App connects to host Ollama at `http://host.containers.internal:11434` |
 | `podman compose -f docker-compose.yml -f docker-compose.next.yml up -d --build` | PostgreSQL/pgvector + FastAPI + Next.js app | API connects to host Ollama at `http://host.containers.internal:11434` |
 | `OLLAMA_BASE_URL=http://ollama:11434 podman compose -f docker-compose.yml -f docker-compose.next.yml -f docker-compose.ollama.yml up -d --build` | PostgreSQL/pgvector + FastAPI + Next.js app + Ollama runtime | API connects to compose service `http://ollama:11434` |
+| `podman compose -f docker-compose.yml -f archive/legacy-streamlit/docker-compose.app.yml up -d --build` | PostgreSQL/pgvector + archived Streamlit reference UI | Reference-only parity check |
 
 For local macOS development, prefer host Ollama plus containerized app/database;
 Ollama inside the Podman Linux VM may be CPU-only and slower. If using the
@@ -270,8 +280,8 @@ All settings in `config.py`, overridable via environment variables:
 
 ### Fully Working
 - [x] 9-layer data pipeline (ingestion → provenance → normalize → anchor → retrieval docs → embeddings → analysis → reliability → RAG)
-- [x] 8-tab Streamlit UI (Overview, Chat, Evidence Explorer, Data, Pre-Analysis, Database, Stats, Evaluation)
-- [x] Initial Next.js + FastAPI migration scaffold (Overview, Chat, Evidence, System)
+- [x] Archived 8-tab Streamlit UI for reference/parity checks
+- [x] Next.js + FastAPI academic UI migration scaffold and feature expansion
 - [x] Evaluation Tab with 4 sub-tabs: Standard, Ablation Study, Compare Runs, Questions Browser
 - [x] Full 7-variant ablation study CLI (`scripts/run_ablation.py`) & UI plotting
 - [x] 208 unit tests passing
@@ -280,8 +290,8 @@ All settings in `config.py`, overridable via environment variables:
 - [x] Evaluation comparison CLI (`scripts/compare_evaluations.py`) for cross-run analysis
 
 ### Known Limitations
-- `app.py` is a monolith (~2,600 lines) — standard for Streamlit but could be refactored into page modules
-- Streamlit is the current local/internal research UI; future cloud deployment should evaluate a non-Streamlit frontend/backend split
+- `archive/legacy-streamlit/app.py` is a retained monolith and should be used only as reference material
+- Next.js + FastAPI is now the forward cloud-facing UI/backend split
 - SQL table browser uses f-strings for table names (safe because values come from `inspector.get_table_names()`, not user input)
 - CI/CD: GitHub Actions runs `pytest` on every push/PR to main (`.github/workflows/tests.yml`)
 
@@ -301,7 +311,7 @@ is **manual scheduled batch updates first**, not automatic ingestion yet.
 | **Evaluation** | Run the full 105-evaluation ablation study: `python scripts/run_ablation.py` | Easy |
 | **Evaluation** | Run multi-model comparison: `python scripts/run_evaluation.py --models model1,model2` | Easy |
 | **Evaluation** | Add LLM-as-judge scoring (use a second model to rate answer quality) | Medium |
-| **UI** | Refactor `app.py` into Streamlit multipage app (`pages/` directory) | Medium |
+| **UI** | Mine `archive/legacy-streamlit/app.py` for any remaining parity gaps | Medium |
 | **Testing** | Add integration tests that run against a test database | Medium |
 | **Testing** | Set up GitHub Actions CI to run `pytest` on every push | Easy |
 | **Coverage** | Add tests for `preprocessing/pre_analysis.py` and `remote_sensing.py` | Medium |
@@ -320,4 +330,4 @@ is **manual scheduled batch updates first**, not automatic ingestion yet.
 5. **Analysis/Reliability JSONL**: These files in `data/analysis/` and `data/reliability/` are the bridge between pre-analysis and the RAG prompt — if they're missing, context injection silently returns empty strings
 6. **Evaluation temperature**: The benchmark uses `temperature=0.0` for determinism — changing this will make results non-reproducible
 7. **`onagawa_sst_subset/`**: This 51MB directory contains the actual satellite NetCDF files — it's gitignored but must exist locally for the SST pipeline to work
-8. **Container modes**: `docker-compose.app.yml` does not start Ollama by itself; it expects host Ollama. Add `docker-compose.ollama.yml` only when you want the LLM runtime containerized too
+8. **Container modes**: `docker-compose.next.yml` does not start Ollama by itself; it expects host Ollama. Add `docker-compose.ollama.yml` only when you want the LLM runtime containerized too

@@ -74,14 +74,14 @@ flowchart TB
 
 | Component | Technology |
 | --- | --- |
-| Language | Python 3.12 (41 files, ~8,800 lines) |
+| Language | Python 3.12 + TypeScript/React |
 | Database | PostgreSQL 16 + pgvector (cosine similarity) |
 | Container | Podman / Docker |
 | LLM | Ollama (local) — qwen2.5:14b-instruct |
 | Embeddings | nomic-embed-text (768-dim) |
 | Data | Pandas, Parquet, xarray, netCDF4, SciPy |
 | ORM | SQLAlchemy 2.x |
-| UI | Streamlit |
+| UI | Next.js academic UI + FastAPI API; Streamlit archived as reference |
 | Search | pgvector cosine + tsvector FTS + Reciprocal Rank Fusion |
 
 ---
@@ -98,8 +98,7 @@ flowchart TB
 
 ```bash
 # Install dependencies
-pip install streamlit pandas pyarrow sqlalchemy psycopg2-binary pgvector \
-    xarray netcdf4 requests numpy matplotlib scipy
+pip install -r requirements.txt
 
 # Start database
 podman machine start
@@ -139,9 +138,21 @@ python scripts/load_db.py --reset --embed  # 5. Populate DB + embed 323 docs
 
 ### Launch
 
+Terminal 1:
+
 ```bash
-streamlit run app.py
+uvicorn api.main:app --reload --port 8000
 ```
+
+Terminal 2:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Then open `http://localhost:3000`.
 
 ### Containerized with Podman
 
@@ -150,25 +161,13 @@ The compose files are layered so you can choose how much to containerize.
 | Command | Starts | LLM behavior |
 | --- | --- | --- |
 | `podman compose up -d` | PostgreSQL/pgvector only | Uses whatever app you run on your host |
-| `podman compose -f docker-compose.yml -f docker-compose.app.yml up -d --build` | PostgreSQL/pgvector + Streamlit app | App connects to Ollama running on your host |
 | `podman compose -f docker-compose.yml -f docker-compose.next.yml up -d --build` | PostgreSQL/pgvector + FastAPI + Next.js app | API connects to Ollama running on your host |
 | `OLLAMA_BASE_URL=http://ollama:11434 podman compose -f docker-compose.yml -f docker-compose.next.yml -f docker-compose.ollama.yml up -d --build` | PostgreSQL/pgvector + FastAPI + Next.js app + Ollama runtime | API connects to the `ollama` service inside the compose network |
+| `podman compose -f docker-compose.yml -f archive/legacy-streamlit/docker-compose.app.yml up -d --build` | PostgreSQL/pgvector + archived Streamlit reference UI | Reference-only parity check against the old UI |
 
 Recommended local macOS setup: containerize the app and database, but keep
 Ollama running on the host. That lets Ollama use the normal local runtime path;
 Ollama inside a Podman VM on macOS may be CPU-only and slower.
-
-```bash
-podman compose -f docker-compose.yml -f docker-compose.app.yml up -d --build
-```
-
-Then open:
-
-```text
-http://localhost:8501
-```
-
-For the Next.js migration stack:
 
 ```bash
 podman compose -f docker-compose.yml -f docker-compose.next.yml up -d --build
@@ -180,18 +179,31 @@ Then open:
 http://localhost:3000
 ```
 
+For an intentional archived Streamlit parity check:
+
+```bash
+podman compose -f docker-compose.yml -f archive/legacy-streamlit/docker-compose.app.yml up -d --build
+```
+
+Then open:
+
+```text
+http://localhost:8501
+```
+
 Useful commands:
 
 ```bash
-podman compose -f docker-compose.yml -f docker-compose.app.yml logs -f app
-podman compose -f docker-compose.yml -f docker-compose.app.yml down
-podman compose -f docker-compose.yml -f docker-compose.app.yml up -d postgres
+podman compose -f docker-compose.yml -f docker-compose.next.yml logs -f api
+podman compose -f docker-compose.yml -f docker-compose.next.yml logs -f frontend
+podman compose -f docker-compose.yml -f docker-compose.next.yml down
+podman compose -f docker-compose.yml up -d postgres
 ```
 
 If you want the LLM runtime containerized too:
 
 ```bash
-podman compose -f docker-compose.yml -f docker-compose.app.yml -f docker-compose.ollama.yml up -d --build
+OLLAMA_BASE_URL=http://ollama:11434 podman compose -f docker-compose.yml -f docker-compose.next.yml -f docker-compose.ollama.yml up -d --build
 podman exec -it onagawa_ollama ollama pull nomic-embed-text
 podman exec -it onagawa_ollama ollama pull qwen2.5:14b-instruct
 ```
@@ -203,7 +215,6 @@ The containers use these defaults:
 | `DATABASE_URL` | `postgresql://onagawa:onagawa@postgres:5432/onagawa_rag` | Uses the compose service name and internal PostgreSQL port |
 | `OLLAMA_BASE_URL` | `http://host.containers.internal:11434` | Reaches Ollama running on your host from inside Podman |
 | `OLLAMA_BASE_URL` with `docker-compose.ollama.yml` | `http://ollama:11434` | Set this in the command or `.env` when using containerized Ollama |
-| `STREAMLIT_PORT` | `8501` | Host port mapped to the app container |
 | `NEXT_PORT` | `3000` | Host port mapped to the Next.js frontend |
 | `API_PORT` | `8000` | Host port mapped to FastAPI |
 | `API_BASE_URL` | `http://api:8000` | Internal compose URL used by the Next.js proxy |
@@ -220,10 +231,17 @@ FastAPI service:
 
 | Route | Description |
 | --- | --- |
-| `/` | Corpus overview, source composition, backend signals |
-| `/chat` | Citation-grounded RAG query interface |
+| `/` | Overview page with per-tab feature map, corpus summary, and health signals |
+| `/explore` | Data exploration workspace for source coverage, filters, and charts |
+| `/data` | Source-level CTD, metagenome, and SST browsing |
+| `/analysis` | Pre-analysis and reliability outputs |
+| `/database` | Expert database explorer, schema view, and read-only query tools |
+| `/pipeline` | Manual batch ingestion and corpus rebuild controls |
+| `/evaluation` | First-class evaluation suite with background runs and controls |
+| `/chat` | Citation-grounded RAG query interface with expert retrieval/model knobs |
 | `/evidence` | Evidence catalogue with source and bay filters |
-| `/system` | API, database, Ollama, and artifact status |
+| `/system` | API, database, Ollama, artifact, and runtime status |
+| `/debug` | Debug payloads and low-level diagnostic properties |
 
 Local development:
 
@@ -240,9 +258,10 @@ Then open:
 http://localhost:3000
 ```
 
-Streamlit remains available as the reference/internal research UI:
+The previous Streamlit UI is archived as readable reference material at
+`archive/legacy-streamlit/`.
 
-The Streamlit interface has **8 tabs**:
+The archived Streamlit interface had **8 tabs**:
 
 | Tab | Description |
 | --- | --- |
@@ -285,12 +304,11 @@ The Streamlit interface has **8 tabs**:
 
 ```
 source_chat_agt/
-├── app.py                              # Streamlit application (7 tabs, ~1,820 lines)
+├── archive/
+│   └── legacy-streamlit/               # Archived Streamlit UI and container overlay
 ├── config.py                           # Paths, DB, models, thresholds
-├── Containerfile                       # Streamlit app container image
 ├── Containerfile.api                   # FastAPI backend container image
 ├── docker-compose.yml                  # PostgreSQL + pgvector service
-├── docker-compose.app.yml              # Optional Streamlit app service
 ├── docker-compose.next.yml             # Optional FastAPI + Next.js services
 ├── docker-compose.ollama.yml           # Optional Ollama service overlay
 ├── .env.example                        # Local container env defaults
@@ -507,7 +525,7 @@ Key settings in [config.py](config.py):
 ## Testing
 
 For planned engineering work, including manual scheduled batch updates,
-deployment hardening, and future non-Streamlit cloud UI evaluation, see
+deployment hardening, and continued cloud UI/backend work, see
 [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ### Methodology

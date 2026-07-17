@@ -79,8 +79,8 @@ weekly or monthly, without making ingestion automatic yet.
 
 ## Containerization and Deployment
 
-- [x] Add `Containerfile` for the Streamlit app.
-- [x] Add `docker-compose.app.yml` for app + database.
+- [x] Archive the legacy Streamlit `Containerfile` and compose overlay under
+      `archive/legacy-streamlit/`.
 - [x] Add `docker-compose.ollama.yml` for optional containerized Ollama.
 - [ ] Add a server deployment guide with reverse proxy/TLS, backups, and
       private-only Ollama networking.
@@ -90,16 +90,14 @@ weekly or monthly, without making ingestion automatic yet.
 
 ## Future Cloud UI Replacement
 
-Streamlit is useful for local development, thesis demos, and internal data
-exploration. For a future cloud-facing deployment, plan to replace or wrap the
-Streamlit UI with a more conventional web architecture. Do not rush this while
-the data pipeline is still evolving.
+Streamlit remains useful as historical reference material for thesis demos,
+screenshots, and parity checks. The cloud-facing implementation direction is
+now a conventional web architecture: Next.js frontend plus FastAPI backend.
 
-- [ ] Keep Streamlit as the current local/internal UI until the batch pipeline,
-      container stack, and database loading workflow are stable.
-- [ ] Extract reusable application logic from `app.py` into backend/service
-      modules before rebuilding the UI. The new UI should call APIs rather than
-      import Streamlit-specific functions.
+- [x] Archive the Streamlit UI under `archive/legacy-streamlit/` rather than
+      keeping it as the active root entrypoint.
+- [x] Extract reusable application behavior behind FastAPI endpoints so the
+      frontend calls APIs rather than importing Streamlit-specific functions.
 - [x] Prototype a small API layer first: query, retrieve, ask, evidence search,
       dataset status, pipeline run status, and evaluation results.
 - [x] Start a Next.js + FastAPI proof of concept.
@@ -111,7 +109,7 @@ Candidate directions:
 | [Next.js](https://nextjs.org/docs) frontend + [FastAPI](https://fastapi.tiangolo.com/) backend | Best likely cloud-facing architecture; strong for auth, routing, polished UI, streaming chat, and API separation | Requires a TypeScript/React frontend |
 | FastAPI + server-rendered templates/HTMX | Simpler than React; keeps most code Python-side | Less rich for complex dashboards and interactive exploration |
 | [Dash](https://dash.plotly.com/) | Good for scientific dashboards and Plotly-heavy analytics | Less flexible for polished app/product UX than a custom frontend |
-| Keep Streamlit containerized | Fastest path for private/internal deployment | Less ideal for public cloud UX, auth, multi-user polish, and long-term frontend maintainability |
+| Keep archived Streamlit runnable | Useful for private parity checks and historical reference | Not the forward path for public cloud UX, auth, multi-user polish, or frontend maintainability |
 
 Evaluation criteria:
 
@@ -124,16 +122,14 @@ Evaluation criteria:
 - [ ] Ability to show pipeline freshness, database health, model health, and
       evaluation reports clearly.
 
-Current migration direction: **Next.js + FastAPI**, with Streamlit kept as an
-internal research dashboard until the replacement reaches feature parity.
+Current migration direction: **Next.js + FastAPI**, with Streamlit kept only as
+an archived reference for remaining parity checks.
 
 ## App and RAG Improvements
 
-- [ ] Split `app.py` into smaller Streamlit page modules when feature work
-      resumes.
-- [ ] Identify which parts of `app.py` are product UI, backend logic, data
-      loading, and visualization so a future non-Streamlit UI can be built
-      without rewriting the RAG core.
+- [ ] Use `archive/legacy-streamlit/app.py` only to identify remaining parity
+      gaps; implement new UI behavior in Next.js and reusable behavior in
+      FastAPI/service modules.
 - [ ] Surface pipeline freshness in the UI: latest run tag, latest raw data
       date, database load time, and embedding count.
 - [ ] Add a health/status page for PostgreSQL, local JSONL fallback, Ollama,
