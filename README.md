@@ -2,7 +2,7 @@
 
 **Onagawa Source Chat** — a provenance-aware Retrieval-Augmented Generation (RAG) system for marine environmental monitoring in Miyagi Prefecture, Japan.
 
-Transforms fragmented field data — CTD water profiles, metagenome sequencing, and satellite SST — into a citation-grounded question-answering system where every answer traces back to its original source.
+Transforms fragmented field data — CTD water profiles, metagenome sequencing, and satellite SST — into a citation-grounded question-answering system where every answer traces back to its original source and can be audited against the evidence that was actually supplied.
 
 ---
 
@@ -50,8 +50,10 @@ flowchart TB
         DB["9 Relational Tables\nprofiles, samples, links"]
     end
 
-    RET["Hybrid Retrieval\nVector + FTS + RRF\n+ Analysis + Reliability injection"]
+    RET["Hybrid Retrieval\nVector + FTS + RRF\n+ Linked cross-source evidence"]
+    CTX["Context Injection\nAnalysis + Reliability docs"]
     LLM["LLM\nProvenance-aware prompting\nCitation-grounded answers"]
+    AUDIT["Answer Trust Report\nCitation resolution + requirements"]
 
     Sources --> PROV --> Preprocess --> NORM
     NORM --> ANCHOR
@@ -63,9 +65,11 @@ flowchart TB
     PREANA --> DB
     EMB -->|cosine| RET
     FTS -->|rank| RET
-    PREANA -.->|inject| RET
-    RELIAB -.->|inject| RET
-    RET -->|top-K + context| LLM
+    PREANA -.-> CTX
+    RELIAB -.-> CTX
+    RET -->|primary + linked evidence| LLM
+    CTX -->|analysis + reliability context| LLM
+    LLM --> AUDIT
 ```
 
 ---
@@ -268,7 +272,7 @@ FastAPI service:
 | `/pipeline` | Manual batch ingestion and corpus rebuild controls |
 | `/provenance` | Traceability manifest, document lineage, embedding treatment, and upsert dry-run |
 | `/evaluation` | First-class evaluation suite with background runs and controls |
-| `/chat` | Citation-grounded RAG query interface with expert retrieval/model knobs |
+| `/chat` | Citation-grounded RAG query interface with expert retrieval/model knobs, linked cross-source evidence, Markdown rendering, and an answer trust report |
 | `/evidence` | Compatibility redirect to `/explore?view=evidence` |
 | `/system` | API, database, Ollama, artifact, and runtime status |
 | `/debug` | Debug payloads and low-level diagnostic properties |
@@ -304,10 +308,13 @@ The archived Streamlit interface had **8 tabs**:
 | **Stats** | Corpus metrics, sample coverage, provenance tracking |
 | **Evaluation** | Benchmark 15 questions × 4 modes, measuring retrieval precision, source coverage, citation accuracy, context utilization, and latency. Exportable CSV results. |
 
-### Sidebar
+### Current Expert Controls
+
+The active Next.js interface exposes compact controls where they affect the
+workflow:
 
 - **Model**: chat model, temperature, top_p, repeat_penalty, context_window
-- **Retrieval**: vector/FTS weights, RRF-k, top-K, pre-analysis toggle, reliability toggle
+- **Retrieval**: vector/FTS weights, RRF-k, top-K, linked evidence expansion, pre-analysis toggle, reliability toggle, trust-report toggle
 - **Filters**: source type, bay, date range
 - **Status**: backend connection indicator
 
@@ -374,8 +381,9 @@ provenance-eco-rag/
 │   └── vector_store.py                 # Ollama embedding + cosine search
 │
 ├── orchestration/
+│   ├── answer_audit.py                 # Citation resolution and answer trust report
 │   ├── query_orchestrator.py           # Cross-source evidence expansion
-│   └── unified.py                      # Prompt builder + context injection
+│   └── unified.py                      # Prompt builder, linked evidence, context injection
 │
 ├── evaluation/
 │   └── benchmark.py                    # 15 questions, 4 modes, 6 metrics
@@ -489,6 +497,16 @@ provenance-eco-rag/
 4. **SQL filters** — bay, source_type, time range
 5. **RRF fusion** — merges vector + FTS rankings: `score = w_v/(k+r_v) + w_f/(k+r_f)` where k=60
 
+### Trustworthy Multi-Source Answering
+
+Retrieval can expand the primary top-K result set through anchor-event links so
+nearby CTD, metagenome, and satellite SST records are available as corroborating
+evidence. The `/retrieve` and `/chat` endpoints return primary `sources`,
+separate `linked_sources`, and diagnostics that report expected, retrieved, and
+missing source families. The same controls are exposed in the Explore evidence
+workbench and Chat settings through `expand_evidence` and
+`max_linked_sources`.
+
 ### Context Injection
 
 | Context | Trigger keywords | Citations |
@@ -496,15 +514,37 @@ provenance-eco-rag/
 | **Pre-Analysis** | correlation, diversity, trend, seasonal, ecosystem, ... | `[analysis_*]` |
 | **Reliability** | reliable, confidence, validate, anomaly, gap, temperature, SST, CTD, ... | `[reliability_*]` |
 
-Both are toggleable via sidebar checkboxes.
+Both are toggleable via Chat settings.
 
 ### Provenance-Aware Prompting
 
 Every prompt includes:
 - System rules enforcing `[doc_id]`, `[analysis_*]`, and `[reliability_*]` citations
 - Retrieved evidence with source type, time, and provenance metadata
+- Linked cross-source evidence with link type and source anchor
 - Pre-analysis context (when keyword-triggered)
 - Reliability context (when keyword-triggered)
+
+### Answer Trust Report / Citation Audit
+
+Chat responses can include a deterministic `answer_audit` payload. The audit
+resolves every bracket citation against primary sources, linked sources,
+analysis context, and reliability context; reports valid and invalid citations;
+counts primary, linked, analysis, and reliability citations; and assigns a
+`strong`, `caution`, or `weak` trust level.
+
+The audit is context-aware:
+
+- Synthesis questions about trends, correlations, diversity, or ecosystem
+  patterns can satisfy source requirements with cited `[analysis_*]` context
+  when that context covers the expected source family.
+- Reliability and validation questions can satisfy source requirements with
+  cited `[reliability_*]` context when the reliability document covers the
+  relevant CTD/SST evidence.
+- Raw measurement questions still require raw source citations, even if an
+  analysis summary mentions the same topic.
+- Retrieval gaps are surfaced as warnings unless the answer explicitly
+  acknowledges the missing evidence.
 
 ---
 
@@ -598,19 +638,19 @@ npm run build
 
 ### Current Test Matrix
 
-The current suite collects **254 tests** across 18 test modules:
+The current suite collects **265 tests** across 19 test modules:
 
 | Test area | Files |
 | --- | --- |
 | API pages and controls | `test_api_explore.py`, `test_api_pipeline.py`, `test_api_provenance.py`, `test_api_evaluation.py`, `test_api_retrieve.py`, `test_api_schemas.py` |
 | Data normalization and provenance | `test_common.py`, `test_provenance.py`, `test_lineage.py`, `test_anchor_events.py` |
-| Retrieval and prompting | `test_local_retriever.py`, `test_prompt_builder.py` |
+| Retrieval, prompting, and answer audit | `test_local_retriever.py`, `test_prompt_builder.py`, `test_answer_audit.py` |
 | Reliability and evaluation | `test_reliability.py`, `test_evaluation.py`, `test_questions.py`, `test_quality_metrics.py`, `test_report.py`, `test_statistical_analysis.py` |
 
 Latest verified local result:
 
 ```text
-254 passed, 3 scipy RuntimeWarnings
+265 passed, 3 scipy RuntimeWarnings
 ```
 
 The warnings are emitted by SciPy for intentionally degenerate evaluation and

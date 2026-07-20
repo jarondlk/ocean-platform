@@ -11,7 +11,8 @@
 This repository contains a provenance-aware Retrieval-Augmented Generation
 system for marine environmental monitoring in Miyagi Prefecture, Japan. It
 combines CTD water profiles, metagenome sequencing outputs, and satellite SST
-observations into a citation-grounded question-answering system.
+observations into a citation-grounded question-answering system with
+cross-source evidence expansion and deterministic answer citation auditing.
 
 The project has moved from a Streamlit-first research UI to a more cloud-ready
 application shape:
@@ -50,7 +51,9 @@ from the repository root when intentionally run from the archive path.
 
 - `README.md` now presents Next.js + FastAPI as the normal application path.
 - `README.md` keeps Streamlit documentation as an archived parity reference.
-- `README.md` testing notes now reflect the current 254-test suite.
+- `README.md` documents linked cross-source evidence, answer trust reports,
+  context-aware citation requirements, Markdown answer rendering, and the
+  current 265-test suite.
 - `docs/ROADMAP.md` records the manual batch-ingestion direction and cloud UI
   migration direction.
 - `archive/README.md` and `archive/legacy-streamlit/README.md` explain what is
@@ -135,6 +138,29 @@ incremental updates into PostgreSQL.
   so the retrieval diagnostics can live inside the corpus workbench without a
   second page implementation.
 
+### Trustworthy Multi-Source Answering and Citation Audit
+
+- Added linked evidence expansion for retrieval/chat requests through
+  `expand_evidence` and `max_linked_sources`.
+- Retrieval now returns primary `sources`, separate `linked_sources`, and
+  diagnostics for expected, retrieved, and missing source families.
+- Chat prompts include a linked cross-source evidence section when corroborating
+  anchor-event neighbors are available.
+- Added deterministic answer auditing in `orchestration/answer_audit.py`.
+- Chat responses can include `answer_audit` with trust level, trust score,
+  citation resolution records, invalid citation warnings, source-family
+  requirements, linked-source use, and analysis/reliability context use.
+- Citation requirements are context-aware: cited `[analysis_*]` documents can
+  satisfy trend/correlation/diversity requirements, cited `[reliability_*]`
+  documents can satisfy validation/trust requirements, and raw measurement
+  questions still require raw source citations.
+- Added Chat settings for linked evidence expansion and the trust-report toggle.
+- Added a clean expert-facing Trust Report panel with summary metrics, warning
+  table, requirement table, and citation-resolution table.
+- Added `frontend/components/MarkdownAnswer.tsx` so answer text renders
+  headings, lists, code blocks, tables, links, emphasis, and citation chips
+  without using unsafe HTML injection.
+
 ### Active Stack Clarified
 
 The active root stack is:
@@ -196,7 +222,7 @@ provenance-eco-rag/
 ├── retrieval/                        # Document builder, hybrid retriever, local fallback
 ├── schema/                           # Anchor-event construction
 ├── scripts/                          # Manual batch pipeline and evaluation CLIs
-├── tests/                            # 254 tests collected locally
+├── tests/                            # 265 tests collected locally
 ├── config.py                         # Paths, model defaults, thresholds
 ├── Containerfile.api                 # FastAPI container
 ├── docker-compose.yml                # PostgreSQL/pgvector
@@ -239,7 +265,7 @@ and reproducible run information.
 | `/pipeline` | Manual batch ingestion and corpus rebuild controls |
 | `/provenance` | Traceability manifest, document lineage, embedding treatment, upsert dry-run |
 | `/evaluation` | First-class evaluation suite with background jobs and detailed controls |
-| `/chat` | Citation-grounded RAG chat with expert model/retrieval knobs |
+| `/chat` | Citation-grounded RAG chat with expert retrieval/model knobs, linked evidence, Markdown answer rendering, and answer trust reports |
 | `/evidence` | Compatibility redirect to `/explore?view=evidence` |
 | `/system` | API, database, Ollama, artifacts, and runtime status |
 | `/debug` | Debug payloads and low-level diagnostics |
@@ -274,6 +300,10 @@ The main backend file is `api/main.py`. Key endpoint groups:
 | Database | `GET /database/schema`, `GET /database/table`, `POST /database/query` |
 | Explore | `GET /explore/catalog`, `GET /explore/table`, `GET /explore/summary`, `GET /explore/timeseries`, `GET /explore/sample/{sample_id}` |
 | Evidence/chat | `GET /documents`, `POST /retrieve`, `POST /chat` |
+
+`POST /retrieve` and `POST /chat` accept `expand_evidence` and
+`max_linked_sources`. `POST /chat` also accepts `run_answer_audit` and returns
+`linked_sources`, `retrieval_diagnostics`, and optional `answer_audit`.
 
 The database query endpoint is intentionally read-only. Keep mutation blocking
 in place, and continue improving SQL identifier handling rather than broadening
@@ -424,7 +454,7 @@ Latest local verification for this audit:
 
 | Check | Result |
 | --- | --- |
-| `pytest` | 254 passed, 3 expected SciPy RuntimeWarnings |
+| `pytest` | 265 passed, 3 expected SciPy RuntimeWarnings |
 | `npm run typecheck` | Passed |
 | `npm run build` | Passed |
 | `git diff --check` | Passed |
@@ -439,7 +469,7 @@ Current test modules:
 | --- | --- |
 | API and UI backend contracts | `test_api_explore.py`, `test_api_pipeline.py`, `test_api_provenance.py`, `test_api_evaluation.py`, `test_api_retrieve.py`, `test_api_schemas.py` |
 | Core data/provenance | `test_common.py`, `test_provenance.py`, `test_lineage.py`, `test_anchor_events.py` |
-| Retrieval/prompting | `test_local_retriever.py`, `test_prompt_builder.py` |
+| Retrieval/prompting/audit | `test_local_retriever.py`, `test_prompt_builder.py`, `test_answer_audit.py` |
 | Evaluation/reliability | `test_reliability.py`, `test_evaluation.py`, `test_questions.py`, `test_quality_metrics.py`, `test_report.py`, `test_statistical_analysis.py` |
 
 Run before larger commits:
@@ -468,11 +498,12 @@ git diff --check
 | 3 | `api/schemas.py` | Frontend/backend contracts and expert-control payloads |
 | 4 | `frontend/app/*/page.tsx` | Active UI routes |
 | 5 | `frontend/components/AppShell.tsx` | Navigation structure and page shell |
-| 6 | `orchestration/unified.py` | Prompt builder, retrieval dispatch, context injection |
-| 7 | `retrieval/hybrid_retriever.py` | PostgreSQL vector + FTS retrieval |
-| 8 | `retrieval/local_retriever.py` | Local fallback retrieval without PostgreSQL |
-| 9 | `preprocessing/reliability_ensurance.py` | Cross-source reliability layer |
-| 10 | `evaluation/benchmark.py` | System variants and benchmark execution |
+| 6 | `orchestration/unified.py` | Prompt builder, retrieval dispatch, linked evidence, context injection |
+| 7 | `orchestration/answer_audit.py` | Citation resolution, trust scoring, and context-aware requirements |
+| 8 | `retrieval/hybrid_retriever.py` | PostgreSQL vector + FTS retrieval |
+| 9 | `retrieval/local_retriever.py` | Local fallback retrieval without PostgreSQL |
+| 10 | `preprocessing/reliability_ensurance.py` | Cross-source reliability layer |
+| 11 | `evaluation/benchmark.py` | System variants and benchmark execution |
 
 ---
 
@@ -484,7 +515,9 @@ git diff --check
 | Provenance | SHA-256 file registry, traceability manifest, document trace API/UI, and read-only upsert dry-run exist |
 | Anchor/cross-source linking | Anchor events and cross-source links exist |
 | Retrieval | PostgreSQL hybrid retrieval and local fallback exist |
-| Prompting | Provenance-aware citations plus analysis/reliability injection exist |
+| Trustworthy multi-source answering | Primary retrieval, linked cross-source evidence expansion, source-family diagnostics, and chat/evidence controls exist |
+| Prompting | Provenance-aware citations plus linked evidence and analysis/reliability injection exist |
+| Answer trust report | Deterministic citation audit, context-aware citation requirements, warnings, exportable tables, and Chat UI toggle exist |
 | Evaluation | Standard/background runs, ablation controls, run browser, reports, comparison |
 | Pipeline UI | Manual batch job controls, preflight checks, active/background job status, artifact freshness, per-stage logs, run history, manifests, and artifact diffs exist |
 | Database UI | Schema, table browsing, and read-only query surface exist |
@@ -506,6 +539,7 @@ git diff --check
 | Ollama is local-first | Host Ollama is preferred on macOS; containerized Ollama is optional and may be slower |
 | Streamlit is archived | Do not add new active features to `archive/legacy-streamlit/app.py` |
 | Screenshots are historical | `docs/screenshots/` are useful reference images, not necessarily current Next.js UI captures |
+| Trust report is deterministic | The current audit checks supplied evidence and citations; it is not an LLM-as-judge semantic faithfulness scorer |
 | Integration tests are limited | Most tests are synthetic; a temporary PostgreSQL/pgvector integration suite is still needed |
 | CI status should be checked | If `.github/workflows/` is absent in a branch, add CI before relying on GitHub checks |
 
@@ -562,7 +596,8 @@ Potential parity checks:
 
 - Confirm all old Streamlit data views have Next.js equivalents
 - Replace historical screenshots with current Next.js screenshots when stable
-- Improve source-citation rendering and evidence inspection from chat
+- Add click-through citation chips from answers/trust reports into provenance
+  traces and source detail panels
 - Add compact export/download controls for tables and evaluation reports
 - Add richer pipeline freshness and data lineage indicators
 

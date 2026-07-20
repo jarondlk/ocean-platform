@@ -17,6 +17,12 @@ workflow that can later become automated.
 - Repeated database loads are safest with `scripts/load_db.py --reset --embed`.
   Read-only upsert planning exists through `scripts/load_db.py --upsert --dry-run`,
   but mutating upsert semantics are not production-ready yet.
+- Retrieval/chat can expand primary top-K evidence through anchor-event
+  cross-source links and report expected, retrieved, and missing source
+  families.
+- Chat can return a deterministic answer trust report that audits citations
+  against primary evidence, linked evidence, pre-analysis context, and
+  reliability context.
 
 ## Near-Term Priority: Manual Scheduled Batch Updates
 
@@ -128,7 +134,9 @@ Candidate directions:
 Evaluation criteria:
 
 - [ ] Authentication and authorization story.
-- [ ] Streaming chat UX and source-citation rendering.
+- [ ] Streaming token-by-token chat UX.
+- [x] Source-citation rendering, Markdown answer rendering, and answer trust
+      report in the Chat interface.
 - [ ] Explore evidence panel tables, filters, charts, and downloads.
 - [ ] API contract between frontend and RAG backend.
 - [ ] Deployment simplicity on one server and on managed cloud.
@@ -150,6 +158,10 @@ an archived reference for remaining parity checks.
       upsert dry-run planning in the UI.
 - [x] Add a health/status page for PostgreSQL, local JSONL fallback, Ollama,
       model availability, and artifact presence.
+- [x] Add linked cross-source evidence expansion for retrieval/chat requests.
+- [x] Add context-aware answer citation audit and trust report UI.
+- [ ] Add click-through citation chips from answers/trust reports into
+      provenance traces and source detail panels.
 - [ ] Add clearer warnings when the app is using local BM25 fallback instead of
       PostgreSQL/pgvector.
 
