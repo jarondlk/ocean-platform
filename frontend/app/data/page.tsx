@@ -1,7 +1,9 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, Suspense, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { RefreshCw } from "lucide-react";
+import { AnalysisWorkbench } from "@/components/AnalysisWorkbench";
 import { DataTable, formatCell } from "@/components/DataTable";
 import { getCtdProfile, getDataCatalog, getSstData, getTaxaSample } from "@/lib/api";
 import type {
@@ -14,7 +16,7 @@ import type {
   TaxaSampleResponse,
 } from "@/types";
 
-type DataView = "ctd" | "taxa" | "sst";
+type DataView = "observations" | "ctd" | "taxa" | "sst" | "analysis" | "reliability";
 
 const ctdLabels: Record<string, string> = {
   temperature: "Temperature",
@@ -29,8 +31,18 @@ const ctdLabels: Record<string, string> = {
 };
 
 export default function DataPage() {
+  return (
+    <Suspense fallback={<DataPageFallback />}>
+      <DataPageContent />
+    </Suspense>
+  );
+}
+
+function DataPageContent() {
+  const searchParams = useSearchParams();
+  const requestedView = searchParams.get("view");
   const [catalog, setCatalog] = useState<DataCatalogResponse | null>(null);
-  const [view, setView] = useState<DataView>("ctd");
+  const [view, setView] = useState<DataView>("observations");
   const [ctdSample, setCtdSample] = useState("");
   const [taxaSample, setTaxaSample] = useState("");
   const [selectedVars, setSelectedVars] = useState<string[]>([]);
@@ -42,6 +54,10 @@ export default function DataPage() {
   const [sstLimit, setSstLimit] = useState(1000);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    setView(isDataView(requestedView) ? requestedView : "observations");
+  }, [requestedView]);
 
   useEffect(() => {
     getDataCatalog()
@@ -129,8 +145,11 @@ export default function DataPage() {
       </header>
 
       <div className="data-tabs" role="tablist" aria-label="Data views">
+        <button className={view === "observations" ? "active" : ""} onClick={() => setView("observations")} type="button">
+          Observations
+        </button>
         <button className={view === "ctd" ? "active" : ""} onClick={() => setView("ctd")} type="button">
-          CTD Profiles
+          CTD
         </button>
         <button className={view === "taxa" ? "active" : ""} onClick={() => setView("taxa")} type="button">
           Taxa
@@ -138,9 +157,50 @@ export default function DataPage() {
         <button className={view === "sst" ? "active" : ""} onClick={() => setView("sst")} type="button">
           SST
         </button>
+        <button className={view === "analysis" ? "active" : ""} onClick={() => setView("analysis")} type="button">
+          Derived Analysis
+        </button>
+        <button className={view === "reliability" ? "active" : ""} onClick={() => setView("reliability")} type="button">
+          Reliability
+        </button>
       </div>
 
       {error ? <p className="error-text">{error}</p> : null}
+
+      {view === "observations" ? (
+        <section className="data-view">
+          <div className="summary-strip">
+            <SummaryCell label="CTD samples" value={catalog?.ctd_samples.length ?? "..."} />
+            <SummaryCell label="Taxa samples" value={catalog?.taxa_samples.length ?? "..."} />
+            <SummaryCell label="SST observations" value={formatCell(catalog?.sst_observations)} />
+            <SummaryCell label="SST days" value={formatCell(catalog?.sst_days)} />
+          </div>
+
+          <section className="dashboard-grid">
+            <article className="data-section">
+              <h3 className="section-title">Observation Classes</h3>
+              <ObservationBars
+                rows={[
+                  { label: "CTD", value: catalog?.ctd_samples.length || 0 },
+                  { label: "Taxa", value: catalog?.taxa_samples.length || 0 },
+                  { label: "SST days", value: catalog?.sst_days || 0 },
+                ]}
+              />
+            </article>
+            <article className="data-section">
+              <h3 className="section-title">Catalog</h3>
+              <table className="debug-table">
+                <tbody>
+                  <CatalogRow label="CTD variables" value={catalog?.ctd_variables.length} />
+                  <CatalogRow label="Context rows" value={catalog?.context_rows} />
+                  <CatalogRow label="Default CTD sample" value={ctdSample || "NA"} />
+                  <CatalogRow label="Default taxa sample" value={taxaSample || "NA"} />
+                </tbody>
+              </table>
+            </article>
+          </section>
+        </section>
+      ) : null}
 
       {view === "ctd" ? (
         <section className="data-view">
@@ -293,6 +353,21 @@ export default function DataPage() {
           </section>
         </section>
       ) : null}
+
+      {view === "analysis" ? <AnalysisWorkbench key="analysis" scope="analysis" /> : null}
+
+      {view === "reliability" ? <AnalysisWorkbench key="reliability" scope="reliability" /> : null}
+    </section>
+  );
+}
+
+function DataPageFallback() {
+  return (
+    <section>
+      <header className="page-header">
+        <h2>Data</h2>
+      </header>
+      <p className="empty-state">Loading data workspace.</p>
     </section>
   );
 }
@@ -302,6 +377,36 @@ function SummaryCell({ label, value }: { label: string; value: string | number }
     <div>
       <span>{label}</span>
       <strong>{value}</strong>
+    </div>
+  );
+}
+
+function CatalogRow({ label, value }: { label: string; value: unknown }) {
+  return (
+    <tr>
+      <th scope="row">{label}</th>
+      <td>{formatCell(value)}</td>
+    </tr>
+  );
+}
+
+function ObservationBars({ rows }: { rows: { label: string; value: number }[] }) {
+  const total = rows.reduce((sum, row) => sum + row.value, 0);
+  return (
+    <div className="visual-bars">
+      {rows.map((row) => {
+        const pct = total ? Math.round((row.value / total) * 100) : 0;
+        return (
+          <div className="visual-bar-row" key={row.label}>
+            <span>{row.label}</span>
+            <div className="visual-track" aria-label={`${row.label}: ${pct}%`}>
+              <div style={{ width: `${pct}%` }} />
+            </div>
+            <strong>{row.value.toLocaleString()}</strong>
+            <em>{pct}%</em>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -481,4 +586,8 @@ function formatNumber(value: number): string {
 
 function formatDate(value: string): string {
   return value.length > 10 ? value.slice(0, 10) : value;
+}
+
+function isDataView(value: string | null): value is DataView {
+  return value === "observations" || value === "ctd" || value === "taxa" || value === "sst" || value === "analysis" || value === "reliability";
 }

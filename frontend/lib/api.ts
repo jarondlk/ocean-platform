@@ -9,6 +9,7 @@ import type {
   DatabaseTableResponse,
   DebugState,
   DatasetCatalogItem,
+  EvaluationAnalyticsResponse,
   EvaluationCatalogResponse,
   EvaluationAblationRunRequest,
   EvaluationCompareResponse,
@@ -23,15 +24,22 @@ import type {
   ModelsResponse,
   PipelineJobStatus,
   PipelineLogResponse,
+  PipelinePreflightResponse,
+  PipelineRunDetailResponse,
   PipelineRunRequest,
+  PipelineRunsResponse,
   PipelineStartResponse,
   PipelineStatusResponse,
+  ProvenanceManifestResponse,
+  ProvenanceTraceResponse,
+  RetrieveResponse,
   SampleDetailResponse,
   SourceDocument,
   SstDataResponse,
   StatusResponse,
   TaxaSampleResponse,
   TimeSeriesResponse,
+  UpsertDryRunResponse,
 } from "@/types";
 
 const API_BASE_URL =
@@ -107,6 +115,23 @@ export async function askQuestion(input: {
   seed?: number;
 }): Promise<ChatResponse> {
   return request<ChatResponse>("/chat", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
+}
+
+export async function retrieveSources(input: {
+  query: string;
+  k?: number;
+  source_type?: string;
+  bay?: string;
+  time_from?: string;
+  time_to?: string;
+  vector_weight?: number;
+  fts_weight?: number;
+  rrf_k?: number;
+}): Promise<RetrieveResponse> {
+  return request<RetrieveResponse>("/retrieve", {
     method: "POST",
     body: JSON.stringify(input),
   });
@@ -228,6 +253,21 @@ export async function getPipelineStatus(): Promise<PipelineStatusResponse> {
   return request<PipelineStatusResponse>("/pipeline/status");
 }
 
+export async function getPipelinePreflight(input: PipelineRunRequest): Promise<PipelinePreflightResponse> {
+  return request<PipelinePreflightResponse>("/pipeline/preflight", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
+}
+
+export async function getPipelineRuns(limit = 50): Promise<PipelineRunsResponse> {
+  return request<PipelineRunsResponse>(`/pipeline/runs?${searchParams({ limit })}`);
+}
+
+export async function getPipelineRun(runId: string, limitBytes = 50000): Promise<PipelineRunDetailResponse> {
+  return request<PipelineRunDetailResponse>(`/pipeline/runs/${encodeURIComponent(runId)}?${searchParams({ limit_bytes: limitBytes })}`);
+}
+
 export async function startPipelineJob(input: PipelineRunRequest): Promise<PipelineStartResponse> {
   return request<PipelineStartResponse>("/pipeline/jobs", {
     method: "POST",
@@ -248,6 +288,21 @@ export async function cancelPipelineJob(jobId: string): Promise<PipelineJobStatu
     method: "POST",
     body: JSON.stringify({}),
   });
+}
+
+export async function getProvenanceManifest(params: {
+  limit_documents?: number;
+  include_embeddings?: boolean;
+} = {}): Promise<ProvenanceManifestResponse> {
+  return request<ProvenanceManifestResponse>(`/provenance/manifest?${searchParams(params)}`);
+}
+
+export async function getProvenanceTrace(docId: string): Promise<ProvenanceTraceResponse> {
+  return request<ProvenanceTraceResponse>(`/provenance/trace/${encodeURIComponent(docId)}`);
+}
+
+export async function getProvenanceUpsertDryRun(limitKeys = 25): Promise<UpsertDryRunResponse> {
+  return request<UpsertDryRunResponse>(`/provenance/upsert-dry-run?${searchParams({ limit_keys: limitKeys })}`);
 }
 
 export async function getEvaluationCatalog(): Promise<EvaluationCatalogResponse> {
@@ -297,6 +352,16 @@ export async function getEvaluationRun(params: {
 }): Promise<EvaluationRunDetailResponse> {
   const { run_id, ...query } = params;
   return request<EvaluationRunDetailResponse>(`/evaluation/runs/${encodeURIComponent(run_id)}?${searchParams(query)}`);
+}
+
+export async function getEvaluationAnalytics(params: {
+  run_id: string;
+  metric?: string;
+  baseline_mode?: string;
+  category?: string;
+}): Promise<EvaluationAnalyticsResponse> {
+  const { run_id, ...query } = params;
+  return request<EvaluationAnalyticsResponse>(`/evaluation/runs/${encodeURIComponent(run_id)}/analytics?${searchParams(query)}`);
 }
 
 export async function getEvaluationReport(runId: string): Promise<EvaluationReportResponse> {

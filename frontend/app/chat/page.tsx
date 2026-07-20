@@ -2,8 +2,10 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { RotateCcw, Send } from "lucide-react";
+import { CsvExportButton } from "@/components/CsvExportButton";
+import { DataTable, formatCell } from "@/components/DataTable";
 import { askQuestion, getModels } from "@/lib/api";
-import type { ChatResponse, ModelsResponse } from "@/types";
+import type { ChatResponse, ContextDocument, ModelsResponse, SourceDocument } from "@/types";
 import { SourceTable } from "@/components/SourceTable";
 
 type ChatSettings = {
@@ -48,6 +50,29 @@ const defaultSettings: ChatSettings = {
   seed: "",
 };
 
+const quickQuestions = [
+  {
+    label: "Temperature Reliability",
+    query: "Compare CTD surface temperature and satellite SST reliability in Onagawa Bay.",
+  },
+  {
+    label: "Seasonal CTD Trend",
+    query: "What seasonal CTD temperature and salinity patterns are visible across the monitoring period?",
+  },
+  {
+    label: "Taxa-Environment",
+    query: "Which taxa show the strongest correlations with temperature, salinity, dissolved oxygen, or chlorophyll?",
+  },
+  {
+    label: "Diversity Anomaly",
+    query: "Which samples show anomalous community diversity relative to environmental expectations?",
+  },
+  {
+    label: "Cross-Source Gaps",
+    query: "Where do cross-source links or reliability checks reveal gaps, standalone observations, or corroborated evidence?",
+  },
+];
+
 export default function ChatPage() {
   const [query, setQuery] = useState("");
   const [settings, setSettings] = useState<ChatSettings>(defaultSettings);
@@ -72,6 +97,16 @@ export default function ChatPage() {
     if (!response?.options) return null;
     return JSON.stringify(response.options, null, 2);
   }, [response]);
+  const contextRows = useMemo(() => {
+    if (!response) return [];
+    return [
+      ...(response.analysis_context || []).map((document) => contextDocumentRow(document)),
+      ...(response.reliability_context || []).map((document) => contextDocumentRow(document)),
+    ];
+  }, [response]);
+  const evidenceRows = useMemo(() => (response?.sources || []).map(sourceDocumentRow), [response]);
+  const diagnosticRows = useMemo(() => diagnosticsToRows(response?.prompt_diagnostics || {}), [response]);
+  const promptDiagnostics = response?.prompt_diagnostics || {};
 
   function updateSetting<K extends keyof ChatSettings>(key: K, value: ChatSettings[K]) {
     setSettings((current) => ({ ...current, [key]: value }));
@@ -84,13 +119,15 @@ export default function ChatPage() {
     });
   }
 
-  async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function runQuestion(nextQuery: string) {
+    const trimmedQuery = nextQuery.trim();
+    if (!trimmedQuery || loading) return;
+    setQuery(nextQuery);
     setLoading(true);
     setError("");
     try {
       const result = await askQuestion({
-        query,
+        query: trimmedQuery,
         k: settings.k,
         source_type: settings.sourceType || undefined,
         bay: settings.bay || undefined,
@@ -118,6 +155,11 @@ export default function ChatPage() {
     }
   }
 
+  function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void runQuestion(query);
+  }
+
   return (
     <section>
       <header className="page-header">
@@ -139,6 +181,20 @@ export default function ChatPage() {
                 aria-label="Question"
                 placeholder="Enter question"
               />
+              <div className="quick-question-grid" aria-label="Quick questions">
+                {quickQuestions.map((item) => (
+                  <button
+                    className="button secondary-button quick-question-button"
+                    disabled={loading}
+                    key={item.label}
+                    onClick={() => void runQuestion(item.query)}
+                    title={item.query}
+                    type="button"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
               <div className="section-toolbar chat-actions">
                 <span className="empty-state">
                   {response ? `${response.n_sources} retrieved sources` : "No response."}
@@ -155,6 +211,56 @@ export default function ChatPage() {
               <h3 className="section-title">Response</h3>
               <div className="answer">{response?.answer || "No response."}</div>
             </article>
+
+            {response ? (
+              <article className="card">
+                <div className="section-toolbar">
+                  <h3 className="section-title">Context Ledger</h3>
+                  <span className="empty-state">
+                    {response.n_sources} retrieved | {(response.n_context_documents || 0)} injected
+                  </span>
+                </div>
+
+                <div className="summary-strip chat-diagnostics">
+                  <SummaryCell label="Model" value={response.model} />
+                  <SummaryCell label="Retrieved" value={response.n_sources} />
+                  <SummaryCell label="Analysis" value={(response.analysis_context || []).length} />
+                  <SummaryCell label="Reliability" value={(response.reliability_context || []).length} />
+                  <SummaryCell label="Prompt chars" value={formatCell(promptDiagnostics.prompt_chars)} />
+                  <SummaryCell label="Ranked" value={formatCell(promptDiagnostics.ranked_documents)} />
+                </div>
+
+                <div className="section-toolbar compact-toolbar">
+                  <h4 className="subsection-title">Retrieved Evidence</h4>
+                  <CsvExportButton
+                    columns={["doc_id", "title", "source_type", "sample_id", "event_id", "time", "bay", "station", "score", "vector_rank", "fts_rank", "text"]}
+                    filename="chat_retrieved_evidence"
+                    rows={evidenceRows}
+                  />
+                </div>
+                <SourceTable sources={response.sources} />
+
+                <div className="section-toolbar compact-toolbar">
+                  <h4 className="subsection-title">Injected Context</h4>
+                  <CsvExportButton
+                    columns={["context_type", "doc_id", "analysis_type", "title", "text"]}
+                    filename="chat_injected_context"
+                    rows={contextRows}
+                  />
+                </div>
+                <DataTable
+                  columns={["context_type", "doc_id", "analysis_type", "title", "text"]}
+                  emptyText="No supplementary context injected."
+                  rows={contextRows}
+                  rowKeyColumn="doc_id"
+                />
+
+                <details className="debug-block chat-debug-block">
+                  <summary>Prompt Diagnostics</summary>
+                  <DataTable columns={["key", "value"]} rows={diagnosticRows} rowKeyColumn="key" />
+                </details>
+              </article>
+            ) : null}
 
             {appliedSettings ? (
               <details className="debug-block">
@@ -209,7 +315,7 @@ export default function ChatPage() {
                   <option value="">All bays</option>
                   <option value="O">Onagawa</option>
                   <option value="I">Ishinomaki</option>
-                  <option value="M">Matsushima</option>
+                  <option value="M">Mutsu</option>
                 </select>
               </label>
               <div className="settings-pair">
@@ -380,12 +486,48 @@ export default function ChatPage() {
         </div>
       </form>
 
-      <article className="card" style={{ marginTop: 16 }}>
-        <h3 className="section-title">Evidence</h3>
-        <SourceTable sources={response?.sources || []} />
-      </article>
     </section>
   );
+}
+
+function SummaryCell({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div>
+      <span>{label}</span>
+      <strong>{value}</strong>
+    </div>
+  );
+}
+
+function sourceDocumentRow(source: SourceDocument): Record<string, unknown> {
+  return {
+    doc_id: source.doc_id,
+    title: source.title,
+    source_type: source.source_type,
+    sample_id: source.sample_id,
+    event_id: source.event_id,
+    time: source.time,
+    bay: source.bay,
+    station: source.station,
+    score: source.score,
+    vector_rank: source.rank_sources?.vector,
+    fts_rank: source.rank_sources?.fts,
+    text: source.text,
+  };
+}
+
+function contextDocumentRow(document: ContextDocument): Record<string, unknown> {
+  return {
+    context_type: document.context_type,
+    doc_id: document.doc_id,
+    analysis_type: document.analysis_type,
+    title: document.title,
+    text: document.text,
+  };
+}
+
+function diagnosticsToRows(diagnostics: Record<string, unknown>): Record<string, unknown>[] {
+  return Object.entries(diagnostics).map(([key, value]) => ({ key, value }));
 }
 
 function NumericControl({

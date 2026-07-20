@@ -11,10 +11,12 @@ Usage:
     python scripts/load_db.py                # load all data
     python scripts/load_db.py --embed        # also compute embeddings
     python scripts/load_db.py --reset        # drop and recreate tables
+    python scripts/load_db.py --upsert --dry-run --json
 """
 from __future__ import annotations
 
 import argparse
+import json
 import logging
 import sys
 from pathlib import Path
@@ -163,11 +165,39 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Load data into PostgreSQL")
     parser.add_argument("--embed", action="store_true", help="Compute embeddings via Ollama")
     parser.add_argument("--reset", action="store_true", help="Drop and recreate all tables")
+    parser.add_argument("--upsert", action="store_true", help="Plan an incremental upsert instead of append/reset loading.")
+    parser.add_argument("--dry-run", action="store_true", help="With --upsert, produce a read-only lineage-aware upsert plan.")
+    parser.add_argument("--limit-keys", type=int, default=25, help="Maximum example keys to show per dry-run upsert table.")
+    parser.add_argument("--json", action="store_true", help="Print machine-readable JSON for dry-run upsert planning.")
     args = parser.parse_args()
 
     logger.info("=" * 60)
     logger.info("Loading data into PostgreSQL")
     logger.info("=" * 60)
+
+    if args.upsert:
+        if not args.dry_run:
+            raise SystemExit("Mutating --upsert is not implemented yet. Use --upsert --dry-run to inspect the lineage-aware plan.")
+        from ingestion.lineage import build_upsert_dry_run_plan
+
+        plan = build_upsert_dry_run_plan(limit_keys=args.limit_keys)
+        if args.json:
+            print(json.dumps(plan, indent=2, default=str))
+        else:
+            summary = plan["summary"]
+            print("Upsert dry-run plan")
+            print(f"database_available={summary['database_available']}")
+            print(f"incoming_rows={summary['incoming_rows']}")
+            print(f"planned_inserts={summary['planned_inserts']}")
+            print(f"candidate_updates={summary['candidate_updates']}")
+            print(f"stale_existing={summary['stale_existing']}")
+            print(f"embedding_refresh_candidates={summary['embedding_refresh_candidates']}")
+            for table_plan in plan["table_plans"]:
+                print(
+                    "{table}: incoming={incoming_count} existing={existing_count} "
+                    "insert={planned_inserts} update={candidate_updates} stale={stale_existing}".format(**table_plan)
+                )
+        return
 
     if args.reset:
         logger.warning("Dropping all tables...")

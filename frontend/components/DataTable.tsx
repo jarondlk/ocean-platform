@@ -4,7 +4,7 @@ type DataTableProps = {
   emptyText?: string;
   rowKeyColumn?: string;
   selectedKey?: string;
-  onRowSelect?: (row: Record<string, unknown>) => void;
+  onRowSelect?: (row: Record<string, unknown>, index: number, rowKey: string) => void;
 };
 
 export function DataTable({
@@ -36,13 +36,13 @@ export function DataTable({
               <tr
                 className={onRowSelect ? "selectable-row" : undefined}
                 key={rowKey}
-                onClick={onRowSelect ? () => onRowSelect(row) : undefined}
+                onClick={onRowSelect ? () => onRowSelect(row, index, rowKey) : undefined}
                 onKeyDown={
                   onRowSelect
                     ? (event) => {
                         if (event.key === "Enter" || event.key === " ") {
                           event.preventDefault();
-                          onRowSelect(row);
+                          onRowSelect(row, index, rowKey);
                         }
                       }
                     : undefined

@@ -41,6 +41,15 @@ class SourceDocument(BaseModel):
     station: Optional[str] = None
     text: str = ""
     score: Optional[float] = None
+    rank_sources: Dict[str, int] = Field(default_factory=dict)
+
+
+class ContextDocument(BaseModel):
+    doc_id: str
+    title: str = ""
+    context_type: str
+    analysis_type: Optional[str] = None
+    text: str = ""
 
 
 class RetrieveResponse(BaseModel):
@@ -52,8 +61,12 @@ class ChatResponse(BaseModel):
     query: str
     answer: str
     sources: List[SourceDocument]
+    analysis_context: List[ContextDocument] = Field(default_factory=list)
+    reliability_context: List[ContextDocument] = Field(default_factory=list)
     model: str
     n_sources: int
+    n_context_documents: int = 0
+    prompt_diagnostics: Dict[str, Any] = Field(default_factory=dict)
     options: Dict[str, Any] = Field(default_factory=dict)
 
 
@@ -267,13 +280,54 @@ class PipelineArtifactInfo(BaseModel):
     note: Optional[str] = None
 
 
+class PipelineArtifactFreshness(BaseModel):
+    id: str
+    label: str
+    kind: str
+    path: str
+    exists: bool
+    freshness_status: str
+    lineage_status: str
+    age_days: Optional[float] = None
+    modified_at: Optional[str] = None
+    latest_raw_modified_at: Optional[str] = None
+    rows: Optional[int] = None
+    size_bytes: Optional[int] = None
+    note: Optional[str] = None
+
+
+class PipelinePreflightCheck(BaseModel):
+    id: str
+    label: str
+    status: str
+    severity: str = "info"
+    required: bool = False
+    detail: str = ""
+
+
+class PipelinePreflightResponse(BaseModel):
+    generated_at: str
+    ok: bool
+    blockers: List[str] = Field(default_factory=list)
+    warnings: List[str] = Field(default_factory=list)
+    request: Dict[str, Any] = Field(default_factory=dict)
+    checks: List[PipelinePreflightCheck] = Field(default_factory=list)
+    command_plan: List[Dict[str, Any]] = Field(default_factory=list)
+    raw_sources: List[PipelineArtifactInfo] = Field(default_factory=list)
+    artifacts: List[PipelineArtifactInfo] = Field(default_factory=list)
+    database: Dict[str, Any] = Field(default_factory=dict)
+    ollama: Dict[str, Any] = Field(default_factory=dict)
+
+
 class PipelineStatusResponse(BaseModel):
     stages: List[PipelineStageInfo]
     raw_sources: List[PipelineArtifactInfo]
     artifacts: List[PipelineArtifactInfo]
+    artifact_freshness: List[PipelineArtifactFreshness] = Field(default_factory=list)
     readiness: Dict[str, Any]
     database: Dict[str, Any]
     ollama: Dict[str, Any]
+    active_jobs: List[Dict[str, Any]] = Field(default_factory=list)
     pipeline_runs: int = 0
 
 
@@ -283,6 +337,7 @@ class PipelineRunRequest(BaseModel):
     dry_run: bool = True
     skip_sst: bool = False
     reset_database: bool = False
+    embed_after_load: bool = True
     embedding_model: Optional[str] = None
     embedding_batch_size: int = Field(default=32, ge=1, le=256)
     notes: Optional[str] = None
@@ -315,11 +370,83 @@ class PipelineJobStatus(BaseModel):
     result_run_id: Optional[str] = None
 
 
+class PipelineStageLog(BaseModel):
+    stage_id: str
+    label: Optional[str] = None
+    command: Optional[str] = None
+    status: Optional[str] = None
+    return_code: Optional[int] = None
+    duration_seconds: Optional[float] = None
+    line_count: int = 0
+    bytes: int = 0
+    log: str = ""
+
+
 class PipelineLogResponse(BaseModel):
     job_id: str
     log_path: str
     log: str
     bytes: int
+    stage_logs: List[PipelineStageLog] = Field(default_factory=list)
+
+
+class PipelineRunSummary(BaseModel):
+    run_id: str
+    job_id: Optional[str] = None
+    status: str = "unknown"
+    tag: Optional[str] = None
+    dry_run: bool = False
+    stages: List[str] = Field(default_factory=list)
+    stage_count: int = 0
+    failed_stage: Optional[str] = None
+    started_at: Optional[str] = None
+    completed_at: Optional[str] = None
+    duration_seconds: Optional[float] = None
+    output_dir: Optional[str] = None
+    manifest_path: Optional[str] = None
+    log_path: Optional[str] = None
+    error: Optional[str] = None
+
+
+class PipelineRunsResponse(BaseModel):
+    runs: List[PipelineRunSummary] = Field(default_factory=list)
+
+
+class PipelineRunDetailResponse(BaseModel):
+    summary: PipelineRunSummary
+    manifest: Dict[str, Any] = Field(default_factory=dict)
+    progress: Dict[str, Any] = Field(default_factory=dict)
+    log_tail: str = ""
+    stage_logs: List[PipelineStageLog] = Field(default_factory=list)
+
+
+class ProvenanceManifestResponse(BaseModel):
+    schema_version: int
+    generated_at: str
+    project_root: str
+    summary: Dict[str, Any] = Field(default_factory=dict)
+    source_files: List[Dict[str, Any]] = Field(default_factory=list)
+    artifacts: List[Dict[str, Any]] = Field(default_factory=list)
+    documents: List[Dict[str, Any]] = Field(default_factory=list)
+    embeddings: List[Dict[str, Any]] = Field(default_factory=list)
+    limitations: List[str] = Field(default_factory=list)
+
+
+class ProvenanceTraceResponse(BaseModel):
+    doc_id: str
+    found: bool
+    trace: Dict[str, Any] = Field(default_factory=dict)
+
+
+class UpsertDryRunResponse(BaseModel):
+    generated_at: str
+    dry_run: bool = True
+    ok: bool
+    database: Dict[str, Any] = Field(default_factory=dict)
+    summary: Dict[str, Any] = Field(default_factory=dict)
+    lineage_manifest_summary: Dict[str, Any] = Field(default_factory=dict)
+    table_plans: List[Dict[str, Any]] = Field(default_factory=list)
+    warnings: List[str] = Field(default_factory=list)
 
 
 class EvaluationQuestion(BaseModel):
@@ -441,6 +568,27 @@ class EvaluationRunDetailResponse(BaseModel):
     limit: int
     offset: int
     summary: Dict[str, Any]
+
+
+class EvaluationAnalyticsResponse(BaseModel):
+    run: EvaluationRunSummary
+    selected_metric: str
+    baseline_mode: Optional[str] = None
+    filters: Dict[str, Any] = Field(default_factory=dict)
+    metric_catalog: List[Dict[str, Any]] = Field(default_factory=list)
+    by_mode: List[Dict[str, Any]] = Field(default_factory=list)
+    by_category: List[Dict[str, Any]] = Field(default_factory=list)
+    by_mode_category: List[Dict[str, Any]] = Field(default_factory=list)
+    mode_category_matrix: Dict[str, Any] = Field(default_factory=dict)
+    metric_distributions: List[Dict[str, Any]] = Field(default_factory=list)
+    quality_by_mode: List[Dict[str, Any]] = Field(default_factory=list)
+    latency_by_mode: List[Dict[str, Any]] = Field(default_factory=list)
+    citation_by_mode: List[Dict[str, Any]] = Field(default_factory=list)
+    source_coverage_by_mode: List[Dict[str, Any]] = Field(default_factory=list)
+    lowest_scoring_questions: List[Dict[str, Any]] = Field(default_factory=list)
+    highest_latency_questions: List[Dict[str, Any]] = Field(default_factory=list)
+    best_by_metric: List[Dict[str, Any]] = Field(default_factory=list)
+    statistical_tests: Dict[str, Any] = Field(default_factory=dict)
 
 
 class EvaluationReportResponse(BaseModel):

@@ -21,6 +21,8 @@ export function SourceTable({ sources }: { sources: SourceDocument[] }) {
             <th>Time</th>
             <th>Bay</th>
             <th>Score</th>
+            <th>Vector</th>
+            <th>FTS</th>
             <th>Text</th>
           </tr>
         </thead>
@@ -34,7 +36,9 @@ export function SourceTable({ sources }: { sources: SourceDocument[] }) {
               <td>{sourceLabels[source.source_type] || source.source_type}</td>
               <td>{source.time || "NA"}</td>
               <td>{source.bay || "regional"}</td>
-              <td>{source.score ? source.score.toFixed(4) : "NA"}</td>
+              <td>{source.score !== null && source.score !== undefined ? source.score.toFixed(4) : "NA"}</td>
+              <td>{source.rank_sources?.vector ?? "NA"}</td>
+              <td>{source.rank_sources?.fts ?? "NA"}</td>
               <td>{source.text}</td>
             </tr>
           ))}

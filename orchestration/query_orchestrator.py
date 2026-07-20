@@ -119,7 +119,7 @@ DATA SOURCES AVAILABLE:
 STUDY AREA:
 - Onagawa Bay (O): ~38.44°N, 141.45°E
 - Ishinomaki Bay (I): ~38.41°N, 141.30°E  
-- Matsushima Bay (M): ~38.35°N, 141.06°E"""
+- Mutsu Bay (M): coordinate from source metadata"""
 
     # Format evidence
     evidence_text = "=== PRIMARY EVIDENCE ===\n"

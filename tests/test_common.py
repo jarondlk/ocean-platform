@@ -33,7 +33,7 @@ class TestParseSampleReplicate:
         assert result["bay"] == "I"
         assert result["station_code"] == "hm"
 
-    def test_valid_matsushima(self):
+    def test_valid_mutsu(self):
         result = parse_sample_replicate("2024-11-M-s1")
         assert result["bay"] == "M"
         assert result["sample_year_month"] == "2024-11"

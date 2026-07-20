@@ -1,10 +1,12 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { Play, RefreshCw } from "lucide-react";
+import { Play, RefreshCw, Search } from "lucide-react";
+import { CsvExportButton } from "@/components/CsvExportButton";
 import { DataTable, formatCell } from "@/components/DataTable";
-import { getDatabaseSchema, getDatabaseTable, runDatabaseQuery } from "@/lib/api";
-import type { DatabaseQueryResponse, DatabaseSchemaResponse, DatabaseTableResponse } from "@/types";
+import { RecordInspector } from "@/components/RecordInspector";
+import { getDatabaseSchema, getDatabaseTable, retrieveSources, runDatabaseQuery } from "@/lib/api";
+import type { DatabaseQueryResponse, DatabaseSchemaResponse, DatabaseTableResponse, RetrieveResponse } from "@/types";
 
 type Direction = "asc" | "desc";
 
@@ -26,10 +28,22 @@ export default function DatabasePage() {
   const [sql, setSql] = useState(defaultSql);
   const [sqlLimit, setSqlLimit] = useState(100);
   const [queryResult, setQueryResult] = useState<DatabaseQueryResponse | null>(null);
+  const [selectedRow, setSelectedRow] = useState<Record<string, unknown> | null>(null);
+  const [selectedRowKey, setSelectedRowKey] = useState("");
+  const [probeQuery, setProbeQuery] = useState("");
+  const [probeK, setProbeK] = useState(10);
+  const [probeSourceType, setProbeSourceType] = useState("");
+  const [probeBay, setProbeBay] = useState("");
+  const [probeVectorWeight, setProbeVectorWeight] = useState(0.6);
+  const [probeFtsWeight, setProbeFtsWeight] = useState(0.4);
+  const [probeRrfK, setProbeRrfK] = useState(60);
+  const [probeResult, setProbeResult] = useState<RetrieveResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [queryLoading, setQueryLoading] = useState(false);
+  const [probeLoading, setProbeLoading] = useState(false);
   const [error, setError] = useState("");
   const [queryError, setQueryError] = useState("");
+  const [probeError, setProbeError] = useState("");
 
   const tables = schema?.tables || [];
   const activeTable = useMemo(() => {
@@ -93,6 +107,8 @@ export default function DatabasePage() {
       });
       setTableData(payload);
       setOffset(nextOffset);
+      setSelectedRow(null);
+      setSelectedRowKey("");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Database table request failed");
     } finally {
@@ -118,8 +134,41 @@ export default function DatabasePage() {
     }
   }
 
+  async function submitProbe(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!probeQuery.trim()) return;
+    setProbeLoading(true);
+    setProbeError("");
+    try {
+      setProbeResult(await retrieveSources({
+        query: probeQuery,
+        k: probeK,
+        source_type: probeSourceType || undefined,
+        bay: probeBay || undefined,
+        vector_weight: probeVectorWeight,
+        fts_weight: probeFtsWeight,
+        rrf_k: probeRrfK,
+      }));
+    } catch (err) {
+      setProbeError(err instanceof Error ? err.message : "Similarity probe failed");
+    } finally {
+      setProbeLoading(false);
+    }
+  }
+
   const canPrevious = offset > 0;
   const canNext = Boolean(tableData && offset + limit < tableData.total);
+  const probeRows = (probeResult?.sources || []).map((source, index) => ({
+    rank: index + 1,
+    doc_id: source.doc_id,
+    source_type: source.source_type,
+    score: source.score,
+    vector_rank: source.rank_sources?.vector,
+    fts_rank: source.rank_sources?.fts,
+    bay: source.bay,
+    time: source.time,
+    title: source.title,
+  }));
 
   return (
     <section>
@@ -247,11 +296,30 @@ export default function DatabasePage() {
                   : "No table loaded."}
               </span>
               <div className="pager">
+                <CsvExportButton
+                  columns={tableData?.columns || []}
+                  filename={`database_${selectedTable}_rows`}
+                  rows={tableData?.rows || []}
+                />
                 <button className="button secondary-button" disabled={!canPrevious || loading} onClick={() => void loadTable({ nextOffset: Math.max(0, offset - limit) })} type="button">Previous</button>
                 <button className="button secondary-button" disabled={!canNext || loading} onClick={() => void loadTable({ nextOffset: offset + limit })} type="button">Next</button>
               </div>
             </div>
-            <DataTable columns={tableData?.columns || []} rows={tableData?.rows || []} rowKeyColumn={tableData?.columns[0] || "id"} />
+            <DataTable
+              columns={tableData?.columns || []}
+              rows={tableData?.rows || []}
+              rowKeyColumn={tableData?.columns[0] || "id"}
+              selectedKey={selectedRowKey}
+              onRowSelect={(row, _index, key) => {
+                setSelectedRow(row);
+                setSelectedRowKey(key);
+              }}
+            />
+          </section>
+
+          <section className="data-section">
+            <h3 className="section-title">Row Inspector</h3>
+            <RecordInspector row={selectedRow} emptyText="Select a table row." />
           </section>
 
           <section className="data-section">
@@ -278,8 +346,92 @@ export default function DatabasePage() {
             {queryError ? <p className="error-text">{queryError}</p> : null}
             {queryResult ? (
               <>
-                <p className="empty-state">{queryResult.row_count} rows in {queryResult.elapsed_ms.toFixed(1)} ms</p>
+                <div className="section-toolbar">
+                  <p className="empty-state">{queryResult.row_count} rows in {queryResult.elapsed_ms.toFixed(1)} ms</p>
+                  <CsvExportButton
+                    columns={queryResult.columns}
+                    filename="database_sql_result"
+                    rows={queryResult.rows}
+                  />
+                </div>
                 <DataTable columns={queryResult.columns} rows={queryResult.rows} rowKeyColumn={queryResult.columns[0] || "id"} />
+              </>
+            ) : null}
+          </section>
+
+          <section className="data-section">
+            <h3 className="section-title">Similarity Probe</h3>
+            <form className="probe-form" onSubmit={submitProbe}>
+              <label className="settings-field probe-query" htmlFor="db-probe-query" title="Hybrid retrieval query executed through the same retrieve API as chat.">
+                <span>Query</span>
+                <input
+                  id="db-probe-query"
+                  className="field"
+                  onChange={(event) => setProbeQuery(event.target.value)}
+                  placeholder="chlorophyll bloom summer"
+                  value={probeQuery}
+                />
+              </label>
+              <label className="settings-field" htmlFor="db-probe-k" title="Number of fused retrieval results to return.">
+                <span>K</span>
+                <select id="db-probe-k" className="field" onChange={(event) => setProbeK(Number(event.target.value))} value={probeK}>
+                  <option value={5}>5</option>
+                  <option value={10}>10</option>
+                  <option value={15}>15</option>
+                  <option value={20}>20</option>
+                </select>
+              </label>
+              <label className="settings-field" htmlFor="db-probe-source" title="Restrict probe retrieval by source type.">
+                <span>Source</span>
+                <select id="db-probe-source" className="field" onChange={(event) => setProbeSourceType(event.target.value)} value={probeSourceType}>
+                  <option value="">All</option>
+                  <option value="ctd">CTD</option>
+                  <option value="metagenome">Metagenome</option>
+                  <option value="remote_sensing">SST</option>
+                </select>
+              </label>
+              <label className="settings-field" htmlFor="db-probe-bay" title="Restrict probe retrieval by bay metadata.">
+                <span>Bay</span>
+                <select id="db-probe-bay" className="field" onChange={(event) => setProbeBay(event.target.value)} value={probeBay}>
+                  <option value="">All</option>
+                  <option value="O">O</option>
+                  <option value="I">I</option>
+                  <option value="M">M</option>
+                </select>
+              </label>
+              <label className="settings-field" htmlFor="db-probe-vector" title="RRF weight for vector ranking.">
+                <span>Vector</span>
+                <input id="db-probe-vector" className="field" max={1} min={0} onChange={(event) => setProbeVectorWeight(Number(event.target.value))} step={0.05} type="number" value={probeVectorWeight} />
+              </label>
+              <label className="settings-field" htmlFor="db-probe-fts" title="RRF weight for full-text ranking.">
+                <span>FTS</span>
+                <input id="db-probe-fts" className="field" max={1} min={0} onChange={(event) => setProbeFtsWeight(Number(event.target.value))} step={0.05} type="number" value={probeFtsWeight} />
+              </label>
+              <label className="settings-field" htmlFor="db-probe-rrf" title="RRF smoothing constant used when fusing vector and FTS ranks.">
+                <span>RRF-k</span>
+                <input id="db-probe-rrf" className="field" max={200} min={1} onChange={(event) => setProbeRrfK(Number(event.target.value))} step={1} type="number" value={probeRrfK} />
+              </label>
+              <button className="button" disabled={probeLoading || !probeQuery.trim()}>
+                <Search size={15} aria-hidden="true" />
+                {probeLoading ? "Probing" : "Probe"}
+              </button>
+            </form>
+            {probeError ? <p className="error-text">{probeError}</p> : null}
+            {probeResult ? (
+              <>
+                <div className="section-toolbar">
+                  <p className="empty-state">{probeRows.length} fused results for `{probeResult.query}`</p>
+                  <CsvExportButton
+                    columns={["rank", "doc_id", "source_type", "score", "vector_rank", "fts_rank", "bay", "time", "title"]}
+                    filename="database_similarity_probe"
+                    rows={probeRows}
+                  />
+                </div>
+                <DataTable
+                  columns={["rank", "doc_id", "source_type", "score", "vector_rank", "fts_rank", "bay", "time", "title"]}
+                  rows={probeRows}
+                  rowKeyColumn="doc_id"
+                />
               </>
             ) : null}
           </section>

@@ -1,17 +1,16 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Activity, BookOpen, Bug, ChartNoAxesColumn, ClipboardCheck, Database, MessageSquare, Microscope, Search, TableProperties, Workflow } from "lucide-react";
+import { Activity, BookOpen, Bug, ChartNoAxesColumn, ClipboardCheck, Database, Fingerprint, MessageSquare, TableProperties, Workflow } from "lucide-react";
 
 const navItems = [
   { href: "/", label: "Overview", icon: BookOpen },
   { href: "/explore", label: "Explore", icon: ChartNoAxesColumn },
   { href: "/data", label: "Data", icon: Database },
-  { href: "/analysis", label: "Analysis", icon: Microscope },
   { href: "/database", label: "Database", icon: TableProperties },
   { href: "/pipeline", label: "Pipeline", icon: Workflow },
+  { href: "/provenance", label: "Provenance", icon: Fingerprint },
   { href: "/evaluation", label: "Evaluation", icon: ClipboardCheck },
   { href: "/chat", label: "Chat", icon: MessageSquare },
-  { href: "/evidence", label: "Evidence", icon: Search },
   { href: "/system", label: "System", icon: Activity },
   { href: "/debug", label: "Debug", icon: Bug },
 ];

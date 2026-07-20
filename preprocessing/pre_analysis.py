@@ -340,7 +340,7 @@ def build_analysis_documents(
     Convert precomputed analyses into text documents for RAG retrieval.
     """
     docs = []
-    bay_names = {"O": "Onagawa Bay", "I": "Ishinomaki Bay", "M": "Matsushima Bay"}
+    bay_names = {"O": "Onagawa Bay", "I": "Ishinomaki Bay", "M": "Mutsu Bay"}
 
     # Trend summaries per bay per year_month
     if not trends.empty:

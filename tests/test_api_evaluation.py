@@ -46,6 +46,48 @@ def test_evaluation_run_detail_returns_rows_and_summary():
     assert payload["summary"]["by_mode"]
 
 
+def test_evaluation_analytics_returns_chart_ready_payload():
+    response = client.get(
+        "/evaluation/runs/ablation_qwen2.5:14b-instruct/analytics",
+        params={"metric": "source_coverage", "baseline_mode": "Full framework"},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["selected_metric"] == "source_coverage"
+    assert payload["baseline_mode"] == "Full framework"
+    assert payload["by_mode"]
+    assert "delta_from_baseline" in payload["by_mode"][0]
+    assert payload["mode_category_matrix"]["categories"]
+    assert payload["mode_category_matrix"]["rows"]
+    assert payload["lowest_scoring_questions"]
+    assert payload["statistical_tests"]["status"] == "available"
+    assert payload["statistical_tests"]["friedman"]
+    assert "source_coverage" in payload["statistical_tests"]["significance_matrix"]
+
+
+def test_evaluation_analytics_supports_category_filter():
+    response = client.get(
+        "/evaluation/runs/ablation_qwen2.5:14b-instruct/analytics",
+        params={"metric": "retrieval_precision", "category": "Single-source (CTD)"},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["filters"]["category"] == "Single-source (CTD)"
+    assert {row["category"] for row in payload["by_category"]} == {"Single-source (CTD)"}
+
+
+def test_evaluation_analytics_rejects_unknown_metric():
+    response = client.get(
+        "/evaluation/runs/ablation_qwen2.5:14b-instruct/analytics",
+        params={"metric": "not_a_metric"},
+    )
+
+    assert response.status_code == 400
+    assert "Unknown or unavailable evaluation metric" in response.text
+
+
 def test_evaluation_report_can_be_generated_from_legacy_csv():
     response = client.get("/evaluation/runs/ablation_qwen2.5:14b-instruct/report")
 

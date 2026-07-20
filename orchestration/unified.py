@@ -7,12 +7,35 @@ is built for the LLM.
 """
 from __future__ import annotations
 
+import json
 import logging
 from typing import Any, Dict, List, Optional
 
 import config
 
 logger = logging.getLogger(__name__)
+
+ANALYSIS_CONTEXT_HEADER = "\n=== PRE-COMPUTED ANALYSES ===\n"
+RELIABILITY_CONTEXT_HEADER = "\n=== RELIABILITY ENSURANCE ===\n"
+
+ANALYSIS_KEYWORDS = {
+    "trend", "trends", "seasonal", "monthly", "correlation", "correlate",
+    "relationship", "diversity", "richness", "evenness", "compare",
+    "comparison", "between", "across", "pattern", "change", "over time",
+    "stratification", "co-occurrence", "cooccurrence", "community",
+    "structure", "composition", "temperature", "salinity", "chlorophyll",
+    "bloom", "dinoflagellate", "diatom", "ecosystem", "bay",
+}
+
+RELIABILITY_KEYWORDS = {
+    "reliable", "reliability", "confidence", "trust", "validate",
+    "validation", "corroborate", "corroboration", "agree", "agreement",
+    "consistent", "consistency", "gap", "gaps", "anomaly", "anomalies",
+    "outlier", "outliers", "interpolate", "predict", "verify",
+    "cross-source", "cross", "support", "confirm", "temperature",
+    "sst", "ctd", "diversity", "shannon", "compare", "comparison",
+    "trend", "seasonal",
+}
 
 
 def _pg_available() -> bool:
@@ -63,6 +86,7 @@ def retrieve(
                 "title": r.title,
                 "text": r.text,
                 "score": r.score,
+                "rank_sources": dict(r.rank_sources),
             }
             for r in results
         ]
@@ -76,51 +100,63 @@ def retrieve(
         )
 
 
+def _query_matches_context(query: str, keywords: set[str]) -> bool:
+    query_lower = query.lower()
+    query_terms = set(query_lower.split())
+    return bool(query_terms.intersection(keywords) or any(" " in keyword and keyword in query_lower for keyword in keywords))
+
+
+def _read_context_documents(path) -> List[dict]:
+    if not path.exists():
+        return []
+    documents: List[dict] = []
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                documents.append(json.loads(line))
+    return documents
+
+
+def analysis_context_documents(query: str) -> List[dict]:
+    """Return analysis context documents that will be injected for a query."""
+    if not _query_matches_context(query, ANALYSIS_KEYWORDS):
+        return []
+    return _read_context_documents(config.ANALYSIS_DIR / "analysis_documents.jsonl")
+
+
+def reliability_context_documents(query: str) -> List[dict]:
+    """Return reliability context documents that will be injected for a query."""
+    if not _query_matches_context(query, RELIABILITY_KEYWORDS):
+        return []
+    return _read_context_documents(config.RELIABILITY_DIR / "reliability_documents.jsonl")
+
+
+def _format_analysis_context(documents: List[dict]) -> str:
+    if not documents:
+        return ""
+    text = ANALYSIS_CONTEXT_HEADER
+    text += "(These are precomputed ecological relationships for supplementary context.)\n"
+    for doc in documents:
+        text += f"\n[{doc['id']}] ({doc.get('analysis_type', 'analysis')})\n{doc['text']}\n"
+    return text
+
+
+def _format_reliability_context(documents: List[dict]) -> str:
+    if not documents:
+        return ""
+    text = RELIABILITY_CONTEXT_HEADER
+    text += "(Cross-source validation and corroboration results.)\n"
+    for doc in documents:
+        text += f"\n[{doc['id']}] ({doc.get('analysis_type', 'reliability')})\n{doc['text']}\n"
+    return text
+
+
 def _load_analysis_context(query: str) -> str:
     """
     Load precomputed analysis documents relevant to the query.
     These are injected as supplementary context in addition to retrieved evidence.
     """
-    import json
-    from pathlib import Path
-
-    analysis_path = config.ANALYSIS_DIR / "analysis_documents.jsonl"
-    if not analysis_path.exists():
-        return ""
-
-    # Load all analysis docs
-    analysis_docs = []
-    with open(analysis_path, encoding="utf-8") as f:
-        for line in f:
-            if line.strip():
-                analysis_docs.append(json.loads(line))
-
-    if not analysis_docs:
-        return ""
-
-    # Simple keyword relevance: inject docs whose text contains query terms
-    query_terms = set(query.lower().split())
-    # Always-relevant ecosystem keywords that trigger analysis injection
-    eco_keywords = {
-        "trend", "trends", "seasonal", "monthly", "correlation", "correlate",
-        "relationship", "diversity", "richness", "evenness", "compare",
-        "comparison", "between", "across", "pattern", "change", "over time",
-        "stratification", "co-occurrence", "cooccurrence", "community",
-        "structure", "composition", "temperature", "salinity", "chlorophyll",
-        "bloom", "dinoflagellate", "diatom", "ecosystem", "bay",
-    }
-
-    # Check if the query is "complex" enough to warrant analysis context
-    if not query_terms.intersection(eco_keywords):
-        return ""
-
-    # Inject all analysis docs (they're small and highly curated)
-    text = "\n=== PRE-COMPUTED ANALYSES ===\n"
-    text += "(These are precomputed ecological relationships for supplementary context.)\n"
-    for doc in analysis_docs:
-        text += f"\n[{doc['id']}] ({doc.get('analysis_type', 'analysis')})\n{doc['text']}\n"
-
-    return text
+    return _format_analysis_context(analysis_context_documents(query))
 
 
 def _load_reliability_context(query: str) -> str:
@@ -128,50 +164,30 @@ def _load_reliability_context(query: str) -> str:
     Load reliability ensurance documents relevant to the query.
     These provide cross-source validation and corroboration context.
     """
-    import json
-
-    rel_path = config.RELIABILITY_DIR / "reliability_documents.jsonl"
-    if not rel_path.exists():
-        return ""
-
-    rel_docs = []
-    with open(rel_path, encoding="utf-8") as f:
-        for line in f:
-            if line.strip():
-                rel_docs.append(json.loads(line))
-
-    if not rel_docs:
-        return ""
-
-    query_terms = set(query.lower().split())
-    reliability_keywords = {
-        "reliable", "reliability", "confidence", "trust", "validate",
-        "validation", "corroborate", "corroboration", "agree", "agreement",
-        "consistent", "consistency", "gap", "gaps", "anomaly", "anomalies",
-        "outlier", "outliers", "interpolate", "predict", "verify",
-        "cross-source", "cross", "support", "confirm",
-        # Also trigger on general science queries
-        "temperature", "sst", "ctd", "diversity", "shannon",
-        "compare", "comparison", "trend", "seasonal",
-    }
-
-    if not query_terms.intersection(reliability_keywords):
-        return ""
-
-    text = "\n=== RELIABILITY ENSURANCE ===\n"
-    text += "(Cross-source validation and corroboration results.)\n"
-    for doc in rel_docs:
-        text += f"\n[{doc['id']}] ({doc.get('analysis_type', 'reliability')})\n{doc['text']}\n"
-
-    return text
+    return _format_reliability_context(reliability_context_documents(query))
 
 
-def build_prompt(
+def build_prompt_with_context(
     query: str,
     results: List[dict],
     *,
     inject_analysis: bool = True,
     inject_reliability: bool = True,
+) -> tuple[str, Dict[str, List[dict]]]:
+    """
+    Build the prompt and return the structured supplementary context used.
+    """
+    context = {
+        "analysis": analysis_context_documents(query) if inject_analysis else [],
+        "reliability": reliability_context_documents(query) if inject_reliability else [],
+    }
+    return _build_prompt_from_context(query, results, context), context
+
+
+def _build_prompt_from_context(
+    query: str,
+    results: List[dict],
+    context: Dict[str, List[dict]],
 ) -> str:
     """
     Build the provenance-aware system prompt with evidence, analysis,
@@ -196,7 +212,7 @@ RULES:
 STUDY SITES:
 • Onagawa Bay (O) ≈ 38.44°N 141.45°E
 • Ishinomaki Bay (I) ≈ 38.41°N 141.30°E
-• Matsushima Bay (M) ≈ 38.35°N 141.06°E"""
+• Mutsu Bay (M): coordinate from source metadata"""
 
     evidence_text = "\n=== EVIDENCE ===\n"
     for r in results:
@@ -206,11 +222,30 @@ STUDY SITES:
         text = r.get("text", "")
         evidence_text += f"\n[{doc_id}] ({src}, {t})\n{text}\n"
 
-    # Inject analysis context for complex queries (when enabled)
-    analysis_text = _load_analysis_context(query) if inject_analysis else ""
-    reliability_text = _load_reliability_context(query) if inject_reliability else ""
+    analysis_text = _format_analysis_context(context.get("analysis", []))
+    reliability_text = _format_reliability_context(context.get("reliability", []))
 
     return f"{system}\n{evidence_text}{analysis_text}{reliability_text}\n\nUSER QUESTION: {query}"
+
+
+def build_prompt(
+    query: str,
+    results: List[dict],
+    *,
+    inject_analysis: bool = True,
+    inject_reliability: bool = True,
+) -> str:
+    """
+    Build the provenance-aware system prompt with evidence, analysis,
+    and reliability context.
+    """
+    prompt, _context = build_prompt_with_context(
+        query,
+        results,
+        inject_analysis=inject_analysis,
+        inject_reliability=inject_reliability,
+    )
+    return prompt
 
 
 def ask(

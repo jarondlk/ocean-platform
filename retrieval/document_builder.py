@@ -42,13 +42,13 @@ class RetrievalDocument:
 BAY_NAMES = {
     "O": "Onagawa Bay",
     "I": "Ishinomaki Bay",
-    "M": "Matsushima Bay",
+    "M": "Mutsu Bay",
 }
 
 BAY_COORDS = {
     "O": (38.4449, 141.4474),
     "I": (38.4127, 141.3040),
-    "M": (38.3540, 141.0630),
+    # Mutsu Bay (M) must come from source metadata; no trusted fallback is hardcoded.
 }
 
 

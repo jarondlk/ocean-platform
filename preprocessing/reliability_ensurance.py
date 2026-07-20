@@ -495,7 +495,7 @@ def build_reliability_documents(
     Same pattern as pre_analysis.build_analysis_documents().
     """
     docs = []
-    bay_names = {"O": "Onagawa Bay", "I": "Ishinomaki Bay", "M": "Matsushima Bay"}
+    bay_names = {"O": "Onagawa Bay", "I": "Ishinomaki Bay", "M": "Mutsu Bay"}
 
     # ── SST-CTD validation summary ──
     if not sst_ctd_validation.empty:

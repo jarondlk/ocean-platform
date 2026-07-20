@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 BAY_BY_LOCATION = {
     "Onagawa Bay": "O",
     "Ishinomaki Bay": "I",
-    "Matsushima Bay": "M",
+    "Mutsu Bay": "M",
 }
 
 

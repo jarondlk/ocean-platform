@@ -23,23 +23,16 @@ const interfaceTabs = [
   {
     tab: "Explore",
     route: "/explore",
-    purpose: "General data exploration across normalized and analysis datasets.",
-    primary_controls: "Dataset, bay, station, source, date range, search, sort, columns, sample drill-down",
-    outputs: "Tables, column profiles, time series, sample-linked evidence",
+    purpose: "Corpus workbench for normalized tables, time series, sample detail, and evidence retrieval.",
+    primary_controls: "View tabs, dataset, bay, station, source, date range, search, sort, evidence query, score threshold",
+    outputs: "Tables, column profiles, time series, sample detail, ranked source documents, retrieval diagnostics",
   },
   {
     tab: "Data",
     route: "/data",
-    purpose: "Domain-specific CTD, taxa, and SST inspection by sample or date range.",
-    primary_controls: "Sample selector, CTD variable selector, SST date bounds",
-    outputs: "CTD profiles, taxa summaries, SST observations and daily aggregates",
-  },
-  {
-    tab: "Analysis",
-    route: "/analysis",
-    purpose: "Inspection of ecological pre-analysis and reliability outputs.",
-    primary_controls: "Co-occurrence pair limit, table limit, analysis sections",
-    outputs: "Trends, correlations, diversity, co-occurrence, reliability tables and summaries",
+    purpose: "Domain workbench for observations, CTD, taxa, SST, derived analysis, and reliability outputs.",
+    primary_controls: "View tabs, sample selectors, CTD variables, SST bounds, analysis filters, reliability checks",
+    outputs: "Observation catalog, CTD profiles, taxa summaries, SST charts, derived-analysis tables, reliability matrices",
   },
   {
     tab: "Database",
@@ -56,6 +49,13 @@ const interfaceTabs = [
     outputs: "Readiness checks, artifact registry, background job progress, persisted logs",
   },
   {
+    tab: "Provenance",
+    route: "/provenance",
+    purpose: "Traceability register for source files, artifact versions, retrieval documents, embeddings, and upsert planning.",
+    primary_controls: "Manifest document limit, embedding status inclusion, doc_id trace lookup, dry-run sample key limit",
+    outputs: "Lineage manifest, document trace path, source/artifact hashes, embedding treatment, upsert dry-run plan",
+  },
+  {
     tab: "Evaluation",
     route: "/evaluation",
     purpose: "Benchmark control and evaluation artifact inspection.",
@@ -68,13 +68,6 @@ const interfaceTabs = [
     purpose: "Expert RAG query interface with retrieval and generation knobs.",
     primary_controls: "Query, k, filters, retrieval weights, model, context injection, sampling controls",
     outputs: "Citation-grounded answer, source list, model/options trace",
-  },
-  {
-    tab: "Evidence",
-    route: "/evidence",
-    purpose: "Source-level evidence retrieval without answer generation.",
-    primary_controls: "Query, source type, bay, date bounds, retrieval parameters",
-    outputs: "Ranked source documents and retrieval diagnostics",
   },
   {
     tab: "System",
@@ -110,6 +103,31 @@ export default function OverviewPage() {
     if (!stats) return 0;
     return Object.values(stats.documents).reduce((sum, value) => sum + value, 0);
   }, [stats]);
+  const sourceComposition = sourceOrder.map((source) => ({
+    label: sourceLabels[source],
+    value: stats?.documents[source] || 0,
+    total: totalDocuments,
+  }));
+  const runtimeSignals = [
+    { label: "API", value: status?.status || "loading", ok: status?.status === "ok" },
+    { label: "Database", value: String(status?.database?.available ?? "loading"), ok: Boolean(status?.database?.available) },
+    { label: "Ollama", value: String(status?.ollama?.available ?? "loading"), ok: Boolean(status?.ollama?.available) },
+    { label: "Analysis docs", value: String(stats?.analysis_docs ?? "loading"), ok: Boolean(stats?.analysis_docs) },
+    { label: "Reliability docs", value: String(stats?.reliability_docs ?? "loading"), ok: Boolean(stats?.reliability_docs) },
+  ];
+  const routeGroups = [
+    { label: "Data", routes: ["/explore", "/data", "/database"] },
+    { label: "Operations", routes: ["/pipeline", "/provenance", "/evaluation", "/system", "/debug"] },
+    { label: "RAG", routes: ["/chat"] },
+  ];
+  const architectureNodes = [
+    { label: "Raw Sources", detail: `${stats?.provenance_records ?? "..."} files` },
+    { label: "Normalized Artifacts", detail: `${stats?.ctd_casts ?? "..."} CTD casts` },
+    { label: "Analysis", detail: `${stats?.analysis_docs ?? "..."} documents` },
+    { label: "Reliability", detail: `${stats?.reliability_docs ?? "..."} documents` },
+    { label: "Retrieval Store", detail: `${totalDocuments || "..."} documents` },
+    { label: "Interfaces", detail: "query, inspect, evaluate" },
+  ];
 
   return (
     <section>
@@ -126,47 +144,27 @@ export default function OverviewPage() {
         <MetricCard label="SST days" value={stats?.sst_days} />
       </div>
 
-      <div className="grid two-column" style={{ marginTop: 16 }}>
-        <article className="card">
-          <h3 className="section-title">Documents by source</h3>
-          <div className="source-bars">
-            {sourceOrder.map((source) => {
-              const value = stats?.documents[source] || 0;
-              const pct = totalDocuments ? Math.round((value / totalDocuments) * 100) : 0;
-              return (
-                <div className="source-bar-row" key={source}>
-                  <span>{sourceLabels[source]}</span>
-                  <strong>{value}</strong>
-                  <span>{pct}%</span>
-                </div>
-              );
-            })}
-          </div>
+      <section className="data-section architecture-panel">
+        <h3 className="section-title">Architecture</h3>
+        <ArchitectureFlow nodes={architectureNodes} />
+      </section>
+
+      <section className="dashboard-grid">
+        <article className="data-section">
+          <h3 className="section-title">Source Balance</h3>
+          <CompositionBars rows={sourceComposition} />
         </article>
 
-        <article className="card">
-          <h3 className="section-title">System</h3>
-          <div className="status-list">
-            <StatusRow label="API" value={status?.status || "loading"} />
-            <StatusRow
-              label="Database"
-              value={String(status?.database?.available ?? "loading")}
-            />
-            <StatusRow
-              label="Ollama"
-              value={String(status?.ollama?.available ?? "loading")}
-            />
-            <StatusRow
-              label="Analysis documents"
-              value={String(stats?.analysis_docs ?? "loading")}
-            />
-            <StatusRow
-              label="Reliability documents"
-              value={String(stats?.reliability_docs ?? "loading")}
-            />
-          </div>
+        <article className="data-section">
+          <h3 className="section-title">Runtime Signals</h3>
+          <StatusMatrix rows={runtimeSignals} />
         </article>
-      </div>
+
+        <article className="data-section dashboard-wide">
+          <h3 className="section-title">Operational Surface</h3>
+          <RouteRail groups={routeGroups} />
+        </article>
+      </section>
 
       <section className="data-section overview-register">
         <h3 className="section-title">Interface Register</h3>
@@ -180,6 +178,22 @@ export default function OverviewPage() {
   );
 }
 
+function ArchitectureFlow({ nodes }: { nodes: { label: string; detail: string }[] }) {
+  return (
+    <div className="architecture-flow" aria-label="System architecture flow">
+      {nodes.map((node, index) => (
+        <div className="architecture-step" key={node.label}>
+          <div className="architecture-node">
+            <span>{node.label}</span>
+            <strong>{node.detail}</strong>
+          </div>
+          {index < nodes.length - 1 ? <div className="architecture-edge" aria-hidden="true" /> : null}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function MetricCard({ label, value }: { label: string; value?: number }) {
   return (
     <article className="card">
@@ -189,11 +203,52 @@ function MetricCard({ label, value }: { label: string; value?: number }) {
   );
 }
 
-function StatusRow({ label, value }: { label: string; value: string }) {
+function CompositionBars({ rows }: { rows: { label: string; value: number; total: number }[] }) {
   return (
-    <div className="status-row">
-      <span>{label}</span>
-      <strong>{value}</strong>
+    <div className="visual-bars">
+      {rows.map((row) => {
+        const pct = row.total ? Math.round((row.value / row.total) * 100) : 0;
+        return (
+          <div className="visual-bar-row" key={row.label}>
+            <span>{row.label}</span>
+            <div className="visual-track" aria-label={`${row.label}: ${pct}%`}>
+              <div style={{ width: `${pct}%` }} />
+            </div>
+            <strong>{row.value.toLocaleString()}</strong>
+            <em>{pct}%</em>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function StatusMatrix({ rows }: { rows: { label: string; value: string; ok: boolean }[] }) {
+  return (
+    <div className="status-matrix">
+      {rows.map((row) => (
+        <div className="status-tile" data-state={row.ok ? "ok" : "warn"} key={row.label}>
+          <span>{row.label}</span>
+          <strong>{row.value}</strong>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function RouteRail({ groups }: { groups: { label: string; routes: string[] }[] }) {
+  const total = groups.reduce((sum, group) => sum + group.routes.length, 0);
+  return (
+    <div className="route-rail" aria-label="Interface route groups">
+      {groups.map((group) => {
+        const pct = total ? (group.routes.length / total) * 100 : 0;
+        return (
+          <div className="route-segment" key={group.label} style={{ flexBasis: `${pct}%` }} title={group.routes.join(", ")}>
+            <span>{group.label}</span>
+            <strong>{group.routes.length}</strong>
+          </div>
+        );
+      })}
     </div>
   );
 }

@@ -42,7 +42,7 @@ class AnchorEvent:
 BAY_COORDS = {
     "O": (38.4449, 141.4474),   # Onagawa Bay
     "I": (38.4127, 141.3040),   # Ishinomaki Bay (approximate)
-    "M": (38.3540, 141.0630),   # Matsushima Bay (approximate)
+    # Mutsu Bay (M) must come from source metadata; no trusted fallback is hardcoded.
 }
 
 

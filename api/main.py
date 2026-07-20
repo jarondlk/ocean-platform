@@ -30,6 +30,7 @@ from api.schemas import (
     ChatRequest,
     ChatResponse,
     ColumnProfile,
+    ContextDocument,
     CorpusStats,
     CtdProfileResponse,
     AnalysisResponse,
@@ -40,6 +41,7 @@ from api.schemas import (
     DatabaseTableResponse,
     DatasetCatalogItem,
     EvaluationAblationRunRequest,
+    EvaluationAnalyticsResponse,
     EvaluationCatalogResponse,
     EvaluationCompareRequest,
     EvaluationCompareResponse,
@@ -57,13 +59,22 @@ from api.schemas import (
     ExploreTableResponse,
     ModelsResponse,
     OllamaModel,
+    PipelineArtifactFreshness,
     PipelineArtifactInfo,
     PipelineJobStatus,
     PipelineLogResponse,
+    PipelinePreflightCheck,
+    PipelinePreflightResponse,
+    PipelineRunDetailResponse,
     PipelineRunRequest,
+    PipelineRunSummary,
+    PipelineRunsResponse,
+    PipelineStageLog,
     PipelineStageInfo,
     PipelineStartResponse,
     PipelineStatusResponse,
+    ProvenanceManifestResponse,
+    ProvenanceTraceResponse,
     RetrieveRequest,
     RetrieveResponse,
     SampleDetailResponse,
@@ -76,6 +87,7 @@ from api.schemas import (
     TaxaSampleResponse,
     TimeSeriesPoint,
     TimeSeriesResponse,
+    UpsertDryRunResponse,
 )
 from evaluation.benchmark import (
     EVAL_MODES,
@@ -88,8 +100,13 @@ from evaluation.benchmark import (
 )
 from evaluation.questions import BENCHMARK_QUESTIONS, QUESTION_CATEGORIES
 from evaluation.reference_answers import get_reference
-from orchestration.unified import build_prompt, retrieve
+from orchestration.unified import build_prompt_with_context, retrieve
 from retrieval.local_retriever import LocalRetriever
+from ingestion.lineage import (
+    build_document_trace,
+    build_provenance_manifest,
+    build_upsert_dry_run_plan,
+)
 
 
 def _cors_origins() -> List[str]:
@@ -351,6 +368,7 @@ EVALUATION_QUALITY_METRICS = [
 EVALUATION_JOB_LOCK = threading.Lock()
 EVALUATION_CANCEL_EVENTS: Dict[str, threading.Event] = {}
 EVALUATION_TERMINAL_STATES = {"complete", "failed", "cancelled"}
+PIPELINE_TERMINAL_STATES = {"complete", "failed", "cancelled"}
 
 PIPELINE_STAGES: List[Dict[str, Any]] = [
     {
@@ -406,12 +424,12 @@ PIPELINE_STAGES: List[Dict[str, Any]] = [
     {
         "id": "load_db",
         "label": "Load database",
-        "description": "Create/load PostgreSQL tables and refresh full-text search vectors.",
-        "command": ["python", "scripts/load_db.py"],
+        "description": "Reset/load PostgreSQL tables, refresh full-text search vectors, and optionally embed documents.",
+        "command": ["python", "scripts/load_db.py", "--reset", "--embed"],
         "expected_inputs": ["data/normalized/*.parquet", "data/serving/retrieval_documents.parquet", "data/canonical/*.parquet"],
-        "expected_outputs": ["PostgreSQL tables", "retrieval_document.text_tsv"],
+        "expected_outputs": ["PostgreSQL tables", "retrieval_document.text_tsv", "retrieval_document.embedding"],
         "destructive": True,
-        "expensive": False,
+        "expensive": True,
     },
     {
         "id": "embed_documents",
@@ -425,6 +443,15 @@ PIPELINE_STAGES: List[Dict[str, Any]] = [
     },
 ]
 PIPELINE_STAGE_IDS = {stage["id"] for stage in PIPELINE_STAGES}
+PIPELINE_STAGE_BY_ID = {stage["id"]: stage for stage in PIPELINE_STAGES}
+PIPELINE_DEFAULT_STAGES = [
+    "validate_raw",
+    "ingest",
+    "build_retrieval_docs",
+    "pre_analysis",
+    "reliability",
+    "load_db",
+]
 PIPELINE_JOB_LOCK = threading.Lock()
 PIPELINE_CANCEL_EVENTS: Dict[str, threading.Event] = {}
 PIPELINE_PROCESSES: Dict[str, subprocess.Popen[str]] = {}
@@ -451,7 +478,36 @@ def _source_document(doc: Dict[str, Any]) -> SourceDocument:
         station=doc.get("station"),
         text=str(doc.get("text") or ""),
         score=doc.get("score"),
+        rank_sources=doc.get("rank_sources") or {},
     )
+
+
+def _context_document(doc: Dict[str, Any], context_type: str) -> ContextDocument:
+    doc_id = str(doc.get("doc_id") or doc.get("id") or f"{context_type}:unknown")
+    return ContextDocument(
+        doc_id=doc_id,
+        title=str(doc.get("title") or doc.get("analysis_type") or doc_id),
+        context_type=context_type,
+        analysis_type=doc.get("analysis_type"),
+        text=str(doc.get("text") or ""),
+    )
+
+
+def _prompt_diagnostics(prompt: str, retrieved: List[Dict[str, Any]], context: Dict[str, List[Dict[str, Any]]]) -> Dict[str, Any]:
+    analysis_docs = context.get("analysis") or []
+    reliability_docs = context.get("reliability") or []
+    retrieved_chars = sum(len(str(row.get("text") or "")) for row in retrieved)
+    context_chars = sum(len(str(row.get("text") or "")) for row in [*analysis_docs, *reliability_docs])
+    return {
+        "prompt_chars": len(prompt),
+        "retrieved_documents": len(retrieved),
+        "analysis_context_documents": len(analysis_docs),
+        "reliability_context_documents": len(reliability_docs),
+        "context_documents": len(analysis_docs) + len(reliability_docs),
+        "retrieved_text_chars": retrieved_chars,
+        "supplementary_text_chars": context_chars,
+        "ranked_documents": sum(1 for row in retrieved if row.get("rank_sources")),
+    }
 
 
 def _read_jsonl(path: Path) -> List[Dict[str, Any]]:
@@ -627,6 +683,78 @@ def _pipeline_readiness(
         "missing_core_artifacts": missing_core_artifacts,
         "manual_only": True,
     }
+
+
+def _parse_iso_datetime(value: Optional[str]) -> Optional[datetime]:
+    if not value:
+        return None
+    try:
+        parsed = datetime.fromisoformat(value)
+        return parsed.astimezone() if parsed.tzinfo else parsed.astimezone()
+    except ValueError:
+        return None
+
+
+def _artifact_freshness_status(item: PipelineArtifactInfo, now: datetime) -> tuple[str, Optional[float]]:
+    if not item.exists:
+        return "missing", None
+    modified_at = _parse_iso_datetime(item.modified_at)
+    if not modified_at:
+        return "unknown", None
+    age_days = round((now - modified_at).total_seconds() / 86400, 2)
+    if age_days <= 7:
+        return "recent", age_days
+    if age_days <= 30:
+        return "aged", age_days
+    return "archival", age_days
+
+
+def _pipeline_artifact_freshness(
+    raw_sources: List[PipelineArtifactInfo],
+    artifacts: List[PipelineArtifactInfo],
+) -> List[PipelineArtifactFreshness]:
+    now = datetime.now().astimezone()
+    raw_datetimes = [
+        parsed
+        for parsed in (_parse_iso_datetime(item.modified_at) for item in raw_sources if item.exists)
+        if parsed is not None
+    ]
+    latest_raw = max(raw_datetimes) if raw_datetimes else None
+    latest_raw_text = latest_raw.isoformat(timespec="seconds") if latest_raw else None
+    rows: List[PipelineArtifactFreshness] = []
+
+    for kind, items in (("raw", raw_sources), ("derived", artifacts)):
+        for item in items:
+            freshness_status, age_days = _artifact_freshness_status(item, now)
+            modified_at = _parse_iso_datetime(item.modified_at)
+            if kind == "raw":
+                lineage_status = "source"
+            elif not item.exists:
+                lineage_status = "missing"
+            elif not latest_raw or not modified_at:
+                lineage_status = "unknown"
+            elif modified_at >= latest_raw:
+                lineage_status = "fresh_against_raw"
+            else:
+                lineage_status = "older_than_latest_raw"
+            rows.append(
+                PipelineArtifactFreshness(
+                    id=item.id,
+                    label=item.label,
+                    kind=kind,
+                    path=item.path,
+                    exists=item.exists,
+                    freshness_status=freshness_status,
+                    lineage_status=lineage_status,
+                    age_days=age_days,
+                    modified_at=item.modified_at,
+                    latest_raw_modified_at=latest_raw_text,
+                    rows=item.rows,
+                    size_bytes=item.size_bytes,
+                    note=item.note,
+                )
+            )
+    return rows
 
 
 def _debug_artifacts() -> Dict[str, Dict[str, Any]]:
@@ -818,7 +946,7 @@ def _json_safe_value(value: Any) -> Any:
         if pd.isna(value):
             return None
         return value.isoformat()
-    if isinstance(value, float) and math.isnan(value):
+    if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
         return None
     if hasattr(value, "item"):
         return _json_safe_value(value.item())
@@ -968,6 +1096,464 @@ def _pipeline_tail_log(job_id: str, limit_bytes: int = 20000) -> str:
         return f.read().decode("utf-8", errors="replace")
 
 
+def _pipeline_manifest_path(job_id: str) -> Path:
+    return _pipeline_runs_root() / job_id / "manifest.json"
+
+
+def _model_dump(model: Any) -> Dict[str, Any]:
+    if hasattr(model, "model_dump"):
+        return model.model_dump()
+    if hasattr(model, "dict"):
+        return model.dict()
+    return dict(model)
+
+
+def _git_commit() -> Optional[str]:
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=PROJECT_ROOT,
+            capture_output=True,
+            text=True,
+            check=True,
+            timeout=3,
+        )
+        return result.stdout.strip() or None
+    except Exception:
+        return None
+
+
+def _pipeline_artifacts_payload(items: List[PipelineArtifactInfo]) -> List[Dict[str, Any]]:
+    return [_model_dump(item) for item in items]
+
+
+def _pipeline_runtime_snapshot() -> Dict[str, Any]:
+    raw_sources = _pipeline_raw_sources()
+    artifacts = _pipeline_artifacts()
+    return {
+        "captured_at": _now_iso(),
+        "raw_sources": _pipeline_artifacts_payload(raw_sources),
+        "artifacts": _pipeline_artifacts_payload(artifacts),
+        "database": _pipeline_database_snapshot(),
+        "ollama": _ollama_status(),
+    }
+
+
+def _pipeline_command_plan(request: PipelineRunRequest) -> List[Dict[str, Any]]:
+    plan: List[Dict[str, Any]] = []
+    for index, stage_id in enumerate(request.stages, start=1):
+        stage = PIPELINE_STAGE_BY_ID[stage_id]
+        command = _pipeline_command(stage_id, request)
+        plan.append(
+            {
+                "index": index,
+                "stage_id": stage_id,
+                "label": stage["label"],
+                "description": stage["description"],
+                "command": command,
+                "display_command": _display_command(command),
+                "destructive": bool(stage.get("destructive")),
+                "expensive": bool(stage.get("expensive")),
+            }
+        )
+    return plan
+
+
+def _pipeline_check(
+    checks: List[PipelinePreflightCheck],
+    *,
+    id_: str,
+    label: str,
+    passed: bool,
+    detail: str,
+    required: bool = False,
+    warning: bool = False,
+) -> None:
+    status = "pass" if passed else ("warn" if warning else "fail")
+    severity = "info" if passed else ("warning" if warning else "blocker")
+    checks.append(
+        PipelinePreflightCheck(
+            id=id_,
+            label=label,
+            status=status,
+            severity=severity,
+            required=required,
+            detail=detail,
+        )
+    )
+
+
+def _producer_selected(stage_ids: List[str], producer: str) -> bool:
+    return producer in stage_ids
+
+
+def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePreflightResponse:
+    _validate_pipeline_stages(request.stages)
+    raw_sources = _pipeline_raw_sources()
+    artifacts = _pipeline_artifacts()
+    readiness = _pipeline_readiness(raw_sources, artifacts)
+    database = _pipeline_database_snapshot()
+    ollama = _ollama_status()
+    checks: List[PipelinePreflightCheck] = []
+
+    _pipeline_check(
+        checks,
+        id_="manual_only",
+        label="Manual batch mode",
+        passed=True,
+        detail="This runner only starts from an explicit operator request.",
+        required=True,
+    )
+    _pipeline_check(
+        checks,
+        id_="stages_selected",
+        label="Stages selected",
+        passed=bool(request.stages),
+        detail=", ".join(request.stages) if request.stages else "No stages selected.",
+        required=True,
+    )
+
+    missing_raw = list(readiness.get("missing_required_raw") or [])
+    _pipeline_check(
+        checks,
+        id_="required_raw",
+        label="Required CTD/metagenome raw files",
+        passed=not missing_raw,
+        detail="All required raw source files are present." if not missing_raw else f"Missing: {', '.join(missing_raw)}",
+        required=True,
+    )
+
+    sst_source = next((item for item in raw_sources if item.id == "raw:sst_netcdf"), None)
+    sst_files = 0
+    if sst_source and sst_source.exists:
+        match = re.search(r"(\d+) NetCDF", str(sst_source.note or ""))
+        sst_files = int(match.group(1)) if match else 0
+    if "ingest" in request.stages and not request.skip_sst:
+        _pipeline_check(
+            checks,
+            id_="sst_source",
+            label="SST NetCDF source",
+            passed=sst_files > 0,
+            detail=f"{sst_files} NetCDF files available." if sst_files > 0 else "No SST NetCDF files found; use skip_sst for CTD/metagenome-only ingestion.",
+            required=True,
+        )
+    elif "ingest" in request.stages and request.skip_sst:
+        _pipeline_check(
+            checks,
+            id_="sst_source",
+            label="SST NetCDF source",
+            passed=True,
+            detail="SST preprocessing is explicitly skipped for this run.",
+            required=False,
+        )
+
+    artifact_by_id = {item.id: item for item in artifacts}
+    dependency_checks = [
+        ("build_retrieval_docs", "normalized:ctd_summary", "ingest", "CTD summary artifact"),
+        ("build_retrieval_docs", "serving:sample_registry", "ingest", "Sample registry artifact"),
+        ("pre_analysis", "serving:sample_context", "ingest", "Sample context artifact"),
+        ("reliability", "analysis:documents", "pre_analysis", "Analysis documents"),
+        ("load_db", "serving:retrieval_parquet", "build_retrieval_docs", "Retrieval parquet corpus"),
+        ("load_db", "canonical:anchors", "build_retrieval_docs", "Anchor events"),
+        ("load_db", "canonical:links", "build_retrieval_docs", "Cross-source links"),
+    ]
+    for stage_id, artifact_id, producer, label in dependency_checks:
+        if stage_id not in request.stages:
+            continue
+        artifact = artifact_by_id.get(artifact_id)
+        produced_in_run = _producer_selected(request.stages, producer)
+        exists = bool(artifact and artifact.exists)
+        _pipeline_check(
+            checks,
+            id_=f"input:{stage_id}:{artifact_id}",
+            label=label,
+            passed=exists or produced_in_run,
+            detail=(
+                f"Present: {artifact.path}" if exists and artifact
+                else f"Expected to be produced by stage '{producer}' in this run." if produced_in_run
+                else f"Missing required input artifact: {artifact_id}"
+            ),
+            required=not produced_in_run,
+            warning=produced_in_run and not exists,
+        )
+
+    needs_database = "load_db" in request.stages or "embed_documents" in request.stages
+    if needs_database:
+        db_available = bool(database.get("available"))
+        _pipeline_check(
+            checks,
+            id_="database",
+            label="PostgreSQL connection",
+            passed=db_available,
+            detail="Database connection available." if db_available else str(database.get("error") or "Database is unavailable."),
+            required=not request.dry_run,
+            warning=request.dry_run,
+        )
+
+    if "load_db" in request.stages:
+        _pipeline_check(
+            checks,
+            id_="database_reset_guard",
+            label="Database reset guard",
+            passed=request.dry_run or request.reset_database,
+            detail=(
+                "Dry-run does not modify the database."
+                if request.dry_run
+                else "reset_database=true supplied."
+                if request.reset_database
+                else "Non-dry-run database load requires reset_database=true."
+            ),
+            required=not request.dry_run,
+        )
+
+    needs_ollama = "embed_documents" in request.stages or ("load_db" in request.stages and request.embed_after_load)
+    if needs_ollama:
+        ollama_available = bool(ollama.get("available"))
+        _pipeline_check(
+            checks,
+            id_="ollama_embeddings",
+            label="Ollama embedding runtime",
+            passed=ollama_available,
+            detail="Ollama is reachable for embedding generation." if ollama_available else str(ollama.get("error") or "Ollama is unavailable."),
+            required=not request.dry_run,
+            warning=request.dry_run,
+        )
+
+    blockers = [check.detail for check in checks if check.status == "fail"]
+    warnings = [check.detail for check in checks if check.status == "warn"]
+    return PipelinePreflightResponse(
+        generated_at=_now_iso(),
+        ok=not blockers,
+        blockers=blockers,
+        warnings=warnings,
+        request=_model_dump(request),
+        checks=checks,
+        command_plan=_pipeline_command_plan(request),
+        raw_sources=raw_sources,
+        artifacts=artifacts,
+        database=database,
+        ollama=ollama,
+    )
+
+
+def _pipeline_snapshot_diffs(before: Dict[str, Any], after: Dict[str, Any]) -> Dict[str, Any]:
+    before_items = {
+        str(item.get("id")): item
+        for item in list(before.get("raw_sources") or []) + list(before.get("artifacts") or [])
+        if isinstance(item, dict)
+    }
+    after_items = {
+        str(item.get("id")): item
+        for item in list(after.get("raw_sources") or []) + list(after.get("artifacts") or [])
+        if isinstance(item, dict)
+    }
+    artifact_diffs: List[Dict[str, Any]] = []
+    for item_id in sorted(set(before_items) | set(after_items)):
+        before_item = before_items.get(item_id, {})
+        after_item = after_items.get(item_id, {})
+        before_rows = before_item.get("rows")
+        after_rows = after_item.get("rows")
+        row_delta = None
+        if isinstance(before_rows, int) and isinstance(after_rows, int):
+            row_delta = after_rows - before_rows
+        changed = any(
+            before_item.get(key) != after_item.get(key)
+            for key in ("exists", "rows", "size_bytes", "modified_at")
+        )
+        artifact_diffs.append(
+            {
+                "id": item_id,
+                "label": after_item.get("label") or before_item.get("label") or item_id,
+                "exists_before": before_item.get("exists"),
+                "exists_after": after_item.get("exists"),
+                "rows_before": before_rows,
+                "rows_after": after_rows,
+                "rows_delta": row_delta,
+                "size_before": before_item.get("size_bytes"),
+                "size_after": after_item.get("size_bytes"),
+                "modified_before": before_item.get("modified_at"),
+                "modified_after": after_item.get("modified_at"),
+                "changed": changed,
+            }
+        )
+
+    before_db = before.get("database") if isinstance(before.get("database"), dict) else {}
+    after_db = after.get("database") if isinstance(after.get("database"), dict) else {}
+    database_diffs = {
+        key: {
+            "before": before_db.get(key),
+            "after": after_db.get(key),
+            "delta": after_db.get(key) - before_db.get(key)
+            if isinstance(before_db.get(key), int) and isinstance(after_db.get(key), int)
+            else None,
+        }
+        for key in sorted(set(before_db) | set(after_db))
+        if before_db.get(key) != after_db.get(key)
+    }
+    return {"artifacts": artifact_diffs, "database": database_diffs}
+
+
+def _pipeline_summary_from_payload(run_id: str, payload: Dict[str, Any]) -> PipelineRunSummary:
+    stage_results = payload.get("stage_results") if isinstance(payload.get("stage_results"), list) else []
+    failed_stage = next(
+        (
+            str(result.get("stage_id"))
+            for result in stage_results
+            if isinstance(result, dict) and result.get("status") == "failed"
+        ),
+        None,
+    )
+    request_payload = payload.get("request") if isinstance(payload.get("request"), dict) else {}
+    stages = payload.get("stages")
+    if not isinstance(stages, list):
+        stages = request_payload.get("stages") if isinstance(request_payload.get("stages"), list) else []
+    job_id = str(payload.get("job_id") or run_id)
+    return PipelineRunSummary(
+        run_id=str(payload.get("run_id") or run_id),
+        job_id=job_id,
+        status=str(payload.get("status") or "unknown"),
+        tag=payload.get("tag") or request_payload.get("tag"),
+        dry_run=bool(payload.get("dry_run", request_payload.get("dry_run", False))),
+        stages=[str(stage) for stage in stages],
+        stage_count=len(stage_results) if stage_results else len(stages),
+        failed_stage=failed_stage,
+        started_at=payload.get("started_at"),
+        completed_at=payload.get("completed_at"),
+        duration_seconds=payload.get("duration_seconds"),
+        output_dir=payload.get("output_dir"),
+        manifest_path=payload.get("manifest_path"),
+        log_path=payload.get("log_path"),
+        error=payload.get("error"),
+    )
+
+
+def _pipeline_manifest_for_dir(run_dir: Path) -> Dict[str, Any]:
+    manifest = _read_json_file(run_dir / "manifest.json")
+    if manifest:
+        return manifest
+    meta = _read_json_file(run_dir / "run_meta.json")
+    progress = _read_json_file(run_dir / "progress.json")
+    merged = {**progress, **meta}
+    if merged:
+        merged.setdefault("run_id", run_dir.name)
+        merged.setdefault("job_id", run_dir.name)
+        merged.setdefault("output_dir", str(run_dir))
+        merged.setdefault("manifest_path", str(run_dir / "manifest.json"))
+        merged.setdefault("log_path", str(run_dir / "run.log"))
+    return merged
+
+
+def _pipeline_run_summaries(limit: int = 50) -> List[PipelineRunSummary]:
+    runs_root = _pipeline_runs_root()
+    summaries: List[PipelineRunSummary] = []
+    for run_dir in sorted((path for path in runs_root.iterdir() if path.is_dir()), key=lambda path: path.stat().st_mtime, reverse=True):
+        payload = _pipeline_manifest_for_dir(run_dir)
+        if not payload:
+            continue
+        summary = _pipeline_summary_from_payload(run_dir.name, payload)
+        summaries.append(summary)
+    summaries.sort(key=lambda item: item.started_at or item.completed_at or item.run_id, reverse=True)
+    return summaries[:limit]
+
+
+def _pipeline_job_statuses(limit: int = 50, *, active_only: bool = False) -> List[PipelineJobStatus]:
+    runs_root = _pipeline_runs_root()
+    statuses: List[PipelineJobStatus] = []
+    for progress_path in sorted(runs_root.glob("*/progress.json"), key=lambda path: path.stat().st_mtime, reverse=True):
+        payload = _read_json_file(progress_path)
+        if not payload:
+            continue
+        if active_only and str(payload.get("status") or "") in PIPELINE_TERMINAL_STATES:
+            continue
+        try:
+            statuses.append(PipelineJobStatus(**payload))
+        except Exception:
+            continue
+    statuses.sort(key=lambda item: item.updated_at or item.started_at or item.run_id, reverse=True)
+    return statuses[:limit]
+
+
+def _pipeline_stage_logs(
+    job_id: str,
+    manifest: Optional[Dict[str, Any]] = None,
+    limit_bytes: int = 200000,
+) -> List[PipelineStageLog]:
+    manifest_payload = manifest or _pipeline_manifest_for_dir(_pipeline_runs_root() / job_id)
+    log_text = _pipeline_tail_log(job_id, limit_bytes)
+    buffers: Dict[str, List[str]] = {}
+    stage_order: List[str] = []
+    current_stage: Optional[str] = None
+    header_pattern = re.compile(r"^## \[\d+/\d+\] ([a-zA-Z0-9_.-]+)\s*$")
+
+    for line in log_text.splitlines():
+        match = header_pattern.match(line)
+        if match:
+            current_stage = match.group(1)
+            if current_stage not in buffers:
+                buffers[current_stage] = []
+                stage_order.append(current_stage)
+        if current_stage:
+            buffers.setdefault(current_stage, []).append(line)
+
+    stage_results = manifest_payload.get("stage_results") if isinstance(manifest_payload.get("stage_results"), list) else []
+    for result in stage_results:
+        if not isinstance(result, dict):
+            continue
+        stage_id = str(result.get("stage_id") or "")
+        if stage_id and stage_id not in stage_order:
+            stage_order.append(stage_id)
+
+    request_payload = manifest_payload.get("request") if isinstance(manifest_payload.get("request"), dict) else {}
+    request_stages = request_payload.get("stages") if isinstance(request_payload.get("stages"), list) else manifest_payload.get("stages")
+    for stage_id in request_stages if isinstance(request_stages, list) else []:
+        stage_text = str(stage_id)
+        if stage_text and stage_text not in stage_order:
+            stage_order.append(stage_text)
+
+    result_by_stage = {
+        str(result.get("stage_id")): result
+        for result in stage_results
+        if isinstance(result, dict) and result.get("stage_id")
+    }
+    rows: List[PipelineStageLog] = []
+    for stage_id in stage_order:
+        result = result_by_stage.get(stage_id, {})
+        log = "\n".join(buffers.get(stage_id, []))
+        stage_info = PIPELINE_STAGE_BY_ID.get(stage_id, {})
+        rows.append(
+            PipelineStageLog(
+                stage_id=stage_id,
+                label=stage_info.get("label") or stage_id,
+                command=result.get("command"),
+                status=result.get("status"),
+                return_code=result.get("return_code"),
+                duration_seconds=result.get("duration_seconds"),
+                line_count=len(buffers.get(stage_id, [])),
+                bytes=len(log.encode("utf-8")),
+                log=log,
+            )
+        )
+    return rows
+
+
+def _pipeline_run_detail_or_404(run_id: str, limit_bytes: int = 50000) -> PipelineRunDetailResponse:
+    run_dir = _pipeline_runs_root() / run_id
+    if not run_dir.exists() or not run_dir.is_dir():
+        raise HTTPException(status_code=404, detail=f"Unknown pipeline run: {run_id}")
+    manifest = _pipeline_manifest_for_dir(run_dir)
+    if not manifest:
+        raise HTTPException(status_code=404, detail=f"Pipeline run has no manifest: {run_id}")
+    progress = _read_json_file(run_dir / "progress.json")
+    summary = _pipeline_summary_from_payload(run_id, manifest)
+    return PipelineRunDetailResponse(
+        summary=summary,
+        manifest=manifest,
+        progress=progress,
+        log_tail=_pipeline_tail_log(summary.job_id or run_id, limit_bytes),
+        stage_logs=_pipeline_stage_logs(summary.job_id or run_id, manifest, limit_bytes),
+    )
+
+
 def _pipeline_status_payload(
     *,
     job_id: str,
@@ -1055,6 +1641,8 @@ def _pipeline_command(stage_id: str, request: PipelineRunRequest) -> List[str]:
         command.append("--skip-sst")
     if stage_id == "load_db" and request.reset_database:
         command.append("--reset")
+    if stage_id == "load_db" and request.embed_after_load:
+        command.append("--embed")
     return command
 
 
@@ -1080,7 +1668,11 @@ def _run_pipeline_job(
     started = time.time()
     started_at = _now_iso()
     stage_results: List[Dict[str, Any]] = []
+    preflight = _pipeline_preflight_payload(request)
+    before_snapshot = _pipeline_runtime_snapshot()
+    command_plan = _pipeline_command_plan(request)
     meta: Dict[str, Any] = {
+        "schema_version": 1,
         "run_id": run_id,
         "job_id": job_id,
         "tag": request.tag,
@@ -1088,17 +1680,30 @@ def _run_pipeline_job(
         "dry_run": request.dry_run,
         "skip_sst": request.skip_sst,
         "reset_database": request.reset_database,
+        "embed_after_load": request.embed_after_load,
         "embedding_model": request.embedding_model or config.EMBEDDING_MODEL,
         "embedding_batch_size": request.embedding_batch_size,
         "stages": request.stages,
+        "request": _model_dump(request),
+        "manual_only": True,
+        "git_commit": _git_commit(),
+        "command_plan": command_plan,
+        "preflight": _model_dump(preflight),
+        "artifacts_before": before_snapshot,
+        "stage_results": stage_results,
         "status": "running",
         "started_at": started_at,
+        "output_dir": str(_pipeline_output_dir(run_id)),
+        "manifest_path": str(_pipeline_manifest_path(job_id)),
+        "log_path": str(_pipeline_log_path(job_id)),
     }
+    _write_json_atomic(_pipeline_manifest_path(job_id), meta)
     _write_json_atomic(_pipeline_meta_path(job_id), meta)
     _write_pipeline_status(status_payload, status="running", phase="starting", started_at=started_at)
     _pipeline_append_log(job_id, f"# Pipeline run {run_id}")
     _pipeline_append_log(job_id, f"started_at={started_at}")
     _pipeline_append_log(job_id, f"dry_run={request.dry_run}")
+    _pipeline_append_log(job_id, f"manifest={_pipeline_manifest_path(job_id)}")
 
     for index, stage_id in enumerate(request.stages, start=1):
         if cancel_event.is_set():
@@ -1127,6 +1732,8 @@ def _run_pipeline_job(
                 "duration_seconds": 0.0,
             }
             stage_results.append(result)
+            meta["stage_results"] = stage_results
+            _write_json_atomic(_pipeline_manifest_path(job_id), meta)
             _pipeline_append_log(job_id, "DRY RUN: command not executed.")
             _write_pipeline_status(
                 status_payload,
@@ -1171,6 +1778,8 @@ def _run_pipeline_job(
                 "duration_seconds": duration,
             }
             stage_results.append(result)
+            meta["stage_results"] = stage_results
+            _write_json_atomic(_pipeline_manifest_path(job_id), meta)
             meta["status"] = "cancelled"
             break
 
@@ -1183,6 +1792,8 @@ def _run_pipeline_job(
             "duration_seconds": duration,
         }
         stage_results.append(result)
+        meta["stage_results"] = stage_results
+        _write_json_atomic(_pipeline_manifest_path(job_id), meta)
         _write_pipeline_status(
             status_payload,
             current=index,
@@ -1203,6 +1814,10 @@ def _run_pipeline_job(
     meta["completed_at"] = completed_at
     meta["duration_seconds"] = round(time.time() - started, 2)
     meta["stage_results"] = stage_results
+    after_snapshot = _pipeline_runtime_snapshot()
+    meta["artifacts_after"] = after_snapshot
+    meta["diffs"] = _pipeline_snapshot_diffs(before_snapshot, after_snapshot)
+    _write_json_atomic(_pipeline_manifest_path(job_id), meta)
     _write_json_atomic(_pipeline_meta_path(job_id), meta)
     if final_status == "complete":
         message = "Dry-run plan complete." if request.dry_run else "Pipeline run complete."
@@ -1225,13 +1840,55 @@ def _run_pipeline_job(
     )
 
 
-def _start_pipeline_job(request: PipelineRunRequest) -> PipelineStartResponse:
+def _validate_pipeline_request_for_start(request: PipelineRunRequest) -> PipelinePreflightResponse:
     _validate_pipeline_stages(request.stages)
     if "load_db" in request.stages and not request.dry_run and not request.reset_database:
         raise HTTPException(
             status_code=400,
             detail="Non-dry-run database load requires reset_database=true to avoid duplicate appended rows.",
         )
+    preflight = _pipeline_preflight_payload(request)
+    if not request.dry_run and preflight.blockers:
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "message": "Pipeline preflight failed.",
+                "blockers": preflight.blockers,
+            },
+        )
+    return preflight
+
+
+def run_pipeline_sync(request: PipelineRunRequest, run_id: Optional[str] = None) -> PipelineJobStatus:
+    _validate_pipeline_request_for_start(request)
+    actual_run_id = run_id or _new_pipeline_run_id(request.tag)
+    job_id = actual_run_id
+    output_dir = _pipeline_output_dir(actual_run_id)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    status_payload = _pipeline_status_payload(
+        job_id=job_id,
+        run_id=actual_run_id,
+        status="queued",
+        stages=request.stages,
+        message="Pipeline job queued.",
+    )
+    _write_pipeline_status(status_payload)
+    _run_pipeline_job(
+        request=request,
+        job_id=job_id,
+        run_id=actual_run_id,
+        cancel_event=threading.Event(),
+        status_payload=status_payload,
+    )
+    return _read_pipeline_status_or_404(job_id)
+
+
+def build_pipeline_preflight(request: PipelineRunRequest) -> PipelinePreflightResponse:
+    return _pipeline_preflight_payload(request)
+
+
+def _start_pipeline_job(request: PipelineRunRequest) -> PipelineStartResponse:
+    _validate_pipeline_request_for_start(request)
     run_id = _new_pipeline_run_id(request.tag)
     job_id = run_id
     output_dir = _pipeline_output_dir(run_id)
@@ -1896,6 +2553,348 @@ def _evaluation_summary_from_frame(df: pd.DataFrame) -> Dict[str, Any]:
     return payload
 
 
+def _safe_float(value: Any) -> Optional[float]:
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    if not math.isfinite(number):
+        return None
+    return number
+
+
+def _evaluation_metric_catalog(df: pd.DataFrame) -> List[Dict[str, Any]]:
+    rows: List[Dict[str, Any]] = []
+    for group, definitions in (
+        ("core", EVALUATION_METRICS),
+        ("quality", EVALUATION_QUALITY_METRICS),
+    ):
+        for metric in definitions:
+            key = metric["key"]
+            if key in df.columns:
+                rows.append({**metric, "group": group})
+    return rows
+
+
+def _evaluation_metric_columns(df: pd.DataFrame) -> List[str]:
+    columns: List[str] = []
+    for metric in _evaluation_metric_catalog(df):
+        key = str(metric["key"])
+        numeric = pd.to_numeric(df[key], errors="coerce")
+        if numeric.notna().any():
+            columns.append(key)
+    return columns
+
+
+def _evaluation_group_summary(
+    df: pd.DataFrame,
+    group_cols: List[str],
+    metric_cols: List[str],
+) -> List[Dict[str, Any]]:
+    if not set(group_cols).issubset(df.columns) or not metric_cols:
+        return []
+
+    working = df.copy()
+    for metric in metric_cols:
+        working[metric] = pd.to_numeric(working[metric], errors="coerce")
+
+    grouped = working.groupby(group_cols, dropna=False)
+    payload = grouped[metric_cols].mean(numeric_only=True).round(4).reset_index()
+    payload = payload.merge(grouped.size().rename("n_evaluations").reset_index(), on=group_cols)
+
+    if "question_id" in working.columns:
+        question_counts = grouped["question_id"].nunique().rename("n_questions").reset_index()
+        payload = payload.merge(question_counts, on=group_cols)
+
+    if "error" in working.columns:
+        error_counts = (
+            grouped["error"]
+            .apply(lambda values: int((values.fillna("").astype(str).str.strip() != "").sum()))
+            .rename("n_errors")
+            .reset_index()
+        )
+        payload = payload.merge(error_counts, on=group_cols)
+
+    ordered = group_cols + ["n_evaluations", "n_questions", "n_errors"] + metric_cols
+    payload = payload[[column for column in ordered if column in payload.columns]]
+    return _records(payload)
+
+
+def _choose_baseline_mode(rows: List[Dict[str, Any]], requested: Optional[str]) -> Optional[str]:
+    modes = [str(row.get("mode")) for row in rows if row.get("mode") is not None]
+    if requested and requested in modes:
+        return requested
+    for candidate in ("Full framework", "Full", "+Reliability", "Multi-source RAG"):
+        if candidate in modes:
+            return candidate
+    return modes[-1] if modes else None
+
+
+def _attach_baseline_deltas(
+    rows: List[Dict[str, Any]],
+    metric: str,
+    baseline_mode: Optional[str],
+) -> Optional[str]:
+    chosen = _choose_baseline_mode(rows, baseline_mode)
+    if not chosen:
+        return None
+    baseline_row = next((row for row in rows if row.get("mode") == chosen), None)
+    baseline_value = _safe_float(baseline_row.get(metric) if baseline_row else None)
+    if baseline_value is None:
+        return chosen
+
+    for row in rows:
+        value = _safe_float(row.get(metric))
+        row["baseline_mode"] = chosen
+        if value is None:
+            row["delta_from_baseline"] = None
+            row["relative_delta_pct"] = None
+            continue
+        delta = value - baseline_value
+        row["delta_from_baseline"] = round(delta, 4)
+        row["relative_delta_pct"] = round((delta / abs(baseline_value)) * 100, 2) if baseline_value else None
+    return chosen
+
+
+def _project_rows(rows: List[Dict[str, Any]], columns: List[str]) -> List[Dict[str, Any]]:
+    return [
+        {column: row.get(column) for column in columns if column in row}
+        for row in rows
+    ]
+
+
+def _evaluation_mode_category_matrix(df: pd.DataFrame, metric: str) -> Dict[str, Any]:
+    if not {"mode", "category", metric}.issubset(df.columns):
+        return {"metric": metric, "modes": [], "categories": [], "rows": [], "cells": []}
+
+    working = df[["mode", "category", metric]].copy()
+    working[metric] = pd.to_numeric(working[metric], errors="coerce")
+    pivot = working.pivot_table(index="mode", columns="category", values=metric, aggfunc="mean").round(4)
+    pivot = pivot.sort_index().sort_index(axis=1)
+    rows = _records(pivot.reset_index())
+    cells: List[Dict[str, Any]] = []
+    for mode, row in pivot.iterrows():
+        for category, value in row.items():
+            cells.append(
+                {
+                    "mode": str(mode),
+                    "category": str(category),
+                    "value": _json_safe_value(value),
+                }
+            )
+    values = pd.to_numeric(pivot.stack(), errors="coerce")
+    return {
+        "metric": metric,
+        "modes": [str(item) for item in pivot.index.tolist()],
+        "categories": [str(item) for item in pivot.columns.tolist()],
+        "rows": rows,
+        "cells": cells,
+        "min": _json_safe_value(values.min(skipna=True)) if values.notna().any() else None,
+        "max": _json_safe_value(values.max(skipna=True)) if values.notna().any() else None,
+    }
+
+
+def _evaluation_metric_distributions(df: pd.DataFrame, metric: str) -> List[Dict[str, Any]]:
+    if not {"mode", metric}.issubset(df.columns):
+        return []
+    working = df[["mode", metric]].copy()
+    working[metric] = pd.to_numeric(working[metric], errors="coerce")
+    rows: List[Dict[str, Any]] = []
+    for mode, group in working.groupby("mode", dropna=False):
+        values = group[metric].dropna()
+        if values.empty:
+            continue
+        rows.append(
+            {
+                "mode": _json_safe_value(mode),
+                "n": int(values.count()),
+                "min": _json_safe_value(values.min()),
+                "q1": _json_safe_value(values.quantile(0.25)),
+                "median": _json_safe_value(values.quantile(0.5)),
+                "q3": _json_safe_value(values.quantile(0.75)),
+                "max": _json_safe_value(values.max()),
+                "mean": _json_safe_value(values.mean()),
+            }
+        )
+    return rows
+
+
+def _evaluation_extreme_questions(
+    df: pd.DataFrame,
+    metric: str,
+    *,
+    ascending: bool,
+    limit: int = 15,
+) -> List[Dict[str, Any]]:
+    if metric not in df.columns:
+        return []
+    working = df.copy()
+    working[metric] = pd.to_numeric(working[metric], errors="coerce")
+    working = working[working[metric].notna()].sort_values(metric, ascending=ascending).head(limit)
+    if "response" in working.columns:
+        working["response_excerpt"] = working["response"].fillna("").astype(str).str.slice(0, 240)
+    columns = [
+        "question_id",
+        "category",
+        "mode",
+        "question",
+        metric,
+        "retrieval_precision",
+        "source_coverage",
+        "citation_accuracy",
+        "context_utilization",
+        "latency_seconds",
+        "error",
+        "response_excerpt",
+    ]
+    selected_columns: List[str] = []
+    for column in columns:
+        if column in working.columns and column not in selected_columns:
+            selected_columns.append(column)
+    return _records(working[selected_columns])
+
+
+def _evaluation_best_by_metric(by_mode: List[Dict[str, Any]], metric_cols: List[str]) -> List[Dict[str, Any]]:
+    rows: List[Dict[str, Any]] = []
+    for metric in metric_cols:
+        candidates = [
+            (row, _safe_float(row.get(metric)))
+            for row in by_mode
+            if row.get("mode") is not None
+        ]
+        candidates = [(row, value) for row, value in candidates if value is not None]
+        if not candidates:
+            continue
+        lower_is_better = metric == "latency_seconds"
+        best_row, best_value = min(candidates, key=lambda item: item[1]) if lower_is_better else max(candidates, key=lambda item: item[1])
+        rows.append(
+            {
+                "metric": metric,
+                "direction": "lower" if lower_is_better else "higher",
+                "best_mode": best_row.get("mode"),
+                "value": _json_safe_value(best_value),
+            }
+        )
+    return rows
+
+
+def _statistical_matrix_payload(metric: str, matrix: pd.DataFrame) -> Dict[str, Any]:
+    matrix = matrix.copy()
+    matrix.index = matrix.index.astype(str)
+    matrix.columns = matrix.columns.astype(str)
+    rows = _records(matrix.reset_index().rename(columns={"index": "mode"}))
+    values = pd.to_numeric(matrix.stack(), errors="coerce")
+    return {
+        "metric": metric,
+        "modes": [str(item) for item in matrix.index.tolist()],
+        "rows": rows,
+        "min": _json_safe_value(values.min(skipna=True)) if values.notna().any() else None,
+        "max": _json_safe_value(values.max(skipna=True)) if values.notna().any() else None,
+    }
+
+
+def _evaluation_statistics_payload(df: pd.DataFrame, metric_cols: List[str]) -> Dict[str, Any]:
+    if not {"mode", "question_id"}.issubset(df.columns):
+        return {
+            "status": "skipped",
+            "reason": "Statistical tests require mode and question_id columns.",
+        }
+
+    usable_metrics = [metric for metric in metric_cols if metric in df.columns]
+    if not usable_metrics:
+        return {"status": "skipped", "reason": "No numeric evaluation metrics are available."}
+
+    working = df[["mode", "question_id", *usable_metrics]].copy()
+    working = working.dropna(subset=["mode", "question_id"])
+    for metric in usable_metrics:
+        working[metric] = pd.to_numeric(working[metric], errors="coerce")
+    working = working.groupby(["mode", "question_id"], as_index=False)[usable_metrics].mean(numeric_only=True)
+
+    mode_count = int(working["mode"].nunique()) if "mode" in working.columns else 0
+    question_count = int(working["question_id"].nunique()) if "question_id" in working.columns else 0
+    if mode_count < 2 or question_count < 3:
+        return {
+            "status": "skipped",
+            "reason": "Statistical tests require at least two modes and three paired questions.",
+            "n_modes": mode_count,
+            "n_questions": question_count,
+        }
+
+    try:
+        from evaluation.statistical_analysis import pairwise_to_dataframe, run_full_statistical_analysis
+
+        report = run_full_statistical_analysis(working, metrics=usable_metrics)
+        pairwise_df = pairwise_to_dataframe(report.pairwise_tests)
+        matrices = {
+            metric: _statistical_matrix_payload(metric, matrix)
+            for metric, matrix in report.significance_matrix.items()
+        }
+        return {
+            "status": "available",
+            "summary": {key: _json_safe_value(value) for key, value in report.summary.items()},
+            "friedman": [{key: _json_safe_value(value) for key, value in asdict(result).items()} for result in report.friedman_tests],
+            "pairwise": _records(pairwise_df) if not pairwise_df.empty else [],
+            "significant_pairwise": _records(pairwise_df[pairwise_df["significant"]]) if "significant" in pairwise_df else [],
+            "significance_matrix": matrices,
+        }
+    except Exception as exc:
+        return {
+            "status": "skipped",
+            "reason": f"Statistical analysis failed: {exc}",
+            "n_modes": mode_count,
+            "n_questions": question_count,
+        }
+
+
+def _evaluation_analytics_payload(
+    record: Dict[str, Any],
+    *,
+    metric: Optional[str],
+    baseline_mode: Optional[str],
+    category: Optional[str],
+) -> EvaluationAnalyticsResponse:
+    run = _evaluation_run_summary(record)
+    source_df = _evaluation_results_frame(record)
+    df = source_df.copy()
+    if category and "category" in df.columns:
+        df = df[df["category"].astype(str) == category]
+
+    metric_catalog = _evaluation_metric_catalog(source_df)
+    metric_cols = _evaluation_metric_columns(df)
+    if not metric_cols:
+        raise HTTPException(status_code=400, detail="Evaluation run has no numeric metrics to analyze.")
+    selected_metric = metric or metric_cols[0]
+    if selected_metric not in metric_cols:
+        raise HTTPException(status_code=400, detail=f"Unknown or unavailable evaluation metric: {selected_metric}")
+
+    by_mode = _evaluation_group_summary(df, ["mode"], metric_cols)
+    selected_baseline = _attach_baseline_deltas(by_mode, selected_metric, baseline_mode)
+    by_category = _evaluation_group_summary(df, ["category"], metric_cols)
+    by_mode_category = _evaluation_group_summary(df, ["mode", "category"], metric_cols)
+    quality_cols = [metric_def["key"] for metric_def in EVALUATION_QUALITY_METRICS if metric_def["key"] in metric_cols]
+
+    return EvaluationAnalyticsResponse(
+        run=run,
+        selected_metric=selected_metric,
+        baseline_mode=selected_baseline,
+        filters={"category": category},
+        metric_catalog=metric_catalog,
+        by_mode=by_mode,
+        by_category=by_category,
+        by_mode_category=by_mode_category,
+        mode_category_matrix=_evaluation_mode_category_matrix(df, selected_metric),
+        metric_distributions=_evaluation_metric_distributions(df, selected_metric),
+        quality_by_mode=_evaluation_group_summary(df, ["mode"], quality_cols) if quality_cols else [],
+        latency_by_mode=_project_rows(by_mode, ["mode", "n_evaluations", "latency_seconds", "delta_from_baseline"]),
+        citation_by_mode=_project_rows(by_mode, ["mode", "citation_count", "citation_accuracy", "context_utilization"]),
+        source_coverage_by_mode=_project_rows(by_mode, ["mode", "retrieval_precision", "source_coverage", "n_evaluations"]),
+        lowest_scoring_questions=_evaluation_extreme_questions(df, selected_metric, ascending=True),
+        highest_latency_questions=_evaluation_extreme_questions(df, "latency_seconds", ascending=False) if "latency_seconds" in metric_cols else [],
+        best_by_metric=_evaluation_best_by_metric(by_mode, metric_cols),
+        statistical_tests=_evaluation_statistics_payload(df, metric_cols),
+    )
+
+
 def _evaluation_run_summary(record: Dict[str, Any]) -> EvaluationRunSummary:
     csv_path: Path = record["csv_path"]
     root_path: Path = record["root_path"]
@@ -2221,21 +3220,41 @@ def models() -> ModelsResponse:
 def pipeline_status() -> PipelineStatusResponse:
     raw_sources = _pipeline_raw_sources()
     artifacts = _pipeline_artifacts()
-    runs_root = _pipeline_runs_root()
+    active_jobs = _pipeline_job_statuses(limit=25, active_only=True)
     return PipelineStatusResponse(
         stages=_pipeline_stage_infos(),
         raw_sources=raw_sources,
         artifacts=artifacts,
+        artifact_freshness=_pipeline_artifact_freshness(raw_sources, artifacts),
         readiness=_pipeline_readiness(raw_sources, artifacts),
         database=_pipeline_database_snapshot(),
         ollama=_ollama_status(),
-        pipeline_runs=len(list(runs_root.glob("*/progress.json"))),
+        active_jobs=[_model_dump(job) for job in active_jobs],
+        pipeline_runs=len(_pipeline_run_summaries(limit=10000)),
     )
+
+
+@app.post("/pipeline/preflight", response_model=PipelinePreflightResponse)
+def pipeline_preflight(request: PipelineRunRequest) -> PipelinePreflightResponse:
+    return _pipeline_preflight_payload(request)
 
 
 @app.post("/pipeline/jobs", response_model=PipelineStartResponse)
 def pipeline_start_job(request: PipelineRunRequest) -> PipelineStartResponse:
     return _start_pipeline_job(request)
+
+
+@app.get("/pipeline/runs", response_model=PipelineRunsResponse)
+def pipeline_runs(limit: int = Query(default=50, ge=1, le=250)) -> PipelineRunsResponse:
+    return PipelineRunsResponse(runs=_pipeline_run_summaries(limit=limit))
+
+
+@app.get("/pipeline/runs/{run_id}", response_model=PipelineRunDetailResponse)
+def pipeline_run_detail(
+    run_id: str,
+    limit_bytes: int = Query(default=50000, ge=1000, le=200000),
+) -> PipelineRunDetailResponse:
+    return _pipeline_run_detail_or_404(run_id, limit_bytes)
 
 
 @app.get("/pipeline/jobs/{job_id}", response_model=PipelineJobStatus)
@@ -2256,6 +3275,7 @@ def pipeline_job_log(
         log_path=str(path),
         log=log,
         bytes=path.stat().st_size if path.exists() else 0,
+        stage_logs=_pipeline_stage_logs(job_id, limit_bytes=limit_bytes),
     )
 
 
@@ -2266,7 +3286,7 @@ def pipeline_cancel_job(job_id: str) -> PipelineJobStatus:
         raise HTTPException(status_code=404, detail=f"Unknown pipeline job: {job_id}")
     payload = _read_json_file(path)
     status = str(payload.get("status") or "")
-    if status in EVALUATION_TERMINAL_STATES:
+    if status in PIPELINE_TERMINAL_STATES:
         return PipelineJobStatus(**payload)
     with PIPELINE_JOB_LOCK:
         cancel_event = PIPELINE_CANCEL_EVENTS.get(job_id)
@@ -2282,6 +3302,31 @@ def pipeline_cancel_job(job_id: str) -> PipelineJobStatus:
         phase="cancel_requested",
         message="Cancellation requested. The active stage will stop at the next subprocess checkpoint.",
     )
+
+
+@app.get("/provenance/manifest", response_model=ProvenanceManifestResponse)
+def provenance_manifest(
+    limit_documents: int = Query(default=500, ge=1, le=10000),
+    include_embeddings: bool = Query(default=True),
+) -> ProvenanceManifestResponse:
+    return ProvenanceManifestResponse(
+        **build_provenance_manifest(
+            limit_documents=limit_documents,
+            include_embeddings=include_embeddings,
+        )
+    )
+
+
+@app.get("/provenance/trace/{doc_id}", response_model=ProvenanceTraceResponse)
+def provenance_trace(doc_id: str) -> ProvenanceTraceResponse:
+    return ProvenanceTraceResponse(**build_document_trace(doc_id))
+
+
+@app.get("/provenance/upsert-dry-run", response_model=UpsertDryRunResponse)
+def provenance_upsert_dry_run(
+    limit_keys: int = Query(default=25, ge=0, le=250),
+) -> UpsertDryRunResponse:
+    return UpsertDryRunResponse(**build_upsert_dry_run_plan(limit_keys=limit_keys))
 
 
 @app.get("/debug")
@@ -2615,6 +3660,22 @@ def evaluation_run_detail(
         limit=limit,
         offset=offset,
         summary=_evaluation_summary_from_frame(source_df),
+    )
+
+
+@app.get("/evaluation/runs/{run_id}/analytics", response_model=EvaluationAnalyticsResponse)
+def evaluation_run_analytics(
+    run_id: str,
+    metric: Optional[str] = None,
+    baseline_mode: Optional[str] = None,
+    category: Optional[str] = None,
+) -> EvaluationAnalyticsResponse:
+    record = _evaluation_record_or_404(run_id)
+    return _evaluation_analytics_payload(
+        record,
+        metric=metric,
+        baseline_mode=baseline_mode,
+        category=category,
     )
 
 
@@ -3117,12 +4178,14 @@ def chat(request: ChatRequest) -> ChatResponse:
         fts_weight=request.fts_weight,
         rrf_k=request.rrf_k,
     )
-    prompt = build_prompt(
+    prompt, context = build_prompt_with_context(
         request.query,
         rows,
         inject_analysis=request.inject_analysis,
         inject_reliability=request.inject_reliability,
     )
+    analysis_context = [_context_document(row, "analysis") for row in context.get("analysis", [])]
+    reliability_context = [_context_document(row, "reliability") for row in context.get("reliability", [])]
     model = request.model or config.CHAT_MODEL
     ollama_options = _ollama_options(request)
 
@@ -3146,8 +4209,12 @@ def chat(request: ChatRequest) -> ChatResponse:
         query=request.query,
         answer=answer,
         sources=[_source_document(row) for row in rows],
+        analysis_context=analysis_context,
+        reliability_context=reliability_context,
         model=model,
         n_sources=len(rows),
+        n_context_documents=len(analysis_context) + len(reliability_context),
+        prompt_diagnostics=_prompt_diagnostics(prompt, rows, context),
         options={
             "generation": ollama_options,
             "retrieval": {

@@ -108,13 +108,13 @@ REFERENCE_ANSWERS: Dict[str, ReferenceAnswer] = {
     "meta_03": ReferenceAnswer(
         question_id="meta_03",
         reference_text=(
-            "Metagenome samples from Matsushima Bay (code M) are available in the "
+            "Metagenome samples from Mutsu Bay (code M) are available in the "
             "dataset. These samples follow the naming convention YYYY-MM-M-sN and "
             "include both Kraken and MetaEuk genus-level classifications. The samples "
             "cover multiple time points and include stations s0 and s4."
         ),
         key_facts=[
-            "Matsushima", "metagenome", "samples", "available",
+            "Mutsu", "metagenome", "samples", "available",
         ],
         expected_citation_patterns=["meta_"],
     ),

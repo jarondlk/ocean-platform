@@ -1,6 +1,7 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, Suspense, useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   getExploreCatalog,
   getExploreSummary,
@@ -15,9 +16,13 @@ import type {
   SampleDetailResponse,
   TimeSeriesResponse,
 } from "@/types";
+import { CsvExportButton } from "@/components/CsvExportButton";
 import { DataTable } from "@/components/DataTable";
+import { EvidenceWorkbench } from "@/components/EvidenceWorkbench";
 import { SampleDetail } from "@/components/SampleDetail";
 import { SimpleTimeSeries } from "@/components/SimpleTimeSeries";
+
+type ExploreView = "tables" | "evidence";
 
 type ExploreFilters = {
   bay: string;
@@ -38,6 +43,19 @@ const defaultFilters: ExploreFilters = {
 };
 
 export default function ExplorePage() {
+  return (
+    <Suspense fallback={<ExplorePageFallback />}>
+      <ExplorePageContent />
+    </Suspense>
+  );
+}
+
+function ExplorePageContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const requestedView = searchParams.get("view");
+  const initialView = isExploreView(requestedView) ? requestedView : "tables";
+  const [view, setView] = useState<ExploreView>(initialView);
   const [catalog, setCatalog] = useState<DatasetCatalogItem[]>([]);
   const [dataset, setDataset] = useState("ctd_summary");
   const [filters, setFilters] = useState<ExploreFilters>(defaultFilters);
@@ -63,6 +81,11 @@ export default function ExplorePage() {
   );
 
   useEffect(() => {
+    setView(isExploreView(requestedView) ? requestedView : "tables");
+  }, [requestedView]);
+
+  useEffect(() => {
+    if (view !== "tables" || catalog.length) return;
     getExploreCatalog()
       .then((items) => {
         setCatalog(items);
@@ -86,7 +109,7 @@ export default function ExplorePage() {
       })
       .catch((err: Error) => setError(err.message));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [view, catalog.length]);
 
   async function loadData({
     datasetId = dataset,
@@ -176,6 +199,11 @@ export default function ExplorePage() {
     void loadData({ nextOffset: 0 });
   }
 
+  function changeView(nextView: ExploreView) {
+    setView(nextView);
+    router.replace(nextView === "tables" ? "/explore" : `/explore?view=${nextView}`, { scroll: false });
+  }
+
   function changeDataset(value: string) {
     const item = catalog.find((entry) => entry.id === value);
     const nextFilters = defaultFilters;
@@ -225,6 +253,17 @@ export default function ExplorePage() {
         <h2>Explore</h2>
       </header>
 
+      <div className="data-tabs" role="tablist" aria-label="Explore views">
+        <button className={view === "tables" ? "active" : ""} onClick={() => changeView("tables")} type="button">
+          Tables
+        </button>
+        <button className={view === "evidence" ? "active" : ""} onClick={() => changeView("evidence")} type="button">
+          Evidence
+        </button>
+      </div>
+
+      {view === "tables" ? (
+        <>
       <form className="explore-controls" onSubmit={submit}>
         <label>
           Dataset
@@ -434,6 +473,11 @@ export default function ExplorePage() {
                 Table {table ? `(${table.filtered.toLocaleString()} rows)` : ""}
               </h3>
               <div className="pager">
+                <CsvExportButton
+                  columns={table?.columns || []}
+                  filename={`explore_${dataset}_rows`}
+                  rows={table?.rows || []}
+                />
                 <button
                   className="button secondary-button"
                   disabled={!canPrevious || loading}
@@ -469,6 +513,21 @@ export default function ExplorePage() {
           {detailLoading ? <p className="empty-state">Loading sample.</p> : <SampleDetail detail={detail} />}
         </aside>
       </div>
+        </>
+      ) : (
+        <EvidenceWorkbench />
+      )}
+    </section>
+  );
+}
+
+function ExplorePageFallback() {
+  return (
+    <section>
+      <header className="page-header">
+        <h2>Explore</h2>
+      </header>
+      <p className="empty-state">Loading corpus workspace.</p>
     </section>
   );
 }
@@ -480,4 +539,8 @@ function SummaryCell({ label, value }: { label: string; value: string | number }
       <strong>{value}</strong>
     </div>
   );
+}
+
+function isExploreView(value: string | null): value is ExploreView {
+  return value === "tables" || value === "evidence";
 }

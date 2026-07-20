@@ -14,15 +14,16 @@ workflow that can later become automated.
   outputs, and the PostgreSQL/pgvector database.
 - The app reads previously generated artifacts and/or PostgreSQL. It does not
   watch for new files or run ingestion during user sessions.
-- Repeated database loads are safest with `scripts/load_db.py --reset --embed`;
-  append/upsert semantics are not production-ready yet.
+- Repeated database loads are safest with `scripts/load_db.py --reset --embed`.
+  Read-only upsert planning exists through `scripts/load_db.py --upsert --dry-run`,
+  but mutating upsert semantics are not production-ready yet.
 
 ## Near-Term Priority: Manual Scheduled Batch Updates
 
 Goal: make updates repeatable enough to run manually on a schedule, such as
 weekly or monthly, without making ingestion automatic yet.
 
-- [ ] Add a single orchestration command, for example `scripts/run_pipeline.py`,
+- [x] Add a single orchestration command, `scripts/run_pipeline.py`,
       that runs the full batch in order:
 
   ```bash
@@ -33,14 +34,18 @@ weekly or monthly, without making ingestion automatic yet.
   python scripts/load_db.py --reset --embed
   ```
 
-- [ ] Add flags to the orchestration command:
-  `--skip-sst`, `--skip-embed`, `--validate-only`, `--no-reset`, and
-  `--tag RUN_NAME`.
-- [ ] Write a timestamped run log under `data/runs/` with command status,
-      input counts, output counts, and elapsed time.
-- [ ] Write a manifest snapshot for each run, including raw file paths,
-      SHA-256 hashes, row counts, and generated artifact paths.
-- [ ] Add a documented manual schedule, for example:
+- [x] Add flags to the orchestration command:
+  `--skip-sst`, `--no-embed`, `--validate-only`, `--preflight-only`,
+  `--execute`, `--reset-db`, and `--tag RUN_NAME`.
+- [x] Write timestamped run logs under `data/pipeline_runs/` with command
+      status and elapsed time.
+- [x] Write a manifest snapshot for each run, including raw file paths,
+      row counts, generated artifact paths, database snapshots, and diffs.
+- [x] Add a provenance manifest layer that traces raw files, derived artifacts,
+      retrieval documents, and embedding treatment.
+- [x] Add read-only `--upsert --dry-run` planning before any database mutation
+      path exists.
+- [x] Add a documented manual schedule, for example:
 
   ```bash
   # 1. Place updated raw files in data/raw/ and onagawa_sst_subset/
@@ -48,13 +53,19 @@ weekly or monthly, without making ingestion automatic yet.
   python scripts/run_pipeline.py --validate-only
 
   # 3. Run full scheduled batch
-  python scripts/run_pipeline.py --tag 2026-03-update
+  python scripts/run_pipeline.py --execute --tag 2026-03-update --reset-db --embed
   ```
 
 - [ ] Add a rollback note: keep the previous `data/` artifact snapshot and
       PostgreSQL dump before each scheduled update.
 
 ## Data Ingestion Improvements
+
+- [x] Add a manual provenance manifest command:
+
+  ```bash
+  python scripts/build_provenance_manifest.py --write --run-id 2026-03-update
+  ```
 
 - [ ] Add stricter validation for expected raw columns, date ranges, sample ID
       formats, and duplicate sample IDs before writing outputs.
@@ -64,16 +75,19 @@ weekly or monthly, without making ingestion automatic yet.
   CTD rows/casts, metagenome samples/runs/taxa, SST files/days.
 - [ ] Add row-count and sample-count diffing between the previous run and the
       new run.
-- [ ] Keep provenance file-level for now, but document that CTD/metagenome TSV
-      changes are tracked by whole-file hash rather than per-row lineage.
+- [ ] Add row-level source hashes for CTD/metagenome TSV records; current
+      provenance is file-level plus stable sample/source keys.
 
 ## Database Loading Improvements
 
 - [ ] Keep `--reset --embed` as the default reliable scheduled update path.
+- [x] Add read-only upsert dry-run planning for keyed tables and retrieval
+      document embedding refresh candidates.
 - [ ] Add a database backup command before reset, using `pg_dump` or an
       equivalent containerized backup command.
-- [ ] Add idempotent upsert support later for tables keyed by `sample_id`,
-      `doc_id`, `event_id`, and SST timestamps.
+- [ ] Add mutating idempotent upsert support later for tables keyed by
+      `sample_id`, `doc_id`, `event_id`, and SST timestamps, using the
+      provenance manifest as the safety contract.
 - [ ] Add migration tooling, such as Alembic, if schemas begin changing often.
 - [ ] Add integration tests against a temporary PostgreSQL/pgvector container.
 
@@ -115,7 +129,7 @@ Evaluation criteria:
 
 - [ ] Authentication and authorization story.
 - [ ] Streaming chat UX and source-citation rendering.
-- [ ] Evidence explorer tables, filters, charts, and downloads.
+- [ ] Explore evidence panel tables, filters, charts, and downloads.
 - [ ] API contract between frontend and RAG backend.
 - [ ] Deployment simplicity on one server and on managed cloud.
 - [ ] Maintainability for a mostly Python codebase.
@@ -130,9 +144,11 @@ an archived reference for remaining parity checks.
 - [ ] Use `archive/legacy-streamlit/app.py` only to identify remaining parity
       gaps; implement new UI behavior in Next.js and reusable behavior in
       FastAPI/service modules.
-- [ ] Surface pipeline freshness in the UI: latest run tag, latest raw data
-      date, database load time, and embedding count.
-- [ ] Add a health/status page for PostgreSQL, local JSONL fallback, Ollama,
+- [x] Surface manual pipeline freshness, active/background job state, logs,
+      history, and artifact diffs in the UI.
+- [x] Surface provenance manifest, document trace, embedding treatment, and
+      upsert dry-run planning in the UI.
+- [x] Add a health/status page for PostgreSQL, local JSONL fallback, Ollama,
       model availability, and artifact presence.
 - [ ] Add clearer warnings when the app is using local BM25 fallback instead of
       PostgreSQL/pgvector.

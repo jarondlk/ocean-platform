@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useState } from "react";
 import { Play, RefreshCw, Square } from "lucide-react";
+import { CsvExportButton } from "@/components/CsvExportButton";
 import { DataTable, formatCell } from "@/components/DataTable";
 import {
   cancelEvaluationJob,
   compareEvaluationRuns,
+  getEvaluationAnalytics,
   getEvaluationCatalog,
   getEvaluationJob,
   getEvaluationPreflight,
@@ -17,6 +19,7 @@ import {
 } from "@/lib/api";
 import type {
   EvaluationCatalogResponse,
+  EvaluationAnalyticsResponse,
   EvaluationCompareResponse,
   EvaluationJobStatus,
   EvaluationQuestion,
@@ -25,7 +28,7 @@ import type {
   EvaluationRunSummary,
 } from "@/types";
 
-type EvaluationView = "runs" | "questions" | "standard" | "ablation" | "compare";
+type EvaluationView = "runs" | "analytics" | "questions" | "standard" | "ablation" | "compare";
 
 const resultColumns = [
   "question_id",
@@ -50,11 +53,15 @@ export default function EvaluationPage() {
   const [runs, setRuns] = useState<EvaluationRunSummary[]>([]);
   const [selectedRunId, setSelectedRunId] = useState("");
   const [detail, setDetail] = useState<EvaluationRunDetailResponse | null>(null);
+  const [analytics, setAnalytics] = useState<EvaluationAnalyticsResponse | null>(null);
   const [report, setReport] = useState<EvaluationReportResponse | null>(null);
   const [selectedQuestionId, setSelectedQuestionId] = useState("");
   const [selectedResultKey, setSelectedResultKey] = useState("");
   const [category, setCategory] = useState("");
   const [modeFilter, setModeFilter] = useState("");
+  const [analyticsMetric, setAnalyticsMetric] = useState("");
+  const [analyticsBaseline, setAnalyticsBaseline] = useState("");
+  const [analyticsCategory, setAnalyticsCategory] = useState("");
   const [compareIds, setCompareIds] = useState<string[]>([]);
   const [compareResult, setCompareResult] = useState<EvaluationCompareResponse | null>(null);
   const [job, setJob] = useState<EvaluationJobStatus | null>(null);
@@ -123,10 +130,39 @@ export default function EvaluationPage() {
     setSelectedResultKey("");
   }
 
+  async function loadAnalytics(
+    runId = selectedRunId,
+    metric = analyticsMetric,
+    baselineMode = analyticsBaseline,
+    nextCategory = analyticsCategory,
+  ) {
+    if (!runId) return;
+    setError("");
+    try {
+      const payload = await getEvaluationAnalytics({
+        run_id: runId,
+        metric: metric || undefined,
+        baseline_mode: baselineMode || undefined,
+        category: nextCategory || undefined,
+      });
+      setAnalytics(payload);
+      setAnalyticsMetric(payload.selected_metric);
+      setAnalyticsBaseline(payload.baseline_mode || "");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Evaluation analytics request failed");
+    }
+  }
+
   useEffect(() => {
     void loadAll();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (view !== "analytics" || !selectedRunId) return;
+    void loadAnalytics();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view, selectedRunId, analyticsMetric, analyticsBaseline, analyticsCategory]);
 
   useEffect(() => {
     if (!job || isTerminalJob(job.status)) return;
@@ -175,6 +211,18 @@ export default function EvaluationPage() {
   const byMode = getRows(summary.by_mode);
   const byCategory = getRows(summary.by_category);
   const qualityByMode = getRows(summary.quality_by_mode);
+  const analyticsMetricCatalog = useMemo(
+    () => getRows(analytics?.metric_catalog || catalog?.metrics || []),
+    [analytics?.metric_catalog, catalog?.metrics],
+  );
+  const analyticsByMode = getRows(analytics?.by_mode);
+  const analyticsByCategory = getRows(analytics?.by_category);
+  const analyticsQualityByMode = getRows(analytics?.quality_by_mode);
+  const analyticsDistributions = getRows(analytics?.metric_distributions);
+  const analyticsPairwise = getRows(asRecord(analytics?.statistical_tests).pairwise);
+  const analyticsSignificantPairwise = getRows(asRecord(analytics?.statistical_tests).significant_pairwise);
+  const analyticsFriedman = getRows(asRecord(analytics?.statistical_tests).friedman);
+  const analyticsMetricLabel = metricLabel(analyticsMetricCatalog, analytics?.selected_metric || analyticsMetric);
   const questionIds = parseQuestionIds(questionIdsText);
   const selectedQuestionCount = estimateQuestionCount(catalog, selectedCategories, questionIdsText, quickRun);
   const qualityMultiplier = runQuality || runJudge ? 2 : 1;
@@ -273,6 +321,7 @@ export default function EvaluationPage() {
 
       <div className="data-tabs" role="tablist" aria-label="Evaluation views">
         <TabButton active={view === "runs"} label="Runs" onClick={() => setView("runs")} />
+        <TabButton active={view === "analytics"} label="Analytics" onClick={() => setView("analytics")} />
         <TabButton active={view === "questions"} label="Questions" onClick={() => setView("questions")} />
         <TabButton active={view === "standard"} label="Standard" onClick={() => setView("standard")} />
         <TabButton active={view === "ablation"} label="Ablation" onClick={() => setView("ablation")} />
@@ -341,11 +390,25 @@ export default function EvaluationPage() {
                 </section>
 
                 <section className="data-section">
-                  <h3 className="section-title">Aggregate Metrics</h3>
+                  <div className="section-toolbar">
+                    <h3 className="section-title">Aggregate Metrics</h3>
+                    <CsvExportButton
+                      columns={["mode", ...metricKeys(byMode)]}
+                      filename={`evaluation_${selectedRun.run_id}_by_mode`}
+                      rows={byMode}
+                    />
+                  </div>
                   <DataTable columns={["mode", ...metricKeys(byMode)]} rows={byMode} rowKeyColumn="mode" />
                   {qualityByMode.length ? (
                     <>
-                      <h4 className="subsection-title">Quality Metrics</h4>
+                      <div className="section-toolbar compact-toolbar">
+                        <h4 className="subsection-title">Quality Metrics</h4>
+                        <CsvExportButton
+                          columns={["mode", ...metricKeys(qualityByMode)]}
+                          filename={`evaluation_${selectedRun.run_id}_quality_by_mode`}
+                          rows={qualityByMode}
+                        />
+                      </div>
                       <DataTable columns={["mode", ...metricKeys(qualityByMode)]} rows={qualityByMode} rowKeyColumn="mode" />
                     </>
                   ) : null}
@@ -369,6 +432,11 @@ export default function EvaluationPage() {
                         {selectedRun.modes.map((mode) => <option key={mode} value={mode}>{mode}</option>)}
                       </select>
                     </label>
+                    <CsvExportButton
+                      columns={resultColumns.filter((column) => detail?.columns.includes(column))}
+                      filename={`evaluation_${selectedRun.run_id}_rows`}
+                      rows={detailRows}
+                    />
                   </div>
                   <DataTable
                     columns={resultColumns.filter((column) => detail?.columns.includes(column))}
@@ -411,6 +479,229 @@ export default function EvaluationPage() {
         </section>
       ) : null}
 
+      {view === "analytics" ? (
+        <section className="evaluation-main">
+          <section className="data-section">
+            <div className="section-toolbar">
+              <h3 className="section-title">Analytics Controls</h3>
+              <button className="button secondary-button" disabled={!selectedRunId} onClick={() => void loadAnalytics()} type="button">
+                <RefreshCw size={15} aria-hidden="true" />
+                Refresh
+              </button>
+            </div>
+            <div className="evaluation-control-grid">
+              <label className="settings-field" htmlFor="analytics-run" title="Saved evaluation run used as the analytics source.">
+                <span>Run</span>
+                <select
+                  id="analytics-run"
+                  className="field"
+                  value={selectedRunId}
+                  onChange={(event) => {
+                    setSelectedRunId(event.target.value);
+                    setAnalytics(null);
+                    void loadRun(event.target.value);
+                  }}
+                >
+                  {runs.map((run) => <option key={run.run_id} value={run.run_id}>{run.run_id}</option>)}
+                </select>
+              </label>
+              <label className="settings-field" htmlFor="analytics-metric" title="Primary metric used for matrix, distribution, and failure-surface panels.">
+                <span>Metric</span>
+                <select
+                  id="analytics-metric"
+                  className="field"
+                  value={analytics?.selected_metric || analyticsMetric}
+                  onChange={(event) => {
+                    setAnalyticsMetric(event.target.value);
+                    setAnalytics(null);
+                  }}
+                >
+                  {analyticsMetricCatalog.map((metric) => (
+                    <option key={String(metric.key)} value={String(metric.key)}>
+                      {String(metric.label || metric.key)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="settings-field" htmlFor="analytics-baseline" title="Mode or ablation variant used for delta calculations.">
+                <span>Baseline</span>
+                <select
+                  id="analytics-baseline"
+                  className="field"
+                  value={analyticsBaseline}
+                  onChange={(event) => {
+                    setAnalyticsBaseline(event.target.value);
+                    setAnalytics(null);
+                  }}
+                >
+                  <option value="">auto</option>
+                  {(selectedRun?.modes || []).map((mode) => <option key={mode} value={mode}>{mode}</option>)}
+                </select>
+              </label>
+              <label className="settings-field" htmlFor="analytics-category" title="Optional category restriction applied before analytics are computed.">
+                <span>Category</span>
+                <select
+                  id="analytics-category"
+                  className="field"
+                  value={analyticsCategory}
+                  onChange={(event) => {
+                    setAnalyticsCategory(event.target.value);
+                    setAnalytics(null);
+                  }}
+                >
+                  <option value="">all</option>
+                  {(catalog?.categories || []).map((item) => <option key={item} value={item}>{item}</option>)}
+                </select>
+              </label>
+            </div>
+          </section>
+
+          {analytics ? (
+            <>
+              <section className="data-section">
+                <h3 className="section-title">Run Summary</h3>
+                <div className="summary-strip">
+                  <SummaryCell label="Type" value={analytics.run.run_type} />
+                  <SummaryCell label="Rows" value={analytics.run.n_evaluations} />
+                  <SummaryCell label="Questions" value={analytics.run.n_questions} />
+                  <SummaryCell label="Modes" value={analytics.run.n_modes} />
+                  <SummaryCell label="Metric" value={analyticsMetricLabel} />
+                </div>
+              </section>
+
+              <section className="analytics-grid">
+                <section className="data-section">
+                  <div className="section-toolbar">
+                    <h3 className="section-title">Metric By Mode</h3>
+                    <CsvExportButton
+                      columns={["mode", "n_evaluations", "n_questions", analytics.selected_metric, "delta_from_baseline", "relative_delta_pct"]}
+                      filename={`evaluation_${analytics.run.run_id}_${analytics.selected_metric}_by_mode`}
+                      rows={analyticsByMode}
+                    />
+                  </div>
+                  <MetricBarChart rows={analyticsByMode} metric={analytics.selected_metric} label={analyticsMetricLabel} />
+                  <DataTable
+                    columns={["mode", "n_evaluations", "n_questions", analytics.selected_metric, "delta_from_baseline", "relative_delta_pct"]}
+                    rows={analyticsByMode}
+                    rowKeyColumn="mode"
+                  />
+                </section>
+
+                <section className="data-section">
+                  <div className="section-toolbar">
+                    <h3 className="section-title">Distribution</h3>
+                    <CsvExportButton
+                      columns={["mode", "n", "min", "q1", "median", "q3", "max", "mean"]}
+                      filename={`evaluation_${analytics.run.run_id}_${analytics.selected_metric}_distribution`}
+                      rows={analyticsDistributions}
+                    />
+                  </div>
+                  <DistributionBands rows={analyticsDistributions} />
+                  <DataTable columns={["mode", "n", "min", "q1", "median", "q3", "max", "mean"]} rows={analyticsDistributions} rowKeyColumn="mode" />
+                </section>
+
+                <section className="data-section analytics-wide">
+                  <div className="section-toolbar">
+                    <h3 className="section-title">Mode Category Matrix</h3>
+                    <CsvExportButton
+                      columns={["mode", ...getStringArray(analytics.mode_category_matrix.categories)]}
+                      filename={`evaluation_${analytics.run.run_id}_${analytics.selected_metric}_matrix`}
+                      rows={getRows(analytics.mode_category_matrix.rows)}
+                    />
+                  </div>
+                  <AnalyticsMatrix matrix={analytics.mode_category_matrix} />
+                </section>
+
+                <section className="data-section">
+                  <div className="section-toolbar">
+                    <h3 className="section-title">Retrieval And Citation</h3>
+                    <CsvExportButton
+                      columns={["mode", "retrieval_precision", "source_coverage", "citation_count", "citation_accuracy", "context_utilization"]}
+                      filename={`evaluation_${analytics.run.run_id}_retrieval_citation`}
+                      rows={analyticsByMode}
+                    />
+                  </div>
+                  <DataTable
+                    columns={["mode", "retrieval_precision", "source_coverage", "citation_count", "citation_accuracy", "context_utilization"]}
+                    rows={analyticsByMode}
+                    rowKeyColumn="mode"
+                  />
+                </section>
+
+                <section className="data-section">
+                  <div className="section-toolbar">
+                    <h3 className="section-title">Quality Metrics</h3>
+                    <CsvExportButton
+                      columns={["mode", ...metricKeys(analyticsQualityByMode)]}
+                      filename={`evaluation_${analytics.run.run_id}_quality_analytics`}
+                      rows={analyticsQualityByMode}
+                    />
+                  </div>
+                  {analyticsQualityByMode.length ? (
+                    <DataTable columns={["mode", ...metricKeys(analyticsQualityByMode)]} rows={analyticsQualityByMode} rowKeyColumn="mode" />
+                  ) : (
+                    <p className="empty-state">No quality metrics in this run.</p>
+                  )}
+                </section>
+
+                <section className="data-section analytics-wide">
+                  <div className="section-toolbar">
+                    <h3 className="section-title">Statistical Significance</h3>
+                    <CsvExportButton
+                      columns={["metric", "variant_a", "variant_b", "mean_a", "mean_b", "delta", "p_value", "significant", "effect_size", "effect_category"]}
+                      filename={`evaluation_${analytics.run.run_id}_pairwise_statistics`}
+                      rows={analyticsPairwise}
+                    />
+                  </div>
+                  <StatisticalSummary tests={analytics.statistical_tests} metric={analytics.selected_metric} />
+                  <SignificanceMatrix tests={analytics.statistical_tests} metric={analytics.selected_metric} />
+                  {analyticsFriedman.length ? (
+                    <>
+                      <h4 className="subsection-title">Friedman Omnibus</h4>
+                      <DataTable columns={["metric", "statistic", "p_value", "significant", "n_variants", "n_questions"]} rows={analyticsFriedman} rowKeyColumn="metric" />
+                    </>
+                  ) : null}
+                  {analyticsSignificantPairwise.length ? (
+                    <>
+                      <h4 className="subsection-title">Significant Pairwise Comparisons</h4>
+                      <DataTable
+                        columns={["metric", "variant_a", "variant_b", "mean_a", "mean_b", "delta", "p_value", "effect_size", "effect_category"]}
+                        rows={withRowKeys(analyticsSignificantPairwise, ["metric", "variant_a", "variant_b"])}
+                        rowKeyColumn="_row_key"
+                      />
+                    </>
+                  ) : null}
+                </section>
+
+                <section className="data-section analytics-wide">
+                  <div className="section-toolbar">
+                    <h3 className="section-title">Failure Surface</h3>
+                    <CsvExportButton
+                      columns={uniqueColumns(["question_id", "category", "mode", "question", analytics.selected_metric, "retrieval_precision", "source_coverage", "citation_accuracy", "context_utilization", "latency_seconds", "error"])}
+                      filename={`evaluation_${analytics.run.run_id}_${analytics.selected_metric}_lowest_questions`}
+                      rows={analytics.lowest_scoring_questions}
+                    />
+                  </div>
+                  <DataTable
+                    columns={uniqueColumns(["question_id", "category", "mode", analytics.selected_metric, "retrieval_precision", "source_coverage", "citation_accuracy", "context_utilization", "latency_seconds", "error"])}
+                    rows={withRowKeys(analytics.lowest_scoring_questions, ["question_id", "mode"])}
+                    rowKeyColumn="_row_key"
+                  />
+                  <h4 className="subsection-title">Highest Latency</h4>
+                  <DataTable
+                    columns={["question_id", "category", "mode", "latency_seconds", "retrieval_precision", "source_coverage", "citation_accuracy", "error"]}
+                    rows={withRowKeys(analytics.highest_latency_questions, ["question_id", "mode", "latency_seconds"])}
+                    rowKeyColumn="_row_key"
+                  />
+                </section>
+              </section>
+            </>
+          ) : (
+            <p className="empty-state">Select a saved run to load analytics.</p>
+          )}
+        </section>
+      ) : null}
+
       {view === "questions" ? (
         <section className="evaluation-main">
           <div className="data-controls">
@@ -421,6 +712,11 @@ export default function EvaluationPage() {
                 {(catalog?.categories || []).map((item) => <option key={item} value={item}>{item}</option>)}
               </select>
             </label>
+            <CsvExportButton
+              columns={["id", "category", "question", "expected_source_types", "expected_min_citations", "requires_analysis", "requires_reliability"]}
+              filename="evaluation_questions"
+              rows={questions.map(questionToRow)}
+            />
           </div>
           <DataTable
             columns={["id", "category", "question", "expected_source_types", "expected_min_citations", "requires_analysis", "requires_reliability"]}
@@ -604,6 +900,14 @@ export default function EvaluationPage() {
           {compareResult ? (
             <>
               <h3 className="section-title">Mode Comparison</h3>
+              <div className="section-toolbar">
+                <span className="empty-state">{compareResult.by_mode.length} comparison rows</span>
+                <CsvExportButton
+                  columns={["run_id", "model", "mode", ...metricKeys(compareResult.by_mode)]}
+                  filename="evaluation_compare_by_mode"
+                  rows={compareResult.by_mode}
+                />
+              </div>
               <DataTable columns={["run_id", "model", "mode", ...metricKeys(compareResult.by_mode)]} rows={compareResult.by_mode} rowKeyColumn="run_id" />
               <h3 className="section-title">Comparison Report</h3>
               <pre className="code-block report-block">{compareResult.markdown}</pre>
@@ -645,6 +949,155 @@ function JobStatusPanel({ job, loading, onCancel }: { job: EvaluationJobStatus; 
         {job.error ? <StatusRow label="Error" value={job.error} /> : null}
       </div>
     </section>
+  );
+}
+
+function MetricBarChart({ rows, metric, label }: { rows: Record<string, unknown>[]; metric: string; label: string }) {
+  const values = rows.map((row) => numberValue(row[metric])).filter((value): value is number => value !== null);
+  const max = Math.max(...values, 0.0001);
+  return (
+    <div className="visual-bars analytics-bars" aria-label={`${label} by mode`}>
+      {rows.map((row) => {
+        const value = numberValue(row[metric]);
+        const width = value === null ? 0 : Math.max(2, (value / max) * 100);
+        return (
+          <div className="visual-bar-row" key={String(row.mode)}>
+            <span>{String(row.mode || "mode")}</span>
+            <div className="visual-track">
+              <div style={{ width: `${width}%` }} />
+            </div>
+            <strong>{formatCompactNumber(value)}</strong>
+            <em>{formatDelta(row.delta_from_baseline)}</em>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function DistributionBands({ rows }: { rows: Record<string, unknown>[] }) {
+  const values = rows.flatMap((row) => ["min", "q1", "median", "q3", "max"].map((key) => numberValue(row[key])).filter((value): value is number => value !== null));
+  const min = Math.min(...values, 0);
+  const max = Math.max(...values, 1);
+  const span = max - min || 1;
+  return (
+    <div className="distribution-list">
+      {rows.map((row) => {
+        const low = numberValue(row.min) ?? min;
+        const q1 = numberValue(row.q1) ?? low;
+        const median = numberValue(row.median) ?? q1;
+        const q3 = numberValue(row.q3) ?? median;
+        const high = numberValue(row.max) ?? q3;
+        return (
+          <div className="distribution-row" key={String(row.mode)}>
+            <span>{String(row.mode || "mode")}</span>
+            <div className="distribution-track">
+              <i style={{ left: `${((low - min) / span) * 100}%`, width: `${Math.max(1, ((high - low) / span) * 100)}%` }} />
+              <b style={{ left: `${((q1 - min) / span) * 100}%`, width: `${Math.max(1, ((q3 - q1) / span) * 100)}%` }} />
+              <strong style={{ left: `${((median - min) / span) * 100}%` }} />
+            </div>
+            <em>{formatCompactNumber(numberValue(row.mean))}</em>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function AnalyticsMatrix({ matrix }: { matrix: Record<string, unknown> }) {
+  const categories = getStringArray(matrix.categories);
+  const rows = getRows(matrix.rows);
+  const min = numberValue(matrix.min) ?? 0;
+  const max = numberValue(matrix.max) ?? 1;
+  if (!categories.length || !rows.length) {
+    return <p className="empty-state">No mode/category matrix available.</p>;
+  }
+  return (
+    <div className="analytics-matrix-wrap">
+      <table className="analytics-matrix">
+        <thead>
+          <tr>
+            <th>Mode</th>
+            {categories.map((category) => <th key={category}>{category}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={String(row.mode)}>
+              <th>{String(row.mode || "mode")}</th>
+              {categories.map((category) => {
+                const value = numberValue(row[category]);
+                return (
+                  <td key={category} style={heatmapStyle(value, min, max)}>
+                    {formatCompactNumber(value)}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function StatisticalSummary({ tests, metric }: { tests: Record<string, unknown>; metric: string }) {
+  const status = String(tests.status || "skipped");
+  const summary = asRecord(tests.summary);
+  if (status !== "available") {
+    return (
+      <div className="analytics-status">
+        <SummaryCell label="Status" value={status} />
+        <SummaryCell label="Reason" value={String(tests.reason || "not available")} />
+      </div>
+    );
+  }
+  const pairwise = getRows(tests.pairwise);
+  const significant = getRows(tests.significant_pairwise);
+  return (
+    <div className="analytics-status">
+      <SummaryCell label="Status" value="available" />
+      <SummaryCell label="Metric" value={metric} />
+      <SummaryCell label="Modes" value={formatCell(summary.n_variants)} />
+      <SummaryCell label="Questions" value={formatCell(summary.n_questions)} />
+      <SummaryCell label="Pairwise" value={pairwise.length} />
+      <SummaryCell label="Significant" value={significant.length} />
+    </div>
+  );
+}
+
+function SignificanceMatrix({ tests, metric }: { tests: Record<string, unknown>; metric: string }) {
+  const matrices = asRecord(tests.significance_matrix);
+  const matrix = asRecord(matrices[metric]);
+  const modes = getStringArray(matrix.modes);
+  const rows = getRows(matrix.rows);
+  if (!modes.length || !rows.length) return null;
+  return (
+    <div className="analytics-matrix-wrap significance-wrap">
+      <table className="analytics-matrix significance-matrix">
+        <thead>
+          <tr>
+            <th>Mode</th>
+            {modes.map((mode) => <th key={mode}>{mode}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={String(row.mode)}>
+              <th>{String(row.mode || "mode")}</th>
+              {modes.map((mode) => {
+                const value = numberValue(row[mode]);
+                return (
+                  <td key={mode} style={significanceStyle(value)}>
+                    {formatPValue(value)}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
@@ -916,6 +1369,68 @@ function asRecord(value: unknown): Record<string, unknown> {
 
 function getRows(value: unknown): Record<string, unknown>[] {
   return Array.isArray(value) ? value.filter((row): row is Record<string, unknown> => Boolean(row) && typeof row === "object" && !Array.isArray(row)) : [];
+}
+
+function getStringArray(value: unknown): string[] {
+  return Array.isArray(value) ? value.map((item) => String(item)) : [];
+}
+
+function uniqueColumns(columns: string[]): string[] {
+  return Array.from(new Set(columns));
+}
+
+function withRowKeys(rows: Record<string, unknown>[], keys: string[]): Record<string, unknown>[] {
+  return rows.map((row, index) => {
+    const parts = keys.map((key) => row[key]).filter((value) => value !== undefined && value !== null && value !== "");
+    return {
+      ...row,
+      _row_key: parts.length ? parts.map(String).join(":") : String(index),
+    };
+  });
+}
+
+function numberValue(value: unknown): number | null {
+  const parsed = typeof value === "number" ? value : Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function formatCompactNumber(value: number | null): string {
+  if (value === null) return "NA";
+  if (Math.abs(value) >= 100) return value.toLocaleString(undefined, { maximumFractionDigits: 1 });
+  if (Math.abs(value) >= 10) return value.toLocaleString(undefined, { maximumFractionDigits: 2 });
+  return value.toLocaleString(undefined, { maximumFractionDigits: 4 });
+}
+
+function formatDelta(value: unknown): string {
+  const numeric = numberValue(value);
+  if (numeric === null) return "NA";
+  const sign = numeric > 0 ? "+" : "";
+  return `${sign}${formatCompactNumber(numeric)}`;
+}
+
+function formatPValue(value: number | null): string {
+  if (value === null) return "NA";
+  if (value < 0.001) return "<0.001";
+  return value.toLocaleString(undefined, { maximumFractionDigits: 4 });
+}
+
+function heatmapStyle(value: number | null, min: number, max: number): CSSProperties {
+  if (value === null) return {};
+  const span = max - min || 1;
+  const intensity = Math.max(0.08, Math.min(0.72, ((value - min) / span) * 0.64 + 0.08));
+  return { backgroundColor: `rgba(86, 180, 233, ${intensity})` };
+}
+
+function significanceStyle(value: number | null): CSSProperties {
+  if (value === null) return {};
+  if (value <= 0.01) return { backgroundColor: "rgba(86, 180, 233, 0.48)", color: "#111111" };
+  if (value <= 0.05) return { backgroundColor: "rgba(86, 180, 233, 0.28)", color: "#111111" };
+  return { backgroundColor: "transparent" };
+}
+
+function metricLabel(metrics: Record<string, unknown>[], key: string): string {
+  const metric = metrics.find((item) => item.key === key);
+  return String(metric?.label || key || "metric");
 }
 
 function metricKeys(rows: Record<string, unknown>[]): string[] {

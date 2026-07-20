@@ -86,7 +86,7 @@ BENCHMARK_QUESTIONS: List[BenchmarkQuestion] = [
     BenchmarkQuestion(
         id="meta_03",
         category="Single-source (Metagenome)",
-        question="What metagenome samples are available from Matsushima Bay?",
+        question="What metagenome samples are available from Mutsu Bay?",
         expected_source_types=["metagenome"],
         expected_min_citations=1,
     ),

@@ -1,6 +1,6 @@
 # Handoff Document - Onagawa Source Chat (provenance-eco-rag)
 
-> **Last updated**: 2026-07-17
+> **Last updated**: 2026-07-20
 > **Project path**: `/Users/jaronchai/Documents/GitHub/provenance-eco-rag/`
 > **Current status**: Active Next.js + FastAPI application, local-first RAG stack, manual batch ingestion only. Legacy Streamlit UI is archived for reference.
 
@@ -21,6 +21,8 @@ application shape:
 - **Database**: PostgreSQL 16 + pgvector through `docker-compose.yml`
 - **LLM runtime**: Ollama, usually host-run locally; optional compose overlay
 - **Ingestion**: manual batch-run pipeline scripts, not automatic ingestion
+- **Provenance**: manifest-backed lineage inspection plus read-only upsert
+  dry-run planning
 - **Archive**: old Streamlit app and Streamlit container overlay preserved in
   `archive/legacy-streamlit/`
 
@@ -48,11 +50,90 @@ from the repository root when intentionally run from the archive path.
 
 - `README.md` now presents Next.js + FastAPI as the normal application path.
 - `README.md` keeps Streamlit documentation as an archived parity reference.
-- `README.md` testing notes now reflect the current 235-test suite.
+- `README.md` testing notes now reflect the current 254-test suite.
 - `docs/ROADMAP.md` records the manual batch-ingestion direction and cloud UI
   migration direction.
 - `archive/README.md` and `archive/legacy-streamlit/README.md` explain what is
   archived and how to intentionally run it.
+
+### Manual Pipeline Improvement
+
+- Added `scripts/run_pipeline.py` as the safe manual batch orchestrator.
+- Added pipeline preflight API support.
+- Added durable pipeline manifests at `data/pipeline_runs/{run_id}/manifest.json`.
+- Added run history/detail APIs for pipeline runs.
+- Expanded the `/pipeline` page with preflight checks, active/background job
+  status, artifact freshness, per-stage logs, run history, selected manifest
+  JSON, artifact diffs, and log-tail inspection.
+- Added tests for preflight command planning, reset blockers, dry-run manifest
+  creation, active job discovery, artifact freshness, stage-log parsing, run
+  history, and run detail retrieval.
+
+### Repository Audit and Mutsu Correction
+
+- Corrected bay code `M` to **Mutsu Bay** across active UI labels, retrieval
+  naming, prompt context, preprocessing text documents, evaluation fixtures,
+  README study-site documentation, and tests.
+- Removed the old hardcoded `M` coordinate fallback from active retrieval and
+  anchor-event generation. `M` coordinates should come from source metadata
+  until a trusted Mutsu coordinate policy is added.
+- Regenerated `data/serving/retrieval_documents.jsonl`,
+  `data/serving/retrieval_documents.parquet`, and
+  `data/canonical/anchor_events.parquet` from the corrected code.
+- Reloaded the local PostgreSQL database with `python scripts/load_db.py --reset --embed`
+  so the live `/database`, `/chat`, and retrieval surfaces no longer show stale
+  generated bay-label text.
+- Audited all active routes in the browser at `http://127.0.0.1:3002`: `/`,
+  `/explore`, `/data`, `/database`, `/pipeline`, `/provenance`, `/evaluation`,
+  `/chat`, `/system`, `/debug`, plus `/analysis` and `/evidence` compatibility
+  redirects. No fatal render text or top-level layout overflow was found.
+- Audited major internal expert views: Data observations/CTD/taxa/SST/derived
+  analysis/reliability; Pipeline status/run/logs/history; Provenance
+  manifest/document trace/upsert dry-run; Evaluation
+  runs/analytics/questions/standard/ablation/compare.
+- Active-path sweeps are clean for old or misspelled M-bay labels; remaining old
+  labels are only in historical generated evaluation CSVs and archived
+  Streamlit reference files.
+
+### Provenance Manifest and Upsert Dry-Run
+
+- Added `ingestion/lineage.py` as the traceability-first manifest layer.
+- Added `scripts/build_provenance_manifest.py` for manual manifest inspection
+  and optional manifest writing under `data/provenance/`.
+- Added read-only `scripts/load_db.py --upsert --dry-run --limit-keys N --json` support.
+- Added FastAPI endpoints:
+  - `GET /provenance/manifest`
+  - `GET /provenance/trace/{doc_id}`
+  - `GET /provenance/upsert-dry-run`
+- Added a Next.js `/provenance` page with manifest tables, document trace
+  lookup, embedding treatment, raw trace payload inspection, and manual dry-run
+  controls.
+- Added synthetic tests for lineage construction, content-hash comparison,
+  embedding-refresh planning, and provenance API contracts.
+
+Important boundary: mutating upserts are still intentionally blocked. The
+current implementation plans and explains what would change; it does not write
+incremental updates into PostgreSQL.
+
+### Data and Analysis UI Consolidation
+
+- Removed `Analysis` from the top-level sidebar.
+- Combined source observations, CTD, taxa, SST, derived analysis, and
+  reliability review under `/data`.
+- Replaced `/analysis` with a compatibility redirect to `/data?view=analysis`.
+- Extracted the former analysis page into `frontend/components/AnalysisWorkbench.tsx`
+  so derived-analysis and reliability views can be embedded without duplicating
+  chart/table logic.
+
+### Explore and Evidence UI Consolidation
+
+- Removed `Evidence` from the top-level sidebar.
+- Combined normalized table exploration, time-series review, sample detail, and
+  evidence retrieval under `/explore`.
+- Replaced `/evidence` with a compatibility redirect to `/explore?view=evidence`.
+- Extracted the former evidence page into `frontend/components/EvidenceWorkbench.tsx`
+  so the retrieval diagnostics can live inside the corpus workbench without a
+  second page implementation.
 
 ### Active Stack Clarified
 
@@ -109,13 +190,13 @@ provenance-eco-rag/
 ├── docs/                             # Roadmap and screenshots
 ├── evaluation/                       # Benchmark, questions, metrics, reports, statistics
 ├── frontend/                         # Next.js academic UI
-├── ingestion/                        # File inventory and provenance registry
+├── ingestion/                        # File inventory, provenance registry, lineage manifests
 ├── orchestration/                    # Prompt construction and RAG context injection
 ├── preprocessing/                    # CTD, metagenome, SST, pre-analysis, reliability
 ├── retrieval/                        # Document builder, hybrid retriever, local fallback
 ├── schema/                           # Anchor-event construction
 ├── scripts/                          # Manual batch pipeline and evaluation CLIs
-├── tests/                            # 235 tests collected locally
+├── tests/                            # 254 tests collected locally
 ├── config.py                         # Paths, model defaults, thresholds
 ├── Containerfile.api                 # FastAPI container
 ├── docker-compose.yml                # PostgreSQL/pgvector
@@ -151,14 +232,15 @@ and reproducible run information.
 | Route | Purpose |
 | --- | --- |
 | `/` | Overview, corpus summary, tab feature map, backend signals |
-| `/explore` | Competent data exploration workspace with filters, summaries, charts, and sample detail |
-| `/data` | Source-specific CTD, metagenome, and SST browsing |
-| `/analysis` | Pre-analysis and reliability output review |
+| `/explore` | Corpus workbench for tables, filters, summaries, charts, sample detail, and evidence retrieval |
+| `/data` | Combined domain workbench for observations, CTD, taxa, SST, derived analysis, and reliability |
+| `/analysis` | Compatibility redirect to `/data?view=analysis` |
 | `/database` | Expert database explorer, schema inspection, read-only SQL/table tools |
 | `/pipeline` | Manual batch ingestion and corpus rebuild controls |
+| `/provenance` | Traceability manifest, document lineage, embedding treatment, upsert dry-run |
 | `/evaluation` | First-class evaluation suite with background jobs and detailed controls |
 | `/chat` | Citation-grounded RAG chat with expert model/retrieval knobs |
-| `/evidence` | Evidence catalog and source browsing |
+| `/evidence` | Compatibility redirect to `/explore?view=evidence` |
 | `/system` | API, database, Ollama, artifacts, and runtime status |
 | `/debug` | Debug payloads and low-level diagnostics |
 
@@ -183,7 +265,8 @@ The main backend file is `api/main.py`. Key endpoint groups:
 | Group | Endpoints |
 | --- | --- |
 | Health/statistics | `GET /health`, `GET /stats`, `GET /models` |
-| Pipeline | `GET /pipeline/status`, `POST /pipeline/jobs`, `GET /pipeline/jobs/{job_id}`, `GET /pipeline/jobs/{job_id}/log`, `POST /pipeline/jobs/{job_id}/cancel` |
+| Pipeline | `GET /pipeline/status`, `POST /pipeline/preflight`, `POST /pipeline/jobs`, `GET /pipeline/jobs/{job_id}`, `GET /pipeline/jobs/{job_id}/log`, `POST /pipeline/jobs/{job_id}/cancel`, `GET /pipeline/runs`, `GET /pipeline/runs/{run_id}` |
+| Provenance | `GET /provenance/manifest`, `GET /provenance/trace/{doc_id}`, `GET /provenance/upsert-dry-run` |
 | Debug | `GET /debug` |
 | Data page | `GET /data/catalog`, `GET /data/ctd-profile/{sample_id}`, `GET /data/taxa/{sample_id}`, `GET /data/sst` |
 | Evaluation | `GET /evaluation/catalog`, `GET /evaluation/preflight`, `POST /evaluation/runs/standard`, `POST /evaluation/runs/ablation`, `GET /evaluation/jobs/{job_id}`, `POST /evaluation/jobs/{job_id}/cancel`, `GET /evaluation/runs`, `GET /evaluation/runs/{run_id}`, `GET /evaluation/runs/{run_id}/report`, `POST /evaluation/compare` |
@@ -236,23 +319,64 @@ sync.
    - PostgreSQL tables are rebuilt
    - Embeddings are generated via Ollama
 
-7. **Application use**
+7. **Traceability and dry-run planning**
+   - Run `python scripts/build_provenance_manifest.py --write --run-id <run_id>`
+   - Optionally run `python scripts/load_db.py --upsert --dry-run --limit-keys 25 --json`
+   - Inspect `/provenance` for source hashes, artifact versions, document
+     trace paths, embedding treatment, and upsert planning
+
+8. **Application use**
    - Next.js calls FastAPI
    - FastAPI uses PostgreSQL when available
    - Retrieval falls back to local JSONL/BM25/numpy when PostgreSQL is down
 
-### Manual Batch Direction
+### Manual Batch Runner
 
-The planned next data workflow is a single manual batch command, not automatic
-ingestion. The intended future command shape is something like:
+The data workflow now has a single manual batch command. It is still not
+automatic ingestion: no watcher, scheduler, queue, or cloud sync starts this
+without an explicit operator action.
 
 ```bash
-python scripts/run_pipeline.py --tag 2026-07-manual-refresh --reset-db --embed
+python scripts/run_pipeline.py --validate-only
+python scripts/run_pipeline.py --preflight-only --stages full
+python scripts/run_pipeline.py --execute --tag 2026-07-manual-refresh --reset-db --embed
 ```
 
-That future command should orchestrate existing scripts, record manifests,
-capture row-count diffs, persist logs, and surface status in the `/pipeline`
-page.
+`scripts/run_pipeline.py` is dry-run by default. Real execution requires
+`--execute`; destructive database loads require `--reset-db`. Runs write
+`progress.json`, `run.log`, `run_meta.json`, and `manifest.json` under
+`data/pipeline_runs/{run_id}/`.
+
+The `/pipeline` page can start background jobs, run preflight checks, inspect
+active/background job status, show per-stage logs, list run history, inspect
+manifests, report artifact freshness, and display artifact diffs.
+
+### Provenance and Incremental-Load Planning
+
+The provenance layer is intentionally inspectable before it becomes mutating:
+
+```bash
+python scripts/build_provenance_manifest.py --limit-documents 500
+python scripts/build_provenance_manifest.py --write --run-id 2026-07-lineage-check
+python scripts/load_db.py --upsert --dry-run --limit-keys 25 --json
+```
+
+The manifest currently records:
+
+- Raw file existence, SHA-256, collection fingerprints, registry counts, and
+  latest processing run where available
+- Derived artifact paths, producer stage, table mapping, key columns, row
+  counts, schema hashes, and file hashes
+- Retrieval document IDs, source type, source keys, content hashes, metadata
+  hashes, and inferred source artifacts/files
+- Embedding treatment for the manifest document window, including model,
+  dimension, database status, and refresh candidates
+
+The upsert dry-run compares current artifacts against PostgreSQL keys and
+reports planned inserts, candidate updates, stale existing keys, and
+retrieval-document embedding refresh candidates. It is read-only and should
+remain so until row-level lineage, backup/rollback, and integration testing are
+implemented.
 
 ---
 
@@ -296,25 +420,25 @@ Use this only to compare historical Streamlit behavior with the Next.js UI.
 
 ## 9. Testing and Verification
 
-Latest local verification before this handoff update:
+Latest local verification for this audit:
 
 | Check | Result |
 | --- | --- |
-| `pytest` | 235 passed, 1 expected SciPy RuntimeWarning |
+| `pytest` | 254 passed, 3 expected SciPy RuntimeWarnings |
 | `npm run typecheck` | Passed |
 | `npm run build` | Passed |
 | `git diff --check` | Passed |
-| `python -m py_compile archive/legacy-streamlit/app.py` | Passed |
+| `python -m py_compile` for provenance/API/load-db files | Passed |
 
-The SciPy warning comes from a deliberately degenerate statistical test case in
-`tests/test_statistical_analysis.py`.
+The SciPy warnings come from deliberately degenerate evaluation/statistical
+fixtures and are expected by the test coverage.
 
 Current test modules:
 
 | Area | Files |
 | --- | --- |
-| API and UI backend contracts | `test_api_explore.py`, `test_api_pipeline.py`, `test_api_evaluation.py`, `test_api_schemas.py` |
-| Core data/provenance | `test_common.py`, `test_provenance.py`, `test_anchor_events.py` |
+| API and UI backend contracts | `test_api_explore.py`, `test_api_pipeline.py`, `test_api_provenance.py`, `test_api_evaluation.py`, `test_api_retrieve.py`, `test_api_schemas.py` |
+| Core data/provenance | `test_common.py`, `test_provenance.py`, `test_lineage.py`, `test_anchor_events.py` |
 | Retrieval/prompting | `test_local_retriever.py`, `test_prompt_builder.py` |
 | Evaluation/reliability | `test_reliability.py`, `test_evaluation.py`, `test_questions.py`, `test_quality_metrics.py`, `test_report.py`, `test_statistical_analysis.py` |
 
@@ -357,14 +481,14 @@ git diff --check
 | Area | Status |
 | --- | --- |
 | Core data pipeline | CTD, metagenome, SST normalization and retrieval-document build path exist |
-| Provenance | SHA-256 file registry exists |
+| Provenance | SHA-256 file registry, traceability manifest, document trace API/UI, and read-only upsert dry-run exist |
 | Anchor/cross-source linking | Anchor events and cross-source links exist |
 | Retrieval | PostgreSQL hybrid retrieval and local fallback exist |
 | Prompting | Provenance-aware citations plus analysis/reliability injection exist |
 | Evaluation | Standard/background runs, ablation controls, run browser, reports, comparison |
-| Pipeline UI | Manual batch job controls and logs exist |
+| Pipeline UI | Manual batch job controls, preflight checks, active/background job status, artifact freshness, per-stage logs, run history, manifests, and artifact diffs exist |
 | Database UI | Schema, table browsing, and read-only query surface exist |
-| Data exploration | Explore/data/analysis pages exist for expert browsing |
+| Data exploration | Combined Explore corpus workbench plus combined Data domain workbench exist for expert browsing |
 | System/debug | Status and debug surfaces exist |
 | Containerization | Database-only, Next/FastAPI, optional Ollama, and archived Streamlit modes exist |
 | Archive | Legacy Streamlit root files are preserved under `archive/legacy-streamlit/` |
@@ -376,8 +500,8 @@ git diff --check
 | Limitation | Notes |
 | --- | --- |
 | Ingestion is manual | No automatic file watcher, scheduler, queue, or cloud object-store sync yet |
-| Batch orchestration is split | Existing scripts run separately; unified `run_pipeline.py` is planned |
-| Database load is reset-oriented | `scripts/load_db.py --reset --embed` is the reliable path; upsert/migrations are future work |
+| Pipeline backup/rollback | Unified `run_pipeline.py` exists, but database backup and rollback automation are still future work |
+| Database load is reset-oriented | `scripts/load_db.py --reset --embed` is the reliable mutation path; `--upsert --dry-run` exists, but mutating upsert/migrations are future work |
 | Cloud hardening not done | No reverse proxy/TLS guide, backup automation, auth, or production secret strategy yet |
 | Ollama is local-first | Host Ollama is preferred on macOS; containerized Ollama is optional and may be slower |
 | Streamlit is archived | Do not add new active features to `archive/legacy-streamlit/app.py` |
@@ -389,38 +513,16 @@ git diff --check
 
 ## 13. Recommended Next Work Order
 
-### 1. Manual Batch Pipeline Consolidation
-
-Create `scripts/run_pipeline.py` to orchestrate the current manual stages:
-
-1. `scripts/ingest.py`
-2. `scripts/build_retrieval_docs.py`
-3. `scripts/run_pre_analysis.py`
-4. `scripts/run_reliability.py`
-5. `scripts/load_db.py --reset --embed`
-
-Add:
-
-- Run tags
-- Run manifest JSON
-- Stage timing
-- Row-count diffs
-- Artifact freshness checks
-- Failure boundaries and resumability notes
-- UI status integration on `/pipeline`
-
-Keep this manual batch-run only for now.
-
-### 2. Pipeline Safety and Database Backups
+### 1. Pipeline Safety and Database Backups
 
 Before destructive reset loads:
 
 - Add optional `pg_dump` backup command
 - Show backup path in `/pipeline`
 - Make reset/embed consequences explicit in the UI
-- Add a dry-run/preflight mode that checks required artifacts and models
+- Extend preflight with backup-path, free-space, and restore-readiness checks
 
-### 3. Evaluation Suite Hardening
+### 2. Evaluation Suite Hardening
 
 Continue treating evaluation as first-class:
 
@@ -430,7 +532,7 @@ Continue treating evaluation as first-class:
 - Add regression comparison against a selected baseline run
 - Add charts for latency, citation accuracy, faithfulness, and source coverage
 
-### 4. Cloud-Ready App Architecture
+### 3. Cloud-Ready App Architecture
 
 Next.js + FastAPI remains the preferred direction. Before server/cloud use:
 
@@ -442,14 +544,16 @@ Next.js + FastAPI remains the preferred direction. Before server/cloud use:
 - Add backups for PostgreSQL and important generated artifacts
 - Add deployment health checks and log-retention policy
 
-### 5. Database and SQL Improvements
+### 4. Database and SQL Improvements
 
 - Add integration tests with temporary PostgreSQL/pgvector
 - Consider Alembic if schemas begin changing often
-- Add idempotent upsert support keyed by `sample_id`, `doc_id`, `event_id`, and SST timestamps
+- Extend the provenance manifest with row-level hashes and embedding run IDs
+- Add mutating idempotent upsert support keyed by `sample_id`, `doc_id`,
+  `event_id`, and SST timestamps after backup/rollback policy is in place
 - Continue tightening read-only SQL validation and identifier quoting
 
-### 6. UI Parity and Expert UX
+### 5. UI Parity and Expert UX
 
 Use `archive/legacy-streamlit/app.py` only as parity reference. Implement all
 new work in Next.js/FastAPI.

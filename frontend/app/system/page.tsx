@@ -2,8 +2,10 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { RefreshCw } from "lucide-react";
-import { getDebugState, getModels, getStats, getStatus } from "@/lib/api";
-import type { CorpusStats, DebugState, ModelsResponse, StatusResponse } from "@/types";
+import { CsvExportButton } from "@/components/CsvExportButton";
+import { DataTable } from "@/components/DataTable";
+import { getDebugState, getExploreTable, getModels, getStats, getStatus } from "@/lib/api";
+import type { CorpusStats, DebugState, ExploreTableResponse, ModelsResponse, StatusResponse } from "@/types";
 
 type ArtifactRow = {
   name: string;
@@ -20,6 +22,7 @@ export default function SystemPage() {
   const [stats, setStats] = useState<CorpusStats | null>(null);
   const [models, setModels] = useState<ModelsResponse | null>(null);
   const [debug, setDebug] = useState<DebugState | null>(null);
+  const [sampleCoverage, setSampleCoverage] = useState<ExploreTableResponse | null>(null);
   const [refreshSeconds, setRefreshSeconds] = useState(0);
   const [lastUpdated, setLastUpdated] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,16 +32,22 @@ export default function SystemPage() {
     setLoading(true);
     setError("");
     try {
-      const [statusData, statsData, modelsData, debugData] = await Promise.all([
+      const [statusData, statsData, modelsData, debugData, sampleCoverageData] = await Promise.all([
         getStatus(),
         getStats(),
         getModels(),
         getDebugState(),
+        getExploreTable({
+          dataset: "sample_registry",
+          columns: "sample_id,bay,has_run_qc,has_kraken,has_metaeuk,has_ctd",
+          limit: 500,
+        }),
       ]);
       setStatus(statusData);
       setStats(statsData);
       setModels(modelsData);
       setDebug(debugData);
+      setSampleCoverage(sampleCoverageData);
       setLastUpdated(new Date().toLocaleTimeString());
     } catch (err) {
       setError(err instanceof Error ? err.message : "System request failed");
@@ -61,6 +70,46 @@ export default function SystemPage() {
     if (!stats) return 0;
     return Object.values(stats.documents).reduce((sum, value) => sum + value, 0);
   }, [stats]);
+  const sourceRows = useMemo(() => {
+    const documents = stats?.documents || {};
+    return [
+      { source_type: "ctd", label: "CTD", documents: documents.ctd || 0 },
+      { source_type: "metagenome", label: "Metagenome", documents: documents.metagenome || 0 },
+      { source_type: "remote_sensing", label: "Satellite SST", documents: documents.remote_sensing || 0 },
+      ...Object.entries(documents)
+        .filter(([source]) => !["ctd", "metagenome", "remote_sensing"].includes(source))
+        .map(([source, count]) => ({ source_type: source, label: source || "unknown", documents: count })),
+    ];
+  }, [stats]);
+  const bayRows = useMemo(() => {
+    const counts = new Map<string, number>();
+    (sampleCoverage?.rows || []).forEach((row) => {
+      const bay = String(row.bay || "unknown");
+      counts.set(bay, (counts.get(bay) || 0) + 1);
+    });
+    const bayLabels: Record<string, string> = {
+      O: "Onagawa",
+      I: "Ishinomaki",
+      M: "Mutsu",
+    };
+    return Array.from(counts.entries())
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([bay, samples]) => ({
+        bay,
+        label: bayLabels[bay] || bay,
+        samples,
+      }));
+  }, [sampleCoverage]);
+  const coverageRows = useMemo(() => {
+    return (sampleCoverage?.rows || []).map((row) => ({
+      sample_id: row.sample_id,
+      bay: row.bay,
+      QC: row.has_run_qc,
+      Kraken: row.has_kraken,
+      MetaEuk: row.has_metaeuk,
+      CTD: row.has_ctd,
+    }));
+  }, [sampleCoverage]);
 
   const artifacts = useMemo<ArtifactRow[]>(() => {
     const rows = Object.entries(asRecord(debug?.artifacts)).map(([name, value]) => ({
@@ -150,6 +199,57 @@ export default function SystemPage() {
       </section>
 
       <section className="system-section">
+        <div className="section-toolbar">
+          <h3 className="section-title">Corpus Statistics</h3>
+          <CsvExportButton
+            columns={["sample_id", "bay", "QC", "Kraken", "MetaEuk", "CTD"]}
+            filename="system_sample_coverage"
+            rows={coverageRows}
+          />
+        </div>
+        <div className="summary-strip">
+          <SummaryCell label="Total documents" value={totalDocuments} />
+          <SummaryCell label="CTD docs" value={stats?.documents.ctd ?? 0} />
+          <SummaryCell label="Metagenome docs" value={stats?.documents.metagenome ?? 0} />
+          <SummaryCell label="SST docs" value={stats?.documents.remote_sensing ?? 0} />
+          <SummaryCell label="Registered files" value={stats?.provenance_records ?? "..."} />
+        </div>
+        <div className="dashboard-grid system-stats-grid">
+          <article className="data-section">
+            <h3 className="section-title">Documents By Source</h3>
+            <SystemBars
+              rows={sourceRows.map((row) => ({
+                label: row.label,
+                value: row.documents,
+                total: totalDocuments,
+              }))}
+            />
+            <DataTable columns={["source_type", "label", "documents"]} rows={sourceRows} rowKeyColumn="source_type" />
+          </article>
+          <article className="data-section">
+            <h3 className="section-title">Samples By Bay</h3>
+            <SystemBars
+              rows={bayRows.map((row) => ({
+                label: `${row.label} (${row.bay})`,
+                value: row.samples,
+                total: sampleCoverage?.total || coverageRows.length,
+              }))}
+            />
+            <DataTable columns={["bay", "label", "samples"]} rows={bayRows} rowKeyColumn="bay" />
+          </article>
+          <article className="data-section dashboard-wide">
+            <h3 className="section-title">Sample Coverage</h3>
+            <DataTable
+              columns={["sample_id", "bay", "QC", "Kraken", "MetaEuk", "CTD"]}
+              emptyText="No sample registry rows available."
+              rows={coverageRows}
+              rowKeyColumn="sample_id"
+            />
+          </article>
+        </div>
+      </section>
+
+      <section className="system-section">
         <h3 className="section-title">Artifacts</h3>
         <div className="table-wrap compact-table-wrap">
           <table className="artifact-table">
@@ -229,6 +329,37 @@ function Metric({ label, value }: { label: string; value: string | number }) {
       <p className="metric-label">{label}</p>
       <p className="metric-value">{value}</p>
     </article>
+  );
+}
+
+function SummaryCell({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div>
+      <span>{label}</span>
+      <strong>{value}</strong>
+    </div>
+  );
+}
+
+function SystemBars({ rows }: { rows: { label: string; value: number; total: number }[] }) {
+  const fallbackTotal = rows.reduce((sum, row) => sum + row.value, 0);
+  return (
+    <div className="visual-bars system-bars">
+      {rows.map((row) => {
+        const total = row.total || fallbackTotal;
+        const pct = total ? Math.round((row.value / total) * 100) : 0;
+        return (
+          <div className="visual-bar-row" key={row.label}>
+            <span title={row.label}>{row.label}</span>
+            <div className="visual-track" aria-label={`${row.label}: ${pct}%`}>
+              <div style={{ width: `${pct}%` }} />
+            </div>
+            <strong>{row.value.toLocaleString()}</strong>
+            <em>{pct}%</em>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 

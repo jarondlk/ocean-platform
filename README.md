@@ -12,7 +12,7 @@ Transforms fragmented field data — CTD water profiles, metagenome sequencing, 
 | --- | --- | --- | --- |
 | Onagawa Bay | O | ~38.44°N, 141.45°E | CTD + Metagenome + SST |
 | Ishinomaki Bay | I | ~38.41°N, 141.30°E | CTD + Metagenome |
-| Matsushima Bay | M | ~38.35°N, 141.06°E | CTD + Metagenome |
+| Mutsu Bay | M | source metadata | CTD + Metagenome |
 
 ---
 
@@ -128,6 +128,23 @@ overrides.
 
 ### Data Pipeline
 
+Recommended manual batch entrypoint:
+
+```bash
+python scripts/run_pipeline.py --validate-only
+python scripts/run_pipeline.py --preflight-only --stages full
+python scripts/run_pipeline.py --execute --tag 2026-07-refresh --reset-db --embed
+```
+
+`scripts/run_pipeline.py` is dry-run by default. Real execution requires
+`--execute`; destructive database reloads also require `--reset-db`. Each run
+writes status, logs, and a manifest under `data/pipeline_runs/`.
+The `/pipeline` page exposes manual controls, preflight checks, active job
+status, per-stage logs, artifact freshness, run history, manifests, and
+artifact diffs.
+
+Individual stages remain runnable for focused debugging:
+
 ```bash
 python scripts/ingest.py                # 1. Ingestion + preprocessing
 python scripts/build_retrieval_docs.py  # 2. Anchor events + documents + links
@@ -135,6 +152,18 @@ python scripts/run_pre_analysis.py      # 3. Ecological analyses
 python scripts/run_reliability.py       # 4. Cross-source reliability validation
 python scripts/load_db.py --reset --embed  # 5. Populate DB + embed 323 docs
 ```
+
+Traceability and incremental-load planning are also manual:
+
+```bash
+python scripts/build_provenance_manifest.py --write --run-id 2026-07-refresh
+python scripts/load_db.py --upsert --dry-run --limit-keys 25 --json
+```
+
+`--upsert --dry-run` is read-only. It compares current artifacts with database
+keys through the provenance manifest and reports planned inserts, candidate
+updates, stale rows, and embedding refresh candidates. Mutating upserts remain
+blocked until row-level lineage and backup/rollback policy are hardened.
 
 ### Launch
 
@@ -232,14 +261,15 @@ FastAPI service:
 | Route | Description |
 | --- | --- |
 | `/` | Overview page with per-tab feature map, corpus summary, and health signals |
-| `/explore` | Data exploration workspace for source coverage, filters, and charts |
-| `/data` | Source-level CTD, metagenome, and SST browsing |
-| `/analysis` | Pre-analysis and reliability outputs |
+| `/explore` | Corpus workbench for source coverage, filters, charts, sample detail, and evidence retrieval |
+| `/data` | Source observations, CTD, taxa, SST, derived analysis, and reliability workbench |
+| `/analysis` | Compatibility redirect to `/data?view=analysis` |
 | `/database` | Expert database explorer, schema view, and read-only query tools |
 | `/pipeline` | Manual batch ingestion and corpus rebuild controls |
+| `/provenance` | Traceability manifest, document lineage, embedding treatment, and upsert dry-run |
 | `/evaluation` | First-class evaluation suite with background runs and controls |
 | `/chat` | Citation-grounded RAG query interface with expert retrieval/model knobs |
-| `/evidence` | Evidence catalogue with source and bay filters |
+| `/evidence` | Compatibility redirect to `/explore?view=evidence` |
 | `/system` | API, database, Ollama, artifact, and runtime status |
 | `/debug` | Debug payloads and low-level diagnostic properties |
 
@@ -302,8 +332,8 @@ The archived Streamlit interface had **8 tabs**:
 
 ## Project Structure
 
-```
-source_chat_agt/
+```text
+provenance-eco-rag/
 ├── archive/
 │   └── legacy-streamlit/               # Archived Streamlit UI and container overlay
 ├── config.py                           # Paths, DB, models, thresholds
@@ -326,6 +356,7 @@ source_chat_agt/
 │
 ├── ingestion/
 │   ├── provenance.py                   # SHA-256 file registration (JSONL)
+│   ├── lineage.py                      # Traceability manifests + upsert dry-run planner
 │   └── file_inventory.py              # Directory scanner
 │
 ├── schema/
@@ -350,20 +381,28 @@ source_chat_agt/
 │   └── benchmark.py                    # 15 questions, 4 modes, 6 metrics
 │
 ├── scripts/
+│   ├── run_pipeline.py                 # Manual batch orchestrator + manifests
+│   ├── build_provenance_manifest.py    # Manual traceability manifest writer
 │   ├── ingest.py                       # Ingestion pipeline
 │   ├── build_retrieval_docs.py         # Documents + links
-│   ├── load_db.py                      # Populate PostgreSQL + embeddings
+│   ├── load_db.py                      # Reset load, embeddings, upsert dry-run
 │   ├── run_pre_analysis.py             # Pre-analysis pipeline
-│   └── run_reliability.py              # Reliability pipeline
+│   ├── run_reliability.py              # Reliability pipeline
+│   ├── update_embeddings.py            # Partial embedding refresh
+│   ├── run_evaluation.py               # Evaluation CLI
+│   ├── run_ablation.py                 # Ablation CLI
+│   └── compare_evaluations.py          # Evaluation comparison CLI
 │
 ├── tests/
 │   ├── conftest.py                     # Shared fixtures (synthetic data)
+│   ├── test_api_*.py                   # FastAPI contracts for UI pages and jobs
 │   ├── test_common.py                  # Sample ID parsing, canonicalization
 │   ├── test_provenance.py              # SHA-256, JSONL, dedup
 │   ├── test_anchor_events.py           # Anchor creation, coordinates
-│   ├── test_reliability.py             # Agreement, tiers, anomaly, docs
+│   ├── test_local_retriever.py         # Local fallback retriever
 │   ├── test_prompt_builder.py          # Prompt structure, context injection
-│   └── test_evaluation.py             # Benchmark questions, citations, metrics
+│   ├── test_reliability.py             # Agreement, tiers, anomaly, docs
+│   └── test_evaluation/report/...      # Benchmark, metrics, reporting, stats
 │
 └── data/
     ├── raw/ctd/                        # 1 file (CTD_Onagawa.tsv)
@@ -559,23 +598,23 @@ npm run build
 
 ### Current Test Matrix
 
-The current suite collects **235 tests** across 15 test modules:
+The current suite collects **254 tests** across 18 test modules:
 
 | Test area | Files |
 | --- | --- |
-| API pages and controls | `test_api_explore.py`, `test_api_pipeline.py`, `test_api_evaluation.py`, `test_api_schemas.py` |
-| Data normalization and provenance | `test_common.py`, `test_provenance.py`, `test_anchor_events.py` |
+| API pages and controls | `test_api_explore.py`, `test_api_pipeline.py`, `test_api_provenance.py`, `test_api_evaluation.py`, `test_api_retrieve.py`, `test_api_schemas.py` |
+| Data normalization and provenance | `test_common.py`, `test_provenance.py`, `test_lineage.py`, `test_anchor_events.py` |
 | Retrieval and prompting | `test_local_retriever.py`, `test_prompt_builder.py` |
 | Reliability and evaluation | `test_reliability.py`, `test_evaluation.py`, `test_questions.py`, `test_quality_metrics.py`, `test_report.py`, `test_statistical_analysis.py` |
 
 Latest verified local result:
 
 ```text
-235 passed, 1 scipy RuntimeWarning in test_statistical_analysis.py
+254 passed, 3 scipy RuntimeWarnings
 ```
 
-The warning is emitted by SciPy for an intentionally degenerate Friedman-test
-case and is expected by the test coverage.
+The warnings are emitted by SciPy for intentionally degenerate evaluation and
+statistical fixtures, and are expected by the test coverage.
 
 ---
 

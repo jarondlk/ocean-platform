@@ -9,6 +9,15 @@ export type SourceDocument = {
   station?: string | null;
   text: string;
   score?: number | null;
+  rank_sources?: Record<string, number>;
+};
+
+export type ContextDocument = {
+  doc_id: string;
+  title: string;
+  context_type: string;
+  analysis_type?: string | null;
+  text: string;
 };
 
 export type StatusResponse = {
@@ -32,9 +41,18 @@ export type ChatResponse = {
   query: string;
   answer: string;
   sources: SourceDocument[];
+  analysis_context: ContextDocument[];
+  reliability_context: ContextDocument[];
   model: string;
   n_sources: number;
+  n_context_documents: number;
+  prompt_diagnostics: Record<string, unknown>;
   options: Record<string, unknown>;
+};
+
+export type RetrieveResponse = {
+  query: string;
+  sources: SourceDocument[];
 };
 
 export type OllamaModel = {
@@ -227,14 +245,55 @@ export type PipelineArtifactInfo = {
   note?: string | null;
 };
 
+export type PipelineArtifactFreshness = {
+  id: string;
+  label: string;
+  kind: string;
+  path: string;
+  exists: boolean;
+  freshness_status: string;
+  lineage_status: string;
+  age_days?: number | null;
+  modified_at?: string | null;
+  latest_raw_modified_at?: string | null;
+  rows?: number | null;
+  size_bytes?: number | null;
+  note?: string | null;
+};
+
 export type PipelineStatusResponse = {
   stages: PipelineStageInfo[];
   raw_sources: PipelineArtifactInfo[];
   artifacts: PipelineArtifactInfo[];
+  artifact_freshness: PipelineArtifactFreshness[];
   readiness: Record<string, unknown>;
   database: Record<string, unknown>;
   ollama: Record<string, unknown>;
+  active_jobs: PipelineJobStatus[];
   pipeline_runs: number;
+};
+
+export type PipelinePreflightCheck = {
+  id: string;
+  label: string;
+  status: string;
+  severity: string;
+  required: boolean;
+  detail: string;
+};
+
+export type PipelinePreflightResponse = {
+  generated_at: string;
+  ok: boolean;
+  blockers: string[];
+  warnings: string[];
+  request: Record<string, unknown>;
+  checks: PipelinePreflightCheck[];
+  command_plan: Record<string, unknown>[];
+  raw_sources: PipelineArtifactInfo[];
+  artifacts: PipelineArtifactInfo[];
+  database: Record<string, unknown>;
+  ollama: Record<string, unknown>;
 };
 
 export type PipelineRunRequest = {
@@ -243,6 +302,7 @@ export type PipelineRunRequest = {
   dry_run: boolean;
   skip_sst: boolean;
   reset_database: boolean;
+  embed_after_load: boolean;
   embedding_model?: string;
   embedding_batch_size: number;
   notes?: string;
@@ -280,6 +340,78 @@ export type PipelineLogResponse = {
   log_path: string;
   log: string;
   bytes: number;
+  stage_logs: PipelineStageLog[];
+};
+
+export type PipelineStageLog = {
+  stage_id: string;
+  label?: string | null;
+  command?: string | null;
+  status?: string | null;
+  return_code?: number | null;
+  duration_seconds?: number | null;
+  line_count: number;
+  bytes: number;
+  log: string;
+};
+
+export type PipelineRunSummary = {
+  run_id: string;
+  job_id?: string | null;
+  status: string;
+  tag?: string | null;
+  dry_run: boolean;
+  stages: string[];
+  stage_count: number;
+  failed_stage?: string | null;
+  started_at?: string | null;
+  completed_at?: string | null;
+  duration_seconds?: number | null;
+  output_dir?: string | null;
+  manifest_path?: string | null;
+  log_path?: string | null;
+  error?: string | null;
+};
+
+export type PipelineRunsResponse = {
+  runs: PipelineRunSummary[];
+};
+
+export type PipelineRunDetailResponse = {
+  summary: PipelineRunSummary;
+  manifest: Record<string, unknown>;
+  progress: Record<string, unknown>;
+  log_tail: string;
+  stage_logs: PipelineStageLog[];
+};
+
+export type ProvenanceManifestResponse = {
+  schema_version: number;
+  generated_at: string;
+  project_root: string;
+  summary: Record<string, unknown>;
+  source_files: Record<string, unknown>[];
+  artifacts: Record<string, unknown>[];
+  documents: Record<string, unknown>[];
+  embeddings: Record<string, unknown>[];
+  limitations: string[];
+};
+
+export type ProvenanceTraceResponse = {
+  doc_id: string;
+  found: boolean;
+  trace: Record<string, unknown>;
+};
+
+export type UpsertDryRunResponse = {
+  generated_at: string;
+  dry_run: boolean;
+  ok: boolean;
+  database: Record<string, unknown>;
+  summary: Record<string, unknown>;
+  lineage_manifest_summary: Record<string, unknown>;
+  table_plans: Record<string, unknown>[];
+  warnings: string[];
 };
 
 export type EvaluationQuestion = {
@@ -401,6 +533,27 @@ export type EvaluationRunDetailResponse = {
   limit: number;
   offset: number;
   summary: Record<string, unknown>;
+};
+
+export type EvaluationAnalyticsResponse = {
+  run: EvaluationRunSummary;
+  selected_metric: string;
+  baseline_mode?: string | null;
+  filters: Record<string, unknown>;
+  metric_catalog: Array<Record<string, unknown>>;
+  by_mode: Record<string, unknown>[];
+  by_category: Record<string, unknown>[];
+  by_mode_category: Record<string, unknown>[];
+  mode_category_matrix: Record<string, unknown>;
+  metric_distributions: Record<string, unknown>[];
+  quality_by_mode: Record<string, unknown>[];
+  latency_by_mode: Record<string, unknown>[];
+  citation_by_mode: Record<string, unknown>[];
+  source_coverage_by_mode: Record<string, unknown>[];
+  lowest_scoring_questions: Record<string, unknown>[];
+  highest_latency_questions: Record<string, unknown>[];
+  best_by_metric: Record<string, unknown>[];
+  statistical_tests: Record<string, unknown>;
 };
 
 export type EvaluationReportResponse = {

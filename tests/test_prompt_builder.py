@@ -7,7 +7,14 @@ from unittest.mock import patch
 
 import pytest
 
-from orchestration.unified import build_prompt, _load_analysis_context, _load_reliability_context
+from orchestration.unified import (
+    analysis_context_documents,
+    build_prompt,
+    build_prompt_with_context,
+    reliability_context_documents,
+    _load_analysis_context,
+    _load_reliability_context,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -98,6 +105,12 @@ class TestLoadAnalysisContext:
             result = _load_analysis_context("What is the diversity index?")
         assert "PRE-COMPUTED ANALYSES" in result
 
+    def test_structured_analysis_context_documents(self, sample_analysis_docs):
+        """Analysis context can be inspected separately from prompt text."""
+        with patch("config.ANALYSIS_DIR", sample_analysis_docs.parent):
+            documents = analysis_context_documents("What are the correlation patterns?")
+        assert [doc["id"] for doc in documents] == ["analysis_trends", "analysis_correlations"]
+
     def test_missing_file_returns_empty(self, tmp_path):
         """Missing JSONL file returns empty string gracefully."""
         with patch("config.ANALYSIS_DIR", tmp_path):
@@ -123,6 +136,15 @@ class TestLoadReliabilityContext:
         with patch("config.RELIABILITY_DIR", sample_reliability_docs.parent):
             result = _load_reliability_context("What is the temperature trend?")
         assert "RELIABILITY ENSURANCE" in result
+
+    def test_structured_reliability_context_documents(self, sample_reliability_docs):
+        """Reliability context can be inspected separately from prompt text."""
+        with patch("config.RELIABILITY_DIR", sample_reliability_docs.parent):
+            documents = reliability_context_documents("Is the temperature data reliable?")
+        assert [doc["id"] for doc in documents] == [
+            "reliability_sst_ctd_validation",
+            "reliability_corroboration_summary",
+        ]
 
     def test_no_keyword_skips(self, sample_reliability_docs):
         """Generic query without keywords returns empty."""
@@ -169,3 +191,21 @@ class TestBuildPromptWithInjection:
                               inject_analysis=False, inject_reliability=False)
         assert "PRE-COMPUTED ANALYSES" not in prompt
         assert "RELIABILITY ENSURANCE" not in prompt
+
+    def test_prompt_with_context_returns_structured_ledger(self, sample_analysis_docs, sample_reliability_docs):
+        """Prompt construction exposes the injected context documents."""
+        results = [{"doc_id": "test", "source_type": "ctd", "title": "Test",
+                     "text": "Test data", "time": "2024-01", "score": 0.9}]
+        with patch("config.ANALYSIS_DIR", sample_analysis_docs.parent), patch(
+            "config.RELIABILITY_DIR", sample_reliability_docs.parent
+        ):
+            prompt, context = build_prompt_with_context(
+                "Compare temperature reliability and correlation patterns",
+                results,
+                inject_analysis=True,
+                inject_reliability=True,
+            )
+        assert "PRE-COMPUTED ANALYSES" in prompt
+        assert "RELIABILITY ENSURANCE" in prompt
+        assert len(context["analysis"]) == 2
+        assert len(context["reliability"]) == 2
