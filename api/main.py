@@ -100,7 +100,8 @@ from evaluation.benchmark import (
 )
 from evaluation.questions import BENCHMARK_QUESTIONS, QUESTION_CATEGORIES
 from evaluation.reference_answers import get_reference
-from orchestration.unified import build_prompt_with_context, retrieve
+from orchestration.answer_audit import audit_answer
+from orchestration.unified import build_prompt_with_context, retrieve, retrieve_with_expansion
 from retrieval.local_retriever import LocalRetriever
 from ingestion.lineage import (
     build_document_trace,
@@ -479,6 +480,12 @@ def _source_document(doc: Dict[str, Any]) -> SourceDocument:
         text=str(doc.get("text") or ""),
         score=doc.get("score"),
         rank_sources=doc.get("rank_sources") or {},
+        retrieval_role=str(doc.get("retrieval_role") or "primary"),
+        link_type=doc.get("link_type"),
+        linked_from_doc_id=doc.get("linked_from_doc_id"),
+        linked_from_event_id=doc.get("linked_from_event_id"),
+        time_delta_days=doc.get("time_delta_days"),
+        distance_km=doc.get("distance_km"),
     )
 
 
@@ -493,18 +500,27 @@ def _context_document(doc: Dict[str, Any], context_type: str) -> ContextDocument
     )
 
 
-def _prompt_diagnostics(prompt: str, retrieved: List[Dict[str, Any]], context: Dict[str, List[Dict[str, Any]]]) -> Dict[str, Any]:
+def _prompt_diagnostics(
+    prompt: str,
+    retrieved: List[Dict[str, Any]],
+    context: Dict[str, List[Dict[str, Any]]],
+    linked: Optional[List[Dict[str, Any]]] = None,
+) -> Dict[str, Any]:
     analysis_docs = context.get("analysis") or []
     reliability_docs = context.get("reliability") or []
+    linked_docs = linked or []
     retrieved_chars = sum(len(str(row.get("text") or "")) for row in retrieved)
+    linked_chars = sum(len(str(row.get("text") or "")) for row in linked_docs)
     context_chars = sum(len(str(row.get("text") or "")) for row in [*analysis_docs, *reliability_docs])
     return {
         "prompt_chars": len(prompt),
         "retrieved_documents": len(retrieved),
+        "linked_documents": len(linked_docs),
         "analysis_context_documents": len(analysis_docs),
         "reliability_context_documents": len(reliability_docs),
         "context_documents": len(analysis_docs) + len(reliability_docs),
         "retrieved_text_chars": retrieved_chars,
+        "linked_text_chars": linked_chars,
         "supplementary_text_chars": context_chars,
         "ranked_documents": sum(1 for row in retrieved if row.get("rank_sources")),
     }
@@ -4151,7 +4167,7 @@ def documents(
 
 @app.post("/retrieve", response_model=RetrieveResponse)
 def retrieve_sources(request: RetrieveRequest) -> RetrieveResponse:
-    rows = retrieve(
+    bundle = retrieve_with_expansion(
         request.query,
         k=request.k,
         source_type=request.source_type,
@@ -4161,13 +4177,22 @@ def retrieve_sources(request: RetrieveRequest) -> RetrieveResponse:
         vector_weight=request.vector_weight,
         fts_weight=request.fts_weight,
         rrf_k=request.rrf_k,
+        expand_evidence=request.expand_evidence,
+        max_linked_sources=request.max_linked_sources,
     )
-    return RetrieveResponse(query=request.query, sources=[_source_document(row) for row in rows])
+    primary_rows = bundle.get("primary") or []
+    linked_rows = bundle.get("linked") or []
+    return RetrieveResponse(
+        query=request.query,
+        sources=[_source_document(row) for row in primary_rows],
+        linked_sources=[_source_document(row) for row in linked_rows],
+        diagnostics=bundle.get("diagnostics") or {},
+    )
 
 
 @app.post("/chat", response_model=ChatResponse)
 def chat(request: ChatRequest) -> ChatResponse:
-    rows = retrieve(
+    bundle = retrieve_with_expansion(
         request.query,
         k=request.k,
         source_type=request.source_type,
@@ -4177,10 +4202,16 @@ def chat(request: ChatRequest) -> ChatResponse:
         vector_weight=request.vector_weight,
         fts_weight=request.fts_weight,
         rrf_k=request.rrf_k,
+        expand_evidence=request.expand_evidence,
+        max_linked_sources=request.max_linked_sources,
     )
+    rows = bundle.get("primary") or []
+    linked_rows = bundle.get("linked") or []
+    retrieval_diagnostics = bundle.get("diagnostics") or {}
     prompt, context = build_prompt_with_context(
         request.query,
         rows,
+        linked_results=linked_rows,
         inject_analysis=request.inject_analysis,
         inject_reliability=request.inject_reliability,
     )
@@ -4205,16 +4236,34 @@ def chat(request: ChatRequest) -> ChatResponse:
     except Exception as exc:
         answer = f"LLM error: {exc}"
 
+    answer_audit = (
+        audit_answer(
+            query=request.query,
+            answer=answer,
+            primary_sources=rows,
+            linked_sources=linked_rows,
+            analysis_context=context.get("analysis", []),
+            reliability_context=context.get("reliability", []),
+            retrieval_diagnostics=retrieval_diagnostics,
+        )
+        if request.run_answer_audit
+        else None
+    )
+
     return ChatResponse(
         query=request.query,
         answer=answer,
         sources=[_source_document(row) for row in rows],
+        linked_sources=[_source_document(row) for row in linked_rows],
         analysis_context=analysis_context,
         reliability_context=reliability_context,
         model=model,
         n_sources=len(rows),
+        n_linked_sources=len(linked_rows),
         n_context_documents=len(analysis_context) + len(reliability_context),
-        prompt_diagnostics=_prompt_diagnostics(prompt, rows, context),
+        prompt_diagnostics=_prompt_diagnostics(prompt, rows, context, linked_rows),
+        retrieval_diagnostics=retrieval_diagnostics,
+        answer_audit=answer_audit,
         options={
             "generation": ollama_options,
             "retrieval": {
@@ -4226,10 +4275,13 @@ def chat(request: ChatRequest) -> ChatResponse:
                 "vector_weight": request.vector_weight,
                 "fts_weight": request.fts_weight,
                 "rrf_k": request.rrf_k,
+                "expand_evidence": request.expand_evidence,
+                "max_linked_sources": request.max_linked_sources,
             },
             "context": {
                 "inject_analysis": request.inject_analysis,
                 "inject_reliability": request.inject_reliability,
+                "run_answer_audit": request.run_answer_audit,
             },
         },
     )

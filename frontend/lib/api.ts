@@ -103,9 +103,12 @@ export async function askQuestion(input: {
   vector_weight?: number;
   fts_weight?: number;
   rrf_k?: number;
+  expand_evidence?: boolean;
+  max_linked_sources?: number;
   model?: string;
   inject_analysis?: boolean;
   inject_reliability?: boolean;
+  run_answer_audit?: boolean;
   temperature?: number;
   top_p?: number;
   repeat_penalty?: number;
@@ -130,6 +133,8 @@ export async function retrieveSources(input: {
   vector_weight?: number;
   fts_weight?: number;
   rrf_k?: number;
+  expand_evidence?: boolean;
+  max_linked_sources?: number;
 }): Promise<RetrieveResponse> {
   return request<RetrieveResponse>("/retrieve", {
     method: "POST",

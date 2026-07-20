@@ -10,6 +10,12 @@ export type SourceDocument = {
   text: string;
   score?: number | null;
   rank_sources?: Record<string, number>;
+  retrieval_role?: string;
+  link_type?: string | null;
+  linked_from_doc_id?: string | null;
+  linked_from_event_id?: string | null;
+  time_delta_days?: number | null;
+  distance_km?: number | null;
 };
 
 export type ContextDocument = {
@@ -18,6 +24,39 @@ export type ContextDocument = {
   context_type: string;
   analysis_type?: string | null;
   text: string;
+};
+
+export type CitationAuditRecord = {
+  citation_id: string;
+  raw: string;
+  valid: boolean;
+  evidence_role?: string | null;
+  source_type?: string | null;
+  context_type?: string | null;
+  covered_source_types: string[];
+  title?: string | null;
+  detail: string;
+};
+
+export type AnswerAudit = {
+  trust_level: string;
+  trust_score: number;
+  citation_count: number;
+  valid_citation_count: number;
+  invalid_citation_count: number;
+  cited_source_types: string[];
+  expected_source_types: string[];
+  retrieved_source_types: string[];
+  missing_expected_citations: string[];
+  primary_sources_cited: number;
+  linked_sources_cited: number;
+  analysis_context_cited: number;
+  reliability_context_cited: number;
+  unused_linked_sources: string[];
+  citation_requirements: Record<string, unknown>;
+  invalid_citations: CitationAuditRecord[];
+  citations: CitationAuditRecord[];
+  warnings: string[];
 };
 
 export type StatusResponse = {
@@ -41,18 +80,24 @@ export type ChatResponse = {
   query: string;
   answer: string;
   sources: SourceDocument[];
+  linked_sources: SourceDocument[];
   analysis_context: ContextDocument[];
   reliability_context: ContextDocument[];
   model: string;
   n_sources: number;
+  n_linked_sources: number;
   n_context_documents: number;
   prompt_diagnostics: Record<string, unknown>;
+  retrieval_diagnostics: Record<string, unknown>;
+  answer_audit?: AnswerAudit | null;
   options: Record<string, unknown>;
 };
 
 export type RetrieveResponse = {
   query: string;
   sources: SourceDocument[];
+  linked_sources: SourceDocument[];
+  diagnostics: Record<string, unknown>;
 };
 
 export type OllamaModel = {

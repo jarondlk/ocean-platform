@@ -15,12 +15,15 @@ class RetrieveRequest(BaseModel):
     vector_weight: float = Field(default=0.6, ge=0.0, le=1.0)
     fts_weight: float = Field(default=0.4, ge=0.0, le=1.0)
     rrf_k: int = Field(default=60, ge=1, le=200)
+    expand_evidence: bool = True
+    max_linked_sources: int = Field(default=5, ge=0, le=25)
 
 
 class ChatRequest(RetrieveRequest):
     model: Optional[str] = None
     inject_analysis: bool = True
     inject_reliability: bool = True
+    run_answer_audit: bool = True
     temperature: float = Field(default=0.0, ge=0.0, le=2.0)
     top_p: float = Field(default=0.9, ge=0.0, le=1.0)
     repeat_penalty: float = Field(default=1.1, ge=0.5, le=2.0)
@@ -42,6 +45,12 @@ class SourceDocument(BaseModel):
     text: str = ""
     score: Optional[float] = None
     rank_sources: Dict[str, int] = Field(default_factory=dict)
+    retrieval_role: str = "primary"
+    link_type: Optional[str] = None
+    linked_from_doc_id: Optional[str] = None
+    linked_from_event_id: Optional[str] = None
+    time_delta_days: Optional[float] = None
+    distance_km: Optional[float] = None
 
 
 class ContextDocument(BaseModel):
@@ -52,9 +61,44 @@ class ContextDocument(BaseModel):
     text: str = ""
 
 
+class CitationAuditRecord(BaseModel):
+    citation_id: str
+    raw: str
+    valid: bool
+    evidence_role: Optional[str] = None
+    source_type: Optional[str] = None
+    context_type: Optional[str] = None
+    covered_source_types: List[str] = Field(default_factory=list)
+    title: Optional[str] = None
+    detail: str = ""
+
+
+class AnswerAudit(BaseModel):
+    trust_level: str = "weak"
+    trust_score: float = 0.0
+    citation_count: int = 0
+    valid_citation_count: int = 0
+    invalid_citation_count: int = 0
+    cited_source_types: List[str] = Field(default_factory=list)
+    expected_source_types: List[str] = Field(default_factory=list)
+    retrieved_source_types: List[str] = Field(default_factory=list)
+    missing_expected_citations: List[str] = Field(default_factory=list)
+    primary_sources_cited: int = 0
+    linked_sources_cited: int = 0
+    analysis_context_cited: int = 0
+    reliability_context_cited: int = 0
+    unused_linked_sources: List[str] = Field(default_factory=list)
+    citation_requirements: Dict[str, Any] = Field(default_factory=dict)
+    invalid_citations: List[CitationAuditRecord] = Field(default_factory=list)
+    citations: List[CitationAuditRecord] = Field(default_factory=list)
+    warnings: List[str] = Field(default_factory=list)
+
+
 class RetrieveResponse(BaseModel):
     query: str
     sources: List[SourceDocument]
+    linked_sources: List[SourceDocument] = Field(default_factory=list)
+    diagnostics: Dict[str, Any] = Field(default_factory=dict)
 
 
 class ChatResponse(BaseModel):
@@ -63,10 +107,14 @@ class ChatResponse(BaseModel):
     sources: List[SourceDocument]
     analysis_context: List[ContextDocument] = Field(default_factory=list)
     reliability_context: List[ContextDocument] = Field(default_factory=list)
+    linked_sources: List[SourceDocument] = Field(default_factory=list)
     model: str
     n_sources: int
+    n_linked_sources: int = 0
     n_context_documents: int = 0
     prompt_diagnostics: Dict[str, Any] = Field(default_factory=dict)
+    retrieval_diagnostics: Dict[str, Any] = Field(default_factory=dict)
+    answer_audit: Optional[AnswerAudit] = None
     options: Dict[str, Any] = Field(default_factory=dict)
 
 

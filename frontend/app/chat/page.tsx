@@ -4,8 +4,9 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { RotateCcw, Send } from "lucide-react";
 import { CsvExportButton } from "@/components/CsvExportButton";
 import { DataTable, formatCell } from "@/components/DataTable";
+import { MarkdownAnswer } from "@/components/MarkdownAnswer";
 import { askQuestion, getModels } from "@/lib/api";
-import type { ChatResponse, ContextDocument, ModelsResponse, SourceDocument } from "@/types";
+import type { AnswerAudit, ChatResponse, CitationAuditRecord, ContextDocument, ModelsResponse, SourceDocument } from "@/types";
 import { SourceTable } from "@/components/SourceTable";
 
 type ChatSettings = {
@@ -18,8 +19,11 @@ type ChatSettings = {
   vectorWeight: number;
   ftsWeight: number;
   rrfK: number;
+  expandEvidence: boolean;
+  maxLinkedSources: number;
   injectAnalysis: boolean;
   injectReliability: boolean;
+  runAnswerAudit: boolean;
   temperature: number;
   topP: number;
   repeatPenalty: number;
@@ -39,8 +43,11 @@ const defaultSettings: ChatSettings = {
   vectorWeight: 0.6,
   ftsWeight: 0.4,
   rrfK: 60,
+  expandEvidence: true,
+  maxLinkedSources: 5,
   injectAnalysis: true,
   injectReliability: true,
+  runAnswerAudit: true,
   temperature: 0,
   topP: 0.9,
   repeatPenalty: 1.1,
@@ -104,9 +111,20 @@ export default function ChatPage() {
       ...(response.reliability_context || []).map((document) => contextDocumentRow(document)),
     ];
   }, [response]);
-  const evidenceRows = useMemo(() => (response?.sources || []).map(sourceDocumentRow), [response]);
+  const evidenceSources = useMemo(() => {
+    if (!response) return [];
+    return [...(response.sources || []), ...(response.linked_sources || [])];
+  }, [response]);
+  const evidenceRows = useMemo(() => evidenceSources.map(sourceDocumentRow), [evidenceSources]);
   const diagnosticRows = useMemo(() => diagnosticsToRows(response?.prompt_diagnostics || {}), [response]);
+  const retrievalDiagnosticRows = useMemo(() => diagnosticsToRows(response?.retrieval_diagnostics || {}), [response]);
+  const auditCitationRows = useMemo(() => citationAuditRows(response?.answer_audit), [response]);
+  const auditRequirementRows = useMemo(() => citationRequirementRows(response?.answer_audit), [response]);
+  const auditWarningRows = useMemo(() => warningRows(response?.answer_audit), [response]);
   const promptDiagnostics = response?.prompt_diagnostics || {};
+  const retrievalDiagnostics = response?.retrieval_diagnostics || {};
+  const answerAudit = response?.answer_audit;
+  const missingSourceTypes = formatSourceTypeList(retrievalDiagnostics.missing_source_types);
 
   function updateSetting<K extends keyof ChatSettings>(key: K, value: ChatSettings[K]) {
     setSettings((current) => ({ ...current, [key]: value }));
@@ -136,9 +154,12 @@ export default function ChatPage() {
         vector_weight: settings.vectorWeight,
         fts_weight: settings.ftsWeight,
         rrf_k: settings.rrfK,
+        expand_evidence: settings.expandEvidence,
+        max_linked_sources: settings.maxLinkedSources,
         model: settings.model.trim() || undefined,
         inject_analysis: settings.injectAnalysis,
         inject_reliability: settings.injectReliability,
+        run_answer_audit: settings.runAnswerAudit,
         temperature: settings.temperature,
         top_p: settings.topP,
         repeat_penalty: settings.repeatPenalty,
@@ -197,7 +218,7 @@ export default function ChatPage() {
               </div>
               <div className="section-toolbar chat-actions">
                 <span className="empty-state">
-                  {response ? `${response.n_sources} retrieved sources` : "No response."}
+                  {response ? `${response.n_sources} primary | ${response.n_linked_sources || 0} linked` : "No response."}
                 </span>
                 <button className="button" disabled={loading || !query.trim()}>
                   <Send size={16} aria-hidden="true" />
@@ -209,36 +230,108 @@ export default function ChatPage() {
 
             <article className="card">
               <h3 className="section-title">Response</h3>
-              <div className="answer">{response?.answer || "No response."}</div>
+              <MarkdownAnswer text={response?.answer || ""} />
             </article>
+
+            {answerAudit ? (
+              <article className="card">
+                <div className="section-toolbar">
+                  <h3 className="section-title">Trust Report</h3>
+                  <span className="empty-state">
+                    {answerAudit.valid_citation_count} valid | {answerAudit.invalid_citation_count} invalid | {answerAudit.warnings.length} warnings
+                  </span>
+                </div>
+
+                <div className="summary-strip chat-diagnostics">
+                  <SummaryCell label="Trust" value={titleCase(answerAudit.trust_level)} />
+                  <SummaryCell label="Score" value={formatCoverage(answerAudit.trust_score)} />
+                  <SummaryCell label="Citations" value={answerAudit.citation_count} />
+                  <SummaryCell label="Valid" value={answerAudit.valid_citation_count} />
+                  <SummaryCell label="Invalid" value={answerAudit.invalid_citation_count} />
+                  <SummaryCell label="Primary cited" value={answerAudit.primary_sources_cited} />
+                  <SummaryCell label="Linked cited" value={answerAudit.linked_sources_cited} />
+                  <SummaryCell label="Req context" value={requirementList(answerAudit, "required_context_types") || "None"} />
+                  <SummaryCell label="Context cited" value={requirementList(answerAudit, "satisfied_context_types") || "None"} />
+                  <SummaryCell label="Sources ok" value={requirementList(answerAudit, "satisfied_source_types") || "None"} />
+                  <SummaryCell label="Missing req" value={requirementList(answerAudit, "missing_source_types") || "None"} />
+                </div>
+
+                <div className="section-toolbar compact-toolbar">
+                  <h4 className="subsection-title">Audit Warnings</h4>
+                  <CsvExportButton
+                    columns={["warning"]}
+                    filename="chat_trust_warnings"
+                    rows={auditWarningRows}
+                  />
+                </div>
+                <DataTable
+                  columns={["warning"]}
+                  emptyText="No audit warnings."
+                  rows={auditWarningRows}
+                  rowKeyColumn="warning"
+                />
+
+                <div className="section-toolbar compact-toolbar">
+                  <h4 className="subsection-title">Citation Requirements</h4>
+                  <CsvExportButton
+                    columns={["requirement", "required", "satisfied_by", "status"]}
+                    filename="chat_citation_requirements"
+                    rows={auditRequirementRows}
+                  />
+                </div>
+                <DataTable
+                  columns={["requirement", "required", "satisfied_by", "status"]}
+                  emptyText="No inferred citation requirements."
+                  rows={auditRequirementRows}
+                  rowKeyColumn="_row_key"
+                />
+
+                <div className="section-toolbar compact-toolbar">
+                  <h4 className="subsection-title">Citation Resolution</h4>
+                  <CsvExportButton
+                    columns={["citation_id", "raw", "valid", "evidence_role", "source_type", "context_type", "covered_source_types", "title", "detail"]}
+                    filename="chat_citation_audit"
+                    rows={auditCitationRows}
+                  />
+                </div>
+                <DataTable
+                  columns={["citation_id", "raw", "valid", "evidence_role", "source_type", "context_type", "covered_source_types", "title", "detail"]}
+                  emptyText="No bracket citations found."
+                  rows={auditCitationRows}
+                  rowKeyColumn="_row_key"
+                />
+              </article>
+            ) : null}
 
             {response ? (
               <article className="card">
                 <div className="section-toolbar">
                   <h3 className="section-title">Context Ledger</h3>
                   <span className="empty-state">
-                    {response.n_sources} retrieved | {(response.n_context_documents || 0)} injected
+                    {response.n_sources} primary | {response.n_linked_sources || 0} linked | {(response.n_context_documents || 0)} injected
                   </span>
                 </div>
 
                 <div className="summary-strip chat-diagnostics">
                   <SummaryCell label="Model" value={response.model} />
-                  <SummaryCell label="Retrieved" value={response.n_sources} />
+                  <SummaryCell label="Primary" value={response.n_sources} />
+                  <SummaryCell label="Linked" value={response.n_linked_sources || 0} />
+                  <SummaryCell label="Coverage" value={formatCoverage(retrievalDiagnostics.source_coverage_ratio)} />
                   <SummaryCell label="Analysis" value={(response.analysis_context || []).length} />
                   <SummaryCell label="Reliability" value={(response.reliability_context || []).length} />
                   <SummaryCell label="Prompt chars" value={formatCell(promptDiagnostics.prompt_chars)} />
-                  <SummaryCell label="Ranked" value={formatCell(promptDiagnostics.ranked_documents)} />
+                  <SummaryCell label="Missing" value={missingSourceTypes || "None"} />
                 </div>
 
                 <div className="section-toolbar compact-toolbar">
                   <h4 className="subsection-title">Retrieved Evidence</h4>
                   <CsvExportButton
-                    columns={["doc_id", "title", "source_type", "sample_id", "event_id", "time", "bay", "station", "score", "vector_rank", "fts_rank", "text"]}
+                    columns={["retrieval_role", "doc_id", "title", "source_type", "sample_id", "event_id", "time", "bay", "station", "score", "vector_rank", "fts_rank", "link_type", "linked_from_doc_id", "linked_from_event_id", "time_delta_days", "distance_km", "text"]}
                     filename="chat_retrieved_evidence"
                     rows={evidenceRows}
                   />
                 </div>
-                <SourceTable sources={response.sources} />
+                <SourceTable sources={evidenceSources} />
 
                 <div className="section-toolbar compact-toolbar">
                   <h4 className="subsection-title">Injected Context</h4>
@@ -254,6 +347,11 @@ export default function ChatPage() {
                   rows={contextRows}
                   rowKeyColumn="doc_id"
                 />
+
+                <details className="debug-block chat-debug-block">
+                  <summary>Retrieval Diagnostics</summary>
+                  <DataTable columns={["key", "value"]} rows={retrievalDiagnosticRows} rowKeyColumn="key" />
+                </details>
 
                 <details className="debug-block chat-debug-block">
                   <summary>Prompt Diagnostics</summary>
@@ -370,6 +468,22 @@ export default function ChatPage() {
                 value={settings.rrfK}
                 onChange={(value) => updateSetting("rrfK", value)}
               />
+              <CheckboxControl
+                checked={settings.expandEvidence}
+                label="Expand cross-source evidence"
+                help="Follow anchor-event links from primary retrieval into corroborating CTD, metagenome, or satellite SST records."
+                onChange={(value) => updateSetting("expandEvidence", value)}
+              />
+              <NumericControl
+                id="chat-max-linked"
+                label="Max linked"
+                help="Maximum number of linked cross-source documents added after primary retrieval."
+                min={0}
+                max={25}
+                step={1}
+                value={settings.maxLinkedSources}
+                onChange={(value) => updateSetting("maxLinkedSources", value)}
+              />
             </fieldset>
 
             <fieldset className="settings-section">
@@ -385,6 +499,12 @@ export default function ChatPage() {
                 label="Inject reliability"
                 help="Add cross-source validation and corroboration documents when the query triggers them."
                 onChange={(value) => updateSetting("injectReliability", value)}
+              />
+              <CheckboxControl
+                checked={settings.runAnswerAudit}
+                label="Run trust report"
+                help="Audit answer citations against retrieved evidence, linked evidence, analysis context, and reliability context."
+                onChange={(value) => updateSetting("runAnswerAudit", value)}
               />
             </fieldset>
 
@@ -501,6 +621,7 @@ function SummaryCell({ label, value }: { label: string; value: string | number }
 
 function sourceDocumentRow(source: SourceDocument): Record<string, unknown> {
   return {
+    retrieval_role: source.retrieval_role || "primary",
     doc_id: source.doc_id,
     title: source.title,
     source_type: source.source_type,
@@ -512,6 +633,11 @@ function sourceDocumentRow(source: SourceDocument): Record<string, unknown> {
     score: source.score,
     vector_rank: source.rank_sources?.vector,
     fts_rank: source.rank_sources?.fts,
+    link_type: source.link_type,
+    linked_from_doc_id: source.linked_from_doc_id,
+    linked_from_event_id: source.linked_from_event_id,
+    time_delta_days: source.time_delta_days,
+    distance_km: source.distance_km,
     text: source.text,
   };
 }
@@ -528,6 +654,61 @@ function contextDocumentRow(document: ContextDocument): Record<string, unknown> 
 
 function diagnosticsToRows(diagnostics: Record<string, unknown>): Record<string, unknown>[] {
   return Object.entries(diagnostics).map(([key, value]) => ({ key, value }));
+}
+
+function citationAuditRows(audit?: AnswerAudit | null): Record<string, unknown>[] {
+  return (audit?.citations || []).map((record, index) => citationAuditRow(record, index));
+}
+
+function citationAuditRow(record: CitationAuditRecord, index: number): Record<string, unknown> {
+  return {
+    citation_id: record.citation_id,
+    raw: record.raw,
+    valid: record.valid,
+    evidence_role: record.evidence_role,
+    source_type: record.source_type,
+    context_type: record.context_type,
+    covered_source_types: record.covered_source_types,
+    title: record.title,
+    detail: record.detail,
+    _row_key: `${record.citation_id}:${index}`,
+  };
+}
+
+function citationRequirementRows(audit?: AnswerAudit | null): Record<string, unknown>[] {
+  const rows = audit?.citation_requirements?.requirement_rows;
+  if (!Array.isArray(rows)) return [];
+  return rows.map((row, index) => {
+    const record = row && typeof row === "object" ? row as Record<string, unknown> : {};
+    return {
+      requirement: record.requirement,
+      required: record.required,
+      satisfied_by: record.satisfied_by,
+      status: record.status,
+      _row_key: `${record.requirement || "requirement"}:${index}`,
+    };
+  });
+}
+
+function warningRows(audit?: AnswerAudit | null): Record<string, unknown>[] {
+  return (audit?.warnings || []).map((warning) => ({ warning }));
+}
+
+function formatCoverage(value: unknown): string {
+  return typeof value === "number" ? `${Math.round(value * 100)}%` : "NA";
+}
+
+function formatSourceTypeList(value: unknown): string {
+  if (!Array.isArray(value)) return "";
+  return value.map((item) => String(item)).join(", ");
+}
+
+function requirementList(audit: AnswerAudit, key: string): string {
+  return formatSourceTypeList(audit.citation_requirements?.[key]);
+}
+
+function titleCase(value: string): string {
+  return value ? `${value[0].toUpperCase()}${value.slice(1)}` : "NA";
 }
 
 function NumericControl({

@@ -11,7 +11,9 @@ from orchestration.unified import (
     analysis_context_documents,
     build_prompt,
     build_prompt_with_context,
+    infer_expected_source_types,
     reliability_context_documents,
+    source_coverage_diagnostics,
     _load_analysis_context,
     _load_reliability_context,
 )
@@ -78,6 +80,30 @@ class TestBuildPrompt:
                               inject_analysis=False, inject_reliability=False)
         assert "ctd" in prompt.lower()
         assert "metagenome" in prompt.lower()
+
+    def test_prompt_has_linked_cross_source_section(self):
+        """Linked evidence is separated from primary retrieval."""
+        linked = [
+            {
+                "doc_id": "sst_2024-04-15",
+                "source_type": "remote_sensing",
+                "time": "2024-04-15",
+                "text": "Satellite SST was 10.8°C.",
+                "link_type": "same_day",
+                "linked_from_doc_id": "ctd_2024-04-O-s1",
+            }
+        ]
+        prompt = build_prompt(
+            "Compare CTD surface temperature and satellite SST.",
+            self._sample_results()[:1],
+            linked_results=linked,
+            inject_analysis=False,
+            inject_reliability=False,
+        )
+        assert "PRIMARY EVIDENCE" in prompt
+        assert "LINKED CROSS-SOURCE EVIDENCE" in prompt
+        assert "sst_2024-04-15" in prompt
+        assert "linked via same_day from ctd_2024-04-O-s1" in prompt
 
 
 # ---------------------------------------------------------------------------
@@ -209,3 +235,28 @@ class TestBuildPromptWithInjection:
         assert "RELIABILITY ENSURANCE" in prompt
         assert len(context["analysis"]) == 2
         assert len(context["reliability"]) == 2
+
+
+class TestSourceCoverageDiagnostics:
+    """Validate query intent and source-family coverage diagnostics."""
+
+    def test_reliability_query_expects_ctd_and_remote_sensing(self):
+        expected = infer_expected_source_types(
+            "How reliable is satellite SST compared with CTD surface temperature?"
+        )
+
+        assert expected == ["ctd", "remote_sensing"]
+
+    def test_linked_evidence_fills_missing_source_family(self):
+        diagnostics = source_coverage_diagnostics(
+            "How reliable is satellite SST compared with CTD surface temperature?",
+            [{"doc_id": "sst", "source_type": "remote_sensing"}],
+            [{"doc_id": "ctd", "source_type": "ctd", "retrieval_role": "linked"}],
+            expanded=True,
+            backend="postgres",
+        )
+
+        assert diagnostics["missing_source_types"] == []
+        assert diagnostics["source_coverage_ratio"] == 1.0
+        assert diagnostics["primary_source_types"] == ["remote_sensing"]
+        assert diagnostics["linked_source_types"] == ["ctd"]

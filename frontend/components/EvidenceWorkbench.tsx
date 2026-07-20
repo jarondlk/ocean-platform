@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { RotateCcw, Search } from "lucide-react";
 import { CsvExportButton } from "@/components/CsvExportButton";
-import { getDocuments } from "@/lib/api";
+import { getDocuments, retrieveSources } from "@/lib/api";
 import { SourceTable } from "@/components/SourceTable";
 import type { SourceDocument } from "@/types";
 
@@ -21,13 +21,20 @@ export function EvidenceWorkbench() {
   const [timeTo, setTimeTo] = useState("");
   const [limit, setLimit] = useState(25);
   const [minScore, setMinScore] = useState(0);
+  const [roleFilter, setRoleFilter] = useState("all");
+  const [expandEvidence, setExpandEvidence] = useState(true);
+  const [maxLinkedSources, setMaxLinkedSources] = useState(5);
   const [documents, setDocuments] = useState<SourceDocument[]>([]);
+  const [retrievalDiagnostics, setRetrievalDiagnostics] = useState<Record<string, unknown>>({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const visibleDocuments = useMemo(() => {
-    return documents.filter((document) => (document.score ?? 0) >= minScore);
-  }, [documents, minScore]);
+    return documents.filter((document) => {
+      const role = document.retrieval_role || "primary";
+      return (roleFilter === "all" || role === roleFilter) && (document.score ?? 0) >= minScore;
+    });
+  }, [documents, minScore, roleFilter]);
 
   const sourceCounts = useMemo(() => {
     const counts: Record<string, number> = {};
@@ -45,7 +52,19 @@ export function EvidenceWorkbench() {
     const mean = scores.reduce((sum, score) => sum + score, 0) / scores.length;
     return { max: Math.max(...scores).toFixed(4), mean: mean.toFixed(4) };
   }, [visibleDocuments]);
+  const roleCounts = useMemo(() => {
+    return visibleDocuments.reduce(
+      (counts, document) => {
+        const role = document.retrieval_role === "linked" ? "linked" : "primary";
+        counts[role] += 1;
+        return counts;
+      },
+      { primary: 0, linked: 0 },
+    );
+  }, [visibleDocuments]);
+  const missingSourceTypes = formatSourceTypeList(retrievalDiagnostics.missing_source_types);
   const exportRows = visibleDocuments.map((document) => ({
+    retrieval_role: document.retrieval_role || "primary",
     doc_id: document.doc_id,
     title: document.title,
     source_type: document.source_type,
@@ -57,6 +76,11 @@ export function EvidenceWorkbench() {
     score: document.score,
     vector_rank: document.rank_sources?.vector,
     fts_rank: document.rank_sources?.fts,
+    link_type: document.link_type,
+    linked_from_doc_id: document.linked_from_doc_id,
+    linked_from_event_id: document.linked_from_event_id,
+    time_delta_days: document.time_delta_days,
+    distance_km: document.distance_km,
     text: document.text,
   }));
 
@@ -64,15 +88,31 @@ export function EvidenceWorkbench() {
     setLoading(true);
     setError("");
     try {
-      const rows = await getDocuments({
-        q: query,
-        source_type: sourceType || undefined,
-        bay: bay || undefined,
-        time_from: timeFrom || undefined,
-        time_to: timeTo || undefined,
-        limit,
-      });
-      setDocuments(rows);
+      const trimmedQuery = query.trim();
+      if (trimmedQuery) {
+        const payload = await retrieveSources({
+          query: trimmedQuery,
+          k: Math.min(limit, 25),
+          source_type: sourceType || undefined,
+          bay: bay || undefined,
+          time_from: timeFrom || undefined,
+          time_to: timeTo || undefined,
+          expand_evidence: expandEvidence,
+          max_linked_sources: maxLinkedSources,
+        });
+        setDocuments([...(payload.sources || []), ...(payload.linked_sources || [])]);
+        setRetrievalDiagnostics(payload.diagnostics || {});
+      } else {
+        const rows = await getDocuments({
+          source_type: sourceType || undefined,
+          bay: bay || undefined,
+          time_from: timeFrom || undefined,
+          time_to: timeTo || undefined,
+          limit,
+        });
+        setDocuments(rows);
+        setRetrievalDiagnostics({});
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Request failed");
     } finally {
@@ -98,6 +138,10 @@ export function EvidenceWorkbench() {
     setTimeTo("");
     setLimit(25);
     setMinScore(0);
+    setRoleFilter("all");
+    setExpandEvidence(true);
+    setMaxLinkedSources(5);
+    setRetrievalDiagnostics({});
   }
 
   const maxSourceCount = Math.max(1, ...Object.values(sourceCounts));
@@ -185,6 +229,37 @@ export function EvidenceWorkbench() {
               onChange={(event) => setMinScore(Number(event.target.value))}
             />
           </label>
+          <label className="settings-field" htmlFor="evidence-role" title="Filter displayed rows by primary retrieval or linked cross-source evidence.">
+            <span>Role</span>
+            <select id="evidence-role" className="field" value={roleFilter} onChange={(event) => setRoleFilter(event.target.value)}>
+              <option value="all">All roles</option>
+              <option value="primary">Primary</option>
+              <option value="linked">Linked</option>
+            </select>
+          </label>
+          <label className="settings-field" title="Follow anchor-event links when the query retrieval endpoint is used.">
+            <span>Expansion</span>
+            <span className="checkbox-row">
+              <input checked={expandEvidence} onChange={(event) => setExpandEvidence(event.target.checked)} type="checkbox" />
+              Linked evidence
+            </span>
+          </label>
+          <label className="settings-field" htmlFor="evidence-max-linked" title="Maximum linked documents requested for query retrieval.">
+            <span>Max linked</span>
+            <select
+              id="evidence-max-linked"
+              className="field"
+              value={maxLinkedSources}
+              onChange={(event) => setMaxLinkedSources(Number(event.target.value))}
+            >
+              <option value={0}>0</option>
+              <option value={3}>3</option>
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={15}>15</option>
+              <option value={25}>25</option>
+            </select>
+          </label>
           <div className="evidence-actions">
             <button className="button" disabled={loading}>
               <Search size={16} aria-hidden="true" />
@@ -203,6 +278,10 @@ export function EvidenceWorkbench() {
         <div className="summary-strip">
           <SummaryCell label="Displayed" value={visibleDocuments.length} />
           <SummaryCell label="Fetched" value={documents.length} />
+          <SummaryCell label="Primary" value={roleCounts.primary} />
+          <SummaryCell label="Linked" value={roleCounts.linked} />
+          <SummaryCell label="Coverage" value={formatCoverage(retrievalDiagnostics.source_coverage_ratio)} />
+          <SummaryCell label="Missing" value={missingSourceTypes || "None"} />
           <SummaryCell label="Max score" value={scoreStats.max} />
           <SummaryCell label="Mean score" value={scoreStats.mean} />
         </div>
@@ -224,7 +303,7 @@ export function EvidenceWorkbench() {
         <div className="section-toolbar">
           <h3 className="section-title">{visibleDocuments.length} documents</h3>
           <CsvExportButton
-            columns={["doc_id", "title", "source_type", "sample_id", "event_id", "time", "bay", "station", "score", "vector_rank", "fts_rank", "text"]}
+            columns={["retrieval_role", "doc_id", "title", "source_type", "sample_id", "event_id", "time", "bay", "station", "score", "vector_rank", "fts_rank", "link_type", "linked_from_doc_id", "linked_from_event_id", "time_delta_days", "distance_km", "text"]}
             filename="explore_evidence_documents"
             rows={exportRows}
           />
@@ -242,4 +321,13 @@ function SummaryCell({ label, value }: { label: string; value: string | number }
       <strong>{value}</strong>
     </div>
   );
+}
+
+function formatCoverage(value: unknown): string {
+  return typeof value === "number" ? `${Math.round(value * 100)}%` : "NA";
+}
+
+function formatSourceTypeList(value: unknown): string {
+  if (!Array.isArray(value)) return "";
+  return value.map((item) => String(item)).join(", ");
 }
