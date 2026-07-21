@@ -16,6 +16,40 @@ Transforms fragmented field data — CTD water profiles, metagenome sequencing, 
 
 ---
 
+## Current Prototype Status
+
+Status as of **2026-07-21**: this is an active local-first **Next.js +
+FastAPI** prototype with PostgreSQL/pgvector retrieval and Ollama-backed local
+generation. The old Streamlit interface is archived for historical reference;
+new product work happens in the Next.js UI and FastAPI service.
+
+Implemented in the current prototype:
+
+- Manual batch ingestion and corpus rebuild controls, including preflight,
+  background job status, run logs, artifact freshness, manifests, and diffs.
+- Traceability surfaces for provenance manifests, document lineage, embedding
+  treatment, and read-only upsert dry-run planning.
+- Expert data workbenches for source observations, CTD profiles, taxa, SST,
+  derived ecological analysis, and reliability review.
+- Hybrid retrieval over pgvector + PostgreSQL full-text search with local
+  fallback retrieval when PostgreSQL is unavailable.
+- Trustworthy multi-source answering with linked cross-source evidence,
+  analysis/reliability context injection, Markdown answer rendering, and a
+  deterministic Answer Trust Report / Citation Audit.
+- Evaluation run management for standard and ablation runs, saved run browsing,
+  analytics, reports, and comparison.
+
+Still intentionally future work:
+
+- Automatic ingestion, file watching, or scheduled cloud sync.
+- Mutating incremental upserts; the current upsert path is dry-run/read-only.
+- Production hardening such as auth, TLS/reverse proxy guidance, backup
+  automation, deployment secrets, and CI.
+- LLM-as-judge semantic faithfulness scoring and click-through citation chips
+  from chat answers into provenance/source detail panels.
+
+---
+
 ## Architecture
 
 ```mermaid
@@ -318,22 +352,29 @@ workflow:
 - **Filters**: source type, bay, date range
 - **Status**: backend connection indicator
 
-### Screenshots
+### Current Prototype Screenshots
 
-![Overview Tab](docs/screenshots/overview_tab.png)
-*System Overview with pipeline architecture and live metrics.*
+Captured from the live Next.js/FastAPI prototype on **2026-07-21**.
 
-![Data (CTD) Tab](docs/screenshots/data_ctd_tab.png)
-*Interactive depth profiles for CTD measurements.*
+![Current overview](docs/screenshots/prototype_overview.png)
+*Overview page with corpus counts, source balance, runtime signals, and active
+route registry.*
 
-![Pre-Analysis Tab](docs/screenshots/pre_analysis_tab.png)
-*Ecological correlations and diversity indices.*
+![Current explore evidence workbench](docs/screenshots/prototype_explore_evidence.png)
+*Explore evidence workbench with retrieval filters, linked-evidence controls,
+diagnostics, and source rows.*
 
-![Database Explorer Tab](docs/screenshots/database_tab.png)
-*Read-only SQL console and table inspector.*
+![Current data analysis workbench](docs/screenshots/prototype_data_analysis.png)
+*Data workbench showing derived CTD trend analysis inside the active Next.js
+interface.*
 
-![Stats Tab](docs/screenshots/stats_tab.png)
-*Corpus statistics and data coverage.*
+![Current provenance workbench](docs/screenshots/prototype_provenance.png)
+*Provenance workbench with manifest counts, lineage flow, artifact classes, and
+source registration diagnostics.*
+
+![Current chat trust report](docs/screenshots/prototype_chat_trust_report.png)
+*Chat Trust Report after a real local-model query, showing trust level,
+context-aware citation requirements, and citation resolution.*
 
 ---
 
