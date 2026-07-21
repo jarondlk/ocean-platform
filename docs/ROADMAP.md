@@ -23,6 +23,8 @@ workflow that can later become automated.
 - Chat can return a deterministic answer trust report that audits citations
   against primary evidence, linked evidence, pre-analysis context, and
   reliability context.
+- The README screenshot set was refreshed from the live Next.js/FastAPI
+  prototype on 2026-07-21.
 
 ## Near-Term Priority: Manual Scheduled Batch Updates
 
@@ -121,6 +123,8 @@ now a conventional web architecture: Next.js frontend plus FastAPI backend.
 - [x] Prototype a small API layer first: query, retrieve, ask, evidence search,
       dataset status, pipeline run status, and evaluation results.
 - [x] Start a Next.js + FastAPI proof of concept.
+- [x] Refresh the public README screenshots with current Next.js/FastAPI
+      prototype captures.
 
 Candidate directions:
 
@@ -160,6 +164,7 @@ an archived reference for remaining parity checks.
       model availability, and artifact presence.
 - [x] Add linked cross-source evidence expansion for retrieval/chat requests.
 - [x] Add context-aware answer citation audit and trust report UI.
+- [x] Replace historical README screenshots with current prototype screenshots.
 - [ ] Add click-through citation chips from answers/trust reports into
       provenance traces and source detail panels.
 - [ ] Add clearer warnings when the app is using local BM25 fallback instead of

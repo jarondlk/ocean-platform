@@ -4,10 +4,15 @@ This directory preserves the previous Streamlit application as reference
 material. The active application is now the Next.js frontend in `frontend/`
 backed by the FastAPI service in `api/`.
 
+Status as of **2026-07-21**: this archive is not the source of truth for the
+current prototype. Use the root `README.md` for current screenshots and public
+status, `handoff.md` for resume context, and `docs/ROADMAP.md` for planned
+engineering work.
+
 Use this archive for:
 
 - Comparing historical Streamlit behavior against the current Next.js UI.
-- Recovering implementation details that have not yet been ported.
+- Recovering implementation details if a remaining parity question comes up.
 - Thesis or project documentation screenshots that refer to the older UI.
 
 Intentional local run from the repository root:
@@ -23,4 +28,3 @@ podman compose -f docker-compose.yml -f archive/legacy-streamlit/docker-compose.
 ```
 
 For normal development, use the root `docker-compose.next.yml` stack instead.
-

@@ -1,6 +1,6 @@
 # Handoff Document - Onagawa Source Chat (provenance-eco-rag)
 
-> **Last updated**: 2026-07-20
+> **Last updated**: 2026-07-21
 > **Project path**: `/Users/jaronchai/Documents/GitHub/provenance-eco-rag/`
 > **Current status**: Active Next.js + FastAPI application, local-first RAG stack, manual batch ingestion only. Legacy Streamlit UI is archived for reference.
 
@@ -54,10 +54,14 @@ from the repository root when intentionally run from the archive path.
 - `README.md` documents linked cross-source evidence, answer trust reports,
   context-aware citation requirements, Markdown answer rendering, and the
   current 265-test suite.
+- `README.md` now includes a 2026-07-21 current prototype status section and
+  fresh screenshots captured from the live Next.js/FastAPI prototype.
 - `docs/ROADMAP.md` records the manual batch-ingestion direction and cloud UI
-  migration direction.
+  migration direction, including completed citation rendering, linked evidence,
+  trust report, and screenshot refresh work.
 - `archive/README.md` and `archive/legacy-streamlit/README.md` explain what is
-  archived and how to intentionally run it.
+  archived, how to intentionally run it, and where the active prototype docs
+  live.
 
 ### Manual Pipeline Improvement
 
@@ -160,6 +164,17 @@ incremental updates into PostgreSQL.
 - Added `frontend/components/MarkdownAnswer.tsx` so answer text renders
   headings, lists, code blocks, tables, links, emphasis, and citation chips
   without using unsafe HTML injection.
+
+### Prototype Screenshot Refresh
+
+- Replaced historical Streamlit-era README screenshots with live Next.js/FastAPI
+  prototype captures from 2026-07-21.
+- Current screenshot files under `docs/screenshots/`:
+  `prototype_overview.png`, `prototype_explore_evidence.png`,
+  `prototype_data_analysis.png`, `prototype_provenance.png`, and
+  `prototype_chat_trust_report.png`.
+- The Chat screenshot was captured after a real local-model query and shows the
+  Answer Trust Report with context-aware citation requirements.
 
 ### Active Stack Clarified
 
@@ -538,7 +553,7 @@ git diff --check
 | Cloud hardening not done | No reverse proxy/TLS guide, backup automation, auth, or production secret strategy yet |
 | Ollama is local-first | Host Ollama is preferred on macOS; containerized Ollama is optional and may be slower |
 | Streamlit is archived | Do not add new active features to `archive/legacy-streamlit/app.py` |
-| Screenshots are historical | `docs/screenshots/` are useful reference images, not necessarily current Next.js UI captures |
+| Screenshots are point-in-time | `docs/screenshots/` contains current prototype captures from 2026-07-21; refresh them after major UI changes |
 | Trust report is deterministic | The current audit checks supplied evidence and citations; it is not an LLM-as-judge semantic faithfulness scorer |
 | Integration tests are limited | Most tests are synthetic; a temporary PostgreSQL/pgvector integration suite is still needed |
 | CI status should be checked | If `.github/workflows/` is absent in a branch, add CI before relying on GitHub checks |
@@ -595,7 +610,6 @@ new work in Next.js/FastAPI.
 Potential parity checks:
 
 - Confirm all old Streamlit data views have Next.js equivalents
-- Replace historical screenshots with current Next.js screenshots when stable
 - Add click-through citation chips from answers/trust reports into provenance
   traces and source detail panels
 - Add compact export/download controls for tables and evaluation reports

@@ -48,6 +48,13 @@ Still intentionally future work:
 - LLM-as-judge semantic faithfulness scoring and click-through citation chips
   from chat answers into provenance/source detail panels.
 
+Documentation map:
+
+- `README.md` is the current public project guide and screenshot source.
+- `handoff.md` is the operator/developer handoff for resuming work.
+- `docs/ROADMAP.md` tracks completed and planned engineering work.
+- `archive/` docs describe historical Streamlit reference material only.
+
 ---
 
 ## Architecture
