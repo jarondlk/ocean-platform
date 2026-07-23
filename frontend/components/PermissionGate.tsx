@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 
 const routePermissions: Array<[string, string]> = [
+  ["/admin/feedback", "feedback:review"],
   ["/admin", "users:manage"],
   ["/database", "database:read"],
   ["/pipeline", "pipeline:read"],

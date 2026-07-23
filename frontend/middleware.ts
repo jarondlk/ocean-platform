@@ -4,6 +4,9 @@ import { auth } from "@/auth";
 
 
 export default auth((request) => {
+  if (process.env.AUTH_MODE?.trim().toLowerCase() === "disabled") {
+    return NextResponse.next();
+  }
   const isLogin = request.nextUrl.pathname === "/login";
   if (!request.auth && !isLogin) {
     const loginUrl = new URL("/login", request.nextUrl.origin);

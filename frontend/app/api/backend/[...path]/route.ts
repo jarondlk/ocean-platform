@@ -19,7 +19,9 @@ function targetUrl(path: string[], request: NextRequest): string {
 
 async function proxy(request: NextRequest, context: RouteContext): Promise<Response> {
   const session = await auth();
-  if (!session) {
+  const localAuthDisabled =
+    process.env.AUTH_MODE?.trim().toLowerCase() === "disabled";
+  if (!session && !localAuthDisabled) {
     return Response.json({ detail: "Authentication required" }, { status: 401 });
   }
   if (!["GET", "HEAD", "OPTIONS"].includes(request.method)) {
@@ -33,21 +35,25 @@ async function proxy(request: NextRequest, context: RouteContext): Promise<Respo
   }
 
   const { path } = await context.params;
-  let internalToken: string;
-  try {
-    internalToken = await tokenForSession(session);
-  } catch {
-    return Response.json(
-      { detail: "Authenticated identity is incomplete" },
-      { status: 401 },
-    );
+  let internalToken: string | null = null;
+  if (session) {
+    try {
+      internalToken = await tokenForSession(session);
+    } catch {
+      return Response.json(
+        { detail: "Authenticated identity is incomplete" },
+        { status: 401 },
+      );
+    }
   }
   const init: RequestInit = {
     method: request.method,
     headers: {
       "Content-Type": request.headers.get("Content-Type") || "application/json",
       Accept: request.headers.get("Accept") || "application/json",
-      Authorization: `Bearer ${internalToken}`,
+      ...(internalToken
+        ? { Authorization: `Bearer ${internalToken}` }
+        : {}),
     },
   };
 
@@ -62,8 +68,14 @@ async function proxy(request: NextRequest, context: RouteContext): Promise<Respo
     return Response.json({ detail: "Backend API is unavailable" }, { status: 502 });
   }
   const headers = new Headers();
-  const contentType = upstream.headers.get("Content-Type");
-  if (contentType) headers.set("Content-Type", contentType);
+  for (const headerName of [
+    "Content-Type",
+    "Content-Disposition",
+    "X-Export-Truncated",
+  ]) {
+    const value = upstream.headers.get(headerName);
+    if (value) headers.set(headerName, value);
+  }
 
   return new Response(upstream.body, {
     status: upstream.status,

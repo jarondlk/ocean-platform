@@ -24,3 +24,21 @@ export async function getCurrentUser(session: Session): Promise<CurrentUser | nu
     return null;
   }
 }
+
+export async function getLocalCurrentUser(): Promise<CurrentUser | null> {
+  if (process.env.AUTH_MODE?.trim().toLowerCase() !== "disabled") {
+    return null;
+  }
+  try {
+    const response = await fetch(`${API_BASE_URL}/me`, {
+      headers: {
+        Accept: "application/json",
+      },
+      cache: "no-store",
+    });
+    if (!response.ok) return null;
+    return response.json() as Promise<CurrentUser>;
+  } catch {
+    return null;
+  }
+}

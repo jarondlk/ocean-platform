@@ -1,5 +1,8 @@
 import type {
+  AdminFeedbackDetail,
+  AdminFeedbackListResponse,
   AnalysisResponse,
+  ChatFeedback,
   ChatResponse,
   CorpusStats,
   CtdProfileResponse,
@@ -59,11 +62,28 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   });
 
   if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || `Request failed with ${response.status}`);
+    throw new Error(await responseErrorMessage(response));
   }
 
   return response.json() as Promise<T>;
+}
+
+async function responseErrorMessage(response: Response): Promise<string> {
+  const body = await response.text();
+  let message = body;
+  try {
+    const payload = JSON.parse(body) as {
+      detail?: string | { message?: string };
+    };
+    if (typeof payload.detail === "string") {
+      message = payload.detail;
+    } else if (payload.detail?.message) {
+      message = payload.detail.message;
+    }
+  } catch {
+    // Preserve a non-JSON response body as the most useful error message.
+  }
+  return message || `Request failed with ${response.status}`;
 }
 
 export async function getStatus(): Promise<StatusResponse> {
@@ -106,6 +126,51 @@ export async function updateUser(
     method: "PATCH",
     body: JSON.stringify(input),
   });
+}
+
+export type AdminFeedbackFilters = {
+  rating?: -1 | 1;
+  reason_code?: string;
+  date_from?: string;
+  date_to?: string;
+  model?: string;
+  role?: UserSummary["role"];
+  account_type?: UserSummary["account_type"];
+  search?: string;
+};
+
+export async function getAdminFeedback(
+  filters: AdminFeedbackFilters & { limit?: number; offset?: number },
+): Promise<AdminFeedbackListResponse> {
+  return request<AdminFeedbackListResponse>(
+    `/admin/feedback?${searchParams(filters)}`,
+  );
+}
+
+export async function getAdminFeedbackDetail(
+  feedbackId: string,
+): Promise<AdminFeedbackDetail> {
+  return request<AdminFeedbackDetail>(
+    `/admin/feedback/${encodeURIComponent(feedbackId)}`,
+  );
+}
+
+export async function downloadAdminFeedbackCsv(
+  filters: AdminFeedbackFilters,
+): Promise<{ blob: Blob; filename: string }> {
+  const response = await fetch(
+    `${API_BASE_URL}/admin/feedback/export?${searchParams(filters)}`,
+    { cache: "no-store" },
+  );
+  if (!response.ok) {
+    throw new Error(await responseErrorMessage(response));
+  }
+  const disposition = response.headers.get("Content-Disposition") || "";
+  const filenameMatch = disposition.match(/filename="([^"]+)"/);
+  return {
+    blob: await response.blob(),
+    filename: filenameMatch?.[1] || "chat-feedback.csv",
+  };
 }
 
 export async function getDocuments(params: {
@@ -153,6 +218,31 @@ export async function askQuestion(input: {
     method: "POST",
     body: JSON.stringify(input),
   });
+}
+
+export async function putChatFeedback(
+  interactionId: string,
+  input: {
+    rating: -1 | 1;
+    reason_codes: string[];
+    comment?: string;
+  },
+): Promise<ChatFeedback> {
+  return request<ChatFeedback>(
+    `/chat/interactions/${encodeURIComponent(interactionId)}/feedback`,
+    {
+      method: "PUT",
+      body: JSON.stringify(input),
+    },
+  );
+}
+
+export async function getChatFeedback(
+  interactionId: string,
+): Promise<ChatFeedback | null> {
+  return request<ChatFeedback | null>(
+    `/chat/interactions/${encodeURIComponent(interactionId)}/feedback`,
+  );
 }
 
 export async function retrieveSources(input: {

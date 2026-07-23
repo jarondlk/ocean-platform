@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import math
 import os
 import re
@@ -18,7 +19,7 @@ from urllib.parse import urlsplit, urlunsplit
 
 import pandas as pd
 import requests
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, inspect, text
 
@@ -26,8 +27,17 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 import config
-from api.auth import authorization_middleware
+from api.admin_feedback_routes import router as admin_feedback_router
+from api.auth import CurrentUser, authorization_middleware, get_current_user
 from api.auth_routes import router as auth_router
+from api.chat_records import (
+    complete_chat_interaction,
+    create_chat_interaction,
+    fail_chat_interaction,
+    json_safe,
+    record_chat_context,
+)
+from api.feedback_routes import router as feedback_router
 from api.schemas import (
     ChatRequest,
     ChatResponse,
@@ -136,6 +146,10 @@ app.add_middleware(
 
 app.middleware("http")(authorization_middleware)
 app.include_router(auth_router)
+app.include_router(admin_feedback_router)
+app.include_router(feedback_router)
+
+logger = logging.getLogger(__name__)
 
 
 EXPLORE_DATASETS: Dict[str, Dict[str, Any]] = {
@@ -4201,98 +4215,206 @@ def retrieve_sources(request: RetrieveRequest) -> RetrieveResponse:
     )
 
 
+def _chat_latency_ms(started_at: float) -> int:
+    return int((time.perf_counter() - started_at) * 1000)
+
+
+def _mark_chat_failed_safely(
+    *,
+    interaction_id: Optional[uuid.UUID],
+    user: CurrentUser,
+    error_code: str,
+    started_at: float,
+) -> None:
+    try:
+        fail_chat_interaction(
+            interaction_id=interaction_id,
+            user=user,
+            error_code=error_code,
+            latency_ms=_chat_latency_ms(started_at),
+        )
+    except Exception:
+        logger.exception(
+            "Could not mark chat interaction %s as failed",
+            interaction_id,
+        )
+
+
 @app.post("/chat", response_model=ChatResponse)
-def chat(request: ChatRequest) -> ChatResponse:
-    bundle = retrieve_with_expansion(
-        request.query,
-        k=request.k,
-        source_type=request.source_type,
-        bay=request.bay,
-        time_from=request.time_from,
-        time_to=request.time_to,
-        vector_weight=request.vector_weight,
-        fts_weight=request.fts_weight,
-        rrf_k=request.rrf_k,
-        expand_evidence=request.expand_evidence,
-        max_linked_sources=request.max_linked_sources,
-    )
-    rows = bundle.get("primary") or []
-    linked_rows = bundle.get("linked") or []
-    retrieval_diagnostics = bundle.get("diagnostics") or {}
-    prompt, context = build_prompt_with_context(
-        request.query,
-        rows,
-        linked_results=linked_rows,
-        inject_analysis=request.inject_analysis,
-        inject_reliability=request.inject_reliability,
-    )
-    analysis_context = [_context_document(row, "analysis") for row in context.get("analysis", [])]
-    reliability_context = [_context_document(row, "reliability") for row in context.get("reliability", [])]
+def chat(
+    request: ChatRequest,
+    user: CurrentUser = Depends(get_current_user),
+) -> ChatResponse:
+    started_at = time.perf_counter()
     model = request.model or config.CHAT_MODEL
     ollama_options = _ollama_options(request)
+    response_options = {
+        "generation": ollama_options,
+        "retrieval": {
+            "k": request.k,
+            "source_type": request.source_type,
+            "bay": request.bay,
+            "time_from": request.time_from,
+            "time_to": request.time_to,
+            "vector_weight": request.vector_weight,
+            "fts_weight": request.fts_weight,
+            "rrf_k": request.rrf_k,
+            "expand_evidence": request.expand_evidence,
+            "max_linked_sources": request.max_linked_sources,
+        },
+        "context": {
+            "inject_analysis": request.inject_analysis,
+            "inject_reliability": request.inject_reliability,
+            "run_answer_audit": request.run_answer_audit,
+        },
+    }
+    interaction_id = create_chat_interaction(
+        user=user,
+        query=request.query,
+        model=model,
+        request_options=response_options,
+    )
 
     try:
-        resp = requests.post(
-            f"{config.OLLAMA_BASE_URL}/api/chat",
-            json={
-                "model": model,
-                "messages": [{"role": "user", "content": prompt}],
-                "stream": False,
-                "options": ollama_options,
-            },
-            timeout=120,
+        bundle = retrieve_with_expansion(
+            request.query,
+            k=request.k,
+            source_type=request.source_type,
+            bay=request.bay,
+            time_from=request.time_from,
+            time_to=request.time_to,
+            vector_weight=request.vector_weight,
+            fts_weight=request.fts_weight,
+            rrf_k=request.rrf_k,
+            expand_evidence=request.expand_evidence,
+            max_linked_sources=request.max_linked_sources,
         )
-        resp.raise_for_status()
-        answer = resp.json()["message"]["content"]
-    except Exception as exc:
-        answer = f"LLM error: {exc}"
+        rows = bundle.get("primary") or []
+        linked_rows = bundle.get("linked") or []
+        retrieval_diagnostics = bundle.get("diagnostics") or {}
+        prompt, context = build_prompt_with_context(
+            request.query,
+            rows,
+            linked_results=linked_rows,
+            inject_analysis=request.inject_analysis,
+            inject_reliability=request.inject_reliability,
+        )
+        sources = [_source_document(row) for row in rows]
+        linked_sources = [_source_document(row) for row in linked_rows]
+        analysis_context = [
+            _context_document(row, "analysis")
+            for row in context.get("analysis", [])
+        ]
+        reliability_context = [
+            _context_document(row, "reliability")
+            for row in context.get("reliability", [])
+        ]
+        prompt_diagnostics = _prompt_diagnostics(
+            prompt,
+            rows,
+            context,
+            linked_rows,
+        )
+        evidence_snapshot = {
+            "sources": sources,
+            "linked_sources": linked_sources,
+            "analysis_context": analysis_context,
+            "reliability_context": reliability_context,
+            "retrieval_diagnostics": retrieval_diagnostics,
+            "prompt_diagnostics": prompt_diagnostics,
+        }
+        record_chat_context(
+            interaction_id=interaction_id,
+            user=user,
+            evidence_snapshot=evidence_snapshot,
+            prompt=prompt,
+        )
 
-    answer_audit = (
-        audit_answer(
+        try:
+            resp = requests.post(
+                f"{config.OLLAMA_BASE_URL}/api/chat",
+                json={
+                    "model": model,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "stream": False,
+                    "options": ollama_options,
+                },
+                timeout=120,
+            )
+            resp.raise_for_status()
+            answer = resp.json()["message"]["content"]
+            if not isinstance(answer, str) or not answer.strip():
+                raise ValueError("The model returned an empty answer")
+        except Exception as exc:
+            _mark_chat_failed_safely(
+                interaction_id=interaction_id,
+                user=user,
+                error_code="llm_request_failed",
+                started_at=started_at,
+            )
+            logger.exception("Language model request failed")
+            detail = {
+                "code": "llm_request_failed",
+                "message": "The language model could not complete the request",
+            }
+            if interaction_id is not None:
+                detail["interaction_id"] = str(interaction_id)
+            raise HTTPException(status_code=502, detail=detail) from exc
+
+        answer_audit = (
+            audit_answer(
+                query=request.query,
+                answer=answer,
+                primary_sources=rows,
+                linked_sources=linked_rows,
+                analysis_context=context.get("analysis", []),
+                reliability_context=context.get("reliability", []),
+                retrieval_diagnostics=retrieval_diagnostics,
+            )
+            if request.run_answer_audit
+            else None
+        )
+        complete_chat_interaction(
+            interaction_id=interaction_id,
+            user=user,
+            answer=answer,
+            answer_audit_snapshot=json_safe(answer_audit),
+            latency_ms=_chat_latency_ms(started_at),
+        )
+
+        return ChatResponse(
+            interaction_id=interaction_id,
             query=request.query,
             answer=answer,
-            primary_sources=rows,
-            linked_sources=linked_rows,
-            analysis_context=context.get("analysis", []),
-            reliability_context=context.get("reliability", []),
+            sources=sources,
+            linked_sources=linked_sources,
+            analysis_context=analysis_context,
+            reliability_context=reliability_context,
+            model=model,
+            n_sources=len(rows),
+            n_linked_sources=len(linked_rows),
+            n_context_documents=(
+                len(analysis_context) + len(reliability_context)
+            ),
+            prompt_diagnostics=prompt_diagnostics,
             retrieval_diagnostics=retrieval_diagnostics,
+            answer_audit=answer_audit,
+            options=response_options,
         )
-        if request.run_answer_audit
-        else None
-    )
-
-    return ChatResponse(
-        query=request.query,
-        answer=answer,
-        sources=[_source_document(row) for row in rows],
-        linked_sources=[_source_document(row) for row in linked_rows],
-        analysis_context=analysis_context,
-        reliability_context=reliability_context,
-        model=model,
-        n_sources=len(rows),
-        n_linked_sources=len(linked_rows),
-        n_context_documents=len(analysis_context) + len(reliability_context),
-        prompt_diagnostics=_prompt_diagnostics(prompt, rows, context, linked_rows),
-        retrieval_diagnostics=retrieval_diagnostics,
-        answer_audit=answer_audit,
-        options={
-            "generation": ollama_options,
-            "retrieval": {
-                "k": request.k,
-                "source_type": request.source_type,
-                "bay": request.bay,
-                "time_from": request.time_from,
-                "time_to": request.time_to,
-                "vector_weight": request.vector_weight,
-                "fts_weight": request.fts_weight,
-                "rrf_k": request.rrf_k,
-                "expand_evidence": request.expand_evidence,
-                "max_linked_sources": request.max_linked_sources,
-            },
-            "context": {
-                "inject_analysis": request.inject_analysis,
-                "inject_reliability": request.inject_reliability,
-                "run_answer_audit": request.run_answer_audit,
-            },
-        },
-    )
+    except HTTPException:
+        raise
+    except Exception as exc:
+        _mark_chat_failed_safely(
+            interaction_id=interaction_id,
+            user=user,
+            error_code="chat_processing_failed",
+            started_at=started_at,
+        )
+        logger.exception("Chat request failed before completion")
+        detail = {
+            "code": "chat_processing_failed",
+            "message": "The chat request could not be completed",
+        }
+        if interaction_id is not None:
+            detail["interaction_id"] = str(interaction_id)
+        raise HTTPException(status_code=500, detail=detail) from exc

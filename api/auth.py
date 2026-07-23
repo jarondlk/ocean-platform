@@ -328,6 +328,8 @@ def route_permission(method: str, path: str) -> Optional[str]:
         return "system:read"
     if path.startswith("/admin/users") or path.startswith("/admin/invitations"):
         return "users:manage"
+    if path == "/admin/feedback/export":
+        return "feedback:export"
     if path.startswith("/admin/feedback"):
         return "feedback:review"
     if path.startswith("/docs") or path in {"/redoc", "/openapi.json"}:

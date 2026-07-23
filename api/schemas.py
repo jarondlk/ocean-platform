@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Literal, Optional
 
 from pydantic import AliasChoices, BaseModel, Field
 
@@ -150,6 +150,7 @@ class RetrieveResponse(BaseModel):
 
 
 class ChatResponse(BaseModel):
+    interaction_id: Optional[uuid.UUID] = None
     query: str
     answer: str
     sources: List[SourceDocument]
@@ -164,6 +165,68 @@ class ChatResponse(BaseModel):
     retrieval_diagnostics: Dict[str, Any] = Field(default_factory=dict)
     answer_audit: Optional[AnswerAudit] = None
     options: Dict[str, Any] = Field(default_factory=dict)
+
+
+class ChatFeedbackRequest(BaseModel):
+    rating: Literal[-1, 1]
+    reason_codes: List[str] = Field(default_factory=list, max_length=8)
+    comment: Optional[str] = Field(default=None, max_length=1000)
+
+
+class ChatFeedbackResponse(BaseModel):
+    id: uuid.UUID
+    interaction_id: uuid.UUID
+    rating: Literal[-1, 1]
+    reason_codes: List[str] = Field(default_factory=list)
+    comment: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+
+
+class AdminFeedbackMetrics(BaseModel):
+    total: int
+    positive: int
+    negative: int
+    positive_rate: Optional[float] = None
+    reason_counts: Dict[str, int] = Field(default_factory=dict)
+
+
+class AdminFeedbackListItem(BaseModel):
+    feedback_id: uuid.UUID
+    interaction_id: uuid.UUID
+    rating: Literal[-1, 1]
+    reason_codes: List[str] = Field(default_factory=list)
+    comment: Optional[str] = None
+    feedback_created_at: datetime
+    feedback_updated_at: datetime
+    query: str
+    model: Optional[str] = None
+    latency_ms: Optional[int] = None
+    interaction_created_at: datetime
+    user_id: uuid.UUID
+    user_email: str
+    user_display_name: Optional[str] = None
+    user_role: str
+    user_account_type: str
+
+
+class AdminFeedbackListResponse(BaseModel):
+    items: List[AdminFeedbackListItem] = Field(default_factory=list)
+    total: int
+    limit: int
+    offset: int
+    metrics: AdminFeedbackMetrics
+
+
+class AdminFeedbackDetail(AdminFeedbackListItem):
+    interaction_status: str
+    answer: Optional[str] = None
+    request_options: Dict[str, Any] = Field(default_factory=dict)
+    evidence_snapshot: Dict[str, Any] = Field(default_factory=dict)
+    answer_audit_snapshot: Optional[Dict[str, Any]] = None
+    corpus_fingerprint: Optional[str] = None
+    prompt_version: Optional[str] = None
+    prompt_sha256: Optional[str] = None
 
 
 class OllamaModel(BaseModel):

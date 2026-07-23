@@ -1,10 +1,10 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Activity, BookOpen, Bug, ChartNoAxesColumn, ClipboardCheck, Database, Fingerprint, LogOut, MessageSquare, TableProperties, UsersRound, Workflow } from "lucide-react";
+import { Activity, BookOpen, Bug, ChartNoAxesColumn, ClipboardCheck, Database, Fingerprint, LogOut, MessageSquare, MessagesSquare, TableProperties, UsersRound, Workflow } from "lucide-react";
 
 import { auth, signOut } from "@/auth";
 import { PermissionGate } from "@/components/PermissionGate";
-import { getCurrentUser } from "@/lib/server-api";
+import { getCurrentUser, getLocalCurrentUser } from "@/lib/server-api";
 
 const navItems = [
   { href: "/", label: "Overview", icon: BookOpen, permission: "overview:read" },
@@ -17,15 +17,20 @@ const navItems = [
   { href: "/chat", label: "Chat", icon: MessageSquare, permission: "chat:use" },
   { href: "/system", label: "System", icon: Activity, permission: "system:read" },
   { href: "/debug", label: "Debug", icon: Bug, permission: "system:read" },
+  { href: "/admin/feedback", label: "Feedback", icon: MessagesSquare, permission: "feedback:review" },
   { href: "/admin/users", label: "Users", icon: UsersRound, permission: "users:manage" },
 ];
 
 export async function AppShell({ children }: { children: ReactNode }) {
   const session = await auth();
-  if (!session) {
+  const localAuthDisabled =
+    process.env.AUTH_MODE?.trim().toLowerCase() === "disabled";
+  if (!session && !localAuthDisabled) {
     return <main className="auth-main">{children}</main>;
   }
-  const user = await getCurrentUser(session);
+  const user = session
+    ? await getCurrentUser(session)
+    : await getLocalCurrentUser();
   if (!user) {
     return (
       <main className="auth-main">
@@ -71,17 +76,19 @@ export async function AppShell({ children }: { children: ReactNode }) {
             <strong>{user.display_name || user.email}</strong>
             <span>{user.role} · {user.account_type}</span>
           </div>
-          <form
-            action={async () => {
-              "use server";
-              await signOut({ redirectTo: "/login" });
-            }}
-          >
-            <button className="icon-button" type="submit" title="Sign out">
-              <LogOut size={16} aria-hidden="true" />
-              <span className="sr-only">Sign out</span>
-            </button>
-          </form>
+          {session ? (
+            <form
+              action={async () => {
+                "use server";
+                await signOut({ redirectTo: "/login" });
+              }}
+            >
+              <button className="icon-button" type="submit" title="Sign out">
+                <LogOut size={16} aria-hidden="true" />
+                <span className="sr-only">Sign out</span>
+              </button>
+            </form>
+          ) : null}
         </div>
       </aside>
       <main className="main-panel">
