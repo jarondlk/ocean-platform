@@ -10,6 +10,7 @@ import sys
 import threading
 import time
 import uuid
+from contextlib import asynccontextmanager
 from dataclasses import asdict
 from datetime import date, datetime
 from functools import lru_cache
@@ -130,10 +131,17 @@ def _cors_origins() -> List[str]:
     return [origin.strip() for origin in raw.split(",") if origin.strip()]
 
 
+@asynccontextmanager
+async def _app_lifespan(_app: FastAPI):
+    config.validate_security_configuration(require_auth_secret=True)
+    yield
+
+
 app = FastAPI(
     title="Onagawa Source Chat API",
     description="API layer for the Next.js migration of the provenance-aware marine RAG system.",
     version="0.1.0",
+    lifespan=_app_lifespan,
 )
 
 app.add_middleware(
@@ -967,11 +975,27 @@ def _read_only_sql(sql: str) -> str:
     upper = stripped.upper()
     if not (upper.startswith("SELECT") or upper.startswith("WITH")):
         raise HTTPException(status_code=400, detail="Only SELECT/WITH queries are allowed")
-    tokens = {token.strip("(),") for token in upper.replace("\n", " ").split()}
+    without_literals = re.sub(r"'(?:''|[^'])*'", "''", upper)
+    without_comments = re.sub(
+        r"--[^\n]*|/\*.*?\*/",
+        " ",
+        without_literals,
+        flags=re.DOTALL,
+    )
+    tokens = set(re.findall(r"[A-Z_]+", without_comments))
     blocked = sorted(tokens.intersection(READ_ONLY_SQL_FORBIDDEN))
     if blocked:
         raise HTTPException(status_code=400, detail=f"Forbidden SQL keyword: {blocked[0]}")
     return stripped
+
+
+def _secure_read_only_connection(connection: Any) -> None:
+    """Ask PostgreSQL to enforce read-only execution and a short timeout."""
+
+    if connection.dialect.name != "postgresql":
+        return
+    connection.execute(text("SET TRANSACTION READ ONLY"))
+    connection.execute(text("SET LOCAL statement_timeout = '5000ms'"))
 
 
 def _json_safe_value(value: Any) -> Any:
@@ -3936,6 +3960,7 @@ def database_query(request: DatabaseQueryRequest) -> DatabaseQueryResponse:
     engine = _database_engine()
     start = time.perf_counter()
     with engine.connect() as conn:
+        _secure_read_only_connection(conn)
         result = conn.execute(text(wrapped_sql), {"limit": request.limit})
         rows = result.mappings().all()
         columns = list(result.keys())

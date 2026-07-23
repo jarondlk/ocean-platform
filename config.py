@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+from typing import Mapping, Optional
 
 # ---------------------------------------------------------------------------
 # Project root – resolves relative to this file
@@ -83,7 +84,9 @@ DATABASE_URL = os.environ.get(
 # ---------------------------------------------------------------------------
 # ``required`` is the secure default. Tests and intentionally isolated local
 # development may explicitly opt out with AUTH_MODE=disabled.
+DEPLOYMENT_ENV = os.environ.get("DEPLOYMENT_ENV", "development").strip().lower()
 AUTH_MODE = os.environ.get("AUTH_MODE", "required").strip().lower()
+PERSIST_LOCAL_CHAT = os.environ.get("PERSIST_LOCAL_CHAT", "false").strip().lower()
 INTERNAL_AUTH_SECRET = os.environ.get("INTERNAL_AUTH_SECRET", "")
 INTERNAL_AUTH_ISSUER = os.environ.get(
     "INTERNAL_AUTH_ISSUER",
@@ -93,6 +96,145 @@ INTERNAL_AUTH_AUDIENCE = os.environ.get(
     "INTERNAL_AUTH_AUDIENCE",
     "onagawa-source-chat-api",
 )
+
+
+class SecurityConfigurationError(RuntimeError):
+    """Raised when authentication could start in an unsafe configuration."""
+
+
+_ALLOWED_DEPLOYMENT_ENVS = frozenset(
+    {"development", "test", "staging", "production"}
+)
+_PRODUCTION_LIKE_ENVS = frozenset({"staging", "production"})
+_TRUE_VALUES = frozenset({"1", "true", "yes", "on"})
+_FALSE_VALUES = frozenset({"0", "false", "no", "off", ""})
+_PLACEHOLDER_MARKERS = (
+    "replace-with",
+    "not-configured",
+    "change-me",
+    "changeme",
+)
+
+
+def _security_setting(
+    environ: Mapping[str, str],
+    name: str,
+    default: str,
+) -> str:
+    return str(environ.get(name, default)).strip()
+
+
+def _security_flag(value: str, name: str) -> bool:
+    normalized = value.strip().lower()
+    if normalized in _TRUE_VALUES:
+        return True
+    if normalized in _FALSE_VALUES:
+        return False
+    raise SecurityConfigurationError(
+        f"{name} must be one of true/false, yes/no, on/off, or 1/0"
+    )
+
+
+def _placeholder_secret(value: str) -> bool:
+    lowered = value.lower()
+    return any(marker in lowered for marker in _PLACEHOLDER_MARKERS)
+
+
+def validate_security_configuration(
+    environ: Optional[Mapping[str, str]] = None,
+    *,
+    require_auth_secret: bool = False,
+) -> None:
+    """Validate authentication settings without logging any secret values.
+
+    Production-like deployments are always strict. Local development may use
+    disabled authentication, but an API process that is actually serving
+    authenticated requests must still provide a non-placeholder signing secret.
+    """
+
+    env = os.environ if environ is None else environ
+    deployment_env = _security_setting(
+        env,
+        "DEPLOYMENT_ENV",
+        DEPLOYMENT_ENV,
+    ).lower()
+    if deployment_env not in _ALLOWED_DEPLOYMENT_ENVS:
+        raise SecurityConfigurationError(
+            "DEPLOYMENT_ENV must be development, test, staging, or production"
+        )
+
+    auth_mode = _security_setting(env, "AUTH_MODE", AUTH_MODE).lower()
+    if auth_mode not in {"required", "disabled"}:
+        raise SecurityConfigurationError(
+            "AUTH_MODE must be either required or disabled"
+        )
+
+    persist_local_chat = _security_flag(
+        _security_setting(
+            env,
+            "PERSIST_LOCAL_CHAT",
+            PERSIST_LOCAL_CHAT,
+        ),
+        "PERSIST_LOCAL_CHAT",
+    )
+    production_like = deployment_env in _PRODUCTION_LIKE_ENVS
+    if production_like and auth_mode != "required":
+        raise SecurityConfigurationError(
+            "AUTH_MODE=disabled is forbidden in staging and production"
+        )
+    if production_like and persist_local_chat:
+        raise SecurityConfigurationError(
+            "PERSIST_LOCAL_CHAT is forbidden in staging and production"
+        )
+    if persist_local_chat and auth_mode != "disabled":
+        raise SecurityConfigurationError(
+            "PERSIST_LOCAL_CHAT may only be used with AUTH_MODE=disabled"
+        )
+
+    if auth_mode == "required" and (require_auth_secret or production_like):
+        secret = _security_setting(
+            env,
+            "INTERNAL_AUTH_SECRET",
+            INTERNAL_AUTH_SECRET,
+        )
+        if len(secret) < 32 or _placeholder_secret(secret):
+            raise SecurityConfigurationError(
+                "INTERNAL_AUTH_SECRET must be a non-placeholder value "
+                "of at least 32 characters"
+            )
+        issuer = _security_setting(
+            env,
+            "INTERNAL_AUTH_ISSUER",
+            INTERNAL_AUTH_ISSUER,
+        )
+        audience = _security_setting(
+            env,
+            "INTERNAL_AUTH_AUDIENCE",
+            INTERNAL_AUTH_AUDIENCE,
+        )
+        if not issuer or not audience:
+            raise SecurityConfigurationError(
+                "INTERNAL_AUTH_ISSUER and INTERNAL_AUTH_AUDIENCE are required"
+            )
+
+    if production_like:
+        raw_origins = _security_setting(env, "CORS_ORIGINS", "")
+        origins = [
+            origin.strip()
+            for origin in raw_origins.split(",")
+            if origin.strip()
+        ]
+        if not origins:
+            raise SecurityConfigurationError(
+                "CORS_ORIGINS must list the production frontend origin"
+            )
+        if any(
+            origin == "*" or not origin.startswith("https://")
+            for origin in origins
+        ):
+            raise SecurityConfigurationError(
+                "Production CORS_ORIGINS must contain explicit HTTPS origins"
+            )
 
 # ---------------------------------------------------------------------------
 # LLM / Embedding

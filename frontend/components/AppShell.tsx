@@ -5,6 +5,7 @@ import { Activity, BookOpen, Bug, ChartNoAxesColumn, ClipboardCheck, Database, F
 import { auth, signOut } from "@/auth";
 import { PermissionGate } from "@/components/PermissionGate";
 import { getCurrentUser, getLocalCurrentUser } from "@/lib/server-api";
+import { localAuthDisabled } from "@/lib/security-config";
 
 const navItems = [
   { href: "/", label: "Overview", icon: BookOpen, permission: "overview:read" },
@@ -23,9 +24,8 @@ const navItems = [
 
 export async function AppShell({ children }: { children: ReactNode }) {
   const session = await auth();
-  const localAuthDisabled =
-    process.env.AUTH_MODE?.trim().toLowerCase() === "disabled";
-  if (!session && !localAuthDisabled) {
+  const authDisabled = localAuthDisabled();
+  if (!session && !authDisabled) {
     return <main className="auth-main">{children}</main>;
   }
   const user = session

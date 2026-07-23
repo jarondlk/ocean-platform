@@ -3,6 +3,7 @@ import "server-only";
 import type { Session } from "next-auth";
 
 import { tokenForSession } from "@/lib/internal-auth";
+import { localAuthDisabled } from "@/lib/security-config";
 import type { CurrentUser } from "@/types";
 
 
@@ -26,7 +27,7 @@ export async function getCurrentUser(session: Session): Promise<CurrentUser | nu
 }
 
 export async function getLocalCurrentUser(): Promise<CurrentUser | null> {
-  if (process.env.AUTH_MODE?.trim().toLowerCase() !== "disabled") {
+  if (!localAuthDisabled()) {
     return null;
   }
   try {

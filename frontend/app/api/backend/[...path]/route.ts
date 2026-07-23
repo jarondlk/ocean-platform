@@ -2,6 +2,7 @@ import type { NextRequest } from "next/server";
 
 import { auth } from "@/auth";
 import { tokenForSession } from "@/lib/internal-auth";
+import { localAuthDisabled } from "@/lib/security-config";
 
 export const dynamic = "force-dynamic";
 
@@ -19,9 +20,7 @@ function targetUrl(path: string[], request: NextRequest): string {
 
 async function proxy(request: NextRequest, context: RouteContext): Promise<Response> {
   const session = await auth();
-  const localAuthDisabled =
-    process.env.AUTH_MODE?.trim().toLowerCase() === "disabled";
-  if (!session && !localAuthDisabled) {
+  if (!session && !localAuthDisabled()) {
     return Response.json({ detail: "Authentication required" }, { status: 401 });
   }
   if (!["GET", "HEAD", "OPTIONS"].includes(request.method)) {

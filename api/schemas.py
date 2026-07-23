@@ -54,12 +54,12 @@ class UserUpdate(BaseModel):
 
 
 class RetrieveRequest(BaseModel):
-    query: str = Field(..., min_length=1)
+    query: str = Field(..., min_length=1, max_length=4000)
     k: int = Field(default=8, ge=1, le=25, validation_alias=AliasChoices("k", "top_k"))
-    source_type: Optional[str] = None
-    bay: Optional[str] = None
-    time_from: Optional[str] = None
-    time_to: Optional[str] = None
+    source_type: Optional[str] = Field(default=None, max_length=64)
+    bay: Optional[str] = Field(default=None, max_length=64)
+    time_from: Optional[str] = Field(default=None, max_length=64)
+    time_to: Optional[str] = Field(default=None, max_length=64)
     vector_weight: float = Field(default=0.6, ge=0.0, le=1.0)
     fts_weight: float = Field(default=0.4, ge=0.0, le=1.0)
     rrf_k: int = Field(default=60, ge=1, le=200)
@@ -68,7 +68,7 @@ class RetrieveRequest(BaseModel):
 
 
 class ChatRequest(RetrieveRequest):
-    model: Optional[str] = None
+    model: Optional[str] = Field(default=None, max_length=255)
     inject_analysis: bool = True
     inject_reliability: bool = True
     run_answer_audit: bool = True
@@ -404,7 +404,7 @@ class DatabaseTableResponse(BaseModel):
 
 
 class DatabaseQueryRequest(BaseModel):
-    sql: str = Field(..., min_length=1)
+    sql: str = Field(..., min_length=1, max_length=20_000)
     limit: int = Field(default=100, ge=1, le=1000)
 
 

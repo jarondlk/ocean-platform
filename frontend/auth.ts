@@ -3,9 +3,11 @@ import type { Profile } from "next-auth";
 import NextAuth from "next-auth";
 
 import { mintInternalAccessToken } from "@/lib/internal-auth";
+import { validateFrontendSecurityConfiguration } from "@/lib/security-config";
 
 
 const API_BASE_URL = process.env.API_BASE_URL || "http://127.0.0.1:8000";
+validateFrontendSecurityConfiguration();
 
 function oidcProvider(): OIDCConfig<Profile> {
   return {

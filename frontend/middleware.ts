@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 
 import { auth } from "@/auth";
+import { localAuthDisabled } from "@/lib/security-config";
 
 
 export default auth((request) => {
-  if (process.env.AUTH_MODE?.trim().toLowerCase() === "disabled") {
+  if (localAuthDisabled()) {
     return NextResponse.next();
   }
   const isLogin = request.nextUrl.pathname === "/login";

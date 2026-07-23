@@ -157,7 +157,7 @@ def decode_internal_token(token: str) -> Mapping[str, Any]:
         config.INTERNAL_AUTH_AUDIENCE,
     )
     try:
-        return jwt.decode(
+        claims = jwt.decode(
             token,
             secret,
             algorithms=["HS256"],
@@ -176,6 +176,21 @@ def decode_internal_token(token: str) -> Mapping[str, Any]:
                 ]
             },
         )
+        issued_at = claims.get("iat")
+        expires_at = claims.get("exp")
+        if (
+            not isinstance(issued_at, (int, float))
+            or not isinstance(expires_at, (int, float))
+            or expires_at <= issued_at
+            or expires_at - issued_at > 120
+        ):
+            raise AuthenticationFailure(
+                401,
+                "Invalid or expired identity token",
+            )
+        return claims
+    except AuthenticationFailure:
+        raise
     except jwt.PyJWTError as exc:
         raise AuthenticationFailure(401, "Invalid or expired identity token") from exc
 
@@ -188,11 +203,13 @@ def resolve_identity(session: Session, claims: Mapping[str, Any]) -> CurrentUser
     subject = str(claims.get("sub") or "").strip()
     if not provider or not subject:
         raise AuthenticationFailure(401, "Identity token is missing its provider subject")
+    if len(provider) > 64 or len(subject) > 255:
+        raise AuthenticationFailure(401, "Identity token provider subject is invalid")
     try:
         email = normalize_email(str(claims.get("email") or ""))
     except ValueError as exc:
         raise AuthenticationFailure(401, str(exc)) from exc
-    display_name = str(claims.get("name") or "").strip() or None
+    display_name = str(claims.get("name") or "").strip()[:255] or None
     now = datetime.now(timezone.utc)
 
     user = session.scalar(
@@ -269,6 +286,15 @@ def resolve_identity(session: Session, claims: Mapping[str, Any]) -> CurrentUser
 
 
 def authenticate_request(request: Request) -> CurrentUser:
+    try:
+        config.validate_security_configuration()
+    except config.SecurityConfigurationError as exc:
+        logger.error("Unsafe authentication configuration rejected: %s", exc)
+        raise AuthenticationFailure(
+            503,
+            "Authentication security configuration is invalid",
+        ) from exc
+
     auth_mode = os.environ.get("AUTH_MODE", config.AUTH_MODE).strip().lower()
     if auth_mode == "disabled":
         return _disabled_mode_user()
@@ -277,8 +303,10 @@ def authenticate_request(request: Request) -> CurrentUser:
 
     authorization = request.headers.get("authorization", "")
     scheme, _, token = authorization.partition(" ")
-    if scheme.lower() != "bearer" or not token:
+    if scheme.lower() != "bearer" or not token or " " in token:
         raise AuthenticationFailure(401, "Authentication required")
+    if len(token) > 8192:
+        raise AuthenticationFailure(401, "Invalid identity token")
 
     claims = decode_internal_token(token)
     try:
