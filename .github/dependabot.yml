@@ -4,26 +4,48 @@ updates:
   - package-ecosystem: pip
     directory: /
     schedule:
-      interval: weekly
+      interval: monthly
+    # requirements.txt currently uses lower bounds rather than a lock file.
+    # Routine version PRs only raise those floors and do not make fresh
+    # installations more current, so keep Dependabot focused on vulnerabilities.
+    open-pull-requests-limit: 0
     groups:
-      python-runtime:
-        dependency-type: production
-        update-types:
-          - minor
-          - patch
+      python-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
 
   - package-ecosystem: npm
     directory: /frontend
     schedule:
-      interval: weekly
+      interval: monthly
+    open-pull-requests-limit: 2
     groups:
-      frontend-runtime:
-        dependency-type: production
+      frontend-routine:
+        applies-to: version-updates
+        patterns:
+          - "*"
         update-types:
           - minor
           - patch
+      frontend-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+    # Framework, compiler, type-runtime, and icon-library majors need an
+    # intentional compatibility slice rather than an automated maintenance PR.
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - version-update:semver-major
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
+    open-pull-requests-limit: 1
+    groups:
+      github-actions:
+        applies-to: version-updates
+        patterns:
+          - "*"
