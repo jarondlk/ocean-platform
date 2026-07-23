@@ -59,8 +59,18 @@ def test_production_rejects_local_chat_persistence():
             },
             "INTERNAL_AUTH_SECRET",
         ),
+        (
+            {
+                "INTERNAL_AUTH_SECRET": (
+                    "<generate-a-different-random-value-of-at-least-32-characters>"
+                )
+            },
+            "INTERNAL_AUTH_SECRET",
+        ),
         ({"CORS_ORIGINS": "*"}, "HTTPS origins"),
         ({"CORS_ORIGINS": "http://rag.example.org"}, "HTTPS origins"),
+        ({"CORS_ORIGINS": "https://"}, "HTTPS origins"),
+        ({"CORS_ORIGINS": "https://rag.example.org/path"}, "HTTPS origins"),
         ({"CORS_ORIGINS": ""}, "CORS_ORIGINS"),
     ],
 )

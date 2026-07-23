@@ -7,8 +7,11 @@ const PLACEHOLDER_MARKERS = [
   "not-configured",
   "change-me",
   "changeme",
+  "placeholder",
+  "generate-",
   "invalid.example",
   "identity.example.org",
+  "rag.example.org",
 ];
 
 function setting(name: string, fallback = ""): string {
@@ -17,7 +20,26 @@ function setting(name: string, fallback = ""): string {
 
 function placeholder(value: string): boolean {
   const normalized = value.toLowerCase();
-  return PLACEHOLDER_MARKERS.some((marker) => normalized.includes(marker));
+  return (
+    value.includes("<") ||
+    value.includes(">") ||
+    PLACEHOLDER_MARKERS.some((marker) => normalized.includes(marker))
+  );
+}
+
+function secureHttpsUrl(value: string): boolean {
+  if (placeholder(value)) return false;
+  try {
+    const parsed = new URL(value);
+    return (
+      parsed.protocol === "https:" &&
+      Boolean(parsed.hostname) &&
+      !parsed.username &&
+      !parsed.password
+    );
+  } catch {
+    return false;
+  }
 }
 
 export function validateFrontendSecurityConfiguration(): void {
@@ -55,20 +77,21 @@ export function validateFrontendSecurityConfiguration(): void {
     throw new Error("AUTH_SECRET and INTERNAL_AUTH_SECRET must be different");
   }
 
+  const authUrl = setting("AUTH_URL");
   const issuer = setting("OIDC_ISSUER");
   const clientId = setting("OIDC_CLIENT_ID");
   const clientSecret = setting("OIDC_CLIENT_SECRET");
   if (
-    !issuer.startsWith("https://") ||
-    placeholder(issuer) ||
+    !secureHttpsUrl(authUrl) ||
+    !secureHttpsUrl(issuer) ||
     !clientId ||
     placeholder(clientId) ||
     !clientSecret ||
     placeholder(clientSecret)
   ) {
     throw new Error(
-      "Production OIDC settings must use a real HTTPS issuer and " +
-        "non-placeholder client credentials",
+      "Production authentication settings must use real HTTPS application " +
+        "and OIDC URLs with non-placeholder client credentials",
     );
   }
 }

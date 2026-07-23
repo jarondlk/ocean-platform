@@ -41,6 +41,7 @@ services:
       DEPLOYMENT_ENV: ${DEPLOYMENT_ENV:-development}
       AUTH_MODE: ${AUTH_MODE:-required}
       AUTH_SECRET: ${AUTH_SECRET:?Set AUTH_SECRET in .env}
+      AUTH_URL: ${AUTH_URL:-http://localhost:3000}
       AUTH_TRUST_HOST: ${AUTH_TRUST_HOST:-true}
       INTERNAL_AUTH_SECRET: ${INTERNAL_AUTH_SECRET:?Set INTERNAL_AUTH_SECRET in .env}
       INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-onagawa-source-chat-frontend}

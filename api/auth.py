@@ -23,6 +23,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 import config
+from api.rate_limit import policy_for_request, rate_limiter
 from db.app_models import AppUser, AuditEvent, UserInvitation
 from db.connection import get_session
 
@@ -369,8 +370,13 @@ async def authorization_middleware(
     request: Request,
     call_next: Callable[..., Any],
 ):
-    if request.method == "OPTIONS" or request.url.path == "/health/live":
-        return await call_next(request)
+    if request.method == "OPTIONS" or (
+        request.method in {"GET", "HEAD"}
+        and request.url.path == "/health/live"
+    ):
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        return response
 
     try:
         user = authenticate_request(request)
@@ -382,14 +388,38 @@ async def authorization_middleware(
                 403,
                 f"Permission required: {permission}",
             )
+        if config.production_like_environment():
+            policy = policy_for_request(request.method, request.url.path)
+            if policy is not None:
+                retry_after = rate_limiter.retry_after(
+                    subject=str(user.id),
+                    policy=policy,
+                )
+                if retry_after is not None:
+                    return JSONResponse(
+                        status_code=429,
+                        content={"detail": "Request rate limit exceeded"},
+                        headers={
+                            "Retry-After": str(retry_after),
+                            "Cache-Control": "no-store",
+                            "X-Content-Type-Options": "nosniff",
+                        },
+                    )
         request.state.current_user = user
-        return await call_next(request)
+        response = await call_next(request)
+        response.headers["Cache-Control"] = "no-store"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        return response
     except AuthenticationFailure as exc:
         headers = {"WWW-Authenticate": "Bearer"} if exc.status_code == 401 else {}
         return JSONResponse(
             status_code=exc.status_code,
             content={"detail": exc.detail},
-            headers=headers,
+            headers={
+                **headers,
+                "Cache-Control": "no-store",
+                "X-Content-Type-Options": "nosniff",
+            },
         )
 
 

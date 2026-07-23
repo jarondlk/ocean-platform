@@ -262,6 +262,7 @@ def test_api_is_default_deny_and_liveness_stays_public(monkeypatch):
     monkeypatch.setenv("AUTH_MODE", "required")
     client = TestClient(app)
     assert client.get("/health/live").status_code == 200
+    assert client.post("/health/live").status_code == 401
     assert client.get("/stats").status_code == 401
 
 

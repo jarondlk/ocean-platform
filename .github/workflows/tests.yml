@@ -1,4 +1,4 @@
-name: Tests
+name: CI
 
 on:
   push:
@@ -6,41 +6,88 @@ on:
   pull_request:
     branches: [main, master]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  test:
+  backend:
+    name: Backend tests and security boundary
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
 
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          python -m pip install -r requirements-dev.txt
 
-      - name: Run tests
+      - name: Lint security-sensitive Python modules
         run: |
-          python -m pytest tests/ -v --tb=short
+          python -m ruff check \
+            api/auth.py \
+            api/auth_routes.py \
+            api/admin_feedback_routes.py \
+            api/chat_records.py \
+            api/feedback_routes.py \
+            api/rate_limit.py \
+            config.py \
+            tests/test_auth.py \
+            tests/test_security_config.py \
+            tests/test_rate_limit.py \
+            tests/test_admin_feedback.py \
+            tests/test_chat_feedback.py \
+            tests/integration/test_app_metadata_postgres.py \
+            --select E4,E7,E9,F
 
       - name: Run tests with coverage
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          PERSIST_LOCAL_CHAT: "false"
         run: |
-          python -m pytest tests/ -v \
+          python -m pytest tests/ -q --tb=short \
+            --cov=api \
+            --cov=config \
+            --cov=db \
             --cov=preprocessing \
             --cov=ingestion \
             --cov=orchestration \
             --cov=schema \
             --cov=evaluation \
             --cov-report=term-missing \
-            --cov-fail-under=30
+            --cov-fail-under=60
+
+  frontend:
+    name: Frontend typecheck and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
 
       - name: Set up Node.js 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: "22"
           cache: npm
@@ -57,6 +104,82 @@ jobs:
       - name: Build frontend
         working-directory: frontend
         env:
+          DEPLOYMENT_ENV: test
+          AUTH_MODE: required
           AUTH_SECRET: ci-only-auth-secret-that-is-long-enough
           INTERNAL_AUTH_SECRET: ci-only-internal-secret-that-is-long-enough
         run: npm run build
+
+  postgres-integration:
+    name: PostgreSQL migration and metadata integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: onagawa
+          POSTGRES_PASSWORD: integration-only-password
+          POSTGRES_DB: onagawa_rag
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U onagawa -d onagawa_rag"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Apply application migrations
+        env:
+          DATABASE_URL: postgresql://onagawa:integration-only-password@127.0.0.1:5432/onagawa_rag
+        run: python -m alembic upgrade head
+
+      - name: Verify invite acceptance and metadata persistence
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          DATABASE_URL: postgresql://onagawa:integration-only-password@127.0.0.1:5432/onagawa_rag
+          RUN_POSTGRES_INTEGRATION: "1"
+        run: python -m pytest tests/integration/test_app_metadata_postgres.py -q
+
+  dependency-review:
+    name: Dependency review
+    if: >-
+      github.event_name == 'pull_request' &&
+      (github.event.repository.private == false ||
+      vars.GH_CODE_SECURITY_ENABLED == 'true')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Review dependency changes
+        uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4.9.0
+        with:
+          fail-on-severity: high
+          fail-on-scopes: runtime

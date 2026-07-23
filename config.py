@@ -9,6 +9,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 from typing import Mapping, Optional
+from urllib.parse import urlparse
 
 # ---------------------------------------------------------------------------
 # Project root – resolves relative to this file
@@ -113,6 +114,8 @@ _PLACEHOLDER_MARKERS = (
     "not-configured",
     "change-me",
     "changeme",
+    "placeholder",
+    "generate-",
 )
 
 
@@ -137,7 +140,25 @@ def _security_flag(value: str, name: str) -> bool:
 
 def _placeholder_secret(value: str) -> bool:
     lowered = value.lower()
-    return any(marker in lowered for marker in _PLACEHOLDER_MARKERS)
+    return (
+        "<" in value
+        or ">" in value
+        or any(marker in lowered for marker in _PLACEHOLDER_MARKERS)
+    )
+
+
+def _valid_https_origin(value: str) -> bool:
+    parsed = urlparse(value)
+    return (
+        parsed.scheme == "https"
+        and bool(parsed.hostname)
+        and parsed.username is None
+        and parsed.password is None
+        and not parsed.path
+        and not parsed.params
+        and not parsed.query
+        and not parsed.fragment
+    )
 
 
 def validate_security_configuration(
@@ -229,12 +250,24 @@ def validate_security_configuration(
                 "CORS_ORIGINS must list the production frontend origin"
             )
         if any(
-            origin == "*" or not origin.startswith("https://")
+            origin == "*" or not _valid_https_origin(origin)
             for origin in origins
         ):
             raise SecurityConfigurationError(
                 "Production CORS_ORIGINS must contain explicit HTTPS origins"
             )
+
+
+def production_like_environment(
+    environ: Optional[Mapping[str, str]] = None,
+) -> bool:
+    env = os.environ if environ is None else environ
+    deployment_env = _security_setting(
+        env,
+        "DEPLOYMENT_ENV",
+        DEPLOYMENT_ENV,
+    ).lower()
+    return deployment_env in _PRODUCTION_LIKE_ENVS
 
 # ---------------------------------------------------------------------------
 # LLM / Embedding
