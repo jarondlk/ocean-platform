@@ -377,7 +377,7 @@ The archived Streamlit interface had **8 tabs**:
 | **Evidence Explorer** | Search 323 documents by keyword, source type, and bay |
 | **Data** | CTD depth profiles, metagenome composition (Kraken/MetaEuk), SST time series |
 | **Pre-Analysis** | 5 sub-tabs: CTD Trends, Correlations, Diversity, Co-occurrence, Reliability |
-| **Database** | Table browser, SQL console (read-only), schema inspector, embedding statistics |
+| **Database** | Validated table browser, schema inspector, embedding statistics |
 | **Stats** | Corpus metrics, sample coverage, provenance tracking |
 | **Evaluation** | Benchmark 15 questions × 4 modes, measuring retrieval precision, source coverage, citation accuracy, context utilization, and latency. Exportable CSV results. |
 
@@ -763,6 +763,6 @@ statistical fixtures, and are expected by the test coverage.
 5. **Pre-analysis injection** — keyword-triggered: only injects for complex ecosystem queries
 6. **Reliability ensurance** — modular cross-source validation with SST↔CTD agreement, diversity prediction, and corroboration scoring
 7. **Variable-prevalence co-occurrence** — selects genera in 10–90% of samples to avoid trivial co-occurrence
-8. **Read-only SQL console** — blocks destructive queries while allowing analytical exploration
+8. **Structured database inspection** — table and column allowlists plus parameterized pagination replace free-form SQL
 9. **Port 5433** — avoids conflict with default PostgreSQL on 5432
 10. **Modular pipeline** — each stage is independently runnable via CLI scripts

@@ -349,13 +349,6 @@ export type DatabaseTableResponse = {
   rows: Record<string, unknown>[];
 };
 
-export type DatabaseQueryResponse = {
-  columns: string[];
-  rows: Record<string, unknown>[];
-  row_count: number;
-  elapsed_ms: number;
-};
-
 export type PipelineStageInfo = {
   id: string;
   label: string;

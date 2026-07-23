@@ -1,20 +1,14 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { Play, RefreshCw, Search } from "lucide-react";
+import { RefreshCw, Search } from "lucide-react";
 import { CsvExportButton } from "@/components/CsvExportButton";
 import { DataTable, formatCell } from "@/components/DataTable";
 import { RecordInspector } from "@/components/RecordInspector";
-import { getDatabaseSchema, getDatabaseTable, retrieveSources, runDatabaseQuery } from "@/lib/api";
-import type { DatabaseQueryResponse, DatabaseSchemaResponse, DatabaseTableResponse, RetrieveResponse } from "@/types";
+import { getDatabaseSchema, getDatabaseTable, retrieveSources } from "@/lib/api";
+import type { DatabaseSchemaResponse, DatabaseTableResponse, RetrieveResponse } from "@/types";
 
 type Direction = "asc" | "desc";
-
-const defaultSql = `SELECT source_type, count(*) AS n_docs,
-       round(avg(length(text))) AS avg_text_len
-FROM retrieval_document
-GROUP BY source_type
-ORDER BY n_docs DESC`;
 
 export default function DatabasePage() {
   const [schema, setSchema] = useState<DatabaseSchemaResponse | null>(null);
@@ -25,9 +19,6 @@ export default function DatabasePage() {
   const [orderBy, setOrderBy] = useState("");
   const [direction, setDirection] = useState<Direction>("asc");
   const [includeHeavy, setIncludeHeavy] = useState(false);
-  const [sql, setSql] = useState(defaultSql);
-  const [sqlLimit, setSqlLimit] = useState(100);
-  const [queryResult, setQueryResult] = useState<DatabaseQueryResponse | null>(null);
   const [selectedRow, setSelectedRow] = useState<Record<string, unknown> | null>(null);
   const [selectedRowKey, setSelectedRowKey] = useState("");
   const [probeQuery, setProbeQuery] = useState("");
@@ -39,10 +30,8 @@ export default function DatabasePage() {
   const [probeRrfK, setProbeRrfK] = useState(60);
   const [probeResult, setProbeResult] = useState<RetrieveResponse | null>(null);
   const [loading, setLoading] = useState(false);
-  const [queryLoading, setQueryLoading] = useState(false);
   const [probeLoading, setProbeLoading] = useState(false);
   const [error, setError] = useState("");
-  const [queryError, setQueryError] = useState("");
   const [probeError, setProbeError] = useState("");
 
   const tables = schema?.tables || [];
@@ -120,19 +109,6 @@ export default function DatabasePage() {
     void loadSchema();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  async function submitSql(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setQueryLoading(true);
-    setQueryError("");
-    try {
-      setQueryResult(await runDatabaseQuery({ sql, limit: sqlLimit }));
-    } catch (err) {
-      setQueryError(err instanceof Error ? err.message : "SQL request failed");
-    } finally {
-      setQueryLoading(false);
-    }
-  }
 
   async function submitProbe(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -320,43 +296,6 @@ export default function DatabasePage() {
           <section className="data-section">
             <h3 className="section-title">Row Inspector</h3>
             <RecordInspector row={selectedRow} emptyText="Select a table row." />
-          </section>
-
-          <section className="data-section">
-            <h3 className="section-title">SQL Console</h3>
-            <form onSubmit={submitSql}>
-              <textarea className="textarea sql-editor" value={sql} onChange={(event) => setSql(event.target.value)} aria-label="SQL query" />
-              <div className="section-toolbar">
-                <label className="settings-field" htmlFor="sql-limit" title="Maximum rows returned by the API wrapper.">
-                  <span>Limit</span>
-                  <select id="sql-limit" className="field" value={sqlLimit} onChange={(event) => setSqlLimit(Number(event.target.value))}>
-                    <option value={25}>25</option>
-                    <option value={100}>100</option>
-                    <option value={250}>250</option>
-                    <option value={500}>500</option>
-                    <option value={1000}>1000</option>
-                  </select>
-                </label>
-                <button className="button" disabled={queryLoading || !sql.trim()}>
-                  <Play size={15} aria-hidden="true" />
-                  {queryLoading ? "Running" : "Run"}
-                </button>
-              </div>
-            </form>
-            {queryError ? <p className="error-text">{queryError}</p> : null}
-            {queryResult ? (
-              <>
-                <div className="section-toolbar">
-                  <p className="empty-state">{queryResult.row_count} rows in {queryResult.elapsed_ms.toFixed(1)} ms</p>
-                  <CsvExportButton
-                    columns={queryResult.columns}
-                    filename="database_sql_result"
-                    rows={queryResult.rows}
-                  />
-                </div>
-                <DataTable columns={queryResult.columns} rows={queryResult.rows} rowKeyColumn={queryResult.columns[0] || "id"} />
-              </>
-            ) : null}
           </section>
 
           <section className="data-section">

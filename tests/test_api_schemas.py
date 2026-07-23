@@ -2,7 +2,7 @@ import pytest
 from pydantic import ValidationError
 
 from api.main import _ollama_options
-from api.schemas import ChatRequest, DatabaseQueryRequest, RetrieveRequest
+from api.schemas import ChatRequest, RetrieveRequest
 
 
 def test_retrieve_request_accepts_top_k_alias():
@@ -59,7 +59,6 @@ def test_chat_request_exposes_expert_knobs():
     [
         lambda: RetrieveRequest(query="q" * 4001),
         lambda: ChatRequest(query="valid", model="m" * 256),
-        lambda: DatabaseQueryRequest(sql="s" * 20_001),
     ],
 )
 def test_security_sensitive_request_strings_are_bounded(factory):

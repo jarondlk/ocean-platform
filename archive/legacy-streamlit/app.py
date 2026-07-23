@@ -1557,7 +1557,7 @@ with tab_db:
     if not USE_PG:
         st.warning("PostgreSQL is not connected. Start the database with `podman compose up -d`.")
     else:
-        from sqlalchemy import create_engine, text, inspect
+        from sqlalchemy import MetaData, Table, create_engine, func, inspect, select, text
         _db_engine = create_engine(config.DATABASE_URL, pool_pre_ping=True)
 
         # ── Connection & Schema Overview ──
@@ -1569,8 +1569,8 @@ with tab_db:
         st.caption(f"Connected: `{pg_ver[:60]}…` • Port **{config.DATABASE_URL.split(':')[-1].split('/')[0]}** • Tables: **{len(table_names)}**")
 
         # ── Sub-tabs inside Database ──
-        db_sub1, db_sub2, db_sub3, db_sub4 = st.tabs(
-            ["Table Browser", "SQL Console", "Schema", "Embeddings"]
+        db_sub1, db_sub3, db_sub4 = st.tabs(
+            ["Table Browser", "Schema", "Embeddings"]
         )
 
         # ──────────────────────────────────
@@ -1581,10 +1581,17 @@ with tab_db:
 
             with col_tbl:
                 selected_table = st.selectbox("Table", table_names, index=0, key="db_table")
+                selected_table_obj = Table(
+                    selected_table,
+                    MetaData(),
+                    autoload_with=_db_engine,
+                )
 
                 # Row count
                 with _db_engine.connect() as _conn:
-                    row_count = _conn.execute(text(f"SELECT count(*) FROM {selected_table}")).scalar()
+                    row_count = _conn.execute(
+                        select(func.count()).select_from(selected_table_obj)
+                    ).scalar()
                 st.metric("Rows", f"{row_count:,}")
 
                 # Column info
@@ -1594,28 +1601,20 @@ with tab_db:
 
             with col_opts:
                 # Filters
-                fc1, fc2, fc3 = st.columns([2, 1, 1])
+                fc1, fc2 = st.columns(2)
                 with fc1:
-                    where_clause = st.text_input(
-                        "WHERE clause (optional)",
-                        placeholder="e.g. bay = 'O' AND source_type = 'ctd'",
-                        key="db_where",
-                    )
-                with fc2:
                     order_col = st.selectbox("ORDER BY", [""] + col_names, index=0, key="db_order")
-                with fc3:
+                with fc2:
                     limit = st.number_input("LIMIT", min_value=1, max_value=5000, value=100, key="db_limit")
 
-                # Build and execute query
-                query_str = f"SELECT * FROM {selected_table}"
-                if where_clause:
-                    query_str += f" WHERE {where_clause}"
+                # Build the query from reflected database objects rather than SQL text.
+                table_query = select(selected_table_obj)
                 if order_col:
-                    query_str += f" ORDER BY {order_col}"
-                query_str += f" LIMIT {limit}"
+                    table_query = table_query.order_by(selected_table_obj.c[order_col])
+                table_query = table_query.limit(int(limit))
 
                 try:
-                    df_result = pd.read_sql(text(query_str), _db_engine)
+                    df_result = pd.read_sql(table_query, _db_engine)
 
                     # Hide embedding column (too large to display)
                     display_cols = [c for c in df_result.columns if c not in ("embedding", "text_tsv")]
@@ -1629,8 +1628,8 @@ with tab_db:
                         file_name=f"{selected_table}_export.csv",
                         mime="text/csv",
                     )
-                except Exception as e:
-                    st.error(f"Query error: {e}")
+                except Exception:
+                    st.error("Table query failed.")
 
                 # Row detail inspector
                 if "df_result" in dir() and not df_result.empty:
@@ -1645,59 +1644,6 @@ with tab_db:
                                 st.text_area("Text content", val, height=150, key=f"db_detail_{col_name}")
                             else:
                                 st.markdown(f"**{col_name}:** {val}")
-
-        # ──────────────────────────────────
-        # Sub-tab 2: SQL Console
-        # ──────────────────────────────────
-        with db_sub2:
-            st.markdown("Run **read-only** SQL queries against the database.")
-
-            default_sql = """-- Example queries:
--- SELECT source_type, count(*) FROM retrieval_document GROUP BY source_type;
--- SELECT sample_id, surface_temperature, mean_salinity FROM ctd_summary ORDER BY ctd_date LIMIT 20;
--- SELECT * FROM cross_source_link WHERE link_type = 'time_match' LIMIT 10;
-
-SELECT source_type, count(*) AS n_docs,
-       round(avg(length(text))) AS avg_text_len
-FROM retrieval_document
-GROUP BY source_type
-ORDER BY n_docs DESC;"""
-
-            sql_input = st.text_area("SQL Query", value=default_sql, height=180, key="db_sql")
-
-            col_run, col_info = st.columns([1, 3])
-            with col_run:
-                run_sql = st.button("Run Query", key="db_run_sql")
-
-            if run_sql and sql_input.strip():
-                # Safety: block destructive statements
-                sql_upper = sql_input.strip().upper()
-                blocked = ["DROP", "DELETE", "TRUNCATE", "ALTER", "INSERT", "UPDATE", "CREATE"]
-                if any(sql_upper.startswith(kw) for kw in blocked):
-                    st.error("Only SELECT queries are allowed.")
-                else:
-                    try:
-                        import time as _time
-                        t0 = _time.perf_counter()
-                        df_sql = pd.read_sql(text(sql_input), _db_engine)
-                        elapsed = _time.perf_counter() - t0
-
-                        with col_info:
-                            st.caption(f"{len(df_sql)} rows in {elapsed:.3f}s")
-
-                        # Hide embedding columns
-                        display = [c for c in df_sql.columns if c not in ("embedding", "text_tsv")]
-                        st.dataframe(df_sql[display], width="stretch", height=400)
-
-                        st.download_button(
-                            f"Download result ({len(df_sql)} rows)",
-                            data=df_sql[display].to_csv(index=False),
-                            file_name="query_result.csv",
-                            mime="text/csv",
-                            key="db_sql_download",
-                        )
-                    except Exception as e:
-                        st.error(f"SQL error: {e}")
 
         # ──────────────────────────────────
         # Sub-tab 3: Schema

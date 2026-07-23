@@ -48,8 +48,6 @@ from api.schemas import (
     CtdProfileResponse,
     AnalysisResponse,
     DataCatalogResponse,
-    DatabaseQueryRequest,
-    DatabaseQueryResponse,
     DatabaseSchemaResponse,
     DatabaseTableResponse,
     DatasetCatalogItem,
@@ -355,27 +353,6 @@ CTD_PROFILE_VARIABLES = [
     "ph",
     "par",
 ]
-
-READ_ONLY_SQL_FORBIDDEN = {
-    "ALTER",
-    "ANALYZE",
-    "CALL",
-    "COMMENT",
-    "COPY",
-    "CREATE",
-    "DELETE",
-    "DO",
-    "DROP",
-    "GRANT",
-    "INSERT",
-    "MERGE",
-    "REFRESH",
-    "REINDEX",
-    "REVOKE",
-    "TRUNCATE",
-    "UPDATE",
-    "VACUUM",
-}
 
 EVALUATION_METRICS = [
     {"key": "retrieval_precision", "label": "Retrieval Precision", "format": "percent"},
@@ -687,8 +664,9 @@ def _pipeline_database_snapshot() -> Dict[str, Any]:
             payload["embedded_documents"] = int(conn.execute(text("SELECT count(*) FROM retrieval_document WHERE embedding IS NOT NULL")).scalar() or 0)
             payload["anchor_events"] = int(conn.execute(text("SELECT count(*) FROM anchor_event")).scalar() or 0)
             payload["cross_source_links"] = int(conn.execute(text("SELECT count(*) FROM cross_source_link")).scalar() or 0)
-    except Exception as exc:
-        payload["detail_error"] = str(exc)
+    except Exception:
+        logger.exception("Pipeline database detail check failed")
+        payload["detail_error"] = "Database detail check is unavailable"
     return payload
 
 
@@ -965,38 +943,6 @@ def _validate_table_and_columns(engine: Any, table: str) -> List[str]:
     if table not in table_names:
         raise HTTPException(status_code=404, detail=f"Unknown table: {table}")
     return [column["name"] for column in inspector.get_columns(table)]
-
-
-def _read_only_sql(sql: str) -> str:
-    stripped = sql.strip().rstrip(";").strip()
-    if not stripped:
-        raise HTTPException(status_code=400, detail="SQL query is empty")
-    if ";" in stripped:
-        raise HTTPException(status_code=400, detail="Only one SQL statement is allowed")
-    upper = stripped.upper()
-    if not (upper.startswith("SELECT") or upper.startswith("WITH")):
-        raise HTTPException(status_code=400, detail="Only SELECT/WITH queries are allowed")
-    without_literals = re.sub(r"'(?:''|[^'])*'", "''", upper)
-    without_comments = re.sub(
-        r"--[^\n]*|/\*.*?\*/",
-        " ",
-        without_literals,
-        flags=re.DOTALL,
-    )
-    tokens = set(re.findall(r"[A-Z_]+", without_comments))
-    blocked = sorted(tokens.intersection(READ_ONLY_SQL_FORBIDDEN))
-    if blocked:
-        raise HTTPException(status_code=400, detail=f"Forbidden SQL keyword: {blocked[0]}")
-    return stripped
-
-
-def _secure_read_only_connection(connection: Any) -> None:
-    """Ask PostgreSQL to enforce read-only execution and a short timeout."""
-
-    if connection.dialect.name != "postgresql":
-        return
-    connection.execute(text("SET TRANSACTION READ ONLY"))
-    connection.execute(text("SET LOCAL statement_timeout = '5000ms'"))
 
 
 def _json_safe_value(value: Any) -> Any:
@@ -1972,14 +1918,15 @@ def _start_pipeline_job(request: PipelineRunRequest) -> PipelineStartResponse:
                 cancel_event=cancel_event,
                 status_payload=status_payload,
             )
-        except Exception as exc:
-            _pipeline_append_log(job_id, f"ERROR: {exc}")
+        except Exception:
+            logger.exception("Pipeline job %s failed", job_id)
+            _pipeline_append_log(job_id, "ERROR: Pipeline job failed.")
             _write_pipeline_status(
                 status_payload,
                 status="failed",
                 phase="failed",
                 completed_at=_now_iso(),
-                error=str(exc),
+                error="Pipeline job failed",
                 message="Pipeline job failed.",
             )
         finally:
@@ -2521,13 +2468,14 @@ def _start_evaluation_job(
                 cancel_event=cancel_event,
                 status_payload=status_payload,
             )
-        except Exception as exc:
+        except Exception:
+            logger.exception("Evaluation job %s failed", job_id)
             _write_job_status(
                 status_payload,
                 status="failed",
                 phase="failed",
                 completed_at=_now_iso(),
-                error=str(exc),
+                error="Evaluation job failed",
                 message="Evaluation job failed.",
             )
         finally:
@@ -2602,8 +2550,9 @@ def _evaluation_summary_from_frame(df: pd.DataFrame) -> Dict[str, Any]:
             payload["by_mode"] = _records(summaries["by_mode"].reset_index())
             payload["by_category"] = _records(summaries["by_category"].reset_index())
             payload["by_mode_category"] = _records(summaries["by_mode_category"].reset_index())
-        except Exception as exc:
-            payload["error"] = str(exc)
+        except Exception:
+            logger.exception("Evaluation summary computation failed")
+            payload["error"] = "Evaluation summary is unavailable"
 
     quality_cols = [metric["key"] for metric in EVALUATION_QUALITY_METRICS if metric["key"] in df.columns]
     if quality_cols and "mode" in df.columns:
@@ -2897,10 +2846,11 @@ def _evaluation_statistics_payload(df: pd.DataFrame, metric_cols: List[str]) -> 
             "significant_pairwise": _records(pairwise_df[pairwise_df["significant"]]) if "significant" in pairwise_df else [],
             "significance_matrix": matrices,
         }
-    except Exception as exc:
+    except Exception:
+        logger.exception("Statistical analysis failed")
         return {
             "status": "skipped",
-            "reason": f"Statistical analysis failed: {exc}",
+            "reason": "Statistical analysis is unavailable",
             "n_modes": mode_count,
             "n_questions": question_count,
         }
@@ -2963,7 +2913,8 @@ def _evaluation_run_summary(record: Dict[str, Any]) -> EvaluationRunSummary:
     meta = _read_json_file(meta_path)
     try:
         df = _evaluation_results_frame(record)
-    except Exception as exc:
+    except Exception:
+        logger.exception("Evaluation run %s could not be read", record["run_id"])
         return EvaluationRunSummary(
             run_id=record["run_id"],
             run_type="unreadable",
@@ -2972,7 +2923,7 @@ def _evaluation_run_summary(record: Dict[str, Any]) -> EvaluationRunSummary:
             meta_path=str(meta_path) if meta_path else None,
             report_path=str(report_path) if report_path else None,
             status="error",
-            metrics={"error": str(exc)},
+            metrics={"error": "Evaluation results are unreadable"},
         )
 
     metrics: Dict[str, Any] = {}
@@ -3147,8 +3098,9 @@ def _database_status() -> Dict[str, Any]:
             version = conn.execute(text("SELECT version()")).scalar()
             n_docs = conn.execute(text("SELECT count(*) FROM retrieval_document")).scalar()
         return {"available": True, "documents": int(n_docs or 0), "version": version}
-    except Exception as exc:
-        return {"available": False, "error": str(exc)}
+    except Exception:
+        logger.exception("Database status check failed")
+        return {"available": False, "error": "Database is unavailable"}
 
 
 def _ollama_status() -> Dict[str, Any]:
@@ -3157,8 +3109,13 @@ def _ollama_status() -> Dict[str, Any]:
         resp.raise_for_status()
         models = [m.get("name") for m in resp.json().get("models", [])]
         return {"available": True, "base_url": config.OLLAMA_BASE_URL, "models": models}
-    except Exception as exc:
-        return {"available": False, "base_url": config.OLLAMA_BASE_URL, "error": str(exc)}
+    except Exception:
+        logger.exception("Ollama status check failed")
+        return {
+            "available": False,
+            "base_url": config.OLLAMA_BASE_URL,
+            "error": "Ollama is unavailable",
+        }
 
 
 def _is_embedding_only_model(name: str) -> bool:
@@ -3272,13 +3229,14 @@ def models() -> ModelsResponse:
             available=True,
             models=chat_models,
         )
-    except Exception as exc:
+    except Exception:
+        logger.exception("Model discovery failed")
         return ModelsResponse(
             default_model=config.CHAT_MODEL,
             embedding_model=config.EMBEDDING_MODEL,
             ollama_base_url=config.OLLAMA_BASE_URL,
             available=False,
-            error=str(exc),
+            error="Model discovery is unavailable",
         )
 
 
@@ -3418,12 +3376,13 @@ def debug_state() -> Dict[str, Any]:
                     "source": cfg.get("source_column"),
                 },
             }
-        except Exception as exc:
+        except Exception:
+            logger.exception("Debug dataset inspection failed for %s", dataset)
             datasets[dataset] = {
                 "label": cfg["label"],
                 "path": str(cfg["path"]),
                 "exists": cfg["path"].exists(),
-                "error": str(exc),
+                "error": "Dataset inspection failed",
             }
 
     routes = []
@@ -3920,8 +3879,12 @@ def database_schema() -> DatabaseSchemaResponse:
                     }
                 )
         return DatabaseSchemaResponse(available=True, version=str(version), tables=tables)
-    except Exception as exc:
-        return DatabaseSchemaResponse(available=False, error=str(exc))
+    except Exception:
+        logger.exception("Database schema inspection failed")
+        return DatabaseSchemaResponse(
+            available=False,
+            error="Database schema is unavailable",
+        )
 
 
 @app.get("/database/table", response_model=DatabaseTableResponse)
@@ -3940,7 +3903,13 @@ def database_table(
     visible_columns = columns if include_heavy else [column for column in columns if column not in {"embedding", "text_tsv"}]
     quoted_table = _quote_identifier(engine, table_name)
     quoted_columns = ", ".join(_quote_identifier(engine, column) for column in visible_columns) or "*"
-    order_sql = f" ORDER BY {_quote_identifier(engine, order_by)} {direction.upper()}" if order_by else ""
+    if direction == "asc":
+        direction_sql = "ASC"
+    elif direction == "desc":
+        direction_sql = "DESC"
+    else:
+        raise HTTPException(status_code=400, detail="Unknown sort direction")
+    order_sql = f" ORDER BY {_quote_identifier(engine, order_by)} {direction_sql}" if order_by else ""
     with engine.connect() as conn:
         total = conn.execute(text(f"SELECT count(*) FROM {quoted_table}")).scalar()
         rows = conn.execute(text(f"SELECT {quoted_columns} FROM {quoted_table}{order_sql} LIMIT :limit OFFSET :offset"), {"limit": limit, "offset": offset}).mappings().all()
@@ -3951,26 +3920,6 @@ def database_table(
         offset=offset,
         columns=visible_columns,
         rows=[{key: _json_safe_value(value) for key, value in row.items()} for row in rows],
-    )
-
-
-@app.post("/database/query", response_model=DatabaseQueryResponse)
-def database_query(request: DatabaseQueryRequest) -> DatabaseQueryResponse:
-    sql = _read_only_sql(request.sql)
-    wrapped_sql = f"SELECT * FROM ({sql}) AS readonly_query LIMIT :limit"
-    engine = _database_engine()
-    start = time.perf_counter()
-    with engine.connect() as conn:
-        _secure_read_only_connection(conn)
-        result = conn.execute(text(wrapped_sql), {"limit": request.limit})
-        rows = result.mappings().all()
-        columns = list(result.keys())
-    elapsed_ms = (time.perf_counter() - start) * 1000
-    return DatabaseQueryResponse(
-        columns=columns,
-        rows=[{key: _json_safe_value(value) for key, value in row.items()} for row in rows],
-        row_count=len(rows),
-        elapsed_ms=elapsed_ms,
     )
 
 

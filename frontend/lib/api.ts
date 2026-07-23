@@ -7,7 +7,6 @@ import type {
   CorpusStats,
   CtdProfileResponse,
   DataCatalogResponse,
-  DatabaseQueryResponse,
   DatabaseSchemaResponse,
   DatabaseTableResponse,
   DebugState,
@@ -364,16 +363,6 @@ export async function getDatabaseTable(params: {
   include_heavy?: boolean;
 }): Promise<DatabaseTableResponse> {
   return request<DatabaseTableResponse>(`/database/table?${searchParams(params)}`);
-}
-
-export async function runDatabaseQuery(input: {
-  sql: string;
-  limit: number;
-}): Promise<DatabaseQueryResponse> {
-  return request<DatabaseQueryResponse>("/database/query", {
-    method: "POST",
-    body: JSON.stringify(input),
-  });
 }
 
 export async function getPipelineStatus(): Promise<PipelineStatusResponse> {

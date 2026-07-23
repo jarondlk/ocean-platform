@@ -344,7 +344,7 @@ The main backend file is `api/main.py`. Key endpoint groups:
 | Data page | `GET /data/catalog`, `GET /data/ctd-profile/{sample_id}`, `GET /data/taxa/{sample_id}`, `GET /data/sst` |
 | Evaluation | `GET /evaluation/catalog`, `GET /evaluation/preflight`, `POST /evaluation/runs/standard`, `POST /evaluation/runs/ablation`, `GET /evaluation/jobs/{job_id}`, `POST /evaluation/jobs/{job_id}/cancel`, `GET /evaluation/runs`, `GET /evaluation/runs/{run_id}`, `GET /evaluation/runs/{run_id}/report`, `POST /evaluation/compare` |
 | Analysis | `GET /analysis` |
-| Database | `GET /database/schema`, `GET /database/table`, `POST /database/query` |
+| Database | `GET /database/schema`, `GET /database/table` |
 | Explore | `GET /explore/catalog`, `GET /explore/table`, `GET /explore/summary`, `GET /explore/timeseries`, `GET /explore/sample/{sample_id}` |
 | Evidence/chat | `GET /documents`, `POST /retrieve`, `POST /chat` |
 
@@ -352,9 +352,9 @@ The main backend file is `api/main.py`. Key endpoint groups:
 `max_linked_sources`. `POST /chat` also accepts `run_answer_audit` and returns
 `linked_sources`, `retrieval_diagnostics`, and optional `answer_audit`.
 
-The database query endpoint is intentionally read-only. Keep mutation blocking
-in place, and continue improving SQL identifier handling rather than broadening
-permissions.
+Database access is intentionally GET-only through validated schema and table
+inspection endpoints. Free-form SQL execution and its permission were removed;
+add future analytical reports as server-defined, structured endpoints.
 
 ---
 

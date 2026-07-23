@@ -492,7 +492,7 @@ def test_invited_identity_can_enter_me_and_suspension_is_immediate(monkeypatch):
 
 def test_route_permission_map_is_explicit_for_sensitive_surfaces():
     assert route_permission("POST", "/pipeline/jobs") == "pipeline:execute"
-    assert route_permission("POST", "/database/query") == "database:query"
+    assert route_permission("POST", "/database/query") is None
     assert route_permission("GET", "/admin/users") == "users:manage"
     assert route_permission("GET", "/unknown") is None
 
@@ -523,7 +523,6 @@ def test_route_permission_map_is_explicit_for_sensitive_surfaces():
         ("GET", "/pipeline/status", "pipeline:read", {"admin"}),
         ("POST", "/pipeline/jobs", "pipeline:execute", {"admin"}),
         ("GET", "/database/schema", "database:read", {"admin"}),
-        ("POST", "/database/query", "database:query", {"admin"}),
         ("GET", "/admin/users", "users:manage", {"admin"}),
         (
             "GET",

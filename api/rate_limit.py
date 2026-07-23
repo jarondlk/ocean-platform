@@ -30,8 +30,6 @@ def policy_for_request(method: str, path: str) -> Optional[RateLimitPolicy]:
         return RateLimitPolicy("pipeline_start", 2)
     if method == "POST" and path.startswith("/evaluation/"):
         return RateLimitPolicy("evaluation_mutation", 5)
-    if method == "POST" and path == "/database/query":
-        return RateLimitPolicy("database_query", 30)
     return None
 
 

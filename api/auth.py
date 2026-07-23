@@ -71,7 +71,6 @@ ROLE_PERMISSIONS: Dict[str, FrozenSet[str]] = {
             "pipeline:read",
             "pipeline:execute",
             "database:read",
-            "database:query",
             "system:read",
             "users:manage",
         }
@@ -351,8 +350,8 @@ def route_permission(method: str, path: str) -> Optional[str]:
         return "evaluation:run" if method == "POST" else "evaluation:read"
     if path.startswith("/pipeline/"):
         return "pipeline:execute" if method == "POST" else "pipeline:read"
-    if path.startswith("/database/"):
-        return "database:query" if method == "POST" else "database:read"
+    if path.startswith("/database/") and method == "GET":
+        return "database:read"
     if path == "/debug":
         return "system:read"
     if path.startswith("/admin/users") or path.startswith("/admin/invitations"):

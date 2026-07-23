@@ -1126,11 +1126,6 @@ td span {
   margin: 0;
 }
 
-.sql-editor {
-  min-height: 170px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-}
-
 .evaluation-layout {
   display: grid;
   grid-template-columns: 285px minmax(0, 1fr);

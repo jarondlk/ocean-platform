@@ -403,18 +403,6 @@ class DatabaseTableResponse(BaseModel):
     rows: List[Dict[str, Any]]
 
 
-class DatabaseQueryRequest(BaseModel):
-    sql: str = Field(..., min_length=1, max_length=20_000)
-    limit: int = Field(default=100, ge=1, le=1000)
-
-
-class DatabaseQueryResponse(BaseModel):
-    columns: List[str]
-    rows: List[Dict[str, Any]]
-    row_count: int
-    elapsed_ms: float
-
-
 class PipelineStageInfo(BaseModel):
     id: str
     label: str

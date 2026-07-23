@@ -1,9 +1,8 @@
 import pytest
-from fastapi import HTTPException
 from fastapi.testclient import TestClient
 
 import config
-from api.main import _read_only_sql, _secure_read_only_connection, app
+from api.main import app
 
 
 pytestmark = pytest.mark.skipif(
@@ -125,49 +124,8 @@ def test_analysis_state_includes_reliability_and_cooccurrence():
     assert payload["reliability"]["sst_ctd"]["summary"]["paired"] > 0
 
 
-def test_database_query_rejects_mutation_sql_before_execution():
-    client = TestClient(app)
-
-    response = client.post(
-        "/database/query",
-        json={"sql": "DELETE FROM retrieval_document", "limit": 10},
-    )
-
-    assert response.status_code == 400
-    assert "Only SELECT/WITH queries are allowed" in response.text
-
-
-@pytest.mark.parametrize(
-    "sql",
-    [
-        "WITH changed AS (DELETE FROM retrieval_document RETURNING *) SELECT * FROM changed",
-        "WITH changed AS (DELETE/* comment */FROM retrieval_document RETURNING *) SELECT * FROM changed",
-        "SELECT 1; DROP TABLE retrieval_document",
-        "SELECT 1 -- harmless-looking prefix\n; UPDATE retrieval_document SET text = ''",
-    ],
-)
-def test_read_only_sql_guard_rejects_obfuscated_mutation(sql):
-    with pytest.raises(HTTPException):
-        _read_only_sql(sql)
-
-
-def test_postgres_query_connection_enforces_read_only_timeout():
-    class _Dialect:
-        name = "postgresql"
-
-    class _Connection:
-        dialect = _Dialect()
-
-        def __init__(self):
-            self.statements = []
-
-        def execute(self, statement):
-            self.statements.append(str(statement))
-
-    connection = _Connection()
-    _secure_read_only_connection(connection)
-
-    assert connection.statements == [
-        "SET TRANSACTION READ ONLY",
-        "SET LOCAL statement_timeout = '5000ms'",
-    ]
+def test_database_query_route_is_removed():
+    assert "/database/query" not in {
+        getattr(route, "path", "")
+        for route in app.routes
+    }
