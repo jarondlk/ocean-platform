@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { RotateCcw, Send } from "lucide-react";
 import { CsvExportButton } from "@/components/CsvExportButton";
+import { ChatFeedback } from "@/components/ChatFeedback";
 import { DataTable, formatCell } from "@/components/DataTable";
 import { MarkdownAnswer } from "@/components/MarkdownAnswer";
 import { askQuestion, getModels } from "@/lib/api";
@@ -143,6 +144,7 @@ export default function ChatPage() {
     setQuery(nextQuery);
     setLoading(true);
     setError("");
+    setResponse(null);
     try {
       const result = await askQuestion({
         query: trimmedQuery,
@@ -231,6 +233,12 @@ export default function ChatPage() {
             <article className="card">
               <h3 className="section-title">Response</h3>
               <MarkdownAnswer text={response?.answer || ""} />
+              {response?.interaction_id ? (
+                <ChatFeedback
+                  interactionId={response.interaction_id}
+                  key={response.interaction_id}
+                />
+              ) : null}
             </article>
 
             {answerAudit ? (

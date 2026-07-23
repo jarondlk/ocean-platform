@@ -13,18 +13,20 @@ services:
       CHAT_MODEL: ${CHAT_MODEL:-qwen2.5:14b-instruct}
       EMBEDDING_MODEL: ${EMBEDDING_MODEL:-nomic-embed-text}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
+      DEPLOYMENT_ENV: ${DEPLOYMENT_ENV:-development}
+      AUTH_MODE: ${AUTH_MODE:-required}
+      PERSIST_LOCAL_CHAT: ${PERSIST_LOCAL_CHAT:-false}
+      INTERNAL_AUTH_SECRET: ${INTERNAL_AUTH_SECRET:?Set INTERNAL_AUTH_SECRET in .env}
+      INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-onagawa-source-chat-frontend}
+      INTERNAL_AUTH_AUDIENCE: ${INTERNAL_AUTH_AUDIENCE:-onagawa-source-chat-api}
     ports:
       - "${API_PORT:-8000}:8000"
     volumes:
       - .:/app:Z
     command:
-      - uvicorn
-      - api.main:app
-      - --host
-      - 0.0.0.0
-      - --port
-      - "8000"
-      - --reload
+      - /bin/sh
+      - -c
+      - python -m alembic upgrade head && exec uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
 
   frontend:
     build:
@@ -36,5 +38,17 @@ services:
       - api
     environment:
       API_BASE_URL: ${API_BASE_URL:-http://api:8000}
+      DEPLOYMENT_ENV: ${DEPLOYMENT_ENV:-development}
+      AUTH_MODE: ${AUTH_MODE:-required}
+      AUTH_SECRET: ${AUTH_SECRET:?Set AUTH_SECRET in .env}
+      AUTH_URL: ${AUTH_URL:-http://localhost:3000}
+      AUTH_TRUST_HOST: ${AUTH_TRUST_HOST:-true}
+      INTERNAL_AUTH_SECRET: ${INTERNAL_AUTH_SECRET:?Set INTERNAL_AUTH_SECRET in .env}
+      INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-onagawa-source-chat-frontend}
+      INTERNAL_AUTH_AUDIENCE: ${INTERNAL_AUTH_AUDIENCE:-onagawa-source-chat-api}
+      OIDC_PROVIDER_NAME: ${OIDC_PROVIDER_NAME:-Organization account}
+      OIDC_ISSUER: ${OIDC_ISSUER:?Set OIDC_ISSUER in .env}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:?Set OIDC_CLIENT_ID in .env}
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET:?Set OIDC_CLIENT_SECRET in .env}
     ports:
       - "${NEXT_PORT:-3000}:3000"

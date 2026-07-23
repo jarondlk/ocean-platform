@@ -1,3 +1,36 @@
+export type CurrentUser = {
+  id: string;
+  email: string;
+  display_name?: string | null;
+  role: "viewer" | "researcher" | "admin";
+  account_type: "research" | "commercial" | "internal";
+  status: "active" | "suspended";
+  permissions: string[];
+};
+
+export type UserSummary = {
+  id: string;
+  email: string;
+  display_name?: string | null;
+  role: "viewer" | "researcher" | "admin";
+  account_type: "research" | "commercial" | "internal";
+  status: "active" | "suspended";
+  auth_provider: string;
+  created_at: string;
+  last_login_at?: string | null;
+};
+
+export type UserInvitation = {
+  id: string;
+  email: string;
+  role: "viewer" | "researcher" | "admin";
+  account_type: "research" | "commercial" | "internal";
+  status: "pending" | "accepted" | "revoked" | "expired";
+  expires_at: string;
+  accepted_at?: string | null;
+  created_at: string;
+};
+
 export type SourceDocument = {
   doc_id: string;
   title: string;
@@ -77,6 +110,7 @@ export type CorpusStats = {
 };
 
 export type ChatResponse = {
+  interaction_id?: string | null;
   query: string;
   answer: string;
   sources: SourceDocument[];
@@ -91,6 +125,62 @@ export type ChatResponse = {
   retrieval_diagnostics: Record<string, unknown>;
   answer_audit?: AnswerAudit | null;
   options: Record<string, unknown>;
+};
+
+export type ChatFeedback = {
+  id: string;
+  interaction_id: string;
+  rating: -1 | 1;
+  reason_codes: string[];
+  comment?: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type AdminFeedbackMetrics = {
+  total: number;
+  positive: number;
+  negative: number;
+  positive_rate?: number | null;
+  reason_counts: Record<string, number>;
+};
+
+export type AdminFeedbackListItem = {
+  feedback_id: string;
+  interaction_id: string;
+  rating: -1 | 1;
+  reason_codes: string[];
+  comment?: string | null;
+  feedback_created_at: string;
+  feedback_updated_at: string;
+  query: string;
+  model?: string | null;
+  latency_ms?: number | null;
+  interaction_created_at: string;
+  user_id: string;
+  user_email: string;
+  user_display_name?: string | null;
+  user_role: CurrentUser["role"];
+  user_account_type: CurrentUser["account_type"];
+};
+
+export type AdminFeedbackListResponse = {
+  items: AdminFeedbackListItem[];
+  total: number;
+  limit: number;
+  offset: number;
+  metrics: AdminFeedbackMetrics;
+};
+
+export type AdminFeedbackDetail = AdminFeedbackListItem & {
+  interaction_status: "running" | "completed" | "failed";
+  answer?: string | null;
+  request_options: Record<string, unknown>;
+  evidence_snapshot: Record<string, unknown>;
+  answer_audit_snapshot?: Record<string, unknown> | null;
+  corpus_fingerprint?: string | null;
+  prompt_version?: string | null;
+  prompt_sha256?: string | null;
 };
 
 export type RetrieveResponse = {

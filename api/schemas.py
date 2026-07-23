@@ -1,17 +1,65 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+import uuid
+from datetime import datetime
+from typing import Any, Dict, List, Literal, Optional
 
 from pydantic import AliasChoices, BaseModel, Field
 
 
+class CurrentUserResponse(BaseModel):
+    id: uuid.UUID
+    email: str
+    display_name: Optional[str] = None
+    role: str
+    account_type: str
+    status: str
+    permissions: List[str] = Field(default_factory=list)
+
+
+class UserSummary(BaseModel):
+    id: uuid.UUID
+    email: str
+    display_name: Optional[str] = None
+    role: str
+    account_type: str
+    status: str
+    auth_provider: str
+    created_at: datetime
+    last_login_at: Optional[datetime] = None
+
+
+class InvitationCreate(BaseModel):
+    email: str = Field(..., min_length=3, max_length=320)
+    role: str = "viewer"
+    account_type: str = "research"
+    expires_in_days: int = Field(default=7, ge=1, le=90)
+
+
+class InvitationResponse(BaseModel):
+    id: uuid.UUID
+    email: str
+    role: str
+    account_type: str
+    status: str
+    expires_at: datetime
+    accepted_at: Optional[datetime] = None
+    created_at: datetime
+
+
+class UserUpdate(BaseModel):
+    role: Optional[str] = None
+    account_type: Optional[str] = None
+    status: Optional[str] = None
+
+
 class RetrieveRequest(BaseModel):
-    query: str = Field(..., min_length=1)
+    query: str = Field(..., min_length=1, max_length=4000)
     k: int = Field(default=8, ge=1, le=25, validation_alias=AliasChoices("k", "top_k"))
-    source_type: Optional[str] = None
-    bay: Optional[str] = None
-    time_from: Optional[str] = None
-    time_to: Optional[str] = None
+    source_type: Optional[str] = Field(default=None, max_length=64)
+    bay: Optional[str] = Field(default=None, max_length=64)
+    time_from: Optional[str] = Field(default=None, max_length=64)
+    time_to: Optional[str] = Field(default=None, max_length=64)
     vector_weight: float = Field(default=0.6, ge=0.0, le=1.0)
     fts_weight: float = Field(default=0.4, ge=0.0, le=1.0)
     rrf_k: int = Field(default=60, ge=1, le=200)
@@ -20,7 +68,7 @@ class RetrieveRequest(BaseModel):
 
 
 class ChatRequest(RetrieveRequest):
-    model: Optional[str] = None
+    model: Optional[str] = Field(default=None, max_length=255)
     inject_analysis: bool = True
     inject_reliability: bool = True
     run_answer_audit: bool = True
@@ -102,6 +150,7 @@ class RetrieveResponse(BaseModel):
 
 
 class ChatResponse(BaseModel):
+    interaction_id: Optional[uuid.UUID] = None
     query: str
     answer: str
     sources: List[SourceDocument]
@@ -116,6 +165,68 @@ class ChatResponse(BaseModel):
     retrieval_diagnostics: Dict[str, Any] = Field(default_factory=dict)
     answer_audit: Optional[AnswerAudit] = None
     options: Dict[str, Any] = Field(default_factory=dict)
+
+
+class ChatFeedbackRequest(BaseModel):
+    rating: Literal[-1, 1]
+    reason_codes: List[str] = Field(default_factory=list, max_length=8)
+    comment: Optional[str] = Field(default=None, max_length=1000)
+
+
+class ChatFeedbackResponse(BaseModel):
+    id: uuid.UUID
+    interaction_id: uuid.UUID
+    rating: Literal[-1, 1]
+    reason_codes: List[str] = Field(default_factory=list)
+    comment: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+
+
+class AdminFeedbackMetrics(BaseModel):
+    total: int
+    positive: int
+    negative: int
+    positive_rate: Optional[float] = None
+    reason_counts: Dict[str, int] = Field(default_factory=dict)
+
+
+class AdminFeedbackListItem(BaseModel):
+    feedback_id: uuid.UUID
+    interaction_id: uuid.UUID
+    rating: Literal[-1, 1]
+    reason_codes: List[str] = Field(default_factory=list)
+    comment: Optional[str] = None
+    feedback_created_at: datetime
+    feedback_updated_at: datetime
+    query: str
+    model: Optional[str] = None
+    latency_ms: Optional[int] = None
+    interaction_created_at: datetime
+    user_id: uuid.UUID
+    user_email: str
+    user_display_name: Optional[str] = None
+    user_role: str
+    user_account_type: str
+
+
+class AdminFeedbackListResponse(BaseModel):
+    items: List[AdminFeedbackListItem] = Field(default_factory=list)
+    total: int
+    limit: int
+    offset: int
+    metrics: AdminFeedbackMetrics
+
+
+class AdminFeedbackDetail(AdminFeedbackListItem):
+    interaction_status: str
+    answer: Optional[str] = None
+    request_options: Dict[str, Any] = Field(default_factory=dict)
+    evidence_snapshot: Dict[str, Any] = Field(default_factory=dict)
+    answer_audit_snapshot: Optional[Dict[str, Any]] = None
+    corpus_fingerprint: Optional[str] = None
+    prompt_version: Optional[str] = None
+    prompt_sha256: Optional[str] = None
 
 
 class OllamaModel(BaseModel):
@@ -293,7 +404,7 @@ class DatabaseTableResponse(BaseModel):
 
 
 class DatabaseQueryRequest(BaseModel):
-    sql: str = Field(..., min_length=1)
+    sql: str = Field(..., min_length=1, max_length=20_000)
     limit: int = Field(default=100, ge=1, le=1000)
 
 

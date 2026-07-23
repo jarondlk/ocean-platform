@@ -1,0 +1,71 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-onagawa_rag}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Containerfile.api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:?Set OLLAMA_BASE_URL}
+      CHAT_MODEL: ${CHAT_MODEL:-qwen2.5:14b-instruct}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-nomic-embed-text}
+      CORS_ORIGINS: ${CORS_ORIGINS:?Set the HTTPS frontend origin}
+      DEPLOYMENT_ENV: production
+      AUTH_MODE: required
+      PERSIST_LOCAL_CHAT: "false"
+      INTERNAL_AUTH_SECRET: ${INTERNAL_AUTH_SECRET:?Set INTERNAL_AUTH_SECRET}
+      INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-onagawa-source-chat-frontend}
+      INTERNAL_AUTH_AUDIENCE: ${INTERNAL_AUTH_AUDIENCE:-onagawa-source-chat-api}
+    expose:
+      - "8000"
+    command:
+      - /bin/sh
+      - -c
+      - python -m alembic upgrade head && exec uvicorn api.main:app --host 0.0.0.0 --port 8000
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Containerfile
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      API_BASE_URL: http://api:8000
+      DEPLOYMENT_ENV: production
+      AUTH_MODE: required
+      AUTH_SECRET: ${AUTH_SECRET:?Set AUTH_SECRET}
+      AUTH_URL: ${AUTH_URL:?Set the public HTTPS application URL}
+      AUTH_TRUST_HOST: ${AUTH_TRUST_HOST:-false}
+      INTERNAL_AUTH_SECRET: ${INTERNAL_AUTH_SECRET:?Set INTERNAL_AUTH_SECRET}
+      INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-onagawa-source-chat-frontend}
+      INTERNAL_AUTH_AUDIENCE: ${INTERNAL_AUTH_AUDIENCE:-onagawa-source-chat-api}
+      OIDC_PROVIDER_NAME: ${OIDC_PROVIDER_NAME:-Organization account}
+      OIDC_ISSUER: ${OIDC_ISSUER:?Set OIDC_ISSUER}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:?Set OIDC_CLIENT_ID}
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET:?Set OIDC_CLIENT_SECRET}
+    ports:
+      - "127.0.0.1:${NEXT_PORT:-3000}:3000"
+
+volumes:
+  pgdata:

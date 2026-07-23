@@ -11,7 +11,8 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session, sessionmaker
 
 import config
-from .models import Base
+from .app_models import AppBase
+from .models import CorpusBase
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +50,10 @@ def get_session() -> Generator[Session, None, None]:
 
 def init_db() -> None:
     """
-    Create all tables and enable required extensions.
+    Create corpus tables and enable required extensions.
+
+    Application metadata is managed separately by Alembic (or ``init_app_db``
+    for disposable local/test databases).
     """
     engine = get_engine()
 
@@ -57,12 +61,23 @@ def init_db() -> None:
         conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
         conn.commit()
 
-    Base.metadata.create_all(engine)
-    logger.info("Database initialized (all tables created)")
+    CorpusBase.metadata.create_all(engine)
+    logger.info("Corpus database initialized")
+
+
+def init_app_db() -> None:
+    """Create application metadata tables without touching corpus data."""
+    AppBase.metadata.create_all(get_engine())
+    logger.info("Application metadata database initialized")
+
+
+def drop_corpus_tables() -> None:
+    """Drop only replaceable scientific corpus tables."""
+    engine = get_engine()
+    CorpusBase.metadata.drop_all(engine)
+    logger.warning("Corpus tables dropped; application metadata was preserved")
 
 
 def drop_all() -> None:
-    """Drop all tables – use with caution."""
-    engine = get_engine()
-    Base.metadata.drop_all(engine)
-    logger.warning("All tables dropped")
+    """Backward-compatible safe alias for the historical corpus reset."""
+    drop_corpus_tables()

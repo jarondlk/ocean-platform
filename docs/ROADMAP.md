@@ -23,6 +23,12 @@ workflow that can later become automated.
 - Chat can return a deterministic answer trust report that audits citations
   against primary evidence, linked evidence, pre-analysis context, and
   reliability context.
+- The application is invite-only through OIDC, with viewer, researcher, and
+  admin permissions enforced by a default-deny FastAPI policy.
+- Chat interactions and thumbs-up/down feedback are persisted for the user and
+  available to administrators through a filtered review/export surface.
+- Production-like environments fail closed on unsafe authentication, secret,
+  CORS, or local-persistence configuration.
 - The README screenshot set was refreshed from the live Next.js/FastAPI
   prototype on 2026-07-21.
 
@@ -96,17 +102,19 @@ weekly or monthly, without making ingestion automatic yet.
 - [ ] Add mutating idempotent upsert support later for tables keyed by
       `sample_id`, `doc_id`, `event_id`, and SST timestamps, using the
       provenance manifest as the safety contract.
-- [ ] Add migration tooling, such as Alembic, if schemas begin changing often.
-- [ ] Add integration tests against a temporary PostgreSQL/pgvector container.
+- [x] Add Alembic migrations for application metadata tables.
+- [x] Add a PostgreSQL/pgvector CI integration test for migrations, invitation
+      acceptance, user persistence, and audit events.
 
 ## Containerization and Deployment
 
 - [x] Archive the legacy Streamlit `Containerfile` and compose overlay under
       `archive/legacy-streamlit/`.
 - [x] Add `docker-compose.ollama.yml` for optional containerized Ollama.
-- [ ] Add a server deployment guide with reverse proxy/TLS, backups, and
+- [x] Add a server deployment guide with reverse proxy/TLS, backups, and
       private-only Ollama networking.
-- [ ] Add a production `.env.example` variant for server deployments.
+- [x] Add a production environment template and private-service Compose
+      topology for server deployments.
 - [ ] Decide where large raw and generated artifacts live on a server:
       local volume, NAS, S3-compatible object storage, or managed bucket.
 
@@ -137,12 +145,14 @@ Candidate directions:
 
 Evaluation criteria:
 
-- [ ] Authentication and authorization story.
+- [x] Invite-only OIDC authentication, verified-email invitation acceptance,
+      viewer/researcher/admin authorization, suspension, and audit events.
 - [ ] Streaming token-by-token chat UX.
 - [x] Source-citation rendering, Markdown answer rendering, and answer trust
       report in the Chat interface.
 - [ ] Explore evidence panel tables, filters, charts, and downloads.
-- [ ] API contract between frontend and RAG backend.
+- [x] API contract between frontend and RAG backend, including the authenticated
+      Next.js proxy boundary.
 - [ ] Deployment simplicity on one server and on managed cloud.
 - [ ] Maintainability for a mostly Python codebase.
 - [ ] Ability to show pipeline freshness, database health, model health, and

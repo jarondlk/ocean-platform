@@ -7,12 +7,17 @@ database, or Ollama required.
 from __future__ import annotations
 
 import json
+import os
 import tempfile
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import pytest
+
+# Existing endpoint tests exercise domain behavior rather than authentication.
+# Auth-specific tests opt into required mode explicitly.
+os.environ.setdefault("AUTH_MODE", "disabled")
 
 
 @pytest.fixture
