@@ -10,7 +10,7 @@ scripts/load_db.py – Load normalized data into PostgreSQL + pgvector.
 Usage:
     python scripts/load_db.py                # load all data
     python scripts/load_db.py --embed        # also compute embeddings
-    python scripts/load_db.py --reset        # drop and recreate tables
+    python scripts/load_db.py --reset        # drop and recreate corpus tables
     python scripts/load_db.py --upsert --dry-run --json
 """
 from __future__ import annotations
@@ -28,7 +28,7 @@ import pandas as pd
 from sqlalchemy import text
 
 import config
-from db.connection import init_db, drop_all, get_session, get_engine
+from db.connection import drop_corpus_tables, get_engine, get_session, init_db
 from db.models import (
     AnchorEvent,
     CrossSourceLink,
@@ -164,7 +164,11 @@ def load_metagenome_samples() -> int:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Load data into PostgreSQL")
     parser.add_argument("--embed", action="store_true", help="Compute embeddings via Ollama")
-    parser.add_argument("--reset", action="store_true", help="Drop and recreate all tables")
+    parser.add_argument(
+        "--reset",
+        action="store_true",
+        help="Drop and recreate corpus tables (users, invites, and feedback are preserved)",
+    )
     parser.add_argument("--upsert", action="store_true", help="Plan an incremental upsert instead of append/reset loading.")
     parser.add_argument("--dry-run", action="store_true", help="With --upsert, produce a read-only lineage-aware upsert plan.")
     parser.add_argument("--limit-keys", type=int, default=25, help="Maximum example keys to show per dry-run upsert table.")
@@ -200,8 +204,8 @@ def main() -> None:
         return
 
     if args.reset:
-        logger.warning("Dropping all tables...")
-        drop_all()
+        logger.warning("Dropping corpus tables...")
+        drop_corpus_tables()
 
     init_db()
 

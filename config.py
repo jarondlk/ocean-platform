@@ -79,6 +79,22 @@ DATABASE_URL = os.environ.get(
 )
 
 # ---------------------------------------------------------------------------
+# Authentication
+# ---------------------------------------------------------------------------
+# ``required`` is the secure default. Tests and intentionally isolated local
+# development may explicitly opt out with AUTH_MODE=disabled.
+AUTH_MODE = os.environ.get("AUTH_MODE", "required").strip().lower()
+INTERNAL_AUTH_SECRET = os.environ.get("INTERNAL_AUTH_SECRET", "")
+INTERNAL_AUTH_ISSUER = os.environ.get(
+    "INTERNAL_AUTH_ISSUER",
+    "onagawa-source-chat-frontend",
+)
+INTERNAL_AUTH_AUDIENCE = os.environ.get(
+    "INTERNAL_AUTH_AUDIENCE",
+    "onagawa-source-chat-api",
+)
+
+# ---------------------------------------------------------------------------
 # LLM / Embedding
 # ---------------------------------------------------------------------------
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")

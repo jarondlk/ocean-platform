@@ -1,3 +1,36 @@
+export type CurrentUser = {
+  id: string;
+  email: string;
+  display_name?: string | null;
+  role: "viewer" | "researcher" | "admin";
+  account_type: "research" | "commercial" | "internal";
+  status: "active" | "suspended";
+  permissions: string[];
+};
+
+export type UserSummary = {
+  id: string;
+  email: string;
+  display_name?: string | null;
+  role: "viewer" | "researcher" | "admin";
+  account_type: "research" | "commercial" | "internal";
+  status: "active" | "suspended";
+  auth_provider: string;
+  created_at: string;
+  last_login_at?: string | null;
+};
+
+export type UserInvitation = {
+  id: string;
+  email: string;
+  role: "viewer" | "researcher" | "admin";
+  account_type: "research" | "commercial" | "internal";
+  status: "pending" | "accepted" | "revoked" | "expired";
+  expires_at: string;
+  accepted_at?: string | null;
+  created_at: string;
+};
+
 export type SourceDocument = {
   doc_id: string;
   title: string;

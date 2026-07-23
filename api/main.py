@@ -26,6 +26,8 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 import config
+from api.auth import authorization_middleware
+from api.auth_routes import router as auth_router
 from api.schemas import (
     ChatRequest,
     ChatResponse,
@@ -131,6 +133,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.middleware("http")(authorization_middleware)
+app.include_router(auth_router)
 
 
 EXPLORE_DATASETS: Dict[str, Dict[str, Any]] = {
@@ -3170,6 +3175,12 @@ def _filter_documents(
             continue
         rows.append(doc)
     return rows
+
+
+@app.get("/health/live")
+def health_live() -> Dict[str, str]:
+    """Unauthenticated process liveness without dependency details."""
+    return {"status": "ok"}
 
 
 @app.get("/health", response_model=StatusResponse)

@@ -40,6 +40,8 @@ import type {
   TaxaSampleResponse,
   TimeSeriesResponse,
   UpsertDryRunResponse,
+  UserInvitation,
+  UserSummary,
 } from "@/types";
 
 const API_BASE_URL =
@@ -74,6 +76,36 @@ export async function getStats(): Promise<CorpusStats> {
 
 export async function getModels(): Promise<ModelsResponse> {
   return request<ModelsResponse>("/models");
+}
+
+export async function getUsers(): Promise<UserSummary[]> {
+  return request<UserSummary[]>("/admin/users");
+}
+
+export async function getInvitations(): Promise<UserInvitation[]> {
+  return request<UserInvitation[]>("/admin/invitations");
+}
+
+export async function createInvitation(input: {
+  email: string;
+  role: UserSummary["role"];
+  account_type: UserSummary["account_type"];
+  expires_in_days?: number;
+}): Promise<UserInvitation> {
+  return request<UserInvitation>("/admin/invitations", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
+}
+
+export async function updateUser(
+  userId: string,
+  input: Partial<Pick<UserSummary, "role" | "account_type" | "status">>,
+): Promise<UserSummary> {
+  return request<UserSummary>(`/admin/users/${encodeURIComponent(userId)}`, {
+    method: "PATCH",
+    body: JSON.stringify(input),
+  });
 }
 
 export async function getDocuments(params: {

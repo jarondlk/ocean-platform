@@ -49,6 +49,8 @@ a {
   border-right: 1px solid var(--line);
   padding: 16px 14px;
   background: var(--bg);
+  display: flex;
+  flex-direction: column;
 }
 
 .brand-block {
@@ -66,6 +68,7 @@ a {
 .nav-list {
   display: grid;
   gap: 2px;
+  flex: 1;
 }
 
 .nav-link {
@@ -89,9 +92,95 @@ a {
   background: var(--control);
 }
 
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  margin-top: 16px;
+  padding-top: 12px;
+}
+
+.sidebar-user div {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.sidebar-user strong,
+.sidebar-user span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-user strong {
+  font-size: 12px;
+}
+
+.sidebar-user span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.sidebar-user .icon-button {
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--blue-ink);
+  cursor: pointer;
+}
+
 .main-panel {
   min-width: 0;
   padding: 18px 22px 28px;
+}
+
+.auth-main {
+  min-height: 100vh;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.login-card {
+  width: min(440px, 100%);
+  border: 1px solid var(--line);
+  padding: 28px;
+}
+
+.login-card h2 {
+  margin: 4px 0 12px;
+}
+
+.login-button {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--blue-ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .page-header {
@@ -154,6 +243,21 @@ a {
   grid-template-columns: minmax(0, 1fr) 160px 130px;
   gap: 8px;
   margin-bottom: 12px;
+}
+
+.admin-invite-form {
+  grid-template-columns: minmax(220px, 1fr) 150px 150px auto;
+}
+
+.compact-field {
+  min-width: 120px;
+  padding: 5px 7px;
+}
+
+.table-scroll td small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
 }
 
 .evidence-form {
@@ -2018,6 +2122,7 @@ td span {
   .two-column,
   .data-controls,
   .form-grid,
+  .admin-invite-form,
   .evidence-form,
   .evidence-expert-form,
   .dashboard-grid,

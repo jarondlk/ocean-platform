@@ -1,8 +1,56 @@
 from __future__ import annotations
 
+import uuid
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from pydantic import AliasChoices, BaseModel, Field
+
+
+class CurrentUserResponse(BaseModel):
+    id: uuid.UUID
+    email: str
+    display_name: Optional[str] = None
+    role: str
+    account_type: str
+    status: str
+    permissions: List[str] = Field(default_factory=list)
+
+
+class UserSummary(BaseModel):
+    id: uuid.UUID
+    email: str
+    display_name: Optional[str] = None
+    role: str
+    account_type: str
+    status: str
+    auth_provider: str
+    created_at: datetime
+    last_login_at: Optional[datetime] = None
+
+
+class InvitationCreate(BaseModel):
+    email: str = Field(..., min_length=3, max_length=320)
+    role: str = "viewer"
+    account_type: str = "research"
+    expires_in_days: int = Field(default=7, ge=1, le=90)
+
+
+class InvitationResponse(BaseModel):
+    id: uuid.UUID
+    email: str
+    role: str
+    account_type: str
+    status: str
+    expires_at: datetime
+    accepted_at: Optional[datetime] = None
+    created_at: datetime
+
+
+class UserUpdate(BaseModel):
+    role: Optional[str] = None
+    account_type: Optional[str] = None
+    status: Optional[str] = None
 
 
 class RetrieveRequest(BaseModel):

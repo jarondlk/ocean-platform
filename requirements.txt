@@ -18,6 +18,8 @@ requests>=2.32.0
 sqlalchemy>=2.0.0
 psycopg2-binary>=2.9.0
 pgvector>=0.4.0
+alembic>=1.14.0
+PyJWT>=2.9.0
 
 # ── Satellite data ──
 xarray>=2024.0.0

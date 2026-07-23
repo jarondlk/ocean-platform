@@ -29,14 +29,20 @@ except ImportError:
 import config
 
 
-class Base(DeclarativeBase):
+class CorpusBase(DeclarativeBase):
     pass
+
+
+# Backward-compatible alias for modules that import the corpus metadata as
+# ``Base``. Application identity/audit data deliberately lives on AppBase in
+# db.app_models so a corpus rebuild can never drop it.
+Base = CorpusBase
 
 
 # -----------------------------------------------------------------------
 # Layer 1: Provenance
 # -----------------------------------------------------------------------
-class ProvenanceRecord(Base):
+class ProvenanceRecord(CorpusBase):
     __tablename__ = "provenance_record"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -52,7 +58,7 @@ class ProvenanceRecord(Base):
 # -----------------------------------------------------------------------
 # Layer 3: Anchor events
 # -----------------------------------------------------------------------
-class AnchorEvent(Base):
+class AnchorEvent(CorpusBase):
     __tablename__ = "anchor_event"
 
     event_id = Column(String(128), primary_key=True)
@@ -71,7 +77,7 @@ class AnchorEvent(Base):
 # -----------------------------------------------------------------------
 # Layer 3: CTD tables
 # -----------------------------------------------------------------------
-class CtdProfile(Base):
+class CtdProfile(CorpusBase):
     __tablename__ = "ctd_profile"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -95,7 +101,7 @@ class CtdProfile(Base):
     par = Column(Float)
 
 
-class CtdSummary(Base):
+class CtdSummary(CorpusBase):
     __tablename__ = "ctd_summary"
 
     sample_id = Column(String(64), primary_key=True)
@@ -120,7 +126,7 @@ class CtdSummary(Base):
 # -----------------------------------------------------------------------
 # Layer 3: Metagenome tables
 # -----------------------------------------------------------------------
-class MetagenomeSample(Base):
+class MetagenomeSample(CorpusBase):
     __tablename__ = "metagenome_sample"
 
     sample_id = Column(String(64), primary_key=True)
@@ -143,7 +149,7 @@ class MetagenomeSample(Base):
 # -----------------------------------------------------------------------
 # Layer 3: Remote sensing tables
 # -----------------------------------------------------------------------
-class SstPointObservation(Base):
+class SstPointObservation(CorpusBase):
     __tablename__ = "sst_point_observation"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -155,7 +161,7 @@ class SstPointObservation(Base):
     nearest_lon = Column(Float)
 
 
-class SstDailySummary(Base):
+class SstDailySummary(CorpusBase):
     __tablename__ = "sst_daily_summary"
 
     date_jst = Column(String(16), primary_key=True)
@@ -169,7 +175,7 @@ class SstDailySummary(Base):
 # -----------------------------------------------------------------------
 # Layer 4: Retrieval documents
 # -----------------------------------------------------------------------
-class RetrievalDocument(Base):
+class RetrievalDocument(CorpusBase):
     __tablename__ = "retrieval_document"
 
     doc_id = Column(String(128), primary_key=True)
@@ -196,7 +202,7 @@ class RetrievalDocument(Base):
 # -----------------------------------------------------------------------
 # Layer 4: Cross-source links
 # -----------------------------------------------------------------------
-class CrossSourceLink(Base):
+class CrossSourceLink(CorpusBase):
     __tablename__ = "cross_source_link"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

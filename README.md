@@ -43,8 +43,8 @@ Still intentionally future work:
 
 - Automatic ingestion, file watching, or scheduled cloud sync.
 - Mutating incremental upserts; the current upsert path is dry-run/read-only.
-- Production hardening such as auth, TLS/reverse proxy guidance, backup
-  automation, deployment secrets, and CI.
+- Production hardening such as TLS/reverse proxy guidance and backup
+  automation.
 - LLM-as-judge semantic faithfulness scoring and click-through citation chips
   from chat answers into provenance/source detail panels.
 
@@ -167,9 +167,23 @@ Ignored files/directories needed only for full regeneration:
 | `onagawa_sst_subset/` | `python scripts/ingest.py` SST preprocessing | Local working copy has 1,848 NetCDF files, about 51 MB |
 | `himawari_raw/` | Optional raw Himawari `.DAT` parsing | Not required by the default pipeline |
 
-No `.env` file is required. `DATABASE_URL`, `OLLAMA_BASE_URL`,
-`EMBEDDING_MODEL`, and `CHAT_MODEL` can be supplied as optional environment
-overrides.
+The invite-only application requires OIDC and signing secrets. Copy
+`.env.example` to `.env`, register the callback URL
+`http://localhost:3000/api/auth/callback/oidc` with your OpenID Connect
+provider, and fill in `AUTH_SECRET`, `INTERNAL_AUTH_SECRET`, and the `OIDC_*`
+settings. The two signing secrets must be different and at least 32 random
+bytes each.
+
+Apply application-metadata migrations and bootstrap the first admin invite:
+
+```bash
+python -m alembic upgrade head
+python scripts/invite_user.py admin@example.org --role admin --account-type internal
+```
+
+Invitations are matched to the verified OIDC email. There is no local password
+database or public sign-up path. Corpus reloads preserve the application
+metadata tables that hold users and invitations.
 
 ### Data Pipeline
 
@@ -227,6 +241,10 @@ npm run dev
 ```
 
 Then open `http://localhost:3000`.
+
+FastAPI requires a short-lived internal identity token on every route except
+`/health/live`. Use the Next.js application as the browser entrypoint; do not
+expose the FastAPI port publicly in production.
 
 ### Containerized with Podman
 
@@ -317,6 +335,7 @@ FastAPI service:
 | `/evidence` | Compatibility redirect to `/explore?view=evidence` |
 | `/system` | API, database, Ollama, artifact, and runtime status |
 | `/debug` | Debug payloads and low-level diagnostic properties |
+| `/admin/users` | Admin-only invitations, roles, account types, and suspension controls |
 
 Local development:
 

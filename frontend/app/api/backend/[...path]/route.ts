@@ -1,5 +1,8 @@
 import type { NextRequest } from "next/server";
 
+import { auth } from "@/auth";
+import { tokenForSession } from "@/lib/internal-auth";
+
 export const dynamic = "force-dynamic";
 
 type RouteContext = {
@@ -15,11 +18,36 @@ function targetUrl(path: string[], request: NextRequest): string {
 }
 
 async function proxy(request: NextRequest, context: RouteContext): Promise<Response> {
+  const session = await auth();
+  if (!session) {
+    return Response.json({ detail: "Authentication required" }, { status: 401 });
+  }
+  if (!["GET", "HEAD", "OPTIONS"].includes(request.method)) {
+    const origin = request.headers.get("Origin");
+    if (!origin || origin !== request.nextUrl.origin) {
+      return Response.json(
+        { detail: "Cross-origin state change rejected" },
+        { status: 403 },
+      );
+    }
+  }
+
   const { path } = await context.params;
+  let internalToken: string;
+  try {
+    internalToken = await tokenForSession(session);
+  } catch {
+    return Response.json(
+      { detail: "Authenticated identity is incomplete" },
+      { status: 401 },
+    );
+  }
   const init: RequestInit = {
     method: request.method,
     headers: {
       "Content-Type": request.headers.get("Content-Type") || "application/json",
+      Accept: request.headers.get("Accept") || "application/json",
+      Authorization: `Bearer ${internalToken}`,
     },
   };
 
@@ -27,7 +55,12 @@ async function proxy(request: NextRequest, context: RouteContext): Promise<Respo
     init.body = await request.text();
   }
 
-  const upstream = await fetch(targetUrl(path, request), init);
+  let upstream: Response;
+  try {
+    upstream = await fetch(targetUrl(path, request), init);
+  } catch {
+    return Response.json({ detail: "Backend API is unavailable" }, { status: 502 });
+  }
   const headers = new Headers();
   const contentType = upstream.headers.get("Content-Type");
   if (contentType) headers.set("Content-Type", contentType);
@@ -44,5 +77,17 @@ export function GET(request: NextRequest, context: RouteContext) {
 }
 
 export function POST(request: NextRequest, context: RouteContext) {
+  return proxy(request, context);
+}
+
+export function PUT(request: NextRequest, context: RouteContext) {
+  return proxy(request, context);
+}
+
+export function PATCH(request: NextRequest, context: RouteContext) {
+  return proxy(request, context);
+}
+
+export function DELETE(request: NextRequest, context: RouteContext) {
   return proxy(request, context);
 }
