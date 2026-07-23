@@ -32,12 +32,13 @@ updates:
         applies-to: security-updates
         patterns:
           - "*"
-    # Framework, compiler, type-runtime, and icon-library majors need an
-    # intentional compatibility slice rather than an automated maintenance PR.
-    ignore:
+    # Routine version updates stay on compatible releases. GitHub documents
+    # that this allowlist does not restrict Dependabot security updates.
+    allow:
       - dependency-name: "*"
         update-types:
-          - version-update:semver-major
+          - version-update:semver-minor
+          - version-update:semver-patch
 
   - package-ecosystem: github-actions
     directory: /
