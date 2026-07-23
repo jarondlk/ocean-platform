@@ -1,8 +1,8 @@
 # Handoff Document - Onagawa Source Chat (provenance-eco-rag)
 
-> **Last updated**: 2026-07-21
+> **Last updated**: 2026-07-23
 > **Project path**: `/Users/jaronchai/Documents/GitHub/provenance-eco-rag/`
-> **Current status**: Active Next.js + FastAPI application, local-first RAG stack, manual batch ingestion only. Legacy Streamlit UI is archived for reference.
+> **Current status**: Active invite-only Next.js + FastAPI application with OIDC, role-based authorization, persistent feedback, and a local-first RAG stack. Manual batch ingestion remains the only update path. Legacy Streamlit UI is archived for reference.
 
 ---
 
@@ -24,6 +24,12 @@ application shape:
 - **Ingestion**: manual batch-run pipeline scripts, not automatic ingestion
 - **Provenance**: manifest-backed lineage inspection plus read-only upsert
   dry-run planning
+- **Identity**: invite-only OpenID Connect through Auth.js; viewer, researcher,
+  and admin permissions are re-resolved from PostgreSQL on every API request
+- **Feedback**: persisted chat interactions, thumbs-up/down reasons/comments,
+  and an audited admin review/export workbench
+- **Production boundary**: fail-closed configuration, private API/database
+  topology, rate limits, security headers, and CI security checks
 - **Archive**: old Streamlit app and Streamlit container overlay preserved in
   `archive/legacy-streamlit/`
 
@@ -52,13 +58,16 @@ from the repository root when intentionally run from the archive path.
 - `README.md` now presents Next.js + FastAPI as the normal application path.
 - `README.md` keeps Streamlit documentation as an archived parity reference.
 - `README.md` documents linked cross-source evidence, answer trust reports,
-  context-aware citation requirements, Markdown answer rendering, and the
-  current 265-test suite.
-- `README.md` now includes a 2026-07-21 current prototype status section and
+  invite-only authorization, feedback review, production safeguards, and the
+  current 338-test suite.
+- `README.md` now includes a 2026-07-23 current prototype status section and
   fresh screenshots captured from the live Next.js/FastAPI prototype.
 - `docs/ROADMAP.md` records the manual batch-ingestion direction and cloud UI
   migration direction, including completed citation rendering, linked evidence,
   trust report, and screenshot refresh work.
+- `docs/SECURITY.md`, `docs/DEPLOYMENT.md`, and `docs/TESTING.md` define the
+  authorization model, supported production topology, residual risks, and
+  release verification.
 - `archive/README.md` and `archive/legacy-streamlit/README.md` explain what is
   archived, how to intentionally run it, and where the active prototype docs
   live.
@@ -165,6 +174,26 @@ incremental updates into PostgreSQL.
   headings, lists, code blocks, tables, links, emphasis, and citation chips
   without using unsafe HTML injection.
 
+### Invite-Only Authorization and Feedback
+
+- Added Auth.js OpenID Connect login with verified-email invitation acceptance;
+  there is no public registration or local password store.
+- Added viewer, researcher, and admin roles. Research, commercial, and internal
+  are account-type metadata, not permission-bearing roles.
+- Added default-deny FastAPI route policies, current-role/status resolution on
+  every request, immediate suspension, and self-demotion/self-suspension
+  protection for administrators.
+- Added persistent chat interactions and thumbs-up/down feedback with reason
+  codes and optional comments.
+- Added administrator user/invitation management plus a filtered feedback
+  review and CSV export surface. Security-sensitive changes write audit events.
+- Added fail-closed production configuration, bounded short-lived internal
+  tokens, request/body limits, read-only SQL defense in depth, response security
+  headers, and per-user production rate limits.
+- Added Alembic-backed metadata integration testing, coverage enforcement,
+  pinned CI actions, Dependabot configuration, a production Compose topology,
+  and security/deployment/testing runbooks.
+
 ### Prototype Screenshot Refresh
 
 - Replaced historical Streamlit-era README screenshots with live Next.js/FastAPI
@@ -228,7 +257,7 @@ provenance-eco-rag/
 │   └── legacy-streamlit/             # Archived Streamlit app and overlay
 ├── data/                             # Tracked clean-clone artifacts + ignored generated outputs
 ├── db/                               # SQLAlchemy models, connection helpers, vector store
-├── docs/                             # Roadmap and screenshots
+├── docs/                             # Security, deployment, testing, roadmap, screenshots
 ├── evaluation/                       # Benchmark, questions, metrics, reports, statistics
 ├── frontend/                         # Next.js academic UI
 ├── ingestion/                        # File inventory, provenance registry, lineage manifests
@@ -237,14 +266,17 @@ provenance-eco-rag/
 ├── retrieval/                        # Document builder, hybrid retriever, local fallback
 ├── schema/                           # Anchor-event construction
 ├── scripts/                          # Manual batch pipeline and evaluation CLIs
-├── tests/                            # 265 tests collected locally
+├── tests/                            # 338 tests collected locally
 ├── config.py                         # Paths, model defaults, thresholds
 ├── Containerfile.api                 # FastAPI container
 ├── docker-compose.yml                # PostgreSQL/pgvector
 ├── docker-compose.next.yml           # FastAPI + Next.js overlay
 ├── docker-compose.ollama.yml         # Optional Ollama overlay
+├── docker-compose.production.yml     # Private-service production topology
+├── .env.production.example           # Production environment template
 ├── README.md                         # Public project guide
-└── requirements.txt                  # Python dependency set
+├── requirements.txt                  # Python runtime dependency set
+└── requirements-dev.txt              # CI/development verification tools
 ```
 
 ### Archive Policy
@@ -469,11 +501,14 @@ Latest local verification for this audit:
 
 | Check | Result |
 | --- | --- |
-| `pytest` | 265 passed, 3 expected SciPy RuntimeWarnings |
+| `pytest` | 337 passed, 1 gated integration test skipped, 3 expected SciPy RuntimeWarnings |
+| Coverage boundary | 65% aggregate; required floor is 60% |
+| PostgreSQL metadata integration | Passed against migrated local PostgreSQL/pgvector |
+| Security-boundary Ruff check | Passed |
 | `npm run typecheck` | Passed |
-| `npm run build` | Passed |
+| Production-configured `npm run build` | Passed |
+| Production Compose expansion | Passed |
 | `git diff --check` | Passed |
-| `python -m py_compile` for provenance/API/load-db files | Passed |
 
 The SciPy warnings come from deliberately degenerate evaluation/statistical
 fixtures and are expected by the test coverage.
@@ -482,12 +517,15 @@ Current test modules:
 
 | Area | Files |
 | --- | --- |
+| Authorization, feedback, and security | `test_auth.py`, `test_security_config.py`, `test_rate_limit.py`, `test_chat_feedback.py`, `test_admin_feedback.py` |
 | API and UI backend contracts | `test_api_explore.py`, `test_api_pipeline.py`, `test_api_provenance.py`, `test_api_evaluation.py`, `test_api_retrieve.py`, `test_api_schemas.py` |
 | Core data/provenance | `test_common.py`, `test_provenance.py`, `test_lineage.py`, `test_anchor_events.py` |
 | Retrieval/prompting/audit | `test_local_retriever.py`, `test_prompt_builder.py`, `test_answer_audit.py` |
 | Evaluation/reliability | `test_reliability.py`, `test_evaluation.py`, `test_questions.py`, `test_quality_metrics.py`, `test_report.py`, `test_statistical_analysis.py` |
+| PostgreSQL metadata integration | `integration/test_app_metadata_postgres.py` |
 
-Run before larger commits:
+Use the CI-equivalent commands in `docs/TESTING.md` before larger commits.
+At minimum:
 
 ```bash
 pytest
@@ -508,17 +546,18 @@ git diff --check
 
 | Priority | File | Why |
 | --- | --- | --- |
-| 1 | `config.py` | Central paths, model names, thresholds, and DB defaults |
-| 2 | `api/main.py` | Active backend surface and orchestration for UI features |
-| 3 | `api/schemas.py` | Frontend/backend contracts and expert-control payloads |
-| 4 | `frontend/app/*/page.tsx` | Active UI routes |
-| 5 | `frontend/components/AppShell.tsx` | Navigation structure and page shell |
-| 6 | `orchestration/unified.py` | Prompt builder, retrieval dispatch, linked evidence, context injection |
-| 7 | `orchestration/answer_audit.py` | Citation resolution, trust scoring, and context-aware requirements |
-| 8 | `retrieval/hybrid_retriever.py` | PostgreSQL vector + FTS retrieval |
-| 9 | `retrieval/local_retriever.py` | Local fallback retrieval without PostgreSQL |
-| 10 | `preprocessing/reliability_ensurance.py` | Cross-source reliability layer |
-| 11 | `evaluation/benchmark.py` | System variants and benchmark execution |
+| 1 | `config.py` | Central paths, model defaults, and fail-closed API configuration |
+| 2 | `api/auth.py` | Identity resolution, permission matrix, default-deny authorization |
+| 3 | `frontend/auth.ts` | OIDC provider, invite acceptance, session enrichment |
+| 4 | `api/main.py` | Active backend surface and middleware registration |
+| 5 | `api/schemas.py` | Frontend/backend contracts and bounded payloads |
+| 6 | `frontend/app/*/page.tsx` | Active UI routes |
+| 7 | `frontend/components/AppShell.tsx` | Permission-aware navigation and page shell |
+| 8 | `orchestration/unified.py` | Prompt builder, retrieval dispatch, linked evidence, context injection |
+| 9 | `orchestration/answer_audit.py` | Citation resolution, trust scoring, and context-aware requirements |
+| 10 | `retrieval/hybrid_retriever.py` | PostgreSQL vector + FTS retrieval |
+| 11 | `retrieval/local_retriever.py` | Local fallback retrieval without PostgreSQL |
+| 12 | `docs/SECURITY.md` | Authorization matrix, trust boundaries, limitations, release checklist |
 
 ---
 
@@ -538,7 +577,11 @@ git diff --check
 | Database UI | Schema, table browsing, and read-only query surface exist |
 | Data exploration | Combined Explore corpus workbench plus combined Data domain workbench exist for expert browsing |
 | System/debug | Status and debug surfaces exist |
-| Containerization | Database-only, Next/FastAPI, optional Ollama, and archived Streamlit modes exist |
+| Invite-only identity | OIDC, invitations, viewer/researcher/admin roles, suspension, and audit events exist |
+| User feedback | Persisted chat interactions, feedback revisions, admin review/filter/export exist |
+| Security boundary | Fail-closed production config, default-deny authorization, bounded tokens/input, rate limits, headers, and SQL defense in depth exist |
+| CI and integration | Coverage enforcement, security lint, pinned actions, dependency monitoring config, and PostgreSQL metadata integration exist |
+| Containerization | Database-only, Next/FastAPI, optional Ollama, production private-service, and archived Streamlit modes exist |
 | Archive | Legacy Streamlit root files are preserved under `archive/legacy-streamlit/` |
 
 ---
@@ -549,14 +592,16 @@ git diff --check
 | --- | --- |
 | Ingestion is manual | No automatic file watcher, scheduler, queue, or cloud object-store sync yet |
 | Pipeline backup/rollback | Unified `run_pipeline.py` exists, but database backup and rollback automation are still future work |
-| Database load is reset-oriented | `scripts/load_db.py --reset --embed` is the reliable mutation path; `--upsert --dry-run` exists, but mutating upsert/migrations are future work |
-| Cloud hardening not done | No reverse proxy/TLS guide, backup automation, auth, or production secret strategy yet |
+| Database load is reset-oriented | `scripts/load_db.py --reset --embed` is the reliable corpus mutation path; `--upsert --dry-run` exists, but mutating corpus upserts remain future work |
+| Production operations remain operator-managed | The topology, TLS, secret, backup, and rollback requirements are documented, but backup/restore and log-retention automation are not implemented |
 | Ollama is local-first | Host Ollama is preferred on macOS; containerized Ollama is optional and may be slower |
 | Streamlit is archived | Do not add new active features to `archive/legacy-streamlit/app.py` |
 | Screenshots are point-in-time | `docs/screenshots/` contains current prototype captures from 2026-07-21; refresh them after major UI changes |
 | Trust report is deterministic | The current audit checks supplied evidence and citations; it is not an LLM-as-judge semantic faithfulness scorer |
-| Integration tests are limited | Most tests are synthetic; a temporary PostgreSQL/pgvector integration suite is still needed |
-| CI status should be checked | If `.github/workflows/` is absent in a branch, add CI before relying on GitHub checks |
+| Integration scope is focused | PostgreSQL migrations/invites/audits are integration-tested; most RAG and scientific tests remain synthetic |
+| CSP is report-only | Review violations before changing it to enforcement mode |
+| Rate limiting is single-process | Replace the in-memory limiter before adding API workers or hosts |
+| Security operations require repository settings | Enable protected required checks, Dependabot alerts/security updates, CodeQL, and secret scanning where available |
 
 ---
 
@@ -581,22 +626,26 @@ Continue treating evaluation as first-class:
 - Add regression comparison against a selected baseline run
 - Add charts for latency, citation accuracy, faithfulness, and source coverage
 
-### 3. Cloud-Ready App Architecture
+### 3. Production Operations and Security Follow-Through
 
-Next.js + FastAPI remains the preferred direction. Before server/cloud use:
+The supported single-host topology and authorization boundary now exist.
+Before real users or multiple workers:
 
-- Add authentication and authorization
-- Add production `.env.example`
-- Add reverse proxy/TLS deployment guide
-- Keep Ollama private to the app network
-- Decide artifact storage: local volume, NAS, S3-compatible object store, or managed bucket
-- Add backups for PostgreSQL and important generated artifacts
-- Add deployment health checks and log-retention policy
+- Enable protected CI, Dependabot security updates, CodeQL, and secret scanning
+- Complete the manual release checklist in `docs/SECURITY.md`
+- Deploy and test the TLS reverse proxy while keeping API, PostgreSQL, and
+  Ollama private
+- Automate and restore-test backups for PostgreSQL and important artifacts
+- Decide artifact storage: local volume, NAS, S3-compatible object store, or
+  managed bucket
+- Add deployment health checks, log retention, and incident contacts
+- Move rate limits to a shared store or gateway before horizontal scaling
+- Review CSP reports and switch to enforcement after compatibility validation
 
 ### 4. Database and SQL Improvements
 
-- Add integration tests with temporary PostgreSQL/pgvector
-- Consider Alembic if schemas begin changing often
+- Expand PostgreSQL integration coverage beyond metadata/invitation flows
+- Keep Alembic migrations additive and rollback-reviewed
 - Extend the provenance manifest with row-level hashes and embedding run IDs
 - Add mutating idempotent upsert support keyed by `sample_id`, `doc_id`,
   `event_id`, and SST timestamps after backup/rollback policy is in place

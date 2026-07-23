@@ -18,7 +18,7 @@ Transforms fragmented field data — CTD water profiles, metagenome sequencing, 
 
 ## Current Prototype Status
 
-Status as of **2026-07-21**: this is an active local-first **Next.js +
+Status as of **2026-07-23**: this is an active local-first **Next.js +
 FastAPI** prototype with PostgreSQL/pgvector retrieval and Ollama-backed local
 generation. The old Streamlit interface is archived for historical reference;
 new product work happens in the Next.js UI and FastAPI service.
@@ -38,13 +38,22 @@ Implemented in the current prototype:
   deterministic Answer Trust Report / Citation Audit.
 - Evaluation run management for standard and ablation runs, saved run browsing,
   analytics, reports, and comparison.
+- Invite-only OpenID Connect authentication with verified-email invitation
+  acceptance, viewer/researcher/admin roles, research/commercial/internal
+  account metadata, immediate suspension enforcement, and audited
+  administration.
+- Persistent chat interactions with thumbs-up/down feedback, reason codes,
+  comments, and an administrator feedback-review/export workbench.
+- Fail-closed production configuration, bounded internal identity tokens,
+  default-deny API authorization, request limits, security headers, production
+  rate limits, a private-service Compose topology, and hardened CI checks.
 
 Still intentionally future work:
 
 - Automatic ingestion, file watching, or scheduled cloud sync.
 - Mutating incremental upserts; the current upsert path is dry-run/read-only.
-- Production hardening such as TLS/reverse proxy guidance and backup
-  automation.
+- Backup/restore automation, shared rate limiting for multi-worker deployment,
+  and enforcement-mode Content Security Policy.
 - LLM-as-judge semantic faithfulness scoring and click-through citation chips
   from chat answers into provenance/source detail panels.
 
@@ -53,6 +62,9 @@ Documentation map:
 - `README.md` is the current public project guide and screenshot source.
 - `handoff.md` is the operator/developer handoff for resuming work.
 - `docs/ROADMAP.md` tracks completed and planned engineering work.
+- `docs/SECURITY.md` defines the authorization and application-security model.
+- `docs/DEPLOYMENT.md` covers the supported production topology and operations.
+- `docs/TESTING.md` documents local verification and required CI checks.
 - `archive/` docs describe historical Streamlit reference material only.
 
 ---
@@ -172,7 +184,8 @@ The invite-only application requires OIDC and signing secrets. Copy
 `http://localhost:3000/api/auth/callback/oidc` with your OpenID Connect
 provider, and fill in `AUTH_SECRET`, `INTERNAL_AUTH_SECRET`, and the `OIDC_*`
 settings. The two signing secrets must be different and at least 32 random
-bytes each.
+bytes each. `AUTH_MODE=disabled` is only for an isolated local preview;
+staging and production reject it at startup.
 
 Apply application-metadata migrations and bootstrap the first admin invite:
 
@@ -415,10 +428,13 @@ provenance-eco-rag/
 ├── docker-compose.yml                  # PostgreSQL + pgvector service
 ├── docker-compose.next.yml             # Optional FastAPI + Next.js services
 ├── docker-compose.ollama.yml           # Optional Ollama service overlay
+├── docker-compose.production.yml       # Private-service production topology
 ├── .env.example                        # Local container env defaults
+├── .env.production.example             # Production environment template
 │
 ├── api/                                # FastAPI API layer for Next.js
 ├── frontend/                           # Next.js academic UI
+├── docs/                               # Security, deployment, testing, roadmap
 │
 ├── preprocessing/
 │   ├── common.py                       # Sample ID parsing, TSV I/O
@@ -663,6 +679,9 @@ Key settings in [config.py](config.py):
 | `OLLAMA_BASE_URL` | `http://localhost:11434` |
 | `EMBEDDING_MODEL` | `nomic-embed-text` (768-dim) |
 | `CHAT_MODEL` | `qwen2.5:14b-instruct` |
+| `DEPLOYMENT_ENV` | `development`; `staging` and `production` enable fail-closed checks |
+| `AUTH_MODE` | `required`; `disabled` is allowed only for isolated local development/tests |
+| `AUTH_URL` | `http://localhost:3000` locally; must be the public HTTPS URL in production |
 | `SST_CTD_AGREEMENT_THRESHOLD` | 2.0°C (env: `SST_CTD_THRESHOLD`) |
 | `DIVERSITY_ANOMALY_SIGMA` | 2.0 (env: `DIVERSITY_ANOMALY_SIGMA`) |
 
@@ -670,13 +689,16 @@ Key settings in [config.py](config.py):
 
 ## Testing
 
-For planned engineering work, including manual scheduled batch updates,
-deployment hardening, and continued cloud UI/backend work, see
+For the complete local and CI verification commands, see
+[docs/TESTING.md](docs/TESTING.md). Planned engineering work remains in
 [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ### Methodology
 
-All tests use **pytest** with **synthetic in-memory data** — no PostgreSQL, Ollama, or real data files required. This ensures reproducibility: anyone can clone the repository and run the full test suite immediately.
+The normal pytest run uses **synthetic in-memory data** and does not require
+PostgreSQL, Ollama, or real data files. A separately gated PostgreSQL/pgvector
+integration test verifies migrations, invite acceptance, metadata persistence,
+and audit-event creation against a real database.
 
 **Key design principles:**
 
@@ -694,8 +716,12 @@ pytest tests/ -v
 # Collect without running, useful for quick inventory checks
 python -m pytest --collect-only -q
 
-# Run with coverage report
-pytest tests/ -v --cov=preprocessing --cov=ingestion --cov=orchestration --cov=schema --cov=evaluation --cov-report=term-missing
+# Run the CI-equivalent coverage boundary
+AUTH_MODE=disabled DEPLOYMENT_ENV=test PERSIST_LOCAL_CHAT=false \
+pytest tests/ -q --tb=short \
+  --cov=api --cov=config --cov=db --cov=preprocessing --cov=ingestion \
+  --cov=orchestration --cov=schema --cov=evaluation \
+  --cov-report=term-missing --cov-fail-under=60
 
 # Check the Next.js frontend
 cd frontend
@@ -705,19 +731,22 @@ npm run build
 
 ### Current Test Matrix
 
-The current suite collects **265 tests** across 19 test modules:
+The current suite collects **338 tests** across 25 test modules. The normal
+run passes 337 and skips the explicitly gated PostgreSQL integration test:
 
 | Test area | Files |
 | --- | --- |
+| Authentication, authorization, feedback, and security | `test_auth.py`, `test_security_config.py`, `test_rate_limit.py`, `test_chat_feedback.py`, `test_admin_feedback.py` |
 | API pages and controls | `test_api_explore.py`, `test_api_pipeline.py`, `test_api_provenance.py`, `test_api_evaluation.py`, `test_api_retrieve.py`, `test_api_schemas.py` |
 | Data normalization and provenance | `test_common.py`, `test_provenance.py`, `test_lineage.py`, `test_anchor_events.py` |
 | Retrieval, prompting, and answer audit | `test_local_retriever.py`, `test_prompt_builder.py`, `test_answer_audit.py` |
 | Reliability and evaluation | `test_reliability.py`, `test_evaluation.py`, `test_questions.py`, `test_quality_metrics.py`, `test_report.py`, `test_statistical_analysis.py` |
+| PostgreSQL integration | `integration/test_app_metadata_postgres.py` |
 
 Latest verified local result:
 
 ```text
-265 passed, 3 scipy RuntimeWarnings
+337 passed, 1 skipped, 3 scipy RuntimeWarnings
 ```
 
 The warnings are emitted by SciPy for intentionally degenerate evaluation and
