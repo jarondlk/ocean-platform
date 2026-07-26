@@ -58,7 +58,14 @@ def upgrade() -> None:
         unique=False,
     )
 
+    # Alembic owns the application-metadata tables, while the regenerable
+    # scientific corpus tables are created by ``db.connection.init_db``.
+    # Existing deployments may already have the corpus tables when this
+    # revision runs, but a fresh CI/production database does not.
+    existing_tables = set(sa.inspect(op.get_bind()).get_table_names())
     for table_name in CORPUS_TABLES:
+        if table_name not in existing_tables:
+            continue
         op.execute(
             sa.text(
                 f"""
