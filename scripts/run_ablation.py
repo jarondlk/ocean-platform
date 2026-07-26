@@ -50,7 +50,7 @@ from evaluation.benchmark import (
     run_single_ablation,
 )
 from evaluation.quality_metrics import score_single_response
-from evaluation.reference_answers import REFERENCE_ANSWERS, get_reference
+from evaluation.reference_answers import get_reference
 from evaluation.statistical_analysis import (
     pairwise_to_dataframe,
     run_full_statistical_analysis,
@@ -90,7 +90,7 @@ def preflight_check(ollama_url: str, model: str) -> bool:
         print(f"  ✅ Model '{model}' available")
     else:
         print(f"  ⚠️  Model '{model}' not found (available: {', '.join(models[:5])})")
-        print(f"      Will attempt to use anyway (Ollama may pull automatically)")
+        print("      Will attempt to use anyway (Ollama may pull automatically)")
 
     # Check retrieval data
     jsonl = config.SERVING_DIR / "retrieval_documents.jsonl"
@@ -103,16 +103,16 @@ def preflight_check(ollama_url: str, model: str) -> bool:
     # Check analysis data
     analysis_jsonl = config.ANALYSIS_DIR / "analysis_documents.jsonl"
     if analysis_jsonl.exists():
-        print(f"  ✅ Analysis documents available")
+        print("  ✅ Analysis documents available")
     else:
-        print(f"  ⚠️  No analysis documents")
+        print("  ⚠️  No analysis documents")
 
     # Check reliability data
     rel_jsonl = config.RELIABILITY_DIR / "reliability_documents.jsonl"
     if rel_jsonl.exists():
-        print(f"  ✅ Reliability documents available")
+        print("  ✅ Reliability documents available")
     else:
-        print(f"  ⚠️  No reliability documents")
+        print("  ⚠️  No reliability documents")
 
     print()
     return True
@@ -315,12 +315,12 @@ def run_analysis(
 
     summary = all_results.groupby("mode")[metric_cols].agg(["mean", "std"]).round(4)
     summary.to_csv(analysis_dir / "ablation_summary.csv")
-    print(f"  ✅ Ablation summary saved")
+    print("  ✅ Ablation summary saved")
 
     # Category breakdown
     cat_summary = all_results.groupby(["mode", "category"])[metric_cols].mean().round(4)
     cat_summary.to_csv(analysis_dir / "category_breakdown.csv")
-    print(f"  ✅ Category breakdown saved")
+    print("  ✅ Category breakdown saved")
 
     # 2. Statistical tests
     print("\n🔬 Running statistical significance tests...")
@@ -380,7 +380,7 @@ def run_analysis(
     try:
         std_report = generate_report(all_results, run_meta)
         (output_dir / "standard_report.md").write_text(std_report, encoding="utf-8")
-        print(f"  ✅ Standard report saved")
+        print("  ✅ Standard report saved")
     except Exception as e:
         print(f"  ⚠️  Standard report failed: {e}")
 
@@ -728,7 +728,7 @@ def main():
 
     # Final summary
     print(f"\n{'='*60}")
-    print(f"  ✅ ABLATION STUDY COMPLETE")
+    print("  ✅ ABLATION STUDY COMPLETE")
     print(f"{'='*60}")
     print(f"  Run ID:      {run_id}")
     print(f"  Variants:    {len(variants)}")

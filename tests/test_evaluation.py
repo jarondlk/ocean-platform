@@ -2,14 +2,11 @@
 from __future__ import annotations
 
 import pandas as pd
-import pytest
 
 from evaluation.benchmark import (
     BENCHMARK_QUESTIONS,
     EVAL_MODES,
-    EvalResult,
     SYSTEM_VARIANTS,
-    SystemVariant,
     _filter_by_source_coverage,
     extract_citations,
     compute_citation_accuracy,

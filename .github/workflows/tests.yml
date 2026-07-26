@@ -39,23 +39,20 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements-dev.txt
 
-      - name: Lint security-sensitive Python modules
+      - name: Lint active Python code
         run: |
           python -m ruff check \
-            api/auth.py \
-            api/auth_routes.py \
-            api/admin_feedback_routes.py \
-            api/chat_records.py \
-            api/feedback_routes.py \
-            api/rate_limit.py \
+            api \
             config.py \
-            tests/test_auth.py \
-            tests/test_security_config.py \
-            tests/test_rate_limit.py \
-            tests/test_admin_feedback.py \
-            tests/test_chat_feedback.py \
-            tests/integration/test_app_metadata_postgres.py \
-            --select E4,E7,E9,F
+            db \
+            evaluation \
+            ingestion \
+            orchestration \
+            preprocessing \
+            retrieval \
+            schema \
+            scripts \
+            tests
 
       - name: Run tests with coverage
         env:

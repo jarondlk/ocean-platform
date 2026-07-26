@@ -29,17 +29,6 @@ from sqlalchemy import text
 
 import config
 from db.connection import drop_corpus_tables, get_engine, get_session, init_db
-from db.models import (
-    AnchorEvent,
-    CrossSourceLink,
-    CtdProfile,
-    CtdSummary,
-    MetagenomeSample,
-    ProvenanceRecord,
-    RetrievalDocument,
-    SstDailySummary,
-    SstPointObservation,
-)
 
 logging.basicConfig(
     level=logging.INFO,

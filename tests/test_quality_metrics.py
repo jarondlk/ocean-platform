@@ -1,14 +1,11 @@
 """Tests for evaluation/quality_metrics.py — answer quality scoring."""
 from __future__ import annotations
 
-import json
-from unittest.mock import MagicMock, patch
 
 import pytest
 
 from evaluation.quality_metrics import (
     JudgeScores,
-    QualityScores,
     _parse_judge_json,
     _simple_rouge_l,
     compute_answer_completeness,

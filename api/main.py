@@ -3098,8 +3098,9 @@ def _database_status() -> Dict[str, Any]:
             version = conn.execute(text("SELECT version()")).scalar()
             n_docs = conn.execute(text("SELECT count(*) FROM retrieval_document")).scalar()
         return {"available": True, "documents": int(n_docs or 0), "version": version}
-    except Exception:
-        logger.exception("Database status check failed")
+    except Exception as exc:
+        logger.warning("Database status check failed: %s", type(exc).__name__)
+        logger.debug("Database status check traceback", exc_info=True)
         return {"available": False, "error": "Database is unavailable"}
 
 
@@ -3109,8 +3110,9 @@ def _ollama_status() -> Dict[str, Any]:
         resp.raise_for_status()
         models = [m.get("name") for m in resp.json().get("models", [])]
         return {"available": True, "base_url": config.OLLAMA_BASE_URL, "models": models}
-    except Exception:
-        logger.exception("Ollama status check failed")
+    except Exception as exc:
+        logger.warning("Ollama status check failed: %s", type(exc).__name__)
+        logger.debug("Ollama status check traceback", exc_info=True)
         return {
             "available": False,
             "base_url": config.OLLAMA_BASE_URL,

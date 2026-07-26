@@ -25,21 +25,16 @@ python -m pytest tests/ -q --tb=short \
   --cov-fail-under=60
 ```
 
-Run the security-sensitive lint boundary:
+Run the active Python lint boundary:
 
 ```bash
 python -m ruff check \
-  api/auth.py api/auth_routes.py api/admin_feedback_routes.py \
-  api/chat_records.py api/feedback_routes.py api/rate_limit.py \
-  config.py tests/test_auth.py tests/test_security_config.py \
-  tests/test_rate_limit.py tests/test_admin_feedback.py \
-  tests/test_chat_feedback.py tests/integration/test_app_metadata_postgres.py \
-  --select E4,E7,E9,F
+  api config.py db evaluation ingestion orchestration preprocessing \
+  retrieval schema scripts tests
 ```
 
-The lint boundary is intentionally incremental because the older scientific
-pipeline has existing lint debt. New security-sensitive modules must remain
-clean; broaden the boundary as legacy modules are repaired.
+The lint configuration in `pyproject.toml` covers active Python code. Archived
+reference code is intentionally outside this boundary.
 
 Verify the frontend:
 
@@ -71,7 +66,7 @@ rolled back.
 
 `.github/workflows/tests.yml` defines:
 
-- backend tests, 60% aggregate coverage, and security-boundary linting;
+- backend tests, 60% aggregate coverage, and active Python linting;
 - frontend lockfile installation, typechecking, and production build;
 - a real pgvector service, Alembic migration, and metadata integration test;
 - dependency review for public repositories or private repositories with GitHub

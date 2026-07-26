@@ -14,7 +14,6 @@ from typing import Any, Dict, List, Optional
 
 from sqlalchemy import text
 
-import config
 from db.connection import get_session
 from db.vector_store import embed_text
 

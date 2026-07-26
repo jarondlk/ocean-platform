@@ -8,8 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
-from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 import numpy as np
 import pandas as pd
@@ -85,7 +84,6 @@ def compute_taxa_env_correlations(top_n_genera: int = 20) -> pd.DataFrame:
 
     # Collect all genera from Kraken
     all_genera: Dict[str, List[float]] = {}
-    sample_indices = []
 
     for _, row in paired.iterrows():
         kr_json = row.get("top_genus_10_json_x")

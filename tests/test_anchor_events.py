@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import pandas as pd
-import pytest
 
 from schema.anchor_event import build_anchor_events, BAY_COORDS
 

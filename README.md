@@ -249,7 +249,7 @@ Terminal 2:
 
 ```bash
 cd frontend
-npm install
+npm ci
 npm run dev
 ```
 
@@ -355,7 +355,7 @@ Local development:
 ```bash
 uvicorn api.main:app --reload --port 8000
 cd frontend
-npm install
+npm ci
 npm run dev
 ```
 
@@ -731,7 +731,8 @@ npm run build
 
 ### Current Test Matrix
 
-The current suite collects **338 tests** across 25 test modules. The normal
+The current suite contains more than **330 tests** across unit, API, and
+integration modules. The normal
 run passes 337 and skips the explicitly gated PostgreSQL integration test:
 
 | Test area | Files |

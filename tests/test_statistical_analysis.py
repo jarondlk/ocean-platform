@@ -6,8 +6,6 @@ import pandas as pd
 import pytest
 
 from evaluation.statistical_analysis import (
-    FriedmanResult,
-    PairwiseResult,
     cliffs_delta,
     format_significance,
     friedman_test,

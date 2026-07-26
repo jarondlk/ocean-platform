@@ -23,7 +23,6 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 import config
 from ingestion.provenance import ProvenanceRegistry
-from ingestion.file_inventory import inventory_dir, inventory_recursive
 
 logging.basicConfig(
     level=logging.INFO,

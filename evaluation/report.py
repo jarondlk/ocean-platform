@@ -10,9 +10,8 @@ import json
 import logging
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
-import numpy as np
 import pandas as pd
 
 from evaluation.benchmark import compute_summary_metrics
@@ -127,7 +126,7 @@ def generate_report(
     # Errors
     n_errors = (results_df["error"] != "").sum()
     if n_errors > 0:
-        lines.append(f"> [!WARNING]")
+        lines.append("> [!WARNING]")
         lines.append(f"> {n_errors} evaluations encountered errors.")
         lines.append("")
         error_rows = results_df[results_df["error"] != ""]

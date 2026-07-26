@@ -6,15 +6,12 @@ cross-source links, and constructs a provenance-aware LLM prompt.
 """
 from __future__ import annotations
 
-import json
 import logging
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from typing import List, Optional
 
-import pandas as pd
 from sqlalchemy import text
 
-import config
 from db.connection import get_session
 
 logger = logging.getLogger(__name__)

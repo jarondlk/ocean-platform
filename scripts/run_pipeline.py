@@ -46,10 +46,13 @@ def _parse_stages(value: str, *, validate_only: bool) -> list[str]:
 
 def _request_from_args(args: argparse.Namespace) -> PipelineRunRequest:
     stages = _parse_stages(args.stages, validate_only=args.validate_only)
+    execute = args.execute
+    if execute is None:
+        execute = args.validate_only
     return PipelineRunRequest(
         stages=stages,
         tag=args.tag,
-        dry_run=not args.execute,
+        dry_run=not execute,
         skip_sst=args.skip_sst,
         reset_database=args.reset_db,
         embed_after_load=args.embed,
@@ -66,9 +69,24 @@ def main() -> int:
         default="full",
         help="Comma-separated stage IDs, or 'full' for validate_raw, ingest, build_retrieval_docs, pre_analysis, reliability, load_db.",
     )
-    parser.add_argument("--validate-only", action="store_true", help="Alias for --stages validate_raw.")
-    parser.add_argument("--execute", action="store_true", help="Execute commands. Without this, the script writes a dry-run manifest only.")
-    parser.add_argument("--dry-run", dest="execute", action="store_false", default=False, help="Plan commands without executing them. This is the default.")
+    parser.add_argument(
+        "--validate-only",
+        action="store_true",
+        help="Run only safe raw-file checks. Executes by default unless --dry-run is also set.",
+    )
+    parser.add_argument(
+        "--execute",
+        dest="execute",
+        action="store_true",
+        help="Execute commands. Without this, normal pipeline stages write a dry-run manifest only.",
+    )
+    parser.add_argument(
+        "--dry-run",
+        dest="execute",
+        action="store_false",
+        help="Plan commands without executing them. This is the default for non-validation stages.",
+    )
+    parser.set_defaults(execute=None)
     parser.add_argument("--tag", help="Optional run tag stored in the manifest.")
     parser.add_argument("--notes", help="Optional operator notes stored in the manifest.")
     parser.add_argument("--skip-sst", action="store_true", help="Skip SST preprocessing during ingest.")
@@ -89,7 +107,7 @@ def main() -> int:
         print(json.dumps(payload, indent=2, default=str))
         return 0 if preflight.ok else 2
 
-    if not args.execute:
+    if request.dry_run:
         print("Dry-run mode: commands will be planned but not executed. Add --execute to run them.")
     elif preflight.blockers:
         print("Preflight failed:")

@@ -1,7 +1,6 @@
 """Tests for evaluation/questions.py — standalone benchmark questions module."""
 from __future__ import annotations
 
-import pytest
 
 from evaluation.questions import (
     BENCHMARK_QUESTIONS,

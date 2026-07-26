@@ -3,7 +3,6 @@ Vector store – embed documents via Ollama and search via pgvector.
 """
 from __future__ import annotations
 
-import json
 import logging
 from typing import Any, Dict, List, Optional
 
@@ -113,8 +112,10 @@ def search_similar(
         emb_str = "[" + ",".join(str(x) for x in query_emb) + "]"
 
         where_clause = ""
+        params: Dict[str, Any] = {"emb": emb_str, "k": k}
         if source_type:
-            where_clause = f"AND source_type = '{source_type}'"
+            where_clause = "AND source_type = :source_type"
+            params["source_type"] = source_type
 
         sql = text(f"""
             SELECT doc_id, source_type, sample_id, event_id, time,
@@ -126,7 +127,7 @@ def search_similar(
             LIMIT :k
         """)
 
-        rows = session.execute(sql, {"emb": emb_str, "k": k}).fetchall()
+        rows = session.execute(sql, params).fetchall()
 
     return [
         {

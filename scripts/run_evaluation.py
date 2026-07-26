@@ -252,7 +252,7 @@ def run_single_model(
     print(f"  Duration: {duration:.1f}s ({duration / 60:.1f} min)")
     if n_errors > 0:
         print(f"  ⚠ {n_errors} evaluations had errors")
-    print(f"\n  Saved to:")
+    print("\n  Saved to:")
     print(f"    CSV:    {csv_path}")
     print(f"    Meta:   {meta_path}")
     print(f"    Report: {report_path}")

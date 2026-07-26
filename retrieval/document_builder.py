@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import json
 import logging
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
 import numpy as np
@@ -73,7 +73,6 @@ def build_ctd_docs(
         parts = str(sid).split("-")
         bay = parts[2] if len(parts) >= 3 else None
         station = parts[3] if len(parts) >= 4 else None
-        year_month = f"{parts[0]}-{parts[1]}" if len(parts) >= 2 else None
         bay_name = BAY_NAMES.get(bay, bay or "unknown bay")
         lat, lon = BAY_COORDS.get(bay, (None, None))
 
@@ -198,11 +197,6 @@ def build_metagenome_docs(
                 pass
 
         # Top MetaEuk genera
-        metaeuk_col = None
-        for c in sample_context.columns:
-            if "metaeuk" in c.lower() or c == "top_genus_10_json_y":
-                # Handle suffix from merge
-                pass
         # Try common column names from the merge
         for col_candidate in ["top_genus_10_json_y", "top_genus_10_json"]:
             if col_candidate in row.index and col_candidate != "top_genus_10_json":

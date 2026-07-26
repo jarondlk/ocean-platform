@@ -80,7 +80,7 @@ Examples:
         print(f"  Need at least 2 evaluation CSVs to compare (found {len(csv_paths)}).")
         if not csv_paths:
             print(f"  No CSVs found in {eval_dir}")
-            print(f"  Run evaluations first: python scripts/run_evaluation.py")
+            print("  Run evaluations first: python scripts/run_evaluation.py")
         sys.exit(1)
 
     print(f"\n  Comparing {len(csv_paths)} evaluation runs:")

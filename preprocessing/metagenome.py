@@ -17,7 +17,6 @@ from __future__ import annotations
 import json
 import logging
 from pathlib import Path
-from typing import Dict, List, Optional, Set
 
 import numpy as np
 import pandas as pd
@@ -27,7 +26,6 @@ from .common import (
     derive_sample_dims,
     normalize_genus_key,
     read_tsv_no_header,
-    read_tsv_with_header,
 )
 
 logger = logging.getLogger(__name__)

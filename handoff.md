@@ -59,7 +59,7 @@ from the repository root when intentionally run from the archive path.
 - `README.md` keeps Streamlit documentation as an archived parity reference.
 - `README.md` documents linked cross-source evidence, answer trust reports,
   invite-only authorization, feedback review, production safeguards, and the
-  current 338-test suite.
+  current 330+ test suite.
 - `README.md` now includes a 2026-07-23 current prototype status section and
   fresh screenshots captured from the live Next.js/FastAPI prototype.
 - `docs/ROADMAP.md` records the manual batch-ingestion direction and cloud UI
@@ -266,7 +266,7 @@ provenance-eco-rag/
 ├── retrieval/                        # Document builder, hybrid retriever, local fallback
 ├── schema/                           # Anchor-event construction
 ├── scripts/                          # Manual batch pipeline and evaluation CLIs
-├── tests/                            # 338 tests collected locally
+├── tests/                            # 330+ unit, API, and integration tests
 ├── config.py                         # Paths, model defaults, thresholds
 ├── Containerfile.api                 # FastAPI container
 ├── docker-compose.yml                # PostgreSQL/pgvector
