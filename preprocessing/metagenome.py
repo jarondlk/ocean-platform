@@ -140,6 +140,12 @@ def wide_to_long(df: pd.DataFrame, method: str) -> pd.DataFrame:
 def load_group_mapping(path: Path) -> pd.DataFrame:
     """Load genus → upper_group mapping (Kraken or global)."""
     df = pd.read_csv(path, sep="\t", header=None)
+    if (
+        df.shape[1] == 4
+        and str(df.iloc[0, 0]).strip().lower()
+        in {"genus_txid", "genus_taxid"}
+    ):
+        df = df.iloc[1:].reset_index(drop=True)
 
     if df.shape[1] == 4:
         df.columns = ["genus_taxid", "genus", "upper_taxid", "upper_group_label"]
@@ -153,6 +159,8 @@ def load_group_mapping(path: Path) -> pd.DataFrame:
     else:
         raise ValueError(f"{path.name}: unsupported number of columns: {df.shape[1]}")
 
+    df["genus_taxid"] = pd.to_numeric(df["genus_taxid"], errors="coerce")
+    df["upper_taxid"] = pd.to_numeric(df["upper_taxid"], errors="coerce")
     df["genus"] = df["genus"].astype("string").str.strip()
     df["upper_group_label"] = df["upper_group_label"].astype("string").str.strip()
     df["upper_domain"] = df["upper_group_label"].str.split(":", n=1).str[0]
@@ -208,7 +216,8 @@ def load_gn_consistency(path: Path) -> pd.DataFrame:
     df = pd.read_csv(path, sep="\t", header=None)
 
     if df.shape[1] == 3:
-        df.columns = ["genus_taxid", "genus", "consistency_level"]
+        # Raw files are taxid, numeric consistency tier, genus name.
+        df.columns = ["genus_taxid", "consistency_level", "genus"]
     elif df.shape[1] == 2:
         df.columns = ["genus", "consistency_level"]
         df["genus_taxid"] = pd.NA

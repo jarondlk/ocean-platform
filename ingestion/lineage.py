@@ -635,9 +635,9 @@ def build_provenance_manifest(
         "documents": [asdict(item) for item in documents],
         "embeddings": [asdict(item) for item in embeddings],
         "limitations": [
-            "CTD/metagenome row-level origin is currently inferred from stable sample/source keys plus source file hashes; source_row_hash columns are planned.",
+            "Corpus database rows carry source_row_hash values generated from normalized row content; document traces additionally retain stable source keys and file hashes.",
             "SST collection manifests use a directory fingerprint at API time; per-file SHA records are available after ingestion registration.",
-            "Embedding provenance records current model/dimension/status; durable embedding run tables are planned before mutating upserts.",
+            "Embedding provenance records current model/dimension/status; unchanged retrieval rows retain their existing embeddings during transactional upserts.",
         ],
     }
 
@@ -856,7 +856,7 @@ def build_upsert_dry_run_plan(limit_keys: int = 25) -> Dict[str, Any]:
         "table_plans": table_plans,
         "warnings": [
             "This plan is read-only and does not mutate PostgreSQL.",
-            "Deletes are reported as stale_existing and require explicit operator policy before implementation.",
-            "Only retrieval_document currently performs content-hash update detection; broader column-level diffing is planned.",
+            "Mutating upserts retain rows reported as stale_existing; use an explicit reset only for full replacement.",
+            "Retrieval-document estimates use content hashes so unchanged embeddings are retained; other table estimates conservatively classify matched keys as update candidates.",
         ],
     }

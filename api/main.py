@@ -111,6 +111,7 @@ from evaluation.benchmark import (
 )
 from evaluation.questions import BENCHMARK_QUESTIONS, QUESTION_CATEGORIES
 from evaluation.reference_answers import get_reference
+from db.backup import backup_capability
 from orchestration.answer_audit import audit_answer
 from orchestration.unified import build_prompt_with_context, retrieve, retrieve_with_expansion
 from retrieval.local_retriever import LocalRetriever
@@ -428,10 +429,20 @@ PIPELINE_STAGES: List[Dict[str, Any]] = [
         "expensive": False,
     },
     {
+        "id": "backup_database",
+        "label": "Back up database",
+        "description": "Create an atomic PostgreSQL custom archive, SHA-256 manifest, and structural restore verification before mutation.",
+        "command": ["python", "scripts/database_backup.py", "create"],
+        "expected_inputs": ["PostgreSQL database", "pg_dump and pg_restore"],
+        "expected_outputs": ["data/backups/*.dump", "data/backups/*.dump.json"],
+        "destructive": False,
+        "expensive": False,
+    },
+    {
         "id": "load_db",
         "label": "Load database",
-        "description": "Reset/load PostgreSQL tables, refresh full-text search vectors, and optionally embed documents.",
-        "command": ["python", "scripts/load_db.py", "--reset", "--embed"],
+        "description": "Transactionally upsert PostgreSQL corpus rows by default, or explicitly reset, then refresh search vectors and embeddings.",
+        "command": ["python", "scripts/load_db.py", "--upsert", "--embed"],
         "expected_inputs": ["data/normalized/*.parquet", "data/serving/retrieval_documents.parquet", "data/canonical/*.parquet"],
         "expected_outputs": ["PostgreSQL tables", "retrieval_document.text_tsv", "retrieval_document.embedding"],
         "destructive": True,
@@ -456,6 +467,7 @@ PIPELINE_DEFAULT_STAGES = [
     "build_retrieval_docs",
     "pre_analysis",
     "reliability",
+    "backup_database",
     "load_db",
 ]
 PIPELINE_JOB_LOCK = threading.Lock()
@@ -1283,7 +1295,11 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
             warning=produced_in_run and not exists,
         )
 
-    needs_database = "load_db" in request.stages or "embed_documents" in request.stages
+    needs_database = (
+        "backup_database" in request.stages
+        or "load_db" in request.stages
+        or "embed_documents" in request.stages
+    )
     if needs_database:
         db_available = bool(database.get("available"))
         _pipeline_check(
@@ -1297,19 +1313,52 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
         )
 
     if "load_db" in request.stages:
+        backup_index = (
+            request.stages.index("backup_database")
+            if "backup_database" in request.stages
+            else -1
+        )
+        load_index = request.stages.index("load_db")
+        backup_ordered = backup_index >= 0 and backup_index < load_index
         _pipeline_check(
             checks,
-            id_="database_reset_guard",
-            label="Database reset guard",
-            passed=request.dry_run or request.reset_database,
+            id_="database_backup_guard",
+            label="Pre-mutation database backup",
+            passed=request.dry_run or backup_ordered,
             detail=(
                 "Dry-run does not modify the database."
                 if request.dry_run
-                else "reset_database=true supplied."
-                if request.reset_database
-                else "Non-dry-run database load requires reset_database=true."
+                else "A verified database backup is ordered before load_db."
+                if backup_ordered
+                else "Non-dry-run database loading requires backup_database before load_db."
             ),
             required=not request.dry_run,
+        )
+        _pipeline_check(
+            checks,
+            id_="database_reset_guard",
+            label="Database mutation mode",
+            passed=True,
+            detail=(
+                "Dry-run does not modify the database."
+                if request.dry_run
+                else "Explicit reset mode selected; the corpus tables will be replaced."
+                if request.reset_database
+                else "Transactional incremental upsert selected; stale rows are retained."
+            ),
+            required=False,
+        )
+
+    if "backup_database" in request.stages:
+        capability = backup_capability()
+        _pipeline_check(
+            checks,
+            id_="database_backup_tools",
+            label="Database backup tooling",
+            passed=bool(capability.get("available")),
+            detail=str(capability.get("detail") or "Backup tooling unavailable."),
+            required=not request.dry_run,
+            warning=request.dry_run,
         )
 
     needs_ollama = "embed_documents" in request.stages or ("load_db" in request.stages and request.embed_after_load)
@@ -1634,6 +1683,15 @@ def _pipeline_command(stage_id: str, request: PipelineRunRequest) -> List[str]:
         "build_retrieval_docs": [sys.executable, "scripts/build_retrieval_docs.py"],
         "pre_analysis": [sys.executable, "scripts/run_pre_analysis.py"],
         "reliability": [sys.executable, "scripts/run_reliability.py"],
+        "backup_database": [
+            sys.executable,
+            "scripts/database_backup.py",
+            "create",
+            "--output-dir",
+            str(config.DATABASE_BACKUP_DIR),
+            "--label",
+            request.tag or "pipeline",
+        ],
         "load_db": [sys.executable, "scripts/load_db.py"],
         "embed_documents": [
             sys.executable,
@@ -1647,6 +1705,8 @@ def _pipeline_command(stage_id: str, request: PipelineRunRequest) -> List[str]:
         command.append("--skip-sst")
     if stage_id == "load_db" and request.reset_database:
         command.append("--reset")
+    if stage_id == "load_db" and not request.reset_database:
+        command.append("--upsert")
     if stage_id == "load_db" and request.embed_after_load:
         command.append("--embed")
     return command
@@ -1848,11 +1908,6 @@ def _run_pipeline_job(
 
 def _validate_pipeline_request_for_start(request: PipelineRunRequest) -> PipelinePreflightResponse:
     _validate_pipeline_stages(request.stages)
-    if "load_db" in request.stages and not request.dry_run and not request.reset_database:
-        raise HTTPException(
-            status_code=400,
-            detail="Non-dry-run database load requires reset_database=true to avoid duplicate appended rows.",
-        )
     preflight = _pipeline_preflight_payload(request)
     if not request.dry_run and preflight.blockers:
         raise HTTPException(

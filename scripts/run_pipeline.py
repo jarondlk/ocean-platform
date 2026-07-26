@@ -9,7 +9,7 @@ manifest/log/status files used by the FastAPI `/pipeline` endpoints.
 Examples:
     python scripts/run_pipeline.py --validate-only
     python scripts/run_pipeline.py --stages ingest,build_retrieval_docs --dry-run
-    python scripts/run_pipeline.py --execute --tag 2026-07-refresh --reset-db --embed
+    python scripts/run_pipeline.py --execute --tag 2026-07-refresh --embed
 """
 from __future__ import annotations
 
@@ -46,6 +46,8 @@ def _parse_stages(value: str, *, validate_only: bool) -> list[str]:
 
 def _request_from_args(args: argparse.Namespace) -> PipelineRunRequest:
     stages = _parse_stages(args.stages, validate_only=args.validate_only)
+    if "load_db" in stages and "backup_database" not in stages:
+        stages.insert(stages.index("load_db"), "backup_database")
     execute = args.execute
     if execute is None:
         execute = args.validate_only
@@ -67,7 +69,7 @@ def main() -> int:
     parser.add_argument(
         "--stages",
         default="full",
-        help="Comma-separated stage IDs, or 'full' for validate_raw, ingest, build_retrieval_docs, pre_analysis, reliability, load_db.",
+        help="Comma-separated stage IDs, or 'full' for validation, ingestion, analysis, verified database backup, and database loading.",
     )
     parser.add_argument(
         "--validate-only",
@@ -90,7 +92,11 @@ def main() -> int:
     parser.add_argument("--tag", help="Optional run tag stored in the manifest.")
     parser.add_argument("--notes", help="Optional operator notes stored in the manifest.")
     parser.add_argument("--skip-sst", action="store_true", help="Skip SST preprocessing during ingest.")
-    parser.add_argument("--reset-db", action="store_true", help="Required for real load_db runs.")
+    parser.add_argument(
+        "--reset-db",
+        action="store_true",
+        help="Replace corpus tables instead of the default transactional upsert.",
+    )
     parser.add_argument("--embed", dest="embed", action="store_true", default=True, help="Run load_db with --embed when load_db is selected.")
     parser.add_argument("--no-embed", dest="embed", action="store_false", help="Run load_db without --embed.")
     parser.add_argument("--embedding-model", help="Override EMBEDDING_MODEL for embedding stages.")

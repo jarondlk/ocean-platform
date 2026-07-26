@@ -2,6 +2,14 @@ import "server-only";
 
 
 const PRODUCTION_LIKE = new Set(["staging", "production"]);
+const TRUE_VALUES = new Set(["1", "true", "yes", "on"]);
+const FALSE_VALUES = new Set(["0", "false", "no", "off", ""]);
+const MOCK_PASSWORD_HASH_SETTINGS = [
+  "MOCK_VIEWER_PASSWORD_HASH",
+  "MOCK_RESEARCHER_PASSWORD_HASH",
+  "MOCK_ADMIN_PASSWORD_HASH",
+] as const;
+const SCRYPT_HASH_PATTERN = /^scrypt\$[a-f0-9]{32}\$[a-f0-9]{128}$/;
 const PLACEHOLDER_MARKERS = [
   "replace-with",
   "not-configured",
@@ -16,6 +24,15 @@ const PLACEHOLDER_MARKERS = [
 
 function setting(name: string, fallback = ""): string {
   return (process.env[name] || fallback).trim();
+}
+
+function booleanSetting(name: string, fallback = "false"): boolean {
+  const value = setting(name, fallback).toLowerCase();
+  if (TRUE_VALUES.has(value)) return true;
+  if (FALSE_VALUES.has(value)) return false;
+  throw new Error(
+    `${name} must be one of true/false, yes/no, on/off, or 1/0`,
+  );
 }
 
 function placeholder(value: string): boolean {
@@ -53,6 +70,26 @@ export function validateFrontendSecurityConfiguration(): void {
   const authMode = setting("AUTH_MODE", "required").toLowerCase();
   if (!["required", "disabled"].includes(authMode)) {
     throw new Error("AUTH_MODE must be either required or disabled");
+  }
+  const mockLogin = booleanSetting("ENABLE_MOCK_LOGIN");
+  if (mockLogin && PRODUCTION_LIKE.has(deploymentEnv)) {
+    throw new Error(
+      "ENABLE_MOCK_LOGIN is forbidden in staging and production",
+    );
+  }
+  if (mockLogin && authMode !== "required") {
+    throw new Error(
+      "ENABLE_MOCK_LOGIN requires AUTH_MODE=required",
+    );
+  }
+  if (mockLogin) {
+    for (const name of MOCK_PASSWORD_HASH_SETTINGS) {
+      if (!SCRYPT_HASH_PATTERN.test(setting(name))) {
+        throw new Error(
+          `${name} must be a valid scrypt password hash when mock login is enabled`,
+        );
+      }
+    }
   }
   if (!PRODUCTION_LIKE.has(deploymentEnv)) return;
 
@@ -99,4 +136,9 @@ export function validateFrontendSecurityConfiguration(): void {
 export function localAuthDisabled(): boolean {
   validateFrontendSecurityConfiguration();
   return setting("AUTH_MODE", "required").toLowerCase() === "disabled";
+}
+
+export function mockLoginEnabled(): boolean {
+  validateFrontendSecurityConfiguration();
+  return booleanSetting("ENABLE_MOCK_LOGIN");
 }

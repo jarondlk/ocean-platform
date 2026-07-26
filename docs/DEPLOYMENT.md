@@ -28,6 +28,7 @@ repository and replace every placeholder. At minimum, set:
 DEPLOYMENT_ENV=production
 AUTH_MODE=required
 PERSIST_LOCAL_CHAT=false
+ENABLE_MOCK_LOGIN=false
 
 AUTH_URL=https://rag.example.org
 AUTH_TRUST_HOST=false
@@ -39,7 +40,7 @@ INTERNAL_AUTH_AUDIENCE=onagawa-source-chat-api
 OIDC_ISSUER=https://identity.example.org
 OIDC_CLIENT_ID=<provider client id>
 OIDC_CLIENT_SECRET=<provider client secret>
-OIDC_PROVIDER_NAME=Organization account
+OIDC_PROVIDER_NAME=Managed identity provider
 
 CORS_ORIGINS=https://rag.example.org
 POSTGRES_USER=onagawa
@@ -60,6 +61,12 @@ Do not commit the generated values. Restrict the environment file to the service
 account. If the reverse proxy must provide the public host dynamically, enable
 `AUTH_TRUST_HOST=true` only when the proxy overwrites untrusted `Host`,
 `Forwarded`, and `X-Forwarded-*` headers.
+
+Select a managed OIDC provider that supplies hosted email/password sign-in,
+password recovery, MFA, lockout, and abuse protection. The application login
+page displays one neutral **Sign in** action; it does not collect or store
+production passwords. `ENABLE_MOCK_LOGIN` is only a local test harness and
+cannot be enabled in staging or production.
 
 Register this exact provider callback:
 
@@ -119,11 +126,27 @@ Back up the complete PostgreSQL database, not only scientific corpus tables.
 The application metadata tables contain users, invitations, chat history,
 feedback, and audit events.
 
-Before launch:
+The pipeline automatically creates and verifies a PostgreSQL custom-format
+archive before a database mutation. To exercise the same path directly:
 
-1. schedule encrypted `pg_dump` or managed PostgreSQL backups;
+```bash
+python scripts/database_backup.py create --label pre-release --restore-test
+python scripts/database_backup.py verify data/backups/<archive>.dump
+python scripts/database_backup.py restore-test data/backups/<archive>.dump
+```
+
+Each archive is written atomically with a SHA-256 sidecar manifest, table row
+counts, and archive metadata. `--restore-test` restores into a disposable
+database, compares recorded counts, and drops the disposable database. The
+production API image includes PostgreSQL client tools and
+`docker-compose.production.yml` persists `/app/data/backups` in a dedicated
+volume.
+
+Before launch, operators must still:
+
+1. schedule the verified backup command or managed PostgreSQL backups;
 2. define retention and off-host storage;
-3. restore a backup into an isolated database;
+3. encrypt backup media and restrict access;
 4. apply migrations to the restored copy;
 5. verify user, chat, feedback, and audit-event counts;
 6. record recovery time and recovery point objectives.
@@ -147,15 +170,16 @@ Rotate secrets after suspected exposure and on the operator's normal schedule:
 Changing signing secrets invalidates active sessions or in-flight internal
 tokens. The internal token lifetime is at most 120 seconds.
 
-## Scaling Constraint
+## Scaling
 
-The authorization MVP rate limiter is in-process. Run one FastAPI worker.
-Before adding workers or hosts, replace it with a shared limiter or enforce
-equivalent per-identity limits at the gateway.
+Production and staging rate-limit counters are stored atomically in PostgreSQL
+and are shared by API workers. Horizontal deployment must still point every
+worker at the same migrated database, and an internet-facing gateway should
+apply additional connection and volumetric limits.
 
 ## Rollback
 
 Application rollback must not automatically downgrade the database. Keep the
-previous image, take a database backup before migrations, and confirm that the
-previous code can read the upgraded schema. Use Alembic downgrade only after
-reviewing the migration's data-loss behavior.
+previous image, create and restore-test a database backup before migrations,
+and confirm that the previous code can read the upgraded schema. Use Alembic
+downgrade only after reviewing the migration's data-loss behavior.

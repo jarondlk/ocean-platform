@@ -166,6 +166,12 @@ def friedman_test(
     if n < 3:
         logger.warning("Friedman test requires at least 3 observations")
         return 0.0, 1.0
+    reference = np.asarray(groups[0], dtype=float)
+    if all(
+        np.array_equal(reference, np.asarray(group, dtype=float), equal_nan=True)
+        for group in groups[1:]
+    ):
+        return 0.0, 1.0
 
     try:
         stat, p = sp_stats.friedmanchisquare(*groups)

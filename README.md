@@ -18,7 +18,7 @@ Transforms fragmented field data — CTD water profiles, metagenome sequencing, 
 
 ## Current Prototype Status
 
-Status as of **2026-07-23**: this is an active local-first **Next.js +
+Status as of **2026-07-26**: this is an active local-first **Next.js +
 FastAPI** prototype with PostgreSQL/pgvector retrieval and Ollama-backed local
 generation. The old Streamlit interface is archived for historical reference;
 new product work happens in the Next.js UI and FastAPI service.
@@ -28,7 +28,7 @@ Implemented in the current prototype:
 - Manual batch ingestion and corpus rebuild controls, including preflight,
   background job status, run logs, artifact freshness, manifests, and diffs.
 - Traceability surfaces for provenance manifests, document lineage, embedding
-  treatment, and read-only upsert dry-run planning.
+  treatment, strict raw-source validation, and upsert planning.
 - Expert data workbenches for source observations, CTD profiles, taxa, SST,
   derived ecological analysis, and reliability review.
 - Hybrid retrieval over pgvector + PostgreSQL full-text search with local
@@ -51,9 +51,9 @@ Implemented in the current prototype:
 Still intentionally future work:
 
 - Automatic ingestion, file watching, or scheduled cloud sync.
-- Mutating incremental upserts; the current upsert path is dry-run/read-only.
-- Backup/restore automation, shared rate limiting for multi-worker deployment,
-  and enforcement-mode Content Security Policy.
+- Automatic deletion of database rows whose source keys disappear from a batch;
+  idempotent upserts retain stale rows and report them for operator review.
+- Managed off-host backup retention, encryption, and point-in-time recovery.
 - LLM-as-judge semantic faithfulness scoring and click-through citation chips
   from chat answers into provenance/source detail panels.
 
@@ -154,8 +154,9 @@ flowchart TB
 ### Setup
 
 ```bash
-# Install dependencies
-pip install -r requirements.txt
+# Create .venv and install the hash-verified development lock
+./scripts/bootstrap_dev.sh
+source .venv/bin/activate
 
 # Start database
 podman machine start
@@ -187,6 +188,24 @@ settings. The two signing secrets must be different and at least 32 random
 bytes each. `AUTH_MODE=disabled` is only for an isolated local preview;
 staging and production reject it at startup.
 
+For realistic role-aware UI development without organization OIDC credentials,
+keep `AUTH_MODE=required` and set `ENABLE_MOCK_LOGIN=true` in an isolated local
+environment. Configure the three `MOCK_*_PASSWORD_HASH` settings using
+`python scripts/hash_mock_password.py`. The login page then accepts the fixed
+Viewer, Researcher, and Admin mock emails through a normal email/password form.
+It creates signed Auth.js sessions and exercises the normal FastAPI permission
+matrix without creating database users. Plaintext passwords are never committed.
+The flag is disabled by default and rejected in staging and production. Use it
+only against an isolated development environment: Admin actions retain their
+real local effects.
+
+Cloud authentication will remain OIDC-backed through a managed identity
+provider that can present a conventional email/password experience. The
+application will not store production password hashes or implement password
+reset, recovery, MFA, or breached-password checks itself. Local mock mode shows
+only the mock email/password form; production shows one neutral **Sign in**
+action that hands authentication to the configured provider.
+
 Apply application-metadata migrations and bootstrap the first admin invite:
 
 ```bash
@@ -205,12 +224,14 @@ Recommended manual batch entrypoint:
 ```bash
 python scripts/run_pipeline.py --validate-only
 python scripts/run_pipeline.py --preflight-only --stages full
-python scripts/run_pipeline.py --execute --tag 2026-07-refresh --reset-db --embed
+python scripts/run_pipeline.py --execute --tag 2026-07-refresh --embed
 ```
 
 `scripts/run_pipeline.py` is dry-run by default. Real execution requires
-`--execute`; destructive database reloads also require `--reset-db`. Each run
-writes status, logs, and a manifest under `data/pipeline_runs/`.
+`--execute`. A verified PostgreSQL backup is created before the default
+transactional, idempotent upsert. Full replacement is available only through
+the explicit `--reset-db` flag. Each run writes status, logs, and a manifest
+under `data/pipeline_runs/`.
 The `/pipeline` page exposes manual controls, preflight checks, active job
 status, per-stage logs, artifact freshness, run history, manifests, and
 artifact diffs.
@@ -222,20 +243,22 @@ python scripts/ingest.py                # 1. Ingestion + preprocessing
 python scripts/build_retrieval_docs.py  # 2. Anchor events + documents + links
 python scripts/run_pre_analysis.py      # 3. Ecological analyses
 python scripts/run_reliability.py       # 4. Cross-source reliability validation
-python scripts/load_db.py --reset --embed  # 5. Populate DB + embed 323 docs
+python scripts/database_backup.py create --restore-test  # 5. Verified DB backup
+python scripts/load_db.py --upsert --embed                # 6. Transactional load
 ```
 
-Traceability and incremental-load planning are also manual:
+Traceability, dry-run planning, and explicit full replacement remain available:
 
 ```bash
 python scripts/build_provenance_manifest.py --write --run-id 2026-07-refresh
 python scripts/load_db.py --upsert --dry-run --limit-keys 25 --json
+python scripts/load_db.py --reset --embed
 ```
 
-`--upsert --dry-run` is read-only. It compares current artifacts with database
-keys through the provenance manifest and reports planned inserts, candidate
-updates, stale rows, and embedding refresh candidates. Mutating upserts remain
-blocked until row-level lineage and backup/rollback policy are hardened.
+The upsert path compares current artifacts with logical database keys and
+source-row hashes. It inserts and updates inside one transaction, preserves
+unchanged retrieval embeddings, and reports stale rows without deleting them.
+`--upsert --dry-run` exposes the same plan without writing.
 
 ### Launch
 
@@ -446,7 +469,8 @@ provenance-eco-rag/
 │
 ├── ingestion/
 │   ├── provenance.py                   # SHA-256 file registration (JSONL)
-│   ├── lineage.py                      # Traceability manifests + upsert dry-run planner
+│   ├── lineage.py                      # Traceability manifests + upsert planner
+│   ├── raw_validation.py               # Strict raw-source validation contracts
 │   └── file_inventory.py              # Directory scanner
 │
 ├── schema/
@@ -459,7 +483,8 @@ provenance-eco-rag/
 │   └── local_retriever.py              # BM25 + numpy fallback
 │
 ├── db/
-│   ├── models.py                       # 9 SQLAlchemy ORM tables
+│   ├── backup.py                       # Verified backup and isolated restore checks
+│   ├── models.py                       # Scientific corpus SQLAlchemy models
 │   ├── connection.py                   # Engine, sessions, init_db
 │   └── vector_store.py                 # Ollama embedding + cosine search
 │
@@ -473,10 +498,11 @@ provenance-eco-rag/
 │
 ├── scripts/
 │   ├── run_pipeline.py                 # Manual batch orchestrator + manifests
+│   ├── database_backup.py              # Backup, verification, and restore-test CLI
 │   ├── build_provenance_manifest.py    # Manual traceability manifest writer
 │   ├── ingest.py                       # Ingestion pipeline
 │   ├── build_retrieval_docs.py         # Documents + links
-│   ├── load_db.py                      # Reset load, embeddings, upsert dry-run
+│   ├── load_db.py                      # Transactional upsert/reset + embeddings
 │   ├── run_pre_analysis.py             # Pre-analysis pipeline
 │   ├── run_reliability.py              # Reliability pipeline
 │   ├── update_embeddings.py            # Partial embedding refresh
@@ -721,7 +747,7 @@ AUTH_MODE=disabled DEPLOYMENT_ENV=test PERSIST_LOCAL_CHAT=false \
 pytest tests/ -q --tb=short \
   --cov=api --cov=config --cov=db --cov=preprocessing --cov=ingestion \
   --cov=orchestration --cov=schema --cov=evaluation \
-  --cov-report=term-missing --cov-fail-under=60
+  --cov-report=term-missing --cov-fail-under=70
 
 # Check the Next.js frontend
 cd frontend
@@ -731,27 +757,25 @@ npm run build
 
 ### Current Test Matrix
 
-The current suite contains more than **330 tests** across unit, API, and
-integration modules. The normal
-run passes 337 and skips the explicitly gated PostgreSQL integration test:
+The current suite contains more than **360 tests** across unit, API, and
+integration modules. The normal run passes 379 and skips the two explicitly
+gated PostgreSQL integration modules:
 
 | Test area | Files |
 | --- | --- |
 | Authentication, authorization, feedback, and security | `test_auth.py`, `test_security_config.py`, `test_rate_limit.py`, `test_chat_feedback.py`, `test_admin_feedback.py` |
 | API pages and controls | `test_api_explore.py`, `test_api_pipeline.py`, `test_api_provenance.py`, `test_api_evaluation.py`, `test_api_retrieve.py`, `test_api_schemas.py` |
-| Data normalization and provenance | `test_common.py`, `test_provenance.py`, `test_lineage.py`, `test_anchor_events.py` |
-| Retrieval, prompting, and answer audit | `test_local_retriever.py`, `test_prompt_builder.py`, `test_answer_audit.py` |
+| Data normalization and provenance | `test_common.py`, `test_provenance.py`, `test_lineage.py`, `test_raw_validation.py`, `test_metagenome_loaders.py`, `test_anchor_events.py` |
+| Retrieval, prompting, and answer audit | `test_local_retriever.py`, `test_query_orchestrator.py`, `test_prompt_builder.py`, `test_answer_audit.py` |
 | Reliability and evaluation | `test_reliability.py`, `test_evaluation.py`, `test_questions.py`, `test_quality_metrics.py`, `test_report.py`, `test_statistical_analysis.py` |
-| PostgreSQL integration | `integration/test_app_metadata_postgres.py` |
+| Database safety and loading | `test_database_backup.py`, `test_load_db_upsert.py` |
+| PostgreSQL integration | `integration/test_app_metadata_postgres.py`, `integration/test_operational_postgres.py` |
 
 Latest verified local result:
 
 ```text
-337 passed, 1 skipped, 3 scipy RuntimeWarnings
+379 passed, 2 skipped, 1 upstream netCDF4 wheel warning
 ```
-
-The warnings are emitted by SciPy for intentionally degenerate evaluation and
-statistical fixtures, and are expected by the test coverage.
 
 ---
 

@@ -35,7 +35,7 @@ const preflightColumns = ["status", "severity", "required", "label", "detail"];
 const runColumns = ["run_id", "status", "tag", "dry_run", "stage_count", "started_at", "completed_at", "duration_seconds", "failed_stage"];
 const activeJobColumns = ["job_id", "status", "phase", "stage_id", "percent", "updated_at", "message"];
 const diffColumns = ["label", "changed", "rows_before", "rows_after", "rows_delta", "size_before", "size_after", "modified_after"];
-const defaultFullStages = ["validate_raw", "ingest", "build_retrieval_docs", "pre_analysis", "reliability", "load_db"];
+const defaultFullStages = ["validate_raw", "ingest", "build_retrieval_docs", "pre_analysis", "reliability", "backup_database", "load_db"];
 
 export default function PipelinePage() {
   const [view, setView] = useState<PipelineView>("status");
@@ -59,8 +59,11 @@ export default function PipelinePage() {
   const [error, setError] = useState("");
 
   function buildRequest() {
+    const orderedStages = (status?.stages || [])
+      .map((stage) => stage.id)
+      .filter((stageId) => selectedStages.includes(stageId));
     return {
-      stages: selectedStages,
+      stages: orderedStages.length === selectedStages.length ? orderedStages : selectedStages,
       tag: tag || undefined,
       dry_run: dryRun,
       skip_sst: skipSst,
@@ -215,7 +218,8 @@ export default function PipelinePage() {
     },
   ];
   const freshnessBreakdown = countRowsBy(freshnessRows, "freshness_status");
-  const canStart = selectedStages.length > 0 && !loading && (!selectedStages.includes("load_db") || dryRun || resetDatabase);
+  const canStart = selectedStages.length > 0 && !loading
+    && (!selectedStages.includes("load_db") || dryRun || selectedStages.includes("backup_database"));
 
   async function submitJob() {
     if (!selectedStages.length) return;
@@ -400,7 +404,7 @@ export default function PipelinePage() {
                 <input checked={skipSst} onChange={(event) => setSkipSst(event.target.checked)} type="checkbox" />
                 <span>Skip SST</span>
               </label>
-              <label className="checkbox-row" title="Required for non-dry-run database load to avoid duplicate appended rows.">
+              <label className="checkbox-row" title="Replace all scientific corpus tables instead of using the default transactional upsert.">
                 <input checked={resetDatabase} onChange={(event) => setResetDatabase(event.target.checked)} type="checkbox" />
                 <span>Reset database</span>
               </label>
@@ -415,8 +419,8 @@ export default function PipelinePage() {
               <textarea id="pipeline-notes" className="textarea compact-textarea" onChange={(event) => setNotes(event.target.value)} value={notes} />
             </label>
 
-            {!canStart && selectedStages.includes("load_db") && !dryRun && !resetDatabase ? (
-              <p className="error-text">Non-dry-run database load requires Reset database.</p>
+            {!canStart && selectedStages.includes("load_db") && !dryRun && !selectedStages.includes("backup_database") ? (
+              <p className="error-text">Non-dry-run database loading requires the backup_database stage.</p>
             ) : null}
           </section>
 

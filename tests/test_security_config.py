@@ -10,6 +10,7 @@ def _environment(**overrides: str) -> dict[str, str]:
         "DEPLOYMENT_ENV": "production",
         "AUTH_MODE": "required",
         "PERSIST_LOCAL_CHAT": "false",
+        "ENABLE_MOCK_LOGIN": "false",
         "INTERNAL_AUTH_SECRET": "api-signing-secret-that-is-long-and-random-123",
         "INTERNAL_AUTH_ISSUER": "onagawa-source-chat-frontend",
         "INTERNAL_AUTH_AUDIENCE": "onagawa-source-chat-api",
@@ -44,6 +45,53 @@ def test_production_rejects_local_chat_persistence():
     ):
         config.validate_security_configuration(
             _environment(PERSIST_LOCAL_CHAT="true")
+        )
+
+
+@pytest.mark.parametrize("deployment_env", ["staging", "production"])
+def test_production_rejects_mock_login(deployment_env):
+    with pytest.raises(
+        config.SecurityConfigurationError,
+        match="ENABLE_MOCK_LOGIN",
+    ):
+        config.validate_security_configuration(
+            _environment(
+                DEPLOYMENT_ENV=deployment_env,
+                ENABLE_MOCK_LOGIN="true",
+            )
+        )
+
+
+def test_local_mock_login_requires_normal_authentication():
+    config.validate_security_configuration(
+        _environment(
+            DEPLOYMENT_ENV="test",
+            AUTH_MODE="required",
+            ENABLE_MOCK_LOGIN="true",
+            CORS_ORIGINS="http://localhost:3000",
+        )
+    )
+    assert config.mock_login_enabled(
+        _environment(
+            DEPLOYMENT_ENV="development",
+            AUTH_MODE="required",
+            ENABLE_MOCK_LOGIN="true",
+            CORS_ORIGINS="http://localhost:3000",
+        )
+    )
+
+    with pytest.raises(
+        config.SecurityConfigurationError,
+        match="requires AUTH_MODE=required",
+    ):
+        config.validate_security_configuration(
+            _environment(
+                DEPLOYMENT_ENV="development",
+                AUTH_MODE="disabled",
+                ENABLE_MOCK_LOGIN="true",
+                INTERNAL_AUTH_SECRET="",
+                CORS_ORIGINS="http://localhost:3000",
+            )
         )
 
 
@@ -121,6 +169,21 @@ def test_invalid_local_persistence_boolean_is_rejected(value):
                 AUTH_MODE="disabled",
                 PERSIST_LOCAL_CHAT=value,
                 INTERNAL_AUTH_SECRET="",
+                CORS_ORIGINS="http://localhost:3000",
+            )
+        )
+
+
+@pytest.mark.parametrize("value", ["sometimes", "enabled", "truthy"])
+def test_invalid_mock_login_boolean_is_rejected(value):
+    with pytest.raises(
+        config.SecurityConfigurationError,
+        match="ENABLE_MOCK_LOGIN",
+    ):
+        config.validate_security_configuration(
+            _environment(
+                DEPLOYMENT_ENV="development",
+                ENABLE_MOCK_LOGIN=value,
                 CORS_ORIGINS="http://localhost:3000",
             )
         )

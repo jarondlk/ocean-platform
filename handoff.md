@@ -1,6 +1,6 @@
 # Handoff Document - Onagawa Source Chat (provenance-eco-rag)
 
-> **Last updated**: 2026-07-23
+> **Last updated**: 2026-07-26
 > **Project path**: `/Users/jaronchai/Documents/GitHub/provenance-eco-rag/`
 > **Current status**: Active invite-only Next.js + FastAPI application with OIDC, role-based authorization, persistent feedback, and a local-first RAG stack. Manual batch ingestion remains the only update path. Legacy Streamlit UI is archived for reference.
 
@@ -22,14 +22,15 @@ application shape:
 - **Database**: PostgreSQL 16 + pgvector through `docker-compose.yml`
 - **LLM runtime**: Ollama, usually host-run locally; optional compose overlay
 - **Ingestion**: manual batch-run pipeline scripts, not automatic ingestion
-- **Provenance**: manifest-backed lineage inspection plus read-only upsert
-  dry-run planning
+- **Provenance**: strict raw-source contracts, SHA-256 manifests, row hashes,
+  lineage inspection, and transactional upsert planning
 - **Identity**: invite-only OpenID Connect through Auth.js; viewer, researcher,
   and admin permissions are re-resolved from PostgreSQL on every API request
 - **Feedback**: persisted chat interactions, thumbs-up/down reasons/comments,
   and an audited admin review/export workbench
 - **Production boundary**: fail-closed configuration, private API/database
-  topology, rate limits, security headers, and CI security checks
+  topology, shared PostgreSQL rate limits, enforcing security headers, verified
+  backups, and CI security checks
 - **Archive**: old Streamlit app and Streamlit container overlay preserved in
   `archive/legacy-streamlit/`
 
@@ -59,8 +60,8 @@ from the repository root when intentionally run from the archive path.
 - `README.md` keeps Streamlit documentation as an archived parity reference.
 - `README.md` documents linked cross-source evidence, answer trust reports,
   invite-only authorization, feedback review, production safeguards, and the
-  current 330+ test suite.
-- `README.md` now includes a 2026-07-23 current prototype status section and
+  current 360+ test suite.
+- `README.md` now includes a 2026-07-26 current prototype status section and
   fresh screenshots captured from the live Next.js/FastAPI prototype.
 - `docs/ROADMAP.md` records the manual batch-ingestion direction and cloud UI
   migration direction, including completed citation rendering, linked evidence,
@@ -84,6 +85,42 @@ from the repository root when intentionally run from the archive path.
 - Added tests for preflight command planning, reset blockers, dry-run manifest
   creation, active job discovery, artifact freshness, stage-log parsing, run
   history, and run detail retrieval.
+
+### Milestone Readiness Hardening
+
+- Added strict contracts for every raw tabular source plus the 1,848-file SST
+  collection, including schema, identifiers, dates, duplicate detection,
+  cross-file sample/run agreement, file hashes, and prior-run row-count checks.
+- Corrected the `gn.consistency.tsv` column interpretation and optional Kraken
+  group-header handling found by the stricter validation.
+- Added source-row hashes and transactional staging-table upserts. The default
+  pipeline now preserves unchanged embeddings and requires an explicit reset
+  flag for full replacement.
+- Added atomic custom-format PostgreSQL backups with SHA-256 sidecars, archive
+  verification, row-count manifests, and isolated restore tests. Pipeline
+  preflight requires a backup stage before database mutation.
+- Moved production/staging rate-limit counters to PostgreSQL, switched CSP to
+  enforcement, and dropped container capabilities while running application
+  processes as non-root users.
+- Split runtime, development, analysis, and archived-app dependencies into
+  hash-verified transitive locks and added a Python 3.12 bootstrap script.
+- Pinned production base images by digest, pinned the patched Auth.js beta,
+  and overrode the frontend's transitive Sharp and PostCSS packages to patched
+  releases. Routine npm installs do not submit dependency metadata to the
+  registry audit endpoint; CI dependency review and Dependabot remain enabled.
+- Browser validation found and fixed two frontend integration issues: enforced
+  CSP now permits the Next.js evaluation runtime only in development, and the
+  same-origin proxy guard compares state-changing requests with the effective
+  browser-facing host/protocol while continuing to reject foreign or missing
+  origins.
+- Added an opt-in development email/password harness on `/login` for fixed
+  viewer, researcher, and admin mock accounts. Passwords are supplied only as
+  environment-injected scrypt hashes. It creates normal signed Auth.js/internal
+  JWT sessions without database fixtures, is disabled by default, and fails
+  closed if enabled in staging or production.
+- Raised the aggregate coverage floor to 70% and added focused tests for
+  database safety, raw validation, query orchestration, analysis, evaluation,
+  and remote sensing.
 
 ### Repository Audit and Mutsu Correction
 
@@ -127,9 +164,10 @@ from the repository root when intentionally run from the archive path.
 - Added synthetic tests for lineage construction, content-hash comparison,
   embedding-refresh planning, and provenance API contracts.
 
-Important boundary: mutating upserts are still intentionally blocked. The
-current implementation plans and explains what would change; it does not write
-incremental updates into PostgreSQL.
+The upsert implementation now stages each corpus table, compares logical keys
+and source-row hashes, and applies inserts/updates in one transaction. It
+retains and reports stale keys rather than deleting them. Unchanged retrieval
+documents retain their embeddings.
 
 ### Data and Analysis UI Consolidation
 
@@ -178,6 +216,11 @@ incremental updates into PostgreSQL.
 
 - Added Auth.js OpenID Connect login with verified-email invitation acceptance;
   there is no public registration or local password store.
+- Recorded the cloud authentication decision: use a managed OIDC provider that
+  presents hosted email/password sign-in and owns password recovery, MFA,
+  lockout, and abuse controls. The application shows one neutral production
+  **Sign in** action and never stores production passwords. Local mock mode
+  hides the provider action completely.
 - Added viewer, researcher, and admin roles. Research, commercial, and internal
   are account-type metadata, not permission-bearing roles.
 - Added default-deny FastAPI route policies, current-role/status resolution on
@@ -266,7 +309,7 @@ provenance-eco-rag/
 ├── retrieval/                        # Document builder, hybrid retriever, local fallback
 ├── schema/                           # Anchor-event construction
 ├── scripts/                          # Manual batch pipeline and evaluation CLIs
-├── tests/                            # 330+ unit, API, and integration tests
+├── tests/                            # 360+ unit, API, and integration tests
 ├── config.py                         # Paths, model defaults, thresholds
 ├── Containerfile.api                 # FastAPI container
 ├── docker-compose.yml                # PostgreSQL/pgvector
@@ -275,8 +318,10 @@ provenance-eco-rag/
 ├── docker-compose.production.yml     # Private-service production topology
 ├── .env.production.example           # Production environment template
 ├── README.md                         # Public project guide
-├── requirements.txt                  # Python runtime dependency set
-└── requirements-dev.txt              # CI/development verification tools
+├── requirements.in                   # Direct Python runtime inputs
+├── requirements.txt                  # Hash-verified transitive runtime lock
+├── requirements-dev.in               # Direct development/test inputs
+└── requirements-dev.txt              # Hash-verified development/test lock
 ```
 
 ### Archive Policy
@@ -391,10 +436,11 @@ sync.
    - Cross-source validation outputs and `reliability_documents.jsonl` are
      generated under `data/reliability/`
 
-6. **Database load and embeddings**
-   - Run `python scripts/load_db.py --reset --embed`
-   - PostgreSQL tables are rebuilt
-   - Embeddings are generated via Ollama
+6. **Database backup, load, and embeddings**
+   - Run `python scripts/database_backup.py create --restore-test`
+   - Run `python scripts/load_db.py --upsert --embed`
+   - Corpus inserts/updates commit transactionally; stale rows are reported
+   - Only new or changed retrieval documents require fresh embeddings
 
 7. **Traceability and dry-run planning**
    - Run `python scripts/build_provenance_manifest.py --write --run-id <run_id>`
@@ -416,13 +462,14 @@ without an explicit operator action.
 ```bash
 python scripts/run_pipeline.py --validate-only
 python scripts/run_pipeline.py --preflight-only --stages full
-python scripts/run_pipeline.py --execute --tag 2026-07-manual-refresh --reset-db --embed
+python scripts/run_pipeline.py --execute --tag 2026-07-manual-refresh --embed
 ```
 
 `scripts/run_pipeline.py` is dry-run by default. Real execution requires
-`--execute`; destructive database loads require `--reset-db`. Runs write
-`progress.json`, `run.log`, `run_meta.json`, and `manifest.json` under
-`data/pipeline_runs/{run_id}/`.
+`--execute`; the normal path creates a verified backup before transactional
+upsert. A destructive full replacement additionally requires `--reset-db`.
+Runs write `progress.json`, `run.log`, `run_meta.json`, and `manifest.json`
+under `data/pipeline_runs/{run_id}/`.
 
 The `/pipeline` page can start background jobs, run preflight checks, inspect
 active/background job status, show per-stage logs, list run history, inspect
@@ -430,7 +477,7 @@ manifests, report artifact freshness, and display artifact diffs.
 
 ### Provenance and Incremental-Load Planning
 
-The provenance layer is intentionally inspectable before it becomes mutating:
+The provenance and mutation plan remain inspectable before execution:
 
 ```bash
 python scripts/build_provenance_manifest.py --limit-documents 500
@@ -449,11 +496,10 @@ The manifest currently records:
 - Embedding treatment for the manifest document window, including model,
   dimension, database status, and refresh candidates
 
-The upsert dry-run compares current artifacts against PostgreSQL keys and
-reports planned inserts, candidate updates, stale existing keys, and
-retrieval-document embedding refresh candidates. It is read-only and should
-remain so until row-level lineage, backup/rollback, and integration testing are
-implemented.
+The upsert dry-run compares current artifacts against PostgreSQL logical keys
+and reports planned inserts, updates, stale existing keys, and embedding
+refresh candidates. The mutating mode uses the same contract inside one
+transaction; stale rows are not automatically deleted.
 
 ---
 
@@ -501,17 +547,22 @@ Latest local verification for this audit:
 
 | Check | Result |
 | --- | --- |
-| `pytest` | 337 passed, 1 gated integration test skipped, 3 expected SciPy RuntimeWarnings |
-| Coverage boundary | 65% aggregate; required floor is 60% |
+| `pytest` | 379 passed, 2 gated PostgreSQL integration modules skipped; 1 upstream macOS ARM netCDF4 wheel warning |
+| Coverage boundary | 72% aggregate; required floor is 70% |
 | PostgreSQL metadata integration | Passed against migrated local PostgreSQL/pgvector |
 | Security-boundary Ruff check | Passed |
 | `npm run typecheck` | Passed |
 | Production-configured `npm run build` | Passed |
+| Production API and frontend container builds | Passed; non-root runtime and pinned frontend dependency versions confirmed |
+| Browser route smoke test | Passed all 12 registered routes in local preview mode with no post-fix console errors |
+| Browser interaction smoke test | Explore search, all Data views, database probe, pipeline preflight, provenance dry-run, evaluation views, and citation-grounded chat passed |
+| Production frontend container browser test | Passed overview data load and state-changing retrieval probe; strict CSP and 403 cross-origin rejection confirmed |
+| OIDC browser integration | Passed authorization-code flow with PKCE/state/nonce, invitation consumption, viewer/researcher/admin sessions, role navigation/direct-route gates, sign-out, audit records, and immediate suspension using an isolated local issuer |
+| Development mock-login browser test | Passed viewer/researcher/admin signed logins, invalid-password handling, permission-aware navigation, direct-route denial, admin-only pages, sign-out, and non-persistence checks |
 | Production Compose expansion | Passed |
+| Strict raw-source validation | Passed for all 12 tabular sources and 1,848 SST files |
+| Full default pipeline | Passed all 7 stages, including verified backup and idempotent upsert |
 | `git diff --check` | Passed |
-
-The SciPy warnings come from deliberately degenerate evaluation/statistical
-fixtures and are expected by the test coverage.
 
 Current test modules:
 
@@ -566,7 +617,7 @@ git diff --check
 | Area | Status |
 | --- | --- |
 | Core data pipeline | CTD, metagenome, SST normalization and retrieval-document build path exist |
-| Provenance | SHA-256 file registry, traceability manifest, document trace API/UI, and read-only upsert dry-run exist |
+| Provenance | Strict raw validation, SHA-256 file registry, row hashes, traceability manifest, document trace API/UI, and upsert dry-run exist |
 | Anchor/cross-source linking | Anchor events and cross-source links exist |
 | Retrieval | PostgreSQL hybrid retrieval and local fallback exist |
 | Trustworthy multi-source answering | Primary retrieval, linked cross-source evidence expansion, source-family diagnostics, and chat/evidence controls exist |
@@ -577,10 +628,10 @@ git diff --check
 | Database UI | Schema, table browsing, and read-only query surface exist |
 | Data exploration | Combined Explore corpus workbench plus combined Data domain workbench exist for expert browsing |
 | System/debug | Status and debug surfaces exist |
-| Invite-only identity | OIDC, invitations, viewer/researcher/admin roles, suspension, and audit events exist |
+| Invite-only identity | OIDC, invitations, viewer/researcher/admin roles, suspension, audit events, and a production-forbidden development mock-login harness exist |
 | User feedback | Persisted chat interactions, feedback revisions, admin review/filter/export exist |
 | Security boundary | Fail-closed production config, default-deny authorization, bounded tokens/input, rate limits, headers, and SQL defense in depth exist |
-| CI and integration | Coverage enforcement, security lint, pinned actions, dependency monitoring config, and PostgreSQL metadata integration exist |
+| CI and integration | 70% coverage enforcement, security lint, pinned actions, hash-verified dependency locks, and PostgreSQL metadata/operations integration exist |
 | Containerization | Database-only, Next/FastAPI, optional Ollama, production private-service, and archived Streamlit modes exist |
 | Archive | Legacy Streamlit root files are preserved under `archive/legacy-streamlit/` |
 
@@ -591,30 +642,31 @@ git diff --check
 | Limitation | Notes |
 | --- | --- |
 | Ingestion is manual | No automatic file watcher, scheduler, queue, or cloud object-store sync yet |
-| Pipeline backup/rollback | Unified `run_pipeline.py` exists, but database backup and rollback automation are still future work |
-| Database load is reset-oriented | `scripts/load_db.py --reset --embed` is the reliable corpus mutation path; `--upsert --dry-run` exists, but mutating corpus upserts remain future work |
-| Production operations remain operator-managed | The topology, TLS, secret, backup, and rollback requirements are documented, but backup/restore and log-retention automation are not implemented |
+| Backup retention/PITR | Verified logical backup and isolated restore testing exist; encryption, off-host retention, and point-in-time recovery need deployment-specific infrastructure |
+| Stale-row deletion | Transactional upsert reports but does not delete database keys missing from the incoming artifacts |
+| Production operations remain operator-managed | TLS, secret rotation, log retention, backup retention, and incident procedures require deployment-specific implementation |
 | Ollama is local-first | Host Ollama is preferred on macOS; containerized Ollama is optional and may be slower |
 | Streamlit is archived | Do not add new active features to `archive/legacy-streamlit/app.py` |
 | Screenshots are point-in-time | `docs/screenshots/` contains current prototype captures from 2026-07-21; refresh them after major UI changes |
 | Trust report is deterministic | The current audit checks supplied evidence and citations; it is not an LLM-as-judge semantic faithfulness scorer |
-| Integration scope is focused | PostgreSQL migrations/invites/audits are integration-tested; most RAG and scientific tests remain synthetic |
-| CSP is report-only | Review violations before changing it to enforcement mode |
-| Rate limiting is single-process | Replace the in-memory limiter before adding API workers or hosts |
+| Integration scope is focused | PostgreSQL migrations, metadata, shared rate limiting, backup/restore, and repeated upserts are integration-tested; most RAG and scientific tests remain synthetic |
+| Auth.js beta | Auth.js 5 is exact-pinned at beta.32; regression-test any upgrade |
+| Managed OIDC deployment | The full application flow passed against an isolated local issuer; select the cloud provider and smoke-test its hosted email/password, recovery, MFA, HTTPS callback, and invited accounts |
 | Security operations require repository settings | Enable protected required checks, Dependabot alerts/security updates, CodeQL, and secret scanning where available |
+| Final mutation/recovery gates | Follow `docs/PRE_MILESTONE_VALIDATION_PLAN.md`; database-backed development mock users, invitation revoke, typed reset confirmation, browser mutations, and an isolated destructive drill remain open |
 
 ---
 
 ## 13. Recommended Next Work Order
 
-### 1. Pipeline Safety and Database Backups
+### 1. Scheduled-Update Operationalization
 
-Before destructive reset loads:
+Before handing scheduled updates to operators:
 
-- Add optional `pg_dump` backup command
-- Show backup path in `/pipeline`
-- Make reset/embed consequences explicit in the UI
-- Extend preflight with backup-path, free-space, and restore-readiness checks
+- Choose encrypted off-host backup storage and retention
+- Decide whether and when stale database keys may be deleted
+- Record recovery time and recovery point objectives
+- Add deployment-specific artifact snapshots and log retention
 
 ### 2. Evaluation Suite Hardening
 
@@ -635,20 +687,19 @@ Before real users or multiple workers:
 - Complete the manual release checklist in `docs/SECURITY.md`
 - Deploy and test the TLS reverse proxy while keeping API, PostgreSQL, and
   Ollama private
-- Automate and restore-test backups for PostgreSQL and important artifacts
+- Export verified PostgreSQL backups and important artifacts to encrypted
+  off-host storage
 - Decide artifact storage: local volume, NAS, S3-compatible object store, or
   managed bucket
 - Add deployment health checks, log retention, and incident contacts
-- Move rate limits to a shared store or gateway before horizontal scaling
-- Review CSP reports and switch to enforcement after compatibility validation
+- Add gateway-level volumetric limits before internet-facing horizontal scaling
 
 ### 4. Database and SQL Improvements
 
 - Expand PostgreSQL integration coverage beyond metadata/invitation flows
 - Keep Alembic migrations additive and rollback-reviewed
-- Extend the provenance manifest with row-level hashes and embedding run IDs
-- Add mutating idempotent upsert support keyed by `sample_id`, `doc_id`,
-  `event_id`, and SST timestamps after backup/rollback policy is in place
+- Extend the provenance manifest with embedding run IDs
+- Define an opt-in, policy-backed stale-row deletion workflow
 - Continue tightening read-only SQL validation and identifier quoting
 
 ### 5. UI Parity and Expert UX

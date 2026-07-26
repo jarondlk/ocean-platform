@@ -21,6 +21,11 @@ services:
       context: .
       dockerfile: Containerfile.api
     restart: unless-stopped
+    init: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
     depends_on:
       postgres:
         condition: service_healthy
@@ -33,11 +38,25 @@ services:
       DEPLOYMENT_ENV: production
       AUTH_MODE: required
       PERSIST_LOCAL_CHAT: "false"
+      ENABLE_MOCK_LOGIN: "false"
       INTERNAL_AUTH_SECRET: ${INTERNAL_AUTH_SECRET:?Set INTERNAL_AUTH_SECRET}
       INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-onagawa-source-chat-frontend}
       INTERNAL_AUTH_AUDIENCE: ${INTERNAL_AUTH_AUDIENCE:-onagawa-source-chat-api}
     expose:
       - "8000"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/live', timeout=3).read()"
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+    volumes:
+      - database_backups:/app/data/backups
+      - pipeline_runs:/app/data/pipeline_runs
     command:
       - /bin/sh
       - -c
@@ -48,19 +67,26 @@ services:
       context: ./frontend
       dockerfile: Containerfile
     restart: unless-stopped
+    init: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
     depends_on:
-      - api
+      api:
+        condition: service_healthy
     environment:
       API_BASE_URL: http://api:8000
       DEPLOYMENT_ENV: production
       AUTH_MODE: required
+      ENABLE_MOCK_LOGIN: "false"
       AUTH_SECRET: ${AUTH_SECRET:?Set AUTH_SECRET}
       AUTH_URL: ${AUTH_URL:?Set the public HTTPS application URL}
       AUTH_TRUST_HOST: ${AUTH_TRUST_HOST:-false}
       INTERNAL_AUTH_SECRET: ${INTERNAL_AUTH_SECRET:?Set INTERNAL_AUTH_SECRET}
       INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-onagawa-source-chat-frontend}
       INTERNAL_AUTH_AUDIENCE: ${INTERNAL_AUTH_AUDIENCE:-onagawa-source-chat-api}
-      OIDC_PROVIDER_NAME: ${OIDC_PROVIDER_NAME:-Organization account}
+      OIDC_PROVIDER_NAME: ${OIDC_PROVIDER_NAME:-Managed identity provider}
       OIDC_ISSUER: ${OIDC_ISSUER:?Set OIDC_ISSUER}
       OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:?Set OIDC_CLIENT_ID}
       OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET:?Set OIDC_CLIENT_SECRET}
@@ -69,3 +95,5 @@ services:
 
 volumes:
   pgdata:
+  database_backups:
+  pipeline_runs:

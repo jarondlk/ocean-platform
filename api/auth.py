@@ -80,6 +80,7 @@ ROLE_PERMISSIONS: Dict[str, FrozenSet[str]] = {
 VALID_ROLES = frozenset(ROLE_PERMISSIONS)
 VALID_ACCOUNT_TYPES = frozenset({"research", "commercial", "internal"})
 VALID_USER_STATUSES = frozenset({"active", "suspended"})
+MOCK_CREDENTIALS_PROVIDER = "mock-credentials"
 
 
 @dataclass(frozen=True)
@@ -128,6 +129,46 @@ def current_user_from_model(user: AppUser) -> CurrentUser:
         status=user.status,
         permissions=permissions_for_role(user.role),
         auth_provider=user.auth_provider,
+    )
+
+
+def _mock_login_identity(
+    claims: Mapping[str, Any],
+    *,
+    provider: str,
+    subject: str,
+    email: str,
+) -> CurrentUser:
+    try:
+        enabled = config.mock_login_enabled()
+    except config.SecurityConfigurationError as exc:
+        raise AuthenticationFailure(
+            503,
+            "Authentication security configuration is invalid",
+        ) from exc
+    if not enabled:
+        raise AuthenticationFailure(403, "Mock login is disabled")
+
+    role = str(claims.get("mock_login_role") or "").strip().lower()
+    expected_subject = f"mock-login:{role}"
+    expected_email = f"{role}@mock.invalid"
+    if (
+        role not in VALID_ROLES
+        or provider != MOCK_CREDENTIALS_PROVIDER
+        or subject != expected_subject
+        or email != expected_email
+    ):
+        raise AuthenticationFailure(401, "Mock login identity claims are invalid")
+
+    return CurrentUser(
+        id=uuid.uuid5(uuid.NAMESPACE_URL, f"onagawa-rag:{expected_subject}"),
+        email=expected_email,
+        display_name=f"Mock {role.title()}",
+        role=role,
+        account_type="internal",
+        status="active",
+        permissions=ROLE_PERMISSIONS[role],
+        auth_provider=MOCK_CREDENTIALS_PROVIDER,
     )
 
 
@@ -210,6 +251,13 @@ def resolve_identity(session: Session, claims: Mapping[str, Any]) -> CurrentUser
     except ValueError as exc:
         raise AuthenticationFailure(401, str(exc)) from exc
     display_name = str(claims.get("name") or "").strip()[:255] or None
+    if provider == MOCK_CREDENTIALS_PROVIDER:
+        return _mock_login_identity(
+            claims,
+            provider=provider,
+            subject=subject,
+            email=email,
+        )
     now = datetime.now(timezone.utc)
 
     user = session.scalar(

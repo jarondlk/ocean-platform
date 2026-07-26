@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "allowed_date_start": "2000-01-01",
+  "allowed_future_days": 366,
+  "maximum_row_drop_ratio": 0.2,
+  "sources": {
+    "ctd": {"minimum_rows": 10000, "columns": 18},
+    "runid": {"minimum_rows": 100, "columns": 3},
+    "read_summary": {"minimum_rows": 100, "columns": 5},
+    "coverage_log": {"minimum_rows": 1, "columns": 4},
+    "kraken_genus_sample_tsv": {"minimum_rows": 700, "minimum_sample_columns": 75},
+    "kraken_genus_sample_txt": {"minimum_rows": 700, "minimum_sample_columns": 75},
+    "kraken_upper_group_sample": {"minimum_rows": 35, "minimum_sample_columns": 75},
+    "kraken_genus_group": {"minimum_rows": 700, "columns": 4},
+    "metaeuk_genus_sample": {"minimum_rows": 800, "minimum_sample_columns": 75},
+    "genus_group": {"minimum_rows": 100000, "columns": 4},
+    "gn_consistency": {"minimum_rows": 400, "columns": 3},
+    "km_consistency": {"minimum_rows": 700000, "columns": 11}
+  },
+  "sst": {"minimum_files": 1800}
+}

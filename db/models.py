@@ -72,6 +72,7 @@ class AnchorEvent(CorpusBase):
     sample_id = Column(String(64), index=True)
     bay_code = Column(String(4), index=True)
     source_types = Column(String(128))
+    source_row_hash = Column(String(64), index=True)
 
 
 # -----------------------------------------------------------------------
@@ -99,6 +100,7 @@ class CtdProfile(CorpusBase):
     orp = Column(Float)
     ph = Column(Float)
     par = Column(Float)
+    source_row_hash = Column(String(64), index=True)
 
 
 class CtdSummary(CorpusBase):
@@ -121,6 +123,7 @@ class CtdSummary(CorpusBase):
     surface_chl_a = Column(Float)
     bottom_chl_a = Column(Float)
     mean_chl_a = Column(Float)
+    source_row_hash = Column(String(64), index=True)
 
 
 # -----------------------------------------------------------------------
@@ -144,6 +147,7 @@ class MetagenomeSample(CorpusBase):
     top_kraken_genera_json = Column(Text)
     top_metaeuk_genera_json = Column(Text)
     top_upper_groups_json = Column(Text)
+    source_row_hash = Column(String(64), index=True)
 
 
 # -----------------------------------------------------------------------
@@ -159,6 +163,7 @@ class SstPointObservation(CorpusBase):
     sst = Column(Float)
     nearest_lat = Column(Float)
     nearest_lon = Column(Float)
+    source_row_hash = Column(String(64), index=True)
 
 
 class SstDailySummary(CorpusBase):
@@ -170,6 +175,7 @@ class SstDailySummary(CorpusBase):
     max_sst = Column(Float)
     std_sst = Column(Float)
     n_files = Column(Integer)
+    source_row_hash = Column(String(64), index=True)
 
 
 # -----------------------------------------------------------------------
@@ -190,6 +196,7 @@ class RetrievalDocument(CorpusBase):
     title = Column(Text, nullable=False)
     text = Column(Text, nullable=False)
     text_tsv = Column(TSVECTOR)  # full-text search vector
+    source_row_hash = Column(String(64), index=True)
 
     if Vector is not None:
         embedding = Column(Vector(config.EMBEDDING_DIM))
@@ -211,3 +218,4 @@ class CrossSourceLink(CorpusBase):
     link_type = Column(String(32), nullable=False)
     distance_km = Column(Float)
     time_delta_days = Column(Float)
+    source_row_hash = Column(String(64), index=True)

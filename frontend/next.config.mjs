@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
+const scriptSources =
+  process.env.NODE_ENV === "development"
+    ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+    : "script-src 'self' 'unsafe-inline'";
+
 const contentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
@@ -8,13 +13,13 @@ const contentSecurityPolicy = [
   "frame-ancestors 'none'",
   "img-src 'self' data: blob:",
   "object-src 'none'",
-  "script-src 'self' 'unsafe-inline'",
+  scriptSources,
   "style-src 'self' 'unsafe-inline'",
 ].join("; ");
 
 const securityHeaders = [
   {
-    key: "Content-Security-Policy-Report-Only",
+    key: "Content-Security-Policy",
     value: contentSecurityPolicy,
   },
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },

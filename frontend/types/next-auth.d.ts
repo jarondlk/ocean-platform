@@ -6,7 +6,12 @@ declare module "next-auth" {
       authSubject: string;
       authProvider: string;
       providerEmailVerified: boolean;
+      mockLoginRole?: string;
     } & DefaultSession["user"];
+  }
+
+  interface User {
+    mockLoginRole?: string;
   }
 }
 
@@ -15,5 +20,6 @@ declare module "next-auth/jwt" {
     authSubject?: string;
     authProvider?: string;
     providerEmailVerified?: boolean;
+    mockLoginRole?: string;
   }
 }

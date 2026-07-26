@@ -219,3 +219,32 @@ class AuditEvent(AppBase):
     __table_args__ = (
         Index("ix_audit_event_created_at", "created_at"),
     )
+
+
+class RateLimitBucket(AppBase):
+    """Shared fixed-window request counters for multi-worker deployments."""
+
+    __tablename__ = "rate_limit_bucket"
+
+    scope = Column(String(64), primary_key=True)
+    subject_hash = Column(String(64), primary_key=True)
+    window_started_at = Column(
+        DateTime(timezone=True),
+        nullable=False,
+        server_default=func.now(),
+    )
+    request_count = Column(Integer, nullable=False, default=0)
+    updated_at = Column(
+        DateTime(timezone=True),
+        nullable=False,
+        server_default=func.now(),
+        onupdate=func.now(),
+    )
+
+    __table_args__ = (
+        CheckConstraint(
+            "request_count >= 0",
+            name="ck_rate_limit_bucket_request_count",
+        ),
+        Index("ix_rate_limit_bucket_updated_at", "updated_at"),
+    )

@@ -13,6 +13,30 @@ type RouteContext = {
 const API_BASE_URL = process.env.API_BASE_URL || "http://127.0.0.1:8000";
 const MAX_REQUEST_BODY_BYTES = 1_048_576;
 
+function firstHeaderValue(value: string | null): string | null {
+  const first = value?.split(",", 1)[0]?.trim();
+  return first || null;
+}
+
+function hasSameOrigin(request: NextRequest): boolean {
+  const suppliedOrigin = request.headers.get("Origin");
+  if (!suppliedOrigin) return false;
+
+  const host =
+    firstHeaderValue(request.headers.get("X-Forwarded-Host")) ||
+    request.headers.get("Host");
+  const protocol =
+    firstHeaderValue(request.headers.get("X-Forwarded-Proto")) ||
+    request.nextUrl.protocol.replace(/:$/, "");
+  if (!host || !["http", "https"].includes(protocol)) return false;
+
+  try {
+    return new URL(suppliedOrigin).origin === new URL(`${protocol}://${host}`).origin;
+  } catch {
+    return false;
+  }
+}
+
 function targetUrl(path: string[], request: NextRequest): string {
   const pathname = path.join("/");
   const search = request.nextUrl.search || "";
@@ -28,8 +52,7 @@ async function proxy(request: NextRequest, context: RouteContext): Promise<Respo
     );
   }
   if (!["GET", "HEAD", "OPTIONS"].includes(request.method)) {
-    const origin = request.headers.get("Origin");
-    if (!origin || origin !== request.nextUrl.origin) {
+    if (!hasSameOrigin(request)) {
       return Response.json(
         { detail: "Cross-origin state change rejected" },
         { status: 403, headers: { "Cache-Control": "no-store" } },

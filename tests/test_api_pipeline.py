@@ -35,6 +35,7 @@ def test_pipeline_status_exposes_manual_stages_and_artifacts():
         "build_retrieval_docs",
         "pre_analysis",
         "reliability",
+        "backup_database",
         "load_db",
         "embed_documents",
     }.issubset(stage_ids)
@@ -72,7 +73,7 @@ def test_pipeline_preflight_returns_exact_command_plan():
     assert "--embed" not in payload["command_plan"][0]["display_command"]
 
 
-def test_pipeline_preflight_reports_real_db_reset_blocker():
+def test_pipeline_preflight_requires_backup_before_real_database_mutation():
     response = client.post(
         "/pipeline/preflight",
         json={"stages": ["load_db"], "dry_run": False, "reset_database": False},
@@ -81,7 +82,7 @@ def test_pipeline_preflight_reports_real_db_reset_blocker():
     assert response.status_code == 200
     payload = response.json()
     assert payload["ok"] is False
-    assert any("reset_database=true" in blocker for blocker in payload["blockers"])
+    assert any("backup_database before load_db" in blocker for blocker in payload["blockers"])
 
 
 def test_pipeline_status_reports_active_jobs_and_artifact_freshness(tmp_path, monkeypatch):
@@ -116,14 +117,14 @@ def test_pipeline_status_reports_active_jobs_and_artifact_freshness(tmp_path, mo
     assert {"id", "kind", "freshness_status", "lineage_status", "age_days"}.issubset(first_freshness)
 
 
-def test_pipeline_database_load_requires_reset_for_real_run():
+def test_pipeline_database_load_requires_backup_for_real_run():
     response = client.post(
         "/pipeline/jobs",
         json={"stages": ["load_db"], "dry_run": False, "reset_database": False},
     )
 
     assert response.status_code == 400
-    assert "reset_database=true" in response.text
+    assert "backup_database before load_db" in response.text
 
 
 def test_pipeline_dry_run_writes_manifest_and_history(tmp_path, monkeypatch):

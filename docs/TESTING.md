@@ -5,8 +5,28 @@
 Install development dependencies:
 
 ```bash
-python -m pip install -r requirements-dev.txt
+./scripts/bootstrap_dev.sh
+source .venv/bin/activate
 ```
+
+The bootstrap script creates an isolated Python 3.12 environment and installs
+the fully transitive development lock with `--require-hashes`. Runtime,
+analysis, and archived Streamlit dependencies are separately locked in
+`requirements.txt`, `requirements-analysis.txt`, and
+`requirements-archive.txt`.
+
+For browser testing of the permission-aware UI without organization OIDC
+credentials, run both services with `AUTH_MODE=required`,
+`DEPLOYMENT_ENV=test`, matching `INTERNAL_AUTH_SECRET` values, and
+`ENABLE_MOCK_LOGIN=true`. Generate the three required scrypt password hashes
+with `python scripts/hash_mock_password.py` and assign them to
+`MOCK_VIEWER_PASSWORD_HASH`, `MOCK_RESEARCHER_PASSWORD_HASH`, and
+`MOCK_ADMIN_PASSWORD_HASH`. The login page exposes three signed, non-persisted
+accounts: `viewer@mock.invalid`, `researcher@mock.invalid`, and
+`admin@mock.invalid`. This harness is rejected in staging and production and
+does not replace the final real-provider callback smoke test. Run it only
+against an isolated test environment because Admin actions retain their normal
+local side effects.
 
 Run the backend suite and the same coverage boundary used by CI:
 
@@ -22,7 +42,7 @@ python -m pytest tests/ -q --tb=short \
   --cov=schema \
   --cov=evaluation \
   --cov-report=term-missing \
-  --cov-fail-under=60
+  --cov-fail-under=70
 ```
 
 Run the active Python lint boundary:
@@ -55,20 +75,35 @@ DATABASE_URL=postgresql://onagawa:password@127.0.0.1:5432/onagawa_rag \
 RUN_POSTGRES_INTEGRATION=1 \
 AUTH_MODE=disabled \
 DEPLOYMENT_ENV=test \
-python -m pytest tests/integration/test_app_metadata_postgres.py -q
+python -m pytest \
+  tests/integration/test_app_metadata_postgres.py \
+  tests/integration/test_operational_postgres.py \
+  -q
 ```
 
-The test verifies migrated tables, invite acceptance, user persistence, and the
-acceptance audit event. Its records are wrapped in an outer transaction and
-rolled back.
+The tests verify migrated tables, invite acceptance, user persistence, the
+acceptance audit event, and shared rate-limit behavior. Their records are
+isolated and cleaned up.
+
+Exercise the database mutation safety path:
+
+```bash
+python scripts/load_db.py --upsert --json
+python scripts/load_db.py --upsert --json
+python scripts/database_backup.py create --label local-check --restore-test
+```
+
+The repeated load must be idempotent. The backup command verifies archive
+integrity and restores into a disposable database before removing it.
 
 ## CI Checks
 
 `.github/workflows/tests.yml` defines:
 
-- backend tests, 60% aggregate coverage, and active Python linting;
+- backend tests, a 70% aggregate coverage floor, and active Python linting;
 - frontend lockfile installation, typechecking, and production build;
-- a real pgvector service, Alembic migration, and metadata integration test;
+- a real pgvector service, Alembic migration, metadata/shared-rate-limit
+  integration tests, repeated transactional upserts, and backup restore testing;
 - dependency review for public repositories or private repositories with GitHub
   Code Security enabled.
 

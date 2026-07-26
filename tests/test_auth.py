@@ -105,6 +105,100 @@ def test_uninvited_or_unverified_identity_is_rejected():
             )
 
 
+@pytest.mark.parametrize("role", ["viewer", "researcher", "admin"])
+def test_mock_login_identity_is_signed_non_persisted_and_role_scoped(
+    monkeypatch,
+    role,
+):
+    monkeypatch.setenv("DEPLOYMENT_ENV", "test")
+    monkeypatch.setenv("AUTH_MODE", "required")
+    monkeypatch.setenv("ENABLE_MOCK_LOGIN", "true")
+
+    with _session() as session:
+        current = resolve_identity(
+            session,
+            {
+                "sub": f"mock-login:{role}",
+                "provider": "mock-credentials",
+                "email": f"{role}@mock.invalid",
+                "email_verified": True,
+                "name": f"Mock {role.title()}",
+                "mock_login_role": role,
+            },
+        )
+        assert current.role == role
+        assert current.permissions == ROLE_PERMISSIONS[role]
+        assert current.auth_provider == "mock-credentials"
+        assert current.account_type == "internal"
+        assert session.query(AppUser).count() == 0
+        assert session.query(UserInvitation).count() == 0
+
+
+def test_mock_login_identity_fails_closed_when_disabled_or_malformed(
+    monkeypatch,
+):
+    claims = {
+        "sub": "mock-login:viewer",
+        "provider": "mock-credentials",
+        "email": "viewer@mock.invalid",
+        "email_verified": True,
+        "mock_login_role": "viewer",
+    }
+    monkeypatch.setenv("DEPLOYMENT_ENV", "test")
+    monkeypatch.setenv("AUTH_MODE", "required")
+    monkeypatch.setenv("ENABLE_MOCK_LOGIN", "false")
+    with _session() as session:
+        with pytest.raises(AuthenticationFailure, match="disabled"):
+            resolve_identity(session, claims)
+
+    monkeypatch.setenv("ENABLE_MOCK_LOGIN", "true")
+    with _session() as session:
+        with pytest.raises(AuthenticationFailure, match="claims are invalid"):
+            resolve_identity(
+                session,
+                {
+                    **claims,
+                    "sub": "mock-login:admin",
+                },
+            )
+
+
+@pytest.mark.parametrize("role", ["viewer", "researcher", "admin"])
+def test_mock_login_internal_token_reaches_me_without_database_fixtures(
+    monkeypatch,
+    role,
+):
+    monkeypatch.setenv("DEPLOYMENT_ENV", "test")
+    monkeypatch.setenv("AUTH_MODE", "required")
+    monkeypatch.setenv("ENABLE_MOCK_LOGIN", "true")
+    monkeypatch.setenv("INTERNAL_AUTH_SECRET", TOKEN_SECRET)
+    now = datetime.now(timezone.utc)
+    token = jwt.encode(
+        {
+            "sub": f"mock-login:{role}",
+            "provider": "mock-credentials",
+            "email": f"{role}@mock.invalid",
+            "email_verified": True,
+            "name": f"Mock {role.title()}",
+            "mock_login_role": role,
+            "iss": "onagawa-source-chat-frontend",
+            "aud": "onagawa-source-chat-api",
+            "iat": now,
+            "exp": now + timedelta(seconds=60),
+        },
+        TOKEN_SECRET,
+        algorithm="HS256",
+    )
+    response = TestClient(app).get(
+        "/me",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 200
+    assert response.json()["role"] == role
+    assert response.json()["email"] == f"{role}@mock.invalid"
+    assert response.json()["account_type"] == "internal"
+
+
 def test_internal_token_requires_expected_issuer_audience_and_claims(monkeypatch):
     monkeypatch.setenv("INTERNAL_AUTH_SECRET", TOKEN_SECRET)
     now = datetime.now(timezone.utc)

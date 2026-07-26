@@ -12,9 +12,12 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import json
 import logging
 import sys
 import time
+from dataclasses import asdict
+from datetime import datetime, timezone
 from pathlib import Path
 
 # Ensure project root is on sys.path
@@ -23,6 +26,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 import config
 from ingestion.provenance import ProvenanceRegistry
+from ingestion.raw_validation import validate_raw_sources
 
 logging.basicConfig(
     level=logging.INFO,
@@ -33,36 +37,78 @@ logger = logging.getLogger("ingest")
 
 
 def validate_raw_files() -> bool:
-    """Check that all expected raw files exist."""
-    ok = True
-    for key, path in config.RAW_FILES.items():
-        if path.exists():
-            logger.info("  ✓  %-30s  %s", key, path.name)
-        else:
-            logger.error("  ✗  %-30s  MISSING: %s", key, path)
-            ok = False
-
-    # SST files
-    sst_files = list(config.SST_NETCDF_DIR.rglob("*.nc")) if config.SST_NETCDF_DIR.exists() else []
-    logger.info("  SST NetCDF files: %d under %s", len(sst_files), config.SST_NETCDF_DIR)
-
-    return ok
+    """Validate raw schemas, identifiers, ranges, counts, and fingerprints."""
+    report = validate_raw_sources()
+    for source in report.sources:
+        marker = "✓" if not source.issues else "✗"
+        logger.info(
+            "  %s  %-30s rows=%d columns=%s",
+            marker,
+            source.source,
+            source.rows,
+            source.columns if source.columns is not None else "unknown",
+        )
+    logger.info(
+        "  SST NetCDF files: %d under %s",
+        report.sst_files,
+        config.SST_NETCDF_DIR,
+    )
+    for issue in report.issues:
+        log = logger.error if issue.severity == "error" else logger.warning
+        log("  %s [%s] %s", issue.source, issue.code, issue.message)
+    logger.info(
+        "  Validation report: %s",
+        config.PROVENANCE_DIR / "raw_validation_latest.json",
+    )
+    return report.ok
 
 
 def run_provenance_registration(registry: ProvenanceRegistry, run_id: str) -> None:
     """Register all raw input files in the provenance registry."""
     logger.info("--- Provenance registration ---")
+    used_records = []
 
     for key, path in config.RAW_FILES.items():
         if path.exists():
             rec = registry.register(path, source_dataset=key, processing_run=run_id)
+            used_records.append(
+                {
+                    **asdict(rec),
+                    "used_by_processing_run": run_id,
+                }
+            )
             logger.info("  Registered: %s  sha256=%s…", path.name, rec.sha256[:12])
 
     # SST NetCDFs
     if config.SST_NETCDF_DIR.exists():
         for fp in sorted(config.SST_NETCDF_DIR.rglob("*.nc")):
             rec = registry.register(fp, source_dataset="sst_netcdf", processing_run=run_id)
+            used_records.append(
+                {
+                    **asdict(rec),
+                    "used_by_processing_run": run_id,
+                }
+            )
         logger.info("  Registered %d SST files", len(list(config.SST_NETCDF_DIR.rglob("*.nc"))))
+
+    manifest = {
+        "schema_version": 1,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "processing_run": run_id,
+        "source_count": len(used_records),
+        "sources": used_records,
+    }
+    manifest_dir = config.PROVENANCE_DIR / "raw_manifests"
+    manifest_dir.mkdir(parents=True, exist_ok=True)
+    manifest_text = json.dumps(manifest, indent=2, ensure_ascii=False)
+    (manifest_dir / f"{run_id}.json").write_text(
+        manifest_text,
+        encoding="utf-8",
+    )
+    (config.PROVENANCE_DIR / "raw_source_manifest_latest.json").write_text(
+        manifest_text,
+        encoding="utf-8",
+    )
 
 
 def run_ctd_pipeline() -> None:

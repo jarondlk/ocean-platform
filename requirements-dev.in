@@ -1,0 +1,8 @@
+# Runtime plus backend test and lint tooling. Compile with:
+#   pip-compile --generate-hashes --output-file requirements-dev.txt requirements-dev.in
+-r requirements.in
+
+httpx==0.28.1
+pytest==9.0.3
+pytest-cov==7.1.0
+ruff==0.15.22

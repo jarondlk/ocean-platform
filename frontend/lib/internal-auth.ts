@@ -10,6 +10,7 @@ type Identity = {
   email: string;
   emailVerified: boolean;
   name?: string | null;
+  mockLoginRole?: string;
 };
 
 function signingSecret(): Uint8Array {
@@ -37,6 +38,7 @@ export async function mintInternalAccessToken(identity: Identity): Promise<strin
     email_verified: true,
     name: identity.name || undefined,
     provider: identity.provider,
+    mock_login_role: identity.mockLoginRole || undefined,
   })
     .setProtectedHeader({ alg: "HS256", typ: "JWT" })
     .setSubject(identity.subject)
@@ -62,5 +64,6 @@ export async function tokenForSession(session: Session): Promise<string> {
     email: user.email,
     emailVerified: user.providerEmailVerified,
     name: user.name,
+    mockLoginRole: user.mockLoginRole,
   });
 }

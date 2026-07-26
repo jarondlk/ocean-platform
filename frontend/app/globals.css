@@ -154,18 +154,132 @@ a {
 }
 
 .login-card {
-  width: min(440px, 100%);
+  width: min(480px, 100%);
   border: 1px solid var(--line);
   padding: 28px;
 }
 
-.login-card h2 {
-  margin: 4px 0 12px;
+.login-heading {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+}
+
+.login-heading h2 {
+  font-size: 23px;
+  margin: 3px 0 0;
+}
+
+.login-mark {
+  align-items: center;
+  background: var(--blue-wash);
+  border: 1px solid var(--line);
+  color: var(--blue-ink);
+  display: flex;
+  height: 42px;
+  justify-content: center;
+  width: 42px;
+}
+
+.login-intro {
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 16px 0 0;
+}
+
+.login-error {
+  background: #fffafa;
+  border: 1px solid #e4b9ba;
+  color: var(--danger);
+  line-height: 1.45;
+  margin: 16px 0 0;
+  padding: 9px 10px;
 }
 
 .login-button {
   width: 100%;
   margin-top: 18px;
+}
+
+.mock-login-panel {
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  padding: 16px;
+}
+
+.mock-login-heading {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mock-login-heading h3 {
+  font-size: 16px;
+  margin: 4px 0 0;
+}
+
+.mock-login-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.mock-login-form label {
+  color: var(--text);
+  display: grid;
+  font-size: 12px;
+  font-weight: 600;
+  gap: 6px;
+}
+
+.mock-login-form .field {
+  min-height: 40px;
+}
+
+.mock-login-form .login-button {
+  margin-top: 4px;
+}
+
+.mock-account-list {
+  border-top: 1px solid var(--soft-line);
+  display: grid;
+  gap: 7px;
+  margin-top: 16px;
+  padding-top: 13px;
+}
+
+.mock-account-list > p {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  margin: 0 0 2px;
+  text-transform: uppercase;
+}
+
+.mock-account-list > div {
+  align-items: center;
+  display: flex;
+  font-size: 12px;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mock-login-warning,
+.login-support {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.mock-login-warning {
+  margin: 13px 0 0;
+}
+
+.login-support {
+  margin: 14px 0 0;
+  text-align: center;
 }
 
 .eyebrow {

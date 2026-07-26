@@ -66,10 +66,10 @@ def load_ctd_raw(path: Path) -> pd.DataFrame:
     ctd["ctd_date"] = pd.to_datetime(ctd["ctd_date"], errors="coerce")
     ctd["depth_m"] = pd.to_numeric(ctd["depth_m"], errors="coerce")
 
-    # Convert all non-key columns to numeric where possible.
+    # Raw non-key CTD columns are measurement fields and must be numeric.
     for c in ctd.columns:
         if c not in {"sample_id", "ctd_date"}:
-            ctd[c] = pd.to_numeric(ctd[c], errors="ignore")
+            ctd[c] = pd.to_numeric(ctd[c], errors="coerce")
 
     logger.info(
         "Loaded CTD: %d rows, %d columns, %d unique samples",

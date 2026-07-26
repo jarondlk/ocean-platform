@@ -14,9 +14,9 @@ workflow that can later become automated.
   outputs, and the PostgreSQL/pgvector database.
 - The app reads previously generated artifacts and/or PostgreSQL. It does not
   watch for new files or run ingestion during user sessions.
-- Repeated database loads are safest with `scripts/load_db.py --reset --embed`.
-  Read-only upsert planning exists through `scripts/load_db.py --upsert --dry-run`,
-  but mutating upsert semantics are not production-ready yet.
+- Repeated database loads use `scripts/load_db.py --upsert --embed`, with
+  logical-key staging, source-row hashes, and one transaction. `--reset` is an
+  explicit full-replacement operation.
 - Retrieval/chat can expand primary top-K evidence through anchor-event
   cross-source links and report expected, retrieved, and missing source
   families.
@@ -25,6 +25,9 @@ workflow that can later become automated.
   reliability context.
 - The application is invite-only through OIDC, with viewer, researcher, and
   admin permissions enforced by a default-deny FastAPI policy.
+- Cloud sign-in will use a managed OIDC provider with a hosted email/password
+  experience; the application will not own production password storage,
+  recovery, MFA, or lockout.
 - Chat interactions and thumbs-up/down feedback are persisted for the user and
   available to administrators through a filtered review/export surface.
 - Production-like environments fail closed on unsafe authentication, secret,
@@ -45,7 +48,8 @@ weekly or monthly, without making ingestion automatic yet.
   python scripts/build_retrieval_docs.py
   python scripts/run_pre_analysis.py
   python scripts/run_reliability.py
-  python scripts/load_db.py --reset --embed
+  python scripts/database_backup.py create
+  python scripts/load_db.py --upsert --embed
   ```
 
 - [x] Add flags to the orchestration command:
@@ -57,8 +61,7 @@ weekly or monthly, without making ingestion automatic yet.
       row counts, generated artifact paths, database snapshots, and diffs.
 - [x] Add a provenance manifest layer that traces raw files, derived artifacts,
       retrieval documents, and embedding treatment.
-- [x] Add read-only `--upsert --dry-run` planning before any database mutation
-      path exists.
+- [x] Add read-only `--upsert --dry-run` planning.
 - [x] Add a documented manual schedule, for example:
 
   ```bash
@@ -67,11 +70,11 @@ weekly or monthly, without making ingestion automatic yet.
   python scripts/run_pipeline.py --validate-only
 
   # 3. Run full scheduled batch
-  python scripts/run_pipeline.py --execute --tag 2026-03-update --reset-db --embed
+  python scripts/run_pipeline.py --execute --tag 2026-03-update --embed
   ```
 
-- [ ] Add a rollback note: keep the previous `data/` artifact snapshot and
-      PostgreSQL dump before each scheduled update.
+- [x] Add a verified PostgreSQL backup before each database mutation and
+      document artifact snapshot/off-host retention responsibilities.
 
 ## Data Ingestion Improvements
 
@@ -81,30 +84,31 @@ weekly or monthly, without making ingestion automatic yet.
   python scripts/build_provenance_manifest.py --write --run-id 2026-03-update
   ```
 
-- [ ] Add stricter validation for expected raw columns, date ranges, sample ID
+- [x] Add stricter validation for expected raw columns, date ranges, sample ID
       formats, and duplicate sample IDs before writing outputs.
-- [ ] Make `onagawa_sst_subset/` expectations explicit with a generated manifest
+- [x] Make `onagawa_sst_subset/` expectations explicit with a generated manifest
       because the raw NetCDF tree is intentionally not tracked in git.
-- [ ] Add source-specific input reports:
+- [x] Add source-specific input reports:
   CTD rows/casts, metagenome samples/runs/taxa, SST files/days.
-- [ ] Add row-count and sample-count diffing between the previous run and the
+- [x] Add row-count and sample-count diffing between the previous run and the
       new run.
-- [ ] Add row-level source hashes for CTD/metagenome TSV records; current
-      provenance is file-level plus stable sample/source keys.
+- [x] Add row-level source hashes for keyed corpus records.
 
 ## Database Loading Improvements
 
-- [ ] Keep `--reset --embed` as the default reliable scheduled update path.
+- [x] Make transactional `--upsert --embed` the default scheduled update path
+      while retaining stale keys for explicit operator review.
 - [x] Add read-only upsert dry-run planning for keyed tables and retrieval
       document embedding refresh candidates.
-- [ ] Add a database backup command before reset, using `pg_dump` or an
+- [x] Add a database backup command before mutation, using `pg_dump` or an
       equivalent containerized backup command.
-- [ ] Add mutating idempotent upsert support later for tables keyed by
-      `sample_id`, `doc_id`, `event_id`, and SST timestamps, using the
-      provenance manifest as the safety contract.
+- [x] Add mutating idempotent upsert support for tables keyed by `sample_id`,
+      `doc_id`, `event_id`, and SST timestamps, using row hashes and a staging
+      transaction as the safety contract.
 - [x] Add Alembic migrations for application metadata tables.
-- [x] Add a PostgreSQL/pgvector CI integration test for migrations, invitation
-      acceptance, user persistence, and audit events.
+- [x] Add PostgreSQL/pgvector CI integration tests for migrations, invitation
+      acceptance, user persistence, audit events, shared rate limits, repeated
+      upserts, and isolated restore checks.
 
 ## Containerization and Deployment
 
@@ -147,6 +151,10 @@ Evaluation criteria:
 
 - [x] Invite-only OIDC authentication, verified-email invitation acceptance,
       viewer/researcher/admin authorization, suspension, and audit events.
+- [x] Keep local mock credentials isolated while presenting a single neutral
+      production sign-in action.
+- [ ] Select and configure a managed OIDC provider with hosted email/password,
+      recovery, MFA, lockout, and abuse protection.
 - [ ] Streaming token-by-token chat UX.
 - [x] Source-citation rendering, Markdown answer rendering, and answer trust
       report in the Chat interface.
@@ -195,7 +203,7 @@ These are intentionally **not** the immediate plan.
 
 - [ ] Add incremental detection of new/changed raw files from manifests.
 - [ ] Add per-source incremental jobs for CTD, metagenome, and SST.
-- [ ] Add true database upserts and deletion handling.
+- [ ] Add opt-in, policy-backed deletion handling for stale database keys.
 - [ ] Add a scheduler, such as cron/systemd timer, GitHub Actions self-hosted
       runner, Airflow, Prefect, or cloud scheduled jobs.
 - [ ] Add file-watcher or object-storage event ingestion only if data arrival

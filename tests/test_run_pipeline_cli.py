@@ -41,3 +41,14 @@ def test_full_pipeline_remains_dry_run_by_default() -> None:
     request = _request_from_args(_args())
 
     assert request.dry_run is True
+    assert request.stages[-2:] == ["backup_database", "load_db"]
+
+
+def test_explicit_database_load_injects_backup_and_defaults_to_upsert() -> None:
+    request = _request_from_args(
+        _args(stages="load_db", execute=True, embed=False)
+    )
+
+    assert request.stages == ["backup_database", "load_db"]
+    assert request.reset_database is False
+    assert request.dry_run is False

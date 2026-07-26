@@ -52,6 +52,20 @@ Account type (`research`, `commercial`, or `internal`) is metadata for
 segmentation and reporting; it does not grant permissions. Role changes and
 suspensions take effect on the next API request.
 
+## Cloud Authentication Decision
+
+Production authentication remains OIDC-backed. The selected managed identity
+provider should offer a conventional hosted email/password experience while
+owning password hashing, reset and recovery, MFA, lockout, and abuse controls.
+This application does not store production passwords.
+
+The application login page intentionally exposes one path at a time:
+
+- local development with `ENABLE_MOCK_LOGIN=true` shows only the guarded mock
+  email/password form;
+- staging and production show one neutral **Sign in** action that redirects to
+  the configured managed provider.
+
 Administrators cannot demote or suspend their own account. Feedback lookup uses
 404 for another user's interaction so it does not disclose whether that
 interaction exists.
@@ -72,6 +86,7 @@ interaction exists.
 
 - `AUTH_MODE=required`;
 - `PERSIST_LOCAL_CHAT=false`;
+- `ENABLE_MOCK_LOGIN=false`;
 - non-placeholder internal signing secrets of at least 32 characters;
 - explicit HTTPS CORS origins;
 - real HTTPS Auth.js and OIDC URLs;
@@ -86,6 +101,18 @@ application from serving protected traffic.
 isolated local development or tests. Never bind a disabled-auth instance to a
 shared or public interface.
 
+`ENABLE_MOCK_LOGIN=true` is a separate development/test harness that keeps
+`AUTH_MODE=required`. It adds a conventional email/password form for three
+fixed Viewer, Researcher, and Admin mock emails. Passwords are supplied only as
+scrypt hashes through `MOCK_*_PASSWORD_HASH` environment settings; plaintext
+passwords are not stored in the repository. Successful authentication creates
+a signed Auth.js session and sends signed short-lived internal tokens through
+the normal FastAPI authorization middleware. It does not create database users
+or replace the real-provider release smoke test. The API and frontend reject
+the flag in staging and production. Because the selected account receives its
+real permission set, use the harness only in an isolated development
+environment; Admin actions can mutate that environment.
+
 ## Request and Response Protections
 
 - The frontend proxy rejects cross-origin state-changing requests.
@@ -96,8 +123,7 @@ shared or public interface.
 - Authenticated API and proxy responses use `Cache-Control: no-store`.
 - Browser responses include clickjacking, MIME-sniffing, referrer, permissions,
   opener, and no-index headers.
-- Content Security Policy currently runs in report-only mode. Review violations
-  before switching it to enforcement.
+- Content Security Policy is enforced by the frontend response configuration.
 - Production rate limits are keyed by user:
 
 | Scope | Limit per minute |
@@ -107,11 +133,11 @@ shared or public interface.
 | User/invitation administration | 10 |
 | Pipeline starts | 2 |
 | Evaluation mutations | 5 |
-| Database queries | 30 |
 
-The limiter is intentionally in-memory for the one-process MVP deployment. Do
-not run multiple API workers or hosts until this state is moved to a shared
-store such as Redis or enforced by the gateway.
+Production and staging use an atomic PostgreSQL-backed fixed-window limiter, so
+multiple API workers share counters. Development and tests use an in-memory
+backend. A gateway limit is still recommended as an additional denial-of-service
+boundary for an internet-facing deployment.
 
 The database query inspector accepts only one `SELECT` or `WITH` statement,
 rejects mutation keywords after removing comments and string literals, wraps the
@@ -142,15 +168,15 @@ to audit metadata or application logs.
 ## Known Security Limitations
 
 - No independent penetration test has been completed.
-- CSP is report-only.
-- Rate-limit state is per API process.
-- PostgreSQL backup and point-in-time recovery are operator responsibilities.
+- Managed backup encryption, off-host retention, and PostgreSQL point-in-time
+  recovery remain operator responsibilities. The repository provides verified
+  logical backups and isolated restore tests.
 - Secret rotation temporarily invalidates sessions/internal tokens and requires
   coordinated service restarts.
 - The application does not yet provide an audit-event review UI or automatic
   alerting for repeated authorization failures.
-- Python dependencies are not yet represented by a fully transitive,
-  cross-platform lock file.
+- Auth.js 5 remains a pinned beta dependency; upgrades require authentication
+  regression testing.
 
 ## Authorization MVP Release Checklist
 

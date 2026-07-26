@@ -31,6 +31,9 @@ ANALYSIS_DIR    = DATA_DIR / "analysis"
 RELIABILITY_DIR = DATA_DIR / "reliability"
 PROVENANCE_DIR  = DATA_DIR / "provenance"
 EVALUATION_DIR  = DATA_DIR / "evaluation"
+DATABASE_BACKUP_DIR = Path(
+    os.environ.get("DATABASE_BACKUP_DIR", str(DATA_DIR / "backups"))
+)
 
 # Satellite SST source (NetCDF subset files)
 SST_NETCDF_DIR = PROJECT_ROOT / "onagawa_sst_subset"
@@ -79,6 +82,10 @@ DATABASE_URL = os.environ.get(
     "DATABASE_URL",
     "postgresql://onagawa:onagawa@localhost:5433/onagawa_rag",
 )
+DATABASE_BACKUP_CONTAINER = os.environ.get(
+    "DATABASE_BACKUP_CONTAINER",
+    "onagawa_pgvector",
+).strip()
 
 # ---------------------------------------------------------------------------
 # Authentication
@@ -88,6 +95,10 @@ DATABASE_URL = os.environ.get(
 DEPLOYMENT_ENV = os.environ.get("DEPLOYMENT_ENV", "development").strip().lower()
 AUTH_MODE = os.environ.get("AUTH_MODE", "required").strip().lower()
 PERSIST_LOCAL_CHAT = os.environ.get("PERSIST_LOCAL_CHAT", "false").strip().lower()
+ENABLE_MOCK_LOGIN = os.environ.get(
+    "ENABLE_MOCK_LOGIN",
+    "false",
+).strip().lower()
 INTERNAL_AUTH_SECRET = os.environ.get("INTERNAL_AUTH_SECRET", "")
 INTERNAL_AUTH_ISSUER = os.environ.get(
     "INTERNAL_AUTH_ISSUER",
@@ -198,6 +209,14 @@ def validate_security_configuration(
         ),
         "PERSIST_LOCAL_CHAT",
     )
+    mock_login = _security_flag(
+        _security_setting(
+            env,
+            "ENABLE_MOCK_LOGIN",
+            ENABLE_MOCK_LOGIN,
+        ),
+        "ENABLE_MOCK_LOGIN",
+    )
     production_like = deployment_env in _PRODUCTION_LIKE_ENVS
     if production_like and auth_mode != "required":
         raise SecurityConfigurationError(
@@ -210,6 +229,14 @@ def validate_security_configuration(
     if persist_local_chat and auth_mode != "disabled":
         raise SecurityConfigurationError(
             "PERSIST_LOCAL_CHAT may only be used with AUTH_MODE=disabled"
+        )
+    if production_like and mock_login:
+        raise SecurityConfigurationError(
+            "ENABLE_MOCK_LOGIN is forbidden in staging and production"
+        )
+    if mock_login and auth_mode != "required":
+        raise SecurityConfigurationError(
+            "ENABLE_MOCK_LOGIN requires AUTH_MODE=required"
         )
 
     if auth_mode == "required" and (require_auth_secret or production_like):
@@ -269,6 +296,23 @@ def production_like_environment(
     ).lower()
     return deployment_env in _PRODUCTION_LIKE_ENVS
 
+
+def mock_login_enabled(
+    environ: Optional[Mapping[str, str]] = None,
+) -> bool:
+    """Return whether the guarded development mock login is enabled."""
+
+    env = os.environ if environ is None else environ
+    validate_security_configuration(env)
+    return _security_flag(
+        _security_setting(
+            env,
+            "ENABLE_MOCK_LOGIN",
+            ENABLE_MOCK_LOGIN,
+        ),
+        "ENABLE_MOCK_LOGIN",
+    )
+
 # ---------------------------------------------------------------------------
 # LLM / Embedding
 # ---------------------------------------------------------------------------
@@ -283,5 +327,6 @@ EMBEDDING_DIM = int(os.environ.get("EMBEDDING_DIM", "768"))
 def ensure_dirs() -> None:
     """Create all output directories if they don't exist."""
     for d in [NORMALIZED_DIR, CANONICAL_DIR, SERVING_DIR, PROVENANCE_DIR,
-              ANALYSIS_DIR, RELIABILITY_DIR, EVALUATION_DIR]:
+              ANALYSIS_DIR, RELIABILITY_DIR, EVALUATION_DIR,
+              DATABASE_BACKUP_DIR]:
         d.mkdir(parents=True, exist_ok=True)
