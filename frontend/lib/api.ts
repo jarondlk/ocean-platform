@@ -117,6 +117,18 @@ export async function createInvitation(input: {
   });
 }
 
+export async function revokeInvitation(
+  invitationId: string,
+): Promise<UserInvitation> {
+  return request<UserInvitation>(
+    `/admin/invitations/${encodeURIComponent(invitationId)}/revoke`,
+    {
+      method: "POST",
+      body: JSON.stringify({}),
+    },
+  );
+}
+
 export async function updateUser(
   userId: string,
   input: Partial<Pick<UserSummary, "role" | "account_type" | "status">>,

@@ -76,9 +76,11 @@ interaction exists.
 - An invitation is matched to a normalized, verified OIDC email.
 - The invitation must be `pending` and unexpired when first accepted.
 - Accepted, revoked, and expired invitations cannot create an account.
+- Administrators can revoke a pending invitation; repeated revocation is
+  idempotent.
 - An email already linked to a different provider identity is rejected.
-- Invite acceptance, invitation creation, user changes, feedback changes, and
-  feedback export create audit events.
+- Invite acceptance, invitation creation/revocation, user changes, feedback
+  changes, and feedback export create audit events.
 
 ## Fail-Closed Configuration
 
@@ -107,11 +109,13 @@ fixed Viewer, Researcher, and Admin mock emails. Passwords are supplied only as
 scrypt hashes through `MOCK_*_PASSWORD_HASH` environment settings; plaintext
 passwords are not stored in the repository. Successful authentication creates
 a signed Auth.js session and sends signed short-lived internal tokens through
-the normal FastAPI authorization middleware. It does not create database users
-or replace the real-provider release smoke test. The API and frontend reject
-the flag in staging and production. Because the selected account receives its
-real permission set, use the harness only in an isolated development
-environment; Admin actions can mutate that environment.
+the normal FastAPI authorization middleware. The API creates each fixed mock
+identity once in the local test database, then resolves its current role,
+account type, and status from PostgreSQL on every request. This permits real
+foreign-key, suspension, chat, feedback, and audit testing but does not replace
+the real-provider release smoke test. The API and frontend reject the flag in
+staging and production. Use the harness only in an isolated development
+environment because its mutations are real within that environment.
 
 ## Request and Response Protections
 

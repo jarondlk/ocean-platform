@@ -12,7 +12,7 @@ import api.auth as api_auth
 import api.chat_records as chat_records
 import api.feedback_routes as feedback_routes
 import api.main as api_main
-from api.auth import CurrentUser, ROLE_PERMISSIONS
+from api.auth import CurrentUser, ROLE_PERMISSIONS, resolve_identity
 from db.app_models import (
     AppBase,
     AppUser,
@@ -194,6 +194,43 @@ def test_chat_persists_completed_interaction_and_feedback_can_be_revised(
             "chat.feedback_created",
             "chat.feedback_updated",
         ]
+
+
+def test_database_backed_mock_identity_satisfies_chat_foreign_key(
+    monkeypatch,
+):
+    factory = _database()
+    monkeypatch.setenv("DEPLOYMENT_ENV", "test")
+    monkeypatch.setenv("AUTH_MODE", "required")
+    monkeypatch.setenv("ENABLE_MOCK_LOGIN", "true")
+    with factory() as session:
+        user = resolve_identity(
+            session,
+            {
+                "sub": "mock-login:viewer",
+                "provider": "mock-credentials",
+                "email": "viewer@mock.invalid",
+                "email_verified": True,
+                "name": "Mock Viewer",
+                "mock_login_role": "viewer",
+            },
+        )
+        session.commit()
+
+    _install_database(monkeypatch, factory)
+    interaction_id = chat_records.create_chat_interaction(
+        user=user,
+        query="Browser smoke test question",
+        model="test-model",
+        request_options={"test": True},
+    )
+
+    assert interaction_id is not None
+    with factory() as session:
+        interaction = session.get(ChatInteraction, interaction_id)
+        assert interaction is not None
+        assert interaction.user_id == user.id
+        assert interaction.status == "running"
 
 
 def test_chat_model_failure_is_persisted_and_returned_as_bad_gateway(monkeypatch):

@@ -36,6 +36,7 @@ const runColumns = ["run_id", "status", "tag", "dry_run", "stage_count", "starte
 const activeJobColumns = ["job_id", "status", "phase", "stage_id", "percent", "updated_at", "message"];
 const diffColumns = ["label", "changed", "rows_before", "rows_after", "rows_delta", "size_before", "size_after", "modified_after"];
 const defaultFullStages = ["validate_raw", "ingest", "build_retrieval_docs", "pre_analysis", "reliability", "backup_database", "load_db"];
+const resetConfirmationPhrase = "RESET DATABASE";
 
 export default function PipelinePage() {
   const [view, setView] = useState<PipelineView>("status");
@@ -46,6 +47,7 @@ export default function PipelinePage() {
   const [dryRun, setDryRun] = useState(true);
   const [skipSst, setSkipSst] = useState(false);
   const [resetDatabase, setResetDatabase] = useState(false);
+  const [resetConfirmation, setResetConfirmation] = useState("");
   const [embedAfterLoad, setEmbedAfterLoad] = useState(true);
   const [embeddingModel, setEmbeddingModel] = useState("");
   const [embeddingBatchSize, setEmbeddingBatchSize] = useState(32);
@@ -62,12 +64,20 @@ export default function PipelinePage() {
     const orderedStages = (status?.stages || [])
       .map((stage) => stage.id)
       .filter((stageId) => selectedStages.includes(stageId));
+    const requiresResetConfirmation = (
+      selectedStages.includes("load_db")
+      && !dryRun
+      && resetDatabase
+    );
     return {
       stages: orderedStages.length === selectedStages.length ? orderedStages : selectedStages,
       tag: tag || undefined,
       dry_run: dryRun,
       skip_sst: skipSst,
       reset_database: resetDatabase,
+      reset_confirmation: requiresResetConfirmation
+        ? resetConfirmation
+        : undefined,
       embed_after_load: embedAfterLoad,
       embedding_model: embeddingModel || undefined,
       embedding_batch_size: embeddingBatchSize,
@@ -177,6 +187,21 @@ export default function PipelinePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [job?.job_id, job?.status]);
 
+  useEffect(() => {
+    setPreflight(null);
+  }, [
+    dryRun,
+    embedAfterLoad,
+    embeddingBatchSize,
+    embeddingModel,
+    notes,
+    resetConfirmation,
+    resetDatabase,
+    selectedStages,
+    skipSst,
+    tag,
+  ]);
+
   const stages = status?.stages || [];
   const selectedStageInfos = stages.filter((stage) => selectedStages.includes(stage.id));
   const readiness = asRecord(status?.readiness);
@@ -189,7 +214,12 @@ export default function PipelinePage() {
   const activeJobRows = (status?.active_jobs || []).map(jobToRow);
   const selectedCommandRows = preflight?.command_plan?.length
     ? preflight.command_plan.map(commandPlanToRow)
-    : selectedStageInfos.map(stageToCommandRow);
+    : selectedStageInfos.map((stage) => stageToCommandRow(stage, {
+      embedAfterLoad,
+      embeddingBatchSize,
+      resetDatabase,
+      skipSst,
+    }));
   const preflightRows = (preflight?.checks || []).map(preflightCheckToRow);
   const runRows = runs.map(runToRow);
   const diffRows = artifactDiffRows(runDetail?.manifest);
@@ -218,8 +248,18 @@ export default function PipelinePage() {
     },
   ];
   const freshnessBreakdown = countRowsBy(freshnessRows, "freshness_status");
+  const requiresResetConfirmation = (
+    selectedStages.includes("load_db")
+    && !dryRun
+    && resetDatabase
+  );
+  const resetConfirmationValid = (
+    !requiresResetConfirmation
+    || resetConfirmation === resetConfirmationPhrase
+  );
   const canStart = selectedStages.length > 0 && !loading
-    && (!selectedStages.includes("load_db") || dryRun || selectedStages.includes("backup_database"));
+    && (!selectedStages.includes("load_db") || dryRun || selectedStages.includes("backup_database"))
+    && resetConfirmationValid;
 
   async function submitJob() {
     if (!selectedStages.length) return;
@@ -419,8 +459,35 @@ export default function PipelinePage() {
               <textarea id="pipeline-notes" className="textarea compact-textarea" onChange={(event) => setNotes(event.target.value)} value={notes} />
             </label>
 
+            {requiresResetConfirmation ? (
+              <label
+                className="settings-field pipeline-notes"
+                htmlFor="pipeline-reset-confirmation"
+                title="Server-enforced confirmation required before replacing all scientific corpus tables."
+              >
+                <span>
+                  Type <strong>{resetConfirmationPhrase}</strong> to authorize
+                  the destructive reset
+                </span>
+                <input
+                  autoComplete="off"
+                  className="field"
+                  id="pipeline-reset-confirmation"
+                  maxLength={64}
+                  onChange={(event) => setResetConfirmation(event.target.value)}
+                  placeholder={resetConfirmationPhrase}
+                  value={resetConfirmation}
+                />
+              </label>
+            ) : null}
+
             {!canStart && selectedStages.includes("load_db") && !dryRun && !selectedStages.includes("backup_database") ? (
               <p className="error-text">Non-dry-run database loading requires the backup_database stage.</p>
+            ) : null}
+            {requiresResetConfirmation && !resetConfirmationValid ? (
+              <p className="error-text">
+                Enter the exact reset confirmation phrase before starting.
+              </p>
             ) : null}
           </section>
 
@@ -816,10 +883,37 @@ function stageToRow(stage: PipelineStageInfo): Record<string, unknown> {
   };
 }
 
-function stageToCommandRow(stage: PipelineStageInfo): Record<string, unknown> {
+function stageToCommandRow(
+  stage: PipelineStageInfo,
+  options: {
+    embedAfterLoad: boolean;
+    embeddingBatchSize: number;
+    resetDatabase: boolean;
+    skipSst: boolean;
+  },
+): Record<string, unknown> {
+  let command = [...stage.command];
+  if (stage.id === "ingest") {
+    command = command.filter((part) => part !== "--skip-sst");
+    if (options.skipSst) command.push("--skip-sst");
+  }
+  if (stage.id === "load_db") {
+    command = command.filter(
+      (part) => !["--embed", "--reset", "--upsert"].includes(part),
+    );
+    command.push(options.resetDatabase ? "--reset" : "--upsert");
+    if (options.embedAfterLoad) command.push("--embed");
+  }
+  if (stage.id === "embed_documents") {
+    const batchFlagIndex = command.indexOf("--batch-size");
+    if (batchFlagIndex >= 0) {
+      command.splice(batchFlagIndex, 2);
+    }
+    command.push("--batch-size", String(options.embeddingBatchSize));
+  }
   return {
     id: stage.id,
-    command: stage.command.join(" "),
+    command: command.join(" "),
     destructive: stage.destructive,
     expensive: stage.expensive,
   };

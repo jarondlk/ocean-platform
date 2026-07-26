@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
+import uuid
 
 import jwt
 import pytest
@@ -23,7 +24,7 @@ from api.auth import (
     route_permission,
 )
 from api.main import app
-from db.app_models import AppBase, AppUser, UserInvitation
+from db.app_models import AppBase, AppUser, AuditEvent, UserInvitation
 from db.models import CorpusBase
 
 
@@ -106,7 +107,7 @@ def test_uninvited_or_unverified_identity_is_rejected():
 
 
 @pytest.mark.parametrize("role", ["viewer", "researcher", "admin"])
-def test_mock_login_identity_is_signed_non_persisted_and_role_scoped(
+def test_mock_login_identity_is_signed_database_backed_and_role_scoped(
     monkeypatch,
     role,
 ):
@@ -130,7 +131,10 @@ def test_mock_login_identity_is_signed_non_persisted_and_role_scoped(
         assert current.permissions == ROLE_PERMISSIONS[role]
         assert current.auth_provider == "mock-credentials"
         assert current.account_type == "internal"
-        assert session.query(AppUser).count() == 0
+        user = session.query(AppUser).one()
+        assert user.id == current.id
+        assert user.auth_subject == f"mock-login:{role}"
+        assert user.email == f"{role}@mock.invalid"
         assert session.query(UserInvitation).count() == 0
 
 
@@ -164,14 +168,35 @@ def test_mock_login_identity_fails_closed_when_disabled_or_malformed(
 
 
 @pytest.mark.parametrize("role", ["viewer", "researcher", "admin"])
-def test_mock_login_internal_token_reaches_me_without_database_fixtures(
+def test_mock_login_internal_token_reaches_me_with_database_fixture(
     monkeypatch,
     role,
 ):
+    engine = create_engine(
+        "sqlite+pysqlite://",
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
+    )
+    AppBase.metadata.create_all(engine)
+    factory = sessionmaker(bind=engine, expire_on_commit=False)
+
+    @contextmanager
+    def fake_get_session():
+        session = factory()
+        try:
+            yield session
+            session.commit()
+        except Exception:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+
     monkeypatch.setenv("DEPLOYMENT_ENV", "test")
     monkeypatch.setenv("AUTH_MODE", "required")
     monkeypatch.setenv("ENABLE_MOCK_LOGIN", "true")
     monkeypatch.setenv("INTERNAL_AUTH_SECRET", TOKEN_SECRET)
+    monkeypatch.setattr(api_auth, "get_session", fake_get_session)
     now = datetime.now(timezone.utc)
     token = jwt.encode(
         {
@@ -197,6 +222,37 @@ def test_mock_login_internal_token_reaches_me_without_database_fixtures(
     assert response.json()["role"] == role
     assert response.json()["email"] == f"{role}@mock.invalid"
     assert response.json()["account_type"] == "internal"
+    with factory() as session:
+        assert session.query(AppUser).count() == 1
+
+
+def test_mock_login_uses_database_role_and_suspension(monkeypatch):
+    monkeypatch.setenv("DEPLOYMENT_ENV", "test")
+    monkeypatch.setenv("AUTH_MODE", "required")
+    monkeypatch.setenv("ENABLE_MOCK_LOGIN", "true")
+    claims = {
+        "sub": "mock-login:viewer",
+        "provider": "mock-credentials",
+        "email": "viewer@mock.invalid",
+        "email_verified": True,
+        "name": "Mock Viewer",
+        "mock_login_role": "viewer",
+    }
+
+    with _session() as session:
+        current = resolve_identity(session, claims)
+        user = session.get(AppUser, current.id)
+        user.role = "researcher"
+        session.commit()
+
+        updated = resolve_identity(session, claims)
+        assert updated.role == "researcher"
+        assert updated.permissions == ROLE_PERMISSIONS["researcher"]
+
+        user.status = "suspended"
+        session.commit()
+        with pytest.raises(AuthenticationFailure, match="suspended"):
+            resolve_identity(session, claims)
 
 
 def test_internal_token_requires_expected_issuer_audience_and_claims(monkeypatch):
@@ -514,6 +570,103 @@ def test_admin_cannot_demote_or_suspend_self(monkeypatch):
         unchanged = session.get(AppUser, admin_id)
         assert unchanged.role == "admin"
         assert unchanged.status == "active"
+
+
+def test_database_backed_mock_admin_can_create_and_revoke_invitation(
+    monkeypatch,
+):
+    engine = create_engine(
+        "sqlite+pysqlite://",
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
+    )
+    AppBase.metadata.create_all(engine)
+    factory = sessionmaker(bind=engine, expire_on_commit=False)
+    with factory() as session:
+        admin = AppUser(
+            auth_provider="mock-credentials",
+            auth_subject="mock-login:admin",
+            email="admin@mock.invalid",
+            display_name="Mock Admin",
+            role="admin",
+            account_type="internal",
+            status="active",
+        )
+        session.add(admin)
+        session.commit()
+        admin_id = admin.id
+
+    actor = CurrentUser(
+        id=admin_id,
+        email="admin@mock.invalid",
+        display_name="Mock Admin",
+        role="admin",
+        account_type="internal",
+        status="active",
+        permissions=ROLE_PERMISSIONS["admin"],
+        auth_provider="mock-credentials",
+    )
+
+    @contextmanager
+    def fake_get_session():
+        session = factory()
+        try:
+            yield session
+            session.commit()
+        except Exception:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+
+    monkeypatch.setattr(
+        api_auth,
+        "authenticate_request",
+        lambda _request: actor,
+    )
+    monkeypatch.setattr(auth_routes, "get_session", fake_get_session)
+    client = TestClient(app)
+
+    created = client.post(
+        "/admin/invitations",
+        json={
+            "email": "browser-smoke@mock.invalid",
+            "role": "viewer",
+            "account_type": "research",
+        },
+    )
+    assert created.status_code == 201
+    invitation_id = created.json()["id"]
+
+    revoked = client.post(
+        f"/admin/invitations/{invitation_id}/revoke",
+        json={},
+    )
+    repeated = client.post(
+        f"/admin/invitations/{invitation_id}/revoke",
+        json={},
+    )
+
+    assert revoked.status_code == 200
+    assert revoked.json()["status"] == "revoked"
+    assert repeated.status_code == 200
+    assert repeated.json()["status"] == "revoked"
+    with factory() as session:
+        invitation = session.get(
+            UserInvitation,
+            uuid.UUID(invitation_id),
+        )
+        assert invitation.status == "revoked"
+        actions = [
+            event.action
+            for event in session.query(AuditEvent)
+            .order_by(AuditEvent.created_at)
+            .all()
+        ]
+        assert actions == [
+            "admin.invitation_created",
+            "admin.invitation_revoked",
+        ]
 
 
 def test_invited_identity_can_enter_me_and_suspension_is_immediate(monkeypatch):

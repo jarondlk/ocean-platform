@@ -21,12 +21,14 @@ credentials, run both services with `AUTH_MODE=required`,
 `ENABLE_MOCK_LOGIN=true`. Generate the three required scrypt password hashes
 with `python scripts/hash_mock_password.py` and assign them to
 `MOCK_VIEWER_PASSWORD_HASH`, `MOCK_RESEARCHER_PASSWORD_HASH`, and
-`MOCK_ADMIN_PASSWORD_HASH`. The login page exposes three signed, non-persisted
-accounts: `viewer@mock.invalid`, `researcher@mock.invalid`, and
-`admin@mock.invalid`. This harness is rejected in staging and production and
-does not replace the final real-provider callback smoke test. Run it only
-against an isolated test environment because Admin actions retain their normal
-local side effects.
+`MOCK_ADMIN_PASSWORD_HASH`. The login page exposes three fixed accounts:
+`viewer@mock.invalid`, `researcher@mock.invalid`, and `admin@mock.invalid`.
+Each is created once in the isolated test database on first API use so foreign
+keys, role changes, suspension, chat, feedback, and audit behavior use the same
+application-metadata path as provider-backed users. This harness is rejected in
+staging and production and does not replace the final real-provider callback
+smoke test. Run it only against an isolated test environment because its
+mutations are real within that environment.
 
 Run the backend suite and the same coverage boundary used by CI:
 
@@ -81,9 +83,9 @@ python -m pytest \
   -q
 ```
 
-The tests verify migrated tables, invite acceptance, user persistence, the
-acceptance audit event, and shared rate-limit behavior. Their records are
-isolated and cleaned up.
+The tests verify migrated tables, invite acceptance, user persistence,
+database-backed mock identity suspension, audited invitation mutations, and
+shared rate-limit behavior. Their records are isolated and cleaned up.
 
 Exercise the database mutation safety path:
 

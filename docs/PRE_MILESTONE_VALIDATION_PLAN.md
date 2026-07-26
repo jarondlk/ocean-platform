@@ -8,45 +8,55 @@ local repository from destructive drills and deployment-provider controls.
 
 Validated on 2026-07-26:
 
-- Python: 379 passed, 2 skipped, 72.72% aggregate coverage.
+- Python: 383 passed, 3 skipped, 73.10% aggregate coverage.
 - Ruff: active Python boundary passed.
 - Frontend: TypeScript check and production build passed.
 - PostgreSQL: Alembic is at `20260726_0002` (head).
-- PostgreSQL integration: migration/invite persistence and shared-rate-limit
-  checks passed.
+- PostgreSQL integration: three real-database checks passed, including
+  migration/invite persistence, database-backed mock suspension, audited
+  invitation mutation foreign keys, and shared rate limiting.
 - Recovery: a fresh custom-format database backup restored into a disposable
   database, matched all 16 recorded table counts, and the temporary database
   was removed.
-- Browser read-only checks: Users, Feedback, Evaluation, Pipeline, and Chat
-  rendered with the expected Admin controls. Pipeline reported the corpus,
-  PostgreSQL, and Ollama ready, with 323 retrieval documents and 323
-  embeddings.
+- Browser mutation checks passed against a restored disposable database with
+  independent Admin and Viewer/Researcher sessions: invitation create/revoke,
+  suspend/deny/reactivate, chat feedback create/revise/admin review, and a
+  one-work-unit Standard evaluation.
+- Destructive browser drill passed in a temporary source/artifact copy:
+  preflight required the verified backup and exact `RESET DATABASE` phrase,
+  backup completed, `load_db.py --reset --embed` completed, all 323 document
+  embeddings were rebuilt, and application metadata survived.
+- The command preview was corrected to show the selected reset/upsert, embed,
+  skip-SST, and batch-size options before preflight.
 
-These results support an intermediate commit. They do not prove production
-readiness because the mutation, destructive, real-OIDC, and provider-operated
-gates below remain open.
+These results close the repository-local implementation and validation gates.
+They do not prove production readiness because real OIDC and provider-operated
+deployment gates remain open.
 
-## Blockers to Patch Before Mutation Testing
+## Local Blockers Implemented
 
 ### 1. Make development mock identities database-backed
 
-The three development email/password identities currently receive signed role
-claims but are deliberately not stored in `app_user`. That is sufficient for
-read-only authorization tests, but not for audited mutations:
+Status: implemented and covered by unit, PostgreSQL integration, and isolated
+browser suspension tests.
+
+Before this patch, the three development email/password identities received
+signed role claims but were not stored in `app_user`. That was sufficient for
+read-only authorization tests, but prevented realistic audited mutations:
 
 - invitation and user-admin audit events reference the acting user's
   `app_user` primary key;
 - persisted chat interactions reference the user's `app_user` primary key;
-- suspension cannot take effect because the mock identity is reconstructed as
-  active from its signed role claim on every request.
+- suspension could not take effect because the mock identity was reconstructed
+  as active from its signed role claim on every request.
 
-Patch the development/test-only resolver so the fixed mock subjects are created
-once in `app_user`, then resolve role, account type, and status from PostgreSQL
-on every request. Never recreate or reset an existing mock user's role/status
-at login. Preserve all current production/staging prohibitions on
-`ENABLE_MOCK_LOGIN`.
+The development/test-only resolver now creates each fixed mock subject once in
+`app_user`, then resolves role, account type, and status from PostgreSQL on
+every request. It never recreates or resets an existing mock user's
+role/status at login, and all production/staging prohibitions on
+`ENABLE_MOCK_LOGIN` remain in force.
 
-Required automated checks:
+Automated coverage confirms:
 
 - first login creates exactly one fixed mock user and repeated login is
   idempotent;
@@ -58,25 +68,30 @@ Required automated checks:
 
 ### 2. Add invitation cleanup
 
-Invitation state already supports `revoked`, but the application has no
-revoke API or browser control. Add an Admin-only revoke action for a pending
-invitation, record an audit event, and make repeated revoke requests
-idempotent. This allows a browser smoke test to create and clean up a tagged
-invitation without deleting audit history.
+Status: implemented with an Admin-only, audited, idempotent revoke endpoint and
+browser control.
+
+Invitation state already supported `revoked`, but the application had no
+revoke API or browser control. The new Admin-only action revokes a pending
+invitation, records an audit event, and treats repeated revoke requests as
+idempotent. This lets browser checks clean up a tagged invitation without
+deleting audit history.
 
 ### 3. Add a destructive reset confirmation
 
-The pipeline defaults to dry-run and requires `backup_database` before a real
-`load_db`, which are good safeguards. A real reset can still be selected with
-checkboxes and the normal Start button. Require an exact confirmation phrase,
-such as `RESET DATABASE`, in both the API schema/validation and browser UI when:
+Status: implemented in both API validation and browser UI, with exact-phrase
+regression tests and a completed disposable reset drill.
+
+The pipeline already defaulted to dry-run and required `backup_database` before
+a real `load_db`. It now additionally requires the exact `RESET DATABASE`
+confirmation phrase in both API validation and the browser UI when:
 
 ```text
 dry_run=false AND reset_database=true AND load_db is selected
 ```
 
-The server must reject a missing or incorrect phrase even if a client bypasses
-the UI.
+The server rejects a missing or incorrect phrase even if a client bypasses the
+UI.
 
 ## Browser Mutation Matrix
 
@@ -88,13 +103,17 @@ test record.
 | --- | --- | --- | --- |
 | Invite | Admin creates a Viewer invitation for a unique `.invalid` email, refreshes, and revokes it | Pending then revoked state; create and revoke audit events | Keep the revoked audit record in the disposable database |
 | Suspension | Viewer signs in once; Admin suspends Viewer; Viewer refreshes an authenticated page; Admin reactivates Viewer | Next Viewer request is 403 while suspended; login works after reactivation; two user-change audit events | Viewer restored to active |
-| Feedback mutation | Viewer asks one small tagged question, submits positive feedback, then revises it to negative with a valid reason and comment | One completed chat; feedback PUT creates then updates the same row; both audit events visible to Admin | Dispose of the entire test database after evidence capture |
+| Feedback mutation | Viewer asks one small tagged question, submits positive feedback, then revises it to negative with a valid reason and comment | One completed chat; feedback PUT creates then updates the same row; revised rating/reason/comment visible to Admin; audit events persisted | Dispose of the entire test database after evidence capture |
 | Evaluation execution | Researcher starts Standard with `question_ids=ctd_01`, Baseline only, quality off, judge off, and a unique tag | Job moves queued → running → completed; exactly one answer work unit; CSV/meta/report can be reopened from Runs | Retain the tagged evaluation artifact as release evidence or delete the disposable artifact volume |
 | Role boundaries | Use isolated Viewer, Researcher, and Admin browser contexts | Viewer cannot access Evaluation/Admin/Pipeline; Researcher can run Evaluation but not Admin/Pipeline; Admin can access all | Close all contexts |
 
 Use independent browser contexts for the role matrix. Sequential sign-out and
 sign-in in one cookie jar is useful UI coverage but does not prove simultaneous
 session isolation.
+
+Executed on 2026-07-26 with host-isolated cookie jars and separate frontend
+instances for the Admin and Viewer/Researcher sessions. Every matrix row passed;
+the disposable database and temporary artifact copy were removed afterward.
 
 ## Destructive Pipeline Drill
 
@@ -126,6 +145,12 @@ working repository's only artifact tree.
 
 The normal scheduled-update path remains transactional `--upsert`; a reset is
 a recovery/rebuild drill, not the default update procedure.
+
+The 2026-07-26 drill used only `backup_database` plus `load_db`, because its
+purpose was to exercise the destructive boundary using already validated
+artifacts. It completed in the disposable database and temporary artifact
+copy; the full log confirmed `--reset --embed`, 323 regenerated embeddings,
+and preserved application-metadata records.
 
 ## Deployment-Provider Gates
 
@@ -189,13 +214,13 @@ workflow YAML.
 
 ## Release Decision
 
-- **Safe now:** commit and push this iteration as a clearly labeled
-  pre-milestone/readiness checkpoint.
-- **Not safe to claim:** 100% browser mutation coverage, destructive recovery
-  coverage, or production readiness.
-- **Next code gate:** database-backed development mock identities, invitation
-  revoke, and reset confirmation.
-- **Next validation gate:** run the browser mutation matrix and destructive
-  drill in disposable environments.
-- **Final production gate:** real managed OIDC plus TLS, PITR/off-host backup,
-  secret rotation, and remotely enforced CI protections.
+- **Safe now:** commit and push the repository-local production-readiness
+  implementation after the final validation commands remain green.
+- **Locally proven:** role-aware mock sessions, immediate suspension,
+  invitation revocation, feedback mutation, one-unit evaluation execution,
+  verified logical backup, and destructive corpus reset/re-embedding.
+- **Not safe to claim yet:** production deployment readiness or a successful
+  real-provider login.
+- **Remaining production gate:** real managed OIDC plus TLS,
+  PITR/off-host backup, secret rotation, retention/incident procedures, and
+  remotely enforced CI/repository protections.

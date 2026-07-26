@@ -1,12 +1,13 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { RefreshCw, UserPlus } from "lucide-react";
+import { Ban, RefreshCw, UserPlus } from "lucide-react";
 
 import {
   createInvitation,
   getInvitations,
   getUsers,
+  revokeInvitation,
   updateUser,
 } from "@/lib/api";
 import type { UserInvitation, UserSummary } from "@/types";
@@ -20,6 +21,7 @@ export default function UsersPage() {
   const [accountType, setAccountType] =
     useState<UserSummary["account_type"]>("research");
   const [loading, setLoading] = useState(true);
+  const [revokingInvitationId, setRevokingInvitationId] = useState("");
   const [error, setError] = useState("");
 
   async function load() {
@@ -72,6 +74,24 @@ export default function UsersPage() {
     } catch (err) {
       setError(err instanceof Error ? err.message : "Update failed");
       await load();
+    }
+  }
+
+  async function revoke(invitationId: string) {
+    setError("");
+    setRevokingInvitationId(invitationId);
+    try {
+      const updated = await revokeInvitation(invitationId);
+      setInvitations((current) =>
+        current.map((invitation) =>
+          invitation.id === updated.id ? updated : invitation,
+        ),
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Revocation failed");
+      await load();
+    } finally {
+      setRevokingInvitationId("");
     }
   }
 
@@ -221,6 +241,7 @@ export default function UsersPage() {
                 <th>Account type</th>
                 <th>Status</th>
                 <th>Expires</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -231,10 +252,28 @@ export default function UsersPage() {
                   <td>{invitation.account_type}</td>
                   <td>{invitation.status}</td>
                   <td>{invitation.expires_at}</td>
+                  <td>
+                    {invitation.status === "pending" ? (
+                      <button
+                        aria-label={`Revoke invitation for ${invitation.email}`}
+                        className="button secondary-button"
+                        disabled={revokingInvitationId === invitation.id}
+                        onClick={() => void revoke(invitation.id)}
+                        type="button"
+                      >
+                        <Ban size={15} aria-hidden="true" />
+                        {revokingInvitationId === invitation.id
+                          ? "Revoking"
+                          : "Revoke"}
+                      </button>
+                    ) : (
+                      "—"
+                    )}
+                  </td>
                 </tr>
               ))}
               {!loading && invitations.length === 0 ? (
-                <tr><td colSpan={5}>No invitations.</td></tr>
+                <tr><td colSpan={6}>No invitations.</td></tr>
               ) : null}
             </tbody>
           </table>

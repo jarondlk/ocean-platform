@@ -484,6 +484,7 @@ class PipelineRunRequest(BaseModel):
     dry_run: bool = True
     skip_sst: bool = False
     reset_database: bool = False
+    reset_confirmation: Optional[str] = Field(default=None, max_length=64)
     embed_after_load: bool = True
     embedding_model: Optional[str] = None
     embedding_batch_size: int = Field(default=32, ge=1, le=256)

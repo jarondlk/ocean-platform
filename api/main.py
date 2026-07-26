@@ -376,6 +376,7 @@ EVALUATION_JOB_LOCK = threading.Lock()
 EVALUATION_CANCEL_EVENTS: Dict[str, threading.Event] = {}
 EVALUATION_TERMINAL_STATES = {"complete", "failed", "cancelled"}
 PIPELINE_TERMINAL_STATES = {"complete", "failed", "cancelled"}
+PIPELINE_RESET_CONFIRMATION = "RESET DATABASE"
 
 PIPELINE_STAGES: List[Dict[str, Any]] = [
     {
@@ -1347,6 +1348,32 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
                 else "Transactional incremental upsert selected; stale rows are retained."
             ),
             required=False,
+        )
+        reset_confirmation_required = (
+            not request.dry_run and request.reset_database
+        )
+        reset_confirmation_valid = (
+            request.reset_confirmation == PIPELINE_RESET_CONFIRMATION
+        )
+        _pipeline_check(
+            checks,
+            id_="database_reset_confirmation",
+            label="Destructive reset confirmation",
+            passed=(
+                not reset_confirmation_required
+                or reset_confirmation_valid
+            ),
+            detail=(
+                "Destructive reset confirmation is not required."
+                if not reset_confirmation_required
+                else "Destructive reset confirmation accepted."
+                if reset_confirmation_valid
+                else (
+                    "A non-dry-run database reset requires the exact "
+                    f"confirmation phrase: {PIPELINE_RESET_CONFIRMATION}"
+                )
+            ),
+            required=reset_confirmation_required,
         )
 
     if "backup_database" in request.stages:

@@ -430,6 +430,7 @@ export type PipelineRunRequest = {
   dry_run: boolean;
   skip_sst: boolean;
   reset_database: boolean;
+  reset_confirmation?: string;
   embed_after_load: boolean;
   embedding_model?: string;
   embedding_batch_size: number;

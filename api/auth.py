@@ -133,11 +133,13 @@ def current_user_from_model(user: AppUser) -> CurrentUser:
 
 
 def _mock_login_identity(
+    session: Session,
     claims: Mapping[str, Any],
     *,
     provider: str,
     subject: str,
     email: str,
+    display_name: Optional[str],
 ) -> CurrentUser:
     try:
         enabled = config.mock_login_enabled()
@@ -160,16 +162,57 @@ def _mock_login_identity(
     ):
         raise AuthenticationFailure(401, "Mock login identity claims are invalid")
 
-    return CurrentUser(
-        id=uuid.uuid5(uuid.NAMESPACE_URL, f"onagawa-rag:{expected_subject}"),
-        email=expected_email,
-        display_name=f"Mock {role.title()}",
-        role=role,
-        account_type="internal",
-        status="active",
-        permissions=ROLE_PERMISSIONS[role],
-        auth_provider=MOCK_CREDENTIALS_PROVIDER,
+    now = datetime.now(timezone.utc)
+    user = session.scalar(
+        select(AppUser).where(
+            AppUser.auth_provider == MOCK_CREDENTIALS_PROVIDER,
+            AppUser.auth_subject == expected_subject,
+        )
     )
+    if user is None:
+        email_owner = session.scalar(
+            select(AppUser).where(AppUser.email == expected_email)
+        )
+        if email_owner is not None:
+            raise AuthenticationFailure(
+                403,
+                "This mock email is already linked to another identity",
+            )
+        user = AppUser(
+            id=uuid.uuid5(
+                uuid.NAMESPACE_URL,
+                f"onagawa-rag:{expected_subject}",
+            ),
+            auth_provider=MOCK_CREDENTIALS_PROVIDER,
+            auth_subject=expected_subject,
+            email=expected_email,
+            display_name=display_name or f"Mock {role.title()}",
+            role=role,
+            account_type="internal",
+            status="active",
+            last_login_at=now,
+        )
+        session.add(user)
+        session.flush()
+        return current_user_from_model(user)
+
+    if user.email != expected_email:
+        raise AuthenticationFailure(
+            403,
+            "The mock identity email no longer matches this account",
+        )
+    if user.status != "active":
+        raise AuthenticationFailure(403, "This account is suspended")
+    user.display_name = display_name or user.display_name
+    last_login_at = user.last_login_at
+    if last_login_at is not None and last_login_at.tzinfo is None:
+        last_login_at = last_login_at.replace(tzinfo=timezone.utc)
+    if (
+        last_login_at is None
+        or (now - last_login_at).total_seconds() >= 15 * 60
+    ):
+        user.last_login_at = now
+    return current_user_from_model(user)
 
 
 def _disabled_mode_user() -> CurrentUser:
@@ -253,10 +296,12 @@ def resolve_identity(session: Session, claims: Mapping[str, Any]) -> CurrentUser
     display_name = str(claims.get("name") or "").strip()[:255] or None
     if provider == MOCK_CREDENTIALS_PROVIDER:
         return _mock_login_identity(
+            session,
             claims,
             provider=provider,
             subject=subject,
             email=email,
+            display_name=display_name,
         )
     now = datetime.now(timezone.utc)
 

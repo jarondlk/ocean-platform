@@ -151,8 +151,9 @@ export default async function LoginPage({
               ))}
             </div>
             <p className="mock-login-warning">
-              These accounts are not stored as users. Authorized actions still
-              affect this local environment.
+              These accounts are stored only in this local test database so
+              role, suspension, audit, chat, and feedback behavior can be
+              exercised safely.
             </p>
           </section>
         ) : (

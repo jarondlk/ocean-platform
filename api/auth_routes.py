@@ -216,3 +216,39 @@ def create_invitation(
                 detail="An invitation for this email already exists",
             ) from exc
         return _invitation_response(invitation)
+
+
+@router.post(
+    "/admin/invitations/{invitation_id}/revoke",
+    response_model=InvitationResponse,
+)
+def revoke_invitation(
+    invitation_id: uuid.UUID,
+    actor: CurrentUser = Depends(get_current_user),
+) -> InvitationResponse:
+    with get_session() as session:
+        invitation = session.get(UserInvitation, invitation_id)
+        if invitation is None:
+            raise HTTPException(status_code=404, detail="Invitation not found")
+        if invitation.status == "revoked":
+            return _invitation_response(invitation)
+        if invitation.status != "pending":
+            raise HTTPException(
+                status_code=409,
+                detail="Only a pending invitation can be revoked",
+            )
+
+        invitation.status = "revoked"
+        session.add(
+            AuditEvent(
+                actor_user_id=(
+                    actor.id if actor.auth_provider != "disabled" else None
+                ),
+                action="admin.invitation_revoked",
+                target_type="invitation",
+                target_id=str(invitation.id),
+                metadata_json={"email": invitation.email},
+            )
+        )
+        session.flush()
+        return _invitation_response(invitation)

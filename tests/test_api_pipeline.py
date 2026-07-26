@@ -85,6 +85,50 @@ def test_pipeline_preflight_requires_backup_before_real_database_mutation():
     assert any("backup_database before load_db" in blocker for blocker in payload["blockers"])
 
 
+def test_pipeline_reset_requires_exact_server_side_confirmation():
+    request = {
+        "stages": ["backup_database", "load_db"],
+        "dry_run": False,
+        "reset_database": True,
+        "embed_after_load": False,
+    }
+
+    missing = client.post("/pipeline/preflight", json=request)
+    incorrect = client.post(
+        "/pipeline/preflight",
+        json={**request, "reset_confirmation": "reset database"},
+    )
+    accepted = client.post(
+        "/pipeline/preflight",
+        json={**request, "reset_confirmation": "RESET DATABASE"},
+    )
+    blocked_start = client.post("/pipeline/jobs", json=request)
+
+    assert missing.status_code == 200
+    assert incorrect.status_code == 200
+    assert accepted.status_code == 200
+    missing_check = next(
+        check
+        for check in missing.json()["checks"]
+        if check["id"] == "database_reset_confirmation"
+    )
+    incorrect_check = next(
+        check
+        for check in incorrect.json()["checks"]
+        if check["id"] == "database_reset_confirmation"
+    )
+    accepted_check = next(
+        check
+        for check in accepted.json()["checks"]
+        if check["id"] == "database_reset_confirmation"
+    )
+    assert missing_check["status"] == "fail"
+    assert incorrect_check["status"] == "fail"
+    assert accepted_check["status"] == "pass"
+    assert blocked_start.status_code == 400
+    assert "RESET DATABASE" in blocked_start.text
+
+
 def test_pipeline_status_reports_active_jobs_and_artifact_freshness(tmp_path, monkeypatch):
     monkeypatch.setattr(api_main.config, "DATA_DIR", tmp_path)
     job_id = "pipeline_active_contract"

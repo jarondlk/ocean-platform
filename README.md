@@ -194,10 +194,12 @@ environment. Configure the three `MOCK_*_PASSWORD_HASH` settings using
 `python scripts/hash_mock_password.py`. The login page then accepts the fixed
 Viewer, Researcher, and Admin mock emails through a normal email/password form.
 It creates signed Auth.js sessions and exercises the normal FastAPI permission
-matrix without creating database users. Plaintext passwords are never committed.
+matrix. On first API use, each fixed identity is created once in the local test
+database; subsequent requests resolve its current role, account type, and
+suspension status from PostgreSQL. Plaintext passwords are never committed.
 The flag is disabled by default and rejected in staging and production. Use it
-only against an isolated development environment: Admin actions retain their
-real local effects.
+only against an isolated development environment: chat, feedback, audit, and
+Admin actions retain their real local effects.
 
 Cloud authentication will remain OIDC-backed through a managed identity
 provider that can present a conventional email/password experience. The
