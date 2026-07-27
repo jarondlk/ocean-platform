@@ -1,17 +1,17 @@
 # Runtime dependencies. Compile with:
 #   pip-compile --generate-hashes --output-file requirements.txt requirements.in
-fastapi==0.117.1
-uvicorn[standard]==0.40.0
+fastapi==0.140.0
+uvicorn[standard]==0.51.0
 pandas==2.3.0
 pyarrow==23.0.1
-numpy==2.0.2
-scipy==1.15.1
-requests==2.33.0
-sqlalchemy==2.0.46
-psycopg2-binary==2.9.11
-pgvector==0.4.2
-alembic==1.18.3
+numpy==2.4.6
+scipy==1.18.0
+requests==2.34.2
+sqlalchemy==2.0.51
+psycopg2-binary==2.9.12
+pgvector==0.5.0
+alembic==1.18.5
 PyJWT==2.13.0
-xarray==2026.4.0
+xarray==2026.7.0
 netCDF4==1.7.4
 rouge-score==0.1.2
