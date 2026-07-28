@@ -1,0 +1,54 @@
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: onagawa-evaluation
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/cloudsql-instances: PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
+        run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/secrets: 'onagawa-database-url:projects/PROJECT_NUMBER/secrets/onagawa-database-url'
+    spec:
+      template:
+        spec:
+          serviceAccountName: onagawa-jobs@PROJECT_ID.iam.gserviceaccount.com
+          maxRetries: 0
+          timeoutSeconds: "3600"
+          containers:
+            - image: REGION-docker.pkg.dev/PROJECT_ID/ARTIFACT_REPOSITORY/api:IMAGE_TAG
+              command:
+                - python
+              args:
+                - scripts/run_evaluation.py
+                - --quick
+              env:
+                - name: DATABASE_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: onagawa-database-url
+                      key: latest
+                - name: DATA_DIR
+                  value: /mnt/onagawa-data
+                - name: MODEL_PROVIDER
+                  value: ollama
+                - name: OLLAMA_BASE_URL
+                  value: OLLAMA_PRIVATE_URL
+                - name: CHAT_MODEL
+                  value: qwen2.5:14b-instruct
+                - name: EMBEDDING_MODEL
+                  value: nomic-embed-text
+              resources:
+                limits:
+                  cpu: "2"
+                  memory: 4Gi
+              volumeMounts:
+                - name: scientific-data
+                  mountPath: /mnt/onagawa-data
+          volumes:
+            - name: scientific-data
+              csi:
+                driver: gcsfuse.run.googleapis.com
+                readOnly: false
+                volumeAttributes:
+                  bucketName: DATA_BUCKET

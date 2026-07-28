@@ -1,0 +1,55 @@
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: onagawa-pipeline
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/cloudsql-instances: PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
+        run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/secrets: 'onagawa-database-url:projects/PROJECT_NUMBER/secrets/onagawa-database-url'
+    spec:
+      template:
+        spec:
+          serviceAccountName: onagawa-jobs@PROJECT_ID.iam.gserviceaccount.com
+          maxRetries: 0
+          timeoutSeconds: "3600"
+          containers:
+            - image: REGION-docker.pkg.dev/PROJECT_ID/ARTIFACT_REPOSITORY/api:IMAGE_TAG
+              command:
+                - python
+              args:
+                - scripts/run_pipeline.py
+                - --dry-run
+                - --json
+              env:
+                - name: DATABASE_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: onagawa-database-url
+                      key: latest
+                - name: DATA_DIR
+                  value: /mnt/onagawa-data
+                - name: SST_NETCDF_DIR
+                  value: /mnt/onagawa-data/raw/sst-netcdf
+                - name: HIMAWARI_RAW_DIR
+                  value: /mnt/onagawa-data/raw/himawari
+                - name: MODEL_PROVIDER
+                  value: ollama
+                - name: OLLAMA_BASE_URL
+                  value: OLLAMA_PRIVATE_URL
+              resources:
+                limits:
+                  cpu: "2"
+                  memory: 4Gi
+              volumeMounts:
+                - name: scientific-data
+                  mountPath: /mnt/onagawa-data
+          volumes:
+            - name: scientific-data
+              csi:
+                driver: gcsfuse.run.googleapis.com
+                readOnly: false
+                volumeAttributes:
+                  bucketName: DATA_BUCKET

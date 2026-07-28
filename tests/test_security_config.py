@@ -9,6 +9,7 @@ def _environment(**overrides: str) -> dict[str, str]:
     values = {
         "DEPLOYMENT_ENV": "production",
         "AUTH_MODE": "required",
+        "AUTH_ALLOWED_PROVIDERS": "oidc",
         "PERSIST_LOCAL_CHAT": "false",
         "ENABLE_MOCK_LOGIN": "false",
         "INTERNAL_AUTH_SECRET": "api-signing-secret-that-is-long-and-random-123",
@@ -22,6 +23,26 @@ def _environment(**overrides: str) -> dict[str, str]:
 
 def test_secure_production_configuration_is_accepted():
     config.validate_security_configuration(_environment())
+
+
+@pytest.mark.parametrize(
+    "providers",
+    ["", "OIDC", "google_provider", "google,google", "mock-credentials"],
+)
+def test_auth_provider_allowlist_rejects_unsafe_values(providers):
+    with pytest.raises(
+        config.SecurityConfigurationError,
+        match="AUTH_ALLOWED_PROVIDERS",
+    ):
+        config.validate_security_configuration(
+            _environment(AUTH_ALLOWED_PROVIDERS=providers)
+        )
+
+
+def test_auth_provider_allowlist_accepts_stable_cloud_provider_ids():
+    config.validate_security_configuration(
+        _environment(AUTH_ALLOWED_PROVIDERS="google,tohoku")
+    )
 
 
 @pytest.mark.parametrize("deployment_env", ["staging", "production"])

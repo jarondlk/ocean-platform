@@ -10,6 +10,7 @@ spec:
         run.googleapis.com/cloudsql-instances: PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
         run.googleapis.com/container-dependencies: '{"frontend":["api"]}'
         run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/secrets: 'onagawa-auth-secret:projects/PROJECT_NUMBER/secrets/onagawa-auth-secret,onagawa-internal-auth-secret:projects/PROJECT_NUMBER/secrets/onagawa-internal-auth-secret,onagawa-oidc-client-secret:projects/PROJECT_NUMBER/secrets/onagawa-oidc-client-secret,onagawa-database-url:projects/PROJECT_NUMBER/secrets/onagawa-database-url'
     spec:
       serviceAccountName: onagawa-app@PROJECT_ID.iam.gserviceaccount.com
       containerConcurrency: 20
@@ -38,7 +39,9 @@ spec:
             - name: INTERNAL_AUTH_AUDIENCE
               value: onagawa-source-chat-api
             - name: OIDC_PROVIDER_NAME
-              value: Managed identity provider
+              value: OIDC_PROVIDER_NAME
+            - name: OIDC_PROVIDER_ID
+              value: OIDC_PROVIDER_ID
             - name: OIDC_ISSUER
               value: OIDC_ISSUER
             - name: OIDC_CLIENT_ID
@@ -74,6 +77,8 @@ spec:
               value: "false"
             - name: ENABLE_MOCK_LOGIN
               value: "false"
+            - name: AUTH_ALLOWED_PROVIDERS
+              value: OIDC_PROVIDER_ID
             - name: CORS_ORIGINS
               value: PUBLIC_APP_URL
             - name: INTERNAL_AUTH_ISSUER
@@ -131,6 +136,6 @@ spec:
         - name: scientific-data
           csi:
             driver: gcsfuse.run.googleapis.com
-            readOnly: false
+            readOnly: true
             volumeAttributes:
               bucketName: DATA_BUCKET

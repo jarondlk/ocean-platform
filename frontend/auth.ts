@@ -11,6 +11,7 @@ import {
 } from "@/lib/mock-login";
 import {
   mockLoginEnabled,
+  oidcProviderId,
   validateFrontendSecurityConfiguration,
 } from "@/lib/security-config";
 
@@ -20,7 +21,7 @@ validateFrontendSecurityConfiguration();
 
 function oidcProvider(): OIDCConfig<Profile> {
   return {
-    id: "oidc",
+    id: oidcProviderId(),
     name: process.env.OIDC_PROVIDER_NAME || "Managed identity provider",
     type: "oidc",
     issuer: process.env.OIDC_ISSUER || "https://invalid.example",

@@ -1,4 +1,25 @@
 steps:
+  - id: test-python
+    name: python:3.12-slim
+    entrypoint: bash
+    args:
+      - -ceu
+      - |
+        python -m pip install --disable-pip-version-check --require-hashes -r requirements/dev.txt
+        python -m ruff check .
+        python -m pytest -q
+
+  - id: test-frontend
+    name: node:22
+    dir: frontend
+    entrypoint: bash
+    args:
+      - -ceu
+      - |
+        npm ci
+        npm run typecheck
+        npm run build
+
   - id: build-api
     name: gcr.io/cloud-builders/docker
     args:
@@ -29,3 +50,5 @@ substitutions:
 
 options:
   logging: CLOUD_LOGGING_ONLY
+
+timeout: 2400s

@@ -184,11 +184,12 @@ Ignored files/directories needed only for full regeneration:
 
 The invite-only application requires OIDC and signing secrets. Copy
 `.env.example` to `.env`, register the callback URL
-`http://localhost:3000/api/auth/callback/oidc` with your OpenID Connect
-provider, and fill in `AUTH_SECRET`, `INTERNAL_AUTH_SECRET`, and the `OIDC_*`
-settings. The two signing secrets must be different and at least 32 random
-bytes each. `AUTH_MODE=disabled` is only for an isolated local preview;
-staging and production reject it at startup.
+`http://localhost:3000/api/auth/callback/<OIDC_PROVIDER_ID>` with your OpenID
+Connect provider, and fill in `AUTH_SECRET`, `INTERNAL_AUTH_SECRET`, the
+`OIDC_*` settings, and the matching `AUTH_ALLOWED_PROVIDERS` value. The two
+signing secrets must be different and at least 32 random bytes each.
+`AUTH_MODE=disabled` is only for an isolated local preview; staging and
+production reject it at startup.
 
 For realistic role-aware UI development without organization OIDC credentials,
 keep `AUTH_MODE=required` and set `ENABLE_MOCK_LOGIN=true` in an isolated local
@@ -712,7 +713,9 @@ Key settings in [config.py](config.py):
 | `CHAT_MODEL` | `qwen2.5:14b-instruct` |
 | `DEPLOYMENT_ENV` | `development`; `staging` and `production` enable fail-closed checks |
 | `AUTH_MODE` | `required`; `disabled` is allowed only for isolated local development/tests |
+| `AUTH_ALLOWED_PROVIDERS` | `oidc`; comma-separated stable provider IDs accepted by the API |
 | `AUTH_URL` | `http://localhost:3000` locally; must be the public HTTPS URL in production |
+| `OIDC_PROVIDER_ID` | `oidc`; determines the callback path and durable provider identity |
 | `SST_CTD_AGREEMENT_THRESHOLD` | 2.0°C (env: `SST_CTD_THRESHOLD`) |
 | `DIVERSITY_ANOMALY_SIGMA` | 2.0 (env: `DIVERSITY_ANOMALY_SIGMA`) |
 

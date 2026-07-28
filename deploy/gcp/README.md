@@ -8,10 +8,12 @@ provisioning resources from the repository.
 - One Cloud Run service with Next.js as the ingress container and FastAPI as a
   localhost sidecar.
 - Cloud SQL for PostgreSQL 16 with the `vector` extension.
-- Cloud Storage mounted at `/mnt/onagawa-data` for scientific artifacts and job
-  outputs.
+- Cloud Storage mounted read-only by the serving API and read-write by
+  operator-run jobs.
 - Secret Manager for the database URL, signing secrets, and OIDC client secret.
 - Cloud Run Jobs for migrations, ingestion, embedding refresh, and evaluation.
+- Google OIDC through the existing Auth.js flow, with application invitations
+  and roles retained in Cloud SQL.
 - A private Ollama endpoint for the first prototype. `model_runtime.py` is the
   provider boundary for a future Vertex AI implementation.
 
@@ -28,6 +30,7 @@ gcloud services enable \
   run.googleapis.com \
   artifactregistry.googleapis.com \
   cloudbuild.googleapis.com \
+  storage.googleapis.com \
   sqladmin.googleapis.com \
   secretmanager.googleapis.com \
   iam.googleapis.com \
@@ -39,6 +42,28 @@ gcloud services enable \
 
 Compute Engine and Vertex AI remain optional until the model-hosting decision
 is final.
+
+See [`AUTHENTICATION.md`](AUTHENTICATION.md) for the selected authentication
+transfer, callback URL, provider identity rules, and IAP/Identity Platform
+tradeoffs.
+
+## Foundation preparation
+
+`prepare-foundation.sh` is guarded by `CONFIRM_GCP_PROJECT` and creates only
+APIs, the Artifact Registry repository, service accounts, empty secret
+containers, the data bucket, and least-privilege bindings. It does not create
+secret versions, Cloud SQL, jobs, or a Cloud Run service.
+
+`create-cloud-sql.sh` is separately guarded by
+`CONFIRM_BILLABLE_GCP_PROJECT`. Review the selected tier and expected cost
+before running it. The script deliberately does not accept or generate a
+database password.
+
+Neither script is run as part of tests or builds.
+
+`upload-data.sh` is guarded separately by `CONFIRM_DATA_BUCKET`. It synchronizes
+the current `data/` tree and optional SST/Himawari source directories without
+deleting local files or remote objects.
 
 ## Build
 
@@ -55,16 +80,36 @@ gcloud builds submit \
 Cloud Build produces immutable images tagged with its build ID. Replace
 `IMAGE_TAG` in `service.template.yaml` with that ID.
 
+## Render without deploying
+
+The renderer accepts only non-secret values and writes ignored
+`*.rendered.yaml` files:
+
+```sh
+python scripts/render_gcp_templates.py \
+  --image-tag=BUILD_ID \
+  --public-app-url=https://SERVICE_URL \
+  --data-bucket=DATA_BUCKET \
+  --oidc-client-id=GOOGLE_OAUTH_CLIENT_ID \
+  --ollama-private-url=https://PRIVATE_MODEL_URL
+```
+
+Review every rendered file before using `gcloud run services replace` or
+`gcloud run jobs replace`. Rendering does not contact GCP.
+
 ## Required template values
 
 Copy `service.template.yaml` to an untracked working file and replace:
 
 - `PROJECT_ID`
+- `PROJECT_NUMBER`
 - `REGION`
 - `ARTIFACT_REPOSITORY`
 - `IMAGE_TAG`
 - `CLOUD_SQL_INSTANCE`
 - `PUBLIC_APP_URL`
+- `OIDC_PROVIDER_ID`
+- `OIDC_PROVIDER_NAME`
 - `OIDC_ISSUER`
 - `OIDC_CLIENT_ID`
 - `OLLAMA_PRIVATE_URL`
@@ -83,10 +128,11 @@ configured revision:
 
 - Cloud SQL Client
 - Secret Manager Secret Accessor for the four named secrets
-- Storage Object User on the scientific-data bucket
+- Storage Object Viewer on the scientific-data bucket
 
-Use a separate job service account later if pipeline operators need broader
-write or model-invocation permissions.
+The separate `onagawa-jobs` identity receives Cloud SQL Client, access to the
+database secret, and Storage Object User. Add Vertex AI User only when the
+Vertex runtime is implemented and selected.
 
 The database URL for a Cloud SQL Unix socket has this shape:
 
@@ -94,10 +140,15 @@ The database URL for a Cloud SQL Unix socket has this shape:
 postgresql://USER:PASSWORD@/onagawa_rag?host=/cloudsql/PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
 ```
 
+Add secret versions only after the OAuth client and database user exist.
+Never pass secret values as renderer arguments or place them in rendered YAML.
+
 ## Cloud Run Jobs
 
-Use the API image with an overridden command instead of running migrations or
-durable work during web-container startup:
+Render the migration, pipeline, embedding, and evaluation templates alongside
+the service. The migration job runs the combined bootstrap command so both
+Alembic-managed application tables and the current scientific corpus schema
+exist before serving:
 
 ```sh
 gcloud run jobs create onagawa-migrate \
@@ -105,10 +156,12 @@ gcloud run jobs create onagawa-migrate \
   --region=asia-northeast1 \
   --image=API_IMAGE \
   --command=python \
-  --args=-m,alembic,upgrade,head
+  --args=scripts/bootstrap_database.py,--json
 ```
 
-Create the pipeline job with a safe dry-run default:
+The pipeline template has a safe dry-run default and zero automatic retries.
+After its preflight output is reviewed, override `--dry-run` with `--execute`
+for an operator-approved run.
 
 ```sh
 gcloud run jobs create onagawa-pipeline \

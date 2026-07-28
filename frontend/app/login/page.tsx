@@ -4,7 +4,10 @@ import { redirect } from "next/navigation";
 
 import { signIn } from "@/auth";
 import { MOCK_LOGIN_ACCOUNTS } from "@/lib/mock-login";
-import { mockLoginEnabled } from "@/lib/security-config";
+import {
+  mockLoginEnabled,
+  oidcProviderId,
+} from "@/lib/security-config";
 
 
 export const dynamic = "force-dynamic";
@@ -23,7 +26,7 @@ export default async function LoginPage({
       !params.returnTo.startsWith("//")
         ? params.returnTo
         : "/";
-    await signIn("oidc", { redirectTo: returnTo });
+    await signIn(oidcProviderId(), { redirectTo: returnTo });
   }
 
   async function startMockLogin(formData: FormData) {

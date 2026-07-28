@@ -7,6 +7,7 @@ overrides are collected here so that every module imports from one place.
 from __future__ import annotations
 
 import os
+import re
 from pathlib import Path
 from typing import Mapping, Optional
 from urllib.parse import urlparse
@@ -163,6 +164,11 @@ INTERNAL_AUTH_AUDIENCE = os.environ.get(
     "INTERNAL_AUTH_AUDIENCE",
     "onagawa-source-chat-api",
 )
+AUTH_ALLOWED_PROVIDERS = tuple(
+    provider.strip()
+    for provider in os.environ.get("AUTH_ALLOWED_PROVIDERS", "oidc").split(",")
+    if provider.strip()
+)
 
 
 class SecurityConfigurationError(RuntimeError):
@@ -183,6 +189,7 @@ _PLACEHOLDER_MARKERS = (
     "placeholder",
     "generate-",
 )
+_AUTH_PROVIDER_ID_PATTERN = re.compile(r"^[a-z][a-z0-9-]{0,31}$")
 
 
 def _security_setting(
@@ -254,6 +261,31 @@ def validate_security_configuration(
     if auth_mode not in {"required", "disabled"}:
         raise SecurityConfigurationError(
             "AUTH_MODE must be either required or disabled"
+        )
+    allowed_providers = tuple(
+        provider.strip()
+        for provider in _security_setting(
+            env,
+            "AUTH_ALLOWED_PROVIDERS",
+            ",".join(AUTH_ALLOWED_PROVIDERS),
+        ).split(",")
+        if provider.strip()
+    )
+    if auth_mode == "required" and not allowed_providers:
+        raise SecurityConfigurationError(
+            "AUTH_ALLOWED_PROVIDERS must contain at least one provider"
+        )
+    if (
+        len(set(allowed_providers)) != len(allowed_providers)
+        or any(
+            not _AUTH_PROVIDER_ID_PATTERN.fullmatch(provider)
+            or provider == "mock-credentials"
+            for provider in allowed_providers
+        )
+    ):
+        raise SecurityConfigurationError(
+            "AUTH_ALLOWED_PROVIDERS must be unique lowercase provider IDs "
+            "containing only letters, numbers, and hyphens"
         )
 
     persist_local_chat = _security_flag(

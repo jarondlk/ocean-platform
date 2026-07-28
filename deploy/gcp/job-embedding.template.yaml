@@ -1,0 +1,43 @@
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: onagawa-embedding
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/cloudsql-instances: PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
+        run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/secrets: 'onagawa-database-url:projects/PROJECT_NUMBER/secrets/onagawa-database-url'
+    spec:
+      template:
+        spec:
+          serviceAccountName: onagawa-jobs@PROJECT_ID.iam.gserviceaccount.com
+          maxRetries: 0
+          timeoutSeconds: "3600"
+          containers:
+            - image: REGION-docker.pkg.dev/PROJECT_ID/ARTIFACT_REPOSITORY/api:IMAGE_TAG
+              command:
+                - python
+              args:
+                - scripts/update_embeddings.py
+                - --batch-size
+                - "32"
+              env:
+                - name: DATABASE_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: onagawa-database-url
+                      key: latest
+                - name: MODEL_PROVIDER
+                  value: ollama
+                - name: OLLAMA_BASE_URL
+                  value: OLLAMA_PRIVATE_URL
+                - name: EMBEDDING_MODEL
+                  value: nomic-embed-text
+                - name: EMBEDDING_DIM
+                  value: "768"
+              resources:
+                limits:
+                  cpu: "2"
+                  memory: 2Gi

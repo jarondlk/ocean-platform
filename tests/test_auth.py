@@ -106,6 +106,43 @@ def test_uninvited_or_unverified_identity_is_rejected():
             )
 
 
+def test_identity_provider_must_be_explicitly_allowed(monkeypatch):
+    monkeypatch.setenv("AUTH_ALLOWED_PROVIDERS", "google")
+    with _session() as session:
+        session.add(
+            UserInvitation(
+                email="person@example.org",
+                role="viewer",
+                account_type="research",
+                status="pending",
+                expires_at=datetime.now(timezone.utc) + timedelta(days=1),
+            )
+        )
+        session.commit()
+
+        with pytest.raises(AuthenticationFailure, match="provider is not allowed"):
+            resolve_identity(
+                session,
+                {
+                    "sub": "subject",
+                    "provider": "oidc",
+                    "email": "person@example.org",
+                    "email_verified": True,
+                },
+            )
+
+        current = resolve_identity(
+            session,
+            {
+                "sub": "subject",
+                "provider": "google",
+                "email": "person@example.org",
+                "email_verified": True,
+            },
+        )
+        assert current.auth_provider == "google"
+
+
 @pytest.mark.parametrize("role", ["viewer", "researcher", "admin"])
 def test_mock_login_identity_is_signed_database_backed_and_role_scoped(
     monkeypatch,

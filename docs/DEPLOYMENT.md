@@ -41,6 +41,7 @@ with `--env-file`. At minimum, set:
 ```dotenv
 DEPLOYMENT_ENV=production
 AUTH_MODE=required
+AUTH_ALLOWED_PROVIDERS=oidc
 PERSIST_LOCAL_CHAT=false
 ENABLE_MOCK_LOGIN=false
 
@@ -55,6 +56,7 @@ OIDC_ISSUER=https://identity.example.org
 OIDC_CLIENT_ID=<provider client id>
 OIDC_CLIENT_SECRET=<provider client secret>
 OIDC_PROVIDER_NAME=Managed identity provider
+OIDC_PROVIDER_ID=oidc
 
 CORS_ORIGINS=https://rag.example.org
 POSTGRES_USER=onagawa

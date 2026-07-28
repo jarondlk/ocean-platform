@@ -26,6 +26,7 @@ EMBEDDING_MODEL=nomic-embed-text
 
 DEPLOYMENT_ENV=production
 AUTH_MODE=required
+AUTH_ALLOWED_PROVIDERS=oidc
 PERSIST_LOCAL_CHAT=false
 ENABLE_MOCK_LOGIN=false
 
@@ -37,6 +38,7 @@ INTERNAL_AUTH_ISSUER=onagawa-source-chat-frontend
 INTERNAL_AUTH_AUDIENCE=onagawa-source-chat-api
 
 OIDC_PROVIDER_NAME=Managed identity provider
+OIDC_PROVIDER_ID=oidc
 OIDC_ISSUER=https://identity.example.org
 OIDC_CLIENT_ID=<provider-client-id>
 OIDC_CLIENT_SECRET=<provider-client-secret>

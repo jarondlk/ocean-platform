@@ -10,6 +10,7 @@ const MOCK_PASSWORD_HASH_SETTINGS = [
   "MOCK_ADMIN_PASSWORD_HASH",
 ] as const;
 const SCRYPT_HASH_PATTERN = /^scrypt\$[a-f0-9]{32}\$[a-f0-9]{128}$/;
+const PROVIDER_ID_PATTERN = /^[a-z][a-z0-9-]{0,31}$/;
 const PLACEHOLDER_MARKERS = [
   "replace-with",
   "not-configured",
@@ -70,6 +71,13 @@ export function validateFrontendSecurityConfiguration(): void {
   const authMode = setting("AUTH_MODE", "required").toLowerCase();
   if (!["required", "disabled"].includes(authMode)) {
     throw new Error("AUTH_MODE must be either required or disabled");
+  }
+  const providerId = setting("OIDC_PROVIDER_ID", "oidc");
+  if (!PROVIDER_ID_PATTERN.test(providerId) || providerId === "mock-credentials") {
+    throw new Error(
+      "OIDC_PROVIDER_ID must start with a lowercase letter and contain only " +
+        "lowercase letters, numbers, and hyphens",
+    );
   }
   const mockLogin = booleanSetting("ENABLE_MOCK_LOGIN");
   if (mockLogin && PRODUCTION_LIKE.has(deploymentEnv)) {
@@ -136,6 +144,11 @@ export function validateFrontendSecurityConfiguration(): void {
 export function localAuthDisabled(): boolean {
   validateFrontendSecurityConfiguration();
   return setting("AUTH_MODE", "required").toLowerCase() === "disabled";
+}
+
+export function oidcProviderId(): string {
+  validateFrontendSecurityConfiguration();
+  return setting("OIDC_PROVIDER_ID", "oidc");
 }
 
 export function mockLoginEnabled(): boolean {
