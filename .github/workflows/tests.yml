@@ -31,15 +31,15 @@ jobs:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: |
-            requirements.in
-            requirements.txt
-            requirements-dev.in
-            requirements-dev.txt
+            requirements/runtime.in
+            requirements/runtime.txt
+            requirements/dev.in
+            requirements/dev.txt
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install --require-hashes -r requirements-dev.txt
+          python -m pip install --require-hashes -r requirements/dev.txt
 
       - name: Lint active Python code
         run: |
@@ -143,15 +143,15 @@ jobs:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: |
-            requirements.in
-            requirements.txt
-            requirements-dev.in
-            requirements-dev.txt
+            requirements/runtime.in
+            requirements/runtime.txt
+            requirements/dev.in
+            requirements/dev.txt
 
       - name: Install test dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install --require-hashes -r requirements-dev.txt
+          python -m pip install --require-hashes -r requirements/dev.txt
 
       - name: Apply application migrations
         env:

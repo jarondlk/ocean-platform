@@ -15,7 +15,7 @@ RUN apt-get update \
     && chown -R app:app /app /home/app \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt ./
+COPY requirements/runtime.txt ./requirements.txt
 RUN pip install --upgrade pip \
     && pip install --require-hashes -r requirements.txt
 

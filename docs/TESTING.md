@@ -12,8 +12,8 @@ source .venv/bin/activate
 The bootstrap script creates an isolated Python 3.12 environment and installs
 the fully transitive development lock with `--require-hashes`. Runtime,
 analysis, and archived Streamlit dependencies are separately locked in
-`requirements.txt`, `requirements-analysis.txt`, and
-`requirements-archive.txt`.
+`requirements/runtime.txt`, `requirements/analysis.txt`, and
+`requirements/archive.txt`.
 
 For browser testing of the permission-aware UI without organization OIDC
 credentials, run both services with `AUTH_MODE=required`,

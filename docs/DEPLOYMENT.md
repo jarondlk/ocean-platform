@@ -27,15 +27,16 @@ Internet
        -> approved private Ollama endpoint
 ```
 
-Do not use `docker-compose.yml` or `docker-compose.next.yml` as production
+Do not use `compose.yml` or `deploy/compose/app.yml` as production
 definitions. They intentionally publish development ports, mount the repository,
-and enable reload behavior. `docker-compose.production.yml` publishes only
+and enable reload behavior. `deploy/compose/production.yml` publishes only
 Next.js to host loopback.
 
 ## Required Configuration
 
-Copy `.env.production.example` to a secret-managed location outside the
-repository and replace every placeholder. At minimum, set:
+Copy `deploy/env/production.example` to a secret-managed location outside the
+repository, replace every placeholder, and pass that populated file explicitly
+with `--env-file`. At minimum, set:
 
 ```dotenv
 DEPLOYMENT_ENV=production
@@ -92,20 +93,29 @@ https://rag.example.org/api/auth/callback/oidc
 Validate expansion before starting:
 
 ```bash
-podman compose -f docker-compose.production.yml config --quiet
+podman compose \
+  --env-file /secure/path/onagawa-production.env \
+  -f deploy/compose/production.yml \
+  config --quiet
 ```
 
 Start the services:
 
 ```bash
-podman compose -f docker-compose.production.yml up -d --build
+podman compose \
+  --env-file /secure/path/onagawa-production.env \
+  -f deploy/compose/production.yml \
+  up -d --build
 ```
 
 The API container applies Alembic migrations before starting FastAPI. Bootstrap
 the first administrator from an API container:
 
 ```bash
-podman compose -f docker-compose.production.yml exec api \
+podman compose \
+  --env-file /secure/path/onagawa-production.env \
+  -f deploy/compose/production.yml \
+  exec api \
   python scripts/invite_user.py admin@example.org \
   --role admin \
   --account-type internal
@@ -152,7 +162,7 @@ Each archive is written atomically with a SHA-256 sidecar manifest, table row
 counts, and archive metadata. `--restore-test` restores into a disposable
 database, compares recorded counts, and drops the disposable database. The
 production API image includes PostgreSQL client tools and
-`docker-compose.production.yml` persists `/app/data/backups` in a dedicated
+`deploy/compose/production.yml` persists `/app/data/backups` in a dedicated
 volume.
 
 Before launch, operators must still:

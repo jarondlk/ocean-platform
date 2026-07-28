@@ -19,7 +19,7 @@ application shape:
 
 - **Frontend**: Next.js academic UI in `frontend/`
 - **Backend**: FastAPI service in `api/`
-- **Database**: PostgreSQL 16 + pgvector through `docker-compose.yml`
+- **Database**: PostgreSQL 16 + pgvector through `compose.yml`
 - **LLM runtime**: Ollama, usually host-run locally; optional compose overlay
 - **Ingestion**: manual batch-run pipeline scripts, not automatic ingestion
 - **Provenance**: strict raw-source contracts, SHA-256 manifests, row hashes,
@@ -250,13 +250,13 @@ documents retain their embeddings.
 
 ### Active Stack Clarified
 
-The active root stack is:
+The active container stack is:
 
 - `Containerfile.api` for FastAPI
 - `frontend/Containerfile` for Next.js
-- `docker-compose.yml` for PostgreSQL/pgvector
-- `docker-compose.next.yml` for FastAPI + Next.js
-- `docker-compose.ollama.yml` for optional containerized Ollama
+- `compose.yml` for PostgreSQL/pgvector
+- `deploy/compose/app.yml` for FastAPI + Next.js
+- `deploy/compose/ollama.yml` for optional containerized Ollama
 
 The root no longer contains a Streamlit entrypoint.
 
@@ -312,22 +312,18 @@ provenance-eco-rag/
 ├── tests/                            # 360+ unit, API, and integration tests
 ├── config.py                         # Paths, model defaults, thresholds
 ├── Containerfile.api                 # FastAPI container
-├── docker-compose.yml                # PostgreSQL/pgvector
-├── docker-compose.next.yml           # FastAPI + Next.js overlay
-├── docker-compose.ollama.yml         # Optional Ollama overlay
-├── docker-compose.production.yml     # Private-service production topology
-├── .env.production.example           # Production environment template
+├── compose.yml                        # Default local PostgreSQL/pgvector
+├── deploy/                            # Compose, environment, and GCP configuration
+├── requirements/                      # Python inputs and hash-verified locks
 ├── README.md                         # Public project guide
-├── requirements.in                   # Direct Python runtime inputs
-├── requirements.txt                  # Hash-verified transitive runtime lock
-├── requirements-dev.in               # Direct development/test inputs
-└── requirements-dev.txt              # Hash-verified development/test lock
+└── .env.example                      # Local environment template
 ```
 
 ### Archive Policy
 
-Keep active files in the root/module directories. Move only retired material
-that is still useful as reference into `archive/`.
+Keep active code in its module directories, dependency sets in `requirements/`,
+and deployment configuration in `deploy/`. Move only retired material that is
+still useful as reference into `archive/`.
 
 Current archive contents:
 
@@ -516,7 +512,7 @@ Starts PostgreSQL/pgvector on host port `5433`.
 ### Recommended Local App Stack
 
 ```bash
-podman compose -f docker-compose.yml -f docker-compose.next.yml up -d --build
+podman compose -f compose.yml -f deploy/compose/app.yml up -d --build
 ```
 
 Starts PostgreSQL, FastAPI, and Next.js. FastAPI connects to Ollama on the host
@@ -525,7 +521,7 @@ through `http://host.containers.internal:11434`.
 ### Optional Containerized Ollama
 
 ```bash
-OLLAMA_BASE_URL=http://ollama:11434 podman compose -f docker-compose.yml -f docker-compose.next.yml -f docker-compose.ollama.yml up -d --build
+OLLAMA_BASE_URL=http://ollama:11434 podman compose -f compose.yml -f deploy/compose/app.yml -f deploy/compose/ollama.yml up -d --build
 ```
 
 Use this only when the LLM runtime should live inside compose too. On macOS,
@@ -534,7 +530,7 @@ host Ollama is usually faster and simpler than Ollama inside the Podman VM.
 ### Archived Streamlit Parity Check
 
 ```bash
-podman compose -f docker-compose.yml -f archive/legacy-streamlit/docker-compose.app.yml up -d --build
+podman compose -f compose.yml -f archive/legacy-streamlit/docker-compose.app.yml up -d --build
 ```
 
 Use this only to compare historical Streamlit behavior with the Next.js UI.
@@ -723,8 +719,8 @@ Potential parity checks:
 2. `DATABASE_URL` differs inside compose vs on the host.
 3. `OLLAMA_BASE_URL` is usually `http://localhost:11434` on host and
    `http://host.containers.internal:11434` from app containers.
-4. `docker-compose.next.yml` does not start Ollama unless combined with
-   `docker-compose.ollama.yml`.
+4. `deploy/compose/app.yml` does not start Ollama unless combined with
+   `deploy/compose/ollama.yml`.
 5. `onagawa_sst_subset/` is ignored but needed for full SST regeneration.
 6. `data/` includes tracked clean-clone artifacts, while many regenerated
    outputs are ignored by `.gitignore`.

@@ -293,16 +293,16 @@ The compose files are layered so you can choose how much to containerize.
 | Command | Starts | LLM behavior |
 | --- | --- | --- |
 | `podman compose up -d` | PostgreSQL/pgvector only | Uses whatever app you run on your host |
-| `podman compose -f docker-compose.yml -f docker-compose.next.yml up -d --build` | PostgreSQL/pgvector + FastAPI + Next.js app | API connects to Ollama running on your host |
-| `OLLAMA_BASE_URL=http://ollama:11434 podman compose -f docker-compose.yml -f docker-compose.next.yml -f docker-compose.ollama.yml up -d --build` | PostgreSQL/pgvector + FastAPI + Next.js app + Ollama runtime | API connects to the `ollama` service inside the compose network |
-| `podman compose -f docker-compose.yml -f archive/legacy-streamlit/docker-compose.app.yml up -d --build` | PostgreSQL/pgvector + archived Streamlit reference UI | Reference-only parity check against the old UI |
+| `podman compose -f compose.yml -f deploy/compose/app.yml up -d --build` | PostgreSQL/pgvector + FastAPI + Next.js app | API connects to Ollama running on your host |
+| `OLLAMA_BASE_URL=http://ollama:11434 podman compose -f compose.yml -f deploy/compose/app.yml -f deploy/compose/ollama.yml up -d --build` | PostgreSQL/pgvector + FastAPI + Next.js app + Ollama runtime | API connects to the `ollama` service inside the compose network |
+| `podman compose -f compose.yml -f archive/legacy-streamlit/docker-compose.app.yml up -d --build` | PostgreSQL/pgvector + archived Streamlit reference UI | Reference-only parity check against the old UI |
 
 Recommended local macOS setup: containerize the app and database, but keep
 Ollama running on the host. That lets Ollama use the normal local runtime path;
 Ollama inside a Podman VM on macOS may be CPU-only and slower.
 
 ```bash
-podman compose -f docker-compose.yml -f docker-compose.next.yml up -d --build
+podman compose -f compose.yml -f deploy/compose/app.yml up -d --build
 ```
 
 Then open:
@@ -314,7 +314,7 @@ http://localhost:3000
 For an intentional archived Streamlit parity check:
 
 ```bash
-podman compose -f docker-compose.yml -f archive/legacy-streamlit/docker-compose.app.yml up -d --build
+podman compose -f compose.yml -f archive/legacy-streamlit/docker-compose.app.yml up -d --build
 ```
 
 Then open:
@@ -326,16 +326,16 @@ http://localhost:8501
 Useful commands:
 
 ```bash
-podman compose -f docker-compose.yml -f docker-compose.next.yml logs -f api
-podman compose -f docker-compose.yml -f docker-compose.next.yml logs -f frontend
-podman compose -f docker-compose.yml -f docker-compose.next.yml down
-podman compose -f docker-compose.yml up -d postgres
+podman compose -f compose.yml -f deploy/compose/app.yml logs -f api
+podman compose -f compose.yml -f deploy/compose/app.yml logs -f frontend
+podman compose -f compose.yml -f deploy/compose/app.yml down
+podman compose -f compose.yml up -d postgres
 ```
 
 If you want the LLM runtime containerized too:
 
 ```bash
-OLLAMA_BASE_URL=http://ollama:11434 podman compose -f docker-compose.yml -f docker-compose.next.yml -f docker-compose.ollama.yml up -d --build
+OLLAMA_BASE_URL=http://ollama:11434 podman compose -f compose.yml -f deploy/compose/app.yml -f deploy/compose/ollama.yml up -d --build
 podman exec -it onagawa_ollama ollama pull nomic-embed-text
 podman exec -it onagawa_ollama ollama pull qwen2.5:14b-instruct
 ```
@@ -346,7 +346,7 @@ The containers use these defaults:
 | --- | --- | --- |
 | `DATABASE_URL` | `postgresql://onagawa:onagawa@postgres:5432/onagawa_rag` | Uses the compose service name and internal PostgreSQL port |
 | `OLLAMA_BASE_URL` | `http://host.containers.internal:11434` | Reaches Ollama running on your host from inside Podman |
-| `OLLAMA_BASE_URL` with `docker-compose.ollama.yml` | `http://ollama:11434` | Set this in the command or `.env` when using containerized Ollama |
+| `OLLAMA_BASE_URL` with `deploy/compose/ollama.yml` | `http://ollama:11434` | Set this in the command or `.env` when using containerized Ollama |
 | `NEXT_PORT` | `3000` | Host port mapped to the Next.js frontend |
 | `API_PORT` | `8000` | Host port mapped to FastAPI |
 | `API_BASE_URL` | `http://api:8000` | Internal compose URL used by the Next.js proxy |
@@ -452,12 +452,13 @@ provenance-eco-rag/
 │   └── legacy-streamlit/               # Archived Streamlit UI and container overlay
 ├── config.py                           # Paths, DB, models, thresholds
 ├── Containerfile.api                   # FastAPI backend container image
-├── docker-compose.yml                  # PostgreSQL + pgvector service
-├── docker-compose.next.yml             # Optional FastAPI + Next.js services
-├── docker-compose.ollama.yml           # Optional Ollama service overlay
-├── docker-compose.production.yml       # Private-service production topology
+├── compose.yml                         # Default local PostgreSQL + pgvector service
 ├── .env.example                        # Local container env defaults
-├── .env.production.example             # Production environment template
+├── requirements/                       # Python inputs and hash-verified locks
+├── deploy/
+│   ├── compose/                        # App, Ollama, and production definitions
+│   ├── env/                            # Production environment template
+│   └── gcp/                            # Managed GCP prototype templates
 │
 ├── api/                                # FastAPI API layer for Next.js
 ├── frontend/                           # Next.js academic UI

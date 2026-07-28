@@ -114,7 +114,7 @@ weekly or monthly, without making ingestion automatic yet.
 
 - [x] Archive the legacy Streamlit `Containerfile` and compose overlay under
       `archive/legacy-streamlit/`.
-- [x] Add `docker-compose.ollama.yml` for optional containerized Ollama.
+- [x] Add `deploy/compose/ollama.yml` for optional containerized Ollama.
 - [x] Add a server deployment guide with reverse proxy/TLS, backups, and
       private-only Ollama networking.
 - [x] Add a production environment template and private-service Compose
