@@ -1,15 +1,15 @@
 """
-Vector store – embed documents via Ollama and search via pgvector.
+Vector store – embed documents through the model runtime and search pgvector.
 """
 from __future__ import annotations
 
 import logging
 from typing import Any, Dict, List, Optional
 
-import requests
 from sqlalchemy import text
 
 import config
+from model_runtime import get_model_runtime
 from .connection import get_session
 
 logger = logging.getLogger(__name__)
@@ -17,40 +17,21 @@ logger = logging.getLogger(__name__)
 
 def embed_text(text_input: str, model: str = None) -> List[float]:
     """
-    Get embedding vector from Ollama for a single text.
+    Get an embedding vector from the configured model runtime.
     """
     model = model or config.EMBEDDING_MODEL
-    url = f"{config.OLLAMA_BASE_URL}/api/embed"
-    payload = {"model": model, "input": text_input}
-
-    r = requests.post(url, json=payload, timeout=60)
-    r.raise_for_status()
-    data = r.json()
-
-    # Ollama returns {"embeddings": [[...]]}
-    embeddings = data.get("embeddings", [])
-    if embeddings:
-        return embeddings[0]
-
-    raise ValueError(f"No embedding returned for model {model}")
+    return get_model_runtime().embed(text_input, model=model)
 
 
 def embed_batch(texts: List[str], model: str = None) -> List[List[float]]:
     """
-    Embed a batch of texts.  Ollama supports batch via the 'input' field.
-    Falls back to sequential if batch fails.
+    Embed a batch of texts through the configured runtime. Fall back to
+    sequential calls if the provider cannot complete a batch request.
     """
     model = model or config.EMBEDDING_MODEL
-    url = f"{config.OLLAMA_BASE_URL}/api/embed"
 
     try:
-        payload = {"model": model, "input": texts}
-        r = requests.post(url, json=payload, timeout=300)
-        r.raise_for_status()
-        data = r.json()
-        embeddings = data.get("embeddings", [])
-        if len(embeddings) == len(texts):
-            return embeddings
+        return get_model_runtime().embed_batch(texts, model=model)
     except Exception as e:
         logger.warning("Batch embedding failed, falling back to sequential: %s", e)
 

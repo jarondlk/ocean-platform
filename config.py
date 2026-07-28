@@ -19,7 +19,9 @@ PROJECT_ROOT = Path(__file__).resolve().parent
 # ---------------------------------------------------------------------------
 # Data directory layout
 # ---------------------------------------------------------------------------
-DATA_DIR       = PROJECT_ROOT / "data"
+DATA_DIR       = Path(
+    os.environ.get("DATA_DIR", str(PROJECT_ROOT / "data"))
+).expanduser()
 RAW_DIR        = DATA_DIR / "raw"
 RAW_CTD_DIR    = RAW_DIR / "ctd"
 RAW_META_DIR   = RAW_DIR / "meta"
@@ -33,13 +35,17 @@ PROVENANCE_DIR  = DATA_DIR / "provenance"
 EVALUATION_DIR  = DATA_DIR / "evaluation"
 DATABASE_BACKUP_DIR = Path(
     os.environ.get("DATABASE_BACKUP_DIR", str(DATA_DIR / "backups"))
-)
+).expanduser()
 
 # Satellite SST source (NetCDF subset files)
-SST_NETCDF_DIR = PROJECT_ROOT / "onagawa_sst_subset"
+SST_NETCDF_DIR = Path(
+    os.environ.get("SST_NETCDF_DIR", str(PROJECT_ROOT / "onagawa_sst_subset"))
+).expanduser()
 
 # Raw Himawari .DAT files (optional, parsed via satpy if available)
-HIMAWARI_RAW_DIR = PROJECT_ROOT / "himawari_raw"
+HIMAWARI_RAW_DIR = Path(
+    os.environ.get("HIMAWARI_RAW_DIR", str(PROJECT_ROOT / "himawari_raw"))
+).expanduser()
 
 # ---------------------------------------------------------------------------
 # Known raw file registry (matches notebook FILES dict)
@@ -82,10 +88,59 @@ DATABASE_URL = os.environ.get(
     "DATABASE_URL",
     "postgresql://onagawa:onagawa@localhost:5433/onagawa_rag",
 )
+
+
+def _environment_int(name: str, default: int, *, minimum: int = 0) -> int:
+    raw_value = os.environ.get(name, str(default)).strip()
+    try:
+        value = int(raw_value)
+    except ValueError as exc:
+        raise ValueError(f"{name} must be an integer") from exc
+    if value < minimum:
+        raise ValueError(f"{name} must be at least {minimum}")
+    return value
+
+
+# Keep each autoscaled application instance's connection footprint bounded.
+# The local defaults remain intentionally small and can be tuned independently
+# for Cloud Run and Cloud SQL through environment variables.
+DATABASE_POOL_SIZE = _environment_int("DATABASE_POOL_SIZE", 5, minimum=1)
+DATABASE_MAX_OVERFLOW = _environment_int("DATABASE_MAX_OVERFLOW", 2)
+DATABASE_POOL_TIMEOUT = _environment_int(
+    "DATABASE_POOL_TIMEOUT",
+    30,
+    minimum=1,
+)
+DATABASE_POOL_RECYCLE = _environment_int(
+    "DATABASE_POOL_RECYCLE",
+    1800,
+    minimum=1,
+)
+
+
+def database_engine_options() -> dict[str, object]:
+    """Return bounded SQLAlchemy pool settings for application processes."""
+
+    return {
+        "pool_pre_ping": True,
+        "pool_size": DATABASE_POOL_SIZE,
+        "max_overflow": DATABASE_MAX_OVERFLOW,
+        "pool_timeout": DATABASE_POOL_TIMEOUT,
+        "pool_recycle": DATABASE_POOL_RECYCLE,
+    }
+
+
 DATABASE_BACKUP_CONTAINER = os.environ.get(
     "DATABASE_BACKUP_CONTAINER",
     "onagawa_pgvector",
 ).strip()
+
+# Web processes may run background jobs locally, while autoscaled cloud
+# services must delegate durable work to an external job runner.
+JOB_EXECUTION_MODE = os.environ.get(
+    "JOB_EXECUTION_MODE",
+    "local",
+).strip().lower()
 
 # ---------------------------------------------------------------------------
 # Authentication
@@ -316,12 +371,26 @@ def mock_login_enabled(
 # ---------------------------------------------------------------------------
 # LLM / Embedding
 # ---------------------------------------------------------------------------
+MODEL_PROVIDER = os.environ.get("MODEL_PROVIDER", "ollama").strip().lower()
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 EMBEDDING_MODEL = os.environ.get("EMBEDDING_MODEL", "nomic-embed-text")
 CHAT_MODEL      = os.environ.get("CHAT_MODEL", "qwen2.5:14b-instruct")
 
 # Embedding dimension (nomic-embed-text → 768)
 EMBEDDING_DIM = int(os.environ.get("EMBEDDING_DIM", "768"))
+
+
+class RuntimeConfigurationError(ValueError):
+    """Raised when runtime settings are invalid or unsafe for the platform."""
+
+
+def validate_runtime_configuration() -> None:
+    if JOB_EXECUTION_MODE not in {"local", "external"}:
+        raise RuntimeConfigurationError(
+            "JOB_EXECUTION_MODE must be either local or external"
+        )
+    if not MODEL_PROVIDER:
+        raise RuntimeConfigurationError("MODEL_PROVIDER must not be empty")
 
 
 def ensure_dirs() -> None:

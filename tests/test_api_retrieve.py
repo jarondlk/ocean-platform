@@ -2,6 +2,7 @@ from fastapi.testclient import TestClient
 
 import api.main as api_main
 import config
+import model_runtime
 from api.main import app
 
 
@@ -156,7 +157,7 @@ def test_chat_response_includes_context_ledger(tmp_path, monkeypatch):
     monkeypatch.setattr(api_main, "retrieve_with_expansion", fake_retrieve_with_expansion)
     monkeypatch.setattr(config, "ANALYSIS_DIR", analysis_dir)
     monkeypatch.setattr(config, "RELIABILITY_DIR", reliability_dir)
-    monkeypatch.setattr(api_main.requests, "post", fake_post)
+    monkeypatch.setattr(model_runtime.requests, "post", fake_post)
 
     response = client.post(
         "/chat",
@@ -217,7 +218,11 @@ def test_chat_can_disable_answer_audit(monkeypatch):
             return {"message": {"content": "answer with citations [ctd:2024-01-O-s1]"}}
 
     monkeypatch.setattr(api_main, "retrieve_with_expansion", fake_retrieve_with_expansion)
-    monkeypatch.setattr(api_main.requests, "post", lambda *args, **kwargs: FakeOllamaResponse())
+    monkeypatch.setattr(
+        model_runtime.requests,
+        "post",
+        lambda *args, **kwargs: FakeOllamaResponse(),
+    )
 
     response = client.post(
         "/chat",

@@ -238,6 +238,7 @@ class OllamaModel(BaseModel):
 class ModelsResponse(BaseModel):
     default_model: str
     embedding_model: str
+    provider: str = "ollama"
     ollama_base_url: str
     available: bool
     models: List[OllamaModel] = Field(default_factory=list)

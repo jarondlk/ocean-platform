@@ -111,7 +111,7 @@ export default function OverviewPage() {
   const runtimeSignals = [
     { label: "API", value: status?.status || "loading", ok: status?.status === "ok" },
     { label: "Database", value: String(status?.database?.available ?? "loading"), ok: Boolean(status?.database?.available) },
-    { label: "Ollama", value: String(status?.ollama?.available ?? "loading"), ok: Boolean(status?.ollama?.available) },
+    { label: "Model runtime", value: String(status?.ollama?.available ?? "loading"), ok: Boolean(status?.ollama?.available) },
     { label: "Analysis docs", value: String(stats?.analysis_docs ?? "loading"), ok: Boolean(stats?.analysis_docs) },
     { label: "Reliability docs", value: String(stats?.reliability_docs ?? "loading"), ok: Boolean(stats?.reliability_docs) },
   ];

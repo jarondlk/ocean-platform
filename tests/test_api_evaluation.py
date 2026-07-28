@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 
+import api.main as api_main
 from api.main import app
 
 
@@ -130,3 +131,15 @@ def test_evaluation_job_status_requires_known_job():
     response = client.get("/evaluation/jobs/missing-job")
 
     assert response.status_code == 404
+
+
+def test_cloud_runtime_delegates_evaluation_execution(monkeypatch):
+    monkeypatch.setattr(api_main.config, "JOB_EXECUTION_MODE", "external")
+
+    response = client.post(
+        "/evaluation/runs/standard",
+        json={"quick": True},
+    )
+
+    assert response.status_code == 503
+    assert response.json()["detail"]["code"] == "external_job_runner_required"

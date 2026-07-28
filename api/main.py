@@ -19,7 +19,6 @@ from typing import Any, Dict, Iterable, List, Optional
 from urllib.parse import urlsplit, urlunsplit
 
 import pandas as pd
-import requests
 from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, inspect, text
@@ -120,6 +119,7 @@ from ingestion.lineage import (
     build_provenance_manifest,
     build_upsert_dry_run_plan,
 )
+from model_runtime import get_model_runtime
 
 
 def _cors_origins() -> List[str]:
@@ -133,6 +133,7 @@ def _cors_origins() -> List[str]:
 @asynccontextmanager
 async def _app_lifespan(_app: FastAPI):
     config.validate_security_configuration(require_auth_secret=True)
+    config.validate_runtime_configuration()
     yield
 
 
@@ -476,6 +477,21 @@ PIPELINE_CANCEL_EVENTS: Dict[str, threading.Event] = {}
 PIPELINE_PROCESSES: Dict[str, subprocess.Popen[str]] = {}
 
 
+def _require_local_job_execution(job_kind: str) -> None:
+    if config.JOB_EXECUTION_MODE == "local":
+        return
+    raise HTTPException(
+        status_code=503,
+        detail={
+            "code": "external_job_runner_required",
+            "message": (
+                f"{job_kind} execution is delegated to the external job "
+                "runner for this deployment."
+            ),
+        },
+    )
+
+
 def _doc_id(doc: Dict[str, Any]) -> str:
     return str(doc.get("doc_id") or doc.get("id") or "unknown")
 
@@ -671,7 +687,10 @@ def _pipeline_database_snapshot() -> Dict[str, Any]:
     if not payload.get("available"):
         return payload
     try:
-        engine = create_engine(config.DATABASE_URL, pool_pre_ping=True)
+        engine = create_engine(
+            config.DATABASE_URL,
+            **config.database_engine_options(),
+        )
         with engine.connect() as conn:
             payload["retrieval_documents"] = int(conn.execute(text("SELECT count(*) FROM retrieval_document")).scalar() or 0)
             payload["embedded_documents"] = int(conn.execute(text("SELECT count(*) FROM retrieval_document WHERE embedding IS NOT NULL")).scalar() or 0)
@@ -943,7 +962,10 @@ def _cooccurrence_pairs(df: pd.DataFrame, limit: int) -> List[Dict[str, Any]]:
 
 
 def _database_engine():
-    return create_engine(config.DATABASE_URL, pool_pre_ping=True)
+    return create_engine(
+        config.DATABASE_URL,
+        **config.database_engine_options(),
+    )
 
 
 def _quote_identifier(engine: Any, identifier: str) -> str:
@@ -1976,6 +1998,7 @@ def build_pipeline_preflight(request: PipelineRunRequest) -> PipelinePreflightRe
 
 
 def _start_pipeline_job(request: PipelineRunRequest) -> PipelineStartResponse:
+    _require_local_job_execution("Pipeline")
     _validate_pipeline_request_for_start(request)
     run_id = _new_pipeline_run_id(request.tag)
     job_id = run_id
@@ -2515,6 +2538,7 @@ def _start_evaluation_job(
     run_type: str,
     request: EvaluationStandardRunRequest | EvaluationAblationRunRequest,
 ) -> EvaluationStartResponse:
+    _require_local_job_execution("Evaluation")
     if run_type == "standard":
         _select_benchmark_questions(request.question_ids, request.categories, request.quick)
         _select_evaluation_modes(request.modes)  # type: ignore[union-attr]
@@ -3175,7 +3199,10 @@ def _selected_columns(df: pd.DataFrame, cfg: Dict[str, Any], columns: Optional[s
 
 def _database_status() -> Dict[str, Any]:
     try:
-        engine = create_engine(config.DATABASE_URL, pool_pre_ping=True)
+        engine = create_engine(
+            config.DATABASE_URL,
+            **config.database_engine_options(),
+        )
         with engine.connect() as conn:
             version = conn.execute(text("SELECT version()")).scalar()
             n_docs = conn.execute(text("SELECT count(*) FROM retrieval_document")).scalar()
@@ -3188,17 +3215,26 @@ def _database_status() -> Dict[str, Any]:
 
 def _ollama_status() -> Dict[str, Any]:
     try:
-        resp = requests.get(f"{config.OLLAMA_BASE_URL}/api/tags", timeout=2)
-        resp.raise_for_status()
-        models = [m.get("name") for m in resp.json().get("models", [])]
-        return {"available": True, "base_url": config.OLLAMA_BASE_URL, "models": models}
+        runtime = get_model_runtime()
+        models = [
+            model.get("name")
+            for model in runtime.list_models(timeout=2)
+            if model.get("name")
+        ]
+        return {
+            "available": True,
+            "provider": runtime.provider,
+            "base_url": runtime.endpoint,
+            "models": models,
+        }
     except Exception as exc:
-        logger.warning("Ollama status check failed: %s", type(exc).__name__)
-        logger.debug("Ollama status check traceback", exc_info=True)
+        logger.warning("Model runtime status check failed: %s", type(exc).__name__)
+        logger.debug("Model runtime status check traceback", exc_info=True)
         return {
             "available": False,
+            "provider": config.MODEL_PROVIDER,
             "base_url": config.OLLAMA_BASE_URL,
-            "error": "Ollama is unavailable",
+            "error": "Model runtime is unavailable",
         }
 
 
@@ -3294,9 +3330,8 @@ def stats() -> CorpusStats:
 @app.get("/models", response_model=ModelsResponse)
 def models() -> ModelsResponse:
     try:
-        resp = requests.get(f"{config.OLLAMA_BASE_URL}/api/tags", timeout=3)
-        resp.raise_for_status()
-        raw_models = resp.json().get("models", [])
+        runtime = get_model_runtime()
+        raw_models = runtime.list_models(timeout=3)
         chat_models = [
             OllamaModel(
                 name=str(model.get("name") or ""),
@@ -3309,7 +3344,8 @@ def models() -> ModelsResponse:
         return ModelsResponse(
             default_model=config.CHAT_MODEL,
             embedding_model=config.EMBEDDING_MODEL,
-            ollama_base_url=config.OLLAMA_BASE_URL,
+            provider=runtime.provider,
+            ollama_base_url=runtime.endpoint,
             available=True,
             models=chat_models,
         )
@@ -3318,6 +3354,7 @@ def models() -> ModelsResponse:
         return ModelsResponse(
             default_model=config.CHAT_MODEL,
             embedding_model=config.EMBEDDING_MODEL,
+            provider=config.MODEL_PROVIDER,
             ollama_base_url=config.OLLAMA_BASE_URL,
             available=False,
             error="Model discovery is unavailable",
@@ -3389,6 +3426,7 @@ def pipeline_job_log(
 
 @app.post("/pipeline/jobs/{job_id}/cancel", response_model=PipelineJobStatus)
 def pipeline_cancel_job(job_id: str) -> PipelineJobStatus:
+    _require_local_job_execution("Pipeline")
     path = _pipeline_status_path(job_id)
     if not path.exists():
         raise HTTPException(status_code=404, detail=f"Unknown pipeline job: {job_id}")
@@ -3491,9 +3529,11 @@ def debug_state() -> Dict[str, Any]:
         },
         "config": {
             "database_url": _redact_url(config.DATABASE_URL),
+            "model_provider": config.MODEL_PROVIDER,
             "ollama_base_url": config.OLLAMA_BASE_URL,
             "embedding_model": config.EMBEDDING_MODEL,
             "chat_model": config.CHAT_MODEL,
+            "job_execution_mode": config.JOB_EXECUTION_MODE,
             "cors_origins": _cors_origins(),
             "data_dir": str(config.DATA_DIR),
             "serving_dir": str(config.SERVING_DIR),
@@ -3503,8 +3543,10 @@ def debug_state() -> Dict[str, Any]:
         "selected_environment": {
             "DATABASE_URL": _redact_url(os.environ["DATABASE_URL"]) if os.environ.get("DATABASE_URL") else None,
             "OLLAMA_BASE_URL": os.environ.get("OLLAMA_BASE_URL"),
+            "MODEL_PROVIDER": os.environ.get("MODEL_PROVIDER"),
             "EMBEDDING_MODEL": os.environ.get("EMBEDDING_MODEL"),
             "CHAT_MODEL": os.environ.get("CHAT_MODEL"),
+            "JOB_EXECUTION_MODE": os.environ.get("JOB_EXECUTION_MODE"),
             "CORS_ORIGINS": os.environ.get("CORS_ORIGINS"),
         },
         "health": health().model_dump(),
@@ -3712,6 +3754,7 @@ def evaluation_job_status(job_id: str) -> EvaluationJobStatus:
 
 @app.post("/evaluation/jobs/{job_id}/cancel", response_model=EvaluationJobStatus)
 def evaluation_cancel_job(job_id: str) -> EvaluationJobStatus:
+    _require_local_job_execution("Evaluation")
     path = _job_status_path(job_id)
     if not path.exists():
         raise HTTPException(status_code=404, detail=f"Unknown evaluation job: {job_id}")
@@ -4390,20 +4433,12 @@ def chat(
         )
 
         try:
-            resp = requests.post(
-                f"{config.OLLAMA_BASE_URL}/api/chat",
-                json={
-                    "model": model,
-                    "messages": [{"role": "user", "content": prompt}],
-                    "stream": False,
-                    "options": ollama_options,
-                },
+            answer = get_model_runtime().chat(
+                model=model,
+                prompt=prompt,
+                options=ollama_options,
                 timeout=120,
             )
-            resp.raise_for_status()
-            answer = resp.json()["message"]["content"]
-            if not isinstance(answer, str) or not answer.strip():
-                raise ValueError("The model returned an empty answer")
         except Exception as exc:
             _mark_chat_failed_safely(
                 interaction_id=interaction_id,

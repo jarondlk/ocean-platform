@@ -54,6 +54,18 @@ def test_pipeline_start_rejects_unknown_stage():
     assert "Unknown pipeline stage" in response.text
 
 
+def test_cloud_runtime_delegates_pipeline_execution(monkeypatch):
+    monkeypatch.setattr(api_main.config, "JOB_EXECUTION_MODE", "external")
+
+    response = client.post(
+        "/pipeline/jobs",
+        json={"stages": ["validate_raw"], "dry_run": True},
+    )
+
+    assert response.status_code == 503
+    assert response.json()["detail"]["code"] == "external_job_runner_required"
+
+
 def test_pipeline_preflight_returns_exact_command_plan():
     response = client.post(
         "/pipeline/preflight",

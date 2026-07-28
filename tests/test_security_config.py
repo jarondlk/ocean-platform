@@ -187,3 +187,20 @@ def test_invalid_mock_login_boolean_is_rejected(value):
                 CORS_ORIGINS="http://localhost:3000",
             )
         )
+
+
+def test_runtime_configuration_accepts_supported_job_modes(monkeypatch):
+    for mode in ("local", "external"):
+        monkeypatch.setattr(config, "JOB_EXECUTION_MODE", mode)
+        monkeypatch.setattr(config, "MODEL_PROVIDER", "ollama")
+        config.validate_runtime_configuration()
+
+
+def test_runtime_configuration_rejects_unknown_job_mode(monkeypatch):
+    monkeypatch.setattr(config, "JOB_EXECUTION_MODE", "background-thread")
+
+    with pytest.raises(
+        config.RuntimeConfigurationError,
+        match="JOB_EXECUTION_MODE",
+    ):
+        config.validate_runtime_configuration()

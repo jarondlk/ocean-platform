@@ -64,6 +64,8 @@ Documentation map:
 - `docs/ROADMAP.md` tracks completed and planned engineering work.
 - `docs/SECURITY.md` defines the authorization and application-security model.
 - `docs/DEPLOYMENT.md` covers the supported production topology and operations.
+- `deploy/gcp/README.md` tracks the managed GCP prototype topology and
+  pre-provisioning templates.
 - `docs/TESTING.md` documents local verification and required CI checks.
 - `archive/` docs describe historical Streamlit reference material only.
 

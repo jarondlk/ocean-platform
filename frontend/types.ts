@@ -199,6 +199,7 @@ export type OllamaModel = {
 export type ModelsResponse = {
   default_model: string;
   embedding_model: string;
+  provider: string;
   ollama_base_url: string;
   available: boolean;
   models: OllamaModel[];

@@ -282,7 +282,8 @@ export default function SystemPage() {
       <section className="system-section">
         <h3 className="section-title">Models</h3>
         <div className="status-list">
-          <StatusRow label="Ollama URL" value={models?.ollama_base_url || "loading"} />
+          <StatusRow label="Provider" value={models?.provider || "loading"} />
+          <StatusRow label="Model endpoint" value={models?.ollama_base_url || "loading"} />
           <StatusRow label="Default chat model" value={models?.default_model || "loading"} />
           <StatusRow label="Embedding model" value={models?.embedding_model || "loading"} />
         </div>
@@ -315,7 +316,7 @@ export default function SystemPage() {
 
       <div className="system-register">
         <StatusSection title="Database" rows={status?.database || { available: "loading" }} />
-        <StatusSection title="Ollama" rows={status?.ollama || { available: "loading" }} />
+        <StatusSection title="Model runtime" rows={status?.ollama || { available: "loading" }} />
         <StatusSection title="Config" rows={asRecord(debug?.config)} />
         <StatusSection title="Cache" rows={asRecord(debug?.cache)} />
       </div>
