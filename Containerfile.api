@@ -1,3 +1,5 @@
+FROM postgres:16-bookworm@sha256:92620daddcd947f8d5ab5ba66e848702fe443d87fed30c4cea8e389fd78dfc55 AS postgres-client
+
 FROM python:3.12-slim@sha256:57cd7c3a7a273101a6485ba99423ee568157882804b1124b4dd04266317710de
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -8,12 +10,27 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends libgomp1 postgresql-client \
+    && apt-get install -y --no-install-recommends \
+        libgomp1 \
+        liblz4-1 \
+        libpq5 \
+        libzstd1 \
+        zlib1g \
     && groupadd --system app \
     && useradd --system --gid app --create-home --home-dir /home/app app \
     && mkdir -p /app/data/backups /app/data/pipeline_runs \
     && chown -R app:app /app /home/app \
     && rm -rf /var/lib/apt/lists/*
+
+# Match the managed PostgreSQL 16 server. Newer pg_dump archives can contain
+# settings that PostgreSQL 16 cannot restore (for example transaction_timeout).
+COPY --from=postgres-client \
+    /usr/lib/postgresql/16/bin/pg_dump \
+    /usr/lib/postgresql/16/bin/pg_restore \
+    /usr/lib/postgresql/16/bin/createdb \
+    /usr/lib/postgresql/16/bin/dropdb \
+    /usr/local/bin/
+RUN pg_dump --version | grep -Eq '^pg_dump \(PostgreSQL\) 16\.'
 
 COPY requirements/runtime.txt ./requirements.txt
 RUN pip install --upgrade pip \
