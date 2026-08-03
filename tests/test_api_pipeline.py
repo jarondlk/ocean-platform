@@ -185,6 +185,10 @@ def test_pipeline_database_load_requires_backup_for_real_run():
 
 def test_pipeline_dry_run_writes_manifest_and_history(tmp_path, monkeypatch):
     monkeypatch.setattr(api_main.config, "DATA_DIR", tmp_path)
+    raw_ctd = tmp_path / "raw" / "ctd" / "CTD_Onagawa.tsv"
+    raw_ctd.parent.mkdir(parents=True)
+    raw_ctd.write_text("date\tdepth\ttemperature\n", encoding="utf-8")
+    monkeypatch.setattr(api_main.config, "RAW_FILES", {"ctd": raw_ctd})
 
     response = client.post(
         "/pipeline/jobs",

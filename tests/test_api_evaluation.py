@@ -1,10 +1,66 @@
+import json
+
+import pandas as pd
+import pytest
 from fastapi.testclient import TestClient
 
 import api.main as api_main
 from api.main import app
+from evaluation.benchmark import SYSTEM_VARIANTS
+from evaluation.questions import BENCHMARK_QUESTIONS
 
 
 client = TestClient(app)
+
+
+@pytest.fixture(autouse=True)
+def saved_ablation_artifact(tmp_path, monkeypatch):
+    """Create the saved-run contract without relying on ignored project data."""
+    evaluation_dir = tmp_path / "evaluation"
+    run_dir = evaluation_dir / "ablation_qwen2.5:14b-instruct"
+    run_dir.mkdir(parents=True)
+
+    rows = []
+    for question_index, question in enumerate(BENCHMARK_QUESTIONS):
+        for variant_index, variant in enumerate(SYSTEM_VARIANTS):
+            score = 0.2 + variant_index * 0.1 + question_index * 0.001
+            rows.append(
+                {
+                    "question_id": question.id,
+                    "category": question.category,
+                    "question": question.question,
+                    "mode": variant.name,
+                    "n_retrieved": variant.source_coverage,
+                    "retrieval_precision": min(score, 1.0),
+                    "source_coverage": min(score + 0.02, 1.0),
+                    "citation_count": variant_index,
+                    "citation_accuracy": min(score + 0.04, 1.0),
+                    "context_utilization": min(score + 0.06, 1.0),
+                    "latency_seconds": 1.0 + variant_index * 0.2,
+                    "response": f"Synthetic response for {question.id}",
+                    "cited_ids": "[]",
+                    "error": "",
+                    "rouge_l": min(score + 0.01, 1.0),
+                    "faithfulness": min(score + 0.03, 1.0),
+                    "answer_completeness": min(score + 0.05, 1.0),
+                    "semantic_similarity": min(score + 0.07, 1.0),
+                }
+            )
+
+    pd.DataFrame(rows).to_csv(run_dir / "ablation_results.csv", index=False)
+    (run_dir / "ablation_meta.json").write_text(
+        json.dumps(
+            {
+                "model": "qwen2.5:14b-instruct",
+                "n_questions": len(BENCHMARK_QUESTIONS),
+                "n_variants": len(SYSTEM_VARIANTS),
+                "n_evaluations": len(rows),
+                "variants": [variant.name for variant in SYSTEM_VARIANTS],
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(api_main.config, "EVALUATION_DIR", evaluation_dir)
 
 
 def test_evaluation_catalog_exposes_questions_modes_and_variants():
