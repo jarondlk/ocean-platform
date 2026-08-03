@@ -27,6 +27,7 @@ if ! gcloud sql instances describe "$CLOUD_SQL_INSTANCE" \
     --availability-type=zonal \
     --backup-start-time=18:00 \
     --enable-point-in-time-recovery \
+    --labels=environment=prototype,cost_component=database \
     --deletion-protection
 fi
 
