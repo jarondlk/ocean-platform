@@ -11,23 +11,26 @@ Live state verified on 2026-08-03:
 
 - project billing is enabled and the linked JPY billing account is open;
 - the project is in organization `735965963562`;
-- the required foundation APIs are enabled, but no Cloud Run service, Cloud
-  Run Job, or Cloud SQL instance exists;
+- the required foundation and runtime APIs are enabled;
 - Artifact Registry repository `onagawa-source-chat` exists in
-  `asia-northeast1`, is empty, and has cleanup rules in dry-run mode;
+  `asia-northeast1`, contains the tested API and frontend images, and has
+  cleanup rules in dry-run mode;
 - service accounts `onagawa-app` and `onagawa-jobs` exist with no user-managed
   keys;
-- the four named Secret Manager containers exist with no secret versions;
+- the database secret has one enabled version; the other three application
+  secret containers remain empty;
 - regional bucket `data-infra-infobio-prototype-data` has public access
   prevention, uniform bucket-level access, versioning, and the reviewed
   lifecycle policy enabled; GCP's default seven-day soft-delete protection
   remains enabled;
-- no application runtime component has been deployed; and
+- Cloud SQL instance `onagawa-postgres` and Cloud Run migration job
+  `onagawa-migrate` are ready, while no Cloud Run serving service is deployed;
+- project, Cloud Run, and Cloud SQL budget controls are configured; and
 - the billing account has a Billing Account Administrator who can create and
   manage budgets.
 
-This is a good migration starting point: cost controls can be installed before
-the first runtime resource.
+The persistent database foundation is now live. Serving remains private and
+undeployed until the authentication and restricted-access gate is prepared.
 
 ## Cost-control model
 
@@ -96,15 +99,20 @@ of the prior seven days of cost by service and SKU.
 Create no runtime resources.
 
 Status on 2026-08-03: **complete**. The Cloud Billing Budget API is enabled and
-the project-scoped Billing console shows both controls:
+the project-scoped Billing console shows the two Phase 0 controls plus the
+Phase 3 database control:
 
 - `data-infra-infobio-monthly-guardrail`: JPY 10,000 monthly, actual alerts at
   50%, 75%, 90%, and 100%, and a forecast alert at 95%;
 - `data-infra-infobio-cloud-run-spend-cap`: Cloud Run only, JPY 2,250 monthly
   enforced trigger, default notifications at 50%, 80%, and 100%, status
-  `Configured`.
+  `Configured`;
+- `data-infra-infobio-cloud-sql-alert`: project `data-infra-infobio` and Cloud
+  SQL only, JPY 4,000 monthly, actual alerts at 50%, 75%, 90%, and 100%, and a
+  forecast alert at 95%.
 
-Both controls notify Billing Account Administrators/Users and project owners.
+All three controls notify Billing Account Administrators/Users and project
+owners.
 The CLI account still cannot enumerate account-wide budgets, so live checks
 must use the project-scoped Billing console unless its IAM is expanded.
 
@@ -177,6 +185,12 @@ build tag:
 - API: `sha256:b0b1243badc7062cd2ca7ed9a9165785618d15c0734b0b54b48650aa933b2ab0`
 - Frontend: `sha256:17392ca04ed9b270e40473193682aabf1cbfdec12305a356504a098e76be284c`
 
+The Cloud SQL backup fixes then passed Ruff and 401 backend tests (with 3
+skipped). Backend-only build `6e36e1e9-ac25-4273-a49f-3fbef9a8510f`
+published the current PostgreSQL 16-compatible API image:
+
+- API: `sha256:ffe6480bfe5d2626d628bb179fc019e6ab148c771cae1132bddbb230f8f958d2`
+
 All five deployment templates rendered as valid YAML using non-secret pending
 endpoint/client values, with application secrets represented only by Secret
 Manager references. Artifact Registry remains in cleanup dry-run mode and
@@ -197,6 +211,32 @@ Cloud SQL is the first persistent, always-billed runtime component. Create it
 only after the previous phases pass. Use the guarded
 `create-cloud-sql.sh`, create the database user out of band, add the database
 secret version, and run the migration job manually.
+
+Status on 2026-08-03: **database foundation and recovery check complete;
+data-dependent integration gate pending**.
+
+- `onagawa-postgres` is RUNNABLE in `asia-northeast1-c` on PostgreSQL 16
+  Enterprise with `db-f1-micro`, zonal availability, deletion protection,
+  10 GB SSD storage, and a 20 GB automatic-growth ceiling.
+- Automated backups and point-in-time recovery are enabled with seven retained
+  backups and seven days of transaction logs.
+- Database `onagawa_rag`, built-in user `onagawa_app`, and enabled database
+  secret version 1 exist. The secret value was never written to the repository
+  or emitted in command output.
+- Migration execution `onagawa-migrate-8qrll` completed once with no retry,
+  installed the `vector` extension, and left all 16 expected tables present.
+- Recovery execution `onagawa-migrate-rpbkb` used the immutable API image
+  above, completed successfully in 17.4 seconds, and restored an 85,751-byte
+  custom archive into a disposable database. Its SHA-256 was
+  `fbf4c2d8507ef6772329a9c14be1190d88f27b602c4428117292beef1814c3b1`;
+  all table row counts matched and the disposable database was removed.
+- The job has one task, parallelism one, no retries, a 15-minute timeout, and
+  `cost_component=migration`. Cloud Run has no serving service yet.
+
+The two live PostgreSQL integration modules and repeated corpus upsert require
+the representative data subset scheduled for Phase 5. They remain mandatory
+before the database gate is marked fully complete; they are not treated as
+evidence for enabling public traffic.
 
 Gate:
 
