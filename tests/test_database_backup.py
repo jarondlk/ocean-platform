@@ -6,8 +6,42 @@ import subprocess
 from pathlib import Path
 
 import pytest
+from sqlalchemy.engine import make_url
 
 from db import backup
+
+
+def test_postgres_tools_use_cloud_sql_query_socket_path():
+    url = make_url(
+        "postgresql://onagawa_app:secret@/onagawa_rag"
+        "?host=/cloudsql/project:region:instance"
+    )
+
+    assert backup._connection_args(
+        url,
+        inside_database_container=False,
+    ) == [
+        "--host",
+        "/cloudsql/project:region:instance",
+        "--username",
+        "onagawa_app",
+        "--dbname",
+        "onagawa_rag",
+    ]
+    assert backup._maintenance_connection_args(
+        url,
+        inside_database_container=False,
+    ) == [
+        "--host",
+        "/cloudsql/project:region:instance",
+        "--username",
+        "onagawa_app",
+        "--maintenance-db",
+        "postgres",
+    ]
+    assert backup._database_identity(url) == (
+        "/cloudsql/project:region:instance/onagawa_rag"
+    )
 
 
 def test_create_backup_is_atomic_hashed_and_structurally_verified(
