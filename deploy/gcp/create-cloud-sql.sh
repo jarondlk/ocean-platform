@@ -21,6 +21,7 @@ if ! gcloud sql instances describe "$CLOUD_SQL_INSTANCE" \
     --project="$GCP_PROJECT_ID" \
     --region="$GCP_REGION" \
     --database-version=POSTGRES_16 \
+    --edition=ENTERPRISE \
     --tier="$CLOUD_SQL_TIER" \
     --storage-type=SSD \
     --storage-size=10 \
