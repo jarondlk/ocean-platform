@@ -2,11 +2,19 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: onagawa-source-chat
+  labels:
+    environment: prototype
+    cost_component: serving
+  annotations:
+    run.googleapis.com/maxScale: "1"
 spec:
   template:
     metadata:
+      labels:
+        environment: prototype
+        cost_component: serving
       annotations:
-        autoscaling.knative.dev/maxScale: "3"
+        autoscaling.knative.dev/maxScale: "1"
         run.googleapis.com/cloudsql-instances: PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
         run.googleapis.com/container-dependencies: '{"frontend":["api"]}'
         run.googleapis.com/execution-environment: gen2

@@ -3,6 +3,11 @@
 This directory prepares the application for a managed GCP prototype without
 provisioning resources from the repository.
 
+Follow [`MIGRATION_PLAN.md`](MIGRATION_PLAN.md) for the phased deployment order,
+integration gates, JPY 10,000 monthly prototype envelope, per-component
+budgets, and technical cost ceilings. Cost controls are Phase 0 and must be in
+place before the foundation or any runtime component is created.
+
 ## Target topology
 
 - One Cloud Run service with Next.js as the ingress container and FastAPI as a
@@ -35,7 +40,6 @@ gcloud services enable \
   secretmanager.googleapis.com \
   iam.googleapis.com \
   iamcredentials.googleapis.com \
-  servicenetworking.googleapis.com \
   cloudresourcemanager.googleapis.com \
   --project=data-infra-infobio
 ```
@@ -193,5 +197,5 @@ Before replacing the service:
 4. Register the final OIDC callback URL.
 5. Grant public invocation only to the frontend service after authentication
    succeeds.
-6. Keep Cloud Run maximum instances low until Cloud SQL pool behavior and model
-   capacity are measured.
+6. Keep Cloud Run at one maximum instance until Cloud SQL pool behavior, model
+   capacity, and seven days of cost are measured.

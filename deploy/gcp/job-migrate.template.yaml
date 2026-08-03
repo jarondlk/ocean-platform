@@ -2,9 +2,15 @@ apiVersion: run.googleapis.com/v1
 kind: Job
 metadata:
   name: onagawa-migrate
+  labels:
+    environment: prototype
+    cost_component: migration
 spec:
   template:
     metadata:
+      labels:
+        environment: prototype
+        cost_component: migration
       annotations:
         run.googleapis.com/cloudsql-instances: PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
         run.googleapis.com/execution-environment: gen2
@@ -13,7 +19,7 @@ spec:
       template:
         spec:
           serviceAccountName: onagawa-jobs@PROJECT_ID.iam.gserviceaccount.com
-          maxRetries: 1
+          maxRetries: 0
           timeoutSeconds: "900"
           containers:
             - image: REGION-docker.pkg.dev/PROJECT_ID/ARTIFACT_REPOSITORY/api:IMAGE_TAG

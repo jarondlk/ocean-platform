@@ -2,9 +2,15 @@ apiVersion: run.googleapis.com/v1
 kind: Job
 metadata:
   name: onagawa-evaluation
+  labels:
+    environment: prototype
+    cost_component: evaluation
 spec:
   template:
     metadata:
+      labels:
+        environment: prototype
+        cost_component: evaluation
       annotations:
         run.googleapis.com/cloudsql-instances: PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
         run.googleapis.com/execution-environment: gen2

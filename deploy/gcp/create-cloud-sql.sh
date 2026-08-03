@@ -22,6 +22,8 @@ if ! gcloud sql instances describe "$CLOUD_SQL_INSTANCE" \
     --tier="$CLOUD_SQL_TIER" \
     --storage-type=SSD \
     --storage-size=10 \
+    --storage-auto-increase \
+    --storage-auto-increase-limit=20 \
     --availability-type=zonal \
     --backup-start-time=18:00 \
     --enable-point-in-time-recovery \

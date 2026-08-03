@@ -32,6 +32,7 @@ if ! gcloud artifacts repositories describe "$ARTIFACT_REPOSITORY" \
     --location="$GCP_REGION" \
     --repository-format=docker \
     --description="Onagawa Source Chat containers" \
+    --labels=environment=prototype,cost_component=artifact_registry \
     --project="$GCP_PROJECT_ID"
 fi
 
@@ -54,6 +55,7 @@ for secret in \
     --project="$GCP_PROJECT_ID" >/dev/null 2>&1; then
     gcloud secrets create "$secret" \
       --replication-policy=automatic \
+      --labels=environment=prototype,cost_component=secrets \
       --project="$GCP_PROJECT_ID"
   fi
 done
@@ -66,7 +68,9 @@ if ! gcloud storage buckets describe "gs://$DATA_BUCKET" \
     --uniform-bucket-level-access \
     --public-access-prevention
 fi
-gcloud storage buckets update "gs://$DATA_BUCKET" --versioning
+gcloud storage buckets update "gs://$DATA_BUCKET" \
+  --versioning \
+  --update-labels=environment=prototype,cost_component=storage
 
 app_member="serviceAccount:onagawa-app@$GCP_PROJECT_ID.iam.gserviceaccount.com"
 jobs_member="serviceAccount:onagawa-jobs@$GCP_PROJECT_ID.iam.gserviceaccount.com"

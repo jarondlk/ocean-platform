@@ -2,9 +2,15 @@ apiVersion: run.googleapis.com/v1
 kind: Job
 metadata:
   name: onagawa-pipeline
+  labels:
+    environment: prototype
+    cost_component: pipeline
 spec:
   template:
     metadata:
+      labels:
+        environment: prototype
+        cost_component: pipeline
       annotations:
         run.googleapis.com/cloudsql-instances: PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
         run.googleapis.com/execution-environment: gen2

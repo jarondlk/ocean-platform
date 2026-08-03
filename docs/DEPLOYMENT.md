@@ -8,6 +8,10 @@ for Cloud Run, Cloud SQL, Cloud Storage, Secret Manager, and Cloud Run Jobs.
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for the templates and
 pre-provisioning checklist.
 
+The required migration sequence, integration gates, and cost controls are in
+[`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Install the
+project budget and Cloud Run spend cap before enabling runtime APIs.
+
 The Cloud Run serving revision must use `JOB_EXECUTION_MODE=external`. Database
 migrations, pipeline runs, and evaluations belong in run-to-completion jobs;
 they must not be launched as daemon threads or startup migrations in an
