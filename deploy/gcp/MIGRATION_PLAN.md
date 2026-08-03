@@ -168,6 +168,21 @@ Gate:
 Run local tests before spending Cloud Build time, then submit `cloudbuild.yaml`
 manually. Do not create a branch trigger yet.
 
+Status on 2026-08-03: **complete**. Source commit `dfde9b9` passed Ruff,
+400 backend tests (with 3 skipped), the frontend typecheck, and the frontend
+production build. Manual Cloud Build
+`09350352-a1cb-4c2e-b459-1ee17bb7f81d` published both images with the same
+build tag:
+
+- API: `sha256:b0b1243badc7062cd2ca7ed9a9165785618d15c0734b0b54b48650aa933b2ab0`
+- Frontend: `sha256:17392ca04ed9b270e40473193682aabf1cbfdec12305a356504a098e76be284c`
+
+All five deployment templates rendered as valid YAML using non-secret pending
+endpoint/client values, with application secrets represented only by Secret
+Manager references. Artifact Registry remains in cleanup dry-run mode and
+keeps the five newest versions. No Cloud Run service, Cloud Run Job, or Cloud
+SQL instance was created.
+
 Gate:
 
 - backend tests and lint pass;
