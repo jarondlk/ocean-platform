@@ -15,7 +15,9 @@ fi
 gcloud projects describe "$GCP_PROJECT_ID" >/dev/null
 if ! gcloud sql instances describe "$CLOUD_SQL_INSTANCE" \
   --project="$GCP_PROJECT_ID" >/dev/null 2>&1; then
-  gcloud sql instances create "$CLOUD_SQL_INSTANCE" \
+  # Cloud SQL instance labels are currently exposed by the gcloud beta create
+  # surface. Keeping them on the create call avoids any unlabelled billing gap.
+  gcloud beta sql instances create "$CLOUD_SQL_INSTANCE" \
     --project="$GCP_PROJECT_ID" \
     --region="$GCP_REGION" \
     --database-version=POSTGRES_16 \
