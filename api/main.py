@@ -3349,8 +3349,8 @@ def models() -> ModelsResponse:
             available=True,
             models=chat_models,
         )
-    except Exception:
-        logger.exception("Model discovery failed")
+    except Exception as exc:
+        logger.warning("Model discovery unavailable: %s", exc)
         return ModelsResponse(
             default_model=config.CHAT_MODEL,
             embedding_model=config.EMBEDDING_MODEL,
@@ -3497,6 +3497,13 @@ def debug_state() -> Dict[str, Any]:
                     "station": cfg.get("station_column"),
                     "source": cfg.get("source_column"),
                 },
+            }
+        except HTTPException as exc:
+            datasets[dataset] = {
+                "label": cfg["label"],
+                "path": str(cfg["path"]),
+                "exists": cfg["path"].exists(),
+                "error": str(exc.detail),
             }
         except Exception:
             logger.exception("Debug dataset inspection failed for %s", dataset)

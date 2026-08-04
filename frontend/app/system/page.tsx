@@ -32,22 +32,32 @@ export default function SystemPage() {
     setLoading(true);
     setError("");
     try {
-      const [statusData, statsData, modelsData, debugData, sampleCoverageData] = await Promise.all([
+      const sampleCoverageRequest = getExploreTable({
+        dataset: "sample_registry",
+        columns: "sample_id,bay,has_run_qc,has_kraken,has_metaeuk,has_ctd",
+        limit: 500,
+      }).then(
+        (data) => ({ data, error: "" }),
+        (err: unknown) => ({
+          data: null,
+          error: err instanceof Error ? err.message : "Sample coverage is unavailable",
+        }),
+      );
+      const [statusData, statsData, modelsData, debugData, sampleCoverageResult] = await Promise.all([
         getStatus(),
         getStats(),
         getModels(),
         getDebugState(),
-        getExploreTable({
-          dataset: "sample_registry",
-          columns: "sample_id,bay,has_run_qc,has_kraken,has_metaeuk,has_ctd",
-          limit: 500,
-        }),
+        sampleCoverageRequest,
       ]);
       setStatus(statusData);
       setStats(statsData);
       setModels(modelsData);
       setDebug(debugData);
-      setSampleCoverage(sampleCoverageData);
+      setSampleCoverage(sampleCoverageResult.data);
+      if (sampleCoverageResult.error) {
+        setError(`Sample coverage unavailable: ${sampleCoverageResult.error}`);
+      }
       setLastUpdated(new Date().toLocaleTimeString());
     } catch (err) {
       setError(err instanceof Error ? err.message : "System request failed");
