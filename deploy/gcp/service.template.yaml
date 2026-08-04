@@ -14,6 +14,7 @@ spec:
         environment: prototype
         cost_component: serving
       annotations:
+        autoscaling.knative.dev/minScale: "0"
         autoscaling.knative.dev/maxScale: "1"
         run.googleapis.com/cloudsql-instances: PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
         run.googleapis.com/container-dependencies: '{"frontend":["api"]}'
@@ -41,19 +42,19 @@ spec:
             - name: AUTH_URL
               value: PUBLIC_APP_URL
             - name: AUTH_TRUST_HOST
-              value: "false"
+              value: "true"
             - name: INTERNAL_AUTH_ISSUER
               value: onagawa-source-chat-frontend
             - name: INTERNAL_AUTH_AUDIENCE
               value: onagawa-source-chat-api
             - name: OIDC_PROVIDER_NAME
-              value: OIDC_PROVIDER_NAME
+              value: OIDC_PROVIDER_NAME_VALUE
             - name: OIDC_PROVIDER_ID
-              value: OIDC_PROVIDER_ID
+              value: OIDC_PROVIDER_ID_VALUE
             - name: OIDC_ISSUER
-              value: OIDC_ISSUER
+              value: OIDC_ISSUER_VALUE
             - name: OIDC_CLIENT_ID
-              value: OIDC_CLIENT_ID
+              value: OIDC_CLIENT_ID_VALUE
             - name: AUTH_SECRET
               valueFrom:
                 secretKeyRef:
@@ -86,7 +87,7 @@ spec:
             - name: ENABLE_MOCK_LOGIN
               value: "false"
             - name: AUTH_ALLOWED_PROVIDERS
-              value: OIDC_PROVIDER_ID
+              value: OIDC_PROVIDER_ID_VALUE
             - name: CORS_ORIGINS
               value: PUBLIC_APP_URL
             - name: INTERNAL_AUTH_ISSUER

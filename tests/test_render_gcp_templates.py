@@ -17,10 +17,10 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
         "IMAGE_TAG": "build-123",
         "CLOUD_SQL_INSTANCE": "example-postgres",
         "PUBLIC_APP_URL": "https://example.run.app",
-        "OIDC_PROVIDER_ID": "google",
-        "OIDC_PROVIDER_NAME": "Google",
-        "OIDC_ISSUER": "https://accounts.google.com",
-        "OIDC_CLIENT_ID": "client.apps.googleusercontent.com",
+        "OIDC_PROVIDER_ID_VALUE": "google",
+        "OIDC_PROVIDER_NAME_VALUE": "Google",
+        "OIDC_ISSUER_VALUE": "https://accounts.google.com",
+        "OIDC_CLIENT_ID_VALUE": "client.apps.googleusercontent.com",
         "OLLAMA_PRIVATE_URL": "https://model.internal",
         "DATA_BUCKET": "example-data",
     }
@@ -45,6 +45,30 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
         ["autoscaling.knative.dev/maxScale"]
         == "1"
     )
+    assert (
+        service["spec"]["template"]["metadata"]["annotations"]
+        ["autoscaling.knative.dev/minScale"]
+        == "0"
+    )
+    frontend = service["spec"]["template"]["spec"]["containers"][0]
+    frontend_env = {
+        setting["name"]: setting.get("value")
+        for setting in frontend["env"]
+    }
+    assert frontend_env["AUTH_TRUST_HOST"] == "true"
+    assert frontend_env["OIDC_PROVIDER_NAME"] == "Google"
+    assert frontend_env["OIDC_PROVIDER_ID"] == "google"
+    assert frontend_env["OIDC_ISSUER"] == "https://accounts.google.com"
+    assert (
+        frontend_env["OIDC_CLIENT_ID"]
+        == "client.apps.googleusercontent.com"
+    )
+    api = service["spec"]["template"]["spec"]["containers"][1]
+    api_env = {
+        setting["name"]: setting.get("value")
+        for setting in api["env"]
+    }
+    assert api_env["AUTH_ALLOWED_PROVIDERS"] == "google"
 
     expected_job_labels = {
         "job-migrate.rendered.yaml": "migration",

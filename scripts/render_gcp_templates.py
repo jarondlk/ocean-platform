@@ -18,8 +18,9 @@ TEMPLATES = (
 )
 TOKEN_PATTERN = re.compile(
     r"\b(?:PROJECT_ID|PROJECT_NUMBER|REGION|ARTIFACT_REPOSITORY|IMAGE_TAG|"
-    r"CLOUD_SQL_INSTANCE|PUBLIC_APP_URL|OIDC_PROVIDER_ID|OIDC_PROVIDER_NAME|"
-    r"OIDC_ISSUER|OIDC_CLIENT_ID|OLLAMA_PRIVATE_URL|DATA_BUCKET)\b"
+    r"CLOUD_SQL_INSTANCE|PUBLIC_APP_URL|OIDC_PROVIDER_ID_VALUE|"
+    r"OIDC_PROVIDER_NAME_VALUE|OIDC_ISSUER_VALUE|OIDC_CLIENT_ID_VALUE|"
+    r"OLLAMA_PRIVATE_URL|DATA_BUCKET)\b"
 )
 
 
@@ -74,10 +75,10 @@ def main() -> int:
         "IMAGE_TAG": args.image_tag,
         "CLOUD_SQL_INSTANCE": args.cloud_sql_instance,
         "PUBLIC_APP_URL": args.public_app_url.rstrip("/"),
-        "OIDC_PROVIDER_ID": args.oidc_provider_id,
-        "OIDC_PROVIDER_NAME": args.oidc_provider_name,
-        "OIDC_ISSUER": args.oidc_issuer.rstrip("/"),
-        "OIDC_CLIENT_ID": args.oidc_client_id,
+        "OIDC_PROVIDER_ID_VALUE": args.oidc_provider_id,
+        "OIDC_PROVIDER_NAME_VALUE": args.oidc_provider_name,
+        "OIDC_ISSUER_VALUE": args.oidc_issuer.rstrip("/"),
+        "OIDC_CLIENT_ID_VALUE": args.oidc_client_id,
         "OLLAMA_PRIVATE_URL": args.ollama_private_url.rstrip("/"),
         "DATA_BUCKET": args.data_bucket,
     }
