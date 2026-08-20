@@ -175,6 +175,15 @@ def _embedding_values(item: Any) -> List[float]:
     return [float(value) for value in values]
 
 
+def _finish_reason(response: Any) -> Optional[str]:
+    candidates = getattr(response, "candidates", None)
+    if not isinstance(candidates, list) or not candidates:
+        return None
+    value = getattr(candidates[0], "finish_reason", None)
+    value = getattr(value, "value", value)
+    return str(value).upper() if value is not None else None
+
+
 @dataclass
 class VertexRuntime:
     """Vertex AI implementation using workload identity through ADC."""
@@ -268,6 +277,10 @@ class VertexRuntime:
         if requested_output is not None:
             output_limit = min(int(requested_output), output_limit)
         vertex_options["max_output_tokens"] = output_limit
+        vertex_options["thinking_config"] = {
+            "thinking_budget": config.VERTEX_THINKING_BUDGET,
+            "include_thoughts": False,
+        }
 
         response = self._request(
             "chat",
@@ -277,6 +290,11 @@ class VertexRuntime:
                 config=vertex_options,
             ),
         )
+        finish_reason = _finish_reason(response)
+        if finish_reason not in {None, "STOP"}:
+            raise ValueError(
+                f"Vertex AI answer did not finish cleanly: {finish_reason}"
+            )
         content = getattr(response, "text", None)
         if not isinstance(content, str) or not content.strip():
             raise ValueError("Vertex AI returned an empty answer")

@@ -242,6 +242,11 @@ is disabled, the SDK's hidden retry layer is disabled, each request has a
 120-second timeout, and no failed batch falls back to duplicate sequential
 calls.
 
+For the citation-focused RAG path, Vertex reasoning tokens are disabled so the
+800-token response ceiling is reserved for the visible grounded answer. Any
+generation that ends with a non-`STOP` finish reason (including `MAX_TOKENS`)
+is treated as a failed evaluation instead of being scored as a valid answer.
+
 The bucket mount is a prototype compatibility bridge for the current
 filesystem-oriented pipeline. Cloud Storage FUSE does not turn object storage
 into a fully POSIX filesystem. Before production, move job state transitions

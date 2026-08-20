@@ -23,9 +23,10 @@ class _VertexEmbedding:
 
 
 class _VertexResponse:
-    def __init__(self, *, text=None, embeddings=None):
+    def __init__(self, *, text=None, embeddings=None, candidates=None):
         self.text = text
         self.embeddings = embeddings
+        self.candidates = candidates
 
 
 class _VertexModels:
@@ -129,6 +130,10 @@ def test_vertex_runtime_maps_options_and_embedding_task(monkeypatch):
     assert chat_call["config"] == {
         "temperature": 0.2,
         "max_output_tokens": 100,
+        "thinking_config": {
+            "thinking_budget": 0,
+            "include_thoughts": False,
+        },
     }
     embedding_call = client.models.calls[1][1]
     assert embedding_call["config"] == {
@@ -183,6 +188,26 @@ def test_vertex_runtime_validates_embedding_dimension():
 
     with pytest.raises(ValueError, match="returned dimension 2; expected 3"):
         runtime.embed("text", model="gemini-embedding-001")
+
+
+def test_vertex_runtime_rejects_truncated_answers():
+    class _Candidate:
+        finish_reason = "MAX_TOKENS"
+
+    client = _VertexClient()
+    client.models.generate_content = lambda **_kwargs: _VertexResponse(
+        text="incomplete",
+        candidates=[_Candidate()],
+    )
+    runtime = model_runtime.VertexRuntime(
+        project="example-project",
+        location="global",
+        embedding_dim=2,
+        client=client,
+    )
+
+    with pytest.raises(ValueError, match="did not finish cleanly: MAX_TOKENS"):
+        runtime.chat(model="gemini-flash", prompt="question")
 
 
 def test_runtime_factory_builds_vertex_from_config(monkeypatch):

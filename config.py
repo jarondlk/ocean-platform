@@ -417,6 +417,7 @@ MODEL_RETRY_INITIAL_SECONDS = float(
 MODEL_REQUEST_TIMEOUT_SECONDS = int(
     os.environ.get("MODEL_REQUEST_TIMEOUT_SECONDS", "120")
 )
+VERTEX_THINKING_BUDGET = int(os.environ.get("VERTEX_THINKING_BUDGET", "0"))
 
 # Embedding dimension (nomic-embed-text → 768)
 EMBEDDING_DIM = int(os.environ.get("EMBEDDING_DIM", "768"))
@@ -450,6 +451,10 @@ def validate_runtime_configuration() -> None:
     if not 1 <= MODEL_REQUEST_TIMEOUT_SECONDS <= 300:
         raise RuntimeConfigurationError(
             "MODEL_REQUEST_TIMEOUT_SECONDS must be between 1 and 300"
+        )
+    if not 0 <= VERTEX_THINKING_BUDGET <= 4096:
+        raise RuntimeConfigurationError(
+            "VERTEX_THINKING_BUDGET must be between 0 and 4096"
         )
 
 

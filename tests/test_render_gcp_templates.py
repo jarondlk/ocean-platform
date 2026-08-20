@@ -137,6 +137,7 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
     assert evaluation_env["MODEL_PROVIDER"] == "vertex"
     assert evaluation_env["CHAT_MODEL"] == "gemini-3.6-flash"
     assert evaluation_env["CHAT_MAX_OUTPUT_TOKENS"] == "800"
+    assert evaluation_env["VERTEX_THINKING_BUDGET"] == "0"
     assert evaluation_env["MODEL_REQUEST_TIMEOUT_SECONDS"] == "120"
 
 
