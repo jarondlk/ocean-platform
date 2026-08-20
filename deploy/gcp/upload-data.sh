@@ -49,13 +49,13 @@ if [ "$UPLOAD_MODE" = "dry-run" ]; then
     --recursive \
     --dry-run \
     --checksums-only \
-    --exclude='(^|/)\.DS_Store$' \
+    --exclude='.*\.DS_Store$' \
     --project="$GCP_PROJECT_ID"
   gcloud storage rsync "$SST_DIR" "gs://$DATA_BUCKET/raw/sst-netcdf" \
     --recursive \
     --dry-run \
     --checksums-only \
-    --exclude='(^|/)\.DS_Store$' \
+    --exclude='.*\.DS_Store$' \
     --project="$GCP_PROJECT_ID"
   echo "Dry-run complete. No objects were uploaded."
   exit 0
@@ -64,12 +64,12 @@ fi
 gcloud storage rsync "$RAW_DIR" "gs://$DATA_BUCKET/raw" \
   --recursive \
   --checksums-only \
-  --exclude='(^|/)\.DS_Store$' \
+  --exclude='.*\.DS_Store$' \
   --project="$GCP_PROJECT_ID"
 gcloud storage rsync "$SST_DIR" "gs://$DATA_BUCKET/raw/sst-netcdf" \
   --recursive \
   --checksums-only \
-  --exclude='(^|/)\.DS_Store$' \
+  --exclude='.*\.DS_Store$' \
   --project="$GCP_PROJECT_ID"
 EXPECTED_OBJECTS=$("$PYTHON_BIN" -c \
   'import json,sys; print(json.load(open(sys.argv[1]))["total_objects"])' \

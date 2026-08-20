@@ -105,6 +105,7 @@ def test_gcp_upload_script_is_raw_only_and_non_deleting():
     assert 'SST_DIR="$PROJECT_ROOT/onagawa_sst_subset"' in script
     assert 'gcloud storage rsync data ' not in script
     assert "--delete-unmatched-destination-objects" not in script
+    assert script.count("--exclude='.*\\.DS_Store$'") == 4
     assert "build_gcp_seed_manifest.py" in script
     assert "manifests/$SEED_TAG.json" in script
 
