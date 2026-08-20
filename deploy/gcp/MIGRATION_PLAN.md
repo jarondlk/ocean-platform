@@ -7,7 +7,7 @@ financial envelope is **JPY 10,000 per calendar month** for project
 
 ## Current cloud baseline
 
-Live state verified on 2026-08-03:
+Live state verified on 2026-08-04:
 
 - project billing is enabled and the linked JPY billing account is open;
 - the project is in organization `735965963562`;
@@ -17,20 +17,22 @@ Live state verified on 2026-08-03:
   cleanup rules in dry-run mode;
 - service accounts `onagawa-app` and `onagawa-jobs` exist with no user-managed
   keys;
-- the database secret has one enabled version; the other three application
-  secret containers remain empty;
+- the database, Auth.js signing, internal API signing, and Google OAuth client
+  secrets each have one enabled version;
 - regional bucket `data-infra-infobio-prototype-data` has public access
   prevention, uniform bucket-level access, versioning, and the reviewed
   lifecycle policy enabled; GCP's default seven-day soft-delete protection
   remains enabled;
-- Cloud SQL instance `onagawa-postgres` and Cloud Run migration job
-  `onagawa-migrate` are ready, while no Cloud Run serving service is deployed;
+- Cloud SQL instance `onagawa-postgres`, Cloud Run migration job
+  `onagawa-migrate`, and the authenticated multi-container Cloud Run service
+  `onagawa-source-chat` are ready;
 - project, Cloud Run, and Cloud SQL budget controls are configured; and
 - the billing account has a Billing Account Administrator who can create and
   manage budgets.
 
-The persistent database foundation is now live. Serving remains private and
-undeployed until the authentication and restricted-access gate is prepared.
+The persistent database and authenticated serving foundations are live. The
+representative corpus is not uploaded yet, and the model runtime remains
+disabled until the Phase 5 and Phase 6 gates are executed.
 
 ## Cost-control model
 
@@ -197,6 +199,11 @@ Manager references. Artifact Registry remains in cleanup dry-run mode and
 keeps the five newest versions. No Cloud Run service, Cloud Run Job, or Cloud
 SQL instance was created.
 
+Phase 4 build `810380c1-40bc-46ea-9725-1dc7eb5c4512` then passed the repository
+Python lint/tests, frontend typecheck, and production build for source commit
+`81b0c70`. It published the API and frontend images under the same immutable
+build tag used by the serving revision.
+
 Gate:
 
 - backend tests and lint pass;
@@ -254,6 +261,43 @@ Deploy the multi-container Cloud Run service with no public traffic first. The
 Next.js container remains the ingress and FastAPI remains a localhost sidecar.
 Keep the existing Auth.js Google OIDC flow and Cloud SQL-backed invitations and
 roles.
+
+Status on 2026-08-04: **deployed and accepted for the single-admin cloud
+prototype**.
+
+- Service `onagawa-source-chat` revision `onagawa-source-chat-00003-vff` is
+  Ready in `asia-northeast1` and receives 100% of traffic at
+  `https://onagawa-source-chat-469489188516.asia-northeast1.run.app`.
+- The frontend and API sidecar use build
+  `810380c1-40bc-46ea-9725-1dc7eb5c4512`. FastAPI listens only inside the
+  Cloud Run instance, and Cloud SQL and the future model endpoint have no
+  public route.
+- Minimum instances is zero, maximum instances is one, and concurrency is 20.
+  The `cost_component=serving` label and JPY 2,250 Cloud Run spend cap remain
+  in effect.
+- Google Auth Platform uses an internal Tohoku University audience. The live
+  OAuth callback, the accepted 30-day admin invitation, the Cloud SQL-backed
+  admin session, logout, and subsequent login all passed in the hosted UI.
+- With explicit operator approval, `allUsers` has the Cloud Run Invoker role so
+  a browser can reach the frontend. Unauthenticated users are redirected to
+  `/login`, and direct access to `/api/backend/health/live` returns 401. The
+  application remains invitation-only through Google OIDC and its database
+  authorization layer.
+- The live System page reports Cloud SQL available and shows the absent corpus
+  and model runtime as expected degraded states. Missing Phase 5 artifacts no
+  longer prevent the remaining diagnostics from loading, and the absent Phase
+  6 model produces a concise warning instead of an error traceback.
+- The new revision produced no error-level entries during acceptance checks,
+  and log searches found no application secret names or access/refresh token
+  markers.
+- The automated authentication suite covers viewer, researcher, admin,
+  invitation, and suspension behavior. The sole live admin was not suspended
+  or demoted because that could lock out the project operator; Phase 7 still
+  requires two invited test identities for the full multi-user path.
+- Authenticated revision `onagawa-source-chat-00002-sdj` is the immediate,
+  database-compatible rollback target. The initial one-container reservation
+  revision `onagawa-source-chat-00001-pns` is a non-production placeholder and
+  must not receive traffic.
 
 Gate:
 
