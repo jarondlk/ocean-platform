@@ -225,3 +225,26 @@ def test_runtime_configuration_rejects_unknown_job_mode(monkeypatch):
         match="JOB_EXECUTION_MODE",
     ):
         config.validate_runtime_configuration()
+
+
+def test_vertex_runtime_requires_project(monkeypatch):
+    monkeypatch.setattr(config, "MODEL_PROVIDER", "vertex")
+    monkeypatch.setattr(config, "GOOGLE_CLOUD_PROJECT", "")
+
+    with pytest.raises(
+        config.RuntimeConfigurationError,
+        match="GOOGLE_CLOUD_PROJECT",
+    ):
+        config.validate_runtime_configuration()
+
+
+def test_vertex_runtime_accepts_bounded_configuration(monkeypatch):
+    monkeypatch.setattr(config, "MODEL_PROVIDER", "vertex")
+    monkeypatch.setattr(config, "GOOGLE_CLOUD_PROJECT", "example-project")
+    monkeypatch.setattr(config, "GOOGLE_CLOUD_LOCATION", "global")
+    monkeypatch.setattr(config, "MODEL_MAX_ATTEMPTS", 3)
+    monkeypatch.setattr(config, "MODEL_RETRY_INITIAL_SECONDS", 0.5)
+    monkeypatch.setattr(config, "CHAT_MAX_OUTPUT_TOKENS", 800)
+    monkeypatch.setattr(config, "MODEL_REQUEST_TIMEOUT_SECONDS", 120)
+
+    config.validate_runtime_configuration()

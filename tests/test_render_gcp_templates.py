@@ -97,6 +97,48 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
         "--json",
     ]
 
+    embedding = documents["job-embedding.rendered.yaml"]
+    embedding_task = embedding["spec"]["template"]["spec"]["template"]["spec"]
+    embedding_container = embedding_task["containers"][0]
+    embedding_env = {
+        setting["name"]: setting.get("value")
+        for setting in embedding_container["env"]
+    }
+    assert embedding_task["timeoutSeconds"] == "1800"
+    assert embedding_container["args"] == [
+        "scripts/update_embeddings.py",
+        "--batch-size",
+        "32",
+        "--dry-run",
+        "--limit",
+        "16",
+    ]
+    assert embedding_env["MODEL_PROVIDER"] == "vertex"
+    assert embedding_env["GOOGLE_CLOUD_PROJECT"] == "example-project"
+    assert embedding_env["GOOGLE_CLOUD_LOCATION"] == "global"
+    assert embedding_env["EMBEDDING_MODEL"] == "gemini-embedding-001"
+    assert embedding_env["EMBEDDING_DIM"] == "768"
+    assert embedding_env["MODEL_REQUEST_TIMEOUT_SECONDS"] == "120"
+
+    evaluation = documents["job-evaluation.rendered.yaml"]
+    evaluation_task = evaluation["spec"]["template"]["spec"]["template"]["spec"]
+    evaluation_container = evaluation_task["containers"][0]
+    evaluation_env = {
+        setting["name"]: setting.get("value")
+        for setting in evaluation_container["env"]
+    }
+    assert evaluation_container["args"] == [
+        "scripts/run_evaluation.py",
+        "--questions",
+        "ctd_01",
+        "--modes",
+        "Full",
+    ]
+    assert evaluation_env["MODEL_PROVIDER"] == "vertex"
+    assert evaluation_env["CHAT_MODEL"] == "gemini-3.6-flash"
+    assert evaluation_env["CHAT_MAX_OUTPUT_TOKENS"] == "800"
+    assert evaluation_env["MODEL_REQUEST_TIMEOUT_SECONDS"] == "120"
+
 
 def test_gcp_upload_script_is_raw_only_and_non_deleting():
     script = (renderer.TEMPLATE_DIR / "upload-data.sh").read_text(

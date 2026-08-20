@@ -407,6 +407,16 @@ MODEL_PROVIDER = os.environ.get("MODEL_PROVIDER", "ollama").strip().lower()
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 EMBEDDING_MODEL = os.environ.get("EMBEDDING_MODEL", "nomic-embed-text")
 CHAT_MODEL      = os.environ.get("CHAT_MODEL", "qwen2.5:14b-instruct")
+GOOGLE_CLOUD_PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT", "").strip()
+GOOGLE_CLOUD_LOCATION = os.environ.get("GOOGLE_CLOUD_LOCATION", "global").strip()
+CHAT_MAX_OUTPUT_TOKENS = int(os.environ.get("CHAT_MAX_OUTPUT_TOKENS", "800"))
+MODEL_MAX_ATTEMPTS = int(os.environ.get("MODEL_MAX_ATTEMPTS", "3"))
+MODEL_RETRY_INITIAL_SECONDS = float(
+    os.environ.get("MODEL_RETRY_INITIAL_SECONDS", "0.5")
+)
+MODEL_REQUEST_TIMEOUT_SECONDS = int(
+    os.environ.get("MODEL_REQUEST_TIMEOUT_SECONDS", "120")
+)
 
 # Embedding dimension (nomic-embed-text → 768)
 EMBEDDING_DIM = int(os.environ.get("EMBEDDING_DIM", "768"))
@@ -423,6 +433,24 @@ def validate_runtime_configuration() -> None:
         )
     if not MODEL_PROVIDER:
         raise RuntimeConfigurationError("MODEL_PROVIDER must not be empty")
+    if MODEL_PROVIDER == "vertex" and not GOOGLE_CLOUD_PROJECT:
+        raise RuntimeConfigurationError(
+            "MODEL_PROVIDER=vertex requires GOOGLE_CLOUD_PROJECT"
+        )
+    if not GOOGLE_CLOUD_LOCATION:
+        raise RuntimeConfigurationError("GOOGLE_CLOUD_LOCATION must not be empty")
+    if CHAT_MAX_OUTPUT_TOKENS < 1:
+        raise RuntimeConfigurationError("CHAT_MAX_OUTPUT_TOKENS must be positive")
+    if MODEL_MAX_ATTEMPTS not in {1, 2, 3}:
+        raise RuntimeConfigurationError("MODEL_MAX_ATTEMPTS must be between 1 and 3")
+    if MODEL_RETRY_INITIAL_SECONDS < 0:
+        raise RuntimeConfigurationError(
+            "MODEL_RETRY_INITIAL_SECONDS must not be negative"
+        )
+    if not 1 <= MODEL_REQUEST_TIMEOUT_SECONDS <= 300:
+        raise RuntimeConfigurationError(
+            "MODEL_REQUEST_TIMEOUT_SECONDS must be between 1 and 300"
+        )
 
 
 def ensure_dirs() -> None:

@@ -7,7 +7,7 @@ financial envelope is **JPY 10,000 per calendar month** for project
 
 ## Current cloud baseline
 
-Live state verified on 2026-08-04:
+Live state verified through 2026-08-20:
 
 - project billing is enabled and the linked JPY billing account is open;
 - the project is in organization `735965963562`;
@@ -30,9 +30,11 @@ Live state verified on 2026-08-04:
 - the billing account has a Billing Account Administrator who can create and
   manage budgets.
 
-The persistent database and authenticated serving foundations are live. The
-representative corpus is not uploaded yet, and the model runtime remains
-disabled until the Phase 5 and Phase 6 gates are executed.
+The persistent database, authenticated serving foundation, and Phase 5 corpus
+are live: the bounded seed contains 1,860 raw objects, 14,231 corpus rows, and
+323 retrieval documents. Those retrieval documents intentionally have no
+cloud embeddings yet. The model runtime remains disabled until the Phase 6
+build, IAM, canary, retrieval, evaluation, and cost gates are executed.
 
 ## Cost-control model
 
@@ -65,7 +67,7 @@ ceilings are the primary controls.
 | Cloud Run serving | 1,200 | `cost_component=serving`; minimum 0, maximum 1 instance, concurrency 20 |
 | Cloud Run migration job | 100 | `cost_component=migration`; manual only, one task, no retry, 15-minute timeout |
 | Cloud Run pipeline job | 400 | `cost_component=pipeline`; dry-run default, manual execution, one task, no retry, 60-minute timeout |
-| Cloud Run embedding job | 500 | `cost_component=embedding`; manual execution, batch size 32, one task, no retry, 60-minute timeout |
+| Cloud Run embedding job | 500 | `cost_component=embedding`; dry-run default, manual execution, batch size 32, one task, no retry, 30-minute timeout |
 | Cloud Run evaluation job | 300 | `cost_component=evaluation`; quick suite first, one task, no retry, 60-minute timeout |
 | Cloud Storage | 500 | Alert budget; one regional bucket; keep at most three noncurrent versions and delete them after 30 days |
 | Cloud Build | 400 | Alert budget; manual builds only at first; 40-minute build timeout; no automatic branch trigger |
@@ -416,6 +418,26 @@ runtime first, or approve a separately costed private Ollama design.
 Start with a small embedding sample and the quick evaluation job. Apply an
 eligible service spend cap or a strict API quota and application-level request
 limit before enabling general chat traffic.
+
+Status on 2026-08-20: **implementation in progress; no Vertex resources or
+model calls started by this implementation checkpoint**. The native adapter,
+hash-locked SDK dependency, embedding provenance migration, explicit document
+and query task types, bounded transient retries, credential probe, 16-row
+canary limit, and dry-run-by-default Cloud Run Job are prepared. The existing
+768-dimensional pgvector schema is retained by requesting 768 output
+dimensions from `gemini-embedding-001`.
+
+Execution order is deliberately split:
+
+1. build and test the immutable image while Vertex remains disabled;
+2. back up and restore-test Cloud SQL, then apply the provenance migration;
+3. enable the Vertex AI API and grant Vertex AI User only to `onagawa-jobs`;
+4. run one credential/dimension probe with no database writes;
+5. update 16 rows, verify provider/model/dimension metadata and retrieval;
+6. update the remaining rows and prove an identical rerun selects zero rows;
+7. run one known evaluation question in Full mode, then the quick suite;
+8. grant the serving identity access and switch the service only after all
+   gates and the measured cost review pass.
 
 Gate:
 

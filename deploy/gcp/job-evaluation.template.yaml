@@ -27,7 +27,10 @@ spec:
                 - python
               args:
                 - scripts/run_evaluation.py
-                - --quick
+                - --questions
+                - ctd_01
+                - --modes
+                - Full
               env:
                 - name: DATABASE_URL
                   valueFrom:
@@ -37,13 +40,21 @@ spec:
                 - name: DATA_DIR
                   value: /mnt/onagawa-data
                 - name: MODEL_PROVIDER
-                  value: ollama
-                - name: OLLAMA_BASE_URL
-                  value: OLLAMA_PRIVATE_URL
+                  value: vertex
+                - name: GOOGLE_CLOUD_PROJECT
+                  value: PROJECT_ID
+                - name: GOOGLE_CLOUD_LOCATION
+                  value: global
                 - name: CHAT_MODEL
-                  value: qwen2.5:14b-instruct
+                  value: gemini-3.6-flash
                 - name: EMBEDDING_MODEL
-                  value: nomic-embed-text
+                  value: gemini-embedding-001
+                - name: EMBEDDING_DIM
+                  value: "768"
+                - name: CHAT_MAX_OUTPUT_TOKENS
+                  value: "800"
+                - name: MODEL_REQUEST_TIMEOUT_SECONDS
+                  value: "120"
               resources:
                 limits:
                   cpu: "2"

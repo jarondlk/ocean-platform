@@ -197,6 +197,10 @@ class RetrievalDocument(CorpusBase):
     text = Column(Text, nullable=False)
     text_tsv = Column(TSVECTOR)  # full-text search vector
     source_row_hash = Column(String(64), index=True)
+    embedding_provider = Column(String(32))
+    embedding_model = Column(String(128))
+    embedding_dim = Column(Integer)
+    embedded_at = Column(DateTime(timezone=True))
 
     if Vector is not None:
         embedding = Column(Vector(config.EMBEDDING_DIM))

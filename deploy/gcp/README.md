@@ -19,8 +19,8 @@ place before the foundation or any runtime component is created.
 - Cloud Run Jobs for migrations, ingestion, embedding refresh, and evaluation.
 - Google OIDC through the existing Auth.js flow, with application invitations
   and roles retained in Cloud SQL.
-- A private Ollama endpoint for the first prototype. `model_runtime.py` is the
-  provider boundary for a future Vertex AI implementation.
+- Vertex AI through Application Default Credentials and the Cloud Run service
+  identity. No downloaded service-account key or always-on model VM is used.
 
 The serving revision sets `JOB_EXECUTION_MODE=external`. This deliberately
 prevents an autoscaled web instance from starting daemon-thread pipeline or
@@ -44,8 +44,8 @@ gcloud services enable \
   --project=data-infra-infobio
 ```
 
-Compute Engine and Vertex AI remain optional until the model-hosting decision
-is final.
+Compute Engine remains optional. Enable Vertex AI only when executing the
+Phase 6 credential probe and canary described below.
 
 See [`AUTHENTICATION.md`](AUTHENTICATION.md) for the selected authentication
 transfer, callback URL, provider identity rules, and IAP/Identity Platform
@@ -160,8 +160,9 @@ configured revision:
 - Storage Object Viewer on the scientific-data bucket
 
 The separate `onagawa-jobs` identity receives Cloud SQL Client, access to the
-database secret, and Storage Object User. Add Vertex AI User only when the
-Vertex runtime is implemented and selected.
+database secret, and Storage Object User. Phase 6 adds Vertex AI User to this
+job identity only; the serving identity receives it after evaluation passes
+and general chat is explicitly approved.
 
 The database URL for a Cloud SQL Unix socket has this shape:
 
@@ -212,6 +213,34 @@ a disposable database before the transactional upsert can start.
 Both jobs also require the same database secret, Cloud SQL connection, data
 volume, model settings, and service identity as the API sidecar. Add those
 settings when the backing resources exist, then execute jobs manually.
+
+### Phase 6 Vertex canary
+
+The embedding job uses `gemini-embedding-001` with 768 output dimensions, so
+the existing pgvector column does not need a dimension rewrite. Corpus and
+query requests use `RETRIEVAL_DOCUMENT` and `RETRIEVAL_QUERY` respectively.
+Authentication is workload identity through Application Default Credentials.
+
+The checked-in job is non-billable by default: it runs `--dry-run --limit 16`.
+After the new image and database migration pass, advance manually in this
+order:
+
+1. enable `aiplatform.googleapis.com` and grant `roles/aiplatform.user` only to
+   `onagawa-jobs`;
+2. execute `scripts/update_embeddings.py --probe` to validate credentials and
+   the 768-dimensional response without database writes;
+3. execute `--limit 16`, verify 16 rows have Vertex provider/model/dimension
+   provenance, and run known retrieval checks;
+4. refresh the remaining rows, then repeat the command and require zero
+   candidates;
+5. run the evaluation job's one-question/one-mode default before expanding to
+   the quick suite.
+
+Provider failures abort the transaction. Automatic Cloud Run retries are zero,
+SDK retry attempts are capped at three for 429/5xx responses, input truncation
+is disabled, the SDK's hidden retry layer is disabled, each request has a
+120-second timeout, and no failed batch falls back to duplicate sequential
+calls.
 
 The bucket mount is a prototype compatibility bridge for the current
 filesystem-oriented pipeline. Cloud Storage FUSE does not turn object storage

@@ -455,7 +455,10 @@ PIPELINE_STAGES: List[Dict[str, Any]] = [
         "label": "Refresh embeddings",
         "description": "Compute missing retrieval-document embeddings without reloading database rows.",
         "command": ["python", "scripts/update_embeddings.py"],
-        "expected_inputs": ["PostgreSQL retrieval_document rows", "Ollama embedding model"],
+        "expected_inputs": [
+            "PostgreSQL retrieval_document rows",
+            "Configured embedding runtime",
+        ],
         "expected_outputs": ["retrieval_document.embedding"],
         "destructive": False,
         "expensive": True,
@@ -1410,15 +1413,21 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
             warning=request.dry_run,
         )
 
-    needs_ollama = "embed_documents" in request.stages or ("load_db" in request.stages and request.embed_after_load)
-    if needs_ollama:
-        ollama_available = bool(ollama.get("available"))
+    needs_model_runtime = "embed_documents" in request.stages or (
+        "load_db" in request.stages and request.embed_after_load
+    )
+    if needs_model_runtime:
+        model_runtime_available = bool(ollama.get("available"))
         _pipeline_check(
             checks,
-            id_="ollama_embeddings",
-            label="Ollama embedding runtime",
-            passed=ollama_available,
-            detail="Ollama is reachable for embedding generation." if ollama_available else str(ollama.get("error") or "Ollama is unavailable."),
+            id_="model_runtime_embeddings",
+            label="Embedding model runtime",
+            passed=model_runtime_available,
+            detail=(
+                "The configured model runtime is available for embeddings."
+                if model_runtime_available
+                else str(ollama.get("error") or "Model runtime is unavailable.")
+            ),
             required=not request.dry_run,
             warning=request.dry_run,
         )
@@ -3234,7 +3243,11 @@ def _ollama_status() -> Dict[str, Any]:
         return {
             "available": False,
             "provider": config.MODEL_PROVIDER,
-            "base_url": config.OLLAMA_BASE_URL,
+            "base_url": (
+                config.OLLAMA_BASE_URL
+                if config.MODEL_PROVIDER == "ollama"
+                else f"vertex://{config.GOOGLE_CLOUD_PROJECT}/{config.GOOGLE_CLOUD_LOCATION}"
+            ),
             "error": "Model runtime is unavailable",
         }
 

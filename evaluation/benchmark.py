@@ -25,12 +25,19 @@ from typing import Any, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
-import requests
 
 import config
+from model_runtime import OllamaRuntime, get_model_runtime
 from orchestration.unified import build_prompt
 
 logger = logging.getLogger(__name__)
+
+
+def _evaluation_runtime(ollama_url: str):
+    """Preserve custom local endpoints while using the configured cloud provider."""
+    if config.MODEL_PROVIDER == "ollama":
+        return OllamaRuntime(ollama_url)
+    return get_model_runtime()
 
 
 # ─────────────────────────────────────────────
@@ -278,26 +285,15 @@ def run_single_evaluation(
 
         # 3. Call LLM
         t0 = time.time()
-        full_response = ""
-        resp = requests.post(
-            f"{ollama_url}/api/chat",
-            json={
-                "model": model,
-                "messages": [{"role": "user", "content": prompt_text}],
-                "stream": True,
-                "options": {
-                    "temperature": temperature,
-                    "num_ctx": num_ctx,
-                },
+        full_response = _evaluation_runtime(ollama_url).chat(
+            model=model,
+            prompt=prompt_text,
+            options={
+                "temperature": temperature,
+                "num_ctx": num_ctx,
             },
-            stream=True, timeout=180,
+            timeout=180,
         )
-        resp.raise_for_status()
-        for line in resp.iter_lines():
-            if line:
-                chunk = json.loads(line)
-                token = chunk.get("message", {}).get("content", "")
-                full_response += token
 
         result.latency_seconds = round(time.time() - t0, 2)
         result.response = full_response
@@ -483,26 +479,15 @@ def run_single_ablation(
 
         # 3. Call LLM
         t0 = time.time()
-        full_response = ""
-        resp = requests.post(
-            f"{ollama_url}/api/chat",
-            json={
-                "model": model,
-                "messages": [{"role": "user", "content": prompt_text}],
-                "stream": True,
-                "options": {
-                    "temperature": temperature,
-                    "num_ctx": num_ctx,
-                },
+        full_response = _evaluation_runtime(ollama_url).chat(
+            model=model,
+            prompt=prompt_text,
+            options={
+                "temperature": temperature,
+                "num_ctx": num_ctx,
             },
-            stream=True, timeout=180,
+            timeout=180,
         )
-        resp.raise_for_status()
-        for line in resp.iter_lines():
-            if line:
-                chunk = json.loads(line)
-                token = chunk.get("message", {}).get("content", "")
-                full_response += token
 
         result.latency_seconds = round(time.time() - t0, 2)
         result.response = full_response
@@ -556,8 +541,8 @@ def run_full_benchmark(
     Run all benchmark questions through all evaluation modes.
 
     Args:
-        model: Ollama model name.
-        ollama_url: Ollama API base URL.
+        model: Model name for the configured runtime.
+        ollama_url: Ollama API base URL when MODEL_PROVIDER=ollama.
         top_k: Number of documents to retrieve.
         temperature: LLM temperature (0.0 for deterministic).
         num_ctx: Context window size.
@@ -611,8 +596,8 @@ def run_ablation_benchmark(
     Run the 7-variant ablation benchmark.
 
     Args:
-        model: Ollama model name.
-        ollama_url: Ollama API base URL.
+        model: Model name for the configured runtime.
+        ollama_url: Ollama API base URL when MODEL_PROVIDER=ollama.
         top_k: Number of documents to retrieve.
         temperature: LLM temperature (0.0 for deterministic).
         num_ctx: Context window size.
