@@ -72,6 +72,14 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
     assert api_env["DATA_DIR"] == "/mnt/onagawa-data"
     assert api_env["SST_NETCDF_DIR"] == "/mnt/onagawa-data/raw/sst-netcdf"
     assert api_env["HIMAWARI_RAW_DIR"] == "/mnt/onagawa-data/raw/himawari"
+    assert api_env["MODEL_PROVIDER"] == "vertex"
+    assert api_env["GOOGLE_CLOUD_PROJECT"] == "example-project"
+    assert api_env["GOOGLE_CLOUD_LOCATION"] == "global"
+    assert api_env["CHAT_MODEL"] == "gemini-3.6-flash"
+    assert api_env["EMBEDDING_MODEL"] == "gemini-embedding-001"
+    assert api_env["CHAT_MAX_OUTPUT_TOKENS"] == "1600"
+    assert api_env["VERTEX_THINKING_BUDGET"] == "0"
+    assert "OLLAMA_BASE_URL" not in api_env
 
     expected_job_labels = {
         "job-migrate.rendered.yaml": "migration",

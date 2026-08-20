@@ -25,6 +25,11 @@ place before the foundation or any runtime component is created.
 The serving revision sets `JOB_EXECUTION_MODE=external`. This deliberately
 prevents an autoscaled web instance from starting daemon-thread pipeline or
 evaluation work. Operators execute the existing CLI scripts as Cloud Run Jobs.
+The Phase 6 serving template uses Vertex AI with the same bounded generation
+settings as the passing evaluation job. Grant Vertex AI User to `onagawa-app`
+only immediately before this reviewed revision is deployed; keep maximum
+instances at one and the shared `/chat` limit at 10 requests per user per
+minute.
 
 ## Baseline APIs
 

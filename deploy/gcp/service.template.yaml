@@ -111,15 +111,27 @@ spec:
             - name: DATABASE_POOL_RECYCLE
               value: "1800"
             - name: MODEL_PROVIDER
-              value: ollama
-            - name: OLLAMA_BASE_URL
-              value: OLLAMA_PRIVATE_URL
+              value: vertex
+            - name: GOOGLE_CLOUD_PROJECT
+              value: PROJECT_ID
+            - name: GOOGLE_CLOUD_LOCATION
+              value: global
             - name: CHAT_MODEL
-              value: qwen2.5:14b-instruct
+              value: gemini-3.6-flash
             - name: EMBEDDING_MODEL
-              value: nomic-embed-text
+              value: gemini-embedding-001
             - name: EMBEDDING_DIM
               value: "768"
+            - name: CHAT_MAX_OUTPUT_TOKENS
+              value: "1600"
+            - name: VERTEX_THINKING_BUDGET
+              value: "0"
+            - name: MODEL_MAX_ATTEMPTS
+              value: "3"
+            - name: MODEL_RETRY_INITIAL_SECONDS
+              value: "0.5"
+            - name: MODEL_REQUEST_TIMEOUT_SECONDS
+              value: "120"
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
