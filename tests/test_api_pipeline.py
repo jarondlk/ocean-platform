@@ -85,6 +85,22 @@ def test_pipeline_preflight_returns_exact_command_plan():
     assert "--embed" not in payload["command_plan"][0]["display_command"]
 
 
+def test_pipeline_backup_command_requires_disposable_restore_test():
+    response = client.post(
+        "/pipeline/preflight",
+        json={
+            "stages": ["backup_database", "load_db"],
+            "dry_run": True,
+            "embed_after_load": False,
+        },
+    )
+
+    assert response.status_code == 200
+    backup = response.json()["command_plan"][0]
+    assert backup["stage_id"] == "backup_database"
+    assert "--restore-test" in backup["command"]
+
+
 def test_pipeline_preflight_requires_backup_before_real_database_mutation():
     response = client.post(
         "/pipeline/preflight",

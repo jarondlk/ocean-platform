@@ -20,7 +20,7 @@ spec:
         spec:
           serviceAccountName: onagawa-jobs@PROJECT_ID.iam.gserviceaccount.com
           maxRetries: 0
-          timeoutSeconds: "3600"
+          timeoutSeconds: "1800"
           containers:
             - image: REGION-docker.pkg.dev/PROJECT_ID/ARTIFACT_REPOSITORY/api:IMAGE_TAG
               command:
@@ -28,6 +28,7 @@ spec:
               args:
                 - scripts/run_pipeline.py
                 - --dry-run
+                - --no-embed
                 - --json
               env:
                 - name: DATABASE_URL

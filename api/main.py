@@ -433,8 +433,8 @@ PIPELINE_STAGES: List[Dict[str, Any]] = [
     {
         "id": "backup_database",
         "label": "Back up database",
-        "description": "Create an atomic PostgreSQL custom archive, SHA-256 manifest, and structural restore verification before mutation.",
-        "command": ["python", "scripts/database_backup.py", "create"],
+        "description": "Create an atomic PostgreSQL custom archive, verify it, and restore it into a disposable database before mutation.",
+        "command": ["python", "scripts/database_backup.py", "create", "--restore-test"],
         "expected_inputs": ["PostgreSQL database", "pg_dump and pg_restore"],
         "expected_outputs": ["data/backups/*.dump", "data/backups/*.dump.json"],
         "destructive": False,
@@ -1740,6 +1740,7 @@ def _pipeline_command(stage_id: str, request: PipelineRunRequest) -> List[str]:
             str(config.DATABASE_BACKUP_DIR),
             "--label",
             request.tag or "pipeline",
+            "--restore-test",
         ],
         "load_db": [sys.executable, "scripts/load_db.py"],
         "embed_documents": [

@@ -314,16 +314,52 @@ frontend.
 
 ### Phase 5: storage and batch pipeline
 
-Upload a small representative data subset first. Execute the pipeline job in
-dry-run mode, then run validation and a limited upsert without embedding. Add
-the full dataset only after object counts and storage growth are understood.
+Status on 2026-08-20: **local safety preparation in progress; no Phase 5 cloud
+job or data upload has started**.
+
+The current complete raw source set is already a bounded prototype seed:
+
+- 12 required CTD/metagenome files, 36,549,398 bytes;
+- 1,848 SST NetCDF files, 52,609,972 bytes; and
+- 1,860 objects and 89,159,370 bytes in total.
+
+The SST contract requires at least 1,800 files, so an arbitrary smaller SST
+sample would fail the production validation contract. Upload the complete
+raw-only seed, but do not upload locally generated normalized/serving outputs,
+pipeline history, evaluation artifacts, or database backups. Generate a
+content-addressed manifest first and require the cloud raw prefix to match its
+object and byte totals.
+
+Execute Phase 5 in four separately approved stage groups:
+
+1. raw upload, validation-only, and full `--dry-run --no-embed` planning;
+2. artifact generation through validation, ingestion, retrieval-document
+   construction, pre-analysis, and reliability, with no database mutation;
+3. a read-only upsert plan followed by an archive verification and disposable
+   restore test; and
+4. one transactional no-embedding upsert, then the identical upsert again as
+   an idempotency check.
+
+The local reference corpus produces 207 sample-registry rows, 323 retrieval
+documents, 286 anchor events, 496 cross-source links, and 1,849 provenance
+records. The database upsert plan contains 14,231 incoming rows across eight
+tables. Treat those as review baselines, not permission to ignore a justified
+environment-specific difference.
+
+Keep the pipeline at one task, zero retries, 2 CPU, 4 GiB memory, and an
+initial 30-minute timeout. Stop after the first failed run instead of retrying.
+Keep embeddings disabled and stay inside the JPY 400 monthly pipeline envelope
+and the shared JPY 2,250 Cloud Run spend cap.
 
 Gate:
 
 - dry-run produces the expected stages without mutations;
+- the raw prefix matches the uploaded manifest's 1,860 objects and total bytes,
+  checksum-only synchronization reports no pending changes, and the manifest
+  collection digest is recorded;
 - validation, provenance manifests, and artifact freshness checks pass;
 - the limited pipeline creates expected row and object counts;
-- a second upsert makes no unintended changes;
+- a second upsert reports zero inserts and zero updates;
 - a pre-mutation backup and restore test pass; and
 - noncurrent object versions obey the lifecycle policy.
 

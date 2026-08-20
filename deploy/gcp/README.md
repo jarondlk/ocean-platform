@@ -65,9 +65,34 @@ database password.
 
 Neither script is run as part of tests or builds.
 
-`upload-data.sh` is guarded separately by `CONFIRM_DATA_BUCKET`. It synchronizes
-the current `data/` tree and optional SST/Himawari source directories without
-deleting local files or remote objects.
+`upload-data.sh` uploads only the bounded Phase 5 raw seed: the 12 required
+CTD/metagenome files under `data/raw` and the NetCDF files under
+`onagawa_sst_subset`. It never uploads generated artifacts, evaluations,
+pipeline history, or database backups, and it never deletes local or remote
+objects.
+
+Dry-run is the default. Before contacting Cloud Storage, the script rejects
+missing or unexpected input files and builds a SHA-256 manifest with the exact
+destination, size, and digest of every object:
+
+```sh
+DATA_BUCKET=data-infra-infobio-prototype-data \
+  ./deploy/gcp/upload-data.sh
+```
+
+After reviewing the dry-run, an upload requires both an explicit mode and an
+exact bucket confirmation:
+
+```sh
+DATA_BUCKET=data-infra-infobio-prototype-data \
+CONFIRM_DATA_BUCKET=data-infra-infobio-prototype-data \
+UPLOAD_MODE=apply \
+  ./deploy/gcp/upload-data.sh
+```
+
+The apply path uses checksum comparisons, verifies the remote raw object and
+byte totals, then writes the manifest under `manifests/`. The current seed is
+1,860 objects and 89,159,370 bytes. Do not use `gcloud storage rsync data/`.
 
 ## Build
 
@@ -163,9 +188,11 @@ gcloud run jobs create onagawa-migrate \
   --args=scripts/bootstrap_database.py,--json
 ```
 
-The pipeline template has a safe dry-run default and zero automatic retries.
-After its preflight output is reviewed, override `--dry-run` with `--execute`
-for an operator-approved run.
+The pipeline template has a safe dry-run default, explicitly disables
+embeddings, has zero automatic retries, and starts with a 30-minute task
+ceiling. After its preflight output is reviewed, override `--dry-run` with
+`--execute` only for an operator-approved stage group. Database mutation must
+retain `--no-embed`; model work belongs to Phase 6.
 
 ```sh
 gcloud run jobs create onagawa-pipeline \
@@ -173,10 +200,14 @@ gcloud run jobs create onagawa-pipeline \
   --region=asia-northeast1 \
   --image=API_IMAGE \
   --command=python \
-  --args=scripts/run_pipeline.py,--dry-run,--json \
-  --task-timeout=3600s \
-  --max-retries=1
+  --args=scripts/run_pipeline.py,--dry-run,--no-embed,--json \
+  --task-timeout=1800s \
+  --max-retries=0
 ```
+
+When `load_db` is selected, the runner inserts `backup_database` first. That
+stage now creates and verifies a custom PostgreSQL archive and restores it into
+a disposable database before the transactional upsert can start.
 
 Both jobs also require the same database secret, Cloud SQL connection, data
 volume, model settings, and service identity as the API sidecar. Add those

@@ -84,6 +84,30 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
             == 0
         )
 
+    pipeline = documents["job-pipeline.rendered.yaml"]
+    pipeline_task = pipeline["spec"]["template"]["spec"]["template"]["spec"]
+    assert pipeline_task["timeoutSeconds"] == "1800"
+    assert pipeline_task["containers"][0]["args"] == [
+        "scripts/run_pipeline.py",
+        "--dry-run",
+        "--no-embed",
+        "--json",
+    ]
+
+
+def test_gcp_upload_script_is_raw_only_and_non_deleting():
+    script = (renderer.TEMPLATE_DIR / "upload-data.sh").read_text(
+        encoding="utf-8"
+    )
+
+    assert 'UPLOAD_MODE="${UPLOAD_MODE:-dry-run}"' in script
+    assert 'RAW_DIR="$PROJECT_ROOT/data/raw"' in script
+    assert 'SST_DIR="$PROJECT_ROOT/onagawa_sst_subset"' in script
+    assert 'gcloud storage rsync data ' not in script
+    assert "--delete-unmatched-destination-objects" not in script
+    assert "build_gcp_seed_manifest.py" in script
+    assert "manifests/$SEED_TAG.json" in script
+
 
 def test_gcp_retention_policies_are_bounded():
     storage = json.loads(
