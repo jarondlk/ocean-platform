@@ -228,7 +228,7 @@ export default function PipelinePage() {
     { label: "Corpus", value: formatCell(readiness.corpus_artifacts_ready), ok: readiness.corpus_artifacts_ready === true },
     { label: "SST", value: formatCell(readiness.sst_available), ok: readiness.sst_available === true },
     { label: "Database", value: formatCell(database.available), ok: database.available === true },
-    { label: "Ollama", value: formatCell(ollama.available), ok: ollama.available === true },
+    { label: "Model runtime", value: formatCell(ollama.available), ok: ollama.available === true },
   ];
   const artifactAvailabilityRows = [
     {
@@ -357,7 +357,7 @@ export default function PipelinePage() {
               <StatusRow label="Missing raw" value={formatCell(readiness.missing_required_raw)} />
               <StatusRow label="Missing corpus artifacts" value={formatCell(readiness.missing_core_artifacts)} />
               <StatusRow label="Database" value={formatCell(database.available)} />
-              <StatusRow label="Ollama" value={formatCell(ollama.available)} />
+              <StatusRow label="Model runtime" value={formatCell(ollama.available)} />
             </div>
           </section>
 

@@ -1157,7 +1157,7 @@ function EvaluationControlPanel({
   return (
     <>
       <div className="evaluation-control-grid">
-        <label className="settings-field" htmlFor="eval-model" title="Ollama chat model used for answer generation. Leave as the configured default unless comparing models.">
+        <label className="settings-field" htmlFor="eval-model" title="Chat model used for answer generation. Leave as the configured default unless comparing models.">
           <span>Model</span>
           <input id="eval-model" className="field" onChange={(event) => setEvalModel(event.target.value)} value={evalModel} />
         </label>
@@ -1169,7 +1169,7 @@ function EvaluationControlPanel({
           <span>Top K</span>
           <input id="eval-top-k" className="field" max={25} min={1} onChange={(event) => setTopK(clampNumber(event.target.value, 1, 25))} type="number" value={topK} />
         </label>
-        <label className="settings-field" htmlFor="eval-num-ctx" title="Ollama context window for evaluation calls.">
+        <label className="settings-field" htmlFor="eval-num-ctx" title="Model context window for evaluation calls when supported by the configured runtime.">
           <span>Num ctx</span>
           <input id="eval-num-ctx" className="field" max={32768} min={512} onChange={(event) => setNumCtx(clampNumber(event.target.value, 512, 32768))} step={512} type="number" value={numCtx} />
         </label>
@@ -1343,7 +1343,7 @@ function PreflightBlock({ preflight }: { preflight: Record<string, unknown> | nu
       <div className="status-list">
         <StatusRow label="Model" value={formatCell(defaults.model)} />
         <StatusRow label="Embedding model" value={formatCell(defaults.embedding_model)} />
-        <StatusRow label="Ollama URL" value={formatCell(defaults.ollama_base_url)} />
+        <StatusRow label="Model endpoint" value={formatCell(defaults.ollama_base_url)} />
         <StatusRow label="Evaluation runs" value={formatCell(artifacts.evaluation_runs)} />
         <StatusRow label="Retrieval documents" value={formatCell(artifacts.retrieval_documents)} />
       </div>

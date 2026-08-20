@@ -30,11 +30,12 @@ Live state verified through 2026-08-20:
 - the billing account has a Billing Account Administrator who can create and
   manage budgets.
 
-The persistent database, authenticated serving foundation, and Phase 5 corpus
-are live: the bounded seed contains 1,860 raw objects, 14,231 corpus rows, and
-323 retrieval documents. Those retrieval documents intentionally have no
-cloud embeddings yet. The model runtime remains disabled until the Phase 6
-build, IAM, canary, retrieval, evaluation, and cost gates are executed.
+The persistent database, authenticated serving foundation, Phase 5 corpus,
+and Phase 6 Vertex runtime are live. The bounded seed contains 1,860 raw
+objects, 14,231 corpus rows, and 323 retrieval documents. All 323 retrieval
+documents now have 768-dimensional `gemini-embedding-001` embeddings with
+provider provenance. Authenticated chat traffic uses `gemini-3.6-flash` on
+Vertex AI through workload identity.
 
 ## Cost-control model
 
@@ -74,7 +75,7 @@ ceilings are the primary controls.
 | Artifact Registry | 200 | Alert budget; keep five recent versions and remove older versions after 30 days |
 | Secret Manager | 100 | Alert budget; four application secrets; no scheduled access polling |
 | Logging and Monitoring | 300 | Alert budget; normal application logs only; no debug payloads or request bodies |
-| Model runtime reserve | 1,000 | **Disabled initially**; no GPU/CPU Ollama VM; Vertex adapter and its own cap or quota required before use |
+| Model runtime reserve | 1,000 | Vertex only; no model VM; chat limited to one Cloud Run instance and 10 requests/user/minute; output, timeout, retry, batch, and manual-job ceilings enforced in code and deployment |
 | Network and unclassified reserve | 1,000 | Covered by the project-wide budget; investigate any usage here before raising the envelope |
 | **Project total** | **10,000** | Monthly alert budget at 50%, 75%, 90%, and 100%, plus a 95% forecast alert |
 
@@ -393,8 +394,9 @@ Live execution record:
   GCS mount. Authenticated browser checks show Raw, Corpus, SST, and Database
   ready; 15 of 15 derived artifacts present; all expected table counts; and
   no active pipeline job. Unauthenticated requests still redirect to OIDC.
-- The model runtime and 323 document embeddings remain intentionally absent.
-  They belong to Phase 6 and were not silently enabled by this phase.
+- Phase 5 did not enable a model runtime or generate embeddings. Those changes
+  were introduced only after the Phase 6 backup, migration, canary, evaluation,
+  and serving gates passed.
 
 Gate:
 
@@ -419,15 +421,46 @@ Start with a small embedding sample and the quick evaluation job. Apply an
 eligible service spend cap or a strict API quota and application-level request
 limit before enabling general chat traffic.
 
-Status on 2026-08-20: **implementation in progress; no Vertex resources or
-model calls started by this implementation checkpoint**. The native adapter,
-hash-locked SDK dependency, embedding provenance migration, explicit document
-and query task types, bounded transient retries, credential probe, 16-row
-canary limit, and dry-run-by-default Cloud Run Job are prepared. The existing
-768-dimensional pgvector schema is retained by requesting 768 output
-dimensions from `gemini-embedding-001`.
+Status on 2026-08-20: **complete**. The native adapter uses Application Default
+Credentials and the `google-genai` SDK without downloaded keys. The Vertex AI
+API is enabled; `onagawa-jobs` and `onagawa-app` have Vertex AI User and no
+broader model-runtime role. `gemini-embedding-001` uses explicit retrieval
+document/query task types and 768 output dimensions, preserving the pgvector
+schema. `gemini-3.6-flash` uses a 1,600-token output ceiling, zero thinking
+budget, a 120-second client timeout, and at most three bounded attempts for
+429/5xx responses. Hidden SDK retries are disabled.
 
-Execution order is deliberately split:
+Execution evidence:
+
+- pre-migration backup `20260820T130422Z-phase6-pre-migration-onagawa_rag.dump`
+  restore-tested successfully with SHA-256
+  `4291ec35a9af09c0c71fa2c7db07dc766014f2d263a297005be075c2f3e6fb9f`;
+- migration execution `onagawa-migrate-792vs` upgraded the database to
+  `20260820_0003` and verified all 16 tables plus pgvector;
+- credential probe `onagawa-embedding-b6hsz` returned one 768-dimensional
+  vector, the 16-document canary `onagawa-embedding-crxn4` committed cleanly,
+  and full refresh `onagawa-embedding-rh88n` completed the remaining 307
+  documents in ten successful batches;
+- idempotency execution `onagawa-embedding-sdtcn` selected zero documents and
+  made no Vertex request;
+- strict quick evaluation `onagawa-evaluation-jpn4x` completed all 20 cases
+  without errors: retrieval precision was 100% in every mode, source coverage
+  was 70% in every mode, and Full-mode citation accuracy was 100%; and
+- serving revision `onagawa-source-chat-00005-5pf` receives 100% of traffic,
+  runs as `onagawa-app`, scales from zero to one instance, and has no Ollama
+  endpoint. An authenticated browser smoke test loaded all 323 documents and
+  returned a `gemini-3.6-flash` answer with seven valid citations, no invalid
+  citations or warnings, and a 100% trust score.
+
+The embedding and evaluation jobs remain manual, have zero task retries, and
+store safe dry-run/one-question defaults. General chat is limited to ten
+requests per user per minute; the service remains at maximum one instance.
+Billing export data can lag, so the JPY 1,000 reserve remains an operating
+guardrail rather than a hard provider-level spending cap. The canary, full
+refresh, strict evaluation, and one live smoke query stayed within the planned
+bounded request counts; review posted billing data before raising any limit.
+
+Completed execution order:
 
 1. build and test the immutable image while Vertex remains disabled;
 2. back up and restore-test Cloud SQL, then apply the provenance migration;
@@ -446,7 +479,8 @@ Gate:
 - a small embedding batch has the expected dimension and row count;
 - retrieval and citation checks pass against known questions;
 - timeout, quota-exceeded, and unavailable-model paths fail safely; and
-- the measured sample cost fits the JPY 1,000 model reserve.
+- the bounded request-count estimate fits the JPY 1,000 model reserve, and
+  posted billing data is reviewed before any ceiling is raised.
 
 ### Phase 7: end-to-end prototype release
 

@@ -88,6 +88,7 @@ export default function ChatPage() {
   const [response, setResponse] = useState<ChatResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const providerLabel = models?.provider === "vertex" ? "Vertex AI" : models?.provider || "Model runtime";
 
   useEffect(() => {
     getModels()
@@ -518,7 +519,7 @@ export default function ChatPage() {
 
             <fieldset className="settings-section">
               <legend>Generation</legend>
-              <label className="settings-field" htmlFor="chat-model" title="Ollama chat model. The field is editable, so models not returned by /api/tags can still be entered.">
+              <label className="settings-field" htmlFor="chat-model" title="Chat model used for answer generation. The field remains editable for provider-supported model names.">
                 <span>Model</span>
                 <input
                   id="chat-model"
@@ -534,7 +535,7 @@ export default function ChatPage() {
                 </datalist>
               </label>
               <div className="settings-status">
-                Ollama: {models?.available ? "available" : "unknown"} | Embedding: {models?.embedding_model || "unknown"}
+                {providerLabel}: {models?.available ? "available" : "unknown"} | Embedding: {models?.embedding_model || "unknown"}
               </div>
               <NumericControl
                 id="chat-temperature"
@@ -566,7 +567,7 @@ export default function ChatPage() {
                 value={settings.repeatPenalty}
                 onChange={(value) => updateSetting("repeatPenalty", value)}
               />
-              <label className="settings-field" htmlFor="chat-num-ctx" title="Maximum model context window requested from Ollama.">
+              <label className="settings-field" htmlFor="chat-num-ctx" title="Maximum model context window requested from the configured runtime when supported.">
                 <span>Context window</span>
                 <select
                   id="chat-num-ctx"
@@ -585,7 +586,7 @@ export default function ChatPage() {
                 <OptionalIntegerControl
                   id="chat-num-predict"
                   label="Max tokens"
-                  help="Ollama num_predict. Leave blank for model/runtime default."
+                  help="Maximum generated tokens. Leave blank for the configured runtime default."
                   max={8192}
                   min={1}
                   value={settings.numPredict}
@@ -594,7 +595,7 @@ export default function ChatPage() {
                 <OptionalIntegerControl
                   id="chat-sampling-top-k"
                   label="Sampling top-k"
-                  help="Ollama sampling top_k. Leave blank for model/runtime default."
+                  help="Sampling top-k when supported. Leave blank for the configured runtime default."
                   max={200}
                   min={1}
                   value={settings.samplingTopK}
@@ -604,7 +605,7 @@ export default function ChatPage() {
               <OptionalIntegerControl
                 id="chat-seed"
                 label="Seed"
-                help="Optional deterministic seed passed to Ollama."
+                help="Optional deterministic seed when supported by the configured runtime."
                 min={0}
                 value={settings.seed}
                 onChange={(value) => updateSetting("seed", value)}

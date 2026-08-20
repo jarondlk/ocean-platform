@@ -138,7 +138,7 @@ export default function SystemPage() {
       ok: asRecord(status?.database).available === true,
     },
     {
-      label: "Ollama",
+      label: "Model runtime",
       value: String(asRecord(status?.ollama).available ?? "loading"),
       ok: asRecord(status?.ollama).available === true,
     },
