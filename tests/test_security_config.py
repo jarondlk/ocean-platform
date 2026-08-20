@@ -244,7 +244,7 @@ def test_vertex_runtime_accepts_bounded_configuration(monkeypatch):
     monkeypatch.setattr(config, "GOOGLE_CLOUD_LOCATION", "global")
     monkeypatch.setattr(config, "MODEL_MAX_ATTEMPTS", 3)
     monkeypatch.setattr(config, "MODEL_RETRY_INITIAL_SECONDS", 0.5)
-    monkeypatch.setattr(config, "CHAT_MAX_OUTPUT_TOKENS", 800)
+    monkeypatch.setattr(config, "CHAT_MAX_OUTPUT_TOKENS", 1600)
     monkeypatch.setattr(config, "MODEL_REQUEST_TIMEOUT_SECONDS", 120)
     monkeypatch.setattr(config, "VERTEX_THINKING_BUDGET", 0)
 

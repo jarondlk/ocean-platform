@@ -52,7 +52,7 @@ spec:
                 - name: EMBEDDING_DIM
                   value: "768"
                 - name: CHAT_MAX_OUTPUT_TOKENS
-                  value: "800"
+                  value: "1600"
                 - name: VERTEX_THINKING_BUDGET
                   value: "0"
                 - name: MODEL_REQUEST_TIMEOUT_SECONDS

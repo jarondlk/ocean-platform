@@ -409,7 +409,7 @@ EMBEDDING_MODEL = os.environ.get("EMBEDDING_MODEL", "nomic-embed-text")
 CHAT_MODEL      = os.environ.get("CHAT_MODEL", "qwen2.5:14b-instruct")
 GOOGLE_CLOUD_PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT", "").strip()
 GOOGLE_CLOUD_LOCATION = os.environ.get("GOOGLE_CLOUD_LOCATION", "global").strip()
-CHAT_MAX_OUTPUT_TOKENS = int(os.environ.get("CHAT_MAX_OUTPUT_TOKENS", "800"))
+CHAT_MAX_OUTPUT_TOKENS = int(os.environ.get("CHAT_MAX_OUTPUT_TOKENS", "1600"))
 MODEL_MAX_ATTEMPTS = int(os.environ.get("MODEL_MAX_ATTEMPTS", "3"))
 MODEL_RETRY_INITIAL_SECONDS = float(
     os.environ.get("MODEL_RETRY_INITIAL_SECONDS", "0.5")

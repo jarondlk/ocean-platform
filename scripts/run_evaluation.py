@@ -176,7 +176,7 @@ def run_single_model(
     num_ctx: int,
     output_dir: Path,
     tag: str | None,
-) -> Path:
+) -> tuple[Path, int]:
     """Run evaluation for a single model and save results."""
     run_id = _make_run_id(model)
     total = len(questions) * len(modes)
@@ -259,10 +259,10 @@ def run_single_model(
     print(f"    Meta:   {meta_path}")
     print(f"    Report: {report_path}")
 
-    return csv_path
+    return csv_path, int(n_errors)
 
 
-def main():
+def main() -> int:
     parser = argparse.ArgumentParser(
         description="Run the Onagawa Source Chat evaluation benchmark.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -353,8 +353,9 @@ Examples:
 
     # Run evaluations
     csv_paths = []
+    total_errors = 0
     for model in model_list:
-        csv_path = run_single_model(
+        csv_path, n_errors = run_single_model(
             model=model,
             questions=questions,
             modes=modes,
@@ -365,6 +366,7 @@ Examples:
             tag=args.tag,
         )
         csv_paths.append(csv_path)
+        total_errors += n_errors
 
     # Multi-model comparison
     if len(csv_paths) > 1:
@@ -376,7 +378,8 @@ Examples:
 
     print(f"\n  All results saved to: {output_dir}/")
     print()
+    return 1 if total_errors else 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
