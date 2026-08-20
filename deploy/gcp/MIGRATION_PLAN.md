@@ -265,11 +265,11 @@ roles.
 Status on 2026-08-04: **deployed and accepted for the single-admin cloud
 prototype**.
 
-- Service `onagawa-source-chat` revision `onagawa-source-chat-00003-vff` is
+- Service `onagawa-source-chat` revision `onagawa-source-chat-00004-s5v` is
   Ready in `asia-northeast1` and receives 100% of traffic at
   `https://onagawa-source-chat-469489188516.asia-northeast1.run.app`.
 - The frontend and API sidecar use build
-  `810380c1-40bc-46ea-9725-1dc7eb5c4512`. FastAPI listens only inside the
+  `88b6a119-67f7-46c6-9820-04e22627086f`. FastAPI listens only inside the
   Cloud Run instance, and Cloud SQL and the future model endpoint have no
   public route.
 - Minimum instances is zero, maximum instances is one, and concurrency is 20.
@@ -294,8 +294,9 @@ prototype**.
   invitation, and suspension behavior. The sole live admin was not suspended
   or demoted because that could lock out the project operator; Phase 7 still
   requires two invited test identities for the full multi-user path.
-- Authenticated revision `onagawa-source-chat-00002-sdj` is the immediate,
-  database-compatible rollback target. The initial one-container reservation
+- Authenticated revision `onagawa-source-chat-00003-vff` is the immediate,
+  database-compatible rollback target. Revision `onagawa-source-chat-00002-sdj`
+  remains an earlier authenticated fallback. The initial one-container reservation
   revision `onagawa-source-chat-00001-pns` is a non-production placeholder and
   must not receive traffic.
 
@@ -314,8 +315,7 @@ frontend.
 
 ### Phase 5: storage and batch pipeline
 
-Status on 2026-08-20: **local safety preparation in progress; no Phase 5 cloud
-job or data upload has started**.
+Status on 2026-08-20: **complete for the no-embedding prototype corpus**.
 
 The current complete raw source set is already a bounded prototype seed:
 
@@ -350,6 +350,49 @@ Keep the pipeline at one task, zero retries, 2 CPU, 4 GiB memory, and an
 initial 30-minute timeout. Stop after the first failed run instead of retrying.
 Keep embeddings disabled and stay inside the JPY 400 monthly pipeline envelope
 and the shared JPY 2,250 Cloud Run spend cap.
+
+Live execution record:
+
+- Cloud Build `88b6a119-67f7-46c6-9820-04e22627086f` passed its lint, backend,
+  and frontend gates in 7m52s and published immutable API and frontend images.
+- Job `onagawa-pipeline` is Ready with one task, zero retries, a 30-minute
+  timeout, 2 CPU, 4 GiB, the jobs service account, Cloud SQL attachment, and a
+  writable GCS FUSE mount. Its stored default remains `--dry-run --no-embed`.
+- The raw-only upload verified 1,860 objects and 89,159,370 bytes. Manifest
+  `manifests/phase5-raw-v1.json` records collection SHA-256
+  `eeb63298a80eb4b7d777fc6f6d5394d503f345cd30509ac9e6d667b716188cad`.
+- Validation execution `onagawa-pipeline-rxkfj` completed in 1m03s. It passed
+  all 12 CTD/metagenome source checks and found exactly 1,848 SST NetCDF files.
+  Full dry-run execution `onagawa-pipeline-r2xb6` completed in 59s with seven
+  planned stages, no blockers or warnings, database connectivity, backup
+  tooling, and no artifact or database mutations.
+- Non-database execution `onagawa-pipeline-blbk5` completed all five selected
+  artifact stages in 24m12s. GCS FUSE emitted transient 429 retries while
+  registering 1,848 small SST objects, but the single task completed within its
+  cap. Production optimization should stage or compact those small objects
+  instead of increasing the cost ceiling.
+- Cloud artifacts match the reference: 10,955 CTD profiles, 162 CTD summaries,
+  82 metagenome samples, 1,848 SST points, 79 SST daily summaries, 286 anchor
+  events, 323 retrieval documents, 496 cross-source links, five analysis
+  documents, four reliability documents, and 1,849 provenance entries.
+- Isolated backup execution `onagawa-pipeline-ppgc7` verified an 88,192-byte
+  archive with SHA-256
+  `f9ebb453dffa230184138239cf8fbfdde242dc023e475a276cffacc366606477` and
+  removed its disposable restore database. The guarded first upsert execution
+  `onagawa-pipeline-shdzq` then inserted the expected 14,231 corpus rows without
+  resetting or replacing application rows.
+- Idempotency execution `onagawa-pipeline-9d2gf` first restored and verified a
+  populated 1,205,375-byte archive with SHA-256
+  `e398c2576ee897927edf69544dd784b9b274c5316fa5f48b771011292628b250`,
+  removed the disposable database, and reported zero inserts, zero updates,
+  and 14,231 unchanged rows across all eight corpus tables.
+- Serving revision `onagawa-source-chat-00004-s5v` uses the same immutable
+  images and explicitly points `SST_NETCDF_DIR` and `HIMAWARI_RAW_DIR` at the
+  GCS mount. Authenticated browser checks show Raw, Corpus, SST, and Database
+  ready; 15 of 15 derived artifacts present; all expected table counts; and
+  no active pipeline job. Unauthenticated requests still redirect to OIDC.
+- The model runtime and 323 document embeddings remain intentionally absent.
+  They belong to Phase 6 and were not silently enabled by this phase.
 
 Gate:
 

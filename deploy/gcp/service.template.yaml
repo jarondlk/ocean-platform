@@ -96,6 +96,10 @@ spec:
               value: onagawa-source-chat-api
             - name: DATA_DIR
               value: /mnt/onagawa-data
+            - name: SST_NETCDF_DIR
+              value: /mnt/onagawa-data/raw/sst-netcdf
+            - name: HIMAWARI_RAW_DIR
+              value: /mnt/onagawa-data/raw/himawari
             - name: JOB_EXECUTION_MODE
               value: external
             - name: DATABASE_POOL_SIZE

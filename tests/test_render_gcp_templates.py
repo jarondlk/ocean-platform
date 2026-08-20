@@ -69,6 +69,9 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
         for setting in api["env"]
     }
     assert api_env["AUTH_ALLOWED_PROVIDERS"] == "google"
+    assert api_env["DATA_DIR"] == "/mnt/onagawa-data"
+    assert api_env["SST_NETCDF_DIR"] == "/mnt/onagawa-data/raw/sst-netcdf"
+    assert api_env["HIMAWARI_RAW_DIR"] == "/mnt/onagawa-data/raw/himawari"
 
     expected_job_labels = {
         "job-migrate.rendered.yaml": "migration",
