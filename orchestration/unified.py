@@ -518,6 +518,9 @@ RULES:
 8. Treat linked cross-source evidence as corroborating context. Cite it directly
    when it supports or challenges the primary retrieval, and state when expected
    source types are missing.
+9. Keep the complete answer under 500 words. Prefer a compact summary and
+   evidence bullets; include at least one valid citation in every factual
+   paragraph or bullet.
 
 STUDY SITES:
 • Onagawa Bay (O) ≈ 38.44°N 141.45°E

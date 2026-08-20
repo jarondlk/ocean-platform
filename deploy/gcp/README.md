@@ -248,6 +248,9 @@ generation that ends with a non-`STOP` finish reason (including `MAX_TOKENS`)
 is treated as a failed evaluation instead of being scored as a valid answer.
 The evaluation CLI exits nonzero when any case records an error, so Cloud Run
 cannot report a partially failed benchmark as a successful gate.
+The shared grounded prompt also caps answers at 500 words and requires a valid
+citation in each factual paragraph or bullet, preserving useful answers inside
+the token ceiling instead of merely increasing the spending limit.
 
 The bucket mount is a prototype compatibility bridge for the current
 filesystem-oriented pipeline. Cloud Storage FUSE does not turn object storage
