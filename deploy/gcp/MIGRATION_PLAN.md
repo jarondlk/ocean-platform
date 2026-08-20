@@ -446,8 +446,9 @@ Execution evidence:
 - strict quick evaluation `onagawa-evaluation-jpn4x` completed all 20 cases
   without errors: retrieval precision was 100% in every mode, source coverage
   was 70% in every mode, and Full-mode citation accuracy was 100%; and
-- serving revision `onagawa-source-chat-00005-5pf` receives 100% of traffic,
-  runs as `onagawa-app`, scales from zero to one instance, and has no Ollama
+- serving revision `onagawa-source-chat-00006-ms2`, built from immutable image
+  tag `5b9c22ef-2b12-4903-a3d5-ecf50e7ffe3b`, receives 100% of traffic, runs
+  as `onagawa-app`, scales from zero to one instance, and has no Ollama
   endpoint. An authenticated browser smoke test loaded all 323 documents and
   returned a `gemini-3.6-flash` answer with seven valid citations, no invalid
   citations or warnings, and a 100% trust score.
