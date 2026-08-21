@@ -253,7 +253,10 @@ decisions, and time-delayed cost reviews remain open.
 - `npm audit --omit=dev` reports zero production findings after overriding the
   vulnerable PostCSS/Nano ID chain to `8.5.23` / `3.3.18`. A disposable
   `pip-audit` scan of `requirements/dev.txt` reports no known Python
-  vulnerabilities.
+  vulnerabilities. The live revision predates this lockfile patch and its
+  standalone image still contains PostCSS `8.5.18` and Nano ID `3.3.16`; one
+  separately approved build/deploy is required before the live dependency gate
+  closes.
 - CI now runs on `gcp-dev` and audits production npm dependencies. Its first
   remote run passed the backend, frontend, PostgreSQL, backup/restore, and npm
   audit jobs. GitHub confirmed that repository-level CodeQL default setup is
@@ -269,8 +272,8 @@ decisions, and time-delayed cost reviews remain open.
 
 1. Akane completes the researcher OIDC, role-boundary, cited-chat, feedback, and
    re-login journey from her own session.
-2. The security update reaches the default branch so its Dependabot alerts
-   close; CodeQL remains enabled through GitHub default setup.
+2. The security update is built/deployed and reaches the default branch so its
+   Dependabot alerts close; CodeQL remains enabled through GitHub default setup.
 3. The operator chooses and approves chat/feedback retention and deletion/legal-
    hold behavior; the proposed 90-day period is not silently enforced.
 4. Incident and billing contacts are approved for publication or recorded in a
