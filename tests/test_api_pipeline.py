@@ -101,6 +101,42 @@ def test_pipeline_backup_command_requires_disposable_restore_test():
     assert "--restore-test" in backup["command"]
 
 
+def test_pipeline_backup_preflight_skips_unused_model_probe(monkeypatch):
+    def fail_if_called():
+        raise AssertionError("backup-only preflight must not probe the model")
+
+    monkeypatch.setattr(api_main, "_ollama_status", fail_if_called)
+
+    response = client.post(
+        "/pipeline/preflight",
+        json={"stages": ["backup_database"], "dry_run": True},
+    )
+
+    assert response.status_code == 200
+    model_status = response.json()["ollama"]
+    assert model_status["skipped"] is True
+    assert model_status["available"] is None
+
+
+def test_pipeline_embedding_preflight_probes_configured_model(monkeypatch):
+    monkeypatch.setattr(
+        api_main,
+        "_ollama_status",
+        lambda: {"available": True, "provider": "vertex"},
+    )
+
+    response = client.post(
+        "/pipeline/preflight",
+        json={"stages": ["embed_documents"], "dry_run": True},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["ollama"] == {
+        "available": True,
+        "provider": "vertex",
+    }
+
+
 def test_pipeline_preflight_requires_backup_before_real_database_mutation():
     response = client.post(
         "/pipeline/preflight",

@@ -1171,7 +1171,24 @@ def _pipeline_artifacts_payload(items: List[PipelineArtifactInfo]) -> List[Dict[
     return [_model_dump(item) for item in items]
 
 
-def _pipeline_runtime_snapshot() -> Dict[str, Any]:
+def _pipeline_needs_model_runtime(request: PipelineRunRequest) -> bool:
+    return "embed_documents" in request.stages or (
+        "load_db" in request.stages and request.embed_after_load
+    )
+
+
+def _pipeline_model_status(*, required: bool) -> Dict[str, Any]:
+    if required:
+        return _ollama_status()
+    return {
+        "available": None,
+        "provider": config.MODEL_PROVIDER,
+        "skipped": True,
+        "reason": "The selected pipeline stages do not use a model runtime.",
+    }
+
+
+def _pipeline_runtime_snapshot(*, include_model_runtime: bool) -> Dict[str, Any]:
     raw_sources = _pipeline_raw_sources()
     artifacts = _pipeline_artifacts()
     return {
@@ -1179,7 +1196,7 @@ def _pipeline_runtime_snapshot() -> Dict[str, Any]:
         "raw_sources": _pipeline_artifacts_payload(raw_sources),
         "artifacts": _pipeline_artifacts_payload(artifacts),
         "database": _pipeline_database_snapshot(),
-        "ollama": _ollama_status(),
+        "ollama": _pipeline_model_status(required=include_model_runtime),
     }
 
 
@@ -1237,7 +1254,8 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
     artifacts = _pipeline_artifacts()
     readiness = _pipeline_readiness(raw_sources, artifacts)
     database = _pipeline_database_snapshot()
-    ollama = _ollama_status()
+    needs_model_runtime = _pipeline_needs_model_runtime(request)
+    ollama = _pipeline_model_status(required=needs_model_runtime)
     checks: List[PipelinePreflightCheck] = []
 
     _pipeline_check(
@@ -1413,9 +1431,6 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
             warning=request.dry_run,
         )
 
-    needs_model_runtime = "embed_documents" in request.stages or (
-        "load_db" in request.stages and request.embed_after_load
-    )
     if needs_model_runtime:
         model_runtime_available = bool(ollama.get("available"))
         _pipeline_check(
@@ -1794,7 +1809,10 @@ def _run_pipeline_job(
     started_at = _now_iso()
     stage_results: List[Dict[str, Any]] = []
     preflight = _pipeline_preflight_payload(request)
-    before_snapshot = _pipeline_runtime_snapshot()
+    include_model_runtime = _pipeline_needs_model_runtime(request)
+    before_snapshot = _pipeline_runtime_snapshot(
+        include_model_runtime=include_model_runtime
+    )
     command_plan = _pipeline_command_plan(request)
     meta: Dict[str, Any] = {
         "schema_version": 1,
@@ -1939,7 +1957,9 @@ def _run_pipeline_job(
     meta["completed_at"] = completed_at
     meta["duration_seconds"] = round(time.time() - started, 2)
     meta["stage_results"] = stage_results
-    after_snapshot = _pipeline_runtime_snapshot()
+    after_snapshot = _pipeline_runtime_snapshot(
+        include_model_runtime=include_model_runtime
+    )
     meta["artifacts_after"] = after_snapshot
     meta["diffs"] = _pipeline_snapshot_diffs(before_snapshot, after_snapshot)
     _write_json_atomic(_pipeline_manifest_path(job_id), meta)
