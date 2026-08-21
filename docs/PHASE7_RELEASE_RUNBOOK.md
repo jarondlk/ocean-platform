@@ -196,3 +196,83 @@ The broader research-team decision is **go** only when:
 Do not increase Cloud Run maximum instances from one to two as part of Phase 7.
 That is a separate post-release decision based on measured connections and
 remaining monthly budget.
+
+## Execution record — 2026-08-21
+
+Current decision: **keep the bounded administrator prototype live; do not widen
+the cohort yet**. The immediate serving, persistence, recovery, model, and
+resource gates passed. The researcher journey, first CodeQL run, retention and
+contact decisions, and time-delayed cost reviews remain open.
+
+### Release and recovery evidence
+
+- The frozen Phase 6 revision was `onagawa-source-chat-00006-ms2`. The first
+  Phase 7 release candidate was `onagawa-source-chat-00007-xpm` from build
+  `25b94a3d-7a01-45e2-99ea-b07b22909778`.
+- The pre-release logical backup is
+  `20260821T065606Z-phase7-pre-release-onagawa_rag.dump`, SHA-256
+  `1b0607d4b489d645c2b2a153565a7bc128d74a265cb23b7184047fb4137a6783`.
+  It contains 16 tables and 110 TOC entries. Its isolated restore test passed,
+  all recorded table counts matched, and the disposable database was removed.
+- Traffic was routed from the Phase 7 candidate to the known-good Phase 6
+  revision and forward again in under 15 seconds without changing the database.
+- Cloud Build initially omitted `frontend/app/data/page.tsx` because the
+  unanchored `.gcloudignore` entry `data/` also matched the nested Next.js route.
+  The exclusion is now anchored to `/data/`, and Cloud Build fails if either the
+  source page or standalone server artifact is missing. One explicitly approved
+  corrective build, `8341812f-ca9d-458e-bdbb-17ea7c150e18`, produced live
+  revision `onagawa-source-chat-00008-926`; `/data` now returns the complete
+  authenticated catalog UI.
+
+### Authenticated and load evidence
+
+- The administrator journey completed through Google OIDC. The fixed smoke
+  answer used Vertex `gemini-3.6-flash`, completed in 11.033 seconds, and had 13
+  valid citations, zero invalid citations, zero warnings, and a Strong/100%
+  trust result. Positive feedback persisted across the revision.
+- The approved researcher remains active as `researcher` / `research`. Their
+  own-session journey is still pending and must not be replaced by administrator
+  impersonation.
+- Sixty five-way core-route navigations completed successfully. They generated
+  166 authenticated backend reads—below the 300-read hard cap—and all returned
+  HTTP 200. The health/stats subset matching the release probe had 0.485-second
+  p95 latency. The full backend-read p95 was 8.031 seconds because 12 concurrent
+  provenance-manifest diagnostics scanned the GCS-mounted lineage data; this is
+  recorded as a performance follow-up and the normal cohort must not repeatedly
+  refresh that diagnostic under concurrency.
+- Two additional Vertex chat calls on the corrected revision completed in
+  8.493 and 6.692 seconds. Their trust reports contained 16 and 18 valid
+  citations respectively, with zero invalid citations and zero warnings.
+- The window used one Cloud Run instance. Peak one-minute CPU utilization was
+  33.5% and memory utilization was 11.8%. There were zero 5xx responses, severe
+  logs, database-pool errors, and model-failure patterns. The only observed 4xx
+  responses were three expected missing-`favicon.ico` requests.
+
+### Security and operations evidence
+
+- `npm audit --omit=dev` reports zero production findings after overriding the
+  vulnerable PostCSS/Nano ID chain to `8.5.23` / `3.3.18`. A disposable
+  `pip-audit` scan of `requirements/dev.txt` reports no known Python
+  vulnerabilities.
+- CI now runs on `gcp-dev`, audits production npm dependencies, and a pinned
+  CodeQL workflow covers Python and JavaScript/TypeScript. Its first remote run
+  must pass before this gate closes; default-branch Dependabot alerts remain
+  open until the security lockfile change is merged.
+- A counts-only scan of 2,142 Phase 7 log entries found zero credential, prompt
+  or answer, authorization-failure, database-pool, and model-failure patterns.
+- The administrator CSV feedback export did not produce a browser download
+  event, so export remains unproven rather than assumed successful.
+
+### Remaining no-go items
+
+1. Akane completes the researcher OIDC, role-boundary, cited-chat, feedback, and
+   re-login journey from her own session.
+2. The first CI and CodeQL runs pass, and the security update reaches the
+   default branch.
+3. The operator chooses and approves chat/feedback retention and deletion/legal-
+   hold behavior; the proposed 90-day period is not silently enforced.
+4. Incident and billing contacts are approved for publication or recorded in a
+   private operations register.
+5. The feedback CSV download is proven and the provenance-manifest concurrency
+   follow-up is dispositioned.
+6. Posted billing is reviewed after 24 hours and again after seven days.

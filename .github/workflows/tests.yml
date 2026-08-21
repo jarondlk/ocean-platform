@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, gcp-dev]
   pull_request:
     branches: [main, master]
 
@@ -96,6 +96,10 @@ jobs:
       - name: Install frontend dependencies
         working-directory: frontend
         run: npm ci
+
+      - name: Audit production frontend dependencies
+        working-directory: frontend
+        run: npm audit --omit=dev --audit-level=moderate
 
       - name: Typecheck frontend
         working-directory: frontend

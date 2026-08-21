@@ -491,7 +491,8 @@ researcher before inviting the wider research team. The approved researcher is
 remain covered by automated authorization tests; do not suspend a real user as
 part of the reduced live cohort.
 
-Status on 2026-08-21: **implementation in progress**. The execution procedure,
+Status on 2026-08-21: **bounded administrator validation passed; wider-cohort
+go/no-go remains open**. The execution procedure,
 hard request/model limits, recovery sequence, and go/no-go criteria are defined
 in `docs/PHASE7_RELEASE_RUNBOOK.md`. The reusable probe is dry-run by default,
 requires exact production-host confirmation plus an external private cookie
@@ -499,6 +500,15 @@ file to execute, and cannot exceed five concurrent requests, five minutes, 300
 reads, or 18 chat calls in one run. The entire release exercise is capped at 32
 chat generations. No Phase 7 scale, quota, pool, timeout, or budget increase is
 approved.
+
+The live corrected revision is `onagawa-source-chat-00008-926` from immutable
+build `8341812f-ca9d-458e-bdbb-17ea7c150e18`. Authentication, persistence,
+backup/restore, revision rollback, the `/data` deployment correction, bounded
+core-route load, two additional Vertex chat calls, resource ceilings, log
+hygiene, and local dependency audits are recorded in the runbook. Do not call
+Phase 7 complete until the researcher-owned journey, first CodeQL run,
+retention/contact decisions, CSV export check, performance follow-up, and
+24-hour/seven-day posted cost reviews close.
 
 Execution order:
 
