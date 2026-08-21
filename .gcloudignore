@@ -27,7 +27,7 @@ frontend/tsconfig.tsbuildinfo
 
 # Scientific data and generated artifacts are seeded through Cloud Storage,
 # never copied into Cloud Build source archives or application images.
-data/
+/data/
 docs/screenshots/
 archive/
 

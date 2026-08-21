@@ -16,9 +16,11 @@ steps:
     args:
       - -ceu
       - |
+        test -f app/data/page.tsx
         npm ci
         npm run typecheck
         npm run build
+        test -f .next/standalone/.next/server/app/data/page.js
 
   - id: build-api
     name: gcr.io/cloud-builders/docker
