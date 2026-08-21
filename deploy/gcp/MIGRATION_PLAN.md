@@ -506,8 +506,8 @@ build `8341812f-ca9d-458e-bdbb-17ea7c150e18`. Authentication, persistence,
 backup/restore, revision rollback, the `/data` deployment correction, bounded
 core-route load, two additional Vertex chat calls, resource ceilings, log
 hygiene, and local dependency audits are recorded in the runbook. Do not call
-Phase 7 complete until the researcher-owned journey, first CodeQL run,
-retention/contact decisions, CSV export check, performance follow-up, and
+Phase 7 complete until the researcher-owned journey, default-branch security
+merge, retention/contact decisions, CSV export check, performance follow-up, and
 24-hour/seven-day posted cost reviews close.
 
 Execution order:

@@ -200,9 +200,9 @@ remaining monthly budget.
 ## Execution record — 2026-08-21
 
 Current decision: **keep the bounded administrator prototype live; do not widen
-the cohort yet**. The immediate serving, persistence, recovery, model, and
-resource gates passed. The researcher journey, first CodeQL run, retention and
-contact decisions, and time-delayed cost reviews remain open.
+the cohort yet**. The immediate serving, persistence, recovery, model, resource,
+CI, and dependency gates passed. The researcher journey, retention and contact
+decisions, and time-delayed cost reviews remain open.
 
 ### Release and recovery evidence
 
@@ -254,10 +254,12 @@ contact decisions, and time-delayed cost reviews remain open.
   vulnerable PostCSS/Nano ID chain to `8.5.23` / `3.3.18`. A disposable
   `pip-audit` scan of `requirements/dev.txt` reports no known Python
   vulnerabilities.
-- CI now runs on `gcp-dev`, audits production npm dependencies, and a pinned
-  CodeQL workflow covers Python and JavaScript/TypeScript. Its first remote run
-  must pass before this gate closes; default-branch Dependabot alerts remain
-  open until the security lockfile change is merged.
+- CI now runs on `gcp-dev` and audits production npm dependencies. Its first
+  remote run passed the backend, frontend, PostgreSQL, backup/restore, and npm
+  audit jobs. GitHub confirmed that repository-level CodeQL default setup is
+  already enabled; the temporary duplicate advanced workflow was removed after
+  GitHub correctly rejected it. Default-branch Dependabot alerts remain open
+  until the security lockfile change is merged.
 - A counts-only scan of 2,142 Phase 7 log entries found zero credential, prompt
   or answer, authorization-failure, database-pool, and model-failure patterns.
 - The administrator CSV feedback export did not produce a browser download
@@ -267,8 +269,8 @@ contact decisions, and time-delayed cost reviews remain open.
 
 1. Akane completes the researcher OIDC, role-boundary, cited-chat, feedback, and
    re-login journey from her own session.
-2. The first CI and CodeQL runs pass, and the security update reaches the
-   default branch.
+2. The security update reaches the default branch so its Dependabot alerts
+   close; CodeQL remains enabled through GitHub default setup.
 3. The operator chooses and approves chat/feedback retention and deletion/legal-
    hold behavior; the proposed 90-day period is not silently enforced.
 4. Incident and billing contacts are approved for publication or recorded in a
