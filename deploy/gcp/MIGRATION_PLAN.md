@@ -501,14 +501,15 @@ reads, or 18 chat calls in one run. The entire release exercise is capped at 32
 chat generations. No Phase 7 scale, quota, pool, timeout, or budget increase is
 approved.
 
-The live corrected revision is `onagawa-source-chat-00008-926` from immutable
-build `8341812f-ca9d-458e-bdbb-17ea7c150e18`. Authentication, persistence,
+The live security-patched revision is `onagawa-source-chat-00009-x8f` from
+immutable build `48ffbcd3-3839-4d9b-977f-de1b4df7ab19`. Authentication, persistence,
 backup/restore, revision rollback, the `/data` deployment correction, bounded
 core-route load, two additional Vertex chat calls, resource ceilings, log
-hygiene, and local dependency audits are recorded in the runbook. Do not call
-Phase 7 complete until the researcher-owned journey, default-branch security
-build/deploy and merge, retention/contact decisions, CSV export check,
-performance follow-up, and 24-hour/seven-day posted cost reviews close.
+hygiene, dependency audits, security-patched runtime, confirmed researcher
+login, approved 90-day chat/feedback retention, and private operations contacts
+are recorded in the runbook. Do not approve a wider cohort until the
+default-branch security merge, retention enforcement, performance follow-up,
+and 24-hour/seven-day posted cost reviews close.
 
 Execution order:
 

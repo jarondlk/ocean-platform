@@ -199,10 +199,11 @@ remaining monthly budget.
 
 ## Execution record — 2026-08-21
 
-Current decision: **keep the bounded administrator prototype live; do not widen
-the cohort yet**. The immediate serving, persistence, recovery, model, resource,
-CI, and dependency gates passed. The researcher journey, retention and contact
-decisions, and time-delayed cost reviews remain open.
+Current decision: **keep the bounded two-person prototype live; do not widen the
+cohort until the time-delayed cost reviews pass**. The immediate serving,
+persistence, recovery, model, resource, CI, dependency, researcher-login,
+retention-decision, and operations-contact gates passed. Automated retention
+enforcement remains separate implementation work.
 
 ### Release and recovery evidence
 
@@ -230,9 +231,11 @@ decisions, and time-delayed cost reviews remain open.
   answer used Vertex `gemini-3.6-flash`, completed in 11.033 seconds, and had 13
   valid citations, zero invalid citations, zero warnings, and a Strong/100%
   trust result. Positive feedback persisted across the revision.
-- The approved researcher remains active as `researcher` / `research`. Their
-  own-session journey is still pending and must not be replaced by administrator
-  impersonation.
+- The approved researcher remains active as `researcher` / `research`. The
+  operator confirmed that Akane can sign in successfully through Google from
+  her own session; no administrator impersonation was used. Automated
+  authorization tests remain the evidence for the detailed role boundaries in
+  this reduced prototype cohort.
 - Sixty five-way core-route navigations completed successfully. They generated
   166 authenticated backend reads—below the 300-read hard cap—and all returned
   HTTP 200. The health/stats subset matching the release probe had 0.485-second
@@ -253,10 +256,10 @@ decisions, and time-delayed cost reviews remain open.
 - `npm audit --omit=dev` reports zero production findings after overriding the
   vulnerable PostCSS/Nano ID chain to `8.5.23` / `3.3.18`. A disposable
   `pip-audit` scan of `requirements/dev.txt` reports no known Python
-  vulnerabilities. The live revision predates this lockfile patch and its
-  standalone image still contains PostCSS `8.5.18` and Nano ID `3.3.16`; one
-  separately approved build/deploy is required before the live dependency gate
-  closes.
+  vulnerabilities. Approved build `48ffbcd3-3839-4d9b-977f-de1b4df7ab19`
+  deployed revision `onagawa-source-chat-00009-x8f` at 100% traffic. Direct
+  inspection of the published standalone image confirmed PostCSS `8.5.23` and
+  Nano ID `3.3.18` in the live runtime.
 - CI now runs on `gcp-dev` and audits production npm dependencies. Its first
   remote run passed the backend, frontend, PostgreSQL, backup/restore, and npm
   audit jobs. GitHub confirmed that repository-level CodeQL default setup is
@@ -265,19 +268,25 @@ decisions, and time-delayed cost reviews remain open.
   until the security lockfile change is merged.
 - A counts-only scan of 2,142 Phase 7 log entries found zero credential, prompt
   or answer, authorization-failure, database-pool, and model-failure patterns.
-- The administrator CSV feedback export did not produce a browser download
-  event, so export remains unproven rather than assumed successful.
+- The administrator feedback export endpoint returned HTTP 200 in 0.084
+  seconds. The browser harness did not surface its Blob download as a download
+  event, so a human save/open check remains useful but the authenticated server
+  export path is proven.
+- Chat/evidence/audit snapshots and associated feedback have an approved
+  90-day retention period. No data was deleted; dry-run, legal-hold-aware,
+  audited enforcement remains separate implementation work.
+- The project owner/application administrator is the primary incident contact.
+  Takeshi Obayashi is the primary billing contact through the existing IAM and
+  billing assignments. Contact addresses remain in the private account/IAM
+  systems rather than being added to this public repository.
 
 ### Remaining no-go items
 
-1. Akane completes the researcher OIDC, role-boundary, cited-chat, feedback, and
-   re-login journey from her own session.
-2. The security update is built/deployed and reaches the default branch so its
+1. The security update reaches the default branch so its
    Dependabot alerts close; CodeQL remains enabled through GitHub default setup.
-3. The operator chooses and approves chat/feedback retention and deletion/legal-
-   hold behavior; the proposed 90-day period is not silently enforced.
-4. Incident and billing contacts are approved for publication or recorded in a
-   private operations register.
-5. The feedback CSV download is proven and the provenance-manifest concurrency
-   follow-up is dispositioned.
-6. Posted billing is reviewed after 24 hours and again after seven days.
+2. Retention enforcement is implemented and reviewed before the cohort expands;
+   the approved policy by itself does not authorize immediate deletion.
+3. The provenance-manifest concurrency follow-up is dispositioned before that
+   diagnostic is used repeatedly by a larger cohort.
+4. Posted billing is reviewed after 24 hours and again after seven days. Per the
+   operator's decision, these reviews remain pending until their data is due.

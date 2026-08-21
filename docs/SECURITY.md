@@ -160,11 +160,17 @@ The metadata database stores:
 - feedback reason codes and optional comments;
 - security and administration audit events.
 
-The MVP does not automatically expire these records. Before handling real
-sensitive data, the operator must approve a retention period, document deletion
-and legal-hold procedures, and schedule tested cleanup and backup retention.
-Ninety days is a reasonable initial chat/feedback proposal, but it is not
-enforced by the current code.
+The prototype retention policy approved on 2026-08-21 is 90 days for complete
+chat interactions, their retrieved-evidence and answer-audit snapshots, and
+associated feedback/comments. No existing records were deleted when the policy
+was approved. Automated expiry is not yet enforced by the current code; a
+separate reviewed cleanup implementation must support dry-run reporting,
+transactional deletion of the related records, explicit legal holds, audit
+events, and the documented backup-retention window before broader use.
+
+User identities, invitations, security/administration audit events, scientific
+corpus records, and evaluation artifacts are outside this 90-day approval and
+must not be deleted under it. Their retention needs a separate policy decision.
 
 Never write tokens, OIDC client secrets, signing secrets, or database passwords
 to audit metadata or application logs.
@@ -194,6 +200,7 @@ to audit metadata or application logs.
       values.
 - [ ] The production OIDC callback exactly matches the deployed HTTPS URL.
 - [ ] FastAPI, PostgreSQL, and Ollama are not exposed publicly.
-- [ ] TLS, backup, restore, log retention, and incident contacts are verified.
+- [ ] TLS, backup, restore, log retention, retention enforcement, and incident
+      contacts are verified.
 - [ ] Viewer, researcher, admin, suspended-user, and uninvited-user behavior is
       manually smoke-tested with real provider accounts.
