@@ -485,8 +485,38 @@ Gate:
 
 ### Phase 7: end-to-end prototype release
 
-Run the full integration path with two invited test users before inviting the
-research team.
+Run the full integration path with the existing administrator and one invited
+researcher before inviting the wider research team. The approved researcher is
+`akane.kitamura.e7@tohoku.ac.jp`. Viewer-only and suspended-user boundaries
+remain covered by automated authorization tests; do not suspend a real user as
+part of the reduced live cohort.
+
+Status on 2026-08-21: **implementation in progress**. The execution procedure,
+hard request/model limits, recovery sequence, and go/no-go criteria are defined
+in `docs/PHASE7_RELEASE_RUNBOOK.md`. The reusable probe is dry-run by default,
+requires exact production-host confirmation plus an external private cookie
+file to execute, and cannot exceed five concurrent requests, five minutes, 300
+reads, or 18 chat calls in one run. The entire release exercise is capped at 32
+chat generations. No Phase 7 scale, quota, pool, timeout, or budget increase is
+approved.
+
+Execution order:
+
+1. freeze the Phase 6 revision, IAM, database, job, billing, and application
+   baseline;
+2. create and restore-test a full `phase7-pre-release` logical backup;
+3. pass local tests, production build, probe safety tests, and one bounded
+   authenticated admin journey;
+4. have the researcher validate their own OIDC, role boundary, chat, evidence,
+   and feedback path without sharing or impersonating their session;
+5. deploy one immutable release candidate and prove application/database state
+   persists across the revision;
+6. run the capped mixed-load test while observing Cloud Run, Cloud SQL, Vertex,
+   and application logs;
+7. route traffic to the previous revision and forward again, then exercise a
+   disposable full-database restore; and
+8. complete posted 24-hour and seven-day cost reviews before the wider-team
+   go/no-go decision.
 
 Gate:
 
