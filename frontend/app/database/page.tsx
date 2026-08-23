@@ -6,11 +6,13 @@ import { CsvExportButton } from "@/components/CsvExportButton";
 import { DataTable, formatCell } from "@/components/DataTable";
 import { RecordInspector } from "@/components/RecordInspector";
 import { getDatabaseSchema, getDatabaseTable, retrieveSources } from "@/lib/api";
+import { useAppPreferences } from "@/lib/preferences";
 import type { DatabaseSchemaResponse, DatabaseTableResponse, RetrieveResponse } from "@/types";
 
 type Direction = "asc" | "desc";
 
 export default function DatabasePage() {
+  const { ui } = useAppPreferences();
   const [schema, setSchema] = useState<DatabaseSchemaResponse | null>(null);
   const [selectedTable, setSelectedTable] = useState("");
   const [tableData, setTableData] = useState<DatabaseTableResponse | null>(null);
@@ -149,31 +151,31 @@ export default function DatabasePage() {
   return (
     <section>
       <header className="page-header">
-        <h2>Database</h2>
+        <h2>{ui("Database")}</h2>
       </header>
 
       <div className="section-toolbar">
         <span className="empty-state">
-          {schema?.available ? `${tables.length} tables` : schema?.error || "Loading database schema."}
+          {schema?.available ? `${tables.length} ${ui("tables")}` : schema?.error || ui("Loading database schema.")}
         </span>
         <button className="button secondary-button" onClick={() => void loadSchema()} type="button">
           <RefreshCw size={15} aria-hidden="true" />
-          Refresh
+          {ui("Refresh")}
         </button>
       </div>
 
       {error ? <p className="error-text">{error}</p> : null}
 
       <div className="grid metrics-grid system-metrics">
-        <Metric label="Tables" value={tables.length || "..."} />
-        <Metric label="Rows in table" value={formatCell(activeTable?.row_count)} />
-        <Metric label="Visible rows" value={tableData?.rows.length ?? "..."} />
-        <Metric label="Columns" value={activeColumns.length || "..."} />
+        <Metric label={ui("Tables")} value={tables.length || "..."} />
+        <Metric label={ui("Rows in table")} value={formatCell(activeTable?.row_count)} />
+        <Metric label={ui("Visible rows")} value={tableData?.rows.length ?? "..."} />
+        <Metric label={ui("Columns")} value={activeColumns.length || "..."} />
       </div>
 
       <section className="database-layout">
         <aside className="database-sidebar">
-          <h3 className="section-title">Tables</h3>
+          <h3 className="section-title">{ui("Tables")}</h3>
           <div className="table-list">
             {tables.map((table) => {
               const name = String(table.name);
@@ -199,10 +201,10 @@ export default function DatabasePage() {
 
         <main className="database-main">
           <section className="data-section">
-            <h3 className="section-title">Table Browser</h3>
+            <h3 className="section-title">{ui("Table Browser")}</h3>
             <div className="database-controls">
               <label className="settings-field" htmlFor="db-limit" title="Rows per page.">
-                <span>Limit</span>
+                <span>{ui("Limit")}</span>
                 <select
                   id="db-limit"
                   className="field"
@@ -221,7 +223,7 @@ export default function DatabasePage() {
                 </select>
               </label>
               <label className="settings-field" htmlFor="db-order" title="Validated order-by column.">
-                <span>Order by</span>
+                <span>{ui("Order by")}</span>
                 <select
                   id="db-order"
                   className="field"
@@ -231,12 +233,12 @@ export default function DatabasePage() {
                     void loadTable({ nextOrderBy: event.target.value, nextOffset: 0 });
                   }}
                 >
-                  <option value="">none</option>
+                  <option value="">{ui("none")}</option>
                   {activeColumns.map((column) => <option key={column} value={column}>{column}</option>)}
                 </select>
               </label>
               <label className="settings-field" htmlFor="db-direction" title="Sort direction.">
-                <span>Direction</span>
+                <span>{ui("Direction")}</span>
                 <select
                   id="db-direction"
                   className="field"
@@ -247,8 +249,8 @@ export default function DatabasePage() {
                     void loadTable({ nextDirection: next, nextOffset: 0 });
                   }}
                 >
-                  <option value="asc">Ascending</option>
-                  <option value="desc">Descending</option>
+                  <option value="asc">{ui("Ascending")}</option>
+                  <option value="desc">{ui("Descending")}</option>
                 </select>
               </label>
               <label className="checkbox-row" title="Include heavy vector/search columns such as embedding and text_tsv.">
@@ -260,7 +262,7 @@ export default function DatabasePage() {
                   }}
                   type="checkbox"
                 />
-                <span>Heavy columns</span>
+                <span>{ui("Heavy columns")}</span>
               </label>
             </div>
             <div className="section-toolbar">
@@ -268,8 +270,8 @@ export default function DatabasePage() {
                 {tableData
                   ? tableData.total > 0
                     ? `${offset + 1}-${Math.min(offset + limit, tableData.total)} of ${tableData.total}`
-                    : "0 of 0"
-                  : "No table loaded."}
+                    : `0 ${ui("of")} 0`
+                  : ui("No table loaded.")}
               </span>
               <div className="pager">
                 <CsvExportButton
@@ -277,8 +279,8 @@ export default function DatabasePage() {
                   filename={`database_${selectedTable}_rows`}
                   rows={tableData?.rows || []}
                 />
-                <button className="button secondary-button" disabled={!canPrevious || loading} onClick={() => void loadTable({ nextOffset: Math.max(0, offset - limit) })} type="button">Previous</button>
-                <button className="button secondary-button" disabled={!canNext || loading} onClick={() => void loadTable({ nextOffset: offset + limit })} type="button">Next</button>
+                <button className="button secondary-button" disabled={!canPrevious || loading} onClick={() => void loadTable({ nextOffset: Math.max(0, offset - limit) })} type="button">{ui("Previous")}</button>
+                <button className="button secondary-button" disabled={!canNext || loading} onClick={() => void loadTable({ nextOffset: offset + limit })} type="button">{ui("Next")}</button>
               </div>
             </div>
             <DataTable
@@ -294,15 +296,15 @@ export default function DatabasePage() {
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Row Inspector</h3>
+            <h3 className="section-title">{ui("Row Inspector")}</h3>
             <RecordInspector row={selectedRow} emptyText="Select a table row." />
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Similarity Probe</h3>
+            <h3 className="section-title">{ui("Similarity Probe")}</h3>
             <form className="probe-form" onSubmit={submitProbe}>
               <label className="settings-field probe-query" htmlFor="db-probe-query" title="Hybrid retrieval query executed through the same retrieve API as chat.">
-                <span>Query</span>
+                <span>{ui("Query")}</span>
                 <input
                   id="db-probe-query"
                   className="field"
@@ -321,18 +323,18 @@ export default function DatabasePage() {
                 </select>
               </label>
               <label className="settings-field" htmlFor="db-probe-source" title="Restrict probe retrieval by source type.">
-                <span>Source</span>
+                <span>{ui("Source")}</span>
                 <select id="db-probe-source" className="field" onChange={(event) => setProbeSourceType(event.target.value)} value={probeSourceType}>
-                  <option value="">All</option>
+                  <option value="">{ui("All")}</option>
                   <option value="ctd">CTD</option>
                   <option value="metagenome">Metagenome</option>
                   <option value="remote_sensing">SST</option>
                 </select>
               </label>
               <label className="settings-field" htmlFor="db-probe-bay" title="Restrict probe retrieval by bay metadata.">
-                <span>Bay</span>
+                <span>{ui("Bay")}</span>
                 <select id="db-probe-bay" className="field" onChange={(event) => setProbeBay(event.target.value)} value={probeBay}>
-                  <option value="">All</option>
+                  <option value="">{ui("All")}</option>
                   <option value="O">O</option>
                   <option value="I">I</option>
                   <option value="M">M</option>
@@ -352,14 +354,14 @@ export default function DatabasePage() {
               </label>
               <button className="button" disabled={probeLoading || !probeQuery.trim()}>
                 <Search size={15} aria-hidden="true" />
-                {probeLoading ? "Probing" : "Probe"}
+                {probeLoading ? ui("Probing") : ui("Probe")}
               </button>
             </form>
             {probeError ? <p className="error-text">{probeError}</p> : null}
             {probeResult ? (
               <>
                 <div className="section-toolbar">
-                  <p className="empty-state">{probeRows.length} fused results for `{probeResult.query}`</p>
+                  <p className="empty-state">{probeRows.length} {ui("fused results for")} `{probeResult.query}`</p>
                   <CsvExportButton
                     columns={["rank", "doc_id", "source_type", "score", "vector_rank", "fts_rank", "bay", "time", "title"]}
                     filename="database_similarity_probe"
@@ -376,8 +378,8 @@ export default function DatabasePage() {
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Schema</h3>
-            {activeTable ? <SchemaTable table={activeTable} /> : <p className="empty-state">Select a table.</p>}
+            <h3 className="section-title">{ui("Schema")}</h3>
+            {activeTable ? <SchemaTable table={activeTable} /> : <p className="empty-state">{ui("Select a table.")}</p>}
           </section>
         </main>
       </section>

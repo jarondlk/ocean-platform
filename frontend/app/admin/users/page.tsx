@@ -11,9 +11,11 @@ import {
   updateUser,
 } from "@/lib/api";
 import type { UserInvitation, UserSummary } from "@/types";
+import { useAppPreferences } from "@/lib/preferences";
 
 
 export default function UsersPage() {
+  const { ui } = useAppPreferences();
   const [users, setUsers] = useState<UserSummary[]>([]);
   const [invitations, setInvitations] = useState<UserInvitation[]>([]);
   const [email, setEmail] = useState("");
@@ -98,11 +100,11 @@ export default function UsersPage() {
   return (
     <section>
       <header className="page-header">
-        <h2>Users and invitations</h2>
+        <h2>{ui("Users and invitations")}</h2>
       </header>
 
       <article className="card">
-        <h3 className="section-title">Invite account</h3>
+        <h3 className="section-title">{ui("Invite account")}</h3>
         <form className="form-grid admin-invite-form" onSubmit={invite}>
           <input
             className="field"
@@ -111,17 +113,17 @@ export default function UsersPage() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             placeholder="person@example.org"
-            aria-label="Email"
+            aria-label={ui("Email")}
           />
           <select
             className="field"
             value={role}
             onChange={(event) => setRole(event.target.value as UserSummary["role"])}
-            aria-label="Role"
+            aria-label={ui("Role")}
           >
-            <option value="viewer">Viewer</option>
-            <option value="researcher">Researcher</option>
-            <option value="admin">Admin</option>
+            <option value="viewer">{ui("Viewer")}</option>
+            <option value="researcher">{ui("Researcher")}</option>
+            <option value="admin">{ui("Admin")}</option>
           </select>
           <select
             className="field"
@@ -129,15 +131,15 @@ export default function UsersPage() {
             onChange={(event) =>
               setAccountType(event.target.value as UserSummary["account_type"])
             }
-            aria-label="Account type"
+            aria-label={ui("Account type")}
           >
-            <option value="research">Research</option>
-            <option value="commercial">Commercial</option>
-            <option value="internal">Internal</option>
+            <option value="research">{ui("Research")}</option>
+            <option value="commercial">{ui("Commercial")}</option>
+            <option value="internal">{ui("Internal")}</option>
           </select>
           <button className="button" type="submit">
             <UserPlus size={16} aria-hidden="true" />
-            Invite
+            {ui("Invite")}
           </button>
         </form>
         {error ? <p className="error-text">{error}</p> : null}
@@ -145,7 +147,7 @@ export default function UsersPage() {
 
       <article className="card">
         <div className="section-toolbar">
-          <h3 className="section-title">Active accounts</h3>
+          <h3 className="section-title">{ui("Active accounts")}</h3>
           <button
             className="button secondary-button"
             type="button"
@@ -153,18 +155,18 @@ export default function UsersPage() {
             disabled={loading}
           >
             <RefreshCw size={15} aria-hidden="true" />
-            Refresh
+            {ui("Refresh")}
           </button>
         </div>
         <div className="table-scroll">
           <table>
             <thead>
               <tr>
-                <th>User</th>
-                <th>Role</th>
-                <th>Account type</th>
-                <th>Status</th>
-                <th>Last login</th>
+                <th>{ui("User")}</th>
+                <th>{ui("Role")}</th>
+                <th>{ui("Account type")}</th>
+                <th>{ui("Status")}</th>
+                <th>{ui("Last login")}</th>
               </tr>
             </thead>
             <tbody>
@@ -184,9 +186,9 @@ export default function UsersPage() {
                         })
                       }
                     >
-                      <option value="viewer">Viewer</option>
-                      <option value="researcher">Researcher</option>
-                      <option value="admin">Admin</option>
+                      <option value="viewer">{ui("Viewer")}</option>
+                      <option value="researcher">{ui("Researcher")}</option>
+                      <option value="admin">{ui("Admin")}</option>
                     </select>
                   </td>
                   <td>
@@ -200,9 +202,9 @@ export default function UsersPage() {
                         })
                       }
                     >
-                      <option value="research">Research</option>
-                      <option value="commercial">Commercial</option>
-                      <option value="internal">Internal</option>
+                      <option value="research">{ui("Research")}</option>
+                      <option value="commercial">{ui("Commercial")}</option>
+                      <option value="internal">{ui("Internal")}</option>
                     </select>
                   </td>
                   <td>
@@ -215,15 +217,15 @@ export default function UsersPage() {
                         })
                       }
                     >
-                      <option value="active">Active</option>
-                      <option value="suspended">Suspended</option>
+                      <option value="active">{ui("Active")}</option>
+                      <option value="suspended">{ui("Suspended")}</option>
                     </select>
                   </td>
                   <td>{user.last_login_at || "Never"}</td>
                 </tr>
               ))}
               {!loading && users.length === 0 ? (
-                <tr><td colSpan={5}>No accounts.</td></tr>
+                <tr><td colSpan={5}>{ui("No accounts.")}</td></tr>
               ) : null}
             </tbody>
           </table>
@@ -231,17 +233,17 @@ export default function UsersPage() {
       </article>
 
       <article className="card">
-        <h3 className="section-title">Invitations</h3>
+        <h3 className="section-title">{ui("Invitations")}</h3>
         <div className="table-scroll">
           <table>
             <thead>
               <tr>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Account type</th>
-                <th>Status</th>
-                <th>Expires</th>
-                <th>Actions</th>
+                <th>{ui("Email")}</th>
+                <th>{ui("Role")}</th>
+                <th>{ui("Account type")}</th>
+                <th>{ui("Status")}</th>
+                <th>{ui("Expires")}</th>
+                <th>{ui("Actions")}</th>
               </tr>
             </thead>
             <tbody>
@@ -273,7 +275,7 @@ export default function UsersPage() {
                 </tr>
               ))}
               {!loading && invitations.length === 0 ? (
-                <tr><td colSpan={6}>No invitations.</td></tr>
+                <tr><td colSpan={6}>{ui("No invitations.")}</td></tr>
               ) : null}
             </tbody>
           </table>

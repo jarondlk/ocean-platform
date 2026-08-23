@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
+import { useAppPreferences } from "@/lib/preferences";
 
 
 const routePermissions: Array<[string, string]> = [
@@ -28,6 +29,7 @@ export function PermissionGate({
   permissions: string[];
 }) {
   const pathname = usePathname();
+  const { ui } = useAppPreferences();
   const required = routePermissions.find(([prefix]) =>
     prefix === "/" ? pathname === "/" : pathname.startsWith(prefix),
   )?.[1];
@@ -35,11 +37,11 @@ export function PermissionGate({
     return (
       <section>
         <header className="page-header">
-          <h2>Access denied</h2>
+          <h2>{ui("Access denied")}</h2>
         </header>
         <article className="card">
           <p className="error-text">
-            Your account does not have permission to view this page.
+            {ui("Your account does not have permission to view this page.")}
           </p>
         </article>
       </section>

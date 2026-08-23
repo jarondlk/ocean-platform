@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getDebugState } from "@/lib/api";
 import type { DebugState } from "@/types";
 import { formatCell } from "@/components/DataTable";
+import { useAppPreferences } from "@/lib/preferences";
 
 type ClientDebug = {
   location: string;
@@ -15,6 +16,7 @@ type ClientDebug = {
 };
 
 export default function DebugPage() {
+  const { ui } = useAppPreferences();
   const [debug, setDebug] = useState<DebugState | null>(null);
   const [clientDebug, setClientDebug] = useState<ClientDebug | null>(null);
   const [loading, setLoading] = useState(true);
@@ -72,20 +74,20 @@ export default function DebugPage() {
   return (
     <section>
       <header className="page-header">
-        <h2>Debug</h2>
+        <h2>{ui("Debug")}</h2>
       </header>
 
       <div className="section-toolbar">
-        <span className="empty-state">{loading ? "Loading debug payload." : "Debug payload loaded."}</span>
+        <span className="empty-state">{loading ? ui("Loading debug payload.") : ui("Debug payload loaded.")}</span>
         <button className="button secondary-button" onClick={() => void load()} type="button">
-          Refresh
+          {ui("Refresh")}
         </button>
       </div>
 
       {error ? <p className="error-text">{error}</p> : null}
 
       <section className="debug-section">
-        <h3 className="section-title">Summary</h3>
+        <h3 className="section-title">{ui("Summary")}</h3>
         <table className="debug-table">
           <tbody>
             {summaryRows.map(([key, value]) => (
@@ -99,18 +101,18 @@ export default function DebugPage() {
       </section>
 
       <section className="debug-grid">
-        <DebugBlock title="Client" value={clientDebug} open />
-        <DebugBlock title="App" value={debug?.app} open />
-        <DebugBlock title="Config" value={debug?.config} open />
-        <DebugBlock title="Selected Environment" value={debug?.selected_environment} />
-        <DebugBlock title="Health" value={debug?.health} />
-        <DebugBlock title="Stats" value={stats} />
-        <DebugBlock title="Artifacts" value={debug?.artifacts} />
-        <DebugBlock title="Datasets" value={debug?.datasets} />
-        <DebugBlock title="Routes" value={debug?.routes} />
-        <DebugBlock title="Cache" value={debug?.cache} />
-        <DebugBlock title="Notes" value={debug?.notes} />
-        <DebugBlock title="Raw Payload" value={{ backend: debug, client: clientDebug }} />
+        <DebugBlock title={ui("Client")} value={clientDebug} open />
+        <DebugBlock title={ui("App")} value={debug?.app} open />
+        <DebugBlock title={ui("Config")} value={debug?.config} open />
+        <DebugBlock title={ui("Selected Environment")} value={debug?.selected_environment} />
+        <DebugBlock title={ui("Health")} value={debug?.health} />
+        <DebugBlock title={ui("Stats")} value={stats} />
+        <DebugBlock title={ui("Artifacts")} value={debug?.artifacts} />
+        <DebugBlock title={ui("Datasets")} value={debug?.datasets} />
+        <DebugBlock title={ui("Routes")} value={debug?.routes} />
+        <DebugBlock title={ui("Cache")} value={debug?.cache} />
+        <DebugBlock title={ui("Notes")} value={debug?.notes} />
+        <DebugBlock title={ui("Raw Payload")} value={{ backend: debug, client: clientDebug }} />
       </section>
     </section>
   );

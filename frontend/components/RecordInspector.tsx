@@ -1,4 +1,7 @@
+"use client";
+
 import { formatCell } from "@/components/DataTable";
+import { useAppPreferences } from "@/lib/preferences";
 
 type RecordInspectorProps = {
   row: Record<string, unknown> | null;
@@ -6,8 +9,9 @@ type RecordInspectorProps = {
 };
 
 export function RecordInspector({ row, emptyText = "Select a row." }: RecordInspectorProps) {
+  const { ui } = useAppPreferences();
   if (!row) {
-    return <p className="empty-state">{emptyText}</p>;
+    return <p className="empty-state">{ui(emptyText)}</p>;
   }
 
   return (

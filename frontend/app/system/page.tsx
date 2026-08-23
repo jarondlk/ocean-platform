@@ -5,6 +5,7 @@ import { RefreshCw } from "lucide-react";
 import { CsvExportButton } from "@/components/CsvExportButton";
 import { DataTable } from "@/components/DataTable";
 import { getDebugState, getExploreTable, getModels, getStats, getStatus } from "@/lib/api";
+import { useAppPreferences } from "@/lib/preferences";
 import type { CorpusStats, DebugState, ExploreTableResponse, ModelsResponse, StatusResponse } from "@/types";
 
 type ArtifactRow = {
@@ -18,6 +19,7 @@ type ArtifactRow = {
 };
 
 export default function SystemPage() {
+  const { ui } = useAppPreferences();
   const [status, setStatus] = useState<StatusResponse | null>(null);
   const [stats, setStats] = useState<CorpusStats | null>(null);
   const [models, setModels] = useState<ModelsResponse | null>(null);
@@ -157,23 +159,23 @@ export default function SystemPage() {
   return (
     <section>
       <header className="page-header">
-        <h2>System</h2>
+        <h2>{ui("System")}</h2>
       </header>
 
       <div className="section-toolbar system-toolbar">
         <span className="empty-state">
-          {loading ? "Refreshing." : lastUpdated ? `Updated ${lastUpdated}` : "Not loaded."}
+          {loading ? ui("Refreshing.") : lastUpdated ? `${ui("Updated")} ${lastUpdated}` : ui("Not loaded.")}
         </span>
         <div className="system-actions">
           <label className="settings-field" htmlFor="system-refresh" title="Automatically refresh system diagnostics.">
-            <span>Auto-refresh</span>
+            <span>{ui("Auto-refresh")}</span>
             <select
               id="system-refresh"
               className="field"
               value={refreshSeconds}
               onChange={(event) => setRefreshSeconds(Number(event.target.value))}
             >
-              <option value={0}>Off</option>
+              <option value={0}>{ui("Off")}</option>
               <option value={15}>15s</option>
               <option value={30}>30s</option>
               <option value={60}>60s</option>
@@ -181,7 +183,7 @@ export default function SystemPage() {
           </label>
           <button className="button secondary-button" onClick={() => void load()} type="button">
             <RefreshCw size={15} aria-hidden="true" />
-            Refresh
+            {ui("Refresh")}
           </button>
         </div>
       </div>
@@ -189,18 +191,18 @@ export default function SystemPage() {
       {error ? <p className="error-text">{error}</p> : null}
 
       <div className="grid metrics-grid system-metrics">
-        <Metric label="Retrieval documents" value={totalDocuments} />
-        <Metric label="Samples" value={stats?.samples ?? "..."} />
-        <Metric label="Artifacts present" value={`${existingArtifacts}/${artifacts.length || "..."}`} />
-        <Metric label="Chat models" value={models?.models.length ?? "..."} />
+        <Metric label={ui("Retrieval documents")} value={totalDocuments} />
+        <Metric label={ui("Samples")} value={stats?.samples ?? "..."} />
+        <Metric label={ui("Artifacts present")} value={`${existingArtifacts}/${artifacts.length || "..."}`} />
+        <Metric label={ui("Chat models")} value={models?.models.length ?? "..."} />
       </div>
 
       <section className="system-section">
-        <h3 className="section-title">Health</h3>
+        <h3 className="section-title">{ui("Health")}</h3>
         <div className="health-grid">
           {healthRows.map((row) => (
             <div className="health-card" key={row.label}>
-              <span>{row.label}</span>
+              <span>{ui(row.label)}</span>
               <strong>{row.value}</strong>
               <StatusPill ok={row.ok} />
             </div>
@@ -210,7 +212,7 @@ export default function SystemPage() {
 
       <section className="system-section">
         <div className="section-toolbar">
-          <h3 className="section-title">Corpus Statistics</h3>
+          <h3 className="section-title">{ui("Corpus Statistics")}</h3>
           <CsvExportButton
             columns={["sample_id", "bay", "QC", "Kraken", "MetaEuk", "CTD"]}
             filename="system_sample_coverage"
@@ -218,15 +220,15 @@ export default function SystemPage() {
           />
         </div>
         <div className="summary-strip">
-          <SummaryCell label="Total documents" value={totalDocuments} />
-          <SummaryCell label="CTD docs" value={stats?.documents.ctd ?? 0} />
-          <SummaryCell label="Metagenome docs" value={stats?.documents.metagenome ?? 0} />
-          <SummaryCell label="SST docs" value={stats?.documents.remote_sensing ?? 0} />
-          <SummaryCell label="Registered files" value={stats?.provenance_records ?? "..."} />
+          <SummaryCell label={ui("Total documents")} value={totalDocuments} />
+          <SummaryCell label={ui("CTD docs")} value={stats?.documents.ctd ?? 0} />
+          <SummaryCell label={ui("Metagenome docs")} value={stats?.documents.metagenome ?? 0} />
+          <SummaryCell label={ui("SST docs")} value={stats?.documents.remote_sensing ?? 0} />
+          <SummaryCell label={ui("Registered files")} value={stats?.provenance_records ?? "..."} />
         </div>
         <div className="dashboard-grid system-stats-grid">
           <article className="data-section">
-            <h3 className="section-title">Documents By Source</h3>
+            <h3 className="section-title">{ui("Documents By Source")}</h3>
             <SystemBars
               rows={sourceRows.map((row) => ({
                 label: row.label,
@@ -237,7 +239,7 @@ export default function SystemPage() {
             <DataTable columns={["source_type", "label", "documents"]} rows={sourceRows} rowKeyColumn="source_type" />
           </article>
           <article className="data-section">
-            <h3 className="section-title">Samples By Bay</h3>
+            <h3 className="section-title">{ui("Samples By Bay")}</h3>
             <SystemBars
               rows={bayRows.map((row) => ({
                 label: `${row.label} (${row.bay})`,
@@ -248,7 +250,7 @@ export default function SystemPage() {
             <DataTable columns={["bay", "label", "samples"]} rows={bayRows} rowKeyColumn="bay" />
           </article>
           <article className="data-section dashboard-wide">
-            <h3 className="section-title">Sample Coverage</h3>
+            <h3 className="section-title">{ui("Sample Coverage")}</h3>
             <DataTable
               columns={["sample_id", "bay", "QC", "Kraken", "MetaEuk", "CTD"]}
               emptyText="No sample registry rows available."
@@ -260,16 +262,16 @@ export default function SystemPage() {
       </section>
 
       <section className="system-section">
-        <h3 className="section-title">Artifacts</h3>
+        <h3 className="section-title">{ui("Artifacts")}</h3>
         <div className="table-wrap compact-table-wrap">
           <table className="artifact-table">
             <thead>
               <tr>
-                <th>Artifact</th>
-                <th>State</th>
-                <th>Rows</th>
-                <th>Size</th>
-                <th>Path</th>
+                <th>{ui("Artifact")}</th>
+                <th>{ui("State")}</th>
+                <th>{ui("Rows")}</th>
+                <th>{ui("Size")}</th>
+                <th>{ui("Path")}</th>
               </tr>
             </thead>
             <tbody>
@@ -290,7 +292,7 @@ export default function SystemPage() {
       </section>
 
       <section className="system-section">
-        <h3 className="section-title">Models</h3>
+        <h3 className="section-title">{ui("Models")}</h3>
         <div className="status-list">
           <StatusRow label="Provider" value={models?.provider || "loading"} />
           <StatusRow label="Model endpoint" value={models?.ollama_base_url || "loading"} />
@@ -301,9 +303,9 @@ export default function SystemPage() {
           <table className="model-table">
             <thead>
               <tr>
-                <th>Model</th>
-                <th>Size</th>
-                <th>Modified</th>
+                <th>{ui("Model")}</th>
+                <th>{ui("Size")}</th>
+                <th>{ui("Modified")}</th>
               </tr>
             </thead>
             <tbody>
@@ -375,13 +377,15 @@ function SystemBars({ rows }: { rows: { label: string; value: number; total: num
 }
 
 function StatusPill({ ok, label }: { ok?: boolean; label?: string }) {
-  return <span className={`status-pill ${ok ? "ok" : "bad"}`}>{label || (ok ? "ok" : "check")}</span>;
+  const { ui } = useAppPreferences();
+  return <span className={`status-pill ${ok ? "ok" : "bad"}`}>{ui(label || (ok ? "ok" : "check"))}</span>;
 }
 
 function StatusSection({ title, rows }: { title: string; rows: Record<string, unknown> }) {
+  const { ui } = useAppPreferences();
   return (
     <section className="system-section">
-      <h3 className="section-title">{title}</h3>
+      <h3 className="section-title">{ui(title)}</h3>
       <table className="system-table">
         <tbody>
           {Object.entries(rows).map(([key, value]) => (
@@ -397,9 +401,10 @@ function StatusSection({ title, rows }: { title: string; rows: Record<string, un
 }
 
 function StatusRow({ label, value }: { label: string; value: string }) {
+  const { ui } = useAppPreferences();
   return (
     <div className="status-row">
-      <span>{label}</span>
+      <span>{ui(label)}</span>
       <strong>{value}</strong>
     </div>
   );

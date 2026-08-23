@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { DataTable } from "@/components/DataTable";
 import { getStats, getStatus } from "@/lib/api";
+import { useAppPreferences } from "@/lib/preferences";
 import type { CorpusStats, StatusResponse } from "@/types";
 
 const sourceOrder = ["ctd", "metagenome", "remote_sensing"];
@@ -86,6 +87,7 @@ const interfaceTabs = [
 ];
 
 export default function OverviewPage() {
+  const { ui } = useAppPreferences();
   const [stats, setStats] = useState<CorpusStats | null>(null);
   const [status, setStatus] = useState<StatusResponse | null>(null);
   const [error, setError] = useState<string>("");
@@ -104,70 +106,70 @@ export default function OverviewPage() {
     return Object.values(stats.documents).reduce((sum, value) => sum + value, 0);
   }, [stats]);
   const sourceComposition = sourceOrder.map((source) => ({
-    label: sourceLabels[source],
+    label: ui(sourceLabels[source]),
     value: stats?.documents[source] || 0,
     total: totalDocuments,
   }));
   const runtimeSignals = [
-    { label: "API", value: status?.status || "loading", ok: status?.status === "ok" },
-    { label: "Database", value: String(status?.database?.available ?? "loading"), ok: Boolean(status?.database?.available) },
-    { label: "Model runtime", value: String(status?.ollama?.available ?? "loading"), ok: Boolean(status?.ollama?.available) },
-    { label: "Analysis docs", value: String(stats?.analysis_docs ?? "loading"), ok: Boolean(stats?.analysis_docs) },
-    { label: "Reliability docs", value: String(stats?.reliability_docs ?? "loading"), ok: Boolean(stats?.reliability_docs) },
+    { label: ui("API"), value: status?.status || "loading", ok: status?.status === "ok" },
+    { label: ui("Database"), value: String(status?.database?.available ?? "loading"), ok: Boolean(status?.database?.available) },
+    { label: ui("Model runtime"), value: String(status?.ollama?.available ?? "loading"), ok: Boolean(status?.ollama?.available) },
+    { label: ui("Analysis docs"), value: String(stats?.analysis_docs ?? "loading"), ok: Boolean(stats?.analysis_docs) },
+    { label: ui("Reliability docs"), value: String(stats?.reliability_docs ?? "loading"), ok: Boolean(stats?.reliability_docs) },
   ];
   const routeGroups = [
-    { label: "Data", routes: ["/explore", "/data", "/database"] },
-    { label: "Operations", routes: ["/pipeline", "/provenance", "/evaluation", "/system", "/debug"] },
-    { label: "RAG", routes: ["/chat"] },
+    { label: ui("Data"), routes: ["/explore", "/data", "/database"] },
+    { label: ui("Operations"), routes: ["/pipeline", "/provenance", "/evaluation", "/system", "/debug"] },
+    { label: ui("RAG"), routes: ["/chat"] },
   ];
   const architectureNodes = [
-    { label: "Raw Sources", detail: `${stats?.provenance_records ?? "..."} files` },
-    { label: "Normalized Artifacts", detail: `${stats?.ctd_casts ?? "..."} CTD casts` },
-    { label: "Analysis", detail: `${stats?.analysis_docs ?? "..."} documents` },
-    { label: "Reliability", detail: `${stats?.reliability_docs ?? "..."} documents` },
-    { label: "Retrieval Store", detail: `${totalDocuments || "..."} documents` },
-    { label: "Interfaces", detail: "query, inspect, evaluate" },
+    { label: ui("Raw Sources"), detail: `${stats?.provenance_records ?? "..."} files` },
+    { label: ui("Normalized Artifacts"), detail: `${stats?.ctd_casts ?? "..."} CTD casts` },
+    { label: ui("Analysis"), detail: `${stats?.analysis_docs ?? "..."} documents` },
+    { label: ui("Reliability"), detail: `${stats?.reliability_docs ?? "..."} documents` },
+    { label: ui("Retrieval Store"), detail: `${totalDocuments || "..."} documents` },
+    { label: ui("Interfaces"), detail: ui("query, inspect, evaluate") },
   ];
 
   return (
     <section>
       <header className="page-header">
-        <h2>Overview</h2>
+        <h2>{ui("Overview")}</h2>
       </header>
 
       {error ? <p className="error-text">{error}</p> : null}
 
       <div className="grid metrics-grid">
-        <MetricCard label="Retrieval documents" value={totalDocuments} />
-        <MetricCard label="Registered samples" value={stats?.samples} />
-        <MetricCard label="CTD casts" value={stats?.ctd_casts} />
-        <MetricCard label="SST days" value={stats?.sst_days} />
+        <MetricCard label={ui("Retrieval documents")} value={totalDocuments} />
+        <MetricCard label={ui("Registered samples")} value={stats?.samples} />
+        <MetricCard label={ui("CTD casts")} value={stats?.ctd_casts} />
+        <MetricCard label={ui("SST days")} value={stats?.sst_days} />
       </div>
 
       <section className="data-section architecture-panel">
-        <h3 className="section-title">Architecture</h3>
+        <h3 className="section-title">{ui("Architecture")}</h3>
         <ArchitectureFlow nodes={architectureNodes} />
       </section>
 
       <section className="dashboard-grid">
         <article className="data-section">
-          <h3 className="section-title">Source Balance</h3>
+          <h3 className="section-title">{ui("Source Balance")}</h3>
           <CompositionBars rows={sourceComposition} />
         </article>
 
         <article className="data-section">
-          <h3 className="section-title">Runtime Signals</h3>
+          <h3 className="section-title">{ui("Runtime Signals")}</h3>
           <StatusMatrix rows={runtimeSignals} />
         </article>
 
         <article className="data-section dashboard-wide">
-          <h3 className="section-title">Operational Surface</h3>
+          <h3 className="section-title">{ui("Operational Surface")}</h3>
           <RouteRail groups={routeGroups} />
         </article>
       </section>
 
       <section className="data-section overview-register">
-        <h3 className="section-title">Interface Register</h3>
+        <h3 className="section-title">{ui("Interface Register")}</h3>
         <DataTable
           columns={["tab", "route", "purpose", "primary_controls", "outputs"]}
           rows={interfaceTabs}

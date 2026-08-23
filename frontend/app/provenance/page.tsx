@@ -13,6 +13,7 @@ import type {
   ProvenanceTraceResponse,
   UpsertDryRunResponse,
 } from "@/types";
+import { useAppPreferences } from "@/lib/preferences";
 
 type ProvenanceView = "manifest" | "trace" | "upsert";
 
@@ -83,6 +84,7 @@ const upsertColumns = [
 ];
 
 export default function ProvenancePage() {
+  const { ui } = useAppPreferences();
   const [view, setView] = useState<ProvenanceView>("manifest");
   const [manifest, setManifest] = useState<ProvenanceManifestResponse | null>(null);
   const [trace, setTrace] = useState<ProvenanceTraceResponse | null>(null);
@@ -210,10 +212,10 @@ export default function ProvenancePage() {
   return (
     <section>
       <header className="page-header">
-        <h2>Provenance</h2>
+        <h2>{ui("Provenance")}</h2>
       </header>
 
-      <div className="data-tabs" role="tablist" aria-label="Provenance views">
+      <div className="data-tabs" role="tablist" aria-label={ui("Provenance views")}>
         <TabButton active={view === "manifest"} label="Manifest" onClick={() => setView("manifest")} />
         <TabButton active={view === "trace"} label="Document Trace" onClick={() => setView("trace")} />
         <TabButton active={view === "upsert"} label="Upsert Dry-Run" onClick={() => setView("upsert")} />
@@ -221,38 +223,38 @@ export default function ProvenancePage() {
 
       <div className="section-toolbar">
         <span className="empty-state">
-          {loading ? "Loading provenance state." : `${formatCell(summary.documents)} manifest documents. ${formatCell(summary.artifacts)} tracked artifacts.`}
+          {loading ? ui("Loading provenance state.") : `${formatCell(summary.documents)} ${ui("manifest documents.")} ${formatCell(summary.artifacts)} ${ui("tracked artifacts.")}`}
         </span>
         <button className="button secondary-button" onClick={() => void loadManifest()} type="button">
           <RefreshCw size={15} aria-hidden="true" />
-          Refresh
+          {ui("Refresh")}
         </button>
       </div>
       {error ? <p className="error-text">{error}</p> : null}
 
       <div className="grid metrics-grid system-metrics">
-        <Metric label="Source files" value={formatCell(summary.source_files)} />
-        <Metric label="Registry records" value={formatCell(summary.registered_source_records)} />
-        <Metric label="Existing artifacts" value={formatCell(summary.existing_artifacts)} />
-        <Metric label="Documents indexed" value={formatCell(summary.documents)} />
-        <Metric label="Embedded in view" value={formatCell(summary.embedded_documents_in_manifest)} />
+        <Metric label={ui("Source files")} value={formatCell(summary.source_files)} />
+        <Metric label={ui("Registry records")} value={formatCell(summary.registered_source_records)} />
+        <Metric label={ui("Existing artifacts")} value={formatCell(summary.existing_artifacts)} />
+        <Metric label={ui("Documents indexed")} value={formatCell(summary.documents)} />
+        <Metric label={ui("Embedded in view")} value={formatCell(summary.embedded_documents_in_manifest)} />
       </div>
 
       <section className="dashboard-grid provenance-dashboard">
         <article className="data-section dashboard-wide">
-          <h3 className="section-title">Lineage Flow</h3>
+          <h3 className="section-title">{ui("Lineage Flow")}</h3>
           <LineageFlow nodes={lineageNodes} />
         </article>
         <article className="data-section">
-          <h3 className="section-title">Artifact Classes</h3>
+          <h3 className="section-title">{ui("Artifact Classes")}</h3>
           <CompositionBars rows={artifactClassRows} emptyText="No artifact classes loaded." />
         </article>
         <article className="data-section">
-          <h3 className="section-title">Source Registration</h3>
+          <h3 className="section-title">{ui("Source Registration")}</h3>
           <CompositionBars rows={sourceRegistrationRows} emptyText="No source files loaded." />
         </article>
         <article className="data-section">
-          <h3 className="section-title">Embedding Status</h3>
+          <h3 className="section-title">{ui("Embedding Status")}</h3>
           <CompositionBars rows={embeddingStatusRows} emptyText="Embedding status is not included." />
         </article>
       </section>
@@ -261,15 +263,15 @@ export default function ProvenancePage() {
         <section className="provenance-main">
           <section className="data-section">
             <div className="section-toolbar">
-              <h3 className="section-title">Manifest Controls</h3>
+              <h3 className="section-title">{ui("Manifest Controls")}</h3>
               <button className="button secondary-button" disabled={loading} onClick={() => void loadManifest()} type="button">
                 <FileJson size={15} aria-hidden="true" />
-                Build Manifest
+                {ui("Build Manifest")}
               </button>
             </div>
             <div className="provenance-control-grid">
               <label className="settings-field" htmlFor="provenance-limit-documents" title="Maximum retrieval documents included in the visible manifest payload.">
-                <span>Document limit</span>
+                <span>{ui("Document limit")}</span>
                 <input
                   className="field"
                   id="provenance-limit-documents"
@@ -282,23 +284,23 @@ export default function ProvenancePage() {
               </label>
               <label className="checkbox-row provenance-checkbox" title="Query database embedding status for the manifest document window.">
                 <input checked={includeEmbeddings} onChange={(event) => setIncludeEmbeddings(event.target.checked)} type="checkbox" />
-                <span>Include embedding treatment</span>
+                <span>{ui("Include embedding treatment")}</span>
               </label>
             </div>
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Source Files</h3>
+            <h3 className="section-title">{ui("Source Files")}</h3>
             <DataTable columns={sourceColumns} rows={sourceRows} rowKeyColumn="id" />
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Artifact Versions</h3>
+            <h3 className="section-title">{ui("Artifact Versions")}</h3>
             <DataTable columns={artifactColumns} rows={artifactRows} rowKeyColumn="id" />
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Document Trace Index</h3>
+            <h3 className="section-title">{ui("Document Trace Index")}</h3>
             <DataTable
               columns={documentColumns}
               rows={documentRows}
@@ -314,12 +316,12 @@ export default function ProvenancePage() {
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Embedding Treatment</h3>
+            <h3 className="section-title">{ui("Embedding Treatment")}</h3>
             <DataTable columns={embeddingColumns} rows={embeddingRows} rowKeyColumn="doc_id" />
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Limitations</h3>
+            <h3 className="section-title">{ui("Limitations")}</h3>
             <pre className="code-block">{JSON.stringify(manifest?.limitations || [], null, 2)}</pre>
           </section>
         </section>
@@ -329,10 +331,10 @@ export default function ProvenancePage() {
         <section className="provenance-main">
           <section className="data-section">
             <div className="section-toolbar">
-              <h3 className="section-title">Document Lookup</h3>
+              <h3 className="section-title">{ui("Document Lookup")}</h3>
               <button className="button" disabled={!docId || loading} onClick={() => void loadTrace()} type="button">
                 <Search size={15} aria-hidden="true" />
-                Trace
+                {ui("Trace")}
               </button>
             </div>
             <div className="provenance-search-grid">
@@ -351,27 +353,27 @@ export default function ProvenancePage() {
           {trace ? (
             <>
               <section className="data-section">
-                <h3 className="section-title">Trace Summary</h3>
+                <h3 className="section-title">{ui("Trace Summary")}</h3>
                 <div className="summary-strip">
-                  <SummaryCell label="Found" value={formatCell(trace.found)} />
-                  <SummaryCell label="Source" value={formatCell(traceDocument.source_type)} />
-                  <SummaryCell label="Sample" value={formatCell(traceDocument.sample_id)} />
-                  <SummaryCell label="Embedding" value={formatCell(traceEmbedding.embedding_status)} />
+                  <SummaryCell label={ui("Found")} value={formatCell(trace.found)} />
+                  <SummaryCell label={ui("Source")} value={formatCell(traceDocument.source_type)} />
+                  <SummaryCell label={ui("Sample")} value={formatCell(traceDocument.sample_id)} />
+                  <SummaryCell label={ui("Embedding")} value={formatCell(traceEmbedding.embedding_status)} />
                 </div>
               </section>
 
               <section className="data-section">
-                <h3 className="section-title">Trace Rail</h3>
+                <h3 className="section-title">{ui("Trace Rail")}</h3>
                 <TraceRail rows={tracePathRows} />
               </section>
 
               <section className="trace-grid">
                 <article className="data-section">
-                  <h3 className="section-title">Trace Path</h3>
+                  <h3 className="section-title">{ui("Trace Path")}</h3>
                   <DataTable columns={tracePathColumns} rows={tracePathRows} rowKeyColumn="step" />
                 </article>
                 <article className="data-section">
-                  <h3 className="section-title">Document</h3>
+                  <h3 className="section-title">{ui("Document")}</h3>
                   <table className="debug-table">
                     <tbody>
                       {Object.entries(traceDocument).map(([key, value]) => (
@@ -386,17 +388,17 @@ export default function ProvenancePage() {
               </section>
 
               <section className="data-section">
-                <h3 className="section-title">Derived Artifacts</h3>
+                <h3 className="section-title">{ui("Derived Artifacts")}</h3>
                 <DataTable columns={artifactColumns} rows={traceArtifacts} rowKeyColumn="id" />
               </section>
 
               <section className="data-section">
-                <h3 className="section-title">Source Files</h3>
+                <h3 className="section-title">{ui("Source Files")}</h3>
                 <DataTable columns={sourceColumns} rows={traceSourceFiles} rowKeyColumn="id" />
               </section>
 
               <section className="data-section">
-                <h3 className="section-title">Raw Trace Payload</h3>
+                <h3 className="section-title">{ui("Raw Trace Payload")}</h3>
                 <pre className="code-block report-block">{JSON.stringify(trace, null, 2)}</pre>
               </section>
             </>
@@ -410,10 +412,10 @@ export default function ProvenancePage() {
         <section className="provenance-main">
           <section className="data-section">
             <div className="section-toolbar">
-              <h3 className="section-title">Dry-Run Controls</h3>
+              <h3 className="section-title">{ui("Dry-Run Controls")}</h3>
               <button className="button" disabled={loading} onClick={() => void loadUpsertDryRun()} type="button">
                 <RefreshCw size={15} aria-hidden="true" />
-                Run Dry-Run
+                {ui("Run Dry-Run")}
               </button>
             </div>
             <div className="provenance-control-grid">
@@ -496,9 +498,10 @@ function TabButton({
   label: string;
   onClick: () => void;
 }) {
+  const { ui } = useAppPreferences();
   return (
     <button className={active ? "active" : undefined} onClick={onClick} type="button">
-      {label}
+      {ui(label)}
     </button>
   );
 }

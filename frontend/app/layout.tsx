@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 import { AppShell } from "@/components/AppShell";
+import { AppPreferencesProvider } from "@/lib/preferences";
 
 export const metadata: Metadata = {
   title: "Onagawa Source Chat",
@@ -10,9 +11,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <AppShell>{children}</AppShell>
+        <AppPreferencesProvider>
+          <AppShell>{children}</AppShell>
+        </AppPreferencesProvider>
       </body>
     </html>
   );

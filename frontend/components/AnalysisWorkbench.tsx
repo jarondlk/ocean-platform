@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { RefreshCw } from "lucide-react";
 import { DataTable, formatCell } from "@/components/DataTable";
 import { getAnalysis } from "@/lib/api";
+import { useAppPreferences } from "@/lib/preferences";
 import type { AnalysisResponse } from "@/types";
 
 type AnalysisView = "trends" | "correlations" | "diversity" | "cooccurrence" | "reliability";
@@ -22,6 +23,7 @@ const trendLabels: Record<string, string> = {
 };
 
 export function AnalysisWorkbench({ scope = "all" }: { scope?: AnalysisScope }) {
+  const { ui } = useAppPreferences();
   const [analysis, setAnalysis] = useState<AnalysisResponse | null>(null);
   const [view, setView] = useState<AnalysisView>(scope === "reliability" ? "reliability" : "trends");
   const [trendVariable, setTrendVariable] = useState("mean_temperature");
@@ -93,7 +95,7 @@ export function AnalysisWorkbench({ scope = "all" }: { scope?: AnalysisScope }) 
   return (
     <section className="analysis-workbench">
       {visibleTabs.length > 1 ? (
-        <div className="data-tabs" role="tablist" aria-label="Analysis views">
+        <div className="data-tabs" role="tablist" aria-label={ui("Analysis views")}>
           {visibleTabs.map((item) => (
             <TabButton
               active={view === item.view}
@@ -106,10 +108,10 @@ export function AnalysisWorkbench({ scope = "all" }: { scope?: AnalysisScope }) 
       ) : null}
 
       <div className="section-toolbar">
-        <span className="empty-state">{loading ? "Loading artifacts." : "Artifacts loaded."}</span>
+        <span className="empty-state">{loading ? ui("Loading artifacts.") : ui("Artifacts loaded.")}</span>
         <button className="button secondary-button" onClick={() => void load()} type="button">
           <RefreshCw size={15} aria-hidden="true" />
-          Refresh
+          {ui("Refresh")}
         </button>
       </div>
       {error ? <p className="error-text">{error}</p> : null}
@@ -118,7 +120,7 @@ export function AnalysisWorkbench({ scope = "all" }: { scope?: AnalysisScope }) 
         <section className="analysis-view">
           <div className="data-controls">
             <label className="settings-field" htmlFor="trend-variable" title="Monthly trend variable to plot by bay.">
-              <span>Variable</span>
+              <span>{ui("Variable")}</span>
               <select id="trend-variable" className="field" value={trendVariable} onChange={(event) => setTrendVariable(event.target.value)}>
                 {trendVariables.map((variable) => (
                   <option key={variable} value={variable}>{trendLabels[variable] || variable}</option>
@@ -134,14 +136,14 @@ export function AnalysisWorkbench({ scope = "all" }: { scope?: AnalysisScope }) 
       {view === "correlations" ? (
         <section className="analysis-view">
           <div className="summary-strip">
-            <SummaryCell label="Pairs" value={formatCell(correlationSummary.total)} />
-            <SummaryCell label="Significant" value={formatCell(correlationSummary.significant)} />
-            <SummaryCell label="Genera" value={formatCell(correlationSummary.genera)} />
-            <SummaryCell label="Variables" value={formatCell(correlationSummary.env_variables)} />
+            <SummaryCell label={ui("Pairs")} value={formatCell(correlationSummary.total)} />
+            <SummaryCell label={ui("Significant")} value={formatCell(correlationSummary.significant)} />
+            <SummaryCell label={ui("Genera")} value={formatCell(correlationSummary.genera)} />
+            <SummaryCell label={ui("Variables")} value={formatCell(correlationSummary.env_variables)} />
           </div>
           <label className="checkbox-row" title="Restrict table and heatmap to p<0.05 rows.">
             <input checked={significantOnly} onChange={(event) => setSignificantOnly(event.target.checked)} type="checkbox" />
-            <span>Significant only</span>
+            <span>{ui("Significant only")}</span>
           </label>
           <CorrelationHeatmap rows={correlationRows} />
           <DataTable columns={["genus", "env_variable", "spearman_rho", "p_value", "n_samples", "significant"]} rows={correlationRows} />
@@ -152,7 +154,7 @@ export function AnalysisWorkbench({ scope = "all" }: { scope?: AnalysisScope }) 
         <section className="analysis-view">
           <div className="data-controls">
             <label className="settings-field" htmlFor="diversity-source" title="Taxonomic source used for diversity metrics.">
-              <span>Source</span>
+              <span>{ui("Source")}</span>
               <select id="diversity-source" className="field" value={diversitySource} onChange={(event) => setDiversitySource(event.target.value)}>
                 {diversitySources.map((source) => <option key={source} value={source}>{source}</option>)}
               </select>
@@ -167,7 +169,7 @@ export function AnalysisWorkbench({ scope = "all" }: { scope?: AnalysisScope }) 
         <section className="analysis-view">
           <div className="data-controls">
             <label className="settings-field" htmlFor="pair-limit" title="Number of strongest co-occurring genus pairs to fetch.">
-              <span>Top pairs</span>
+              <span>{ui("Top pairs")}</span>
               <select
                 id="pair-limit"
                 className="field"
@@ -194,7 +196,7 @@ export function AnalysisWorkbench({ scope = "all" }: { scope?: AnalysisScope }) 
         <section className="analysis-view">
           <div className="data-controls">
             <label className="settings-field" htmlFor="reliability-view" title="Cross-source reliability artifact to inspect.">
-              <span>Check</span>
+              <span>{ui("Check")}</span>
               <select id="reliability-view" className="field" value={reliabilityView} onChange={(event) => setReliabilityView(event.target.value as ReliabilityView)}>
                 <option value="sst_ctd">SST / CTD validation</option>
                 <option value="gap">Gap interpolation</option>
@@ -213,7 +215,8 @@ export function AnalysisWorkbench({ scope = "all" }: { scope?: AnalysisScope }) 
 }
 
 function TabButton({ active, label, onClick }: { active: boolean; label: string; onClick: () => void }) {
-  return <button className={active ? "active" : ""} onClick={onClick} type="button">{label}</button>;
+  const { ui } = useAppPreferences();
+  return <button className={active ? "active" : ""} onClick={onClick} type="button">{ui(label)}</button>;
 }
 
 function SummaryCell({ label, value }: { label: string; value: string | number }) {

@@ -6,6 +6,7 @@ import { RefreshCw } from "lucide-react";
 import { AnalysisWorkbench } from "@/components/AnalysisWorkbench";
 import { DataTable, formatCell } from "@/components/DataTable";
 import { getCtdProfile, getDataCatalog, getSstData, getTaxaSample } from "@/lib/api";
+import { useAppPreferences } from "@/lib/preferences";
 import type {
   CtdProfileResponse,
   DataCatalogResponse,
@@ -39,6 +40,7 @@ export default function DataPage() {
 }
 
 function DataPageContent() {
+  const { ui } = useAppPreferences();
   const searchParams = useSearchParams();
   const requestedView = searchParams.get("view");
   const [catalog, setCatalog] = useState<DataCatalogResponse | null>(null);
@@ -141,27 +143,27 @@ function DataPageContent() {
   return (
     <section>
       <header className="page-header">
-        <h2>Data</h2>
+        <h2>{ui("Data")}</h2>
       </header>
 
-      <div className="data-tabs" role="tablist" aria-label="Data views">
+      <div className="data-tabs" role="tablist" aria-label={ui("Data views")}>
         <button className={view === "observations" ? "active" : ""} onClick={() => setView("observations")} type="button">
-          Observations
+          {ui("Observations")}
         </button>
         <button className={view === "ctd" ? "active" : ""} onClick={() => setView("ctd")} type="button">
           CTD
         </button>
         <button className={view === "taxa" ? "active" : ""} onClick={() => setView("taxa")} type="button">
-          Taxa
+          {ui("Taxa")}
         </button>
         <button className={view === "sst" ? "active" : ""} onClick={() => setView("sst")} type="button">
           SST
         </button>
         <button className={view === "analysis" ? "active" : ""} onClick={() => setView("analysis")} type="button">
-          Derived Analysis
+          {ui("Derived Analysis")}
         </button>
         <button className={view === "reliability" ? "active" : ""} onClick={() => setView("reliability")} type="button">
-          Reliability
+          {ui("Reliability")}
         </button>
       </div>
 
@@ -170,15 +172,15 @@ function DataPageContent() {
       {view === "observations" ? (
         <section className="data-view">
           <div className="summary-strip">
-            <SummaryCell label="CTD samples" value={catalog?.ctd_samples.length ?? "..."} />
-            <SummaryCell label="Taxa samples" value={catalog?.taxa_samples.length ?? "..."} />
-            <SummaryCell label="SST observations" value={formatCell(catalog?.sst_observations)} />
-            <SummaryCell label="SST days" value={formatCell(catalog?.sst_days)} />
+            <SummaryCell label={ui("CTD samples")} value={catalog?.ctd_samples.length ?? "..."} />
+            <SummaryCell label={ui("Taxa samples")} value={catalog?.taxa_samples.length ?? "..."} />
+            <SummaryCell label={ui("SST observations")} value={formatCell(catalog?.sst_observations)} />
+            <SummaryCell label={ui("SST days")} value={formatCell(catalog?.sst_days)} />
           </div>
 
           <section className="dashboard-grid">
             <article className="data-section">
-              <h3 className="section-title">Observation Classes</h3>
+              <h3 className="section-title">{ui("Observation Classes")}</h3>
               <ObservationBars
                 rows={[
                   { label: "CTD", value: catalog?.ctd_samples.length || 0 },
@@ -188,13 +190,13 @@ function DataPageContent() {
               />
             </article>
             <article className="data-section">
-              <h3 className="section-title">Catalog</h3>
+              <h3 className="section-title">{ui("Catalog")}</h3>
               <table className="debug-table">
                 <tbody>
-                  <CatalogRow label="CTD variables" value={catalog?.ctd_variables.length} />
-                  <CatalogRow label="Context rows" value={catalog?.context_rows} />
-                  <CatalogRow label="Default CTD sample" value={ctdSample || "NA"} />
-                  <CatalogRow label="Default taxa sample" value={taxaSample || "NA"} />
+                  <CatalogRow label={ui("CTD variables")} value={catalog?.ctd_variables.length} />
+                  <CatalogRow label={ui("Context rows")} value={catalog?.context_rows} />
+                  <CatalogRow label={ui("Default CTD sample")} value={ctdSample || "NA"} />
+                  <CatalogRow label={ui("Default taxa sample")} value={taxaSample || "NA"} />
                 </tbody>
               </table>
             </article>
@@ -206,7 +208,7 @@ function DataPageContent() {
         <section className="data-view">
           <div className="data-controls">
             <label className="settings-field" htmlFor="ctd-sample" title="CTD sample identifier to profile by depth.">
-              <span>Sample</span>
+              <span>{ui("Sample")}</span>
               <select
                 id="ctd-sample"
                 className="field"
@@ -225,20 +227,20 @@ function DataPageContent() {
             </label>
             <button className="button secondary-button" disabled={loading || !ctdSample} onClick={() => void loadCtd()} type="button">
               <RefreshCw size={15} aria-hidden="true" />
-              Refresh
+              {ui("Refresh")}
             </button>
           </div>
 
           <div className="summary-strip">
-            <SummaryCell label="Depth points" value={formatCell(ctdProfile?.summary?.n_depth_points)} />
-            <SummaryCell label="Max depth" value={formatMetric(ctdProfile?.summary?.max_depth_m, "m")} />
-            <SummaryCell label="Surface T" value={formatMetric(ctdProfile?.summary?.surface_temperature, "C")} />
-            <SummaryCell label="Mean salinity" value={formatMetric(ctdProfile?.summary?.mean_salinity, "PSU")} />
+            <SummaryCell label={ui("Depth points")} value={formatCell(ctdProfile?.summary?.n_depth_points)} />
+            <SummaryCell label={ui("Max depth")} value={formatMetric(ctdProfile?.summary?.max_depth_m, "m")} />
+            <SummaryCell label={ui("Surface T")} value={formatMetric(ctdProfile?.summary?.surface_temperature, "C")} />
+            <SummaryCell label={ui("Mean salinity")} value={formatMetric(ctdProfile?.summary?.mean_salinity, "PSU")} />
           </div>
 
           <section className="data-section">
             <div className="section-toolbar">
-              <h3 className="section-title">Depth Profiles</h3>
+              <h3 className="section-title">{ui("Depth Profiles")}</h3>
               <div className="variable-grid">
                 {(ctdProfile?.variables || catalog?.ctd_variables || []).map((variable) => (
                   <label className="checkbox-row" key={variable} title={`Toggle ${variable} profile.`}>
@@ -262,7 +264,7 @@ function DataPageContent() {
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Profile Table</h3>
+            <h3 className="section-title">{ui("Profile Table")}</h3>
             <DataTable columns={["depth_m", ...selectedVars]} rows={ctdTableRows} rowKeyColumn="depth_m" />
           </section>
         </section>
@@ -272,7 +274,7 @@ function DataPageContent() {
         <section className="data-view">
           <div className="data-controls">
             <label className="settings-field" htmlFor="taxa-sample" title="Metagenome sample to inspect.">
-              <span>Sample</span>
+              <span>{ui("Sample")}</span>
               <select
                 id="taxa-sample"
                 className="field"
@@ -291,21 +293,21 @@ function DataPageContent() {
             </label>
             <button className="button secondary-button" disabled={loading || !taxaSample} onClick={() => void loadTaxa()} type="button">
               <RefreshCw size={15} aria-hidden="true" />
-              Refresh
+              {ui("Refresh")}
             </button>
           </div>
 
           <div className="summary-strip">
-            <SummaryCell label="Runs" value={formatCell(taxa?.context?.n_runs)} />
-            <SummaryCell label="Reads >1kb" value={formatCell(taxa?.context?.sum_reads_gt1kb)} />
-            <SummaryCell label="Kraken genera" value={taxa?.kraken_top.length ?? "..."} />
-            <SummaryCell label="MetaEuk genera" value={taxa?.metaeuk_top.length ?? "..."} />
+            <SummaryCell label={ui("Runs")} value={formatCell(taxa?.context?.n_runs)} />
+            <SummaryCell label={ui("Reads >1kb")} value={formatCell(taxa?.context?.sum_reads_gt1kb)} />
+            <SummaryCell label={ui("Kraken genera")} value={taxa?.kraken_top.length ?? "..."} />
+            <SummaryCell label={ui("MetaEuk genera")} value={taxa?.metaeuk_top.length ?? "..."} />
           </div>
 
           <div className="taxa-grid">
-            <BarPanel title="Kraken Top Genera" entries={taxa?.kraken_top || []} />
-            <BarPanel title="MetaEuk Top Genera" entries={taxa?.metaeuk_top || []} />
-            <BarPanel title="Dominant Groups" entries={taxa?.upper_groups || []} />
+            <BarPanel title={ui("Kraken Top Genera")} entries={taxa?.kraken_top || []} />
+            <BarPanel title={ui("MetaEuk Top Genera")} entries={taxa?.metaeuk_top || []} />
+            <BarPanel title={ui("Dominant Groups")} entries={taxa?.upper_groups || []} />
           </div>
         </section>
       ) : null}
@@ -314,15 +316,15 @@ function DataPageContent() {
         <section className="data-view">
           <form className="data-controls" onSubmit={submitSst}>
             <label className="settings-field" htmlFor="sst-from" title="Inclusive lower bound for SST timestamps.">
-              <span>From</span>
+              <span>{ui("From")}</span>
               <input id="sst-from" className="field" type="date" value={sstFrom} onChange={(event) => setSstFrom(event.target.value)} />
             </label>
             <label className="settings-field" htmlFor="sst-to" title="Inclusive upper bound for SST timestamps.">
-              <span>To</span>
+              <span>{ui("To")}</span>
               <input id="sst-to" className="field" type="date" value={sstTo} onChange={(event) => setSstTo(event.target.value)} />
             </label>
             <label className="settings-field" htmlFor="sst-limit" title="Maximum hourly SST observations to render.">
-              <span>Limit</span>
+              <span>{ui("Limit")}</span>
               <select id="sst-limit" className="field" value={sstLimit} onChange={(event) => setSstLimit(Number(event.target.value))}>
                 <option value={250}>250</option>
                 <option value={500}>500</option>
@@ -332,23 +334,23 @@ function DataPageContent() {
               </select>
             </label>
             <button className="button" disabled={loading}>
-              Apply
+              {ui("Apply")}
             </button>
           </form>
 
           <div className="summary-strip">
-            <SummaryCell label="Observations" value={sst?.observations ?? "..."} />
-            <SummaryCell label="Days" value={sst?.days ?? "..."} />
-            <SummaryCell label="Mean SST" value={formatMetric(sst?.stats.mean_sst, "C")} />
-            <SummaryCell label="Max SST" value={formatMetric(sst?.stats.max_sst, "C")} />
+            <SummaryCell label={ui("Observations")} value={sst?.observations ?? "..."} />
+            <SummaryCell label={ui("Days")} value={sst?.days ?? "..."} />
+            <SummaryCell label={ui("Mean SST")} value={formatMetric(sst?.stats.mean_sst, "C")} />
+            <SummaryCell label={ui("Max SST")} value={formatMetric(sst?.stats.max_sst, "C")} />
           </div>
 
           <section className="data-section">
-            <h3 className="section-title">Point SST</h3>
+            <h3 className="section-title">{ui("Point SST")}</h3>
             <SstPointChart points={sst?.points || []} />
           </section>
           <section className="data-section">
-            <h3 className="section-title">Daily Regional Range</h3>
+            <h3 className="section-title">{ui("Daily Regional Range")}</h3>
             <SstDailyChart points={sst?.daily || []} />
           </section>
         </section>
@@ -362,12 +364,13 @@ function DataPageContent() {
 }
 
 function DataPageFallback() {
+  const { ui } = useAppPreferences();
   return (
     <section>
       <header className="page-header">
-        <h2>Data</h2>
+        <h2>{ui("Data")}</h2>
       </header>
-      <p className="empty-state">Loading data workspace.</p>
+      <p className="empty-state">{ui("Loading data workspace.")}</p>
     </section>
   );
 }
@@ -412,8 +415,9 @@ function ObservationBars({ rows }: { rows: { label: string; value: number }[] })
 }
 
 function DepthProfileChart({ rows, variables }: { rows: Record<string, unknown>[]; variables: string[] }) {
+  const { ui } = useAppPreferences();
   if (!rows.length || !variables.length) {
-    return <p className="empty-state">No profile variables selected.</p>;
+    return <p className="empty-state">{ui("No profile variables selected.")}</p>;
   }
   return (
     <div className="profile-grid">
@@ -463,10 +467,11 @@ function ProfilePanel({ rows, variable }: { rows: Record<string, unknown>[]; var
 }
 
 function BarPanel({ title, entries }: { title: string; entries: TaxaEntry[] }) {
+  const { ui } = useAppPreferences();
   return (
     <section className="data-section">
       <h3 className="section-title">{title}</h3>
-      {entries.length ? <HorizontalBars entries={entries} /> : <p className="empty-state">No taxa values for this sample.</p>}
+      {entries.length ? <HorizontalBars entries={entries} /> : <p className="empty-state">{ui("No taxa values for this sample.")}</p>}
     </section>
   );
 }
@@ -516,8 +521,9 @@ function LineChart({
   emptyText: string;
   ranges?: boolean;
 }) {
+  const { ui } = useAppPreferences();
   const valid = points.filter((point) => Number.isFinite(point.x) && Number.isFinite(point.y));
-  if (!valid.length) return <p className="empty-state">{emptyText}</p>;
+  if (!valid.length) return <p className="empty-state">{ui(emptyText)}</p>;
   const width = 820;
   const height = 280;
   const pad = { top: 18, right: 18, bottom: 38, left: 58 };
