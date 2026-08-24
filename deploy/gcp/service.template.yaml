@@ -102,6 +102,12 @@ spec:
               value: /mnt/onagawa-data/raw/himawari
             - name: JOB_EXECUTION_MODE
               value: external
+            - name: PROVENANCE_READ_MODE
+              value: snapshot
+            - name: PROVENANCE_SNAPSHOT_URI
+              value: gs://DATA_BUCKET/provenance
+            - name: PROVENANCE_CACHE_TTL_SECONDS
+              value: "60"
             - name: DATABASE_POOL_SIZE
               value: "5"
             - name: DATABASE_MAX_OVERFLOW

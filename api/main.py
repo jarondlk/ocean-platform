@@ -38,6 +38,7 @@ from api.chat_records import (
     record_chat_context,
 )
 from api.feedback_routes import router as feedback_router
+from api.provenance_snapshot_service import get_provenance_snapshot_service
 from api.schemas import (
     ChatRequest,
     ChatResponse,
@@ -119,6 +120,7 @@ from ingestion.lineage import (
     build_provenance_manifest,
     build_upsert_dry_run_plan,
 )
+from ingestion.provenance_snapshot import SnapshotError
 from model_runtime import get_model_runtime
 
 
@@ -463,6 +465,23 @@ PIPELINE_STAGES: List[Dict[str, Any]] = [
         "destructive": False,
         "expensive": True,
     },
+    {
+        "id": "publish_provenance",
+        "label": "Publish provenance snapshot",
+        "description": "Build and validate the complete lineage manifest, publish an immutable snapshot, and advance the generation-guarded latest pointer.",
+        "command": ["python", "scripts/build_provenance_manifest.py", "--publish"],
+        "expected_inputs": [
+            "data/provenance/provenance.jsonl",
+            "data/serving/retrieval_documents.parquet",
+            "PostgreSQL retrieval_document embedding status",
+        ],
+        "expected_outputs": [
+            "provenance/manifests/<run-id>.json",
+            "provenance/latest.json",
+        ],
+        "destructive": False,
+        "expensive": True,
+    },
 ]
 PIPELINE_STAGE_IDS = {stage["id"] for stage in PIPELINE_STAGES}
 PIPELINE_STAGE_BY_ID = {stage["id"]: stage for stage in PIPELINE_STAGES}
@@ -474,6 +493,7 @@ PIPELINE_DEFAULT_STAGES = [
     "reliability",
     "backup_database",
     "load_db",
+    "publish_provenance",
 ]
 PIPELINE_JOB_LOCK = threading.Lock()
 PIPELINE_CANCEL_EVENTS: Dict[str, threading.Event] = {}
@@ -1318,6 +1338,7 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
         ("load_db", "serving:retrieval_parquet", "build_retrieval_docs", "Retrieval parquet corpus"),
         ("load_db", "canonical:anchors", "build_retrieval_docs", "Anchor events"),
         ("load_db", "canonical:links", "build_retrieval_docs", "Cross-source links"),
+        ("publish_provenance", "serving:retrieval_parquet", "build_retrieval_docs", "Retrieval parquet corpus"),
     ]
     for stage_id, artifact_id, producer, label in dependency_checks:
         if stage_id not in request.stages:
@@ -1343,6 +1364,7 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
         "backup_database" in request.stages
         or "load_db" in request.stages
         or "embed_documents" in request.stages
+        or "publish_provenance" in request.stages
     )
     if needs_database:
         db_available = bool(database.get("available"))
@@ -1417,6 +1439,26 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
                 )
             ),
             required=reset_confirmation_required,
+        )
+
+    if "publish_provenance" in request.stages:
+        publication_id = (request.tag or "").strip()
+        has_publication_id = bool(
+            re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", publication_id)
+        )
+        _pipeline_check(
+            checks,
+            id_="provenance_publication_id",
+            label="Immutable provenance publication ID",
+            passed=request.dry_run or has_publication_id,
+            detail=(
+                "Dry-run uses a placeholder and does not publish objects."
+                if request.dry_run and not has_publication_id
+                else f"Snapshot publication ID: {publication_id}"
+                if has_publication_id
+                else "Executing publish_provenance requires a unique 1-128 character pipeline tag using letters, numbers, '.', '_', or '-'."
+            ),
+            required=not request.dry_run,
         )
 
     if "backup_database" in request.stages:
@@ -1749,7 +1791,12 @@ def _validate_pipeline_stages(stage_ids: List[str]) -> None:
         raise HTTPException(status_code=400, detail=f"Unknown pipeline stage: {unknown[0]}")
 
 
-def _pipeline_command(stage_id: str, request: PipelineRunRequest) -> List[str]:
+def _pipeline_command(
+    stage_id: str,
+    request: PipelineRunRequest,
+    *,
+    pipeline_run_id: Optional[str] = None,
+) -> List[str]:
     command_map: Dict[str, List[str]] = {
         "validate_raw": [sys.executable, "scripts/ingest.py", "--validate-only"],
         "ingest": [sys.executable, "scripts/ingest.py"],
@@ -1772,6 +1819,15 @@ def _pipeline_command(stage_id: str, request: PipelineRunRequest) -> List[str]:
             "scripts/update_embeddings.py",
             "--batch-size",
             str(request.embedding_batch_size),
+        ],
+        "publish_provenance": [
+            sys.executable,
+            "scripts/build_provenance_manifest.py",
+            "--publish",
+            "--run-id",
+            request.tag or "dry-run-placeholder",
+            "--pipeline-run-id",
+            pipeline_run_id or request.tag or "dry-run-placeholder",
         ],
     }
     command = list(command_map[stage_id])
@@ -1853,7 +1909,7 @@ def _run_pipeline_job(
             meta["status"] = "cancelled"
             break
 
-        command = _pipeline_command(stage_id, request)
+        command = _pipeline_command(stage_id, request, pipeline_run_id=run_id)
         command_text = _display_command(command)
         stage_started = time.time()
         _pipeline_append_log(job_id, "")
@@ -3486,9 +3542,25 @@ def pipeline_cancel_job(job_id: str) -> PipelineJobStatus:
 
 @app.get("/provenance/manifest", response_model=ProvenanceManifestResponse)
 def provenance_manifest(
-    limit_documents: int = Query(default=500, ge=1, le=10000),
+    limit_documents: int = Query(default=100, ge=1, le=500),
     include_embeddings: bool = Query(default=True),
 ) -> ProvenanceManifestResponse:
+    if config.PROVENANCE_READ_MODE == "snapshot":
+        try:
+            payload = get_provenance_snapshot_service().manifest_payload(
+                limit_documents=limit_documents,
+                include_embeddings=include_embeddings,
+            )
+        except SnapshotError as exc:
+            logger.warning("Provenance snapshot unavailable: %s", exc)
+            raise HTTPException(
+                status_code=503,
+                detail={
+                    "code": "provenance_snapshot_unavailable",
+                    "message": "The published Provenance snapshot is unavailable or invalid.",
+                },
+            ) from exc
+        return ProvenanceManifestResponse(**payload)
     return ProvenanceManifestResponse(
         **build_provenance_manifest(
             limit_documents=limit_documents,
@@ -3499,6 +3571,19 @@ def provenance_manifest(
 
 @app.get("/provenance/trace/{doc_id}", response_model=ProvenanceTraceResponse)
 def provenance_trace(doc_id: str) -> ProvenanceTraceResponse:
+    if config.PROVENANCE_READ_MODE == "snapshot":
+        try:
+            payload = get_provenance_snapshot_service().trace_payload(doc_id)
+        except SnapshotError as exc:
+            logger.warning("Provenance snapshot unavailable: %s", exc)
+            raise HTTPException(
+                status_code=503,
+                detail={
+                    "code": "provenance_snapshot_unavailable",
+                    "message": "The published Provenance snapshot is unavailable or invalid.",
+                },
+            ) from exc
+        return ProvenanceTraceResponse(**payload)
     return ProvenanceTraceResponse(**build_document_trace(doc_id))
 
 

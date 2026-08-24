@@ -2,6 +2,7 @@ from fastapi.testclient import TestClient
 
 import api.main as api_main
 from api.main import app
+from ingestion.provenance_snapshot import SnapshotError
 
 
 client = TestClient(app)
@@ -36,6 +37,42 @@ def test_provenance_manifest_endpoint_passes_controls(monkeypatch):
     assert payload["source_files"][0]["id"] == "raw:ctd"
 
 
+def test_snapshot_manifest_endpoint_never_calls_dynamic_builder(monkeypatch):
+    class FakeSnapshotService:
+        def manifest_payload(self, *, limit_documents, include_embeddings):
+            assert limit_documents == 7
+            assert include_embeddings is False
+            return {
+                "schema_version": 2,
+                "generated_at": "2026-08-24T00:00:00+00:00",
+                "project_root": "/repo",
+                "snapshot": {"manifest_id": "snapshot-1"},
+                "summary": {"documents": 1},
+                "source_files": [],
+                "artifacts": [],
+                "documents": [{"doc_id": "ctd_doc_1"}],
+                "embeddings": [],
+                "limitations": [],
+            }
+
+    monkeypatch.setattr(api_main.config, "PROVENANCE_READ_MODE", "snapshot")
+    monkeypatch.setattr(
+        api_main,
+        "get_provenance_snapshot_service",
+        lambda: FakeSnapshotService(),
+    )
+    monkeypatch.setattr(
+        api_main,
+        "build_provenance_manifest",
+        lambda **_: (_ for _ in ()).throw(AssertionError("dynamic builder called")),
+    )
+
+    response = client.get("/provenance/manifest?limit_documents=7&include_embeddings=false")
+
+    assert response.status_code == 200
+    assert response.json()["snapshot"]["manifest_id"] == "snapshot-1"
+
+
 def test_provenance_trace_endpoint_returns_lineage_payload(monkeypatch):
     monkeypatch.setattr(
         api_main,
@@ -56,6 +93,55 @@ def test_provenance_trace_endpoint_returns_lineage_payload(monkeypatch):
     payload = response.json()
     assert payload["found"] is True
     assert payload["trace"]["document"]["doc_id"] == "ctd_doc_1"
+
+
+def test_snapshot_trace_endpoint_never_calls_dynamic_builder(monkeypatch):
+    class FakeSnapshotService:
+        def trace_payload(self, doc_id):
+            return {
+                "doc_id": doc_id,
+                "found": True,
+                "snapshot": {"manifest_id": "snapshot-1"},
+                "trace": {"document": {"doc_id": doc_id}},
+            }
+
+    monkeypatch.setattr(api_main.config, "PROVENANCE_READ_MODE", "snapshot")
+    monkeypatch.setattr(
+        api_main,
+        "get_provenance_snapshot_service",
+        lambda: FakeSnapshotService(),
+    )
+    monkeypatch.setattr(
+        api_main,
+        "build_document_trace",
+        lambda *_: (_ for _ in ()).throw(AssertionError("dynamic builder called")),
+    )
+
+    response = client.get("/provenance/trace/ctd_doc_1")
+
+    assert response.status_code == 200
+    assert response.json()["snapshot"]["manifest_id"] == "snapshot-1"
+
+
+def test_snapshot_endpoint_fails_closed_when_publication_is_invalid(monkeypatch):
+    class FailedSnapshotService:
+        def manifest_payload(self, **_):
+            raise SnapshotError("digest mismatch")
+
+    monkeypatch.setattr(api_main.config, "PROVENANCE_READ_MODE", "snapshot")
+    monkeypatch.setattr(
+        api_main,
+        "get_provenance_snapshot_service",
+        lambda: FailedSnapshotService(),
+    )
+
+    response = client.get("/provenance/manifest")
+
+    assert response.status_code == 503
+    assert response.json()["detail"] == {
+        "code": "provenance_snapshot_unavailable",
+        "message": "The published Provenance snapshot is unavailable or invalid.",
+    }
 
 
 def test_provenance_upsert_dry_run_endpoint_returns_plan(monkeypatch):

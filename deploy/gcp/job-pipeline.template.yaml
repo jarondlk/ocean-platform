@@ -38,6 +38,8 @@ spec:
                       key: latest
                 - name: DATA_DIR
                   value: /mnt/onagawa-data
+                - name: PROVENANCE_SNAPSHOT_URI
+                  value: gs://DATA_BUCKET/provenance
                 - name: SST_NETCDF_DIR
                   value: /mnt/onagawa-data/raw/sst-netcdf
                 - name: HIMAWARI_RAW_DIR

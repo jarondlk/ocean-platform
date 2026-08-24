@@ -286,7 +286,8 @@ enforcement remains separate implementation work.
    Dependabot alerts close; CodeQL remains enabled through GitHub default setup.
 2. Retention enforcement is implemented and reviewed before the cohort expands;
    the approved policy by itself does not authorize immediate deletion.
-3. The provenance-manifest concurrency follow-up is dispositioned before that
+3. The Provenance snapshot fast path is implemented on `gcp-dev`; publish and
+   verify its first cloud snapshot and repeat the concurrency gate before that
    diagnostic is used repeatedly by a larger cohort.
 4. Posted billing is reviewed after 24 hours and again after seven days. Per the
    operator's decision, these reviews remain pending until their data is due.

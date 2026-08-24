@@ -511,6 +511,15 @@ are recorded in the runbook. Do not approve a wider cohort until the
 default-branch security merge, retention enforcement, performance follow-up,
 and 24-hour/seven-day posted cost reviews close.
 
+The Provenance performance follow-up is implemented on `gcp-dev` but is not
+yet a live acceptance result. The implementation publishes a complete,
+schema-v2 immutable manifest through the existing pipeline job, advances a
+generation-guarded Cloud Storage pointer only after integrity verification,
+and serves cached manifest windows and indexed document traces without a
+dynamic production fallback. The follow-up closes only after the first cloud
+snapshot is published and the authenticated concurrency gate in
+`docs/PROVENANCE_SNAPSHOT_RUNBOOK.md` passes on the candidate revision.
+
 Execution order:
 
 1. freeze the Phase 6 revision, IAM, database, job, billing, and application

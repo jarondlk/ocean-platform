@@ -61,6 +61,8 @@ weekly or monthly, without making ingestion automatic yet.
       row counts, generated artifact paths, database snapshots, and diffs.
 - [x] Add a provenance manifest layer that traces raw files, derived artifacts,
       retrieval documents, and embedding treatment.
+- [x] Move hosted Provenance manifest and trace reads to integrity-verified,
+      immutable snapshots published by the manual pipeline.
 - [x] Add read-only `--upsert --dry-run` planning.
 - [x] Add a documented manual schedule, for example:
 

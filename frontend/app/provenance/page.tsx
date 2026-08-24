@@ -147,6 +147,7 @@ export default function ProvenancePage() {
   }, []);
 
   const summary = asRecord(manifest?.summary);
+  const snapshot = asRecord(manifest?.snapshot);
   const sourceRows = useMemo(() => (manifest?.source_files || []).map(sourceToRow), [manifest]);
   const artifactRows = useMemo(() => (manifest?.artifacts || []).map(artifactToRow), [manifest]);
   const documentRows = useMemo(() => (manifest?.documents || []).map(documentToRow), [manifest]);
@@ -223,7 +224,7 @@ export default function ProvenancePage() {
 
       <div className="section-toolbar">
         <span className="empty-state">
-          {loading ? ui("Loading provenance state.") : `${formatCell(summary.documents)} ${ui("manifest documents.")} ${formatCell(summary.artifacts)} ${ui("tracked artifacts.")}`}
+          {loading ? ui("Loading provenance state.") : `${formatCell(summary.documents)} ${ui("manifest documents.")} ${formatCell(summary.artifacts)} ${ui("tracked artifacts.")} ${snapshot.manifest_id ? `${ui("Snapshot")} ${formatCell(snapshot.manifest_id)}.` : ""}`}
         </span>
         <button className="button secondary-button" onClick={() => void loadManifest()} type="button">
           <RefreshCw size={15} aria-hidden="true" />
@@ -238,6 +239,7 @@ export default function ProvenancePage() {
         <Metric label={ui("Existing artifacts")} value={formatCell(summary.existing_artifacts)} />
         <Metric label={ui("Documents indexed")} value={formatCell(summary.documents)} />
         <Metric label={ui("Embedded in view")} value={formatCell(summary.embedded_documents_in_manifest)} />
+        <Metric label={ui("Snapshot age (seconds)")} value={formatCell(snapshot.age_seconds)} />
       </div>
 
       <section className="dashboard-grid provenance-dashboard">
@@ -266,7 +268,7 @@ export default function ProvenancePage() {
               <h3 className="section-title">{ui("Manifest Controls")}</h3>
               <button className="button secondary-button" disabled={loading} onClick={() => void loadManifest()} type="button">
                 <FileJson size={15} aria-hidden="true" />
-                {ui("Build Manifest")}
+                {ui("Reload Snapshot")}
               </button>
             </div>
             <div className="provenance-control-grid">
@@ -275,18 +277,26 @@ export default function ProvenancePage() {
                 <input
                   className="field"
                   id="provenance-limit-documents"
-                  max={10000}
+                  max={500}
                   min={1}
-                  onChange={(event) => setLimitDocuments(clampNumber(event.target.value, 1, 10000))}
+                  onChange={(event) => setLimitDocuments(clampNumber(event.target.value, 1, 500))}
                   type="number"
                   value={limitDocuments}
                 />
               </label>
-              <label className="checkbox-row provenance-checkbox" title="Query database embedding status for the manifest document window.">
+              <label className="checkbox-row provenance-checkbox" title="Include the embedding treatment captured when this snapshot was published.">
                 <input checked={includeEmbeddings} onChange={(event) => setIncludeEmbeddings(event.target.checked)} type="checkbox" />
                 <span>{ui("Include embedding treatment")}</span>
               </label>
             </div>
+            {snapshot.manifest_id ? (
+              <div className="summary-strip">
+                <SummaryCell label={ui("Snapshot")} value={formatCell(snapshot.manifest_id)} />
+                <SummaryCell label={ui("Pipeline run")} value={formatCell(snapshot.pipeline_run_id)} />
+                <SummaryCell label={ui("Generated")} value={formatCell(snapshot.generated_at)} />
+                <SummaryCell label={ui("Corpus documents")} value={formatCell(snapshot.document_count)} />
+              </div>
+            ) : null}
           </section>
 
           <section className="data-section">

@@ -38,6 +38,7 @@ def test_pipeline_status_exposes_manual_stages_and_artifacts():
         "backup_database",
         "load_db",
         "embed_documents",
+        "publish_provenance",
     }.issubset(stage_ids)
     assert payload["readiness"]["manual_only"] is True
     assert payload["raw_sources"]
@@ -135,6 +136,55 @@ def test_pipeline_embedding_preflight_probes_configured_model(monkeypatch):
         "available": True,
         "provider": "vertex",
     }
+
+
+def test_provenance_publication_has_safe_dry_run_and_requires_execution_tag():
+    dry_run = client.post(
+        "/pipeline/preflight",
+        json={"stages": ["publish_provenance"], "dry_run": True},
+    )
+    execute = client.post(
+        "/pipeline/preflight",
+        json={"stages": ["publish_provenance"], "dry_run": False},
+    )
+
+    assert dry_run.status_code == 200
+    plan = dry_run.json()["command_plan"][0]
+    assert plan["stage_id"] == "publish_provenance"
+    assert "--publish" in plan["command"]
+    assert "dry-run-placeholder" in plan["command"]
+    dry_run_check = next(
+        check
+        for check in dry_run.json()["checks"]
+        if check["id"] == "provenance_publication_id"
+    )
+    execute_check = next(
+        check
+        for check in execute.json()["checks"]
+        if check["id"] == "provenance_publication_id"
+    )
+    assert dry_run_check["status"] == "pass"
+    assert execute_check["status"] == "fail"
+
+
+def test_provenance_publication_records_actual_pipeline_run_id():
+    request = api_main.PipelineRunRequest(
+        stages=["publish_provenance"],
+        dry_run=False,
+        tag="manifest-20260824",
+    )
+
+    command = api_main._pipeline_command(
+        "publish_provenance",
+        request,
+        pipeline_run_id="pipeline-actual-20260824T120000",
+    )
+
+    assert command[command.index("--run-id") + 1] == "manifest-20260824"
+    assert (
+        command[command.index("--pipeline-run-id") + 1]
+        == "pipeline-actual-20260824T120000"
+    )
 
 
 def test_pipeline_preflight_requires_backup_before_real_database_mutation():

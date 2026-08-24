@@ -519,6 +519,7 @@ export type ProvenanceManifestResponse = {
   schema_version: number;
   generated_at: string;
   project_root: string;
+  snapshot: Record<string, unknown>;
   summary: Record<string, unknown>;
   source_files: Record<string, unknown>[];
   artifacts: Record<string, unknown>[];
@@ -530,6 +531,7 @@ export type ProvenanceManifestResponse = {
 export type ProvenanceTraceResponse = {
   doc_id: string;
   found: boolean;
+  snapshot: Record<string, unknown>;
   trace: Record<string, unknown>;
 };
 

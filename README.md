@@ -716,6 +716,9 @@ Key settings in [config.py](config.py):
 | `AUTH_ALLOWED_PROVIDERS` | `oidc`; comma-separated stable provider IDs accepted by the API |
 | `AUTH_URL` | `http://localhost:3000` locally; must be the public HTTPS URL in production |
 | `OIDC_PROVIDER_ID` | `oidc`; determines the callback path and durable provider identity |
+| `PROVENANCE_READ_MODE` | `build` locally; GCP uses the fail-closed `snapshot` fast path |
+| `PROVENANCE_SNAPSHOT_URI` | Local `data/provenance`; GCP uses the private bucket `provenance/` prefix |
+| `PROVENANCE_CACHE_TTL_SECONDS` | `60` |
 | `SST_CTD_AGREEMENT_THRESHOLD` | 2.0°C (env: `SST_CTD_THRESHOLD`) |
 | `DIVERSITY_ANOMALY_SIGMA` | 2.0 (env: `DIVERSITY_ANOMALY_SIGMA`) |
 

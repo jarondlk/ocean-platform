@@ -573,6 +573,7 @@ class ProvenanceManifestResponse(BaseModel):
     schema_version: int
     generated_at: str
     project_root: str
+    snapshot: Dict[str, Any] = Field(default_factory=dict)
     summary: Dict[str, Any] = Field(default_factory=dict)
     source_files: List[Dict[str, Any]] = Field(default_factory=list)
     artifacts: List[Dict[str, Any]] = Field(default_factory=list)
@@ -584,6 +585,7 @@ class ProvenanceManifestResponse(BaseModel):
 class ProvenanceTraceResponse(BaseModel):
     doc_id: str
     found: bool
+    snapshot: Dict[str, Any] = Field(default_factory=dict)
     trace: Dict[str, Any] = Field(default_factory=dict)
 
 

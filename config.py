@@ -34,6 +34,17 @@ ANALYSIS_DIR    = DATA_DIR / "analysis"
 RELIABILITY_DIR = DATA_DIR / "reliability"
 PROVENANCE_DIR  = DATA_DIR / "provenance"
 EVALUATION_DIR  = DATA_DIR / "evaluation"
+PROVENANCE_SNAPSHOT_URI = os.environ.get(
+    "PROVENANCE_SNAPSHOT_URI",
+    f"file://{PROVENANCE_DIR}",
+).strip()
+PROVENANCE_READ_MODE = os.environ.get(
+    "PROVENANCE_READ_MODE",
+    "build",
+).strip().lower()
+PROVENANCE_CACHE_TTL_SECONDS = int(
+    os.environ.get("PROVENANCE_CACHE_TTL_SECONDS", "60")
+)
 DATABASE_BACKUP_DIR = Path(
     os.environ.get("DATABASE_BACKUP_DIR", str(DATA_DIR / "backups"))
 ).expanduser()
@@ -431,6 +442,14 @@ def validate_runtime_configuration() -> None:
     if JOB_EXECUTION_MODE not in {"local", "external"}:
         raise RuntimeConfigurationError(
             "JOB_EXECUTION_MODE must be either local or external"
+        )
+    if PROVENANCE_READ_MODE not in {"build", "snapshot"}:
+        raise RuntimeConfigurationError(
+            "PROVENANCE_READ_MODE must be either build or snapshot"
+        )
+    if not 1 <= PROVENANCE_CACHE_TTL_SECONDS <= 3600:
+        raise RuntimeConfigurationError(
+            "PROVENANCE_CACHE_TTL_SECONDS must be between 1 and 3600"
         )
     if not MODEL_PROVIDER:
         raise RuntimeConfigurationError("MODEL_PROVIDER must not be empty")

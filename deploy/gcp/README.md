@@ -17,6 +17,8 @@ place before the foundation or any runtime component is created.
   operator-run jobs.
 - Secret Manager for the database URL, signing secrets, and OIDC client secret.
 - Cloud Run Jobs for migrations, ingestion, embedding refresh, and evaluation.
+- Immutable Provenance snapshots published by the pipeline job and read
+  directly from Cloud Storage by the serving API.
 - Google OIDC through the existing Auth.js flow, with application invitations
   and roles retained in Cloud SQL.
 - Vertex AI through Application Default Credentials and the Cloud Run service
@@ -25,6 +27,11 @@ place before the foundation or any runtime component is created.
 The serving revision sets `JOB_EXECUTION_MODE=external`. This deliberately
 prevents an autoscaled web instance from starting daemon-thread pipeline or
 evaluation work. Operators execute the existing CLI scripts as Cloud Run Jobs.
+It also sets `PROVENANCE_READ_MODE=snapshot`, so manifest and document-trace
+requests read a verified immutable object and never rebuild lineage through the
+GCS FUSE mount. Follow
+[`../../docs/PROVENANCE_SNAPSHOT_RUNBOOK.md`](../../docs/PROVENANCE_SNAPSHOT_RUNBOOK.md)
+for validation, publication, rollout, and rollback.
 The Phase 6 serving template uses Vertex AI with the same bounded generation
 settings as the passing evaluation job. Grant Vertex AI User to `onagawa-app`
 only immediately before this reviewed revision is deployed; keep maximum

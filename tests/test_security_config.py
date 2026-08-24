@@ -217,6 +217,16 @@ def test_runtime_configuration_accepts_supported_job_modes(monkeypatch):
         config.validate_runtime_configuration()
 
 
+def test_runtime_configuration_rejects_unknown_provenance_mode(monkeypatch):
+    monkeypatch.setattr(config, "PROVENANCE_READ_MODE", "automatic")
+
+    with pytest.raises(
+        config.RuntimeConfigurationError,
+        match="PROVENANCE_READ_MODE",
+    ):
+        config.validate_runtime_configuration()
+
+
 def test_runtime_configuration_rejects_unknown_job_mode(monkeypatch):
     monkeypatch.setattr(config, "JOB_EXECUTION_MODE", "background-thread")
 
