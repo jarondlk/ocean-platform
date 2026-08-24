@@ -5,6 +5,18 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
+def _locked_version(requirements: str, package: str) -> tuple[int, ...]:
+    """Return one explicitly pinned package version from requirements text."""
+    prefix = f"{package}=="
+    matches = [
+        line.removeprefix(prefix).split()[0]
+        for line in requirements.splitlines()
+        if line.startswith(prefix)
+    ]
+    assert len(matches) == 1
+    return tuple(int(part) for part in matches[0].split("."))
+
+
 def test_linux_sqlalchemy_greenlet_dependency_is_explicitly_locked() -> None:
     """Apple Silicon lock generation must retain the Linux Cloud Run extra."""
     runtime_input = (PROJECT_ROOT / "requirements/runtime.in").read_text()
@@ -21,5 +33,8 @@ def test_archive_gitpython_security_floor_is_explicitly_locked() -> None:
     archive_input = (PROJECT_ROOT / "requirements/archive.in").read_text()
     archive_lock = (PROJECT_ROOT / "requirements/archive.txt").read_text()
 
-    assert "gitpython==3.1.58" in archive_input
-    assert "gitpython==3.1.58" in archive_lock
+    input_version = _locked_version(archive_input, "gitpython")
+    lock_version = _locked_version(archive_lock, "gitpython")
+
+    assert input_version == lock_version
+    assert input_version >= (3, 1, 58)
