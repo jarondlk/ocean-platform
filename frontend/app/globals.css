@@ -1093,6 +1093,122 @@ td span {
   background: var(--blue-wash);
 }
 
+.admin-workspace,
+.admin-workspace-content {
+  min-width: 0;
+}
+
+.admin-workspace-header {
+  display: grid;
+  gap: 5px;
+}
+
+.admin-workspace-header p,
+.admin-overview-intro p {
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 5px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 18px;
+  overflow-x: auto;
+  padding-bottom: 9px;
+  scrollbar-width: thin;
+}
+
+.admin-tab {
+  align-items: center;
+  border: 1px solid transparent;
+  color: var(--muted);
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 6px;
+  min-height: 34px;
+  padding: 7px 10px;
+}
+
+.admin-tab:hover,
+.admin-tab:focus-visible,
+.admin-tab[aria-current="page"] {
+  background: var(--blue-wash);
+  border-color: var(--line);
+  color: var(--blue-ink);
+  outline: none;
+}
+
+.admin-tab[aria-current="page"] {
+  border-color: var(--accent);
+  font-weight: 700;
+}
+
+.admin-overview {
+  display: grid;
+  gap: 18px;
+}
+
+.admin-overview-intro {
+  display: grid;
+  gap: 5px;
+}
+
+.admin-overview-intro h3 {
+  font-size: 17px;
+  margin: 0;
+}
+
+.admin-section-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.admin-section-card {
+  align-items: center;
+  border: 1px solid var(--line);
+  display: grid;
+  gap: 12px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  min-height: 92px;
+  padding: 15px;
+}
+
+.admin-section-card:hover,
+.admin-section-card:focus-visible {
+  background: var(--blue-wash);
+  border-color: var(--accent);
+  outline: none;
+}
+
+.admin-section-icon {
+  align-items: center;
+  background: var(--blue-wash);
+  color: var(--blue-ink);
+  display: inline-flex;
+  height: 36px;
+  justify-content: center;
+  width: 36px;
+}
+
+.admin-section-copy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.admin-section-copy strong {
+  font-size: 14px;
+}
+
+.admin-section-copy span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
 .data-view {
   display: grid;
   gap: 18px;
@@ -2995,6 +3111,10 @@ td span {
 
   .admin-feedback-filters,
   .feedback-detail-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-section-grid {
     grid-template-columns: 1fr;
   }
 

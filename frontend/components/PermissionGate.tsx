@@ -7,6 +7,10 @@ import { useAppPreferences } from "@/lib/preferences";
 
 const routePermissions: Array<[string, string]> = [
   ["/admin/feedback", "feedback:review"],
+  ["/admin/pipeline", "pipeline:read"],
+  ["/admin/database", "database:read"],
+  ["/admin/system", "system:read"],
+  ["/admin/debug", "system:read"],
   ["/admin", "users:manage"],
   ["/database", "database:read"],
   ["/pipeline", "pipeline:read"],
