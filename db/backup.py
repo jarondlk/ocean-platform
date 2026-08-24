@@ -76,9 +76,17 @@ def _database_url(value: Optional[str] = None) -> URL:
 
 
 def _database_identity(url: URL) -> str:
-    host = url.host or "local-socket"
+    host = _connection_host(url) or "local-socket"
     port = f":{url.port}" if url.port else ""
     return f"{host}{port}/{url.database}"
+
+
+def _connection_host(url: URL) -> Optional[str]:
+    """Return an authority host or PostgreSQL query-string socket path."""
+    if url.host:
+        return url.host
+    query_host = url.query.get("host")
+    return query_host if isinstance(query_host, str) and query_host else None
 
 
 def resolve_toolchain(
@@ -142,8 +150,9 @@ def _client_environment(url: URL) -> dict[str, str]:
 def _connection_args(url: URL, *, inside_database_container: bool) -> list[str]:
     args: list[str] = []
     if not inside_database_container:
-        if url.host:
-            args.extend(["--host", url.host])
+        host = _connection_host(url)
+        if host:
+            args.extend(["--host", host])
         if url.port:
             args.extend(["--port", str(url.port)])
     if url.username:
@@ -159,8 +168,9 @@ def _maintenance_connection_args(
 ) -> list[str]:
     args: list[str] = []
     if not inside_database_container:
-        if url.host:
-            args.extend(["--host", url.host])
+        host = _connection_host(url)
+        if host:
+            args.extend(["--host", host])
         if url.port:
             args.extend(["--port", str(url.port)])
     if url.username:

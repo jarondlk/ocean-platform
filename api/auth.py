@@ -303,6 +303,16 @@ def resolve_identity(session: Session, claims: Mapping[str, Any]) -> CurrentUser
             email=email,
             display_name=display_name,
         )
+    allowed_providers = {
+        item.strip()
+        for item in os.environ.get(
+            "AUTH_ALLOWED_PROVIDERS",
+            ",".join(config.AUTH_ALLOWED_PROVIDERS),
+        ).split(",")
+        if item.strip()
+    }
+    if provider not in allowed_providers:
+        raise AuthenticationFailure(403, "This identity provider is not allowed")
     now = datetime.now(timezone.utc)
 
     user = session.scalar(

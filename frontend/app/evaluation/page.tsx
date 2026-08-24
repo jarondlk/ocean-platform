@@ -27,6 +27,7 @@ import type {
   EvaluationRunDetailResponse,
   EvaluationRunSummary,
 } from "@/types";
+import { useAppPreferences } from "@/lib/preferences";
 
 type EvaluationView = "runs" | "analytics" | "questions" | "standard" | "ablation" | "compare";
 
@@ -47,6 +48,7 @@ const resultColumns = [
 ];
 
 export default function EvaluationPage() {
+  const { ui } = useAppPreferences();
   const [view, setView] = useState<EvaluationView>("runs");
   const [catalog, setCatalog] = useState<EvaluationCatalogResponse | null>(null);
   const [preflight, setPreflight] = useState<Record<string, unknown> | null>(null);
@@ -316,10 +318,10 @@ export default function EvaluationPage() {
   return (
     <section>
       <header className="page-header">
-        <h2>Evaluation</h2>
+        <h2>{ui("Evaluation")}</h2>
       </header>
 
-      <div className="data-tabs" role="tablist" aria-label="Evaluation views">
+      <div className="data-tabs" role="tablist" aria-label={ui("Evaluation views")}>
         <TabButton active={view === "runs"} label="Runs" onClick={() => setView("runs")} />
         <TabButton active={view === "analytics"} label="Analytics" onClick={() => setView("analytics")} />
         <TabButton active={view === "questions"} label="Questions" onClick={() => setView("questions")} />
@@ -330,20 +332,20 @@ export default function EvaluationPage() {
 
       <div className="section-toolbar">
         <span className="empty-state">
-          {loading ? "Loading evaluation state." : `${runs.length} saved runs. ${catalog?.questions.length || 0} benchmark questions.`}
+          {loading ? ui("Loading evaluation state.") : `${runs.length} ${ui("saved runs.")} ${catalog?.questions.length || 0} ${ui("benchmark questions.")}`}
         </span>
         <button className="button secondary-button" onClick={() => void loadAll()} type="button">
           <RefreshCw size={15} aria-hidden="true" />
-          Refresh
+          {ui("Refresh")}
         </button>
       </div>
       {error ? <p className="error-text">{error}</p> : null}
 
       <div className="grid metrics-grid system-metrics">
-        <Metric label="Questions" value={catalog?.questions.length ?? "..."} />
-        <Metric label="Modes" value={catalog?.modes.length ?? "..."} />
-        <Metric label="Variants" value={catalog?.variants.length ?? "..."} />
-        <Metric label="Saved runs" value={runs.length || "..."} />
+        <Metric label={ui("Questions")} value={catalog?.questions.length ?? "..."} />
+        <Metric label={ui("Modes")} value={catalog?.modes.length ?? "..."} />
+        <Metric label={ui("Variants")} value={catalog?.variants.length ?? "..."} />
+        <Metric label={ui("Saved runs")} value={runs.length || "..."} />
       </div>
 
       {job ? <JobStatusPanel job={job} loading={loading} onCancel={() => void cancelJob()} /> : null}
@@ -351,7 +353,7 @@ export default function EvaluationPage() {
       {view === "runs" ? (
         <section className="evaluation-layout">
           <aside className="evaluation-sidebar">
-            <h3 className="section-title">Runs</h3>
+            <h3 className="section-title">{ui("Runs")}</h3>
             <div className="table-list">
               {runs.map((run) => (
                 <button
@@ -375,7 +377,7 @@ export default function EvaluationPage() {
             {selectedRun ? (
               <>
                 <section className="data-section">
-                  <h3 className="section-title">Run Detail</h3>
+                  <h3 className="section-title">{ui("Run Detail")}</h3>
                   <div className="summary-strip">
                     <SummaryCell label="Type" value={selectedRun.run_type} />
                     <SummaryCell label="Model" value={selectedRun.model || "unknown"} />
@@ -391,7 +393,7 @@ export default function EvaluationPage() {
 
                 <section className="data-section">
                   <div className="section-toolbar">
-                    <h3 className="section-title">Aggregate Metrics</h3>
+                    <h3 className="section-title">{ui("Aggregate Metrics")}</h3>
                     <CsvExportButton
                       columns={["mode", ...metricKeys(byMode)]}
                       filename={`evaluation_${selectedRun.run_id}_by_mode`}
@@ -402,7 +404,7 @@ export default function EvaluationPage() {
                   {qualityByMode.length ? (
                     <>
                       <div className="section-toolbar compact-toolbar">
-                        <h4 className="subsection-title">Quality Metrics</h4>
+                        <h4 className="subsection-title">{ui("Quality Metrics")}</h4>
                         <CsvExportButton
                           columns={["mode", ...metricKeys(qualityByMode)]}
                           filename={`evaluation_${selectedRun.run_id}_quality_by_mode`}
@@ -416,9 +418,9 @@ export default function EvaluationPage() {
 
                 <section className="data-section">
                   <div className="section-toolbar">
-                    <h3 className="section-title">Rows</h3>
+                    <h3 className="section-title">{ui("Rows")}</h3>
                     <label className="settings-field compact-field" htmlFor="eval-mode-filter" title="Filter rows by evaluation mode or ablation variant.">
-                      <span>Mode</span>
+                      <span>{ui("Mode")}</span>
                       <select
                         id="eval-mode-filter"
                         className="field"
@@ -449,7 +451,7 @@ export default function EvaluationPage() {
 
                 {selectedResult ? (
                   <section className="data-section">
-                    <h3 className="section-title">Trace</h3>
+                    <h3 className="section-title">{ui("Trace")}</h3>
                     <div className="trace-grid">
                       <div>
                         <p className="metric-label">Question</p>
@@ -468,7 +470,7 @@ export default function EvaluationPage() {
                 ) : null}
 
                 <section className="data-section">
-                  <h3 className="section-title">Report</h3>
+                  <h3 className="section-title">{ui("Report")}</h3>
                   <pre className="code-block report-block">{report?.markdown || "No report."}</pre>
                 </section>
               </>
@@ -483,15 +485,15 @@ export default function EvaluationPage() {
         <section className="evaluation-main">
           <section className="data-section">
             <div className="section-toolbar">
-              <h3 className="section-title">Analytics Controls</h3>
+              <h3 className="section-title">{ui("Analytics Controls")}</h3>
               <button className="button secondary-button" disabled={!selectedRunId} onClick={() => void loadAnalytics()} type="button">
                 <RefreshCw size={15} aria-hidden="true" />
-                Refresh
+                {ui("Refresh")}
               </button>
             </div>
             <div className="evaluation-control-grid">
               <label className="settings-field" htmlFor="analytics-run" title="Saved evaluation run used as the analytics source.">
-                <span>Run</span>
+                <span>{ui("Run")}</span>
                 <select
                   id="analytics-run"
                   className="field"
@@ -506,7 +508,7 @@ export default function EvaluationPage() {
                 </select>
               </label>
               <label className="settings-field" htmlFor="analytics-metric" title="Primary metric used for matrix, distribution, and failure-surface panels.">
-                <span>Metric</span>
+                <span>{ui("Metric")}</span>
                 <select
                   id="analytics-metric"
                   className="field"
@@ -524,7 +526,7 @@ export default function EvaluationPage() {
                 </select>
               </label>
               <label className="settings-field" htmlFor="analytics-baseline" title="Mode or ablation variant used for delta calculations.">
-                <span>Baseline</span>
+                <span>{ui("Baseline")}</span>
                 <select
                   id="analytics-baseline"
                   className="field"
@@ -539,7 +541,7 @@ export default function EvaluationPage() {
                 </select>
               </label>
               <label className="settings-field" htmlFor="analytics-category" title="Optional category restriction applied before analytics are computed.">
-                <span>Category</span>
+                <span>{ui("Category")}</span>
                 <select
                   id="analytics-category"
                   className="field"
@@ -559,7 +561,7 @@ export default function EvaluationPage() {
           {analytics ? (
             <>
               <section className="data-section">
-                <h3 className="section-title">Run Summary</h3>
+                <h3 className="section-title">{ui("Run Summary")}</h3>
                 <div className="summary-strip">
                   <SummaryCell label="Type" value={analytics.run.run_type} />
                   <SummaryCell label="Rows" value={analytics.run.n_evaluations} />
@@ -572,7 +574,7 @@ export default function EvaluationPage() {
               <section className="analytics-grid">
                 <section className="data-section">
                   <div className="section-toolbar">
-                    <h3 className="section-title">Metric By Mode</h3>
+                    <h3 className="section-title">{ui("Metric By Mode")}</h3>
                     <CsvExportButton
                       columns={["mode", "n_evaluations", "n_questions", analytics.selected_metric, "delta_from_baseline", "relative_delta_pct"]}
                       filename={`evaluation_${analytics.run.run_id}_${analytics.selected_metric}_by_mode`}
@@ -589,7 +591,7 @@ export default function EvaluationPage() {
 
                 <section className="data-section">
                   <div className="section-toolbar">
-                    <h3 className="section-title">Distribution</h3>
+                    <h3 className="section-title">{ui("Distribution")}</h3>
                     <CsvExportButton
                       columns={["mode", "n", "min", "q1", "median", "q3", "max", "mean"]}
                       filename={`evaluation_${analytics.run.run_id}_${analytics.selected_metric}_distribution`}
@@ -602,7 +604,7 @@ export default function EvaluationPage() {
 
                 <section className="data-section analytics-wide">
                   <div className="section-toolbar">
-                    <h3 className="section-title">Mode Category Matrix</h3>
+                    <h3 className="section-title">{ui("Mode Category Matrix")}</h3>
                     <CsvExportButton
                       columns={["mode", ...getStringArray(analytics.mode_category_matrix.categories)]}
                       filename={`evaluation_${analytics.run.run_id}_${analytics.selected_metric}_matrix`}
@@ -614,7 +616,7 @@ export default function EvaluationPage() {
 
                 <section className="data-section">
                   <div className="section-toolbar">
-                    <h3 className="section-title">Retrieval And Citation</h3>
+                    <h3 className="section-title">{ui("Retrieval And Citation")}</h3>
                     <CsvExportButton
                       columns={["mode", "retrieval_precision", "source_coverage", "citation_count", "citation_accuracy", "context_utilization"]}
                       filename={`evaluation_${analytics.run.run_id}_retrieval_citation`}
@@ -630,7 +632,7 @@ export default function EvaluationPage() {
 
                 <section className="data-section">
                   <div className="section-toolbar">
-                    <h3 className="section-title">Quality Metrics</h3>
+                    <h3 className="section-title">{ui("Quality Metrics")}</h3>
                     <CsvExportButton
                       columns={["mode", ...metricKeys(analyticsQualityByMode)]}
                       filename={`evaluation_${analytics.run.run_id}_quality_analytics`}
@@ -646,7 +648,7 @@ export default function EvaluationPage() {
 
                 <section className="data-section analytics-wide">
                   <div className="section-toolbar">
-                    <h3 className="section-title">Statistical Significance</h3>
+                    <h3 className="section-title">{ui("Statistical Significance")}</h3>
                     <CsvExportButton
                       columns={["metric", "variant_a", "variant_b", "mean_a", "mean_b", "delta", "p_value", "significant", "effect_size", "effect_category"]}
                       filename={`evaluation_${analytics.run.run_id}_pairwise_statistics`}
@@ -657,13 +659,13 @@ export default function EvaluationPage() {
                   <SignificanceMatrix tests={analytics.statistical_tests} metric={analytics.selected_metric} />
                   {analyticsFriedman.length ? (
                     <>
-                      <h4 className="subsection-title">Friedman Omnibus</h4>
+                      <h4 className="subsection-title">{ui("Friedman Omnibus")}</h4>
                       <DataTable columns={["metric", "statistic", "p_value", "significant", "n_variants", "n_questions"]} rows={analyticsFriedman} rowKeyColumn="metric" />
                     </>
                   ) : null}
                   {analyticsSignificantPairwise.length ? (
                     <>
-                      <h4 className="subsection-title">Significant Pairwise Comparisons</h4>
+                      <h4 className="subsection-title">{ui("Significant Pairwise Comparisons")}</h4>
                       <DataTable
                         columns={["metric", "variant_a", "variant_b", "mean_a", "mean_b", "delta", "p_value", "effect_size", "effect_category"]}
                         rows={withRowKeys(analyticsSignificantPairwise, ["metric", "variant_a", "variant_b"])}
@@ -675,7 +677,7 @@ export default function EvaluationPage() {
 
                 <section className="data-section analytics-wide">
                   <div className="section-toolbar">
-                    <h3 className="section-title">Failure Surface</h3>
+                    <h3 className="section-title">{ui("Failure Surface")}</h3>
                     <CsvExportButton
                       columns={uniqueColumns(["question_id", "category", "mode", "question", analytics.selected_metric, "retrieval_precision", "source_coverage", "citation_accuracy", "context_utilization", "latency_seconds", "error"])}
                       filename={`evaluation_${analytics.run.run_id}_${analytics.selected_metric}_lowest_questions`}
@@ -706,7 +708,7 @@ export default function EvaluationPage() {
         <section className="evaluation-main">
           <div className="data-controls">
             <label className="settings-field" htmlFor="question-category" title="Filter benchmark questions by category.">
-              <span>Category</span>
+              <span>{ui("Category")}</span>
               <select id="question-category" className="field" value={category} onChange={(event) => setCategory(event.target.value)}>
                 <option value="">all</option>
                 {(catalog?.categories || []).map((item) => <option key={item} value={item}>{item}</option>)}
@@ -733,10 +735,10 @@ export default function EvaluationPage() {
         <section className="evaluation-main">
           <section className="data-section">
             <div className="section-toolbar">
-              <h3 className="section-title">Standard Run Controls</h3>
+              <h3 className="section-title">{ui("Standard Run Controls")}</h3>
               <button className="button" disabled={loading || standardEvalUnits === 0 || selectedModes.length === 0} onClick={() => void submitStandardRun()} type="button">
                 <Play size={15} aria-hidden="true" />
-                Start Standard
+                {ui("Start Standard")}
               </button>
             </div>
             <EvaluationControlPanel
@@ -777,19 +779,19 @@ export default function EvaluationPage() {
               }}
             />
             <RunEstimate
-              label="Standard estimate"
+              label={ui("Standard estimate")}
               primary={`${standardEvalUnits} answer runs`}
               secondary={`${standardEvalUnits * qualityMultiplier} total work units with current quality settings`}
             />
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Standard Protocol</h3>
+            <h3 className="section-title">{ui("Standard Protocol")}</h3>
             <DataTable columns={["name", "inject_analysis", "inject_reliability"]} rows={catalog?.modes || []} rowKeyColumn="name" />
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Metric Contract</h3>
+            <h3 className="section-title">{ui("Metric Contract")}</h3>
             <DataTable columns={["key", "label", "format"]} rows={catalog?.metrics || []} rowKeyColumn="key" />
           </section>
           <PreflightBlock preflight={preflight} />
@@ -800,10 +802,10 @@ export default function EvaluationPage() {
         <section className="evaluation-main">
           <section className="data-section">
             <div className="section-toolbar">
-              <h3 className="section-title">Ablation Run Controls</h3>
+              <h3 className="section-title">{ui("Ablation Run Controls")}</h3>
               <button className="button" disabled={loading || ablationEvalUnits === 0 || selectedVariants.length === 0} onClick={() => void submitAblationRun()} type="button">
                 <Play size={15} aria-hidden="true" />
-                Start Ablation
+                {ui("Start Ablation")}
               </button>
             </div>
             <EvaluationControlPanel
@@ -835,7 +837,7 @@ export default function EvaluationPage() {
             />
             <div className="evaluation-control-grid compact-controls">
               <label className="settings-field" htmlFor="ablation-repeats" title="Repeat each question and variant combination for stability checks.">
-                <span>Repeats</span>
+                <span>{ui("Repeats")}</span>
                 <input
                   id="ablation-repeats"
                   className="field"
@@ -855,19 +857,19 @@ export default function EvaluationPage() {
               titleFor={(name) => catalog?.variants.find((item) => item.name === name)?.description || name}
             />
             <RunEstimate
-              label="Ablation estimate"
+              label={ui("Ablation estimate")}
               primary={`${ablationEvalUnits} answer runs`}
               secondary={`${ablationEvalUnits * qualityMultiplier} total work units with current quality settings`}
             />
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Ablation Protocol</h3>
+            <h3 className="section-title">{ui("Ablation Protocol")}</h3>
             <DataTable columns={["name", "source_coverage", "inject_analysis", "inject_reliability", "description"]} rows={catalog?.variants || []} rowKeyColumn="name" />
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Category Summary</h3>
+            <h3 className="section-title">{ui("Category Summary")}</h3>
             <DataTable columns={["category", ...metricKeys(byCategory)]} rows={byCategory} rowKeyColumn="category" />
           </section>
         </section>
@@ -875,7 +877,7 @@ export default function EvaluationPage() {
 
       {view === "compare" ? (
         <section className="evaluation-main">
-          <h3 className="section-title">Run Selection</h3>
+          <h3 className="section-title">{ui("Run Selection")}</h3>
           <div className="compare-list">
             {runs.map((run) => (
               <label className="checkbox-row" key={run.run_id} title={run.csv_path}>
@@ -895,11 +897,11 @@ export default function EvaluationPage() {
             ))}
           </div>
           <button className="button" disabled={compareIds.length < 2 || loading} onClick={() => void submitCompare()} type="button">
-            Compare
+            {ui("Compare")}
           </button>
           {compareResult ? (
             <>
-              <h3 className="section-title">Mode Comparison</h3>
+              <h3 className="section-title">{ui("Mode Comparison")}</h3>
               <div className="section-toolbar">
                 <span className="empty-state">{compareResult.by_mode.length} comparison rows</span>
                 <CsvExportButton
@@ -909,7 +911,7 @@ export default function EvaluationPage() {
                 />
               </div>
               <DataTable columns={["run_id", "model", "mode", ...metricKeys(compareResult.by_mode)]} rows={compareResult.by_mode} rowKeyColumn="run_id" />
-              <h3 className="section-title">Comparison Report</h3>
+              <h3 className="section-title">{ui("Comparison Report")}</h3>
               <pre className="code-block report-block">{compareResult.markdown}</pre>
             </>
           ) : null}
@@ -920,16 +922,17 @@ export default function EvaluationPage() {
 }
 
 function JobStatusPanel({ job, loading, onCancel }: { job: EvaluationJobStatus; loading: boolean; onCancel: () => void }) {
+  const { ui } = useAppPreferences();
   const terminal = isTerminalJob(job.status);
   const percent = Math.max(0, Math.min(100, Number(job.percent) || 0));
   return (
     <section className="data-section job-panel">
       <div className="section-toolbar">
-        <h3 className="section-title">Background Run</h3>
+        <h3 className="section-title">{ui("Background Run")}</h3>
         {!terminal ? (
           <button className="button secondary-button" disabled={loading || job.status === "cancel_requested"} onClick={onCancel} type="button">
             <Square size={14} aria-hidden="true" />
-            Cancel
+            {ui("Cancel")}
           </button>
         ) : null}
       </div>
@@ -1154,35 +1157,36 @@ function EvaluationControlPanel({
   questionIdsText: string;
   setQuestionIdsText: (value: string) => void;
 }) {
+  const { ui } = useAppPreferences();
   return (
     <>
       <div className="evaluation-control-grid">
-        <label className="settings-field" htmlFor="eval-model" title="Ollama chat model used for answer generation. Leave as the configured default unless comparing models.">
-          <span>Model</span>
+        <label className="settings-field" htmlFor="eval-model" title="Chat model used for answer generation. Leave as the configured default unless comparing models.">
+          <span>{ui("Model")}</span>
           <input id="eval-model" className="field" onChange={(event) => setEvalModel(event.target.value)} value={evalModel} />
         </label>
         <label className="settings-field" htmlFor="eval-tag" title="Optional label stored in run metadata for later comparison.">
-          <span>Tag</span>
+          <span>{ui("Tag")}</span>
           <input id="eval-tag" className="field" onChange={(event) => setRunTag(event.target.value)} placeholder="local-test, qwen-baseline" value={runTag} />
         </label>
         <label className="settings-field" htmlFor="eval-top-k" title="Number of retrieved source documents passed into each answer-generation run.">
-          <span>Top K</span>
+          <span>{ui("Top K")}</span>
           <input id="eval-top-k" className="field" max={25} min={1} onChange={(event) => setTopK(clampNumber(event.target.value, 1, 25))} type="number" value={topK} />
         </label>
-        <label className="settings-field" htmlFor="eval-num-ctx" title="Ollama context window for evaluation calls.">
-          <span>Num ctx</span>
+        <label className="settings-field" htmlFor="eval-num-ctx" title="Model context window for evaluation calls when supported by the configured runtime.">
+          <span>{ui("Num ctx")}</span>
           <input id="eval-num-ctx" className="field" max={32768} min={512} onChange={(event) => setNumCtx(clampNumber(event.target.value, 512, 32768))} step={512} type="number" value={numCtx} />
         </label>
         <label className="settings-field" htmlFor="eval-temp" title="Generation temperature. Zero is preferred for deterministic benchmark runs.">
-          <span>Temperature</span>
+          <span>{ui("Temperature")}</span>
           <input id="eval-temp" className="field" max={2} min={0} onChange={(event) => setTemperature(clampNumber(event.target.value, 0, 2))} step={0.05} type="number" value={temperature} />
         </label>
         <label className="settings-field" htmlFor="eval-embedding-model" title="Embedding model used for semantic similarity when quality scoring is enabled.">
-          <span>Embedding model</span>
+          <span>{ui("Embedding model")}</span>
           <input id="eval-embedding-model" className="field" onChange={(event) => setEmbeddingModel(event.target.value)} value={embeddingModel} />
         </label>
         <label className="settings-field" htmlFor="eval-judge-model" title="Model used for LLM-as-judge scoring when enabled.">
-          <span>Judge model</span>
+          <span>{ui("Judge model")}</span>
           <input id="eval-judge-model" className="field" onChange={(event) => setJudgeModel(event.target.value)} value={judgeModel} />
         </label>
       </div>
@@ -1190,11 +1194,11 @@ function EvaluationControlPanel({
       <div className="evaluation-switch-grid">
         <label className="checkbox-row" title="Use one representative question per category unless explicit question IDs are provided.">
           <input checked={quickRun} onChange={(event) => setQuickRun(event.target.checked)} type="checkbox" />
-          <span>Quick subset</span>
+          <span>{ui("Quick subset")}</span>
         </label>
         <label className="checkbox-row" title="Append ROUGE-L, semantic similarity, faithfulness, and answer-completeness metrics after answer generation.">
           <input checked={runQuality} onChange={(event) => setRunQuality(event.target.checked)} type="checkbox" />
-          <span>Quality metrics</span>
+          <span>{ui("Quality metrics")}</span>
         </label>
         <label className="checkbox-row" title="Run LLM-as-judge scoring. This also enables quality scoring and is intentionally expensive.">
           <input
@@ -1205,7 +1209,7 @@ function EvaluationControlPanel({
             }}
             type="checkbox"
           />
-          <span>LLM judge</span>
+          <span>{ui("LLM judge")}</span>
         </label>
       </div>
 
@@ -1218,7 +1222,7 @@ function EvaluationControlPanel({
       />
 
       <label className="settings-field evaluation-question-field" htmlFor="eval-question-ids" title="Comma or whitespace separated benchmark question IDs. Explicit IDs override category and quick-subset sampling.">
-        <span>Question IDs</span>
+        <span>{ui("Question IDs")}</span>
         <textarea
           id="eval-question-ids"
           className="textarea compact-textarea"
@@ -1244,12 +1248,13 @@ function CheckboxGroup({
   setSelected: (value: string[]) => void;
   titleFor?: (item: string) => string;
 }) {
+  const { ui } = useAppPreferences();
   return (
     <fieldset className="settings-section evaluation-choice-group">
-      <legend>{label}</legend>
+      <legend>{ui(label)}</legend>
       <div className="choice-actions">
-        <button className="button secondary-button" onClick={() => setSelected(items)} type="button">Select all</button>
-        <button className="button secondary-button" onClick={() => setSelected([])} type="button">Clear</button>
+        <button className="button secondary-button" onClick={() => setSelected(items)} type="button">{ui("Select all")}</button>
+        <button className="button secondary-button" onClick={() => setSelected([])} type="button">{ui("Clear")}</button>
       </div>
       <div className="evaluation-checkbox-grid">
         {items.map((item) => (
@@ -1268,9 +1273,10 @@ function CheckboxGroup({
 }
 
 function RunEstimate({ label, primary, secondary }: { label: string; primary: string; secondary: string }) {
+  const { ui } = useAppPreferences();
   return (
     <div className="run-estimate">
-      <span>{label}</span>
+      <span>{ui(label)}</span>
       <strong>{primary}</strong>
       <small>{secondary}</small>
     </div>
@@ -1278,55 +1284,60 @@ function RunEstimate({ label, primary, secondary }: { label: string; primary: st
 }
 
 function TabButton({ active, label, onClick }: { active: boolean; label: string; onClick: () => void }) {
-  return <button className={active ? "active" : ""} onClick={onClick} type="button">{label}</button>;
+  const { ui } = useAppPreferences();
+  return <button className={active ? "active" : ""} onClick={onClick} type="button">{ui(label)}</button>;
 }
 
 function Metric({ label, value }: { label: string; value: string | number }) {
+  const { ui } = useAppPreferences();
   return (
     <article className="card">
-      <p className="metric-label">{label}</p>
+      <p className="metric-label">{ui(label)}</p>
       <p className="metric-value">{value}</p>
     </article>
   );
 }
 
 function SummaryCell({ label, value }: { label: string; value: string | number }) {
+  const { ui } = useAppPreferences();
   return (
     <div>
-      <span>{label}</span>
+      <span>{ui(label)}</span>
       <strong>{value}</strong>
     </div>
   );
 }
 
 function StatusRow({ label, value }: { label: string; value: string }) {
+  const { ui } = useAppPreferences();
   return (
     <div className="status-row">
-      <span>{label}</span>
+      <span>{ui(label)}</span>
       <strong>{value}</strong>
     </div>
   );
 }
 
 function QuestionDetail({ question }: { question: EvaluationQuestion }) {
+  const { ui } = useAppPreferences();
   return (
     <section className="data-section question-detail">
       <h3 className="section-title">{question.id}</h3>
       <div className="trace-grid">
         <div className="trace-wide">
-          <p className="metric-label">Question</p>
+          <p className="metric-label">{ui("Question")}</p>
           <pre className="code-block">{question.question}</pre>
         </div>
         <div>
-          <p className="metric-label">Key facts</p>
+          <p className="metric-label">{ui("Key facts")}</p>
           <pre className="code-block">{question.key_facts.join("\n") || "NA"}</pre>
         </div>
         <div>
-          <p className="metric-label">Citation patterns</p>
+          <p className="metric-label">{ui("Citation patterns")}</p>
           <pre className="code-block">{question.expected_citation_patterns.join("\n") || "NA"}</pre>
         </div>
         <div className="trace-wide">
-          <p className="metric-label">Reference answer</p>
+          <p className="metric-label">{ui("Reference answer")}</p>
           <pre className="code-block tall-block">{question.reference_answer || "NA"}</pre>
         </div>
       </div>
@@ -1335,15 +1346,16 @@ function QuestionDetail({ question }: { question: EvaluationQuestion }) {
 }
 
 function PreflightBlock({ preflight }: { preflight: Record<string, unknown> | null }) {
+  const { ui } = useAppPreferences();
   const defaults = asRecord(preflight?.defaults);
   const artifacts = asRecord(preflight?.artifacts);
   return (
     <section className="data-section">
-      <h3 className="section-title">Preflight</h3>
+      <h3 className="section-title">{ui("Preflight")}</h3>
       <div className="status-list">
         <StatusRow label="Model" value={formatCell(defaults.model)} />
         <StatusRow label="Embedding model" value={formatCell(defaults.embedding_model)} />
-        <StatusRow label="Ollama URL" value={formatCell(defaults.ollama_base_url)} />
+        <StatusRow label="Model endpoint" value={formatCell(defaults.ollama_base_url)} />
         <StatusRow label="Evaluation runs" value={formatCell(artifacts.evaluation_runs)} />
         <StatusRow label="Retrieval documents" value={formatCell(artifacts.retrieval_documents)} />
       </div>

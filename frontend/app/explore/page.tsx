@@ -21,6 +21,7 @@ import { DataTable } from "@/components/DataTable";
 import { EvidenceWorkbench } from "@/components/EvidenceWorkbench";
 import { SampleDetail } from "@/components/SampleDetail";
 import { SimpleTimeSeries } from "@/components/SimpleTimeSeries";
+import { useAppPreferences } from "@/lib/preferences";
 
 type ExploreView = "tables" | "evidence";
 
@@ -51,6 +52,7 @@ export default function ExplorePage() {
 }
 
 function ExplorePageContent() {
+  const { ui } = useAppPreferences();
   const router = useRouter();
   const searchParams = useSearchParams();
   const requestedView = searchParams.get("view");
@@ -250,15 +252,15 @@ function ExplorePageContent() {
   return (
     <section>
       <header className="page-header">
-        <h2>Explore</h2>
+        <h2>{ui("Explore")}</h2>
       </header>
 
-      <div className="data-tabs" role="tablist" aria-label="Explore views">
+      <div className="data-tabs" role="tablist" aria-label={ui("Explore views")}>
         <button className={view === "tables" ? "active" : ""} onClick={() => changeView("tables")} type="button">
-          Tables
+          {ui("Tables")}
         </button>
         <button className={view === "evidence" ? "active" : ""} onClick={() => changeView("evidence")} type="button">
-          Evidence
+          {ui("Evidence")}
         </button>
       </div>
 
@@ -266,7 +268,7 @@ function ExplorePageContent() {
         <>
       <form className="explore-controls" onSubmit={submit}>
         <label>
-          Dataset
+          {ui("Dataset")}
           <select className="field" value={dataset} onChange={(event) => changeDataset(event.target.value)}>
             {catalog.map((item) => (
               <option key={item.id} value={item.id}>
@@ -276,30 +278,30 @@ function ExplorePageContent() {
           </select>
         </label>
         <label>
-          Search
+          {ui("Search")}
           <input
             className="field"
             value={filters.search}
             onChange={(event) => updateFilter("search", event.target.value)}
-            placeholder="Text filter"
+            placeholder={ui("Text filter")}
           />
         </label>
         <label>
-          Bay
+          {ui("Bay")}
           <select
             className="field"
             value={filters.bay}
             onChange={(event) => updateFilter("bay", event.target.value)}
             disabled={!activeDataset?.filters.bay}
           >
-            <option value="">All</option>
+            <option value="">{ui("All")}</option>
             <option value="O">O</option>
             <option value="I">I</option>
             <option value="M">M</option>
           </select>
         </label>
         <label>
-          Station
+          {ui("Station")}
           <input
             className="field"
             value={filters.station}
@@ -309,7 +311,7 @@ function ExplorePageContent() {
           />
         </label>
         <label>
-          Source
+          {ui("Source")}
           <input
             className="field"
             value={filters.source}
@@ -319,7 +321,7 @@ function ExplorePageContent() {
           />
         </label>
         <label>
-          From
+          {ui("From")}
           <input
             className="field"
             type="date"
@@ -329,7 +331,7 @@ function ExplorePageContent() {
           />
         </label>
         <label>
-          To
+          {ui("To")}
           <input
             className="field"
             type="date"
@@ -339,7 +341,7 @@ function ExplorePageContent() {
           />
         </label>
         <label>
-          Limit
+          {ui("Limit")}
           <select
             className="field"
             value={limit}
@@ -356,7 +358,7 @@ function ExplorePageContent() {
           </select>
         </label>
         <label title="Column used to sort the displayed table page.">
-          Sort by
+          {ui("Sort by")}
           <select
             className="field"
             value={sortColumn}
@@ -373,7 +375,7 @@ function ExplorePageContent() {
           </select>
         </label>
         <label title="Direction for table sorting.">
-          Direction
+          {ui("Direction")}
           <select
             className="field"
             value={sortDirection}
@@ -383,12 +385,12 @@ function ExplorePageContent() {
               void loadData({ nextOffset: 0, nextDirection });
             }}
           >
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
+            <option value="asc">{ui("Ascending")}</option>
+            <option value="desc">{ui("Descending")}</option>
           </select>
         </label>
         <button className="button" disabled={loading}>
-          {loading ? "Loading" : "Apply"}
+          {loading ? ui("Loading") : ui("Apply")}
         </button>
       </form>
 
@@ -397,21 +399,21 @@ function ExplorePageContent() {
       <div className="explore-layout">
         <main className="explore-main">
           <section className="explore-section">
-            <h3 className="section-title">Summary</h3>
+            <h3 className="section-title">{ui("Summary")}</h3>
             <div className="summary-strip">
-              <SummaryCell label="Rows" value={summary?.filtered_rows ?? "..."} />
-              <SummaryCell label="Total" value={summary?.total_rows ?? "..."} />
-              <SummaryCell label="Columns" value={summary?.columns.length ?? "..."} />
-              <SummaryCell label="Numeric" value={summary?.numeric_columns.length ?? "..."} />
+              <SummaryCell label={ui("Rows")} value={summary?.filtered_rows ?? "..."} />
+              <SummaryCell label={ui("Total")} value={summary?.total_rows ?? "..."} />
+              <SummaryCell label={ui("Columns")} value={summary?.columns.length ?? "..."} />
+              <SummaryCell label={ui("Numeric")} value={summary?.numeric_columns.length ?? "..."} />
             </div>
           </section>
 
           <section className="explore-section">
             <div className="section-toolbar">
-              <h3 className="section-title">Time series</h3>
+              <h3 className="section-title">{ui("Time series")}</h3>
               <div className="inline-controls">
                 <label title="Maximum points requested for the chart.">
-                  Points
+                  {ui("Points")}
                   <select
                     className="field"
                     value={seriesLimit}
@@ -463,7 +465,7 @@ function ExplorePageContent() {
             {series ? (
               <SimpleTimeSeries points={series.points} xColumn={series.x_column} yColumn={series.y_column} />
             ) : (
-              <p className="empty-state">No time-series view for this dataset.</p>
+              <p className="empty-state">{ui("No time-series view for this dataset.")}</p>
             )}
           </section>
 
@@ -484,7 +486,7 @@ function ExplorePageContent() {
                   onClick={() => void loadData({ nextOffset: Math.max(0, offset - limit) })}
                   type="button"
                 >
-                  Previous
+                {ui("Previous")}
                 </button>
                 <span>
                   {table ? `${offset + 1}-${Math.min(offset + limit, table.filtered)}` : "0-0"}
@@ -495,7 +497,7 @@ function ExplorePageContent() {
                   onClick={() => void loadData({ nextOffset: offset + limit })}
                   type="button"
                 >
-                  Next
+                  {ui("Next")}
                 </button>
               </div>
             </div>
@@ -509,8 +511,8 @@ function ExplorePageContent() {
         </main>
 
         <aside className="explore-side">
-          <h3 className="section-title">Sample detail</h3>
-          {detailLoading ? <p className="empty-state">Loading sample.</p> : <SampleDetail detail={detail} />}
+          <h3 className="section-title">{ui("Sample detail")}</h3>
+          {detailLoading ? <p className="empty-state">{ui("Loading sample.")}</p> : <SampleDetail detail={detail} />}
         </aside>
       </div>
         </>
@@ -522,12 +524,13 @@ function ExplorePageContent() {
 }
 
 function ExplorePageFallback() {
+  const { ui } = useAppPreferences();
   return (
     <section>
       <header className="page-header">
-        <h2>Explore</h2>
+        <h2>{ui("Explore")}</h2>
       </header>
-      <p className="empty-state">Loading corpus workspace.</p>
+      <p className="empty-state">{ui("Loading corpus workspace.")}</p>
     </section>
   );
 }

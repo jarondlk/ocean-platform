@@ -2,6 +2,7 @@
 
 import { Download } from "lucide-react";
 import { rowsToCsv, safeCsvFilename } from "@/lib/csv";
+import { useAppPreferences } from "@/lib/preferences";
 
 type CsvExportButtonProps = {
   rows: Record<string, unknown>[];
@@ -16,6 +17,7 @@ export function CsvExportButton({
   filename,
   label = "CSV",
 }: CsvExportButtonProps) {
+  const { ui } = useAppPreferences();
   function downloadCsv() {
     const csv = rowsToCsv(rows, columns);
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
@@ -34,11 +36,11 @@ export function CsvExportButton({
       className="button secondary-button"
       disabled={!rows.length}
       onClick={downloadCsv}
-      title="Download the currently loaded table rows as CSV."
+      title={ui("Download the currently loaded table rows as CSV.")}
       type="button"
     >
       <Download size={15} aria-hidden="true" />
-      {label}
+      {ui(label)}
     </button>
   );
 }

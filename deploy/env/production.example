@@ -1,7 +1,7 @@
 # Onagawa Source Chat production template
 #
 # Copy this file to a secret-managed location outside the repository. Replace
-# every angle-bracketed value before validating docker-compose.production.yml.
+# every angle-bracketed value before validating deploy/compose/production.yml.
 
 NEXT_PORT=3000
 
@@ -9,15 +9,24 @@ POSTGRES_USER=onagawa
 POSTGRES_PASSWORD=<generate-a-random-database-password>
 POSTGRES_DB=onagawa_rag
 DATABASE_URL=postgresql://onagawa:<url-encoded-database-password>@postgres:5432/onagawa_rag
+DATABASE_POOL_SIZE=5
+DATABASE_MAX_OVERFLOW=2
+DATABASE_POOL_TIMEOUT=30
+DATABASE_POOL_RECYCLE=1800
 DATABASE_BACKUP_CONTAINER=
 DATABASE_BACKUP_DIR=/app/data/backups
 
+DATA_DIR=/app/data
+JOB_EXECUTION_MODE=local
+
+MODEL_PROVIDER=ollama
 OLLAMA_BASE_URL=http://<private-ollama-host>:11434
 CHAT_MODEL=qwen2.5:14b-instruct
 EMBEDDING_MODEL=nomic-embed-text
 
 DEPLOYMENT_ENV=production
 AUTH_MODE=required
+AUTH_ALLOWED_PROVIDERS=oidc
 PERSIST_LOCAL_CHAT=false
 ENABLE_MOCK_LOGIN=false
 
@@ -29,6 +38,7 @@ INTERNAL_AUTH_ISSUER=onagawa-source-chat-frontend
 INTERNAL_AUTH_AUDIENCE=onagawa-source-chat-api
 
 OIDC_PROVIDER_NAME=Managed identity provider
+OIDC_PROVIDER_ID=oidc
 OIDC_ISSUER=https://identity.example.org
 OIDC_CLIENT_ID=<provider-client-id>
 OIDC_CLIENT_SECRET=<provider-client-secret>

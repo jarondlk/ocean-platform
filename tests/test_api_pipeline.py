@@ -38,6 +38,7 @@ def test_pipeline_status_exposes_manual_stages_and_artifacts():
         "backup_database",
         "load_db",
         "embed_documents",
+        "publish_provenance",
     }.issubset(stage_ids)
     assert payload["readiness"]["manual_only"] is True
     assert payload["raw_sources"]
@@ -52,6 +53,18 @@ def test_pipeline_start_rejects_unknown_stage():
 
     assert response.status_code == 400
     assert "Unknown pipeline stage" in response.text
+
+
+def test_cloud_runtime_delegates_pipeline_execution(monkeypatch):
+    monkeypatch.setattr(api_main.config, "JOB_EXECUTION_MODE", "external")
+
+    response = client.post(
+        "/pipeline/jobs",
+        json={"stages": ["validate_raw"], "dry_run": True},
+    )
+
+    assert response.status_code == 503
+    assert response.json()["detail"]["code"] == "external_job_runner_required"
 
 
 def test_pipeline_preflight_returns_exact_command_plan():
@@ -71,6 +84,107 @@ def test_pipeline_preflight_returns_exact_command_plan():
     assert payload["command_plan"][0]["stage_id"] == "load_db"
     assert "--reset" in payload["command_plan"][0]["display_command"]
     assert "--embed" not in payload["command_plan"][0]["display_command"]
+
+
+def test_pipeline_backup_command_requires_disposable_restore_test():
+    response = client.post(
+        "/pipeline/preflight",
+        json={
+            "stages": ["backup_database", "load_db"],
+            "dry_run": True,
+            "embed_after_load": False,
+        },
+    )
+
+    assert response.status_code == 200
+    backup = response.json()["command_plan"][0]
+    assert backup["stage_id"] == "backup_database"
+    assert "--restore-test" in backup["command"]
+
+
+def test_pipeline_backup_preflight_skips_unused_model_probe(monkeypatch):
+    def fail_if_called():
+        raise AssertionError("backup-only preflight must not probe the model")
+
+    monkeypatch.setattr(api_main, "_ollama_status", fail_if_called)
+
+    response = client.post(
+        "/pipeline/preflight",
+        json={"stages": ["backup_database"], "dry_run": True},
+    )
+
+    assert response.status_code == 200
+    model_status = response.json()["ollama"]
+    assert model_status["skipped"] is True
+    assert model_status["available"] is None
+
+
+def test_pipeline_embedding_preflight_probes_configured_model(monkeypatch):
+    monkeypatch.setattr(
+        api_main,
+        "_ollama_status",
+        lambda: {"available": True, "provider": "vertex"},
+    )
+
+    response = client.post(
+        "/pipeline/preflight",
+        json={"stages": ["embed_documents"], "dry_run": True},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["ollama"] == {
+        "available": True,
+        "provider": "vertex",
+    }
+
+
+def test_provenance_publication_has_safe_dry_run_and_requires_execution_tag():
+    dry_run = client.post(
+        "/pipeline/preflight",
+        json={"stages": ["publish_provenance"], "dry_run": True},
+    )
+    execute = client.post(
+        "/pipeline/preflight",
+        json={"stages": ["publish_provenance"], "dry_run": False},
+    )
+
+    assert dry_run.status_code == 200
+    plan = dry_run.json()["command_plan"][0]
+    assert plan["stage_id"] == "publish_provenance"
+    assert "--publish" in plan["command"]
+    assert "dry-run-placeholder" in plan["command"]
+    dry_run_check = next(
+        check
+        for check in dry_run.json()["checks"]
+        if check["id"] == "provenance_publication_id"
+    )
+    execute_check = next(
+        check
+        for check in execute.json()["checks"]
+        if check["id"] == "provenance_publication_id"
+    )
+    assert dry_run_check["status"] == "pass"
+    assert execute_check["status"] == "fail"
+
+
+def test_provenance_publication_records_actual_pipeline_run_id():
+    request = api_main.PipelineRunRequest(
+        stages=["publish_provenance"],
+        dry_run=False,
+        tag="manifest-20260824",
+    )
+
+    command = api_main._pipeline_command(
+        "publish_provenance",
+        request,
+        pipeline_run_id="pipeline-actual-20260824T120000",
+    )
+
+    assert command[command.index("--run-id") + 1] == "manifest-20260824"
+    assert (
+        command[command.index("--pipeline-run-id") + 1]
+        == "pipeline-actual-20260824T120000"
+    )
 
 
 def test_pipeline_preflight_requires_backup_before_real_database_mutation():
@@ -173,6 +287,10 @@ def test_pipeline_database_load_requires_backup_for_real_run():
 
 def test_pipeline_dry_run_writes_manifest_and_history(tmp_path, monkeypatch):
     monkeypatch.setattr(api_main.config, "DATA_DIR", tmp_path)
+    raw_ctd = tmp_path / "raw" / "ctd" / "CTD_Onagawa.tsv"
+    raw_ctd.parent.mkdir(parents=True)
+    raw_ctd.write_text("date\tdepth\ttemperature\n", encoding="utf-8")
+    monkeypatch.setattr(api_main.config, "RAW_FILES", {"ctd": raw_ctd})
 
     response = client.post(
         "/pipeline/jobs",

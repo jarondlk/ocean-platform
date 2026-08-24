@@ -515,12 +515,13 @@ def _document_source_files(source_type: str) -> List[str]:
     return []
 
 
-def build_document_traces(limit_documents: int = 500) -> List[DocumentTrace]:
+def build_document_traces(limit_documents: Optional[int] = 500) -> List[DocumentTrace]:
     df = _read_retrieval_documents()
     if df.empty:
         return []
     rows: List[DocumentTrace] = []
-    for _, row in df.head(limit_documents).iterrows():
+    selected = df if limit_documents is None else df.head(limit_documents)
+    for _, row in selected.iterrows():
         doc_id = str(row.get("doc_id") or row.get("id") or "")
         if not doc_id:
             continue
@@ -606,7 +607,7 @@ def build_embedding_traces(documents: List[DocumentTrace], *, include_database: 
 
 def build_provenance_manifest(
     *,
-    limit_documents: int = 500,
+    limit_documents: Optional[int] = 500,
     include_embeddings: bool = True,
 ) -> Dict[str, Any]:
     source_files = build_source_file_traces()

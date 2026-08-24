@@ -9,6 +9,7 @@ def _environment(**overrides: str) -> dict[str, str]:
     values = {
         "DEPLOYMENT_ENV": "production",
         "AUTH_MODE": "required",
+        "AUTH_ALLOWED_PROVIDERS": "oidc",
         "PERSIST_LOCAL_CHAT": "false",
         "ENABLE_MOCK_LOGIN": "false",
         "INTERNAL_AUTH_SECRET": "api-signing-secret-that-is-long-and-random-123",
@@ -22,6 +23,26 @@ def _environment(**overrides: str) -> dict[str, str]:
 
 def test_secure_production_configuration_is_accepted():
     config.validate_security_configuration(_environment())
+
+
+@pytest.mark.parametrize(
+    "providers",
+    ["", "OIDC", "google_provider", "google,google", "mock-credentials"],
+)
+def test_auth_provider_allowlist_rejects_unsafe_values(providers):
+    with pytest.raises(
+        config.SecurityConfigurationError,
+        match="AUTH_ALLOWED_PROVIDERS",
+    ):
+        config.validate_security_configuration(
+            _environment(AUTH_ALLOWED_PROVIDERS=providers)
+        )
+
+
+def test_auth_provider_allowlist_accepts_stable_cloud_provider_ids():
+    config.validate_security_configuration(
+        _environment(AUTH_ALLOWED_PROVIDERS="google,tohoku")
+    )
 
 
 @pytest.mark.parametrize("deployment_env", ["staging", "production"])
@@ -187,3 +208,54 @@ def test_invalid_mock_login_boolean_is_rejected(value):
                 CORS_ORIGINS="http://localhost:3000",
             )
         )
+
+
+def test_runtime_configuration_accepts_supported_job_modes(monkeypatch):
+    for mode in ("local", "external"):
+        monkeypatch.setattr(config, "JOB_EXECUTION_MODE", mode)
+        monkeypatch.setattr(config, "MODEL_PROVIDER", "ollama")
+        config.validate_runtime_configuration()
+
+
+def test_runtime_configuration_rejects_unknown_provenance_mode(monkeypatch):
+    monkeypatch.setattr(config, "PROVENANCE_READ_MODE", "automatic")
+
+    with pytest.raises(
+        config.RuntimeConfigurationError,
+        match="PROVENANCE_READ_MODE",
+    ):
+        config.validate_runtime_configuration()
+
+
+def test_runtime_configuration_rejects_unknown_job_mode(monkeypatch):
+    monkeypatch.setattr(config, "JOB_EXECUTION_MODE", "background-thread")
+
+    with pytest.raises(
+        config.RuntimeConfigurationError,
+        match="JOB_EXECUTION_MODE",
+    ):
+        config.validate_runtime_configuration()
+
+
+def test_vertex_runtime_requires_project(monkeypatch):
+    monkeypatch.setattr(config, "MODEL_PROVIDER", "vertex")
+    monkeypatch.setattr(config, "GOOGLE_CLOUD_PROJECT", "")
+
+    with pytest.raises(
+        config.RuntimeConfigurationError,
+        match="GOOGLE_CLOUD_PROJECT",
+    ):
+        config.validate_runtime_configuration()
+
+
+def test_vertex_runtime_accepts_bounded_configuration(monkeypatch):
+    monkeypatch.setattr(config, "MODEL_PROVIDER", "vertex")
+    monkeypatch.setattr(config, "GOOGLE_CLOUD_PROJECT", "example-project")
+    monkeypatch.setattr(config, "GOOGLE_CLOUD_LOCATION", "global")
+    monkeypatch.setattr(config, "MODEL_MAX_ATTEMPTS", 3)
+    monkeypatch.setattr(config, "MODEL_RETRY_INITIAL_SECONDS", 0.5)
+    monkeypatch.setattr(config, "CHAT_MAX_OUTPUT_TOKENS", 1600)
+    monkeypatch.setattr(config, "MODEL_REQUEST_TIMEOUT_SECONDS", 120)
+    monkeypatch.setattr(config, "VERTEX_THINKING_BUDGET", 0)
+
+    config.validate_runtime_configuration()

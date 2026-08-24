@@ -4,6 +4,7 @@ import pytest
 from fastapi import HTTPException
 
 import api.main as api_main
+import model_runtime
 
 
 class _IdentifierPreparer:
@@ -114,7 +115,7 @@ def test_dependency_errors_do_not_expose_exception_details(
         raise RuntimeError(sensitive_detail)
 
     monkeypatch.setattr(api_main, "create_engine", fail)
-    monkeypatch.setattr(api_main.requests, "get", fail)
+    monkeypatch.setattr(model_runtime.requests, "get", fail)
 
     database = api_main._database_status()
     ollama = api_main._ollama_status()
@@ -124,7 +125,7 @@ def test_dependency_errors_do_not_expose_exception_details(
         "available": False,
         "error": "Database is unavailable",
     }
-    assert ollama["error"] == "Ollama is unavailable"
+    assert ollama["error"] == "Model runtime is unavailable"
     assert model_status.error == "Model discovery is unavailable"
     assert sensitive_detail not in repr((database, ollama, model_status))
 

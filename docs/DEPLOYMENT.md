@@ -1,5 +1,22 @@
 # Production Deployment
 
+## Managed GCP Prototype
+
+The existing production Compose topology remains the supported single-host
+deployment. The GCP readiness branch also includes a managed prototype design
+for Cloud Run, Cloud SQL, Cloud Storage, Secret Manager, and Cloud Run Jobs.
+See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for the templates and
+pre-provisioning checklist.
+
+The required migration sequence, integration gates, and cost controls are in
+[`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Install the
+project budget and Cloud Run spend cap before enabling runtime APIs.
+
+The Cloud Run serving revision must use `JOB_EXECUTION_MODE=external`. Database
+migrations, pipeline runs, and evaluations belong in run-to-completion jobs;
+they must not be launched as daemon threads or startup migrations in an
+autoscaled web instance.
+
 ## Supported Topology
 
 The production Compose file is intended for a single application host:
@@ -14,19 +31,21 @@ Internet
        -> approved private Ollama endpoint
 ```
 
-Do not use `docker-compose.yml` or `docker-compose.next.yml` as production
+Do not use `compose.yml` or `deploy/compose/app.yml` as production
 definitions. They intentionally publish development ports, mount the repository,
-and enable reload behavior. `docker-compose.production.yml` publishes only
+and enable reload behavior. `deploy/compose/production.yml` publishes only
 Next.js to host loopback.
 
 ## Required Configuration
 
-Copy `.env.production.example` to a secret-managed location outside the
-repository and replace every placeholder. At minimum, set:
+Copy `deploy/env/production.example` to a secret-managed location outside the
+repository, replace every placeholder, and pass that populated file explicitly
+with `--env-file`. At minimum, set:
 
 ```dotenv
 DEPLOYMENT_ENV=production
 AUTH_MODE=required
+AUTH_ALLOWED_PROVIDERS=oidc
 PERSIST_LOCAL_CHAT=false
 ENABLE_MOCK_LOGIN=false
 
@@ -41,6 +60,7 @@ OIDC_ISSUER=https://identity.example.org
 OIDC_CLIENT_ID=<provider client id>
 OIDC_CLIENT_SECRET=<provider client secret>
 OIDC_PROVIDER_NAME=Managed identity provider
+OIDC_PROVIDER_ID=oidc
 
 CORS_ORIGINS=https://rag.example.org
 POSTGRES_USER=onagawa
@@ -79,20 +99,29 @@ https://rag.example.org/api/auth/callback/oidc
 Validate expansion before starting:
 
 ```bash
-podman compose -f docker-compose.production.yml config --quiet
+podman compose \
+  --env-file /secure/path/onagawa-production.env \
+  -f deploy/compose/production.yml \
+  config --quiet
 ```
 
 Start the services:
 
 ```bash
-podman compose -f docker-compose.production.yml up -d --build
+podman compose \
+  --env-file /secure/path/onagawa-production.env \
+  -f deploy/compose/production.yml \
+  up -d --build
 ```
 
 The API container applies Alembic migrations before starting FastAPI. Bootstrap
 the first administrator from an API container:
 
 ```bash
-podman compose -f docker-compose.production.yml exec api \
+podman compose \
+  --env-file /secure/path/onagawa-production.env \
+  -f deploy/compose/production.yml \
+  exec api \
   python scripts/invite_user.py admin@example.org \
   --role admin \
   --account-type internal
@@ -139,7 +168,7 @@ Each archive is written atomically with a SHA-256 sidecar manifest, table row
 counts, and archive metadata. `--restore-test` restores into a disposable
 database, compares recorded counts, and drops the disposable database. The
 production API image includes PostgreSQL client tools and
-`docker-compose.production.yml` persists `/app/data/backups` in a dedicated
+`deploy/compose/production.yml` persists `/app/data/backups` in a dedicated
 volume.
 
 Before launch, operators must still:

@@ -57,6 +57,8 @@ class TestBuildPrompt:
                               inject_analysis=False, inject_reliability=False)
         assert "[doc_id]" in prompt
         assert "ONLY use the evidence" in prompt
+        assert "under 500 words" in prompt
+        assert "citation in every factual" in prompt
 
     def test_prompt_contains_study_sites(self):
         """System prompt includes study site coordinates."""

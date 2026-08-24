@@ -1,0 +1,76 @@
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: onagawa-pipeline
+  labels:
+    environment: prototype
+    cost_component: pipeline
+spec:
+  template:
+    metadata:
+      labels:
+        environment: prototype
+        cost_component: pipeline
+      annotations:
+        run.googleapis.com/cloudsql-instances: PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
+        run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/secrets: 'onagawa-database-url:projects/PROJECT_NUMBER/secrets/onagawa-database-url'
+    spec:
+      template:
+        spec:
+          serviceAccountName: onagawa-jobs@PROJECT_ID.iam.gserviceaccount.com
+          maxRetries: 0
+          timeoutSeconds: "1800"
+          containers:
+            - image: REGION-docker.pkg.dev/PROJECT_ID/ARTIFACT_REPOSITORY/api:IMAGE_TAG
+              command:
+                - python
+              args:
+                - scripts/run_pipeline.py
+                - --dry-run
+                - --no-embed
+                - --json
+              env:
+                - name: DATABASE_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: onagawa-database-url
+                      key: latest
+                - name: DATA_DIR
+                  value: /mnt/onagawa-data
+                - name: PROVENANCE_SNAPSHOT_URI
+                  value: gs://DATA_BUCKET/provenance
+                - name: SST_NETCDF_DIR
+                  value: /mnt/onagawa-data/raw/sst-netcdf
+                - name: HIMAWARI_RAW_DIR
+                  value: /mnt/onagawa-data/raw/himawari
+                - name: MODEL_PROVIDER
+                  value: vertex
+                - name: GOOGLE_CLOUD_PROJECT
+                  value: PROJECT_ID
+                - name: GOOGLE_CLOUD_LOCATION
+                  value: global
+                - name: EMBEDDING_MODEL
+                  value: gemini-embedding-001
+                - name: EMBEDDING_DIM
+                  value: "768"
+                - name: MODEL_MAX_ATTEMPTS
+                  value: "3"
+                - name: MODEL_RETRY_INITIAL_SECONDS
+                  value: "0.5"
+                - name: MODEL_REQUEST_TIMEOUT_SECONDS
+                  value: "120"
+              resources:
+                limits:
+                  cpu: "2"
+                  memory: 4Gi
+              volumeMounts:
+                - name: scientific-data
+                  mountPath: /mnt/onagawa-data
+          volumes:
+            - name: scientific-data
+              csi:
+                driver: gcsfuse.run.googleapis.com
+                readOnly: false
+                volumeAttributes:
+                  bucketName: DATA_BUCKET

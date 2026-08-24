@@ -25,6 +25,7 @@ import type {
   AdminFeedbackListItem,
   AdminFeedbackListResponse,
 } from "@/types";
+import { useAppPreferences } from "@/lib/preferences";
 
 
 type FilterDraft = {
@@ -52,6 +53,7 @@ const emptyFilters: FilterDraft = {
 const pageSize = 25;
 
 export default function AdminFeedbackPage() {
+  const { ui } = useAppPreferences();
   const [draft, setDraft] = useState<FilterDraft>(emptyFilters);
   const [activeFilters, setActiveFilters] =
     useState<AdminFeedbackFilters>({});
@@ -193,7 +195,7 @@ export default function AdminFeedbackPage() {
   return (
     <section>
       <header className="page-header">
-        <h2>Feedback review</h2>
+        <h2>{ui("Feedback review")}</h2>
       </header>
 
       <article className="card">
@@ -202,19 +204,19 @@ export default function AdminFeedbackPage() {
           onSubmit={applyFilters}
         >
           <label className="settings-field feedback-search-field">
-            <span>Search</span>
+            <span>{ui("Search")}</span>
             <div className="field-with-icon">
               <Search size={15} aria-hidden="true" />
               <input
                 className="field"
                 onChange={(event) => updateDraft("search", event.target.value)}
-                placeholder="Question, answer, comment, or user"
+                placeholder={ui("Question, answer, comment, or user")}
                 value={draft.search}
               />
             </div>
           </label>
           <label className="settings-field">
-            <span>Rating</span>
+            <span>{ui("Rating")}</span>
             <select
               className="field"
               onChange={(event) =>
@@ -225,13 +227,13 @@ export default function AdminFeedbackPage() {
               }
               value={draft.rating}
             >
-              <option value="">All ratings</option>
-              <option value="1">Positive</option>
-              <option value="-1">Negative</option>
+              <option value="">{ui("All ratings")}</option>
+              <option value="1">{ui("Positive")}</option>
+              <option value="-1">{ui("Negative")}</option>
             </select>
           </label>
           <label className="settings-field">
-            <span>Reason</span>
+            <span>{ui("Reason")}</span>
             <select
               className="field"
               onChange={(event) =>
@@ -239,15 +241,15 @@ export default function AdminFeedbackPage() {
               }
               value={draft.reasonCode}
             >
-              <option value="">All reasons</option>
-              <optgroup label="Positive">
+              <option value="">{ui("All reasons")}</option>
+              <optgroup label={ui("Positive")}>
                 {feedbackReasons[1].map((reason) => (
                   <option key={reason.code} value={reason.code}>
                     {reason.label}
                   </option>
                 ))}
               </optgroup>
-              <optgroup label="Negative">
+              <optgroup label={ui("Negative")}>
                 {feedbackReasons[-1].map((reason) => (
                   <option key={reason.code} value={reason.code}>
                     {reason.label}
@@ -257,20 +259,20 @@ export default function AdminFeedbackPage() {
             </select>
           </label>
           <label className="settings-field">
-            <span>Role</span>
+            <span>{ui("Role")}</span>
             <select
               className="field"
               onChange={(event) => updateDraft("role", event.target.value)}
               value={draft.role}
             >
-              <option value="">All roles</option>
+              <option value="">{ui("All roles")}</option>
               <option value="viewer">Viewer</option>
               <option value="researcher">Researcher</option>
               <option value="admin">Admin</option>
             </select>
           </label>
           <label className="settings-field">
-            <span>Account type</span>
+            <span>{ui("Account type")}</span>
             <select
               className="field"
               onChange={(event) =>
@@ -278,14 +280,14 @@ export default function AdminFeedbackPage() {
               }
               value={draft.accountType}
             >
-              <option value="">All account types</option>
+              <option value="">{ui("All account types")}</option>
               <option value="research">Research</option>
               <option value="commercial">Commercial</option>
               <option value="internal">Internal</option>
             </select>
           </label>
           <label className="settings-field">
-            <span>Model</span>
+            <span>{ui("Model")}</span>
             <input
               className="field"
               onChange={(event) => updateDraft("model", event.target.value)}
@@ -294,7 +296,7 @@ export default function AdminFeedbackPage() {
             />
           </label>
           <label className="settings-field">
-            <span>From</span>
+            <span>{ui("From")}</span>
             <input
               className="field"
               onChange={(event) => updateDraft("dateFrom", event.target.value)}
@@ -303,7 +305,7 @@ export default function AdminFeedbackPage() {
             />
           </label>
           <label className="settings-field">
-            <span>To</span>
+            <span>{ui("To")}</span>
             <input
               className="field"
               onChange={(event) => updateDraft("dateTo", event.target.value)}
@@ -313,7 +315,7 @@ export default function AdminFeedbackPage() {
           </label>
           <div className="feedback-filter-actions">
             <button className="button" disabled={loading} type="submit">
-              Apply filters
+              {ui("Apply filters")}
             </button>
             <button
               className="button secondary-button"
@@ -322,7 +324,7 @@ export default function AdminFeedbackPage() {
               type="button"
             >
               <RefreshCw size={15} aria-hidden="true" />
-              Reset
+              {ui("Reset")}
             </button>
             <button
               className="button secondary-button"
@@ -331,7 +333,7 @@ export default function AdminFeedbackPage() {
               type="button"
             >
               <Download size={15} aria-hidden="true" />
-              {exporting ? "Exporting" : "Export CSV"}
+              {exporting ? ui("Exporting") : ui("Export CSV")}
             </button>
           </div>
         </form>
@@ -349,7 +351,7 @@ export default function AdminFeedbackPage() {
           />
         </div>
         <div className="feedback-reason-summary">
-          <span>Common reasons</span>
+          <span>{ui("Common reasons")}</span>
           {reasonEntries.length ? (
             reasonEntries.slice(0, 8).map(([reason, count]) => (
               <span className="feedback-reason-count" key={reason}>
@@ -365,7 +367,7 @@ export default function AdminFeedbackPage() {
       <div className="feedback-review-layout">
         <article className="card feedback-review-list">
           <div className="section-toolbar">
-            <h3 className="section-title">Responses</h3>
+            <h3 className="section-title">{ui("Responses")}</h3>
             <span className="empty-state">
               {result
                 ? `${result.total.toLocaleString()} matching`
@@ -376,10 +378,10 @@ export default function AdminFeedbackPage() {
             <table className="feedback-list-table">
               <thead>
                 <tr>
-                  <th>Rating</th>
-                  <th>Question</th>
-                  <th>User</th>
-                  <th>Submitted</th>
+                  <th>{ui("Rating")}</th>
+                  <th>{ui("Question")}</th>
+                  <th>{ui("User")}</th>
+                  <th>{ui("Submitted")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -408,7 +410,7 @@ export default function AdminFeedbackPage() {
               }
               type="button"
             >
-              Previous
+              {ui("Previous")}
             </button>
             <span className="empty-state">
               {result?.total
@@ -424,7 +426,7 @@ export default function AdminFeedbackPage() {
               onClick={() => void load(activeFilters, offset + pageSize)}
               type="button"
             >
-              Next
+              {ui("Next")}
             </button>
           </div>
         </article>
@@ -486,6 +488,7 @@ function FeedbackDetail({
   detail: AdminFeedbackDetail | null;
   loading: boolean;
 }) {
+  const { ui } = useAppPreferences();
   const evidenceCount = detail
     ? ["sources", "linked_sources", "analysis_context", "reliability_context"]
         .map((key) => detail.evidence_snapshot[key])
@@ -498,12 +501,12 @@ function FeedbackDetail({
   return (
     <article className="card feedback-detail-card">
       <div className="section-toolbar">
-        <h3 className="section-title">Review detail</h3>
+        <h3 className="section-title">{ui("Review detail")}</h3>
         {detail ? <RatingBadge rating={detail.rating} /> : null}
       </div>
-      {loading ? <p className="empty-state">Loading detail…</p> : null}
+      {loading ? <p className="empty-state">{ui("Loading detail…")}</p> : null}
       {!loading && !detail ? (
-        <p className="empty-state">Select a response to review it.</p>
+        <p className="empty-state">{ui("Select a response to review it.")}</p>
       ) : null}
       {!loading && detail ? (
         <>
@@ -531,7 +534,7 @@ function FeedbackDetail({
           </div>
 
           <section className="feedback-detail-section">
-            <h4 className="subsection-title">Feedback</h4>
+            <h4 className="subsection-title">{ui("Feedback")}</h4>
             <div className="feedback-detail-reasons">
               {detail.reason_codes.length
                 ? detail.reason_codes.map((reason) => (
@@ -539,33 +542,33 @@ function FeedbackDetail({
                       {feedbackReasonLabels[reason] || reason}
                     </span>
                   ))
-                : <span className="empty-state">No reason supplied.</span>}
+                : <span className="empty-state">{ui("No reason supplied.")}</span>}
             </div>
             <p className="feedback-comment-text">
-              {detail.comment || "No additional comment."}
+              {detail.comment || ui("No additional comment.")}
             </p>
           </section>
 
           <section className="feedback-detail-section">
-            <h4 className="subsection-title">Question</h4>
+            <h4 className="subsection-title">{ui("Question")}</h4>
             <p>{detail.query}</p>
           </section>
 
           <section className="feedback-detail-section">
-            <h4 className="subsection-title">Answer</h4>
+            <h4 className="subsection-title">{ui("Answer")}</h4>
             <MarkdownAnswer text={detail.answer || ""} />
           </section>
 
           <details className="debug-block feedback-debug-block">
-            <summary>Evidence snapshot ({evidenceCount})</summary>
+            <summary>{ui("Evidence snapshot")} ({evidenceCount})</summary>
             <pre>{JSON.stringify(detail.evidence_snapshot, null, 2)}</pre>
           </details>
           <details className="debug-block feedback-debug-block">
-            <summary>Trust report</summary>
+            <summary>{ui("Trust report")}</summary>
             <pre>
               {JSON.stringify(
                 detail.answer_audit_snapshot || {
-                  status: "No trust report was recorded.",
+                  status: ui("No trust report was recorded."),
                 },
                 null,
                 2,
@@ -573,7 +576,7 @@ function FeedbackDetail({
             </pre>
           </details>
           <details className="debug-block feedback-debug-block">
-            <summary>Request and prompt metadata</summary>
+            <summary>{ui("Request and prompt metadata")}</summary>
             <pre>
               {JSON.stringify(
                 {
@@ -594,6 +597,7 @@ function FeedbackDetail({
 }
 
 function RatingBadge({ rating }: { rating: -1 | 1 }) {
+  const { ui } = useAppPreferences();
   return (
     <span
       className={`feedback-rating-badge ${
@@ -605,7 +609,7 @@ function RatingBadge({ rating }: { rating: -1 | 1 }) {
       ) : (
         <ThumbsDown size={14} aria-hidden="true" />
       )}
-      {rating === 1 ? "Positive" : "Negative"}
+      {ui(rating === 1 ? "Positive" : "Negative")}
     </span>
   );
 }
@@ -617,9 +621,10 @@ function SummaryCell({
   label: string;
   value: string | number;
 }) {
+  const { ui } = useAppPreferences();
   return (
     <div>
-      <span>{label}</span>
+      <span>{ui(label)}</span>
       <strong>{value}</strong>
     </div>
   );

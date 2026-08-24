@@ -1,3 +1,7 @@
+"use client";
+
+import { useAppPreferences } from "@/lib/preferences";
+
 type DataTableProps = {
   columns: string[];
   rows: Record<string, unknown>[];
@@ -15,8 +19,9 @@ export function DataTable({
   selectedKey,
   onRowSelect,
 }: DataTableProps) {
+  const { ui } = useAppPreferences();
   if (!rows.length) {
-    return <p className="empty-state">{emptyText}</p>;
+    return <p className="empty-state">{ui(emptyText)}</p>;
   }
 
   return (

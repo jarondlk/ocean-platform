@@ -1,64 +1,87 @@
 """
-Vector store – embed documents via Ollama and search via pgvector.
+Vector store – embed documents through the model runtime and search pgvector.
 """
 from __future__ import annotations
 
 import logging
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
-import requests
-from sqlalchemy import text
+from sqlalchemy import or_, text
 
 import config
+from model_runtime import RETRIEVAL_DOCUMENT, RETRIEVAL_QUERY, get_model_runtime
 from .connection import get_session
 
 logger = logging.getLogger(__name__)
 
 
-def embed_text(text_input: str, model: str = None) -> List[float]:
+def embed_text(
+    text_input: str,
+    model: str = None,
+    *,
+    task_type: str = RETRIEVAL_QUERY,
+) -> List[float]:
     """
-    Get embedding vector from Ollama for a single text.
-    """
-    model = model or config.EMBEDDING_MODEL
-    url = f"{config.OLLAMA_BASE_URL}/api/embed"
-    payload = {"model": model, "input": text_input}
-
-    r = requests.post(url, json=payload, timeout=60)
-    r.raise_for_status()
-    data = r.json()
-
-    # Ollama returns {"embeddings": [[...]]}
-    embeddings = data.get("embeddings", [])
-    if embeddings:
-        return embeddings[0]
-
-    raise ValueError(f"No embedding returned for model {model}")
-
-
-def embed_batch(texts: List[str], model: str = None) -> List[List[float]]:
-    """
-    Embed a batch of texts.  Ollama supports batch via the 'input' field.
-    Falls back to sequential if batch fails.
+    Get an embedding vector from the configured model runtime.
     """
     model = model or config.EMBEDDING_MODEL
-    url = f"{config.OLLAMA_BASE_URL}/api/embed"
-
-    try:
-        payload = {"model": model, "input": texts}
-        r = requests.post(url, json=payload, timeout=300)
-        r.raise_for_status()
-        data = r.json()
-        embeddings = data.get("embeddings", [])
-        if len(embeddings) == len(texts):
-            return embeddings
-    except Exception as e:
-        logger.warning("Batch embedding failed, falling back to sequential: %s", e)
-
-    # Sequential fallback
-    return [embed_text(t, model) for t in texts]
+    return get_model_runtime().embed(
+        text_input,
+        model=model,
+        task_type=task_type,
+    )
 
 
-def update_document_embeddings(batch_size: int = 32) -> int:
+def embed_batch(
+    texts: List[str],
+    model: str = None,
+    *,
+    task_type: str = RETRIEVAL_DOCUMENT,
+) -> List[List[float]]:
+    """
+    Embed a batch of texts through the configured runtime.
+
+    Provider errors deliberately propagate. Retrying every item after a failed
+    batch can duplicate billable calls and conceal a partial provider outage.
+    """
+    model = model or config.EMBEDDING_MODEL
+
+    return get_model_runtime().embed_batch(
+        texts,
+        model=model,
+        task_type=task_type,
+    )
+
+
+def _embedding_refresh_query(session: Any) -> Any:
+    from .models import RetrievalDocument
+
+    return session.query(RetrievalDocument).filter(
+        or_(
+            RetrievalDocument.embedding.is_(None),
+            RetrievalDocument.embedding_provider != config.MODEL_PROVIDER,
+            RetrievalDocument.embedding_provider.is_(None),
+            RetrievalDocument.embedding_model != config.EMBEDDING_MODEL,
+            RetrievalDocument.embedding_model.is_(None),
+            RetrievalDocument.embedding_dim != config.EMBEDDING_DIM,
+            RetrievalDocument.embedding_dim.is_(None),
+        )
+    )
+
+
+def embedding_refresh_candidate_count(limit: Optional[int] = None) -> int:
+    """Count documents needing the configured embedding identity."""
+    with get_session() as session:
+        count = _embedding_refresh_query(session).count()
+    return min(count, limit) if limit is not None else count
+
+
+def update_document_embeddings(
+    batch_size: int = 32,
+    *,
+    limit: Optional[int] = None,
+) -> int:
     """
     Find retrieval documents without embeddings and compute them.
     Returns the number of documents updated.
@@ -68,11 +91,10 @@ def update_document_embeddings(batch_size: int = 32) -> int:
     count = 0
 
     with get_session() as session:
-        docs = (
-            session.query(RetrievalDocument)
-            .filter(RetrievalDocument.embedding.is_(None))
-            .all()
-        )
+        query = _embedding_refresh_query(session).order_by(RetrievalDocument.doc_id)
+        if limit is not None:
+            query = query.limit(limit)
+        docs = query.all()
 
         if not docs:
             logger.info("All documents already have embeddings")
@@ -84,15 +106,27 @@ def update_document_embeddings(batch_size: int = 32) -> int:
             batch = docs[i : i + batch_size]
             texts = [d.text for d in batch]
 
-            try:
-                embeddings = embed_batch(texts)
-                for doc, emb in zip(batch, embeddings):
-                    doc.embedding = emb
-                    count += 1
-                session.flush()
-                logger.info("  Embedded batch %d-%d", i, i + len(batch))
-            except Exception as e:
-                logger.error("  Failed batch %d-%d: %s", i, i + len(batch), e)
+            embeddings = embed_batch(texts, task_type=RETRIEVAL_DOCUMENT)
+            if len(embeddings) != len(batch):
+                raise ValueError(
+                    f"Embedding runtime returned {len(embeddings)} vectors "
+                    f"for {len(batch)} documents"
+                )
+            embedded_at = datetime.now(timezone.utc)
+            for doc, embedding in zip(batch, embeddings):
+                if len(embedding) != config.EMBEDDING_DIM:
+                    raise ValueError(
+                        f"Embedding dimension {len(embedding)} does not match "
+                        f"configured dimension {config.EMBEDDING_DIM}"
+                    )
+                doc.embedding = embedding
+                doc.embedding_provider = config.MODEL_PROVIDER
+                doc.embedding_model = config.EMBEDDING_MODEL
+                doc.embedding_dim = config.EMBEDDING_DIM
+                doc.embedded_at = embedded_at
+                count += 1
+            session.flush()
+            logger.info("  Embedded batch %d-%d", i, i + len(batch))
 
     logger.info("Updated %d document embeddings", count)
     return count

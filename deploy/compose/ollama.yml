@@ -1,3 +1,4 @@
+# Optional local Ollama service overlay.
 services:
   ollama:
     image: ollama/ollama:latest

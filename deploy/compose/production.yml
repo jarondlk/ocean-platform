@@ -1,3 +1,6 @@
+# Standalone production topology.
+name: provenance-eco-rag
+
 services:
   postgres:
     image: pgvector/pgvector:pg16
@@ -18,7 +21,7 @@ services:
 
   api:
     build:
-      context: .
+      context: ../..
       dockerfile: Containerfile.api
     restart: unless-stopped
     init: true
@@ -31,12 +34,20 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL}
+      DATABASE_POOL_SIZE: ${DATABASE_POOL_SIZE:-5}
+      DATABASE_MAX_OVERFLOW: ${DATABASE_MAX_OVERFLOW:-2}
+      DATABASE_POOL_TIMEOUT: ${DATABASE_POOL_TIMEOUT:-30}
+      DATABASE_POOL_RECYCLE: ${DATABASE_POOL_RECYCLE:-1800}
+      DATA_DIR: ${DATA_DIR:-/app/data}
+      JOB_EXECUTION_MODE: ${JOB_EXECUTION_MODE:-local}
+      MODEL_PROVIDER: ${MODEL_PROVIDER:-ollama}
       OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:?Set OLLAMA_BASE_URL}
       CHAT_MODEL: ${CHAT_MODEL:-qwen2.5:14b-instruct}
       EMBEDDING_MODEL: ${EMBEDDING_MODEL:-nomic-embed-text}
       CORS_ORIGINS: ${CORS_ORIGINS:?Set the HTTPS frontend origin}
       DEPLOYMENT_ENV: production
       AUTH_MODE: required
+      AUTH_ALLOWED_PROVIDERS: ${AUTH_ALLOWED_PROVIDERS:-oidc}
       PERSIST_LOCAL_CHAT: "false"
       ENABLE_MOCK_LOGIN: "false"
       INTERNAL_AUTH_SECRET: ${INTERNAL_AUTH_SECRET:?Set INTERNAL_AUTH_SECRET}
@@ -60,11 +71,11 @@ services:
     command:
       - /bin/sh
       - -c
-      - python -m alembic upgrade head && exec uvicorn api.main:app --host 0.0.0.0 --port 8000
+      - python scripts/bootstrap_database.py && exec uvicorn api.main:app --host 0.0.0.0 --port 8000
 
   frontend:
     build:
-      context: ./frontend
+      context: ../../frontend
       dockerfile: Containerfile
     restart: unless-stopped
     init: true
@@ -87,6 +98,7 @@ services:
       INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-onagawa-source-chat-frontend}
       INTERNAL_AUTH_AUDIENCE: ${INTERNAL_AUTH_AUDIENCE:-onagawa-source-chat-api}
       OIDC_PROVIDER_NAME: ${OIDC_PROVIDER_NAME:-Managed identity provider}
+      OIDC_PROVIDER_ID: ${OIDC_PROVIDER_ID:-oidc}
       OIDC_ISSUER: ${OIDC_ISSUER:?Set OIDC_ISSUER}
       OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:?Set OIDC_CLIENT_ID}
       OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET:?Set OIDC_CLIENT_SECRET}

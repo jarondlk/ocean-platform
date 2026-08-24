@@ -1,20 +1,38 @@
+FROM postgres:16-bookworm@sha256:92620daddcd947f8d5ab5ba66e848702fe443d87fed30c4cea8e389fd78dfc55 AS postgres-client
+
 FROM python:3.12-slim@sha256:57cd7c3a7a273101a6485ba99423ee568157882804b1124b4dd04266317710de
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
+    PIP_NO_CACHE_DIR=1 \
+    PORT=8000
 
 WORKDIR /app
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends libgomp1 postgresql-client \
+    && apt-get install -y --no-install-recommends \
+        libgomp1 \
+        liblz4-1 \
+        libpq5 \
+        libzstd1 \
+        zlib1g \
     && groupadd --system app \
     && useradd --system --gid app --create-home --home-dir /home/app app \
     && mkdir -p /app/data/backups /app/data/pipeline_runs \
     && chown -R app:app /app /home/app \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt ./
+# Match the managed PostgreSQL 16 server. Newer pg_dump archives can contain
+# settings that PostgreSQL 16 cannot restore (for example transaction_timeout).
+COPY --from=postgres-client \
+    /usr/lib/postgresql/16/bin/pg_dump \
+    /usr/lib/postgresql/16/bin/pg_restore \
+    /usr/lib/postgresql/16/bin/createdb \
+    /usr/lib/postgresql/16/bin/dropdb \
+    /usr/local/bin/
+RUN pg_dump --version | grep -Eq '^pg_dump \(PostgreSQL\) 16\.'
+
+COPY requirements/runtime.txt ./requirements.txt
 RUN pip install --upgrade pip \
     && pip install --require-hashes -r requirements.txt
 
@@ -25,6 +43,6 @@ USER app
 EXPOSE 8000
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/live', timeout=3).read()"
+    CMD python -c "import os, urllib.request; urllib.request.urlopen(f\"http://127.0.0.1:{os.environ.get('PORT', '8000')}/health/live\", timeout=3).read()"
 
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["/bin/sh", "-c", "exec uvicorn api.main:app --host 0.0.0.0 --port \"${PORT:-8000}\""]

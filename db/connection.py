@@ -23,7 +23,10 @@ _SessionLocal = None
 def get_engine():
     global _engine
     if _engine is None:
-        _engine = create_engine(config.DATABASE_URL, pool_pre_ping=True)
+        _engine = create_engine(
+            config.DATABASE_URL,
+            **config.database_engine_options(),
+        )
     return _engine
 
 

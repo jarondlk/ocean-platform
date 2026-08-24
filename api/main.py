@@ -19,7 +19,6 @@ from typing import Any, Dict, Iterable, List, Optional
 from urllib.parse import urlsplit, urlunsplit
 
 import pandas as pd
-import requests
 from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, inspect, text
@@ -39,6 +38,7 @@ from api.chat_records import (
     record_chat_context,
 )
 from api.feedback_routes import router as feedback_router
+from api.provenance_snapshot_service import get_provenance_snapshot_service
 from api.schemas import (
     ChatRequest,
     ChatResponse,
@@ -120,6 +120,8 @@ from ingestion.lineage import (
     build_provenance_manifest,
     build_upsert_dry_run_plan,
 )
+from ingestion.provenance_snapshot import SnapshotError
+from model_runtime import get_model_runtime
 
 
 def _cors_origins() -> List[str]:
@@ -133,6 +135,7 @@ def _cors_origins() -> List[str]:
 @asynccontextmanager
 async def _app_lifespan(_app: FastAPI):
     config.validate_security_configuration(require_auth_secret=True)
+    config.validate_runtime_configuration()
     yield
 
 
@@ -432,8 +435,8 @@ PIPELINE_STAGES: List[Dict[str, Any]] = [
     {
         "id": "backup_database",
         "label": "Back up database",
-        "description": "Create an atomic PostgreSQL custom archive, SHA-256 manifest, and structural restore verification before mutation.",
-        "command": ["python", "scripts/database_backup.py", "create"],
+        "description": "Create an atomic PostgreSQL custom archive, verify it, and restore it into a disposable database before mutation.",
+        "command": ["python", "scripts/database_backup.py", "create", "--restore-test"],
         "expected_inputs": ["PostgreSQL database", "pg_dump and pg_restore"],
         "expected_outputs": ["data/backups/*.dump", "data/backups/*.dump.json"],
         "destructive": False,
@@ -454,8 +457,28 @@ PIPELINE_STAGES: List[Dict[str, Any]] = [
         "label": "Refresh embeddings",
         "description": "Compute missing retrieval-document embeddings without reloading database rows.",
         "command": ["python", "scripts/update_embeddings.py"],
-        "expected_inputs": ["PostgreSQL retrieval_document rows", "Ollama embedding model"],
+        "expected_inputs": [
+            "PostgreSQL retrieval_document rows",
+            "Configured embedding runtime",
+        ],
         "expected_outputs": ["retrieval_document.embedding"],
+        "destructive": False,
+        "expensive": True,
+    },
+    {
+        "id": "publish_provenance",
+        "label": "Publish provenance snapshot",
+        "description": "Build and validate the complete lineage manifest, publish an immutable snapshot, and advance the generation-guarded latest pointer.",
+        "command": ["python", "scripts/build_provenance_manifest.py", "--publish"],
+        "expected_inputs": [
+            "data/provenance/provenance.jsonl",
+            "data/serving/retrieval_documents.parquet",
+            "PostgreSQL retrieval_document embedding status",
+        ],
+        "expected_outputs": [
+            "provenance/manifests/<run-id>.json",
+            "provenance/latest.json",
+        ],
         "destructive": False,
         "expensive": True,
     },
@@ -470,10 +493,26 @@ PIPELINE_DEFAULT_STAGES = [
     "reliability",
     "backup_database",
     "load_db",
+    "publish_provenance",
 ]
 PIPELINE_JOB_LOCK = threading.Lock()
 PIPELINE_CANCEL_EVENTS: Dict[str, threading.Event] = {}
 PIPELINE_PROCESSES: Dict[str, subprocess.Popen[str]] = {}
+
+
+def _require_local_job_execution(job_kind: str) -> None:
+    if config.JOB_EXECUTION_MODE == "local":
+        return
+    raise HTTPException(
+        status_code=503,
+        detail={
+            "code": "external_job_runner_required",
+            "message": (
+                f"{job_kind} execution is delegated to the external job "
+                "runner for this deployment."
+            ),
+        },
+    )
 
 
 def _doc_id(doc: Dict[str, Any]) -> str:
@@ -671,7 +710,10 @@ def _pipeline_database_snapshot() -> Dict[str, Any]:
     if not payload.get("available"):
         return payload
     try:
-        engine = create_engine(config.DATABASE_URL, pool_pre_ping=True)
+        engine = create_engine(
+            config.DATABASE_URL,
+            **config.database_engine_options(),
+        )
         with engine.connect() as conn:
             payload["retrieval_documents"] = int(conn.execute(text("SELECT count(*) FROM retrieval_document")).scalar() or 0)
             payload["embedded_documents"] = int(conn.execute(text("SELECT count(*) FROM retrieval_document WHERE embedding IS NOT NULL")).scalar() or 0)
@@ -943,7 +985,10 @@ def _cooccurrence_pairs(df: pd.DataFrame, limit: int) -> List[Dict[str, Any]]:
 
 
 def _database_engine():
-    return create_engine(config.DATABASE_URL, pool_pre_ping=True)
+    return create_engine(
+        config.DATABASE_URL,
+        **config.database_engine_options(),
+    )
 
 
 def _quote_identifier(engine: Any, identifier: str) -> str:
@@ -1146,7 +1191,24 @@ def _pipeline_artifacts_payload(items: List[PipelineArtifactInfo]) -> List[Dict[
     return [_model_dump(item) for item in items]
 
 
-def _pipeline_runtime_snapshot() -> Dict[str, Any]:
+def _pipeline_needs_model_runtime(request: PipelineRunRequest) -> bool:
+    return "embed_documents" in request.stages or (
+        "load_db" in request.stages and request.embed_after_load
+    )
+
+
+def _pipeline_model_status(*, required: bool) -> Dict[str, Any]:
+    if required:
+        return _ollama_status()
+    return {
+        "available": None,
+        "provider": config.MODEL_PROVIDER,
+        "skipped": True,
+        "reason": "The selected pipeline stages do not use a model runtime.",
+    }
+
+
+def _pipeline_runtime_snapshot(*, include_model_runtime: bool) -> Dict[str, Any]:
     raw_sources = _pipeline_raw_sources()
     artifacts = _pipeline_artifacts()
     return {
@@ -1154,7 +1216,7 @@ def _pipeline_runtime_snapshot() -> Dict[str, Any]:
         "raw_sources": _pipeline_artifacts_payload(raw_sources),
         "artifacts": _pipeline_artifacts_payload(artifacts),
         "database": _pipeline_database_snapshot(),
-        "ollama": _ollama_status(),
+        "ollama": _pipeline_model_status(required=include_model_runtime),
     }
 
 
@@ -1212,7 +1274,8 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
     artifacts = _pipeline_artifacts()
     readiness = _pipeline_readiness(raw_sources, artifacts)
     database = _pipeline_database_snapshot()
-    ollama = _ollama_status()
+    needs_model_runtime = _pipeline_needs_model_runtime(request)
+    ollama = _pipeline_model_status(required=needs_model_runtime)
     checks: List[PipelinePreflightCheck] = []
 
     _pipeline_check(
@@ -1275,6 +1338,7 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
         ("load_db", "serving:retrieval_parquet", "build_retrieval_docs", "Retrieval parquet corpus"),
         ("load_db", "canonical:anchors", "build_retrieval_docs", "Anchor events"),
         ("load_db", "canonical:links", "build_retrieval_docs", "Cross-source links"),
+        ("publish_provenance", "serving:retrieval_parquet", "build_retrieval_docs", "Retrieval parquet corpus"),
     ]
     for stage_id, artifact_id, producer, label in dependency_checks:
         if stage_id not in request.stages:
@@ -1300,6 +1364,7 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
         "backup_database" in request.stages
         or "load_db" in request.stages
         or "embed_documents" in request.stages
+        or "publish_provenance" in request.stages
     )
     if needs_database:
         db_available = bool(database.get("available"))
@@ -1376,6 +1441,26 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
             required=reset_confirmation_required,
         )
 
+    if "publish_provenance" in request.stages:
+        publication_id = (request.tag or "").strip()
+        has_publication_id = bool(
+            re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", publication_id)
+        )
+        _pipeline_check(
+            checks,
+            id_="provenance_publication_id",
+            label="Immutable provenance publication ID",
+            passed=request.dry_run or has_publication_id,
+            detail=(
+                "Dry-run uses a placeholder and does not publish objects."
+                if request.dry_run and not has_publication_id
+                else f"Snapshot publication ID: {publication_id}"
+                if has_publication_id
+                else "Executing publish_provenance requires a unique 1-128 character pipeline tag using letters, numbers, '.', '_', or '-'."
+            ),
+            required=not request.dry_run,
+        )
+
     if "backup_database" in request.stages:
         capability = backup_capability()
         _pipeline_check(
@@ -1388,15 +1473,18 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
             warning=request.dry_run,
         )
 
-    needs_ollama = "embed_documents" in request.stages or ("load_db" in request.stages and request.embed_after_load)
-    if needs_ollama:
-        ollama_available = bool(ollama.get("available"))
+    if needs_model_runtime:
+        model_runtime_available = bool(ollama.get("available"))
         _pipeline_check(
             checks,
-            id_="ollama_embeddings",
-            label="Ollama embedding runtime",
-            passed=ollama_available,
-            detail="Ollama is reachable for embedding generation." if ollama_available else str(ollama.get("error") or "Ollama is unavailable."),
+            id_="model_runtime_embeddings",
+            label="Embedding model runtime",
+            passed=model_runtime_available,
+            detail=(
+                "The configured model runtime is available for embeddings."
+                if model_runtime_available
+                else str(ollama.get("error") or "Model runtime is unavailable.")
+            ),
             required=not request.dry_run,
             warning=request.dry_run,
         )
@@ -1703,7 +1791,12 @@ def _validate_pipeline_stages(stage_ids: List[str]) -> None:
         raise HTTPException(status_code=400, detail=f"Unknown pipeline stage: {unknown[0]}")
 
 
-def _pipeline_command(stage_id: str, request: PipelineRunRequest) -> List[str]:
+def _pipeline_command(
+    stage_id: str,
+    request: PipelineRunRequest,
+    *,
+    pipeline_run_id: Optional[str] = None,
+) -> List[str]:
     command_map: Dict[str, List[str]] = {
         "validate_raw": [sys.executable, "scripts/ingest.py", "--validate-only"],
         "ingest": [sys.executable, "scripts/ingest.py"],
@@ -1718,6 +1811,7 @@ def _pipeline_command(stage_id: str, request: PipelineRunRequest) -> List[str]:
             str(config.DATABASE_BACKUP_DIR),
             "--label",
             request.tag or "pipeline",
+            "--restore-test",
         ],
         "load_db": [sys.executable, "scripts/load_db.py"],
         "embed_documents": [
@@ -1725,6 +1819,15 @@ def _pipeline_command(stage_id: str, request: PipelineRunRequest) -> List[str]:
             "scripts/update_embeddings.py",
             "--batch-size",
             str(request.embedding_batch_size),
+        ],
+        "publish_provenance": [
+            sys.executable,
+            "scripts/build_provenance_manifest.py",
+            "--publish",
+            "--run-id",
+            request.tag or "dry-run-placeholder",
+            "--pipeline-run-id",
+            pipeline_run_id or request.tag or "dry-run-placeholder",
         ],
     }
     command = list(command_map[stage_id])
@@ -1762,7 +1865,10 @@ def _run_pipeline_job(
     started_at = _now_iso()
     stage_results: List[Dict[str, Any]] = []
     preflight = _pipeline_preflight_payload(request)
-    before_snapshot = _pipeline_runtime_snapshot()
+    include_model_runtime = _pipeline_needs_model_runtime(request)
+    before_snapshot = _pipeline_runtime_snapshot(
+        include_model_runtime=include_model_runtime
+    )
     command_plan = _pipeline_command_plan(request)
     meta: Dict[str, Any] = {
         "schema_version": 1,
@@ -1803,7 +1909,7 @@ def _run_pipeline_job(
             meta["status"] = "cancelled"
             break
 
-        command = _pipeline_command(stage_id, request)
+        command = _pipeline_command(stage_id, request, pipeline_run_id=run_id)
         command_text = _display_command(command)
         stage_started = time.time()
         _pipeline_append_log(job_id, "")
@@ -1907,7 +2013,9 @@ def _run_pipeline_job(
     meta["completed_at"] = completed_at
     meta["duration_seconds"] = round(time.time() - started, 2)
     meta["stage_results"] = stage_results
-    after_snapshot = _pipeline_runtime_snapshot()
+    after_snapshot = _pipeline_runtime_snapshot(
+        include_model_runtime=include_model_runtime
+    )
     meta["artifacts_after"] = after_snapshot
     meta["diffs"] = _pipeline_snapshot_diffs(before_snapshot, after_snapshot)
     _write_json_atomic(_pipeline_manifest_path(job_id), meta)
@@ -1976,6 +2084,7 @@ def build_pipeline_preflight(request: PipelineRunRequest) -> PipelinePreflightRe
 
 
 def _start_pipeline_job(request: PipelineRunRequest) -> PipelineStartResponse:
+    _require_local_job_execution("Pipeline")
     _validate_pipeline_request_for_start(request)
     run_id = _new_pipeline_run_id(request.tag)
     job_id = run_id
@@ -2515,6 +2624,7 @@ def _start_evaluation_job(
     run_type: str,
     request: EvaluationStandardRunRequest | EvaluationAblationRunRequest,
 ) -> EvaluationStartResponse:
+    _require_local_job_execution("Evaluation")
     if run_type == "standard":
         _select_benchmark_questions(request.question_ids, request.categories, request.quick)
         _select_evaluation_modes(request.modes)  # type: ignore[union-attr]
@@ -3175,7 +3285,10 @@ def _selected_columns(df: pd.DataFrame, cfg: Dict[str, Any], columns: Optional[s
 
 def _database_status() -> Dict[str, Any]:
     try:
-        engine = create_engine(config.DATABASE_URL, pool_pre_ping=True)
+        engine = create_engine(
+            config.DATABASE_URL,
+            **config.database_engine_options(),
+        )
         with engine.connect() as conn:
             version = conn.execute(text("SELECT version()")).scalar()
             n_docs = conn.execute(text("SELECT count(*) FROM retrieval_document")).scalar()
@@ -3188,17 +3301,30 @@ def _database_status() -> Dict[str, Any]:
 
 def _ollama_status() -> Dict[str, Any]:
     try:
-        resp = requests.get(f"{config.OLLAMA_BASE_URL}/api/tags", timeout=2)
-        resp.raise_for_status()
-        models = [m.get("name") for m in resp.json().get("models", [])]
-        return {"available": True, "base_url": config.OLLAMA_BASE_URL, "models": models}
+        runtime = get_model_runtime()
+        models = [
+            model.get("name")
+            for model in runtime.list_models(timeout=2)
+            if model.get("name")
+        ]
+        return {
+            "available": True,
+            "provider": runtime.provider,
+            "base_url": runtime.endpoint,
+            "models": models,
+        }
     except Exception as exc:
-        logger.warning("Ollama status check failed: %s", type(exc).__name__)
-        logger.debug("Ollama status check traceback", exc_info=True)
+        logger.warning("Model runtime status check failed: %s", type(exc).__name__)
+        logger.debug("Model runtime status check traceback", exc_info=True)
         return {
             "available": False,
-            "base_url": config.OLLAMA_BASE_URL,
-            "error": "Ollama is unavailable",
+            "provider": config.MODEL_PROVIDER,
+            "base_url": (
+                config.OLLAMA_BASE_URL
+                if config.MODEL_PROVIDER == "ollama"
+                else f"vertex://{config.GOOGLE_CLOUD_PROJECT}/{config.GOOGLE_CLOUD_LOCATION}"
+            ),
+            "error": "Model runtime is unavailable",
         }
 
 
@@ -3294,9 +3420,8 @@ def stats() -> CorpusStats:
 @app.get("/models", response_model=ModelsResponse)
 def models() -> ModelsResponse:
     try:
-        resp = requests.get(f"{config.OLLAMA_BASE_URL}/api/tags", timeout=3)
-        resp.raise_for_status()
-        raw_models = resp.json().get("models", [])
+        runtime = get_model_runtime()
+        raw_models = runtime.list_models(timeout=3)
         chat_models = [
             OllamaModel(
                 name=str(model.get("name") or ""),
@@ -3309,15 +3434,17 @@ def models() -> ModelsResponse:
         return ModelsResponse(
             default_model=config.CHAT_MODEL,
             embedding_model=config.EMBEDDING_MODEL,
-            ollama_base_url=config.OLLAMA_BASE_URL,
+            provider=runtime.provider,
+            ollama_base_url=runtime.endpoint,
             available=True,
             models=chat_models,
         )
-    except Exception:
-        logger.exception("Model discovery failed")
+    except Exception as exc:
+        logger.warning("Model discovery unavailable: %s", exc)
         return ModelsResponse(
             default_model=config.CHAT_MODEL,
             embedding_model=config.EMBEDDING_MODEL,
+            provider=config.MODEL_PROVIDER,
             ollama_base_url=config.OLLAMA_BASE_URL,
             available=False,
             error="Model discovery is unavailable",
@@ -3389,6 +3516,7 @@ def pipeline_job_log(
 
 @app.post("/pipeline/jobs/{job_id}/cancel", response_model=PipelineJobStatus)
 def pipeline_cancel_job(job_id: str) -> PipelineJobStatus:
+    _require_local_job_execution("Pipeline")
     path = _pipeline_status_path(job_id)
     if not path.exists():
         raise HTTPException(status_code=404, detail=f"Unknown pipeline job: {job_id}")
@@ -3414,9 +3542,25 @@ def pipeline_cancel_job(job_id: str) -> PipelineJobStatus:
 
 @app.get("/provenance/manifest", response_model=ProvenanceManifestResponse)
 def provenance_manifest(
-    limit_documents: int = Query(default=500, ge=1, le=10000),
+    limit_documents: int = Query(default=100, ge=1, le=500),
     include_embeddings: bool = Query(default=True),
 ) -> ProvenanceManifestResponse:
+    if config.PROVENANCE_READ_MODE == "snapshot":
+        try:
+            payload = get_provenance_snapshot_service().manifest_payload(
+                limit_documents=limit_documents,
+                include_embeddings=include_embeddings,
+            )
+        except SnapshotError as exc:
+            logger.warning("Provenance snapshot unavailable: %s", exc)
+            raise HTTPException(
+                status_code=503,
+                detail={
+                    "code": "provenance_snapshot_unavailable",
+                    "message": "The published Provenance snapshot is unavailable or invalid.",
+                },
+            ) from exc
+        return ProvenanceManifestResponse(**payload)
     return ProvenanceManifestResponse(
         **build_provenance_manifest(
             limit_documents=limit_documents,
@@ -3427,6 +3571,19 @@ def provenance_manifest(
 
 @app.get("/provenance/trace/{doc_id}", response_model=ProvenanceTraceResponse)
 def provenance_trace(doc_id: str) -> ProvenanceTraceResponse:
+    if config.PROVENANCE_READ_MODE == "snapshot":
+        try:
+            payload = get_provenance_snapshot_service().trace_payload(doc_id)
+        except SnapshotError as exc:
+            logger.warning("Provenance snapshot unavailable: %s", exc)
+            raise HTTPException(
+                status_code=503,
+                detail={
+                    "code": "provenance_snapshot_unavailable",
+                    "message": "The published Provenance snapshot is unavailable or invalid.",
+                },
+            ) from exc
+        return ProvenanceTraceResponse(**payload)
     return ProvenanceTraceResponse(**build_document_trace(doc_id))
 
 
@@ -3460,6 +3617,13 @@ def debug_state() -> Dict[str, Any]:
                     "source": cfg.get("source_column"),
                 },
             }
+        except HTTPException as exc:
+            datasets[dataset] = {
+                "label": cfg["label"],
+                "path": str(cfg["path"]),
+                "exists": cfg["path"].exists(),
+                "error": str(exc.detail),
+            }
         except Exception:
             logger.exception("Debug dataset inspection failed for %s", dataset)
             datasets[dataset] = {
@@ -3491,9 +3655,11 @@ def debug_state() -> Dict[str, Any]:
         },
         "config": {
             "database_url": _redact_url(config.DATABASE_URL),
+            "model_provider": config.MODEL_PROVIDER,
             "ollama_base_url": config.OLLAMA_BASE_URL,
             "embedding_model": config.EMBEDDING_MODEL,
             "chat_model": config.CHAT_MODEL,
+            "job_execution_mode": config.JOB_EXECUTION_MODE,
             "cors_origins": _cors_origins(),
             "data_dir": str(config.DATA_DIR),
             "serving_dir": str(config.SERVING_DIR),
@@ -3503,8 +3669,10 @@ def debug_state() -> Dict[str, Any]:
         "selected_environment": {
             "DATABASE_URL": _redact_url(os.environ["DATABASE_URL"]) if os.environ.get("DATABASE_URL") else None,
             "OLLAMA_BASE_URL": os.environ.get("OLLAMA_BASE_URL"),
+            "MODEL_PROVIDER": os.environ.get("MODEL_PROVIDER"),
             "EMBEDDING_MODEL": os.environ.get("EMBEDDING_MODEL"),
             "CHAT_MODEL": os.environ.get("CHAT_MODEL"),
+            "JOB_EXECUTION_MODE": os.environ.get("JOB_EXECUTION_MODE"),
             "CORS_ORIGINS": os.environ.get("CORS_ORIGINS"),
         },
         "health": health().model_dump(),
@@ -3712,6 +3880,7 @@ def evaluation_job_status(job_id: str) -> EvaluationJobStatus:
 
 @app.post("/evaluation/jobs/{job_id}/cancel", response_model=EvaluationJobStatus)
 def evaluation_cancel_job(job_id: str) -> EvaluationJobStatus:
+    _require_local_job_execution("Evaluation")
     path = _job_status_path(job_id)
     if not path.exists():
         raise HTTPException(status_code=404, detail=f"Unknown evaluation job: {job_id}")
@@ -4390,20 +4559,12 @@ def chat(
         )
 
         try:
-            resp = requests.post(
-                f"{config.OLLAMA_BASE_URL}/api/chat",
-                json={
-                    "model": model,
-                    "messages": [{"role": "user", "content": prompt}],
-                    "stream": False,
-                    "options": ollama_options,
-                },
+            answer = get_model_runtime().chat(
+                model=model,
+                prompt=prompt,
+                options=ollama_options,
                 timeout=120,
             )
-            resp.raise_for_status()
-            answer = resp.json()["message"]["content"]
-            if not isinstance(answer, str) or not answer.strip():
-                raise ValueError("The model returned an empty answer")
         except Exception as exc:
             _mark_chat_failed_safely(
                 interaction_id=interaction_id,

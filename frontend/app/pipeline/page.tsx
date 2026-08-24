@@ -25,6 +25,7 @@ import type {
   PipelineStatusResponse,
   PipelineRunSummary,
 } from "@/types";
+import { useAppPreferences } from "@/lib/preferences";
 
 type PipelineView = "status" | "run" | "logs" | "history";
 
@@ -39,6 +40,7 @@ const defaultFullStages = ["validate_raw", "ingest", "build_retrieval_docs", "pr
 const resetConfirmationPhrase = "RESET DATABASE";
 
 export default function PipelinePage() {
+  const { ui } = useAppPreferences();
   const [view, setView] = useState<PipelineView>("status");
   const [status, setStatus] = useState<PipelineStatusResponse | null>(null);
   const [selectedStages, setSelectedStages] = useState<string[]>(["validate_raw"]);
@@ -228,7 +230,7 @@ export default function PipelinePage() {
     { label: "Corpus", value: formatCell(readiness.corpus_artifacts_ready), ok: readiness.corpus_artifacts_ready === true },
     { label: "SST", value: formatCell(readiness.sst_available), ok: readiness.sst_available === true },
     { label: "Database", value: formatCell(database.available), ok: database.available === true },
-    { label: "Ollama", value: formatCell(ollama.available), ok: ollama.available === true },
+    { label: "Model runtime", value: formatCell(ollama.available), ok: ollama.available === true },
   ];
   const artifactAvailabilityRows = [
     {
@@ -296,10 +298,10 @@ export default function PipelinePage() {
   return (
     <section>
       <header className="page-header">
-        <h2>Pipeline</h2>
+        <h2>{ui("Pipeline")}</h2>
       </header>
 
-      <div className="data-tabs" role="tablist" aria-label="Pipeline views">
+      <div className="data-tabs" role="tablist" aria-label={ui("Pipeline views")}>
         <TabButton active={view === "status"} label="Status" onClick={() => setView("status")} />
         <TabButton active={view === "run"} label="Run" onClick={() => setView("run")} />
         <TabButton active={view === "logs"} label="Logs" onClick={() => setView("logs")} />
@@ -308,38 +310,38 @@ export default function PipelinePage() {
 
       <div className="section-toolbar">
         <span className="empty-state">
-          {loading ? "Loading pipeline state." : `${stages.length || 0} stages. ${status?.pipeline_runs || 0} recorded manual runs.`}
+          {loading ? ui("Loading pipeline state.") : `${stages.length || 0} ${ui("stages.")} ${status?.pipeline_runs || 0} ${ui("recorded manual runs.")}`}
         </span>
         <button className="button secondary-button" onClick={() => void loadStatus()} type="button">
           <RefreshCw size={15} aria-hidden="true" />
-          Refresh
+          {ui("Refresh")}
         </button>
       </div>
       {error ? <p className="error-text">{error}</p> : null}
 
       <div className="grid metrics-grid system-metrics">
-        <Metric label="Raw ready" value={formatCell(readiness.required_raw_ready)} />
-        <Metric label="Corpus ready" value={formatCell(readiness.corpus_artifacts_ready)} />
-        <Metric label="DB docs" value={formatCell(database.retrieval_documents)} />
-        <Metric label="Embedded" value={formatCell(database.embedded_documents)} />
-        <Metric label="Active jobs" value={status?.active_jobs?.length || 0} />
+        <Metric label={ui("Raw ready")} value={formatCell(readiness.required_raw_ready)} />
+        <Metric label={ui("Corpus ready")} value={formatCell(readiness.corpus_artifacts_ready)} />
+        <Metric label={ui("DB docs")} value={formatCell(database.retrieval_documents)} />
+        <Metric label={ui("Embedded")} value={formatCell(database.embedded_documents)} />
+        <Metric label={ui("Active jobs")} value={status?.active_jobs?.length || 0} />
       </div>
 
       <section className="dashboard-grid pipeline-dashboard">
         <article className="data-section dashboard-wide">
-          <h3 className="section-title">Stage Flow</h3>
+          <h3 className="section-title">{ui("Stage Flow")}</h3>
           <PipelineStageFlow stages={stages} selectedStages={selectedStages} activeStageId={job?.stage_id || ""} />
         </article>
         <article className="data-section">
-          <h3 className="section-title">Artifact Availability</h3>
+          <h3 className="section-title">{ui("Artifact Availability")}</h3>
           <CompositionBars rows={artifactAvailabilityRows} emptyText="No pipeline artifacts loaded." />
         </article>
         <article className="data-section">
-          <h3 className="section-title">Freshness Classes</h3>
+          <h3 className="section-title">{ui("Freshness Classes")}</h3>
           <CompositionBars rows={freshnessBreakdown} emptyText="No freshness records loaded." />
         </article>
         <article className="data-section">
-          <h3 className="section-title">Readiness Matrix</h3>
+          <h3 className="section-title">{ui("Readiness Matrix")}</h3>
           <StatusMatrix rows={readinessRows} />
         </article>
       </section>
@@ -349,7 +351,7 @@ export default function PipelinePage() {
       {view === "status" ? (
         <section className="pipeline-main">
           <section className="data-section">
-            <h3 className="section-title">Readiness</h3>
+            <h3 className="section-title">{ui("Readiness")}</h3>
             <div className="status-list">
               <StatusRow label="Manual only" value={formatCell(readiness.manual_only)} />
               <StatusRow label="Required raw ready" value={formatCell(readiness.required_raw_ready)} />
@@ -357,12 +359,12 @@ export default function PipelinePage() {
               <StatusRow label="Missing raw" value={formatCell(readiness.missing_required_raw)} />
               <StatusRow label="Missing corpus artifacts" value={formatCell(readiness.missing_core_artifacts)} />
               <StatusRow label="Database" value={formatCell(database.available)} />
-              <StatusRow label="Ollama" value={formatCell(ollama.available)} />
+              <StatusRow label="Model runtime" value={formatCell(ollama.available)} />
             </div>
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Active Background Jobs</h3>
+            <h3 className="section-title">{ui("Active Background Jobs")}</h3>
             <DataTable
               columns={activeJobColumns}
               rows={activeJobRows}
@@ -380,22 +382,22 @@ export default function PipelinePage() {
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Raw Sources</h3>
+            <h3 className="section-title">{ui("Raw Sources")}</h3>
             <DataTable columns={artifactColumns} rows={rawRows} rowKeyColumn="id" />
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Artifact Freshness</h3>
+            <h3 className="section-title">{ui("Artifact Freshness")}</h3>
             <DataTable columns={freshnessColumns} rows={freshnessRows} rowKeyColumn="id" />
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Derived Artifacts</h3>
+            <h3 className="section-title">{ui("Derived Artifacts")}</h3>
             <DataTable columns={artifactColumns} rows={artifactRows} rowKeyColumn="id" />
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Stage Catalog</h3>
+            <h3 className="section-title">{ui("Stage Catalog")}</h3>
             <DataTable columns={stageColumns} rows={stageRows} rowKeyColumn="id" />
           </section>
         </section>
@@ -405,24 +407,24 @@ export default function PipelinePage() {
         <section className="pipeline-main">
           <section className="data-section">
             <div className="section-toolbar">
-              <h3 className="section-title">Manual Batch Controls</h3>
+              <h3 className="section-title">{ui("Manual Batch Controls")}</h3>
               <button className="button" disabled={!canStart} onClick={() => void submitJob()} type="button">
                 <Play size={15} aria-hidden="true" />
-                Start Job
+                {ui("Start Job")}
               </button>
             </div>
 
             <div className="pipeline-control-grid">
               <label className="settings-field" htmlFor="pipeline-tag" title="Optional run label stored in run metadata.">
-                <span>Tag</span>
+                <span>{ui("Tag")}</span>
                 <input id="pipeline-tag" className="field" onChange={(event) => setTag(event.target.value)} value={tag} />
               </label>
               <label className="settings-field" htmlFor="pipeline-embedding-model" title="Embedding model used by the embedding refresh stage.">
-                <span>Embedding model</span>
+                <span>{ui("Embedding model")}</span>
                 <input id="pipeline-embedding-model" className="field" onChange={(event) => setEmbeddingModel(event.target.value)} value={embeddingModel} />
               </label>
               <label className="settings-field" htmlFor="pipeline-batch-size" title="Embedding batch size for scripts/update_embeddings.py.">
-                <span>Embedding batch</span>
+                <span>{ui("Embedding batch")}</span>
                 <input
                   id="pipeline-batch-size"
                   className="field"
@@ -438,24 +440,24 @@ export default function PipelinePage() {
             <div className="pipeline-switch-grid">
               <label className="checkbox-row" title="Plan selected commands and write a log without executing scripts.">
                 <input checked={dryRun} onChange={(event) => setDryRun(event.target.checked)} type="checkbox" />
-                <span>Dry run</span>
+                <span>{ui("Dry run")}</span>
               </label>
               <label className="checkbox-row" title="Skip SST preprocessing during ingest.">
                 <input checked={skipSst} onChange={(event) => setSkipSst(event.target.checked)} type="checkbox" />
-                <span>Skip SST</span>
+                <span>{ui("Skip SST")}</span>
               </label>
               <label className="checkbox-row" title="Replace all scientific corpus tables instead of using the default transactional upsert.">
                 <input checked={resetDatabase} onChange={(event) => setResetDatabase(event.target.checked)} type="checkbox" />
-                <span>Reset database</span>
+                <span>{ui("Reset database")}</span>
               </label>
               <label className="checkbox-row" title="Append --embed to scripts/load_db.py when the database load stage is selected.">
                 <input checked={embedAfterLoad} onChange={(event) => setEmbedAfterLoad(event.target.checked)} type="checkbox" />
-                <span>Embed during load</span>
+                <span>{ui("Embed during load")}</span>
               </label>
             </div>
 
             <label className="settings-field pipeline-notes" htmlFor="pipeline-notes" title="Optional notes stored in run metadata.">
-              <span>Notes</span>
+              <span>{ui("Notes")}</span>
               <textarea id="pipeline-notes" className="textarea compact-textarea" onChange={(event) => setNotes(event.target.value)} value={notes} />
             </label>
 
@@ -493,10 +495,10 @@ export default function PipelinePage() {
 
           <section className="data-section">
             <div className="section-toolbar">
-              <h3 className="section-title">Preflight</h3>
+              <h3 className="section-title">{ui("Preflight")}</h3>
               <button className="button secondary-button" disabled={!selectedStages.length || loading} onClick={() => void refreshPreflight()} type="button">
                 <RefreshCw size={15} aria-hidden="true" />
-                Run Preflight
+                {ui("Run Preflight")}
               </button>
             </div>
             {preflight ? (
@@ -516,12 +518,12 @@ export default function PipelinePage() {
 
           <section className="data-section">
             <div className="section-toolbar">
-              <h3 className="section-title">Stages</h3>
+              <h3 className="section-title">{ui("Stages")}</h3>
               <div className="choice-actions">
-                <button className="button secondary-button" onClick={() => setSelectedStages(defaultFullStages)} type="button">Full rebuild</button>
-                <button className="button secondary-button" onClick={() => setSelectedStages(stages.map((stage) => stage.id))} type="button">Select all</button>
-                <button className="button secondary-button" onClick={() => setSelectedStages(["validate_raw"])} type="button">Validate only</button>
-                <button className="button secondary-button" onClick={() => setSelectedStages([])} type="button">Clear</button>
+                <button className="button secondary-button" onClick={() => setSelectedStages(defaultFullStages)} type="button">{ui("Full rebuild")}</button>
+                <button className="button secondary-button" onClick={() => setSelectedStages(stages.map((stage) => stage.id))} type="button">{ui("Select all")}</button>
+                <button className="button secondary-button" onClick={() => setSelectedStages(["validate_raw"])} type="button">{ui("Validate only")}</button>
+                <button className="button secondary-button" onClick={() => setSelectedStages([])} type="button">{ui("Clear")}</button>
               </div>
             </div>
             <div className="pipeline-stage-grid">
@@ -544,7 +546,7 @@ export default function PipelinePage() {
           </section>
 
           <section className="data-section">
-            <h3 className="section-title">Selected Command Plan</h3>
+            <h3 className="section-title">{ui("Selected Command Plan")}</h3>
             <DataTable columns={["id", "command", "destructive", "expensive"]} rows={selectedCommandRows} rowKeyColumn="id" />
           </section>
         </section>
@@ -555,16 +557,16 @@ export default function PipelinePage() {
           {job ? (
             <>
               <section className="data-section">
-                <h3 className="section-title">Per-Stage Logs</h3>
+                <h3 className="section-title">{ui("Per-Stage Logs")}</h3>
                 <StageLogList logs={jobLog?.stage_logs || []} />
               </section>
               <section className="data-section">
-                <h3 className="section-title">Full Run Log</h3>
+                <h3 className="section-title">{ui("Full Run Log")}</h3>
                 <pre className="code-block report-block">{jobLog?.log || "No log yet."}</pre>
               </section>
             </>
           ) : (
-            <p className="empty-state">No pipeline job selected.</p>
+            <p className="empty-state">{ui("No pipeline job selected.")}</p>
           )}
         </section>
       ) : null}
@@ -573,10 +575,10 @@ export default function PipelinePage() {
         <section className="pipeline-main">
           <section className="data-section">
             <div className="section-toolbar">
-              <h3 className="section-title">Run History</h3>
+              <h3 className="section-title">{ui("Run History")}</h3>
               <button className="button secondary-button" disabled={loading} onClick={() => void loadStatus()} type="button">
                 <RefreshCw size={15} aria-hidden="true" />
-                Refresh
+                {ui("Refresh")}
               </button>
             </div>
             <RunTimeline runs={runs.slice(0, 12)} selectedRunId={selectedRunId} />
@@ -597,7 +599,7 @@ export default function PipelinePage() {
 
           {runDetail ? (
             <section className="data-section">
-              <h3 className="section-title">Selected Run</h3>
+              <h3 className="section-title">{ui("Selected Run")}</h3>
               <div className="summary-strip">
                 <SummaryCell label="Status" value={runDetail.summary.status} />
                 <SummaryCell label="Dry run" value={formatCell(runDetail.summary.dry_run)} />
@@ -618,28 +620,28 @@ export default function PipelinePage() {
 
           {runDetail && diffRows.length ? (
             <section className="data-section">
-              <h3 className="section-title">Artifact Diffs</h3>
+              <h3 className="section-title">{ui("Artifact Diffs")}</h3>
               <DataTable columns={diffColumns} rows={diffRows} rowKeyColumn="id" />
             </section>
           ) : null}
 
           {runDetail ? (
             <section className="data-section">
-              <h3 className="section-title">Per-Stage Logs</h3>
+              <h3 className="section-title">{ui("Per-Stage Logs")}</h3>
               <StageLogList logs={runDetail.stage_logs || []} />
             </section>
           ) : null}
 
           {runDetail ? (
             <section className="data-section">
-              <h3 className="section-title">Manifest JSON</h3>
+              <h3 className="section-title">{ui("Manifest JSON")}</h3>
               <pre className="code-block report-block">{JSON.stringify(runDetail.manifest, null, 2)}</pre>
             </section>
           ) : null}
 
           {runDetail?.log_tail ? (
             <section className="data-section">
-              <h3 className="section-title">Log Tail</h3>
+              <h3 className="section-title">{ui("Log Tail")}</h3>
               <pre className="code-block report-block">{runDetail.log_tail}</pre>
             </section>
           ) : null}
@@ -749,16 +751,17 @@ function PipelineJobPanel({
   loading: boolean;
   onCancel: () => void;
 }) {
+  const { ui } = useAppPreferences();
   const terminal = isTerminalJob(job.status);
   const percent = Math.max(0, Math.min(100, Number(job.percent) || 0));
   return (
     <section className="data-section job-panel">
       <div className="section-toolbar">
-        <h3 className="section-title">Background Pipeline Job</h3>
+        <h3 className="section-title">{ui("Background Pipeline Job")}</h3>
         {!terminal ? (
           <button className="button secondary-button" disabled={loading || job.status === "cancel_requested"} onClick={onCancel} type="button">
             <Square size={14} aria-hidden="true" />
-            Cancel
+            {ui("Cancel")}
           </button>
         ) : null}
       </div>
@@ -786,7 +789,8 @@ function PipelineJobPanel({
 }
 
 function StageLogList({ logs }: { logs: PipelineStageLog[] }) {
-  if (!logs.length) return <p className="empty-state">No per-stage log sections available.</p>;
+  const { ui } = useAppPreferences();
+  if (!logs.length) return <p className="empty-state">{ui("No per-stage log sections available.")}</p>;
   return (
     <div className="stage-log-list">
       {logs.map((stage) => (
@@ -805,7 +809,7 @@ function StageLogList({ logs }: { logs: PipelineStageLog[] }) {
             <StatusRow label="Return code" value={formatCell(stage.return_code)} />
             <StatusRow label="Bytes" value={formatCell(stage.bytes)} />
           </div>
-          <pre className="code-block report-block">{stage.log || "No stage log captured."}</pre>
+          <pre className="code-block report-block">{stage.log || ui("No stage log captured.")}</pre>
         </details>
       ))}
     </div>
@@ -813,31 +817,35 @@ function StageLogList({ logs }: { logs: PipelineStageLog[] }) {
 }
 
 function TabButton({ active, label, onClick }: { active: boolean; label: string; onClick: () => void }) {
-  return <button className={active ? "active" : ""} onClick={onClick} type="button">{label}</button>;
+  const { ui } = useAppPreferences();
+  return <button className={active ? "active" : ""} onClick={onClick} type="button">{ui(label)}</button>;
 }
 
 function Metric({ label, value }: { label: string; value: string | number }) {
+  const { ui } = useAppPreferences();
   return (
     <article className="card">
-      <p className="metric-label">{label}</p>
+      <p className="metric-label">{ui(label)}</p>
       <p className="metric-value">{value}</p>
     </article>
   );
 }
 
 function SummaryCell({ label, value }: { label: string; value: string | number }) {
+  const { ui } = useAppPreferences();
   return (
     <div>
-      <span>{label}</span>
+      <span>{ui(label)}</span>
       <strong>{value}</strong>
     </div>
   );
 }
 
 function StatusRow({ label, value }: { label: string; value: string }) {
+  const { ui } = useAppPreferences();
   return (
     <div className="status-row">
-      <span>{label}</span>
+      <span>{ui(label)}</span>
       <strong>{value}</strong>
     </div>
   );

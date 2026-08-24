@@ -1,4 +1,7 @@
+"use client";
+
 import type { SourceDocument } from "@/types";
+import { useAppPreferences } from "@/lib/preferences";
 
 const sourceLabels: Record<string, string> = {
   ctd: "CTD",
@@ -12,8 +15,9 @@ const roleLabels: Record<string, string> = {
 };
 
 export function SourceTable({ sources }: { sources: SourceDocument[] }) {
+  const { ui } = useAppPreferences();
   if (!sources.length) {
-    return <p className="empty-state">No matching evidence records.</p>;
+    return <p className="empty-state">{ui("No matching evidence records.")}</p>;
   }
 
   return (
@@ -21,16 +25,16 @@ export function SourceTable({ sources }: { sources: SourceDocument[] }) {
       <table>
         <thead>
           <tr>
-            <th>Document</th>
-            <th>Role</th>
-            <th>Source</th>
-            <th>Time</th>
-            <th>Bay</th>
-            <th>Link</th>
-            <th>Score</th>
-            <th>Vector</th>
-            <th>FTS</th>
-            <th>Text</th>
+            <th>{ui("Document")}</th>
+            <th>{ui("Role")}</th>
+            <th>{ui("Source")}</th>
+            <th>{ui("Time")}</th>
+            <th>{ui("Bay")}</th>
+            <th>{ui("Link")}</th>
+            <th>{ui("Score")}</th>
+            <th>{ui("Vector")}</th>
+            <th>{ui("FTS")}</th>
+            <th>{ui("Text")}</th>
           </tr>
         </thead>
         <tbody>
@@ -40,7 +44,7 @@ export function SourceTable({ sources }: { sources: SourceDocument[] }) {
                 <strong>{source.doc_id}</strong>
                 <span>{source.title}</span>
               </td>
-              <td>{roleLabels[source.retrieval_role || "primary"] || source.retrieval_role || "Primary"}</td>
+              <td>{ui(roleLabels[source.retrieval_role || "primary"] || source.retrieval_role || "Primary")}</td>
               <td>{sourceLabels[source.source_type] || source.source_type}</td>
               <td>{source.time || "NA"}</td>
               <td>{source.bay || "regional"}</td>

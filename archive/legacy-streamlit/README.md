@@ -24,7 +24,8 @@ streamlit run archive/legacy-streamlit/app.py
 Intentional container run from the repository root:
 
 ```bash
-podman compose -f docker-compose.yml -f archive/legacy-streamlit/docker-compose.app.yml up -d --build
+podman compose -f compose.yml -f archive/legacy-streamlit/docker-compose.app.yml up -d --build
 ```
 
-For normal development, use the root `docker-compose.next.yml` stack instead.
+For normal development, combine the root `compose.yml` with
+`deploy/compose/app.yml` instead.

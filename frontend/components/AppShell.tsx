@@ -1,26 +1,11 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
-import { Activity, BookOpen, Bug, ChartNoAxesColumn, ClipboardCheck, Database, Fingerprint, LogOut, MessageSquare, MessagesSquare, TableProperties, UsersRound, Workflow } from "lucide-react";
+import { LogOut } from "lucide-react";
 
 import { auth, signOut } from "@/auth";
+import { AppNavigation } from "@/components/AppNavigation";
 import { PermissionGate } from "@/components/PermissionGate";
 import { getCurrentUser, getLocalCurrentUser } from "@/lib/server-api";
 import { localAuthDisabled } from "@/lib/security-config";
-
-const navItems = [
-  { href: "/", label: "Overview", icon: BookOpen, permission: "overview:read" },
-  { href: "/explore", label: "Explore", icon: ChartNoAxesColumn, permission: "data:read" },
-  { href: "/data", label: "Data", icon: Database, permission: "data:read" },
-  { href: "/database", label: "Database", icon: TableProperties, permission: "database:read" },
-  { href: "/pipeline", label: "Pipeline", icon: Workflow, permission: "pipeline:read" },
-  { href: "/provenance", label: "Provenance", icon: Fingerprint, permission: "provenance:read" },
-  { href: "/evaluation", label: "Evaluation", icon: ClipboardCheck, permission: "evaluation:read" },
-  { href: "/chat", label: "Chat", icon: MessageSquare, permission: "chat:use" },
-  { href: "/system", label: "System", icon: Activity, permission: "system:read" },
-  { href: "/debug", label: "Debug", icon: Bug, permission: "system:read" },
-  { href: "/admin/feedback", label: "Feedback", icon: MessagesSquare, permission: "feedback:review" },
-  { href: "/admin/users", label: "Users", icon: UsersRound, permission: "users:manage" },
-];
 
 export async function AppShell({ children }: { children: ReactNode }) {
   const session = await auth();
@@ -53,24 +38,13 @@ export async function AppShell({ children }: { children: ReactNode }) {
       </main>
     );
   }
-  const permissions = new Set(user.permissions);
   return (
     <div className="app-shell">
       <aside className="sidebar" aria-label="Primary navigation">
         <div className="brand-block">
           <h1>Onagawa RAG</h1>
         </div>
-        <nav className="nav-list">
-          {navItems.filter((item) => permissions.has(item.permission)).map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link key={item.href} href={item.href} className="nav-link">
-                <Icon size={16} aria-hidden="true" />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
-        </nav>
+        <AppNavigation permissions={user.permissions} />
         <div className="sidebar-user">
           <div>
             <strong>{user.display_name || user.email}</strong>

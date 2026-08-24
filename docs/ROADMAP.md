@@ -61,6 +61,8 @@ weekly or monthly, without making ingestion automatic yet.
       row counts, generated artifact paths, database snapshots, and diffs.
 - [x] Add a provenance manifest layer that traces raw files, derived artifacts,
       retrieval documents, and embedding treatment.
+- [x] Move hosted Provenance manifest and trace reads to integrity-verified,
+      immutable snapshots published by the manual pipeline.
 - [x] Add read-only `--upsert --dry-run` planning.
 - [x] Add a documented manual schedule, for example:
 
@@ -114,7 +116,7 @@ weekly or monthly, without making ingestion automatic yet.
 
 - [x] Archive the legacy Streamlit `Containerfile` and compose overlay under
       `archive/legacy-streamlit/`.
-- [x] Add `docker-compose.ollama.yml` for optional containerized Ollama.
+- [x] Add `deploy/compose/ollama.yml` for optional containerized Ollama.
 - [x] Add a server deployment guide with reverse proxy/TLS, backups, and
       private-only Ollama networking.
 - [x] Add a production environment template and private-service Compose

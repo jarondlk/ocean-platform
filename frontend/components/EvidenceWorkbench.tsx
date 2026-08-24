@@ -5,6 +5,7 @@ import { RotateCcw, Search } from "lucide-react";
 import { CsvExportButton } from "@/components/CsvExportButton";
 import { getDocuments, retrieveSources } from "@/lib/api";
 import { SourceTable } from "@/components/SourceTable";
+import { useAppPreferences } from "@/lib/preferences";
 import type { SourceDocument } from "@/types";
 
 const sourceLabels: Record<string, string> = {
@@ -14,6 +15,7 @@ const sourceLabels: Record<string, string> = {
 };
 
 export function EvidenceWorkbench() {
+  const { ui } = useAppPreferences();
   const [query, setQuery] = useState("");
   const [sourceType, setSourceType] = useState("");
   const [bay, setBay] = useState("");
@@ -151,40 +153,40 @@ export function EvidenceWorkbench() {
       <section className="explore-section">
         <form className="evidence-expert-form" onSubmit={submit}>
           <label className="settings-field" htmlFor="evidence-query" title="Full-text or retrieval query. Leave blank to list corpus records by filter.">
-            <span>Query</span>
+            <span>{ui("Query")}</span>
             <input
               id="evidence-query"
               className="field"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search evidence"
+              placeholder={ui("Search evidence")}
             />
           </label>
           <label className="settings-field" htmlFor="evidence-source" title="Restrict retrieval to a single evidence source type.">
-            <span>Source</span>
+            <span>{ui("Source")}</span>
             <select
               id="evidence-source"
               className="field"
               value={sourceType}
               onChange={(event) => setSourceType(event.target.value)}
             >
-              <option value="">All source types</option>
+              <option value="">{ui("All source types")}</option>
               <option value="ctd">CTD</option>
               <option value="metagenome">Metagenome</option>
-              <option value="remote_sensing">Satellite SST</option>
+              <option value="remote_sensing">{ui("Satellite SST")}</option>
             </select>
           </label>
           <label className="settings-field" htmlFor="evidence-bay" title="Filter by bay metadata where available.">
-            <span>Bay</span>
+            <span>{ui("Bay")}</span>
             <select id="evidence-bay" className="field" value={bay} onChange={(event) => setBay(event.target.value)}>
-              <option value="">All bays</option>
+              <option value="">{ui("All bays")}</option>
               <option value="O">Onagawa</option>
               <option value="I">Ishinomaki</option>
               <option value="M">Mutsu</option>
             </select>
           </label>
           <label className="settings-field" htmlFor="evidence-time-from" title="Inclusive lower bound for document time metadata.">
-            <span>From</span>
+            <span>{ui("From")}</span>
             <input
               id="evidence-time-from"
               className="field"
@@ -194,7 +196,7 @@ export function EvidenceWorkbench() {
             />
           </label>
           <label className="settings-field" htmlFor="evidence-time-to" title="Inclusive upper bound for document time metadata.">
-            <span>To</span>
+            <span>{ui("To")}</span>
             <input
               id="evidence-time-to"
               className="field"
@@ -204,7 +206,7 @@ export function EvidenceWorkbench() {
             />
           </label>
           <label className="settings-field" htmlFor="evidence-limit" title="Maximum number of documents requested from the API.">
-            <span>Limit</span>
+            <span>{ui("Limit")}</span>
             <select
               id="evidence-limit"
               className="field"
@@ -218,7 +220,7 @@ export function EvidenceWorkbench() {
             </select>
           </label>
           <label className="settings-field" htmlFor="evidence-min-score" title="Client-side threshold applied after retrieval.">
-            <span>Min score</span>
+            <span>{ui("Min score")}</span>
             <input
               id="evidence-min-score"
               className="field"
@@ -230,22 +232,22 @@ export function EvidenceWorkbench() {
             />
           </label>
           <label className="settings-field" htmlFor="evidence-role" title="Filter displayed rows by primary retrieval or linked cross-source evidence.">
-            <span>Role</span>
+            <span>{ui("Role")}</span>
             <select id="evidence-role" className="field" value={roleFilter} onChange={(event) => setRoleFilter(event.target.value)}>
-              <option value="all">All roles</option>
-              <option value="primary">Primary</option>
-              <option value="linked">Linked</option>
+              <option value="all">{ui("All roles")}</option>
+              <option value="primary">{ui("Primary")}</option>
+              <option value="linked">{ui("Linked")}</option>
             </select>
           </label>
           <label className="settings-field" title="Follow anchor-event links when the query retrieval endpoint is used.">
-            <span>Expansion</span>
+            <span>{ui("Expansion")}</span>
             <span className="checkbox-row">
               <input checked={expandEvidence} onChange={(event) => setExpandEvidence(event.target.checked)} type="checkbox" />
-              Linked evidence
+              {ui("Linked evidence")}
             </span>
           </label>
           <label className="settings-field" htmlFor="evidence-max-linked" title="Maximum linked documents requested for query retrieval.">
-            <span>Max linked</span>
+            <span>{ui("Max linked")}</span>
             <select
               id="evidence-max-linked"
               className="field"
@@ -263,9 +265,9 @@ export function EvidenceWorkbench() {
           <div className="evidence-actions">
             <button className="button" disabled={loading}>
               <Search size={16} aria-hidden="true" />
-              {loading ? "Searching" : "Search"}
+              {loading ? ui("Searching") : ui("Search")}
             </button>
-            <button className="button secondary-button icon-button" onClick={resetControls} title="Reset evidence controls." type="button">
+            <button className="button secondary-button icon-button" onClick={resetControls} title={ui("Reset evidence controls.")} type="button">
               <RotateCcw size={15} aria-hidden="true" />
             </button>
           </div>
@@ -274,16 +276,16 @@ export function EvidenceWorkbench() {
       </section>
 
       <section className="explore-section">
-        <h3 className="section-title">Result Diagnostics</h3>
+        <h3 className="section-title">{ui("Result Diagnostics")}</h3>
         <div className="summary-strip">
-          <SummaryCell label="Displayed" value={visibleDocuments.length} />
-          <SummaryCell label="Fetched" value={documents.length} />
-          <SummaryCell label="Primary" value={roleCounts.primary} />
-          <SummaryCell label="Linked" value={roleCounts.linked} />
-          <SummaryCell label="Coverage" value={formatCoverage(retrievalDiagnostics.source_coverage_ratio)} />
-          <SummaryCell label="Missing" value={missingSourceTypes || "None"} />
-          <SummaryCell label="Max score" value={scoreStats.max} />
-          <SummaryCell label="Mean score" value={scoreStats.mean} />
+          <SummaryCell label={ui("Displayed")} value={visibleDocuments.length} />
+          <SummaryCell label={ui("Fetched")} value={documents.length} />
+          <SummaryCell label={ui("Primary")} value={roleCounts.primary} />
+          <SummaryCell label={ui("Linked")} value={roleCounts.linked} />
+          <SummaryCell label={ui("Coverage")} value={formatCoverage(retrievalDiagnostics.source_coverage_ratio)} />
+          <SummaryCell label={ui("Missing")} value={missingSourceTypes || ui("None")} />
+          <SummaryCell label={ui("Max score")} value={scoreStats.max} />
+          <SummaryCell label={ui("Mean score")} value={scoreStats.mean} />
         </div>
         <div className="evidence-source-grid">
           {Object.entries(sourceCounts).map(([source, count]) => (
@@ -295,13 +297,13 @@ export function EvidenceWorkbench() {
               </div>
             </div>
           ))}
-          {!visibleDocuments.length ? <p className="empty-state">No documents match the active score threshold.</p> : null}
+          {!visibleDocuments.length ? <p className="empty-state">{ui("No documents match the active score threshold.")}</p> : null}
         </div>
       </section>
 
       <section className="explore-section">
         <div className="section-toolbar">
-          <h3 className="section-title">{visibleDocuments.length} documents</h3>
+          <h3 className="section-title">{visibleDocuments.length} {ui("documents")}</h3>
           <CsvExportButton
             columns={["retrieval_role", "doc_id", "title", "source_type", "sample_id", "event_id", "time", "bay", "station", "score", "vector_rank", "fts_rank", "link_type", "linked_from_doc_id", "linked_from_event_id", "time_delta_days", "distance_km", "text"]}
             filename="explore_evidence_documents"

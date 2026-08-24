@@ -52,16 +52,18 @@ from evaluation.benchmark import (
     run_full_benchmark,
 )
 from evaluation.report import generate_report, print_summary
+from model_runtime import OllamaRuntime, get_model_runtime
 
 
-def _check_ollama(url: str) -> bool:
-    """Check if Ollama is reachable."""
+def _check_model_runtime(url: str) -> tuple[bool, str]:
+    """Validate the configured runtime without issuing a billable generation."""
     try:
-        import requests
-        resp = requests.get(f"{url}/api/tags", timeout=5)
-        return resp.status_code == 200
-    except Exception:
-        return False
+        runtime = OllamaRuntime(url) if config.MODEL_PROVIDER == "ollama" else get_model_runtime()
+        runtime.list_models(timeout=5)
+        return True, runtime.endpoint
+    except Exception as exc:
+        logger.debug("Model runtime preflight failed", exc_info=True)
+        return False, type(exc).__name__
 
 
 def _check_backend() -> str:
@@ -174,7 +176,7 @@ def run_single_model(
     num_ctx: int,
     output_dir: Path,
     tag: str | None,
-) -> Path:
+) -> tuple[Path, int]:
     """Run evaluation for a single model and save results."""
     run_id = _make_run_id(model)
     total = len(questions) * len(modes)
@@ -257,10 +259,10 @@ def run_single_model(
     print(f"    Meta:   {meta_path}")
     print(f"    Report: {report_path}")
 
-    return csv_path
+    return csv_path, int(n_errors)
 
 
-def main():
+def main() -> int:
     parser = argparse.ArgumentParser(
         description="Run the Onagawa Source Chat evaluation benchmark.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -276,7 +278,7 @@ Examples:
     )
     parser.add_argument(
         "--model", default=config.CHAT_MODEL,
-        help=f"Ollama model name (default: {config.CHAT_MODEL})",
+        help=f"Model name for the configured runtime (default: {config.CHAT_MODEL})",
     )
     parser.add_argument(
         "--models", default=None,
@@ -325,11 +327,11 @@ Examples:
     # Preflight checks
     print("\n  Preflight checks...")
 
-    if not _check_ollama(args.ollama_url):
-        print(f"  ✗ Ollama not reachable at {args.ollama_url}")
-        print("    Start Ollama first: ollama serve")
+    runtime_ready, runtime_detail = _check_model_runtime(args.ollama_url)
+    if not runtime_ready:
+        print(f"  ✗ Model runtime unavailable: {runtime_detail}")
         sys.exit(1)
-    print(f"  ✓ Ollama reachable at {args.ollama_url}")
+    print(f"  ✓ Model runtime configured: {runtime_detail}")
 
     backend = _check_backend()
     print(f"  ✓ Retrieval backend: {backend}")
@@ -351,8 +353,9 @@ Examples:
 
     # Run evaluations
     csv_paths = []
+    total_errors = 0
     for model in model_list:
-        csv_path = run_single_model(
+        csv_path, n_errors = run_single_model(
             model=model,
             questions=questions,
             modes=modes,
@@ -363,6 +366,7 @@ Examples:
             tag=args.tag,
         )
         csv_paths.append(csv_path)
+        total_errors += n_errors
 
     # Multi-model comparison
     if len(csv_paths) > 1:
@@ -374,7 +378,8 @@ Examples:
 
     print(f"\n  All results saved to: {output_dir}/")
     print()
+    return 1 if total_errors else 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

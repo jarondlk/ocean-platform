@@ -12,6 +12,7 @@ import logging
 from typing import Any, Dict, List, Optional, Set
 
 import config
+from model_runtime import get_model_runtime
 
 logger = logging.getLogger(__name__)
 
@@ -517,6 +518,9 @@ RULES:
 8. Treat linked cross-source evidence as corroborating context. Cite it directly
    when it supports or challenges the primary retrieval, and state when expected
    source types are missing.
+9. Keep the complete answer under 500 words. Prefer a compact summary and
+   evidence bullets; include at least one valid citation in every factual
+   paragraph or bullet.
 
 STUDY SITES:
 • Onagawa Bay (O) ≈ 38.44°N 141.45°E
@@ -583,8 +587,6 @@ def ask(
     """
     Full RAG pipeline: retrieve → build prompt → call LLM → return answer + sources.
     """
-    import requests
-
     # Retrieve
     results = retrieve(
         query, k=k, source_type=source_type, bay=bay,
@@ -594,20 +596,14 @@ def ask(
     # Build prompt
     prompt = build_prompt(query, results)
 
-    # Call Ollama
+    # Call the configured model runtime.
     model = model or config.CHAT_MODEL
     try:
-        resp = requests.post(
-            f"{config.OLLAMA_BASE_URL}/api/chat",
-            json={
-                "model": model,
-                "messages": [{"role": "user", "content": prompt}],
-                "stream": False,
-            },
+        answer = get_model_runtime().chat(
+            model=model,
+            prompt=prompt,
             timeout=120,
         )
-        resp.raise_for_status()
-        answer = resp.json()["message"]["content"]
     except Exception as e:
         answer = f"LLM error: {e}"
 

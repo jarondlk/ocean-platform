@@ -9,6 +9,7 @@ import { MarkdownAnswer } from "@/components/MarkdownAnswer";
 import { askQuestion, getModels } from "@/lib/api";
 import type { AnswerAudit, ChatResponse, CitationAuditRecord, ContextDocument, ModelsResponse, SourceDocument } from "@/types";
 import { SourceTable } from "@/components/SourceTable";
+import { useAppPreferences } from "@/lib/preferences";
 
 type ChatSettings = {
   model: string;
@@ -82,12 +83,14 @@ const quickQuestions = [
 ];
 
 export default function ChatPage() {
+  const { ui } = useAppPreferences();
   const [query, setQuery] = useState("");
   const [settings, setSettings] = useState<ChatSettings>(defaultSettings);
   const [models, setModels] = useState<ModelsResponse | null>(null);
   const [response, setResponse] = useState<ChatResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const providerLabel = models?.provider === "vertex" ? "Vertex AI" : models?.provider || "Model runtime";
 
   useEffect(() => {
     getModels()
@@ -186,25 +189,25 @@ export default function ChatPage() {
   return (
     <section>
       <header className="page-header">
-        <h2>Query</h2>
+        <h2>{ui("Query")}</h2>
       </header>
 
       <form className="chat-form" onSubmit={submit}>
         <div className="chat-layout">
           <section className="chat-main">
             <article className="card">
-              <label className="section-label" htmlFor="query-input" title="User question sent to retrieval and the selected chat model.">
-                Question
+              <label className="section-label" htmlFor="query-input" title={ui("User question sent to retrieval and the selected chat model.")}>
+                {ui("Question")}
               </label>
               <textarea
                 id="query-input"
                 className="textarea"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                aria-label="Question"
-                placeholder="Enter question"
+                aria-label={ui("Question")}
+                placeholder={ui("Enter question")}
               />
-              <div className="quick-question-grid" aria-label="Quick questions">
+              <div className="quick-question-grid" aria-label={ui("Quick questions")}>
                 {quickQuestions.map((item) => (
                   <button
                     className="button secondary-button quick-question-button"
@@ -214,24 +217,24 @@ export default function ChatPage() {
                     title={item.query}
                     type="button"
                   >
-                    {item.label}
+                    {ui(item.label)}
                   </button>
                 ))}
               </div>
               <div className="section-toolbar chat-actions">
                 <span className="empty-state">
-                  {response ? `${response.n_sources} primary | ${response.n_linked_sources || 0} linked` : "No response."}
+                  {response ? `${response.n_sources} ${ui("primary")} | ${response.n_linked_sources || 0} ${ui("linked")}` : ui("No response.")}
                 </span>
                 <button className="button" disabled={loading || !query.trim()}>
                   <Send size={16} aria-hidden="true" />
-                  {loading ? "Asking" : "Ask"}
+                  {loading ? ui("Asking") : ui("Ask")}
                 </button>
               </div>
               {error ? <p className="error-text">{error}</p> : null}
             </article>
 
             <article className="card">
-              <h3 className="section-title">Response</h3>
+              <h3 className="section-title">{ui("Response")}</h3>
               <MarkdownAnswer text={response?.answer || ""} />
               {response?.interaction_id ? (
                 <ChatFeedback
@@ -244,28 +247,28 @@ export default function ChatPage() {
             {answerAudit ? (
               <article className="card">
                 <div className="section-toolbar">
-                  <h3 className="section-title">Trust Report</h3>
+                  <h3 className="section-title">{ui("Trust Report")}</h3>
                   <span className="empty-state">
                     {answerAudit.valid_citation_count} valid | {answerAudit.invalid_citation_count} invalid | {answerAudit.warnings.length} warnings
                   </span>
                 </div>
 
                 <div className="summary-strip chat-diagnostics">
-                  <SummaryCell label="Trust" value={titleCase(answerAudit.trust_level)} />
-                  <SummaryCell label="Score" value={formatCoverage(answerAudit.trust_score)} />
-                  <SummaryCell label="Citations" value={answerAudit.citation_count} />
-                  <SummaryCell label="Valid" value={answerAudit.valid_citation_count} />
-                  <SummaryCell label="Invalid" value={answerAudit.invalid_citation_count} />
-                  <SummaryCell label="Primary cited" value={answerAudit.primary_sources_cited} />
-                  <SummaryCell label="Linked cited" value={answerAudit.linked_sources_cited} />
-                  <SummaryCell label="Req context" value={requirementList(answerAudit, "required_context_types") || "None"} />
-                  <SummaryCell label="Context cited" value={requirementList(answerAudit, "satisfied_context_types") || "None"} />
-                  <SummaryCell label="Sources ok" value={requirementList(answerAudit, "satisfied_source_types") || "None"} />
-                  <SummaryCell label="Missing req" value={requirementList(answerAudit, "missing_source_types") || "None"} />
+                  <SummaryCell label={ui("Trust")} value={titleCase(answerAudit.trust_level)} />
+                  <SummaryCell label={ui("Score")} value={formatCoverage(answerAudit.trust_score)} />
+                  <SummaryCell label={ui("Citations")} value={answerAudit.citation_count} />
+                  <SummaryCell label={ui("Valid")} value={answerAudit.valid_citation_count} />
+                  <SummaryCell label={ui("Invalid")} value={answerAudit.invalid_citation_count} />
+                  <SummaryCell label={ui("Primary cited")} value={answerAudit.primary_sources_cited} />
+                  <SummaryCell label={ui("Linked cited")} value={answerAudit.linked_sources_cited} />
+                  <SummaryCell label={ui("Req context")} value={requirementList(answerAudit, "required_context_types") || ui("None")} />
+                  <SummaryCell label={ui("Context cited")} value={requirementList(answerAudit, "satisfied_context_types") || ui("None")} />
+                  <SummaryCell label={ui("Sources ok")} value={requirementList(answerAudit, "satisfied_source_types") || ui("None")} />
+                  <SummaryCell label={ui("Missing req")} value={requirementList(answerAudit, "missing_source_types") || ui("None")} />
                 </div>
 
                 <div className="section-toolbar compact-toolbar">
-                  <h4 className="subsection-title">Audit Warnings</h4>
+                  <h4 className="subsection-title">{ui("Audit Warnings")}</h4>
                   <CsvExportButton
                     columns={["warning"]}
                     filename="chat_trust_warnings"
@@ -280,7 +283,7 @@ export default function ChatPage() {
                 />
 
                 <div className="section-toolbar compact-toolbar">
-                  <h4 className="subsection-title">Citation Requirements</h4>
+                  <h4 className="subsection-title">{ui("Citation Requirements")}</h4>
                   <CsvExportButton
                     columns={["requirement", "required", "satisfied_by", "status"]}
                     filename="chat_citation_requirements"
@@ -295,7 +298,7 @@ export default function ChatPage() {
                 />
 
                 <div className="section-toolbar compact-toolbar">
-                  <h4 className="subsection-title">Citation Resolution</h4>
+                  <h4 className="subsection-title">{ui("Citation Resolution")}</h4>
                   <CsvExportButton
                     columns={["citation_id", "raw", "valid", "evidence_role", "source_type", "context_type", "covered_source_types", "title", "detail"]}
                     filename="chat_citation_audit"
@@ -314,25 +317,25 @@ export default function ChatPage() {
             {response ? (
               <article className="card">
                 <div className="section-toolbar">
-                  <h3 className="section-title">Context Ledger</h3>
+                  <h3 className="section-title">{ui("Context Ledger")}</h3>
                   <span className="empty-state">
                     {response.n_sources} primary | {response.n_linked_sources || 0} linked | {(response.n_context_documents || 0)} injected
                   </span>
                 </div>
 
                 <div className="summary-strip chat-diagnostics">
-                  <SummaryCell label="Model" value={response.model} />
-                  <SummaryCell label="Primary" value={response.n_sources} />
-                  <SummaryCell label="Linked" value={response.n_linked_sources || 0} />
-                  <SummaryCell label="Coverage" value={formatCoverage(retrievalDiagnostics.source_coverage_ratio)} />
-                  <SummaryCell label="Analysis" value={(response.analysis_context || []).length} />
-                  <SummaryCell label="Reliability" value={(response.reliability_context || []).length} />
-                  <SummaryCell label="Prompt chars" value={formatCell(promptDiagnostics.prompt_chars)} />
-                  <SummaryCell label="Missing" value={missingSourceTypes || "None"} />
+                  <SummaryCell label={ui("Model")} value={response.model} />
+                  <SummaryCell label={ui("Primary")} value={response.n_sources} />
+                  <SummaryCell label={ui("Linked")} value={response.n_linked_sources || 0} />
+                  <SummaryCell label={ui("Coverage")} value={formatCoverage(retrievalDiagnostics.source_coverage_ratio)} />
+                  <SummaryCell label={ui("Analysis")} value={(response.analysis_context || []).length} />
+                  <SummaryCell label={ui("Reliability")} value={(response.reliability_context || []).length} />
+                  <SummaryCell label={ui("Prompt chars")} value={formatCell(promptDiagnostics.prompt_chars)} />
+                  <SummaryCell label={ui("Missing")} value={missingSourceTypes || ui("None")} />
                 </div>
 
                 <div className="section-toolbar compact-toolbar">
-                  <h4 className="subsection-title">Retrieved Evidence</h4>
+                  <h4 className="subsection-title">{ui("Retrieved Evidence")}</h4>
                   <CsvExportButton
                     columns={["retrieval_role", "doc_id", "title", "source_type", "sample_id", "event_id", "time", "bay", "station", "score", "vector_rank", "fts_rank", "link_type", "linked_from_doc_id", "linked_from_event_id", "time_delta_days", "distance_km", "text"]}
                     filename="chat_retrieved_evidence"
@@ -342,7 +345,7 @@ export default function ChatPage() {
                 <SourceTable sources={evidenceSources} />
 
                 <div className="section-toolbar compact-toolbar">
-                  <h4 className="subsection-title">Injected Context</h4>
+                  <h4 className="subsection-title">{ui("Injected Context")}</h4>
                   <CsvExportButton
                     columns={["context_type", "doc_id", "analysis_type", "title", "text"]}
                     filename="chat_injected_context"
@@ -357,12 +360,12 @@ export default function ChatPage() {
                 />
 
                 <details className="debug-block chat-debug-block">
-                  <summary>Retrieval Diagnostics</summary>
+                  <summary>{ui("Retrieval Diagnostics")}</summary>
                   <DataTable columns={["key", "value"]} rows={retrievalDiagnosticRows} rowKeyColumn="key" />
                 </details>
 
                 <details className="debug-block chat-debug-block">
-                  <summary>Prompt Diagnostics</summary>
+                  <summary>{ui("Prompt Diagnostics")}</summary>
                   <DataTable columns={["key", "value"]} rows={diagnosticRows} rowKeyColumn="key" />
                 </details>
               </article>
@@ -370,22 +373,22 @@ export default function ChatPage() {
 
             {appliedSettings ? (
               <details className="debug-block">
-                <summary>Applied Settings</summary>
+                <summary>{ui("Applied Settings")}</summary>
                 <pre>{appliedSettings}</pre>
               </details>
             ) : null}
           </section>
 
-          <aside className="chat-settings" aria-label="Chat settings">
+          <aside className="chat-settings" aria-label={ui("Chat settings")}>
             <div className="settings-header">
-              <h3 className="section-title">Settings</h3>
-              <button className="button secondary-button icon-button" onClick={resetControls} title="Reset all chat controls to defaults." type="button">
+              <h3 className="section-title">{ui("Settings")}</h3>
+              <button className="button secondary-button icon-button" onClick={resetControls} title={ui("Reset all chat controls to defaults.")} type="button">
                 <RotateCcw size={15} aria-hidden="true" />
               </button>
             </div>
 
             <fieldset className="settings-section">
-              <legend>Retrieval</legend>
+              <legend>{ui("Retrieval")}</legend>
               <NumericControl
                 id="chat-top-k"
                 label="Top-K sources"
@@ -397,28 +400,28 @@ export default function ChatPage() {
                 onChange={(value) => updateSetting("k", value)}
               />
               <label className="settings-field" htmlFor="chat-source-type" title="Restrict retrieval to one source type.">
-                <span>Source type</span>
+                  <span>{ui("Source type")}</span>
                 <select
                   id="chat-source-type"
                   className="field"
                   value={settings.sourceType}
                   onChange={(event) => updateSetting("sourceType", event.target.value)}
                 >
-                  <option value="">All source types</option>
+                  <option value="">{ui("All source types")}</option>
                   <option value="ctd">CTD</option>
                   <option value="metagenome">Metagenome</option>
-                  <option value="remote_sensing">Satellite SST</option>
+                  <option value="remote_sensing">{ui("Satellite SST")}</option>
                 </select>
               </label>
               <label className="settings-field" htmlFor="chat-bay" title="Restrict retrieval to one bay when source metadata supports it.">
-                <span>Bay</span>
+                <span>{ui("Bay")}</span>
                 <select
                   id="chat-bay"
                   className="field"
                   value={settings.bay}
                   onChange={(event) => updateSetting("bay", event.target.value)}
                 >
-                  <option value="">All bays</option>
+                  <option value="">{ui("All bays")}</option>
                   <option value="O">Onagawa</option>
                   <option value="I">Ishinomaki</option>
                   <option value="M">Mutsu</option>
@@ -426,7 +429,7 @@ export default function ChatPage() {
               </label>
               <div className="settings-pair">
                 <label className="settings-field" htmlFor="chat-time-from" title="Inclusive lower bound for document time metadata.">
-                  <span>From</span>
+                  <span>{ui("From")}</span>
                   <input
                     id="chat-time-from"
                     className="field"
@@ -436,7 +439,7 @@ export default function ChatPage() {
                   />
                 </label>
                 <label className="settings-field" htmlFor="chat-time-to" title="Inclusive upper bound for document time metadata.">
-                  <span>To</span>
+                  <span>{ui("To")}</span>
                   <input
                     id="chat-time-to"
                     className="field"
@@ -495,7 +498,7 @@ export default function ChatPage() {
             </fieldset>
 
             <fieldset className="settings-section">
-              <legend>Prompt Context</legend>
+              <legend>{ui("Prompt Context")}</legend>
               <CheckboxControl
                 checked={settings.injectAnalysis}
                 label="Inject analysis"
@@ -517,9 +520,9 @@ export default function ChatPage() {
             </fieldset>
 
             <fieldset className="settings-section">
-              <legend>Generation</legend>
-              <label className="settings-field" htmlFor="chat-model" title="Ollama chat model. The field is editable, so models not returned by /api/tags can still be entered.">
-                <span>Model</span>
+              <legend>{ui("Generation")}</legend>
+              <label className="settings-field" htmlFor="chat-model" title="Chat model used for answer generation. The field remains editable for provider-supported model names.">
+                <span>{ui("Model")}</span>
                 <input
                   id="chat-model"
                   className="field"
@@ -534,7 +537,7 @@ export default function ChatPage() {
                 </datalist>
               </label>
               <div className="settings-status">
-                Ollama: {models?.available ? "available" : "unknown"} | Embedding: {models?.embedding_model || "unknown"}
+                {providerLabel}: {models?.available ? "available" : "unknown"} | Embedding: {models?.embedding_model || "unknown"}
               </div>
               <NumericControl
                 id="chat-temperature"
@@ -566,8 +569,8 @@ export default function ChatPage() {
                 value={settings.repeatPenalty}
                 onChange={(value) => updateSetting("repeatPenalty", value)}
               />
-              <label className="settings-field" htmlFor="chat-num-ctx" title="Maximum model context window requested from Ollama.">
-                <span>Context window</span>
+              <label className="settings-field" htmlFor="chat-num-ctx" title="Maximum model context window requested from the configured runtime when supported.">
+                <span>{ui("Context window")}</span>
                 <select
                   id="chat-num-ctx"
                   className="field"
@@ -585,7 +588,7 @@ export default function ChatPage() {
                 <OptionalIntegerControl
                   id="chat-num-predict"
                   label="Max tokens"
-                  help="Ollama num_predict. Leave blank for model/runtime default."
+                  help="Maximum generated tokens. Leave blank for the configured runtime default."
                   max={8192}
                   min={1}
                   value={settings.numPredict}
@@ -594,7 +597,7 @@ export default function ChatPage() {
                 <OptionalIntegerControl
                   id="chat-sampling-top-k"
                   label="Sampling top-k"
-                  help="Ollama sampling top_k. Leave blank for model/runtime default."
+                  help="Sampling top-k when supported. Leave blank for the configured runtime default."
                   max={200}
                   min={1}
                   value={settings.samplingTopK}
@@ -604,7 +607,7 @@ export default function ChatPage() {
               <OptionalIntegerControl
                 id="chat-seed"
                 label="Seed"
-                help="Optional deterministic seed passed to Ollama."
+                help="Optional deterministic seed when supported by the configured runtime."
                 min={0}
                 value={settings.seed}
                 onChange={(value) => updateSetting("seed", value)}
@@ -738,9 +741,10 @@ function NumericControl({
   value: number;
   onChange: (value: number) => void;
 }) {
+  const { ui } = useAppPreferences();
   return (
-    <label className="settings-field" htmlFor={id} title={help}>
-      <span>{label}</span>
+    <label className="settings-field" htmlFor={id} title={ui(help)}>
+      <span>{ui(label)}</span>
       <div className="range-row">
         <input
           id={id}
@@ -752,7 +756,7 @@ function NumericControl({
           value={value}
         />
         <input
-          aria-label={`${label} value`}
+          aria-label={`${ui(label)} ${ui("value")}`}
           className="field numeric-field"
           max={max}
           min={min}
@@ -783,9 +787,10 @@ function OptionalIntegerControl({
   value: string;
   onChange: (value: string) => void;
 }) {
+  const { ui } = useAppPreferences();
   return (
-    <label className="settings-field" htmlFor={id} title={help}>
-      <span>{label}</span>
+    <label className="settings-field" htmlFor={id} title={ui(help)}>
+      <span>{ui(label)}</span>
       <input
         id={id}
         className="field"
@@ -793,7 +798,7 @@ function OptionalIntegerControl({
         max={max}
         min={min}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="default"
+        placeholder={ui("default")}
         type="number"
         value={value}
       />
@@ -812,10 +817,11 @@ function CheckboxControl({
   help: string;
   onChange: (value: boolean) => void;
 }) {
+  const { ui } = useAppPreferences();
   return (
-    <label className="checkbox-row" title={help}>
+    <label className="checkbox-row" title={ui(help)}>
       <input checked={checked} onChange={(event) => onChange(event.target.checked)} type="checkbox" />
-      <span>{label}</span>
+      <span>{ui(label)}</span>
     </label>
   );
 }

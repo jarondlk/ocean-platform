@@ -1,0 +1,44 @@
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: onagawa-migrate
+  labels:
+    environment: prototype
+    cost_component: migration
+spec:
+  template:
+    metadata:
+      labels:
+        environment: prototype
+        cost_component: migration
+      annotations:
+        run.googleapis.com/cloudsql-instances: PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
+        run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/secrets: 'onagawa-database-url:projects/PROJECT_NUMBER/secrets/onagawa-database-url'
+    spec:
+      template:
+        spec:
+          serviceAccountName: onagawa-jobs@PROJECT_ID.iam.gserviceaccount.com
+          maxRetries: 0
+          timeoutSeconds: "900"
+          containers:
+            - image: REGION-docker.pkg.dev/PROJECT_ID/ARTIFACT_REPOSITORY/api:IMAGE_TAG
+              command:
+                - python
+              args:
+                - scripts/bootstrap_database.py
+                - --json
+              env:
+                - name: DATABASE_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: onagawa-database-url
+                      key: latest
+                - name: DATABASE_POOL_SIZE
+                  value: "2"
+                - name: DATABASE_MAX_OVERFLOW
+                  value: "0"
+              resources:
+                limits:
+                  cpu: "1"
+                  memory: 1Gi

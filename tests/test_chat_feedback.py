@@ -12,6 +12,7 @@ import api.auth as api_auth
 import api.chat_records as chat_records
 import api.feedback_routes as feedback_routes
 import api.main as api_main
+import model_runtime
 from api.auth import CurrentUser, ROLE_PERMISSIONS, resolve_identity
 from db.app_models import (
     AppBase,
@@ -123,7 +124,7 @@ def test_chat_persists_completed_interaction_and_feedback_can_be_revised(
     _stub_chat_dependencies(monkeypatch)
     monkeypatch.setattr(api_auth, "authenticate_request", lambda _request: user)
     monkeypatch.setattr(
-        api_main.requests,
+        model_runtime.requests,
         "post",
         lambda *args, **kwargs: _OllamaResponse(),
     )
@@ -243,7 +244,7 @@ def test_chat_model_failure_is_persisted_and_returned_as_bad_gateway(monkeypatch
     def fail_model(*args, **kwargs):
         raise ConnectionError("Ollama is offline")
 
-    monkeypatch.setattr(api_main.requests, "post", fail_model)
+    monkeypatch.setattr(model_runtime.requests, "post", fail_model)
     client = TestClient(api_main.app)
 
     response = client.post(
