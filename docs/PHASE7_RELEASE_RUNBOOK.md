@@ -286,8 +286,11 @@ enforcement remains separate implementation work.
    Dependabot alerts close; CodeQL remains enabled through GitHub default setup.
 2. Retention enforcement is implemented and reviewed before the cohort expands;
    the approved policy by itself does not authorize immediate deletion.
-3. The Provenance snapshot fast path is implemented on `gcp-dev`; publish and
-   verify its first cloud snapshot and repeat the concurrency gate before that
-   diagnostic is used repeatedly by a larger cohort.
-4. Posted billing is reviewed after 24 hours and again after seven days. Per the
+3. Posted billing is reviewed after 24 hours and again after seven days. Per the
    operator's decision, these reviews remain pending until their data is due.
+
+The former Provenance performance no-go item closed on 2026-08-24. Snapshot
+`provenance-20260824T064300Z` is live on revision
+`onagawa-source-chat-00011-4pd`; integrity, authenticated UI/trace behavior,
+and the bounded concurrency gate passed as recorded in
+`docs/PROVENANCE_SNAPSHOT_RUNBOOK.md`.

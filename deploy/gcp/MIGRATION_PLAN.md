@@ -501,24 +501,29 @@ reads, or 18 chat calls in one run. The entire release exercise is capped at 32
 chat generations. No Phase 7 scale, quota, pool, timeout, or budget increase is
 approved.
 
-The live security-patched revision is `onagawa-source-chat-00009-x8f` from
+The preceding Phase 7 security-patched baseline was
+`onagawa-source-chat-00009-x8f` from
 immutable build `48ffbcd3-3839-4d9b-977f-de1b4df7ab19`. Authentication, persistence,
 backup/restore, revision rollback, the `/data` deployment correction, bounded
 core-route load, two additional Vertex chat calls, resource ceilings, log
 hygiene, dependency audits, security-patched runtime, confirmed researcher
 login, approved 90-day chat/feedback retention, and private operations contacts
 are recorded in the runbook. Do not approve a wider cohort until the
-default-branch security merge, retention enforcement, performance follow-up,
-and 24-hour/seven-day posted cost reviews close.
+default-branch security merge, retention enforcement, and 24-hour/seven-day
+posted cost reviews close.
 
-The Provenance performance follow-up is implemented on `gcp-dev` but is not
-yet a live acceptance result. The implementation publishes a complete,
-schema-v2 immutable manifest through the existing pipeline job, advances a
-generation-guarded Cloud Storage pointer only after integrity verification,
-and serves cached manifest windows and indexed document traces without a
-dynamic production fallback. The follow-up closes only after the first cloud
-snapshot is published and the authenticated concurrency gate in
-`docs/PROVENANCE_SNAPSHOT_RUNBOOK.md` passes on the candidate revision.
+The Provenance performance follow-up completed its live acceptance gate on
+2026-08-24. Immutable build `72483be4-a0d7-4f97-9ef4-873474217bd1` is live as
+revision `onagawa-source-chat-00011-4pd`, with the prior revision retained as
+the immediate rollback target. Pipeline execution `onagawa-pipeline-cwbxs`
+published schema-v2 snapshot `provenance-20260824T064300Z`; its 328,769-byte
+object has SHA-256
+`5126d63e2d56b8fde8b4cc291f404f9eee63f7bce3d17601ebbdbb3aef24e7fb`
+and contains 323 documents plus 323 embedded-document records. Authenticated
+UI, manifest, document-trace, and twelve-request concurrency checks passed.
+The observed cold manifest latency was 0.971 seconds, concurrent manifest p95
+was 0.307 seconds, and trace latency was 0.170 seconds. The serving path has no
+dynamic production fallback.
 
 Execution order:
 

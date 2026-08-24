@@ -122,3 +122,34 @@ diagnosis before publishing a corrected unique manifest ID.
 
 The interactive upsert dry-run remains separate follow-up work. It should move
 to an external pipeline result before broader Provenance use.
+
+## Deployment record — 2026-08-24
+
+- Source commits `790be44` and `c7a531b` produced successful Cloud Build
+  `72483be4-a0d7-4f97-9ef4-873474217bd1`. The API digest is
+  `sha256:f4d6d7ad2c77ded275ba48e5b85e0fc4484c5e8bc77682bc0deee039da732ea5`;
+  the frontend digest is
+  `sha256:1a7f290de1bc9957b26703a992b63b26c4e533ed2aa13e41a9de293ae2cd5ba3`.
+- The first build attempt stopped before tests because an Apple-Silicon lock
+  omitted SQLAlchemy's conditional Linux `greenlet` dependency. Commit
+  `c7a531b` makes it explicit and adds a regression test; no image or runtime
+  was produced by the failed build.
+- Publication-only dry-run `onagawa-pipeline-cbltb` passed. Execution
+  `onagawa-pipeline-cwbxs` then published
+  `provenance-20260824T064300Z` with pipeline run
+  `pipeline_20260824T064614_provenance-20260824T064300Z_832bf1e8`.
+- The downloaded 328,769-byte schema-v2 object independently matched pointer
+  SHA-256
+  `5126d63e2d56b8fde8b4cc291f404f9eee63f7bce3d17601ebbdbb3aef24e7fb`.
+  It contains 323 unique documents and 323 embedding records, all marked
+  embedded with `gemini-embedding-001` at 768 dimensions.
+- Revision `onagawa-source-chat-00011-4pd` became Ready with zero traffic while
+  `onagawa-source-chat-00010-pft` stayed at 100%. After readiness, configuration,
+  ingress, and log gates passed, traffic moved explicitly to `00011-4pd`.
+- The authenticated admin UI displayed the snapshot and its pipeline linkage;
+  document `ctd_2024-01-O-s1` resolved through citation, retrieval document,
+  derived artifacts, raw source, and embedding treatment.
+- Cloud Run request logs recorded a 0.971-second cold manifest response,
+  0.307-second p95 across twelve concurrent authenticated manifest requests,
+  and a 0.170-second authenticated document trace. Every measured request
+  returned HTTP 200, and the post-rollout error-level log audit was empty.
