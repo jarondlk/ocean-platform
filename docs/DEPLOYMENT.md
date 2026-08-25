@@ -2,22 +2,42 @@
 
 ## Managed GCP Prototype
 
-The existing production Compose topology remains the supported single-host
-deployment. The GCP readiness branch also includes a managed prototype design
-for Cloud Run, Cloud SQL, Cloud Storage, Secret Manager, and Cloud Run Jobs.
-See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for the templates and
-pre-provisioning checklist.
+The managed GCP prototype is live. It uses a public Cloud Run frontend with a
+private FastAPI sidecar, Cloud SQL PostgreSQL/pgvector, Cloud Storage, Secret
+Manager, Cloud Run Jobs, Google OIDC, and Vertex AI. The production application
+URL is
+[`https://onagawa-source-chat-469489188516.asia-northeast1.run.app`](https://onagawa-source-chat-469489188516.asia-northeast1.run.app).
+See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
+operations.
+
+Current release record as of 2026-08-25:
+
+- stable GitHub release `v0.1.0`, source commit `2820f128` on `gcp-dev`;
+- Cloud Build `ce129a4f-4059-4e21-8bd1-7702fb34cdac`;
+- serving revision `onagawa-source-chat-00012-drc` at 100% traffic;
+- immediate rollback revision `onagawa-source-chat-00011-4pd`;
+- Cloud Run minimum zero, maximum one instance, concurrency 20; and
+- successful GitHub `production` deployment status.
+
+The standalone Compose topology below remains the supported self-hosted
+alternative. Its configuration examples do not describe the current GCP
+service.
 
 The required migration sequence, integration gates, and cost controls are in
 [`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Install the
 project budget and Cloud Run spend cap before enabling runtime APIs.
 
-The Cloud Run serving revision must use `JOB_EXECUTION_MODE=external`. Database
+The Cloud Run serving revision uses `JOB_EXECUTION_MODE=external`. Database
 migrations, pipeline runs, and evaluations belong in run-to-completion jobs;
 they must not be launched as daemon threads or startup migrations in an
 autoscaled web instance.
 
-## Supported Topology
+The Evaluation page can browse runs, reports, analytics, questions, and
+comparisons. Its start controls currently surface the external-runner boundary;
+operators execute the bounded `onagawa-evaluation` Cloud Run Job until a
+least-privilege UI-to-job bridge is implemented.
+
+## Standalone Compose Topology
 
 The production Compose file is intended for a single application host:
 

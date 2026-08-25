@@ -7,7 +7,7 @@ financial envelope is **JPY 10,000 per calendar month** for project
 
 ## Current cloud baseline
 
-Live state verified through 2026-08-20:
+Live state verified through 2026-08-25:
 
 - project billing is enabled and the linked JPY billing account is open;
 - the project is in organization `735965963562`;
@@ -36,6 +36,16 @@ objects, 14,231 corpus rows, and 323 retrieval documents. All 323 retrieval
 documents now have 768-dimensional `gemini-embedding-001` embeddings with
 provider provenance. Authenticated chat traffic uses `gemini-3.6-flash` on
 Vertex AI through workload identity.
+
+The current application milestone is stable GitHub release `v0.1.0`, source
+commit `2820f128`. Cloud Build
+`ce129a4f-4059-4e21-8bd1-7702fb34cdac` produced serving revision
+`onagawa-source-chat-00012-drc`, which receives 100% of traffic. Revision
+`onagawa-source-chat-00011-4pd` remains the immediate rollback target. GitHub
+deployment `6077080890` records status `success` for the `production`
+environment. The service still scales from zero to one instance with
+concurrency 20; no budget, quota, database tier, or model ceiling changed for
+this release.
 
 ## Cost-control model
 
@@ -524,6 +534,26 @@ UI, manifest, document-trace, and twelve-request concurrency checks passed.
 The observed cold manifest latency was 0.971 seconds, concurrent manifest p95
 was 0.307 seconds, and trace latency was 0.170 seconds. The serving path has no
 dynamic production fallback.
+
+The 2026-08-25 Admin milestone then passed as a configuration-preserving Phase
+7 follow-up. Commit `2820f128` consolidated the operational pages under
+`/admin`; Cloud Build `ce129a4f-4059-4e21-8bd1-7702fb34cdac` passed and revision
+`onagawa-source-chat-00012-drc` became ready first at zero traffic and then at
+100%. Authenticated checks covered every Admin section, Akane's active
+researcher record, Pipeline and System settling, database schema reads, legacy
+redirects, security headers, Cloud SQL health, and backend request logs. No
+schema, corpus, snapshot, role, quota, scaling, or budget mutation accompanied
+the rollout.
+
+Bounded evaluation execution `onagawa-evaluation-rw7mm` subsequently ran one
+question in Baseline and Full modes with judge and quality passes disabled. It
+completed two evaluations without error, wrote CSV/meta/report artifacts to
+the mounted bucket, and reopened as the eighth saved run in the Evaluation UI.
+Production serving deliberately keeps `JOB_EXECUTION_MODE=external`; the UI
+start controls are not yet connected to the Cloud Run Job API. A future bridge
+must use a narrowly scoped execution identity, preserve the UI workload
+estimate, enforce one task/zero retries, and never grant general job-management
+permission to the browser.
 
 Execution order:
 

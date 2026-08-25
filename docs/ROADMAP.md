@@ -25,15 +25,19 @@ workflow that can later become automated.
   reliability context.
 - The application is invite-only through OIDC, with viewer, researcher, and
   admin permissions enforced by a default-deny FastAPI policy.
-- Cloud sign-in will use a managed OIDC provider with a hosted email/password
-  experience; the application will not own production password storage,
-  recovery, MFA, or lockout.
+- Cloud sign-in uses Google OIDC; the application does not own production
+  password storage, recovery, MFA, or lockout.
 - Chat interactions and thumbs-up/down feedback are persisted for the user and
   available to administrators through a filtered review/export surface.
 - Production-like environments fail closed on unsafe authentication, secret,
   CORS, or local-persistence configuration.
+- The bounded GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
+  Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
+  and stable GitHub release `v0.1.0`.
+- Operational administration is consolidated under `/admin` with Users,
+  Feedback, Pipeline, Database, System, and Debug sections.
 - The README screenshot set was refreshed from the live Next.js/FastAPI
-  prototype on 2026-07-21.
+  local prototype on 2026-07-21; it predates the Admin consolidation.
 
 ## Near-Term Priority: Manual Scheduled Batch Updates
 
@@ -121,10 +125,13 @@ weekly or monthly, without making ingestion automatic yet.
       private-only Ollama networking.
 - [x] Add a production environment template and private-service Compose
       topology for server deployments.
+- [x] Deploy the bounded managed GCP prototype with workload identity, Google
+      OIDC, Cloud Run/Jobs, Cloud SQL, Cloud Storage, Secret Manager, Vertex AI,
+      budget controls, and tested rollback.
 - [ ] Decide where large raw and generated artifacts live on a server:
       local volume, NAS, S3-compatible object storage, or managed bucket.
 
-## Future Cloud UI Replacement
+## Cloud UI Replacement
 
 Streamlit remains useful as historical reference material for thesis demos,
 screenshots, and parity checks. The cloud-facing implementation direction is
@@ -155,17 +162,20 @@ Evaluation criteria:
       viewer/researcher/admin authorization, suspension, and audit events.
 - [x] Keep local mock credentials isolated while presenting a single neutral
       production sign-in action.
-- [ ] Select and configure a managed OIDC provider with hosted email/password,
+- [x] Select and configure Google OIDC with hosted email/password,
       recovery, MFA, lockout, and abuse protection.
 - [ ] Streaming token-by-token chat UX.
 - [x] Source-citation rendering, Markdown answer rendering, and answer trust
       report in the Chat interface.
-- [ ] Explore evidence panel tables, filters, charts, and downloads.
+- [x] Explore evidence panel tables, filters, charts, and CSV downloads.
 - [x] API contract between frontend and RAG backend, including the authenticated
       Next.js proxy boundary.
-- [ ] Deployment simplicity on one server and on managed cloud.
+- [x] Prove deployment on one managed-cloud prototype with immutable builds,
+      bounded jobs, authentication, rollback, and cost ceilings.
+- [ ] Automate a reviewed release workflow without weakening manual cost and
+      production-approval gates.
 - [ ] Maintainability for a mostly Python codebase.
-- [ ] Ability to show pipeline freshness, database health, model health, and
+- [x] Ability to show pipeline freshness, database health, model health, and
       evaluation reports clearly.
 
 Current migration direction: **Next.js + FastAPI**, with Streamlit kept only as
@@ -192,12 +202,20 @@ an archived reference for remaining parity checks.
 
 ## Evaluation and Quality
 
+- [x] Provide saved runs, reports, analytics, questions, Standard/Ablation
+      controls, comparison, and CSV exports in the Evaluation UI.
+- [x] Validate a bounded Vertex Baseline/Full evaluation through the manual
+      `onagawa-evaluation` Cloud Run Job and reopen its artifacts in the UI.
+- [ ] Connect the Evaluation start controls to the external Cloud Run Job with
+      a least-privilege execution bridge and server-side workload ceilings.
 - [ ] Run the full ablation study after each major data update.
 - [ ] Add a short scheduled-update QA checklist:
   tests pass, pipeline completes, document counts look plausible, app starts,
   representative questions retrieve expected sources.
-- [ ] Add LLM-as-judge scoring only after the baseline scheduled batch workflow
-      is stable.
+- [x] Add opt-in LLM-as-judge and quality scoring controls while keeping them
+      disabled for bounded smoke runs by default.
+- [ ] Calibrate judge scoring, define its retention/access policy, and approve
+      its cost envelope before making it a routine release gate.
 
 ## Later: Incremental or Automatic Ingestion
 

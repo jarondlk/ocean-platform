@@ -18,10 +18,27 @@ Transforms fragmented field data — CTD water profiles, metagenome sequencing, 
 
 ## Current Prototype Status
 
-Status as of **2026-07-26**: this is an active local-first **Next.js +
-FastAPI** prototype with PostgreSQL/pgvector retrieval and Ollama-backed local
-generation. The old Streamlit interface is archived for historical reference;
-new product work happens in the Next.js UI and FastAPI service.
+Status as of **2026-08-25**: this is an active invite-only **Next.js +
+FastAPI** prototype deployed on GCP, with PostgreSQL/pgvector retrieval,
+Vertex AI generation and embeddings, Google OIDC, and Cloud Run Jobs for
+operator-approved batch work. The same application remains runnable locally
+with PostgreSQL and Ollama. The old Streamlit interface is archived for
+historical reference; new product work happens in the Next.js UI and FastAPI
+service.
+
+Current managed milestone:
+
+- GitHub release [`v0.1.0`](https://github.com/jarondlk/provenance-eco-rag/releases/tag/v0.1.0)
+  is the first stable GCP prototype release and targets commit `2820f128` on
+  `gcp-dev`.
+- Cloud Run revision `onagawa-source-chat-00012-drc` serves 100% of production
+  traffic in `asia-northeast1`; `onagawa-source-chat-00011-4pd` remains the
+  immediate rollback revision.
+- The live application is
+  [`https://onagawa-source-chat-469489188516.asia-northeast1.run.app`](https://onagawa-source-chat-469489188516.asia-northeast1.run.app).
+- GitHub records the successful deployment against the `production`
+  environment while `gcp-dev` remains the development branch and `main` the
+  stable integration branch.
 
 Implemented in the current prototype:
 
@@ -44,6 +61,8 @@ Implemented in the current prototype:
   administration.
 - Persistent chat interactions with thumbs-up/down feedback, reason codes,
   comments, and an administrator feedback-review/export workbench.
+- A consolidated administrator workspace under `/admin` for users, feedback,
+  pipeline state, database inspection, system health, and diagnostics.
 - Fail-closed production configuration, bounded internal identity tokens,
   default-deny API authorization, request limits, security headers, production
   rate limits, a private-service Compose topology, and hardened CI checks.
@@ -54,8 +73,12 @@ Still intentionally future work:
 - Automatic deletion of database rows whose source keys disappear from a batch;
   idempotent upserts retain stale rows and report them for operator review.
 - Managed off-host backup retention, encryption, and point-in-time recovery.
-- LLM-as-judge semantic faithfulness scoring and click-through citation chips
-  from chat answers into provenance/source detail panels.
+- Calibration and routine release-gate use of the existing opt-in
+  LLM-as-judge/quality metrics, plus click-through citation chips from chat
+  answers into provenance/source detail panels.
+- A least-privilege bridge from the Evaluation UI's start controls to the
+  external Cloud Run evaluation job. Production evaluations currently remain
+  explicit operator-run jobs.
 
 Documentation map:
 
@@ -100,9 +123,9 @@ flowchart TB
     RETDOCS["Retrieval Documents\n323 narrative chunks\n162 CTD + 82 meta + 79 SST"]
 
     subgraph Storage["PostgreSQL + pgvector"]
-        EMB["Vector Embeddings\n323 x 768-dim\nnomic-embed-text"]
+        EMB["Vector Embeddings\n323 x 768-dim\nlocal: nomic / GCP: Gemini"]
         FTS["Full-Text Index\ntsvector + ts_rank_cd"]
-        DB["9 Relational Tables\nprofiles, samples, links"]
+        DB["16 PostgreSQL Tables\nscientific + application metadata"]
     end
 
     RET["Hybrid Retrieval\nVector + FTS + RRF\n+ Linked cross-source evidence"]
@@ -136,8 +159,8 @@ flowchart TB
 | Language | Python 3.12 + TypeScript/React |
 | Database | PostgreSQL 16 + pgvector (cosine similarity) |
 | Container | Podman / Docker |
-| LLM | Ollama (local) — qwen2.5:14b-instruct |
-| Embeddings | nomic-embed-text (768-dim) |
+| LLM | Vertex AI `gemini-3.6-flash` on GCP; Ollama `qwen2.5:14b-instruct` locally |
+| Embeddings | Vertex AI `gemini-embedding-001` on GCP; `nomic-embed-text` locally (both 768-dim) |
 | Data | Pandas, Parquet, xarray, netCDF4, SciPy |
 | ORM | SQLAlchemy 2.x |
 | UI | Next.js academic UI + FastAPI API; Streamlit archived as reference |
@@ -368,15 +391,20 @@ FastAPI service:
 | `/explore` | Corpus workbench for source coverage, filters, charts, sample detail, and evidence retrieval |
 | `/data` | Source observations, CTD, taxa, SST, derived analysis, and reliability workbench |
 | `/analysis` | Compatibility redirect to `/data?view=analysis` |
-| `/database` | Expert database explorer, schema view, and read-only query tools |
-| `/pipeline` | Manual batch ingestion and corpus rebuild controls |
 | `/provenance` | Traceability manifest, document lineage, embedding treatment, and upsert dry-run |
 | `/evaluation` | First-class evaluation suite with background runs and controls |
 | `/chat` | Citation-grounded RAG query interface with expert retrieval/model knobs, linked cross-source evidence, Markdown rendering, and an answer trust report |
+| `/settings` | Per-user language, formatting, and interface preferences |
+| `/login` | Neutral Google OIDC entry point for invited accounts |
 | `/evidence` | Compatibility redirect to `/explore?view=evidence` |
-| `/system` | API, database, Ollama, artifact, and runtime status |
-| `/debug` | Debug payloads and low-level diagnostic properties |
+| `/admin` | Admin-only workspace overview and navigation |
 | `/admin/users` | Admin-only invitations, roles, account types, and suspension controls |
+| `/admin/feedback` | Admin-only feedback review, evidence inspection, and CSV export |
+| `/admin/pipeline` | Manual batch ingestion state, logs, history, and artifacts |
+| `/admin/database` | Expert database explorer, schema view, and read-only query tools |
+| `/admin/system` | API, database, model, artifact, and runtime status |
+| `/admin/debug` | Debug payloads and low-level diagnostic properties |
+| `/pipeline`, `/database`, `/system`, `/debug` | Compatibility redirects into the corresponding Admin section |
 
 Local development:
 
@@ -421,7 +449,9 @@ workflow:
 
 ### Current Prototype Screenshots
 
-Captured from the live Next.js/FastAPI prototype on **2026-07-21**.
+Captured from the local Next.js/FastAPI prototype on **2026-07-21**. These
+remain accurate for the scientific workbenches but predate the consolidated
+Admin workspace and managed GCP release.
 
 ![Current overview](docs/screenshots/prototype_overview.png)
 *Overview page with corpus counts, source balance, runtime signals, and active
@@ -586,7 +616,7 @@ provenance-eco-rag/
 | Corroboration scoring | **37 verified**, 20 supported, 150 standalone |
 | Reliability documents | 4 text summaries for RAG injection |
 
-### PostgreSQL Database (9 tables)
+### PostgreSQL Scientific Corpus (9 tables)
 
 | Table | Rows | Purpose |
 | --- | --- | --- |
@@ -600,13 +630,18 @@ provenance-eco-rag/
 | `cross_source_link` | 496 | CTD/meta ↔ SST links |
 | `provenance_record` | 0 | (tracked via JSONL) |
 
+Alembic-managed identity, invitation, chat, feedback, audit, and rate-limit
+tables bring the migrated application database to 16 tables in the deployed
+prototype.
+
 ---
 
 ## Retrieval System
 
 ### Hybrid Search
 
-1. **Query** → embedded via nomic-embed-text (768-dim)
+1. **Query** → embedded at 768 dimensions using `gemini-embedding-001` on GCP
+   or `nomic-embed-text` locally
 2. **Vector search** — pgvector cosine similarity over 323 embeddings
 3. **Full-text search** — PostgreSQL tsvector with ts_rank_cd
 4. **SQL filters** — bay, source_type, time range
@@ -709,6 +744,7 @@ Key settings in [config.py](config.py):
 | --- | --- |
 | `DATABASE_URL` | `postgresql://onagawa:onagawa@localhost:5433/onagawa_rag` |
 | `OLLAMA_BASE_URL` | `http://localhost:11434` |
+| `MODEL_PROVIDER` | `ollama` locally; `vertex` in the GCP service and jobs |
 | `EMBEDDING_MODEL` | `nomic-embed-text` (768-dim) |
 | `CHAT_MODEL` | `qwen2.5:14b-instruct` |
 | `DEPLOYMENT_ENV` | `development`; `staging` and `production` enable fail-closed checks |
@@ -768,9 +804,9 @@ npm run build
 
 ### Current Test Matrix
 
-The current suite contains more than **360 tests** across unit, API, and
-integration modules. The normal run passes 379 and skips the two explicitly
-gated PostgreSQL integration modules:
+The current suite contains more than **450 tests** across unit, API, and
+integration modules. The latest release validation passed 454 and skipped
+three explicitly gated/environment-dependent checks:
 
 | Test area | Files |
 | --- | --- |
@@ -785,7 +821,7 @@ gated PostgreSQL integration modules:
 Latest verified local result:
 
 ```text
-379 passed, 2 skipped, 1 upstream netCDF4 wheel warning
+454 passed, 3 skipped
 ```
 
 ---

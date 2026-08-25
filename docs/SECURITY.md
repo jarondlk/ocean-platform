@@ -190,6 +190,22 @@ to audit metadata or application logs.
 
 ## Authorization MVP Release Checklist
 
+Current GCP evidence as of 2026-08-25: stable release `v0.1.0` runs with
+`DEPLOYMENT_ENV=production`, `AUTH_MODE=required`, Google OIDC, distinct Secret
+Manager-backed signing secrets, private FastAPI/Cloud SQL connectivity, and
+default-deny API authorization. The administrator and approved researcher have
+completed real-provider login, all Admin sections were smoke-tested, Cloud Run
+emitted no error-level or 5xx entries during acceptance, CI and CodeQL are
+enabled, and dependency alerts were resolved before the release.
+
+The checklist remains reusable for every future release. It is intentionally
+not marked permanently complete: secret rotation, dependency state, callback
+configuration, role tests, backups, logs, and retention must be re-evaluated
+for each deployment. The current unresolved operational items are audited
+90-day retention enforcement, posted 24-hour/seven-day billing review,
+production-environment approval rules, alerting, and an independent security
+assessment.
+
 - [ ] All backend tests and the frontend production build pass.
 - [ ] The PostgreSQL migration/invite integration check passes.
 - [ ] CI required checks are enabled on the default branch.

@@ -1,10 +1,25 @@
 # Authentication on GCP
 
-## Recommended prototype path
+## Deployed status
 
-Keep the application's existing Auth.js OIDC flow and use a Google OAuth 2.0
-web client as the first cloud identity provider. This is the smallest secure
-change because the application already separates:
+Google OIDC is live in project `data-infra-infobio` at the production Cloud Run
+URL. The application remains public only at the Cloud Run invocation layer;
+Next.js requires an Auth.js session for application pages and FastAPI remains a
+localhost sidecar protected by short-lived internal JWTs.
+
+The invited administrator and the approved researcher have both completed
+provider-backed login. The administrator is resolved as `admin` / `internal`,
+and `akane.kitamura.e7@tohoku.ac.jp` is active as `researcher` / `research`.
+The consolidated `/admin` workspace is absent for the researcher through both
+navigation and backend authorization. No local password store, downloaded
+service-account key, mock login, IAP layer, or Identity Platform tenant was
+introduced for `v0.1.0`.
+
+## Selected prototype path
+
+The application keeps its existing Auth.js OIDC flow and uses a Google OAuth
+2.0 web client as the cloud identity provider. This preserves the separation
+between:
 
 1. identity authentication at the OIDC provider;
 2. invitation, role, and suspension decisions in PostgreSQL; and
@@ -81,3 +96,10 @@ Before granting unauthenticated Cloud Run invocation:
 Do not enable IAP on the same prototype revision. IAP would add a second login
 and requires a deliberate adapter from IAP identity assertions to the
 application's invitation and role records.
+
+The `v0.1.0` rollout completed the callback, invitation/role resolution,
+administrator navigation, approved researcher login, logout/re-login, unknown
+session redirect, and log-hygiene checks. Continue treating suspension,
+uninvited-user behavior, provider recovery/MFA policy, and future identity
+changes as explicit release tests rather than assumptions inherited from this
+record.

@@ -1,12 +1,32 @@
 # GCP prototype deployment
 
-This directory prepares the application for a managed GCP prototype without
-provisioning resources from the repository.
+This directory contains the templates, guarded preparation scripts, and
+operational guidance for the live managed GCP prototype. Applying a template or
+running a guarded script is always an explicit operator action; repository
+checkout, rendering, tests, and Cloud Build do not provision runtime resources
+automatically.
 
 Follow [`MIGRATION_PLAN.md`](MIGRATION_PLAN.md) for the phased deployment order,
 integration gates, JPY 10,000 monthly prototype envelope, per-component
 budgets, and technical cost ceilings. Cost controls are Phase 0 and must be in
 place before the foundation or any runtime component is created.
+
+## Current deployed milestone
+
+Verified on 2026-08-25:
+
+- project `data-infra-infobio`, region `asia-northeast1`;
+- stable GitHub release `v0.1.0`, source commit `2820f128`;
+- Cloud Build `ce129a4f-4059-4e21-8bd1-7702fb34cdac`;
+- Cloud Run service `onagawa-source-chat`, revision
+  `onagawa-source-chat-00012-drc`, 100% traffic;
+- rollback revision `onagawa-source-chat-00011-4pd`;
+- Cloud SQL instance `onagawa-postgres` is PostgreSQL 16 and RUNNABLE;
+- minimum zero/maximum one service instance, concurrency 20; and
+- GitHub `production` deployment status `success`.
+
+The live URL is
+[`https://onagawa-source-chat-469489188516.asia-northeast1.run.app`](https://onagawa-source-chat-469489188516.asia-northeast1.run.app).
 
 ## Target topology
 
@@ -27,6 +47,11 @@ place before the foundation or any runtime component is created.
 The serving revision sets `JOB_EXECUTION_MODE=external`. This deliberately
 prevents an autoscaled web instance from starting daemon-thread pipeline or
 evaluation work. Operators execute the existing CLI scripts as Cloud Run Jobs.
+The Evaluation UI can read all stored results and prepare bounded run controls,
+but its Start actions intentionally receive the external-runner response until
+a least-privilege Cloud Run Jobs execution bridge is implemented. Do not work
+around this boundary by enabling local/background-thread execution in the
+serving revision.
 It also sets `PROVENANCE_READ_MODE=snapshot`, so manifest and document-trace
 requests read a verified immutable object and never rebuild lineage through the
 GCS FUSE mount. Follow

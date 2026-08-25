@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, BookOpen, Bug, ChartNoAxesColumn, ClipboardCheck, Database, Fingerprint, MessageSquare, MessagesSquare, Settings, TableProperties, UsersRound, Workflow } from "lucide-react";
+import { BookOpen, ChartNoAxesColumn, ClipboardCheck, Database, Fingerprint, MessageSquare, Settings, ShieldCheck } from "lucide-react";
 
 import { useAppPreferences } from "@/lib/preferences";
 
@@ -10,15 +10,10 @@ const navItems = [
   { href: "/", key: "overview", icon: BookOpen, permission: "overview:read" },
   { href: "/explore", key: "explore", icon: ChartNoAxesColumn, permission: "data:read" },
   { href: "/data", key: "data", icon: Database, permission: "data:read" },
-  { href: "/database", key: "database", icon: TableProperties, permission: "database:read" },
-  { href: "/pipeline", key: "pipeline", icon: Workflow, permission: "pipeline:read" },
   { href: "/provenance", key: "provenance", icon: Fingerprint, permission: "provenance:read" },
   { href: "/evaluation", key: "evaluation", icon: ClipboardCheck, permission: "evaluation:read" },
   { href: "/chat", key: "chat", icon: MessageSquare, permission: "chat:use" },
-  { href: "/system", key: "system", icon: Activity, permission: "system:read" },
-  { href: "/debug", key: "debug", icon: Bug, permission: "system:read" },
-  { href: "/admin/feedback", key: "feedback", icon: MessagesSquare, permission: "feedback:review" },
-  { href: "/admin/users", key: "users", icon: UsersRound, permission: "users:manage" },
+  { href: "/admin", key: "admin", icon: ShieldCheck, permission: "users:manage" },
   { href: "/settings", key: "settings", icon: Settings, permission: "overview:read" },
 ] as const;
 

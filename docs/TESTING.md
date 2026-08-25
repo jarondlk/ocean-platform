@@ -1,5 +1,17 @@
 # Testing and CI
 
+## Current release evidence
+
+For stable release `v0.1.0` and source commit `2820f128`, the local backend
+suite passed 454 tests with 3 skipped checks and 74.31% aggregate coverage.
+Ruff, frontend typecheck, the production Next.js build, Cloud Build, Cloud Run
+candidate checks, authenticated Admin navigation, and the bounded external
+evaluation smoke test also passed. CI runs for pushes to `main` and `gcp-dev`
+and for pull requests targeting `main`/`master`.
+
+This is a point-in-time release record, not a substitute for rerunning the
+commands below after changes.
+
 ## Local Verification
 
 Install development dependencies:
@@ -69,8 +81,8 @@ npm run build
 
 ## PostgreSQL Integration
 
-The normal suite skips the integration test. Against a disposable migrated
-PostgreSQL/pgvector database:
+The normal suite skips the gated PostgreSQL integration modules. Against a
+disposable migrated PostgreSQL/pgvector database:
 
 ```bash
 DATABASE_URL=postgresql://onagawa:password@127.0.0.1:5432/onagawa_rag \

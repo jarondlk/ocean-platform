@@ -36,20 +36,6 @@ const interfaceTabs = [
     outputs: "Observation catalog, CTD profiles, taxa summaries, SST charts, derived-analysis tables, reliability matrices",
   },
   {
-    tab: "Database",
-    route: "/database",
-    purpose: "PostgreSQL schema and read-only SQL inspection for expert debugging.",
-    primary_controls: "Table selector, ordering, heavy-column toggle, read-only SQL editor",
-    outputs: "Schema metadata, table rows, SQL result sets",
-  },
-  {
-    tab: "Pipeline",
-    route: "/pipeline",
-    purpose: "Manual batch control for ingestion, corpus rebuilds, analysis, database load, and embeddings.",
-    primary_controls: "Stage selection, dry run, skip SST, reset database, embedding batch/model, cancel",
-    outputs: "Readiness checks, artifact registry, background job progress, persisted logs",
-  },
-  {
     tab: "Provenance",
     route: "/provenance",
     purpose: "Traceability register for source files, artifact versions, retrieval documents, embeddings, and upsert planning.",
@@ -71,18 +57,11 @@ const interfaceTabs = [
     outputs: "Citation-grounded answer, source list, model/options trace",
   },
   {
-    tab: "System",
-    route: "/system",
-    purpose: "Operational status page for services, artifacts, models, and environment defaults.",
-    primary_controls: "Refresh and model/status inspection",
-    outputs: "Health cards, artifact inventory, model availability, configuration values",
-  },
-  {
-    tab: "Debug",
-    route: "/debug",
-    purpose: "Raw debug surface for backend state and page/API diagnostics.",
-    primary_controls: "Expandable debug blocks",
-    outputs: "Routes, config, datasets, cache info, artifacts, selected environment",
+    tab: "Admin",
+    route: "/admin",
+    purpose: "Administration workspace for access, feedback, operations, database inspection, system health, and debugging.",
+    primary_controls: "Users, feedback, pipeline, database, system, and debug subtabs",
+    outputs: "Account controls, review records, job status, database metadata, health signals, and diagnostics",
   },
 ];
 
@@ -118,9 +97,10 @@ export default function OverviewPage() {
     { label: ui("Reliability docs"), value: String(stats?.reliability_docs ?? "loading"), ok: Boolean(stats?.reliability_docs) },
   ];
   const routeGroups = [
-    { label: ui("Data"), routes: ["/explore", "/data", "/database"] },
-    { label: ui("Operations"), routes: ["/pipeline", "/provenance", "/evaluation", "/system", "/debug"] },
+    { label: ui("Data"), routes: ["/explore", "/data"] },
+    { label: ui("Research"), routes: ["/provenance", "/evaluation"] },
     { label: ui("RAG"), routes: ["/chat"] },
+    { label: ui("Administration"), routes: ["/admin"] },
   ];
   const architectureNodes = [
     { label: ui("Raw Sources"), detail: `${stats?.provenance_records ?? "..."} files` },

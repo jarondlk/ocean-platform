@@ -3,8 +3,20 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { localAuthDisabled } from "@/lib/security-config";
 
+const legacyAdminRoutes: Record<string, string> = {
+  "/pipeline": "/admin/pipeline",
+  "/database": "/admin/database",
+  "/system": "/admin/system",
+  "/debug": "/admin/debug",
+};
 
 export default auth((request) => {
+  const adminRoute = legacyAdminRoutes[request.nextUrl.pathname];
+  if (adminRoute) {
+    const destination = request.nextUrl.clone();
+    destination.pathname = adminRoute;
+    return NextResponse.redirect(destination);
+  }
   if (localAuthDisabled()) {
     return NextResponse.next();
   }
