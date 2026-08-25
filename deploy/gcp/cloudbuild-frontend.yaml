@@ -13,7 +13,7 @@ images:
   - ${_IMAGE}
 
 substitutions:
-  _IMAGE: asia-northeast1-docker.pkg.dev/${PROJECT_ID}/onagawa-source-chat/frontend:manual
+  _IMAGE: asia-northeast1-docker.pkg.dev/${PROJECT_ID}/ocean-platform/frontend:manual
 
 options:
   logging: CLOUD_LOGGING_ONLY

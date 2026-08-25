@@ -4,7 +4,7 @@ set -eu
 
 GCP_PROJECT_ID="${GCP_PROJECT_ID:-data-infra-infobio}"
 GCP_REGION="${GCP_REGION:-asia-northeast1}"
-CLOUD_SQL_INSTANCE="${CLOUD_SQL_INSTANCE:-onagawa-postgres}"
+CLOUD_SQL_INSTANCE="${CLOUD_SQL_INSTANCE:-ocean-postgres}"
 CLOUD_SQL_TIER="${CLOUD_SQL_TIER:-db-f1-micro}"
 
 if [ "${CONFIRM_BILLABLE_GCP_PROJECT:-}" != "$GCP_PROJECT_ID" ]; then
@@ -34,10 +34,10 @@ if ! gcloud sql instances describe "$CLOUD_SQL_INSTANCE" \
     --deletion-protection
 fi
 
-if ! gcloud sql databases describe onagawa_rag \
+if ! gcloud sql databases describe ocean_platform \
   --instance="$CLOUD_SQL_INSTANCE" \
   --project="$GCP_PROJECT_ID" >/dev/null 2>&1; then
-  gcloud sql databases create onagawa_rag \
+  gcloud sql databases create ocean_platform \
     --instance="$CLOUD_SQL_INSTANCE" \
     --project="$GCP_PROJECT_ID"
 fi

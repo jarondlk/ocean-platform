@@ -54,9 +54,9 @@ brand.
 - New default internal JWT values are `ocean-platform-frontend` and
   `ocean-platform-api`; environment variables remain the deployment control
   point during rollout.
-- Existing GCP data-plane resources keep their current IDs through phase 8.
-  The parallel OCEAN service may reference those legacy resources during the
-  transition.
+- Release `v0.2.1` completed the GCP data-plane transition. Active application
+  manifests and identities use the target names below. Legacy resources keep
+  their historical IDs only as private, deletion-protected rollback assets.
 
 ## Target component names
 
@@ -65,7 +65,7 @@ brand.
 | GitHub repository | `jarondlk/ocean-platform` |
 | Cloud Run service | `ocean-platform` |
 | Artifact Registry repository | `ocean-platform` |
-| Application service account | `ocean-app` |
+| Application service account | `ocean-platform` |
 | Job service account | `ocean-jobs` |
 | Cloud SQL instance | `ocean-postgres` |
 | PostgreSQL database | `ocean_platform` |
@@ -74,6 +74,8 @@ brand.
 | Pipeline job | `ocean-pipeline` |
 | Embedding job | `ocean-embedding` |
 | Evaluation job | `ocean-evaluation` |
+| Cloud Storage bucket | `data-infra-infobio-ocean-data` |
 
-Only the repository and parallel Cloud Run service are part of the current
-cutover. The remaining GCP target identifiers are reserved for phase 8.
+All target identifiers are active as of release `v0.2.1`. The former service
+is private and the former Cloud SQL instance is stopped; do not reuse legacy
+identifiers for new components.

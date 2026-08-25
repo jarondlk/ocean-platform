@@ -16,14 +16,16 @@ place before the foundation or any runtime component is created.
 Verified on 2026-08-25:
 
 - project `data-infra-infobio`, region `asia-northeast1`;
-- OCEAN Platform GitHub release `v0.2.0`;
-- full Cloud Build `d2b38c01-526a-4827-bd9d-2d05948e2350` and targeted
-  frontend build `2754b49a-6963-4efb-91c2-bdeb3d4a97c2`;
-- Cloud Run service `ocean-platform`, revision `ocean-platform-00002-rhc`,
+- OCEAN Platform GitHub release `v0.2.1`;
+- full Cloud Build `8e4c7d4b-f723-40ef-9278-1d647b54111d`;
+- Cloud Run service `ocean-platform`, revision `ocean-platform-00004-8tb`,
   100% traffic;
-- former `onagawa-source-chat` service retained as the phase 8 rollback
-  application;
-- Cloud SQL instance `onagawa-postgres` is PostgreSQL 16 and RUNNABLE;
+- Artifact Registry `ocean-platform`; service accounts `ocean-platform` and
+  `ocean-jobs`; secrets and jobs under the `ocean-*` prefix;
+- Cloud SQL `ocean-postgres` / `ocean_platform` is PostgreSQL 16 and RUNNABLE;
+- bucket `data-infra-infobio-ocean-data` contains the verified copied data;
+- former `onagawa-source-chat` is private and deletion-protected
+  `onagawa-postgres` is stopped for reversible rollback;
 - minimum zero/maximum one service instance, concurrency 20; and
 - GitHub `production` deployment status `success`.
 
@@ -59,8 +61,8 @@ requests read a verified immutable object and never rebuild lineage through the
 GCS FUSE mount. Follow
 [`../../docs/PROVENANCE_SNAPSHOT_RUNBOOK.md`](../../docs/PROVENANCE_SNAPSHOT_RUNBOOK.md)
 for validation, publication, rollout, and rollback.
-The Phase 6 serving template uses Vertex AI with the same bounded generation
-settings as the passing evaluation job. Grant Vertex AI User to `onagawa-app`
+The serving template uses Vertex AI with the same bounded generation settings
+as the passing evaluation job. Grant Vertex AI User to `ocean-platform`
 only immediately before this reviewed revision is deployed; keep maximum
 instances at one and the shared `/chat` limit at 10 requests per user per
 minute.
@@ -115,7 +117,7 @@ missing or unexpected input files and builds a SHA-256 manifest with the exact
 destination, size, and digest of every object:
 
 ```sh
-DATA_BUCKET=data-infra-infobio-prototype-data \
+DATA_BUCKET=data-infra-infobio-ocean-data \
   ./deploy/gcp/upload-data.sh
 ```
 
@@ -123,8 +125,8 @@ After reviewing the dry-run, an upload requires both an explicit mode and an
 exact bucket confirmation:
 
 ```sh
-DATA_BUCKET=data-infra-infobio-prototype-data \
-CONFIRM_DATA_BUCKET=data-infra-infobio-prototype-data \
+DATA_BUCKET=data-infra-infobio-ocean-data \
+CONFIRM_DATA_BUCKET=data-infra-infobio-ocean-data \
 UPLOAD_MODE=apply \
   ./deploy/gcp/upload-data.sh
 ```
@@ -135,7 +137,7 @@ byte totals, then writes the manifest under `manifests/`. The current seed is
 
 ## Build
 
-Create an Artifact Registry Docker repository named `onagawa-source-chat` in
+Create an Artifact Registry Docker repository named `ocean-platform` in
 `asia-northeast1`, then submit both images:
 
 ```sh
@@ -186,19 +188,19 @@ Copy `service.template.yaml` to an untracked working file and replace:
 Do not put secret values in the rendered YAML. Create these Secret Manager
 secrets and grant the Cloud Run service account Secret Accessor:
 
-- `onagawa-auth-secret`
-- `onagawa-internal-auth-secret`
-- `onagawa-oidc-client-secret`
-- `onagawa-database-url`
+- `ocean-auth-secret`
+- `ocean-internal-auth-secret`
+- `ocean-oidc-client-secret`
+- `ocean-database-url`
 
-The `onagawa-app` service account needs only the roles required by the
+The `ocean-platform` service account needs only the roles required by the
 configured revision:
 
 - Cloud SQL Client
 - Secret Manager Secret Accessor for the four named secrets
 - Storage Object Viewer on the scientific-data bucket
 
-The separate `onagawa-jobs` identity receives Cloud SQL Client, access to the
+The separate `ocean-jobs` identity receives Cloud SQL Client, access to the
 database secret, and Storage Object User. Phase 6 adds Vertex AI User to this
 job identity only; the serving identity receives it after evaluation passes
 and general chat is explicitly approved.
@@ -206,7 +208,7 @@ and general chat is explicitly approved.
 The database URL for a Cloud SQL Unix socket has this shape:
 
 ```text
-postgresql://USER:PASSWORD@/onagawa_rag?host=/cloudsql/PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
+postgresql://USER:PASSWORD@/ocean_platform?host=/cloudsql/PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
 ```
 
 Add secret versions only after the OAuth client and database user exist.
@@ -220,7 +222,7 @@ Alembic-managed application tables and the current scientific corpus schema
 exist before serving:
 
 ```sh
-gcloud run jobs create onagawa-migrate \
+gcloud run jobs create ocean-migrate \
   --project=data-infra-infobio \
   --region=asia-northeast1 \
   --image=API_IMAGE \
@@ -235,7 +237,7 @@ ceiling. After its preflight output is reviewed, override `--dry-run` with
 retain `--no-embed`; model work belongs to Phase 6.
 
 ```sh
-gcloud run jobs create onagawa-pipeline \
+gcloud run jobs create ocean-pipeline \
   --project=data-infra-infobio \
   --region=asia-northeast1 \
   --image=API_IMAGE \
@@ -265,7 +267,7 @@ After the new image and database migration pass, advance manually in this
 order:
 
 1. enable `aiplatform.googleapis.com` and grant `roles/aiplatform.user` only to
-   `onagawa-jobs`;
+   `ocean-jobs`;
 2. execute `scripts/update_embeddings.py --probe` to validate credentials and
    the 768-dimensional response without database writes;
 3. execute `--limit 16`, verify 16 rows have Vertex provider/model/dimension

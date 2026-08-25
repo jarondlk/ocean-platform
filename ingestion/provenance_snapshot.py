@@ -14,6 +14,7 @@ import json
 import os
 import re
 import tempfile
+import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -295,6 +296,23 @@ class LocalSnapshotStore:
             raise SnapshotError(f"snapshot key escapes store root: {key}") from exc
         return candidate
 
+    @staticmethod
+    def _advance_generation(path: Path, previous_generation: int) -> int:
+        """Return a generation distinct from the replaced file's generation.
+
+        Some container filesystems assign the same mtime to temporary files
+        created in a tight loop. Explicitly advance the replacement mtime so
+        compare-and-swap remains deterministic across local and CI runtimes.
+        """
+        candidate = max(time.time_ns(), previous_generation + 1_000_000)
+        for attempt in range(4):
+            requested = candidate + (attempt * 1_000_000_000)
+            os.utime(path, ns=(requested, requested))
+            generation = path.stat().st_mtime_ns
+            if generation != previous_generation:
+                return generation
+        raise SnapshotError(f"could not advance local snapshot generation: {path}")
+
     def read(self, key: str) -> StoredObject:
         path = self._path(key)
         try:
@@ -346,7 +364,7 @@ class LocalSnapshotStore:
             finally:
                 if temporary_path is not None:
                     temporary_path.unlink(missing_ok=True)
-            return path.stat().st_mtime_ns
+            return self._advance_generation(path, current_generation)
 
 
 class GcsSnapshotStore:

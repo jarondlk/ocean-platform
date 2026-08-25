@@ -1,6 +1,5 @@
 import { CredentialsSignin } from "next-auth";
 import { LockKeyhole, LogIn, Mail, ShieldCheck } from "lucide-react";
-import Image from "next/image";
 import { redirect } from "next/navigation";
 
 import { signIn } from "@/auth";
@@ -78,9 +77,6 @@ export default async function LoginPage({
     <section className="login-page">
       <article className="card login-card">
         <header className="login-heading">
-          <div className="login-mark" aria-hidden="true">
-            <Image alt="" height={42} priority src="/ocean-mark.svg" width={42} />
-          </div>
           <div>
             <p className="eyebrow">{PRODUCT_NAME}</p>
             <h2>Welcome back</h2>

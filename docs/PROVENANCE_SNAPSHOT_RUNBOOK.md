@@ -19,7 +19,7 @@ query all embedding rows during an HTTP request.
 The GCP service and pipeline job use:
 
 ```text
-PROVENANCE_SNAPSHOT_URI=gs://data-infra-infobio-prototype-data/provenance
+PROVENANCE_SNAPSHOT_URI=gs://data-infra-infobio-ocean-data/provenance
 ```
 
 The serving identity needs Storage Object Viewer. The pipeline identity needs
@@ -59,7 +59,7 @@ Job default and does not write objects.
 Run a publication-only dry-run first:
 
 ```sh
-gcloud run jobs execute onagawa-pipeline \
+gcloud run jobs execute ocean-pipeline \
   --project=data-infra-infobio \
   --region=asia-northeast1 \
   --args=scripts/run_pipeline.py,--stages=publish_provenance,--dry-run,--no-embed,--tag=provenance-YYYYMMDDTHHMMSSZ \

@@ -13,7 +13,7 @@ and `akane.kitamura.e7@tohoku.ac.jp` is active as `researcher` / `research`.
 The consolidated `/admin` workspace is absent for the researcher through both
 navigation and backend authorization. No local password store, downloaded
 service-account key, mock login, IAP layer, or Identity Platform tenant was
-introduced for `v0.2.0`.
+introduced for `v0.2.1`.
 
 ## Selected prototype path
 
@@ -54,9 +54,9 @@ OIDC_CLIENT_ID=<oauth-web-client-id>
 AUTH_ALLOWED_PROVIDERS=google
 ```
 
-Store the OAuth client secret in `onagawa-oidc-client-secret`. Store the
+Store the OAuth client secret in `ocean-oidc-client-secret`. Store the
 Auth.js session secret and internal API signing secret separately in
-`onagawa-auth-secret` and `onagawa-internal-auth-secret`. The two signing
+`ocean-auth-secret` and `ocean-internal-auth-secret`. The two signing
 secrets must be different random values of at least 32 characters.
 
 The provider ID is part of the durable identity key
@@ -97,8 +97,9 @@ Do not enable IAP on the same prototype revision. IAP would add a second login
 and requires a deliberate adapter from IAP identity assertions to the
 application's invitation and role records.
 
-The `v0.2.0` rollout registered the OCEAN JavaScript origin and Google callback
-while retaining the former service values for rollback. It completed the
+The `v0.2.1` rollout retained the registered OCEAN JavaScript origin and Google
+callback while moving the active secret references to the OCEAN data plane.
+It completed the
 callback, invitation/role resolution,
 administrator navigation, approved researcher login, logout/re-login, unknown
 session redirect, and log-hygiene checks. Continue treating suspension,

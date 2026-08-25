@@ -1,7 +1,7 @@
 apiVersion: run.googleapis.com/v1
 kind: Job
 metadata:
-  name: onagawa-evaluation
+  name: ocean-evaluation
   labels:
     environment: prototype
     cost_component: evaluation
@@ -14,11 +14,11 @@ spec:
       annotations:
         run.googleapis.com/cloudsql-instances: PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
         run.googleapis.com/execution-environment: gen2
-        run.googleapis.com/secrets: 'onagawa-database-url:projects/PROJECT_NUMBER/secrets/onagawa-database-url'
+        run.googleapis.com/secrets: 'ocean-database-url:projects/PROJECT_NUMBER/secrets/ocean-database-url'
     spec:
       template:
         spec:
-          serviceAccountName: onagawa-jobs@PROJECT_ID.iam.gserviceaccount.com
+          serviceAccountName: ocean-jobs@PROJECT_ID.iam.gserviceaccount.com
           maxRetries: 0
           timeoutSeconds: "3600"
           containers:
@@ -35,10 +35,10 @@ spec:
                 - name: DATABASE_URL
                   valueFrom:
                     secretKeyRef:
-                      name: onagawa-database-url
+                      name: ocean-database-url
                       key: latest
                 - name: DATA_DIR
-                  value: /mnt/onagawa-data
+                  value: /mnt/ocean-data
                 - name: MODEL_PROVIDER
                   value: vertex
                 - name: GOOGLE_CLOUD_PROJECT
@@ -63,7 +63,7 @@ spec:
                   memory: 4Gi
               volumeMounts:
                 - name: scientific-data
-                  mountPath: /mnt/onagawa-data
+                  mountPath: /mnt/ocean-data
           volumes:
             - name: scientific-data
               csi:

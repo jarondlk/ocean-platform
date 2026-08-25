@@ -2,7 +2,7 @@
 
 > **Last updated**: 2026-08-25
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform release `v0.2.0` is live on Cloud Run service `ocean-platform`, revision `ocean-platform-00002-rhc`. The invite-only Next.js + FastAPI application uses Google OIDC, Cloud SQL/pgvector, Vertex AI, verified Provenance snapshots, and manual Cloud Run Jobs. The former service remains available as the phase 8 rollback boundary; local Ollama development and the archived Streamlit reference remain supported.
+> **Current status**: OCEAN Platform release `v0.2.1` is live on Cloud Run service `ocean-platform`, revision `ocean-platform-00004-8tb`. The invite-only Next.js + FastAPI application uses Google OIDC, the OCEAN Cloud SQL/pgvector data plane, Vertex AI, verified Provenance snapshots, and `ocean-*` Cloud Run Jobs. The former service is private and its deletion-protected SQL instance is stopped as a reversible rollback boundary; local Ollama development and the archived Streamlit reference remain supported.
 
 ---
 
@@ -43,15 +43,32 @@ used only as historical reference and parity material.
 
 ### OCEAN Platform Cutover (2026-08-25)
 
+- Release `v0.2.1` completed phase 8: Artifact Registry `ocean-platform`,
+  service accounts `ocean-platform` and `ocean-jobs`, Cloud SQL
+  `ocean-postgres` / `ocean_platform`, `ocean-*` jobs and secrets, and bucket
+  `data-infra-infobio-ocean-data` now form the live data plane.
+- Cloud Build `8e4c7d4b-f723-40ef-9278-1d647b54111d` passed the full test and
+  image pipeline. Revision `ocean-platform-00004-8tb` serves 100% traffic.
+- The database migration preserved all 16 tables and audited row counts. Job
+  executions `ocean-migrate-glml5`, `ocean-pipeline-q8x99`,
+  `ocean-embedding-trv4b`, and `ocean-evaluation-skf6f` passed their bounded
+  validation gates.
+- The former `onagawa-source-chat` service is private. `onagawa-postgres` is
+  stopped with deletion protection; restarting it and explicitly restoring
+  service access remains the rollback path during the retention window.
+- The application logo and favicon assets were removed. All five checked-in
+  product screenshots are logo-free.
+
+The preceding `v0.2.0` cutover established the canonical product identity:
+
 - Release `v0.2.0` establishes **OCEAN Platform** — Ocean Coastal Ecosystem
   Archive Nexus (OCEAN) — as the canonical product and repository identity.
 - Cloud Build `d2b38c01-526a-4827-bd9d-2d05948e2350` passed the full backend,
   frontend, and image pipeline. Targeted frontend build
   `2754b49a-6963-4efb-91c2-bdeb3d4a97c2` produced the public-asset fix.
 - Cloud Run service `ocean-platform`, revision `ocean-platform-00002-rhc`,
-  receives 100% of its traffic at the OCEAN URL. The former
-  `onagawa-source-chat` service remains unchanged as rollback coverage while
-  data-plane resource renames are deferred to phase 8.
+  received 100% of its traffic at the OCEAN URL during the parallel-service
+  transition. Phase 8 has since replaced its legacy data-plane references.
 - Google OIDC retains the former origin/callback for rollback and adds the
   OCEAN origin/callback. Administrator sign-in and every user/admin route were
   validated against the new service.
@@ -672,7 +689,7 @@ git diff --check
 | Limitation | Notes |
 | --- | --- |
 | Ingestion is manual | No automatic file watcher, scheduler, queue, or cloud object-store sync yet |
-| Backup retention/PITR | Verified logical backup and isolated restore testing exist; encryption, off-host retention, and point-in-time recovery need deployment-specific infrastructure |
+| Backup retention/PITR | The live Cloud SQL instance keeps seven backups and seven days of PITR; continue periodic logical-export and restore drills |
 | Stale-row deletion | Transactional upsert reports but does not delete database keys missing from the incoming artifacts |
 | Production operations remain operator-managed | Cloud Run/Cloud SQL are live; secret rotation, retention enforcement, posted-cost review, alerting, and incident drills remain operator responsibilities |
 | Ollama is local-only | GCP uses native Vertex AI; host/container Ollama remains an optional local-development runtime |
@@ -703,7 +720,7 @@ Before handing scheduled updates to operators:
 
 Continue treating evaluation as first-class:
 
-- Connect the Standard/Ablation start controls to `onagawa-evaluation` through
+- Connect the Standard/Ablation start controls to `ocean-evaluation` through
   a least-privilege, bounded Cloud Run Jobs execution bridge
 - Calibrate the existing opt-in LLM-as-judge scoring against a reviewed
   benchmark and separate judge model

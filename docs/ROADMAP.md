@@ -33,7 +33,9 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The bounded GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.2.0`.
+  and OCEAN Platform release `v0.2.1`. The active data plane now uses the
+  `ocean-*` service, job, identity, database, secret, registry, and bucket
+  naming contract; private legacy rollback resources are retained temporarily.
 - Operational administration is consolidated under `/admin` with Users,
   Feedback, Pipeline, Database, System, and Debug sections.
 - The README screenshot set was refreshed from the authenticated OCEAN
@@ -205,7 +207,7 @@ an archived reference for remaining parity checks.
 - [x] Provide saved runs, reports, analytics, questions, Standard/Ablation
       controls, comparison, and CSV exports in the Evaluation UI.
 - [x] Validate a bounded Vertex Baseline/Full evaluation through the manual
-      `onagawa-evaluation` Cloud Run Job and reopen its artifacts in the UI.
+      `ocean-evaluation` Cloud Run Job and reopen its artifacts in the UI.
 - [ ] Connect the Evaluation start controls to the external Cloud Run Job with
       a least-privilege execution bridge and server-side workload ceilings.
 - [ ] Run the full ablation study after each major data update.

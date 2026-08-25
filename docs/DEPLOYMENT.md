@@ -12,13 +12,15 @@ operations.
 
 Current release record as of 2026-08-25:
 
-- OCEAN Platform GitHub release `v0.2.0`;
-- full Cloud Build `d2b38c01-526a-4827-bd9d-2d05948e2350` and targeted
-  frontend build `2754b49a-6963-4efb-91c2-bdeb3d4a97c2`;
+- OCEAN Platform GitHub release `v0.2.1`;
+- full Cloud Build `8e4c7d4b-f723-40ef-9278-1d647b54111d`;
 - Cloud Run service `ocean-platform`, serving revision
-  `ocean-platform-00002-rhc` at 100% traffic;
-- former `onagawa-source-chat` service retained as the phase 8 rollback
-  application;
+  `ocean-platform-00004-8tb` at 100% traffic;
+- Artifact Registry `ocean-platform`, runtime identities `ocean-platform` and
+  `ocean-jobs`, Cloud SQL `ocean-postgres` / `ocean_platform`, OCEAN secrets,
+  OCEAN jobs, and bucket `data-infra-infobio-ocean-data`;
+- former `onagawa-source-chat` service private and deletion-protected
+  `onagawa-postgres` stopped as reversible rollback resources;
 - Cloud Run minimum zero, maximum one instance, concurrency 20; and
 - successful GitHub `production` deployment status.
 
@@ -37,7 +39,7 @@ autoscaled web instance.
 
 The Evaluation page can browse runs, reports, analytics, questions, and
 comparisons. Its start controls currently surface the external-runner boundary;
-operators execute the bounded `onagawa-evaluation` Cloud Run Job until a
+operators execute the bounded `ocean-evaluation` Cloud Run Job until a
 least-privilege UI-to-job bridge is implemented.
 
 ## Standalone Compose Topology

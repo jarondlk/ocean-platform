@@ -4,7 +4,7 @@ set -eu
 
 GCP_PROJECT_ID="${GCP_PROJECT_ID:-data-infra-infobio}"
 GCP_REGION="${GCP_REGION:-asia-northeast1}"
-ARTIFACT_REPOSITORY="${ARTIFACT_REPOSITORY:-onagawa-source-chat}"
+ARTIFACT_REPOSITORY="${ARTIFACT_REPOSITORY:-ocean-platform}"
 : "${DATA_BUCKET:?Set DATA_BUCKET to a globally unique Cloud Storage bucket name}"
 
 if [ "${CONFIRM_GCP_PROJECT:-}" != "$GCP_PROJECT_ID" ]; then
@@ -36,7 +36,7 @@ if ! gcloud artifacts repositories describe "$ARTIFACT_REPOSITORY" \
     --project="$GCP_PROJECT_ID"
 fi
 
-for account in onagawa-app onagawa-jobs; do
+for account in ocean-platform ocean-jobs; do
   email="$account@$GCP_PROJECT_ID.iam.gserviceaccount.com"
   if ! gcloud iam service-accounts describe "$email" \
     --project="$GCP_PROJECT_ID" >/dev/null 2>&1; then
@@ -47,10 +47,10 @@ for account in onagawa-app onagawa-jobs; do
 done
 
 for secret in \
-  onagawa-auth-secret \
-  onagawa-internal-auth-secret \
-  onagawa-oidc-client-secret \
-  onagawa-database-url; do
+  ocean-auth-secret \
+  ocean-internal-auth-secret \
+  ocean-oidc-client-secret \
+  ocean-database-url; do
   if ! gcloud secrets describe "$secret" \
     --project="$GCP_PROJECT_ID" >/dev/null 2>&1; then
     gcloud secrets create "$secret" \
@@ -72,8 +72,8 @@ gcloud storage buckets update "gs://$DATA_BUCKET" \
   --versioning \
   --update-labels=environment=prototype,cost_component=storage
 
-app_member="serviceAccount:onagawa-app@$GCP_PROJECT_ID.iam.gserviceaccount.com"
-jobs_member="serviceAccount:onagawa-jobs@$GCP_PROJECT_ID.iam.gserviceaccount.com"
+app_member="serviceAccount:ocean-platform@$GCP_PROJECT_ID.iam.gserviceaccount.com"
+jobs_member="serviceAccount:ocean-jobs@$GCP_PROJECT_ID.iam.gserviceaccount.com"
 
 gcloud projects add-iam-policy-binding "$GCP_PROJECT_ID" \
   --member="$app_member" \
@@ -85,16 +85,16 @@ gcloud projects add-iam-policy-binding "$GCP_PROJECT_ID" \
   --condition=None >/dev/null
 
 for secret in \
-  onagawa-auth-secret \
-  onagawa-internal-auth-secret \
-  onagawa-oidc-client-secret \
-  onagawa-database-url; do
+  ocean-auth-secret \
+  ocean-internal-auth-secret \
+  ocean-oidc-client-secret \
+  ocean-database-url; do
   gcloud secrets add-iam-policy-binding "$secret" \
     --project="$GCP_PROJECT_ID" \
     --member="$app_member" \
     --role=roles/secretmanager.secretAccessor >/dev/null
 done
-gcloud secrets add-iam-policy-binding onagawa-database-url \
+gcloud secrets add-iam-policy-binding ocean-database-url \
   --project="$GCP_PROJECT_ID" \
   --member="$jobs_member" \
   --role=roles/secretmanager.secretAccessor >/dev/null

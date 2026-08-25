@@ -12,20 +12,20 @@ Live state verified through 2026-08-25:
 - project billing is enabled and the linked JPY billing account is open;
 - the project is in organization `735965963562`;
 - the required foundation and runtime APIs are enabled;
-- Artifact Registry repository `onagawa-source-chat` exists in
-  `asia-northeast1`, contains the tested API and frontend images, and has
-  cleanup rules in dry-run mode;
-- service accounts `onagawa-app` and `onagawa-jobs` exist with no user-managed
+- Artifact Registry repository `ocean-platform` exists in `asia-northeast1`,
+  contains the tested API and frontend images, and has cleanup rules in
+  dry-run mode;
+- service accounts `ocean-platform` and `ocean-jobs` exist with no user-managed
   keys;
 - the database, Auth.js signing, internal API signing, and Google OAuth client
   secrets each have one enabled version;
-- regional bucket `data-infra-infobio-prototype-data` has public access
+- regional bucket `data-infra-infobio-ocean-data` has public access
   prevention, uniform bucket-level access, versioning, and the reviewed
   lifecycle policy enabled; GCP's default seven-day soft-delete protection
   remains enabled;
-- Cloud SQL instance `onagawa-postgres`, Cloud Run migration job
-  `onagawa-migrate`, and the authenticated multi-container Cloud Run service
-  `onagawa-source-chat` are ready;
+- Cloud SQL instance `ocean-postgres`, Cloud Run jobs under the `ocean-*`
+  prefix, and the authenticated multi-container Cloud Run service
+  `ocean-platform` are ready;
 - project, Cloud Run, and Cloud SQL budget controls are configured; and
 - the billing account has a Billing Account Administrator who can create and
   manage budgets.
@@ -37,14 +37,13 @@ documents now have 768-dimensional `gemini-embedding-001` embeddings with
 provider provenance. Authenticated chat traffic uses `gemini-3.6-flash` on
 Vertex AI through workload identity.
 
-The current application milestone is OCEAN Platform release `v0.2.0`. Full
-Cloud Build `d2b38c01-526a-4827-bd9d-2d05948e2350` and targeted frontend
-build `2754b49a-6963-4efb-91c2-bdeb3d4a97c2` produced Cloud Run service
-`ocean-platform`, serving revision `ocean-platform-00002-rhc` at 100% traffic.
-The former `onagawa-source-chat` service remains unchanged as the immediate
-application rollback while phase 8 defers Artifact Registry, service-account,
-Cloud SQL, job, secret, and bucket renames. The service still scales from zero
-to one instance with concurrency 20; no budget, quota, database tier, or model
+The current application milestone is OCEAN Platform release `v0.2.1`. Full
+Cloud Build `8e4c7d4b-f723-40ef-9278-1d647b54111d` produced Cloud Run service
+`ocean-platform`, serving revision `ocean-platform-00004-8tb` at 100% traffic
+on the completed OCEAN data plane. The former `onagawa-source-chat` service is
+private and `onagawa-postgres` is stopped with deletion protection as the
+temporary rollback boundary. The service still scales from zero to one
+instance with concurrency 20; no budget, quota, database tier, or model
 ceiling changed for this release.
 
 ## Cost-control model
@@ -588,6 +587,43 @@ Gate:
 After seven stable days, maximum Cloud Run instances may increase from one to
 two only if measured database connections and the remaining monthly budget
 support it.
+
+## Phase 8: OCEAN data-plane cutover — complete
+
+Completed on 2026-08-25 for release `v0.2.1`:
+
+- created Artifact Registry `ocean-platform`, service account `ocean-jobs`,
+  four OCEAN secrets, and bucket `data-infra-infobio-ocean-data`; reused the
+  existing keyless `ocean-platform` runtime service account;
+- copied 111,240,263 bytes of bucket data with checksum verification and no
+  source deletion; enabled public-access prevention, uniform access,
+  versioning, the reviewed lifecycle policy, and seven-day soft deletion;
+- created deletion-protected PostgreSQL 16 instance `ocean-postgres` at the
+  same `db-f1-micro`, 10 GB / 20 GB ceiling, seven-backup, seven-day-PITR
+  configuration;
+- held a maintenance window, exported `onagawa_rag`, imported it into
+  `ocean_platform` as `ocean_app`, and verified all 16 tables plus the source
+  row-count inventory;
+- rotated both database credentials and disabled both old secret versions
+  after a failed Alembic traceback logged a connection URL; no exposed
+  credential remained enabled when traffic resumed;
+- deployed immutable image build `8e4c7d4b-f723-40ef-9278-1d647b54111d` as
+  `ocean-platform-00004-8tb` and passed all 14 authenticated routes, public
+  boundaries, Google OIDC, a live trust report, and zero-logo DOM checks;
+- passed migration `ocean-migrate-glml5`, eight-stage pipeline dry-run
+  `ocean-pipeline-q8x99`, bounded embedding dry-run
+  `ocean-embedding-trv4b`, and one-question evaluation
+  `ocean-evaluation-skf6f` (100% retrieval precision, source coverage,
+  citation accuracy, and context utilization); and
+- removed temporary Cloud SQL bucket permissions, made the legacy service
+  private, and stopped—but did not delete—the deletion-protected legacy SQL
+  instance to avoid double runtime cost.
+
+Rollback during the retention window is explicit: stop public traffic to the
+OCEAN revision, set `onagawa-postgres` activation policy back to `ALWAYS`,
+redeploy/restart the legacy revision so it resolves the rotated secret, verify
+health and authentication privately, and only then restore its invocation
+policy. Never run both databases longer than the rollback test requires.
 
 ## Stop conditions
 

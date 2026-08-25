@@ -9,9 +9,6 @@ export const metadata: Metadata = {
   title: PRODUCT_NAME,
   description: PRODUCT_DESCRIPTION,
   manifest: "/manifest.webmanifest",
-  icons: {
-    icon: "/favicon.svg",
-  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
