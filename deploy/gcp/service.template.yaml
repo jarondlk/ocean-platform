@@ -19,9 +19,9 @@ spec:
         run.googleapis.com/cloudsql-instances: PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
         run.googleapis.com/container-dependencies: '{"frontend":["api"]}'
         run.googleapis.com/execution-environment: gen2
-        run.googleapis.com/secrets: 'onagawa-auth-secret:projects/PROJECT_NUMBER/secrets/onagawa-auth-secret,onagawa-internal-auth-secret:projects/PROJECT_NUMBER/secrets/onagawa-internal-auth-secret,onagawa-oidc-client-secret:projects/PROJECT_NUMBER/secrets/onagawa-oidc-client-secret,onagawa-database-url:projects/PROJECT_NUMBER/secrets/onagawa-database-url'
+        run.googleapis.com/secrets: 'ocean-auth-secret:projects/PROJECT_NUMBER/secrets/ocean-auth-secret,ocean-internal-auth-secret:projects/PROJECT_NUMBER/secrets/ocean-internal-auth-secret,ocean-oidc-client-secret:projects/PROJECT_NUMBER/secrets/ocean-oidc-client-secret,ocean-database-url:projects/PROJECT_NUMBER/secrets/ocean-database-url'
     spec:
-      serviceAccountName: onagawa-app@PROJECT_ID.iam.gserviceaccount.com
+      serviceAccountName: ocean-platform@PROJECT_ID.iam.gserviceaccount.com
       containerConcurrency: 20
       timeoutSeconds: 300
       containers:
@@ -58,17 +58,17 @@ spec:
             - name: AUTH_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: onagawa-auth-secret
+                  name: ocean-auth-secret
                   key: latest
             - name: INTERNAL_AUTH_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: onagawa-internal-auth-secret
+                  name: ocean-internal-auth-secret
                   key: latest
             - name: OIDC_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: onagawa-oidc-client-secret
+                  name: ocean-oidc-client-secret
                   key: latest
           resources:
             limits:
@@ -141,12 +141,12 @@ spec:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
-                  name: onagawa-database-url
+                  name: ocean-database-url
                   key: latest
             - name: INTERNAL_AUTH_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: onagawa-internal-auth-secret
+                  name: ocean-internal-auth-secret
                   key: latest
           resources:
             limits:

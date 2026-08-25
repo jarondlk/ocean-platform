@@ -1,7 +1,7 @@
 apiVersion: run.googleapis.com/v1
 kind: Job
 metadata:
-  name: onagawa-embedding
+  name: ocean-embedding
   labels:
     environment: prototype
     cost_component: embedding
@@ -14,11 +14,11 @@ spec:
       annotations:
         run.googleapis.com/cloudsql-instances: PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
         run.googleapis.com/execution-environment: gen2
-        run.googleapis.com/secrets: 'onagawa-database-url:projects/PROJECT_NUMBER/secrets/onagawa-database-url'
+        run.googleapis.com/secrets: 'ocean-database-url:projects/PROJECT_NUMBER/secrets/ocean-database-url'
     spec:
       template:
         spec:
-          serviceAccountName: onagawa-jobs@PROJECT_ID.iam.gserviceaccount.com
+          serviceAccountName: ocean-jobs@PROJECT_ID.iam.gserviceaccount.com
           maxRetries: 0
           timeoutSeconds: "1800"
           containers:
@@ -36,7 +36,7 @@ spec:
                 - name: DATABASE_URL
                   valueFrom:
                     secretKeyRef:
-                      name: onagawa-database-url
+                      name: ocean-database-url
                       key: latest
                 - name: MODEL_PROVIDER
                   value: vertex

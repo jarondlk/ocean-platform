@@ -65,7 +65,7 @@ brand.
 | GitHub repository | `jarondlk/ocean-platform` |
 | Cloud Run service | `ocean-platform` |
 | Artifact Registry repository | `ocean-platform` |
-| Application service account | `ocean-app` |
+| Application service account | `ocean-platform` |
 | Job service account | `ocean-jobs` |
 | Cloud SQL instance | `ocean-postgres` |
 | PostgreSQL database | `ocean_platform` |
