@@ -20,7 +20,7 @@ TOKEN_PATTERN = re.compile(
     r"\b(?:PROJECT_ID|PROJECT_NUMBER|REGION|ARTIFACT_REPOSITORY|IMAGE_TAG|"
     r"CLOUD_SQL_INSTANCE|PUBLIC_APP_URL|OIDC_PROVIDER_ID_VALUE|"
     r"OIDC_PROVIDER_NAME_VALUE|OIDC_ISSUER_VALUE|OIDC_CLIENT_ID_VALUE|"
-    r"OLLAMA_PRIVATE_URL|DATA_BUCKET)\b"
+    r"DATA_BUCKET)\b"
 )
 
 
@@ -60,7 +60,6 @@ def main() -> int:
     parser.add_argument("--oidc-provider-name", default="Google")
     parser.add_argument("--oidc-issuer", default="https://accounts.google.com")
     parser.add_argument("--oidc-client-id", required=True)
-    parser.add_argument("--ollama-private-url", required=True)
     parser.add_argument(
         "--output-dir",
         type=Path,
@@ -72,7 +71,6 @@ def main() -> int:
         "public-app-url": args.public_app_url,
         "data-bucket": args.data_bucket,
         "oidc-client-id": args.oidc_client_id,
-        "ollama-private-url": args.ollama_private_url,
     }
     for option, value in required_values.items():
         if not value.strip():
@@ -89,7 +87,6 @@ def main() -> int:
         "OIDC_PROVIDER_NAME_VALUE": args.oidc_provider_name,
         "OIDC_ISSUER_VALUE": args.oidc_issuer.rstrip("/"),
         "OIDC_CLIENT_ID_VALUE": args.oidc_client_id,
-        "OLLAMA_PRIVATE_URL": args.ollama_private_url.rstrip("/"),
         "DATA_BUCKET": args.data_bucket,
     }
     for path in render_templates(values, args.output_dir):

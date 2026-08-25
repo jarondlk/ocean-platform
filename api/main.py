@@ -881,7 +881,6 @@ def _debug_artifacts() -> Dict[str, Dict[str, Any]]:
         "provenance_dir": config.PROVENANCE_DIR,
         "retrieval_documents_jsonl": config.SERVING_DIR / "retrieval_documents.jsonl",
         "retrieval_documents_parquet": config.SERVING_DIR / "retrieval_documents.parquet",
-        "retrieval_embeddings": config.SERVING_DIR / "retrieval_embeddings.npy",
         "sample_registry": config.SERVING_DIR / "sample_registry.parquet",
         "sample_multisource_context": config.SERVING_DIR / "sample_multisource_context.parquet",
         "provenance_jsonl": config.PROVENANCE_DIR / "provenance.jsonl",

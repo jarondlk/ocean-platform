@@ -69,18 +69,19 @@ The preceding `v0.2.0` cutover established the canonical product identity:
 - Cloud Run service `ocean-platform`, revision `ocean-platform-00002-rhc`,
   received 100% of its traffic at the OCEAN URL during the parallel-service
   transition. Phase 8 has since replaced its legacy data-plane references.
-- Google OIDC retains the former origin/callback for rollback and adds the
-  OCEAN origin/callback. Administrator sign-in and every user/admin route were
-  validated against the new service.
+- At the `v0.2.0` cutover, Google OIDC temporarily retained the former
+  origin/callback for rollback and added the OCEAN origin/callback. The former
+  entries were removed before `v0.2.2`; only the OCEAN origin/callback is now
+  active. Administrator sign-in and every user/admin route were validated
+  against the new service.
 - The primary navigation now has one **Admin** entry. `/admin` contains
   Overview, Users, Feedback, Pipeline, Database, System, and Debug sections.
   `/pipeline`, `/database`, `/system`, and `/debug` are compatibility
   redirects into the Admin workspace.
 - The deployed Evaluation UI reads saved runs, reports, analytics, questions,
-  standard/ablation controls, and comparisons. Production execution remains
-  behind the manual `onagawa-evaluation` Cloud Run Job boundary. Execution
-  `onagawa-evaluation-rw7mm` completed the tagged two-call Baseline/Full smoke
-  run with zero errors, and the eighth saved run is visible in the UI.
+  standard/ablation controls, and comparisons. The `v0.2.0` validation used
+  historical execution `onagawa-evaluation-rw7mm`; production execution now
+  uses the manual `ocean-evaluation` Cloud Run Job boundary.
 - Local release validation passed 455 backend tests with 3 skipped checks,
   Ruff, frontend typecheck/build, and the Cloud Build test/build pipeline.
 - No schema migration, pipeline mutation, embedding refresh, quota increase,

@@ -167,8 +167,7 @@ python scripts/render_gcp_templates.py \
   --image-tag=BUILD_ID \
   --public-app-url=https://SERVICE_URL \
   --data-bucket=DATA_BUCKET \
-  --oidc-client-id=GOOGLE_OAUTH_CLIENT_ID \
-  --ollama-private-url=https://PRIVATE_MODEL_URL
+  --oidc-client-id=GOOGLE_OAUTH_CLIENT_ID
 ```
 
 Review every rendered file before using `gcloud run services replace` or
@@ -189,7 +188,6 @@ Copy `service.template.yaml` to an untracked working file and replace:
 - `OIDC_PROVIDER_NAME`
 - `OIDC_ISSUER`
 - `OIDC_CLIENT_ID`
-- `OLLAMA_PRIVATE_URL`
 - `DATA_BUCKET`
 
 Do not put secret values in the rendered YAML. Create these Secret Manager

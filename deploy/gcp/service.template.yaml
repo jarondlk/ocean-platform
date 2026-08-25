@@ -124,10 +124,16 @@ spec:
               value: global
             - name: CHAT_MODEL
               value: gemini-3.6-flash
+            - name: ALLOWED_CHAT_MODELS
+              value: gemini-3.6-flash
             - name: EMBEDDING_MODEL
+              value: gemini-embedding-001
+            - name: ALLOWED_EMBEDDING_MODELS
               value: gemini-embedding-001
             - name: EMBEDDING_DIM
               value: "768"
+            - name: CHAT_RETENTION_DAYS
+              value: "90"
             - name: CHAT_MAX_OUTPUT_TOKENS
               value: "1600"
             - name: VERTEX_THINKING_BUDGET

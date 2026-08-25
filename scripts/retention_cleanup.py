@@ -7,9 +7,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
+from pathlib import Path
 
-import config
-from db.retention import cleanup_chat_interactions
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+import config  # noqa: E402
+from db.retention import cleanup_chat_interactions  # noqa: E402
 
 
 CONFIRMATION = "DELETE EXPIRED CHAT DATA"
