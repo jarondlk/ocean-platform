@@ -36,7 +36,7 @@ def test_provenance_prompt_contains_primary_and_linked_citations():
     assert "[ctd-1]" in prompt
     assert "[sst-1]" in prompt
     assert "ONLY use the evidence" in prompt
-    assert prompt.endswith("What was the temperature?")
+    assert "<user_question>What was the temperature?</user_question>" in prompt
 
 
 def test_query_pipeline_packages_results_and_metadata(monkeypatch):

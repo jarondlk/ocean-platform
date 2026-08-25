@@ -39,6 +39,7 @@ from api.chat_records import (
 )
 from api.feedback_routes import router as feedback_router
 from api.provenance_snapshot_service import get_provenance_snapshot_service
+from api.retention_routes import router as retention_router
 from api.schemas import (
     ChatRequest,
     ChatResponse,
@@ -159,6 +160,7 @@ app.middleware("http")(authorization_middleware)
 app.include_router(auth_router)
 app.include_router(admin_feedback_router)
 app.include_router(feedback_router)
+app.include_router(retention_router)
 
 logger = logging.getLogger(__name__)
 
@@ -1302,6 +1304,13 @@ def _producer_selected(stage_ids: List[str], producer: str) -> bool:
 
 def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePreflightResponse:
     _validate_pipeline_stages(request.stages)
+    if request.embedding_model:
+        _allowed_model(
+            request.embedding_model,
+            default=config.EMBEDDING_MODEL,
+            allowed=config.ALLOWED_EMBEDDING_MODELS,
+            label="embedding model",
+        )
     raw_sources = _pipeline_raw_sources()
     artifacts = _pipeline_artifacts()
     readiness = _pipeline_readiness(raw_sources, artifacts)
@@ -2671,6 +2680,26 @@ def _start_evaluation_job(
     _require_local_job_execution("Evaluation")
     _acquire_local_job_slot("evaluation")
     try:
+        model = _allowed_model(
+            request.model,
+            default=config.CHAT_MODEL,
+            allowed=config.ALLOWED_CHAT_MODELS,
+            label="chat model",
+        )
+        if request.judge_model:
+            _allowed_model(
+                request.judge_model,
+                default=model,
+                allowed=config.ALLOWED_CHAT_MODELS,
+                label="judge model",
+            )
+        if request.embedding_model:
+            _allowed_model(
+                request.embedding_model,
+                default=config.EMBEDDING_MODEL,
+                allowed=config.ALLOWED_EMBEDDING_MODELS,
+                label="embedding model",
+            )
         if run_type == "standard":
             _select_benchmark_questions(request.question_ids, request.categories, request.quick)
             _select_evaluation_modes(request.modes)  # type: ignore[union-attr]
@@ -2678,7 +2707,6 @@ def _start_evaluation_job(
             _select_benchmark_questions(request.question_ids, request.categories, request.quick)
             _select_system_variants(request.variants)  # type: ignore[union-attr]
 
-        model = request.model or config.CHAT_MODEL
         run_id = _new_evaluation_run_id(run_type, model, request.tag)
         job_id = run_id
         output_dir = _job_output_dir(run_id)
@@ -3295,7 +3323,11 @@ def _filter_explore_df(
         if text_columns:
             mask = pd.Series(False, index=filtered.index)
             for column in text_columns:
-                mask = mask | filtered[column].astype("string").str.lower().str.contains(needle, na=False)
+                mask = mask | filtered[column].astype("string").str.lower().str.contains(
+                    needle,
+                    na=False,
+                    regex=False,
+                )
             filtered = filtered[mask]
 
     return filtered
@@ -3387,6 +3419,25 @@ def _ollama_status() -> Dict[str, Any]:
 def _is_embedding_only_model(name: str) -> bool:
     lowered = name.lower()
     return any(hint in lowered for hint in EMBEDDING_ONLY_MODEL_HINTS)
+
+
+def _allowed_model(
+    requested: Optional[str],
+    *,
+    default: str,
+    allowed: frozenset[str],
+    label: str,
+) -> str:
+    model = (requested or default).strip()
+    if model not in allowed:
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "code": "model_not_allowed",
+                "message": f"The requested {label} is not configured for this deployment.",
+            },
+        )
+    return model
 
 
 def _ollama_options(request: ChatRequest) -> Dict[str, Any]:
@@ -3485,7 +3536,11 @@ def models() -> ModelsResponse:
                 size=model.get("size"),
             )
             for model in raw_models
-            if model.get("name") and not _is_embedding_only_model(str(model.get("name")))
+            if (
+                model.get("name")
+                and str(model.get("name")) in config.ALLOWED_CHAT_MODELS
+                and not _is_embedding_only_model(str(model.get("name")))
+            )
         ]
         return ModelsResponse(
             default_model=config.CHAT_MODEL,
@@ -4272,7 +4327,7 @@ def explore_table(
     source: Optional[str] = None,
     time_from: Optional[str] = None,
     time_to: Optional[str] = None,
-    search: Optional[str] = None,
+    search: Optional[str] = Query(default=None, max_length=200),
     columns: Optional[str] = None,
     sort: Optional[str] = None,
     direction: str = Query(default="asc", pattern="^(asc|desc)$"),
@@ -4322,7 +4377,7 @@ def explore_summary(
     source: Optional[str] = None,
     time_from: Optional[str] = None,
     time_to: Optional[str] = None,
-    search: Optional[str] = None,
+    search: Optional[str] = Query(default=None, max_length=200),
 ) -> ExploreSummaryResponse:
     cfg = _dataset_config(dataset)
     df = _read_explore_dataset(dataset)
@@ -4357,7 +4412,7 @@ def explore_timeseries(
     source: Optional[str] = None,
     time_from: Optional[str] = None,
     time_to: Optional[str] = None,
-    search: Optional[str] = None,
+    search: Optional[str] = Query(default=None, max_length=200),
     limit: int = Query(default=500, ge=1, le=2000),
 ) -> TimeSeriesResponse:
     cfg = _dataset_config(dataset)
@@ -4530,7 +4585,12 @@ def chat(
     user: CurrentUser = Depends(get_current_user),
 ) -> ChatResponse:
     started_at = time.perf_counter()
-    model = request.model or config.CHAT_MODEL
+    model = _allowed_model(
+        request.model,
+        default=config.CHAT_MODEL,
+        allowed=config.ALLOWED_CHAT_MODELS,
+        label="chat model",
+    )
     ollama_options = _ollama_options(request)
     response_options = {
         "generation": ollama_options,

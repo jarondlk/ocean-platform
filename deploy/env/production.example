@@ -24,6 +24,9 @@ MODEL_PROVIDER=ollama
 OLLAMA_BASE_URL=http://<private-ollama-host>:11434
 CHAT_MODEL=qwen2.5:14b-instruct
 EMBEDDING_MODEL=nomic-embed-text
+ALLOWED_CHAT_MODELS=qwen2.5:14b-instruct
+ALLOWED_EMBEDDING_MODELS=nomic-embed-text
+CHAT_RETENTION_DAYS=90
 
 DEPLOYMENT_ENV=production
 AUTH_MODE=required

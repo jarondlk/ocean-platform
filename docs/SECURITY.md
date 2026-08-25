@@ -160,13 +160,16 @@ The metadata database stores:
 - feedback reason codes and optional comments;
 - security and administration audit events.
 
-The prototype retention policy approved on 2026-08-21 is 90 days for complete
-chat interactions, their retrieved-evidence and answer-audit snapshots, and
-associated feedback/comments. No existing records were deleted when the policy
-was approved. Automated expiry is not yet enforced by the current code; a
-separate reviewed cleanup implementation must support dry-run reporting,
-transactional deletion of the related records, explicit legal holds, audit
-events, and the documented backup-retention window before broader use.
+The approved retention policy is 90 days for completed or failed chat
+interactions, their retrieved-evidence and answer-audit snapshots, and
+associated feedback/comments. The `CHAT_RETENTION_DAYS` setting may shorten
+this window but may not exceed 10 years. `python scripts/retention_cleanup.py`
+performs a read-only dry run; deletion requires the explicit confirmation
+string `DELETE EXPIRED CHAT DATA` and should only be run after the operator has
+verified the backup and recovery window. Cleanup is transactional, excludes
+running interactions and legal holds, deletes related feedback through the
+relationship cascade, and records a batch audit event. Administrators can set
+or clear a hold through `PATCH /admin/retention/interactions/{id}/hold`.
 
 User identities, invitations, security/administration audit events, scientific
 corpus records, and evaluation artifacts are outside this 90-day approval and
@@ -185,6 +188,8 @@ to audit metadata or application logs.
   coordinated service restarts.
 - The application does not yet provide an audit-event review UI or automatic
   alerting for repeated authorization failures.
+- Scheduling the reviewed retention cleanup command remains an operator
+  responsibility; no new GCP service topology is introduced by this change.
 - Auth.js 5 remains a pinned beta dependency; upgrades require authentication
   regression testing.
 

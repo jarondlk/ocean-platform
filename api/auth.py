@@ -73,6 +73,7 @@ ROLE_PERMISSIONS: Dict[str, FrozenSet[str]] = {
             "database:read",
             "system:read",
             "users:manage",
+            "retention:manage",
         }
     ),
 }
@@ -465,6 +466,8 @@ def route_permission(method: str, path: str) -> Optional[str]:
         return "feedback:export"
     if path.startswith("/admin/feedback"):
         return "feedback:review"
+    if path.startswith("/admin/retention"):
+        return "retention:manage"
     if path.startswith("/docs") or path in {"/redoc", "/openapi.json"}:
         return "system:read"
     return None

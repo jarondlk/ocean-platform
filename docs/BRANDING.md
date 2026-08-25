@@ -47,7 +47,7 @@ brand.
 
 - Browser preferences migrate from `onagawa-app-preferences` to
   `ocean-platform-preferences` on first load.
-- New chat records use `ocean-chat-v1`; existing `onagawa-chat-v1` records stay
+- New chat records use `ocean-chat-v2`; existing `onagawa-chat-v1` records stay
   unchanged as provenance evidence.
 - The legacy mock-login UUID namespace remains stable so local test identities
   are not duplicated by the rebrand.
