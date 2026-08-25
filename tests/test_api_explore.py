@@ -68,7 +68,7 @@ def test_debug_state_redacts_database_url():
     assert response.status_code == 200
     payload = response.json()
     assert payload["config"]["database_url"]
-    assert "://onagawa:***@" in payload["config"]["database_url"]
+    assert "://ocean:***@" in payload["config"]["database_url"]
     assert "Raw process environment is intentionally omitted." in payload["notes"]
 
 

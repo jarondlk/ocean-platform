@@ -1,8 +1,8 @@
-# Handoff Document - Onagawa Source Chat (provenance-eco-rag)
+# Handoff Document - OCEAN Platform
 
 > **Last updated**: 2026-08-25
-> **Project path**: `/Users/jaronchai/Documents/GitHub/provenance-eco-rag/`
-> **Current status**: Stable GCP prototype release `v0.1.0` is live on Cloud Run revision `onagawa-source-chat-00012-drc`. The invite-only Next.js + FastAPI application uses Google OIDC, Cloud SQL/pgvector, Vertex AI, verified Provenance snapshots, and manual Cloud Run Jobs. Local Ollama development and the archived Streamlit reference remain supported.
+> **Repository**: `jarondlk/ocean-platform`
+> **Current status**: OCEAN Platform release `v0.2.0` is live on Cloud Run service `ocean-platform`, revision `ocean-platform-00002-rhc`. The invite-only Next.js + FastAPI application uses Google OIDC, Cloud SQL/pgvector, Vertex AI, verified Provenance snapshots, and manual Cloud Run Jobs. The former service remains available as the phase 8 rollback boundary; local Ollama development and the archived Streamlit reference remain supported.
 
 ---
 
@@ -41,15 +41,20 @@ used only as historical reference and parity material.
 
 ## 2. What Changed Recently
 
-### GCP Prototype Release and Admin Workspace (2026-08-25)
+### OCEAN Platform Cutover (2026-08-25)
 
-- Stable GitHub release `v0.1.0` targets commit `2820f128` on `gcp-dev`.
-- Cloud Build `ce129a4f-4059-4e21-8bd1-7702fb34cdac` produced the immutable
-  images deployed as Cloud Run revision `onagawa-source-chat-00012-drc` in
-  `asia-northeast1`. It receives 100% of traffic; revision
-  `onagawa-source-chat-00011-4pd` remains the immediate rollback target.
-- GitHub records a successful `production` deployment for the same commit and
-  live Cloud Run URL.
+- Release `v0.2.0` establishes **OCEAN Platform** — Ocean Coastal Ecosystem
+  Archive Nexus (OCEAN) — as the canonical product and repository identity.
+- Cloud Build `d2b38c01-526a-4827-bd9d-2d05948e2350` passed the full backend,
+  frontend, and image pipeline. Targeted frontend build
+  `2754b49a-6963-4efb-91c2-bdeb3d4a97c2` produced the public-asset fix.
+- Cloud Run service `ocean-platform`, revision `ocean-platform-00002-rhc`,
+  receives 100% of its traffic at the OCEAN URL. The former
+  `onagawa-source-chat` service remains unchanged as rollback coverage while
+  data-plane resource renames are deferred to phase 8.
+- Google OIDC retains the former origin/callback for rollback and adds the
+  OCEAN origin/callback. Administrator sign-in and every user/admin route were
+  validated against the new service.
 - The primary navigation now has one **Admin** entry. `/admin` contains
   Overview, Users, Feedback, Pipeline, Database, System, and Debug sections.
   `/pipeline`, `/database`, `/system`, and `/debug` are compatibility
@@ -59,7 +64,7 @@ used only as historical reference and parity material.
   behind the manual `onagawa-evaluation` Cloud Run Job boundary. Execution
   `onagawa-evaluation-rw7mm` completed the tagged two-call Baseline/Full smoke
   run with zero errors, and the eighth saved run is visible in the UI.
-- Local release validation passed 454 backend tests with 3 skipped checks,
+- Local release validation passed 455 backend tests with 3 skipped checks,
   Ruff, frontend typecheck/build, and the Cloud Build test/build pipeline.
 - No schema migration, pipeline mutation, embedding refresh, quota increase,
   scale increase, or budget increase accompanied the Admin release.
@@ -84,8 +89,8 @@ from the repository root when intentionally run from the archive path.
 - `README.md` documents linked cross-source evidence, answer trust reports,
   invite-only authorization, feedback review, production safeguards, and the
   current 450+ test suite.
-- `README.md` now includes the 2026-08-25 GCP release status and retains the
-  July local-prototype screenshots as explicitly dated reference material.
+- `README.md` now includes the 2026-08-25 OCEAN release status and screenshots
+  captured from the authenticated Cloud Run service.
 - `docs/ROADMAP.md` records the manual batch-ingestion direction and cloud UI
   migration direction, including completed citation rendering, linked evidence,
   trust report, and screenshot refresh work.
@@ -262,13 +267,13 @@ documents retain their embeddings.
 
 ### Prototype Screenshot Refresh
 
-- Replaced historical Streamlit-era README screenshots with live Next.js/FastAPI
-  prototype captures from 2026-07-21.
+- Replaced the prior local captures with authenticated OCEAN Platform Cloud Run
+  screenshots from 2026-08-25.
 - Current screenshot files under `docs/screenshots/`:
   `prototype_overview.png`, `prototype_explore_evidence.png`,
   `prototype_data_analysis.png`, `prototype_provenance.png`, and
   `prototype_chat_trust_report.png`.
-- The Chat screenshot was captured after a real local-model query and shows the
+- The Chat screenshot was captured after a real Vertex AI query and shows the
   Answer Trust Report with context-aware citation requirements.
 
 ### Active Stack Clarified
@@ -317,7 +322,7 @@ because it is the local SST raw-data source needed for full regeneration.
 ## 4. Directory Map
 
 ```text
-provenance-eco-rag/
+ocean-platform/
 ├── api/                              # FastAPI service and endpoint logic
 ├── archive/
 │   └── legacy-streamlit/             # Archived Streamlit app and overlay
@@ -572,14 +577,14 @@ Latest local verification for this audit:
 
 | Check | Result |
 | --- | --- |
-| `pytest` | 454 passed, 3 skipped in the `v0.1.0` release validation; 74.31% aggregate coverage |
+| `pytest` | 455 passed, 3 skipped in the OCEAN rebrand validation; 74.31% aggregate coverage |
 | Coverage boundary | 74.31% aggregate; required floor is 70% |
 | PostgreSQL metadata integration | Passed against migrated local PostgreSQL/pgvector |
 | Security-boundary Ruff check | Passed |
 | `npm run typecheck` | Passed |
 | Production-configured `npm run build` | Passed |
 | Production API and frontend container builds | Passed; non-root runtime and pinned frontend dependency versions confirmed |
-| Browser route smoke test | Passed all 12 registered routes in local preview mode with no post-fix console errors |
+| Browser route smoke test | Passed all 14 user/admin routes on the authenticated OCEAN Cloud Run service with no access-denied or application-error states |
 | Browser interaction smoke test | Explore search, all Data views, database probe, pipeline preflight, provenance dry-run, evaluation views, and citation-grounded chat passed |
 | Production frontend container browser test | Passed overview data load and state-changing retrieval probe; strict CSP and 403 cross-origin rejection confirmed |
 | OIDC browser integration | Passed authorization-code flow with PKCE/state/nonce, invitation consumption, viewer/researcher/admin sessions, role navigation/direct-route gates, sign-out, audit records, and immediate suspension using an isolated local issuer |
@@ -672,7 +677,7 @@ git diff --check
 | Production operations remain operator-managed | Cloud Run/Cloud SQL are live; secret rotation, retention enforcement, posted-cost review, alerting, and incident drills remain operator responsibilities |
 | Ollama is local-only | GCP uses native Vertex AI; host/container Ollama remains an optional local-development runtime |
 | Streamlit is archived | Do not add new active features to `archive/legacy-streamlit/app.py` |
-| Screenshots are point-in-time | `docs/screenshots/` contains local prototype captures from 2026-07-21 and predates the consolidated Admin workspace |
+| Screenshots are point-in-time | `docs/screenshots/` contains authenticated OCEAN Cloud Run captures from 2026-08-25 |
 | Trust report is deterministic | The current audit checks supplied evidence and citations; it is not an LLM-as-judge semantic faithfulness scorer |
 | Integration scope is focused | PostgreSQL migrations, metadata, shared rate limiting, backup/restore, and repeated upserts are integration-tested; most RAG and scientific tests remain synthetic |
 | Auth.js beta | Auth.js 5 is exact-pinned at beta.32; regression-test any upgrade |

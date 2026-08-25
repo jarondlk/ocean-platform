@@ -124,13 +124,13 @@ jobs:
       postgres:
         image: pgvector/pgvector:pg16
         env:
-          POSTGRES_USER: onagawa
+          POSTGRES_USER: ocean
           POSTGRES_PASSWORD: integration-only-password
-          POSTGRES_DB: onagawa_rag
+          POSTGRES_DB: ocean_platform
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U onagawa -d onagawa_rag"
+          --health-cmd "pg_isready -U ocean -d ocean_platform"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
@@ -159,14 +159,14 @@ jobs:
 
       - name: Apply application migrations
         env:
-          DATABASE_URL: postgresql://onagawa:integration-only-password@127.0.0.1:5432/onagawa_rag
+          DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform
         run: python -m alembic upgrade head
 
       - name: Verify invite acceptance and metadata persistence
         env:
           AUTH_MODE: disabled
           DEPLOYMENT_ENV: test
-          DATABASE_URL: postgresql://onagawa:integration-only-password@127.0.0.1:5432/onagawa_rag
+          DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform
           RUN_POSTGRES_INTEGRATION: "1"
         run: >-
           python -m pytest
@@ -176,14 +176,14 @@ jobs:
 
       - name: Verify transactional corpus upsert is idempotent
         env:
-          DATABASE_URL: postgresql://onagawa:integration-only-password@127.0.0.1:5432/onagawa_rag
+          DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform
         run: |
           python scripts/load_db.py --upsert --json
           python scripts/load_db.py --upsert --json
 
       - name: Verify database backup and isolated restore
         env:
-          DATABASE_URL: postgresql://onagawa:integration-only-password@127.0.0.1:5432/onagawa_rag
+          DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform
           DATABASE_BACKUP_CONTAINER: ""
         run: >-
           python scripts/database_backup.py create

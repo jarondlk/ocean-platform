@@ -65,7 +65,7 @@ def _request_from_args(args: argparse.Namespace) -> PipelineRunRequest:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run the manual Onagawa RAG batch pipeline")
+    parser = argparse.ArgumentParser(description="Run the manual OCEAN Platform batch pipeline")
     parser.add_argument(
         "--stages",
         default="full",

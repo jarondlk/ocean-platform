@@ -1,7 +1,7 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: onagawa-source-chat
+  name: ocean-platform
   labels:
     environment: prototype
     cost_component: serving
@@ -44,9 +44,9 @@ spec:
             - name: AUTH_TRUST_HOST
               value: "true"
             - name: INTERNAL_AUTH_ISSUER
-              value: onagawa-source-chat-frontend
+              value: ocean-platform-frontend
             - name: INTERNAL_AUTH_AUDIENCE
-              value: onagawa-source-chat-api
+              value: ocean-platform-api
             - name: OIDC_PROVIDER_NAME
               value: OIDC_PROVIDER_NAME_VALUE
             - name: OIDC_PROVIDER_ID
@@ -91,15 +91,15 @@ spec:
             - name: CORS_ORIGINS
               value: PUBLIC_APP_URL
             - name: INTERNAL_AUTH_ISSUER
-              value: onagawa-source-chat-frontend
+              value: ocean-platform-frontend
             - name: INTERNAL_AUTH_AUDIENCE
-              value: onagawa-source-chat-api
+              value: ocean-platform-api
             - name: DATA_DIR
-              value: /mnt/onagawa-data
+              value: /mnt/ocean-data
             - name: SST_NETCDF_DIR
-              value: /mnt/onagawa-data/raw/sst-netcdf
+              value: /mnt/ocean-data/raw/sst-netcdf
             - name: HIMAWARI_RAW_DIR
-              value: /mnt/onagawa-data/raw/himawari
+              value: /mnt/ocean-data/raw/himawari
             - name: JOB_EXECUTION_MODE
               value: external
             - name: PROVENANCE_READ_MODE
@@ -161,7 +161,7 @@ spec:
             timeoutSeconds: 3
           volumeMounts:
             - name: scientific-data
-              mountPath: /mnt/onagawa-data
+              mountPath: /mnt/ocean-data
 
       volumes:
         - name: scientific-data

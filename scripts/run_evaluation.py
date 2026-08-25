@@ -264,7 +264,7 @@ def run_single_model(
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Run the Onagawa Source Chat evaluation benchmark.",
+        description="Run the OCEAN Platform evaluation benchmark.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

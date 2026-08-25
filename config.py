@@ -1,5 +1,5 @@
 """
-Centralized configuration for the Onagawa Source Chat framework.
+Centralized configuration for OCEAN Platform.
 
 All paths, database URLs, model settings, and environment variable
 overrides are collected here so that every module imports from one place.
@@ -98,7 +98,7 @@ DIVERSITY_ANOMALY_SIGMA = float(os.environ.get("DIVERSITY_ANOMALY_SIGMA", "2.0")
 # ---------------------------------------------------------------------------
 DATABASE_URL = os.environ.get(
     "DATABASE_URL",
-    "postgresql://onagawa:onagawa@localhost:5433/onagawa_rag",
+    "postgresql://ocean:ocean@localhost:5433/ocean_platform",
 )
 
 
@@ -144,7 +144,7 @@ def database_engine_options() -> dict[str, object]:
 
 DATABASE_BACKUP_CONTAINER = os.environ.get(
     "DATABASE_BACKUP_CONTAINER",
-    "onagawa_pgvector",
+    "ocean_pgvector",
 ).strip()
 
 # Web processes may run background jobs locally, while autoscaled cloud
@@ -169,11 +169,11 @@ ENABLE_MOCK_LOGIN = os.environ.get(
 INTERNAL_AUTH_SECRET = os.environ.get("INTERNAL_AUTH_SECRET", "")
 INTERNAL_AUTH_ISSUER = os.environ.get(
     "INTERNAL_AUTH_ISSUER",
-    "onagawa-source-chat-frontend",
+    "ocean-platform-frontend",
 )
 INTERNAL_AUTH_AUDIENCE = os.environ.get(
     "INTERNAL_AUTH_AUDIENCE",
-    "onagawa-source-chat-api",
+    "ocean-platform-api",
 )
 AUTH_ALLOWED_PROVIDERS = tuple(
     provider.strip()

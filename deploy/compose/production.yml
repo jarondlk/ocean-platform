@@ -1,5 +1,5 @@
 # Standalone production topology.
-name: provenance-eco-rag
+name: ocean-platform
 
 services:
   postgres:
@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB:-onagawa_rag}
+      POSTGRES_DB: ${POSTGRES_DB:-ocean_platform}
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -51,8 +51,8 @@ services:
       PERSIST_LOCAL_CHAT: "false"
       ENABLE_MOCK_LOGIN: "false"
       INTERNAL_AUTH_SECRET: ${INTERNAL_AUTH_SECRET:?Set INTERNAL_AUTH_SECRET}
-      INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-onagawa-source-chat-frontend}
-      INTERNAL_AUTH_AUDIENCE: ${INTERNAL_AUTH_AUDIENCE:-onagawa-source-chat-api}
+      INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-ocean-platform-frontend}
+      INTERNAL_AUTH_AUDIENCE: ${INTERNAL_AUTH_AUDIENCE:-ocean-platform-api}
     expose:
       - "8000"
     healthcheck:
@@ -95,8 +95,8 @@ services:
       AUTH_URL: ${AUTH_URL:?Set the public HTTPS application URL}
       AUTH_TRUST_HOST: ${AUTH_TRUST_HOST:-false}
       INTERNAL_AUTH_SECRET: ${INTERNAL_AUTH_SECRET:?Set INTERNAL_AUTH_SECRET}
-      INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-onagawa-source-chat-frontend}
-      INTERNAL_AUTH_AUDIENCE: ${INTERNAL_AUTH_AUDIENCE:-onagawa-source-chat-api}
+      INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-ocean-platform-frontend}
+      INTERNAL_AUTH_AUDIENCE: ${INTERNAL_AUTH_AUDIENCE:-ocean-platform-api}
       OIDC_PROVIDER_NAME: ${OIDC_PROVIDER_NAME:-Managed identity provider}
       OIDC_PROVIDER_ID: ${OIDC_PROVIDER_ID:-oidc}
       OIDC_ISSUER: ${OIDC_ISSUER:?Set OIDC_ISSUER}

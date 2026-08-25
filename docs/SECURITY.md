@@ -2,7 +2,7 @@
 
 ## Scope
 
-Onagawa Source Chat is an invite-only research application. It stores user
+OCEAN Platform is an invite-only research application. It stores user
 identity metadata, complete chat interactions, evidence snapshots, answer-audit
 snapshots, and user feedback. The scientific corpus may be regenerated, but
 application metadata is kept in separate tables and must be backed up
@@ -190,13 +190,15 @@ to audit metadata or application logs.
 
 ## Authorization MVP Release Checklist
 
-Current GCP evidence as of 2026-08-25: stable release `v0.1.0` runs with
+Current GCP evidence as of 2026-08-25: OCEAN Platform release `v0.2.0` runs with
 `DEPLOYMENT_ENV=production`, `AUTH_MODE=required`, Google OIDC, distinct Secret
 Manager-backed signing secrets, private FastAPI/Cloud SQL connectivity, and
 default-deny API authorization. The administrator and approved researcher have
-completed real-provider login, all Admin sections were smoke-tested, Cloud Run
-emitted no error-level or 5xx entries during acceptance, CI and CodeQL are
-enabled, and dependency alerts were resolved before the release.
+completed real-provider login; the OCEAN origin and callback are registered
+while the former values remain for rollback; all user and Admin sections were
+smoke-tested; Cloud Run emitted no error-level or 5xx entries during
+acceptance; CI and CodeQL are enabled; and dependency alerts were resolved
+before the release.
 
 The checklist remains reusable for every future release. It is intentionally
 not marked permanently complete: secret rotation, dependency state, callback

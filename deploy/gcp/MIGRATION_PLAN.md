@@ -37,15 +37,15 @@ documents now have 768-dimensional `gemini-embedding-001` embeddings with
 provider provenance. Authenticated chat traffic uses `gemini-3.6-flash` on
 Vertex AI through workload identity.
 
-The current application milestone is stable GitHub release `v0.1.0`, source
-commit `2820f128`. Cloud Build
-`ce129a4f-4059-4e21-8bd1-7702fb34cdac` produced serving revision
-`onagawa-source-chat-00012-drc`, which receives 100% of traffic. Revision
-`onagawa-source-chat-00011-4pd` remains the immediate rollback target. GitHub
-deployment `6077080890` records status `success` for the `production`
-environment. The service still scales from zero to one instance with
-concurrency 20; no budget, quota, database tier, or model ceiling changed for
-this release.
+The current application milestone is OCEAN Platform release `v0.2.0`. Full
+Cloud Build `d2b38c01-526a-4827-bd9d-2d05948e2350` and targeted frontend
+build `2754b49a-6963-4efb-91c2-bdeb3d4a97c2` produced Cloud Run service
+`ocean-platform`, serving revision `ocean-platform-00002-rhc` at 100% traffic.
+The former `onagawa-source-chat` service remains unchanged as the immediate
+application rollback while phase 8 defers Artifact Registry, service-account,
+Cloud SQL, job, secret, and bucket renames. The service still scales from zero
+to one instance with concurrency 20; no budget, quota, database tier, or model
+ceiling changed for this release.
 
 ## Cost-control model
 

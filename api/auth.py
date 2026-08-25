@@ -179,6 +179,8 @@ def _mock_login_identity(
                 "This mock email is already linked to another identity",
             )
         user = AppUser(
+            # Preserve the legacy namespace so the rebrand does not create a
+            # second database identity for an existing local mock account.
             id=uuid.uuid5(
                 uuid.NAMESPACE_URL,
                 f"onagawa-rag:{expected_subject}",

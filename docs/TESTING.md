@@ -2,12 +2,14 @@
 
 ## Current release evidence
 
-For stable release `v0.1.0` and source commit `2820f128`, the local backend
-suite passed 454 tests with 3 skipped checks and 74.31% aggregate coverage.
-Ruff, frontend typecheck, the production Next.js build, Cloud Build, Cloud Run
-candidate checks, authenticated Admin navigation, and the bounded external
-evaluation smoke test also passed. CI runs for pushes to `main` and `gcp-dev`
-and for pull requests targeting `main`/`master`.
+For OCEAN Platform release `v0.2.0`, the local backend suite passed 455 tests
+with 3 skipped checks and 74.31% aggregate coverage. All three gated pgvector
+integration tests passed against a disposable migrated database. Ruff,
+frontend typecheck, the 24-route production Next.js build, full Cloud Build,
+targeted frontend Cloud Build, public-boundary checks, Google OIDC, all 14
+authenticated user/admin routes, and a real Vertex AI trust-report query also
+passed. CI runs for pushes to `main` and `gcp-dev` and for pull requests
+targeting `main`/`master`.
 
 This is a point-in-time release record, not a substitute for rerunning the
 commands below after changes.

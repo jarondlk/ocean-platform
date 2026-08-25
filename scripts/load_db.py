@@ -360,7 +360,7 @@ def _upsert_dataframe(
 
     preparer = connection.dialect.identifier_preparer
     quoted_table = preparer.quote(table_name)
-    temporary_table = f"_onagawa_upsert_{table_name}_{uuid.uuid4().hex[:10]}"
+    temporary_table = f"_ocean_upsert_{table_name}_{uuid.uuid4().hex[:10]}"
     quoted_temporary = preparer.quote(temporary_table)
     columns = list(incoming.columns)
     quoted_columns = ", ".join(preparer.quote(column) for column in columns)
@@ -450,7 +450,7 @@ def upsert_corpus() -> dict[str, Any]:
         connection.execute(
             text(
                 "SELECT pg_advisory_xact_lock("
-                "hashtext('onagawa_source_chat_corpus_upsert'))"
+                "hashtext('ocean_platform_corpus_upsert'))"
             )
         )
         for table_name, frame, key_columns in _incoming_table_frames():

@@ -1,9 +1,11 @@
 import type { ReactNode } from "react";
 import { LogOut } from "lucide-react";
+import Image from "next/image";
 
 import { auth, signOut } from "@/auth";
 import { AppNavigation } from "@/components/AppNavigation";
 import { PermissionGate } from "@/components/PermissionGate";
+import { PRODUCT_NAME } from "@/lib/brand";
 import { getCurrentUser, getLocalCurrentUser } from "@/lib/server-api";
 import { localAuthDisabled } from "@/lib/security-config";
 
@@ -42,7 +44,16 @@ export async function AppShell({ children }: { children: ReactNode }) {
     <div className="app-shell">
       <aside className="sidebar" aria-label="Primary navigation">
         <div className="brand-block">
-          <h1>Onagawa RAG</h1>
+          <Image
+            alt=""
+            aria-hidden="true"
+            className="brand-mark"
+            height={32}
+            priority
+            src="/ocean-mark.svg"
+            width={32}
+          />
+          <h1>{PRODUCT_NAME}</h1>
         </div>
         <AppNavigation permissions={user.permissions} />
         <div className="sidebar-user">

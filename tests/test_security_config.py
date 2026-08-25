@@ -13,8 +13,8 @@ def _environment(**overrides: str) -> dict[str, str]:
         "PERSIST_LOCAL_CHAT": "false",
         "ENABLE_MOCK_LOGIN": "false",
         "INTERNAL_AUTH_SECRET": "api-signing-secret-that-is-long-and-random-123",
-        "INTERNAL_AUTH_ISSUER": "onagawa-source-chat-frontend",
-        "INTERNAL_AUTH_AUDIENCE": "onagawa-source-chat-api",
+        "INTERNAL_AUTH_ISSUER": "ocean-platform-frontend",
+        "INTERNAL_AUTH_AUDIENCE": "ocean-platform-api",
         "CORS_ORIGINS": "https://rag.example.org",
     }
     values.update(overrides)

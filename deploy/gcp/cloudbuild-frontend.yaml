@@ -1,0 +1,21 @@
+steps:
+  - id: build-frontend
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --file
+      - frontend/Containerfile
+      - --tag
+      - ${_IMAGE}
+      - frontend
+
+images:
+  - ${_IMAGE}
+
+substitutions:
+  _IMAGE: asia-northeast1-docker.pkg.dev/${PROJECT_ID}/onagawa-source-chat/frontend:manual
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: 1200s

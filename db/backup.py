@@ -24,7 +24,7 @@ from sqlalchemy.engine import URL, make_url
 import config
 
 
-RESTORE_TEST_PREFIX = "onagawa_restore_verify_"
+RESTORE_TEST_PREFIX = "ocean_restore_verify_"
 
 
 class BackupError(RuntimeError):

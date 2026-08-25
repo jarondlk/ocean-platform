@@ -72,7 +72,7 @@ def main() -> int:
     logger.info("Batch size: %d", args.batch_size)
     if args.probe:
         embedding = get_model_runtime().embed(
-            "Onagawa Phase 6 credential and dimension probe",
+            "OCEAN Platform credential and dimension probe",
             model=config.EMBEDDING_MODEL,
             task_type=RETRIEVAL_DOCUMENT,
         )
