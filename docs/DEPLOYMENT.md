@@ -12,7 +12,7 @@ operations.
 
 Current release record as of 2026-08-25:
 
-- OCEAN Platform GitHub release `v0.2.1`;
+- OCEAN Platform GitHub release `v0.2.2`;
 - full Cloud Build `8e4c7d4b-f723-40ef-9278-1d647b54111d`;
 - Cloud Run service `ocean-platform`, serving revision
   `ocean-platform-00004-8tb` at 100% traffic;

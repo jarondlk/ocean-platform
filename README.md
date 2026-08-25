@@ -30,7 +30,7 @@ service.
 
 Current managed milestone:
 
-- GitHub release [`v0.2.1`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.2.1)
+- GitHub release [`v0.2.2`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.2.2)
   is the completed OCEAN Platform application and managed data-plane cutover.
 - Cloud Run service `ocean-platform`, revision `ocean-platform-00004-8tb`,
   serves 100% of its traffic in `asia-northeast1` through service account

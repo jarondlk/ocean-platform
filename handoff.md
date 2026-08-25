@@ -2,7 +2,7 @@
 
 > **Last updated**: 2026-08-25
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform release `v0.2.1` is live on Cloud Run service `ocean-platform`, revision `ocean-platform-00004-8tb`. The invite-only Next.js + FastAPI application uses Google OIDC, the OCEAN Cloud SQL/pgvector data plane, Vertex AI, verified Provenance snapshots, and `ocean-*` Cloud Run Jobs. The former service is private and its deletion-protected SQL instance is stopped as a reversible rollback boundary; local Ollama development and the archived Streamlit reference remain supported.
+> **Current status**: OCEAN Platform release `v0.2.2` is live on Cloud Run service `ocean-platform`. The invite-only Next.js + FastAPI application uses Google OIDC, the OCEAN Cloud SQL/pgvector data plane, Vertex AI, verified Provenance snapshots, and `ocean-*` Cloud Run Jobs. The former service is private and its deletion-protected SQL instance is stopped as a reversible rollback boundary; local Ollama development and the archived Streamlit reference remain supported.
 
 ---
 
@@ -43,7 +43,7 @@ used only as historical reference and parity material.
 
 ### OCEAN Platform Cutover (2026-08-25)
 
-- Release `v0.2.1` completed phase 8: Artifact Registry `ocean-platform`,
+- Release `v0.2.2` completed phase 8: Artifact Registry `ocean-platform`,
   service accounts `ocean-platform` and `ocean-jobs`, Cloud SQL
   `ocean-postgres` / `ocean_platform`, `ocean-*` jobs and secrets, and bucket
   `data-infra-infobio-ocean-data` now form the live data plane.

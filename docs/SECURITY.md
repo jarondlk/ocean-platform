@@ -195,7 +195,7 @@ to audit metadata or application logs.
 
 ## Authorization MVP Release Checklist
 
-Current GCP evidence as of 2026-08-25: OCEAN Platform release `v0.2.1` runs with
+Current GCP evidence as of 2026-08-25: OCEAN Platform release `v0.2.2` runs with
 `DEPLOYMENT_ENV=production`, `AUTH_MODE=required`, Google OIDC, distinct Secret
 Manager-backed signing secrets, private FastAPI/Cloud SQL connectivity, and
 default-deny API authorization. The administrator and approved researcher have
