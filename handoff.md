@@ -1,6 +1,6 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-08-25
+> **Last updated**: 2026-08-26 JST
 > **Repository**: `jarondlk/ocean-platform`
 > **Current status**: OCEAN Platform release `v0.2.2` is live on Cloud Run service `ocean-platform`. The invite-only Next.js + FastAPI application uses Google OIDC, the OCEAN Cloud SQL/pgvector data plane, Vertex AI, verified Provenance snapshots, and `ocean-*` Cloud Run Jobs. The former service is private and its deletion-protected SQL instance is stopped as a reversible rollback boundary; local Ollama development and the archived Streamlit reference remain supported.
 
@@ -58,6 +58,11 @@ used only as historical reference and parity material.
   service access remains the rollback path during the retention window.
 - The application logo and favicon assets were removed. All five checked-in
   product screenshots are logo-free.
+- Post-release Cloud Build `9764872c-41b4-45ec-ac58-d77c7d9dac86` deployed
+  revision `ocean-platform-00007-2dp` and the same API image to all four active
+  OCEAN jobs. Their bounded canaries passed, explicit model allowlists and the
+  90-day retention setting are deployed, and the four orphan `onagawa-*` job
+  definitions were removed.
 
 The preceding `v0.2.0` cutover established the canonical product identity:
 

@@ -37,14 +37,17 @@ documents now have 768-dimensional `gemini-embedding-001` embeddings with
 provider provenance. Authenticated chat traffic uses `gemini-3.6-flash` on
 Vertex AI through workload identity.
 
-The current application milestone is OCEAN Platform release `v0.2.2`. Full
-Cloud Build `da3045fd-e774-47a0-85a7-df1bd831a7d2` produced Cloud Run service
-`ocean-platform`, serving revision `ocean-platform-00006-noz` at 100% traffic
-on the completed OCEAN data plane. The former `onagawa-source-chat` service is
-private and `onagawa-postgres` is stopped with deletion protection as the
-temporary rollback boundary. The service still scales from zero to one
-instance with concurrency 20; no budget, quota, database tier, or model
-ceiling changed for this release.
+The current application milestone is OCEAN Platform release `v0.2.2` plus the
+reviewed post-release remediation build
+`9764872c-41b4-45ec-ac58-d77c7d9dac86`. Cloud Run service `ocean-platform`,
+serving revision `ocean-platform-00007-2dp`, receives 100% traffic, and all
+four active OCEAN jobs use that same immutable API image. Their migration,
+pipeline dry-run, embedding dry-run, and one-question evaluation canaries all
+completed successfully. The four orphan `onagawa-*` job definitions were
+removed. The former `onagawa-source-chat` service remains private and
+`onagawa-postgres` is stopped with deletion protection as the temporary
+rollback boundary. The service still scales from zero to one instance with
+concurrency 20; no budget, quota, database tier, or model ceiling changed.
 
 ## Cost-control model
 

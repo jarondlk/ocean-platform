@@ -1,6 +1,6 @@
 # GCP resource audit
 
-Last verified: 2026-08-25
+Last verified: 2026-08-26 JST
 
 Project: `data-infra-infobio` (`469489188516`), region
 `asia-northeast1`.
@@ -9,13 +9,13 @@ Project: `data-infra-infobio` (`469489188516`), region
 
 | Component | Resource | State and guardrail |
 | --- | --- | --- |
-| Web application | Cloud Run `ocean-platform` | Revision `ocean-platform-00006-noz`, 100% traffic, minimum 0 / maximum 1 instance, public invoker required for the authenticated frontend |
+| Web application | Cloud Run `ocean-platform` | Revision `ocean-platform-00007-2dp`, build `9764872c-41b4-45ec-ac58-d77c7d9dac86`, 100% traffic, minimum 0 / maximum 1 instance, public invoker required for the authenticated frontend |
 | Database | Cloud SQL `ocean-postgres` | PostgreSQL 16, `db-f1-micro`, 10 GB, RUNNABLE, deletion protection, seven backups and seven days of PITR |
 | Scientific data | `gs://data-infra-infobio-ocean-data` | 113,841,102 live bytes at audit time, versioning and the reviewed scientific-data lifecycle enabled |
 | Images | Artifact Registry `ocean-platform` | API and frontend images; keep five recent versions and delete versions older than 30 days |
 | Runtime identities | `ocean-platform`, `ocean-jobs` | Enabled, keyless, and separated between serving and manual jobs |
 | Secrets | Four `ocean-*` secrets | Access limited to the matching serving or job identity; no values are stored in deployment YAML |
-| Batch definitions | Four `ocean-*` Cloud Run Jobs | Manual only, zero automatic retries, no scheduler or build trigger |
+| Batch definitions | Four `ocean-*` Cloud Run Jobs | All use build `9764872c-41b4-45ec-ac58-d77c7d9dac86`; manual only, zero automatic retries, no scheduler or build trigger |
 | Model runtime | Vertex AI managed models | Workload identity only; no custom model, endpoint, index, or index endpoint exists |
 
 Authenticated validation after the audit passed for Overview, Data, Provenance,
@@ -28,15 +28,18 @@ model runtime.
 The `onagawa-*` resources are a rollback set, not a second live environment:
 
 - Cloud Run `onagawa-source-chat` has no public invoker, returns HTTP 403, has
-  minimum scale zero, and received no request after the OCEAN cutover at
-  2026-08-25 08:36 UTC.
+  minimum scale zero, and has received no authorized or successful traffic
+  after the OCEAN cutover at 2026-08-25 08:36 UTC. Later 403 audit probes do
+  not represent application traffic.
 - `onagawa-postgres` is STOPPED with activation policy `NEVER` and deletion
   protection enabled. Its final export is present in the OCEAN data bucket.
-- The four `onagawa-*` jobs have no scheduler. Their last execution preceded
-  cutover.
+- The four orphan `onagawa-*` Cloud Run Job definitions were deleted after the
+  post-release audit. Their historical execution records remain as immutable
+  operational evidence, but no legacy batch definition can be invoked.
 - `onagawa-app` and `onagawa-jobs` are disabled. They have no user-managed
-  service-account keys, so the legacy service and jobs cannot start until an
-  operator deliberately re-enables the identities.
+  service-account keys. The legacy service cannot start until an operator
+  deliberately re-enables its identity; the former job identity has no job
+  definition to execute.
 - Artifact Registry `onagawa-source-chat` held approximately 4.1 GB at the
   start of the audit. The reviewed keep-five/delete-after-30-days policy is now
   active, retaining bounded rollback images while old versions age out.
@@ -61,14 +64,15 @@ the legacy SQL instance. Do not treat the dormant URL as an instant failover.
 - `gs://data-infra-infobio_cloudbuild` contains transient source archives only
   (15,191,629 bytes at audit time). `source/` objects expire after 30 days via
   [`deploy/gcp/cloudbuild-storage-lifecycle.json`](../deploy/gcp/cloudbuild-storage-lifecycle.json).
-- Cloud Run serving minimum scale is zero. All Cloud Run Jobs are manual and
-  Cloud Scheduler is disabled.
+- Cloud Run serving minimum scale is zero. All four OCEAN Cloud Run Jobs are
+  manual and Cloud Scheduler is disabled.
 - The default log bucket retains 30 days. The locked required-audit bucket
   retains 400 days.
 
 ## Confirmed absent
 
-The audit found no Cloud Build triggers, Scheduler jobs, Cloud Functions,
+The audit found no orphan Cloud Run Job definitions, Cloud Build triggers,
+Scheduler jobs, Cloud Functions,
 Compute Engine VMs, Serverless VPC Access connectors, Pub/Sub topics or
 subscriptions, BigQuery datasets, Dataplex lakes, App Hub applications,
 monitoring alert policies, notification channels, custom logging sinks, or
@@ -83,8 +87,7 @@ checking service dependencies and operator workflows.
 
 These actions remove rollback state and are intentionally not automatic:
 
-1. Delete `onagawa-source-chat` and the four `onagawa-*` Cloud Run Job
-   definitions.
+1. Delete `onagawa-source-chat` after the bounded service rollback window.
 2. Delete Artifact Registry `onagawa-source-chat` after choosing whether the
    five retained API/frontend images are still needed.
 3. Delete `onagawa-postgres` only after confirming the final SQL export and

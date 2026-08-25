@@ -13,12 +13,13 @@ place before the foundation or any runtime component is created.
 
 ## Current deployed milestone
 
-Verified on 2026-08-25:
+Verified on 2026-08-26 JST:
 
 - project `data-infra-infobio`, region `asia-northeast1`;
 - OCEAN Platform GitHub release `v0.2.2`;
-- full Cloud Build `da3045fd-e774-47a0-85a7-df1bd831a7d2`;
-- Cloud Run service `ocean-platform`, revision `ocean-platform-00006-noz`,
+- post-release remediation Cloud Build
+  `9764872c-41b4-45ec-ac58-d77c7d9dac86`;
+- Cloud Run service `ocean-platform`, revision `ocean-platform-00007-2dp`,
   100% traffic;
 - Artifact Registry `ocean-platform`; service accounts `ocean-platform` and
   `ocean-jobs`; secrets and jobs under the `ocean-*` prefix;
@@ -26,7 +27,8 @@ Verified on 2026-08-25:
 - bucket `data-infra-infobio-ocean-data` contains the verified copied data;
 - former `onagawa-source-chat` is private and deletion-protected
   `onagawa-postgres` is stopped for reversible rollback; the two legacy
-  runtime identities are disabled;
+  runtime identities are disabled and the four orphan legacy job definitions
+  have been removed;
 - reviewed Artifact Registry cleanup is active for both repositories, and
   transient Cloud Build source archives expire after 30 days;
 - minimum zero/maximum one service instance, concurrency 20; and

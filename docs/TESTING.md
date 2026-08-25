@@ -17,6 +17,13 @@ targeting `main`/`master`.
 This is a point-in-time release record, not a substitute for rerunning the
 commands below after changes.
 
+Post-release remediation validation on 2026-08-26 JST passed 473 backend
+tests with 3 skipped checks, Ruff, frontend typecheck/build, zero production
+npm vulnerabilities, and full Cloud Build
+`9764872c-41b4-45ec-ac58-d77c7d9dac86`. Cloud Run executions
+`ocean-migrate-744jh`, `ocean-pipeline-q8ktm`, `ocean-embedding-g4qvz`, and
+`ocean-evaluation-rpkct` completed successfully on that image.
+
 ## Local Verification
 
 Install development dependencies:
