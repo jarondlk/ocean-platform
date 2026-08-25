@@ -14,7 +14,8 @@ from db.app_models import AppUser, ChatInteraction
 from db.connection import get_session
 
 
-PROMPT_VERSION = "onagawa-chat-v1"
+# Existing ``onagawa-chat-v1`` rows remain unchanged as historical provenance.
+PROMPT_VERSION = "ocean-chat-v1"
 
 
 def json_safe(value: Any) -> Any:

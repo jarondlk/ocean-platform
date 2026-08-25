@@ -1,1 +1,1 @@
-"""Tests for the Onagawa Source Chat RAG system."""
+"""Tests for OCEAN Platform."""

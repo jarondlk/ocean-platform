@@ -1,5 +1,5 @@
 """
-Evaluation benchmark for the Onagawa Source Chat RAG system.
+Evaluation benchmark for OCEAN Platform.
 
 Defines a benchmark of 15 questions across 5 categories, runs each
 through the RAG pipeline with configurable modes (with/without

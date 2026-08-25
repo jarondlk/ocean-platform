@@ -38,6 +38,7 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
         for path in paths
     }
     service = documents["service.rendered.yaml"]
+    assert service["metadata"]["name"] == "ocean-platform"
     assert service["metadata"]["labels"]["cost_component"] == "serving"
     assert service["metadata"]["annotations"]["run.googleapis.com/maxScale"] == "1"
     assert (
@@ -56,6 +57,8 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
         for setting in frontend["env"]
     }
     assert frontend_env["AUTH_TRUST_HOST"] == "true"
+    assert frontend_env["INTERNAL_AUTH_ISSUER"] == "ocean-platform-frontend"
+    assert frontend_env["INTERNAL_AUTH_AUDIENCE"] == "ocean-platform-api"
     assert frontend_env["OIDC_PROVIDER_NAME"] == "Google"
     assert frontend_env["OIDC_PROVIDER_ID"] == "google"
     assert frontend_env["OIDC_ISSUER"] == "https://accounts.google.com"
@@ -69,9 +72,11 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
         for setting in api["env"]
     }
     assert api_env["AUTH_ALLOWED_PROVIDERS"] == "google"
-    assert api_env["DATA_DIR"] == "/mnt/onagawa-data"
-    assert api_env["SST_NETCDF_DIR"] == "/mnt/onagawa-data/raw/sst-netcdf"
-    assert api_env["HIMAWARI_RAW_DIR"] == "/mnt/onagawa-data/raw/himawari"
+    assert api_env["INTERNAL_AUTH_ISSUER"] == "ocean-platform-frontend"
+    assert api_env["INTERNAL_AUTH_AUDIENCE"] == "ocean-platform-api"
+    assert api_env["DATA_DIR"] == "/mnt/ocean-data"
+    assert api_env["SST_NETCDF_DIR"] == "/mnt/ocean-data/raw/sst-netcdf"
+    assert api_env["HIMAWARI_RAW_DIR"] == "/mnt/ocean-data/raw/himawari"
     assert api_env["MODEL_PROVIDER"] == "vertex"
     assert api_env["GOOGLE_CLOUD_PROJECT"] == "example-project"
     assert api_env["GOOGLE_CLOUD_LOCATION"] == "global"

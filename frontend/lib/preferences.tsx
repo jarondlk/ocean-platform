@@ -17,7 +17,8 @@ export type AppPreferences = {
   reducedMotion: boolean;
 };
 
-const STORAGE_KEY = "onagawa-app-preferences";
+const STORAGE_KEY = "ocean-platform-preferences";
+const LEGACY_STORAGE_KEY = "onagawa-app-preferences";
 
 export const defaultPreferences: AppPreferences = {
   locale: "en",
@@ -641,7 +642,9 @@ export function AppPreferencesProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
-      const stored = window.localStorage.getItem(STORAGE_KEY);
+      const stored =
+        window.localStorage.getItem(STORAGE_KEY) ??
+        window.localStorage.getItem(LEGACY_STORAGE_KEY);
       if (stored) {
         const parsed: unknown = JSON.parse(stored);
         if (isPreferences(parsed)) {

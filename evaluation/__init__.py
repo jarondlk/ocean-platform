@@ -1,1 +1,1 @@
-"""Evaluation benchmark for the Onagawa Source Chat RAG system."""
+"""Evaluation benchmark for OCEAN Platform."""

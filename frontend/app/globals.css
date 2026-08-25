@@ -122,9 +122,16 @@ a {
 }
 
 .brand-block {
+  align-items: center;
   border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 9px;
   padding-bottom: 12px;
   margin-bottom: 12px;
+}
+
+.brand-mark {
+  flex: 0 0 auto;
 }
 
 .brand-block h1 {
@@ -280,6 +287,17 @@ a {
   height: 42px;
   justify-content: center;
   width: 42px;
+}
+
+.login-mark img {
+  display: block;
+}
+
+.brand-expansion {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  margin: 12px 0 0;
 }
 
 .login-intro {

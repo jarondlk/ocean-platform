@@ -1,8 +1,10 @@
 import { CredentialsSignin } from "next-auth";
 import { LockKeyhole, LogIn, Mail, ShieldCheck } from "lucide-react";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 
 import { signIn } from "@/auth";
+import { PRODUCT_EXPANSION, PRODUCT_NAME } from "@/lib/brand";
 import { MOCK_LOGIN_ACCOUNTS } from "@/lib/mock-login";
 import {
   mockLoginEnabled,
@@ -77,13 +79,14 @@ export default async function LoginPage({
       <article className="card login-card">
         <header className="login-heading">
           <div className="login-mark" aria-hidden="true">
-            <ShieldCheck size={21} />
+            <Image alt="" height={42} priority src="/ocean-mark.svg" width={42} />
           </div>
           <div>
-            <p className="eyebrow">Onagawa Source Chat</p>
+            <p className="eyebrow">{PRODUCT_NAME}</p>
             <h2>Welcome back</h2>
           </div>
         </header>
+        <p className="brand-expansion">{PRODUCT_EXPANSION}</p>
         <p className="login-intro">
           {showMockLogin
             ? "Use a local mock account to test this research environment."

@@ -1,14 +1,14 @@
-# Onagawa Source Chat production template
+# OCEAN Platform production template
 #
 # Copy this file to a secret-managed location outside the repository. Replace
 # every angle-bracketed value before validating deploy/compose/production.yml.
 
 NEXT_PORT=3000
 
-POSTGRES_USER=onagawa
+POSTGRES_USER=ocean_app
 POSTGRES_PASSWORD=<generate-a-random-database-password>
-POSTGRES_DB=onagawa_rag
-DATABASE_URL=postgresql://onagawa:<url-encoded-database-password>@postgres:5432/onagawa_rag
+POSTGRES_DB=ocean_platform
+DATABASE_URL=postgresql://ocean_app:<url-encoded-database-password>@postgres:5432/ocean_platform
 DATABASE_POOL_SIZE=5
 DATABASE_MAX_OVERFLOW=2
 DATABASE_POOL_TIMEOUT=30
@@ -34,8 +34,8 @@ AUTH_URL=https://rag.example.org
 AUTH_TRUST_HOST=false
 AUTH_SECRET=<generate-an-independent-random-value-of-at-least-32-characters>
 INTERNAL_AUTH_SECRET=<generate-a-different-random-value-of-at-least-32-characters>
-INTERNAL_AUTH_ISSUER=onagawa-source-chat-frontend
-INTERNAL_AUTH_AUDIENCE=onagawa-source-chat-api
+INTERNAL_AUTH_ISSUER=ocean-platform-frontend
+INTERNAL_AUTH_AUDIENCE=ocean-platform-api
 
 OIDC_PROVIDER_NAME=Managed identity provider
 OIDC_PROVIDER_ID=oidc

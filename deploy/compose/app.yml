@@ -4,12 +4,12 @@ services:
     build:
       context: .
       dockerfile: Containerfile.api
-    container_name: onagawa_source_api
+    container_name: ocean_platform_api
     restart: unless-stopped
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: ${DATABASE_URL:-postgresql://onagawa:onagawa@postgres:5432/onagawa_rag}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://ocean:ocean@postgres:5432/ocean_platform}
       DATABASE_POOL_SIZE: ${DATABASE_POOL_SIZE:-5}
       DATABASE_MAX_OVERFLOW: ${DATABASE_MAX_OVERFLOW:-2}
       DATABASE_POOL_TIMEOUT: ${DATABASE_POOL_TIMEOUT:-30}
@@ -27,8 +27,8 @@ services:
       PERSIST_LOCAL_CHAT: ${PERSIST_LOCAL_CHAT:-false}
       ENABLE_MOCK_LOGIN: ${ENABLE_MOCK_LOGIN:-false}
       INTERNAL_AUTH_SECRET: ${INTERNAL_AUTH_SECRET:?Set INTERNAL_AUTH_SECRET in .env}
-      INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-onagawa-source-chat-frontend}
-      INTERNAL_AUTH_AUDIENCE: ${INTERNAL_AUTH_AUDIENCE:-onagawa-source-chat-api}
+      INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-ocean-platform-frontend}
+      INTERNAL_AUTH_AUDIENCE: ${INTERNAL_AUTH_AUDIENCE:-ocean-platform-api}
     ports:
       - "${API_PORT:-8000}:8000"
     volumes:
@@ -42,7 +42,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Containerfile
-    container_name: onagawa_source_frontend
+    container_name: ocean_platform_frontend
     restart: unless-stopped
     depends_on:
       - api
@@ -58,8 +58,8 @@ services:
       AUTH_URL: ${AUTH_URL:-http://localhost:3000}
       AUTH_TRUST_HOST: ${AUTH_TRUST_HOST:-true}
       INTERNAL_AUTH_SECRET: ${INTERNAL_AUTH_SECRET:?Set INTERNAL_AUTH_SECRET in .env}
-      INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-onagawa-source-chat-frontend}
-      INTERNAL_AUTH_AUDIENCE: ${INTERNAL_AUTH_AUDIENCE:-onagawa-source-chat-api}
+      INTERNAL_AUTH_ISSUER: ${INTERNAL_AUTH_ISSUER:-ocean-platform-frontend}
+      INTERNAL_AUTH_AUDIENCE: ${INTERNAL_AUTH_AUDIENCE:-ocean-platform-api}
       OIDC_PROVIDER_NAME: ${OIDC_PROVIDER_NAME:-Managed identity provider}
       OIDC_PROVIDER_ID: ${OIDC_PROVIDER_ID:-oidc}
       OIDC_ISSUER: ${OIDC_ISSUER:?Set OIDC_ISSUER in .env}

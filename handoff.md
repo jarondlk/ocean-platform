@@ -1,7 +1,7 @@
-# Handoff Document - Onagawa Source Chat (provenance-eco-rag)
+# Handoff Document - OCEAN Platform
 
 > **Last updated**: 2026-08-25
-> **Project path**: `/Users/jaronchai/Documents/GitHub/provenance-eco-rag/`
+> **Repository**: `jarondlk/ocean-platform`
 > **Current status**: Stable GCP prototype release `v0.1.0` is live on Cloud Run revision `onagawa-source-chat-00012-drc`. The invite-only Next.js + FastAPI application uses Google OIDC, Cloud SQL/pgvector, Vertex AI, verified Provenance snapshots, and manual Cloud Run Jobs. Local Ollama development and the archived Streamlit reference remain supported.
 
 ---
@@ -317,7 +317,7 @@ because it is the local SST raw-data source needed for full regeneration.
 ## 4. Directory Map
 
 ```text
-provenance-eco-rag/
+ocean-platform/
 ├── api/                              # FastAPI service and endpoint logic
 ├── archive/
 │   └── legacy-streamlit/             # Archived Streamlit app and overlay

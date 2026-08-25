@@ -1,5 +1,5 @@
 """
-Shared pytest fixtures for the Onagawa Source Chat test suite.
+Shared pytest fixtures for the OCEAN Platform test suite.
 
 All fixtures produce synthetic in-memory data — no real files,
 database, or Ollama required.

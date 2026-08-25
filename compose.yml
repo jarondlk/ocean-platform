@@ -1,15 +1,15 @@
 # Default local service: PostgreSQL with pgvector.
-name: provenance-eco-rag
+name: ocean-platform
 
 services:
   postgres:
     image: pgvector/pgvector:pg16
-    container_name: onagawa_pgvector
+    container_name: ocean_pgvector
     restart: unless-stopped
     environment:
-      POSTGRES_USER: onagawa
-      POSTGRES_PASSWORD: onagawa
-      POSTGRES_DB: onagawa_rag
+      POSTGRES_USER: ocean
+      POSTGRES_PASSWORD: ocean
+      POSTGRES_DB: ocean_platform
     ports:
       - "5433:5432"
     volumes:

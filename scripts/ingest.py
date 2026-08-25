@@ -274,7 +274,7 @@ def main() -> None:
     args = parser.parse_args()
 
     logger.info("=" * 60)
-    logger.info("Onagawa Source Chat – Ingestion Pipeline")
+    logger.info("OCEAN Platform – Ingestion Pipeline")
     logger.info("=" * 60)
 
     # Ensure output dirs

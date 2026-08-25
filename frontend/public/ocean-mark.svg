@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">OCEAN Platform mark</title>
+  <desc id="desc">A circular ocean horizon connected to a central archive nexus.</desc>
+  <defs>
+    <linearGradient id="ocean" x1="8" y1="10" x2="56" y2="54" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22b8cf"/>
+      <stop offset="1" stop-color="#1769aa"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="28" fill="#f5fbff" stroke="url(#ocean)" stroke-width="4"/>
+  <path d="M10 35c7-6 14-6 22 0s15 6 22 0v12c-6 7-13 11-22 11S16 54 10 47Z" fill="url(#ocean)"/>
+  <path d="M10 28c7-6 14-6 22 0s15 6 22 0" fill="none" stroke="#22b8cf" stroke-linecap="round" stroke-width="4"/>
+  <circle cx="32" cy="21" r="5" fill="#ffb84d"/>
+  <circle cx="20" cy="31" r="2.5" fill="#fff"/>
+  <circle cx="44" cy="31" r="2.5" fill="#fff"/>
+  <path d="M22 31h20M32 26v9" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2"/>
+</svg>

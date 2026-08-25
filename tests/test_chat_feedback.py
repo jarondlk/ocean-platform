@@ -23,6 +23,10 @@ from db.app_models import (
 )
 
 
+def test_new_chat_records_use_ocean_prompt_version():
+    assert chat_records.PROMPT_VERSION == "ocean-chat-v1"
+
+
 def _database():
     engine = create_engine(
         "sqlite+pysqlite://",

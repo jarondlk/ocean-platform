@@ -2,7 +2,7 @@
 
 ## Scope
 
-Onagawa Source Chat is an invite-only research application. It stores user
+OCEAN Platform is an invite-only research application. It stores user
 identity metadata, complete chat interactions, evidence snapshots, answer-audit
 snapshots, and user feedback. The scientific corpus may be regenerated, but
 application metadata is kept in separate tables and must be backed up

@@ -31,7 +31,7 @@ if ! gcloud artifacts repositories describe "$ARTIFACT_REPOSITORY" \
   gcloud artifacts repositories create "$ARTIFACT_REPOSITORY" \
     --location="$GCP_REGION" \
     --repository-format=docker \
-    --description="Onagawa Source Chat containers" \
+    --description="OCEAN Platform containers" \
     --labels=environment=prototype,cost_component=artifact_registry \
     --project="$GCP_PROJECT_ID"
 fi

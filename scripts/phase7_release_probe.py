@@ -233,7 +233,7 @@ async def execute_probe(config: ProbeConfig, cookie: str) -> list[RequestResult]
         "Cookie": cookie,
         "Origin": config.base_url,
         "Referer": f"{config.base_url}/",
-        "User-Agent": "onagawa-phase7-release-probe/1",
+        "User-Agent": "ocean-platform-release-probe/1",
     }
     timeout = httpx.Timeout(REQUEST_TIMEOUT_SECONDS)
     async with httpx.AsyncClient(

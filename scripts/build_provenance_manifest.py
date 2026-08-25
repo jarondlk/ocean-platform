@@ -31,7 +31,7 @@ from ingestion.provenance_snapshot import (  # noqa: E402
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the Onagawa traceability manifest")
+    parser = argparse.ArgumentParser(description="Build the OCEAN Platform traceability manifest")
     parser.add_argument("--limit-documents", type=int, default=500, help="Maximum retrieval-document traces to include.")
     parser.add_argument("--no-embeddings", action="store_true", help="Skip database embedding-status inspection.")
     output_mode = parser.add_mutually_exclusive_group()

@@ -13,7 +13,7 @@ from db import backup
 
 def test_postgres_tools_use_cloud_sql_query_socket_path():
     url = make_url(
-        "postgresql://onagawa_app:secret@/onagawa_rag"
+        "postgresql://ocean_app:secret@/ocean_platform"
         "?host=/cloudsql/project:region:instance"
     )
 
@@ -24,9 +24,9 @@ def test_postgres_tools_use_cloud_sql_query_socket_path():
         "--host",
         "/cloudsql/project:region:instance",
         "--username",
-        "onagawa_app",
+        "ocean_app",
         "--dbname",
-        "onagawa_rag",
+        "ocean_platform",
     ]
     assert backup._maintenance_connection_args(
         url,
@@ -35,12 +35,12 @@ def test_postgres_tools_use_cloud_sql_query_socket_path():
         "--host",
         "/cloudsql/project:region:instance",
         "--username",
-        "onagawa_app",
+        "ocean_app",
         "--maintenance-db",
         "postgres",
     ]
     assert backup._database_identity(url) == (
-        "/cloudsql/project:region:instance/onagawa_rag"
+        "/cloudsql/project:region:instance/ocean_platform"
     )
 
 

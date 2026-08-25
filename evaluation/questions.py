@@ -1,5 +1,5 @@
 """
-Benchmark questions for the Onagawa Source Chat RAG evaluation.
+Benchmark questions for the OCEAN Platform RAG evaluation.
 
 15 questions across 5 categories, each with ground truth annotations
 for expected source types, minimum citations, and feature requirements.

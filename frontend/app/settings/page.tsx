@@ -3,6 +3,7 @@
 import { Check, RotateCcw } from "lucide-react";
 import { useState, type ReactNode } from "react";
 
+import { PRODUCT_NAME } from "@/lib/brand";
 import { useAppPreferences, type Accent, type Density, type SidebarMode, type ThemeMode } from "@/lib/preferences";
 
 export default function SettingsPage() {
@@ -18,7 +19,7 @@ export default function SettingsPage() {
     <section className="settings-page">
       <header className="page-header settings-page-header">
         <div>
-          <p className="eyebrow">Onagawa RAG</p>
+          <p className="eyebrow">{PRODUCT_NAME}</p>
           <h2>{t("settings", "title")}</h2>
           <p className="settings-intro">{t("settings", "intro")}</p>
         </div>

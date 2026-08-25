@@ -140,7 +140,7 @@ async def _app_lifespan(_app: FastAPI):
 
 
 app = FastAPI(
-    title="Onagawa Source Chat API",
+    title="OCEAN Platform API",
     description="API layer for the Next.js migration of the provenance-aware marine RAG system.",
     version="0.1.0",
     lifespan=_app_lifespan,

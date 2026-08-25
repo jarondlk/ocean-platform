@@ -43,10 +43,10 @@ export async function mintInternalAccessToken(identity: Identity): Promise<strin
     .setProtectedHeader({ alg: "HS256", typ: "JWT" })
     .setSubject(identity.subject)
     .setIssuer(
-      process.env.INTERNAL_AUTH_ISSUER || "onagawa-source-chat-frontend",
+      process.env.INTERNAL_AUTH_ISSUER || "ocean-platform-frontend",
     )
     .setAudience(
-      process.env.INTERNAL_AUTH_AUDIENCE || "onagawa-source-chat-api",
+      process.env.INTERNAL_AUTH_AUDIENCE || "ocean-platform-api",
     )
     .setIssuedAt(now)
     .setExpirationTime(now + 60)

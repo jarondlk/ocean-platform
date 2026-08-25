@@ -1,6 +1,8 @@
-# provenance-eco-rag
+# OCEAN Platform
 
-**Onagawa Source Chat** — a provenance-aware Retrieval-Augmented Generation (RAG) system for marine environmental monitoring in Miyagi Prefecture, Japan.
+**Ocean Coastal Ecosystem Archive Nexus (OCEAN)** — a provenance-aware
+research platform for marine environmental monitoring in Miyagi Prefecture,
+Japan.
 
 Transforms fragmented field data — CTD water profiles, metagenome sequencing, and satellite SST — into a citation-grounded question-answering system where every answer traces back to its original source and can be audited against the evidence that was actually supplied.
 
@@ -28,7 +30,7 @@ service.
 
 Current managed milestone:
 
-- GitHub release [`v0.1.0`](https://github.com/jarondlk/provenance-eco-rag/releases/tag/v0.1.0)
+- GitHub release [`v0.1.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.1.0)
   is the first stable GCP prototype release and targets commit `2820f128` on
   `gcp-dev`.
 - Cloud Run revision `onagawa-source-chat-00012-drc` serves 100% of production
@@ -478,7 +480,7 @@ context-aware citation requirements, and citation resolution.*
 ## Project Structure
 
 ```text
-provenance-eco-rag/
+ocean-platform/
 ├── archive/
 │   └── legacy-streamlit/               # Archived Streamlit UI and container overlay
 ├── config.py                           # Paths, DB, models, thresholds
