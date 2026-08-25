@@ -30,12 +30,16 @@ service.
 
 Current managed milestone:
 
-- GitHub release [`v0.2.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.2.0)
-  is the OCEAN Platform branding and parallel-service cutover release.
-- Cloud Run service `ocean-platform`, revision `ocean-platform-00002-rhc`,
-  serves 100% of its traffic in `asia-northeast1`. The former
-  `onagawa-source-chat` service remains available as the bounded rollback
-  application during the phase 8 infrastructure transition.
+- GitHub release [`v0.2.1`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.2.1)
+  is the completed OCEAN Platform application and managed data-plane cutover.
+- Cloud Run service `ocean-platform`, revision `ocean-platform-00004-8tb`,
+  serves 100% of its traffic in `asia-northeast1` through service account
+  `ocean-platform`.
+- The live data plane uses Artifact Registry `ocean-platform`, Cloud SQL
+  `ocean-postgres` / database `ocean_platform`, jobs under the `ocean-*`
+  prefix, OCEAN Secret Manager entries, and bucket
+  `data-infra-infobio-ocean-data`. The former service is private and the
+  deletion-protected legacy SQL instance is stopped for bounded rollback.
 - The live application is
   [`https://ocean-platform-469489188516.asia-northeast1.run.app`](https://ocean-platform-469489188516.asia-northeast1.run.app).
 - GitHub records the successful deployment against the `production`
@@ -74,7 +78,10 @@ Still intentionally future work:
 - Automatic ingestion, file watching, or scheduled cloud sync.
 - Automatic deletion of database rows whose source keys disappear from a batch;
   idempotent upserts retain stale rows and report them for operator review.
-- Managed off-host backup retention, encryption, and point-in-time recovery.
+- Periodic restore drills and a reviewed retirement date for the stopped
+  legacy rollback resources. The live Cloud SQL instance already has seven
+  retained backups, seven days of PITR, deletion protection, and a 20 GB
+  storage ceiling.
 - Calibration and routine release-gate use of the existing opt-in
   LLM-as-judge/quality metrics, plus click-through citation chips from chat
   answers into provenance/source detail panels.

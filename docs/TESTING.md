@@ -2,12 +2,14 @@
 
 ## Current release evidence
 
-For OCEAN Platform release `v0.2.0`, the local backend suite passed 455 tests
-with 3 skipped checks and 74.31% aggregate coverage. All three gated pgvector
-integration tests passed against a disposable migrated database. Ruff,
-frontend typecheck, the 24-route production Next.js build, full Cloud Build,
-targeted frontend Cloud Build, public-boundary checks, Google OIDC, all 14
-authenticated user/admin routes, and a real Vertex AI trust-report query also
+For OCEAN Platform release `v0.2.1`, the local backend suite passed 456 tests
+with 3 skipped checks. Ruff, the production dependency audit (zero findings),
+frontend typecheck, the 24-route production Next.js build, and full Cloud Build
+`8e4c7d4b-f723-40ef-9278-1d647b54111d` passed. The imported Cloud SQL database
+reported all 16 required tables with pgvector enabled and every audited row
+count matched the source. Public-boundary checks, Google OIDC, all 14
+authenticated user/admin routes, a live Vertex AI trust-report query, and the
+bounded migrate, pipeline, embedding, and one-question evaluation jobs also
 passed. CI runs for pushes to `main` and `gcp-dev` and for pull requests
 targeting `main`/`master`.
 

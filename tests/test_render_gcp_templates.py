@@ -1,11 +1,31 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
+import pytest
 import yaml
 
 import scripts.render_gcp_templates as renderer
+
+
+def test_renderer_rejects_blank_required_values(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "render_gcp_templates.py",
+            "--image-tag=build-123",
+            "--public-app-url=https://example.run.app",
+            "--data-bucket=example-data",
+            "--oidc-client-id=",
+            "--ollama-private-url=https://model.internal",
+        ],
+    )
+
+    with pytest.raises(SystemExit, match="2"):
+        renderer.main()
 
 
 def test_gcp_templates_render_without_secret_values(tmp_path: Path):

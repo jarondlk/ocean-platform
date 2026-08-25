@@ -67,6 +67,16 @@ def main() -> int:
         default=TEMPLATE_DIR,
     )
     args = parser.parse_args()
+    required_values = {
+        "image-tag": args.image_tag,
+        "public-app-url": args.public_app_url,
+        "data-bucket": args.data_bucket,
+        "oidc-client-id": args.oidc_client_id,
+        "ollama-private-url": args.ollama_private_url,
+    }
+    for option, value in required_values.items():
+        if not value.strip():
+            parser.error(f"--{option} must not be blank")
     values = {
         "PROJECT_ID": args.project_id,
         "PROJECT_NUMBER": args.project_number,

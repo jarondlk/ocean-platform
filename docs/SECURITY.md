@@ -190,15 +190,19 @@ to audit metadata or application logs.
 
 ## Authorization MVP Release Checklist
 
-Current GCP evidence as of 2026-08-25: OCEAN Platform release `v0.2.0` runs with
+Current GCP evidence as of 2026-08-25: OCEAN Platform release `v0.2.1` runs with
 `DEPLOYMENT_ENV=production`, `AUTH_MODE=required`, Google OIDC, distinct Secret
 Manager-backed signing secrets, private FastAPI/Cloud SQL connectivity, and
 default-deny API authorization. The administrator and approved researcher have
 completed real-provider login; the OCEAN origin and callback are registered
-while the former values remain for rollback; all user and Admin sections were
-smoke-tested; Cloud Run emitted no error-level or 5xx entries during
-acceptance; CI and CodeQL are enabled; and dependency alerts were resolved
-before the release.
+while the former service is private for rollback; all 14 user/Admin routes were
+smoke-tested against `ocean-postgres`; all migrated table counts matched; the
+four OCEAN jobs passed bounded execution checks; Cloud Run emitted no
+unresolved error-level or 5xx entries during final acceptance; CI and CodeQL
+are enabled; and dependency alerts were resolved before the release. A
+database URL exposed by a failed migration traceback was immediately
+invalidated by rotating both affected database users and disabling both old
+secret versions before traffic resumed.
 
 The checklist remains reusable for every future release. It is intentionally
 not marked permanently complete: secret rotation, dependency state, callback
