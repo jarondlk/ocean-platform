@@ -39,7 +39,11 @@ Current managed milestone:
   `ocean-postgres` / database `ocean_platform`, jobs under the `ocean-*`
   prefix, OCEAN Secret Manager entries, and bucket
   `data-infra-infobio-ocean-data`. The former service is private and the
-  deletion-protected legacy SQL instance is stopped for bounded rollback.
+  deletion-protected legacy SQL instance is stopped for bounded rollback; its
+  two runtime identities are disabled.
+- The post-cutover [GCP resource audit](docs/GCP_RESOURCE_AUDIT.md) records the
+  active housekeeping controls and the legacy resources that still require
+  explicit approval before deletion.
 - The live application is
   [`https://ocean-platform-469489188516.asia-northeast1.run.app`](https://ocean-platform-469489188516.asia-northeast1.run.app).
 - GitHub records the successful deployment against the `production`

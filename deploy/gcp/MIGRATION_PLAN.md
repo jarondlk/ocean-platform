@@ -13,8 +13,8 @@ Live state verified through 2026-08-25:
 - the project is in organization `735965963562`;
 - the required foundation and runtime APIs are enabled;
 - Artifact Registry repository `ocean-platform` exists in `asia-northeast1`,
-  contains the tested API and frontend images, and has cleanup rules in
-  dry-run mode;
+  contains the tested API and frontend images, and has active keep-five /
+  delete-after-30-days cleanup rules;
 - service accounts `ocean-platform` and `ocean-jobs` exist with no user-managed
   keys;
 - the database, Auth.js signing, internal API signing, and Google OAuth client
@@ -617,13 +617,17 @@ Completed on 2026-08-25 for release `v0.2.1`:
   citation accuracy, and context utilization); and
 - removed temporary Cloud SQL bucket permissions, made the legacy service
   private, and stopped—but did not delete—the deletion-protected legacy SQL
-  instance to avoid double runtime cost.
+  instance to avoid double runtime cost; and
+- disabled both legacy runtime identities, activated the reviewed image
+  cleanup policies, and applied 30-day expiry to transient Cloud Build source
+  archives after the post-cutover resource audit.
 
 Rollback during the retention window is explicit: stop public traffic to the
-OCEAN revision, set `onagawa-postgres` activation policy back to `ALWAYS`,
-redeploy/restart the legacy revision so it resolves the rotated secret, verify
-health and authentication privately, and only then restore its invocation
-policy. Never run both databases longer than the rollback test requires.
+OCEAN revision, re-enable `onagawa-app` and `onagawa-jobs`, set
+`onagawa-postgres` activation policy back to `ALWAYS`, redeploy/restart the
+legacy revision so it resolves the rotated secret, verify health and
+authentication privately, and only then restore its invocation policy. Never
+run both databases longer than the rollback test requires.
 
 ## Stop conditions
 

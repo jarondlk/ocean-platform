@@ -25,9 +25,16 @@ Verified on 2026-08-25:
 - Cloud SQL `ocean-postgres` / `ocean_platform` is PostgreSQL 16 and RUNNABLE;
 - bucket `data-infra-infobio-ocean-data` contains the verified copied data;
 - former `onagawa-source-chat` is private and deletion-protected
-  `onagawa-postgres` is stopped for reversible rollback;
+  `onagawa-postgres` is stopped for reversible rollback; the two legacy
+  runtime identities are disabled;
+- reviewed Artifact Registry cleanup is active for both repositories, and
+  transient Cloud Build source archives expire after 30 days;
 - minimum zero/maximum one service instance, concurrency 20; and
 - GitHub `production` deployment status `success`.
+
+See [`../../docs/GCP_RESOURCE_AUDIT.md`](../../docs/GCP_RESOURCE_AUDIT.md) for
+the current inventory, absence checks, housekeeping controls, and the exact
+rollback resources that still require explicit approval before deletion.
 
 The live URL is
 [`https://ocean-platform-469489188516.asia-northeast1.run.app`](https://ocean-platform-469489188516.asia-northeast1.run.app).
