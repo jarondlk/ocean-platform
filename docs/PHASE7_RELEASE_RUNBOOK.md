@@ -294,3 +294,38 @@ The former Provenance performance no-go item closed on 2026-08-24. Snapshot
 `onagawa-source-chat-00011-4pd`; integrity, authenticated UI/trace behavior,
 and the bounded concurrency gate passed as recorded in
 `docs/PROVENANCE_SNAPSHOT_RUNBOOK.md`.
+
+## Post-release record — 2026-08-25
+
+The bounded prototype has advanced to stable GitHub release `v0.1.0` without
+raising any Phase 7 resource or budget ceiling.
+
+- Source commit `2820f128` added the consolidated Admin workspace. Cloud Build
+  `ce129a4f-4059-4e21-8bd1-7702fb34cdac` passed the backend, frontend, and
+  image gates and produced Cloud Run revision
+  `onagawa-source-chat-00012-drc`.
+- The candidate was deployed at zero traffic, passed readiness, configuration,
+  unauthenticated redirect, security-header, authenticated Admin navigation,
+  backend API, Cloud SQL, and log checks, then received 100% traffic. Revision
+  `onagawa-source-chat-00011-4pd` remains ready as the immediate rollback
+  target.
+- `/admin` now consolidates Users, Feedback, Pipeline, Database, System, and
+  Debug. The former top-level operational routes redirect into the workspace.
+  The approved researcher remains active; no user or role mutation occurred.
+- The Evaluation read/report/analytics UI is live. Bounded Cloud Run Job
+  execution `onagawa-evaluation-rw7mm` ran `ctd_01` in Baseline and Full modes
+  with quality and judge passes disabled. Both embeddings and generations
+  returned HTTP 200, both evaluations completed without error, and the eighth
+  saved run reopened successfully in the UI.
+- GitHub release `v0.1.0` is stable rather than a prerelease. Deployment
+  `6077080890` records the `gcp-dev` commit in the `production` environment with
+  status `success` and the live Cloud Run URL.
+- The default branch contains the reviewed dependency/security merges. This
+  documentation sync brings the Admin milestone to both long-lived branches.
+
+Remaining operational work is unchanged in scope: implement audited 90-day
+retention enforcement before widening the cohort, complete time-delayed posted
+billing reviews, add production-environment approval rules if desired, and
+connect Evaluation start controls to the external job through a bounded,
+least-privilege execution bridge. These are follow-ups, not reasons to rewrite
+the successful historical Phase 7 evidence above.

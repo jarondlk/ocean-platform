@@ -1,5 +1,12 @@
 # Pre-Milestone Validation Plan
 
+> **Historical gate:** This plan records the repository-local validation state
+> from 2026-07-26. Its provider-deployment blockers were subsequently exercised
+> through the GCP migration and Phase 7 runbooks. The stable `v0.1.0` GCP
+> prototype is live as of 2026-08-25. Keep this document as evidence of the
+> pre-cloud safety work; use `docs/PHASE7_RELEASE_RUNBOOK.md` and
+> `deploy/gcp/MIGRATION_PLAN.md` for current release status.
+
 This is the final validation gate for the authorization, feedback, evaluation,
 and manual-pipeline iteration. It separates checks that can run safely in the
 local repository from destructive drills and deployment-provider controls.
@@ -29,9 +36,9 @@ Validated on 2026-07-26:
 - The command preview was corrected to show the selected reset/upsert, embed,
   skip-SST, and batch-size options before preflight.
 
-These results close the repository-local implementation and validation gates.
-They do not prove production readiness because real OIDC and provider-operated
-deployment gates remain open.
+These results closed the repository-local implementation and validation gates
+at that date. Real OIDC and provider-operated deployment gates were still open
+then and are retained below as the historical handoff into the GCP phases.
 
 ## Local Blockers Implemented
 
@@ -214,13 +221,17 @@ workflow YAML.
 
 ## Release Decision
 
-- **Safe now:** commit and push the repository-local production-readiness
-  implementation after the final validation commands remain green.
+- **Historical decision on 2026-07-26:** safe to commit and push the
+  repository-local production-readiness implementation after the final
+  validation commands remained green.
 - **Locally proven:** role-aware mock sessions, immediate suspension,
   invitation revocation, feedback mutation, one-unit evaluation execution,
   verified logical backup, and destructive corpus reset/re-embedding.
-- **Not safe to claim yet:** production deployment readiness or a successful
-  real-provider login.
-- **Remaining production gate:** real managed OIDC plus TLS,
-  PITR/off-host backup, secret rotation, retention/incident procedures, and
-  remotely enforced CI/repository protections.
+- **Closed after this document:** Google OIDC, Cloud Run/Cloud SQL deployment,
+  invited administrator/researcher login, immutable build and rollback,
+  bounded Vertex evaluation, and repository security checks passed during the
+  GCP and Phase 7 releases.
+- **Still operational follow-up:** retention enforcement, time-delayed cost
+  reviews, secret-rotation drills, alerting, and broader-cohort approval remain
+  live operational work; they do not invalidate the bounded `v0.1.0`
+  prototype release.

@@ -1,8 +1,8 @@
 # Handoff Document - Onagawa Source Chat (provenance-eco-rag)
 
-> **Last updated**: 2026-07-26
+> **Last updated**: 2026-08-25
 > **Project path**: `/Users/jaronchai/Documents/GitHub/provenance-eco-rag/`
-> **Current status**: Active invite-only Next.js + FastAPI application with OIDC, role-based authorization, persistent feedback, and a local-first RAG stack. Manual batch ingestion remains the only update path. Legacy Streamlit UI is archived for reference.
+> **Current status**: Stable GCP prototype release `v0.1.0` is live on Cloud Run revision `onagawa-source-chat-00012-drc`. The invite-only Next.js + FastAPI application uses Google OIDC, Cloud SQL/pgvector, Vertex AI, verified Provenance snapshots, and manual Cloud Run Jobs. Local Ollama development and the archived Streamlit reference remain supported.
 
 ---
 
@@ -41,6 +41,29 @@ used only as historical reference and parity material.
 
 ## 2. What Changed Recently
 
+### GCP Prototype Release and Admin Workspace (2026-08-25)
+
+- Stable GitHub release `v0.1.0` targets commit `2820f128` on `gcp-dev`.
+- Cloud Build `ce129a4f-4059-4e21-8bd1-7702fb34cdac` produced the immutable
+  images deployed as Cloud Run revision `onagawa-source-chat-00012-drc` in
+  `asia-northeast1`. It receives 100% of traffic; revision
+  `onagawa-source-chat-00011-4pd` remains the immediate rollback target.
+- GitHub records a successful `production` deployment for the same commit and
+  live Cloud Run URL.
+- The primary navigation now has one **Admin** entry. `/admin` contains
+  Overview, Users, Feedback, Pipeline, Database, System, and Debug sections.
+  `/pipeline`, `/database`, `/system`, and `/debug` are compatibility
+  redirects into the Admin workspace.
+- The deployed Evaluation UI reads saved runs, reports, analytics, questions,
+  standard/ablation controls, and comparisons. Production execution remains
+  behind the manual `onagawa-evaluation` Cloud Run Job boundary. Execution
+  `onagawa-evaluation-rw7mm` completed the tagged two-call Baseline/Full smoke
+  run with zero errors, and the eighth saved run is visible in the UI.
+- Local release validation passed 454 backend tests with 3 skipped checks,
+  Ruff, frontend typecheck/build, and the Cloud Build test/build pipeline.
+- No schema migration, pipeline mutation, embedding refresh, quota increase,
+  scale increase, or budget increase accompanied the Admin release.
+
 ### Repository Structure Cleanup
 
 The old root-level Streamlit files were moved into an in-repo archive:
@@ -60,9 +83,9 @@ from the repository root when intentionally run from the archive path.
 - `README.md` keeps Streamlit documentation as an archived parity reference.
 - `README.md` documents linked cross-source evidence, answer trust reports,
   invite-only authorization, feedback review, production safeguards, and the
-  current 360+ test suite.
-- `README.md` now includes a 2026-07-26 current prototype status section and
-  fresh screenshots captured from the live Next.js/FastAPI prototype.
+  current 450+ test suite.
+- `README.md` now includes the 2026-08-25 GCP release status and retains the
+  July local-prototype screenshots as explicitly dated reference material.
 - `docs/ROADMAP.md` records the manual batch-ingestion direction and cloud UI
   migration direction, including completed citation rendering, linked evidence,
   trust report, and screenshot refresh work.
@@ -283,10 +306,10 @@ because it is the local SST raw-data source needed for full regeneration.
 | RAG orchestration | Python modules in `orchestration/` and `retrieval/` |
 | Database | PostgreSQL 16 + pgvector |
 | Search | pgvector cosine similarity + PostgreSQL full-text search + RRF |
-| LLM | Ollama, default `qwen2.5:14b-instruct` |
-| Embeddings | Ollama `nomic-embed-text`, 768 dimensions |
+| LLM | Vertex AI `gemini-3.6-flash` on GCP; Ollama `qwen2.5:14b-instruct` locally |
+| Embeddings | Vertex AI `gemini-embedding-001` on GCP; Ollama `nomic-embed-text` locally, both 768 dimensions |
 | Data processing | pandas, Parquet, xarray, netCDF4, SciPy |
-| Containers | Podman/Docker compose overlays |
+| Containers | Cloud Run multi-container service and Jobs on GCP; Podman/Docker Compose locally |
 | Tests | pytest backend/API/unit tests; Next.js typecheck/build |
 
 ---
@@ -309,7 +332,7 @@ provenance-eco-rag/
 ├── retrieval/                        # Document builder, hybrid retriever, local fallback
 ├── schema/                           # Anchor-event construction
 ├── scripts/                          # Manual batch pipeline and evaluation CLIs
-├── tests/                            # 360+ unit, API, and integration tests
+├── tests/                            # 450+ unit, API, and integration tests
 ├── config.py                         # Paths, model defaults, thresholds
 ├── Containerfile.api                 # FastAPI container
 ├── compose.yml                        # Default local PostgreSQL/pgvector
@@ -349,14 +372,20 @@ and reproducible run information.
 | `/explore` | Corpus workbench for tables, filters, summaries, charts, sample detail, and evidence retrieval |
 | `/data` | Combined domain workbench for observations, CTD, taxa, SST, derived analysis, and reliability |
 | `/analysis` | Compatibility redirect to `/data?view=analysis` |
-| `/database` | Expert database explorer, schema inspection, read-only SQL/table tools |
-| `/pipeline` | Manual batch ingestion and corpus rebuild controls |
 | `/provenance` | Traceability manifest, document lineage, embedding treatment, upsert dry-run |
 | `/evaluation` | First-class evaluation suite with background jobs and detailed controls |
 | `/chat` | Citation-grounded RAG chat with expert retrieval/model knobs, linked evidence, Markdown answer rendering, and answer trust reports |
+| `/settings` | Per-user language, formatting, and interface preferences |
+| `/login` | Neutral Google OIDC entry point for invited accounts |
 | `/evidence` | Compatibility redirect to `/explore?view=evidence` |
-| `/system` | API, database, Ollama, artifacts, and runtime status |
-| `/debug` | Debug payloads and low-level diagnostics |
+| `/admin` | Admin-only workspace overview and subnavigation |
+| `/admin/users` | Invitations, roles, account types, and suspension controls |
+| `/admin/feedback` | Feedback review, evidence detail, and CSV export |
+| `/admin/pipeline` | Pipeline preflight, state, runs, logs, and artifact freshness |
+| `/admin/database` | Schema inspection and structured read-only table tools |
+| `/admin/system` | API, database, model, artifact, and runtime status |
+| `/admin/debug` | Debug payloads and low-level diagnostics |
+| `/pipeline`, `/database`, `/system`, `/debug` | Compatibility redirects into `/admin/*` |
 
 Visual direction:
 
@@ -543,8 +572,8 @@ Latest local verification for this audit:
 
 | Check | Result |
 | --- | --- |
-| `pytest` | 379 passed, 2 gated PostgreSQL integration modules skipped; 1 upstream macOS ARM netCDF4 wheel warning |
-| Coverage boundary | 72% aggregate; required floor is 70% |
+| `pytest` | 454 passed, 3 skipped in the `v0.1.0` release validation; 74.31% aggregate coverage |
+| Coverage boundary | 74.31% aggregate; required floor is 70% |
 | PostgreSQL metadata integration | Passed against migrated local PostgreSQL/pgvector |
 | Security-boundary Ruff check | Passed |
 | `npm run typecheck` | Passed |
@@ -640,16 +669,17 @@ git diff --check
 | Ingestion is manual | No automatic file watcher, scheduler, queue, or cloud object-store sync yet |
 | Backup retention/PITR | Verified logical backup and isolated restore testing exist; encryption, off-host retention, and point-in-time recovery need deployment-specific infrastructure |
 | Stale-row deletion | Transactional upsert reports but does not delete database keys missing from the incoming artifacts |
-| Production operations remain operator-managed | TLS, secret rotation, log retention, backup retention, and incident procedures require deployment-specific implementation |
-| Ollama is local-first | Host Ollama is preferred on macOS; containerized Ollama is optional and may be slower |
+| Production operations remain operator-managed | Cloud Run/Cloud SQL are live; secret rotation, retention enforcement, posted-cost review, alerting, and incident drills remain operator responsibilities |
+| Ollama is local-only | GCP uses native Vertex AI; host/container Ollama remains an optional local-development runtime |
 | Streamlit is archived | Do not add new active features to `archive/legacy-streamlit/app.py` |
-| Screenshots are point-in-time | `docs/screenshots/` contains current prototype captures from 2026-07-21; refresh them after major UI changes |
+| Screenshots are point-in-time | `docs/screenshots/` contains local prototype captures from 2026-07-21 and predates the consolidated Admin workspace |
 | Trust report is deterministic | The current audit checks supplied evidence and citations; it is not an LLM-as-judge semantic faithfulness scorer |
 | Integration scope is focused | PostgreSQL migrations, metadata, shared rate limiting, backup/restore, and repeated upserts are integration-tested; most RAG and scientific tests remain synthetic |
 | Auth.js beta | Auth.js 5 is exact-pinned at beta.32; regression-test any upgrade |
-| Managed OIDC deployment | The full application flow passed against an isolated local issuer; select the cloud provider and smoke-test its hosted email/password, recovery, MFA, HTTPS callback, and invited accounts |
-| Security operations require repository settings | Enable protected required checks, Dependabot alerts/security updates, CodeQL, and secret scanning where available |
-| Final mutation/recovery gates | Follow `docs/PRE_MILESTONE_VALIDATION_PLAN.md`; database-backed development mock users, invitation revoke, typed reset confirmation, browser mutations, and an isolated destructive drill remain open |
+| Managed OIDC deployment | Google OIDC is live and verified for the administrator and approved researcher; broader identity-provider recovery/MFA policy remains external to the application |
+| Evaluation execution | Serving instances deliberately reject in-process jobs; the UI start controls are not yet connected to the external Cloud Run evaluation job |
+| Security operations require repository settings | CodeQL and dependency automation exist; branch/environment protections, retention enforcement, cost review, and alerting still require operator review |
+| Historical milestone plan | `docs/PRE_MILESTONE_VALIDATION_PLAN.md` records the completed local gate; current cloud release evidence is in the Phase 7 and GCP runbooks |
 
 ---
 
@@ -668,21 +698,26 @@ Before handing scheduled updates to operators:
 
 Continue treating evaluation as first-class:
 
-- Add LLM-as-judge scoring with a separate judge model
-- Store judge prompts, scores, and rationale
-- Add report export/download affordances in the UI
-- Add regression comparison against a selected baseline run
-- Add charts for latency, citation accuracy, faithfulness, and source coverage
+- Connect the Standard/Ablation start controls to `onagawa-evaluation` through
+  a least-privilege, bounded Cloud Run Jobs execution bridge
+- Calibrate the existing opt-in LLM-as-judge scoring against a reviewed
+  benchmark and separate judge model
+- Review retention and access rules for judge prompts, scores, and rationale
+- Add a direct Markdown report download alongside the existing CSV exports
+- Persist an approved baseline designation and enforce reviewed regression
+  thresholds in release gates
+- Expand and calibrate the existing latency, citation, quality, and
+  distribution analytics for multi-run release decisions
 
 ### 3. Production Operations and Security Follow-Through
 
-The supported single-host topology and authorization boundary now exist.
-Before real users or multiple workers:
+The bounded GCP prototype and single-host alternative both exist. Before a
+wider cohort or multiple workers:
 
 - Enable protected CI, Dependabot security updates, CodeQL, and secret scanning
 - Complete the manual release checklist in `docs/SECURITY.md`
-- Deploy and test the TLS reverse proxy while keeping API, PostgreSQL, and
-  Ollama private
+- Keep FastAPI and Cloud SQL private behind the Cloud Run frontend/sidecar
+  boundary; retain TLS reverse-proxy guidance for standalone Compose only
 - Export verified PostgreSQL backups and important artifacts to encrypted
   off-host storage
 - Decide artifact storage: local volume, NAS, S3-compatible object store, or

@@ -153,3 +153,18 @@ to an external pipeline result before broader Provenance use.
   0.307-second p95 across twelve concurrent authenticated manifest requests,
   and a 0.170-second authenticated document trace. Every measured request
   returned HTTP 200, and the post-rollout error-level log audit was empty.
+
+## Serving revision follow-up — 2026-08-25
+
+The Admin MVP rollout changed frontend navigation but did not publish or alter
+the Provenance snapshot. Schema-v2 snapshot
+`provenance-20260824T064300Z`, its pointer, counts, and digest remain the active
+Provenance data contract.
+
+Cloud Build `ce129a4f-4059-4e21-8bd1-7702fb34cdac` deployed revision
+`onagawa-source-chat-00012-drc`, which passed authenticated `/provenance`,
+manifest, trace, Admin, API, and log smoke checks before receiving 100% traffic.
+Revision `onagawa-source-chat-00011-4pd` is now the immediate application
+rollback target and reads the same immutable snapshot. Therefore an application
+rollback does not require snapshot publication, pointer change, corpus rebuild,
+or database migration.
