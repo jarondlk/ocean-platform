@@ -17,8 +17,8 @@ Verified on 2026-08-25:
 
 - project `data-infra-infobio`, region `asia-northeast1`;
 - OCEAN Platform GitHub release `v0.2.2`;
-- full Cloud Build `8e4c7d4b-f723-40ef-9278-1d647b54111d`;
-- Cloud Run service `ocean-platform`, revision `ocean-platform-00004-8tb`,
+- full Cloud Build `da3045fd-e774-47a0-85a7-df1bd831a7d2`;
+- Cloud Run service `ocean-platform`, revision `ocean-platform-00006-noz`,
   100% traffic;
 - Artifact Registry `ocean-platform`; service accounts `ocean-platform` and
   `ocean-jobs`; secrets and jobs under the `ocean-*` prefix;

@@ -2,10 +2,11 @@
 
 ## Current release evidence
 
-For OCEAN Platform release `v0.2.1`, the local backend suite passed 456 tests
-with 3 skipped checks. Ruff, the production dependency audit (zero findings),
-frontend typecheck, the 24-route production Next.js build, and full Cloud Build
-`8e4c7d4b-f723-40ef-9278-1d647b54111d` passed. The imported Cloud SQL database
+For OCEAN Platform release `v0.2.2`, the local backend suite passed 471 tests
+with 3 skipped checks; one GCS snapshot test requires the optional local
+`google-cloud-storage` package. Ruff, the frontend typecheck, the 24-route
+production Next.js build, and full Cloud Build
+`da3045fd-e774-47a0-85a7-df1bd831a7d2` passed. The imported Cloud SQL database
 reported all 16 required tables with pgvector enabled and every audited row
 count matched the source. Public-boundary checks, Google OIDC, all 14
 authenticated user/admin routes, a live Vertex AI trust-report query, and the

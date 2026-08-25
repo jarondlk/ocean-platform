@@ -13,9 +13,9 @@ operations.
 Current release record as of 2026-08-25:
 
 - OCEAN Platform GitHub release `v0.2.2`;
-- full Cloud Build `8e4c7d4b-f723-40ef-9278-1d647b54111d`;
+- full Cloud Build `da3045fd-e774-47a0-85a7-df1bd831a7d2`;
 - Cloud Run service `ocean-platform`, serving revision
-  `ocean-platform-00004-8tb` at 100% traffic;
+  `ocean-platform-00006-noz` at 100% traffic;
 - Artifact Registry `ocean-platform`, runtime identities `ocean-platform` and
   `ocean-jobs`, Cloud SQL `ocean-postgres` / `ocean_platform`, OCEAN secrets,
   OCEAN jobs, and bucket `data-infra-infobio-ocean-data`;

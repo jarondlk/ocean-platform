@@ -47,8 +47,8 @@ used only as historical reference and parity material.
   service accounts `ocean-platform` and `ocean-jobs`, Cloud SQL
   `ocean-postgres` / `ocean_platform`, `ocean-*` jobs and secrets, and bucket
   `data-infra-infobio-ocean-data` now form the live data plane.
-- Cloud Build `8e4c7d4b-f723-40ef-9278-1d647b54111d` passed the full test and
-  image pipeline. Revision `ocean-platform-00004-8tb` serves 100% traffic.
+- Cloud Build `da3045fd-e774-47a0-85a7-df1bd831a7d2` passed the full test and
+  image pipeline. Revision `ocean-platform-00006-noz` serves 100% traffic.
 - The database migration preserved all 16 tables and audited row counts. Job
   executions `ocean-migrate-glml5`, `ocean-pipeline-q8x99`,
   `ocean-embedding-trv4b`, and `ocean-evaluation-skf6f` passed their bounded

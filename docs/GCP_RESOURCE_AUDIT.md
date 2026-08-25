@@ -9,7 +9,7 @@ Project: `data-infra-infobio` (`469489188516`), region
 
 | Component | Resource | State and guardrail |
 | --- | --- | --- |
-| Web application | Cloud Run `ocean-platform` | Revision `ocean-platform-00004-8tb`, 100% traffic, minimum 0 / maximum 1 instance, public invoker required for the authenticated frontend |
+| Web application | Cloud Run `ocean-platform` | Revision `ocean-platform-00006-noz`, 100% traffic, minimum 0 / maximum 1 instance, public invoker required for the authenticated frontend |
 | Database | Cloud SQL `ocean-postgres` | PostgreSQL 16, `db-f1-micro`, 10 GB, RUNNABLE, deletion protection, seven backups and seven days of PITR |
 | Scientific data | `gs://data-infra-infobio-ocean-data` | 113,841,102 live bytes at audit time, versioning and the reviewed scientific-data lifecycle enabled |
 | Images | Artifact Registry `ocean-platform` | API and frontend images; keep five recent versions and delete versions older than 30 days |
