@@ -54,6 +54,10 @@ the legacy SQL instance. Do not treat the dormant URL as an instant failover.
 - Both Artifact Registry repositories preserve the five newest versions and
   delete versions older than 30 days. The policies were promoted from dry-run
   after the image inventory was reviewed.
+- The single `OCEAN Platform Cloud Run Web` OAuth client contains only the
+  current OCEAN JavaScript origin and `/api/auth/callback/google` redirect.
+  The two legacy `onagawa-source-chat` entries were removed and the persisted
+  client configuration was re-read after saving.
 - `gs://data-infra-infobio_cloudbuild` contains transient source archives only
   (15,191,629 bytes at audit time). `source/` objects expire after 30 days via
   [`deploy/gcp/cloudbuild-storage-lifecycle.json`](../deploy/gcp/cloudbuild-storage-lifecycle.json).
@@ -79,20 +83,17 @@ checking service dependencies and operator workflows.
 
 These actions remove rollback state and are intentionally not automatic:
 
-1. Remove the legacy OAuth JavaScript origin and redirect URI from the single
-   `OCEAN Platform Cloud Run Web` client.
-2. Delete `onagawa-source-chat` and the four `onagawa-*` Cloud Run Job
+1. Delete `onagawa-source-chat` and the four `onagawa-*` Cloud Run Job
    definitions.
-3. Delete Artifact Registry `onagawa-source-chat` after choosing whether the
+2. Delete Artifact Registry `onagawa-source-chat` after choosing whether the
    five retained API/frontend images are still needed.
-4. Delete `onagawa-postgres` only after confirming the final SQL export and
+3. Delete `onagawa-postgres` only after confirming the final SQL export and
    restore evidence. This removes its 10 GB disk and managed backup history.
-5. Delete `gs://data-infra-infobio-prototype-data` only after accepting loss of
+4. Delete `gs://data-infra-infobio-prototype-data` only after accepting loss of
    its independent noncurrent object history.
-6. Delete the four `onagawa-*` secrets and then the two disabled legacy service
+5. Delete the four `onagawa-*` secrets and then the two disabled legacy service
    accounts.
 
 The project billing link is enabled, but the active CLI account cannot list the
 billing-account budget objects. Budget configuration therefore remains a
 billing-account IAM follow-up rather than a verified result of this audit.
-
