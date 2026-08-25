@@ -9,6 +9,7 @@ from __future__ import annotations
 import uuid
 
 from sqlalchemy import (
+    Boolean,
     JSON,
     CheckConstraint,
     Column,
@@ -140,6 +141,7 @@ class ChatInteraction(AppBase):
     prompt_sha256 = Column(String(64))
     latency_ms = Column(Integer)
     error_code = Column(String(64))
+    legal_hold = Column(Boolean, nullable=False, default=False, server_default="false")
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     completed_at = Column(DateTime(timezone=True))
 
@@ -156,6 +158,7 @@ class ChatInteraction(AppBase):
             "status IN ('running', 'completed', 'failed')",
             name="ck_chat_interaction_status",
         ),
+        Index("ix_chat_interaction_retention", "created_at", "legal_hold", "status"),
     )
 
 

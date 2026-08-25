@@ -229,6 +229,16 @@ class AdminFeedbackDetail(AdminFeedbackListItem):
     prompt_sha256: Optional[str] = None
 
 
+class RetentionHoldRequest(BaseModel):
+    legal_hold: bool
+
+
+class RetentionHoldResponse(BaseModel):
+    interaction_id: uuid.UUID
+    legal_hold: bool
+    updated_at: datetime
+
+
 class OllamaModel(BaseModel):
     name: str
     modified_at: Optional[str] = None
@@ -637,8 +647,8 @@ class EvaluationCatalogResponse(BaseModel):
 
 
 class EvaluationRunControlBase(BaseModel):
-    model: Optional[str] = None
-    tag: Optional[str] = None
+    model: Optional[str] = Field(default=None, max_length=255)
+    tag: Optional[str] = Field(default=None, max_length=128)
     quick: bool = True
     question_ids: List[str] = Field(default_factory=list)
     categories: List[str] = Field(default_factory=list)
@@ -647,8 +657,8 @@ class EvaluationRunControlBase(BaseModel):
     temperature: float = Field(default=0.0, ge=0.0, le=2.0)
     run_quality: bool = False
     run_judge: bool = False
-    judge_model: Optional[str] = None
-    embedding_model: Optional[str] = None
+    judge_model: Optional[str] = Field(default=None, max_length=255)
+    embedding_model: Optional[str] = Field(default=None, max_length=255)
 
 
 class EvaluationStandardRunRequest(EvaluationRunControlBase):

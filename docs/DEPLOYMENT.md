@@ -12,17 +12,23 @@ operations.
 
 Current release record as of 2026-08-25:
 
-- OCEAN Platform GitHub release `v0.2.1`;
-- full Cloud Build `8e4c7d4b-f723-40ef-9278-1d647b54111d`;
+- OCEAN Platform GitHub release `v0.2.2`;
+- full Cloud Build `da3045fd-e774-47a0-85a7-df1bd831a7d2`;
 - Cloud Run service `ocean-platform`, serving revision
-  `ocean-platform-00004-8tb` at 100% traffic;
+  `ocean-platform-00006-noz` at 100% traffic;
 - Artifact Registry `ocean-platform`, runtime identities `ocean-platform` and
   `ocean-jobs`, Cloud SQL `ocean-postgres` / `ocean_platform`, OCEAN secrets,
   OCEAN jobs, and bucket `data-infra-infobio-ocean-data`;
 - former `onagawa-source-chat` service private and deletion-protected
-  `onagawa-postgres` stopped as reversible rollback resources;
+  `onagawa-postgres` stopped as reversible rollback resources, with both
+  legacy runtime identities disabled;
+- keep-five/delete-after-30-days Artifact Registry cleanup active and 30-day
+  expiry applied to transient Cloud Build source archives;
 - Cloud Run minimum zero, maximum one instance, concurrency 20; and
 - successful GitHub `production` deployment status.
+
+The dated GCP inventory and remaining destructive retirement candidates are
+recorded in [`GCP_RESOURCE_AUDIT.md`](GCP_RESOURCE_AUDIT.md).
 
 The standalone Compose topology below remains the supported self-hosted
 alternative. Its configuration examples do not describe the current GCP

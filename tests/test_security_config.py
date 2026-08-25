@@ -213,7 +213,24 @@ def test_invalid_mock_login_boolean_is_rejected(value):
 def test_runtime_configuration_accepts_supported_job_modes(monkeypatch):
     for mode in ("local", "external"):
         monkeypatch.setattr(config, "JOB_EXECUTION_MODE", mode)
+        monkeypatch.setenv("DEPLOYMENT_ENV", "development")
         monkeypatch.setattr(config, "MODEL_PROVIDER", "ollama")
+        config.validate_runtime_configuration()
+
+
+@pytest.mark.parametrize("deployment_env", ["staging", "production"])
+def test_runtime_configuration_rejects_local_jobs_in_production_like_environments(
+    monkeypatch,
+    deployment_env,
+):
+    monkeypatch.setenv("DEPLOYMENT_ENV", deployment_env)
+    monkeypatch.setattr(config, "JOB_EXECUTION_MODE", "local")
+    monkeypatch.setattr(config, "MODEL_PROVIDER", "ollama")
+
+    with pytest.raises(
+        config.RuntimeConfigurationError,
+        match="JOB_EXECUTION_MODE=external",
+    ):
         config.validate_runtime_configuration()
 
 

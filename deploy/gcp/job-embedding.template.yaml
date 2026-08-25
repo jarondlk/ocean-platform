@@ -46,6 +46,8 @@ spec:
                   value: global
                 - name: EMBEDDING_MODEL
                   value: gemini-embedding-001
+                - name: ALLOWED_EMBEDDING_MODELS
+                  value: gemini-embedding-001
                 - name: EMBEDDING_DIM
                   value: "768"
                 - name: MODEL_MAX_ATTEMPTS

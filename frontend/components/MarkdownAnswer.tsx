@@ -216,10 +216,17 @@ function renderInlineToken(token: string, key: string): ReactNode {
   }
   const link = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(token);
   if (link) {
-    const href = link[2].trim();
-    const external = /^https?:\/\//.test(href);
+    const safeLink = sanitizeHref(link[2]);
+    if (!safeLink) {
+      return <span key={key}>{link[1]}</span>;
+    }
     return (
-      <a href={href} key={key} rel={external ? "noreferrer" : undefined} target={external ? "_blank" : undefined}>
+      <a
+        href={safeLink.href}
+        key={key}
+        rel={safeLink.external ? "noopener noreferrer" : undefined}
+        target={safeLink.external ? "_blank" : undefined}
+      >
         {link[1]}
       </a>
     );
@@ -228,4 +235,32 @@ function renderInlineToken(token: string, key: string): ReactNode {
     return <span className="citation-chip" key={key}>{token}</span>;
   }
   return token;
+}
+
+function sanitizeHref(rawHref: string): { href: string; external: boolean } | null {
+  const href = rawHref.trim();
+  if (!href || /[\u0000-\u001f\u007f\\]/.test(href) || href.startsWith("//")) {
+    return null;
+  }
+
+  let parsed: URL;
+  try {
+    parsed = new URL(href, "https://ocean-platform.invalid");
+  } catch {
+    return null;
+  }
+
+  const hasExplicitScheme = /^[a-z][a-z0-9+.-]*:/i.test(href);
+  if (hasExplicitScheme && !["http:", "https:"].includes(parsed.protocol)) {
+    return null;
+  }
+
+  const external = parsed.protocol === "http:" || parsed.protocol === "https:"
+    ? parsed.origin !== "https://ocean-platform.invalid"
+    : false;
+  if (!external && parsed.origin !== "https://ocean-platform.invalid") {
+    return null;
+  }
+
+  return { href, external };
 }

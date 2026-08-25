@@ -15,6 +15,8 @@ from api.rate_limit import (
 
 def test_expensive_and_mutating_routes_have_scoped_limits():
     assert policy_for_request("POST", "/chat").scope == "chat"
+    assert policy_for_request("POST", "/retrieve").scope == "retrieval"
+    assert policy_for_request("GET", "/documents").limit == 30
     assert policy_for_request(
         "PUT",
         "/chat/interactions/interaction-id/feedback",
@@ -22,6 +24,16 @@ def test_expensive_and_mutating_routes_have_scoped_limits():
     assert policy_for_request("POST", "/pipeline/jobs").limit == 2
     assert policy_for_request("GET", "/chat") is None
     assert policy_for_request("GET", "/admin/users") is None
+
+
+def test_retrieval_rate_limit_is_isolated_by_user():
+    limiter = InMemoryRateLimiter()
+    policy = policy_for_request("POST", "/retrieve")
+
+    for request_index in range(policy.limit):
+        assert limiter.retry_after(subject="researcher-a", policy=policy, now=request_index) is None
+    assert limiter.retry_after(subject="researcher-a", policy=policy, now=policy.limit) == 30
+    assert limiter.retry_after(subject="researcher-b", policy=policy, now=policy.limit) is None
 
 
 def test_rate_limiter_isolated_by_user_and_resets_after_window():

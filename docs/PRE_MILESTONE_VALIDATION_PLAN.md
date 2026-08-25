@@ -231,7 +231,7 @@ workflow YAML.
   invited administrator/researcher login, immutable build and rollback,
   bounded Vertex evaluation, and repository security checks passed during the
   GCP and Phase 7 releases.
-- **Still operational follow-up:** retention enforcement, time-delayed cost
-  reviews, secret-rotation drills, alerting, and broader-cohort approval remain
+- **Still operational follow-up:** retention cleanup scheduling, time-delayed
+  cost reviews, secret-rotation drills, alerting, and broader-cohort approval remain
   live operational work; they do not invalidate the bounded `v0.1.0`
   prototype release.

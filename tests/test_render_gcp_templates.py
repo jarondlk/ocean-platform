@@ -20,7 +20,6 @@ def test_renderer_rejects_blank_required_values(monkeypatch: pytest.MonkeyPatch)
             "--public-app-url=https://example.run.app",
             "--data-bucket=example-data",
             "--oidc-client-id=",
-            "--ollama-private-url=https://model.internal",
         ],
     )
 
@@ -41,7 +40,6 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
         "OIDC_PROVIDER_NAME_VALUE": "Google",
         "OIDC_ISSUER_VALUE": "https://accounts.google.com",
         "OIDC_CLIENT_ID_VALUE": "client.apps.googleusercontent.com",
-        "OLLAMA_PRIVATE_URL": "https://model.internal",
         "DATA_BUCKET": "example-data",
     }
 
@@ -101,7 +99,10 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
     assert api_env["GOOGLE_CLOUD_PROJECT"] == "example-project"
     assert api_env["GOOGLE_CLOUD_LOCATION"] == "global"
     assert api_env["CHAT_MODEL"] == "gemini-3.6-flash"
+    assert api_env["ALLOWED_CHAT_MODELS"] == "gemini-3.6-flash"
     assert api_env["EMBEDDING_MODEL"] == "gemini-embedding-001"
+    assert api_env["ALLOWED_EMBEDDING_MODELS"] == "gemini-embedding-001"
+    assert api_env["CHAT_RETENTION_DAYS"] == "90"
     assert api_env["CHAT_MAX_OUTPUT_TOKENS"] == "1600"
     assert api_env["VERTEX_THINKING_BUDGET"] == "0"
     assert "OLLAMA_BASE_URL" not in api_env
@@ -150,6 +151,7 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
     assert embedding_env["GOOGLE_CLOUD_PROJECT"] == "example-project"
     assert embedding_env["GOOGLE_CLOUD_LOCATION"] == "global"
     assert embedding_env["EMBEDDING_MODEL"] == "gemini-embedding-001"
+    assert embedding_env["ALLOWED_EMBEDDING_MODELS"] == "gemini-embedding-001"
     assert embedding_env["EMBEDDING_DIM"] == "768"
     assert embedding_env["MODEL_REQUEST_TIMEOUT_SECONDS"] == "120"
 
@@ -169,6 +171,8 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
     ]
     assert evaluation_env["MODEL_PROVIDER"] == "vertex"
     assert evaluation_env["CHAT_MODEL"] == "gemini-3.6-flash"
+    assert evaluation_env["ALLOWED_CHAT_MODELS"] == "gemini-3.6-flash"
+    assert evaluation_env["ALLOWED_EMBEDDING_MODELS"] == "gemini-embedding-001"
     assert evaluation_env["CHAT_MAX_OUTPUT_TOKENS"] == "1600"
     assert evaluation_env["VERTEX_THINKING_BUDGET"] == "0"
     assert evaluation_env["MODEL_REQUEST_TIMEOUT_SECONDS"] == "120"

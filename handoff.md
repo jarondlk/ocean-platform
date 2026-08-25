@@ -1,8 +1,8 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-08-25
+> **Last updated**: 2026-08-26 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform release `v0.2.1` is live on Cloud Run service `ocean-platform`, revision `ocean-platform-00004-8tb`. The invite-only Next.js + FastAPI application uses Google OIDC, the OCEAN Cloud SQL/pgvector data plane, Vertex AI, verified Provenance snapshots, and `ocean-*` Cloud Run Jobs. The former service is private and its deletion-protected SQL instance is stopped as a reversible rollback boundary; local Ollama development and the archived Streamlit reference remain supported.
+> **Current status**: OCEAN Platform release `v0.2.2` is live on Cloud Run service `ocean-platform`. The invite-only Next.js + FastAPI application uses Google OIDC, the OCEAN Cloud SQL/pgvector data plane, Vertex AI, verified Provenance snapshots, and `ocean-*` Cloud Run Jobs. The former service is private and its deletion-protected SQL instance is stopped as a reversible rollback boundary; local Ollama development and the archived Streamlit reference remain supported.
 
 ---
 
@@ -43,12 +43,12 @@ used only as historical reference and parity material.
 
 ### OCEAN Platform Cutover (2026-08-25)
 
-- Release `v0.2.1` completed phase 8: Artifact Registry `ocean-platform`,
+- Release `v0.2.2` completed phase 8: Artifact Registry `ocean-platform`,
   service accounts `ocean-platform` and `ocean-jobs`, Cloud SQL
   `ocean-postgres` / `ocean_platform`, `ocean-*` jobs and secrets, and bucket
   `data-infra-infobio-ocean-data` now form the live data plane.
-- Cloud Build `8e4c7d4b-f723-40ef-9278-1d647b54111d` passed the full test and
-  image pipeline. Revision `ocean-platform-00004-8tb` serves 100% traffic.
+- Cloud Build `da3045fd-e774-47a0-85a7-df1bd831a7d2` passed the full test and
+  image pipeline. Revision `ocean-platform-00006-noz` serves 100% traffic.
 - The database migration preserved all 16 tables and audited row counts. Job
   executions `ocean-migrate-glml5`, `ocean-pipeline-q8x99`,
   `ocean-embedding-trv4b`, and `ocean-evaluation-skf6f` passed their bounded
@@ -58,6 +58,11 @@ used only as historical reference and parity material.
   service access remains the rollback path during the retention window.
 - The application logo and favicon assets were removed. All five checked-in
   product screenshots are logo-free.
+- Post-release Cloud Build `9764872c-41b4-45ec-ac58-d77c7d9dac86` deployed
+  revision `ocean-platform-00007-2dp` and the same API image to all four active
+  OCEAN jobs. Their bounded canaries passed, explicit model allowlists and the
+  90-day retention setting are deployed, and the four orphan `onagawa-*` job
+  definitions were removed.
 
 The preceding `v0.2.0` cutover established the canonical product identity:
 
@@ -69,18 +74,19 @@ The preceding `v0.2.0` cutover established the canonical product identity:
 - Cloud Run service `ocean-platform`, revision `ocean-platform-00002-rhc`,
   received 100% of its traffic at the OCEAN URL during the parallel-service
   transition. Phase 8 has since replaced its legacy data-plane references.
-- Google OIDC retains the former origin/callback for rollback and adds the
-  OCEAN origin/callback. Administrator sign-in and every user/admin route were
-  validated against the new service.
+- At the `v0.2.0` cutover, Google OIDC temporarily retained the former
+  origin/callback for rollback and added the OCEAN origin/callback. The former
+  entries were removed before `v0.2.2`; only the OCEAN origin/callback is now
+  active. Administrator sign-in and every user/admin route were validated
+  against the new service.
 - The primary navigation now has one **Admin** entry. `/admin` contains
   Overview, Users, Feedback, Pipeline, Database, System, and Debug sections.
   `/pipeline`, `/database`, `/system`, and `/debug` are compatibility
   redirects into the Admin workspace.
 - The deployed Evaluation UI reads saved runs, reports, analytics, questions,
-  standard/ablation controls, and comparisons. Production execution remains
-  behind the manual `onagawa-evaluation` Cloud Run Job boundary. Execution
-  `onagawa-evaluation-rw7mm` completed the tagged two-call Baseline/Full smoke
-  run with zero errors, and the eighth saved run is visible in the UI.
+  standard/ablation controls, and comparisons. The `v0.2.0` validation used
+  historical execution `onagawa-evaluation-rw7mm`; production execution now
+  uses the manual `ocean-evaluation` Cloud Run Job boundary.
 - Local release validation passed 455 backend tests with 3 skipped checks,
   Ruff, frontend typecheck/build, and the Cloud Build test/build pipeline.
 - No schema migration, pipeline mutation, embedding refresh, quota increase,

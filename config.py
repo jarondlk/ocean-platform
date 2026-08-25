@@ -153,6 +153,7 @@ JOB_EXECUTION_MODE = os.environ.get(
     "JOB_EXECUTION_MODE",
     "local",
 ).strip().lower()
+LOCAL_MAX_ACTIVE_JOBS = _environment_int("LOCAL_MAX_ACTIVE_JOBS", 1, minimum=1)
 
 # ---------------------------------------------------------------------------
 # Authentication
@@ -434,6 +435,21 @@ VERTEX_THINKING_BUDGET = int(os.environ.get("VERTEX_THINKING_BUDGET", "0"))
 EMBEDDING_DIM = int(os.environ.get("EMBEDDING_DIM", "768"))
 
 
+def _model_allowlist(name: str, default: str) -> frozenset[str]:
+    raw_value = os.environ.get(name)
+    if raw_value is None:
+        return frozenset({default})
+    return frozenset(item.strip() for item in raw_value.split(",") if item.strip())
+
+
+ALLOWED_CHAT_MODELS = _model_allowlist("ALLOWED_CHAT_MODELS", CHAT_MODEL)
+ALLOWED_EMBEDDING_MODELS = _model_allowlist(
+    "ALLOWED_EMBEDDING_MODELS",
+    EMBEDDING_MODEL,
+)
+CHAT_RETENTION_DAYS = _environment_int("CHAT_RETENTION_DAYS", 90, minimum=1)
+
+
 class RuntimeConfigurationError(ValueError):
     """Raised when runtime settings are invalid or unsafe for the platform."""
 
@@ -442,6 +458,10 @@ def validate_runtime_configuration() -> None:
     if JOB_EXECUTION_MODE not in {"local", "external"}:
         raise RuntimeConfigurationError(
             "JOB_EXECUTION_MODE must be either local or external"
+        )
+    if production_like_environment() and JOB_EXECUTION_MODE == "local":
+        raise RuntimeConfigurationError(
+            "Production-like environments must use JOB_EXECUTION_MODE=external"
         )
     if PROVENANCE_READ_MODE not in {"build", "snapshot"}:
         raise RuntimeConfigurationError(
@@ -453,6 +473,22 @@ def validate_runtime_configuration() -> None:
         )
     if not MODEL_PROVIDER:
         raise RuntimeConfigurationError("MODEL_PROVIDER must not be empty")
+    if not ALLOWED_CHAT_MODELS:
+        raise RuntimeConfigurationError("ALLOWED_CHAT_MODELS must not be empty")
+    if CHAT_MODEL not in ALLOWED_CHAT_MODELS:
+        raise RuntimeConfigurationError("ALLOWED_CHAT_MODELS must include CHAT_MODEL")
+    if not ALLOWED_EMBEDDING_MODELS:
+        raise RuntimeConfigurationError(
+            "ALLOWED_EMBEDDING_MODELS must not be empty"
+        )
+    if EMBEDDING_MODEL not in ALLOWED_EMBEDDING_MODELS:
+        raise RuntimeConfigurationError(
+            "ALLOWED_EMBEDDING_MODELS must include EMBEDDING_MODEL"
+        )
+    if CHAT_RETENTION_DAYS > 3650:
+        raise RuntimeConfigurationError(
+            "CHAT_RETENTION_DAYS must not exceed 3650"
+        )
     if MODEL_PROVIDER == "vertex" and not GOOGLE_CLOUD_PROJECT:
         raise RuntimeConfigurationError(
             "MODEL_PROVIDER=vertex requires GOOGLE_CLOUD_PROJECT"

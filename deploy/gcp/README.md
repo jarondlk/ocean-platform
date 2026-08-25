@@ -13,21 +13,30 @@ place before the foundation or any runtime component is created.
 
 ## Current deployed milestone
 
-Verified on 2026-08-25:
+Verified on 2026-08-26 JST:
 
 - project `data-infra-infobio`, region `asia-northeast1`;
-- OCEAN Platform GitHub release `v0.2.1`;
-- full Cloud Build `8e4c7d4b-f723-40ef-9278-1d647b54111d`;
-- Cloud Run service `ocean-platform`, revision `ocean-platform-00004-8tb`,
+- OCEAN Platform GitHub release `v0.2.2`;
+- post-release remediation Cloud Build
+  `9764872c-41b4-45ec-ac58-d77c7d9dac86`;
+- Cloud Run service `ocean-platform`, revision `ocean-platform-00007-2dp`,
   100% traffic;
 - Artifact Registry `ocean-platform`; service accounts `ocean-platform` and
   `ocean-jobs`; secrets and jobs under the `ocean-*` prefix;
 - Cloud SQL `ocean-postgres` / `ocean_platform` is PostgreSQL 16 and RUNNABLE;
 - bucket `data-infra-infobio-ocean-data` contains the verified copied data;
 - former `onagawa-source-chat` is private and deletion-protected
-  `onagawa-postgres` is stopped for reversible rollback;
+  `onagawa-postgres` is stopped for reversible rollback; the two legacy
+  runtime identities are disabled and the four orphan legacy job definitions
+  have been removed;
+- reviewed Artifact Registry cleanup is active for both repositories, and
+  transient Cloud Build source archives expire after 30 days;
 - minimum zero/maximum one service instance, concurrency 20; and
 - GitHub `production` deployment status `success`.
+
+See [`../../docs/GCP_RESOURCE_AUDIT.md`](../../docs/GCP_RESOURCE_AUDIT.md) for
+the current inventory, absence checks, housekeeping controls, and the exact
+rollback resources that still require explicit approval before deletion.
 
 The live URL is
 [`https://ocean-platform-469489188516.asia-northeast1.run.app`](https://ocean-platform-469489188516.asia-northeast1.run.app).
@@ -160,8 +169,7 @@ python scripts/render_gcp_templates.py \
   --image-tag=BUILD_ID \
   --public-app-url=https://SERVICE_URL \
   --data-bucket=DATA_BUCKET \
-  --oidc-client-id=GOOGLE_OAUTH_CLIENT_ID \
-  --ollama-private-url=https://PRIVATE_MODEL_URL
+  --oidc-client-id=GOOGLE_OAUTH_CLIENT_ID
 ```
 
 Review every rendered file before using `gcloud run services replace` or
@@ -182,7 +190,6 @@ Copy `service.template.yaml` to an untracked working file and replace:
 - `OIDC_PROVIDER_NAME`
 - `OIDC_ISSUER`
 - `OIDC_CLIENT_ID`
-- `OLLAMA_PRIVATE_URL`
 - `DATA_BUCKET`
 
 Do not put secret values in the rendered YAML. Create these Secret Manager

@@ -31,6 +31,10 @@ def policy_for_request(method: str, path: str) -> Optional[RateLimitPolicy]:
     method = method.upper()
     if method == "POST" and path == "/chat":
         return RateLimitPolicy("chat", 10)
+    if method == "POST" and path == "/retrieve":
+        return RateLimitPolicy("retrieval", 30)
+    if method == "GET" and path == "/documents":
+        return RateLimitPolicy("retrieval", 30)
     if method == "PUT" and path.startswith("/chat/interactions/"):
         return RateLimitPolicy("feedback", 30)
     if method == "POST" and path == "/admin/invitations":

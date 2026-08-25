@@ -47,14 +47,14 @@ brand.
 
 - Browser preferences migrate from `onagawa-app-preferences` to
   `ocean-platform-preferences` on first load.
-- New chat records use `ocean-chat-v1`; existing `onagawa-chat-v1` records stay
+- New chat records use `ocean-chat-v2`; existing `onagawa-chat-v1` records stay
   unchanged as provenance evidence.
 - The legacy mock-login UUID namespace remains stable so local test identities
   are not duplicated by the rebrand.
 - New default internal JWT values are `ocean-platform-frontend` and
   `ocean-platform-api`; environment variables remain the deployment control
   point during rollout.
-- Release `v0.2.1` completed the GCP data-plane transition. Active application
+- Release `v0.2.2` completed the GCP data-plane transition and security hardening. Active application
   manifests and identities use the target names below. Legacy resources keep
   their historical IDs only as private, deletion-protected rollback assets.
 
@@ -76,6 +76,6 @@ brand.
 | Evaluation job | `ocean-evaluation` |
 | Cloud Storage bucket | `data-infra-infobio-ocean-data` |
 
-All target identifiers are active as of release `v0.2.1`. The former service
+All target identifiers are active as of release `v0.2.2`. The former service
 is private and the former Cloud SQL instance is stopped; do not reuse legacy
 identifiers for new components.

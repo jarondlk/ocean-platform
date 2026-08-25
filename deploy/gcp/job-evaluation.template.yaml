@@ -47,7 +47,11 @@ spec:
                   value: global
                 - name: CHAT_MODEL
                   value: gemini-3.6-flash
+                - name: ALLOWED_CHAT_MODELS
+                  value: gemini-3.6-flash
                 - name: EMBEDDING_MODEL
+                  value: gemini-embedding-001
+                - name: ALLOWED_EMBEDDING_MODELS
                   value: gemini-embedding-001
                 - name: EMBEDDING_DIM
                   value: "768"

@@ -15,7 +15,7 @@ from db.connection import get_session
 
 
 # Existing ``onagawa-chat-v1`` rows remain unchanged as historical provenance.
-PROMPT_VERSION = "ocean-chat-v1"
+PROMPT_VERSION = "ocean-chat-v2"
 
 
 def json_safe(value: Any) -> Any:

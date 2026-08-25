@@ -202,8 +202,9 @@ remaining monthly budget.
 Current decision: **keep the bounded two-person prototype live; do not widen the
 cohort until the time-delayed cost reviews pass**. The immediate serving,
 persistence, recovery, model, resource, CI, dependency, researcher-login,
-retention-decision, and operations-contact gates passed. Automated retention
-enforcement remains separate implementation work.
+retention-decision, and operations-contact gates passed. Retention cleanup is
+implemented; production scheduling and the backup/recovery review remain
+operator-controlled.
 
 ### Release and recovery evidence
 
@@ -273,8 +274,9 @@ enforcement remains separate implementation work.
   event, so a human save/open check remains useful but the authenticated server
   export path is proven.
 - Chat/evidence/audit snapshots and associated feedback have an approved
-  90-day retention period. No data was deleted; dry-run, legal-hold-aware,
-  audited enforcement remains separate implementation work.
+  90-day retention period. No data was deleted during this release; the
+  legal-hold-aware, audited cleanup command defaults to dry-run and requires
+  explicit operator confirmation for deletion.
 - The project owner/application administrator is the primary incident contact.
   Takeshi Obayashi is the primary billing contact through the existing IAM and
   billing assignments. Contact addresses remain in the private account/IAM
@@ -284,8 +286,9 @@ enforcement remains separate implementation work.
 
 1. The security update reaches the default branch so its
    Dependabot alerts close; CodeQL remains enabled through GitHub default setup.
-2. Retention enforcement is implemented and reviewed before the cohort expands;
-   the approved policy by itself does not authorize immediate deletion.
+2. The retention cleanup schedule and backup/recovery review are approved before
+   the cohort expands; the approved policy by itself does not authorize
+   immediate deletion.
 3. Posted billing is reviewed after 24 hours and again after seven days. Per the
    operator's decision, these reviews remain pending until their data is due.
 
