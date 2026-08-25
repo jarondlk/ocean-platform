@@ -11,12 +11,5 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     background_color: "#f5fbff",
     theme_color: "#1769aa",
-    icons: [
-      {
-        src: "/ocean-mark.svg",
-        sizes: "any",
-        type: "image/svg+xml",
-      },
-    ],
   };
 }
