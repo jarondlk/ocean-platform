@@ -2,10 +2,10 @@
 
 ## Deployed status
 
-Google OIDC is live in project `data-infra-infobio` at the production Cloud Run
-URL. The application remains public only at the Cloud Run invocation layer;
-Next.js requires an Auth.js session for application pages and FastAPI remains a
-localhost sidecar protected by short-lived internal JWTs.
+Google OIDC is live in project `data-infra-infobio` at the OCEAN Platform Cloud
+Run URL. The application remains public only at the Cloud Run invocation layer;
+Next.js requires an Auth.js session for application pages and FastAPI remains
+a localhost sidecar protected by short-lived internal JWTs.
 
 The invited administrator and the approved researcher have both completed
 provider-backed login. The administrator is resolved as `admin` / `internal`,
@@ -13,7 +13,7 @@ and `akane.kitamura.e7@tohoku.ac.jp` is active as `researcher` / `research`.
 The consolidated `/admin` workspace is absent for the researcher through both
 navigation and backend authorization. No local password store, downloaded
 service-account key, mock login, IAP layer, or Identity Platform tenant was
-introduced for `v0.1.0`.
+introduced for `v0.2.0`.
 
 ## Selected prototype path
 
@@ -97,7 +97,9 @@ Do not enable IAP on the same prototype revision. IAP would add a second login
 and requires a deliberate adapter from IAP identity assertions to the
 application's invitation and role records.
 
-The `v0.1.0` rollout completed the callback, invitation/role resolution,
+The `v0.2.0` rollout registered the OCEAN JavaScript origin and Google callback
+while retaining the former service values for rollback. It completed the
+callback, invitation/role resolution,
 administrator navigation, approved researcher login, logout/re-login, unknown
 session redirect, and log-hygiene checks. Continue treating suspension,
 uninvited-user behavior, provider recovery/MFA policy, and future identity

@@ -30,14 +30,14 @@ service.
 
 Current managed milestone:
 
-- GitHub release [`v0.1.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.1.0)
-  is the first stable GCP prototype release and targets commit `2820f128` on
-  `gcp-dev`.
-- Cloud Run revision `onagawa-source-chat-00012-drc` serves 100% of production
-  traffic in `asia-northeast1`; `onagawa-source-chat-00011-4pd` remains the
-  immediate rollback revision.
+- GitHub release [`v0.2.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.2.0)
+  is the OCEAN Platform branding and parallel-service cutover release.
+- Cloud Run service `ocean-platform`, revision `ocean-platform-00002-rhc`,
+  serves 100% of its traffic in `asia-northeast1`. The former
+  `onagawa-source-chat` service remains available as the bounded rollback
+  application during the phase 8 infrastructure transition.
 - The live application is
-  [`https://onagawa-source-chat-469489188516.asia-northeast1.run.app`](https://onagawa-source-chat-469489188516.asia-northeast1.run.app).
+  [`https://ocean-platform-469489188516.asia-northeast1.run.app`](https://ocean-platform-469489188516.asia-northeast1.run.app).
 - GitHub records the successful deployment against the `production`
   environment while `gcp-dev` remains the development branch and `main` the
   stable integration branch.
@@ -451,9 +451,8 @@ workflow:
 
 ### Current Prototype Screenshots
 
-Captured from the local Next.js/FastAPI prototype on **2026-07-21**. These
-remain accurate for the scientific workbenches but predate the consolidated
-Admin workspace and managed GCP release.
+Captured from the authenticated OCEAN Platform Cloud Run deployment on
+**2026-08-25** after the parallel-service cutover and full route validation.
 
 ![Current overview](docs/screenshots/prototype_overview.png)
 *Overview page with corpus counts, source balance, runtime signals, and active
@@ -472,7 +471,7 @@ interface.*
 source registration diagnostics.*
 
 ![Current chat trust report](docs/screenshots/prototype_chat_trust_report.png)
-*Chat Trust Report after a real local-model query, showing trust level,
+*Chat Trust Report after a real Vertex AI query, showing trust level,
 context-aware citation requirements, and citation resolution.*
 
 ---
@@ -823,7 +822,7 @@ three explicitly gated/environment-dependent checks:
 Latest verified local result:
 
 ```text
-454 passed, 3 skipped
+455 passed, 3 skipped
 ```
 
 ---

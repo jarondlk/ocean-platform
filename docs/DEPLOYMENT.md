@@ -6,16 +6,19 @@ The managed GCP prototype is live. It uses a public Cloud Run frontend with a
 private FastAPI sidecar, Cloud SQL PostgreSQL/pgvector, Cloud Storage, Secret
 Manager, Cloud Run Jobs, Google OIDC, and Vertex AI. The production application
 URL is
-[`https://onagawa-source-chat-469489188516.asia-northeast1.run.app`](https://onagawa-source-chat-469489188516.asia-northeast1.run.app).
+[`https://ocean-platform-469489188516.asia-northeast1.run.app`](https://ocean-platform-469489188516.asia-northeast1.run.app).
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
 Current release record as of 2026-08-25:
 
-- stable GitHub release `v0.1.0`, source commit `2820f128` on `gcp-dev`;
-- Cloud Build `ce129a4f-4059-4e21-8bd1-7702fb34cdac`;
-- serving revision `onagawa-source-chat-00012-drc` at 100% traffic;
-- immediate rollback revision `onagawa-source-chat-00011-4pd`;
+- OCEAN Platform GitHub release `v0.2.0`;
+- full Cloud Build `d2b38c01-526a-4827-bd9d-2d05948e2350` and targeted
+  frontend build `2754b49a-6963-4efb-91c2-bdeb3d4a97c2`;
+- Cloud Run service `ocean-platform`, serving revision
+  `ocean-platform-00002-rhc` at 100% traffic;
+- former `onagawa-source-chat` service retained as the phase 8 rollback
+  application;
 - Cloud Run minimum zero, maximum one instance, concurrency 20; and
 - successful GitHub `production` deployment status.
 
@@ -73,8 +76,8 @@ AUTH_URL=https://rag.example.org
 AUTH_TRUST_HOST=false
 AUTH_SECRET=<independent random value>
 INTERNAL_AUTH_SECRET=<different independent random value>
-INTERNAL_AUTH_ISSUER=onagawa-source-chat-frontend
-INTERNAL_AUTH_AUDIENCE=onagawa-source-chat-api
+INTERNAL_AUTH_ISSUER=ocean-platform-frontend
+INTERNAL_AUTH_AUDIENCE=ocean-platform-api
 
 OIDC_ISSUER=https://identity.example.org
 OIDC_CLIENT_ID=<provider client id>
@@ -83,10 +86,10 @@ OIDC_PROVIDER_NAME=Managed identity provider
 OIDC_PROVIDER_ID=oidc
 
 CORS_ORIGINS=https://rag.example.org
-POSTGRES_USER=onagawa
+POSTGRES_USER=ocean
 POSTGRES_PASSWORD=<random database password>
-POSTGRES_DB=onagawa_rag
-DATABASE_URL=postgresql://onagawa:<url-encoded-password>@postgres:5432/onagawa_rag
+POSTGRES_DB=ocean_platform
+DATABASE_URL=postgresql://ocean:<url-encoded-password>@postgres:5432/ocean_platform
 OLLAMA_BASE_URL=http://<private-ollama-host>:11434
 ```
 

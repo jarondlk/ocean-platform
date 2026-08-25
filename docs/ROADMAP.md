@@ -33,11 +33,11 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The bounded GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and stable GitHub release `v0.1.0`.
+  and OCEAN Platform release `v0.2.0`.
 - Operational administration is consolidated under `/admin` with Users,
   Feedback, Pipeline, Database, System, and Debug sections.
-- The README screenshot set was refreshed from the live Next.js/FastAPI
-  local prototype on 2026-07-21; it predates the Admin consolidation.
+- The README screenshot set was refreshed from the authenticated OCEAN
+  Platform Cloud Run deployment on 2026-08-25.
 
 ## Near-Term Priority: Manual Scheduled Batch Updates
 

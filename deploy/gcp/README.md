@@ -16,17 +16,19 @@ place before the foundation or any runtime component is created.
 Verified on 2026-08-25:
 
 - project `data-infra-infobio`, region `asia-northeast1`;
-- stable GitHub release `v0.1.0`, source commit `2820f128`;
-- Cloud Build `ce129a4f-4059-4e21-8bd1-7702fb34cdac`;
-- Cloud Run service `onagawa-source-chat`, revision
-  `onagawa-source-chat-00012-drc`, 100% traffic;
-- rollback revision `onagawa-source-chat-00011-4pd`;
+- OCEAN Platform GitHub release `v0.2.0`;
+- full Cloud Build `d2b38c01-526a-4827-bd9d-2d05948e2350` and targeted
+  frontend build `2754b49a-6963-4efb-91c2-bdeb3d4a97c2`;
+- Cloud Run service `ocean-platform`, revision `ocean-platform-00002-rhc`,
+  100% traffic;
+- former `onagawa-source-chat` service retained as the phase 8 rollback
+  application;
 - Cloud SQL instance `onagawa-postgres` is PostgreSQL 16 and RUNNABLE;
 - minimum zero/maximum one service instance, concurrency 20; and
 - GitHub `production` deployment status `success`.
 
 The live URL is
-[`https://onagawa-source-chat-469489188516.asia-northeast1.run.app`](https://onagawa-source-chat-469489188516.asia-northeast1.run.app).
+[`https://ocean-platform-469489188516.asia-northeast1.run.app`](https://ocean-platform-469489188516.asia-northeast1.run.app).
 
 ## Target topology
 
