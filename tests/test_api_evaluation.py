@@ -1,7 +1,9 @@
 import json
+import threading
 
 import pandas as pd
 import pytest
+from fastapi import HTTPException
 from fastapi.testclient import TestClient
 
 import api.main as api_main
@@ -187,6 +189,29 @@ def test_evaluation_job_status_requires_known_job():
     response = client.get("/evaluation/jobs/missing-job")
 
     assert response.status_code == 404
+
+
+def test_evaluation_job_status_rejects_unsafe_ids():
+    with pytest.raises(HTTPException) as exc_info:
+        api_main._job_status_path("../escape")
+    assert exc_info.value.status_code == 404
+
+
+def test_evaluation_start_rejects_when_local_job_capacity_is_full(monkeypatch):
+    slots = threading.BoundedSemaphore(1)
+    assert slots.acquire(blocking=False)
+    monkeypatch.setattr(api_main, "LOCAL_JOB_SLOTS", slots)
+
+    try:
+        response = client.post(
+            "/evaluation/runs/standard",
+            json={"quick": True},
+        )
+    finally:
+        slots.release()
+
+    assert response.status_code == 429
+    assert response.json()["detail"]["code"] == "local_job_capacity_reached"
 
 
 def test_cloud_runtime_delegates_evaluation_execution(monkeypatch):

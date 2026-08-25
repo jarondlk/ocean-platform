@@ -1,6 +1,9 @@
 import json
+import threading
 import time
 
+from fastapi import HTTPException
+import pytest
 from fastapi.testclient import TestClient
 
 import api.main as api_main
@@ -53,6 +56,30 @@ def test_pipeline_start_rejects_unknown_stage():
 
     assert response.status_code == 400
     assert "Unknown pipeline stage" in response.text
+
+
+@pytest.mark.parametrize("unsafe_id", ["../escape", "/tmp/escape", "nested/escape", "..%2Fescape"])
+def test_pipeline_artifact_paths_reject_unsafe_ids(unsafe_id):
+    with pytest.raises(HTTPException) as exc_info:
+        api_main._pipeline_status_path(unsafe_id)
+    assert exc_info.value.status_code == 404
+
+
+def test_pipeline_start_rejects_when_local_job_capacity_is_full(monkeypatch):
+    slots = threading.BoundedSemaphore(1)
+    assert slots.acquire(blocking=False)
+    monkeypatch.setattr(api_main, "LOCAL_JOB_SLOTS", slots)
+
+    try:
+        response = client.post(
+            "/pipeline/jobs",
+            json={"stages": ["validate_raw"], "dry_run": True},
+        )
+    finally:
+        slots.release()
+
+    assert response.status_code == 429
+    assert response.json()["detail"]["code"] == "local_job_capacity_reached"
 
 
 def test_cloud_runtime_delegates_pipeline_execution(monkeypatch):

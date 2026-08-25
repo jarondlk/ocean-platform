@@ -380,6 +380,8 @@ EVALUATION_CANCEL_EVENTS: Dict[str, threading.Event] = {}
 EVALUATION_TERMINAL_STATES = {"complete", "failed", "cancelled"}
 PIPELINE_TERMINAL_STATES = {"complete", "failed", "cancelled"}
 PIPELINE_RESET_CONFIRMATION = "RESET DATABASE"
+LOCAL_JOB_SLOTS = threading.BoundedSemaphore(config.LOCAL_MAX_ACTIVE_JOBS)
+SAFE_ARTIFACT_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$")
 
 PIPELINE_STAGES: List[Dict[str, Any]] = [
     {
@@ -498,6 +500,36 @@ PIPELINE_DEFAULT_STAGES = [
 PIPELINE_JOB_LOCK = threading.Lock()
 PIPELINE_CANCEL_EVENTS: Dict[str, threading.Event] = {}
 PIPELINE_PROCESSES: Dict[str, subprocess.Popen[str]] = {}
+
+
+def _acquire_local_job_slot(job_kind: str) -> None:
+    if LOCAL_JOB_SLOTS.acquire(blocking=False):
+        return
+    raise HTTPException(
+        status_code=429,
+        detail={
+            "code": "local_job_capacity_reached",
+            "message": f"The local {job_kind.lower()} worker is at capacity.",
+        },
+        headers={"Retry-After": "60"},
+    )
+
+
+def _validate_artifact_id(value: str, kind: str) -> str:
+    if not SAFE_ARTIFACT_ID.fullmatch(value):
+        raise HTTPException(status_code=404, detail=f"Unknown {kind}: {value}")
+    return value
+
+
+def _artifact_path(root: Path, identifier: str, kind: str) -> Path:
+    safe_identifier = _validate_artifact_id(identifier, kind)
+    resolved_root = root.resolve()
+    candidate = (resolved_root / safe_identifier).resolve()
+    try:
+        candidate.relative_to(resolved_root)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=f"Unknown {kind}: {identifier}") from exc
+    return candidate
 
 
 def _require_local_job_execution(job_kind: str) -> None:
@@ -1095,11 +1127,11 @@ def _new_evaluation_run_id(run_type: str, model: str, tag: Optional[str]) -> str
 
 
 def _job_output_dir(run_id: str) -> Path:
-    return _evaluation_runs_root() / run_id
+    return _artifact_path(_evaluation_runs_root(), run_id, "evaluation run")
 
 
 def _job_status_path(job_id: str) -> Path:
-    return _evaluation_runs_root() / job_id / "progress.json"
+    return _artifact_path(_evaluation_runs_root(), job_id, "evaluation job") / "progress.json"
 
 
 def _write_json_atomic(path: Path, payload: Dict[str, Any]) -> None:
@@ -1126,19 +1158,19 @@ def _new_pipeline_run_id(tag: Optional[str]) -> str:
 
 
 def _pipeline_output_dir(run_id: str) -> Path:
-    return _pipeline_runs_root() / run_id
+    return _artifact_path(_pipeline_runs_root(), run_id, "pipeline run")
 
 
 def _pipeline_status_path(job_id: str) -> Path:
-    return _pipeline_runs_root() / job_id / "progress.json"
+    return _artifact_path(_pipeline_runs_root(), job_id, "pipeline job") / "progress.json"
 
 
 def _pipeline_log_path(job_id: str) -> Path:
-    return _pipeline_runs_root() / job_id / "run.log"
+    return _artifact_path(_pipeline_runs_root(), job_id, "pipeline job") / "run.log"
 
 
 def _pipeline_meta_path(job_id: str) -> Path:
-    return _pipeline_runs_root() / job_id / "run_meta.json"
+    return _artifact_path(_pipeline_runs_root(), job_id, "pipeline job") / "run_meta.json"
 
 
 def _pipeline_append_log(job_id: str, text_value: str) -> None:
@@ -1161,7 +1193,7 @@ def _pipeline_tail_log(job_id: str, limit_bytes: int = 20000) -> str:
 
 
 def _pipeline_manifest_path(job_id: str) -> Path:
-    return _pipeline_runs_root() / job_id / "manifest.json"
+    return _artifact_path(_pipeline_runs_root(), job_id, "pipeline job") / "manifest.json"
 
 
 def _model_dump(model: Any) -> Dict[str, Any]:
@@ -1648,7 +1680,7 @@ def _pipeline_stage_logs(
     manifest: Optional[Dict[str, Any]] = None,
     limit_bytes: int = 200000,
 ) -> List[PipelineStageLog]:
-    manifest_payload = manifest or _pipeline_manifest_for_dir(_pipeline_runs_root() / job_id)
+    manifest_payload = manifest or _pipeline_manifest_for_dir(_pipeline_output_dir(job_id))
     log_text = _pipeline_tail_log(job_id, limit_bytes)
     buffers: Dict[str, List[str]] = {}
     stage_order: List[str] = []
@@ -1707,7 +1739,7 @@ def _pipeline_stage_logs(
 
 
 def _pipeline_run_detail_or_404(run_id: str, limit_bytes: int = 50000) -> PipelineRunDetailResponse:
-    run_dir = _pipeline_runs_root() / run_id
+    run_dir = _pipeline_output_dir(run_id)
     if not run_dir.exists() or not run_dir.is_dir():
         raise HTTPException(status_code=404, detail=f"Unknown pipeline run: {run_id}")
     manifest = _pipeline_manifest_for_dir(run_dir)
@@ -2085,20 +2117,25 @@ def build_pipeline_preflight(request: PipelineRunRequest) -> PipelinePreflightRe
 
 def _start_pipeline_job(request: PipelineRunRequest) -> PipelineStartResponse:
     _require_local_job_execution("Pipeline")
-    _validate_pipeline_request_for_start(request)
-    run_id = _new_pipeline_run_id(request.tag)
-    job_id = run_id
-    output_dir = _pipeline_output_dir(run_id)
-    output_dir.mkdir(parents=True, exist_ok=True)
-    cancel_event = threading.Event()
-    status_payload = _pipeline_status_payload(
-        job_id=job_id,
-        run_id=run_id,
-        status="queued",
-        stages=request.stages,
-        message="Pipeline job queued.",
-    )
-    _write_pipeline_status(status_payload)
+    _acquire_local_job_slot("pipeline")
+    try:
+        _validate_pipeline_request_for_start(request)
+        run_id = _new_pipeline_run_id(request.tag)
+        job_id = run_id
+        output_dir = _pipeline_output_dir(run_id)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        cancel_event = threading.Event()
+        status_payload = _pipeline_status_payload(
+            job_id=job_id,
+            run_id=run_id,
+            status="queued",
+            stages=request.stages,
+            message="Pipeline job queued.",
+        )
+        _write_pipeline_status(status_payload)
+    except Exception:
+        LOCAL_JOB_SLOTS.release()
+        raise
 
     def run_worker() -> None:
         try:
@@ -2124,11 +2161,18 @@ def _start_pipeline_job(request: PipelineRunRequest) -> PipelineStartResponse:
             with PIPELINE_JOB_LOCK:
                 PIPELINE_CANCEL_EVENTS.pop(job_id, None)
                 PIPELINE_PROCESSES.pop(job_id, None)
+            LOCAL_JOB_SLOTS.release()
 
     with PIPELINE_JOB_LOCK:
         PIPELINE_CANCEL_EVENTS[job_id] = cancel_event
     thread = threading.Thread(target=run_worker, name=f"pipeline-{run_id}", daemon=True)
-    thread.start()
+    try:
+        thread.start()
+    except Exception:
+        with PIPELINE_JOB_LOCK:
+            PIPELINE_CANCEL_EVENTS.pop(job_id, None)
+        LOCAL_JOB_SLOTS.release()
+        raise
     return PipelineStartResponse(
         job_id=job_id,
         run_id=run_id,
@@ -2625,28 +2669,33 @@ def _start_evaluation_job(
     request: EvaluationStandardRunRequest | EvaluationAblationRunRequest,
 ) -> EvaluationStartResponse:
     _require_local_job_execution("Evaluation")
-    if run_type == "standard":
-        _select_benchmark_questions(request.question_ids, request.categories, request.quick)
-        _select_evaluation_modes(request.modes)  # type: ignore[union-attr]
-    else:
-        _select_benchmark_questions(request.question_ids, request.categories, request.quick)
-        _select_system_variants(request.variants)  # type: ignore[union-attr]
+    _acquire_local_job_slot("evaluation")
+    try:
+        if run_type == "standard":
+            _select_benchmark_questions(request.question_ids, request.categories, request.quick)
+            _select_evaluation_modes(request.modes)  # type: ignore[union-attr]
+        else:
+            _select_benchmark_questions(request.question_ids, request.categories, request.quick)
+            _select_system_variants(request.variants)  # type: ignore[union-attr]
 
-    model = request.model or config.CHAT_MODEL
-    run_id = _new_evaluation_run_id(run_type, model, request.tag)
-    job_id = run_id
-    output_dir = _job_output_dir(run_id)
-    output_dir.mkdir(parents=True, exist_ok=True)
-    cancel_event = threading.Event()
-    status_payload = _status_payload(
-        job_id=job_id,
-        run_id=run_id,
-        run_type=run_type,
-        status="queued",
-        phase="queued",
-        message="Evaluation job queued.",
-    )
-    _write_job_status(status_payload)
+        model = request.model or config.CHAT_MODEL
+        run_id = _new_evaluation_run_id(run_type, model, request.tag)
+        job_id = run_id
+        output_dir = _job_output_dir(run_id)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        cancel_event = threading.Event()
+        status_payload = _status_payload(
+            job_id=job_id,
+            run_id=run_id,
+            run_type=run_type,
+            status="queued",
+            phase="queued",
+            message="Evaluation job queued.",
+        )
+        _write_job_status(status_payload)
+    except Exception:
+        LOCAL_JOB_SLOTS.release()
+        raise
 
     target = _run_standard_evaluation_job if run_type == "standard" else _run_ablation_evaluation_job
 
@@ -2673,11 +2722,18 @@ def _start_evaluation_job(
         finally:
             with EVALUATION_JOB_LOCK:
                 EVALUATION_CANCEL_EVENTS.pop(job_id, None)
+            LOCAL_JOB_SLOTS.release()
 
     with EVALUATION_JOB_LOCK:
         EVALUATION_CANCEL_EVENTS[job_id] = cancel_event
     thread = threading.Thread(target=run_worker, name=f"evaluation-{run_id}", daemon=True)
-    thread.start()
+    try:
+        thread.start()
+    except Exception:
+        with EVALUATION_JOB_LOCK:
+            EVALUATION_CANCEL_EVENTS.pop(job_id, None)
+        LOCAL_JOB_SLOTS.release()
+        raise
     return EvaluationStartResponse(
         job_id=job_id,
         run_id=run_id,

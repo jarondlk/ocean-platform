@@ -153,6 +153,7 @@ JOB_EXECUTION_MODE = os.environ.get(
     "JOB_EXECUTION_MODE",
     "local",
 ).strip().lower()
+LOCAL_MAX_ACTIVE_JOBS = _environment_int("LOCAL_MAX_ACTIVE_JOBS", 1, minimum=1)
 
 # ---------------------------------------------------------------------------
 # Authentication
@@ -442,6 +443,10 @@ def validate_runtime_configuration() -> None:
     if JOB_EXECUTION_MODE not in {"local", "external"}:
         raise RuntimeConfigurationError(
             "JOB_EXECUTION_MODE must be either local or external"
+        )
+    if production_like_environment() and JOB_EXECUTION_MODE == "local":
+        raise RuntimeConfigurationError(
+            "Production-like environments must use JOB_EXECUTION_MODE=external"
         )
     if PROVENANCE_READ_MODE not in {"build", "snapshot"}:
         raise RuntimeConfigurationError(
