@@ -9,19 +9,19 @@ Project: `data-infra-infobio` (`469489188516`), region
 
 | Component | Resource | State and guardrail |
 | --- | --- | --- |
-| Web application | Cloud Run `ocean-platform` | Revision `ocean-platform-00007-2dp`, build `9764872c-41b4-45ec-ac58-d77c7d9dac86`, 100% traffic, minimum 0 / maximum 1 instance, public invoker required for the authenticated frontend |
+| Web application | Cloud Run `ocean-platform` | Revision `ocean-platform-00008-jh9`, build `9e0048f7-372d-4b3c-9068-971ef299db8d`, 100% traffic, minimum 0 / maximum 1 instance, public invoker required for the authenticated frontend |
 | Database | Cloud SQL `ocean-postgres` | PostgreSQL 16, `db-f1-micro`, 10 GB, RUNNABLE, deletion protection, seven backups and seven days of PITR |
 | Scientific data | `gs://data-infra-infobio-ocean-data` | 113,841,102 live bytes at audit time, versioning and the reviewed scientific-data lifecycle enabled |
 | Images | Artifact Registry `ocean-platform` | API and frontend images; keep five recent versions and delete versions older than 30 days |
 | Runtime identities | `ocean-platform`, `ocean-jobs` | Enabled, keyless, and separated between serving and manual jobs |
 | Secrets | Four `ocean-*` secrets | Access limited to the matching serving or job identity; no values are stored in deployment YAML |
-| Batch definitions | Four `ocean-*` Cloud Run Jobs | All use build `9764872c-41b4-45ec-ac58-d77c7d9dac86`; manual only, zero automatic retries, no scheduler or build trigger |
+| Batch definitions | Four `ocean-*` Cloud Run Jobs | All use build `9e0048f7-372d-4b3c-9068-971ef299db8d`; manual only, zero automatic retries, no scheduler or build trigger |
 | Model runtime | Vertex AI managed models | Workload identity only; no custom model, endpoint, index, or index endpoint exists |
 
 Authenticated validation after the audit passed for Overview, Data, Provenance,
-Evaluation, and Admin/System. The application reported 323 retrieval documents,
-207 samples, 162 CTD casts, 79 SST days, a healthy database, and an available
-model runtime.
+Evaluation, Chat, and all Admin sections. The application reported 323
+retrieval documents, 207 samples, 162 CTD casts, 79 SST days, a healthy
+database, an available model runtime, and 15/15 recent derived artifacts.
 
 ## Dormant legacy resources
 
@@ -97,6 +97,8 @@ These actions remove rollback state and are intentionally not automatic:
 5. Delete the four `onagawa-*` secrets and then the two disabled legacy service
    accounts.
 
-The project billing link is enabled, but the active CLI account cannot list the
-billing-account budget objects. Budget configuration therefore remains a
-billing-account IAM follow-up rather than a verified result of this audit.
+The project billing link is enabled. Cloud Console verification recorded three
+budget controls: a Cloud Run spend cap of ¥2,250, a Cloud SQL alert threshold
+of ¥4,000, and a project monthly guardrail of ¥10,000. The active CLI account
+cannot list billing-account budget objects, so future budget edits still
+require the billing administrator or the signed-in billing console.

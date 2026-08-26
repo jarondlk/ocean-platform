@@ -33,7 +33,7 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The bounded GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.2.2`. The active data plane now uses the
+  and OCEAN Platform release `v0.2.3`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
 - Operational administration is consolidated under `/admin` with Users,
