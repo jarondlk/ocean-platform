@@ -213,6 +213,9 @@ export default function PipelinePage() {
   const rawRows = (status?.raw_sources || []).map(artifactToRow);
   const artifactRows = (status?.artifacts || []).map(artifactToRow);
   const freshnessRows = (status?.artifact_freshness || []).map(freshnessToRow);
+  const derivedFreshness = (status?.artifact_freshness || []).filter(
+    (artifact) => artifact.kind === "derived",
+  );
   const activeJobRows = (status?.active_jobs || []).map(jobToRow);
   const selectedCommandRows = preflight?.command_plan?.length
     ? preflight.command_plan.map(commandPlanToRow)
@@ -244,9 +247,9 @@ export default function PipelinePage() {
       total: artifactRows.length,
     },
     {
-      label: "Fresh artifacts",
-      value: freshnessRows.filter((row) => row.freshness_status === "fresh").length,
-      total: freshnessRows.length,
+      label: "Recent derived artifacts",
+      value: derivedFreshness.filter((artifact) => artifact.freshness_status === "recent").length,
+      total: derivedFreshness.length,
     },
   ];
   const freshnessBreakdown = countRowsBy(freshnessRows, "freshness_status");

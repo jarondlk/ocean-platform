@@ -20,7 +20,7 @@ Transforms fragmented field data — CTD water profiles, metagenome sequencing, 
 
 ## Current Prototype Status
 
-Status as of **2026-08-25**: this is an active invite-only **Next.js +
+Status as of **2026-08-26**: this is an active invite-only **Next.js +
 FastAPI** prototype deployed on GCP, with PostgreSQL/pgvector retrieval,
 Vertex AI generation and embeddings, Google OIDC, and Cloud Run Jobs for
 operator-approved batch work. The same application remains runnable locally
@@ -30,11 +30,15 @@ service.
 
 Current managed milestone:
 
-- GitHub release [`v0.2.2`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.2.2)
-  is the completed OCEAN Platform application and managed data-plane cutover.
-- Post-release remediation build `9764872c-41b4-45ec-ac58-d77c7d9dac86`
-  runs on Cloud Run revision `ocean-platform-00007-2dp`, which serves 100% of
-  traffic in `asia-northeast1` through service account `ocean-platform`.
+- GitHub release [`v0.2.3`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.2.3)
+  is the maintenance release for the completed OCEAN Platform application and
+  managed data-plane cutover. It corrects the Pipeline availability metric so
+  it reports recent derived artifacts against the API freshness contract.
+- The preceding `v0.2.2` remediation build
+  `9764872c-41b4-45ec-ac58-d77c7d9dac86` and Cloud Run revision
+  `ocean-platform-00007-2dp` remain the documented application rollback point.
+  The immutable build, revision, and canary executions for `v0.2.3` are
+  attached to its GitHub production deployment and release record.
 - The live data plane uses Artifact Registry `ocean-platform`, Cloud SQL
   `ocean-postgres` / database `ocean_platform`, jobs under the `ocean-*`
   prefix, OCEAN Secret Manager entries, and bucket
@@ -817,8 +821,8 @@ npm run build
 
 ### Current Test Matrix
 
-The current suite contains more than **450 tests** across unit, API, and
-integration modules. The latest release validation passed 454 and skipped
+The current suite contains more than **470 tests** across unit, API, and
+integration modules. The latest release validation passed 473 and skipped
 three explicitly gated/environment-dependent checks:
 
 | Test area | Files |
@@ -834,7 +838,7 @@ three explicitly gated/environment-dependent checks:
 Latest verified local result:
 
 ```text
-455 passed, 3 skipped
+473 passed, 3 skipped
 ```
 
 ---
