@@ -2,6 +2,13 @@
 
 ## Current release evidence
 
+For OCEAN Platform release `v0.2.3`, the local release gate passed 473 backend
+tests with 3 skipped checks and 74.54% aggregate coverage, Ruff, the frontend
+typecheck and 24-route production build, `pip check`, a single Alembic head,
+and a production npm audit with zero vulnerabilities. The immutable Cloud
+Build, deployed revision, bounded job canaries, and authenticated production
+checks are recorded in the GitHub `production` deployment for the release.
+
 For OCEAN Platform release `v0.2.2`, the local backend suite passed 471 tests
 with 3 skipped checks; one GCS snapshot test requires the optional local
 `google-cloud-storage` package. Ruff, the frontend typecheck, the 24-route

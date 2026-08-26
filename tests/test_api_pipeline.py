@@ -300,6 +300,15 @@ def test_pipeline_status_reports_active_jobs_and_artifact_freshness(tmp_path, mo
     assert payload["artifact_freshness"]
     first_freshness = payload["artifact_freshness"][0]
     assert {"id", "kind", "freshness_status", "lineage_status", "age_days"}.issubset(first_freshness)
+    assert {row["kind"] for row in payload["artifact_freshness"]} <= {"raw", "derived"}
+    assert {row["freshness_status"] for row in payload["artifact_freshness"]} <= {
+        "recent",
+        "aged",
+        "archival",
+        "missing",
+        "unknown",
+    }
+    assert any(row["kind"] == "derived" for row in payload["artifact_freshness"])
 
 
 def test_pipeline_database_load_requires_backup_for_real_run():

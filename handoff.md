@@ -2,7 +2,7 @@
 
 > **Last updated**: 2026-08-26 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform release `v0.2.2` is live on Cloud Run service `ocean-platform`. The invite-only Next.js + FastAPI application uses Google OIDC, the OCEAN Cloud SQL/pgvector data plane, Vertex AI, verified Provenance snapshots, and `ocean-*` Cloud Run Jobs. The former service is private and its deletion-protected SQL instance is stopped as a reversible rollback boundary; local Ollama development and the archived Streamlit reference remain supported.
+> **Current status**: OCEAN Platform release `v0.2.3` is live on Cloud Run service `ocean-platform`. The invite-only Next.js + FastAPI application uses Google OIDC, the OCEAN Cloud SQL/pgvector data plane, Vertex AI, verified Provenance snapshots, and `ocean-*` Cloud Run Jobs. The former service is private and its deletion-protected SQL instance is stopped as a reversible rollback boundary; local Ollama development and the archived Streamlit reference remain supported.
 
 ---
 
@@ -40,6 +40,22 @@ used only as historical reference and parity material.
 ---
 
 ## 2. What Changed Recently
+
+### Maintenance Release v0.2.3 (2026-08-26)
+
+- The Pipeline availability summary now counts only derived artifacts whose
+  API freshness class is `recent`. Raw inputs are excluded from its denominator
+  and the label is explicitly **Recent derived artifacts**.
+- The frontend freshness contract is a closed TypeScript union matching the
+  backend values (`recent`, `aged`, `archival`, `missing`, and `unknown`), so
+  an unsupported class fails typechecking instead of silently displaying 0%.
+- FastAPI and frontend package metadata report `0.2.3`. Local release gates
+  passed 473 backend tests with 3 skipped checks, Ruff, 74.54% coverage, the
+  frontend typecheck and 24-route production build, `pip check`, a single
+  Alembic head, and a zero-vulnerability production npm audit.
+- The exact source SHA, Cloud Build, Cloud Run revision, and bounded canary
+  executions are preserved in the GitHub `production` deployment and release.
+  Revision `ocean-platform-00007-2dp` remains the application rollback point.
 
 ### OCEAN Platform Cutover (2026-08-25)
 
@@ -601,8 +617,8 @@ Latest local verification for this audit:
 
 | Check | Result |
 | --- | --- |
-| `pytest` | 455 passed, 3 skipped in the OCEAN rebrand validation; 74.31% aggregate coverage |
-| Coverage boundary | 74.31% aggregate; required floor is 70% |
+| `pytest` | 473 passed, 3 skipped in the `v0.2.3` release validation; 74.54% aggregate coverage |
+| Coverage boundary | 74.54% aggregate; required floor is 70% |
 | PostgreSQL metadata integration | Passed against migrated local PostgreSQL/pgvector |
 | Security-boundary Ruff check | Passed |
 | `npm run typecheck` | Passed |

@@ -374,13 +374,20 @@ export type PipelineArtifactInfo = {
   note?: string | null;
 };
 
+export type PipelineArtifactFreshnessStatus =
+  | "recent"
+  | "aged"
+  | "archival"
+  | "missing"
+  | "unknown";
+
 export type PipelineArtifactFreshness = {
   id: string;
   label: string;
-  kind: string;
+  kind: "raw" | "derived";
   path: string;
   exists: boolean;
-  freshness_status: string;
+  freshness_status: PipelineArtifactFreshnessStatus;
   lineage_status: string;
   age_days?: number | null;
   modified_at?: string | null;
