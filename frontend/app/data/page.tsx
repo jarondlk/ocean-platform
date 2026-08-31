@@ -1,11 +1,17 @@
 "use client";
 
 import { FormEvent, Suspense, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { RefreshCw } from "lucide-react";
 import { AnalysisWorkbench } from "@/components/AnalysisWorkbench";
 import { DataTable, formatCell } from "@/components/DataTable";
 import { getCtdProfile, getDataCatalog, getSstData, getTaxaSample } from "@/lib/api";
+import {
+  buildHref,
+  resolveContextWorkspace,
+  safeEvidenceIdentifier,
+  safeIsoDate,
+} from "@/lib/citation-navigation";
 import { useAppPreferences } from "@/lib/preferences";
 import type {
   CtdProfileResponse,
@@ -41,10 +47,23 @@ export default function DataPage() {
 
 function DataPageContent() {
   const { ui } = useAppPreferences();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const requestedView = searchParams.get("view");
+  const requestedSampleRaw = searchParams.get("sample_id");
+  const requestedSample = safeEvidenceIdentifier(requestedSampleRaw);
+  const requestedFromRaw = searchParams.get("time_from");
+  const requestedToRaw = searchParams.get("time_to");
+  const requestedFrom = safeIsoDate(requestedFromRaw);
+  const requestedTo = safeIsoDate(requestedToRaw);
+  const requestedContextRaw = searchParams.get("context_id");
+  const requestedContext = safeEvidenceIdentifier(requestedContextRaw);
+  const contextTarget = resolveContextWorkspace(requestedContext);
+  const urlView: DataView = isDataView(requestedView)
+    ? requestedView
+    : contextTarget?.scope || "observations";
   const [catalog, setCatalog] = useState<DataCatalogResponse | null>(null);
-  const [view, setView] = useState<DataView>("observations");
+  const [view, setView] = useState<DataView>(urlView);
   const [ctdSample, setCtdSample] = useState("");
   const [taxaSample, setTaxaSample] = useState("");
   const [selectedVars, setSelectedVars] = useState<string[]>([]);
@@ -58,30 +77,81 @@ function DataPageContent() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    setView(isDataView(requestedView) ? requestedView : "observations");
-  }, [requestedView]);
+    setView(urlView);
+  }, [urlView]);
 
   useEffect(() => {
     getDataCatalog()
       .then((payload) => {
         setCatalog(payload);
-        const firstCtd = payload.ctd_samples[0] || "";
-        const firstTaxa = payload.taxa_samples[0] || "";
-        setCtdSample(firstCtd);
-        setTaxaSample(firstTaxa);
         setSelectedVars(payload.ctd_variables.slice(0, 4));
-        if (firstCtd) void loadCtd(firstCtd);
-        if (firstTaxa) void loadTaxa(firstTaxa);
-        void loadSst();
       })
       .catch((err: Error) => setError(err.message));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (!catalog) return;
+    setError("");
+
+    if (urlView === "ctd") {
+      if (requestedSampleRaw && !requestedSample) {
+        setCtdSample("");
+        setCtdProfile(null);
+        setError("The requested CTD sample identifier is invalid.");
+        return;
+      }
+      const sampleId = requestedSample || catalog.ctd_samples[0] || "";
+      if (requestedSample && !catalog.ctd_samples.includes(requestedSample)) {
+        setCtdSample("");
+        setCtdProfile(null);
+        setError(`CTD sample ${requestedSample} is not available.`);
+        return;
+      }
+      setCtdSample(sampleId);
+      if (sampleId) void loadCtd(sampleId);
+      return;
+    }
+
+    if (urlView === "taxa") {
+      if (requestedSampleRaw && !requestedSample) {
+        setTaxaSample("");
+        setTaxa(null);
+        setError("The requested taxa sample identifier is invalid.");
+        return;
+      }
+      const sampleId = requestedSample || catalog.taxa_samples[0] || "";
+      if (requestedSample && !catalog.taxa_samples.includes(requestedSample)) {
+        setTaxaSample("");
+        setTaxa(null);
+        setError(`Taxa sample ${requestedSample} is not available.`);
+        return;
+      }
+      setTaxaSample(sampleId);
+      if (sampleId) void loadTaxa(sampleId);
+      return;
+    }
+
+    if (urlView === "sst") {
+      if ((requestedFromRaw && !requestedFrom) || (requestedToRaw && !requestedTo)) {
+        setSst(null);
+        setError("The requested SST date range is invalid.");
+        return;
+      }
+      const nextFrom = requestedFrom || "";
+      const nextTo = requestedTo || "";
+      setSstFrom(nextFrom);
+      setSstTo(nextTo);
+      void loadSst({ nextFrom, nextTo });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [catalog, requestedFrom, requestedFromRaw, requestedSample, requestedSampleRaw, requestedTo, requestedToRaw, urlView]);
+
   async function loadCtd(sampleId = ctdSample) {
     if (!sampleId) return;
     setLoading(true);
     setError("");
+    setCtdProfile(null);
     try {
       const payload = await getCtdProfile(sampleId);
       setCtdProfile(payload);
@@ -100,6 +170,7 @@ function DataPageContent() {
     if (!sampleId) return;
     setLoading(true);
     setError("");
+    setTaxa(null);
     try {
       setTaxa(await getTaxaSample(sampleId));
     } catch (err) {
@@ -109,14 +180,23 @@ function DataPageContent() {
     }
   }
 
-  async function loadSst() {
+  async function loadSst({
+    nextFrom = sstFrom,
+    nextTo = sstTo,
+    nextLimit = sstLimit,
+  }: {
+    nextFrom?: string;
+    nextTo?: string;
+    nextLimit?: number;
+  } = {}) {
     setLoading(true);
     setError("");
+    setSst(null);
     try {
       setSst(await getSstData({
-        time_from: sstFrom || undefined,
-        time_to: sstTo || undefined,
-        limit: sstLimit,
+        time_from: nextFrom || undefined,
+        time_to: nextTo || undefined,
+        limit: nextLimit,
       }));
     } catch (err) {
       setError(err instanceof Error ? err.message : "SST request failed");
@@ -127,7 +207,31 @@ function DataPageContent() {
 
   function submitSst(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    void loadSst();
+    const nextFrom = safeIsoDate(sstFrom);
+    const nextTo = safeIsoDate(sstTo);
+    if ((sstFrom && !nextFrom) || (sstTo && !nextTo)) {
+      setSst(null);
+      setError("The requested SST date range is invalid.");
+      return;
+    }
+    router.replace(buildHref("/data", {
+      view: "sst",
+      time_from: nextFrom,
+      time_to: nextTo,
+    }), { scroll: false });
+    if ((requestedFrom || "") === (nextFrom || "") && (requestedTo || "") === (nextTo || "")) {
+      void loadSst({ nextFrom: nextFrom || "", nextTo: nextTo || "" });
+    }
+  }
+
+  function changeView(nextView: DataView) {
+    router.push(buildHref("/data", {
+      view: nextView === "observations" ? undefined : nextView,
+    }), { scroll: false });
+  }
+
+  function changeSample(nextView: "ctd" | "taxa", sampleId: string) {
+    router.push(buildHref("/data", { view: nextView, sample_id: sampleId }), { scroll: false });
   }
 
   const ctdTableRows = useMemo(() => {
@@ -147,22 +251,22 @@ function DataPageContent() {
       </header>
 
       <div className="data-tabs" role="tablist" aria-label={ui("Data views")}>
-        <button className={view === "observations" ? "active" : ""} onClick={() => setView("observations")} type="button">
+        <button className={view === "observations" ? "active" : ""} onClick={() => changeView("observations")} type="button">
           {ui("Observations")}
         </button>
-        <button className={view === "ctd" ? "active" : ""} onClick={() => setView("ctd")} type="button">
+        <button className={view === "ctd" ? "active" : ""} onClick={() => changeView("ctd")} type="button">
           CTD
         </button>
-        <button className={view === "taxa" ? "active" : ""} onClick={() => setView("taxa")} type="button">
+        <button className={view === "taxa" ? "active" : ""} onClick={() => changeView("taxa")} type="button">
           {ui("Taxa")}
         </button>
-        <button className={view === "sst" ? "active" : ""} onClick={() => setView("sst")} type="button">
+        <button className={view === "sst" ? "active" : ""} onClick={() => changeView("sst")} type="button">
           SST
         </button>
-        <button className={view === "analysis" ? "active" : ""} onClick={() => setView("analysis")} type="button">
+        <button className={view === "analysis" ? "active" : ""} onClick={() => changeView("analysis")} type="button">
           {ui("Derived Analysis")}
         </button>
-        <button className={view === "reliability" ? "active" : ""} onClick={() => setView("reliability")} type="button">
+        <button className={view === "reliability" ? "active" : ""} onClick={() => changeView("reliability")} type="button">
           {ui("Reliability")}
         </button>
       </div>
@@ -214,10 +318,10 @@ function DataPageContent() {
                 className="field"
                 value={ctdSample}
                 onChange={(event) => {
-                  setCtdSample(event.target.value);
-                  void loadCtd(event.target.value);
+                  changeSample("ctd", event.target.value);
                 }}
               >
+                <option disabled value="">{ui("Select a sample")}</option>
                 {(catalog?.ctd_samples || []).map((sample) => (
                   <option key={sample} value={sample}>
                     {sample}
@@ -280,10 +384,10 @@ function DataPageContent() {
                 className="field"
                 value={taxaSample}
                 onChange={(event) => {
-                  setTaxaSample(event.target.value);
-                  void loadTaxa(event.target.value);
+                  changeSample("taxa", event.target.value);
                 }}
               >
+                <option disabled value="">{ui("Select a sample")}</option>
                 {(catalog?.taxa_samples || []).map((sample) => (
                   <option key={sample} value={sample}>
                     {sample}
@@ -356,9 +460,30 @@ function DataPageContent() {
         </section>
       ) : null}
 
-      {view === "analysis" ? <AnalysisWorkbench key="analysis" scope="analysis" /> : null}
+      {view === "analysis" ? (
+        requestedContextRaw && (!requestedContext || !contextTarget || contextTarget.scope !== "analysis") ? (
+          <UnsupportedContext contextId={requestedContextRaw} />
+        ) : (
+          <AnalysisWorkbench contextId={requestedContext} key={`analysis-${requestedContext || "default"}`} scope="analysis" />
+        )
+      ) : null}
 
-      {view === "reliability" ? <AnalysisWorkbench key="reliability" scope="reliability" /> : null}
+      {view === "reliability" ? (
+        requestedContextRaw && (!requestedContext || !contextTarget || contextTarget.scope !== "reliability") ? (
+          <UnsupportedContext contextId={requestedContextRaw} />
+        ) : (
+          <AnalysisWorkbench contextId={requestedContext} key={`reliability-${requestedContext || "default"}`} scope="reliability" />
+        )
+      ) : null}
+    </section>
+  );
+}
+
+function UnsupportedContext({ contextId }: { contextId: string }) {
+  return (
+    <section className="data-section navigator-warning" role="alert">
+      <h3 className="section-title">Unsupported evidence context</h3>
+      <p>The context identifier <strong>{contextId}</strong> does not map to a published analysis or reliability artifact.</p>
     </section>
   );
 }

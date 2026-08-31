@@ -101,6 +101,10 @@ jobs:
         working-directory: frontend
         run: npm audit --omit=dev --audit-level=moderate
 
+      - name: Test frontend
+        working-directory: frontend
+        run: npm test
+
       - name: Typecheck frontend
         working-directory: frontend
         run: npm run typecheck

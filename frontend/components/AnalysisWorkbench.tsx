@@ -4,10 +4,11 @@ import { useEffect, useMemo, useState } from "react";
 import { RefreshCw } from "lucide-react";
 import { DataTable, formatCell } from "@/components/DataTable";
 import { getAnalysis } from "@/lib/api";
+import { resolveContextWorkspace } from "@/lib/citation-navigation";
 import { useAppPreferences } from "@/lib/preferences";
 import type { AnalysisResponse } from "@/types";
 
-type AnalysisView = "trends" | "correlations" | "diversity" | "cooccurrence" | "reliability";
+type AnalysisView = "trends" | "correlations" | "diversity" | "cooccurrence" | "bay_comparison" | "reliability";
 type ReliabilityView = "sst_ctd" | "gap" | "diversity_prediction" | "corroboration";
 type AnalysisScope = "all" | "analysis" | "reliability";
 
@@ -22,15 +23,22 @@ const trendLabels: Record<string, string> = {
   strat_index: "Stratification index",
 };
 
-export function AnalysisWorkbench({ scope = "all" }: { scope?: AnalysisScope }) {
+export function AnalysisWorkbench({
+  scope = "all",
+  contextId,
+}: {
+  scope?: AnalysisScope;
+  contextId?: string | null;
+}) {
   const { ui } = useAppPreferences();
+  const contextTarget = useMemo(() => resolveContextWorkspace(contextId), [contextId]);
   const [analysis, setAnalysis] = useState<AnalysisResponse | null>(null);
-  const [view, setView] = useState<AnalysisView>(scope === "reliability" ? "reliability" : "trends");
+  const [view, setView] = useState<AnalysisView>(contextTarget?.view || (scope === "reliability" ? "reliability" : "trends"));
   const [trendVariable, setTrendVariable] = useState("mean_temperature");
   const [significantOnly, setSignificantOnly] = useState(true);
-  const [diversitySource, setDiversitySource] = useState("");
+  const [diversitySource, setDiversitySource] = useState(contextTarget?.diversitySource || "");
   const [pairLimit, setPairLimit] = useState(30);
-  const [reliabilityView, setReliabilityView] = useState<ReliabilityView>("sst_ctd");
+  const [reliabilityView, setReliabilityView] = useState<ReliabilityView>(contextTarget?.reliabilityView || "sst_ctd");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -61,15 +69,22 @@ export function AnalysisWorkbench({ scope = "all" }: { scope?: AnalysisScope }) 
   }, []);
 
   useEffect(() => {
+    if (contextTarget) {
+      setView(contextTarget.view);
+      if (contextTarget.reliabilityView) setReliabilityView(contextTarget.reliabilityView);
+      if (contextTarget.diversitySource) setDiversitySource(contextTarget.diversitySource);
+      return;
+    }
     if (scope === "reliability" && view !== "reliability") {
       setView("reliability");
     }
     if (scope === "analysis" && view === "reliability") {
       setView("trends");
     }
-  }, [scope, view]);
+  }, [contextTarget, scope, view]);
 
   const trendRows = getRows(analysis?.ctd_trends, "rows");
+  const bayComparisonRows = getRows(analysis?.ctd_trends, "by_bay");
   const trendVariables = getStringArray(analysis?.catalog.trend_variables);
   const correlationRows = significantOnly
     ? getRows(analysis?.correlations, "significant")
@@ -88,6 +103,7 @@ export function AnalysisWorkbench({ scope = "all" }: { scope?: AnalysisScope }) 
     { view: "correlations", label: "Correlations", scope: "analysis" },
     { view: "diversity", label: "Diversity", scope: "analysis" },
     { view: "cooccurrence", label: "Co-occurrence", scope: "analysis" },
+    { view: "bay_comparison", label: "Bay Comparison", scope: "analysis" },
     { view: "reliability", label: "Reliability", scope: "reliability" },
   ];
   const visibleTabs = tabItems.filter((item) => scope === "all" || item.scope === scope);
@@ -189,6 +205,17 @@ export function AnalysisWorkbench({ scope = "all" }: { scope?: AnalysisScope }) 
           </div>
           <CooccurrenceHeatmap payload={cooccurrence} />
           <DataTable columns={["genus_a", "genus_b", "jaccard"]} rows={getRows(cooccurrence, "top_pairs")} />
+        </section>
+      ) : null}
+
+      {view === "bay_comparison" ? (
+        <section className="analysis-view">
+          <DataTable
+            columns={Object.keys(bayComparisonRows[0] || {})}
+            emptyText="No cross-bay CTD comparison is available."
+            rowKeyColumn="bay"
+            rows={bayComparisonRows}
+          />
         </section>
       ) : null}
 

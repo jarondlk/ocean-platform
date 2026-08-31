@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FileJson, RefreshCw, Search } from "lucide-react";
 import { DataTable, formatCell } from "@/components/DataTable";
 import {
@@ -14,6 +15,7 @@ import type {
   UpsertDryRunResponse,
 } from "@/types";
 import { useAppPreferences } from "@/lib/preferences";
+import { buildHref, safeEvidenceIdentifier } from "@/lib/citation-navigation";
 
 type ProvenanceView = "manifest" | "trace" | "upsert";
 
@@ -84,12 +86,26 @@ const upsertColumns = [
 ];
 
 export default function ProvenancePage() {
+  return (
+    <Suspense fallback={<ProvenancePageFallback />}>
+      <ProvenancePageContent />
+    </Suspense>
+  );
+}
+
+function ProvenancePageContent() {
   const { ui } = useAppPreferences();
-  const [view, setView] = useState<ProvenanceView>("manifest");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const requestedView = searchParams.get("view");
+  const requestedDocRaw = searchParams.get("doc_id");
+  const requestedDoc = safeEvidenceIdentifier(requestedDocRaw);
+  const urlView = isProvenanceView(requestedView) ? requestedView : "manifest";
+  const [view, setView] = useState<ProvenanceView>(urlView);
   const [manifest, setManifest] = useState<ProvenanceManifestResponse | null>(null);
   const [trace, setTrace] = useState<ProvenanceTraceResponse | null>(null);
   const [upsertPlan, setUpsertPlan] = useState<UpsertDryRunResponse | null>(null);
-  const [docId, setDocId] = useState("");
+  const [docId, setDocId] = useState(requestedDoc || "");
   const [limitDocuments, setLimitDocuments] = useState(100);
   const [includeEmbeddings, setIncludeEmbeddings] = useState(true);
   const [limitKeys, setLimitKeys] = useState(25);
@@ -114,12 +130,21 @@ export default function ProvenancePage() {
     }
   }
 
-  async function loadTrace(targetDocId = docId) {
-    if (!targetDocId) return;
+  async function loadTrace(targetDocId = docId, syncUrl = true) {
+    const safeDocId = safeEvidenceIdentifier(targetDocId);
+    if (!safeDocId) {
+      setTrace(null);
+      setError("The requested provenance document identifier is invalid.");
+      return;
+    }
+    if (syncUrl && (urlView !== "trace" || requestedDoc !== safeDocId)) {
+      router.push(buildHref("/provenance", { view: "trace", doc_id: safeDocId }), { scroll: false });
+      return;
+    }
     setLoading(true);
     setError("");
     try {
-      setTrace(await getProvenanceTrace(targetDocId));
+      setTrace(await getProvenanceTrace(safeDocId));
       setView("trace");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Document trace request failed");
@@ -134,6 +159,7 @@ export default function ProvenancePage() {
     try {
       setUpsertPlan(await getProvenanceUpsertDryRun(limitKeys));
       setView("upsert");
+      router.push("/provenance?view=upsert", { scroll: false });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Upsert dry-run request failed");
     } finally {
@@ -145,6 +171,28 @@ export default function ProvenancePage() {
     void loadManifest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setView(urlView);
+    if (requestedDocRaw && !requestedDoc) {
+      setTrace(null);
+      setError("The requested provenance document identifier is invalid.");
+      return;
+    }
+    if (urlView === "trace" && requestedDoc) {
+      setDocId(requestedDoc);
+      void loadTrace(requestedDoc, false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [requestedDoc, requestedDocRaw, urlView]);
+
+  function changeView(nextView: ProvenanceView) {
+    setView(nextView);
+    router.push(buildHref("/provenance", {
+      view: nextView === "manifest" ? undefined : nextView,
+      doc_id: nextView === "trace" ? safeEvidenceIdentifier(docId) : undefined,
+    }), { scroll: false });
+  }
 
   const summary = asRecord(manifest?.summary);
   const snapshot = asRecord(manifest?.snapshot);
@@ -217,9 +265,9 @@ export default function ProvenancePage() {
       </header>
 
       <div className="data-tabs" role="tablist" aria-label={ui("Provenance views")}>
-        <TabButton active={view === "manifest"} label="Manifest" onClick={() => setView("manifest")} />
-        <TabButton active={view === "trace"} label="Document Trace" onClick={() => setView("trace")} />
-        <TabButton active={view === "upsert"} label="Upsert Dry-Run" onClick={() => setView("upsert")} />
+        <TabButton active={view === "manifest"} label="Manifest" onClick={() => changeView("manifest")} />
+        <TabButton active={view === "trace"} label="Document Trace" onClick={() => changeView("trace")} />
+        <TabButton active={view === "upsert"} label="Upsert Dry-Run" onClick={() => changeView("upsert")} />
       </div>
 
       <div className="section-toolbar">
@@ -499,6 +547,18 @@ export default function ProvenancePage() {
   );
 }
 
+function ProvenancePageFallback() {
+  const { ui } = useAppPreferences();
+  return (
+    <section>
+      <header className="page-header">
+        <h2>{ui("Provenance")}</h2>
+      </header>
+      <p className="empty-state">{ui("Loading provenance state.")}</p>
+    </section>
+  );
+}
+
 function TabButton({
   active,
   label,
@@ -662,4 +722,8 @@ function countBy(rows: Record<string, unknown>[], key: string): { label: string;
 function toNumber(value: unknown): number {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function isProvenanceView(value: string | null): value is ProvenanceView {
+  return value === "manifest" || value === "trace" || value === "upsert";
 }

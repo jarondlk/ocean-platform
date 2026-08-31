@@ -9,6 +9,7 @@ type DataTableProps = {
   rowKeyColumn?: string;
   selectedKey?: string;
   onRowSelect?: (row: Record<string, unknown>, index: number, rowKey: string) => void;
+  isRowSelectable?: (row: Record<string, unknown>, index: number) => boolean;
 };
 
 export function DataTable({
@@ -18,6 +19,7 @@ export function DataTable({
   rowKeyColumn = "sample_id",
   selectedKey,
   onRowSelect,
+  isRowSelectable,
 }: DataTableProps) {
   const { ui } = useAppPreferences();
   if (!rows.length) {
@@ -37,23 +39,26 @@ export function DataTable({
         <tbody>
           {rows.map((row, index) => {
             const rowKey = String(row[rowKeyColumn] ?? row.event_id ?? row.id ?? index);
+            const selectable = Boolean(
+              onRowSelect && (!isRowSelectable || isRowSelectable(row, index)),
+            );
             return (
               <tr
-                className={onRowSelect ? "selectable-row" : undefined}
+                className={selectable ? "selectable-row" : undefined}
                 key={rowKey}
-                onClick={onRowSelect ? () => onRowSelect(row, index, rowKey) : undefined}
+                onClick={selectable ? () => onRowSelect?.(row, index, rowKey) : undefined}
                 onKeyDown={
-                  onRowSelect
+                  selectable
                     ? (event) => {
                         if (event.key === "Enter" || event.key === " ") {
                           event.preventDefault();
-                          onRowSelect(row, index, rowKey);
+                          onRowSelect?.(row, index, rowKey);
                         }
                       }
                     : undefined
                 }
-                tabIndex={onRowSelect ? 0 : undefined}
-                aria-selected={selectedKey === rowKey}
+                tabIndex={selectable ? 0 : undefined}
+                aria-selected={selectable ? selectedKey === rowKey : undefined}
               >
                 {columns.map((column) => (
                   <td key={column}>{formatCell(row[column])}</td>

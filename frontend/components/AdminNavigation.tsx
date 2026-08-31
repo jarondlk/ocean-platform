@@ -32,11 +32,6 @@ export function AdminNavigation() {
     <>
       <header className="page-header admin-workspace-header">
         <h2>{ui("Administration")}</h2>
-        <p>
-          {ui(
-            "Manage access, feedback, operations, and platform diagnostics from one workspace.",
-          )}
-        </p>
       </header>
       <nav className="admin-tabs" aria-label={ui("Administration sections")}>
         {adminSections.map((item) => {

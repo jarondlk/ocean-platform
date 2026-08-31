@@ -14,7 +14,15 @@ const roleLabels: Record<string, string> = {
   linked: "Linked",
 };
 
-export function SourceTable({ sources }: { sources: SourceDocument[] }) {
+export function SourceTable({
+  sources,
+  onSourceSelect,
+  onDocumentSelect,
+}: {
+  sources: SourceDocument[];
+  onSourceSelect?: (source: SourceDocument) => void;
+  onDocumentSelect?: (docId: string) => void;
+}) {
   const { ui } = useAppPreferences();
   if (!sources.length) {
     return <p className="empty-state">{ui("No matching evidence records.")}</p>;
@@ -41,7 +49,17 @@ export function SourceTable({ sources }: { sources: SourceDocument[] }) {
           {sources.map((source) => (
             <tr key={`${source.retrieval_role || "primary"}:${source.doc_id}`}>
               <td>
-                <strong>{source.doc_id}</strong>
+                {onSourceSelect ? (
+                  <button
+                    className="document-link-button"
+                    onClick={() => onSourceSelect(source)}
+                    type="button"
+                  >
+                    {source.doc_id}
+                  </button>
+                ) : (
+                  <strong>{source.doc_id}</strong>
+                )}
                 <span>{source.title}</span>
               </td>
               <td>{ui(roleLabels[source.retrieval_role || "primary"] || source.retrieval_role || "Primary")}</td>
@@ -52,7 +70,17 @@ export function SourceTable({ sources }: { sources: SourceDocument[] }) {
                 {source.retrieval_role === "linked" ? (
                   <>
                     <strong>{source.link_type || "cross_source"}</strong>
-                    <span>{source.linked_from_doc_id || source.linked_from_event_id || "primary evidence"}</span>
+                    {source.linked_from_doc_id && onDocumentSelect ? (
+                      <button
+                        className="document-link-button secondary-document-link"
+                        onClick={() => onDocumentSelect(source.linked_from_doc_id || "")}
+                        type="button"
+                      >
+                        {source.linked_from_doc_id}
+                      </button>
+                    ) : (
+                      <span>{source.linked_from_doc_id || source.linked_from_event_id || "primary evidence"}</span>
+                    )}
                   </>
                 ) : (
                   "NA"

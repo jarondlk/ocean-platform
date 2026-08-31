@@ -13,13 +13,13 @@ place before the foundation or any runtime component is created.
 
 ## Current deployed milestone
 
-Verified on 2026-08-26 JST:
+Verified on 2026-08-31 JST:
 
 - project `data-infra-infobio`, region `asia-northeast1`;
-- OCEAN Platform GitHub release `v0.2.3`;
-- immutable Cloud Build `9e0048f7-372d-4b3c-9068-971ef299db8d`;
-- Cloud Run service `ocean-platform`, revision `ocean-platform-00008-jh9`,
-  100% traffic;
+- OCEAN Platform GitHub release `v0.3.0`;
+- immutable Cloud Build and Cloud Run revision recorded in the GitHub `v0.3.0`
+  release;
+- Cloud Run service `ocean-platform` at 100% traffic;
 - Artifact Registry `ocean-platform`; service accounts `ocean-platform` and
   `ocean-jobs`; secrets and jobs under the `ocean-*` prefix;
 - Cloud SQL `ocean-postgres` / `ocean_platform` is PostgreSQL 16 and RUNNABLE;
@@ -33,9 +33,8 @@ Verified on 2026-08-26 JST:
 - minimum zero/maximum one service instance, concurrency 20; and
 - GitHub `production` deployment status `success`.
 
-The preceding `v0.2.2` remediation build
-`9764872c-41b4-45ec-ac58-d77c7d9dac86` on revision
-`ocean-platform-00007-2dp` remains the documented application rollback point.
+The preceding `v0.2.3` build `9e0048f7-372d-4b3c-9068-971ef299db8d` on revision
+`ocean-platform-00008-jh9` remains the documented application rollback point.
 
 See [`../../docs/GCP_RESOURCE_AUDIT.md`](../../docs/GCP_RESOURCE_AUDIT.md) for
 the current inventory, absence checks, housekeeping controls, and the exact
