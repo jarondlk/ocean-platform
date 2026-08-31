@@ -76,7 +76,7 @@ jobs:
             --cov-fail-under=70
 
   frontend:
-    name: Frontend tests, typecheck, and build
+    name: Frontend typecheck and build
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
