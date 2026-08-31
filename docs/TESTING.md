@@ -94,6 +94,7 @@ Verify the frontend:
 ```bash
 cd frontend
 npm ci
+npm test
 npm run typecheck
 npm run build
 ```
@@ -134,7 +135,8 @@ integrity and restores into a disposable database before removing it.
 `.github/workflows/tests.yml` defines:
 
 - backend tests, a 70% aggregate coverage floor, and active Python linting;
-- frontend lockfile installation, typechecking, and production build;
+- frontend lockfile installation, focused unit tests, typechecking, and
+  production build;
 - a real pgvector service, Alembic migration, metadata/shared-rate-limit
   integration tests, repeated transactional upserts, and backup restore testing;
 - dependency review for public repositories or private repositories with GitHub

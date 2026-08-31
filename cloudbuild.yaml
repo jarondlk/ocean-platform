@@ -18,6 +18,7 @@ steps:
       - |
         test -f app/data/page.tsx
         npm ci
+        npm test
         npm run typecheck
         npm run build
         test -f .next/standalone/.next/server/app/data/page.js

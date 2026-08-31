@@ -76,7 +76,7 @@ jobs:
             --cov-fail-under=70
 
   frontend:
-    name: Frontend typecheck and build
+    name: Frontend tests, typecheck, and build
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -100,6 +100,10 @@ jobs:
       - name: Audit production frontend dependencies
         working-directory: frontend
         run: npm audit --omit=dev --audit-level=moderate
+
+      - name: Test frontend
+        working-directory: frontend
+        run: npm test
 
       - name: Typecheck frontend
         working-directory: frontend

@@ -1,12 +1,15 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { RotateCcw, Send } from "lucide-react";
 import { CsvExportButton } from "@/components/CsvExportButton";
 import { ChatFeedback } from "@/components/ChatFeedback";
 import { DataTable, formatCell } from "@/components/DataTable";
+import { EvidenceNavigator } from "@/components/EvidenceNavigator";
 import { MarkdownAnswer } from "@/components/MarkdownAnswer";
 import { askQuestion, getModels } from "@/lib/api";
+import { buildCitationTargetIndex, sourceTarget } from "@/lib/citation-navigation";
+import type { CitationTarget } from "@/lib/citation-navigation";
 import type { AnswerAudit, ChatResponse, CitationAuditRecord, ContextDocument, ModelsResponse, SourceDocument } from "@/types";
 import { SourceTable } from "@/components/SourceTable";
 import { useAppPreferences } from "@/lib/preferences";
@@ -88,6 +91,7 @@ export default function ChatPage() {
   const [settings, setSettings] = useState<ChatSettings>(defaultSettings);
   const [models, setModels] = useState<ModelsResponse | null>(null);
   const [response, setResponse] = useState<ChatResponse | null>(null);
+  const [selectedCitation, setSelectedCitation] = useState<CitationTarget | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const providerLabel = models?.provider === "vertex" ? "Vertex AI" : models?.provider || "Model runtime";
@@ -120,6 +124,7 @@ export default function ChatPage() {
     return [...(response.sources || []), ...(response.linked_sources || [])];
   }, [response]);
   const evidenceRows = useMemo(() => evidenceSources.map(sourceDocumentRow), [evidenceSources]);
+  const citationTargets = useMemo(() => buildCitationTargetIndex(response), [response]);
   const diagnosticRows = useMemo(() => diagnosticsToRows(response?.prompt_diagnostics || {}), [response]);
   const retrievalDiagnosticRows = useMemo(() => diagnosticsToRows(response?.retrieval_diagnostics || {}), [response]);
   const auditCitationRows = useMemo(() => citationAuditRows(response?.answer_audit), [response]);
@@ -129,6 +134,17 @@ export default function ChatPage() {
   const retrievalDiagnostics = response?.retrieval_diagnostics || {};
   const answerAudit = response?.answer_audit;
   const missingSourceTypes = formatSourceTypeList(retrievalDiagnostics.missing_source_types);
+
+  const selectCitationById = useCallback((citationId: string) => {
+    const target = citationTargets.get(citationId);
+    if (target?.valid) setSelectedCitation(target);
+  }, [citationTargets]);
+
+  const selectSource = useCallback((source: SourceDocument) => {
+    setSelectedCitation(citationTargets.get(source.doc_id) || sourceTarget(source));
+  }, [citationTargets]);
+
+  const closeEvidenceNavigator = useCallback(() => setSelectedCitation(null), []);
 
   function updateSetting<K extends keyof ChatSettings>(key: K, value: ChatSettings[K]) {
     setSettings((current) => ({ ...current, [key]: value }));
@@ -148,6 +164,7 @@ export default function ChatPage() {
     setLoading(true);
     setError("");
     setResponse(null);
+    setSelectedCitation(null);
     try {
       const result = await askQuestion({
         query: trimmedQuery,
@@ -235,7 +252,11 @@ export default function ChatPage() {
 
             <article className="card">
               <h3 className="section-title">{ui("Response")}</h3>
-              <MarkdownAnswer text={response?.answer || ""} />
+              <MarkdownAnswer
+                citationTargets={citationTargets}
+                onCitationSelect={setSelectedCitation}
+                text={response?.answer || ""}
+              />
               {response?.interaction_id ? (
                 <ChatFeedback
                   interactionId={response.interaction_id}
@@ -308,6 +329,8 @@ export default function ChatPage() {
                 <DataTable
                   columns={["citation_id", "raw", "valid", "evidence_role", "source_type", "context_type", "covered_source_types", "title", "detail"]}
                   emptyText="No bracket citations found."
+                  isRowSelectable={(row) => row.valid === true && typeof row.citation_id === "string" && citationTargets.has(row.citation_id)}
+                  onRowSelect={(row) => selectCitationById(String(row.citation_id || ""))}
                   rows={auditCitationRows}
                   rowKeyColumn="_row_key"
                 />
@@ -342,7 +365,11 @@ export default function ChatPage() {
                     rows={evidenceRows}
                   />
                 </div>
-                <SourceTable sources={evidenceSources} />
+                <SourceTable
+                  onDocumentSelect={selectCitationById}
+                  onSourceSelect={selectSource}
+                  sources={evidenceSources}
+                />
 
                 <div className="section-toolbar compact-toolbar">
                   <h4 className="subsection-title">{ui("Injected Context")}</h4>
@@ -355,6 +382,8 @@ export default function ChatPage() {
                 <DataTable
                   columns={["context_type", "doc_id", "analysis_type", "title", "text"]}
                   emptyText="No supplementary context injected."
+                  isRowSelectable={(row) => typeof row.doc_id === "string" && citationTargets.has(row.doc_id)}
+                  onRowSelect={(row) => selectCitationById(String(row.doc_id || ""))}
                   rows={contextRows}
                   rowKeyColumn="doc_id"
                 />
@@ -616,6 +645,8 @@ export default function ChatPage() {
           </aside>
         </div>
       </form>
+
+      <EvidenceNavigator onClose={closeEvidenceNavigator} target={selectedCitation} />
 
     </section>
   );

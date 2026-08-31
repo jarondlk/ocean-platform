@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { citationIdsFromBracketToken } from "@/lib/citation-navigation";
+import type { CitationTarget } from "@/lib/citation-navigation";
 
 type Block =
   | { kind: "paragraph"; text: string }
@@ -8,9 +10,22 @@ type Block =
   | { kind: "code"; language: string; text: string }
   | { kind: "table"; headers: string[]; rows: string[][] };
 
-const inlinePatternSource = /(`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+\]\([^)]+\)|\[[A-Za-z0-9_:.-]+\])/;
+const inlinePatternSource = /(`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+\]\([^)]+\)|\[[A-Za-z0-9_:.-]+(?:\s*[,;]\s*[A-Za-z0-9_:.-]+)*\])/;
 
-export function MarkdownAnswer({ text }: { text: string }) {
+type RenderOptions = {
+  citationTargets?: ReadonlyMap<string, CitationTarget>;
+  onCitationSelect?: (target: CitationTarget) => void;
+};
+
+export function MarkdownAnswer({
+  text,
+  citationTargets,
+  onCitationSelect,
+}: {
+  text: string;
+  citationTargets?: ReadonlyMap<string, CitationTarget>;
+  onCitationSelect?: (target: CitationTarget) => void;
+}) {
   const blocks = parseMarkdown(text);
   if (!blocks.length) {
     return <div className="answer">No response.</div>;
@@ -18,7 +33,7 @@ export function MarkdownAnswer({ text }: { text: string }) {
 
   return (
     <div className="answer answer-markdown">
-      {blocks.map((block, index) => renderBlock(block, index))}
+      {blocks.map((block, index) => renderBlock(block, index, { citationTargets, onCitationSelect }))}
     </div>
   );
 }
@@ -130,23 +145,23 @@ function splitTableRow(line: string): string[] {
     .map((cell) => cell.trim());
 }
 
-function renderBlock(block: Block, index: number): ReactNode {
+function renderBlock(block: Block, index: number, options: RenderOptions): ReactNode {
   if (block.kind === "heading") {
     const Tag = block.level <= 2 ? "h4" : "h5";
-    return <Tag key={index}>{renderInline(block.text, `h-${index}`)}</Tag>;
+    return <Tag key={index}>{renderInline(block.text, `h-${index}`, options)}</Tag>;
   }
   if (block.kind === "list") {
     const Tag = block.ordered ? "ol" : "ul";
     return (
       <Tag key={index}>
         {block.items.map((item, itemIndex) => (
-          <li key={itemIndex}>{renderInline(item, `li-${index}-${itemIndex}`)}</li>
+          <li key={itemIndex}>{renderInline(item, `li-${index}-${itemIndex}`, options)}</li>
         ))}
       </Tag>
     );
   }
   if (block.kind === "blockquote") {
-    return <blockquote key={index}>{renderInline(block.text, `q-${index}`)}</blockquote>;
+    return <blockquote key={index}>{renderInline(block.text, `q-${index}`, options)}</blockquote>;
   }
   if (block.kind === "code") {
     return (
@@ -162,7 +177,7 @@ function renderBlock(block: Block, index: number): ReactNode {
           <thead>
             <tr>
               {block.headers.map((header, headerIndex) => (
-                <th key={headerIndex}>{renderInline(header, `th-${index}-${headerIndex}`)}</th>
+                <th key={headerIndex}>{renderInline(header, `th-${index}-${headerIndex}`, options)}</th>
               ))}
             </tr>
           </thead>
@@ -170,7 +185,7 @@ function renderBlock(block: Block, index: number): ReactNode {
             {block.rows.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {block.headers.map((_header, cellIndex) => (
-                  <td key={cellIndex}>{renderInline(row[cellIndex] || "", `td-${index}-${rowIndex}-${cellIndex}`)}</td>
+                  <td key={cellIndex}>{renderInline(row[cellIndex] || "", `td-${index}-${rowIndex}-${cellIndex}`, options)}</td>
                 ))}
               </tr>
             ))}
@@ -179,10 +194,10 @@ function renderBlock(block: Block, index: number): ReactNode {
       </div>
     );
   }
-  return <p key={index}>{renderInline(block.text, `p-${index}`)}</p>;
+  return <p key={index}>{renderInline(block.text, `p-${index}`, options)}</p>;
 }
 
-function renderInline(text: string, keyPrefix: string): ReactNode[] {
+function renderInline(text: string, keyPrefix: string, options: RenderOptions): ReactNode[] {
   const nodes: ReactNode[] = [];
   const inlinePattern = new RegExp(inlinePatternSource.source, "g");
   let cursor = 0;
@@ -194,7 +209,7 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
     }
     const token = match[0];
     const key = `${keyPrefix}-${match.index}`;
-    nodes.push(renderInlineToken(token, key));
+    nodes.push(renderInlineToken(token, key, options));
     cursor = match.index + token.length;
   }
 
@@ -204,15 +219,15 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
   return nodes;
 }
 
-function renderInlineToken(token: string, key: string): ReactNode {
+function renderInlineToken(token: string, key: string, options: RenderOptions): ReactNode {
   if (token.startsWith("`") && token.endsWith("`")) {
     return <code key={key}>{token.slice(1, -1)}</code>;
   }
   if (token.startsWith("**") && token.endsWith("**")) {
-    return <strong key={key}>{renderInline(token.slice(2, -2), `${key}-strong`)}</strong>;
+    return <strong key={key}>{renderInline(token.slice(2, -2), `${key}-strong`, options)}</strong>;
   }
   if (token.startsWith("*") && token.endsWith("*")) {
-    return <em key={key}>{renderInline(token.slice(1, -1), `${key}-em`)}</em>;
+    return <em key={key}>{renderInline(token.slice(1, -1), `${key}-em`, options)}</em>;
   }
   const link = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(token);
   if (link) {
@@ -231,8 +246,39 @@ function renderInlineToken(token: string, key: string): ReactNode {
       </a>
     );
   }
-  if (/^\[[A-Za-z0-9_:.-]+\]$/.test(token)) {
-    return <span className="citation-chip" key={key}>{token}</span>;
+  const citationIds = citationIdsFromBracketToken(token);
+  if (citationIds.length) {
+    return (
+      <span className="citation-chip-group" key={key}>
+        {citationIds.map((citationId) => {
+          const target = options.citationTargets?.get(citationId);
+          if (target?.valid && options.onCitationSelect) {
+            return (
+              <button
+                aria-label={`Inspect citation ${citationId}`}
+                className="citation-chip citation-chip-button"
+                key={citationId}
+                onClick={() => options.onCitationSelect?.(target)}
+                title={target.title}
+                type="button"
+              >
+                [{citationId}]
+              </button>
+            );
+          }
+          return (
+            <span
+              aria-disabled={target && !target.valid ? "true" : undefined}
+              className={`citation-chip${target && !target.valid ? " citation-chip-invalid" : ""}`}
+              key={citationId}
+              title={target?.detail}
+            >
+              [{citationId}]
+            </span>
+          );
+        })}
+      </span>
+    );
   }
   return token;
 }
