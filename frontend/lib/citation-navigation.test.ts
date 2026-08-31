@@ -1,8 +1,15 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  buildHref,
   buildCitationTargetIndex,
   citationIdsFromBracketToken,
+  evidenceDeepLinks,
+  contextTarget,
+  resolveContextWorkspace,
+  safeEvidenceIdentifier,
+  safeIsoDate,
+  sourceTarget,
 } from "./citation-navigation.ts";
 import type { ChatResponse } from "../types.ts";
 
@@ -138,4 +145,113 @@ test("parses single and grouped bracket citation tokens", () => {
     ["ctd_sample-1", "sst_2026-01-03", "reliability:summary"],
   );
   assert.deepEqual(citationIdsFromBracketToken("[not a citation]"), []);
+});
+
+test("builds deterministic raw-source evidence links", () => {
+  const source = buildCitationTargetIndex(responseFixture()).get("ctd_sample-1");
+  assert.ok(source);
+  assert.deepEqual(evidenceDeepLinks(source), [
+    {
+      kind: "provenance",
+      label: "Provenance",
+      href: "/provenance?view=trace&doc_id=ctd_sample-1",
+    },
+    {
+      kind: "sample",
+      label: "Sample",
+      href: "/explore?view=tables&sample_id=sample-1&doc_id=ctd_sample-1",
+    },
+    {
+      kind: "data",
+      label: "CTD profile",
+      href: "/data?view=ctd&sample_id=sample-1&doc_id=ctd_sample-1",
+    },
+  ]);
+});
+
+test("maps exact analysis and reliability context documents", () => {
+  assert.deepEqual(resolveContextWorkspace("analysis_ctd_trends_O"), {
+    scope: "analysis",
+    view: "trends",
+  });
+  assert.deepEqual(resolveContextWorkspace("analysis_diversity_metaeuk"), {
+    scope: "analysis",
+    view: "diversity",
+    diversitySource: "metaeuk",
+  });
+  assert.deepEqual(resolveContextWorkspace("analysis_bay_comparison"), {
+    scope: "analysis",
+    view: "bay_comparison",
+  });
+  assert.deepEqual(resolveContextWorkspace("reliability_gap_interpolation"), {
+    scope: "reliability",
+    view: "reliability",
+    reliabilityView: "gap",
+  });
+  assert.equal(resolveContextWorkspace("analysis_unknown"), null);
+  assert.equal(resolveContextWorkspace("analysis_ctd_trends_unknown"), null);
+});
+
+test("builds source-specific SST and metagenome destinations", () => {
+  const sst = sourceTarget({
+    doc_id: "sst_2026-01-03",
+    title: "SST 2026-01-03",
+    source_type: "remote_sensing",
+    time: "2026-01-03T12:00:00Z",
+    text: "SST evidence",
+  });
+  assert.deepEqual(evidenceDeepLinks(sst).map((link) => link.href), [
+    "/provenance?view=trace&doc_id=sst_2026-01-03",
+    "/data?view=sst&time_from=2026-01-03&time_to=2026-01-03&doc_id=sst_2026-01-03",
+  ]);
+
+  const metagenome = sourceTarget({
+    doc_id: "meta_2024-04-O-s1",
+    title: "Metagenome sample",
+    source_type: "metagenome",
+    sample_id: "2024-04-O-s1",
+    text: "Taxa evidence",
+  });
+  assert.deepEqual(evidenceDeepLinks(metagenome).map((link) => link.href), [
+    "/provenance?view=trace&doc_id=meta_2024-04-O-s1",
+    "/explore?view=tables&sample_id=2024-04-O-s1&doc_id=meta_2024-04-O-s1",
+    "/data?view=taxa&sample_id=2024-04-O-s1&doc_id=meta_2024-04-O-s1",
+  ]);
+});
+
+test("only publishes full-page links for known context artifacts", () => {
+  const known = contextTarget({
+    doc_id: "reliability_corroboration_summary",
+    title: "Corroboration",
+    context_type: "reliability",
+    analysis_type: "corroboration",
+    text: "Reliability evidence",
+  });
+  assert.deepEqual(evidenceDeepLinks(known), [{
+    kind: "context",
+    label: "Reliability",
+    href: "/data?view=reliability&context_id=reliability_corroboration_summary",
+  }]);
+
+  const unpublished = contextTarget({
+    doc_id: "analysis_future_artifact",
+    title: "Future artifact",
+    context_type: "analysis",
+    text: "Unpublished view",
+  });
+  assert.deepEqual(evidenceDeepLinks(unpublished), []);
+});
+
+test("rejects unsafe or malformed deep-link values", () => {
+  assert.equal(safeEvidenceIdentifier("ctd_2024-01-O-s1"), "ctd_2024-01-O-s1");
+  assert.equal(safeEvidenceIdentifier("../../admin"), null);
+  assert.equal(safeEvidenceIdentifier(".."), null);
+  assert.equal(safeEvidenceIdentifier("with spaces"), null);
+  assert.equal(safeIsoDate("2026-02-28"), "2026-02-28");
+  assert.equal(safeIsoDate("2026-02-31"), null);
+  assert.equal(buildHref("/data", { view: "sst", time_from: "2026-01-01" }), "/data?view=sst&time_from=2026-01-01");
+
+  const invalid = buildCitationTargetIndex(responseFixture()).get("missing_doc");
+  assert.ok(invalid);
+  assert.deepEqual(evidenceDeepLinks(invalid), []);
 });

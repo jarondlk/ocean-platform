@@ -33,7 +33,7 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The bounded GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.2.3`. The active data plane now uses the
+  and OCEAN Platform release `v0.3.0`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
 - Operational administration is consolidated under `/admin` with Users,
@@ -197,8 +197,8 @@ an archived reference for remaining parity checks.
 - [x] Add linked cross-source evidence expansion for retrieval/chat requests.
 - [x] Add context-aware answer citation audit and trust report UI.
 - [x] Replace historical README screenshots with current prototype screenshots.
-- [ ] Add click-through citation chips from answers/trust reports into
-      provenance traces and source detail panels.
+- [x] Add validated citation links from answers and trust reports into exact
+      provenance, sample, source-data, analysis, and reliability views.
 - [ ] Add clearer warnings when the app is using local BM25 fallback instead of
       PostgreSQL/pgvector.
 

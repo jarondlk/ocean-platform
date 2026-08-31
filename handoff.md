@@ -1,8 +1,8 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-08-26 JST
+> **Last updated**: 2026-08-31 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform release `v0.2.3` is live on Cloud Run service `ocean-platform`. The invite-only Next.js + FastAPI application uses Google OIDC, the OCEAN Cloud SQL/pgvector data plane, Vertex AI, verified Provenance snapshots, and `ocean-*` Cloud Run Jobs. The former service is private and its deletion-protected SQL instance is stopped as a reversible rollback boundary; local Ollama development and the archived Streamlit reference remain supported.
+> **Current status**: OCEAN Platform release `v0.3.0` is live on Cloud Run service `ocean-platform`. The invite-only Next.js + FastAPI application uses Google OIDC, the OCEAN Cloud SQL/pgvector data plane, Vertex AI, verified Provenance snapshots, and `ocean-*` Cloud Run Jobs. The former service is private and its deletion-protected SQL instance is stopped as a reversible rollback boundary; local Ollama development and the archived Streamlit reference remain supported.
 
 ---
 
@@ -40,6 +40,25 @@ used only as historical reference and parity material.
 ---
 
 ## 2. What Changed Recently
+
+### Evidence Navigation Release v0.3.0 (2026-08-31)
+
+- Citation evidence now links to validated, bookmarkable provenance, sample,
+  CTD, taxa, SST, derived-analysis, and reliability destinations.
+- `/data`, `/explore`, and `/provenance` restore supported scientific views and
+  identifiers from URL state and fail clearly on invalid or unpublished
+  destinations.
+- Analysis context links restore the exact published workspace, including the
+  cross-bay CTD comparison, and reliability links restore the cited check.
+- Evidence, Settings, and Admin surfaces use concise academic labels and omit
+  redundant product copy, helper blurbs, and duplicate context banners.
+- FastAPI and frontend package metadata report `0.3.0`. Local release gates
+  passed 473 backend tests with 3 skipped checks, Ruff, the frontend's 8 tests,
+  typecheck and 24-route production build, `pip check`, a single Alembic head,
+  and a zero-vulnerability production npm audit.
+- No database schema, corpus, model, identity, job, quota, scaling, or budget
+  change accompanies this release. The `v0.2.3` revision remains the immediate
+  application rollback point.
 
 ### Maintenance Release v0.2.3 (2026-08-26)
 
@@ -443,6 +462,11 @@ Visual direction:
   - `#247fae` for high-contrast blue text
 - Expert controls are acceptable when clearly grouped and labeled
 - Hover help is preferable to visible explanatory copy for specialized knobs
+- Keep visible copy academic, direct, and minimal. Use scientific labels,
+  identifiers, actions, status, and errors only. Do not add marketing copy,
+  eyebrows, taglines, prose subheaders, helper blurbs, or duplicate context
+  banners when the page title, selected control, table, or URL already conveys
+  the same state.
 
 ---
 
@@ -617,7 +641,7 @@ Latest local verification for this audit:
 
 | Check | Result |
 | --- | --- |
-| `pytest` | 473 passed, 3 skipped in the `v0.2.3` release validation; 74.54% aggregate coverage |
+| `pytest` | 473 passed, 3 skipped in the `v0.3.0` release validation; 74.54% aggregate coverage |
 | Coverage boundary | 74.54% aggregate; required floor is 70% |
 | PostgreSQL metadata integration | Passed against migrated local PostgreSQL/pgvector |
 | Security-boundary Ruff check | Passed |
@@ -786,8 +810,6 @@ new work in Next.js/FastAPI.
 Potential parity checks:
 
 - Confirm all old Streamlit data views have Next.js equivalents
-- Add click-through citation chips from answers/trust reports into provenance
-  traces and source detail panels
 - Add compact export/download controls for tables and evaluation reports
 - Add richer pipeline freshness and data lineage indicators
 

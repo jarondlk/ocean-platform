@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { FileSearch, X } from "lucide-react";
+import { ExternalLink, FileSearch, X } from "lucide-react";
 import { DataTable, formatCell } from "@/components/DataTable";
 import { SampleDetail } from "@/components/SampleDetail";
 import { getProvenanceTrace, getSampleDetail } from "@/lib/api";
-import type { CitationTarget } from "@/lib/citation-navigation";
+import { evidenceDeepLinks, type CitationTarget } from "@/lib/citation-navigation";
 import type { ProvenanceTraceResponse, SampleDetailResponse } from "@/types";
 import { useAppPreferences } from "@/lib/preferences";
 
@@ -93,23 +93,20 @@ export function EvidenceNavigator({
     () => asRecords(tracePayload.trace_path).map((row, index) => ({ step: index + 1, ...row })),
     [tracePayload.trace_path],
   );
+  const deepLinks = useMemo(() => target ? evidenceDeepLinks(target) : [], [target]);
 
   if (!target) return null;
 
   return (
     <aside
-      aria-label={`${ui("Evidence navigator")}: ${target.citationId}`}
+      aria-label={`${ui("Evidence")}: ${target.citationId}`}
       className="evidence-navigator"
       role="region"
     >
       <header className="evidence-navigator-header">
-        <div>
-          <span className="eyebrow">{ui("Evidence navigator")}</span>
-          <h3>{target.citationId}</h3>
-          <p>{target.title}</p>
-        </div>
+        <h3>{target.title}</h3>
         <button
-          aria-label={ui("Close evidence navigator")}
+          aria-label={ui("Close evidence")}
           className="button secondary-button icon-button"
           onClick={onClose}
           ref={closeButton}
@@ -121,26 +118,42 @@ export function EvidenceNavigator({
 
       <div className="evidence-navigator-body">
         <div className="citation-target-badges">
-          <span>{target.valid ? ui("Resolved") : ui("Unresolved")}</span>
-          <span>{target.evidenceRole}</span>
-          {target.sourceType ? <span>{target.sourceType}</span> : null}
           {target.contextType ? <span>{target.contextType}</span> : null}
+          {target.sourceType ? <span>{target.sourceType}</span> : null}
+          {target.kind === "source" ? <span>{target.evidenceRole}</span> : null}
         </div>
+
+        {deepLinks.length ? (
+          <nav aria-label={ui("Full evidence pages")} className="navigator-actions">
+            {deepLinks.map((link) => (
+              <a
+                className="button secondary-button"
+                href={link.href}
+                key={`${link.kind}-${link.href}`}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <ExternalLink aria-hidden="true" size={14} />
+                {ui(link.label)}
+              </a>
+            ))}
+          </nav>
+        ) : null}
 
         {!target.valid ? (
           <section className="navigator-section navigator-warning">
-            <h4>{ui("Citation warning")}</h4>
+            <h4>{ui("Unresolved citation")}</h4>
             <p>{target.detail}</p>
-            <p>{ui("No evidence destination is available for this citation.")}</p>
           </section>
         ) : null}
 
         {target.source ? (
           <>
             <section className="navigator-section">
-              <h4>{ui("Evidence supplied to the model")}</h4>
+              <h4>{ui("Source")}</h4>
               <MetadataGrid
                 rows={[
+                  ["Document", target.source.doc_id],
                   ["Role", target.evidenceRole],
                   ["Source", target.source.source_type],
                   ["Sample", target.source.sample_id],
@@ -158,7 +171,7 @@ export function EvidenceNavigator({
             <section className="navigator-section">
               <h4>
                 <FileSearch aria-hidden="true" size={15} />
-                {ui("Provenance trace")}
+                {ui("Provenance")}
               </h4>
               {traceLoading ? <p className="empty-state">{ui("Loading provenance trace.")}</p> : null}
               {traceError ? <p className="error-text">{traceError}</p> : null}
@@ -184,24 +197,19 @@ export function EvidenceNavigator({
             </section>
 
             <section className="navigator-section">
-              <h4>{ui("Source detail")}</h4>
+              <h4>{ui(target.source.sample_id ? "Sample" : "Source record")}</h4>
               {sampleLoading ? <p className="empty-state">{ui("Loading sample.")}</p> : null}
               {sampleError ? <p className="error-text">{sampleError}</p> : null}
               {sample ? <SampleDetail detail={sample} /> : null}
               {!target.source.sample_id && !sampleLoading ? (
-                <>
-                  <p className="empty-state">
-                    {ui("This evidence record has no sample identifier. Its source snapshot is shown above.")}
-                  </p>
-                  <MetadataGrid
-                    rows={[
-                      ["Document", target.source.doc_id],
-                      ["Source", target.source.source_type],
-                      ["Time", target.source.time],
-                      ["Bay", target.source.bay],
-                    ]}
-                  />
-                </>
+                <MetadataGrid
+                  rows={[
+                    ["Document", target.source.doc_id],
+                    ["Source", target.source.source_type],
+                    ["Time", target.source.time],
+                    ["Bay", target.source.bay],
+                  ]}
+                />
               ) : null}
             </section>
           </>
@@ -209,7 +217,7 @@ export function EvidenceNavigator({
 
         {target.context ? (
           <section className="navigator-section">
-            <h4>{ui("Context supplied to the model")}</h4>
+            <h4>{ui("Context")}</h4>
             <MetadataGrid
               rows={[
                 ["Context", target.context.context_type],
@@ -218,9 +226,6 @@ export function EvidenceNavigator({
               ]}
             />
             <p className="navigator-evidence-text">{target.context.text}</p>
-            <p className="empty-state">
-              {ui("Analysis and reliability context is not a retrieval document, so it does not have a raw-source document trace.")}
-            </p>
           </section>
         ) : null}
       </div>

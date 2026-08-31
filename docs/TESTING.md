@@ -2,6 +2,13 @@
 
 ## Current release evidence
 
+For OCEAN Platform release `v0.3.0`, the local release gate passed 473 backend
+tests with 3 skipped checks, Ruff, 8 frontend navigation tests, the frontend
+typecheck and 24-route production build, `pip check`, a single Alembic head,
+and a production npm audit with zero vulnerabilities. The immutable Cloud
+Build, deployed revision, and production checks are recorded in the GitHub
+release.
+
 For OCEAN Platform release `v0.2.3`, the local release gate passed 473 backend
 tests with 3 skipped checks and 74.54% aggregate coverage, Ruff, the frontend
 typecheck and 24-route production build, `pip check`, a single Alembic head,
@@ -98,6 +105,23 @@ npm test
 npm run typecheck
 npm run build
 ```
+
+### Evidence navigation deep links
+
+Citation navigation uses validated, bookmarkable internal URLs. Raw retrieval
+documents open `/provenance?view=trace&doc_id=...`; sample-backed documents can
+also open `/explore?view=tables&sample_id=...` and the matching CTD or taxa data
+view. Remote-sensing documents open the SST view with an exact ISO date range.
+Published analysis and reliability contexts open `/data` with their exact
+`context_id`. These full-page actions open a new tab so the originating chat
+and its in-memory answer remain available.
+
+The focused frontend tests cover URL construction, identifier/date validation,
+source-specific routes, context-to-workbench mappings, and refusal to route
+unknown context artifacts. Browser verification should additionally cold-load
+one CTD, metagenome, SST, analysis, and reliability link; refresh each target;
+exercise back/forward navigation; and confirm malformed identifiers display an
+explicit error without loading a default record.
 
 ## PostgreSQL Integration
 

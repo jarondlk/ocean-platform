@@ -1034,11 +1034,6 @@ td span {
   font-size: 17px;
 }
 
-.evidence-navigator-header p {
-  margin: 0;
-  color: var(--muted);
-}
-
 .evidence-navigator-body {
   min-height: 0;
   overflow-y: auto;
@@ -1057,6 +1052,19 @@ td span {
   background: var(--control);
   color: var(--blue-ink);
   padding: 3px 7px;
+  font-size: 12px;
+}
+
+.navigator-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 0 0 12px;
+}
+
+.navigator-actions .button {
+  min-height: 32px;
+  padding: 6px 9px;
   font-size: 12px;
 }
 
@@ -1274,13 +1282,6 @@ td span {
   gap: 5px;
 }
 
-.admin-workspace-header p,
-.admin-overview-intro p {
-  color: var(--muted);
-  line-height: 1.5;
-  margin: 0;
-}
-
 .admin-tabs {
   display: flex;
   gap: 5px;
@@ -1321,16 +1322,6 @@ td span {
   gap: 18px;
 }
 
-.admin-overview-intro {
-  display: grid;
-  gap: 5px;
-}
-
-.admin-overview-intro h3 {
-  font-size: 17px;
-  margin: 0;
-}
-
 .admin-section-grid {
   display: grid;
   gap: 10px;
@@ -1343,8 +1334,8 @@ td span {
   display: grid;
   gap: 12px;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  min-height: 92px;
-  padding: 15px;
+  min-height: 64px;
+  padding: 12px;
 }
 
 .admin-section-card:hover,
@@ -1364,20 +1355,8 @@ td span {
   width: 36px;
 }
 
-.admin-section-copy {
-  display: grid;
-  gap: 4px;
-  min-width: 0;
-}
-
-.admin-section-copy strong {
+.admin-section-card strong {
   font-size: 14px;
-}
-
-.admin-section-copy span {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.45;
 }
 
 .data-view {
@@ -2926,32 +2905,6 @@ td span {
   max-width: 1180px;
 }
 
-.settings-page-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.settings-page-header h2 {
-  margin-top: 5px;
-}
-
-.settings-intro {
-  max-width: 680px;
-  margin: 8px 0 0;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-.settings-save-state {
-  flex: 0 0 auto;
-  border: 1px solid var(--line);
-  padding: 5px 8px;
-  color: var(--muted);
-  font-size: 12px;
-}
-
 .settings-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(270px, 330px);
@@ -3314,11 +3267,6 @@ td span {
     border-top: 1px solid var(--line);
     padding-left: 0;
     padding-top: 16px;
-  }
-
-  .settings-page-header {
-    align-items: flex-start;
-    flex-direction: column;
   }
 
   .settings-layout,

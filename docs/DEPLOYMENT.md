@@ -10,14 +10,13 @@ URL is
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
-Current release record as of 2026-08-26:
+Current release record as of 2026-08-31:
 
-- OCEAN Platform GitHub release `v0.2.3`; its exact source SHA, Cloud Build,
-  Cloud Run revision, and canary executions are preserved in the GitHub
-  `production` deployment and release record;
-- `v0.2.2` full Cloud Build `da3045fd-e774-47a0-85a7-df1bd831a7d2` and
-  post-release remediation revision `ocean-platform-00007-2dp` remain the
-  documented rollback baseline;
+- OCEAN Platform GitHub release `v0.3.0`; its exact source SHA, Cloud Build,
+  Cloud Run revision, and verification results are preserved in the GitHub
+  release record;
+- `v0.2.3` build `9e0048f7-372d-4b3c-9068-971ef299db8d` and revision
+  `ocean-platform-00008-jh9` remain the documented rollback baseline;
 - Cloud Run service `ocean-platform`, with minimum zero, maximum one instance,
   concurrency 20, and an immutable release-tagged image;
 - Artifact Registry `ocean-platform`, runtime identities `ocean-platform` and

@@ -22,6 +22,7 @@ import { EvidenceWorkbench } from "@/components/EvidenceWorkbench";
 import { SampleDetail } from "@/components/SampleDetail";
 import { SimpleTimeSeries } from "@/components/SimpleTimeSeries";
 import { useAppPreferences } from "@/lib/preferences";
+import { buildHref, safeEvidenceIdentifier } from "@/lib/citation-navigation";
 
 type ExploreView = "tables" | "evidence";
 
@@ -56,10 +57,14 @@ function ExplorePageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const requestedView = searchParams.get("view");
+  const requestedDatasetRaw = searchParams.get("dataset");
+  const requestedDataset = safeEvidenceIdentifier(requestedDatasetRaw);
+  const requestedSampleRaw = searchParams.get("sample_id");
+  const requestedSample = safeEvidenceIdentifier(requestedSampleRaw);
   const initialView = isExploreView(requestedView) ? requestedView : "tables";
   const [view, setView] = useState<ExploreView>(initialView);
   const [catalog, setCatalog] = useState<DatasetCatalogItem[]>([]);
-  const [dataset, setDataset] = useState("ctd_summary");
+  const [dataset, setDataset] = useState(requestedDataset || "ctd_summary");
   const [filters, setFilters] = useState<ExploreFilters>(defaultFilters);
   const [limit, setLimit] = useState(50);
   const [offset, setOffset] = useState(0);
@@ -75,6 +80,7 @@ function ExplorePageContent() {
   const [selectedSample, setSelectedSample] = useState("");
   const [loading, setLoading] = useState(false);
   const [detailLoading, setDetailLoading] = useState(false);
+  const [detailError, setDetailError] = useState("");
   const [error, setError] = useState("");
 
   const activeDataset = useMemo(
@@ -91,7 +97,18 @@ function ExplorePageContent() {
     getExploreCatalog()
       .then((items) => {
         setCatalog(items);
-        const initial = items.find((item) => item.id === "ctd_summary") || items[0];
+        if (requestedDatasetRaw && !requestedDataset) {
+          setError("The requested dataset identifier is invalid.");
+          return;
+        }
+        const requested = requestedDataset
+          ? items.find((item) => item.id === requestedDataset)
+          : undefined;
+        if (requestedDataset && !requested) {
+          setError(`Dataset ${requestedDataset} is not available.`);
+          return;
+        }
+        const initial = requested || items.find((item) => item.id === "ctd_summary") || items[0];
         if (initial) {
           const initialSort = initial.default_x || initial.default_columns[0] || initial.columns[0] || "";
           setDataset(initial.id);
@@ -112,6 +129,34 @@ function ExplorePageContent() {
       .catch((err: Error) => setError(err.message));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [view, catalog.length]);
+
+  useEffect(() => {
+    if (!catalog.length || !requestedDataset || requestedDataset === dataset) return;
+    const item = catalog.find((entry) => entry.id === requestedDataset);
+    if (!item) {
+      setError(`Dataset ${requestedDataset} is not available.`);
+      return;
+    }
+    applyDataset(item.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [catalog, requestedDataset]);
+
+  useEffect(() => {
+    if (!requestedSampleRaw) {
+      setSelectedSample("");
+      setDetail(null);
+      setDetailError("");
+      return;
+    }
+    if (!requestedSample) {
+      setSelectedSample("");
+      setDetail(null);
+      setDetailError("The requested sample identifier is invalid.");
+      return;
+    }
+    void loadSample(requestedSample);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [requestedSample, requestedSampleRaw]);
 
   async function loadData({
     datasetId = dataset,
@@ -203,10 +248,17 @@ function ExplorePageContent() {
 
   function changeView(nextView: ExploreView) {
     setView(nextView);
-    router.replace(nextView === "tables" ? "/explore" : `/explore?view=${nextView}`, { scroll: false });
+    router.push(buildHref("/explore", {
+      view: nextView === "tables" ? undefined : nextView,
+    }), { scroll: false });
   }
 
   function changeDataset(value: string) {
+    applyDataset(value);
+    router.push(buildHref("/explore", { view: "tables", dataset: value }), { scroll: false });
+  }
+
+  function applyDataset(value: string) {
     const item = catalog.find((entry) => entry.id === value);
     const nextFilters = defaultFilters;
     const nextX = item?.default_x || item?.date_columns[0] || "";
@@ -231,16 +283,26 @@ function ExplorePageContent() {
     });
   }
 
-  async function selectRow(row: Record<string, unknown>) {
+  function selectRow(row: Record<string, unknown>) {
     const sampleId = row.sample_id;
     if (typeof sampleId !== "string" || !sampleId) return;
+    router.push(buildHref("/explore", {
+      view: "tables",
+      dataset,
+      sample_id: sampleId,
+    }), { scroll: false });
+  }
+
+  async function loadSample(sampleId: string) {
     setSelectedSample(sampleId);
     setDetailLoading(true);
+    setDetail(null);
+    setDetailError("");
     try {
       const sample = await getSampleDetail(sampleId);
       setDetail(sample);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Sample detail failed");
+      setDetailError(err instanceof Error ? err.message : "Sample detail failed");
     } finally {
       setDetailLoading(false);
     }
@@ -512,6 +574,7 @@ function ExplorePageContent() {
 
         <aside className="explore-side">
           <h3 className="section-title">{ui("Sample detail")}</h3>
+          {detailError ? <p className="error-text">{detailError}</p> : null}
           {detailLoading ? <p className="empty-state">{ui("Loading sample.")}</p> : <SampleDetail detail={detail} />}
         </aside>
       </div>

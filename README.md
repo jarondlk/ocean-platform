@@ -20,7 +20,7 @@ Transforms fragmented field data — CTD water profiles, metagenome sequencing, 
 
 ## Current Prototype Status
 
-Status as of **2026-08-26**: this is an active invite-only **Next.js +
+Status as of **2026-08-31**: this is an active invite-only **Next.js +
 FastAPI** prototype deployed on GCP, with PostgreSQL/pgvector retrieval,
 Vertex AI generation and embeddings, Google OIDC, and Cloud Run Jobs for
 operator-approved batch work. The same application remains runnable locally
@@ -30,15 +30,15 @@ service.
 
 Current managed milestone:
 
-- GitHub release [`v0.2.3`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.2.3)
-  is the maintenance release for the completed OCEAN Platform application and
-  managed data-plane cutover. It corrects the Pipeline availability metric so
-  it reports recent derived artifacts against the API freshness contract.
-- The preceding `v0.2.2` remediation build
-  `9764872c-41b4-45ec-ac58-d77c7d9dac86` and Cloud Run revision
-  `ocean-platform-00007-2dp` remain the documented application rollback point.
-  The immutable build, revision, and canary executions for `v0.2.3` are
-  attached to its GitHub production deployment and release record.
+- GitHub release [`v0.3.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.3.0)
+  completes the evidence-navigation loop. Citations now open exact provenance,
+  sample, source-data, analysis, and reliability destinations through validated,
+  bookmarkable URLs. The affected academic UI surfaces also use concise,
+  direct labels without redundant descriptive copy.
+- The preceding `v0.2.3` build `9e0048f7-372d-4b3c-9068-971ef299db8d` and
+  Cloud Run revision `ocean-platform-00008-jh9` remain the documented
+  application rollback point. The immutable build and revision for `v0.3.0`
+  are attached to its GitHub release record.
 - The live data plane uses Artifact Registry `ocean-platform`, Cloud SQL
   `ocean-postgres` / database `ocean_platform`, jobs under the `ocean-*`
   prefix, OCEAN Secret Manager entries, and bucket
@@ -68,6 +68,8 @@ Implemented in the current prototype:
 - Trustworthy multi-source answering with linked cross-source evidence,
   analysis/reliability context injection, Markdown answer rendering, and a
   deterministic Answer Trust Report / Citation Audit.
+- Validated citation deep links from chat evidence into exact provenance,
+  sample, CTD, taxa, SST, derived-analysis, and reliability views.
 - Evaluation run management for standard and ablation runs, saved run browsing,
   analytics, reports, and comparison.
 - Invite-only OpenID Connect authentication with verified-email invitation
@@ -92,8 +94,7 @@ Still intentionally future work:
   retained backups, seven days of PITR, deletion protection, and a 20 GB
   storage ceiling.
 - Calibration and routine release-gate use of the existing opt-in
-  LLM-as-judge/quality metrics, plus click-through citation chips from chat
-  answers into provenance/source detail panels.
+  LLM-as-judge/quality metrics.
 - A least-privilege bridge from the Evaluation UI's start controls to the
   external Cloud Run evaluation job. Production evaluations currently remain
   explicit operator-run jobs.
