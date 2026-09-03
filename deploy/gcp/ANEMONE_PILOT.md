@@ -1,7 +1,9 @@
 # ANEMONE pilot operations
 
-Status: local implementation; real provider/GCS/Cloud Run validation and release
-are pending. Use with `docs/ANEMONE_PR5_PLAN.md`. This runbook does not approve
+Status: the bounded unknown-classification pilot is deployed in `v0.4.0`;
+see the [verified operations record](../../docs/RELEASE_0.4.0_OPERATIONS.md).
+Full classification/scientific acceptance remains deferred. Use with
+`docs/ANEMONE_PR5_PLAN.md`. This runbook does not approve
 a download, paid execution, migration, deployment, or release.
 
 Release scope update, 2026-09-03: the user approved keeping classification
