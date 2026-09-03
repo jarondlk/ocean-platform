@@ -42,8 +42,13 @@ npm vulnerabilities, and full Cloud Build
 
 ### v0.4.0 release candidate — 2026-09-03
 
-- Backend: 629 passed, 9 PostgreSQL-gated skips, 77.08% coverage; Ruff and
+- Backend after the PR security fix: 638 passed, 9 PostgreSQL-gated skips,
+  77.11% coverage; Ruff and
   dependency consistency passed.
+- Nine additional local-artifact cases cover unsafe keys, resolved root
+  containment, sibling-prefix confusion and file/directory symlinks. The
+  28-test artifact/API/audit subset passed. The CodeQL finding is corrected in
+  code, not suppressed; require the updated PR check to pass before deployment.
 - Frontend: all 14 navigation tests, typecheck and 24-route production build
   passed; production npm audit reported zero vulnerabilities.
 - API/frontend version metadata is `0.4.0`. Scientific classification behavior

@@ -249,6 +249,17 @@ remain only under `staging/` and are not evidence.
 
 ## ANEMONE publication and operator jobs (PR5)
 
+### Local artifact path containment — 2026-09-03
+
+The v0.4.0 PR also reported `py/path-injection` in the bounded local artifact
+reader. Logical key validation and symlink rejection were already present;
+the reader now independently normalizes the actual filesystem path and checks
+the full root-plus-separator prefix immediately before opening it. Regressions
+cover traversal, absolute paths, sibling-prefix confusion and file/directory
+symlinks, including a simulated logical-validator regression. This is a code
+fix, not a dismissed or suppressed alert. Require the PR security check to pass.
+See [CodeQL path-containment guidance](https://codeql.github.com/codeql-query-help/python/py-path-injection/).
+
 ### NLTK release-risk review — 2026-09-03
 
 The active hash-locked runtime contains NLTK 3.10.3 transitively through

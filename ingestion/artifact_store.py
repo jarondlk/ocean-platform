@@ -8,6 +8,7 @@ from pathlib import Path, PurePosixPath
 from urllib.parse import urlparse
 import hashlib
 import json
+import os
 import tempfile
 
 from ingestion.immutable_bundle import canonical_bytes, digest, validate_id
@@ -49,11 +50,16 @@ class BoundedLocalStore(LocalSnapshotStore):
         path = self.root / key
         if any(p.is_symlink() for p in (path, *path.parents)):
             raise ValueError("Symlink in artifact path")
+        # Validate the resolved filesystem path as well as the logical key.
+        # Include the separator so a sibling such as objects-other is not inside
+        # objects. Keep this guard next to the read, not only in caller validation.
+        fullpath = os.path.realpath(path)
+        root_prefix = os.path.realpath(self.root).rstrip(os.sep) + os.sep
+        if not fullpath.startswith(root_prefix):
+            raise ValueError("Artifact path escapes store root")
         try:
-            with path.open("rb") as handle:
+            with open(fullpath, "rb") as handle:
                 data = handle.read(max_bytes + 1)
-                import os
-
                 generation = os.fstat(handle.fileno()).st_mtime_ns
         except FileNotFoundError as exc:
             raise SnapshotNotFound("Artifact not found") from exc

@@ -54,6 +54,11 @@ used only as historical reference and parity material.
 - Release preparation follows CI, merge (keep both branches), production
   backup/migration/deployment verification and then GitHub `v0.4.0` publication.
   Deferring classification does not waive operational or provenance checks.
+- Release PR #51 identified a local-artifact path-containment alert. The reader
+  now independently checks the resolved filesystem root immediately before
+  opening a file; nine regressions were added, with 638 backend tests passing
+  at 77.11% coverage. The pre-fix cloud build was cancelled. Require the updated
+  PR security check and replacement build to pass; do not dismiss the alert.
 
 ### ANEMONE file contract and review proposal (2026-09-03)
 

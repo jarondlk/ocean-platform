@@ -86,6 +86,45 @@ def test_limits_keys_and_tampered_registration(tmp_path):
         tree_files(tmp_path)
 
 
+@pytest.mark.parametrize("key", ["../outside", "/etc/passwd", "a/../../outside", "a//b", "a/./b", "a\\b"])
+def test_local_reader_rejects_unsafe_keys(tmp_path, key):
+    store = BoundedLocalStore(tmp_path / "objects")
+    with pytest.raises(ValueError):
+        store.read(key)
+
+
+def test_local_reader_resolved_root_guard_is_independent_of_key_validation(tmp_path, monkeypatch):
+    import ingestion.artifact_store as artifacts
+
+    root = tmp_path / "objects"
+    sibling = tmp_path / "objects-other"
+    root.mkdir()
+    sibling.mkdir()
+    (sibling / "private.json").write_bytes(b"not an artifact")
+    store = BoundedLocalStore(root)
+    # A future logical-key validation regression must not permit a file escape.
+    monkeypatch.setattr(artifacts, "safe_key", lambda key: key)
+    for key in ("../objects-other/private.json", str(sibling / "private.json")):
+        with pytest.raises(ValueError, match="escapes store root"):
+            store.read(key)
+
+
+@pytest.mark.parametrize("directory_link", [False, True])
+def test_local_reader_rejects_symlinks_before_open(tmp_path, directory_link):
+    root, outside = tmp_path / "objects", tmp_path / "outside"
+    root.mkdir()
+    outside.mkdir()
+    (outside / "private.json").write_bytes(b"not an artifact")
+    if directory_link:
+        (root / "link").symlink_to(outside, target_is_directory=True)
+        key = "link/private.json"
+    else:
+        (root / "link").symlink_to(outside / "private.json")
+        key = "link"
+    with pytest.raises(ValueError, match="Symlink"):
+        BoundedLocalStore(root).read(key)
+
+
 def test_analysis_object_store_read_without_staging_directory(tmp_path, monkeypatch):
     monkeypatch.setattr(config, "EDNA_ARTIFACT_URI", (tmp_path / "objects").as_uri())
     monkeypatch.setattr(config, "EDNA_CACHE_DIR", tmp_path / "writer")
