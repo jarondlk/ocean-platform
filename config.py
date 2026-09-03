@@ -27,10 +27,18 @@ RAW_DIR        = DATA_DIR / "raw"
 RAW_CTD_DIR    = RAW_DIR / "ctd"
 RAW_META_DIR   = RAW_DIR / "meta"
 RAW_SST_DIR    = RAW_DIR / "sst"       # symlink or copy from onagawa_sst_subset/
+RAW_ANEMONE_DIR = RAW_DIR / "anemone"
 NORMALIZED_DIR = DATA_DIR / "normalized"
+ANEMONE_NORMALIZED_DIR = NORMALIZED_DIR / "anemone"
 CANONICAL_DIR  = DATA_DIR / "canonical"
 SERVING_DIR    = DATA_DIR / "serving"
 ANALYSIS_DIR    = DATA_DIR / "analysis"
+EDNA_ARTIFACT_URI = os.environ.get('EDNA_ARTIFACT_URI', '').strip()
+EDNA_CACHE_DIR = Path(os.environ.get('EDNA_CACHE_DIR', '/tmp/ocean-edna-cache')).expanduser().resolve()
+if EDNA_ARTIFACT_URI:
+    RAW_ANEMONE_DIR = EDNA_CACHE_DIR / 'raw'
+    ANEMONE_NORMALIZED_DIR = EDNA_CACHE_DIR / 'normalized'
+EDNA_ANALYSIS_RECIPE = Path(os.environ.get('EDNA_ANALYSIS_RECIPE', str(ANALYSIS_DIR / 'edna_recipe.json'))).expanduser()
 RELIABILITY_DIR = DATA_DIR / "reliability"
 PROVENANCE_DIR  = DATA_DIR / "provenance"
 EVALUATION_DIR  = DATA_DIR / "evaluation"
@@ -48,6 +56,11 @@ PROVENANCE_CACHE_TTL_SECONDS = int(
 DATABASE_BACKUP_DIR = Path(
     os.environ.get("DATABASE_BACKUP_DIR", str(DATA_DIR / "backups"))
 ).expanduser()
+ANEMONE_CONTRACT_PATH = PROJECT_ROOT / "data_contracts" / "anemone_mifish.json"
+ANEMONE_BASE_URL = os.environ.get(
+    "ANEMONE_BASE_URL",
+    "https://db.anemone.bio/dist/MiFish/ANEMONE/",
+).strip()
 
 # Satellite SST source (NetCDF subset files)
 SST_NETCDF_DIR = Path(
@@ -111,6 +124,30 @@ def _environment_int(name: str, default: int, *, minimum: int = 0) -> int:
     if value < minimum:
         raise ValueError(f"{name} must be at least {minimum}")
     return value
+
+
+def _optional_environment_path(name: str) -> Optional[Path]:
+    value = os.environ.get(name, "").strip()
+    return Path(value).expanduser() if value else None
+
+
+ANEMONE_DOWNLOAD_USERNAME_FILE = _optional_environment_path(
+    "ANEMONE_DOWNLOAD_USERNAME_FILE"
+)
+ANEMONE_DOWNLOAD_PASSWORD_FILE = _optional_environment_path(
+    "ANEMONE_DOWNLOAD_PASSWORD_FILE"
+)
+ANEMONE_MAX_FILES = _environment_int("ANEMONE_MAX_FILES", 2000, minimum=1)
+ANEMONE_MAX_BYTES = _environment_int(
+    "ANEMONE_MAX_BYTES",
+    512 * 1024 * 1024,
+    minimum=1,
+)
+ANEMONE_NORMALIZATION_VERSION = _environment_int(
+    "ANEMONE_NORMALIZATION_VERSION",
+    1,
+    minimum=1,
+)
 
 
 # Keep each autoscaled application instance's connection footprint bounded.

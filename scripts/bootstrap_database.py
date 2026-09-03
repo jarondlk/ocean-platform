@@ -30,10 +30,17 @@ REQUIRED_TABLES = frozenset(
         "ctd_profile",
         "ctd_summary",
         "metagenome_sample",
+        "external_source_snapshot",
+        "external_source_file",
+        "edna_sample",
+        "edna_assay",
+        "edna_detection",
+        "edna_internal_standard",
         "sst_point_observation",
         "sst_daily_summary",
         "retrieval_document",
         "cross_source_link",
+        "corpus_publication",
     }
 )
 

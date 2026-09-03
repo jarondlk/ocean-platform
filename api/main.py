@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import csv
+import io
 import json
 import logging
 import math
@@ -21,12 +23,16 @@ from urllib.parse import urlsplit, urlunsplit
 import pandas as pd
 from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from sqlalchemy import create_engine, inspect, text
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 import config
+from api.edna_analysis_routes import router as edna_analysis_router
+from schema.time_range import matches_time
+from retrieval.edna_publication import retrieval_path as edna_retrieval_path
 from api.admin_feedback_routes import router as admin_feedback_router
 from api.auth import CurrentUser, authorization_middleware, get_current_user
 from api.auth_routes import router as auth_router
@@ -38,6 +44,17 @@ from api.chat_records import (
     record_chat_context,
 )
 from api.feedback_routes import router as feedback_router
+from api.edna_service import (
+    EDNA_ASSIGNMENT_METHODS,
+    EDNA_SAMPLE_KINDS,
+    edna_assay_detail,
+    edna_catalog,
+    edna_detection_detail,
+    edna_detections,
+    edna_sample_detail,
+    edna_samples,
+    validate_edna_id,
+)
 from api.provenance_snapshot_service import get_provenance_snapshot_service
 from api.retention_routes import router as retention_router
 from api.schemas import (
@@ -49,6 +66,11 @@ from api.schemas import (
     CtdProfileResponse,
     AnalysisResponse,
     DataCatalogResponse,
+    EdnaAssayDetailResponse,
+    EdnaCatalogResponse,
+    EdnaDetectionDetailResponse,
+    EdnaPageResponse,
+    EdnaSampleDetailResponse,
     DatabaseSchemaResponse,
     DatabaseTableResponse,
     DatasetCatalogItem,
@@ -100,6 +122,7 @@ from api.schemas import (
     TimeSeriesPoint,
     TimeSeriesResponse,
     UpsertDryRunResponse,
+    validate_time_range,
 )
 from evaluation.benchmark import (
     EVAL_MODES,
@@ -161,6 +184,7 @@ app.include_router(auth_router)
 app.include_router(admin_feedback_router)
 app.include_router(feedback_router)
 app.include_router(retention_router)
+app.include_router(edna_analysis_router)
 
 logger = logging.getLogger(__name__)
 
@@ -449,11 +473,35 @@ PIPELINE_STAGES: List[Dict[str, Any]] = [
     {
         "id": "load_db",
         "label": "Load database",
-        "description": "Transactionally upsert PostgreSQL corpus rows by default, or explicitly reset, then refresh search vectors and embeddings.",
-        "command": ["python", "scripts/load_db.py", "--upsert", "--embed"],
+        "description": "Transactionally upsert PostgreSQL corpus rows by default, or explicitly reset.",
+        "command": ["python", "scripts/load_db.py", "--upsert"],
         "expected_inputs": ["data/normalized/*.parquet", "data/serving/retrieval_documents.parquet", "data/canonical/*.parquet"],
-        "expected_outputs": ["PostgreSQL tables", "retrieval_document.text_tsv", "retrieval_document.embedding"],
+        "expected_outputs": ["PostgreSQL tables", "retrieval_document.text_tsv"],
         "destructive": True,
+        "expensive": True,
+    },
+    {
+        "id": "materialize_edna_retrieval",
+        "label": "Build eDNA retrieval corpus",
+        "description": "Materialize one active retrieval document per eDNA assay and assignment method.",
+        "command": ["python", "scripts/materialize_edna_retrieval.py", "--execute"],
+        "expected_inputs": ["Active PostgreSQL eDNA tables"],
+        "expected_outputs": [
+            "PostgreSQL retrieval_document rows",
+            "data/serving/anemone_retrieval_documents.parquet",
+            "data/serving/anemone_retrieval_documents.jsonl",
+        ],
+        "destructive": True,
+        "expensive": False,
+    },
+    {
+        "id": "edna_analysis",
+        "label": "eDNA analysis",
+        "description": "Run the operator-configured cohort recipe.",
+        "command": ["python", "scripts/run_edna_analysis.py", "--recipe", str(config.EDNA_ANALYSIS_RECIPE), "--execute"],
+        "expected_inputs": ["Active eDNA canonical rows", "Operator-configured recipe"],
+        "expected_outputs": ["data/analysis/edna/<analysis_id>/manifest.json"],
+        "destructive": False,
         "expensive": True,
     },
     {
@@ -497,6 +545,8 @@ PIPELINE_DEFAULT_STAGES = [
     "reliability",
     "backup_database",
     "load_db",
+    "materialize_edna_retrieval",
+    "embed_documents",
     "publish_provenance",
 ]
 PIPELINE_JOB_LOCK = threading.Lock()
@@ -577,6 +627,14 @@ def _source_document(doc: Dict[str, Any]) -> SourceDocument:
         linked_from_event_id=doc.get("linked_from_event_id"),
         time_delta_days=doc.get("time_delta_days"),
         distance_km=doc.get("distance_km"),
+        provider=doc.get("provider"),
+        provider_project_id=doc.get("provider_project_id"),
+        provider_run_id=doc.get("provider_run_id"),
+        assay_id=doc.get("assay_id"),
+        assignment_method=doc.get("assignment_method"),
+        sample_kind=doc.get("sample_kind"),
+        is_control=doc.get("is_control"),
+        source_snapshot_id=doc.get("source_snapshot_id"),
     )
 
 
@@ -588,6 +646,10 @@ def _context_document(doc: Dict[str, Any], context_type: str) -> ContextDocument
         context_type=context_type,
         analysis_type=doc.get("analysis_type"),
         text=str(doc.get("text") or ""),
+        analysis_id=doc.get("analysis_id"),
+        table=doc.get("table"),
+        result_ids=doc.get("result_ids", []),
+        source_family=doc.get("source_family"),
     )
 
 
@@ -736,7 +798,17 @@ def _pipeline_artifacts() -> List[PipelineArtifactInfo]:
         ("reliability:documents", "reliability_documents", config.RELIABILITY_DIR / "reliability_documents.jsonl"),
         ("provenance:jsonl", "provenance", config.PROVENANCE_DIR / "provenance.jsonl"),
     ]
-    return [_pipeline_artifact(id_, label, path) for id_, label, path in artifact_paths]
+    artifacts = [_pipeline_artifact(id_, label, path) for id_, label, path in artifact_paths]
+    for suffix in ('parquet', 'jsonl'):
+        identity, label = f'serving:edna_retrieval_{suffix}', f'anemone_retrieval_documents.{suffix}'
+        try:
+            artifacts.append(_pipeline_artifact(identity, label, edna_retrieval_path(suffix)))
+        except (ValueError, OSError, KeyError, SnapshotError):
+            # Keep recovery/preflight available while withholding incomplete data.
+            artifacts.append(PipelineArtifactInfo(id=identity, label=label,
+                path=str(config.SERVING_DIR/'edna_current.json'), exists=False,
+                note='eDNA publication unavailable; rerun materialization.'))
+    return artifacts
 
 
 def _pipeline_database_snapshot() -> Dict[str, Any]:
@@ -749,8 +821,8 @@ def _pipeline_database_snapshot() -> Dict[str, Any]:
             **config.database_engine_options(),
         )
         with engine.connect() as conn:
-            payload["retrieval_documents"] = int(conn.execute(text("SELECT count(*) FROM retrieval_document")).scalar() or 0)
-            payload["embedded_documents"] = int(conn.execute(text("SELECT count(*) FROM retrieval_document WHERE embedding IS NOT NULL")).scalar() or 0)
+            payload["retrieval_documents"] = int(conn.execute(text("SELECT count(*) FROM retrieval_document WHERE active IS TRUE")).scalar() or 0)
+            payload["embedded_documents"] = int(conn.execute(text("SELECT count(*) FROM retrieval_document WHERE active IS TRUE AND embedding IS NOT NULL")).scalar() or 0)
             payload["anchor_events"] = int(conn.execute(text("SELECT count(*) FROM anchor_event")).scalar() or 0)
             payload["cross_source_links"] = int(conn.execute(text("SELECT count(*) FROM cross_source_link")).scalar() or 0)
     except Exception:
@@ -1317,6 +1389,19 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
     needs_model_runtime = _pipeline_needs_model_runtime(request)
     ollama = _pipeline_model_status(required=needs_model_runtime)
     checks: List[PipelinePreflightCheck] = []
+    if 'edna_analysis' in request.stages:
+        from preprocessing.edna_recipe import AnalysisRecipe
+        try:
+            AnalysisRecipe.model_validate_json(config.EDNA_ANALYSIS_RECIPE.read_text())
+            recipe_valid = True
+        except (ValueError, OSError):
+            recipe_valid = False
+        _pipeline_check(checks, id_='edna_recipe', label='eDNA analysis recipe', passed=recipe_valid,
+                        detail='Validated operator recipe.' if recipe_valid else 'Missing or invalid EDNA_ANALYSIS_RECIPE.', required=True)
+        index = request.stages.index('edna_analysis')
+        ordered = all(stage not in request.stages or request.stages.index(stage) < index for stage in ('load_db', 'materialize_edna_retrieval')) and ('publish_provenance' not in request.stages or index < request.stages.index('publish_provenance'))
+        _pipeline_check(checks, id_='edna_analysis_order', label='eDNA analysis order', passed=ordered,
+                        detail='Analysis must follow canonical loading/materialization and precede provenance publication.', required=True)
 
     _pipeline_check(
         checks,
@@ -1340,7 +1425,7 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
         checks,
         id_="required_raw",
         label="Required CTD/metagenome raw files",
-        passed=not missing_raw,
+        passed=not missing_raw or set(request.stages) == {'edna_analysis'},
         detail="All required raw source files are present." if not missing_raw else f"Missing: {', '.join(missing_raw)}",
         required=True,
     )
@@ -1379,6 +1464,7 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
         ("load_db", "canonical:anchors", "build_retrieval_docs", "Anchor events"),
         ("load_db", "canonical:links", "build_retrieval_docs", "Cross-source links"),
         ("publish_provenance", "serving:retrieval_parquet", "build_retrieval_docs", "Retrieval parquet corpus"),
+        ("publish_provenance", "serving:edna_retrieval_parquet", "materialize_edna_retrieval", "eDNA retrieval corpus"),
     ]
     for stage_id, artifact_id, producer, label in dependency_checks:
         if stage_id not in request.stages:
@@ -1403,6 +1489,8 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
     needs_database = (
         "backup_database" in request.stages
         or "load_db" in request.stages
+        or "materialize_edna_retrieval" in request.stages
+        or "edna_analysis" in request.stages
         or "embed_documents" in request.stages
         or "publish_provenance" in request.stages
     )
@@ -1418,14 +1506,19 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
             warning=request.dry_run,
         )
 
-    if "load_db" in request.stages:
+    mutation_stages = [
+        stage
+        for stage in ("load_db", "materialize_edna_retrieval")
+        if stage in request.stages
+    ]
+    if mutation_stages:
         backup_index = (
             request.stages.index("backup_database")
             if "backup_database" in request.stages
             else -1
         )
-        load_index = request.stages.index("load_db")
-        backup_ordered = backup_index >= 0 and backup_index < load_index
+        mutation_index = min(request.stages.index(stage) for stage in mutation_stages)
+        backup_ordered = backup_index >= 0 and backup_index < mutation_index
         _pipeline_check(
             checks,
             id_="database_backup_guard",
@@ -1435,8 +1528,12 @@ def _pipeline_preflight_payload(request: PipelineRunRequest) -> PipelinePrefligh
                 "Dry-run does not modify the database."
                 if request.dry_run
                 else "A verified database backup is ordered before load_db."
+                if backup_ordered and mutation_stages == ["load_db"]
+                else "A verified database backup is ordered before database mutation."
                 if backup_ordered
                 else "Non-dry-run database loading requires backup_database before load_db."
+                if mutation_stages == ["load_db"]
+                else "Non-dry-run database mutation requires backup_database first."
             ),
             required=not request.dry_run,
         )
@@ -1838,6 +1935,7 @@ def _pipeline_command(
     pipeline_run_id: Optional[str] = None,
 ) -> List[str]:
     command_map: Dict[str, List[str]] = {
+        "edna_analysis": [sys.executable, "scripts/run_edna_analysis.py", "--recipe", str(config.EDNA_ANALYSIS_RECIPE), "--execute"],
         "validate_raw": [sys.executable, "scripts/ingest.py", "--validate-only"],
         "ingest": [sys.executable, "scripts/ingest.py"],
         "build_retrieval_docs": [sys.executable, "scripts/build_retrieval_docs.py"],
@@ -1854,6 +1952,11 @@ def _pipeline_command(
             "--restore-test",
         ],
         "load_db": [sys.executable, "scripts/load_db.py"],
+        "materialize_edna_retrieval": [
+            sys.executable,
+            "scripts/materialize_edna_retrieval.py",
+            "--execute",
+        ],
         "embed_documents": [
             sys.executable,
             "scripts/update_embeddings.py",
@@ -1877,7 +1980,11 @@ def _pipeline_command(
         command.append("--reset")
     if stage_id == "load_db" and not request.reset_database:
         command.append("--upsert")
-    if stage_id == "load_db" and request.embed_after_load:
+    if (
+        stage_id == "load_db"
+        and request.embed_after_load
+        and "materialize_edna_retrieval" not in request.stages
+    ):
         command.append("--embed")
     return command
 
@@ -3378,7 +3485,7 @@ def _database_status() -> Dict[str, Any]:
         )
         with engine.connect() as conn:
             version = conn.execute(text("SELECT version()")).scalar()
-            n_docs = conn.execute(text("SELECT count(*) FROM retrieval_document")).scalar()
+            n_docs = conn.execute(text("SELECT count(*) FROM retrieval_document WHERE active IS TRUE")).scalar()
         return {"available": True, "documents": int(n_docs or 0), "version": version}
     except Exception as exc:
         logger.warning("Database status check failed: %s", type(exc).__name__)
@@ -3457,9 +3564,21 @@ def _ollama_options(request: ChatRequest) -> Dict[str, Any]:
 
 def _artifact_status() -> Dict[str, Any]:
     docs_path = config.SERVING_DIR / "retrieval_documents.jsonl"
+    try:
+        edna_docs_path = edna_retrieval_path("jsonl")
+        edna_count = _count_jsonl(edna_docs_path)
+        edna_exists = edna_docs_path.exists()
+        publication = 'ready' if edna_exists else 'not_materialized'
+    except (ValueError, OSError, KeyError, SnapshotError):
+        edna_count, edna_exists, publication = None, False, 'unavailable'
     return {
         "retrieval_documents_jsonl": docs_path.exists(),
-        "retrieval_documents": _count_jsonl(docs_path),
+        "edna_retrieval_documents_jsonl": edna_exists,
+        "edna_publication": publication,
+        "retrieval_documents": (
+            _count_jsonl(docs_path) + (edna_count or 0)
+        ),
+        "edna_retrieval_documents": edna_count,
         "analysis_documents": _count_jsonl(config.ANALYSIS_DIR / "analysis_documents.jsonl"),
         "reliability_documents": _count_jsonl(config.RELIABILITY_DIR / "reliability_documents.jsonl"),
         "embeddings_cache": (config.SERVING_DIR / "retrieval_embeddings.npy").exists(),
@@ -3481,9 +3600,7 @@ def _filter_documents(
         if bay and doc.get("bay") != bay:
             continue
         doc_time = _time(doc) or ""
-        if time_from and doc_time < time_from:
-            continue
-        if time_to and doc_time > time_to:
+        if not matches_time(doc_time, time_from, time_to):
             continue
         rows.append(doc)
     return rows
@@ -3500,13 +3617,18 @@ def health() -> StatusResponse:
     database = _database_status()
     ollama = _ollama_status()
     artifacts = _artifact_status()
-    state = "ok" if artifacts["retrieval_documents"] else "degraded"
+    state = "ok" if artifacts["retrieval_documents"] and artifacts['edna_publication'] != 'unavailable' else "degraded"
     return StatusResponse(status=state, database=database, ollama=ollama, artifacts=artifacts)
 
 
 @app.get("/stats", response_model=CorpusStats)
 def stats() -> CorpusStats:
     docs = _read_jsonl(config.SERVING_DIR / "retrieval_documents.jsonl")
+    docs.extend(
+        _read_jsonl(
+            edna_retrieval_path("jsonl")
+        )
+    )
     counts: Dict[str, int] = {}
     for doc in docs:
         source_type = str(doc.get("source_type") or "unknown")
@@ -3906,6 +4028,374 @@ def data_sst(
             )
             for _, row in daily.iterrows()
         ],
+    )
+
+
+def _edna_filters(
+    *,
+    sample_id: Optional[str] = None,
+    assay_id: Optional[str] = None,
+    provider: Optional[str] = None,
+    provider_project_id: Optional[str] = None,
+    provider_run_id: Optional[str] = None,
+    assignment_method: Optional[str] = None,
+    taxon: Optional[str] = None,
+    sample_kind: Optional[str] = None,
+    is_control: Optional[bool] = None,
+    time_from: Optional[str] = None,
+    time_to: Optional[str] = None,
+    lat_min: Optional[float] = None,
+    lat_max: Optional[float] = None,
+    lon_min: Optional[float] = None,
+    lon_max: Optional[float] = None,
+    strict_ids: bool = False,
+) -> Dict[str, Any]:
+    try:
+        validate_time_range(time_from, time_to)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    if assignment_method and assignment_method not in EDNA_ASSIGNMENT_METHODS:
+        raise HTTPException(status_code=400, detail="Unsupported assignment_method")
+    if sample_kind and sample_kind not in EDNA_SAMPLE_KINDS:
+        raise HTTPException(status_code=400, detail="Unsupported sample_kind")
+    if strict_ids:
+        for value, label in ((sample_id, "sample_id"), (assay_id, "assay_id")):
+            if value is not None:
+                try:
+                    validate_edna_id(value, label)
+                except ValueError as exc:
+                    raise HTTPException(status_code=400, detail=str(exc)) from exc
+    if lat_min is not None and lat_max is not None and lat_min > lat_max:
+        raise HTTPException(status_code=400, detail="lat_min must not exceed lat_max")
+    if lon_min is not None and lon_max is not None and lon_min > lon_max:
+        raise HTTPException(status_code=400, detail="lon_min must not exceed lon_max")
+    return {
+        key: value
+        for key, value in {
+            "sample_id": sample_id,
+            "assay_id": assay_id,
+            "provider": provider,
+            "provider_project_id": provider_project_id,
+            "provider_run_id": provider_run_id,
+            "assignment_method": assignment_method,
+            "taxon": taxon,
+            "sample_kind": sample_kind,
+            "is_control": is_control,
+            "time_from": time_from,
+            "time_to": time_to,
+            "lat_min": lat_min,
+            "lat_max": lat_max,
+            "lon_min": lon_min,
+            "lon_max": lon_max,
+        }.items()
+        if value is not None
+    }
+
+
+def _documents_source_type(
+    source_type: Optional[str], filters: Dict[str, Any]
+) -> Optional[str]:
+    if source_type is None:
+        return None
+    aliases = {
+        "edna": "edna_metabarcoding",
+        "environmental_dna": "edna_metabarcoding",
+        "metabarcoding": "edna_metabarcoding",
+        "mifish": "edna_metabarcoding",
+        "anemone": "edna_metabarcoding",
+    }
+    normalized = aliases.get(source_type.strip().lower(), source_type.strip().lower())
+    edna_only = {
+        "provider",
+        "provider_project_id",
+        "provider_run_id",
+        "assignment_method",
+        "taxon",
+        "sample_kind",
+        "is_control",
+    }
+    if normalized != "edna_metabarcoding" and any(
+        key in filters for key in edna_only
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="eDNA-only filters cannot be combined with a non-eDNA source_type",
+        )
+    return normalized
+
+
+@app.get("/data/edna/catalog", response_model=EdnaCatalogResponse)
+def data_edna_catalog() -> EdnaCatalogResponse:
+    return EdnaCatalogResponse(**edna_catalog())
+
+
+@app.get("/data/edna/samples", response_model=EdnaPageResponse)
+def data_edna_samples(
+    sample_id: Optional[str] = Query(default=None, max_length=64),
+    assay_id: Optional[str] = Query(default=None, max_length=64),
+    provider: Optional[str] = Query(default=None, max_length=64),
+    provider_project_id: Optional[str] = Query(default=None, max_length=128),
+    provider_run_id: Optional[str] = Query(default=None, max_length=128),
+    assignment_method: Optional[str] = Query(default=None, max_length=64),
+    taxon: Optional[str] = Query(default=None, min_length=1, max_length=200),
+    sample_kind: Optional[str] = Query(default=None, max_length=32),
+    is_control: Optional[bool] = None,
+    time_from: Optional[str] = Query(default=None, max_length=64),
+    time_to: Optional[str] = Query(default=None, max_length=64),
+    lat_min: Optional[float] = Query(default=None, ge=-90, le=90),
+    lat_max: Optional[float] = Query(default=None, ge=-90, le=90),
+    lon_min: Optional[float] = Query(default=None, ge=-180, le=180),
+    lon_max: Optional[float] = Query(default=None, ge=-180, le=180),
+    limit: int = Query(default=100, ge=1, le=500),
+    offset: int = Query(default=0, ge=0),
+    sort: str = Query(default="collection_date_utc", max_length=64),
+    direction: str = Query(default="desc", pattern="^(asc|desc)$"),
+) -> EdnaPageResponse:
+    filters = _edna_filters(
+        sample_id=sample_id,
+        assay_id=assay_id,
+        provider=provider,
+        provider_project_id=provider_project_id,
+        provider_run_id=provider_run_id,
+        assignment_method=assignment_method,
+        taxon=taxon,
+        sample_kind=sample_kind,
+        is_control=is_control,
+        time_from=time_from,
+        time_to=time_to,
+        lat_min=lat_min,
+        lat_max=lat_max,
+        lon_min=lon_min,
+        lon_max=lon_max,
+        strict_ids=True,
+    )
+    try:
+        return EdnaPageResponse(
+            **edna_samples(
+                filters,
+                limit=limit,
+                offset=offset,
+                sort=sort,
+                direction=direction,
+            )
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.get(
+    "/data/edna/samples/{sample_id}",
+    response_model=EdnaSampleDetailResponse,
+)
+def data_edna_sample(sample_id: str) -> EdnaSampleDetailResponse:
+    try:
+        payload = edna_sample_detail(sample_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    if payload is None:
+        raise HTTPException(status_code=404, detail="Unknown active eDNA sample")
+    return EdnaSampleDetailResponse(**payload)
+
+
+@app.get(
+    "/data/edna/assays/{assay_id}",
+    response_model=EdnaAssayDetailResponse,
+)
+def data_edna_assay(assay_id: str) -> EdnaAssayDetailResponse:
+    try:
+        payload = edna_assay_detail(assay_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    if payload is None:
+        raise HTTPException(status_code=404, detail="Unknown active eDNA assay")
+    return EdnaAssayDetailResponse(**payload)
+
+
+@app.get("/data/edna/detections", response_model=EdnaPageResponse)
+def data_edna_detections(
+    sample_id: Optional[str] = Query(default=None, max_length=200),
+    assay_id: Optional[str] = Query(default=None, max_length=200),
+    provider: Optional[str] = Query(default=None, max_length=64),
+    provider_project_id: Optional[str] = Query(default=None, max_length=128),
+    provider_run_id: Optional[str] = Query(default=None, max_length=128),
+    assignment_method: Optional[str] = Query(default=None, max_length=64),
+    taxon: Optional[str] = Query(default=None, min_length=1, max_length=200),
+    sample_kind: Optional[str] = Query(default=None, max_length=32),
+    is_control: Optional[bool] = None,
+    time_from: Optional[str] = Query(default=None, max_length=64),
+    time_to: Optional[str] = Query(default=None, max_length=64),
+    lat_min: Optional[float] = Query(default=None, ge=-90, le=90),
+    lat_max: Optional[float] = Query(default=None, ge=-90, le=90),
+    lon_min: Optional[float] = Query(default=None, ge=-180, le=180),
+    lon_max: Optional[float] = Query(default=None, ge=-180, le=180),
+    include_sequence: bool = False,
+    limit: int = Query(default=100, ge=1, le=500),
+    offset: int = Query(default=0, ge=0),
+    sort: str = Query(default="read_count", max_length=64),
+    direction: str = Query(default="desc", pattern="^(asc|desc)$"),
+) -> EdnaPageResponse:
+    filters = _edna_filters(
+        sample_id=sample_id,
+        assay_id=assay_id,
+        provider=provider,
+        provider_project_id=provider_project_id,
+        provider_run_id=provider_run_id,
+        assignment_method=assignment_method,
+        taxon=taxon,
+        sample_kind=sample_kind,
+        is_control=is_control,
+        time_from=time_from,
+        time_to=time_to,
+        lat_min=lat_min,
+        lat_max=lat_max,
+        lon_min=lon_min,
+        lon_max=lon_max,
+        strict_ids=True,
+    )
+    try:
+        return EdnaPageResponse(
+            **edna_detections(
+                filters,
+                limit=limit,
+                offset=offset,
+                sort=sort,
+                direction=direction,
+                include_sequence=include_sequence,
+            )
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.get(
+    "/data/edna/detections/{detection_id}",
+    response_model=EdnaDetectionDetailResponse,
+)
+def data_edna_detection(detection_id: str) -> EdnaDetectionDetailResponse:
+    try:
+        payload = edna_detection_detail(detection_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    if payload is None:
+        raise HTTPException(status_code=404, detail="Unknown active eDNA detection")
+    return EdnaDetectionDetailResponse(**payload)
+
+
+@app.get("/data/edna/controls", response_model=EdnaPageResponse)
+def data_edna_controls(
+    limit: int = Query(default=100, ge=1, le=500),
+    offset: int = Query(default=0, ge=0),
+) -> EdnaPageResponse:
+    return EdnaPageResponse(
+        **edna_samples(
+            {"is_control": True},
+            limit=limit,
+            offset=offset,
+            sort="provider_sample_id",
+            direction="asc",
+        )
+    )
+
+
+@app.get("/data/edna/export")
+def data_edna_export(
+    sample_id: Optional[str] = Query(default=None, max_length=200),
+    assay_id: Optional[str] = Query(default=None, max_length=200),
+    provider: Optional[str] = Query(default=None, max_length=64),
+    provider_project_id: Optional[str] = Query(default=None, max_length=128),
+    provider_run_id: Optional[str] = Query(default=None, max_length=128),
+    assignment_method: Optional[str] = Query(default=None, max_length=64),
+    taxon: Optional[str] = Query(default=None, min_length=1, max_length=200),
+    sample_kind: Optional[str] = Query(default=None, max_length=32),
+    is_control: Optional[bool] = None,
+    time_from: Optional[str] = Query(default=None, max_length=64),
+    time_to: Optional[str] = Query(default=None, max_length=64),
+    lat_min: Optional[float] = Query(default=None, ge=-90, le=90),
+    lat_max: Optional[float] = Query(default=None, ge=-90, le=90),
+    lon_min: Optional[float] = Query(default=None, ge=-180, le=180),
+    lon_max: Optional[float] = Query(default=None, ge=-180, le=180),
+) -> StreamingResponse:
+    filters = _edna_filters(
+        sample_id=sample_id,
+        assay_id=assay_id,
+        provider=provider,
+        provider_project_id=provider_project_id,
+        provider_run_id=provider_run_id,
+        assignment_method=assignment_method,
+        taxon=taxon,
+        sample_kind=sample_kind,
+        is_control=is_control,
+        time_from=time_from,
+        time_to=time_to,
+        lat_min=lat_min,
+        lat_max=lat_max,
+        lon_min=lon_min,
+        lon_max=lon_max,
+        strict_ids=True,
+    )
+    payload = edna_detections(
+        filters,
+        limit=25_001,
+        offset=0,
+        sort="detection_id",
+        direction="asc",
+        include_sequence=False,
+    )
+    truncated = len(payload["rows"]) > 25_000
+    rows = payload["rows"][:25_000]
+    columns = [
+        "detection_id",
+        "assay_id",
+        "sample_id",
+        "provider",
+        "provider_sample_id",
+        "provider_project_id",
+        "provider_run_id",
+        "sample_kind",
+        "is_control",
+        "collection_date_utc",
+        "lat",
+        "lon",
+        "target_gene",
+        "primer_set",
+        "sequencing_method",
+        "assignment_method",
+        "sequence_sha256",
+        "assigned_taxon_name",
+        "assigned_taxon_rank",
+        "read_count",
+        "copies_per_ml",
+        "superkingdom",
+        "kingdom",
+        "phylum",
+        "class",
+        "order",
+        "family",
+        "genus",
+        "species",
+        "subspecies",
+        "source_snapshot_id",
+        "source_file_id",
+        "source_row_number",
+        "source_url",
+        "source_sha256",
+    ]
+    buffer = io.StringIO()
+    writer = csv.DictWriter(buffer, fieldnames=columns, extrasaction="ignore")
+    writer.writeheader()
+    writer.writerows({
+        key: "'" + value
+        if isinstance(value, str) and value.lstrip().startswith(("=", "+", "-", "@", "\t", "\r"))
+        else value
+        for key, value in row.items()
+    } for row in rows)
+    return StreamingResponse(
+        iter([buffer.getvalue()]),
+        media_type="text/csv; charset=utf-8",
+        headers={
+            "Content-Disposition": 'attachment; filename="anemone-edna-evidence.csv"',
+            "X-Export-Truncated": str(truncated).lower(),
+        },
     )
 
 
@@ -4503,40 +4993,91 @@ def explore_sample(sample_id: str) -> SampleDetailResponse:
 def documents(
     q: Optional[str] = None,
     source_type: Optional[str] = None,
+    sample_id: Optional[str] = None,
     bay: Optional[str] = None,
     time_from: Optional[str] = None,
     time_to: Optional[str] = None,
+    provider: Optional[str] = None,
+    provider_project_id: Optional[str] = None,
+    provider_run_id: Optional[str] = None,
+    assignment_method: Optional[str] = None,
+    taxon: Optional[str] = None,
+    sample_kind: Optional[str] = None,
+    is_control: Optional[bool] = None,
+    lat_min: Optional[float] = Query(default=None, ge=-90, le=90),
+    lat_max: Optional[float] = Query(default=None, ge=-90, le=90),
+    lon_min: Optional[float] = Query(default=None, ge=-180, le=180),
+    lon_max: Optional[float] = Query(default=None, ge=-180, le=180),
     limit: int = Query(default=25, ge=1, le=100),
 ) -> List[SourceDocument]:
+    filters = _edna_filters(
+        sample_id=sample_id,
+        provider=provider,
+        provider_project_id=provider_project_id,
+        provider_run_id=provider_run_id,
+        assignment_method=assignment_method,
+        taxon=taxon,
+        sample_kind=sample_kind,
+        is_control=is_control,
+        time_from=time_from,
+        time_to=time_to,
+        lat_min=lat_min,
+        lat_max=lat_max,
+        lon_min=lon_min,
+        lon_max=lon_max,
+    )
+    source_type = _documents_source_type(source_type, filters)
     if q:
         rows = retrieve(
             q,
             k=limit,
             source_type=source_type,
+            sample_id=sample_id,
             bay=bay,
             time_from=time_from,
             time_to=time_to,
+            **{key: value for key, value in filters.items() if key not in {"sample_id", "time_from", "time_to"}},
         )
     else:
-        rows = _filter_documents(
-            _read_jsonl(config.SERVING_DIR / "retrieval_documents.jsonl"),
+        local = LocalRetriever()
+        local.load()
+        rows = local.search(
+            "",
+            k=limit,
             source_type=source_type,
+            sample_id=sample_id,
             bay=bay,
             time_from=time_from,
             time_to=time_to,
-        )[:limit]
+            **{key: value for key, value in filters.items() if key not in {"sample_id", "time_from", "time_to"}},
+        )
     return [_source_document(row) for row in rows]
 
 
 @app.post("/retrieve", response_model=RetrieveResponse)
 def retrieve_sources(request: RetrieveRequest) -> RetrieveResponse:
+    request, analysis_members, analysis_methods = _resolve_analysis_request(request)
     bundle = retrieve_with_expansion(
         request.query,
         k=request.k,
+        sample_ids=None if analysis_members is None else sorted(analysis_members),
+        assignment_methods=None if analysis_methods is None else sorted(analysis_methods),
         source_type=request.source_type,
+        sample_id=request.sample_id,
         bay=request.bay,
         time_from=request.time_from,
         time_to=request.time_to,
+        provider=request.provider,
+        provider_project_id=request.provider_project_id,
+        provider_run_id=request.provider_run_id,
+        assignment_method=request.assignment_method,
+        taxon=request.taxon,
+        sample_kind=request.sample_kind,
+        is_control=request.is_control,
+        lat_min=request.lat_min,
+        lat_max=request.lat_max,
+        lon_min=request.lon_min,
+        lon_max=request.lon_max,
         vector_weight=request.vector_weight,
         fts_weight=request.fts_weight,
         rrf_k=request.rrf_k,
@@ -4545,12 +5086,27 @@ def retrieve_sources(request: RetrieveRequest) -> RetrieveResponse:
     )
     primary_rows = bundle.get("primary") or []
     linked_rows = bundle.get("linked") or []
+    if analysis_members is not None:
+        primary_rows = [r for r in primary_rows if r.get('sample_id') in analysis_members and r.get('assignment_method') in analysis_methods]
+        linked_rows = []
     return RetrieveResponse(
         query=request.query,
         sources=[_source_document(row) for row in primary_rows],
         linked_sources=[_source_document(row) for row in linked_rows],
         diagnostics=bundle.get("diagnostics") or {},
     )
+
+
+def _resolve_analysis_request(request):
+    if not request.analysis_id:
+        return request, None, None
+    from ingestion.edna_analysis_bundle import request_scope
+    from ingestion.provenance_snapshot import SnapshotError
+    try:
+        updates, members, methods = request_scope(request.model_dump())
+        return request.model_copy(update=updates), members, methods
+    except (ValueError, OSError, KeyError, SnapshotError) as exc:
+        raise HTTPException(409, str(exc)) from exc
 
 
 def _chat_latency_ms(started_at: float) -> int:
@@ -4583,6 +5139,7 @@ def chat(
     request: ChatRequest,
     user: CurrentUser = Depends(get_current_user),
 ) -> ChatResponse:
+    request, analysis_members, analysis_methods = _resolve_analysis_request(request)
     started_at = time.perf_counter()
     model = _allowed_model(
         request.model,
@@ -4596,9 +5153,21 @@ def chat(
         "retrieval": {
             "k": request.k,
             "source_type": request.source_type,
+            "sample_id": request.sample_id,
             "bay": request.bay,
             "time_from": request.time_from,
             "time_to": request.time_to,
+            "provider": request.provider,
+            "provider_project_id": request.provider_project_id,
+            "provider_run_id": request.provider_run_id,
+            "assignment_method": request.assignment_method,
+            "taxon": request.taxon,
+            "sample_kind": request.sample_kind,
+            "is_control": request.is_control,
+            "lat_min": request.lat_min,
+            "lat_max": request.lat_max,
+            "lon_min": request.lon_min,
+            "lon_max": request.lon_max,
             "vector_weight": request.vector_weight,
             "fts_weight": request.fts_weight,
             "rrf_k": request.rrf_k,
@@ -4606,6 +5175,7 @@ def chat(
             "max_linked_sources": request.max_linked_sources,
         },
         "context": {
+            "analysis_id": request.analysis_id,
             "inject_analysis": request.inject_analysis,
             "inject_reliability": request.inject_reliability,
             "run_answer_audit": request.run_answer_audit,
@@ -4622,10 +5192,24 @@ def chat(
         bundle = retrieve_with_expansion(
             request.query,
             k=request.k,
+            sample_ids=None if analysis_members is None else sorted(analysis_members),
+            assignment_methods=None if analysis_methods is None else sorted(analysis_methods),
             source_type=request.source_type,
+            sample_id=request.sample_id,
             bay=request.bay,
             time_from=request.time_from,
             time_to=request.time_to,
+            provider=request.provider,
+            provider_project_id=request.provider_project_id,
+            provider_run_id=request.provider_run_id,
+            assignment_method=request.assignment_method,
+            taxon=request.taxon,
+            sample_kind=request.sample_kind,
+            is_control=request.is_control,
+            lat_min=request.lat_min,
+            lat_max=request.lat_max,
+            lon_min=request.lon_min,
+            lon_max=request.lon_max,
             vector_weight=request.vector_weight,
             fts_weight=request.fts_weight,
             rrf_k=request.rrf_k,
@@ -4633,11 +5217,16 @@ def chat(
             max_linked_sources=request.max_linked_sources,
         )
         rows = bundle.get("primary") or []
+        if analysis_members is not None:
+            rows = [r for r in rows if r.get('sample_id') in analysis_members and r.get('assignment_method') in analysis_methods]
         linked_rows = bundle.get("linked") or []
+        if analysis_members is not None:
+            linked_rows = []
         retrieval_diagnostics = bundle.get("diagnostics") or {}
         prompt, context = build_prompt_with_context(
             request.query,
             rows,
+            evidence_scope=request.model_dump(),
             linked_results=linked_rows,
             inject_analysis=request.inject_analysis,
             inject_reliability=request.inject_reliability,

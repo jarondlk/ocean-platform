@@ -40,6 +40,40 @@ npm vulnerabilities, and full Cloud Build
 
 ## Local Verification
 
+### ANEMONE PR5 implementation — 2026-09-03
+
+- Backend: 583 passed, 8 PostgreSQL-gated skips; 76.75% CI-boundary coverage.
+- PostgreSQL: all 8 integration tests passed separately against a freshly
+  migrated disposable PG16/pgvector database, including import rollback/replay,
+  pre-ranking membership filters and publication-generation checks.
+- Frontend: 14 tests, typecheck and production build passed.
+- Ruff, dependency consistency, one Alembic head (`20260902_0007`) and
+  `git diff --check` passed. The acquisition CLI's default offline plan and
+  evaluation CLI help were also checked without provider credentials.
+- The temporary database was removed. No live provider download, real GCS
+  validation, new authenticated browser smoke, model evaluation or deployment
+  was performed. Local object-store and fake GCS protocol tests are not a
+  substitute for the rollout gates in
+  [`ANEMONE_PR5_PLAN.md`](ANEMONE_PR5_PLAN.md).
+
+### ANEMONE follow-up audit — 2026-09-03 (historical)
+
+Fresh verification passed 555 backend tests (7 service-gated skips), 76.17%
+CI-boundary coverage, all 7 PostgreSQL integration checks after applying
+migrations on a disposable PG16/pgvector database, 14 frontend tests,
+typecheck/build, Ruff, dependency consistency, one Alembic head, and diff checks.
+The preview and disposable audit database are stopped. No GCP/live-model
+validation was performed in this audit.
+
+Those pre-implementation gates did not cover three reproduced review gaps: incomplete
+analysis-manifest acceptance, lost historical analysis provenance after a
+rerun, and membership filtering after top-K retrieval. The findings and
+permanent regression tests are recorded in
+[`ANEMONE_PR5_PLAN.md`](ANEMONE_PR5_PLAN.md). PR5 now fixes all three; real pilot
+and deployment verification remain pending.
+
+### Development setup
+
 Install development dependencies:
 
 ```bash
@@ -96,6 +130,150 @@ python -m ruff check \
 The lint configuration in `pyproject.toml` covers active Python code. Archived
 reference code is intentionally outside this boundary.
 
+### ANEMONE acquisition
+
+Run the PR1 contract and acquisition suite:
+
+```bash
+python -m pytest tests/test_anemone_ingestion.py -q
+```
+
+The suite uses synthetic HTML and TSV/XZ fixtures plus a temporary localhost
+Basic-auth server. It tests sample/run scope validation, secret redaction,
+inventory-only behavior, interpreted-file selection, FASTQ exclusion,
+file/byte limits, unknown and missing roles, XZ and TSV schema failures,
+redirect rejection, ETag change detection, interrupted-transfer resume,
+immutable snapshots, idempotency, and CLI output. It never contacts ANEMONE
+and does not require a live credential.
+
+Live authenticated access is a separate manual smoke test. Run inventory first
+against one reviewed sample URL, inspect the JSON limits and file roles, then
+use `--execute`. Store credentials outside the repository through the
+file-backed configuration documented in `docs/SECURITY.md`. Do not use a live
+ANEMONE scope in CI.
+
+Run the PR2 normalization, lineage, and loader unit suite:
+
+```bash
+python -m pytest \
+  tests/test_anemone_normalization.py \
+  tests/test_load_db_upsert.py \
+  tests/test_lineage.py \
+  tests/test_bootstrap_database.py \
+  -q
+```
+
+Normalization is validate-only unless `--execute` is supplied. Activation is
+an additional explicit action:
+
+```bash
+python scripts/normalize_anemone.py --snapshot-id SNAPSHOT_ID
+python scripts/normalize_anemone.py \
+  --snapshot-id SNAPSHOT_ID --execute --activate
+python scripts/load_db.py --upsert --dry-run --json
+python scripts/load_db.py --upsert --json
+```
+
+The loader uses the activated `current.json` bundle by default. An explicit
+different normalization ID is rejected unless the operator also supplies
+`--allow-anemone-noncurrent`; the override is recorded in the result. PR2
+loads no retrieval documents or embeddings for ANEMONE.
+
+### ANEMONE retrieval and evidence navigation (PR3)
+
+```bash
+python -m pytest tests/test_edna_document_builder.py \
+  tests/test_edna_materializer.py tests/test_local_retriever.py \
+  tests/test_api_edna.py tests/test_prompt_builder.py tests/test_lineage.py \
+  tests/test_provenance_snapshot.py -q
+```
+
+The disposable PostgreSQL suite also verifies active documents across multiple
+provider scopes, independent assignment methods, non-featured taxon filtering,
+metadata-only embedding preservation, scientific-correction invalidation,
+read API source locators, and scoped document inactivation. Never point these
+migration/downgrade tests at a research or production database.
+
+The operator sequence, after a verified backup and canonical load, is:
+
+```bash
+python scripts/materialize_edna_retrieval.py
+python scripts/materialize_edna_retrieval.py --execute
+python scripts/update_embeddings.py
+python scripts/build_provenance_manifest.py --publish
+```
+
+The first command is read-only. The full manual pipeline uses the same order;
+`--no-embed` omits the full-pipeline embedding stage. eDNA JSONL/Parquet artifacts
+are separate from the legacy corpus, and a content/provider/model fingerprint
+guards the local embedding cache.
+
+Frontend unit tests cover eDNA URL round-trips and invalid filters. Browser
+smoke checks use synthetic canonical rows: both methods visible initially;
+select a detection; reload; Back/Forward; invalid ID and missing active sample;
+confirm exact sample/assay/method IDs and source hashes remain available. PR3
+verification on 2026-09-02 passed 524 backend tests, 6 isolated PostgreSQL tests,
+12 frontend tests, typecheck/build, and the 70% coverage floor (75.39%).
+
+### ANEMONE PR4 scientific analysis
+
+Verification completed 2026-09-03 JST:
+
+- 555 backend tests passed; 7 PostgreSQL-only checks skipped in that suite;
+  aggregate CI-boundary coverage **76.17%** (70% required).
+- All **7 PostgreSQL integration tests passed separately** against a fresh
+  disposable pgvector/PostgreSQL 16 database; migrations through
+  `20260902_0007` applied successfully. The new test covers timestamped end-date
+  queries, consistent analysis input reads, actual concurrent materializers,
+  generation-registry agreement and failed artifact publication.
+- 14 frontend tests, typecheck and production build passed. Ruff, `pip check`,
+  single Alembic head and `git diff --check` passed; npm production audit found
+  zero vulnerabilities.
+- Synthetic browser checks verified cold-load/exact result selection, reload,
+  Back/Forward, method-separated environmental rows, keyboard plot-to-result
+  navigation, source-sample links and CSV export. Historical runs were labeled
+  and did not offer current-analysis chat. No live provider/model evaluation.
+- Development preview used explicit disabled auth; Auth.js emitted missing
+  local host/secret configuration messages while the development bypass served
+  requests. This was not an OIDC/authentication smoke test. Temporary preview
+  servers and the disposable test container have been stopped; only synthetic
+  scratch artifacts remain under the temporary directory.
+- Existing Starlette/httpx, NumPy/netCDF and Alembic deprecation/runtime warnings
+  remain visible in test output; there were no failed checks.
+
+The three PR3 review regressions have tests in `test_pr3_review_fixes.py` and
+the PostgreSQL suite. Scientific fixtures cover known alpha/beta values,
+unresolved/conflicting taxonomy, empty compositions, protocol partitions,
+paired method differences, explicit controls, units, distance/time/depth/domain,
+SST footprints/coverage, byte/row caps, immutable corruption/freshness, source
+scope, provenance snapshot roundtrips and export escaping.
+
+Generate a reviewed analysis manually (set `DATABASE_URL` using the existing
+local secret configuration, never command-line credentials):
+
+```bash
+python scripts/run_edna_analysis.py --recipe data/analysis/edna_recipe.json
+python scripts/run_edna_analysis.py --recipe data/analysis/edna_recipe.json --execute
+# Optional typed, source-backed observation snapshot:
+python scripts/run_edna_analysis.py --recipe data/analysis/edna_recipe.json \
+  --environment data/analysis/reviewed_environment.json --execute
+```
+
+Start from `analysis_contracts/edna_v1.json` and replace the placeholder cohort.
+Dry-run computes validation/results without publishing. Executed bundles live
+under `data/analysis/edna/<analysis_id>/`. The optional Admin `edna_analysis`
+stage uses `EDNA_ANALYSIS_RECIPE`; no scheduled job or live profile is enabled.
+The CLI is the explicit environmental-input entry point; the Admin stage does
+not implicitly discover observation files. Currentness compares canonical
+inputs and runtime/algorithm; external observations are pinned snapshots and
+must be explicitly refreshed by the operator.
+
+Manual answer-review scenarios are in `evaluation/edna_research_cases.json`.
+For the PR5 pilot, select the matching reviewed analysis for each case, capture
+the exact request/answer/citations, and assess the expected scientific limits.
+Passing deterministic citation checks is not evidence of study validity or
+successful live model evaluation.
+
 Verify the frontend:
 
 ```bash
@@ -136,12 +314,15 @@ DEPLOYMENT_ENV=test \
 python -m pytest \
   tests/integration/test_app_metadata_postgres.py \
   tests/integration/test_operational_postgres.py \
+  tests/integration/test_anemone_postgres.py \
   -q
 ```
 
 The tests verify migrated tables, invite acceptance, user persistence,
-database-backed mock identity suspension, audited invitation mutations, and
-shared rate-limit behavior. Their records are isolated and cleaned up.
+database-backed mock identity suspension, audited invitation mutations,
+shared rate-limit behavior, the eDNA schema, idempotent eDNA merge,
+scientific-correction reporting, and scoped inactivation. Their records are
+isolated and cleaned up.
 
 Exercise the database mutation safety path:
 

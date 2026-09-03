@@ -19,6 +19,7 @@ import pandas as pd
 from sqlalchemy import create_engine, text
 
 import config
+from retrieval.edna_publication import retrieval_path as edna_retrieval_path
 
 
 MANIFEST_SCHEMA_VERSION = 1
@@ -41,6 +42,8 @@ class SourceFileTrace:
     registry_records: int = 0
     latest_processing_run: Optional[str] = None
     notes: Optional[str] = None
+    source_url: Optional[str] = None
+    source_snapshot_id: Optional[str] = None
 
 
 @dataclass
@@ -63,6 +66,7 @@ class ArtifactVersion:
     file_size_bytes: Optional[int] = None
     modified_at: Optional[str] = None
     notes: Optional[str] = None
+    source_snapshot_id: Optional[str] = None
 
 
 @dataclass
@@ -79,6 +83,7 @@ class DocumentTrace:
     source_file_ids: List[str]
     source_artifact_ids: List[str]
     source_record_keys: List[str]
+    metadata: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -91,6 +96,8 @@ class EmbeddingTrace:
     embedding_source: str
     embedded: Optional[bool] = None
     notes: Optional[str] = None
+    embedding_provider: Optional[str] = None
+    embedded_at: Optional[str] = None
 
 
 def _now_iso() -> str:
@@ -212,6 +219,119 @@ def _latest_processing_run(records: List[Dict[str, Any]]) -> Optional[str]:
     return records_sorted[-1].get("processing_run")
 
 
+def _resolve_anemone_lineage_bundle(
+    normalization_id: Optional[str] = None,
+) -> Optional[Tuple[Path, Dict[str, Any]]]:
+    """Resolve an immutable bundle, returning None when no active one exists."""
+    pointer = config.ANEMONE_NORMALIZED_DIR / "current.json"
+    if normalization_id is None and not pointer.exists():
+        return None
+    from preprocessing.anemone import resolve_normalized_bundle
+
+    return resolve_normalized_bundle(
+        normalization_id,
+        normalized_root=config.ANEMONE_NORMALIZED_DIR,
+    )
+
+
+def _anemone_source_file_traces(normalization_id: Optional[str] = None) -> List[SourceFileTrace]:
+    resolved = _resolve_anemone_lineage_bundle(normalization_id)
+    if resolved is None:
+        return []
+    root, manifest = resolved
+    artifact = manifest.get("artifacts", {}).get("external_source_file")
+    if not artifact:
+        return []
+    frame = pd.read_parquet(root / str(artifact["path"]))
+    raw_snapshot_root = (
+        config.RAW_ANEMONE_DIR
+        / "snapshots"
+        / str(manifest["source_snapshot_id"])
+    )
+    traces: List[SourceFileTrace] = []
+    for row in frame.to_dict(orient="records"):
+        relative_path = str(row.get("relative_path") or "")
+        local_path = raw_snapshot_root / relative_path
+        source_file_id = str(row.get("source_file_id") or "")
+        traces.append(
+            SourceFileTrace(
+                id=f"raw:anemone:{source_file_id}",
+                source_dataset="anemone_mifish",
+                path=str(local_path),
+                role=str(row.get("role") or "source_file"),
+                exists=local_path.is_file(),
+                sha256=(
+                    str(row["sha256"])
+                    if row.get("sha256") and not pd.isna(row.get("sha256"))
+                    else None
+                ),
+                file_size_bytes=(
+                    int(row["size_bytes"])
+                    if row.get("size_bytes") is not None
+                    and not pd.isna(row.get("size_bytes"))
+                    else None
+                ),
+                modified_at=_modified_at(local_path),
+                source_url=str(row.get("source_url") or ""),
+                source_snapshot_id=str(manifest["source_snapshot_id"]),
+                notes=(
+                    f"snapshot={manifest['source_snapshot_id']}; "
+                    f"selection={row.get('selection_status')}; "
+                    f"source_url={row.get('source_url')}"
+                ),
+            )
+        )
+    return traces
+
+
+def _database_anemone_source_file_traces() -> List[SourceFileTrace]:
+    """Read immutable external-file provenance across all loaded eDNA scopes."""
+    try:
+        engine = create_engine(config.DATABASE_URL, pool_pre_ping=True)
+        with engine.connect() as connection:
+            rows = connection.execute(
+                text(
+                    "SELECT source_file_id, snapshot_id, relative_path, "
+                    "source_url, role, sha256, size_bytes, last_modified, "
+                    "selection_status, validation_status "
+                    "FROM external_source_file ORDER BY source_file_id"
+                )
+            ).mappings().all()
+    except Exception:
+        return []
+    return [
+        SourceFileTrace(
+            id=f"raw:anemone:{row['source_file_id']}",
+            source_dataset="anemone_mifish",
+            path=str(row.get("source_url") or row.get("relative_path") or ""),
+            role=str(row.get("role") or "source_file"),
+            exists=True,
+            sha256=str(row["sha256"]) if row.get("sha256") else None,
+            file_size_bytes=(
+                int(row["size_bytes"])
+                if row.get("size_bytes") is not None
+                else None
+            ),
+            modified_at=(
+                str(row["last_modified"])
+                if row.get("last_modified")
+                else None
+            ),
+            registry_seen=True,
+            source_url=str(row.get("source_url") or ""),
+            source_snapshot_id=str(row.get("snapshot_id") or ""),
+            registry_records=1,
+            notes=(
+                f"snapshot={row.get('snapshot_id')}; "
+                f"selection={row.get('selection_status')}; "
+                f"validation={row.get('validation_status')}; "
+                f"source_url={row.get('source_url')}"
+            ),
+        )
+        for row in rows
+    ]
+
+
 def build_source_file_traces() -> List[SourceFileTrace]:
     registry_records = _read_registry_records()
     rows: List[SourceFileTrace] = []
@@ -266,11 +386,107 @@ def build_source_file_traces() -> List[SourceFileTrace]:
             notes="Optional raw Himawari DAT directory.",
         )
     )
+    anemone_by_id = {
+        row.id: row for row in _database_anemone_source_file_traces()
+    }
+    normalization_ids = sorted({
+        spec["id"].split(":")[2]
+        for spec in _active_anemone_artifact_specs()
+    })
+    for normalization_id in normalization_ids:
+        anemone_by_id.update({
+            row.id: row
+            for row in _anemone_source_file_traces(normalization_id)
+        })
+    rows.extend(anemone_by_id[key] for key in sorted(anemone_by_id))
     return rows
 
 
+def _anemone_artifact_specs(normalization_id: Optional[str] = None) -> List[Dict[str, Any]]:
+    resolved = _resolve_anemone_lineage_bundle(normalization_id)
+    if resolved is None:
+        return []
+    root, manifest = resolved
+    normalization_id = str(manifest["normalization_id"])
+    source_file_artifact = manifest.get("artifacts", {}).get(
+        "external_source_file"
+    )
+    source_file_ids: List[str] = []
+    if source_file_artifact:
+        frame = pd.read_parquet(root / str(source_file_artifact["path"]))
+        source_file_ids = [
+            f"raw:anemone:{value}"
+            for value in frame.get("source_file_id", pd.Series(dtype="string"))
+            .dropna()
+            .astype(str)
+            .tolist()
+        ]
+    table_keys = {
+        "external_source_snapshot": ("external_source_snapshot", ["snapshot_id"]),
+        "external_source_file": ("external_source_file", ["source_file_id"]),
+        "edna_sample": ("edna_sample", ["sample_id"]),
+        "edna_assay": ("edna_assay", ["assay_id"]),
+        "edna_detection": ("edna_detection", ["detection_id"]),
+        "edna_internal_standard": (
+            "edna_internal_standard",
+            ["internal_standard_id"],
+        ),
+        "edna_anchor_event": (None, ["event_id"]),
+    }
+    specs: List[Dict[str, Any]] = []
+    for name, artifact in sorted(manifest.get("artifacts", {}).items()):
+        table_name, key_columns = table_keys.get(name, (None, []))
+        specs.append(
+            {
+                "id": f"normalized:anemone:{normalization_id}:{name}",
+                "label": name,
+                "kind": "normalized",
+                "path": root / str(artifact["path"]),
+                "producer": "scripts/normalize_anemone.py",
+                "producer_stage": "normalize_anemone",
+                "source_file_ids": source_file_ids,
+                "table_name": table_name,
+                "key_columns": key_columns,
+                "source_snapshot_id": str(manifest["source_snapshot_id"]),
+                "notes": (
+                    f"normalization_id={normalization_id}; "
+                    f"source_snapshot_id={manifest['source_snapshot_id']}; "
+                    "active=true"
+                ),
+            }
+        )
+    return specs
+
+
+def _active_anemone_artifact_specs() -> List[Dict[str, Any]]:
+    """Include normalized bundles referenced by any active eDNA scope."""
+    specs = _anemone_artifact_specs()
+    known = {spec["source_snapshot_id"] for spec in specs}
+    needed: set[str] = set()
+    documents = _read_retrieval_documents()
+    for row in documents.to_dict(orient="records"):
+        if row.get("source_type") != "edna_metabarcoding":
+            continue
+        metadata = row.get("metadata")
+        if not isinstance(metadata, dict):
+            metadata = json.loads(row.get("metadata_json") or "{}")
+        needed.update(metadata.get("source_snapshot_ids") or [])
+    for path in sorted(config.ANEMONE_NORMALIZED_DIR.glob("snapshots/*/normalization_manifest.json")):
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+        snapshot_id = manifest.get("source_snapshot_id")
+        if snapshot_id not in needed or snapshot_id in known:
+            continue
+        historical = _anemone_artifact_specs(path.parent.name)
+        for spec in historical:
+            # Only the current bundle is a canonical upsert candidate.
+            spec["table_name"] = None
+        specs.extend(historical)
+        known.add(snapshot_id)
+    return specs
+
+
 def _artifact_specs() -> List[Dict[str, Any]]:
-    return [
+    specs = [
         {
             "id": "normalized:ctd_profile",
             "label": "ctd_profile_standardized",
@@ -411,6 +627,26 @@ def _artifact_specs() -> List[Dict[str, Any]]:
             "input_artifact_ids": ["serving:retrieval_parquet"],
         },
         {
+            "id": "serving:edna_retrieval_parquet",
+            "label": "anemone_retrieval_documents.parquet",
+            "kind": "serving",
+            "path": edna_retrieval_path("parquet"),
+            "producer": "scripts/materialize_edna_retrieval.py",
+            "producer_stage": "materialize_edna_retrieval",
+            "table_name": "retrieval_document",
+            "key_columns": ["doc_id"],
+            "notes": "Database-wide active eDNA retrieval corpus.",
+        },
+        {
+            "id": "serving:edna_retrieval_jsonl",
+            "label": "anemone_retrieval_documents.jsonl",
+            "kind": "serving",
+            "path": edna_retrieval_path("jsonl"),
+            "producer": "scripts/materialize_edna_retrieval.py",
+            "producer_stage": "materialize_edna_retrieval",
+            "input_artifact_ids": ["serving:edna_retrieval_parquet"],
+        },
+        {
             "id": "analysis:documents",
             "label": "analysis_documents",
             "kind": "analysis",
@@ -438,6 +674,8 @@ def _artifact_specs() -> List[Dict[str, Any]]:
             "source_file_ids": [f"raw:{key}" for key in sorted(config.RAW_FILES)] + ["raw:sst_netcdf"],
         },
     ]
+    specs.extend(_active_anemone_artifact_specs())
+    return specs
 
 
 def build_artifact_versions() -> List[ArtifactVersion]:
@@ -464,25 +702,40 @@ def build_artifact_versions() -> List[ArtifactVersion]:
                 schema_hash=_stable_hash(columns) if columns else None,
                 file_size_bytes=path.stat().st_size if path.exists() and path.is_file() else None,
                 modified_at=_modified_at(path),
+                notes=spec.get("notes"),
+                source_snapshot_id=spec.get("source_snapshot_id"),
             )
         )
     return rows
 
 
 def _read_retrieval_documents() -> pd.DataFrame:
-    parquet_path = config.SERVING_DIR / "retrieval_documents.parquet"
-    jsonl_path = config.SERVING_DIR / "retrieval_documents.jsonl"
-    if parquet_path.exists():
-        return pd.read_parquet(parquet_path)
-    if jsonl_path.exists():
-        rows = []
-        with jsonl_path.open(encoding="utf-8") as handle:
-            for line in handle:
-                line = line.strip()
-                if line:
-                    rows.append(json.loads(line))
-        return pd.DataFrame(rows)
-    return pd.DataFrame()
+    frames: List[pd.DataFrame] = []
+    for name in ("retrieval_documents", "anemone_retrieval_documents"):
+        parquet_path = config.SERVING_DIR / f"{name}.parquet"
+        jsonl_path = config.SERVING_DIR / f"{name}.jsonl"
+        if name == "anemone_retrieval_documents":
+            parquet_path, jsonl_path = edna_retrieval_path("parquet"), edna_retrieval_path("jsonl")
+        if parquet_path.exists():
+            frames.append(pd.read_parquet(parquet_path))
+            continue
+        if jsonl_path.exists():
+            rows = []
+            with jsonl_path.open(encoding="utf-8") as handle:
+                for line in handle:
+                    line = line.strip()
+                    if line:
+                        rows.append(json.loads(line))
+            frames.append(pd.DataFrame(rows))
+    if not frames:
+        return pd.DataFrame()
+    combined = pd.concat(frames, ignore_index=True, sort=False)
+    if "active" in combined.columns:
+        combined = combined[
+            combined["active"].fillna(True).astype(bool)
+        ]
+    id_column = "doc_id" if "doc_id" in combined.columns else "id"
+    return combined.drop_duplicates(id_column, keep="last").sort_values(id_column)
 
 
 def _document_source_artifacts(source_type: str) -> List[str]:
@@ -492,6 +745,8 @@ def _document_source_artifacts(source_type: str) -> List[str]:
         return ["serving:sample_context", "normalized:kraken", "normalized:metaeuk", "serving:retrieval_parquet"]
     if source_type == "remote_sensing":
         return ["normalized:sst_daily", "normalized:sst_point", "serving:retrieval_parquet"]
+    if source_type == "edna_metabarcoding":
+        return ["serving:edna_retrieval_parquet"]
     return ["serving:retrieval_parquet"]
 
 
@@ -520,6 +775,7 @@ def build_document_traces(limit_documents: Optional[int] = 500) -> List[Document
     if df.empty:
         return []
     rows: List[DocumentTrace] = []
+    anemone_artifacts = _active_anemone_artifact_specs()
     selected = df if limit_documents is None else df.head(limit_documents)
     for _, row in selected.iterrows():
         doc_id = str(row.get("doc_id") or row.get("id") or "")
@@ -532,6 +788,15 @@ def build_document_traces(limit_documents: Optional[int] = 500) -> List[Document
         title = str(row.get("title") or doc_id)
         text_value = str(row.get("text") or "")
         content_hash = _stable_hash({"title": title, "text": text_value})
+        metadata_value: Dict[str, Any] = {}
+        raw_metadata = row.get("metadata_json") or row.get("metadata")
+        if isinstance(raw_metadata, dict):
+            metadata_value = raw_metadata
+        elif isinstance(raw_metadata, str) and raw_metadata:
+            try:
+                metadata_value = json.loads(raw_metadata)
+            except json.JSONDecodeError:
+                metadata_value = {}
         metadata_hash = _stable_hash(
             {
                 "source_type": source_type,
@@ -540,6 +805,13 @@ def build_document_traces(limit_documents: Optional[int] = 500) -> List[Document
                 "time": time_value,
                 "bay": None if pd.isna(row.get("bay")) else row.get("bay"),
                 "station": None if pd.isna(row.get("station")) else row.get("station"),
+                "provider": row.get("provider"),
+                "assay_id": row.get("assay_id"),
+                "assignment_method": row.get("assignment_method"),
+                "sample_kind": row.get("sample_kind"),
+                "is_control": row.get("is_control"),
+                "source_snapshot_id": row.get("source_snapshot_id"),
+                "metadata": metadata_value,
             }
         )
         source_keys = []
@@ -549,6 +821,31 @@ def build_document_traces(limit_documents: Optional[int] = 500) -> List[Document
             source_keys.append(f"event_id:{event_id}")
         if source_type == "remote_sensing" and time_value:
             source_keys.append(f"date_jst:{time_value[:10]}")
+        if source_type == "edna_metabarcoding":
+            assay_id = row.get("assay_id")
+            assignment_method = row.get("assignment_method")
+            if assay_id:
+                source_keys.append(f"assay_id:{assay_id}")
+            if assignment_method:
+                source_keys.append(
+                    f"assignment_method:{assignment_method}"
+                )
+            source_keys.extend(
+                f"detection_id:{value}"
+                for value in metadata_value.get("featured_detection_ids", [])
+            )
+        source_file_ids = _document_source_files(source_type)
+        if source_type == "edna_metabarcoding":
+            source_file_ids = [
+                f"raw:anemone:{value}"
+                for value in metadata_value.get("source_file_ids", [])
+            ]
+        source_artifact_ids = _document_source_artifacts(source_type)
+        if source_type == "edna_metabarcoding":
+            source_artifact_ids.extend(
+                spec["id"] for spec in anemone_artifacts
+                if spec["source_snapshot_id"] in metadata_value.get("source_snapshot_ids", [])
+            )
         rows.append(
             DocumentTrace(
                 doc_id=doc_id,
@@ -560,9 +857,10 @@ def build_document_traces(limit_documents: Optional[int] = 500) -> List[Document
                 content_hash=content_hash,
                 metadata_hash=metadata_hash,
                 lineage_level="document_to_artifact_and_source_key",
-                source_file_ids=_document_source_files(source_type),
-                source_artifact_ids=_document_source_artifacts(source_type),
+                source_file_ids=source_file_ids,
+                source_artifact_ids=source_artifact_ids,
                 source_record_keys=source_keys,
+                metadata=metadata_value,
             )
         )
     return rows
@@ -572,8 +870,16 @@ def _database_embedding_status() -> Dict[str, Any]:
     try:
         engine = create_engine(config.DATABASE_URL, pool_pre_ping=True)
         with engine.connect() as conn:
-            rows = conn.execute(text("SELECT doc_id, embedding IS NOT NULL AS embedded FROM retrieval_document")).mappings().all()
-        return {"available": True, "rows": {str(row["doc_id"]): bool(row["embedded"]) for row in rows}}
+            rows = conn.execute(text(
+                "SELECT doc_id, embedding IS NOT NULL AS embedded, "
+                "embedding_provider, embedding_model, embedding_dim, embedded_at "
+                "FROM retrieval_document WHERE active IS TRUE"
+            )).mappings().all()
+        return {
+            "available": True,
+            "rows": {str(row["doc_id"]): bool(row["embedded"]) for row in rows},
+            "metadata": {str(row["doc_id"]): dict(row) for row in rows},
+        }
     except Exception as exc:
         return {"available": False, "error": str(exc), "rows": {}}
 
@@ -584,6 +890,7 @@ def build_embedding_traces(documents: List[DocumentTrace], *, include_database: 
     rows: List[EmbeddingTrace] = []
     for doc in documents:
         embedded_value = embedded_by_doc.get(doc.doc_id)
+        embedding_metadata = (db_status.get("metadata") or {}).get(doc.doc_id, {})
         if db_status.get("available"):
             status = "embedded" if embedded_value else "missing"
             notes = None
@@ -595,8 +902,10 @@ def build_embedding_traces(documents: List[DocumentTrace], *, include_database: 
                 doc_id=doc.doc_id,
                 content_hash=doc.content_hash,
                 embedding_status=status,
-                embedding_model=config.EMBEDDING_MODEL,
-                embedding_dim=config.EMBEDDING_DIM,
+                embedding_model=embedding_metadata.get("embedding_model") or config.EMBEDDING_MODEL,
+                embedding_dim=embedding_metadata.get("embedding_dim") or config.EMBEDDING_DIM,
+                embedding_provider=embedding_metadata.get("embedding_provider"),
+                embedded_at=str(embedding_metadata["embedded_at"]) if embedding_metadata.get("embedded_at") else None,
                 embedding_source="postgresql.retrieval_document.embedding",
                 embedded=embedded_value if isinstance(embedded_value, bool) else None,
                 notes=notes,
@@ -605,15 +914,65 @@ def build_embedding_traces(documents: List[DocumentTrace], *, include_database: 
     return rows
 
 
+def build_anemone_row_traces() -> List[Dict[str, Any]]:
+    """Trace each canonical eDNA row to its immutable source file and row."""
+    resolved = _resolve_anemone_lineage_bundle()
+    if resolved is None:
+        return []
+    root, manifest = resolved
+    normalization_id = str(manifest["normalization_id"])
+    specs = (
+        ("edna_sample", "sample_id", "source_row_numbers_json"),
+        ("edna_assay", "assay_id", "source_row_numbers_json"),
+        ("edna_detection", "detection_id", "source_row_number"),
+        (
+            "edna_internal_standard",
+            "internal_standard_id",
+            "source_row_number",
+        ),
+    )
+    traces: List[Dict[str, Any]] = []
+    for table_name, key_column, locator_column in specs:
+        artifact = manifest.get("artifacts", {}).get(table_name)
+        if not artifact:
+            continue
+        frame = pd.read_parquet(root / str(artifact["path"]))
+        for row in frame.to_dict(orient="records"):
+            source_file_id = str(row.get("source_file_id") or "")
+            traces.append(
+                {
+                    "table": table_name,
+                    "record_id": str(row.get(key_column) or ""),
+                    "source_snapshot_id": str(
+                        row.get("source_snapshot_id") or ""
+                    ),
+                    "source_file_id": source_file_id,
+                    "source_file_trace_id": f"raw:anemone:{source_file_id}",
+                    "source_row_locator": row.get(locator_column),
+                    "scientific_content_sha256": row.get(
+                        "scientific_content_sha256"
+                    ),
+                    "source_row_hash": row.get("source_row_hash"),
+                    "normalization_artifact_id": (
+                        f"normalized:anemone:{normalization_id}:{table_name}"
+                    ),
+                }
+            )
+    return traces
+
+
 def build_provenance_manifest(
     *,
     limit_documents: Optional[int] = 500,
     include_embeddings: bool = True,
 ) -> Dict[str, Any]:
+    from ingestion.edna_analysis_bundle import provenance_descriptors
+    edna_analyses = provenance_descriptors()
     source_files = build_source_file_traces()
     artifacts = build_artifact_versions()
     documents = build_document_traces(limit_documents=limit_documents)
     embeddings = build_embedding_traces(documents, include_database=include_embeddings) if include_embeddings else []
+    anemone_rows = build_anemone_row_traces()
     registry_records = _read_registry_records()
     summary = {
         "source_files": len(source_files),
@@ -621,6 +980,7 @@ def build_provenance_manifest(
         "artifacts": len(artifacts),
         "existing_artifacts": sum(1 for item in artifacts if item.exists),
         "documents": len(documents),
+        "anemone_canonical_rows": len(anemone_rows),
         "embedded_documents_in_manifest": sum(1 for item in embeddings if item.embedding_status == "embedded"),
         "embedding_model": config.EMBEDDING_MODEL,
         "embedding_dim": config.EMBEDDING_DIM,
@@ -635,6 +995,8 @@ def build_provenance_manifest(
         "artifacts": [asdict(item) for item in artifacts],
         "documents": [asdict(item) for item in documents],
         "embeddings": [asdict(item) for item in embeddings],
+        "anemone_canonical_rows": anemone_rows,
+        "edna_analyses": edna_analyses,
         "limitations": [
             "Corpus database rows carry source_row_hash values generated from normalized row content; document traces additionally retain stable source keys and file hashes.",
             "SST collection manifests use a directory fingerprint at API time; per-file SHA records are available after ingestion registration.",
@@ -663,6 +1025,10 @@ def write_provenance_manifest(
 
 def build_document_trace(doc_id: str) -> Dict[str, Any]:
     manifest = build_provenance_manifest(limit_documents=10000, include_embeddings=True)
+    from ingestion.edna_analysis_bundle import analysis_trace
+    analysis = analysis_trace(doc_id, manifest.get('edna_analyses', []))
+    if analysis:
+        return analysis
     documents = manifest.get("documents", [])
     document = next((row for row in documents if row.get("doc_id") == doc_id), None)
     if not document:
@@ -709,6 +1075,12 @@ def _key_tuple(row: Dict[str, Any], columns: List[str]) -> Tuple[str, ...]:
 
 
 def _incoming_dataframe_for_table(table_name: str) -> Tuple[pd.DataFrame, Optional[str], List[str]]:
+    if table_name == "retrieval_document":
+        return (
+            _read_retrieval_documents(),
+            "serving:retrieval_parquet",
+            ["doc_id"],
+        )
     artifact_by_table = {
         spec.get("table_name"): spec
         for spec in _artifact_specs()
@@ -765,9 +1137,64 @@ def _database_rows(table_name: str, columns: Iterable[str]) -> Tuple[bool, Optio
         return False, str(exc), []
 
 
-def build_upsert_dry_run_plan(limit_keys: int = 25) -> Dict[str, Any]:
+def _database_scoped_anemone_rows(
+    table_name: str,
+    columns: Iterable[str],
+    *,
+    scope_template: str,
+    scope_parameters: Dict[str, Any],
+) -> Tuple[bool, Optional[str], List[Dict[str, Any]]]:
+    joins = {
+        "edna_sample": ("", "target"),
+        "edna_assay": (
+            "JOIN edna_sample AS sample ON target.sample_id = sample.sample_id",
+            "sample",
+        ),
+        "edna_detection": (
+            "JOIN edna_assay AS assay ON target.assay_id = assay.assay_id "
+            "JOIN edna_sample AS sample ON assay.sample_id = sample.sample_id",
+            "sample",
+        ),
+        "edna_internal_standard": (
+            "JOIN edna_assay AS assay ON target.assay_id = assay.assay_id "
+            "JOIN edna_sample AS sample ON assay.sample_id = sample.sample_id",
+            "sample",
+        ),
+    }
+    join_clause, scope_alias = joins[table_name]
+    try:
+        engine = create_engine(config.DATABASE_URL, pool_pre_ping=True)
+        preparer = engine.dialect.identifier_preparer
+        selected = ", ".join(
+            f"target.{preparer.quote(column)} AS {preparer.quote(column)}"
+            for column in columns
+        )
+        sql = (
+            f"SELECT {selected} FROM {preparer.quote(table_name)} AS target "
+            f"{join_clause} WHERE "
+            f"{scope_template.format(alias=scope_alias)}"
+        )
+        with engine.connect() as conn:
+            rows = conn.execute(text(sql), scope_parameters).mappings().all()
+        return True, None, [dict(row) for row in rows]
+    except Exception as exc:
+        return False, str(exc), []
+
+
+def build_upsert_dry_run_plan(
+    limit_keys: int = 25,
+    *,
+    anemone_normalization_id: Optional[str] = None,
+    allow_anemone_noncurrent: bool = False,
+) -> Dict[str, Any]:
     table_order = [
+        "external_source_snapshot",
+        "external_source_file",
         "anchor_event",
+        "edna_sample",
+        "edna_assay",
+        "edna_detection",
+        "edna_internal_standard",
         "ctd_profile",
         "ctd_summary",
         "metagenome_sample",
@@ -780,15 +1207,80 @@ def build_upsert_dry_run_plan(limit_keys: int = 25) -> Dict[str, Any]:
     table_plans: List[Dict[str, Any]] = []
     database_available = True
     database_errors: List[str] = []
+    from scripts.load_db import _load_anemone_bundle_frames, _scope_parameters
+
+    anemone_bundle = _load_anemone_bundle_frames(
+        anemone_normalization_id,
+        allow_noncurrent=allow_anemone_noncurrent,
+    )
+    anemone_frames: Dict[str, pd.DataFrame] = {}
+    anemone_manifest: Dict[str, Any] = {}
+    scope_template: Optional[str] = None
+    scope_parameters: Dict[str, Any] = {}
+    if anemone_bundle is not None:
+        anemone_frames, anemone_manifest = anemone_bundle
+        scope_template, scope_parameters = _scope_parameters(
+            anemone_frames["edna_sample"],
+            anemone_manifest,
+        )
+    anemone_table_frames = {
+        name: frame
+        for name, frame in anemone_frames.items()
+        if name != "edna_anchor_event"
+    }
+    anemone_key_columns = {
+        "external_source_snapshot": ["snapshot_id"],
+        "external_source_file": ["source_file_id"],
+        "edna_sample": ["sample_id"],
+        "edna_assay": ["assay_id"],
+        "edna_detection": ["detection_id"],
+        "edna_internal_standard": ["internal_standard_id"],
+    }
 
     for table_name in table_order:
-        incoming_df, artifact_id, key_columns = _incoming_dataframe_for_table(table_name)
+        if table_name in anemone_table_frames:
+            incoming_df = anemone_table_frames[table_name]
+            artifact_id = (
+                "normalized:anemone:"
+                f"{anemone_manifest['normalization_id']}:{table_name}"
+            )
+            key_columns = anemone_key_columns[table_name]
+        else:
+            incoming_df, artifact_id, key_columns = (
+                _incoming_dataframe_for_table(table_name)
+            )
+            if (
+                table_name == "anchor_event"
+                and "edna_anchor_event" in anemone_frames
+                and not anemone_frames["edna_anchor_event"].empty
+            ):
+                incoming_df = pd.concat(
+                    [incoming_df, anemone_frames["edna_anchor_event"]],
+                    ignore_index=True,
+                )
+            if table_name in anemone_key_columns and not key_columns:
+                key_columns = anemone_key_columns[table_name]
         incoming_rows = incoming_df.to_dict(orient="records") if not incoming_df.empty else []
         incoming_keys = {_key_tuple(row, key_columns) for row in incoming_rows if key_columns}
         compare_columns = list(key_columns)
         if table_name == "retrieval_document":
             compare_columns.extend(["title", "text", "embedding IS NOT NULL AS embedded"])
-        available, error, existing_rows = _database_rows(table_name, compare_columns)
+        elif table_name.startswith("edna_"):
+            compare_columns.extend(
+                ["scientific_content_sha256", "source_row_hash", "active"]
+            )
+        if table_name.startswith("edna_") and scope_template:
+            available, error, existing_rows = _database_scoped_anemone_rows(
+                table_name,
+                compare_columns,
+                scope_template=scope_template,
+                scope_parameters=scope_parameters,
+            )
+        else:
+            available, error, existing_rows = _database_rows(
+                table_name,
+                compare_columns,
+            )
         if not available:
             database_available = False
             if error:
@@ -799,6 +1291,8 @@ def build_upsert_dry_run_plan(limit_keys: int = 25) -> Dict[str, Any]:
         matched = sorted(incoming_keys & existing_keys)
         changed = []
         embeddings_to_refresh = []
+        scientific_corrections = []
+        provenance_refreshes = []
         if available and table_name == "retrieval_document":
             incoming_by_key = {_key_tuple(row, key_columns): row for row in incoming_rows}
             existing_by_key = {_key_tuple(row, key_columns): row for row in existing_rows}
@@ -811,6 +1305,46 @@ def build_upsert_dry_run_plan(limit_keys: int = 25) -> Dict[str, Any]:
                     changed.append(key)
                     embeddings_to_refresh.append(key)
             embeddings_to_refresh.extend(inserts)
+        elif available and table_name.startswith("edna_"):
+            incoming_by_key = {
+                _key_tuple(row, key_columns): row for row in incoming_rows
+            }
+            existing_by_key = {
+                _key_tuple(row, key_columns): row for row in existing_rows
+            }
+            for key in matched:
+                incoming_row = incoming_by_key[key]
+                existing_row = existing_by_key[key]
+                if (
+                    incoming_row.get("scientific_content_sha256")
+                    != existing_row.get("scientific_content_sha256")
+                ):
+                    scientific_corrections.append(key)
+                elif (
+                    incoming_row.get("source_row_hash")
+                    != existing_row.get("source_row_hash")
+                    or existing_row.get("active") is not True
+                ):
+                    provenance_refreshes.append(key)
+        is_immutable = table_name.startswith("external_source_")
+        planned_inactivations = (
+            len(stale)
+            if available
+            and anemone_bundle is not None
+            and table_name.startswith("edna_")
+            else 0 if available else None
+        )
+        candidate_updates = (
+            len(changed)
+            if table_name == "retrieval_document" and available
+            else len(scientific_corrections) + len(provenance_refreshes)
+            if table_name.startswith("edna_") and available
+            else 0
+            if is_immutable and available
+            else len(matched)
+            if available
+            else None
+        )
         plan = {
             "table": table_name,
             "artifact_id": artifact_id,
@@ -821,15 +1355,39 @@ def build_upsert_dry_run_plan(limit_keys: int = 25) -> Dict[str, Any]:
             "existing_count": len(existing_rows) if available else None,
             "planned_inserts": len(inserts) if available else None,
             "matched_existing": len(matched) if available else None,
-            "candidate_updates": len(changed) if table_name == "retrieval_document" and available else len(matched) if available else None,
-            "stale_existing": len(stale) if available else None,
+            "candidate_updates": candidate_updates,
+            "scientific_corrections": (
+                len(scientific_corrections) if available else None
+            ),
+            "provenance_refreshes": (
+                len(provenance_refreshes) if available else None
+            ),
+            "planned_inactivations": planned_inactivations,
+            "stale_existing": (
+                0
+                if available
+                and (
+                    is_immutable
+                    or (
+                        table_name.startswith("edna_")
+                        and anemone_bundle is None
+                    )
+                )
+                else len(stale)
+                if available
+                else None
+            ),
             "embedding_refresh_candidates": len(embeddings_to_refresh) if table_name == "retrieval_document" and available else None,
             "sample_insert_keys": [list(key) for key in inserts[:limit_keys]] if available else [],
             "sample_stale_keys": [list(key) for key in stale[:limit_keys]] if available else [],
             "notes": (
                 "Content-hash comparison protects unchanged embeddings; changed or inserted docs should be embedded after upsert."
                 if table_name == "retrieval_document"
-                else "Non-retrieval tables use key-level dry-run counts; column-level value diffing is planned."
+                else "Stable scientific and provenance hashes separate corrections, source refreshes, and scoped inactivation."
+                if table_name.startswith("edna_")
+                else "Immutable source records are inserted once; identity/content conflicts fail the transaction."
+                if is_immutable
+                else "Non-retrieval tables use key-level dry-run counts."
             ),
         }
         table_plans.append(plan)
@@ -846,6 +1404,21 @@ def build_upsert_dry_run_plan(limit_keys: int = 25) -> Dict[str, Any]:
             for plan in table_plans
             if plan["embedding_refresh_candidates"] is not None
         ),
+        "scientific_corrections": sum(
+            int(plan["scientific_corrections"] or 0)
+            for plan in table_plans
+            if plan["scientific_corrections"] is not None
+        ),
+        "provenance_refreshes": sum(
+            int(plan["provenance_refreshes"] or 0)
+            for plan in table_plans
+            if plan["provenance_refreshes"] is not None
+        ),
+        "planned_inactivations": sum(
+            int(plan["planned_inactivations"] or 0)
+            for plan in table_plans
+            if plan["planned_inactivations"] is not None
+        ),
     }
     return {
         "generated_at": _now_iso(),
@@ -854,10 +1427,19 @@ def build_upsert_dry_run_plan(limit_keys: int = 25) -> Dict[str, Any]:
         "database": {"available": database_available, "errors": database_errors[:5]},
         "summary": summary,
         "lineage_manifest_summary": manifest.get("summary", {}),
+        "anemone": {
+            "included": anemone_bundle is not None,
+            "normalization_id": anemone_manifest.get("normalization_id"),
+            "source_snapshot_id": anemone_manifest.get("source_snapshot_id"),
+            "scope_level": anemone_manifest.get("source_scope_level"),
+            "scope_url": anemone_manifest.get("source_scope_url"),
+            "noncurrent_override": allow_anemone_noncurrent,
+        },
         "table_plans": table_plans,
         "warnings": [
             "This plan is read-only and does not mutate PostgreSQL.",
             "Mutating upserts retain rows reported as stale_existing; use an explicit reset only for full replacement.",
             "Retrieval-document estimates use content hashes so unchanged embeddings are retained; other table estimates conservatively classify matched keys as update candidates.",
+            "ANEMONE inactivation estimates are limited to the selected provider sample or provider project/run scope.",
         ],
     }

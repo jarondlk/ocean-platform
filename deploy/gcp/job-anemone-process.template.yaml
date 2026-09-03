@@ -1,0 +1,70 @@
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: ocean-anemone-process
+  labels:
+    environment: prototype
+    cost_component: anemone_processing
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/cloudsql-instances: PROJECT_ID:REGION:CLOUD_SQL_INSTANCE
+        run.googleapis.com/secrets: 'ocean-database-url:projects/PROJECT_NUMBER/secrets/ocean-database-url'
+    spec:
+      taskCount: 1
+      parallelism: 1
+      template:
+        spec:
+          serviceAccountName: ocean-jobs@PROJECT_ID.iam.gserviceaccount.com
+          maxRetries: 0
+          timeoutSeconds: "1800"
+          containers:
+            - image: REGION-docker.pkg.dev/PROJECT_ID/ARTIFACT_REPOSITORY/api@ANEMONE_IMAGE_DIGEST
+              command: [python]
+              args: [scripts/run_anemone_job.py, --stage, materialize]
+              env:
+                - name: DATABASE_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: ocean-database-url
+                      key: latest
+                - name: EDNA_ARTIFACT_URI
+                  value: gs://DATA_BUCKET/edna
+                - name: EDNA_CACHE_DIR
+                  value: /tmp/ocean-edna-cache
+                - name: DATA_DIR
+                  value: /mnt/ocean-data
+                - name: PROVENANCE_SNAPSHOT_URI
+                  value: gs://DATA_BUCKET/provenance
+                - name: MODEL_PROVIDER
+                  value: vertex
+                - name: GOOGLE_CLOUD_PROJECT
+                  value: PROJECT_ID
+                - name: GOOGLE_CLOUD_LOCATION
+                  value: global
+                - name: EMBEDDING_MODEL
+                  value: gemini-embedding-001
+                - name: ALLOWED_EMBEDDING_MODELS
+                  value: gemini-embedding-001
+                - name: EMBEDDING_DIM
+                  value: "768"
+                - name: DATABASE_POOL_SIZE
+                  value: "2"
+                - name: DATABASE_MAX_OVERFLOW
+                  value: "0"
+              resources:
+                limits:
+                  cpu: "2"
+                  memory: 4Gi
+              volumeMounts:
+                - name: scientific-data
+                  mountPath: /mnt/ocean-data
+          volumes:
+            - name: scientific-data
+              csi:
+                driver: gcsfuse.run.googleapis.com
+                readOnly: true
+                volumeAttributes:
+                  bucketName: DATA_BUCKET

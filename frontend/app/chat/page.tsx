@@ -88,6 +88,7 @@ const quickQuestions = [
 export default function ChatPage() {
   const { ui } = useAppPreferences();
   const [query, setQuery] = useState("");
+  const [analysisId, setAnalysisId] = useState("");
   const [settings, setSettings] = useState<ChatSettings>(defaultSettings);
   const [models, setModels] = useState<ModelsResponse | null>(null);
   const [response, setResponse] = useState<ChatResponse | null>(null);
@@ -95,6 +96,11 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const providerLabel = models?.provider === "vertex" ? "Vertex AI" : models?.provider || "Model runtime";
+
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get("analysis_id");
+    if (id) { setAnalysisId(id); setSettings(current => ({ ...current, sourceType: "edna_metabarcoding" })); }
+  }, []);
 
   useEffect(() => {
     getModels()
@@ -151,6 +157,7 @@ export default function ChatPage() {
   }
 
   function resetControls() {
+    setAnalysisId("");
     setSettings({
       ...defaultSettings,
       model: models?.default_model || defaultSettings.model,
@@ -168,6 +175,7 @@ export default function ChatPage() {
     try {
       const result = await askQuestion({
         query: trimmedQuery,
+        analysis_id: analysisId.trim() || undefined,
         k: settings.k,
         source_type: settings.sourceType || undefined,
         bay: settings.bay || undefined,
@@ -439,6 +447,7 @@ export default function ChatPage() {
                   <option value="">{ui("All source types")}</option>
                   <option value="ctd">CTD</option>
                   <option value="metagenome">Metagenome</option>
+                  <option value="edna_metabarcoding">eDNA metabarcoding</option>
                   <option value="remote_sensing">{ui("Satellite SST")}</option>
                 </select>
               </label>
@@ -528,6 +537,7 @@ export default function ChatPage() {
 
             <fieldset className="settings-section">
               <legend>{ui("Prompt Context")}</legend>
+              <label className="settings-field" htmlFor="chat-analysis-id"><span>eDNA analysis ID</span><input id="chat-analysis-id" className="field" value={analysisId} onChange={event => setAnalysisId(event.target.value)} /></label>
               <CheckboxControl
                 checked={settings.injectAnalysis}
                 label="Inject analysis"

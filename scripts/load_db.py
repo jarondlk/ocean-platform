@@ -126,7 +126,7 @@ def _prepare_dataframe(df: pd.DataFrame, table_name: str) -> pd.DataFrame:
             df[column] = df[column].astype("boolean")
         elif definition and isinstance(definition["type"], SQLDateTime):
             df[column] = pd.to_datetime(df[column], errors="coerce")
-    if "source_row_hash" in db_columns:
+    if "source_row_hash" in db_columns and "source_row_hash" not in df.columns:
         df = add_source_row_hash(df)
     keep_columns = [column for column in df.columns if column in db_columns]
     if not keep_columns:
@@ -441,8 +441,446 @@ def _upsert_dataframe(
     }
 
 
-def upsert_corpus() -> dict[str, Any]:
+def _immutable_insert_dataframe(
+    connection: Any,
+    *,
+    table_name: str,
+    incoming: pd.DataFrame,
+    key_columns: list[str],
+) -> dict[str, int]:
+    """Insert append-only rows and reject identity/content conflicts."""
+    incoming = _prepare_dataframe(incoming, table_name)
+    if incoming.empty:
+        return {
+            "incoming": 0,
+            "matched": 0,
+            "updated": 0,
+            "inserted": 0,
+            "unchanged": 0,
+        }
+    if incoming[key_columns].isna().any(axis=None):
+        raise ValueError(f"{table_name}: immutable keys contain null values")
+    if incoming.duplicated(key_columns, keep=False).any():
+        raise ValueError(f"{table_name}: immutable keys are duplicated")
+    preparer = connection.dialect.identifier_preparer
+    quoted_table = preparer.quote(table_name)
+    temporary_table = f"_ocean_immutable_{table_name}_{uuid.uuid4().hex[:10]}"
+    quoted_temporary = preparer.quote(temporary_table)
+    incoming.to_sql(
+        temporary_table,
+        connection,
+        if_exists="fail",
+        index=False,
+        method="multi",
+    )
+    join = _quoted_join(
+        preparer,
+        target_alias="target",
+        source_alias="source",
+        key_columns=key_columns,
+    )
+    compare_columns = [
+        column for column in incoming.columns if column not in key_columns
+    ]
+    conflict = " OR ".join(
+        f"target.{preparer.quote(column)} "
+        f"IS DISTINCT FROM source.{preparer.quote(column)}"
+        for column in compare_columns
+    ) or "FALSE"
+    conflict_count = int(
+        connection.exec_driver_sql(
+            f"SELECT count(*) FROM {quoted_table} AS target "
+            f"JOIN {quoted_temporary} AS source ON {join} "
+            f"WHERE {conflict}"
+        ).scalar_one()
+    )
+    if conflict_count:
+        raise RuntimeError(
+            f"{table_name}: immutable identity conflicts with existing content"
+        )
+    columns = list(incoming.columns)
+    quoted_columns = ", ".join(preparer.quote(column) for column in columns)
+    source_columns = ", ".join(
+        f"source.{preparer.quote(column)}" for column in columns
+    )
+    inserted = int(
+        connection.exec_driver_sql(
+            f"INSERT INTO {quoted_table} ({quoted_columns}) "
+            f"SELECT {source_columns} FROM {quoted_temporary} AS source "
+            f"WHERE NOT EXISTS ("
+            f"SELECT 1 FROM {quoted_table} AS target WHERE {join}"
+            f")"
+        ).rowcount
+        or 0
+    )
+    connection.exec_driver_sql(f"DROP TABLE IF EXISTS {quoted_temporary}")
+    return {
+        "incoming": len(incoming),
+        "matched": len(incoming) - inserted,
+        "updated": 0,
+        "inserted": inserted,
+        "unchanged": len(incoming) - inserted,
+    }
+
+
+def _merge_edna_dataframe(
+    connection: Any,
+    *,
+    table_name: str,
+    incoming: pd.DataFrame,
+    key_column: str,
+) -> dict[str, int]:
+    """Merge current eDNA rows without deleting referenced parent records."""
+    incoming = _prepare_dataframe(incoming, table_name)
+    if incoming.empty:
+        return {
+            "incoming": 0,
+            "matched": 0,
+            "updated": 0,
+            "inserted": 0,
+            "scientific_corrections": 0,
+            "provenance_refreshes": 0,
+            "unchanged": 0,
+        }
+    required = {
+        key_column,
+        "scientific_content_sha256",
+        "source_row_hash",
+        "active",
+        "first_seen_snapshot_id",
+        "last_seen_snapshot_id",
+    }
+    missing = sorted(required - set(incoming.columns))
+    if missing:
+        raise ValueError(
+            f"{table_name}: missing eDNA merge columns: {', '.join(missing)}"
+        )
+    if incoming[[key_column]].isna().any(axis=None):
+        raise ValueError(f"{table_name}: eDNA key contains null values")
+    if incoming.duplicated([key_column], keep=False).any():
+        raise ValueError(f"{table_name}: eDNA key is duplicated")
+    preparer = connection.dialect.identifier_preparer
+    quoted_table = preparer.quote(table_name)
+    quoted_key = preparer.quote(key_column)
+    temporary_table = f"_ocean_edna_{table_name}_{uuid.uuid4().hex[:10]}"
+    quoted_temporary = preparer.quote(temporary_table)
+    incoming.to_sql(
+        temporary_table,
+        connection,
+        if_exists="fail",
+        index=False,
+        method="multi",
+    )
+    join = (
+        f"target.{quoted_key} IS NOT DISTINCT FROM source.{quoted_key}"
+    )
+    matched = int(
+        connection.exec_driver_sql(
+            f"SELECT count(*) FROM {quoted_table} AS target "
+            f"JOIN {quoted_temporary} AS source ON {join}"
+        ).scalar_one()
+    )
+    scientific = int(
+        connection.exec_driver_sql(
+            f"SELECT count(*) FROM {quoted_table} AS target "
+            f"JOIN {quoted_temporary} AS source ON {join} "
+            "WHERE target.scientific_content_sha256 "
+            "IS DISTINCT FROM source.scientific_content_sha256"
+        ).scalar_one()
+    )
+    provenance = int(
+        connection.exec_driver_sql(
+            f"SELECT count(*) FROM {quoted_table} AS target "
+            f"JOIN {quoted_temporary} AS source ON {join} "
+            "WHERE target.scientific_content_sha256 "
+            "IS NOT DISTINCT FROM source.scientific_content_sha256 "
+            "AND (target.source_row_hash IS DISTINCT FROM source.source_row_hash "
+            "OR target.active IS DISTINCT FROM TRUE)"
+        ).scalar_one()
+    )
+    update_columns = [
+        column
+        for column in incoming.columns
+        if column not in {key_column, "first_seen_snapshot_id"}
+    ]
+    assignments = ", ".join(
+        f"{preparer.quote(column)} = source.{preparer.quote(column)}"
+        for column in update_columns
+    )
+    connection.exec_driver_sql(
+        f"UPDATE {quoted_table} AS target SET {assignments} "
+        f"FROM {quoted_temporary} AS source WHERE {join} "
+        "AND (target.source_row_hash IS DISTINCT FROM source.source_row_hash "
+        "OR target.active IS DISTINCT FROM TRUE)"
+    )
+    columns = list(incoming.columns)
+    quoted_columns = ", ".join(preparer.quote(column) for column in columns)
+    source_columns = ", ".join(
+        f"source.{preparer.quote(column)}" for column in columns
+    )
+    inserted = int(
+        connection.exec_driver_sql(
+            f"INSERT INTO {quoted_table} ({quoted_columns}) "
+            f"SELECT {source_columns} FROM {quoted_temporary} AS source "
+            f"WHERE NOT EXISTS ("
+            f"SELECT 1 FROM {quoted_table} AS target WHERE {join}"
+            f")"
+        ).rowcount
+        or 0
+    )
+    connection.exec_driver_sql(f"DROP TABLE IF EXISTS {quoted_temporary}")
+    return {
+        "incoming": len(incoming),
+        "matched": matched,
+        "updated": scientific + provenance,
+        "inserted": inserted,
+        "scientific_corrections": scientific,
+        "provenance_refreshes": provenance,
+        "unchanged": matched - scientific - provenance,
+    }
+
+
+def _load_anemone_bundle_frames(
+    normalization_id: str | None,
+    *,
+    allow_noncurrent: bool,
+) -> tuple[dict[str, pd.DataFrame], dict[str, Any]] | None:
+    from preprocessing.anemone import resolve_normalized_bundle
+
+    pointer_path = config.ANEMONE_NORMALIZED_DIR / "current.json"
+    pointer_id: str | None = None
+    if pointer_path.exists():
+        try:
+            pointer_id = str(
+                json.loads(pointer_path.read_text(encoding="utf-8")).get(
+                    "normalization_id"
+                )
+                or ""
+            )
+        except (OSError, json.JSONDecodeError) as exc:
+            raise ValueError("ANEMONE current normalization pointer is invalid") from exc
+    if normalization_id is None and not pointer_id:
+        return None
+    if (
+        normalization_id
+        and pointer_id
+        and normalization_id != pointer_id
+        and not allow_noncurrent
+    ):
+        raise ValueError(
+            "Explicit ANEMONE normalization differs from current.json; "
+            "use --allow-anemone-noncurrent to override"
+        )
+    root, manifest = resolve_normalized_bundle(
+        normalization_id,
+        normalized_root=config.ANEMONE_NORMALIZED_DIR,
+    )
+    expected = (
+        "external_source_snapshot",
+        "external_source_file",
+        "edna_sample",
+        "edna_assay",
+        "edna_detection",
+        "edna_internal_standard",
+        "edna_anchor_event",
+    )
+    frames: dict[str, pd.DataFrame] = {}
+    for name in expected:
+        artifact = manifest.get("artifacts", {}).get(name)
+        if not artifact:
+            raise ValueError(f"ANEMONE bundle is missing artifact {name}")
+        artifact_path = root / str(artifact["path"])
+        if not artifact_path.is_file():
+            raise ValueError(f"ANEMONE bundle artifact is missing: {name}")
+        expected_sha = str(artifact.get("sha256") or "")
+        actual_sha = hashlib.sha256(artifact_path.read_bytes()).hexdigest()
+        if not expected_sha or actual_sha != expected_sha:
+            raise ValueError(f"ANEMONE bundle artifact hash changed for {name}")
+        frames[name] = pd.read_parquet(artifact_path)
+        if len(frames[name]) != int(artifact["row_count"]):
+            raise ValueError(f"ANEMONE bundle row count changed for {name}")
+    return frames, manifest
+
+
+def _scope_parameters(
+    samples: pd.DataFrame,
+    manifest: dict[str, Any],
+) -> tuple[str, dict[str, Any]]:
+    if samples.empty:
+        raise ValueError("ANEMONE bundle contains no samples")
+    first = samples.iloc[0]
+    parameters = {"provider": str(first["provider"])}
+    if manifest.get("source_scope_level") == "sample":
+        if len(samples) != 1:
+            raise ValueError("ANEMONE sample scope contains multiple samples")
+        parameters["provider_sample_id"] = str(first["provider_sample_id"])
+        return (
+            "{alias}.provider = :provider AND "
+            "{alias}.provider_sample_id = :provider_sample_id",
+            parameters,
+        )
+    projects = set(samples["provider_project_id"].astype(str))
+    runs = set(samples["provider_run_id"].astype(str))
+    if len(projects) != 1 or len(runs) != 1:
+        raise ValueError("ANEMONE run bundle spans multiple provider runs")
+    parameters["provider_project_id"] = projects.pop()
+    parameters["provider_run_id"] = runs.pop()
+    return (
+        "{alias}.provider = :provider AND "
+        "{alias}.provider_project_id = :provider_project_id AND "
+        "{alias}.provider_run_id = :provider_run_id",
+        parameters,
+    )
+
+
+def _inactivate_missing_anemone_rows(
+    connection: Any,
+    *,
+    frames: dict[str, pd.DataFrame],
+    manifest: dict[str, Any],
+) -> dict[str, int]:
+    scope_template, parameters = _scope_parameters(
+        frames["edna_sample"],
+        manifest,
+    )
+    preparer = connection.dialect.identifier_preparer
+    specs = (
+        (
+            "edna_detection",
+            "detection_id",
+            "edna_assay AS assay JOIN edna_sample AS sample "
+            "ON assay.sample_id = sample.sample_id",
+            "target.assay_id = assay.assay_id",
+            "sample",
+        ),
+        (
+            "edna_internal_standard",
+            "internal_standard_id",
+            "edna_assay AS assay JOIN edna_sample AS sample "
+            "ON assay.sample_id = sample.sample_id",
+            "target.assay_id = assay.assay_id",
+            "sample",
+        ),
+        (
+            "edna_assay",
+            "assay_id",
+            "edna_sample AS sample",
+            "target.sample_id = sample.sample_id",
+            "sample",
+        ),
+        ("edna_sample", "sample_id", None, None, "target"),
+        (
+            "anchor_event",
+            "event_id",
+            "edna_sample AS sample",
+            "target.sample_id = sample.sample_id "
+            "AND target.source_types = 'edna_metabarcoding'",
+            "sample",
+        ),
+    )
+    counts: dict[str, int] = {}
+    for table_name, key_column, from_clause, join_clause, scope_alias in specs:
+        frame_name = "edna_anchor_event" if table_name == "anchor_event" else table_name
+        incoming = frames[frame_name]
+        keys = (
+            incoming[key_column].dropna().astype(str).tolist()
+            if key_column in incoming.columns
+            else []
+        )
+        temporary = f"_ocean_edna_keys_{table_name}_{uuid.uuid4().hex[:10]}"
+        pd.DataFrame({key_column: pd.Series(keys, dtype="string")}).to_sql(
+            temporary,
+            connection,
+            if_exists="fail",
+            index=False,
+        )
+        quoted_temp = preparer.quote(temporary)
+        quoted_key = preparer.quote(key_column)
+        sql = (
+            f"UPDATE {preparer.quote(table_name)} AS target "
+            "SET active = FALSE "
+        )
+        if from_clause:
+            sql += f"FROM {from_clause} "
+        conditions = []
+        if join_clause:
+            conditions.append(join_clause)
+        conditions.append(scope_template.format(alias=scope_alias))
+        conditions.append("target.active IS TRUE")
+        conditions.append(
+            f"NOT EXISTS (SELECT 1 FROM {quoted_temp} AS incoming "
+            f"WHERE incoming.{quoted_key} = target.{quoted_key})"
+        )
+        sql += "WHERE " + " AND ".join(conditions)
+        counts[table_name] = int(
+            connection.execute(text(sql), parameters).rowcount or 0
+        )
+        connection.exec_driver_sql(f"DROP TABLE IF EXISTS {quoted_temp}")
+    return counts
+
+
+def _upsert_anemone_bundle(
+    connection: Any,
+    *,
+    frames: dict[str, pd.DataFrame],
+    manifest: dict[str, Any],
+) -> tuple[dict[str, dict[str, int]], dict[str, int]]:
+    results: dict[str, dict[str, int]] = {}
+    results["external_source_snapshot"] = _immutable_insert_dataframe(
+        connection,
+        table_name="external_source_snapshot",
+        incoming=frames["external_source_snapshot"],
+        key_columns=["snapshot_id"],
+    )
+    results["external_source_file"] = _immutable_insert_dataframe(
+        connection,
+        table_name="external_source_file",
+        incoming=frames["external_source_file"],
+        key_columns=["source_file_id"],
+    )
+    results["anchor_event"] = _upsert_dataframe(
+        connection,
+        table_name="anchor_event",
+        incoming=frames["edna_anchor_event"],
+        key_columns=["event_id"],
+    ) if not frames["edna_anchor_event"].empty else {
+        "incoming": 0,
+        "matched": 0,
+        "updated": 0,
+        "inserted": 0,
+        "unchanged": 0,
+        "hashes_refreshed": 0,
+    }
+    for table_name, key_column in (
+        ("edna_sample", "sample_id"),
+        ("edna_assay", "assay_id"),
+        ("edna_detection", "detection_id"),
+        ("edna_internal_standard", "internal_standard_id"),
+    ):
+        results[table_name] = _merge_edna_dataframe(
+            connection,
+            table_name=table_name,
+            incoming=frames[table_name],
+            key_column=key_column,
+        )
+    inactive = _inactivate_missing_anemone_rows(
+        connection,
+        frames=frames,
+        manifest=manifest,
+    )
+    return results, inactive
+
+
+def upsert_corpus(
+    *,
+    anemone_normalization_id: str | None = None,
+    allow_anemone_noncurrent: bool = False,
+) -> dict[str, Any]:
     """Transactionally merge incoming corpus rows while retaining stale rows."""
+    anemone_bundle = _load_anemone_bundle_frames(
+        anemone_normalization_id,
+        allow_noncurrent=allow_anemone_noncurrent,
+    )
     init_db()
     engine = get_engine()
     table_results: dict[str, dict[str, int]] = {}
@@ -469,6 +907,33 @@ def upsert_corpus() -> dict[str, Any]:
                 result["updated"],
                 result["unchanged"],
             )
+        anemone_inactive: dict[str, int] = {}
+        anemone_manifest: dict[str, Any] | None = None
+        if anemone_bundle is not None:
+            anemone_frames, anemone_manifest = anemone_bundle
+            anemone_results, anemone_inactive = _upsert_anemone_bundle(
+                connection,
+                frames=anemone_frames,
+                manifest=anemone_manifest,
+            )
+            for table_name, result in anemone_results.items():
+                if table_name in table_results:
+                    prior = table_results[table_name]
+                    table_results[table_name] = {
+                        key: int(prior.get(key, 0)) + int(result.get(key, 0))
+                        for key in set(prior) | set(result)
+                    }
+                else:
+                    table_results[table_name] = result
+                logger.info(
+                    "  Upserted ANEMONE %s: incoming=%d inserted=%d "
+                    "updated=%d unchanged=%d",
+                    table_name,
+                    result["incoming"],
+                    result["inserted"],
+                    result["updated"],
+                    result["unchanged"],
+                )
         connection.execute(
             text(
                 """
@@ -497,6 +962,24 @@ def upsert_corpus() -> dict[str, Any]:
         "unchanged_rows": sum(
             result["unchanged"] for result in table_results.values()
         ),
+        "anemone": {
+            "included": anemone_bundle is not None,
+            "normalization_id": (
+                anemone_manifest.get("normalization_id")
+                if anemone_manifest
+                else None
+            ),
+            "scientific_corrections": sum(
+                int(result.get("scientific_corrections") or 0)
+                for result in table_results.values()
+            ),
+            "provenance_refreshes": sum(
+                int(result.get("provenance_refreshes") or 0)
+                for result in table_results.values()
+            ),
+            "inactivated": anemone_inactive,
+            "noncurrent_override": allow_anemone_noncurrent,
+        },
     }
 
 
@@ -516,6 +999,20 @@ def main() -> None:
     parser.add_argument("--dry-run", action="store_true", help="With --upsert, produce a read-only lineage-aware upsert plan.")
     parser.add_argument("--limit-keys", type=int, default=25, help="Maximum example keys to show per dry-run upsert table.")
     parser.add_argument("--json", action="store_true", help="Print machine-readable JSON for dry-run upsert planning.")
+    parser.add_argument(
+        "--anemone-normalization-id",
+        help=(
+            "Load this immutable ANEMONE normalized bundle "
+            "(defaults to current.json)."
+        ),
+    )
+    parser.add_argument(
+        "--allow-anemone-noncurrent",
+        action="store_true",
+        help=(
+            "Allow an explicit ANEMONE bundle that differs from current.json."
+        ),
+    )
     args = parser.parse_args()
 
     logger.info("=" * 60)
@@ -528,11 +1025,26 @@ def main() -> None:
         )
     if not args.reset and not args.upsert:
         raise SystemExit("Choose a safe database mutation mode: --upsert or --reset.")
+    if args.reset and (
+        args.anemone_normalization_id or args.allow_anemone_noncurrent
+    ):
+        raise SystemExit("ANEMONE bundle options require --upsert.")
+    if args.allow_anemone_noncurrent and not args.anemone_normalization_id:
+        raise SystemExit(
+            "--allow-anemone-noncurrent requires --anemone-normalization-id."
+        )
 
     if args.upsert and args.dry_run:
         from ingestion.lineage import build_upsert_dry_run_plan
 
-        plan = build_upsert_dry_run_plan(limit_keys=args.limit_keys)
+        plan_kwargs: dict[str, Any] = {"limit_keys": args.limit_keys}
+        if args.anemone_normalization_id:
+            plan_kwargs["anemone_normalization_id"] = (
+                args.anemone_normalization_id
+            )
+        if args.allow_anemone_noncurrent:
+            plan_kwargs["allow_anemone_noncurrent"] = True
+        plan = build_upsert_dry_run_plan(**plan_kwargs)
         if args.json:
             print(json.dumps(plan, indent=2, default=str))
         else:
@@ -552,7 +1064,14 @@ def main() -> None:
         return
 
     if args.upsert:
-        summary = upsert_corpus()
+        upsert_kwargs: dict[str, Any] = {}
+        if args.anemone_normalization_id:
+            upsert_kwargs["anemone_normalization_id"] = (
+                args.anemone_normalization_id
+            )
+        if args.allow_anemone_noncurrent:
+            upsert_kwargs["allow_anemone_noncurrent"] = True
+        summary = upsert_corpus(**upsert_kwargs)
         if args.embed:
             logger.info("Computing missing or changed embeddings...")
             from db.vector_store import update_document_embeddings

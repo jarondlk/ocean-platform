@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "source_family": "edna_metabarcoding",
+  "cohort": {"provider": "anemone", "provider_project_id": "REPLACE_WITH_REVIEWED_PROJECT"},
+  "assignment_methods": ["qcauto_target", "qcauto_95pct_3nn_target"],
+  "rank": "genus",
+  "control_policy": "environmental_only",
+  "min_read_count": 1,
+  "metadata_fields": [],
+  "sites": [],
+  "linkage_profile": null
+}
