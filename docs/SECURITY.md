@@ -249,6 +249,35 @@ remain only under `staging/` and are not evidence.
 
 ## ANEMONE publication and operator jobs (PR5)
 
+### NLTK release-risk review — 2026-09-03
+
+The active hash-locked runtime contains NLTK 3.10.3 transitively through
+`rouge-score==0.1.2`. The maintainer's
+[GHSA-8mgp-746c-j5xp](https://github.com/nltk/nltk/security/advisories/GHSA-8mgp-746c-j5xp)
+reports model-artifact paths bypassing NLTK's optional path sandbox; no patched
+release is listed. Do not describe 3.10.3 as free of all NLTK advisories.
+
+Repository review found the application uses NLTK only through the fixed
+`RougeScorer(['rougeL'], use_stemmer=True)` evaluation path. That path uses the
+Porter stemmer, not model import/export, Stanford Java wrappers, sentence-model
+loading or caller-selected paths. Three regression cases in
+`tests/test_quality_metrics.py` verify actual ROUGE-L scoring while the named
+model-artifact APIs, downloader, data loader, sentence tokenizer and Java entry
+point all raise if called. No exposed path to this advisory was identified in
+the reviewed application workflow; this is a scoped reachability finding, not
+an upstream patch or proof of safety for other NLTK consumers.
+
+GitHub reported 52 NLTK alert instances across current and historical dependency
+manifests, not 52 distinct demonstrated application exploits. In particular,
+critical alerts referenced removed root-level manifests; both checked branches
+use the 3.10.3 locks. The separate
+[Stanford-wrapper advisory](https://github.com/nltk/nltk/security/advisories/GHSA-m4rf-3fr8-xwx3)
+lists 3.10.3 as its fix. No alert was dismissed or dependency weakened.
+Keep maintainer review and an upstream-patch recheck on the release checklist;
+reassess if evaluation methods, dependency versions or model/path APIs change.
+
+### Publication boundaries
+
 - Analyses require an independently registered digest and complete file
   contract; APIs, exports and context consume the verified bytes. Historical
   registrations remain available for provenance.

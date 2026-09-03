@@ -4,6 +4,12 @@ Status: local implementation; real provider/GCS/Cloud Run validation and release
 are pending. Use with `docs/ANEMONE_PR5_PLAN.md`. This runbook does not approve
 a download, paid execution, migration, deployment, or release.
 
+The first bounded real-data local canary is recorded in
+[`../../docs/ANEMONE_PILOT_2026-09-03.md`](../../docs/ANEMONE_PILOT_2026-09-03.md).
+It confirms storage/citation behavior but exposes an unresolved classification
+gate. The user confirmed JPY 20,000/month total; current spending and existing
+component controls must still be checked before paid execution.
+
 ## Preconditions
 
 - Approve one explicit sample, followed by at most one named sequencing run.
@@ -17,6 +23,9 @@ a download, paid execution, migration, deployment, or release.
 - Record the application commit and build digest, existing deployed revisions,
   schema head, current artifact/provenance pointers, and bucket configuration.
 - Rehearse database backup/isolated restore and migrations before a live import.
+  A fresh isolated database needs `bootstrap_database.py` to create legacy
+  corpus tables as well as applying Alembic migrations; Alembic alone is not
+  a complete bootstrap.
   `bootstrap_database.py --check-only` must report every required table,
   including `corpus_publication`. No new migration is introduced by PR5.
 
@@ -138,6 +147,13 @@ legacy pipeline simply to load ANEMONE.
 Record independently checked composition/diversity/method values, control
 classification, missing data, source units and limitations. Do not claim read
 counts measure abundance or that method agreement proves accuracy.
+
+Some real provider samples lack explicit supported classification metadata.
+Keep those samples `unknown`; do not infer environmental/non-control status
+solely from a name, collection device or coordinates. Obtain a source-backed
+review and implement a versioned classification-input path before including
+them in environmental-only analyses. Never edit immutable source files or
+canonical rows to make a pilot appear eligible.
 
 Use an authenticated preview/candidate revision to run the six questions in
 `evaluation/edna_research_cases.json`. Save complete request/response JSON and

@@ -7,6 +7,13 @@
 
 ## Rollout order
 
+Current checkpoint: code commit `bfc8c0a` is pushed and CI/CodeQL passed. The
+user confirmed JPY 20,000/month total and delegated one-sample selection. The
+first real canary passed local acquisition/storage/citation/role/recovery
+checks, but unknown source classification blocks environmental analysis;
+current cloud spend is still unverified. See
+[`ANEMONE_PILOT_2026-09-03.md`](ANEMONE_PILOT_2026-09-03.md).
+
 1. Review, commit and push PR1–PR5 to `gcp-dev`; require passing GitHub CI.
 2. Approve the exact pilot scope, resource/spend limits and fresh credential
    delivery; validate the bounded real pipeline and scientific outputs in

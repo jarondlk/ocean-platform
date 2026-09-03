@@ -7,9 +7,12 @@ checkout, rendering, tests, and Cloud Build do not provision runtime resources
 automatically.
 
 Follow [`MIGRATION_PLAN.md`](MIGRATION_PLAN.md) for the phased deployment order,
-integration gates, JPY 10,000 monthly prototype envelope, per-component
-budgets, and technical cost ceilings. Cost controls are Phase 0 and must be in
-place before the foundation or any runtime component is created.
+integration gates, historical per-component budgets and technical cost ceilings.
+The user confirmed a **JPY 20,000 total monthly project ceiling on 2026-09-03**;
+this does not automatically raise the earlier JPY 10,000 alert or component
+limits. Current spend and live settings still need verification before paid
+pilot work. See [`../../docs/ANEMONE_PILOT_2026-09-03.md`](../../docs/ANEMONE_PILOT_2026-09-03.md).
+Cost controls must be in place before runtime resources are created.
 
 ## Current deployed milestone
 

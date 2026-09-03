@@ -41,6 +41,34 @@ used only as historical reference and parity material.
 
 ## 2. What Changed Recently
 
+### ANEMONE real-data local canary (2026-09-03)
+
+- PR1–PR5 code is committed/pushed as `bfc8c0a`; GitHub CI and CodeQL passed.
+  The user confirmed JPY 20,000/month total project spending, refreshed GCP
+  CLI authentication, supplied acquisition credentials and delegated a sample
+  choice. This supersedes older unresolved-scope/budget/authentication notes.
+- The original example's one MiFish sample passed inventory, 5-file/6,412-byte
+  acquisition, normalization, local import/rollback/replay, 2-document retrieval
+  materialization, exact provenance and signed local API role/export checks.
+  All 70 source detections matched the canonical values. Local backup and
+  isolated restore verified all 23 tables.
+- Post-canary verification: 586 backend tests, 8 PostgreSQL-gated skips,
+  76.75% coverage, Ruff and diff checks passed. Added three NLTK advisory
+  reachability regressions without changing dependencies or scoring behavior.
+  The disposable pilot container was removed after a verified backup; retained
+  artifacts and recovery instructions are in the canary record.
+- New scientific blocker: provider metadata has no supported explicit sample/
+  control classification. Preserve `unknown`; the environmental-only recipe
+  correctly excludes all 70 detections. A source-backed researcher review and
+  provenance-preserving classification input (not yet implemented) or a new
+  explicitly classified sample is needed before the full scientific pilot.
+- Current spending cannot be read by the CLI billing identity; the billing
+  browser required passkey reauthentication. No paid cloud execution, secret
+  version creation, production import, merge, deployment or release occurred.
+  Do not interpret the confirmed budget as verified remaining headroom.
+- Exact IDs, outcomes, retained local artifacts and next gates:
+  [`docs/ANEMONE_PILOT_2026-09-03.md`](docs/ANEMONE_PILOT_2026-09-03.md).
+
 ### ANEMONE gated rollout started (2026-09-03)
 
 - The user authorized this order: review/commit/push and CI, bounded real pilot

@@ -40,6 +40,22 @@ npm vulnerabilities, and full Cloud Build
 
 ## Local Verification
 
+### Real ANEMONE canary — 2026-09-03
+
+One bounded real sample passed local source reconciliation, rolled-back import,
+idempotent import/materialization, full-text retrieval, exact provenance,
+signed mock-provider role/export checks, and database backup/isolated restore.
+Unknown classification correctly prevents environmental diversity output.
+This does not establish scientific acceptance or live cloud/model behavior.
+See [`ANEMONE_PILOT_2026-09-03.md`](ANEMONE_PILOT_2026-09-03.md).
+
+The NLTK reachability regression adds three cases; all 34 quality-metric tests
+passed. It verifies the application's ROUGE-L path does not call the advisory's
+model-artifact APIs; it is not a patch for the upstream dependency.
+The full backend rerun passed 586 tests, 8 PostgreSQL-gated skips and 76.75%
+coverage; Ruff and diff checks also passed. The canary database container was
+removed after a verified backup/restore; artifacts and its backup were retained.
+
 ### ANEMONE PR5 implementation — 2026-09-03
 
 - Backend: 583 passed, 8 PostgreSQL-gated skips; 76.75% CI-boundary coverage.
