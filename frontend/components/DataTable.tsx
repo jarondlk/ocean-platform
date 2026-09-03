@@ -1,6 +1,7 @@
 "use client";
 
 import { useAppPreferences } from "@/lib/preferences";
+import type { ReactNode } from "react";
 
 type DataTableProps = {
   columns: string[];
@@ -10,6 +11,7 @@ type DataTableProps = {
   selectedKey?: string;
   onRowSelect?: (row: Record<string, unknown>, index: number, rowKey: string) => void;
   isRowSelectable?: (row: Record<string, unknown>, index: number) => boolean;
+  renderCell?: (value: unknown, column: string) => ReactNode;
 };
 
 export function DataTable({
@@ -20,6 +22,7 @@ export function DataTable({
   selectedKey,
   onRowSelect,
   isRowSelectable,
+  renderCell,
 }: DataTableProps) {
   const { ui } = useAppPreferences();
   if (!rows.length) {
@@ -61,7 +64,7 @@ export function DataTable({
                 aria-selected={selectable ? selectedKey === rowKey : undefined}
               >
                 {columns.map((column) => (
-                  <td key={column}>{formatCell(row[column])}</td>
+                  <td key={column}>{renderCell ? renderCell(row[column], column) : formatCell(row[column])}</td>
                 ))}
               </tr>
             );

@@ -21,6 +21,11 @@ import type {
   EvaluationRunsResponse,
   EvaluationStandardRunRequest,
   EvaluationStartResponse,
+  EdnaAssayDetailResponse,
+  EdnaCatalogResponse,
+  EdnaDetectionDetailResponse,
+  EdnaPageResponse,
+  EdnaSampleDetailResponse,
   ExploreSummaryResponse,
   ExploreTableResponse,
   ModelsResponse,
@@ -50,7 +55,7 @@ const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_PROXY_BASE_URL ||
   "/api/backend";
 
-async function request<T>(path: string, init?: RequestInit): Promise<T> {
+export async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...init,
     headers: {
@@ -203,6 +208,7 @@ export async function getDocuments(params: {
 
 export async function askQuestion(input: {
   query: string;
+  analysis_id?: string;
   k: number;
   source_type?: string;
   bay?: string;
@@ -353,6 +359,76 @@ export async function getSstData(params: {
   limit?: number;
 }): Promise<SstDataResponse> {
   return request<SstDataResponse>(`/data/sst?${searchParams(params)}`);
+}
+
+export type EdnaFilters = {
+  sample_id?: string;
+  assay_id?: string;
+  provider?: string;
+  provider_project_id?: string;
+  provider_run_id?: string;
+  assignment_method?: string;
+  taxon?: string;
+  sample_kind?: string;
+  is_control?: boolean;
+  time_from?: string;
+  time_to?: string;
+  lat_min?: number;
+  lat_max?: number;
+  lon_min?: number;
+  lon_max?: number;
+};
+
+export async function getEdnaCatalog(): Promise<EdnaCatalogResponse> {
+  return request<EdnaCatalogResponse>("/data/edna/catalog");
+}
+
+export async function getEdnaSamples(
+  params: EdnaFilters & { limit?: number; offset?: number },
+): Promise<EdnaPageResponse> {
+  return request<EdnaPageResponse>(`/data/edna/samples?${searchParams(params)}`);
+}
+
+export async function getEdnaSample(sampleId: string): Promise<EdnaSampleDetailResponse> {
+  return request<EdnaSampleDetailResponse>(
+    `/data/edna/samples/${encodeURIComponent(sampleId)}`,
+  );
+}
+
+export async function getEdnaAssay(assayId: string): Promise<EdnaAssayDetailResponse> {
+  return request<EdnaAssayDetailResponse>(
+    `/data/edna/assays/${encodeURIComponent(assayId)}`,
+  );
+}
+
+export async function getEdnaDetections(
+  params: EdnaFilters & { limit?: number; offset?: number },
+): Promise<EdnaPageResponse> {
+  return request<EdnaPageResponse>(`/data/edna/detections?${searchParams(params)}`);
+}
+
+export async function getEdnaDetection(
+  detectionId: string,
+): Promise<EdnaDetectionDetailResponse> {
+  return request<EdnaDetectionDetailResponse>(
+    `/data/edna/detections/${encodeURIComponent(detectionId)}`,
+  );
+}
+
+export async function downloadEdnaCsv(
+  params: EdnaFilters,
+): Promise<{ blob: Blob; filename: string; truncated: boolean }> {
+  const response = await fetch(
+    `${API_BASE_URL}/data/edna/export?${searchParams(params)}`,
+    { cache: "no-store" },
+  );
+  if (!response.ok) throw new Error(await responseErrorMessage(response));
+  const disposition = response.headers.get("Content-Disposition") || "";
+  return {
+    blob: await response.blob(),
+    filename: disposition.match(/filename="([^"]+)"/)?.[1] || "anemone-edna-evidence.csv",
+    truncated: response.headers.get("X-Export-Truncated") === "true",
+  };
 }
 
 export async function getAnalysis(params: {

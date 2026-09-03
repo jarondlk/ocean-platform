@@ -178,6 +178,29 @@ must not be deleted under it. Their retention needs a separate policy decision.
 Never write tokens, OIDC client secrets, signing secrets, or database passwords
 to audit metadata or application logs.
 
+## ANEMONE Acquisition Boundary
+
+ANEMONE MiFish acquisition is a separate operator-run data-plane action. The
+command accepts only an exact sample or sequencing-run directory below the
+configured HTTPS prefix. Team, project, locus, and archive roots are rejected.
+Same-origin redirects remain below that prefix; a redirect is validated before
+the HTTP client can forward its Basic Authorization header.
+
+Use `ANEMONE_DOWNLOAD_USERNAME_FILE` and
+`ANEMONE_DOWNLOAD_PASSWORD_FILE` for file-mounted credentials outside the
+repository. Direct environment values are a local fallback. The password is
+never accepted as a command argument. Do not put either credential in `.env`,
+shell history, job arguments, manifests, logs, issue text, or test fixtures.
+Regenerate any password used during development before an operator run.
+
+Inventory is the default. `--execute` downloads only the five contracted
+interpreted TSV/XZ files. FASTQ and presentation files are listed in the
+manifest but are not downloaded. Unknown files, missing required roles,
+out-of-scope links, file/byte limits, changed resume validators, XZ corruption,
+and TSV schema drift block publication. Completed snapshots are immutable and
+content-addressed, including the exact contract hash; incomplete transfers
+remain only under `staging/` and are not evidence.
+
 ## Known Security Limitations
 
 - No independent penetration test has been completed.
@@ -192,6 +215,118 @@ to audit metadata or application logs.
   responsibility; no new GCP service topology is introduced by this change.
 - Auth.js 5 remains a pinned beta dependency; upgrades require authentication
   regression testing.
+- ANEMONE download passwords expire after ten days. PR1 provides no automatic
+  credential renewal or scheduled synchronization; credential generation and
+  staging cleanup remain operator responsibilities.
+
+## ANEMONE analysis boundary (PR4)
+
+- Analysis is an optional manual batch operation using a strict bounded recipe;
+  request parameters cannot contain SQL, arbitrary artifact paths or expressions.
+- Read routes validate SHA-256 run/result IDs and table/method allowlists.
+  Every result bundle verifies recipe/input/result hashes before being served.
+  CSV export requires `data:export`, escapes spreadsheet formulas and reports its
+  25,000-row cap; complete bundle downloads retain all inputs and output hashes.
+- Total serialized analysis is limited to 128 MiB, with assay/detection/taxon/
+  comparison guards and bounded API pagination. Recipe/observation input files
+  are capped at 1/16 MiB. These caps are engineering limits, not scientific
+  thresholds. A limit breach fails publication rather than truncating results.
+- Explicit analysis chat/retrieval rejects mismatched cohorts and historical or
+  unverifiable current inputs. Supplementary eDNA context never enables legacy
+  time-only CTD/SST expansion. External observation/source references are data,
+  not executable instructions or automatic download targets.
+- A reviewed profile, source-backed site coordinates/uncertainty, exact units,
+  time/depth/domain limits and valid SST coverage are required for environmental
+  links. No profile is enabled automatically; no inference or credentialed
+  acquisition is performed by these read routes.
+- Retrieval publication holds the corpus advisory lock through the verified
+  pointer update. Pending/corrupt generations cannot fall back to stale flat
+  files; rerunning materialization recovers idempotently. This coordinates DB
+  and filesystem state without claiming a cross-system atomic transaction.
+- The latest verification used only synthetic local data and disposable DBs.
+  Production authorization, mounted storage/rename semantics, backup/restore,
+  credential handling and live-model review remain PR5 deployment gates.
+
+## ANEMONE publication and operator jobs (PR5)
+
+### Local artifact path containment — 2026-09-03
+
+The v0.4.0 PR also reported `py/path-injection` in the bounded local artifact
+reader. Logical key validation and symlink rejection were already present;
+the reader now independently normalizes the actual filesystem path and checks
+the full root-plus-separator prefix immediately before opening it. Regressions
+cover traversal, absolute paths, sibling-prefix confusion and file/directory
+symlinks, including a simulated logical-validator regression. This is a code
+fix, not a dismissed or suppressed alert. Require the PR security check to pass.
+See [CodeQL path-containment guidance](https://codeql.github.com/codeql-query-help/python/py-path-injection/).
+
+### NLTK release-risk review — 2026-09-03
+
+The active hash-locked runtime contains NLTK 3.10.3 transitively through
+`rouge-score==0.1.2`. The maintainer's
+[GHSA-8mgp-746c-j5xp](https://github.com/nltk/nltk/security/advisories/GHSA-8mgp-746c-j5xp)
+reports model-artifact paths bypassing NLTK's optional path sandbox; no patched
+release is listed. Do not describe 3.10.3 as free of all NLTK advisories.
+
+Repository review found the application uses NLTK only through the fixed
+`RougeScorer(['rougeL'], use_stemmer=True)` evaluation path. That path uses the
+Porter stemmer, not model import/export, Stanford Java wrappers, sentence-model
+loading or caller-selected paths. Three regression cases in
+`tests/test_quality_metrics.py` verify actual ROUGE-L scoring while the named
+model-artifact APIs, downloader, data loader, sentence tokenizer and Java entry
+point all raise if called. No exposed path to this advisory was identified in
+the reviewed application workflow; this is a scoped reachability finding, not
+an upstream patch or proof of safety for other NLTK consumers.
+
+GitHub reported 52 NLTK alert instances across current and historical dependency
+manifests, not 52 distinct demonstrated application exploits. In particular,
+critical alerts referenced removed root-level manifests; both checked branches
+use the 3.10.3 locks. The separate
+[Stanford-wrapper advisory](https://github.com/nltk/nltk/security/advisories/GHSA-m4rf-3fr8-xwx3)
+lists 3.10.3 as its fix. No alert was dismissed or dependency weakened.
+Keep maintainer review and an upstream-patch recheck on the release checklist;
+reassess if evaluation methods, dependency versions or model/path APIs change.
+
+### Publication boundaries
+
+- Analyses require an independently registered digest and complete file
+  contract; APIs, exports and context consume the verified bytes. Historical
+  registrations remain available for provenance.
+- Object publication uses create-only objects/receipts, generation-pinned reads
+  and conditional index/pointer updates. These protect integrity and concurrent
+  publication; they do not replace bucket IAM or constitute an authenticity
+  guarantee against a principal authorized to rewrite all registrations.
+- Canonical import marks eDNA pending before commit. SQL serving requires a
+  ready object pointer matching the committed corpus generation. Failed or
+  incomplete publication fails closed; recovery is an explicit operator step.
+- Batch jobs default to an offline plan. Acquisition secrets are isolated from
+  processing, job images and secret versions are pinned, and operation reports
+  omit credential values and arbitrary exception bodies. Keep storage prefixes
+  and report access restricted to approved operators.
+- Storage reads, publication bundles and local serving caches are bounded.
+  Local POSIX staging is separate from the legacy read-only bucket mount; no
+  bucket directory rename is used for publication.
+- Only synthetic/local and simulated GCS checks have run. Real IAM, secret
+  delivery, provider conditions, resource limits and recovery remain rollout
+  gates. See [`../deploy/gcp/ANEMONE_PILOT.md`](../deploy/gcp/ANEMONE_PILOT.md).
+
+## ANEMONE research-serving boundary (PR3)
+
+- eDNA research APIs are read-only under the existing data/evidence permissions;
+  no download credential is accepted or returned by them.
+- Queries are parameterized; sort fields, assignment methods, IDs, coordinate
+  bounds, and dates are validated. Lists cap at 500 rows and CSV exports at
+  25,000 rows with an explicit truncation header and UI notice.
+- Exports contain only allowlisted scientific/provenance columns. Formula-like
+  source strings are escaped for spreadsheet safety; numeric coordinates and
+  measurements are not rewritten.
+- Materialization is operator-only, dry-run by default, and uses the corpus
+  advisory lock. It never deletes canonical or immutable source records.
+- Only active evidence is served. eDNA cross-source expansion is disabled
+  pending reviewed PR4 linkage rules. Missing provenance hashes, row locators,
+  or normalized artifacts block eDNA snapshot publication.
+- No live ANEMONE download, production database mutation, credential change,
+  or GCP deployment is part of PR3 verification.
 
 ## Authorization MVP Release Checklist
 

@@ -58,6 +58,7 @@ def _embedding_refresh_query(session: Any) -> Any:
     from .models import RetrievalDocument
 
     return session.query(RetrievalDocument).filter(
+        RetrievalDocument.active.is_(True),
         or_(
             RetrievalDocument.embedding.is_(None),
             RetrievalDocument.embedding_provider != config.MODEL_PROVIDER,
@@ -156,7 +157,7 @@ def search_similar(
                    lat, lon, bay, station, title, text,
                    embedding <=> :emb AS distance
             FROM retrieval_document
-            WHERE embedding IS NOT NULL {where_clause}
+            WHERE active IS TRUE AND embedding IS NOT NULL {where_clause}
             ORDER BY embedding <=> :emb
             LIMIT :k
         """)

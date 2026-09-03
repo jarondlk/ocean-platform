@@ -49,6 +49,14 @@ export type SourceDocument = {
   linked_from_event_id?: string | null;
   time_delta_days?: number | null;
   distance_km?: number | null;
+  provider?: string | null;
+  provider_project_id?: string | null;
+  provider_run_id?: string | null;
+  assay_id?: string | null;
+  assignment_method?: string | null;
+  sample_kind?: string | null;
+  is_control?: boolean | null;
+  source_snapshot_id?: string | null;
 };
 
 export type ContextDocument = {
@@ -57,6 +65,10 @@ export type ContextDocument = {
   context_type: string;
   analysis_type?: string | null;
   text: string;
+  source_family?: string | null;
+  analysis_id?: string | null;
+  table?: string | null;
+  result_ids?: string[];
 };
 
 export type CitationAuditRecord = {
@@ -323,6 +335,55 @@ export type SstDataResponse = {
   stats: Record<string, unknown>;
   points: SstPoint[];
   daily: SstDailyPoint[];
+};
+
+export type EdnaCatalogResponse = {
+  samples: number;
+  assays: number;
+  detections: number;
+  controls: number;
+  unknown_control_status: number;
+  providers: string[];
+  projects: string[];
+  runs: string[];
+  assignment_methods: string[];
+  sample_kinds: string[];
+  time_extent: { min?: string | null; max?: string | null };
+  coordinate_extent: {
+    lat_min?: number | null;
+    lat_max?: number | null;
+    lon_min?: number | null;
+    lon_max?: number | null;
+  };
+};
+
+export type EdnaPageResponse = {
+  total: number;
+  limit: number;
+  offset: number;
+  rows: Record<string, unknown>[];
+};
+
+export type EdnaSampleDetailResponse = {
+  sample: Record<string, unknown>;
+  assays: Record<string, unknown>[];
+  method_summaries: Record<string, unknown>[];
+  provenance: Record<string, unknown>;
+};
+
+export type EdnaAssayDetailResponse = {
+  assay: Record<string, unknown>;
+  sample: Record<string, unknown>;
+  method_summaries: Record<string, unknown>[];
+  internal_standards: Record<string, unknown>[];
+  provenance: Record<string, unknown>;
+};
+
+export type EdnaDetectionDetailResponse = {
+  detection: Record<string, unknown>;
+  assay: Record<string, unknown>;
+  sample: Record<string, unknown>;
+  provenance: Record<string, unknown>;
 };
 
 export type AnalysisResponse = {

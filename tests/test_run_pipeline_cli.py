@@ -41,11 +41,24 @@ def test_full_pipeline_remains_dry_run_by_default() -> None:
     request = _request_from_args(_args())
 
     assert request.dry_run is True
-    assert request.stages[-3:] == [
+    assert request.stages[-5:] == [
         "backup_database",
         "load_db",
+        "materialize_edna_retrieval",
+        "embed_documents",
         "publish_provenance",
     ]
+
+
+def test_full_pipeline_can_skip_embeddings() -> None:
+    request = _request_from_args(_args(embed=False))
+    assert "embed_documents" not in request.stages
+    assert request.embed_after_load is False
+
+
+def test_edna_materialization_requires_backup() -> None:
+    request = _request_from_args(_args(stages="materialize_edna_retrieval"))
+    assert request.stages == ["backup_database", "materialize_edna_retrieval"]
 
 
 def test_explicit_database_load_injects_backup_and_defaults_to_upsert() -> None:

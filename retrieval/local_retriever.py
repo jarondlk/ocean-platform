@@ -11,6 +11,7 @@ This is the fallback when PostgreSQL is not available.
 from __future__ import annotations
 
 import json
+import hashlib
 import logging
 import math
 import re
@@ -21,6 +22,8 @@ from typing import Dict, List, Optional
 import numpy as np
 
 import config
+from schema.time_range import matches_time
+from retrieval.edna_publication import retrieval_path
 
 logger = logging.getLogger(__name__)
 
@@ -94,19 +97,35 @@ class LocalRetriever:
 
     def load(self, jsonl_path: Path | None = None) -> None:
         """Load documents from JSONL."""
-        if jsonl_path is None:
-            jsonl_path = config.SERVING_DIR / "retrieval_documents.jsonl"
-
-        if not jsonl_path.exists():
-            logger.warning("Document file not found: %s", jsonl_path)
+        self.documents = []
+        self._embeddings = None
+        self._embed_available = False
+        paths = (
+            [jsonl_path]
+            if jsonl_path is not None
+            else [
+                config.SERVING_DIR / "retrieval_documents.jsonl",
+                retrieval_path("jsonl"),
+            ]
+        )
+        existing_paths = [path for path in paths if path.exists()]
+        if not existing_paths:
+            logger.warning("Document files not found: %s", paths)
             return
 
-        with open(jsonl_path, "r", encoding="utf-8") as f:
-            self.documents = [
-                self._normalize_document(json.loads(line))
-                for line in f
-                if line.strip()
-            ]
+        documents: dict[str, dict] = {}
+        for path in existing_paths:
+            with open(path, "r", encoding="utf-8") as handle:
+                for line in handle:
+                    if not line.strip():
+                        continue
+                    document = self._normalize_document(json.loads(line))
+                    if document.get("active", True) is False:
+                        continue
+                    doc_id = str(document.get("doc_id") or "")
+                    if doc_id:
+                        documents[doc_id] = document
+        self.documents = [documents[key] for key in sorted(documents)]
 
         # Fit BM25
         texts = [d.get("text", "") for d in self.documents]
@@ -150,15 +169,31 @@ class LocalRetriever:
         """
         if self._embeddings is not None:
             return True
+        if not self.documents:
+            return False
+
+        fingerprint = hashlib.sha256(json.dumps({
+            "provider": config.MODEL_PROVIDER,
+            "model": config.EMBEDDING_MODEL,
+            "dimension": config.EMBEDDING_DIM,
+            "documents": [(doc.get("doc_id"), doc.get("text")) for doc in self.documents],
+        }, sort_keys=True).encode()).hexdigest()
 
         # Try loading cached embeddings
         cache_path = config.SERVING_DIR / "retrieval_embeddings.npy"
-        if cache_path.exists():
-            self._embeddings = np.load(str(cache_path))
-            if len(self._embeddings) == len(self.documents):
-                self._embed_available = True
-                logger.info("Loaded cached embeddings: %s", self._embeddings.shape)
-                return True
+        metadata_path = config.SERVING_DIR / "retrieval_embeddings.meta.json"
+        if cache_path.exists() and metadata_path.exists():
+            try:
+                metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+                if metadata.get("fingerprint") == fingerprint:
+                    cached = np.load(str(cache_path), allow_pickle=False)
+                    if cached.shape == (len(self.documents), config.EMBEDDING_DIM):
+                        self._embeddings = cached
+                        self._embed_available = True
+                        logger.info("Loaded cached embeddings: %s", cached.shape)
+                        return True
+            except (ValueError, OSError):
+                logger.warning("Ignoring invalid local embedding cache")
 
         # Try computing via Ollama
         try:
@@ -176,6 +211,7 @@ class LocalRetriever:
 
             self._embeddings = np.array(all_embs, dtype="float32")
             np.save(str(cache_path), self._embeddings)
+            metadata_path.write_text(json.dumps({"fingerprint": fingerprint}), encoding="utf-8")
             self._embed_available = True
             logger.info("Computed and cached embeddings: %s", self._embeddings.shape)
             return True
@@ -188,10 +224,24 @@ class LocalRetriever:
         self,
         query: str,
         k: int = 8,
+        sample_ids: Optional[list[str]] = None,
+        assignment_methods: Optional[list[str]] = None,
         source_type: Optional[str] = None,
+        sample_id: Optional[str] = None,
         bay: Optional[str] = None,
         time_from: Optional[str] = None,
         time_to: Optional[str] = None,
+        provider: Optional[str] = None,
+        provider_project_id: Optional[str] = None,
+        provider_run_id: Optional[str] = None,
+        assignment_method: Optional[str] = None,
+        taxon: Optional[str] = None,
+        sample_kind: Optional[str] = None,
+        is_control: Optional[bool] = None,
+        lat_min: Optional[float] = None,
+        lat_max: Optional[float] = None,
+        lon_min: Optional[float] = None,
+        lon_max: Optional[float] = None,
     ) -> List[dict]:
         """
         Hybrid search: BM25 + (optional) vector, fused with RRF.
@@ -199,17 +249,67 @@ class LocalRetriever:
         if not self.documents:
             return []
 
+        edna_only = any(
+            value is not None
+            for value in (
+                provider,
+                provider_project_id,
+                provider_run_id,
+                assignment_method,
+                taxon,
+                sample_kind,
+                is_control,
+            )
+        )
+        if edna_only and source_type is None:
+            source_type = "edna_metabarcoding"
+
         # Apply filters
+        members = None if sample_ids is None else set(sample_ids)
+        methods = None if assignment_methods is None else set(assignment_methods)
         valid_indices = []
         for i, doc in enumerate(self.documents):
+            if members is not None and doc.get('sample_id') not in members:
+                continue
+            if methods is not None and doc.get('assignment_method') not in methods:
+                continue
+            if doc.get("active", True) is False:
+                continue
             if source_type and doc.get("source_type") != source_type:
+                continue
+            if sample_id and doc.get("sample_id") != sample_id:
                 continue
             if bay and doc.get("bay") != bay:
                 continue
-            if time_from and (doc.get("time") or "") < time_from:
+            if not matches_time(doc.get("time"), time_from, time_to):
                 continue
-            if time_to and (doc.get("time") or "") > time_to:
+            if provider and doc.get("provider") != provider:
                 continue
+            if provider_project_id and doc.get("provider_project_id") != provider_project_id:
+                continue
+            if provider_run_id and doc.get("provider_run_id") != provider_run_id:
+                continue
+            if assignment_method and doc.get("assignment_method") != assignment_method:
+                continue
+            if sample_kind and doc.get("sample_kind") != sample_kind:
+                continue
+            if is_control is not None and doc.get("is_control") is not is_control:
+                continue
+            if lat_min is not None and (doc.get("lat") is None or float(doc["lat"]) < lat_min):
+                continue
+            if lat_max is not None and (doc.get("lat") is None or float(doc["lat"]) > lat_max):
+                continue
+            if lon_min is not None and (doc.get("lon") is None or float(doc["lon"]) < lon_min):
+                continue
+            if lon_max is not None and (doc.get("lon") is None or float(doc["lon"]) > lon_max):
+                continue
+            if taxon:
+                metadata = doc.get("metadata") or {}
+                terms = metadata.get("taxon_terms") if isinstance(metadata, dict) else []
+                if taxon.casefold() not in {
+                    str(value).casefold() for value in (terms or [])
+                }:
+                    continue
             valid_indices.append(i)
 
         if not valid_indices:
@@ -264,13 +364,21 @@ class LocalRetriever:
 
 # Global singleton
 _retriever: Optional[LocalRetriever] = None
+_corpus_signature: tuple = ()
 
 
 def get_local_retriever() -> LocalRetriever:
     """Get or create the global local retriever instance."""
-    global _retriever
-    if _retriever is None:
+    global _retriever, _corpus_signature
+    paths = [config.SERVING_DIR / "retrieval_documents.jsonl", retrieval_path("jsonl")]
+    signature = tuple(
+        (str(path), path.stat().st_mtime_ns, path.stat().st_size)
+        if path.exists() else (str(path), None, None)
+        for path in paths
+    )
+    if _retriever is None or signature != _corpus_signature:
         _retriever = LocalRetriever()
         _retriever.load()
         _retriever.ensure_embeddings()
+        _corpus_signature = signature
     return _retriever

@@ -118,7 +118,7 @@ export function evidenceDeepLinks(target: CitationTarget): EvidenceDeepLink[] {
       },
     ];
     const sampleId = safeEvidenceIdentifier(target.source.sample_id);
-    if (sampleId) {
+    if (sampleId && target.source.source_type !== "edna_metabarcoding") {
       links.push({
         kind: "sample",
         label: "Sample",
@@ -147,11 +147,33 @@ export function evidenceDeepLinks(target: CitationTarget): EvidenceDeepLink[] {
           href: buildHref("/data", { view: "sst", time_from: date, time_to: date, doc_id: docId }),
         });
       }
+    } else if (target.source.source_type === "edna_metabarcoding" && sampleId) {
+      const assayId = safeEvidenceIdentifier(target.source.assay_id);
+      const assignmentMethod = safeEvidenceIdentifier(target.source.assignment_method);
+      links.push({
+        kind: "data",
+        label: "eDNA sample",
+        href: buildHref("/data", {
+          view: "edna",
+          sample_id: sampleId,
+          assay_id: assayId,
+          assignment_method: assignmentMethod,
+          doc_id: docId,
+        }),
+      });
     }
     return links;
   }
 
   if (target.context) {
+    const analysisId = target.context.analysis_id;
+    const table = target.context.table;
+    if (target.context.source_family === "edna_metabarcoding" && analysisId && /^[a-f0-9]{64}$/.test(analysisId)
+        && table && target.context.doc_id === `analysis_edna_${analysisId}_${table}` && ["diversity", "method_summary", "controls", "associations", "environment_links"].includes(table)) {
+      return [{ kind: "provenance", label: "Provenance", href: buildHref("/provenance", { view: "trace", doc_id: target.context.doc_id }) }, { kind: "context", label: "eDNA analysis", href: buildHref("/data", {
+        view: "edna_analysis", analysis_id: analysisId, table,
+      }) }];
+    }
     const contextId = safeEvidenceIdentifier(target.context.doc_id);
     const workspace = resolveContextWorkspace(contextId);
     if (!contextId || !workspace || target.context.context_type !== workspace.scope) return [];

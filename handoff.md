@@ -1,6 +1,6 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-08-31 JST
+> **Last updated**: 2026-09-03 JST
 > **Repository**: `jarondlk/ocean-platform`
 > **Current status**: OCEAN Platform release `v0.3.0` is live on Cloud Run service `ocean-platform`. The invite-only Next.js + FastAPI application uses Google OIDC, the OCEAN Cloud SQL/pgvector data plane, Vertex AI, verified Provenance snapshots, and `ocean-*` Cloud Run Jobs. The former service is private and its deletion-protected SQL instance is stopped as a reversible rollback boundary; local Ollama development and the archived Streamlit reference remain supported.
 
@@ -40,6 +40,341 @@ used only as historical reference and parity material.
 ---
 
 ## 2. What Changed Recently
+
+### v0.4.0 scope decision: classification deferred (2026-09-03)
+
+- The user explicitly prioritized releasing `v0.4.0` with the real pilot still
+  `unknown`. This supersedes earlier notes requiring classification approval
+  before this release. The draft proposal remains unapproved and unapplied.
+- Unknown samples remain excluded from environmental-only analyses and linking;
+  raw detections, method comparisons, sources and citations remain available.
+  Do not describe these exclusions as successful environmental validation.
+- Complete and validate the researcher classification workflow in the next
+  patch, as recorded in [ANEMONE_NEXT_PATCH.md](docs/ANEMONE_NEXT_PATCH.md).
+- Release preparation follows CI, merge (keep both branches), production
+  backup/migration/deployment verification and then GitHub `v0.4.0` publication.
+  Deferring classification does not waive operational or provenance checks.
+- Release PR #51 identified a local-artifact path-containment alert. The reader
+  now independently checks the resolved filesystem root immediately before
+  opening a file; nine regressions were added, with 638 backend tests passing
+  at 77.11% coverage. The pre-fix cloud build was cancelled. Require the updated
+  PR security check and replacement build to pass; do not dismiss the alert.
+- The ANEMONE processing template now points legacy SST/Himawari provenance
+  reads at the existing read-only data mount, matching the serving/pipeline
+  configuration. This prevents references to absent image-local data folders;
+  no environmental profile or new SST download is enabled.
+
+### ANEMONE file contract and review proposal (2026-09-03)
+
+- Contract revision 2 recognizes the QCauto and QCauto+3-NN non-target TSVs
+  as optional metadata-only files. They count toward inventory limits but are
+  not downloaded, parsed or included in target analyses. The five required
+  interpreted files and transfer bounds are unchanged; unknown names still fail.
+- The original acquisition contract is retained at
+  `data_contracts/history/anemone_mifish_v1.json`. Normalization and review
+  templates resolve repository-approved contracts by the snapshot's exact hash;
+  old source snapshots need no rewriting. Unknown contract hashes fail closed.
+- A source-backed [pilot classification proposal](docs/ANEMONE_PILOT_CLASSIFICATION_PROPOSAL.md)
+  proposes environmental water, subject to researcher confirmation. Its five
+  cited rows match the source. The private JSON remains a rejected, unapproved
+  draft with no reviewer/time. The real sample remains unknown; all 70 detections,
+  original source bytes and unreviewed v2 normalization identity are unchanged.
+- Verification: 629 backend tests passed (9 database-gated skips), 77.08%
+  coverage; all 72 focused tests, Ruff, diff checks and the unchanged migration
+  head passed. The nine new cases cover non-target exclusion and historical
+  contract replay. See [Testing and CI](docs/TESTING.md).
+- Browser billing access is now verified, superseding the earlier access blocker.
+  Posted September data covered September 1 only: about JPY 235 gross, JPY 0 net
+  after savings/credits. Existing controls are a JPY 10,000 project alert,
+  JPY 4,000 SQL alert and JPY 2,250 Cloud Run spend cap; none was changed.
+  Alerts are not caps, Cloud Run enforcement can lag, and the user's JPY 20,000
+  total monthly ceiling still applies. See the [billing checkpoint](docs/ANEMONE_PILOT_2026-09-03.md#billing-follow-up--2026-09-03).
+- Researcher approval, revised scientific validation and the remaining cloud/
+  release gates are still pending. No real classification, production import,
+  paid execution, branch merge, deployment or release was performed.
+
+### ANEMONE classification review follow-up (2026-09-03)
+
+- Added an explicit operator review input for unknown samples. Generated templates never
+  choose a classification or reviewer. Approved inputs name the snapshot/sample,
+  cite hash-checked source metadata rows, and retain reviewer/time/rationale.
+  Recognized provider classifications cannot be overridden. The operator is a
+  trusted submitter; this is an attestation, not an authenticated signature.
+- Normalization v2 preserves raw metadata, adds the full review record to the
+  canonical sample and manifest, and changes normalization/scientific identity.
+  Historical bundles remain readable; citations, API detail and analysis exports
+  retain the review. Migration `20260903_0008` adds a nullable review column;
+  bootstrap/import fail closed if the required column is missing.
+- Both local normalization and registered job delivery support the review.
+  Explicitly importing an unreviewed historical bundle clears a later review;
+  it does not silently persist stale environmental classification.
+- Same-snapshot review variants are retained separately in provenance. Document
+  artifact links match the exact canonical sample row hash, not the first bundle
+  found for a raw snapshot. Review records also survive verified ZIP exports.
+- Verification: 620 backend tests, 77.08% coverage, all 9 isolated PostgreSQL
+  integration checks, Ruff and diff checks passed. The test database was removed.
+  The real sample's read-only draft has 19 evidence candidates, no reviewer and
+  no approved classification; its original normalization remains readable.
+- The real canary remains **unknown**. No scientific approval was fabricated,
+  and no production migration, paid cloud work, merge or release was performed.
+  Billing was unverified at this checkpoint; the browser follow-up above
+  records the subsequently verified settings and posted charges.
+- Workflow and remaining evidence requirements:
+  [`docs/ANEMONE_CLASSIFICATION_REVIEW.md`](docs/ANEMONE_CLASSIFICATION_REVIEW.md).
+
+### ANEMONE real-data local canary (2026-09-03)
+
+- PR1–PR5 code is committed/pushed as `bfc8c0a`; GitHub CI and CodeQL passed.
+  The user confirmed JPY 20,000/month total project spending, refreshed GCP
+  CLI authentication, supplied acquisition credentials and delegated a sample
+  choice. This supersedes older unresolved-scope/budget/authentication notes.
+- The original example's one MiFish sample passed inventory, 5-file/6,412-byte
+  acquisition, normalization, local import/rollback/replay, 2-document retrieval
+  materialization, exact provenance and signed local API role/export checks.
+  All 70 source detections matched the canonical values. Local backup and
+  isolated restore verified all 23 tables.
+- Post-canary verification: 586 backend tests, 8 PostgreSQL-gated skips,
+  76.75% coverage, Ruff and diff checks passed. Added three NLTK advisory
+  reachability regressions without changing dependencies or scoring behavior.
+  The disposable pilot container was removed after a verified backup; retained
+  artifacts and recovery instructions are in the canary record.
+- New scientific blocker: provider metadata has no supported explicit sample/
+  control classification. Preserve `unknown`; the environmental-only recipe
+  correctly excludes all 70 detections. A source-backed researcher review and
+  provenance-preserving classification input (implemented in the follow-up above) or a new
+  explicitly classified sample is needed before the full scientific pilot.
+- At this checkpoint the CLI could not read billing and the browser required
+  passkey reauthentication; the later browser check above resolved visibility.
+  No paid cloud execution, secret
+  version creation, production import, merge, deployment or release occurred.
+  Do not interpret the confirmed budget as verified remaining headroom.
+- Exact IDs, outcomes, retained local artifacts and next gates:
+  [`docs/ANEMONE_PILOT_2026-09-03.md`](docs/ANEMONE_PILOT_2026-09-03.md).
+
+### ANEMONE gated rollout started (2026-09-03)
+
+- The user authorized this order: review/commit/push and CI, bounded real pilot
+  validation, merge `gcp-dev` into `main` while keeping both, GCP deployment and
+  verification, then GitHub release `v0.4.0`. This supersedes earlier statements
+  that committing or proceeding with the gated rollout was not authorized.
+- This commit records the accumulated PR1–PR5 implementation, tests and operator
+  plans. It is not a release or evidence that live pilot validation passed.
+- Pilot execution still requires an exact sample/run URL, approved transfer and
+  spend bounds, fresh file/Secret Manager credentials, provider-condition review
+  and researcher review of outputs. Do not infer these choices from permission
+  to start the sequence. Do not merge, deploy or release ahead of those gates.
+- Local checks were repeated before committing: backend/coverage and frontend
+  tests/typecheck/build. GitHub CI must then validate the pushed commit,
+  including the migrated PostgreSQL integration suite.
+
+### ANEMONE PR5 local implementation (2026-09-03)
+
+- The prior audit's three findings are fixed: analyses require a complete
+  registered manifest and consume verified bytes; provenance retains every
+  registered run; sample/method constraints reach SQL/local retrieval before K.
+- Added bounded immutable object storage with GCS generation preconditions and
+  retained registration indexes. Local POSIX staging replaces bucket directory
+  renames. Analysis reads do not write staging; retrieval cache is serialized,
+  capped at 512 MiB and checksum-verified against fresh readiness pointers.
+- Canonical import marks eDNA pending before commit. PostgreSQL eDNA retrieval
+  resumes only when the published pointer matches `corpus_publication`.
+  Materializer locking spans DB commit and conditional readiness publication.
+- New `run_anemone_job.py` separates acquisition, normalization, eDNA-only
+  import/rollback validation, materialization, recipe publication, analysis and
+  provenance. It defaults to an offline plan. Operation reports are persisted
+  without arbitrary exception bodies or credential values.
+- GCP templates are opt-in, use pinned image/secret identifiers and separate
+  acquisition credentials. No IAM grants or jobs were applied. Processing mounts
+  legacy data read-only; `EDNA_CACHE_DIR` must be local POSIX storage.
+- Saved-answer evaluation verifies exact analysis/result IDs, citations,
+  provenance and explicit human review. It makes no model calls and does not
+  turn deterministic checks into a scientific-accuracy claim.
+- Operator runbook: [`deploy/gcp/ANEMONE_PILOT.md`](deploy/gcp/ANEMONE_PILOT.md).
+  Status and remaining gates: [`docs/ANEMONE_PR5_PLAN.md`](docs/ANEMONE_PR5_PLAN.md).
+- Final verification: 583 backend tests passed (8 PostgreSQL-gated skips),
+  76.75% CI-boundary coverage, all 8 separately run PostgreSQL integration tests,
+  14 frontend tests, typecheck/build, Ruff, dependency consistency and diff
+  checks passed. Alembic retains one head, `20260902_0007`. The disposable
+  PostgreSQL container and its synthetic databases were removed.
+- Still pending: approved pilot/limits/conditions, fresh credential delivery,
+  real cloud and resource checks, scientific/model review, authenticated
+  browser/permission/export checks, backup/restore and rollback rehearsal,
+  deployment and `v0.4.0`. No live environmental profile is enabled.
+- All PR1–PR5 changes remain uncommitted on `gcp-dev`. No real ANEMONE download,
+  GCP mutation, commit, push, version bump or release was performed in this turn.
+  Keep the academic, direct UI policy; no frontend redesign was introduced.
+
+### ANEMONE PR1–PR4 audit and PR5 plan (2026-09-03)
+
+- Preview tab and local frontend/API servers are closed. The disposable
+  synthetic preview database was removed; temporary scratch artifacts remain.
+- Three open findings supersede any implication below that PR4 is accepted:
+  direct analysis reads can accept a table omitted from its manifest (P1),
+  rerunning a recipe removes old citations from the generated provenance index
+  (P2), and analysis membership/method filters run after top-K retrieval (P2).
+  The first two were reproduced with isolated synthetic bundles; the third
+  with a ranked-backend stub. No runtime fixes were applied in this audit.
+- GCP execution is separately gated on storage-safe publication. Existing
+  directory-rename publishers are not validated for the bucket mount; the
+  live namespace/settings were not inspected. Prefer local staging plus
+  immutable object uploads and generation-conditional publication, reusing the
+  existing GCS provenance-store pattern.
+- The actionable plan is [`docs/ANEMONE_PR5_PLAN.md`](docs/ANEMONE_PR5_PLAN.md):
+  repair these findings, add cloud-safe publication/jobs, approve a bounded
+  pilot and fresh credential delivery, validate scientific/chat outputs,
+  rehearse migration/rollback, then authorized deployment and `v0.4.0`.
+- A selected pilot URL/run, provider conditions, spend/resource bounds and
+  credential-renewal owner remain open. No qualified CTD/SST overlap is assumed;
+  unavailable overlap does not block the ANEMONE-only research workflow.
+- Fresh audit gates: 555 backend tests passed with 7 service-gated skips,
+  76.17% coverage, 14 frontend tests, typecheck/build, Ruff, dependency
+  consistency, one Alembic head and diff checks passed. All 7 PostgreSQL checks
+  passed separately after CI's migration prerequisite on a fresh disposable
+  database; its container was removed. Existing tests do not cover the three
+  audit failures. Keep the concise academic UI policy.
+- Work remains uncommitted on `gcp-dev`. This audit updates planning documents
+  only; no commit, push, live download, production migration or GCP deployment.
+  The live `v0.3.0` status above is the last recorded release, not reverified here.
+
+### ANEMONE PR4 implementation and PR3 repairs (2026-09-03)
+
+- PR3 review findings below are resolved: explicit eDNA scope now controls
+  supplementary context/audit, shared UTC intervals include complete end dates,
+  and locked immutable-generation publication prevents stale/mixed fallback
+  files. Migration `20260902_0007` records the ready corpus generation.
+- PR4 adds explicit cohort/method/rank/control recipes; method-separated read
+  composition, diversity, turnover, sequence-paired method reports, controls,
+  standards, unit-qualified metadata and reviewed environmental matching.
+- Analyses retain complete inputs/results/recipe/runtime in hashed immutable
+  bundles. Read APIs, CSV/ZIP exports, exact citations/provenance, current versus
+  historical status, and Data → eDNA analysis are implemented. Chat requires an
+  explicit compatible current analysis; metrics never come from retrieved top-K.
+- Environmental observations are explicit typed input, not automatic admission
+  of legacy CTD/SST artifacts. A reviewed site/unit/domain/time/depth/coverage
+  profile is required; no live profile is enabled. Raw eDNA generic cross-source
+  expansion remains disabled. No read-count abundance inference, contamination
+  subtraction, invented calibration, or inferential significance is supported.
+- Keep the concise academic UI policy: scientific labels/units, no marketing
+  descriptions, duplicated headings, or unexplained trust scores. Short IDs are
+  for display only; exact identifiers remain recoverable in traces and exports.
+- CLI and current scope are documented in `docs/ANEMONE_PR4_PLAN.md` and
+  `docs/TESTING.md`; manual research answer cases are in
+  `evaluation/edna_research_cases.json`. PR5 retains pilot approval, provider
+  conditions/credentials, source-specific environmental extraction/review,
+  live evaluation, backed-up GCP migration/jobs, deployment and `v0.4.0`.
+- Work remains uncommitted on `gcp-dev`, alongside the existing PR1–PR3 changes.
+  No push, real-data import or GCP mutation was performed. Historical planning
+  and verification entries below are superseded by this record and TESTING.md.
+- Final gate: 555 backend tests, 76.17% coverage, 7 separately run PostgreSQL
+  checks, 14 frontend tests, typecheck/build, Ruff, dependency/diff checks and
+  synthetic browser verification passed. Temporary servers/container stopped.
+  Pending retrieval publication is reported as unavailable in Admin inventory
+  and health, preserving the manual repair path without serving stale files.
+
+### ANEMONE PR3 Review and PR4 Plan (2026-09-02, historical)
+
+- A follow-up review found three open PR3 issues: explicit eDNA filters do not
+  constrain supplementary analysis context, date-only end filters exclude
+  timestamped observations on that day, and fallback publication can race
+  after the materializer releases its DB transaction/advisory lock.
+- The first two were reproduced with isolated in-memory fixtures; the third
+  is a static concurrency finding. The focused PR3 suite passed 62 tests but
+  does not cover these failures. Prior full-suite results below are historical,
+  not proof that these review gaps are resolved. Fix them before acceptance.
+- The proposed implementation contract is now in
+  [`docs/ANEMONE_PR4_PLAN.md`](docs/ANEMONE_PR4_PLAN.md): explicit cohort/rank/
+  method/control recipes, descriptive diversity and turnover, sequence-paired
+  method comparison, control/standard reports, unit-qualified environmental
+  context, immutable result provenance, read APIs and compact analysis UI.
+- PR4 starts with the three prerequisite repairs. It must not pool assignment
+  methods, equate read counts with organism abundance, silently remove
+  controls, or inject analyses unrelated to the selected cohort. Use direct
+  academic labels and preserve the existing no-marketing-copy UI policy.
+- CTD/SST linking requires approved space/time/depth/domain profiles, measured
+  or source-backed coordinates, and verified SST footprint/valid coverage.
+  Legacy bay centroids/time-only links are ineligible. No live ANEMONE overlap
+  was established. Missing qualified matches do not block the other analyses.
+- The plan explicitly proposes descriptive associations, not automatic
+  significance, causal claims, occupancy models, or predictive reliability
+  scores. These need a later reviewed study/replicate design. PR5 retains live
+  pilot approval, credentials, GCP operations, evaluation, and release.
+- This turn changed planning/handoff documents only; it did not fix code,
+  commit, push, download live data, migrate a database, or deploy.
+
+### ANEMONE eDNA Integration PR1–PR3 (2026-09-02)
+
+- The next planned MVP is ANEMONE DB MiFish eDNA metabarcoding integration,
+  targeting release `v0.4.0`.
+- A bounded authenticated inspection confirmed paired FASTQ files, sample and
+  experiment metadata, internal standards, and separate QCauto and
+  QCauto/95%-3NN community tables.
+- ANEMONE is a new `edna_metabarcoding` source family with provider
+  `anemone`; it must not be merged into the current shotgun `metagenome`
+  source.
+- The MVP ingestion boundary is interpreted compressed TSV data. FASTQ files
+  are inventoried and cited but are not downloaded or processed by default.
+- PR1 now implements secure bounded acquisition and a versioned raw-data
+  contract. The command inventories exact sample/run scopes by default and
+  requires `--execute` to download only the five interpreted TSV/XZ roles.
+- The client keeps Basic-auth values out of arguments and manifests, rejects
+  cross-origin redirects before credentials can be forwarded, applies file and
+  byte limits, resumes validator-backed partial transfers, validates XZ and TSV
+  structure, and publishes immutable content-addressed snapshots.
+- Synthetic fixtures and a localhost Basic-auth server cover acquisition and
+  failure behavior without contacting ANEMONE. No live source data is in git.
+- PR2 implements deterministic normalization into seven immutable Parquet
+  artifacts, explicit activation, six additive PostgreSQL corpus tables,
+  eDNA anchor events, exact source-row lineage, and read-only upsert planning.
+- The dedicated transactional merge retains stable IDs, separates scientific
+  corrections from provenance-only refreshes, preserves controls and both
+  assignment methods, and marks missing rows inactive only within the selected
+  provider sample/run scope. It never deletes scientific or provenance rows.
+- Local verification passed 40 focused PR1/PR2 tests. The full backend suite
+  passed 503 tests with 5 expected service-gated skips and 76.03% coverage;
+  Ruff, `pip check`, one Alembic head, and `git diff --check` also passed.
+- The PostgreSQL integration module is wired into CI and passed two tests on
+  an isolated no-volume pgvector/PostgreSQL 16 container, covering upgrade,
+  downgrade/re-upgrade safety, idempotency, scientific corrections,
+  provenance-only refreshes, first/last-seen history, and scoped inactivation.
+- PR3 is implemented locally, with its contract and verification record in
+  [`docs/ANEMONE_PR3_PLAN.md`](docs/ANEMONE_PR3_PLAN.md). It fixes one bounded
+  retrieval document per active assay/assignment method, database-wide active
+  corpus materialization, explicit method/control handling, structured eDNA
+  filters and APIs, a compact bookmarkable Data view, exact evidence export,
+  and source-file provenance. Migration `20260902_0006` extends the retrieval
+  metadata and active lifecycle without replacing legacy rows.
+- The default manual pipeline now loads canonical rows, materializes eDNA,
+  refreshes embeddings, then publishes provenance. Provenance-only changes
+  preserve embeddings; scientific text changes clear them. Local JSONL/Parquet
+  artifacts include all active scopes, and the local embedding cache is keyed
+  by document content plus model/provider identity.
+- The eDNA Data view has explicit method/control/place/time filters,
+  pagination, sample/assay/detection selection, source links, and CSV export.
+  Both methods and unknown control states remain visible by default. No
+  marketing copy or redundant evidence heading was added.
+- Source snapshots, file hashes, canonical row locators, normalized artifacts,
+  and detection-set identity participate in provenance. Publication fails
+  closed for incomplete eDNA references.
+- PR3 verification: 524 backend tests passed, 6 service-gated skips, 75.39%
+  aggregate coverage; all 6 PostgreSQL integration tests passed separately on
+  a clean no-volume pgvector/PostgreSQL 16 container. The 12 frontend tests,
+  typecheck, production build, production npm audit (zero vulnerabilities),
+  Ruff, `pip check`, one Alembic head, and diff checks passed. Synthetic browser
+  checks verified exact detection selection, refresh, Back/Forward, both-method
+  defaults, and malformed/missing destinations. Temporary preview services and
+  fixture containers were torn down after verification.
+- No commit, push, live ANEMONE download, production migration, GCP mutation,
+  or deployment was performed. PR4 owns scientific analyses and reviewed eDNA
+  cross-source expansion; PR5 owns the bounded live pilot and release.
+- The implemented PR2 contract remains documented in
+  [`docs/ANEMONE_PR2_PLAN.md`](docs/ANEMONE_PR2_PLAN.md). No live database
+  migration, ANEMONE data load, GCP change, or deployment was performed.
+- The detailed plan, fixed cross-PR decisions, open scientific decisions, and
+  acceptance gates are in
+  [`docs/ANEMONE_INTEGRATION_PLAN.md`](docs/ANEMONE_INTEGRATION_PLAN.md).
+- No ANEMONE credential, live source file, schema migration, database row, GCP
+  resource, or production setting is part of PR1. Any temporary password shared
+  during discovery must be regenerated before an operator smoke test.
 
 ### Evidence Navigation Release v0.3.0 (2026-08-31)
 
@@ -637,7 +972,9 @@ Use this only to compare historical Streamlit behavior with the Next.js UI.
 
 ## 9. Testing and Verification
 
-Latest local verification for this audit:
+Current ANEMONE PR5 local verification is recorded in section 2 above and
+[`docs/TESTING.md`](docs/TESTING.md). The following table records the historical
+`v0.3.0` release validation; its live checks have not been repeated for PR5:
 
 | Check | Result |
 | --- | --- |
@@ -754,7 +1091,65 @@ git diff --check
 
 ## 13. Recommended Next Work Order
 
-### 1. Scheduled-Update Operationalization
+### 1. Review the local PR1–PR5 implementation
+
+The worktree contains PR1 acquisition, PR2 canonical ingestion, PR3 serving,
+and PR4 analyses. Preserve all existing changes. The earlier PR3 review fixes
+are implemented; do not repeat that obsolete work order. The three later
+findings in [`docs/ANEMONE_PR5_PLAN.md`](docs/ANEMONE_PR5_PLAN.md) are also fixed:
+complete registered-manifest verification, historical citation retention, and
+cohort/method filtering before ranking, with permanent regression tests.
+
+Review/commit the accumulated changes by logical responsibility when requested.
+Keep the scope and credential boundaries in
+[`docs/ANEMONE_INTEGRATION_PLAN.md`](docs/ANEMONE_INTEGRATION_PLAN.md):
+
+- rerun the targeted acquisition/normalization suites, disposable PostgreSQL
+  integration test, and full backend gate;
+- inspect the raw and normalized manifests, migration, provider-scoped merge,
+  lineage output, and negative security tests;
+- confirm the diff contains no credential or live ANEMONE source data;
+- use a regenerated credential only for an optional one-sample inventory smoke
+  test outside CI.
+
+Do not add retrieval behavior, frontend routes, analyses, GCP jobs, or live
+data to the PR1/PR2 boundary.
+
+### 2. Validate the real PR5 pilot and release
+
+Use [`docs/ANEMONE_PR5_PLAN.md`](docs/ANEMONE_PR5_PLAN.md) as the current
+rollout sequence. Local code and audit repairs are implemented; next:
+
+1. review the object-store/job implementation and validate it on approved GCP resources;
+2. approve the pilot, provider conditions, credentials and resource budgets;
+3. validate a real bounded import and research/chat outputs in isolation;
+4. rehearse backup, migrations and rollback, then perform authorized GCP
+   deployment, verification, and `v0.4.0` release.
+
+PR4's biodiversity/control/method analysis and typed environmental adapter
+already exist. Source-specific environmental extraction/profile review remains
+a pilot task; do not enable a live linkage without qualified observations.
+
+Preserve the cross-PR decisions in the integration plan. Do not call read
+counts organism abundance, collapse assignment methods, or link nationwide
+ANEMONE observations to regional SST by date alone.
+
+Use [`docs/ANEMONE_PR3_PLAN.md`](docs/ANEMONE_PR3_PLAN.md) as the PR3
+implementation record and review checklist. In particular, build the searchable eDNA
+corpus from all active canonical database rows rather than only the latest
+normalized-bundle pointer, keep both assignment methods visible when no filter
+is selected, exclude inactive documents everywhere, and keep UI labels direct
+and minimal.
+
+The implemented PR2 specification is
+[`docs/ANEMONE_PR2_PLAN.md`](docs/ANEMONE_PR2_PLAN.md). Its key repository-level
+decision is a dedicated, provider-scoped eDNA merge: stable current records are
+updated, missing records become inactive, and no scientific or provenance row
+is deleted. This avoids retaining removed detections as current evidence while
+preserving immutable PR1 snapshots and the existing global no-stale-delete
+policy.
+
+### 3. Scheduled-Update Operationalization
 
 Before handing scheduled updates to operators:
 
@@ -763,7 +1158,7 @@ Before handing scheduled updates to operators:
 - Record recovery time and recovery point objectives
 - Add deployment-specific artifact snapshots and log retention
 
-### 2. Evaluation Suite Hardening
+### 4. Evaluation Suite Hardening
 
 Continue treating evaluation as first-class:
 
@@ -778,7 +1173,7 @@ Continue treating evaluation as first-class:
 - Expand and calibrate the existing latency, citation, quality, and
   distribution analytics for multi-run release decisions
 
-### 3. Production Operations and Security Follow-Through
+### 5. Production Operations and Security Follow-Through
 
 The bounded GCP prototype and single-host alternative both exist. Before a
 wider cohort or multiple workers:
@@ -794,7 +1189,7 @@ wider cohort or multiple workers:
 - Add deployment health checks, log retention, and incident contacts
 - Add gateway-level volumetric limits before internet-facing horizontal scaling
 
-### 4. Database and SQL Improvements
+### 6. Database and SQL Improvements
 
 - Expand PostgreSQL integration coverage beyond metadata/invitation flows
 - Keep Alembic migrations additive and rollback-reviewed
@@ -802,7 +1197,7 @@ wider cohort or multiple workers:
 - Define an opt-in, policy-backed stale-row deletion workflow
 - Continue tightening read-only SQL validation and identifier quoting
 
-### 5. UI Parity and Expert UX
+### 7. UI Parity and Expert UX
 
 Use `archive/legacy-streamlit/app.py` only as parity reference. Implement all
 new work in Next.js/FastAPI.

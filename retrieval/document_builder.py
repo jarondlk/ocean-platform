@@ -33,6 +33,15 @@ class RetrievalDocument:
     station: Optional[str]
     title: str
     text: str                   # the LLM-facing narrative
+    active: bool = True
+    provider: Optional[str] = None
+    provider_project_id: Optional[str] = None
+    provider_run_id: Optional[str] = None
+    assay_id: Optional[str] = None
+    assignment_method: Optional[str] = None
+    sample_kind: Optional[str] = None
+    is_control: Optional[bool] = None
+    source_snapshot_id: Optional[str] = None
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 
@@ -357,6 +366,22 @@ def documents_to_dataframe(docs: List[RetrievalDocument]) -> pd.DataFrame:
             "station": d.station,
             "title": d.title,
             "text": d.text,
+            "active": d.active,
+            "provider": d.provider,
+            "provider_project_id": d.provider_project_id,
+            "provider_run_id": d.provider_run_id,
+            "assay_id": d.assay_id,
+            "assignment_method": d.assignment_method,
+            "sample_kind": d.sample_kind,
+            "is_control": d.is_control,
+            "source_snapshot_id": d.source_snapshot_id,
+            "metadata_json": json.dumps(
+                d.metadata,
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+                default=str,
+            ),
         })
     return pd.DataFrame(rows)
 
@@ -385,6 +410,16 @@ def documents_to_jsonl(docs: List[RetrievalDocument], path) -> None:
                 "source_type": d.source_type,
                 "sample_id": d.sample_id,
                 "event_id": d.event_id,
+                "active": d.active,
+                "provider": d.provider,
+                "provider_project_id": d.provider_project_id,
+                "provider_run_id": d.provider_run_id,
+                "assay_id": d.assay_id,
+                "assignment_method": d.assignment_method,
+                "sample_kind": d.sample_kind,
+                "is_control": d.is_control,
+                "source_snapshot_id": d.source_snapshot_id,
+                "metadata": d.metadata,
             }
             f.write(json.dumps(obj, ensure_ascii=False, default=str) + "\n")
     logger.info("Wrote %d documents to %s", len(docs), p)
