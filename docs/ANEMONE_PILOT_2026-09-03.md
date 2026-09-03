@@ -5,6 +5,12 @@ and local recovery verified. Scientific acceptance and cloud rollout are not
 complete. No production import, model call, cloud build, GCP mutation, merge or
 release was performed during this canary.
 
+Subsequent release decision: the user explicitly requested `v0.4.0` with the
+pilot still unknown, deferring classification workflow completion to the
+[next patch](ANEMONE_NEXT_PATCH.md). Classification remains scientifically
+unresolved but is not a blocker for this limited release. The historical
+scientific findings below are unchanged; operational release gates still apply.
+
 ## Authority and cost boundary
 
 The user delegated the choice of one relevant sample, supplied a fresh download

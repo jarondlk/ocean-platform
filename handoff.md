@@ -41,6 +41,20 @@ used only as historical reference and parity material.
 
 ## 2. What Changed Recently
 
+### v0.4.0 scope decision: classification deferred (2026-09-03)
+
+- The user explicitly prioritized releasing `v0.4.0` with the real pilot still
+  `unknown`. This supersedes earlier notes requiring classification approval
+  before this release. The draft proposal remains unapproved and unapplied.
+- Unknown samples remain excluded from environmental-only analyses and linking;
+  raw detections, method comparisons, sources and citations remain available.
+  Do not describe these exclusions as successful environmental validation.
+- Complete and validate the researcher classification workflow in the next
+  patch, as recorded in [ANEMONE_NEXT_PATCH.md](docs/ANEMONE_NEXT_PATCH.md).
+- Release preparation follows CI, merge (keep both branches), production
+  backup/migration/deployment verification and then GitHub `v0.4.0` publication.
+  Deferring classification does not waive operational or provenance checks.
+
 ### ANEMONE file contract and review proposal (2026-09-03)
 
 - Contract revision 2 recognizes the QCauto and QCauto+3-NN non-target TSVs

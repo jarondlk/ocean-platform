@@ -7,6 +7,15 @@
 
 ## Rollout order
 
+**Scope update, 2026-09-03:** the user explicitly deferred classification
+workflow completion to the [next patch](ANEMONE_NEXT_PATCH.md) and prioritized
+`v0.4.0`. Keep the pilot unknown; classification approval and the full
+environmental scientific/model-answer pilot are no longer gates for this
+limited release. Verify source/citation integrity and correct exclusions, and
+do not claim scientific acceptance that was not performed. Operational cloud,
+backup, authorization and deployment checks remain required. This decision
+supersedes the broader scientific release criteria recorded below.
+
 Classification follow-up: the operator review path is implemented in
 [`ANEMONE_CLASSIFICATION_REVIEW.md`](ANEMONE_CLASSIFICATION_REVIEW.md), with
 normalization v2 and additive migration `20260903_0008`; commit `0c3aace` passed

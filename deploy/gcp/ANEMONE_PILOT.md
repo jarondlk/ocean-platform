@@ -4,10 +4,18 @@ Status: local implementation; real provider/GCS/Cloud Run validation and release
 are pending. Use with `docs/ANEMONE_PR5_PLAN.md`. This runbook does not approve
 a download, paid execution, migration, deployment, or release.
 
+Release scope update, 2026-09-03: the user approved keeping classification
+unknown for `v0.4.0` and completing the workflow in the
+[next patch](../../docs/ANEMONE_NEXT_PATCH.md). For this release, validate
+retained source evidence, citations and explicit unknown-sample exclusions.
+The full classified environmental/model-answer acceptance described below is
+deferred, not passed. Backup, migrations, authorization, artifact integrity,
+cost bounds and deployment verification still apply.
+
 The first bounded real-data local canary is recorded in
 [`../../docs/ANEMONE_PILOT_2026-09-03.md`](../../docs/ANEMONE_PILOT_2026-09-03.md).
-It confirms storage/citation behavior but exposes an unresolved classification
-gate. The user confirmed JPY 20,000/month total. The canary record includes the
+It confirms storage/citation behavior; classification remains unknown under the
+limited release scope above. The user confirmed JPY 20,000/month total. The canary record includes the
 read-only billing check: JPY 10,000 project and JPY 4,000 SQL alert budgets,
 plus a JPY 2,250 Cloud Run spend cap. Visibility is resolved; refresh posted
 charges and headroom before paid execution. Do not raise these controls implicitly.
@@ -230,6 +238,8 @@ extraction, site/unit/coverage review and actual temporal/spatial overlap must
 precede environmental linking. Missing overlap does not block ANEMONE-only
 research; it does block claims of validated live cross-source integration.
 
-Release `v0.4.0` only after real provider/GCS tests, backup/restore, authenticated
-UI/API/export checks, reviewed scientific/model outputs, approved spend, a
-committed image build and explicit deployment/release authorization.
+Release `v0.4.0` only after the operational checks for the limited scope above:
+real source/GCS integrity, backup/restore, authenticated UI/API/export checks,
+correct unknown-sample exclusions, approved spend, a committed image build
+and deployment verification. The broader classified scientific/model-output
+acceptance remains next-patch work, not a completed gate.

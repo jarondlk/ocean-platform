@@ -1,5 +1,11 @@
 # ANEMONE classification review
 
+Release decision (2026-09-03): keep the pilot unknown for `v0.4.0`. The
+operator primitives below are implemented, but completing and validating the
+researcher workflow is [next-patch work](ANEMONE_NEXT_PATCH.md). No real
+classification review is approved or applied; its absence no longer blocks
+the limited v0.4.0 release.
+
 Status: operator workflow implemented. The real canary has **not** been
 classified or scientifically accepted. No review is inferred from a sample
 name, collection device, coordinates, or permission to implement this workflow.

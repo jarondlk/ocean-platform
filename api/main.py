@@ -166,7 +166,7 @@ async def _app_lifespan(_app: FastAPI):
 app = FastAPI(
     title="OCEAN Platform API",
     description="API layer for the Next.js migration of the provenance-aware marine RAG system.",
-    version="0.3.0",
+    version="0.4.0",
     lifespan=_app_lifespan,
 )
 

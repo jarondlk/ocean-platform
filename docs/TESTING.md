@@ -40,6 +40,20 @@ npm vulnerabilities, and full Cloud Build
 
 ## Local Verification
 
+### v0.4.0 release candidate — 2026-09-03
+
+- Backend: 629 passed, 9 PostgreSQL-gated skips, 77.08% coverage; Ruff and
+  dependency consistency passed.
+- Frontend: all 14 navigation tests, typecheck and 24-route production build
+  passed; production npm audit reported zero vulnerabilities.
+- API/frontend version metadata is `0.4.0`. Scientific classification behavior
+  is unchanged: unknown remains excluded from environmental-only analyses.
+- Classification workflow completion and real researcher acceptance are
+  explicitly deferred to the [next patch](ANEMONE_NEXT_PATCH.md). They must
+  not be reported as passed release checks.
+- GitHub CI, cloud backup/migration and live deployment evidence must be
+  verified separately and recorded in the release record before publication.
+
 ### ANEMONE non-target contract and draft proposal — 2026-09-03
 
 - 629 backend tests passed, 9 PostgreSQL-gated skips, 77.08% CI-boundary

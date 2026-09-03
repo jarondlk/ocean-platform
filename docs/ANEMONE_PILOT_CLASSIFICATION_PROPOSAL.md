@@ -3,6 +3,9 @@
 Status: **draft — not approved or imported**. Prepared from the retained source
 on 2026-09-03. The canonical sample remains `unknown`.
 
+The user explicitly deferred this review to the [next patch](ANEMONE_NEXT_PATCH.md).
+Do not apply it during the `v0.4.0` release.
+
 ## Proposed decision
 
 Classify `20171218T0103-KUM-Otomi-Surface` as an **environmental water sample**,
