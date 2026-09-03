@@ -9,15 +9,20 @@
 
 Classification follow-up: the operator review path is implemented in
 [`ANEMONE_CLASSIFICATION_REVIEW.md`](ANEMONE_CLASSIFICATION_REVIEW.md), with
-normalization v2 and additive migration `20260903_0008`. The real sample remains
-unknown until source-backed researcher approval; cloud spending is still
-unverified. Checkpoint `2cbb061` passed CI/CodeQL before this follow-up.
+normalization v2 and additive migration `20260903_0008`; commit `0c3aace` passed
+CI/CodeQL. The real sample remains unknown until source-backed researcher
+approval. The [classification proposal](ANEMONE_PILOT_CLASSIFICATION_PROPOSAL.md)
+is a draft, not an approval. Both non-target community files are now recognized
+as metadata-only; target analyses and the five-file download set are unchanged.
 
-Current checkpoint: code commit `bfc8c0a` is pushed and CI/CodeQL passed. The
+Initial rollout checkpoint: code commit `bfc8c0a` is pushed and CI/CodeQL passed. The
 user confirmed JPY 20,000/month total and delegated one-sample selection. The
 first real canary passed local acquisition/storage/citation/role/recovery
-checks, but unknown source classification blocks environmental analysis;
-current cloud spend is still unverified. See
+checks, but unknown source classification blocks environmental analysis.
+Subsequent browser verification resolved billing visibility: posted September 1
+usage was about JPY 235 gross/0 net, with existing project/SQL alerts and an
+enforced Cloud Run cap. Recheck current headroom before paid execution; no
+controls were raised. See
 [`ANEMONE_PILOT_2026-09-03.md`](ANEMONE_PILOT_2026-09-03.md).
 
 1. Review, commit and push PR1–PR5 to `gcp-dev`; require passing GitHub CI.

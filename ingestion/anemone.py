@@ -242,6 +242,22 @@ def load_contract(path: Path = config.ANEMONE_CONTRACT_PATH) -> dict[str, Any]:
     return contract
 
 
+def load_contract_by_hash(contract_sha256: str) -> dict[str, Any]:
+    """Resolve only repository-approved contracts, never paths from a manifest."""
+    candidates = (
+        config.ANEMONE_CONTRACT_PATH,
+        config.PROJECT_ROOT / "data_contracts" / "history" / "anemone_mifish_v1.json",
+    )
+    for path in candidates:
+        contract = load_contract(path)
+        if _contract_hash(contract) == contract_sha256:
+            return contract
+    raise AnemoneError(
+        "snapshot_contract_unknown",
+        "ANEMONE snapshot does not match an approved source contract.",
+    )
+
+
 def validate_scope_url(
     url: str,
     *,
@@ -754,7 +770,7 @@ def inventory_anemone(
         )
     return AnemoneInventory(
         scope=scope,
-        contract_version=int(contract["schema_version"]),
+        contract_version=int(contract.get("contract_version", contract["schema_version"])),
         contract_sha256=_contract_hash(contract),
         files=files,
         issues=issues,

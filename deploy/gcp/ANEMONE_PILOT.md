@@ -7,8 +7,10 @@ a download, paid execution, migration, deployment, or release.
 The first bounded real-data local canary is recorded in
 [`../../docs/ANEMONE_PILOT_2026-09-03.md`](../../docs/ANEMONE_PILOT_2026-09-03.md).
 It confirms storage/citation behavior but exposes an unresolved classification
-gate. The user confirmed JPY 20,000/month total; current spending and existing
-component controls must still be checked before paid execution.
+gate. The user confirmed JPY 20,000/month total. The canary record includes the
+read-only billing check: JPY 10,000 project and JPY 4,000 SQL alert budgets,
+plus a JPY 2,250 Cloud Run spend cap. Visibility is resolved; refresh posted
+charges and headroom before paid execution. Do not raise these controls implicitly.
 
 ## Preconditions
 
@@ -17,6 +19,11 @@ component controls must still be checked before paid execution.
 - Set file/byte, staging-memory, model-request, latency and cloud-spend bounds.
   Current canary defaults: 20 files, 64 MiB selected download. Hard acquisition
   maxima: 2,000 files and 512 MiB; decompressed TSV maximum: 64 MiB per file.
+  Contract revision 2 inventories QCauto/3-NN non-target TSVs as metadata-only,
+  like FASTQ/images: count them toward the file limit, but do not download or
+  analyze them. The five required target/metadata TSVs are unchanged. Preserve
+  `data_contracts/history/anemone_mifish_v1.json` in deployed images; historical
+  snapshots resolve that exact approved contract by hash, never a guessed revision.
 - Regenerate the short-lived download password outside chat. Store username
   and password in Secret Manager; record numeric versions and expiry, never
   values. A previously pasted credential is not a deployment credential.

@@ -162,16 +162,18 @@ def validate_review_evidence(review: dict, snapshot_id: str, selected: dict) -> 
 
 def review_template(snapshot_id: str, *, raw_root: Path, contract=None) -> dict:
     """Return a non-executable draft; never choose a classification or reviewer."""
-    from ingestion.anemone import load_contract
     from preprocessing.anemone import (
         _verify_snapshot,
         _read_xz_tsv,
         _classification,
         _metadata_map,
+        snapshot_contract,
     )
 
     _, _, _, selected = _verify_snapshot(
-        snapshot_id, raw_root=raw_root, contract=contract or load_contract()
+        snapshot_id,
+        raw_root=raw_root,
+        contract=contract or snapshot_contract(snapshot_id, raw_root=raw_root),
     )
     decisions = []
     for sample in sorted({sample for sample, _ in selected}):

@@ -19,14 +19,32 @@ resource was found in the preflight inventory. The credential was entered via
 a hidden prompt and retained only in the acquisition processes; it was not
 written to the repository or Secret Manager.
 
-The CLI cannot list billing-account budgets. The project billing console
-required a separate passkey challenge, so current-month spend and live budget
-settings are **not verified**. Earlier documentation records a JPY 10,000
-project alert and smaller component controls; those are historical settings,
-not evidence of the newly confirmed ceiling being configured. Do not raise
-existing resource limits or execute paid work until posted spend/headroom and
-component controls are checked. An ordinary budget alert is not a hard cap.
+The CLI cannot list billing-account budgets. Initial browser access required
+a passkey challenge; the subsequent read-only browser check below resolved
+billing visibility. An ordinary budget alert is not a hard cap.
 [Google budget documentation](https://docs.cloud.google.com/billing/docs/how-to/budgets)
+
+### Billing follow-up — 2026-09-03
+
+The authenticated console for project `data-infra-infobio` showed:
+
+- Posted September charges covered **September 1 only**: approximately JPY 235
+  gross, fully offset by savings/credits, JPY 0 net. Rounded service amounts:
+  Cloud SQL 224, Vertex AI 8, Cloud Run 3 and Storage 0 yen.
+- Trial credits: JPY 45,609 remaining of JPY 48,488.
+- Project monthly budget: JPY 10,000, **alerts only**, at 50/75/90/95/100%.
+- Cloud SQL budget: JPY 4,000, **alerts only**.
+- Cloud Run spend cap: JPY 2,250, enforcement selected, gross usage before
+  savings; the table showed JPY 2.74 used. Alerts: 50/80/100%. The detail page
+  warned enforcement is not immediate and overages can be billed. Its monthly
+  scope and `Resets on Never` display do not establish a reset guarantee.
+
+Sources: authenticated [project reports](https://console.cloud.google.com/billing/019B3B-2B8BBA-42E4B2/reports;projects=data-infra-infobio?project=data-infra-infobio)
+and [budget settings](https://console.cloud.google.com/billing/019B3B-2B8BBA-42E4B2/budgets?project=data-infra-infobio).
+No billing settings changed. This resolves the visibility blocker, not a
+real-time spend guarantee: unposted usage remains possible. Before paid work,
+recheck charges, service bounds and headroom against the user's **JPY 20,000
+total monthly ceiling**, without raising existing controls automatically.
 
 ## Scope and reproducible identities
 
@@ -106,6 +124,22 @@ explicit supported classification metadata after reviewing a new bounded scope.
 Until then, this canary verifies lossless evidence and exclusion behavior, not
 successful environmental biodiversity analysis or the six model-answer cases.
 
+### Classification proposal and contract follow-up
+
+The [draft proposal](ANEMONE_PILOT_CLASSIFICATION_PROPOSAL.md) cites five exact
+metadata rows supporting an environmental-water interpretation, pending
+researcher confirmation that this is field water rather than a blank/control.
+The private draft has no reviewer or review time and is rejected by review
+parsing and normalization. A read-only validation retains unknown classification,
+70 detections and v2 normalization
+`141838ca49b84b2dc9521d3cc6004ce8136e8b4932a3424c6626b642b8dd9bc0`.
+The original raw files and pre-v2 artifacts are unchanged.
+
+Acquisition contract revision 2 now recognizes both non-target community TSVs
+as optional metadata-only inventory entries; it never downloads or analyzes
+them. The archived v1 contract is selected by the retained snapshot's hash,
+so this contract change requires no source rewrite or repeat download.
+
 ## Local evidence retained
 
 Private local workspace: `/private/tmp/ocean-anemone-pilot.DxUnef`.
@@ -121,7 +155,7 @@ No downloaded source file, secret, database archive or signed token is committed
 Temporary-directory evidence is not durable cloud retention; preserve it before
 host cleanup if the pilot is to be resumed.
 
-Remaining: real classification approval and revised pilot validation, current spend and
-component guardrails, secure cloud credential delivery, real object-store/job
+Remaining: real classification approval and revised pilot validation, refreshed spend
+headroom before paid work, secure cloud credential delivery, real object-store/job
 checks, reviewed model answers, live authorization/browser checks, production
 backup/rollback rehearsal, merge, deployment and release.

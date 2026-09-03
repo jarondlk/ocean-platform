@@ -19,7 +19,7 @@ from urllib.parse import urlsplit
 import pandas as pd
 
 import config
-from ingestion.anemone import load_contract
+from ingestion.anemone import AnemoneError, load_contract_by_hash
 
 
 SNAPSHOT_ID_PATTERN = re.compile(r"^[0-9a-f]{64}$")
@@ -377,6 +377,24 @@ def _frame(
     return frame
 
 
+def snapshot_contract(snapshot_id: str, *, raw_root: Path) -> dict[str, Any]:
+    """Use the acquisition contract pinned by an existing snapshot's hash."""
+    if not SNAPSHOT_ID_PATTERN.fullmatch(snapshot_id):
+        raise AnemoneNormalizationError(
+            "snapshot_id_invalid", "Invalid ANEMONE snapshot ID."
+        )
+    try:
+        path = _safe_snapshot_file(raw_root, f"snapshots/{snapshot_id}/manifest.json")
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+        return load_contract_by_hash(manifest.get("contract_sha256"))
+    except AnemoneError as exc:
+        raise AnemoneNormalizationError(exc.code, str(exc)) from exc
+    except (OSError, ValueError, AttributeError) as exc:
+        raise AnemoneNormalizationError(
+            "snapshot_manifest_invalid", "ANEMONE snapshot manifest is unreadable."
+        ) from exc
+
+
 def _verify_snapshot(
     snapshot_id: str,
     *,
@@ -418,6 +436,9 @@ def _verify_snapshot(
         "status": "complete",
         "snapshot_id": snapshot_id,
         "contract_sha256": contract_sha,
+        "contract_version": int(
+            contract.get("contract_version", contract["schema_version"])
+        ),
     }
     if any(manifest.get(key) != value for key, value in required.items()):
         raise AnemoneNormalizationError(
@@ -491,7 +512,7 @@ def build_anemone_bundle(
     generated_at: Optional[str] = None,
     classification_review: Optional[dict[str, Any]] = None,
 ) -> AnemoneNormalizedBundle:
-    source_contract = contract or load_contract()
+    source_contract = contract or snapshot_contract(snapshot_id, raw_root=raw_root)
     snapshot_root, manifest, manifest_sha, selected = _verify_snapshot(
         snapshot_id,
         raw_root=raw_root,

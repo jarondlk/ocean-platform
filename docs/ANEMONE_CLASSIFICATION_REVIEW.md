@@ -119,12 +119,21 @@ budget and deployment gates in the [pilot runbook](../deploy/gcp/ANEMONE_PILOT.m
 
 ## Real pilot
 
-The retained `20171218T0103-KUM-Otomi-Surface` canary remains unknown. Its draft
-can be generated from `/private/tmp/ocean-anemone-pilot.DxUnef/cache/raw`, but
-someone qualified must review its supporting provider evidence before approval.
-Synthetic test attestations are not real scientific acceptance. Billing access,
-current-month spending, cloud execution, model-answer review, merge, deployment
-and release remain gated separately.
+The retained `20171218T0103-KUM-Otomi-Surface` canary remains unknown. An
+[environmental-water proposal](ANEMONE_PILOT_CLASSIFICATION_PROPOSAL.md) cites
+five verified provider rows but remains unapproved. A qualified researcher must
+confirm field water versus blank/control and supply their real review details.
+Synthetic test attestations are not real scientific acceptance.
+
+Templates and normalization resolve the exact acquisition contract from the
+snapshot hash. The archived v1 contract keeps this pilot reproducible after
+revision 2 added metadata-only non-target files. Neither the source nor its
+classification is silently migrated. Draft review inputs remain non-executable.
+
+Browser billing access and existing controls are now verified in the
+[canary record](ANEMONE_PILOT_2026-09-03.md#billing-follow-up--2026-09-03).
+Updated spend headroom, cloud execution, model-answer review, merge, deployment
+and release remain separate gates.
 
 Local verification: 620 backend tests passed (9 database-gated skips), 77.08%
 coverage, and all 9 PostgreSQL integration tests passed separately. Migration,

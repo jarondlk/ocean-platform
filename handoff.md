@@ -41,9 +41,38 @@ used only as historical reference and parity material.
 
 ## 2. What Changed Recently
 
+### ANEMONE file contract and review proposal (2026-09-03)
+
+- Contract revision 2 recognizes the QCauto and QCauto+3-NN non-target TSVs
+  as optional metadata-only files. They count toward inventory limits but are
+  not downloaded, parsed or included in target analyses. The five required
+  interpreted files and transfer bounds are unchanged; unknown names still fail.
+- The original acquisition contract is retained at
+  `data_contracts/history/anemone_mifish_v1.json`. Normalization and review
+  templates resolve repository-approved contracts by the snapshot's exact hash;
+  old source snapshots need no rewriting. Unknown contract hashes fail closed.
+- A source-backed [pilot classification proposal](docs/ANEMONE_PILOT_CLASSIFICATION_PROPOSAL.md)
+  proposes environmental water, subject to researcher confirmation. Its five
+  cited rows match the source. The private JSON remains a rejected, unapproved
+  draft with no reviewer/time. The real sample remains unknown; all 70 detections,
+  original source bytes and unreviewed v2 normalization identity are unchanged.
+- Verification: 629 backend tests passed (9 database-gated skips), 77.08%
+  coverage; all 72 focused tests, Ruff, diff checks and the unchanged migration
+  head passed. The nine new cases cover non-target exclusion and historical
+  contract replay. See [Testing and CI](docs/TESTING.md).
+- Browser billing access is now verified, superseding the earlier access blocker.
+  Posted September data covered September 1 only: about JPY 235 gross, JPY 0 net
+  after savings/credits. Existing controls are a JPY 10,000 project alert,
+  JPY 4,000 SQL alert and JPY 2,250 Cloud Run spend cap; none was changed.
+  Alerts are not caps, Cloud Run enforcement can lag, and the user's JPY 20,000
+  total monthly ceiling still applies. See the [billing checkpoint](docs/ANEMONE_PILOT_2026-09-03.md#billing-follow-up--2026-09-03).
+- Researcher approval, revised scientific validation and the remaining cloud/
+  release gates are still pending. No real classification, production import,
+  paid execution, branch merge, deployment or release was performed.
+
 ### ANEMONE classification review follow-up (2026-09-03)
 
-- Added an explicit operator review input for unknown samples. Drafts never
+- Added an explicit operator review input for unknown samples. Generated templates never
   choose a classification or reviewer. Approved inputs name the snapshot/sample,
   cite hash-checked source metadata rows, and retain reviewer/time/rationale.
   Recognized provider classifications cannot be overridden. The operator is a
@@ -65,7 +94,8 @@ used only as historical reference and parity material.
   no approved classification; its original normalization remains readable.
 - The real canary remains **unknown**. No scientific approval was fabricated,
   and no production migration, paid cloud work, merge or release was performed.
-  Current-month spend remains unverified against JPY 20,000 total/month.
+  Billing was unverified at this checkpoint; the browser follow-up above
+  records the subsequently verified settings and posted charges.
 - Workflow and remaining evidence requirements:
   [`docs/ANEMONE_CLASSIFICATION_REVIEW.md`](docs/ANEMONE_CLASSIFICATION_REVIEW.md).
 
@@ -90,8 +120,9 @@ used only as historical reference and parity material.
   correctly excludes all 70 detections. A source-backed researcher review and
   provenance-preserving classification input (implemented in the follow-up above) or a new
   explicitly classified sample is needed before the full scientific pilot.
-- Current spending cannot be read by the CLI billing identity; the billing
-  browser required passkey reauthentication. No paid cloud execution, secret
+- At this checkpoint the CLI could not read billing and the browser required
+  passkey reauthentication; the later browser check above resolved visibility.
+  No paid cloud execution, secret
   version creation, production import, merge, deployment or release occurred.
   Do not interpret the confirmed budget as verified remaining headroom.
 - Exact IDs, outcomes, retained local artifacts and next gates:

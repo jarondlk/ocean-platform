@@ -40,6 +40,25 @@ npm vulnerabilities, and full Cloud Build
 
 ## Local Verification
 
+### ANEMONE non-target contract and draft proposal — 2026-09-03
+
+- 629 backend tests passed, 9 PostgreSQL-gated skips, 77.08% CI-boundary
+  coverage. All 72 focused acquisition/normalization/review/job tests, Ruff,
+  diff checks and the unchanged single Alembic head `20260903_0008` passed.
+  No database schema or frontend files changed in this follow-up.
+- Nine new regression cases cover either/both optional non-target TSVs at
+  sample/run scope, inventory limits, no payload GETs, no non-target detections,
+  unchanged required target files and scientific IDs, exact approved contract
+  hashes, historical normalization/template replay and unknown-hash rejection.
+- The retained real pilot was checked read-only: all five proposal evidence
+  rows match the source, review parsing and normalization reject the draft,
+  six raw snapshot files remain byte-identical, and 70 detections remain with
+  unknown classification and unchanged unreviewed v2 normalization identity.
+- The API image copies the archived contract into its build context; the
+  archive is not excluded by `.dockerignore`. No new image was built, source
+  downloaded, canonical sample changed or paid cloud operation performed.
+  See the [draft proposal](ANEMONE_PILOT_CLASSIFICATION_PROPOSAL.md).
+
 ### ANEMONE classification review — 2026-09-03
 
 - 620 backend tests passed, 9 PostgreSQL-gated skips, 77.08% CI-boundary

@@ -1,6 +1,5 @@
 {
   "schema_version": 1,
-  "contract_version": 2,
   "provider": "anemone",
   "source_family": "edna_metabarcoding",
   "base_url": "https://db.anemone.bio/dist/MiFish/ANEMONE/",
@@ -10,7 +9,6 @@
     "default": "inventory_only",
     "execution_selection": "interpreted_tsv_only",
     "raw_fastq": "metadata_only",
-    "nontarget_communities": "metadata_only",
     "presentation_assets": "metadata_only"
   },
   "limits": {
@@ -53,22 +51,6 @@
       "role": "community_qc",
       "pattern": "^community_qc_target\\.tsv\\.xz$",
       "selection": "selected",
-      "compression": "xz",
-      "media_type": "text/tab-separated-values",
-      "table_contract": "community"
-    },
-    {
-      "role": "community_qc3nn_nontarget",
-      "pattern": "^community_qc3nn_nontarget\\.tsv\\.xz$",
-      "selection": "metadata_only",
-      "compression": "xz",
-      "media_type": "text/tab-separated-values",
-      "table_contract": "community"
-    },
-    {
-      "role": "community_qc_nontarget",
-      "pattern": "^community_qc_nontarget\\.tsv\\.xz$",
-      "selection": "metadata_only",
       "compression": "xz",
       "media_type": "text/tab-separated-values",
       "table_contract": "community"
