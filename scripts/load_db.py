@@ -99,6 +99,9 @@ def _database_column_definitions(
 def _prepare_dataframe(df: pd.DataFrame, table_name: str) -> pd.DataFrame:
     definitions = _database_column_definitions(table_name)
     db_columns = set(definitions)
+    if (table_name == "edna_sample" and "classification_review_json" in df
+        and "classification_review_json" not in db_columns):
+        raise ValueError("ANEMONE classification review requires database migration 20260903_0008")
     df = df.copy()
     for column in df.columns:
         definition = definitions.get(column)
@@ -697,6 +700,10 @@ def _load_anemone_bundle_frames(
         if not expected_sha or actual_sha != expected_sha:
             raise ValueError(f"ANEMONE bundle artifact hash changed for {name}")
         frames[name] = pd.read_parquet(artifact_path)
+        if name == "edna_sample" and "classification_review_json" not in frames[name]:
+            # An explicit import of a retained pre-review bundle clears a later
+            # review rather than leaving a stale attestation on an unknown row.
+            frames[name]["classification_review_json"] = None
         if len(frames[name]) != int(artifact["row_count"]):
             raise ValueError(f"ANEMONE bundle row count changed for {name}")
     return frames, manifest

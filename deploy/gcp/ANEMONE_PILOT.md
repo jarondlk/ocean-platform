@@ -27,7 +27,9 @@ component controls must still be checked before paid execution.
   corpus tables as well as applying Alembic migrations; Alembic alone is not
   a complete bootstrap.
   `bootstrap_database.py --check-only` must report every required table,
-  including `corpus_publication`. No new migration is introduced by PR5.
+  including `corpus_publication` and `edna_sample.classification_review_json`.
+  The classification follow-up adds migration `20260903_0008`; apply it before
+  importing v2 normalizations. Earlier pilot records used head `20260902_0007`.
 
 ## Storage and identities
 
@@ -151,9 +153,11 @@ counts measure abundance or that method agreement proves accuracy.
 Some real provider samples lack explicit supported classification metadata.
 Keep those samples `unknown`; do not infer environmental/non-control status
 solely from a name, collection device or coordinates. Obtain a source-backed
-review and implement a versioned classification-input path before including
-them in environmental-only analyses. Never edit immutable source files or
-canonical rows to make a pilot appear eligible.
+review through the [classification workflow](../../docs/ANEMONE_CLASSIFICATION_REVIEW.md)
+before including them in environmental-only analyses. It provides a non-executable
+draft, exact source-row verification and registered review delivery. A reviewer
+attestation is still required; implementation does not classify the real pilot.
+Never edit immutable source files or canonical rows to make a pilot appear eligible.
 
 Use an authenticated preview/candidate revision to run the six questions in
 `evaluation/edna_research_cases.json`. Save complete request/response JSON and

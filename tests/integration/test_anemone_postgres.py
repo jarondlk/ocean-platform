@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import hashlib
+import json
 import uuid
 from contextlib import nullcontext
 from pathlib import Path
@@ -383,6 +384,62 @@ def test_anemone_migration_and_transactional_merge_are_idempotent(monkeypatch):
             transaction.rollback()
 
 
+def test_reviewed_classification_import_replay_and_explicit_reversion(tmp_path, monkeypatch):
+    from preprocessing.anemone import build_anemone_bundle
+    from preprocessing.anemone_classification import review_template
+    from tests.test_anemone_classification import approve_fixture, _remove_classification
+    from tests.test_anemone_normalization import _acquire_snapshot
+
+    raw_root = tmp_path / "raw"
+    sid, contract = _acquire_snapshot(raw_root, mutate=_remove_classification)
+    options = dict(raw_root=raw_root, contract=contract)
+    original = build_anemone_bundle(sid, **options)
+    review = approve_fixture(review_template(sid, **options))
+    reviewed = build_anemone_bundle(sid, **options, classification_review=review)
+    sample_id = reviewed.frames["edna_sample"].iloc[0]["sample_id"]
+    original_metadata = original.frames["edna_sample"].iloc[0]["raw_metadata_json"]
+    manifest = {"source_scope_level": "sample"}
+    engine = create_engine(config.DATABASE_URL, pool_pre_ping=True)
+    with engine.connect() as connection:
+        transaction = connection.begin()
+        try:
+            _upsert_anemone_bundle(connection, frames=original.frames, manifest=manifest)
+            documents = build_edna_documents(*_read_active_frames(connection))
+            _merge_documents(connection, _document_frame(documents))
+            changed, _ = _upsert_anemone_bundle(connection, frames=reviewed.frames, manifest=manifest)
+            assert changed["edna_sample"]["scientific_corrections"] == 1
+            assert changed["edna_detection"]["unchanged"] == 2
+            replayed, _ = _upsert_anemone_bundle(connection, frames=reviewed.frames, manifest=manifest)
+            assert replayed["edna_sample"]["unchanged"] == 1
+            row = connection.execute(text("SELECT * FROM edna_sample WHERE sample_id=:id"), {"id": sample_id}).mappings().one()
+            record = json.loads(row["classification_review_json"])
+            assert row["raw_metadata_json"] == original_metadata
+            assert row["sample_kind"] == "environmental" and row["is_control"] is False
+            assert row["first_seen_snapshot_id"] == row["last_seen_snapshot_id"] == sid
+            assert record["decision"] == review["decisions"][0]
+
+            class SameTransactionEngine:
+                def connect(self):
+                    return nullcontext(connection)
+
+            monkeypatch.setattr(edna_service, "get_engine", lambda: SameTransactionEngine())
+            detail = edna_service.edna_sample_detail(sample_id)
+            assert detail["sample"]["classification_review"] == record
+            updated_docs = build_edna_documents(*_read_active_frames(connection))
+            merge = _merge_documents(connection, _document_frame(updated_docs))
+            assert merge["updated"] == 2
+            assert all(d.metadata["classification_review"] == record for d in updated_docs if d.sample_id == sample_id)
+
+            reverted, inactive = _upsert_anemone_bundle(connection, frames=original.frames, manifest=manifest)
+            assert reverted["edna_sample"]["scientific_corrections"] == 1
+            assert inactive["anchor_event"] == 1
+            row = connection.execute(text("SELECT sample_kind, is_control, classification_review_json FROM edna_sample WHERE sample_id=:id"), {"id": sample_id}).one()
+            assert tuple(row) == ("unknown", None, None)
+        finally:
+            transaction.rollback()
+    engine.dispose()
+
+
 def test_anemone_migration_downgrade_preserves_prior_schema_and_reupgrades():
     project_root = Path(__file__).resolve().parents[2]
     alembic_config = Config(str(project_root / "alembic.ini"))
@@ -414,6 +471,9 @@ def test_anemone_migration_downgrade_preserves_prior_schema_and_reupgrades():
         "assignment_method",
         "metadata_json",
     }.issubset(retrieval_columns)
+    assert "classification_review_json" in {
+        column["name"] for column in upgraded.get_columns("edna_sample")
+    }
 
 
 def test_edna_materialization_retains_scopes_and_filters_nonfeatured_taxa(monkeypatch):

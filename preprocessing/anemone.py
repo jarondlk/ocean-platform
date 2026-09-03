@@ -85,6 +85,7 @@ class AnemoneNormalizedBundle:
     input_manifest_sha256: str
     contract_sha256: str
     generated_at: str
+    classification_review: Optional[dict[str, Any]] = None
 
 
 def _json_value(value: Any) -> Any:
@@ -488,6 +489,7 @@ def build_anemone_bundle(
     raw_root: Path = config.RAW_ANEMONE_DIR,
     contract: Optional[dict[str, Any]] = None,
     generated_at: Optional[str] = None,
+    classification_review: Optional[dict[str, Any]] = None,
 ) -> AnemoneNormalizedBundle:
     source_contract = contract or load_contract()
     snapshot_root, manifest, manifest_sha, selected = _verify_snapshot(
@@ -495,6 +497,16 @@ def build_anemone_bundle(
         raw_root=raw_root,
         contract=source_contract,
     )
+    reviews = {}
+    if classification_review is not None:
+        from preprocessing.anemone_classification import parse_review, validate_review_evidence, ReviewError
+
+        try:
+            classification_review = parse_review(_canonical_json(classification_review).encode("utf-8"))
+            validate_review_evidence(classification_review, snapshot_id, selected)
+        except ReviewError as exc:
+            raise AnemoneNormalizationError("classification_review_invalid", str(exc)) from exc
+        reviews = {d["provider_sample_id"]: d for d in classification_review["decisions"]}
     scope_level = str(manifest.get("scope_level") or "")
     scope_url = str(manifest.get("scope_url") or "")
     project_id, run_id = _source_segments(scope_url, scope_level)
@@ -608,6 +620,18 @@ def build_anemone_bundle(
         sample_kind, is_control, classification_basis = _classification(
             sample_metadata
         )
+        review_record = None
+        if provider_sample_id in reviews:
+            review_record = {
+                "schema_version": 1,
+                "source_snapshot_id": snapshot_id,
+                "review_sha256": stable_sha256(classification_review),
+                "provider_classification_basis": classification_basis,
+                "decision": reviews[provider_sample_id],
+            }
+            sample_kind = review_record["decision"]["sample_kind"]
+            is_control = sample_kind != "environmental"
+            classification_basis = "review:" + stable_sha256(review_record)
         if sample_kind not in SAMPLE_KINDS:
             raise AssertionError("unreachable")
         if sample_kind == "unknown":
@@ -663,6 +687,8 @@ def build_anemone_bundle(
             "source_file_id": source_file_ids[(provider_sample_id, "sample_metadata")],
             "source_row_numbers_json": _canonical_json(sample_row_numbers),
         }
+        if review_record is not None:
+            sample_scientific["classification_review_json"] = _canonical_json(review_record)
         sample_scientific_hash, sample_source_hash = _scientific_and_source_hashes(
             sample_scientific,
             sample_source,
@@ -672,6 +698,9 @@ def build_anemone_bundle(
                 "sample_id": sample_id,
                 **sample_scientific,
                 **sample_source,
+                "classification_review_json": (
+                    _canonical_json(review_record) if review_record else None
+                ),
                 "active": True,
                 "first_seen_snapshot_id": snapshot_id,
                 "last_seen_snapshot_id": snapshot_id,
@@ -950,6 +979,8 @@ def build_anemone_bundle(
             for name, frame in sorted(frames.items())
         },
     }
+    if classification_review is not None:
+        identity_payload["classification_review_sha256"] = stable_sha256(classification_review)
     normalization_id = stable_sha256(identity_payload)
     return AnemoneNormalizedBundle(
         normalization_id=normalization_id,
@@ -961,6 +992,7 @@ def build_anemone_bundle(
         input_manifest_sha256=manifest_sha,
         contract_sha256=contract_sha,
         generated_at=generated_at or datetime.now(timezone.utc).isoformat(),
+        classification_review=classification_review,
     )
 
 
@@ -1014,6 +1046,10 @@ def _bundle_manifest(
         "contract_sha256": bundle.contract_sha256,
         "generated_at": bundle.generated_at,
         "mode": mode,
+        "classification_review": bundle.classification_review,
+        "classification_review_sha256": (
+            stable_sha256(bundle.classification_review) if bundle.classification_review else None
+        ),
         "ok": True,
         "row_counts": {
             name: len(frame) for name, frame in bundle.frames.items()
@@ -1056,6 +1092,7 @@ def normalize_anemone_snapshot(
     normalized_root: Path = config.ANEMONE_NORMALIZED_DIR,
     contract: Optional[dict[str, Any]] = None,
     generated_at: Optional[str] = None,
+    classification_review: Optional[dict[str, Any]] = None,
 ) -> dict[str, Any]:
     if activate and not execute:
         raise AnemoneNormalizationError(
@@ -1067,6 +1104,7 @@ def normalize_anemone_snapshot(
         raw_root=raw_root,
         contract=contract,
         generated_at=generated_at,
+        classification_review=classification_review,
     )
     if not execute:
         return _bundle_manifest(bundle, mode="validate")
@@ -1110,7 +1148,8 @@ def normalize_anemone_snapshot(
                     "normalization_conflict",
                     "Existing ANEMONE normalization bundle is invalid.",
                 ) from exc
-            if existing.get("artifacts") != artifacts:
+            if (existing.get("artifacts") != artifacts
+                or existing.get("classification_review") != bundle.classification_review):
                 raise AnemoneNormalizationError(
                     "normalization_conflict",
                     "Existing ANEMONE normalization ID has different artifacts.",
@@ -1188,6 +1227,45 @@ def resolve_normalized_bundle(
                 "normalization_artifact_invalid",
                 "ANEMONE normalized artifact is missing or has changed.",
             )
+    # Retain the decision inside canonical samples as well as the manifest so
+    # retrieval provenance and analysis exports remain self-contained.
+    review = manifest.get("classification_review")
+    try:
+        sample_artifact = manifest["artifacts"]["edna_sample"]
+        samples = pd.read_parquet(root / sample_artifact["path"])
+        if review is not None:
+            from preprocessing.anemone_classification import parse_review
+
+            if parse_review(_canonical_json(review).encode("utf-8")) != review:
+                raise ValueError("Noncanonical review")
+            if (review["source_snapshot_id"] != manifest["source_snapshot_id"]
+                or stable_sha256(review) != manifest.get("classification_review_sha256")):
+                raise ValueError("Review identity mismatch")
+        elif manifest.get("classification_review_sha256") is not None:
+            raise ValueError("Review missing")
+        decisions = {d["provider_sample_id"]: d for d in review["decisions"]} if review else {}
+        observed = set()
+        for row in samples.to_dict(orient="records"):
+            raw_record = row.get("classification_review_json")
+            record = json.loads(raw_record) if pd.notna(raw_record) else None
+            if record is not None:
+                sample = row["provider_sample_id"]
+                if (sample not in decisions or record["decision"] != decisions[sample]
+                    or record["source_snapshot_id"] != manifest["source_snapshot_id"]
+                    or record["review_sha256"] != stable_sha256(review)
+                    or row["classification_basis"] != "review:" + stable_sha256(record)
+                    or row["sample_kind"] != record["decision"]["sample_kind"]
+                    or bool(row["is_control"]) != (row["sample_kind"] != "environmental")):
+                    raise ValueError("Review decision mismatch")
+                observed.add(sample)
+            elif str(row.get("classification_basis", "")).startswith("review:"):
+                raise ValueError("Review record missing")
+        if observed != set(decisions):
+            raise ValueError("Review samples missing")
+    except (ValueError, KeyError, TypeError) as exc:
+        raise AnemoneNormalizationError(
+            "classification_review_invalid", "Normalized classification review is inconsistent."
+        ) from exc
     return root, manifest
 
 

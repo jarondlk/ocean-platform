@@ -28,6 +28,7 @@ NAMESPACES = {
     "retrieval",
     "analysis",
     "recipes",
+    "classification-reviews",
     "evaluation",
     "operations",
 }

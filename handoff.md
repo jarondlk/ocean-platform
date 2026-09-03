@@ -41,6 +41,34 @@ used only as historical reference and parity material.
 
 ## 2. What Changed Recently
 
+### ANEMONE classification review follow-up (2026-09-03)
+
+- Added an explicit operator review input for unknown samples. Drafts never
+  choose a classification or reviewer. Approved inputs name the snapshot/sample,
+  cite hash-checked source metadata rows, and retain reviewer/time/rationale.
+  Recognized provider classifications cannot be overridden. The operator is a
+  trusted submitter; this is an attestation, not an authenticated signature.
+- Normalization v2 preserves raw metadata, adds the full review record to the
+  canonical sample and manifest, and changes normalization/scientific identity.
+  Historical bundles remain readable; citations, API detail and analysis exports
+  retain the review. Migration `20260903_0008` adds a nullable review column;
+  bootstrap/import fail closed if the required column is missing.
+- Both local normalization and registered job delivery support the review.
+  Explicitly importing an unreviewed historical bundle clears a later review;
+  it does not silently persist stale environmental classification.
+- Same-snapshot review variants are retained separately in provenance. Document
+  artifact links match the exact canonical sample row hash, not the first bundle
+  found for a raw snapshot. Review records also survive verified ZIP exports.
+- Verification: 620 backend tests, 77.08% coverage, all 9 isolated PostgreSQL
+  integration checks, Ruff and diff checks passed. The test database was removed.
+  The real sample's read-only draft has 19 evidence candidates, no reviewer and
+  no approved classification; its original normalization remains readable.
+- The real canary remains **unknown**. No scientific approval was fabricated,
+  and no production migration, paid cloud work, merge or release was performed.
+  Current-month spend remains unverified against JPY 20,000 total/month.
+- Workflow and remaining evidence requirements:
+  [`docs/ANEMONE_CLASSIFICATION_REVIEW.md`](docs/ANEMONE_CLASSIFICATION_REVIEW.md).
+
 ### ANEMONE real-data local canary (2026-09-03)
 
 - PR1–PR5 code is committed/pushed as `bfc8c0a`; GitHub CI and CodeQL passed.
@@ -60,7 +88,7 @@ used only as historical reference and parity material.
 - New scientific blocker: provider metadata has no supported explicit sample/
   control classification. Preserve `unknown`; the environmental-only recipe
   correctly excludes all 70 detections. A source-backed researcher review and
-  provenance-preserving classification input (not yet implemented) or a new
+  provenance-preserving classification input (implemented in the follow-up above) or a new
   explicitly classified sample is needed before the full scientific pilot.
 - Current spending cannot be read by the CLI billing identity; the billing
   browser required passkey reauthentication. No paid cloud execution, secret

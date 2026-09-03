@@ -97,10 +97,11 @@ validation, contamination clearance, organism abundance or biological absence.
 No environmental observation profile was enabled.
 
 Before completing the scientific pilot, obtain researcher-reviewed
-sample/control classification backed by provider evidence. The current code
-has no operator classification-override input: an accepted review requires a
-small provenance-preserving normalization extension, not editing raw files or
-manually updating canonical rows. Alternatively, select a provider sample with
+sample/control classification backed by provider evidence. At the canary
+checkpoint the code had no operator classification input. The subsequent
+[classification workflow](ANEMONE_CLASSIFICATION_REVIEW.md) implements that
+extension, but no real review has been approved or imported. Do not edit raw
+files or manually update canonical rows. Alternatively, select a provider sample with
 explicit supported classification metadata after reviewing a new bounded scope.
 Until then, this canary verifies lossless evidence and exclusion behavior, not
 successful environmental biodiversity analysis or the six model-answer cases.
@@ -120,7 +121,7 @@ No downloaded source file, secret, database archive or signed token is committed
 Temporary-directory evidence is not durable cloud retention; preserve it before
 host cleanup if the pilot is to be resumed.
 
-Remaining: classification review/normalization support, current spend and
+Remaining: real classification approval and revised pilot validation, current spend and
 component guardrails, secure cloud credential delivery, real object-store/job
 checks, reviewed model answers, live authorization/browser checks, production
 backup/rollback rehearsal, merge, deployment and release.

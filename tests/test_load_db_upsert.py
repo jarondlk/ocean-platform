@@ -6,6 +6,7 @@ import json
 import sys
 
 import pandas as pd
+import pytest
 
 
 def _write_normalized_bundle(root, normalization_id="a" * 64):
@@ -47,6 +48,25 @@ def _write_normalized_bundle(root, normalization_id="a" * 64):
         encoding="utf-8",
     )
     return bundle_root, manifest
+
+
+def test_review_evidence_cannot_be_silently_dropped_by_unmigrated_database(monkeypatch):
+    load_db = importlib.import_module("scripts.load_db")
+    monkeypatch.setattr(load_db, "_database_column_definitions", lambda _: {
+        "sample_id": {"type": load_db.String()},
+    })
+    with pytest.raises(ValueError, match="migration 20260903_0008"):
+        load_db._prepare_dataframe(pd.DataFrame([{
+            "sample_id": "a" * 64, "classification_review_json": "{}",
+        }]), "edna_sample")
+
+
+def test_legacy_bundle_loader_explicitly_clears_review(tmp_path, monkeypatch):
+    load_db = importlib.import_module("scripts.load_db")
+    _write_normalized_bundle(tmp_path)
+    monkeypatch.setattr(load_db.config, "ANEMONE_NORMALIZED_DIR", tmp_path)
+    frames, _ = load_db._load_anemone_bundle_frames("a" * 64, allow_noncurrent=False)
+    assert frames["edna_sample"]["classification_review_json"].tolist() == [None]
 
 
 def test_source_row_hash_is_stable_and_content_sensitive():

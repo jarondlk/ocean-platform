@@ -19,6 +19,7 @@ STAGES = (
     "inventory",
     "acquire",
     "normalize",
+    "classification-review",
     "import",
     "materialize",
     "recipe",
@@ -81,6 +82,17 @@ def restore_normalized(store, artifact_id):
 
 def execute_stage(args):
     store = ArtifactStore(config.EDNA_ARTIFACT_URI)
+    if args.stage == "classification-review":
+        from preprocessing.anemone_classification import read_review
+
+        review = read_review(args.classification_review)
+        identity = digest(review)
+        store.publish(
+            "classification-reviews", identity,
+            {"review.json": canonical_bytes(review)},
+            metadata={"source_snapshot_id": review["source_snapshot_id"]},
+        )
+        return {"artifact_id": identity, "source_snapshot_id": review["source_snapshot_id"]}
     if args.stage in {"inventory", "acquire"}:
         from ingestion.anemone import resolve_credentials, sync_anemone
 
@@ -108,7 +120,20 @@ def execute_stage(args):
         }
     if args.stage == "normalize":
         from preprocessing.anemone import normalize_anemone_snapshot
+        from preprocessing.anemone_classification import parse_review, read_review, MAX_REVIEW_BYTES
 
+        review = None
+        review_artifact_id = getattr(args, "classification_review_artifact_id", None)
+        review_path = getattr(args, "classification_review", None)
+        if review_artifact_id:
+            _, files = store.read("classification-reviews", review_artifact_id, max_bytes=MAX_REVIEW_BYTES)
+            if set(files) != {"review.json"}:
+                raise ValueError("Invalid classification review artifact contract")
+            review = parse_review(files["review.json"])
+            if digest(review) != review_artifact_id:
+                raise ValueError("Classification review artifact identity mismatch")
+        elif review_path:
+            review = read_review(review_path)
         receipt, _ = store.read("raw", args.artifact_id)
         snapshot_id = validate_id(receipt["metadata"]["snapshot_id"])
         store.restore(
@@ -120,6 +145,7 @@ def execute_stage(args):
             activate=False,
             raw_root=config.RAW_ANEMONE_DIR,
             normalized_root=config.ANEMONE_NORMALIZED_DIR,
+            classification_review=review,
         )
         normalized = store.publish_tree(
             "normalized",
@@ -128,6 +154,7 @@ def execute_stage(args):
                 "normalization_id": result["normalization_id"],
                 "snapshot_id": snapshot_id,
                 "raw_artifact_id": args.artifact_id,
+                **({"classification_review_sha256": digest(review)} if review else {}),
             },
         )
         return {
@@ -243,10 +270,19 @@ def main():
     parser.add_argument("--artifact-id")
     parser.add_argument("--recipe", type=Path)
     parser.add_argument("--environment", type=Path)
+    review_options = parser.add_mutually_exclusive_group()
+    review_options.add_argument("--classification-review", type=Path)
+    review_options.add_argument("--classification-review-artifact-id")
     parser.add_argument("--max-files", type=int, default=20)
     parser.add_argument("--max-bytes", type=int, default=64 * 1024 * 1024)
     parser.add_argument("--operation-id", default="anemone-" + uuid.uuid4().hex)
     args = parser.parse_args()
+    if args.classification_review and args.stage not in {"normalize", "classification-review"}:
+        parser.error("--classification-review requires normalize or classification-review stage")
+    if args.classification_review_artifact_id and args.stage != "normalize":
+        parser.error("--classification-review-artifact-id requires normalize stage")
+    if args.classification_review_artifact_id:
+        validate_id(args.classification_review_artifact_id)
     if not 0 < args.max_files <= 2000 or not 0 < args.max_bytes <= 512 * 1024 * 1024:
         parser.error("Pilot limits: 1–2000 files, 1–536870912 bytes")
     if args.validate_only and args.stage not in {
@@ -277,6 +313,8 @@ def main():
         )
     if args.stage in {"inventory", "acquire"} and not args.scope_url:
         parser.error("An approved --scope-url is required")
+    if args.stage == "classification-review" and not args.classification_review:
+        parser.error("--classification-review is required")
     if args.stage in {"normalize", "import"}:
         if not args.artifact_id:
             parser.error("--artifact-id is required")

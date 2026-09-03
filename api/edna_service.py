@@ -50,6 +50,7 @@ def _row(row: Any) -> dict[str, Any]:
         "raw_metadata_json",
         "taxonomy_json",
         "source_row_numbers_json",
+        "classification_review_json",
     ):
         value = result.get(key)
         if isinstance(value, str):

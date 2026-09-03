@@ -40,6 +40,29 @@ npm vulnerabilities, and full Cloud Build
 
 ## Local Verification
 
+### ANEMONE classification review — 2026-09-03
+
+- 620 backend tests passed, 9 PostgreSQL-gated skips, 77.08% CI-boundary
+  coverage; Ruff, diff checks and the single Alembic head passed.
+- All 9 PostgreSQL integration checks passed in CI order on a fresh disposable
+  PG16/pgvector database. Migration from `20260902_0007` to `20260903_0008`,
+  review import/replay, unchanged source metadata/detections, API review detail,
+  explicit reversion to unknown and anchor inactivation were verified.
+- Tests reject draft/invalid/stale/mismatched/duplicate/oversized reviews and
+  recognized provider-classification overrides. They verify registered review
+  delivery, manifest tampering, immutable replay, review-sensitive identities,
+  exact normalized-artifact links for same-snapshot review variants, retained
+  citations and full review records in ZIP exports. Unmigrated imports and
+  readiness checks fail closed rather than discarding review evidence.
+- Read-only checks on the real canary produced an unapproved one-sample draft
+  with 19 candidate metadata rows. Validation retained all 70 detections and
+  unknown classification; its pre-v2 normalization remained readable by ID.
+  No actual reviewer decision was supplied or applied.
+- The synthetic test container was removed after readiness reported all 23
+  tables and no missing review column. Original real canary files and backup
+  were not changed. No cloud, live-model or production migration was performed.
+  See [operator workflow](ANEMONE_CLASSIFICATION_REVIEW.md).
+
 ### Real ANEMONE canary — 2026-09-03
 
 One bounded real sample passed local source reconciliation, rolled-back import,

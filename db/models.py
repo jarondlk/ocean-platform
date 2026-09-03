@@ -258,6 +258,7 @@ class EdnaSample(CorpusBase):
     sample_kind = Column(String(32), nullable=False, index=True)
     is_control = Column(Boolean, index=True)
     classification_basis = Column(Text, nullable=False)
+    classification_review_json = Column(Text)
     collection_date_utc = Column(String(40), index=True)
     temporal_precision = Column(String(16))
     lat = Column(Float, index=True)

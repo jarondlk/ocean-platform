@@ -434,6 +434,14 @@ def _anemone_artifact_specs(normalization_id: Optional[str] = None) -> List[Dict
         "edna_anchor_event": (None, ["event_id"]),
     }
     specs: List[Dict[str, Any]] = []
+    sample_artifact = manifest.get("artifacts", {}).get("edna_sample")
+    sample_row_hashes = {}
+    if sample_artifact:
+        samples = pd.read_parquet(root / str(sample_artifact["path"]))
+        sample_row_hashes = {
+            str(row["sample_id"]): row.get("source_row_hash")
+            for row in samples.to_dict(orient="records")
+        }
     for name, artifact in sorted(manifest.get("artifacts", {}).items()):
         table_name, key_columns = table_keys.get(name, (None, []))
         specs.append(
@@ -448,6 +456,7 @@ def _anemone_artifact_specs(normalization_id: Optional[str] = None) -> List[Dict
                 "table_name": table_name,
                 "key_columns": key_columns,
                 "source_snapshot_id": str(manifest["source_snapshot_id"]),
+                "sample_row_hashes": sample_row_hashes,
                 "notes": (
                     f"normalization_id={normalization_id}; "
                     f"source_snapshot_id={manifest['source_snapshot_id']}; "
@@ -461,7 +470,7 @@ def _anemone_artifact_specs(normalization_id: Optional[str] = None) -> List[Dict
 def _active_anemone_artifact_specs() -> List[Dict[str, Any]]:
     """Include normalized bundles referenced by any active eDNA scope."""
     specs = _anemone_artifact_specs()
-    known = {spec["source_snapshot_id"] for spec in specs}
+    known = {spec["id"] for spec in specs}
     needed: set[str] = set()
     documents = _read_retrieval_documents()
     for row in documents.to_dict(orient="records"):
@@ -474,14 +483,15 @@ def _active_anemone_artifact_specs() -> List[Dict[str, Any]]:
     for path in sorted(config.ANEMONE_NORMALIZED_DIR.glob("snapshots/*/normalization_manifest.json")):
         manifest = json.loads(path.read_text(encoding="utf-8"))
         snapshot_id = manifest.get("source_snapshot_id")
-        if snapshot_id not in needed or snapshot_id in known:
+        if (snapshot_id not in needed
+            or f"normalized:anemone:{path.parent.name}:edna_sample" in known):
             continue
         historical = _anemone_artifact_specs(path.parent.name)
         for spec in historical:
             # Only the current bundle is a canonical upsert candidate.
             spec["table_name"] = None
         specs.extend(historical)
-        known.add(snapshot_id)
+        known.update(spec["id"] for spec in historical)
     return specs
 
 
@@ -842,9 +852,13 @@ def build_document_traces(limit_documents: Optional[int] = 500) -> List[Document
             ]
         source_artifact_ids = _document_source_artifacts(source_type)
         if source_type == "edna_metabarcoding":
+            sample_row_hash = next((record.get("source_row_hash")
+                for record in metadata_value.get("canonical_records", [])
+                if record.get("entity_type") == "sample" and record.get("entity_id") == sample_id), None)
             source_artifact_ids.extend(
                 spec["id"] for spec in anemone_artifacts
                 if spec["source_snapshot_id"] in metadata_value.get("source_snapshot_ids", [])
+                and spec["sample_row_hashes"].get(sample_id) == sample_row_hash
             )
         rows.append(
             DocumentTrace(
@@ -956,6 +970,9 @@ def build_anemone_row_traces() -> List[Dict[str, Any]]:
                     "normalization_artifact_id": (
                         f"normalized:anemone:{normalization_id}:{table_name}"
                     ),
+                    **({"classification_review": json.loads(row["classification_review_json"])}
+                       if table_name == "edna_sample" and pd.notna(row.get("classification_review_json"))
+                       else {}),
                 }
             )
     return traces

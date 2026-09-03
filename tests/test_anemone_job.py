@@ -26,6 +26,10 @@ def test_job_default_is_offline_plan(monkeypatch, capsys):
         ["--max-files", "2001"],
         ["--max-bytes", "536870913"],
         ["--stage", "acquire", "--validate-only"],
+        ["--stage", "classification-review", "--execute"],
+        ["--stage", "import", "--classification-review", "review.json"],
+        ["--stage", "acquire", "--classification-review-artifact-id", "a" * 64],
+        ["--stage", "normalize", "--classification-review", "review.json", "--classification-review-artifact-id", "a" * 64],
     ],
 )
 def test_job_rejects_missing_scope_and_excess_limits(tmp_path, monkeypatch, options):
@@ -162,3 +166,38 @@ def test_recipe_can_be_delivered_as_registered_cloud_configuration(
         validate_only=True,
     )
     assert job.execute_stage(remote) == {"validated": True}
+
+
+def test_review_can_be_delivered_as_registered_cloud_configuration(tmp_path, monkeypatch):
+    from tests.test_anemone_classification import minimal_review
+    import preprocessing.anemone as normalizer
+
+    monkeypatch.setattr(config, "EDNA_ARTIFACT_URI", (tmp_path / "objects").as_uri())
+    monkeypatch.setattr(config, "RAW_ANEMONE_DIR", tmp_path / "raw")
+    monkeypatch.setattr(config, "ANEMONE_NORMALIZED_DIR", tmp_path / "normalized")
+    review = minimal_review()
+    path = tmp_path / "review.json"
+    path.write_text(json.dumps(review))
+    args = SimpleNamespace(stage="classification-review", classification_review=path)
+    published = job.execute_stage(args)
+    assert job.execute_stage(args) == published
+    store = ArtifactStore(config.EDNA_ARTIFACT_URI)
+    store.publish("raw", "b" * 64, {"manifest.json": b"{}"}, metadata={"snapshot_id": "a" * 64})
+    output = tmp_path / "synthetic-normalized"
+    output.mkdir()
+    (output / "normalization_manifest.json").write_text("{}")
+
+    def normalize(identity, **kwargs):
+        assert identity == "a" * 64
+        assert kwargs["classification_review"] == review
+        return {"normalization_id": "c" * 64, "bundle_path": str(output)}
+
+    monkeypatch.setattr(normalizer, "normalize_anemone_snapshot", normalize)
+    result = job.execute_stage(SimpleNamespace(stage="normalize", artifact_id="b" * 64,
+        classification_review_artifact_id=published["artifact_id"]))
+    _, receipt = job.restore_normalized(store, result["artifact_id"])
+    assert receipt["classification_review_sha256"] == published["artifact_id"]
+    # Published decisions cannot be replaced by editing the operator's file.
+    review["decisions"][0]["reviewer"] = "Changed locally"
+    path.write_text(json.dumps(review))
+    assert json.loads(store.read("classification-reviews", published["artifact_id"])[1]["review.json"])["decisions"][0]["reviewer"] == "Fixture reviewer"

@@ -236,6 +236,9 @@ def build_edna_documents(
             + _control_label(sample_kind, is_control)
             + "."
         )
+        classification_review = _text(sample.get("classification_review_json"))
+        if classification_review:
+            lines.append("Classification basis: researcher review; original provider classification unknown.")
         assay_parts = [
             f"target gene {target_gene}" if target_gene else None,
             f"primer set {primer_set}" if primer_set else None,
@@ -304,6 +307,9 @@ def build_edna_documents(
             "read_count_sum": total_reads,
             "copies_per_ml_record_count": supplied_copies,
         }
+        if classification_review:
+            metadata["classification_review"] = json.loads(classification_review)
+            metadata["classification_basis"] = _text(sample.get("classification_basis"))
         documents.append(
             RetrievalDocument(
                 doc_id=f"edna_{assay_id}_{method}",

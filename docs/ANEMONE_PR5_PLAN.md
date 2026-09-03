@@ -7,6 +7,12 @@
 
 ## Rollout order
 
+Classification follow-up: the operator review path is implemented in
+[`ANEMONE_CLASSIFICATION_REVIEW.md`](ANEMONE_CLASSIFICATION_REVIEW.md), with
+normalization v2 and additive migration `20260903_0008`. The real sample remains
+unknown until source-backed researcher approval; cloud spending is still
+unverified. Checkpoint `2cbb061` passed CI/CodeQL before this follow-up.
+
 Current checkpoint: code commit `bfc8c0a` is pushed and CI/CodeQL passed. The
 user confirmed JPY 20,000/month total and delegated one-sample selection. The
 first real canary passed local acquisition/storage/citation/role/recovery
