@@ -1,5 +1,9 @@
 # ANEMONE local canary — 2026-09-03
 
+This is the historical local-canary record. The subsequent `v0.4.0` deployment,
+verified imports/backups, live citation checks and limitations are recorded
+in [release operations](RELEASE_0.4.0_OPERATIONS.md).
+
 Status: acquisition, canonical storage, evidence/provenance, signed API access
 and local recovery verified. Scientific acceptance and cloud rollout are not
 complete. No production import, model call, cloud build, GCP mutation, merge or

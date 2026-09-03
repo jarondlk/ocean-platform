@@ -34,6 +34,24 @@ classification workflow completion. Keep the pilot `sample_kind=unknown` and
 6. Complete authenticated end-to-end tests, then document acceptance and ship
    the patch. Do not choose a final classification or approval in advance.
 
+## Operational follow-up from the v0.4.0 rollout
+
+- During the import-to-materialization interval, the ready-pointer guard
+  correctly rejected incomplete eDNA publication, but `/stats` returned HTTP
+  500 and the Overview showed an error. It recovered after materialization.
+  Keep the fail-closed guard; show an explicit publication-pending state while
+  retaining available legacy metrics. Add a regression test for this interval.
+- For subsequent rollouts, finish publication before switching traffic or use
+  an explicit maintenance/readiness gate to avoid exposing that interval.
+- Add a no-evidence abstention path before generation. A live v0.4.0 smoke
+  test used the environmental-only analysis filter with context injection
+  disabled. The unknown pilot was correctly excluded, leaving zero evidence;
+  the model nevertheless invented a negative-control sample and agreement
+  counts. The audit marked all five citation occurrences invalid, but did not
+  prevent the answer. Do not present that response as accepted research.
+  Display recipe-derived retrieval filters clearly and test empty cohorts,
+  disabled context, missing sources and invalid citations end to end.
+
 Inputs: [operator implementation](ANEMONE_CLASSIFICATION_REVIEW.md),
 [unapproved pilot proposal](ANEMONE_PILOT_CLASSIFICATION_PROPOSAL.md), and
 [retained canary evidence](ANEMONE_PILOT_2026-09-03.md).
