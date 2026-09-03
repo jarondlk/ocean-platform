@@ -1,0 +1,58 @@
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: ocean-anemone-sync
+  labels:
+    environment: prototype
+    cost_component: anemone_acquisition
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/secrets: 'anemone-username:projects/PROJECT_NUMBER/secrets/ocean-anemone-username,anemone-password:projects/PROJECT_NUMBER/secrets/ocean-anemone-password'
+    spec:
+      taskCount: 1
+      parallelism: 1
+      template:
+        spec:
+          serviceAccountName: ocean-anemone-sync@PROJECT_ID.iam.gserviceaccount.com
+          maxRetries: 0
+          timeoutSeconds: "1800"
+          containers:
+            - image: REGION-docker.pkg.dev/PROJECT_ID/ARTIFACT_REPOSITORY/api@ANEMONE_IMAGE_DIGEST
+              command: [python]
+              args: [scripts/run_anemone_job.py, --stage, inventory]
+              env:
+                - name: EDNA_ARTIFACT_URI
+                  value: gs://DATA_BUCKET/edna
+                - name: EDNA_CACHE_DIR
+                  value: /tmp/ocean-edna-cache
+                - name: DATA_DIR
+                  value: /tmp/ocean-job-data
+                - name: ANEMONE_DOWNLOAD_USERNAME_FILE
+                  value: /secrets/anemone-username/value
+                - name: ANEMONE_DOWNLOAD_PASSWORD_FILE
+                  value: /secrets/anemone-password/value
+              resources:
+                limits:
+                  cpu: "1"
+                  memory: 2Gi
+              volumeMounts:
+                - name: anemone-username
+                  mountPath: /secrets/anemone-username
+                - name: anemone-password
+                  mountPath: /secrets/anemone-password
+          volumes:
+            - name: anemone-username
+              secret:
+                secretName: anemone-username
+                items:
+                  - key: "ANEMONE_USERNAME_VERSION"
+                    path: value
+            - name: anemone-password
+              secret:
+                secretName: anemone-password
+                items:
+                  - key: "ANEMONE_PASSWORD_VERSION"
+                    path: value

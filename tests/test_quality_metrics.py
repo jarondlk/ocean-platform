@@ -50,6 +50,42 @@ class TestRougeL:
         score = compute_rouge_l("", "")
         assert score == 0.0
 
+    @pytest.mark.parametrize("content", [
+        "Fish reads from Onagawa Bay.",
+        "../../outside/model.json is text, not a model path.",
+        "-javaagent:/outside/model.jar is text, not an execution option.",
+    ])
+    def test_rouge_l_does_not_use_nltk_model_artifact_apis(self, monkeypatch, content):
+        """Reachability regression, not a patch or dismissal of the NLTK advisory."""
+        import nltk
+        from nltk.classify import maxent
+        from nltk.parse.transitionparser import TransitionParser
+        from nltk.tag.perceptron import AveragedPerceptron, PerceptronTagger
+        from rouge_score import rouge_scorer
+
+        def forbidden(*args, **kwargs):
+            raise AssertionError('ROUGE-L must not access NLTK model artifacts or Java')
+
+        for target, name in (
+            (TransitionParser, 'train'), (TransitionParser, 'parse'),
+            (AveragedPerceptron, 'save'), (AveragedPerceptron, 'load'),
+            (PerceptronTagger, 'save_to_json'), (maxent, 'save_maxent_params'),
+            (nltk, 'download'), (nltk, 'sent_tokenize'),
+            (nltk.data, 'load'), (nltk.internals, 'java'),
+        ):
+            monkeypatch.setattr(target, name, forbidden)
+
+        real_scorer = rouge_scorer.RougeScorer
+        calls = []
+
+        def checked_scorer(rouge_types, **kwargs):
+            calls.append((rouge_types, kwargs))
+            return real_scorer(rouge_types, **kwargs)
+
+        monkeypatch.setattr(rouge_scorer, 'RougeScorer', checked_scorer)
+        assert compute_rouge_l(content, content) == 1.0
+        assert calls == [(['rougeL'], {'use_stemmer': True})]
+
 
 class TestSimpleRougeL:
     """Test fallback LCS-based ROUGE-L."""

@@ -92,6 +92,49 @@ def test_prepare_snapshot_rejects_unsafe_manifest_id():
         prepare_snapshot(_manifest(), manifest_id="../escape")
 
 
+def test_edna_publication_requires_complete_source_and_row_provenance():
+    manifest = _manifest()
+    snapshot_id, file_id = "a" * 64, "b" * 64
+    manifest["source_files"] = [{
+        "id": f"raw:anemone:{file_id}", "sha256": "c" * 64,
+        "source_snapshot_id": snapshot_id,
+        "source_url": "https://db.anemone.bio/dist/fixture/file.tsv.xz",
+    }]
+    manifest["artifacts"] = [{
+        "id": "normalized:anemone:fixture", "sha256": "d" * 64,
+        "source_snapshot_id": snapshot_id, "exists": True,
+    }]
+    manifest["documents"] = [{
+        "doc_id": "edna_fixture", "source_type": "edna_metabarcoding",
+        "content_hash": "e" * 64, "metadata_hash": "f" * 64,
+        "source_file_ids": [f"raw:anemone:{file_id}"],
+        "source_artifact_ids": ["normalized:anemone:fixture"],
+        "metadata": {
+            "edna_retrieval_document_version": 1,
+            "source_snapshot_ids": [snapshot_id],
+            "detection_set_sha256": "0" * 64,
+            "canonical_records": [{
+                "entity_type": kind, "entity_id": kind,
+                "source_file_id": file_id, "source_snapshot_id": snapshot_id,
+                "source_row_locator": [2], "source_row_hash": "1" * 64,
+            } for kind in ("sample", "assay", "detection")],
+        },
+    }]
+    assert prepare_snapshot(manifest, manifest_id="edna-complete").documents[0]["metadata"]
+    for path in ("file", "hash", "artifact", "locator"):
+        changed = json.loads(json.dumps(manifest))
+        if path == "file":
+            changed["source_files"] = []
+        elif path == "hash":
+            changed["source_files"][0]["sha256"] = None
+        elif path == "artifact":
+            changed["artifacts"] = []
+        else:
+            changed["documents"][0]["metadata"]["canonical_records"][0]["source_row_locator"] = []
+        with pytest.raises(SnapshotError, match="incomplete eDNA provenance"):
+            prepare_snapshot(changed, manifest_id="edna-incomplete")
+
+
 def test_publication_requires_known_embedding_treatment_for_every_document():
     missing = _manifest()
     missing["embeddings"] = []

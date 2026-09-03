@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "contract_version": 2,
+  "provider": "anemone",
+  "source_family": "edna_metabarcoding",
+  "base_url": "https://db.anemone.bio/dist/MiFish/ANEMONE/",
+  "supported_scope_levels": ["sample", "run"],
+  "unexpected_file_policy": "block_execution",
+  "download_policy": {
+    "default": "inventory_only",
+    "execution_selection": "interpreted_tsv_only",
+    "raw_fastq": "metadata_only",
+    "nontarget_communities": "metadata_only",
+    "presentation_assets": "metadata_only"
+  },
+  "limits": {
+    "maximum_files": 2000,
+    "maximum_download_bytes": 536870912,
+    "maximum_directory_bytes": 2000000,
+    "maximum_uncompressed_tsv_bytes": 67108864
+  },
+  "required_selected_roles": [
+    "sample_metadata",
+    "experiment_metadata",
+    "community_standard",
+    "community_qc",
+    "community_qc3nn"
+  ],
+  "file_roles": [
+    {
+      "role": "forward_fastq",
+      "pattern": ".*\\.forward\\.fastq\\.xz$",
+      "selection": "metadata_only",
+      "compression": "xz",
+      "content": "fastq"
+    },
+    {
+      "role": "reverse_fastq",
+      "pattern": ".*\\.reverse\\.fastq\\.xz$",
+      "selection": "metadata_only",
+      "compression": "xz",
+      "content": "fastq"
+    },
+    {
+      "role": "community_qc3nn",
+      "pattern": "^community_qc3nn_target\\.tsv\\.xz$",
+      "selection": "selected",
+      "compression": "xz",
+      "media_type": "text/tab-separated-values",
+      "table_contract": "community"
+    },
+    {
+      "role": "community_qc",
+      "pattern": "^community_qc_target\\.tsv\\.xz$",
+      "selection": "selected",
+      "compression": "xz",
+      "media_type": "text/tab-separated-values",
+      "table_contract": "community"
+    },
+    {
+      "role": "community_qc3nn_nontarget",
+      "pattern": "^community_qc3nn_nontarget\\.tsv\\.xz$",
+      "selection": "metadata_only",
+      "compression": "xz",
+      "media_type": "text/tab-separated-values",
+      "table_contract": "community"
+    },
+    {
+      "role": "community_qc_nontarget",
+      "pattern": "^community_qc_nontarget\\.tsv\\.xz$",
+      "selection": "metadata_only",
+      "compression": "xz",
+      "media_type": "text/tab-separated-values",
+      "table_contract": "community"
+    },
+    {
+      "role": "community_standard",
+      "pattern": "^community_standard\\.tsv\\.xz$",
+      "selection": "selected",
+      "compression": "xz",
+      "media_type": "text/tab-separated-values",
+      "table_contract": "standard"
+    },
+    {
+      "role": "experiment_metadata",
+      "pattern": "^experiment\\.tsv\\.xz$",
+      "selection": "selected",
+      "compression": "xz",
+      "media_type": "text/tab-separated-values",
+      "table_contract": "key_value_experiment"
+    },
+    {
+      "role": "sample_metadata",
+      "pattern": "^sample\\.tsv\\.xz$",
+      "selection": "selected",
+      "compression": "xz",
+      "media_type": "text/tab-separated-values",
+      "table_contract": "key_value_sample"
+    },
+    {
+      "role": "presentation_asset",
+      "pattern": "^wordcloud\\.(phylum|class|order|family|genus|species)\\.png$",
+      "selection": "metadata_only",
+      "media_type": "image/png"
+    }
+  ],
+  "tables": {
+    "community": {
+      "columns": [
+        "samplename",
+        "superkingdom",
+        "kingdom",
+        "subkingdom",
+        "superphylum",
+        "phylum",
+        "subphylum",
+        "superclass",
+        "class",
+        "subclass",
+        "infraclass",
+        "cohort",
+        "subcohort",
+        "superorder",
+        "order",
+        "suborder",
+        "infraorder",
+        "parvorder",
+        "superfamily",
+        "family",
+        "subfamily",
+        "tribe",
+        "subtribe",
+        "genus",
+        "subgenus",
+        "section",
+        "subsection",
+        "series",
+        "species group",
+        "species subgroup",
+        "species",
+        "subspecies",
+        "varietas",
+        "forma",
+        "forma specialis",
+        "strain",
+        "isolate",
+        "sequence",
+        "nreads",
+        "ncopiesperml"
+      ],
+      "minimum_rows": 1,
+      "constraints": {
+        "sequence": {"pattern": "^[ACGTNacgtn]+$", "nullable": false},
+        "nreads": {"type": "integer", "minimum": 0},
+        "ncopiesperml": {
+          "type": "number",
+          "minimum": 0,
+          "nullable_values": ["", "NA", "N/A"]
+        }
+      }
+    },
+    "standard": {
+      "columns": ["samplename", "standard", "sequence", "nreads"],
+      "minimum_rows": 1,
+      "constraints": {
+        "sequence": {"pattern": "^[ACGTNacgtn]+$", "nullable": false},
+        "nreads": {"type": "integer", "minimum": 0}
+      }
+    },
+    "key_value_sample": {
+      "columns": ["samplename", "key", "value"],
+      "minimum_rows": 1,
+      "required_keys": [
+        "samp_name",
+        "project_name",
+        "lat_lon",
+        "collection_date_utc"
+      ]
+    },
+    "key_value_experiment": {
+      "columns": ["samplename", "key", "value"],
+      "minimum_rows": 1,
+      "required_keys": ["target_gene", "pcr_primers", "seq_meth"]
+    }
+  }
+}

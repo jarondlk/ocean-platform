@@ -16,18 +16,25 @@ TEMPLATES = (
     "job-embedding.template.yaml",
     "job-evaluation.template.yaml",
 )
+ANEMONE_TEMPLATES = ('job-anemone-sync.template.yaml', 'job-anemone-process.template.yaml')
 TOKEN_PATTERN = re.compile(
     r"\b(?:PROJECT_ID|PROJECT_NUMBER|REGION|ARTIFACT_REPOSITORY|IMAGE_TAG|"
     r"CLOUD_SQL_INSTANCE|PUBLIC_APP_URL|OIDC_PROVIDER_ID_VALUE|"
     r"OIDC_PROVIDER_NAME_VALUE|OIDC_ISSUER_VALUE|OIDC_CLIENT_ID_VALUE|"
-    r"DATA_BUCKET)\b"
+    r"DATA_BUCKET|ANEMONE_IMAGE_DIGEST|ANEMONE_USERNAME_VERSION|ANEMONE_PASSWORD_VERSION)\b"
 )
 
 
-def render_templates(values: dict[str, str], output_dir: Path) -> list[Path]:
+def render_templates(values: dict[str, str], output_dir: Path, *, include_anemone=False) -> list[Path]:
     output_dir.mkdir(parents=True, exist_ok=True)
     rendered_paths: list[Path] = []
-    for template_name in TEMPLATES:
+    if include_anemone:
+        if not re.fullmatch(r'sha256:[a-f0-9]{64}', values.get('ANEMONE_IMAGE_DIGEST', '')):
+            raise ValueError('ANEMONE requires an immutable image digest')
+        for token in ('ANEMONE_USERNAME_VERSION', 'ANEMONE_PASSWORD_VERSION'):
+            if not re.fullmatch(r'[1-9][0-9]*', values.get(token, '')):
+                raise ValueError('ANEMONE requires pinned numeric secret versions')
+    for template_name in (*TEMPLATES, *(ANEMONE_TEMPLATES if include_anemone else ())):
         source = TEMPLATE_DIR / template_name
         rendered = source.read_text(encoding="utf-8")
         for token, value in values.items():
@@ -60,6 +67,10 @@ def main() -> int:
     parser.add_argument("--oidc-provider-name", default="Google")
     parser.add_argument("--oidc-issuer", default="https://accounts.google.com")
     parser.add_argument("--oidc-client-id", required=True)
+    parser.add_argument('--include-anemone', action='store_true')
+    parser.add_argument('--anemone-image-digest')
+    parser.add_argument('--anemone-username-version')
+    parser.add_argument('--anemone-password-version')
     parser.add_argument(
         "--output-dir",
         type=Path,
@@ -89,7 +100,13 @@ def main() -> int:
         "OIDC_CLIENT_ID_VALUE": args.oidc_client_id,
         "DATA_BUCKET": args.data_bucket,
     }
-    for path in render_templates(values, args.output_dir):
+    if args.include_anemone:
+        values.update({
+            'ANEMONE_IMAGE_DIGEST': args.anemone_image_digest or '',
+            'ANEMONE_USERNAME_VERSION': args.anemone_username_version or '',
+            'ANEMONE_PASSWORD_VERSION': args.anemone_password_version or '',
+        })
+    for path in render_templates(values, args.output_dir, include_anemone=args.include_anemone):
         print(path)
     return 0
 

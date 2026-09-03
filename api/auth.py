@@ -446,6 +446,10 @@ def route_permission(method: str, path: str) -> Optional[str]:
         return "feedback:write"
     if path == "/retrieve" or path == "/documents":
         return "evidence:search"
+    if path.startswith('/data/edna/analysis/') and path.endswith('/export'):
+        return 'data:export'
+    if path.startswith('/data/edna/analysis/') and path.endswith('/provenance'):
+        return 'provenance:read'
     if path.startswith("/data/") or path == "/analysis":
         return "data:read"
     if path.startswith("/explore/"):
