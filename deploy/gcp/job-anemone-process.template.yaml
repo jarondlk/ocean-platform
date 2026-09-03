@@ -36,6 +36,10 @@ spec:
                   value: /tmp/ocean-edna-cache
                 - name: DATA_DIR
                   value: /mnt/ocean-data
+                - name: SST_NETCDF_DIR
+                  value: /mnt/ocean-data/raw/sst-netcdf
+                - name: HIMAWARI_RAW_DIR
+                  value: /mnt/ocean-data/raw/himawari
                 - name: PROVENANCE_SNAPSHOT_URI
                   value: gs://DATA_BUCKET/provenance
                 - name: MODEL_PROVIDER

@@ -59,6 +59,10 @@ used only as historical reference and parity material.
   opening a file; nine regressions were added, with 638 backend tests passing
   at 77.11% coverage. The pre-fix cloud build was cancelled. Require the updated
   PR security check and replacement build to pass; do not dismiss the alert.
+- The ANEMONE processing template now points legacy SST/Himawari provenance
+  reads at the existing read-only data mount, matching the serving/pipeline
+  configuration. This prevents references to absent image-local data folders;
+  no environmental profile or new SST download is enabled.
 
 ### ANEMONE file contract and review proposal (2026-09-03)
 

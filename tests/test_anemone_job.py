@@ -129,6 +129,12 @@ def test_anemone_job_templates_are_bounded_and_secret_files_pinned(tmp_path):
             )
         else:
             assert task["volumes"][0]["csi"]["readOnly"] is True
+            environment = {
+                item["name"]: item.get("value")
+                for item in task["containers"][0]["env"]
+            }
+            assert environment["SST_NETCDF_DIR"] == "/mnt/ocean-data/raw/sst-netcdf"
+            assert environment["HIMAWARI_RAW_DIR"] == "/mnt/ocean-data/raw/himawari"
     with pytest.raises(ValueError, match="pinned"):
         render_templates(
             {**values, "ANEMONE_PASSWORD_VERSION": "latest"},
