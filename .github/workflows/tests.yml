@@ -176,6 +176,8 @@ jobs:
           python -m pytest
           tests/integration/test_app_metadata_postgres.py
           tests/integration/test_operational_postgres.py
+          tests/integration/test_anemone_postgres.py
+          tests/integration/test_edna_analysis_postgres.py
           -q
 
       - name: Verify transactional corpus upsert is idempotent

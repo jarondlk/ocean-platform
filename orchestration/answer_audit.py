@@ -44,6 +44,10 @@ SOURCE_TYPE_TERMS = {
         "microbial", "community", "diversity", "shannon", "kraken",
         "metaeuk", "genus", "genera", "diatom", "dinoflagellate",
     },
+    "edna_metabarcoding": {
+        "edna", "environmental dna", "anemone", "mifish",
+        "metabarcoding", "amplicon", "qcauto", "3nn", "primer", "assay",
+    },
 }
 
 
@@ -126,7 +130,7 @@ def _evidence_index(
                 "evidence_role": "context",
                 "context_type": context_type,
                 "source_type": None,
-                "covered_source_types": _source_types_in_text(_document_text(row)),
+                "covered_source_types": row.get('covered_source_types') or _source_types_in_text(_document_text(row)),
                 "title": row.get("title") or row.get("analysis_type") or doc_id,
             }
 

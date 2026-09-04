@@ -4,7 +4,25 @@ import uuid
 from datetime import datetime
 from typing import Any, Dict, List, Literal, Optional
 
-from pydantic import AliasChoices, BaseModel, Field
+from pydantic import AliasChoices, BaseModel, Field, model_validator
+from schema.time_range import time_bounds
+
+
+EDNA_ASSIGNMENT_METHODS = (
+    "qcauto_target",
+    "qcauto_95pct_3nn_target",
+)
+EDNA_SAMPLE_KINDS = (
+    "environmental",
+    "negative_control",
+    "positive_control",
+    "mock_community",
+    "unknown",
+)
+
+
+def validate_time_range(time_from: Optional[str], time_to: Optional[str]) -> None:
+    time_bounds(time_from, time_to)
 
 
 class CurrentUserResponse(BaseModel):
@@ -54,17 +72,81 @@ class UserUpdate(BaseModel):
 
 
 class RetrieveRequest(BaseModel):
+    analysis_id: Optional[str] = Field(default=None, pattern=r'^[a-f0-9]{64}$')
     query: str = Field(..., min_length=1, max_length=4000)
     k: int = Field(default=8, ge=1, le=25, validation_alias=AliasChoices("k", "top_k"))
     source_type: Optional[str] = Field(default=None, max_length=64)
+    sample_id: Optional[str] = Field(default=None, max_length=200)
     bay: Optional[str] = Field(default=None, max_length=64)
     time_from: Optional[str] = Field(default=None, max_length=64)
     time_to: Optional[str] = Field(default=None, max_length=64)
+    provider: Optional[str] = Field(default=None, max_length=64)
+    provider_project_id: Optional[str] = Field(default=None, max_length=128)
+    provider_run_id: Optional[str] = Field(default=None, max_length=128)
+    assignment_method: Optional[Literal[
+        "qcauto_target",
+        "qcauto_95pct_3nn_target",
+    ]] = None
+    taxon: Optional[str] = Field(default=None, min_length=1, max_length=200)
+    sample_kind: Optional[Literal[
+        "environmental",
+        "negative_control",
+        "positive_control",
+        "mock_community",
+        "unknown",
+    ]] = None
+    is_control: Optional[bool] = None
+    lat_min: Optional[float] = Field(default=None, ge=-90, le=90)
+    lat_max: Optional[float] = Field(default=None, ge=-90, le=90)
+    lon_min: Optional[float] = Field(default=None, ge=-180, le=180)
+    lon_max: Optional[float] = Field(default=None, ge=-180, le=180)
     vector_weight: float = Field(default=0.6, ge=0.0, le=1.0)
     fts_weight: float = Field(default=0.4, ge=0.0, le=1.0)
     rrf_k: int = Field(default=60, ge=1, le=200)
     expand_evidence: bool = True
     max_linked_sources: int = Field(default=5, ge=0, le=25)
+
+    @model_validator(mode="after")
+    def validate_edna_filters(self) -> "RetrieveRequest":
+        validate_time_range(self.time_from, self.time_to)
+        if (
+            self.lat_min is not None
+            and self.lat_max is not None
+            and self.lat_min > self.lat_max
+        ):
+            raise ValueError("lat_min must not exceed lat_max")
+        if (
+            self.lon_min is not None
+            and self.lon_max is not None
+            and self.lon_min > self.lon_max
+        ):
+            raise ValueError("lon_min must not exceed lon_max")
+        edna_filters = (
+            self.analysis_id,
+            self.provider,
+            self.provider_project_id,
+            self.provider_run_id,
+            self.assignment_method,
+            self.taxon,
+            self.sample_kind,
+            self.is_control,
+        )
+        source = (self.source_type or "").strip().lower()
+        edna_aliases = {
+            "edna",
+            "environmental_dna",
+            "edna_metabarcoding",
+            "metabarcoding",
+            "mifish",
+            "anemone",
+        }
+        if source and source not in edna_aliases and any(
+            value is not None for value in edna_filters
+        ):
+            raise ValueError(
+                "eDNA-only filters cannot be combined with a non-eDNA source_type"
+            )
+        return self
 
 
 class ChatRequest(RetrieveRequest):
@@ -99,6 +181,14 @@ class SourceDocument(BaseModel):
     linked_from_event_id: Optional[str] = None
     time_delta_days: Optional[float] = None
     distance_km: Optional[float] = None
+    provider: Optional[str] = None
+    provider_project_id: Optional[str] = None
+    provider_run_id: Optional[str] = None
+    assay_id: Optional[str] = None
+    assignment_method: Optional[str] = None
+    sample_kind: Optional[str] = None
+    is_control: Optional[bool] = None
+    source_snapshot_id: Optional[str] = None
 
 
 class ContextDocument(BaseModel):
@@ -107,6 +197,10 @@ class ContextDocument(BaseModel):
     context_type: str
     analysis_type: Optional[str] = None
     text: str = ""
+    source_family: Optional[str] = None
+    analysis_id: Optional[str] = None
+    table: Optional[str] = None
+    result_ids: List[str] = Field(default_factory=list)
 
 
 class CitationAuditRecord(BaseModel):
@@ -389,6 +483,50 @@ class SstDataResponse(BaseModel):
     daily: List[SstDailyPoint]
 
 
+class EdnaCatalogResponse(BaseModel):
+    samples: int
+    assays: int
+    detections: int
+    controls: int
+    unknown_control_status: int
+    providers: List[str] = Field(default_factory=list)
+    projects: List[str] = Field(default_factory=list)
+    runs: List[str] = Field(default_factory=list)
+    assignment_methods: List[str] = Field(default_factory=list)
+    sample_kinds: List[str] = Field(default_factory=list)
+    time_extent: Dict[str, Optional[str]] = Field(default_factory=dict)
+    coordinate_extent: Dict[str, Optional[float]] = Field(default_factory=dict)
+
+
+class EdnaPageResponse(BaseModel):
+    total: int
+    limit: int
+    offset: int
+    rows: List[Dict[str, Any]] = Field(default_factory=list)
+
+
+class EdnaSampleDetailResponse(BaseModel):
+    sample: Dict[str, Any]
+    assays: List[Dict[str, Any]] = Field(default_factory=list)
+    method_summaries: List[Dict[str, Any]] = Field(default_factory=list)
+    provenance: Dict[str, Any] = Field(default_factory=dict)
+
+
+class EdnaAssayDetailResponse(BaseModel):
+    assay: Dict[str, Any]
+    sample: Dict[str, Any]
+    method_summaries: List[Dict[str, Any]] = Field(default_factory=list)
+    internal_standards: List[Dict[str, Any]] = Field(default_factory=list)
+    provenance: Dict[str, Any] = Field(default_factory=dict)
+
+
+class EdnaDetectionDetailResponse(BaseModel):
+    detection: Dict[str, Any]
+    assay: Dict[str, Any]
+    sample: Dict[str, Any]
+    provenance: Dict[str, Any] = Field(default_factory=dict)
+
+
 class AnalysisResponse(BaseModel):
     catalog: Dict[str, Any]
     ctd_trends: Dict[str, Any]
@@ -580,6 +718,7 @@ class PipelineRunDetailResponse(BaseModel):
 
 
 class ProvenanceManifestResponse(BaseModel):
+    edna_analyses: List[Dict[str, Any]] = Field(default_factory=list)
     schema_version: int
     generated_at: str
     project_root: str
