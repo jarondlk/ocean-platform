@@ -21,8 +21,12 @@ from typing import Any, List
 
 import numpy as np
 import requests
+import snowballstemmer
 
 logger = logging.getLogger(__name__)
+
+_ROUGE_TOKEN_SEPARATOR = re.compile(r"[^a-z0-9]+")
+_ROUGE_STEMMER = snowballstemmer.stemmer("porter")
 
 
 # ─────────────────────────────────────────────
@@ -67,20 +71,53 @@ def compute_rouge_l(generated: str, reference: str) -> float:
     """
     Compute ROUGE-L F-measure between generated and reference text.
 
-    Uses the rouge-score library for LCS-based computation.
-    Falls back to a simple implementation if the library is unavailable.
+    Uses ASCII-alphanumeric tokenization, Snowball's Porter stemming algorithm,
+    and longest common subsequence scoring. This keeps the evaluator
+    self-contained apart from a small, model-free stemmer and avoids model or
+    artifact-loading APIs. Scores produced before this implementation should
+    retain their original evaluator-version provenance.
     """
     if not generated.strip() or not reference.strip():
         return 0.0
 
-    try:
-        from rouge_score import rouge_scorer
-        scorer = rouge_scorer.RougeScorer(["rougeL"], use_stemmer=True)
-        scores = scorer.score(reference, generated)
-        return round(scores["rougeL"].fmeasure, 4)
-    except ImportError:
-        logger.warning("rouge-score not installed; using simple LCS ROUGE-L")
-        return _simple_rouge_l(generated, reference)
+    generated_tokens = _tokenize_rouge_l(generated)
+    reference_tokens = _tokenize_rouge_l(reference)
+    return round(_rouge_l_fmeasure(generated_tokens, reference_tokens), 4)
+
+
+def _tokenize_rouge_l(text: str) -> list[str]:
+    """Tokenize and Porter-stem text for ROUGE-L scoring."""
+    normalized = _ROUGE_TOKEN_SEPARATOR.sub(" ", text.lower())
+    return [
+        _ROUGE_STEMMER.stemWord(token) if len(token) > 3 else token
+        for token in normalized.split()
+    ]
+
+
+def _rouge_l_fmeasure(
+    generated_tokens: list[str],
+    reference_tokens: list[str],
+) -> float:
+    """Return the LCS-based F-measure for two token sequences."""
+    if not generated_tokens or not reference_tokens:
+        return 0.0
+
+    previous = [0] * (len(generated_tokens) + 1)
+    for reference_token in reference_tokens:
+        current = [0]
+        for index, generated_token in enumerate(generated_tokens, start=1):
+            if reference_token == generated_token:
+                current.append(previous[index - 1] + 1)
+            else:
+                current.append(max(previous[index], current[-1]))
+        previous = current
+
+    lcs_len = previous[-1]
+    precision = lcs_len / len(generated_tokens)
+    recall = lcs_len / len(reference_tokens)
+    if precision + recall == 0:
+        return 0.0
+    return 2 * precision * recall / (precision + recall)
 
 
 def _simple_rouge_l(generated: str, reference: str) -> float:
@@ -88,26 +125,7 @@ def _simple_rouge_l(generated: str, reference: str) -> float:
     gen_tokens = generated.lower().split()
     ref_tokens = reference.lower().split()
 
-    if not gen_tokens or not ref_tokens:
-        return 0.0
-
-    # LCS via dynamic programming
-    m, n = len(ref_tokens), len(gen_tokens)
-    dp = [[0] * (n + 1) for _ in range(m + 1)]
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-            if ref_tokens[i - 1] == gen_tokens[j - 1]:
-                dp[i][j] = dp[i - 1][j - 1] + 1
-            else:
-                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
-
-    lcs_len = dp[m][n]
-    precision = lcs_len / n if n > 0 else 0.0
-    recall = lcs_len / m if m > 0 else 0.0
-    if precision + recall == 0:
-        return 0.0
-    f1 = 2 * precision * recall / (precision + recall)
-    return round(f1, 4)
+    return round(_rouge_l_fmeasure(gen_tokens, ref_tokens), 4)
 
 
 # ─────────────────────────────────────────────

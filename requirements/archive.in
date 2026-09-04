@@ -2,6 +2,9 @@
 -r analysis.in
 
 streamlit==1.62.0
+# Streamlit requires watchdog off macOS; keep the Linux archive lock complete
+# when pip-compile runs on an Apple Silicon development host.
+watchdog==6.0.0
 
 # Security floor for GitPython advisories affecting versions through 3.1.57.
 gitpython==3.1.61
