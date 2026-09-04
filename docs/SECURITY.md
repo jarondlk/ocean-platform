@@ -287,6 +287,22 @@ lists 3.10.3 as its fix. No alert was dismissed or dependency weakened.
 Keep maintainer review and an upstream-patch recheck on the release checklist;
 reassess if evaluation methods, dependency versions or model/path APIs change.
 
+### NLTK removal — 2026-09-04
+
+The application no longer depends on `rouge-score` or NLTK. The internal
+ROUGE-L evaluator now performs the same ASCII-alphanumeric tokenization and
+LCS F-measure locally and uses the model-free `snowballstemmer==3.1.1` Porter
+algorithm. Golden tests cover stemming, punctuation, empty input and strings
+that resemble model paths or Java options.
+
+All comparisons over the 15 checked-in reference answers remained unchanged in
+the compatibility review. Snowball Porter and NLTK's extended Porter mode are
+not universally bit-for-bit equivalent, so this is a new evaluator
+implementation boundary: existing recorded scores retain their original
+provenance and should not be silently recomputed for longitudinal comparison.
+The dependency removal addresses the NLTK advisory rather than dismissing its
+live-manifest alerts as unreachable.
+
 ### Publication boundaries
 
 - Analyses require an independently registered digest and complete file

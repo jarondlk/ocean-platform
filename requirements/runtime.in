@@ -22,4 +22,5 @@ alembic==1.19.1
 PyJWT==2.13.0
 xarray==2026.7.0
 netCDF4==1.7.4
-rouge-score==0.1.2
+# NLTK-free Porter stemming for the internal ROUGE-L evaluator.
+snowballstemmer==3.1.1
