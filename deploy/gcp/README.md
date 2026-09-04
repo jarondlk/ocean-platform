@@ -16,12 +16,13 @@ Cost controls must be in place before runtime resources are created.
 
 ## Current deployed milestone
 
-Verified on 2026-08-31 JST:
+Verified on 2026-09-03 JST:
 
 - project `data-infra-infobio`, region `asia-northeast1`;
-- OCEAN Platform GitHub release `v0.3.0`;
-- immutable Cloud Build and Cloud Run revision recorded in the GitHub `v0.3.0`
-  release;
+- OCEAN Platform [GitHub release `v0.4.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.0);
+- build `76b31adb-28d6-4daa-a9cc-f114d36bd753`, revision
+  `ocean-platform-v040-a63885a`; immutable image digests, backup/restore checks,
+  pilot identities and limitations in the [operations record](../../docs/RELEASE_0.4.0_OPERATIONS.md);
 - Cloud Run service `ocean-platform` at 100% traffic;
 - Artifact Registry `ocean-platform`; service accounts `ocean-platform` and
   `ocean-jobs`; secrets and jobs under the `ocean-*` prefix;
@@ -34,10 +35,12 @@ Verified on 2026-08-31 JST:
 - reviewed Artifact Registry cleanup is active for both repositories, and
   transient Cloud Build source archives expire after 30 days;
 - minimum zero/maximum one service instance, concurrency 20; and
-- GitHub `production` deployment status `success`.
+- 325 documents/embeddings, schema head `20260903_0008`, pilot classification
+  still unknown. Complete classification and scientific acceptance next patch.
 
-The preceding `v0.2.3` build `9e0048f7-372d-4b3c-9068-971ef299db8d` on revision
-`ocean-platform-00008-jh9` remains the documented application rollback point.
+The preceding revision `ocean-platform-v030-1bb38b8` and verified pre-release
+backup are retained. Review corpus/publication compatibility before rollback;
+do not automatically downgrade the schema or overwrite later user/chat records.
 
 See [`../../docs/GCP_RESOURCE_AUDIT.md`](../../docs/GCP_RESOURCE_AUDIT.md) for
 the current inventory, absence checks, housekeeping controls, and the exact

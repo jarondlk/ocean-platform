@@ -2,7 +2,7 @@
 
 > **Last updated**: 2026-09-03 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform release `v0.3.0` is live on Cloud Run service `ocean-platform`. The invite-only Next.js + FastAPI application uses Google OIDC, the OCEAN Cloud SQL/pgvector data plane, Vertex AI, verified Provenance snapshots, and `ocean-*` Cloud Run Jobs. The former service is private and its deletion-protected SQL instance is stopped as a reversible rollback boundary; local Ollama development and the archived Streamlit reference remain supported.
+> **Current status**: OCEAN Platform release `v0.4.0` is live on Cloud Run service `ocean-platform`, including the bounded ANEMONE MiFish pilot. Classification remains unknown; researcher classification and full scientific/model-answer acceptance are deferred to the next patch. The invite-only application retains Google OIDC, Cloud SQL/pgvector, Vertex AI and verified provenance snapshots. See the [release operations record](docs/RELEASE_0.4.0_OPERATIONS.md).
 
 ---
 
@@ -40,6 +40,37 @@ used only as historical reference and parity material.
 ---
 
 ## 2. What Changed Recently
+
+### v0.4.0 released and deployed (2026-09-03)
+
+- [GitHub release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.0)
+  published from `a63885a573b18eb92c184fb88fdb85b5aae3cb09`; PR #51 merged,
+  both `main` and `gcp-dev` retained. Later documentation commits record the
+  rollout without changing the built application.
+- Build `76b31adb-28d6-4daa-a9cc-f114d36bd753` passed. Revision
+  `ocean-platform-v040-a63885a` serves 100% traffic. Migration head
+  `20260903_0008`, 23 tables ready; pre/post-migration and final isolated
+  backup restores passed. IAM, service scale and cost limits are unchanged.
+- Pilot: 1 unknown sample, 1 assay, 70 detections, 4 standards, 2 method-separated
+  documents; total 325 documents / 325 embeddings. All legacy records retained.
+  Provenance snapshot `v040-provenance` includes the complete corpus and analysis.
+- Authenticated source-only chat retrieved both documents, reported unknown
+  classification and produced 2 valid citations / 0 invalid / 0 warnings.
+  Source/provenance navigation passed; anonymous eDNA access was denied.
+- Environmental-only analysis retains 70 exclusions and no diversity/composition
+  rows. Descriptive comparison has 35 shared sequences, 25 exact / 10 conflicting
+  assignments. This does not establish environmental eligibility or accuracy.
+- Two observed limitations are recorded, not hidden: Overview errors while
+  publication is pending, and model hallucination when filtering leaves no
+  evidence and context injection is disabled (all citations flagged invalid).
+  Address loading state, visible recipe filters and deterministic abstention in
+  [the next patch](docs/ANEMONE_NEXT_PATCH.md), alongside classification workflow
+  completion and researcher acceptance. Do not present this as a fully validated
+  scientific assistant. A reduced-token test was rejected as incomplete; normal
+  production-limit source chat passed.
+- Full immutable IDs, backup hashes, test outcomes and billing checkpoint:
+  [release operations](docs/RELEASE_0.4.0_OPERATIONS.md). This section supersedes
+  historical statements below that cloud rollout/import/release are pending.
 
 ### v0.4.0 scope decision: classification deferred (2026-09-03)
 
