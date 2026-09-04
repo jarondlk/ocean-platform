@@ -96,6 +96,10 @@ spec:
               value: ocean-platform-api
             - name: DATA_DIR
               value: /mnt/ocean-data
+            - name: EDNA_ARTIFACT_URI
+              value: gs://DATA_BUCKET/edna
+            - name: EDNA_CACHE_DIR
+              value: /tmp/ocean-edna-cache
             - name: SST_NETCDF_DIR
               value: /mnt/ocean-data/raw/sst-netcdf
             - name: HIMAWARI_RAW_DIR

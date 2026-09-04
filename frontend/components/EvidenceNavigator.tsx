@@ -67,7 +67,10 @@ export function EvidenceNavigator({
         if (active) setTraceLoading(false);
       });
 
-    if (target.source.sample_id) {
+    if (
+      target.source.sample_id
+      && target.source.source_type !== "edna_metabarcoding"
+    ) {
       setSampleLoading(true);
       getSampleDetail(target.source.sample_id)
         .then((payload) => {
@@ -159,6 +162,13 @@ export function EvidenceNavigator({
                   ["Sample", target.source.sample_id],
                   ["Event", target.source.event_id],
                   ["Time", target.source.time],
+                  ["Provider", target.source.provider],
+                  ["Project", target.source.provider_project_id],
+                  ["Run", target.source.provider_run_id],
+                  ["Assay", target.source.assay_id],
+                  ["Assignment", target.source.assignment_method],
+                  ["Sample kind", target.source.sample_kind],
+                  ["Control", target.source.is_control],
                   ["Bay", target.source.bay],
                   ["Station", target.source.station],
                   ["Link", target.source.link_type],
@@ -168,7 +178,7 @@ export function EvidenceNavigator({
               <p className="navigator-evidence-text">{target.source.text}</p>
             </section>
 
-            <section className="navigator-section">
+            {target.source.source_type !== "edna_metabarcoding" ? <section className="navigator-section">
               <h4>
                 <FileSearch aria-hidden="true" size={15} />
                 {ui("Provenance")}
@@ -194,7 +204,7 @@ export function EvidenceNavigator({
                   />
                 </>
               ) : null}
-            </section>
+            </section> : null}
 
             <section className="navigator-section">
               <h4>{ui(target.source.sample_id ? "Sample" : "Source record")}</h4>

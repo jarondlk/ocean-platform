@@ -30,17 +30,30 @@ REQUIRED_TABLES = frozenset(
         "ctd_profile",
         "ctd_summary",
         "metagenome_sample",
+        "external_source_snapshot",
+        "external_source_file",
+        "edna_sample",
+        "edna_assay",
+        "edna_detection",
+        "edna_internal_standard",
         "sst_point_observation",
         "sst_daily_summary",
         "retrieval_document",
         "cross_source_link",
+        "corpus_publication",
     }
 )
 
 
 def database_status() -> dict[str, object]:
     engine = get_engine()
-    tables = set(inspect(engine).get_table_names())
+    inspector = inspect(engine)
+    tables = set(inspector.get_table_names())
+    missing_columns = []
+    if "edna_sample" in tables and "classification_review_json" not in {
+        column["name"] for column in inspector.get_columns("edna_sample")
+    }:
+        missing_columns.append("edna_sample.classification_review_json")
     with engine.connect() as connection:
         vector_installed = bool(
             connection.execute(
@@ -53,9 +66,10 @@ def database_status() -> dict[str, object]:
         )
     missing_tables = sorted(REQUIRED_TABLES - tables)
     return {
-        "ready": vector_installed and not missing_tables,
+        "ready": vector_installed and not missing_tables and not missing_columns,
         "vector_extension": vector_installed,
         "missing_tables": missing_tables,
+        "missing_columns": missing_columns,
         "table_count": len(tables),
     }
 
@@ -86,6 +100,7 @@ def main() -> int:
         print(f"ready={str(status['ready']).lower()}")
         print(f"vector_extension={str(status['vector_extension']).lower()}")
         print(f"missing_tables={','.join(status['missing_tables'])}")
+        print(f"missing_columns={','.join(status.get('missing_columns', []))}")
         print(f"table_count={status['table_count']}")
     return 0 if status["ready"] else 1
 

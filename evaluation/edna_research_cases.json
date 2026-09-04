@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "scope": "Manual scientific answer review against a selected immutable analysis; not a claim of model validation",
+  "request": { "source_type": "edna_metabarcoding", "analysis_id": "REPLACE_WITH_REVIEWED_ANALYSIS_ID" },
+  "cases": [
+    { "id": "method_dependence", "question": "Do QCauto and 95%-3NN agree, and which method is more accurate?", "required_evidence": "methods and method_summary with both methods", "expected": "Report paired sequence agreement, one-sided rows and resolution differences; agreement is not independent accuracy validation. Cite the exact analysis." },
+    { "id": "unknown_controls", "question": "Can these detections be considered contamination-free?", "required_evidence": "controls and control_overlap, including unknown or absent controls", "expected": "Unknown or unpaired controls cannot establish a pass. Shared reads are descriptive, not contamination diagnosis; do not subtract them." },
+    { "id": "read_abundance", "question": "Does twice the read count mean twice as many fish or twice the DNA concentration?", "required_evidence": "composition and standards", "expected": "No organism abundance or concentration conversion. Report sequencing counts separately from source-supplied nullable copies/mL; do not invent calibration." },
+    { "id": "unresolved_species", "question": "What is the species richness when some assignments stop at genus?", "required_evidence": "a species-rank run with unresolved_rank exclusions", "expected": "Report richness only among resolved species, exclusions and retained reads. Do not infer missing species or count sequences as species." },
+    { "id": "zero_missing", "question": "Was the species absent between these sampling dates?", "required_evidence": "composition, membership and exclusions", "expected": "Distinguish recorded zero, missing detection records and unsampled events. None alone establishes biological absence; do not interpolate occupancy." },
+    { "id": "outside_sst", "question": "Does local SST explain the eDNA diversity at this out-of-footprint sample?", "required_evidence": "environment_links with rejected SST footprint and no qualified pair", "expected": "State that qualified SST context is unavailable. Do not substitute nearest-date regional SST, infer causation or invent a significance result." }
+  ]
+}

@@ -56,6 +56,15 @@ SOURCE_TYPE_KEYWORDS = {
         "sst", "satellite", "remote sensing", "himawari",
         "sea surface temperature", "surface temperature",
     },
+    "edna_metabarcoding": {
+        "edna", "environmental dna", "anemone", "mifish",
+        "metabarcoding", "amplicon", "qcauto", "3nn", "primer", "assay",
+    },
+}
+
+EDNA_SPECIFIC_KEYWORDS = SOURCE_TYPE_KEYWORDS["edna_metabarcoding"]
+METAGENOME_SPECIFIC_KEYWORDS = {
+    "metagenome", "metagenomic", "shotgun", "kraken", "metaeuk",
 }
 
 RELIABILITY_COMPARISON_KEYWORDS = {
@@ -80,6 +89,11 @@ SOURCE_TYPE_ALIASES = {
     "satellite": "remote_sensing",
     "sst": "remote_sensing",
     "satellite_sst": "remote_sensing",
+    "edna": "edna_metabarcoding",
+    "environmental_dna": "edna_metabarcoding",
+    "metabarcoding": "edna_metabarcoding",
+    "mifish": "edna_metabarcoding",
+    "anemone": "edna_metabarcoding",
 }
 
 
@@ -99,10 +113,24 @@ def retrieve(
     query: str,
     *,
     k: int = 8,
+    sample_ids: Optional[list[str]] = None,
+    assignment_methods: Optional[list[str]] = None,
     source_type: Optional[str] = None,
+    sample_id: Optional[str] = None,
     bay: Optional[str] = None,
     time_from: Optional[str] = None,
     time_to: Optional[str] = None,
+    provider: Optional[str] = None,
+    provider_project_id: Optional[str] = None,
+    provider_run_id: Optional[str] = None,
+    assignment_method: Optional[str] = None,
+    taxon: Optional[str] = None,
+    sample_kind: Optional[str] = None,
+    is_control: Optional[bool] = None,
+    lat_min: Optional[float] = None,
+    lat_max: Optional[float] = None,
+    lon_min: Optional[float] = None,
+    lon_max: Optional[float] = None,
     vector_weight: float = 0.6,
     fts_weight: float = 0.4,
     rrf_k: int = 60,
@@ -110,12 +138,20 @@ def retrieve(
     """
     Retrieve relevant documents using the best available backend.
     """
+    if source_type:
+        source_type = _normalize_source_type(source_type)
     if _pg_available():
         logger.info("Using PostgreSQL hybrid retriever")
         from retrieval.hybrid_retriever import hybrid_search
         results = hybrid_search(
-            query, k=k, source_type=source_type, bay=bay,
-            time_from=time_from, time_to=time_to,
+            query, k=k, source_type=source_type, sample_id=sample_id, bay=bay,
+            sample_ids=sample_ids, assignment_methods=assignment_methods,
+            time_from=time_from, time_to=time_to, provider=provider,
+            provider_project_id=provider_project_id,
+            provider_run_id=provider_run_id,
+            assignment_method=assignment_method, taxon=taxon,
+            sample_kind=sample_kind, is_control=is_control,
+            lat_min=lat_min, lat_max=lat_max, lon_min=lon_min, lon_max=lon_max,
             vector_weight=vector_weight, fts_weight=fts_weight,
             rrf_k=rrf_k,
         )
@@ -130,6 +166,14 @@ def retrieve(
                 "station": r.station,
                 "title": r.title,
                 "text": r.text,
+                "provider": r.provider,
+                "provider_project_id": r.provider_project_id,
+                "provider_run_id": r.provider_run_id,
+                "assay_id": r.assay_id,
+                "assignment_method": r.assignment_method,
+                "sample_kind": r.sample_kind,
+                "is_control": r.is_control,
+                "source_snapshot_id": r.source_snapshot_id,
                 "score": r.score,
                 "rank_sources": dict(r.rank_sources),
             }
@@ -140,8 +184,14 @@ def retrieve(
         from retrieval.local_retriever import get_local_retriever
         retriever = get_local_retriever()
         return retriever.search(
-            query, k=k, source_type=source_type, bay=bay,
-            time_from=time_from, time_to=time_to,
+            query, k=k, source_type=source_type, sample_id=sample_id, bay=bay,
+            sample_ids=sample_ids, assignment_methods=assignment_methods,
+            time_from=time_from, time_to=time_to, provider=provider,
+            provider_project_id=provider_project_id,
+            provider_run_id=provider_run_id,
+            assignment_method=assignment_method, taxon=taxon,
+            sample_kind=sample_kind, is_control=is_control,
+            lat_min=lat_min, lat_max=lat_max, lon_min=lon_min, lon_max=lon_max,
         )
 
 
@@ -170,6 +220,12 @@ def infer_expected_source_types(query: str) -> List[str]:
         if _contains_keyword(query_lower, keywords):
             expected.add(source_type)
 
+    if _contains_keyword(query_lower, EDNA_SPECIFIC_KEYWORDS) and not _contains_keyword(
+        query_lower,
+        METAGENOME_SPECIFIC_KEYWORDS,
+    ):
+        expected.discard("metagenome")
+
     is_reliability_comparison = _contains_keyword(query_lower, RELIABILITY_COMPARISON_KEYWORDS)
     mentions_temperature = "temperature" in query_lower or "sst" in query_lower
     if is_reliability_comparison and mentions_temperature and (
@@ -194,9 +250,10 @@ def source_coverage_diagnostics(
     expanded: bool = False,
     backend: str = "unknown",
     expansion_error: Optional[str] = None,
+    expected_source_types: Optional[List[str]] = None,
 ) -> Dict[str, Any]:
     linked_results = linked_results or []
-    expected = infer_expected_source_types(query)
+    expected = infer_expected_source_types(query) if expected_source_types is None else expected_source_types
     primary_types = sorted({
         _normalize_source_type(row.get("source_type"))
         for row in primary_results
@@ -264,7 +321,15 @@ def _mark_primary_results(results: List[dict]) -> List[dict]:
 
 
 def _expand_linked_evidence(primary_results: List[dict], max_links: int) -> List[dict]:
-    if not primary_results or max_links <= 0:
+    if (
+        not primary_results
+        or max_links <= 0
+        or any(
+            _normalize_source_type(row.get("source_type"))
+            == "edna_metabarcoding"
+            for row in primary_results
+        )
+    ):
         return []
 
     event_to_doc = _primary_event_to_doc(primary_results)
@@ -303,7 +368,9 @@ def _expand_linked_evidence(primary_results: List[dict], max_links: int) -> List
           OR
           (cl.target_event_id IN ({event_placeholders}) AND rd.event_id = cl.source_event_id)
         )
-        WHERE (cl.source_event_id IN ({event_placeholders})
+        WHERE rd.active IS TRUE
+          AND rd.source_type <> 'edna_metabarcoding'
+          AND (cl.source_event_id IN ({event_placeholders})
                OR cl.target_event_id IN ({event_placeholders}))
           AND rd.doc_id NOT IN ({doc_placeholders})
         ORDER BY ABS(COALESCE(cl.time_delta_days, 0)) ASC,
@@ -358,10 +425,24 @@ def retrieve_with_expansion(
     query: str,
     *,
     k: int = 8,
+    sample_ids: Optional[list[str]] = None,
+    assignment_methods: Optional[list[str]] = None,
     source_type: Optional[str] = None,
+    sample_id: Optional[str] = None,
     bay: Optional[str] = None,
     time_from: Optional[str] = None,
     time_to: Optional[str] = None,
+    provider: Optional[str] = None,
+    provider_project_id: Optional[str] = None,
+    provider_run_id: Optional[str] = None,
+    assignment_method: Optional[str] = None,
+    taxon: Optional[str] = None,
+    sample_kind: Optional[str] = None,
+    is_control: Optional[bool] = None,
+    lat_min: Optional[float] = None,
+    lat_max: Optional[float] = None,
+    lon_min: Optional[float] = None,
+    lon_max: Optional[float] = None,
     vector_weight: float = 0.6,
     fts_weight: float = 0.4,
     rrf_k: int = 60,
@@ -371,10 +452,24 @@ def retrieve_with_expansion(
     primary = _mark_primary_results(retrieve(
         query,
         k=k,
+        sample_ids=sample_ids,
+        assignment_methods=assignment_methods,
         source_type=source_type,
+        sample_id=sample_id,
         bay=bay,
         time_from=time_from,
         time_to=time_to,
+        provider=provider,
+        provider_project_id=provider_project_id,
+        provider_run_id=provider_run_id,
+        assignment_method=assignment_method,
+        taxon=taxon,
+        sample_kind=sample_kind,
+        is_control=is_control,
+        lat_min=lat_min,
+        lat_max=lat_max,
+        lon_min=lon_min,
+        lon_max=lon_max,
         vector_weight=vector_weight,
         fts_weight=fts_weight,
         rrf_k=rrf_k,
@@ -383,6 +478,8 @@ def retrieve_with_expansion(
     expansion_error: Optional[str] = None
     pg_available = _pg_available()
 
+    if sample_ids is not None or assignment_methods is not None:
+        expand_evidence = False
     if expand_evidence and max_linked_sources > 0 and pg_available:
         try:
             linked = _expand_linked_evidence(primary, max_linked_sources)
@@ -397,6 +494,8 @@ def retrieve_with_expansion(
         expanded=bool(expand_evidence and pg_available),
         backend="postgres" if pg_available else "local",
         expansion_error=expansion_error,
+        expected_source_types=([_normalize_source_type(source_type)] if source_type else
+            ['edna_metabarcoding'] if any(value is not None for value in (provider, provider_project_id, provider_run_id, assignment_method, taxon, sample_kind, is_control)) else None),
     )
     return {
         "primary": primary,
@@ -424,6 +523,10 @@ def _read_context_documents(path) -> List[dict]:
 
 def analysis_context_documents(query: str) -> List[dict]:
     """Return analysis context documents that will be injected for a query."""
+    if _contains_keyword(query.lower(), EDNA_SPECIFIC_KEYWORDS) and not _contains_keyword(
+        query.lower(), METAGENOME_SPECIFIC_KEYWORDS
+    ):
+        return []
     if not _query_matches_context(query, ANALYSIS_KEYWORDS):
         return []
     return _read_context_documents(config.ANALYSIS_DIR / "analysis_documents.jsonl")
@@ -431,6 +534,10 @@ def analysis_context_documents(query: str) -> List[dict]:
 
 def reliability_context_documents(query: str) -> List[dict]:
     """Return reliability context documents that will be injected for a query."""
+    if _contains_keyword(query.lower(), EDNA_SPECIFIC_KEYWORDS) and not _contains_keyword(
+        query.lower(), METAGENOME_SPECIFIC_KEYWORDS
+    ):
+        return []
     if not _query_matches_context(query, RELIABILITY_KEYWORDS):
         return []
     return _read_context_documents(config.RELIABILITY_DIR / "reliability_documents.jsonl")
@@ -485,14 +592,33 @@ def build_prompt_with_context(
     linked_results: Optional[List[dict]] = None,
     inject_analysis: bool = True,
     inject_reliability: bool = True,
+    evidence_scope: Optional[dict] = None,
 ) -> tuple[str, Dict[str, List[dict]]]:
     """
     Build the prompt and return the structured supplementary context used.
     """
+    scope = evidence_scope or {}
+    explicit_source = _normalize_source_type(scope.get("source_type")) if scope.get("source_type") else ""
+    edna_filters = any(scope.get(key) is not None for key in (
+        "provider", "provider_project_id", "provider_run_id", "assignment_method",
+        "sample_kind", "is_control", "taxon", "analysis_id",
+    ))
+    families = ({explicit_source} if explicit_source else
+                set(infer_expected_source_types(query)) | {r.get("source_type") for r in results})
+    edna_only = edna_filters or explicit_source == "edna_metabarcoding" or (
+        "edna_metabarcoding" in families and "metagenome" not in families
+        and not _contains_keyword(query.lower(), METAGENOME_SPECIFIC_KEYWORDS)
+    )
+    # Generic 'diversity' inference must not override exclusively eDNA results.
+    if results and all(r.get("source_type") == "edna_metabarcoding" for r in results):
+        edna_only = edna_only or not _contains_keyword(query.lower(), METAGENOME_SPECIFIC_KEYWORDS)
     context = {
-        "analysis": analysis_context_documents(query) if inject_analysis else [],
-        "reliability": reliability_context_documents(query) if inject_reliability else [],
+        "analysis": analysis_context_documents(query) if inject_analysis and not edna_only else [],
+        "reliability": reliability_context_documents(query) if inject_reliability and not edna_only else [],
     }
+    if inject_analysis and scope.get('analysis_id'):
+        from ingestion.edna_analysis_bundle import context_documents
+        context['analysis'].extend(context_documents(scope))
     return _build_prompt_from_context(query, results, context, linked_results=linked_results), context
 
 
@@ -508,28 +634,39 @@ def _build_prompt_from_context(
     and reliability context.
     """
     system = """You are an expert marine science assistant for the Onagawa Bay monitoring programme (Japan).
-You analyze CTD water profiles, metagenome taxonomic data, and satellite SST observations.
+You analyze CTD water profiles, shotgun metagenome taxonomic data, targeted MiFish eDNA metabarcoding detection records, and satellite SST observations.
 
 RULES:
 1. ONLY use the evidence provided below. Do not hallucinate.
 2. ALWAYS cite sources using [doc_id] notation.
-3. Distinguish data types: CTD measurements, metagenome taxonomy, satellite SST.
+3. Distinguish data types: CTD measurements, shotgun metagenome taxonomy,
+   targeted eDNA metabarcoding detections, and satellite SST.
 4. State data gaps explicitly. Report values with units.
 5. When comparing across time/space, note the resolution.
 6. If pre-computed analyses are provided, use them to support your answer about
    trends, correlations, diversity patterns, or cross-source relationships.
+7. For eDNA evidence, keep assignment methods separate. Treat read_count as a
+   sequencing count, not abundance, biomass, concentration, or organism count.
+   A missing detection record does not establish biological absence.
+   Method agreement is not independent validation. Unknown controls or missing
+   expected standards cannot establish contamination-free or calibrated results.
+   Do not infer copies/mL, automatic control subtraction, p-values, or causation
+   from descriptive analyses. Unresolved species are excluded, not imputed.
+   Only explicitly qualified environmental pairs support cross-source context;
+   a missing qualified match is unavailable, not a nearest-date substitute.
+   Featured result rows are not the complete analysis cohort.
    Cite analysis docs with [analysis_*] notation.
-7. If reliability ensurance data is provided, mention cross-source validation
+8. If reliability ensurance data is provided, mention cross-source validation
    results when relevant (e.g., SST-CTD agreement, data confidence levels).
    Cite reliability docs with [reliability_*] notation.
-8. Treat linked cross-source evidence as corroborating context. Cite it directly
+9. Treat linked cross-source evidence as corroborating context. Cite it directly
    when it supports or challenges the primary retrieval, and state when expected
    source types are missing.
-9. Keep the complete answer under 500 words. Prefer a compact summary and
+10. Keep the complete answer under 500 words. Prefer a compact summary and
    evidence bullets; include at least one valid citation in every factual
    paragraph or bullet.
 
-STUDY SITES:
+LEGACY STUDY SITES (do not assign these to eDNA samples without source metadata):
 • Onagawa Bay (O) ≈ 38.44°N 141.45°E
 • Ishinomaki Bay (I) ≈ 38.41°N 141.30°E
 • Mutsu Bay (M): coordinate from source metadata"""
