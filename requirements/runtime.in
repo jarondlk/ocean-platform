@@ -8,9 +8,9 @@ uvicorn[standard]==0.52.4
 pandas==2.3.3
 pyarrow==23.0.1
 numpy==2.5.2
-scipy==1.18.0
+scipy==1.18.1
 requests==2.34.2
-google-genai==2.19.0
+google-genai==2.20.0
 google-cloud-storage==3.13.1
 sqlalchemy==2.0.52
 # SQLAlchemy requires greenlet on the Linux/x86_64 Cloud Build and Cloud Run
