@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { RefreshCw } from "lucide-react";
 import { AnalysisWorkbench } from "@/components/AnalysisWorkbench";
 import { DataTable, formatCell } from "@/components/DataTable";
+import { EdnaDataView } from "@/components/EdnaDataView";
+import { EdnaAnalysisView } from "@/components/EdnaAnalysisView";
 import { getCtdProfile, getDataCatalog, getSstData, getTaxaSample } from "@/lib/api";
 import {
   buildHref,
@@ -23,7 +25,7 @@ import type {
   TaxaSampleResponse,
 } from "@/types";
 
-type DataView = "observations" | "ctd" | "taxa" | "sst" | "analysis" | "reliability";
+type DataView = "observations" | "ctd" | "taxa" | "edna" | "edna_analysis" | "sst" | "analysis" | "reliability";
 
 const ctdLabels: Record<string, string> = {
   temperature: "Temperature",
@@ -81,14 +83,18 @@ function DataPageContent() {
   }, [urlView]);
 
   useEffect(() => {
+    setError("");
+    if (urlView === "edna" || urlView === "edna_analysis") return;
+    let active = true;
     getDataCatalog()
       .then((payload) => {
+        if (!active) return;
         setCatalog(payload);
         setSelectedVars(payload.ctd_variables.slice(0, 4));
       })
-      .catch((err: Error) => setError(err.message));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      .catch((err: Error) => { if (active) setError(err.message); });
+    return () => { active = false; };
+  }, [urlView]);
 
   useEffect(() => {
     if (!catalog) return;
@@ -260,9 +266,13 @@ function DataPageContent() {
         <button className={view === "taxa" ? "active" : ""} onClick={() => changeView("taxa")} type="button">
           {ui("Taxa")}
         </button>
+        <button className={view === "edna" ? "active" : ""} onClick={() => changeView("edna")} type="button">
+          eDNA
+        </button>
         <button className={view === "sst" ? "active" : ""} onClick={() => changeView("sst")} type="button">
           SST
         </button>
+        <button className={view === "edna_analysis" ? "active" : ""} onClick={() => changeView("edna_analysis")} type="button">eDNA analysis</button>
         <button className={view === "analysis" ? "active" : ""} onClick={() => changeView("analysis")} type="button">
           {ui("Derived Analysis")}
         </button>
@@ -459,6 +469,9 @@ function DataPageContent() {
           </section>
         </section>
       ) : null}
+
+      {view === "edna" ? <EdnaDataView /> : null}
+      {view === "edna_analysis" ? <EdnaAnalysisView /> : null}
 
       {view === "analysis" ? (
         requestedContextRaw && (!requestedContext || !contextTarget || contextTarget.scope !== "analysis") ? (
@@ -720,5 +733,6 @@ function formatDate(value: string): string {
 }
 
 function isDataView(value: string | null): value is DataView {
-  return value === "observations" || value === "ctd" || value === "taxa" || value === "sst" || value === "analysis" || value === "reliability";
+  if (value === "edna_analysis") return true;
+  return value === "observations" || value === "ctd" || value === "taxa" || value === "edna" || value === "sst" || value === "analysis" || value === "reliability";
 }

@@ -10,13 +10,14 @@ URL is
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
-Current release record as of 2026-08-31:
+Current release record as of 2026-09-03:
 
-- OCEAN Platform GitHub release `v0.3.0`; its exact source SHA, Cloud Build,
-  Cloud Run revision, and verification results are preserved in the GitHub
-  release record;
-- `v0.2.3` build `9e0048f7-372d-4b3c-9068-971ef299db8d` and revision
-  `ocean-platform-00008-jh9` remain the documented rollback baseline;
+- OCEAN Platform [GitHub release `v0.4.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.0),
+  source `a63885a573b18eb92c184fb88fdb85b5aae3cb09`, build
+  `76b31adb-28d6-4daa-a9cc-f114d36bd753`, revision `ocean-platform-v040-a63885a`;
+- previous revision `ocean-platform-v030-1bb38b8` and pre-release backup retained;
+  review corpus/publication compatibility before rollback, without schema
+  downgrade or overwriting later user/chat records;
 - Cloud Run service `ocean-platform`, with minimum zero, maximum one instance,
   concurrency 20, and an immutable release-tagged image;
 - Artifact Registry `ocean-platform`, runtime identities `ocean-platform` and
@@ -27,7 +28,9 @@ Current release record as of 2026-08-31:
   legacy runtime identities disabled;
 - keep-five/delete-after-30-days Artifact Registry cleanup active and 30-day
   expiry applied to transient Cloud Build source archives;
-- successful GitHub `production` deployment status.
+- 325 documents/embeddings including the unknown-classification pilot;
+  schema head `20260903_0008`, verified backup/isolated restore and authenticated
+  source-citation checks. See [operations and known limitations](RELEASE_0.4.0_OPERATIONS.md).
 
 The dated GCP inventory and remaining destructive retirement candidates are
 recorded in [`GCP_RESOURCE_AUDIT.md`](GCP_RESOURCE_AUDIT.md).

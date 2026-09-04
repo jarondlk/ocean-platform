@@ -209,11 +209,16 @@ class ProvenanceSnapshotService:
             "artifacts": snapshot.artifacts,
             "documents": documents,
             "embeddings": embeddings,
+            "edna_analyses": snapshot.edna_analyses,
             "limitations": snapshot.limitations,
         }
 
     def trace_payload(self, doc_id: str) -> Dict[str, Any]:
         loaded = self.load()
+        from ingestion.edna_analysis_bundle import analysis_trace
+        analysis = analysis_trace(doc_id, loaded.snapshot.edna_analyses)
+        if analysis:
+            return {**analysis, 'snapshot':self._metadata(loaded)}
         document = loaded.documents_by_id.get(doc_id)
         if document is None:
             return {

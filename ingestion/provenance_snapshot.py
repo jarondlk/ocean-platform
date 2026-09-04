@@ -60,6 +60,7 @@ class ProvenanceSnapshot(BaseModel):
     artifacts: list[Dict[str, Any]] = Field(default_factory=list)
     documents: list[Dict[str, Any]] = Field(default_factory=list)
     embeddings: list[Dict[str, Any]] = Field(default_factory=list)
+    edna_analyses: list[Dict[str, Any]] = Field(default_factory=list)
     limitations: list[str] = Field(default_factory=list)
 
 
@@ -176,6 +177,8 @@ def _corpus_fingerprint(manifest: Dict[str, Any]) -> str:
         for row in manifest.get("artifacts", [])
         if isinstance(row, dict)
     ]
+    artifact_rows.extend({'id': 'edna_analysis:'+row['analysis_id'], 'sha256': row['manifest_sha256'], 'schema_hash': None}
+                         for row in manifest.get('edna_analyses', []))
     return sha256_bytes(
         canonical_json_bytes(
             {
@@ -184,6 +187,67 @@ def _corpus_fingerprint(manifest: Dict[str, Any]) -> str:
             }
         )
     )
+
+
+def _validate_edna_provenance(snapshot: ProvenanceSnapshot) -> None:
+    from ingestion.immutable_bundle import digest, validate_id
+    for descriptor in snapshot.edna_analyses:
+        try:
+            identity = validate_id(descriptor['analysis_id'])
+            manifest = descriptor['manifest']
+            if manifest['id'] != identity or digest(manifest) != descriptor['manifest_sha256'] or digest(descriptor['recipe']) != manifest['recipe_sha256']:
+                raise ValueError('Analysis manifest mismatch')
+            if digest({'algorithm':manifest['algorithm_version'], 'recipe':descriptor['recipe'], 'input_sha256':manifest['input_sha256']}) != identity:
+                raise ValueError('Analysis identity mismatch')
+            from ingestion.edna_analysis_bundle import TABLES
+            if not {'recipe.json', 'inputs.json', *(name+'.json' for name in TABLES)}.issubset(manifest['files']):
+                raise ValueError('Analysis input/result artifacts missing')
+            for sha in manifest['files'].values():
+                validate_id(sha)
+            if descriptor['bundle_route'] != f'/data/edna/analysis/runs/{identity}/export?format=bundle':
+                raise ValueError('Invalid analysis bundle route')
+        except (KeyError, ValueError, TypeError) as exc:
+            raise SnapshotError('Incomplete eDNA analysis provenance') from exc
+    files = {row.get("id"): row for row in snapshot.source_files}
+    artifacts = {row.get("id"): row for row in snapshot.artifacts}
+    sha256 = re.compile(r"^[a-f0-9]{64}$")
+    for document in snapshot.documents:
+        if document.get("source_type") != "edna_metabarcoding":
+            continue
+        prefix = f"incomplete eDNA provenance for {document['doc_id']}: "
+        metadata = document.get("metadata") or {}
+        snapshot_ids = set(metadata.get("source_snapshot_ids") or [])
+        file_ids = document.get("source_file_ids") or []
+        records = metadata.get("canonical_records") or []
+        if metadata.get("edna_retrieval_document_version") != 1 or not snapshot_ids or not file_ids or len(records) < 3:
+            raise SnapshotError(prefix + "missing document version, snapshots, files, or canonical records")
+        if not sha256.fullmatch(str(metadata.get("detection_set_sha256") or "")):
+            raise SnapshotError(prefix + "missing detection-set hash")
+        for file_id in file_ids:
+            source = files.get(file_id, {})
+            if not sha256.fullmatch(str(source.get("sha256") or "")) or source.get("source_snapshot_id") not in snapshot_ids or not source.get("source_url"):
+                raise SnapshotError(prefix + "missing source file, snapshot, URL, or SHA-256")
+        for record in records:
+            locator = record.get("source_row_locator")
+            locators = locator if isinstance(locator, list) else [locator]
+            if (
+                not record.get("entity_id")
+                or record.get("source_snapshot_id") not in snapshot_ids
+                or f"raw:anemone:{record.get('source_file_id')}" not in file_ids
+                or not sha256.fullmatch(str(record.get("source_row_hash") or ""))
+                or not locators
+                or any(not isinstance(value, int) or isinstance(value, bool) or value < 1 for value in locators)
+            ):
+                raise SnapshotError(prefix + "invalid canonical record or source-row locator")
+        normalized_snapshots: set[str] = set()
+        for artifact_id in document.get("source_artifact_ids") or []:
+            artifact = artifacts.get(artifact_id, {})
+            if not artifact.get("exists") or not sha256.fullmatch(str(artifact.get("sha256") or "")):
+                raise SnapshotError(prefix + "missing normalized or retrieval artifact")
+            if artifact.get("source_snapshot_id"):
+                normalized_snapshots.add(artifact["source_snapshot_id"])
+        if not snapshot_ids.issubset(normalized_snapshots):
+            raise SnapshotError(prefix + "missing normalized snapshot artifacts")
 
 
 def prepare_snapshot(
@@ -228,6 +292,7 @@ def prepare_snapshot(
         "artifacts": manifest["artifacts"],
         "documents": manifest["documents"],
         "embeddings": manifest["embeddings"],
+        "edna_analyses": manifest.get("edna_analyses", []),
         "limitations": manifest["limitations"],
     }
     try:
@@ -240,6 +305,7 @@ def prepare_snapshot(
         raise SnapshotError("every snapshot document must have a non-empty doc_id")
     if len(document_ids) != len(set(document_ids)):
         raise SnapshotError("snapshot document doc_id values must be unique")
+    _validate_edna_provenance(snapshot)
     if require_embedding_capture:
         embedding_ids = [str(row.get("doc_id") or "") for row in snapshot.embeddings]
         if set(embedding_ids) != set(document_ids) or len(embedding_ids) != len(document_ids):

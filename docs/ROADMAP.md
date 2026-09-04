@@ -41,6 +41,42 @@ workflow that can later become automated.
 - The README screenshot set was refreshed from the authenticated OCEAN
   Platform Cloud Run deployment on 2026-08-25.
 
+## Next MVP: ANEMONE eDNA Integration
+
+Target: release `v0.4.0` with ANEMONE MiFish environmental-DNA metabarcoding
+as a first-class, provenance-traced source family. The implementation contract,
+scientific boundaries, security requirements, and acceptance gates are in
+[`docs/ANEMONE_INTEGRATION_PLAN.md`](ANEMONE_INTEGRATION_PLAN.md).
+
+- [x] PR1: secure bounded acquisition and executable raw-data contract.
+- [x] PR2: canonical eDNA schema, normalization, lineage, and transactional
+      upsert.
+- [x] PR3: retrieval, answer audit, API, Data view, and evidence navigation
+      (implemented locally; review fixes completed; not deployed).
+      Implementation contract:
+      [`docs/ANEMONE_PR3_PLAN.md`](ANEMONE_PR3_PLAN.md).
+- [x] PR3 review fixes: structured analysis-context scope, UTC date filtering,
+      and generation-safe retrieval fallback publication.
+- [x] PR4: descriptive biodiversity analysis, controls, assignment comparison,
+      immutable exports/citations, and profile-gated CTD/SST observation input
+      (implemented locally; no live linkage profile or deployment).
+      Implementation record and scientific gates:
+      [`docs/ANEMONE_PR4_PLAN.md`](ANEMONE_PR4_PLAN.md).
+- [x] Follow-up audit gate: verify complete registered analysis manifests,
+      retain historical citation provenance, and filter cohorts before ranking.
+- [x] PR5 code: registered local/GCS object publication, bounded manual stages,
+      pinned job templates, immutable recipe delivery, saved-answer review checks.
+- [ ] PR5 rollout: approved real pilot, GCS/Cloud Run validation, scientific/model
+      review, migration/rollback rehearsal, deployment, and `v0.4.0` release.
+      Plan and remaining gates:
+      [`docs/ANEMONE_PR5_PLAN.md`](ANEMONE_PR5_PLAN.md).
+
+The source type is `edna_metabarcoding` and the provider is `anemone`.
+Interpreted MiFish tables are the MVP ingestion boundary. Raw FASTQ files are
+inventoried and cited but are not downloaded or processed by default. The
+short-lived download credential keeps acquisition manual until a reviewed
+machine-access arrangement exists.
+
 ## Near-Term Priority: Manual Scheduled Batch Updates
 
 Goal: make updates repeatable enough to run manually on a schedule, such as

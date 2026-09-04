@@ -40,6 +40,7 @@ def test_pipeline_status_exposes_manual_stages_and_artifacts():
         "reliability",
         "backup_database",
         "load_db",
+        "materialize_edna_retrieval",
         "embed_documents",
         "publish_provenance",
     }.issubset(stage_ids)

@@ -46,8 +46,12 @@ def _parse_stages(value: str, *, validate_only: bool) -> list[str]:
 
 def _request_from_args(args: argparse.Namespace) -> PipelineRunRequest:
     stages = _parse_stages(args.stages, validate_only=args.validate_only)
-    if "load_db" in stages and "backup_database" not in stages:
-        stages.insert(stages.index("load_db"), "backup_database")
+    if not args.embed and args.stages.strip() in {"", "full"}:
+        stages = [stage for stage in stages if stage != "embed_documents"]
+    mutations = {"load_db", "materialize_edna_retrieval"}
+    if mutations.intersection(stages) and "backup_database" not in stages:
+        first_mutation = min(stages.index(stage) for stage in mutations.intersection(stages))
+        stages.insert(first_mutation, "backup_database")
     execute = args.execute
     if execute is None:
         execute = args.validate_only
@@ -97,8 +101,8 @@ def main() -> int:
         action="store_true",
         help="Replace corpus tables instead of the default transactional upsert.",
     )
-    parser.add_argument("--embed", dest="embed", action="store_true", default=True, help="Run load_db with --embed when load_db is selected.")
-    parser.add_argument("--no-embed", dest="embed", action="store_false", help="Run load_db without --embed.")
+    parser.add_argument("--embed", dest="embed", action="store_true", default=True, help="Refresh embeddings after corpus loading (default).")
+    parser.add_argument("--no-embed", dest="embed", action="store_false", help="Skip embedding refresh in the full pipeline and inline load step.")
     parser.add_argument("--embedding-model", help="Override EMBEDDING_MODEL for embedding stages.")
     parser.add_argument("--embedding-batch-size", type=int, default=32, help="Batch size for standalone embedding refresh.")
     parser.add_argument("--preflight-only", action="store_true", help="Print preflight JSON and do not create a run.")

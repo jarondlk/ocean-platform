@@ -219,6 +219,23 @@ test("builds source-specific SST and metagenome destinations", () => {
   ]);
 });
 
+test("routes eDNA evidence to the exact eDNA data view", () => {
+  const edna = sourceTarget({
+    doc_id: `edna_${"a".repeat(64)}_qcauto_target`,
+    title: "ANEMONE MiFish sample",
+    source_type: "edna_metabarcoding",
+    sample_id: "s".repeat(64),
+    assay_id: "a".repeat(64),
+    assignment_method: "qcauto_target",
+    text: "Detection records",
+  });
+  assert.deepEqual(evidenceDeepLinks(edna).map((link) => link.href), [
+    `/provenance?view=trace&doc_id=edna_${"a".repeat(64)}_qcauto_target`,
+    `/data?view=edna&sample_id=${"s".repeat(64)}&assay_id=${"a".repeat(64)}&assignment_method=qcauto_target&doc_id=edna_${"a".repeat(64)}_qcauto_target`,
+  ]);
+  assert.equal(evidenceDeepLinks(edna).some((link) => link.href.includes("view=taxa")), false);
+});
+
 test("only publishes full-page links for known context artifacts", () => {
   const known = contextTarget({
     doc_id: "reliability_corroboration_summary",

@@ -164,6 +164,16 @@ class TestLoadAnalysisContext:
             documents = analysis_context_documents("What are the correlation patterns?")
         assert [doc["id"] for doc in documents] == ["analysis_trends", "analysis_correlations"]
 
+    def test_edna_question_does_not_inject_legacy_metagenome_analysis(
+        self,
+        sample_analysis_docs,
+    ):
+        with patch("config.ANALYSIS_DIR", sample_analysis_docs.parent):
+            documents = analysis_context_documents(
+                "What is the diversity of ANEMONE MiFish eDNA detections?"
+            )
+        assert documents == []
+
     def test_missing_file_returns_empty(self, tmp_path):
         """Missing JSONL file returns empty string gracefully."""
         with patch("config.ANALYSIS_DIR", tmp_path):
@@ -273,6 +283,20 @@ class TestSourceCoverageDiagnostics:
         )
 
         assert expected == ["ctd", "remote_sensing"]
+
+    def test_edna_specific_terms_do_not_silently_require_metagenome(self):
+        expected = infer_expected_source_types(
+            "Which taxa occur in ANEMONE MiFish eDNA detection records?"
+        )
+
+        assert expected == ["edna_metabarcoding"]
+
+    def test_explicit_mixed_biological_sources_require_both(self):
+        expected = infer_expected_source_types(
+            "Compare ANEMONE eDNA with Kraken metagenome detections."
+        )
+
+        assert expected == ["edna_metabarcoding", "metagenome"]
 
     def test_linked_evidence_fills_missing_source_family(self):
         diagnostics = source_coverage_diagnostics(
