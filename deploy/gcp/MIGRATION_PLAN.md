@@ -1,11 +1,19 @@
 # GCP prototype migration plan
 
+> Historical migration and validation record. The baseline below describes the
+> staged 2026-08 deployment and retains its original resource/count evidence.
+> The current deployed milestone is v0.4.0; use
+> [`README.md`](README.md),
+> [`../../docs/DEPLOYMENT.md`](../../docs/DEPLOYMENT.md), and
+> [`../../docs/RELEASE_0.4.0_OPERATIONS.md`](../../docs/RELEASE_0.4.0_OPERATIONS.md)
+> for current release state.
+
 This plan moves the current local prototype to GCP in independently testable
 stages. No stage advances until its integration gate passes. The initial
 financial envelope is **JPY 10,000 per calendar month** for project
 `data-infra-infobio`.
 
-## Current cloud baseline
+## Historical cloud baseline
 
 Live state verified through 2026-08-25:
 
@@ -37,7 +45,8 @@ documents now have 768-dimensional `gemini-embedding-001` embeddings with
 provider provenance. Authenticated chat traffic uses `gemini-3.6-flash` on
 Vertex AI through workload identity.
 
-The current application milestone is OCEAN Platform release `v0.3.0`; its
+At this historical checkpoint the application milestone was OCEAN Platform
+release `v0.3.0`; its
 immutable Cloud Build and Cloud Run revision are recorded in the GitHub release.
 Cloud Run service `ocean-platform` receives 100% traffic. The four active OCEAN
 jobs retain the immutable `v0.2.3` API image because this release does not alter

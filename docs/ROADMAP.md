@@ -33,17 +33,22 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The bounded GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.3.0`. The active data plane now uses the
+  and OCEAN Platform release `v0.4.0`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
+- The bounded ANEMONE MiFish pilot is stored as a distinct
+  `edna_metabarcoding` source family. One unknown sample, two method-separated
+  retrieval documents, exact source citations, descriptive comparisons, and
+  registered analysis/provenance artifacts are live. Unknown samples remain
+  excluded from environmental-only analyses and links.
 - Operational administration is consolidated under `/admin` with Users,
   Feedback, Pipeline, Database, System, and Debug sections.
 - The README screenshot set was refreshed from the authenticated OCEAN
   Platform Cloud Run deployment on 2026-08-25.
 
-## Next MVP: ANEMONE eDNA Integration
+## Completed MVP: ANEMONE eDNA Integration
 
-Target: release `v0.4.0` with ANEMONE MiFish environmental-DNA metabarcoding
+Released as `v0.4.0`: ANEMONE MiFish environmental-DNA metabarcoding
 as a first-class, provenance-traced source family. The implementation contract,
 scientific boundaries, security requirements, and acceptance gates are in
 [`docs/ANEMONE_INTEGRATION_PLAN.md`](ANEMONE_INTEGRATION_PLAN.md).
@@ -52,23 +57,24 @@ scientific boundaries, security requirements, and acceptance gates are in
 - [x] PR2: canonical eDNA schema, normalization, lineage, and transactional
       upsert.
 - [x] PR3: retrieval, answer audit, API, Data view, and evidence navigation
-      (implemented locally; review fixes completed; not deployed).
+      (deployed; review fixes included).
       Implementation contract:
       [`docs/ANEMONE_PR3_PLAN.md`](ANEMONE_PR3_PLAN.md).
 - [x] PR3 review fixes: structured analysis-context scope, UTC date filtering,
       and generation-safe retrieval fallback publication.
 - [x] PR4: descriptive biodiversity analysis, controls, assignment comparison,
       immutable exports/citations, and profile-gated CTD/SST observation input
-      (implemented locally; no live linkage profile or deployment).
+      (deployed; no qualified live CTD/SST linkage profile was claimed).
       Implementation record and scientific gates:
       [`docs/ANEMONE_PR4_PLAN.md`](ANEMONE_PR4_PLAN.md).
 - [x] Follow-up audit gate: verify complete registered analysis manifests,
       retain historical citation provenance, and filter cohorts before ranking.
 - [x] PR5 code: registered local/GCS object publication, bounded manual stages,
       pinned job templates, immutable recipe delivery, saved-answer review checks.
-- [ ] PR5 rollout: approved real pilot, GCS/Cloud Run validation, scientific/model
-      review, migration/rollback rehearsal, deployment, and `v0.4.0` release.
-      Plan and remaining gates:
+- [x] PR5 rollout: bounded pilot, GCS/Cloud Run validation, migration and
+      rollback rehearsal, deployment, and `v0.4.0` release. Classification and
+      full scientific/model acceptance were explicitly deferred, not passed.
+      Historical plan and release evidence:
       [`docs/ANEMONE_PR5_PLAN.md`](ANEMONE_PR5_PLAN.md).
 
 The source type is `edna_metabarcoding` and the provider is `anemone`.
@@ -76,6 +82,25 @@ Interpreted MiFish tables are the MVP ingestion boundary. Raw FASTQ files are
 inventoried and cited but are not downloaded or processed by default. The
 short-lived download credential keeps acquisition manual until a reviewed
 machine-access arrangement exists.
+
+## Next MVP: ANEMONE Classification and No-Evidence Safety
+
+The next patch completes the researcher workflow without changing the
+v0.4.0 scientific boundary. The detailed work order is in
+[`docs/ANEMONE_NEXT_PATCH.md`](ANEMONE_NEXT_PATCH.md).
+
+- [ ] Provide an evidence-backed draft/review/approve-or-reject classification
+      path with a real reviewer identity, timestamp, rationale, exact source
+      rows, and immutable audit history.
+- [ ] Apply approved classifications through normalization, canonical import,
+      retrieval publication, analysis regeneration, embeddings, and provenance.
+- [ ] Keep unknown and control samples excluded until an approved review is
+      published; never infer classification from names or coordinates.
+- [ ] Add deterministic no-evidence abstention before model generation.
+- [ ] Show recipe-derived filters, exclusion reasons, and empty cohorts clearly
+      in Chat, Data, and analysis views.
+- [ ] Run the deferred researcher acceptance matrix, including source-only,
+      environmental-only, invalid/empty-cohort, citation, and rollback cases.
 
 ## Near-Term Priority: Manual Scheduled Batch Updates
 

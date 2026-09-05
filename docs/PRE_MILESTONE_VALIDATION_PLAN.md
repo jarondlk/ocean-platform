@@ -4,8 +4,9 @@
 > from 2026-07-26. Its provider-deployment blockers were subsequently exercised
 > through the GCP migration and Phase 7 runbooks. The stable `v0.1.0` GCP
 > prototype is live as of 2026-08-25. Keep this document as evidence of the
-> pre-cloud safety work; use `docs/PHASE7_RELEASE_RUNBOOK.md` and
-> `deploy/gcp/MIGRATION_PLAN.md` for current release status.
+> pre-cloud safety work; use [`DEPLOYMENT.md`](DEPLOYMENT.md) and
+> [`RELEASE_0.4.0_OPERATIONS.md`](RELEASE_0.4.0_OPERATIONS.md) for current
+> release status.
 
 This is the final validation gate for the authorization, feedback, evaluation,
 and manual-pipeline iteration. It separates checks that can run safely in the

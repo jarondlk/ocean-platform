@@ -1,5 +1,5 @@
 # Runtime dependencies. Compile with:
-#   pip-compile --generate-hashes --output-file requirements/runtime.txt requirements/runtime.in
+#   pip-compile --generate-hashes --strip-extras --output-file requirements/runtime.txt requirements/runtime.in
 fastapi==0.141.1
 # Security floor for the Starlette advisories tracked by GitHub. FastAPI and
 # the archived Streamlit app both permit the patched 1.x release.

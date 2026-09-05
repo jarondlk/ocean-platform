@@ -2,6 +2,13 @@
 
 Last verified: 2026-08-26 JST
 
+> Historical point-in-time inventory. It predates the v0.4.0 ANEMONE rollout
+> and must not be used as the current revision, job, schema, or corpus count.
+> Current deployed evidence is in
+> [`RELEASE_0.4.0_OPERATIONS.md`](RELEASE_0.4.0_OPERATIONS.md) and
+> [`DEPLOYMENT.md`](DEPLOYMENT.md). Rerun the live resource audit before any
+> retirement, budget, IAM, or capacity decision.
+
 Project: `data-infra-infobio` (`469489188516`), region
 `asia-northeast1`.
 

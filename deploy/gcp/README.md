@@ -42,9 +42,17 @@ The preceding revision `ocean-platform-v030-1bb38b8` and verified pre-release
 backup are retained. Review corpus/publication compatibility before rollback;
 do not automatically downgrade the schema or overwrite later user/chat records.
 
+Post-release repository maintenance is merged to remote `main` and `gcp-dev` at
+`4a4bd38`, including dependency refreshes and removal of the active NLTK
+dependency. It is not part of build `76b31adb-28d6-4daa-a9cc-f114d36bd753` or
+the deployed v0.4.0 revision. A new immutable build and normal release gates are
+required before those changes reach GCP.
+
 See [`../../docs/GCP_RESOURCE_AUDIT.md`](../../docs/GCP_RESOURCE_AUDIT.md) for
-the current inventory, absence checks, housekeeping controls, and the exact
-rollback resources that still require explicit approval before deletion.
+the historical post-cutover inventory, absence checks, housekeeping controls,
+and rollback resources that require explicit approval before deletion. Rerun
+the live audit before making current retirement, budget, IAM, or capacity
+decisions.
 
 The live URL is
 [`https://ocean-platform-469489188516.asia-northeast1.run.app`](https://ocean-platform-469489188516.asia-northeast1.run.app).

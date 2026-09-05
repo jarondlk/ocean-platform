@@ -1,6 +1,8 @@
 # ANEMONE PR5 — Live Pilot, Cloud Publication, and v0.4.0
 
-> Status: local code implemented; real pilot, GCP validation, deployment and release pending
+> Status: implemented, validated, and deployed in `v0.4.0` on 2026-09-03.
+> This is the historical rollout plan. Classification and the broader
+> scientific/model acceptance matrix remain deferred to the next patch.
 > Audited: 2026-09-03 JST, local `gcp-dev` worktree
 > Dependency: accumulated PR1–PR4 implementation
 > The user authorized the gated rollout sequence on 2026-09-03; pilot inputs and acceptance gates remain required
@@ -83,7 +85,7 @@ local evidence, not a completed rollout.
   The disposable database was removed; no live bucket, model or deployment
   validation is included in these results.
 
-Remaining: approved pilot URL/limits, current provider conditions, fresh secrets,
+Remaining at this historical implementation checkpoint: approved pilot URL/limits, current provider conditions, fresh secrets,
 real GCS/Cloud Run and memory/latency/cost checks, independent source/metric and
 model-answer review, authenticated browser/role/export regression, backup/restore
 and rollback rehearsal, committed build, deployment and release authorization.
@@ -349,15 +351,16 @@ chosen recovery procedure in isolation and retain audit history.
 
 - [x] A1 integrity, A2 historical provenance, and A3 pre-ranking scope fixed.
 - [x] Local and simulated GCS publication failure/concurrency/replay tests pass.
-- [ ] Real GCS/Cloud Run and resource/cost validation pass.
-- [ ] Pilot URL, budgets, credential delivery and provider conditions approved.
-- [ ] Real bounded import validated in isolation; repeat import reconciled.
-- [ ] Independent scientific checks and model answer review recorded.
-- [ ] Cross-source availability truthfully documented; no unqualified links.
-- [ ] Authenticated UI/API/export and legacy-source regressions pass.
-- [ ] Backup/restore, migrations, readiness checks and rollback rehearsed.
-- [ ] Current CI/build/dependency/security gates pass on the release commit.
-- [ ] Authorized deployment verified and `v0.4.0` evidence published.
+- [x] Real GCS/Cloud Run and resource/cost validation pass.
+- [x] Pilot URL, budgets, credential delivery and provider conditions approved.
+- [x] Real bounded import validated in isolation; repeat import reconciled.
+- [ ] Full scientific/classification and model-answer acceptance is deferred;
+      source/citation and exclusion behavior passed the limited release scope.
+- [x] Cross-source availability truthfully documented; no unqualified links.
+- [x] Authenticated UI/API/export and legacy-source regressions pass.
+- [x] Backup/restore, migrations, readiness checks and rollback rehearsed.
+- [x] Current CI/build/dependency/security gates pass on the release commit.
+- [x] Authorized deployment verified and `v0.4.0` evidence published.
 
 ## 6. Audit verification record
 

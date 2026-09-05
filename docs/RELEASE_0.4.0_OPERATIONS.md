@@ -29,6 +29,16 @@ was published at 2026-09-03 13:41:04 UTC, targeting the source commit below.
   legacy data mount, local staging and an offline-plan default. No acquisition
   credentials, new IAM grants, scheduler or archive-wide download were added.
 
+### Post-release repository state
+
+Dependency refreshes and the NLTK-free evaluator subsequently merged to remote
+`main` and `gcp-dev` at `4a4bd38` on 2026-09-04. Post-release verification
+recorded 642 backend tests, 9 PostgreSQL-gated skips, and 77.15% coverage, with
+zero open Dependabot security alerts. This does not change the immutable record
+above: the live v0.4.0 service and jobs still run source `a63885a` and their
+recorded image digests. Existing evaluation results keep their original
+evaluator provenance.
+
 ## Backup and preservation
 
 All archives are in `gs://data-infra-infobio-ocean-data/backups/`.

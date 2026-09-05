@@ -1,6 +1,7 @@
 # ANEMONE PR4 — Scientific Analysis and Qualified Environmental Evidence
 
-> Status: implemented locally on `gcp-dev`; follow-up audit fixes implemented in PR5
+> Status: implemented, PR5 audit findings resolved, and deployed in `v0.4.0`.
+> This document retains the PR4 implementation and review record.
 > Reviewed: 2026-09-02
 > Implementation verification: 2026-09-03 JST
 > Dependency: local PR1–PR3 implementation on `gcp-dev`
@@ -11,8 +12,9 @@ The 2026-09-03 follow-up audit found three gaps: result-manifest
 verification on direct reads, historical analysis citation indexing, and
 cohort/method filtering after top-K retrieval. See
 [`ANEMONE_PR5_PLAN.md`](ANEMONE_PR5_PLAN.md) for the now-implemented repairs
-and permanent tests. Live pilot validation is still pending; the implementation
-record below is not a release-readiness claim.
+and permanent tests. The bounded live pilot and release were subsequently
+validated under the explicit unknown-classification scope; the implementation
+record below is not a claim of full researcher or classification acceptance.
 
 ## 1. PR3 review and entry gate
 

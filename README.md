@@ -1,10 +1,13 @@
 # OCEAN Platform
 
 **Ocean Coastal Ecosystem Archive Nexus (OCEAN)** — a provenance-aware
-research platform for marine environmental monitoring in Miyagi Prefecture,
-Japan.
+research platform for marine environmental monitoring, centered on Miyagi
+Prefecture, Japan, with separately qualified external evidence.
 
-Transforms fragmented field data — CTD water profiles, metagenome sequencing, and satellite SST — into a citation-grounded question-answering system where every answer traces back to its original source and can be audited against the evidence that was actually supplied.
+Transforms fragmented field data — CTD water profiles, shotgun metagenome
+summaries, satellite SST, and ANEMONE MiFish eDNA — into a citation-grounded
+question-answering system where every answer traces back to its original source
+and can be audited against the evidence that was actually supplied.
 
 ---
 
@@ -16,11 +19,15 @@ Transforms fragmented field data — CTD water profiles, metagenome sequencing, 
 | Ishinomaki Bay | I | ~38.41°N, 141.30°E | CTD + Metagenome |
 | Mutsu Bay | M | source metadata | CTD + Metagenome |
 
+The bounded ANEMONE pilot retains its provider-supplied location and collection
+metadata. It is not assigned to one of these monitoring bays by inference, and
+its sample classification remains unknown in `v0.4.0`.
+
 ---
 
 ## Current Prototype Status
 
-Status as of **2026-08-31**: this is an active invite-only **Next.js +
+Status as of **2026-09-05**: this is an active invite-only **Next.js +
 FastAPI** prototype deployed on GCP, with PostgreSQL/pgvector retrieval,
 Vertex AI generation and embeddings, Google OIDC, and Cloud Run Jobs for
 operator-approved batch work. The same application remains runnable locally
@@ -30,15 +37,18 @@ service.
 
 Current managed milestone:
 
-- GitHub release [`v0.3.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.3.0)
-  completes the evidence-navigation loop. Citations now open exact provenance,
-  sample, source-data, analysis, and reliability destinations through validated,
-  bookmarkable URLs. The affected academic UI surfaces also use concise,
-  direct labels without redundant descriptive copy.
-- The preceding `v0.2.3` build `9e0048f7-372d-4b3c-9068-971ef299db8d` and
-  Cloud Run revision `ocean-platform-00008-jh9` remain the documented
-  application rollback point. The immutable build and revision for `v0.3.0`
-  are attached to its GitHub release record.
+- GitHub release [`v0.4.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.0)
+  adds bounded ANEMONE MiFish eDNA acquisition, canonical storage, retrieval,
+  citation navigation, descriptive analysis, and registered artifact
+  publication. The deployed source is `a63885a573b18eb92c184fb88fdb85b5aae3cb09`
+  and the active revision is `ocean-platform-v040-a63885a`.
+- The preceding `v0.3.0` revision `ocean-platform-v030-1bb38b8` and verified
+  pre-release backup remain the immediate rollback references. Review corpus
+  and schema compatibility before rollback; do not overwrite later user or
+  chat records.
+- Dependency refreshes and the NLTK-free evaluator have since merged to both
+  remote `main` and `gcp-dev` at `4a4bd38`. They are post-release maintenance
+  and are not part of the deployed `v0.4.0` image.
 - The live data plane uses Artifact Registry `ocean-platform`, Cloud SQL
   `ocean-postgres` / database `ocean_platform`, jobs under the `ocean-*`
   prefix, OCEAN Secret Manager entries, and bucket
@@ -62,7 +72,10 @@ Implemented in the current prototype:
 - Traceability surfaces for provenance manifests, document lineage, embedding
   treatment, strict raw-source validation, and upsert planning.
 - Expert data workbenches for source observations, CTD profiles, taxa, SST,
-  derived ecological analysis, and reliability review.
+  ANEMONE eDNA, derived ecological analysis, and reliability review.
+- A bounded ANEMONE MiFish evidence path with separate QCauto and QCauto+3-NN
+  assignments, exact source-row citations, method-separated retrieval, and
+  explicit exclusion of unknown/control samples from environmental-only work.
 - Hybrid retrieval over pgvector + PostgreSQL full-text search with local
   fallback retrieval when PostgreSQL is unavailable.
 - Trustworthy multi-source answering with linked cross-source evidence,
@@ -86,6 +99,12 @@ Implemented in the current prototype:
 
 Still intentionally future work:
 
+- Complete the researcher-facing ANEMONE classification review and acceptance
+  workflow. The deployed pilot remains `sample_kind=unknown` and
+  `is_control=null`.
+- Deterministically abstain before model generation when filters leave no
+  evidence, and expose the active recipe-derived filters and empty cohort in
+  the research UI.
 - Automatic ingestion, file watching, or scheduled cloud sync.
 - Automatic deletion of database rows whose source keys disappear from a batch;
   idempotent upserts retain stale rows and report them for operator review.
@@ -121,17 +140,19 @@ flowchart TB
         CTD["CTD\n1 TSV, 10,955 profiles"]
         META["Metagenome\n11 TSV files"]
         SST["Satellite SST\n1,848 NetCDF"]
+        EDNA["ANEMONE MiFish\n1 pilot sample, 70 detections"]
     end
 
-    PROV["Provenance Registry\nSHA-256, 1,849 records"]
+    PROV["Provenance Registry\nSHA-256 files, rows, and publications"]
 
     subgraph Preprocess["Preprocessing"]
         CTD_PP["CTD Pipeline\nstandardize, summaries"]
         META_PP["Metagenome Pipeline\nKraken, MetaEuk, groups"]
         SST_PP["SST Pipeline\npoint extraction, daily agg"]
+        EDNA_PP["eDNA Pipeline\nbounded acquire, normalize, review"]
     end
 
-    NORM["Normalized Parquets\n16 files"]
+    NORM["Normalized artifacts\nlegacy Parquets + immutable eDNA bundle"]
     ANCHOR["Anchor Events\n286 anchors, 496 links"]
 
     subgraph Analysis["Ecological Analysis"]
@@ -139,12 +160,12 @@ flowchart TB
         RELIAB["Reliability Ensurance\n4 validation outputs\n4 RAG documents"]
     end
 
-    RETDOCS["Retrieval Documents\n323 narrative chunks\n162 CTD + 82 meta + 79 SST"]
+    RETDOCS["Retrieval Documents\n325 total\n323 legacy + 2 eDNA"]
 
     subgraph Storage["PostgreSQL + pgvector"]
-        EMB["Vector Embeddings\n323 x 768-dim\nlocal: nomic / GCP: Gemini"]
+        EMB["Vector Embeddings\n325 x 768-dim\nlocal: nomic / GCP: Gemini"]
         FTS["Full-Text Index\ntsvector + ts_rank_cd"]
-        DB["16 PostgreSQL Tables\nscientific + application metadata"]
+        DB["23 PostgreSQL Tables\nscientific + application metadata"]
     end
 
     RET["Hybrid Retrieval\nVector + FTS + RRF\n+ Linked cross-source evidence"]
@@ -223,6 +244,7 @@ Ignored files/directories needed only for full regeneration:
 | --- | --- | --- |
 | `onagawa_sst_subset/` | `python scripts/ingest.py` SST preprocessing | Local working copy has 1,848 NetCDF files, about 51 MB |
 | `himawari_raw/` | Optional raw Himawari `.DAT` parsing | Not required by the default pipeline |
+| `data/raw/anemone/` and `EDNA_CACHE_DIR` | ANEMONE acquisition, normalization, and replay | Generated by bounded operator-approved runs; credentials and downloaded source data are not committed |
 
 The invite-only application requires OIDC and signing secrets. Copy
 `.env.example` to `.env`, register the callback URL
@@ -307,6 +329,20 @@ source-row hashes. It inserts and updates inside one transaction, preserves
 unchanged retrieval embeddings, and reports stale rows without deleting them.
 `--upsert --dry-run` exposes the same plan without writing.
 
+ANEMONE/eDNA uses a separate bounded operator workflow. Commands are offline or
+validation-only unless `--execute` is supplied; acquisition credentials belong
+in mounted files and are never passed to processing or serving:
+
+```bash
+python scripts/run_anemone_job.py --stage inventory --scope-url <sample-or-run-url>
+python scripts/normalize_anemone.py --snapshot-id <snapshot-id>
+python scripts/materialize_edna_retrieval.py
+python scripts/run_edna_analysis.py --recipe <reviewed-recipe.json> --dry-run
+```
+
+See [the ANEMONE pilot runbook](deploy/gcp/ANEMONE_PILOT.md) for the approved
+execution, publication, backup, and rollback sequence.
+
 ### Launch
 
 Terminal 1:
@@ -379,15 +415,15 @@ If you want the LLM runtime containerized too:
 
 ```bash
 OLLAMA_BASE_URL=http://ollama:11434 podman compose -f compose.yml -f deploy/compose/app.yml -f deploy/compose/ollama.yml up -d --build
-podman exec -it onagawa_ollama ollama pull nomic-embed-text
-podman exec -it onagawa_ollama ollama pull qwen2.5:14b-instruct
+podman exec -it ocean_ollama ollama pull nomic-embed-text
+podman exec -it ocean_ollama ollama pull qwen2.5:14b-instruct
 ```
 
 The containers use these defaults:
 
 | Setting | Container Default | Why |
 | --- | --- | --- |
-| `DATABASE_URL` | `postgresql://onagawa:onagawa@postgres:5432/onagawa_rag` | Uses the compose service name and internal PostgreSQL port |
+| `DATABASE_URL` | `postgresql://ocean:ocean@postgres:5432/ocean_platform` | Uses the compose service name and internal PostgreSQL port |
 | `OLLAMA_BASE_URL` | `http://host.containers.internal:11434` | Reaches Ollama running on your host from inside Podman |
 | `OLLAMA_BASE_URL` with `deploy/compose/ollama.yml` | `http://ollama:11434` | Set this in the command or `.env` when using containerized Ollama |
 | `NEXT_PORT` | `3000` | Host port mapped to the Next.js frontend |
@@ -408,7 +444,7 @@ FastAPI service:
 | --- | --- |
 | `/` | Overview page with per-tab feature map, corpus summary, and health signals |
 | `/explore` | Corpus workbench for source coverage, filters, charts, sample detail, and evidence retrieval |
-| `/data` | Source observations, CTD, taxa, SST, derived analysis, and reliability workbench |
+| `/data` | Source observations, CTD, taxa, SST, eDNA, derived analysis, and reliability workbench |
 | `/analysis` | Compatibility redirect to `/data?view=analysis` |
 | `/provenance` | Traceability manifest, document lineage, embedding treatment, and upsert dry-run |
 | `/evaluation` | First-class evaluation suite with background runs and controls |
@@ -463,13 +499,15 @@ workflow:
 
 - **Model**: chat model, temperature, top_p, repeat_penalty, context_window
 - **Retrieval**: vector/FTS weights, RRF-k, top-K, linked evidence expansion, pre-analysis toggle, reliability toggle, trust-report toggle
-- **Filters**: source type, bay, date range
+- **Filters**: source type, bay, date range, plus eDNA sample, assay, assignment method, taxonomy, and classification fields
 - **Status**: backend connection indicator
 
-### Current Prototype Screenshots
+### Prototype Screenshots — v0.3.0 UI Baseline
 
 Captured from the authenticated OCEAN Platform Cloud Run deployment on
 **2026-08-25** after the parallel-service cutover and full route validation.
+These are retained as the v0.3.0 interface baseline and do not show the eDNA
+views added in v0.4.0.
 
 ![Current overview](docs/screenshots/prototype_overview.png)
 *Overview page with corpus counts, source balance, runtime signals, and active
@@ -504,6 +542,8 @@ ocean-platform/
 ├── compose.yml                         # Default local PostgreSQL + pgvector service
 ├── .env.example                        # Local container env defaults
 ├── requirements/                       # Python inputs and hash-verified locks
+├── data_contracts/                     # Versioned external-source contracts
+├── analysis_contracts/                 # Reviewed analysis recipe schemas
 ├── deploy/
 │   ├── compose/                        # App, Ollama, and production definitions
 │   ├── env/                            # Production environment template
@@ -518,6 +558,9 @@ ocean-platform/
 │   ├── ctd.py                          # CTD load → standardize → summaries
 │   ├── metagenome.py                   # Kraken/MetaEuk abundance, QC, groups
 │   ├── remote_sensing.py               # NetCDF SST extraction
+│   ├── anemone.py                      # ANEMONE normalization
+│   ├── anemone_classification.py       # Explicit classification review
+│   ├── edna_analysis.py                # Descriptive eDNA analysis
 │   ├── pre_analysis.py                 # Ecological pre-analysis (5 analyses)
 │   └── reliability_ensurance.py        # Cross-source validation (4 engines)
 │
@@ -525,6 +568,8 @@ ocean-platform/
 │   ├── provenance.py                   # SHA-256 file registration (JSONL)
 │   ├── lineage.py                      # Traceability manifests + upsert planner
 │   ├── raw_validation.py               # Strict raw-source validation contracts
+│   ├── anemone.py                      # Bounded inventory/acquisition
+│   ├── edna_analysis_bundle.py         # Registered immutable analysis outputs
 │   └── file_inventory.py              # Directory scanner
 │
 ├── schema/
@@ -533,6 +578,9 @@ ocean-platform/
 ├── retrieval/
 │   ├── document_builder.py             # Raw data → narrative text chunks
 │   ├── cross_source_linker.py          # same_sample + time_match links
+│   ├── edna_document_builder.py        # Method-separated eDNA evidence
+│   ├── edna_environment_linker.py      # Qualified observation matching
+│   ├── edna_materializer.py            # Transactional retrieval publication
 │   ├── hybrid_retriever.py             # pgvector + FTS + RRF (primary)
 │   └── local_retriever.py              # BM25 + numpy fallback
 │
@@ -552,6 +600,10 @@ ocean-platform/
 │
 ├── scripts/
 │   ├── run_pipeline.py                 # Manual batch orchestrator + manifests
+│   ├── run_anemone_job.py              # Explicit bounded eDNA job stages
+│   ├── normalize_anemone.py            # Validate/publish normalized bundles
+│   ├── materialize_edna_retrieval.py   # Publish eDNA retrieval documents
+│   ├── run_edna_analysis.py            # Reproducible descriptive analyses
 │   ├── database_backup.py              # Backup, verification, and restore-test CLI
 │   ├── build_provenance_manifest.py    # Manual traceability manifest writer
 │   ├── ingest.py                       # Ingestion pipeline
@@ -578,6 +630,7 @@ ocean-platform/
 └── data/
     ├── raw/ctd/                        # 1 file (CTD_Onagawa.tsv)
     ├── raw/meta/                       # 11 files (Kraken, MetaEuk, QC)
+    ├── raw/anemone/                    # Ignored external-source snapshots
     ├── normalized/                     # 16 parquet files
     ├── canonical/                      # anchor_events, cross_source_links
     ├── serving/                        # retrieval docs, embeddings, registry
@@ -596,7 +649,8 @@ ocean-platform/
 | --- | --- | --- | --- |
 | CTD (Onagawa) | 1 TSV | 1.2 MB | Jan 2024 – Mar 2026 |
 | Metagenome | 11 TSV/TXT | 34 MB | Apr 2024 – Feb 2026 |
-| Satellite SST | 1,848 NetCDF | ~3.7 GB | Dec 2025 – Feb 2026 |
+| Satellite SST subset | 1,848 NetCDF | ~51 MB locally | Dec 2025 – Feb 2026 |
+| ANEMONE MiFish pilot | 1 bounded source snapshot | Operator-managed | Provider metadata |
 
 ### Processed Output
 
@@ -609,9 +663,10 @@ ocean-platform/
 | SST hourly observations | 1,848 points |
 | SST daily summaries | 79 days |
 | Anchor events | 286 (207 sample + 79 SST) |
-| Retrieval documents | 323 (162 CTD + 82 meta + 79 SST) |
 | Cross-source links | 496 temporal matches |
-| Embeddings | 323 × 768-dim |
+| ANEMONE eDNA | 1 unknown sample, 1 assay, 70 detections, 4 internal standards |
+| Retrieval documents | 325 (323 legacy + 2 method-separated eDNA) |
+| Embeddings | 325 × 768-dim |
 
 ### Pre-Analysis
 
@@ -634,7 +689,7 @@ ocean-platform/
 | Corroboration scoring | **37 verified**, 20 supported, 150 standalone |
 | Reliability documents | 4 text summaries for RAG injection |
 
-### PostgreSQL Scientific Corpus (9 tables)
+### PostgreSQL Scientific Corpus
 
 | Table | Rows | Purpose |
 | --- | --- | --- |
@@ -644,13 +699,19 @@ ocean-platform/
 | `metagenome_sample` | 82 | Sequencing + top taxa |
 | `sst_point_observation` | 1,848 | Hourly satellite SST |
 | `sst_daily_summary` | 79 | Daily regional SST |
-| `retrieval_document` | 323 | Text + embeddings + tsvector |
+| `retrieval_document` | 325 | Text + embeddings + tsvector |
 | `cross_source_link` | 496 | CTD/meta ↔ SST links |
 | `provenance_record` | 0 | (tracked via JSONL) |
 
+The eDNA extension adds `external_source_snapshot`, `external_source_file`,
+`edna_sample`, `edna_assay`, `edna_detection`, and `edna_internal_standard`.
+The deployed pilot contains 1 snapshot, 13 registered source-file records,
+1 sample, 1 assay, 70 detections, and 4 standards.
+
+Six external-source/eDNA tables, the corpus-publication table, and the
 Alembic-managed identity, invitation, chat, feedback, audit, and rate-limit
-tables bring the migrated application database to 16 tables in the deployed
-prototype.
+tables bring the deployed database to 23 tables at migration head
+`20260903_0008`.
 
 ---
 
@@ -660,9 +721,9 @@ prototype.
 
 1. **Query** → embedded at 768 dimensions using `gemini-embedding-001` on GCP
    or `nomic-embed-text` locally
-2. **Vector search** — pgvector cosine similarity over 323 embeddings
+2. **Vector search** — pgvector cosine similarity over 325 embeddings
 3. **Full-text search** — PostgreSQL tsvector with ts_rank_cd
-4. **SQL filters** — bay, source_type, time range
+4. **SQL filters** — bay, source type, time range, and structured eDNA scope
 5. **RRF fusion** — merges vector + FTS rankings: `score = w_v/(k+r_v) + w_f/(k+r_f)` where k=60
 
 ### Trustworthy Multi-Source Answering
@@ -760,7 +821,7 @@ Key settings in [config.py](config.py):
 
 | Setting | Default |
 | --- | --- |
-| `DATABASE_URL` | `postgresql://onagawa:onagawa@localhost:5433/onagawa_rag` |
+| `DATABASE_URL` | `postgresql://ocean:ocean@localhost:5433/ocean_platform` |
 | `OLLAMA_BASE_URL` | `http://localhost:11434` |
 | `MODEL_PROVIDER` | `ollama` locally; `vertex` in the GCP service and jobs |
 | `EMBEDDING_MODEL` | `nomic-embed-text` (768-dim) |
@@ -773,6 +834,10 @@ Key settings in [config.py](config.py):
 | `PROVENANCE_READ_MODE` | `build` locally; GCP uses the fail-closed `snapshot` fast path |
 | `PROVENANCE_SNAPSHOT_URI` | Local `data/provenance`; GCP uses the private bucket `provenance/` prefix |
 | `PROVENANCE_CACHE_TTL_SECONDS` | `60` |
+| `ANEMONE_BASE_URL` | `https://db.anemone.bio/dist/MiFish/ANEMONE/` |
+| `ANEMONE_MAX_FILES` / `ANEMONE_MAX_BYTES` | `2000` / `536870912`; override downward for bounded pilots |
+| `EDNA_ARTIFACT_URI` | Blank locally; approved registered-object prefix in managed storage |
+| `EDNA_CACHE_DIR` | Local POSIX staging/cache, never a bucket FUSE mount |
 | `SST_CTD_AGREEMENT_THRESHOLD` | 2.0°C (env: `SST_CTD_THRESHOLD`) |
 | `DIVERSITY_ANOMALY_SIGMA` | 2.0 (env: `DIVERSITY_ANOMALY_SIGMA`) |
 
@@ -822,9 +887,11 @@ npm run build
 
 ### Current Test Matrix
 
-The current suite contains more than **470 tests** across unit, API, and
-integration modules. The latest release validation passed 473 and skipped
-three explicitly gated/environment-dependent checks:
+The current suite contains more than **640 tests** across unit, API, and
+integration modules. The deployed v0.4.0 release gate passed 638 backend tests
+with 9 PostgreSQL-gated skips and 77.11% coverage. Post-release validation of
+the merged dependency and NLTK-removal maintenance passed 642 tests with 9
+skips and 77.15% coverage; those later changes are not yet deployed.
 
 | Test area | Files |
 | --- | --- |
@@ -839,7 +906,7 @@ three explicitly gated/environment-dependent checks:
 Latest verified local result:
 
 ```text
-473 passed, 3 skipped
+642 passed, 9 skipped; 77.15% coverage
 ```
 
 ---

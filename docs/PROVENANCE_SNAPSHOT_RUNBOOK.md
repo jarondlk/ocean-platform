@@ -78,8 +78,10 @@ until its snapshot publication succeeds.
 1. Build and test an immutable image.
 2. Run snapshot validation without publication.
 3. Publish the first cloud snapshot.
-4. Verify `latest.json`, object SHA-256, object size, schema version, 323
-   prototype documents, and 323 embedded-document records.
+4. Verify `latest.json`, object SHA-256, object size, schema version, and the
+   expected document/embedding counts for the release. The v0.4.0 snapshot has
+   325 documents and 325 embedded-document records; do not reuse the older
+   323-count baseline after eDNA publication.
 5. Render the service with `PROVENANCE_READ_MODE=snapshot` and the GCS URI.
 6. Deploy without changing traffic, then run authenticated manifest and trace
    checks against the candidate revision.

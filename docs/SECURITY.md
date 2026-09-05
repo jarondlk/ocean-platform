@@ -322,9 +322,12 @@ live-manifest alerts as unreachable.
 - Storage reads, publication bundles and local serving caches are bounded.
   Local POSIX staging is separate from the legacy read-only bucket mount; no
   bucket directory rename is used for publication.
-- Only synthetic/local and simulated GCS checks have run. Real IAM, secret
-  delivery, provider conditions, resource limits and recovery remain rollout
-  gates. See [`../deploy/gcp/ANEMONE_PILOT.md`](../deploy/gcp/ANEMONE_PILOT.md).
+- The initial implementation gate used synthetic/local and simulated GCS
+  checks. The bounded v0.4.0 rollout subsequently verified the approved real
+  bucket, job identity, resource limits, publication, backup and recovery path.
+  Acquisition credentials remain isolated from processing and serving. See
+  [`RELEASE_0.4.0_OPERATIONS.md`](RELEASE_0.4.0_OPERATIONS.md) and
+  [`../deploy/gcp/ANEMONE_PILOT.md`](../deploy/gcp/ANEMONE_PILOT.md).
 
 ## ANEMONE research-serving boundary (PR3)
 
@@ -346,17 +349,19 @@ live-manifest alerts as unreachable.
 
 ## Authorization MVP Release Checklist
 
-Current GCP evidence as of 2026-08-31: OCEAN Platform release `v0.3.0` runs with
+Current deployed GCP evidence as of 2026-09-03: OCEAN Platform release `v0.4.0`
+runs with
 `DEPLOYMENT_ENV=production`, `AUTH_MODE=required`, Google OIDC, distinct Secret
 Manager-backed signing secrets, private FastAPI/Cloud SQL connectivity, and
 default-deny API authorization. The administrator and approved researcher have
 completed real-provider login; the OCEAN origin and callback are registered
 while the former service is private for rollback; all 14 user/Admin routes were
-smoke-tested against `ocean-postgres`; all migrated table counts matched; the
-four OCEAN jobs retain the bounded definitions and passing canaries from the
-preceding application baseline; Cloud Run emitted no unresolved error-level or
-5xx entries during final acceptance; CI and CodeQL are enabled; and dependency
-alerts were resolved before the release. A
+smoke-tested against `ocean-postgres`; all 23 migrated tables matched the
+release contract; bounded OCEAN jobs retain manual execution and zero automatic
+retries; Cloud Run emitted no unresolved error-level or 5xx entries during
+final acceptance; and CI and CodeQL passed. Post-release dependency updates and
+the NLTK removal were merged on 2026-09-04 and resolved the remaining GitHub
+dependency alerts, but are not part of the deployed v0.4.0 image. A
 database URL exposed by a failed migration traceback was immediately
 invalidated by rotating both affected database users and disabling both old
 secret versions before traffic resumed.

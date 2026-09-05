@@ -2,6 +2,24 @@
 
 ## Current release evidence
 
+For OCEAN Platform release `v0.4.0`, the release gate passed 638 backend tests
+with 9 PostgreSQL-gated local skips and 77.11% aggregate coverage, all
+PostgreSQL integration checks in CI, 14 frontend navigation tests, frontend
+typecheck and production build, Ruff, dependency consistency, CodeQL, backup
+and isolated restore, migration head `20260903_0008`, and authenticated live
+source/citation checks. The immutable build, job executions, deployed revision,
+and scientific limitations are recorded in
+[`RELEASE_0.4.0_OPERATIONS.md`](RELEASE_0.4.0_OPERATIONS.md).
+
+Post-release dependency/security maintenance on 2026-09-04 passed 642 backend
+tests with 9 PostgreSQL-gated skips and 77.15% aggregate coverage. It refreshed
+the Python, frontend, and container dependencies and replaced the active
+`rouge-score`/NLTK dependency with the internal `snowballstemmer`-based ROUGE-L
+implementation. Those commits are merged to the remote long-lived branches but
+are not part of the deployed v0.4.0 image.
+
+The entries below are dated release records, not the current release:
+
 For OCEAN Platform release `v0.3.0`, the local release gate passed 473 backend
 tests with 3 skipped checks, Ruff, 8 frontend navigation tests, the frontend
 typecheck and 24-route production build, `pip check`, a single Alembic head,
@@ -40,7 +58,7 @@ npm vulnerabilities, and full Cloud Build
 
 ## Local Verification
 
-### v0.4.0 release candidate — 2026-09-03
+### v0.4.0 release candidate — 2026-09-03 (historical)
 
 - Backend after the PR security fix: 638 passed, 9 PostgreSQL-gated skips,
   77.11% coverage; Ruff and
@@ -56,8 +74,9 @@ npm vulnerabilities, and full Cloud Build
 - Classification workflow completion and real researcher acceptance are
   explicitly deferred to the [next patch](ANEMONE_NEXT_PATCH.md). They must
   not be reported as passed release checks.
-- GitHub CI, cloud backup/migration and live deployment evidence must be
-  verified separately and recorded in the release record before publication.
+- GitHub CI, cloud backup/migration and live deployment evidence was subsequently
+  verified and is recorded in
+  [`RELEASE_0.4.0_OPERATIONS.md`](RELEASE_0.4.0_OPERATIONS.md).
 
 ### ANEMONE non-target contract and draft proposal — 2026-09-03
 
@@ -101,7 +120,7 @@ npm vulnerabilities, and full Cloud Build
   were not changed. No cloud, live-model or production migration was performed.
   See [operator workflow](ANEMONE_CLASSIFICATION_REVIEW.md).
 
-### Real ANEMONE canary — 2026-09-03
+### Real ANEMONE canary — 2026-09-03 (historical local checkpoint)
 
 One bounded real sample passed local source reconciliation, rolled-back import,
 idempotent import/materialization, full-text retrieval, exact provenance,
@@ -110,14 +129,15 @@ Unknown classification correctly prevents environmental diversity output.
 This does not establish scientific acceptance or live cloud/model behavior.
 See [`ANEMONE_PILOT_2026-09-03.md`](ANEMONE_PILOT_2026-09-03.md).
 
-The NLTK reachability regression adds three cases; all 34 quality-metric tests
+At this checkpoint, the NLTK reachability regression added three cases and all
+34 quality-metric tests
 passed. It verifies the application's ROUGE-L path does not call the advisory's
 model-artifact APIs; it is not a patch for the upstream dependency.
 The full backend rerun passed 586 tests, 8 PostgreSQL-gated skips and 76.75%
 coverage; Ruff and diff checks also passed. The canary database container was
 removed after a verified backup/restore; artifacts and its backup were retained.
 
-### ANEMONE PR5 implementation — 2026-09-03
+### ANEMONE PR5 implementation — 2026-09-03 (historical local checkpoint)
 
 - Backend: 583 passed, 8 PostgreSQL-gated skips; 76.75% CI-boundary coverage.
 - PostgreSQL: all 8 integration tests passed separately against a freshly
@@ -146,8 +166,9 @@ Those pre-implementation gates did not cover three reproduced review gaps: incom
 analysis-manifest acceptance, lost historical analysis provenance after a
 rerun, and membership filtering after top-K retrieval. The findings and
 permanent regression tests are recorded in
-[`ANEMONE_PR5_PLAN.md`](ANEMONE_PR5_PLAN.md). PR5 now fixes all three; real pilot
-and deployment verification remain pending.
+[`ANEMONE_PR5_PLAN.md`](ANEMONE_PR5_PLAN.md). PR5 fixed all three. The real pilot
+and deployment verification were pending at this checkpoint and were later
+completed for v0.4.0 under the explicit unknown-classification scope.
 
 ### Development setup
 
@@ -162,7 +183,9 @@ The bootstrap script creates an isolated Python 3.12 environment and installs
 the fully transitive development lock with `--require-hashes`. Runtime,
 analysis, and archived Streamlit dependencies are separately locked in
 `requirements/runtime.txt`, `requirements/analysis.txt`, and
-`requirements/archive.txt`.
+`requirements/archive.txt`. Rerun the bootstrap after dependency-lock changes;
+an older `.venv` can pass `pip check` while still missing a newly added direct
+dependency.
 
 For browser testing of the permission-aware UI without organization OIDC
 credentials, run both services with `AUTH_MODE=required`,
@@ -384,7 +407,7 @@ The normal suite skips the gated PostgreSQL integration modules. Against a
 disposable migrated PostgreSQL/pgvector database:
 
 ```bash
-DATABASE_URL=postgresql://onagawa:password@127.0.0.1:5432/onagawa_rag \
+DATABASE_URL=postgresql://ocean:ocean@127.0.0.1:5433/ocean_platform \
 RUN_POSTGRES_INTEGRATION=1 \
 AUTH_MODE=disabled \
 DEPLOYMENT_ENV=test \

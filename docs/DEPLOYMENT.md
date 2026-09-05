@@ -32,12 +32,23 @@ Current release record as of 2026-09-03:
   schema head `20260903_0008`, verified backup/isolated restore and authenticated
   source-citation checks. See [operations and known limitations](RELEASE_0.4.0_OPERATIONS.md).
 
+Repository state after the release: dependency refreshes and the NLTK-free
+evaluator are merged to remote `main` and `gcp-dev` at `4a4bd38`, with zero open
+Dependabot security alerts at the 2026-09-04 review. They are not included in
+the deployed v0.4.0 image or revision above.
+
 The dated GCP inventory and remaining destructive retirement candidates are
 recorded in [`GCP_RESOURCE_AUDIT.md`](GCP_RESOURCE_AUDIT.md).
 
 The standalone Compose topology below remains the supported self-hosted
 alternative. Its configuration examples do not describe the current GCP
 service.
+
+ANEMONE acquisition and processing remain explicit operator jobs. The web
+service never receives download credentials and does not start external-source
+downloads. `deploy/env/production.example` documents the optional job settings;
+mount username/password files from a secret manager and provide them only to a
+separately reviewed acquisition job.
 
 The required migration sequence, integration gates, and cost controls are in
 [`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Install the

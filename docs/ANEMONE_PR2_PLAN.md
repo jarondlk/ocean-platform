@@ -1,6 +1,7 @@
 # ANEMONE PR2 — Canonical Schema and Ingestion Plan
 
-> Status: implemented locally on `gcp-dev` (2026-09-02)
+> Status: implemented, merged, and deployed in `v0.4.0`. This document retains
+> the PR2 implementation contract and verification history.
 > Dependency: ANEMONE PR1 acquisition contract
 > Scope: normalization, canonical storage, provenance, and transactional upsert
 

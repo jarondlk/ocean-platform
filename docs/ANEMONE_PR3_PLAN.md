@@ -1,20 +1,20 @@
 # ANEMONE PR3 — Retrieval and Evidence Navigation Plan
 
-> Status: implemented locally; review follow-ups open (2026-09-02)
+> Status: implemented, review findings resolved, and deployed in `v0.4.0`.
+> This document retains the original PR3 contract and review history.
 > Dependency: ANEMONE PR1 acquisition and PR2 canonical ingestion
 > Scope: retrieval documents, filtering, answer audit, read APIs, compact Data
 > view, evidence navigation, provenance, and evidence export
 
 ## Implementation and verification
 
-Follow-up review found three gaps: structured eDNA scope is not passed into
+Follow-up review found three gaps: structured eDNA scope was not passed into
 analysis-context selection, date-only end filters omit timestamped observations
 on that date, and fallback artifact publication is not coordinated with the
 committed database generation. Details and the prerequisite repair package are
 in [the PR4 review and plan](ANEMONE_PR4_PLAN.md#1-pr3-review-and-entry-gate).
-The existing tests pass but do not cover these cases; resolve them before
-merge/acceptance or adding scientific analyses. No fixes were implemented in
-the planning turn.
+The existing tests at that checkpoint did not cover these cases. They were
+resolved and regression-tested during PR4/PR5 before the v0.4.0 release.
 
 The builder, additive migration `20260902_0006`, database-wide materializer,
 PostgreSQL/local filters, source-qualified prompt/audit behavior, read APIs,

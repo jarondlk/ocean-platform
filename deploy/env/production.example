@@ -20,6 +20,20 @@ DATA_DIR=/app/data
 JOB_EXECUTION_MODE=external
 LOCAL_MAX_ACTIVE_JOBS=1
 
+# Optional ANEMONE/eDNA operator-job configuration. The production web service
+# does not download ANEMONE data or start these jobs. Supply these values only
+# to a separately reviewed manual job and mount credential files from a secret
+# manager; do not place credential values in this file.
+ANEMONE_BASE_URL=https://db.anemone.bio/dist/MiFish/ANEMONE/
+ANEMONE_DOWNLOAD_USERNAME_FILE=/run/secrets/anemone-username
+ANEMONE_DOWNLOAD_PASSWORD_FILE=/run/secrets/anemone-password
+ANEMONE_MAX_FILES=2000
+ANEMONE_MAX_BYTES=536870912
+ANEMONE_NORMALIZATION_VERSION=1
+EDNA_ARTIFACT_URI=
+EDNA_CACHE_DIR=/tmp/ocean-edna-cache
+EDNA_ANALYSIS_RECIPE=/app/data/analysis/edna_recipe.json
+
 MODEL_PROVIDER=ollama
 OLLAMA_BASE_URL=http://<private-ollama-host>:11434
 CHAT_MODEL=qwen2.5:14b-instruct

@@ -1,7 +1,10 @@
 # ANEMONE eDNA Integration Plan
 
-> Status: PR1–PR4 and PR5 code implemented locally; real pilot and release gates pending
-> Target release: `v0.4.0`
+> Status: PR1–PR5 completed and deployed in `v0.4.0` on 2026-09-03. This is the
+> implementation plan and historical decision record; deployment evidence is in
+> [`RELEASE_0.4.0_OPERATIONS.md`](RELEASE_0.4.0_OPERATIONS.md). Classification
+> and full researcher acceptance remain next-patch work.
+> Released: `v0.4.0`
 > Source family: `edna_metabarcoding`
 > Initial provider: `anemone`
 
@@ -407,7 +410,7 @@ complete raw-to-row provenance trace.
 ## 7. PR3 — Retrieval and Evidence Navigation
 
 The fixed implementation specification is in
-[`docs/ANEMONE_PR3_PLAN.md`](ANEMONE_PR3_PLAN.md). Implemented locally:
+[`docs/ANEMONE_PR3_PLAN.md`](ANEMONE_PR3_PLAN.md). Implemented and deployed:
 
 - register `edna_metabarcoding` in source inference and answer auditing;
 - build one community-summary retrieval document per sample/assignment method;
@@ -423,8 +426,8 @@ The fixed implementation specification is in
 PR3 also adds the post-load materialization pipeline stage, content-aware local
 embedding-cache invalidation, exact URL restoration and pagination, and a
 publication gate for incomplete eDNA source/row/artifact provenance. Verification
-results are recorded in the PR3 specification. The patch is not deployed;
-production acquisition and rollout remain PR5.
+results are recorded in the PR3 specification. The patch and its follow-up
+repairs were subsequently deployed through PR5 in v0.4.0.
 
 Acceptance requires source-specific retrieval tests, citation/trust-report
 coverage, bookmarkable evidence destinations, cold-load/refresh browser tests,
@@ -483,12 +486,16 @@ position/time/coverage metadata. Missing matches do not block the other reports.
 
 The current audit, entry gates, implementation sequence, and release checklist
 are in [`ANEMONE_PR5_PLAN.md`](ANEMONE_PR5_PLAN.md). Output-integrity,
-historical-citation, and pre-ranking cohort-filter findings are fixed locally.
-Storage-safe object publication and bounded job tooling are implemented;
-real provider/GCS/Cloud Run checks and release approval remain outstanding.
+historical-citation, and pre-ranking cohort-filter findings were fixed before
+release. Storage-safe object publication, bounded job tooling, real provider/
+GCS/Cloud Run checks, and limited-scope release approval were completed for
+v0.4.0. Full classification and researcher acceptance remain deferred.
 See [`../deploy/gcp/ANEMONE_PILOT.md`](../deploy/gcp/ANEMONE_PILOT.md).
 
-PR5 will add a manually executed `ocean-anemone-sync` Cloud Run Job with:
+PR5 delivered a manually executed `ocean-anemone-process` Cloud Run Job for
+credential-free downstream processing. The separate acquisition template was
+retained but not deployed or granted download credentials. The implementation
+includes:
 
 - a dedicated least-privilege job identity or reviewed `ocean-jobs` extension;
 - Secret Manager-mounted username/password files;

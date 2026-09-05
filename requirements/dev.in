@@ -1,5 +1,5 @@
 # Runtime plus backend test and lint tooling. Compile with:
-#   pip-compile --generate-hashes --output-file requirements/dev.txt requirements/dev.in
+#   pip-compile --generate-hashes --strip-extras --output-file requirements/dev.txt requirements/dev.in
 -r runtime.in
 
 httpx==0.28.1
