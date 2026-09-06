@@ -44,6 +44,8 @@ def test_corpus_and_application_metadata_are_isolated():
         "user_invitation",
         "chat_interaction",
         "chat_feedback",
+        "classification_review",
+        "classification_review_event",
         "audit_event",
     }.issubset(AppBase.metadata.tables)
 
@@ -818,6 +820,36 @@ def test_route_permission_map_is_explicit_for_sensitive_surfaces():
             "GET",
             "/admin/feedback/export",
             "feedback:export",
+            {"admin"},
+        ),
+        (
+            "GET",
+            "/classification-reviews",
+            "classification:read",
+            {"researcher", "admin"},
+        ),
+        (
+            "POST",
+            "/classification-reviews",
+            "classification:decide",
+            {"researcher"},
+        ),
+        (
+            "POST",
+            "/classification-reviews/00000000-0000-0000-0000-000000000000/decision",
+            "classification:decide",
+            {"researcher"},
+        ),
+        (
+            "POST",
+            "/classification-reviews/00000000-0000-0000-0000-000000000000/preview",
+            "classification:read",
+            {"researcher", "admin"},
+        ),
+        (
+            "POST",
+            "/classification-reviews/00000000-0000-0000-0000-000000000000/application",
+            "classification:apply",
             {"admin"},
         ),
     ],

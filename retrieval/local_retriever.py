@@ -24,6 +24,7 @@ import numpy as np
 import config
 from schema.time_range import matches_time
 from retrieval.edna_publication import retrieval_path
+from ingestion.provenance_snapshot import SnapshotError
 
 logger = logging.getLogger(__name__)
 
@@ -32,6 +33,16 @@ BAY_BY_LOCATION = {
     "Ishinomaki Bay": "I",
     "Mutsu Bay": "M",
 }
+
+
+def _default_retrieval_paths() -> List[Path]:
+    """Return usable corpora while a new eDNA generation is unpublished."""
+    paths = [config.SERVING_DIR / "retrieval_documents.jsonl"]
+    try:
+        paths.append(retrieval_path("jsonl"))
+    except (ValueError, OSError, KeyError, SnapshotError):
+        logger.info("eDNA retrieval publication is not currently readable")
+    return paths
 
 
 # =====================================================================
@@ -103,10 +114,7 @@ class LocalRetriever:
         paths = (
             [jsonl_path]
             if jsonl_path is not None
-            else [
-                config.SERVING_DIR / "retrieval_documents.jsonl",
-                retrieval_path("jsonl"),
-            ]
+            else _default_retrieval_paths()
         )
         existing_paths = [path for path in paths if path.exists()]
         if not existing_paths:
@@ -370,7 +378,7 @@ _corpus_signature: tuple = ()
 def get_local_retriever() -> LocalRetriever:
     """Get or create the global local retriever instance."""
     global _retriever, _corpus_signature
-    paths = [config.SERVING_DIR / "retrieval_documents.jsonl", retrieval_path("jsonl")]
+    paths = _default_retrieval_paths()
     signature = tuple(
         (str(path), path.stat().st_mtime_ns, path.stat().st_size)
         if path.exists() else (str(path), None, None)

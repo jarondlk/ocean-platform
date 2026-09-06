@@ -21,7 +21,9 @@ from sqlalchemy import (
     Text,
     UniqueConstraint,
     Uuid,
+    event,
     func,
+    text,
 )
 from sqlalchemy.orm import DeclarativeBase, relationship
 
@@ -133,6 +135,8 @@ class ChatInteraction(AppBase):
     query = Column(Text, nullable=False)
     answer = Column(Text)
     model = Column(String(255))
+    outcome = Column(String(32))
+    abstention_reason = Column(String(64))
     request_options = Column(JSON, nullable=False, default=dict)
     evidence_snapshot = Column(JSON, nullable=False, default=dict)
     answer_audit_snapshot = Column(JSON)
@@ -157,6 +161,22 @@ class ChatInteraction(AppBase):
         CheckConstraint(
             "status IN ('running', 'completed', 'failed')",
             name="ck_chat_interaction_status",
+        ),
+        CheckConstraint(
+            "outcome IS NULL OR outcome IN ('answered', 'abstained')",
+            name="ck_chat_interaction_outcome",
+        ),
+        CheckConstraint(
+            "abstention_reason IS NULL OR abstention_reason IN "
+            "('no_matching_evidence', 'empty_analysis_cohort', "
+            "'publication_pending')",
+            name="ck_chat_interaction_abstention_reason",
+        ),
+        CheckConstraint(
+            "(outcome IS NULL AND abstention_reason IS NULL) OR "
+            "(outcome = 'answered' AND abstention_reason IS NULL) OR "
+            "(outcome = 'abstained' AND abstention_reason IS NOT NULL)",
+            name="ck_chat_interaction_outcome_reason",
         ),
         Index("ix_chat_interaction_retention", "created_at", "legal_hold", "status"),
     )
@@ -199,6 +219,331 @@ class ChatFeedback(AppBase):
         ),
         CheckConstraint("rating IN (-1, 1)", name="ck_chat_feedback_rating"),
     )
+
+
+class ClassificationReview(AppBase):
+    """Current state of one authenticated scientific classification review."""
+
+    __tablename__ = "classification_review"
+
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    source_snapshot_id = Column(String(64), nullable=False, index=True)
+    sample_id = Column(String(64), nullable=False, index=True)
+    provider_sample_id = Column(Text, nullable=False)
+    sample_kind = Column(String(32), nullable=False)
+    rationale = Column(Text, nullable=False)
+    evidence_json = Column(JSON, nullable=False)
+    content_sha256 = Column(String(64), nullable=False, index=True)
+    state = Column(String(32), nullable=False, default="draft", index=True)
+    version = Column(Integer, nullable=False, default=1)
+    supersedes_review_id = Column(
+        Uuid(as_uuid=True),
+        ForeignKey("classification_review.id", ondelete="RESTRICT"),
+    )
+    created_by_user_id = Column(
+        Uuid(as_uuid=True),
+        ForeignKey("app_user.id", ondelete="RESTRICT"),
+        nullable=False,
+        index=True,
+    )
+    scientific_decided_by_user_id = Column(
+        Uuid(as_uuid=True),
+        ForeignKey("app_user.id", ondelete="RESTRICT"),
+        index=True,
+    )
+    scientific_decided_at = Column(DateTime(timezone=True))
+    operational_actor_user_id = Column(
+        Uuid(as_uuid=True),
+        ForeignKey("app_user.id", ondelete="RESTRICT"),
+        index=True,
+    )
+    operational_at = Column(DateTime(timezone=True))
+    application_reference = Column(Text)
+    failure_code = Column(String(64))
+    failure_detail = Column(Text)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(
+        DateTime(timezone=True),
+        nullable=False,
+        server_default=func.now(),
+        onupdate=func.now(),
+    )
+
+    __table_args__ = (
+        CheckConstraint(
+            "sample_kind IN ('environmental', 'negative_control', "
+            "'positive_control', 'mock_community', 'unknown')",
+            name="ck_classification_review_sample_kind",
+        ),
+        CheckConstraint(
+            "state IN ('draft', 'approved', 'rejected', 'superseded', "
+            "'applied', 'failed')",
+            name="ck_classification_review_state",
+        ),
+        CheckConstraint("version >= 1", name="ck_classification_review_version"),
+        CheckConstraint(
+            "(state IN ('approved', 'rejected', 'superseded', 'applied', 'failed') "
+            "AND scientific_decided_by_user_id IS NOT NULL "
+            "AND scientific_decided_at IS NOT NULL) OR state = 'draft'",
+            name="ck_classification_review_scientific_decision",
+        ),
+        CheckConstraint(
+            "(state = 'applied' AND operational_actor_user_id IS NOT NULL "
+            "AND operational_at IS NOT NULL AND application_reference IS NOT NULL "
+            "AND failure_code IS NULL) OR state <> 'applied'",
+            name="ck_classification_review_applied",
+        ),
+        CheckConstraint(
+            "(state = 'failed' AND operational_actor_user_id IS NOT NULL "
+            "AND operational_at IS NOT NULL AND failure_code IS NOT NULL) "
+            "OR state <> 'failed'",
+            name="ck_classification_review_failed",
+        ),
+        Index(
+            "uq_classification_review_current_sample",
+            "sample_id",
+            unique=True,
+            postgresql_where=text(
+                "state IN ('approved', 'applied', 'failed')"
+            ),
+            sqlite_where=text(
+                "state IN ('approved', 'applied', 'failed')"
+            ),
+        ),
+    )
+
+
+class ClassificationReviewEvent(AppBase):
+    """Immutable transition record for a classification review."""
+
+    __tablename__ = "classification_review_event"
+
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    review_id = Column(
+        Uuid(as_uuid=True),
+        ForeignKey("classification_review.id", ondelete="RESTRICT"),
+        nullable=False,
+        index=True,
+    )
+    sequence = Column(Integer, nullable=False)
+    event_type = Column(String(32), nullable=False)
+    from_state = Column(String(32))
+    to_state = Column(String(32), nullable=False)
+    actor_user_id = Column(
+        Uuid(as_uuid=True),
+        ForeignKey("app_user.id", ondelete="RESTRICT"),
+        nullable=False,
+        index=True,
+    )
+    actor_role = Column(String(32), nullable=False)
+    actor_identity_json = Column(JSON, nullable=False)
+    occurred_at = Column(DateTime(timezone=True), nullable=False)
+    content_sha256 = Column(String(64), nullable=False)
+    event_sha256 = Column(String(64), nullable=False)
+    review_snapshot_json = Column(JSON, nullable=False)
+    details_json = Column(JSON, nullable=False, default=dict)
+
+    __table_args__ = (
+        UniqueConstraint(
+            "review_id",
+            "sequence",
+            name="uq_classification_review_event_sequence",
+        ),
+        CheckConstraint(
+            "event_type IN ('created', 'draft_updated', 'approved', "
+            "'rejected', 'superseded', 'applied', 'failed')",
+            name="ck_classification_review_event_type",
+        ),
+        CheckConstraint(
+            "to_state IN ('draft', 'approved', 'rejected', 'superseded', "
+            "'applied', 'failed')",
+            name="ck_classification_review_event_state",
+        ),
+        CheckConstraint(
+            "actor_role IN ('researcher', 'admin')",
+            name="ck_classification_review_event_actor_role",
+        ),
+        CheckConstraint(
+            "(event_type IN ('created', 'draft_updated', 'approved', "
+            "'rejected', 'superseded') AND actor_role = 'researcher') OR "
+            "(event_type IN ('applied', 'failed') AND actor_role = 'admin')",
+            name="ck_classification_review_event_role",
+        ),
+        CheckConstraint(
+            "(event_type = 'created' AND from_state IS NULL "
+            "AND to_state = 'draft') OR "
+            "(event_type = 'draft_updated' AND from_state = 'draft' "
+            "AND to_state = 'draft') OR "
+            "(event_type IN ('approved', 'rejected') "
+            "AND from_state = 'draft' AND to_state = event_type) OR "
+            "(event_type = 'superseded' "
+            "AND from_state IN ('approved', 'applied', 'failed') "
+            "AND to_state = 'superseded') OR "
+            "(event_type IN ('applied', 'failed') "
+            "AND from_state IN ('approved', 'failed') "
+            "AND to_state = event_type)",
+            name="ck_classification_review_event_transition",
+        ),
+        CheckConstraint(
+            "sequence >= 1",
+            name="ck_classification_review_event_sequence",
+        ),
+    )
+
+
+@event.listens_for(ClassificationReviewEvent, "before_update")
+@event.listens_for(ClassificationReviewEvent, "before_delete")
+def _classification_review_event_is_append_only(*_args) -> None:
+    raise ValueError("Classification review events are append-only")
+
+
+class ClassificationApplication(AppBase):
+    """Durable state for one manually launched review application."""
+
+    __tablename__ = "classification_application"
+
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    operation_id = Column(String(100), nullable=False, unique=True, index=True)
+    review_id = Column(
+        Uuid(as_uuid=True),
+        ForeignKey("classification_review.id", ondelete="RESTRICT"),
+        nullable=False,
+        index=True,
+    )
+    review_version = Column(Integer, nullable=False)
+    review_content_sha256 = Column(String(64), nullable=False)
+    source_snapshot_id = Column(String(64), nullable=False)
+    sample_id = Column(String(64), nullable=False, index=True)
+    mode = Column(String(16), nullable=False)
+    rollback_of_application_id = Column(
+        Uuid(as_uuid=True),
+        ForeignKey("classification_application.id", ondelete="RESTRICT"),
+    )
+    actor_user_id = Column(
+        Uuid(as_uuid=True),
+        ForeignKey("app_user.id", ondelete="RESTRICT"),
+        nullable=False,
+        index=True,
+    )
+    actor_identity_json = Column(JSON, nullable=False)
+    status = Column(String(32), nullable=False, index=True)
+    current_stage = Column(String(32))
+    completed_stages_json = Column(JSON, nullable=False, default=list)
+    artifacts_json = Column(JSON, nullable=False, default=dict)
+    results_json = Column(JSON, nullable=False, default=dict)
+    error_code = Column(String(64))
+    recovery_json = Column(JSON, nullable=False, default=list)
+    started_at = Column(DateTime(timezone=True), nullable=False)
+    finished_at = Column(DateTime(timezone=True))
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(
+        DateTime(timezone=True),
+        nullable=False,
+        server_default=func.now(),
+        onupdate=func.now(),
+    )
+
+    __table_args__ = (
+        CheckConstraint(
+            "mode IN ('apply', 'rollback')",
+            name="ck_classification_application_mode",
+        ),
+        CheckConstraint(
+            "review_version >= 1",
+            name="ck_classification_application_review_version",
+        ),
+        CheckConstraint(
+            "status IN ('running', 'failed', 'applied', 'rolled_back')",
+            name="ck_classification_application_status",
+        ),
+        CheckConstraint(
+            "current_stage IS NULL OR current_stage IN ("
+            "'register_review', 'normalize', 'import', 'materialize', "
+            "'analyze', 'embed', 'provenance', 'finalize')",
+            name="ck_classification_application_current_stage",
+        ),
+        CheckConstraint(
+            "(mode = 'rollback' AND rollback_of_application_id IS NOT NULL) "
+            "OR (mode = 'apply' AND rollback_of_application_id IS NULL)",
+            name="ck_classification_application_rollback_target",
+        ),
+        CheckConstraint(
+            "(status IN ('applied', 'rolled_back') AND finished_at IS NOT NULL "
+            "AND error_code IS NULL) OR status NOT IN ('applied', 'rolled_back')",
+            name="ck_classification_application_completion",
+        ),
+        CheckConstraint(
+            "(status = 'failed' AND error_code IS NOT NULL "
+            "AND current_stage IS NOT NULL) OR status <> 'failed'",
+            name="ck_classification_application_failure",
+        ),
+        Index(
+            "uq_classification_application_running_review",
+            "review_id",
+            unique=True,
+            postgresql_where=text("status = 'running'"),
+            sqlite_where=text("status = 'running'"),
+        ),
+    )
+
+
+class ClassificationApplicationEvent(AppBase):
+    """Append-only stage and lifecycle receipt for an application run."""
+
+    __tablename__ = "classification_application_event"
+
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    application_id = Column(
+        Uuid(as_uuid=True),
+        ForeignKey("classification_application.id", ondelete="RESTRICT"),
+        nullable=False,
+        index=True,
+    )
+    sequence = Column(Integer, nullable=False)
+    event_type = Column(String(32), nullable=False)
+    stage = Column(String(32))
+    occurred_at = Column(DateTime(timezone=True), nullable=False)
+    result_json = Column(JSON, nullable=False, default=dict)
+    error_code = Column(String(64))
+    recovery_json = Column(JSON, nullable=False, default=list)
+    event_sha256 = Column(String(64), nullable=False)
+
+    __table_args__ = (
+        UniqueConstraint(
+            "application_id",
+            "sequence",
+            name="uq_classification_application_event_sequence",
+        ),
+        CheckConstraint(
+            "event_type IN ('run_started', 'run_resumed', 'stage_started', "
+            "'stage_completed', 'stage_failed', 'run_applied', "
+            "'run_rolled_back', 'run_failed')",
+            name="ck_classification_application_event_type",
+        ),
+        CheckConstraint(
+            "stage IS NULL OR stage IN ("
+            "'register_review', 'normalize', 'import', 'materialize', "
+            "'analyze', 'embed', 'provenance', 'finalize')",
+            name="ck_classification_application_event_stage",
+        ),
+        CheckConstraint(
+            "(event_type IN ('run_started', 'run_resumed', 'run_applied', "
+            "'run_rolled_back') AND stage IS NULL) OR "
+            "(event_type IN ('stage_started', 'stage_completed', "
+            "'stage_failed', 'run_failed') AND stage IS NOT NULL)",
+            name="ck_classification_application_event_stage_shape",
+        ),
+        CheckConstraint(
+            "sequence >= 1",
+            name="ck_classification_application_event_sequence",
+        ),
+    )
+
+
+@event.listens_for(ClassificationApplicationEvent, "before_update")
+@event.listens_for(ClassificationApplicationEvent, "before_delete")
+def _classification_application_event_is_append_only(*_args) -> None:
+    raise ValueError("Classification application events are append-only")
 
 
 class AuditEvent(AppBase):

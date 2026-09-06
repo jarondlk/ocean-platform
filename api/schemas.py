@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime
 from typing import Any, Dict, List, Literal, Optional
 
-from pydantic import AliasChoices, BaseModel, Field, model_validator
+from pydantic import AliasChoices, BaseModel, ConfigDict, Field, model_validator
 from schema.time_range import time_bounds
 
 
@@ -20,6 +20,15 @@ EDNA_SAMPLE_KINDS = (
     "unknown",
 )
 
+CLASSIFICATION_REVIEW_STATES = (
+    "draft",
+    "approved",
+    "rejected",
+    "superseded",
+    "applied",
+    "failed",
+)
+
 
 def validate_time_range(time_from: Optional[str], time_to: Optional[str]) -> None:
     time_bounds(time_from, time_to)
@@ -33,6 +42,234 @@ class CurrentUserResponse(BaseModel):
     account_type: str
     status: str
     permissions: List[str] = Field(default_factory=list)
+
+
+class ClassificationEvidenceInput(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    source_role: Literal["sample_metadata", "experiment_metadata"]
+    source_file_id: str = Field(pattern=r"^[a-f0-9]{64}$")
+    source_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    row_number: int = Field(ge=2)
+    key: str = Field(min_length=1, max_length=4000)
+    value: str = Field(min_length=1, max_length=4000)
+
+
+class ClassificationReviewDraftCreate(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    source_snapshot_id: str = Field(pattern=r"^[a-f0-9]{64}$")
+    sample_id: str = Field(pattern=r"^[a-f0-9]{64}$")
+    sample_kind: Literal[
+        "environmental",
+        "negative_control",
+        "positive_control",
+        "mock_community",
+        "unknown",
+    ]
+    rationale: str = Field(min_length=1, max_length=4000)
+    evidence: List[ClassificationEvidenceInput] = Field(
+        min_length=1,
+        max_length=32,
+    )
+    supersedes_review_id: Optional[uuid.UUID] = None
+
+    @model_validator(mode="after")
+    def unique_evidence(self) -> "ClassificationReviewDraftCreate":
+        identities = [
+            (row.source_file_id, row.row_number) for row in self.evidence
+        ]
+        if len(identities) != len(set(identities)):
+            raise ValueError("Classification evidence rows must be unique")
+        return self
+
+
+class ClassificationReviewDraftUpdate(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    expected_version: int = Field(ge=1)
+    sample_kind: Literal[
+        "environmental",
+        "negative_control",
+        "positive_control",
+        "mock_community",
+        "unknown",
+    ]
+    rationale: str = Field(min_length=1, max_length=4000)
+    evidence: List[ClassificationEvidenceInput] = Field(
+        min_length=1,
+        max_length=32,
+    )
+
+    @model_validator(mode="after")
+    def unique_evidence(self) -> "ClassificationReviewDraftUpdate":
+        identities = [
+            (row.source_file_id, row.row_number) for row in self.evidence
+        ]
+        if len(identities) != len(set(identities)):
+            raise ValueError("Classification evidence rows must be unique")
+        return self
+
+
+class ClassificationReviewDecisionRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    expected_version: int = Field(ge=1)
+    decision: Literal["approved", "rejected"]
+
+
+class ClassificationReviewApplicationRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    expected_version: int = Field(ge=1)
+    outcome: Literal["applied", "failed"]
+    application_reference: Optional[str] = Field(default=None, max_length=1000)
+    failure_code: Optional[str] = Field(
+        default=None,
+        pattern=r"^[a-z0-9][a-z0-9_.-]{0,63}$",
+    )
+    failure_detail: Optional[str] = Field(default=None, max_length=4000)
+
+    @model_validator(mode="after")
+    def validate_outcome_fields(self) -> "ClassificationReviewApplicationRequest":
+        if self.outcome == "applied":
+            if not self.application_reference:
+                raise ValueError("Applied reviews require an application reference")
+            if self.failure_code or self.failure_detail:
+                raise ValueError("Applied reviews cannot include failure fields")
+        elif not self.failure_code:
+            raise ValueError("Failed reviews require a failure code")
+        return self
+
+
+class ClassificationReviewEventResponse(BaseModel):
+    id: uuid.UUID
+    review_id: uuid.UUID
+    sequence: int
+    event_type: str
+    from_state: Optional[str] = None
+    to_state: str
+    actor_user_id: uuid.UUID
+    actor_role: str
+    actor_identity: Dict[str, Any]
+    occurred_at: datetime
+    content_sha256: str
+    event_sha256: str
+    details: Dict[str, Any] = Field(default_factory=dict)
+
+
+class ClassificationReviewResponse(BaseModel):
+    id: uuid.UUID
+    source_snapshot_id: str
+    sample_id: str
+    provider_sample_id: str
+    sample_kind: str
+    rationale: str
+    evidence: List[ClassificationEvidenceInput]
+    content_sha256: str
+    state: str
+    version: int
+    supersedes_review_id: Optional[uuid.UUID] = None
+    created_by_user_id: uuid.UUID
+    scientific_decided_by_user_id: Optional[uuid.UUID] = None
+    scientific_decided_at: Optional[datetime] = None
+    operational_actor_user_id: Optional[uuid.UUID] = None
+    operational_at: Optional[datetime] = None
+    application_reference: Optional[str] = None
+    failure_code: Optional[str] = None
+    failure_detail: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+    events: List[ClassificationReviewEventResponse] = Field(default_factory=list)
+
+
+class ClassificationReviewListResponse(BaseModel):
+    items: List[ClassificationReviewResponse] = Field(default_factory=list)
+    total: int
+    limit: int
+    offset: int
+
+
+class ClassificationReviewPreviewRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    expected_version: int = Field(ge=1)
+    assignment_methods: List[Literal[
+        "qcauto_target",
+        "qcauto_95pct_3nn_target",
+    ]] = Field(
+        default_factory=lambda: [
+            "qcauto_target",
+            "qcauto_95pct_3nn_target",
+        ],
+        min_length=1,
+        max_length=2,
+    )
+    rank: Literal["genus", "species"] = "genus"
+    min_read_count: int = Field(default=1, ge=1, le=1_000_000_000)
+    top_taxa_limit: int = Field(default=10, ge=1, le=25)
+
+    @model_validator(mode="after")
+    def unique_methods(self) -> "ClassificationReviewPreviewRequest":
+        if len(self.assignment_methods) != len(set(self.assignment_methods)):
+            raise ValueError("Assignment methods must be unique")
+        self.assignment_methods.sort()
+        return self
+
+
+class ClassificationPreviewTaxon(BaseModel):
+    taxon: str
+    read_count: int
+    read_proportion: float
+
+
+class ClassificationPreviewMethod(BaseModel):
+    assay_id: str
+    assignment_method: str
+    status: str
+    reason: Optional[str] = None
+    source_detection_count: int
+    retained_detection_count: int
+    excluded_detection_count: int
+    source_reads: int
+    retained_reads: int
+    excluded_reads: int
+    richness: Optional[int] = None
+    shannon: Optional[float] = None
+    simpson_1d: Optional[float] = None
+    evenness: Optional[float] = None
+    metric_status: str
+    top_taxa: List[ClassificationPreviewTaxon] = Field(default_factory=list)
+
+
+class ClassificationPreviewScenario(BaseModel):
+    sample_kind: str
+    is_control: Optional[bool] = None
+    eligibility: Literal["included", "excluded"]
+    exclusion_reasons: List[str] = Field(default_factory=list)
+    analysis_id: str
+    input_sha256: str
+    table_counts: Dict[str, int]
+    methods: List[ClassificationPreviewMethod] = Field(default_factory=list)
+
+
+class ClassificationReviewPreviewResponse(BaseModel):
+    review_id: uuid.UUID
+    review_state: str
+    review_version: int
+    review_content_sha256: str
+    source_snapshot_id: str
+    sample_id: str
+    provider_sample_id: str
+    algorithm_version: str
+    recipe: Dict[str, Any]
+    canonical_input_sha256: str
+    preview_sha256: str
+    eligibility_changed: bool
+    table_count_delta: Dict[str, int]
+    baseline: ClassificationPreviewScenario
+    proposed: ClassificationPreviewScenario
+    limitations: List[str] = Field(default_factory=list)
 
 
 class UserSummary(BaseModel):
@@ -259,6 +496,13 @@ class ChatResponse(BaseModel):
     retrieval_diagnostics: Dict[str, Any] = Field(default_factory=dict)
     answer_audit: Optional[AnswerAudit] = None
     options: Dict[str, Any] = Field(default_factory=dict)
+    outcome: Literal["answered", "abstained"] = "answered"
+    abstention_reason: Optional[Literal[
+        "no_matching_evidence",
+        "empty_analysis_cohort",
+        "publication_pending",
+    ]] = None
+    model_invoked: bool = True
 
 
 class ChatFeedbackRequest(BaseModel):
@@ -314,6 +558,8 @@ class AdminFeedbackListResponse(BaseModel):
 
 class AdminFeedbackDetail(AdminFeedbackListItem):
     interaction_status: str
+    outcome: Optional[Literal["answered", "abstained"]] = None
+    abstention_reason: Optional[str] = None
     answer: Optional[str] = None
     request_options: Dict[str, Any] = Field(default_factory=dict)
     evidence_snapshot: Dict[str, Any] = Field(default_factory=dict)
@@ -358,6 +604,10 @@ class StatusResponse(BaseModel):
 
 class CorpusStats(BaseModel):
     documents: Dict[str, int]
+    edna_publication: Literal[
+        "ready", "pending", "not_materialized", "unavailable"
+    ]
+    edna_retrieval_documents: Optional[int] = None
     samples: int
     ctd_casts: int
     sst_days: int

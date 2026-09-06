@@ -1,20 +1,26 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { Download } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { DataTable, formatCell } from "@/components/DataTable";
 import {
   downloadEdnaCsv,
+  getClassificationReviews,
   getEdnaAssay,
   getEdnaCatalog,
   getEdnaDetection,
   getEdnaDetections,
   getEdnaSample,
   getEdnaSamples,
+  previewClassificationReview,
   type EdnaFilters,
 } from "@/lib/api";
 import { buildHref } from "@/lib/citation-navigation";
+import {
+  classificationPreviewDeltaRows,
+  classificationPreviewMethodRows,
+} from "@/lib/classification-preview";
 import { EDNA_METHODS, ednaHref, parseEdnaState } from "@/lib/edna-navigation";
 import type {
   EdnaAssayDetailResponse,
@@ -22,6 +28,8 @@ import type {
   EdnaDetectionDetailResponse,
   EdnaPageResponse,
   EdnaSampleDetailResponse,
+  ClassificationReview,
+  ClassificationReviewPreview,
 } from "@/types";
 
 
@@ -51,10 +59,38 @@ export function EdnaDataView() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [exportNote, setExportNote] = useState("");
+  const [classificationReviews, setClassificationReviews] = useState<ClassificationReview[]>([]);
+  const [selectedReviewId, setSelectedReviewId] = useState("");
+  const [classificationPreview, setClassificationPreview] = useState<ClassificationReviewPreview | null>(null);
+  const [classificationError, setClassificationError] = useState("");
+  const [classificationLoading, setClassificationLoading] = useState(false);
+  const [previewMethod, setPreviewMethod] = useState("");
+  const [previewRank, setPreviewRank] = useState<"genus" | "species">("genus");
+  const [previewMinReads, setPreviewMinReads] = useState(1);
+  const [previewTopTaxa, setPreviewTopTaxa] = useState(10);
 
   useEffect(() => {
     getEdnaCatalog().then(setCatalog).catch((err: Error) => setError(err.message));
   }, []);
+
+  useEffect(() => {
+    let active = true;
+    const sampleId = typeof sample?.sample.sample_id === "string" ? sample.sample.sample_id : "";
+    setClassificationReviews([]);
+    setSelectedReviewId("");
+    setClassificationPreview(null);
+    setClassificationError("");
+    if (!sampleId) return () => { active = false; };
+    getClassificationReviews(sampleId)
+      .then((payload) => {
+        if (!active) return;
+        setClassificationReviews(payload.items);
+        const previewable = payload.items.find((item) => ["draft", "approved", "failed"].includes(item.state));
+        setSelectedReviewId((previewable || payload.items[0])?.id || "");
+      })
+      .catch((err: Error) => { if (active) setClassificationError(err.message); });
+    return () => { active = false; };
+  }, [sample]);
 
   useEffect(() => {
     let cancelled = false;
@@ -139,6 +175,33 @@ export function EdnaDataView() {
       setExportNote(result.truncated ? "Export limited to 25,000 rows. Narrow the filters for a complete export." : "");
     } catch (err) {
       setError(err instanceof Error ? err.message : "eDNA export failed");
+    }
+  }
+
+  const selectedReview = useMemo(
+    () => classificationReviews.find((item) => item.id === selectedReviewId),
+    [classificationReviews, selectedReviewId],
+  );
+
+  async function runClassificationPreview() {
+    if (!selectedReview) return;
+    setClassificationLoading(true);
+    setClassificationError("");
+    setClassificationPreview(null);
+    try {
+      setClassificationPreview(await previewClassificationReview(selectedReview.id, {
+        expected_version: selectedReview.version,
+        assignment_methods: previewMethod
+          ? [previewMethod]
+          : ["qcauto_target", "qcauto_95pct_3nn_target"],
+        rank: previewRank,
+        min_read_count: previewMinReads,
+        top_taxa_limit: previewTopTaxa,
+      }));
+    } catch (err) {
+      setClassificationError(err instanceof Error ? err.message : "Classification preview failed");
+    } finally {
+      setClassificationLoading(false);
     }
   }
 
@@ -280,6 +343,77 @@ export function EdnaDataView() {
         </section>
       ) : null}
 
+      {sample ? (
+        <section className="data-section">
+          <h3 className="section-title">Classification review</h3>
+          {classificationError ? <p className="error-text" role="alert">{classificationError}</p> : null}
+          {!classificationReviews.length && !classificationError ? <p>No reviews.</p> : null}
+          {classificationReviews.length ? <>
+            <div className="filter-grid">
+              <label className="control-label">Review
+                <select className="field" value={selectedReviewId} onChange={(event) => { setSelectedReviewId(event.target.value); setClassificationPreview(null); }}>
+                  {classificationReviews.map((item) => <option key={item.id} value={item.id}>{item.state} · {item.sample_kind} · v{item.version}</option>)}
+                </select>
+              </label>
+              <label className="control-label">Assignment method
+                <select className="field" value={previewMethod} onChange={(event) => { setPreviewMethod(event.target.value); setClassificationPreview(null); }}>
+                  <option value="">Both</option>
+                  <option value="qcauto_target">QCauto</option>
+                  <option value="qcauto_95pct_3nn_target">QCauto 95%-3NN</option>
+                </select>
+              </label>
+              <label className="control-label">Rank
+                <select className="field" value={previewRank} onChange={(event) => { setPreviewRank(event.target.value as "genus" | "species"); setClassificationPreview(null); }}>
+                  <option value="genus">Genus</option>
+                  <option value="species">Species</option>
+                </select>
+              </label>
+              <label className="control-label">Minimum reads
+                <input className="field" type="number" min="1" max="1000000000" value={previewMinReads} onChange={(event) => { setPreviewMinReads(Math.min(1000000000, Math.max(1, Number(event.target.value) || 1))); setClassificationPreview(null); }} />
+              </label>
+              <label className="control-label">Top taxa
+                <input className="field" type="number" min="1" max="25" value={previewTopTaxa} onChange={(event) => { setPreviewTopTaxa(Math.min(25, Math.max(1, Number(event.target.value) || 1))); setClassificationPreview(null); }} />
+              </label>
+            </div>
+            <button
+              className="button secondary-button"
+              type="button"
+              disabled={classificationLoading || !selectedReview || !["draft", "approved", "failed"].includes(selectedReview.state)}
+              onClick={() => void runClassificationPreview()}
+            >
+              {classificationLoading ? "Calculating…" : "Preview effect"}
+            </button>
+            <DataTable
+              columns={["state", "sample_kind", "version", "rationale", "scientific_decided_at"]}
+              rows={selectedReview ? [selectedReview] : []}
+            />
+          </> : null}
+          {classificationPreview ? <>
+            <div className="summary-strip">
+              <Metric label="Current" value={classificationPreview.baseline.eligibility} />
+              <Metric label="Proposed" value={classificationPreview.proposed.eligibility} />
+              <Metric label="Current kind" value={classificationPreview.baseline.sample_kind} />
+              <Metric label="Proposed kind" value={classificationPreview.proposed.sample_kind} />
+            </div>
+            <h3 className="section-title">Method results</h3>
+            <DataTable
+              columns={["scenario", "assay_id", "assignment_method", "status", "reason", "source_detection_count", "retained_detection_count", "excluded_detection_count", "source_reads", "retained_reads", "excluded_reads", "richness", "shannon", "simpson_1d", "evenness", "metric_status", "top_taxa"]}
+              rows={classificationPreviewMethodRows(classificationPreview)}
+            />
+            <h3 className="section-title">Changed table counts</h3>
+            <DataTable
+              columns={["table", "current", "proposed", "delta"]}
+              rows={classificationPreviewDeltaRows(classificationPreview)}
+            />
+            <details>
+              <summary>Preview record</summary>
+              <DataTable columns={["preview_sha256", "canonical_input_sha256", "algorithm_version"]} rows={[classificationPreview]} />
+              <ul>{classificationPreview.limitations.map((item) => <li key={item}>{item}</li>)}</ul>
+            </details>
+          </> : null}
+        </section>
+      ) : null}
+
       {assay ? (
         <section className="data-section">
           <h3 className="section-title">Assay</h3>
@@ -313,8 +447,8 @@ export function EdnaDataView() {
   );
 }
 
-function Metric({ label, value }: { label: string; value?: number }) {
-  return <div><span>{label}</span><strong>{value === undefined ? "…" : value.toLocaleString()}</strong></div>;
+function Metric({ label, value }: { label: string; value?: number | string }) {
+  return <div><span>{label}</span><strong>{value === undefined ? "…" : typeof value === "number" ? value.toLocaleString() : value}</strong></div>;
 }
 
 function Pagination({ page, loading, onPage }: { page: EdnaPageResponse | null; loading: boolean; onPage: (offset: number) => void }) {

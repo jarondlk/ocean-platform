@@ -1,4 +1,5 @@
 import json
+from contextlib import contextmanager
 from types import SimpleNamespace
 import sys
 
@@ -17,6 +18,91 @@ def test_job_default_is_offline_plan(monkeypatch, capsys):
     assert json.loads(capsys.readouterr().out)["execute"] is False
 
 
+def test_controlled_application_default_is_offline_without_review_id(
+    monkeypatch, capsys
+):
+    monkeypatch.setattr(sys, "argv", ["job", "--stage", "apply-classification"])
+    monkeypatch.setattr(job, "execute_stage", lambda _: pytest.fail("must not execute"))
+    assert job.main() == 0
+    plan = json.loads(capsys.readouterr().out)
+    assert plan["stage"] == "apply-classification"
+    assert plan["execute"] is False
+
+
+def test_controlled_application_runs_the_fixed_order_and_finalizes(monkeypatch):
+    import api.classification_application_service as lifecycle
+    import db.connection as connection_module
+
+    calls = []
+    application = SimpleNamespace(id="application-id")
+
+    @contextmanager
+    def session():
+        yield object()
+
+    class Connection:
+        dialect = SimpleNamespace(name="sqlite")
+
+        def close(self):
+            calls.append("lock_closed")
+
+    monkeypatch.setattr(connection_module, "get_session", session)
+    monkeypatch.setattr(
+        connection_module,
+        "get_engine",
+        lambda: SimpleNamespace(connect=lambda: Connection()),
+    )
+    monkeypatch.setattr(lifecycle, "workload_actor", lambda _session: "actor")
+    monkeypatch.setattr(
+        lifecycle,
+        "begin_application",
+        lambda *_args, **_kwargs: application,
+    )
+    monkeypatch.setattr(
+        lifecycle,
+        "start_stage",
+        lambda _session, _application_id, stage: (
+            application,
+            calls.append(f"start:{stage}") is None,
+        ),
+    )
+    monkeypatch.setattr(
+        lifecycle,
+        "complete_stage",
+        lambda _session, _application_id, stage, _result: calls.append(
+            f"complete:{stage}"
+        ),
+    )
+    monkeypatch.setattr(
+        lifecycle,
+        "finalize_application",
+        lambda *_args: calls.append("finalize"),
+    )
+    monkeypatch.setattr(lifecycle, "_load_application", lambda *_args: application)
+    monkeypatch.setattr(lifecycle, "application_summary", lambda _application: {"status": "applied"})
+    monkeypatch.setattr(
+        job,
+        "_execute_application_stage",
+        lambda stage, _application_id: calls.append(f"execute:{stage}") or {},
+    )
+    result = job.run_controlled_application(
+        SimpleNamespace(
+            classification_review_id="00000000-0000-4000-8000-000000000001",
+            rollback_of=None,
+            operation_id="ordered-run",
+        )
+    )
+    assert result == {"status": "applied"}
+    expected = []
+    for stage in lifecycle.APPLICATION_STAGES:
+        expected.append(f"start:{stage}")
+        if stage == "finalize":
+            expected.append("finalize")
+        else:
+            expected.extend((f"execute:{stage}", f"complete:{stage}"))
+    assert calls == [*expected, "lock_closed"]
+
+
 @pytest.mark.parametrize(
     "options",
     [
@@ -30,6 +116,9 @@ def test_job_default_is_offline_plan(monkeypatch, capsys):
         ["--stage", "import", "--classification-review", "review.json"],
         ["--stage", "acquire", "--classification-review-artifact-id", "a" * 64],
         ["--stage", "normalize", "--classification-review", "review.json", "--classification-review-artifact-id", "a" * 64],
+        ["--stage", "apply-classification", "--execute"],
+        ["--stage", "apply-classification", "--execute", "--classification-review-id", "not-a-uuid"],
+        ["--stage", "acquire", "--rollback-of", "00000000-0000-0000-0000-000000000000"],
     ],
 )
 def test_job_rejects_missing_scope_and_excess_limits(tmp_path, monkeypatch, options):
@@ -135,6 +224,15 @@ def test_anemone_job_templates_are_bounded_and_secret_files_pinned(tmp_path):
             }
             assert environment["SST_NETCDF_DIR"] == "/mnt/ocean-data/raw/sst-netcdf"
             assert environment["HIMAWARI_RAW_DIR"] == "/mnt/ocean-data/raw/himawari"
+            assert environment["DEPLOYMENT_ENV"] == "production"
+            assert environment["CLASSIFICATION_APPLICATION_ACTOR_SUBJECT"] == (
+                "ocean-jobs@example-project.iam.gserviceaccount.com"
+            )
+            assert task["containers"][0]["args"] == [
+                "scripts/run_anemone_job.py",
+                "--stage",
+                "apply-classification",
+            ]
     with pytest.raises(ValueError, match="pinned"):
         render_templates(
             {**values, "ANEMONE_PASSWORD_VERSION": "latest"},

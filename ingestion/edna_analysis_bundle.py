@@ -330,3 +330,35 @@ def run_analysis(recipe, *, execute=False, environment=None):
         publish_analysis(result)
     return {'execute':execute, 'analysis_id':result['analysis_id'],
             'table_counts':{k:len(v) for k,v in result['tables'].items()}}
+
+
+def regenerate_affected_analyses(sample_id: str, *, maximum: int = 100) -> dict:
+    """Regenerate registered analyses whose recorded inputs contain a sample."""
+    validate_id(sample_id)
+    records = _registered_records()
+    if len(records) > maximum:
+        raise ValueError("Registered analysis regeneration limit exceeded")
+    regenerated = []
+    for record in records:
+        bundle = load_analysis(record['analysis_id'])
+        canonical_samples = bundle['inputs']['canonical']['edna_sample']
+        explicit_samples = bundle['recipe'].get('cohort', {}).get('sample_ids') or []
+        if sample_id not in explicit_samples and not any(
+            row.get('sample_id') == sample_id for row in canonical_samples
+        ):
+            continue
+        environment = bundle['inputs'].get('environment') or []
+        result = run_analysis(
+            AnalysisRecipe.model_validate(bundle['recipe']),
+            execute=True,
+            environment=environment,
+        )
+        regenerated.append({
+            'previous_analysis_id': record['analysis_id'],
+            'analysis_id': result['analysis_id'],
+        })
+    return {
+        'sample_id': sample_id,
+        'affected': len(regenerated),
+        'analysis_ids': regenerated,
+    }

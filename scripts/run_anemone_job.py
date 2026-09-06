@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import sys
 import uuid
+from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import config
@@ -25,7 +26,228 @@ STAGES = (
     "recipe",
     "analyze",
     "provenance",
+    "apply-classification",
 )
+
+
+def _raw_artifact_for_snapshot(store, snapshot_id):
+    matches = sorted(
+        identity
+        for identity, entry in store.entries("raw").items()
+        if entry.get("metadata", {}).get("snapshot_id") == snapshot_id
+    )
+    if len(matches) != 1:
+        raise ValueError("Approved review snapshot must resolve to one raw artifact")
+    return matches[0]
+
+
+def _application_records(application_id):
+    from api.classification_application_service import (
+        _load_application,
+        _review_for_application,
+    )
+    from db.connection import get_session
+
+    with get_session() as session:
+        application = _load_application(session, application_id)
+        review = _review_for_application(session, application, lock=False)
+        return application, review
+
+
+def _execute_application_stage(stage, application_id):
+    from api.classification_application_service import database_review_artifact
+    from db.connection import get_session
+
+    store = ArtifactStore(config.EDNA_ARTIFACT_URI)
+    application, review = _application_records(application_id)
+    results = dict(application.results_json or {})
+    if stage == "register_review":
+        with get_session() as session:
+            from api.classification_application_service import (
+                _load_application,
+                _review_for_application,
+            )
+
+            current = _load_application(session, application_id)
+            current_review = _review_for_application(session, current, lock=False)
+            payload = database_review_artifact(
+                session,
+                current_review,
+                approved_version=current.review_version,
+            )
+        from preprocessing.anemone_classification import parse_review
+
+        payload = parse_review(canonical_bytes(payload))
+        review_artifact_id = digest(payload)
+        store.publish(
+            "classification-reviews",
+            review_artifact_id,
+            {"review.json": canonical_bytes(payload)},
+            metadata={
+                "database_review_id": str(review.id),
+                "review_version": application.review_version,
+                "review_content_sha256": review.content_sha256,
+                "source_snapshot_id": review.source_snapshot_id,
+            },
+        )
+        return {
+            "review_artifact_id": review_artifact_id,
+            "raw_artifact_id": _raw_artifact_for_snapshot(
+                store, review.source_snapshot_id
+            ),
+            "source_snapshot_id": review.source_snapshot_id,
+        }
+    if stage == "normalize":
+        registered = results["register_review"]
+        output = execute_stage(
+            SimpleNamespace(
+                stage="normalize",
+                artifact_id=registered["raw_artifact_id"],
+                classification_review=None,
+                classification_review_artifact_id=registered[
+                    "review_artifact_id"
+                ],
+            )
+        )
+        return {
+            "normalization_id": output["normalization_id"],
+            "normalized_artifact_id": output["artifact_id"],
+        }
+    if stage == "import":
+        output = execute_stage(
+            SimpleNamespace(
+                stage="import",
+                artifact_id=results["normalize"]["normalized_artifact_id"],
+                validate_only=False,
+            )
+        )
+        return {
+            "normalization_id": output["normalization_id"],
+            "tables": output["tables"],
+            "inactivated": output["inactivated"],
+            "committed": output["committed"],
+        }
+    if stage == "materialize":
+        output = execute_stage(
+            SimpleNamespace(stage="materialize", validate_only=False)
+        )
+        manifest = output.get("artifacts", {}).get("manifest") or {}
+        return {
+            "retrieval_generation_id": manifest.get("id"),
+            "documents": output["documents"],
+            "merge": output["merge"],
+        }
+    if stage == "analyze":
+        from ingestion.edna_analysis_bundle import regenerate_affected_analyses
+
+        return regenerate_affected_analyses(review.sample_id)
+    if stage == "embed":
+        from db.vector_store import (
+            embedding_refresh_candidate_count,
+            update_document_embeddings,
+        )
+
+        candidates = embedding_refresh_candidate_count(
+            sample_id=review.sample_id,
+            source_type="edna_metabarcoding",
+        )
+        updated = update_document_embeddings(
+            batch_size=32,
+            sample_id=review.sample_id,
+            source_type="edna_metabarcoding",
+        )
+        return {
+            "sample_id": review.sample_id,
+            "candidates": candidates,
+            "updated": updated,
+        }
+    if stage == "provenance":
+        return execute_stage(
+            SimpleNamespace(
+                stage="provenance",
+                operation_id=application.operation_id,
+                validate_only=False,
+            )
+        )
+    raise ValueError("Unknown controlled application stage")
+
+
+def run_controlled_application(args):
+    from api.classification_application_service import (
+        APPLICATION_STAGES,
+        _load_application,
+        application_summary,
+        begin_application,
+        complete_stage,
+        fail_application,
+        finalize_application,
+        start_stage,
+        workload_actor,
+    )
+    from db.connection import get_engine, get_session
+
+    review_id = uuid.UUID(args.classification_review_id)
+    rollback_id = uuid.UUID(args.rollback_of) if args.rollback_of else None
+    lock_connection = get_engine().connect()
+    locked = True
+    if lock_connection.dialect.name == "postgresql":
+        locked = bool(
+            lock_connection.exec_driver_sql(
+                "SELECT pg_try_advisory_lock(hashtext(%s))",
+                ("classification_application:" + args.operation_id,),
+            ).scalar_one()
+        )
+        lock_connection.commit()
+    if not locked:
+        lock_connection.close()
+        raise ValueError("Classification application operation is already running")
+    try:
+        with get_session() as session:
+            actor = workload_actor(session)
+            application = begin_application(
+                session,
+                review_id=review_id,
+                operation_id=args.operation_id,
+                actor=actor,
+                rollback_of_application_id=rollback_id,
+            )
+            application_id = application.id
+        for stage in APPLICATION_STAGES:
+            try:
+                with get_session() as session:
+                    workload_actor(session)
+                    _, should_run = start_stage(session, application_id, stage)
+                if not should_run:
+                    continue
+                if stage == "finalize":
+                    with get_session() as session:
+                        actor = workload_actor(session)
+                        finalize_application(session, application_id, actor)
+                else:
+                    result = _execute_application_stage(stage, application_id)
+                    with get_session() as session:
+                        complete_stage(session, application_id, stage, result)
+            except Exception:
+                with get_session() as session:
+                    actor = workload_actor(session)
+                    fail_application(
+                        session,
+                        application_id,
+                        stage=stage,
+                        error_code=f"{stage}_failed",
+                        actor=actor,
+                    )
+                raise
+        with get_session() as session:
+            return application_summary(_load_application(session, application_id))
+    finally:
+        if lock_connection.dialect.name == "postgresql" and locked:
+            lock_connection.exec_driver_sql(
+                "SELECT pg_advisory_unlock(hashtext(%s))",
+                ("classification_application:" + args.operation_id,),
+            )
+            lock_connection.commit()
+        lock_connection.close()
 
 
 def import_normalized(normalization_id, *, execute):
@@ -82,6 +304,8 @@ def restore_normalized(store, artifact_id):
 
 def execute_stage(args):
     store = ArtifactStore(config.EDNA_ARTIFACT_URI)
+    if args.stage == "apply-classification":
+        return run_controlled_application(args)
     if args.stage == "classification-review":
         from preprocessing.anemone_classification import read_review
 
@@ -273,6 +497,11 @@ def main():
     review_options = parser.add_mutually_exclusive_group()
     review_options.add_argument("--classification-review", type=Path)
     review_options.add_argument("--classification-review-artifact-id")
+    parser.add_argument("--classification-review-id")
+    parser.add_argument(
+        "--rollback-of",
+        help="Completed application UUID corrected by this superseding review.",
+    )
     parser.add_argument("--max-files", type=int, default=20)
     parser.add_argument("--max-bytes", type=int, default=64 * 1024 * 1024)
     parser.add_argument("--operation-id", default="anemone-" + uuid.uuid4().hex)
@@ -283,6 +512,10 @@ def main():
         parser.error("--classification-review-artifact-id requires normalize stage")
     if args.classification_review_artifact_id:
         validate_id(args.classification_review_artifact_id)
+    if args.classification_review_id and args.stage != "apply-classification":
+        parser.error("--classification-review-id requires apply-classification stage")
+    if args.rollback_of and args.stage != "apply-classification":
+        parser.error("--rollback-of requires apply-classification stage")
     if not 0 < args.max_files <= 2000 or not 0 < args.max_bytes <= 512 * 1024 * 1024:
         parser.error("Pilot limits: 1–2000 files, 1–536870912 bytes")
     if args.validate_only and args.stage not in {
@@ -330,6 +563,15 @@ def main():
             )
         if args.artifact_id:
             validate_id(args.artifact_id)
+    if args.stage == "apply-classification" and args.execute:
+        if not args.classification_review_id:
+            parser.error("--classification-review-id is required")
+        try:
+            uuid.UUID(args.classification_review_id)
+            if args.rollback_of:
+                uuid.UUID(args.rollback_of)
+        except ValueError:
+            parser.error("Classification review and rollback IDs must be UUIDs")
     report = {
         "schema_version": 1,
         "operation_id": args.operation_id,

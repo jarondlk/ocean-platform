@@ -41,15 +41,19 @@ def test_utc_end_date_and_unknown_observations():
         time_bounds('2026-09-02', '2026-09-01')
 
 
-def test_generation_pending_and_corruption_fail_closed(tmp_path, monkeypatch):
+def test_generation_pending_retains_legacy_corpus_and_corruption_fails_closed(tmp_path, monkeypatch):
     monkeypatch.setattr(config, 'SERVING_DIR', tmp_path)
+    (tmp_path / 'retrieval_documents.jsonl').write_text(
+        '{"doc_id":"ctd:legacy","source_type":"ctd","text":"legacy evidence"}\n'
+    )
     docs = build_edna_documents(*_frames())
     _write_artifacts(docs, _document_frame(docs))
     original = retrieval_path('jsonl')
     assert len(LocalRetriever().documents) == 0
     set_pending()
-    with pytest.raises(ValueError, match='incomplete'):
-        LocalRetriever().load()
+    retriever = LocalRetriever()
+    retriever.load()
+    assert [row['doc_id'] for row in retriever.documents] == ['ctd:legacy']
     _write_artifacts(docs, _document_frame(docs))
     assert retrieval_path('jsonl') == original
     manifest = current_manifest()
@@ -61,11 +65,14 @@ def test_generation_pending_and_corruption_fail_closed(tmp_path, monkeypatch):
 
 
 def test_pending_generation_does_not_block_admin_recovery_inventory(tmp_path, monkeypatch):
-    from api.main import _pipeline_artifacts, _artifact_status
+    from api.main import _pipeline_artifacts, _artifact_status, stats
     monkeypatch.setattr(config, 'SERVING_DIR', tmp_path)
     set_pending()
     artifacts = [a for a in _pipeline_artifacts() if a.id.startswith('serving:edna_retrieval_')]
     assert len(artifacts) == 2
     assert all(not a.exists and 'rerun materialization' in a.note for a in artifacts)
-    assert _artifact_status()['edna_publication'] == 'unavailable'
+    assert _artifact_status()['edna_publication'] == 'pending'
     assert _artifact_status()['edna_retrieval_documents'] is None
+    corpus_stats = stats()
+    assert corpus_stats.edna_publication == 'pending'
+    assert corpus_stats.edna_retrieval_documents is None

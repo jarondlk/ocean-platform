@@ -45,8 +45,10 @@ charges and headroom before paid execution. Do not raise these controls implicit
   a complete bootstrap.
   `bootstrap_database.py --check-only` must report every required table,
   including `corpus_publication` and `edna_sample.classification_review_json`.
-  The classification follow-up adds migration `20260903_0008`; apply it before
-  importing v2 normalizations. Earlier pilot records used head `20260902_0007`.
+  Classification storage begins at migration `20260903_0008`; authenticated
+  reviews, preview support, and controlled application extend the local head to
+  `20260905_0011`. Apply the complete head before a controlled run. Earlier
+  pilot records used head `20260902_0007`.
 
 ## Storage and identities
 
@@ -160,6 +162,62 @@ For generation-capable stages `--validate-only` validates/computes without
 publication. Normalization itself is artifact publication, not a DB import.
 The acquisition and processing stages are separate: never invoke the entire
 legacy pipeline simply to load ANEMONE.
+
+## Controlled classification application
+
+This path is only for a database review already approved by an authenticated
+researcher. It does not approve the review and does not infer classification.
+The API and UI do not launch this job.
+
+First preview the one-time workload registration. Run it from the deployed API
+image or another controlled environment connected to the production database:
+
+```bash
+python scripts/register_classification_workload.py \
+  --subject ocean-jobs@<project-id>.iam.gserviceaccount.com
+```
+
+After checking the exact subject, add `--execute`. Registration is idempotent,
+creates an audit event, and fails instead of adopting a conflicting user. The
+job template's `CLASSIFICATION_APPLICATION_ACTOR_SUBJECT` must match exactly.
+The service account has operational admin authority for this job but cannot
+make the researcher's scientific decision.
+
+Review the processing job configuration and current database backup/restore,
+schema, artifact, model, publication, IAM, and cost state. Then manually launch
+one approved review with a stable operation ID:
+
+```bash
+gcloud run jobs execute ocean-anemone-process \
+  --region asia-northeast1 \
+  --args="scripts/run_anemone_job.py,--stage,apply-classification,--execute,--classification-review-id,<review-uuid>,--operation-id,<operation-id>" \
+  --wait
+```
+
+The operation runs immutable review registration, normalization, transactional
+import, retrieval materialization, affected analysis regeneration, sample-
+scoped embedding refresh, provenance publication, and final application receipt.
+The template itself remains an offline plan: it omits `--execute` and a review
+ID so deploying or accidentally starting the default job cannot mutate data.
+
+On failure, inspect `classification_application` and its append-only events for
+the safe stage code, completed IDs, and recovery instructions. Replay the same
+review and operation ID; never invent a new ID to bypass a partial receipt.
+Because a process may stop after a stage commits but before its receipt commits,
+each stage retains its immutable/idempotent behavior on replay.
+
+For an explicit correction or rollback, obtain a new authenticated approved
+review that supersedes the applied review for the same sample, then run:
+
+```bash
+gcloud run jobs execute ocean-anemone-process \
+  --region asia-northeast1 \
+  --args="scripts/run_anemone_job.py,--stage,apply-classification,--execute,--classification-review-id,<superseding-review-uuid>,--rollback-of,<prior-application-uuid>,--operation-id,<rollback-operation-id>" \
+  --wait
+```
+
+This republishes the explicitly reviewed correction and retains the prior
+records. It is not a schema downgrade or blind database restore.
 
 ## Scientific review and saved-answer checks
 

@@ -54,10 +54,15 @@ def embed_batch(
     )
 
 
-def _embedding_refresh_query(session: Any) -> Any:
+def _embedding_refresh_query(
+    session: Any,
+    *,
+    sample_id: Optional[str] = None,
+    source_type: Optional[str] = None,
+) -> Any:
     from .models import RetrievalDocument
 
-    return session.query(RetrievalDocument).filter(
+    query = session.query(RetrievalDocument).filter(
         RetrievalDocument.active.is_(True),
         or_(
             RetrievalDocument.embedding.is_(None),
@@ -69,12 +74,26 @@ def _embedding_refresh_query(session: Any) -> Any:
             RetrievalDocument.embedding_dim.is_(None),
         )
     )
+    if sample_id is not None:
+        query = query.filter(RetrievalDocument.sample_id == sample_id)
+    if source_type is not None:
+        query = query.filter(RetrievalDocument.source_type == source_type)
+    return query
 
 
-def embedding_refresh_candidate_count(limit: Optional[int] = None) -> int:
+def embedding_refresh_candidate_count(
+    limit: Optional[int] = None,
+    *,
+    sample_id: Optional[str] = None,
+    source_type: Optional[str] = None,
+) -> int:
     """Count documents needing the configured embedding identity."""
     with get_session() as session:
-        count = _embedding_refresh_query(session).count()
+        count = _embedding_refresh_query(
+            session,
+            sample_id=sample_id,
+            source_type=source_type,
+        ).count()
     return min(count, limit) if limit is not None else count
 
 
@@ -82,6 +101,8 @@ def update_document_embeddings(
     batch_size: int = 32,
     *,
     limit: Optional[int] = None,
+    sample_id: Optional[str] = None,
+    source_type: Optional[str] = None,
 ) -> int:
     """
     Find retrieval documents without embeddings and compute them.
@@ -92,7 +113,11 @@ def update_document_embeddings(
     count = 0
 
     with get_session() as session:
-        query = _embedding_refresh_query(session).order_by(RetrievalDocument.doc_id)
+        query = _embedding_refresh_query(
+            session,
+            sample_id=sample_id,
+            source_type=source_type,
+        ).order_by(RetrievalDocument.doc_id)
         if limit is not None:
             query = query.limit(limit)
         docs = query.all()

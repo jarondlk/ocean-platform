@@ -76,3 +76,29 @@ def test_embed_batch_propagates_provider_failure(monkeypatch) -> None:
         assert str(exc) == "provider unavailable"
     else:  # pragma: no cover - defensive assertion
         raise AssertionError("provider failure should propagate")
+
+
+def test_embedding_refresh_query_applies_sample_and_source_scope() -> None:
+    class Query:
+        def __init__(self) -> None:
+            self.criteria: list[Any] = []
+
+        def filter(self, *criteria: Any):
+            self.criteria.extend(criteria)
+            return self
+
+    class Session:
+        query_result = Query()
+
+        def query(self, _model: Any) -> Query:
+            return self.query_result
+
+    session = Session()
+    vector_store._embedding_refresh_query(
+        session,
+        sample_id="a" * 64,
+        source_type="edna_metabarcoding",
+    )
+    compiled = " ".join(str(item) for item in session.query_result.criteria)
+    assert "retrieval_document.sample_id" in compiled
+    assert "retrieval_document.source_type" in compiled

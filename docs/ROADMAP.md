@@ -89,16 +89,20 @@ The next patch completes the researcher workflow without changing the
 v0.4.0 scientific boundary. The detailed work order is in
 [`docs/ANEMONE_NEXT_PATCH.md`](ANEMONE_NEXT_PATCH.md).
 
-- [ ] Provide an evidence-backed draft/review/approve-or-reject classification
+- [x] Provide an authenticated, evidence-backed draft/review/approve-or-reject classification
       path with a real reviewer identity, timestamp, rationale, exact source
       rows, and immutable audit history.
-- [ ] Apply approved classifications through normalization, canonical import,
+- [x] Preview classification effects against current canonical data using the
+      existing analysis algorithm without changing corpus or publication state.
+- [x] Apply approved classifications through normalization, canonical import,
       retrieval publication, analysis regeneration, embeddings, and provenance.
-- [ ] Keep unknown and control samples excluded until an approved review is
+- [x] Keep unknown and control samples excluded until an approved review is
       published; never infer classification from names or coordinates.
-- [ ] Add deterministic no-evidence abstention before model generation.
-- [ ] Show recipe-derived filters, exclusion reasons, and empty cohorts clearly
-      in Chat, Data, and analysis views.
+- [x] Add deterministic no-evidence abstention before model generation, with
+      durable outcome metadata and pending-publication handling.
+- [x] Show applied recipe/retrieval filters and empty-cohort outcomes directly
+      in Chat.
+- [ ] Complete exclusion-reason presentation across Data and analysis views.
 - [ ] Run the deferred researcher acceptance matrix, including source-only,
       environmental-only, invalid/empty-cohort, citation, and rollback cases.
 

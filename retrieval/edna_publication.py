@@ -9,6 +9,7 @@ from pathlib import Path
 import config
 from ingestion.immutable_bundle import atomic_json, digest, verify_bundle, read_bundle, validate_id
 from ingestion.artifact_store import ArtifactStore
+from ingestion.provenance_snapshot import SnapshotError
 
 _pending = ContextVar('edna_pending_publication', default=None)
 MAX_CACHE_BYTES = 512 * 1024 * 1024
@@ -16,6 +17,31 @@ MAX_CACHE_BYTES = 512 * 1024 * 1024
 
 def publication_root():
     return (config.EDNA_CACHE_DIR / 'retrieval') if config.EDNA_ARTIFACT_URI else config.SERVING_DIR / "edna_generations"
+
+
+def publication_status() -> str:
+    """Report publication state without resolving or downloading a generation."""
+    try:
+        if config.EDNA_ARTIFACT_URI:
+            payload, _ = ArtifactStore(config.EDNA_ARTIFACT_URI).pointer(
+                "retrieval/current.json"
+            )
+        else:
+            pointer = config.SERVING_DIR / "edna_current.json"
+            if not pointer.exists():
+                compatibility = config.SERVING_DIR / "anemone_retrieval_documents.jsonl"
+                return "ready" if compatibility.exists() else "not_materialized"
+            payload = json.loads(pointer.read_bytes())
+        if payload is None:
+            return "not_materialized"
+        state = payload.get("status")
+        if state == "pending":
+            return "pending"
+        if state == "ready":
+            return "ready"
+        return "unavailable"
+    except (ValueError, OSError, KeyError, json.JSONDecodeError, SnapshotError):
+        return "unavailable"
 
 
 def set_pending():

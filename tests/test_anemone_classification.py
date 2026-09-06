@@ -340,7 +340,6 @@ def minimal_review():
         ("reviewed_at", "2026-09-03"),
         ("reviewed_at", "not-a-time"),
         ("rationale", ""),
-        ("sample_kind", "unknown"),
         ("sample_kind", "field"),
         ("evidence", []),
         ("is_control", False),

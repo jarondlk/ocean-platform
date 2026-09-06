@@ -156,6 +156,8 @@ def _detail_from_row(row: FeedbackRow) -> AdminFeedbackDetail:
     return AdminFeedbackDetail(
         **item.model_dump(),
         interaction_status=interaction.status,
+        outcome=interaction.outcome,
+        abstention_reason=interaction.abstention_reason,
         answer=interaction.answer,
         request_options=interaction.request_options or {},
         evidence_snapshot=interaction.evidence_snapshot or {},

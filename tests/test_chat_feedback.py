@@ -150,6 +150,8 @@ def test_chat_persists_completed_interaction_and_feedback_can_be_revised(
         assert interaction is not None
         assert interaction.user_id == user.id
         assert interaction.status == "completed"
+        assert interaction.outcome == "answered"
+        assert interaction.abstention_reason is None
         assert interaction.answer.startswith("The temperature was")
         assert interaction.evidence_snapshot["sources"][0]["doc_id"] == (
             "ctd:2024-01-O-s1"
@@ -199,6 +201,47 @@ def test_chat_persists_completed_interaction_and_feedback_can_be_revised(
             "chat.feedback_created",
             "chat.feedback_updated",
         ]
+
+
+def test_chat_persists_abstention_and_does_not_call_model(monkeypatch):
+    factory = _database()
+    user = _add_user(factory, "abstention@example.org")
+    _install_database(monkeypatch, factory)
+    monkeypatch.setattr(api_auth, "authenticate_request", lambda _request: user)
+    monkeypatch.setattr(
+        api_main,
+        "retrieve_with_expansion",
+        lambda *args, **kwargs: {
+            "primary": [],
+            "linked": [],
+            "diagnostics": {"edna_publication": "ready"},
+        },
+    )
+
+    class ForbiddenRuntime:
+        def chat(self, *args, **kwargs):
+            raise AssertionError("model must not be called")
+
+    monkeypatch.setattr(api_main, "get_model_runtime", lambda: ForbiddenRuntime())
+    client = TestClient(api_main.app)
+    response = client.post(
+        "/chat",
+        json={
+            "query": "No matching evidence",
+            "inject_analysis": False,
+            "inject_reliability": False,
+        },
+    )
+
+    assert response.status_code == 200
+    interaction_id = uuid.UUID(response.json()["interaction_id"])
+    with factory() as session:
+        interaction = session.get(ChatInteraction, interaction_id)
+        assert interaction.status == "completed"
+        assert interaction.outcome == "abstained"
+        assert interaction.abstention_reason == "no_matching_evidence"
+        assert interaction.answer.endswith("The model was not run.")
+        assert interaction.answer_audit_snapshot is None
 
 
 def test_database_backed_mock_identity_satisfies_chat_foreign_key(

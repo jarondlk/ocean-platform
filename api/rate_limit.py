@@ -41,6 +41,17 @@ def policy_for_request(method: str, path: str) -> Optional[RateLimitPolicy]:
         return RateLimitPolicy("admin_mutation", 10)
     if method == "PATCH" and path.startswith("/admin/users/"):
         return RateLimitPolicy("admin_mutation", 10)
+    if (
+        method == "POST"
+        and path.startswith("/classification-reviews/")
+        and path.endswith("/preview")
+    ):
+        return RateLimitPolicy("classification_preview", 10)
+    if method in {"POST", "PUT", "PATCH"} and (
+        path == "/classification-reviews"
+        or path.startswith("/classification-reviews/")
+    ):
+        return RateLimitPolicy("classification_mutation", 20)
     if method == "POST" and path == "/pipeline/jobs":
         return RateLimitPolicy("pipeline_start", 2)
     if method == "POST" and path.startswith("/evaluation/"):

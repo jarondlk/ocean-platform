@@ -31,6 +31,99 @@ export type UserInvitation = {
   created_at: string;
 };
 
+export type ClassificationEvidence = {
+  source_role: "sample_metadata" | "experiment_metadata";
+  source_file_id: string;
+  source_sha256: string;
+  row_number: number;
+  key: string;
+  value: string;
+};
+
+export type ClassificationReview = {
+  id: string;
+  source_snapshot_id: string;
+  sample_id: string;
+  provider_sample_id: string;
+  sample_kind: "environmental" | "negative_control" | "positive_control" | "mock_community" | "unknown";
+  rationale: string;
+  evidence: ClassificationEvidence[];
+  content_sha256: string;
+  state: "draft" | "approved" | "rejected" | "superseded" | "applied" | "failed";
+  version: number;
+  supersedes_review_id?: string | null;
+  created_by_user_id: string;
+  scientific_decided_by_user_id?: string | null;
+  scientific_decided_at?: string | null;
+  operational_actor_user_id?: string | null;
+  operational_at?: string | null;
+  application_reference?: string | null;
+  failure_code?: string | null;
+  failure_detail?: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ClassificationReviewList = {
+  items: ClassificationReview[];
+  total: number;
+  limit: number;
+  offset: number;
+};
+
+export type ClassificationPreviewMethod = {
+  assay_id: string;
+  assignment_method: string;
+  status: string;
+  reason?: string | null;
+  source_detection_count: number;
+  retained_detection_count: number;
+  excluded_detection_count: number;
+  source_reads: number;
+  retained_reads: number;
+  excluded_reads: number;
+  richness?: number | null;
+  shannon?: number | null;
+  simpson_1d?: number | null;
+  evenness?: number | null;
+  metric_status: string;
+  top_taxa: Array<{
+    taxon: string;
+    read_count: number;
+    read_proportion: number;
+  }>;
+};
+
+export type ClassificationPreviewScenario = {
+  sample_kind: string;
+  is_control?: boolean | null;
+  eligibility: "included" | "excluded";
+  exclusion_reasons: string[];
+  analysis_id: string;
+  input_sha256: string;
+  table_counts: Record<string, number>;
+  methods: ClassificationPreviewMethod[];
+};
+
+export type ClassificationReviewPreview = {
+  review_id: string;
+  review_state: string;
+  review_version: number;
+  review_content_sha256: string;
+  source_snapshot_id: string;
+  sample_id: string;
+  provider_sample_id: string;
+  algorithm_version: string;
+  recipe: Record<string, unknown>;
+  canonical_input_sha256: string;
+  preview_sha256: string;
+  eligibility_changed: boolean;
+  table_count_delta: Record<string, number>;
+  baseline: ClassificationPreviewScenario;
+  proposed: ClassificationPreviewScenario;
+  limitations: string[];
+};
+
 export type SourceDocument = {
   doc_id: string;
   title: string;
@@ -113,6 +206,8 @@ export type StatusResponse = {
 
 export type CorpusStats = {
   documents: Record<string, number>;
+  edna_publication: "ready" | "pending" | "not_materialized" | "unavailable";
+  edna_retrieval_documents?: number | null;
   samples: number;
   ctd_casts: number;
   sst_days: number;
@@ -137,6 +232,9 @@ export type ChatResponse = {
   retrieval_diagnostics: Record<string, unknown>;
   answer_audit?: AnswerAudit | null;
   options: Record<string, unknown>;
+  outcome?: "answered" | "abstained";
+  abstention_reason?: "no_matching_evidence" | "empty_analysis_cohort" | "publication_pending" | null;
+  model_invoked?: boolean;
 };
 
 export type ChatFeedback = {
@@ -186,6 +284,8 @@ export type AdminFeedbackListResponse = {
 
 export type AdminFeedbackDetail = AdminFeedbackListItem & {
   interaction_status: "running" | "completed" | "failed";
+  outcome?: "answered" | "abstained" | null;
+  abstention_reason?: string | null;
   answer?: string | null;
   request_options: Record<string, unknown>;
   evidence_snapshot: Record<string, unknown>;

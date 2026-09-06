@@ -518,6 +518,10 @@ function FeedbackDetail({
             <SummaryCell label="Role" value={detail.user_role} />
             <SummaryCell label="Account" value={detail.user_account_type} />
             <SummaryCell label="Model" value={detail.model || "Unknown"} />
+            <SummaryCell label="Outcome" value={detail.outcome || "Historical"} />
+            {detail.abstention_reason ? (
+              <SummaryCell label="Reason" value={detail.abstention_reason} />
+            ) : null}
             <SummaryCell
               label="Latency"
               value={

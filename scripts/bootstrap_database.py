@@ -23,6 +23,10 @@ REQUIRED_TABLES = frozenset(
         "user_invitation",
         "chat_interaction",
         "chat_feedback",
+        "classification_review",
+        "classification_review_event",
+        "classification_application",
+        "classification_application_event",
         "audit_event",
         "rate_limit_bucket",
         "provenance_record",
@@ -54,6 +58,13 @@ def database_status() -> dict[str, object]:
         column["name"] for column in inspector.get_columns("edna_sample")
     }:
         missing_columns.append("edna_sample.classification_review_json")
+    if "chat_interaction" in tables:
+        chat_columns = {
+            column["name"] for column in inspector.get_columns("chat_interaction")
+        }
+        for column_name in ("outcome", "abstention_reason"):
+            if column_name not in chat_columns:
+                missing_columns.append(f"chat_interaction.{column_name}")
     with engine.connect() as connection:
         vector_installed = bool(
             connection.execute(

@@ -130,6 +130,8 @@ def complete_chat_interaction(
     answer: str,
     answer_audit_snapshot: Optional[Dict[str, Any]],
     latency_ms: int,
+    outcome: str = "answered",
+    abstention_reason: Optional[str] = None,
 ) -> None:
     if interaction_id is None:
         return
@@ -143,6 +145,8 @@ def complete_chat_interaction(
         interaction.status = "completed"
         interaction.answer = answer
         interaction.answer_audit_snapshot = json_safe(answer_audit_snapshot)
+        interaction.outcome = outcome
+        interaction.abstention_reason = abstention_reason
         interaction.latency_ms = max(0, latency_ms)
         interaction.error_code = None
         interaction.completed_at = datetime.now(timezone.utc)

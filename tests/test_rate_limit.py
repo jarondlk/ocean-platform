@@ -22,6 +22,15 @@ def test_expensive_and_mutating_routes_have_scoped_limits():
         "/chat/interactions/interaction-id/feedback",
     ).scope == "feedback"
     assert policy_for_request("POST", "/pipeline/jobs").limit == 2
+    assert policy_for_request(
+        "POST", "/classification-reviews/review-id/decision"
+    ).scope == "classification_mutation"
+    assert policy_for_request(
+        "POST", "/classification-reviews/review-id/preview"
+    ).scope == "classification_preview"
+    assert policy_for_request(
+        "POST", "/classification-reviews/review-id/preview"
+    ).limit == 10
     assert policy_for_request("GET", "/chat") is None
     assert policy_for_request("GET", "/admin/users") is None
 

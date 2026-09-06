@@ -52,6 +52,8 @@ ROLE_PERMISSIONS: Dict[str, FrozenSet[str]] = {
             "provenance:read",
             "evaluation:read",
             "evaluation:run",
+            "classification:read",
+            "classification:decide",
         }
     ),
     "admin": frozenset(
@@ -74,6 +76,8 @@ ROLE_PERMISSIONS: Dict[str, FrozenSet[str]] = {
             "system:read",
             "users:manage",
             "retention:manage",
+            "classification:read",
+            "classification:apply",
         }
     ),
 }
@@ -444,6 +448,14 @@ def route_permission(method: str, path: str) -> Optional[str]:
         return "chat:use"
     if path.startswith("/chat/interactions/"):
         return "feedback:write"
+    if path.startswith("/classification-reviews"):
+        if method == "GET":
+            return "classification:read"
+        if path.endswith("/preview") and method == "POST":
+            return "classification:read"
+        if path.endswith("/application") and method == "POST":
+            return "classification:apply"
+        return "classification:decide"
     if path == "/retrieve" or path == "/documents":
         return "evidence:search"
     if path.startswith('/data/edna/analysis/') and path.endswith('/export'):

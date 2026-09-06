@@ -5,7 +5,12 @@ import math
 import pytest
 
 import config
-from ingestion.edna_analysis_bundle import publish_analysis, load_analysis, context_documents
+from ingestion.edna_analysis_bundle import (
+    context_documents,
+    load_analysis,
+    publish_analysis,
+    regenerate_affected_analyses,
+)
 from preprocessing.edna_analysis import alpha, beta, build_analysis
 from preprocessing.edna_recipe import AnalysisRecipe
 from tests.integration.test_anemone_postgres import _frames
@@ -173,3 +178,45 @@ def test_analysis_snapshot_provenance_roundtrip(tmp_path, monkeypatch):
     changed['edna_analyses'][0]['recipe']['rank'] = 'species'
     with pytest.raises(SnapshotError, match='Incomplete eDNA analysis'):
         prepare_snapshot(changed, manifest_id='invalid')
+
+
+def test_regenerate_affected_analyses_is_sample_scoped_and_bounded(monkeypatch):
+    recipe, source = fixture()
+    affected_id, unrelated_id = "a" * 64, "b" * 64
+    monkeypatch.setattr(
+        "ingestion.edna_analysis_bundle._registered_records",
+        lambda: [{"analysis_id": affected_id}, {"analysis_id": unrelated_id}],
+    )
+
+    def load(identity):
+        selected = source if identity == affected_id else {
+            **source,
+            "edna_sample": [
+                {**source["edna_sample"][0], "sample_id": "e" * 64}
+            ],
+        }
+        return {
+            "recipe": recipe.model_dump(),
+            "inputs": {"canonical": selected, "environment": [{"value": 1}]},
+        }
+
+    calls = []
+
+    def run(selected_recipe, *, execute, environment):
+        calls.append((selected_recipe, execute, environment))
+        return {"analysis_id": "d" * 64}
+
+    monkeypatch.setattr("ingestion.edna_analysis_bundle.load_analysis", load)
+    monkeypatch.setattr("ingestion.edna_analysis_bundle.run_analysis", run)
+    sample_id = source["edna_sample"][0]["sample_id"]
+    result = regenerate_affected_analyses(sample_id)
+    assert result == {
+        "sample_id": sample_id,
+        "affected": 1,
+        "analysis_ids": [
+            {"previous_analysis_id": affected_id, "analysis_id": "d" * 64}
+        ],
+    }
+    assert calls[0][1:] == (True, [{"value": 1}])
+    with pytest.raises(ValueError, match="limit"):
+        regenerate_affected_analyses(sample_id, maximum=1)

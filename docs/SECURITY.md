@@ -219,6 +219,46 @@ remain only under `staging/` and are not evidence.
   credential renewal or scheduled synchronization; credential generation and
   staging cleanup remain operator responsibilities.
 
+## Authenticated classification review boundary
+
+- Classification drafts and scientific decisions require the `researcher` role;
+  operational application outcomes require the `admin` role. Admin access does
+  not grant scientific-decision permission.
+- The service re-resolves the actor against the active application user and
+  rejects disabled authentication, suspended users, and mismatched identity
+  claims. Reviewer/operator IDs, identity snapshots, roles, and timestamps are
+  server-derived and are not accepted from request fields.
+- Review content is bound to the active ANEMONE snapshot, sample, compressed
+  source-file hash, canonical metadata locator and value. Content and event
+  digests detect later row or history changes.
+- Review events are append-only at the ORM boundary and, in PostgreSQL, through
+  a trigger that rejects updates and deletes. Database constraints restrict
+  event role and state-transition combinations.
+- Expected versions, row locks, and one-current-review uniqueness close stale
+  update and competing-approval paths. These controls do not replace database
+  access control or independent audit-log export.
+- The application API never executes normalization, import, retrieval
+  publication, or analysis regeneration. The existing processing job performs
+  those operations only when manually launched with `--execute`, an approved
+  database review UUID, and a fixed pre-registered Cloud Run workload identity.
+- Migration `20260905_0011` stores resumable application runs and append-only
+  stage receipts. Receipt history binds and revalidates the review, snapshot,
+  sample, content digest, operational actor, results, and artifact IDs. A final
+  `applied` outcome is written only after all publication stages succeed.
+- Operation IDs, PostgreSQL advisory locks, and one-running-run uniqueness make
+  replay explicit and reject concurrency. Failures store fixed recovery text,
+  not arbitrary exception details. Rollback requires a new approved review that
+  supersedes the applied decision for the same sample; it is not an unreviewed
+  database restore.
+- Classification preview uses `classification:read`, not decision or application
+  permission. It rejects stale review versions and terminal review states.
+- PostgreSQL preview transactions are repeatable-read and hold the selected
+  review row. Canonical reads are bounded by sample, assay, detection, standard,
+  and source-record caps; unverified source files or snapshots fail closed.
+- Preview runs current and proposed analyses in memory and returns bounded
+  summaries. It performs no artifact, corpus, review-event, embedding, or
+  publication write. Rate limiting uses a separate preview scope.
+
 ## ANEMONE analysis boundary (PR4)
 
 - Analysis is an optional manual batch operation using a strict bounded recipe;

@@ -5,7 +5,8 @@ import uuid
 from datetime import datetime, timedelta, timezone
 
 import pytest
-from sqlalchemy import create_engine, inspect, select
+from sqlalchemy import create_engine, inspect, select, text
+from sqlalchemy.exc import DBAPIError
 from sqlalchemy.orm import Session
 
 import config
@@ -27,6 +28,8 @@ def test_migrations_and_invite_acceptance_persist_app_metadata():
         "user_invitation",
         "chat_interaction",
         "chat_feedback",
+        "classification_review",
+        "classification_review_event",
         "audit_event",
     }.issubset(table_names)
 
@@ -161,3 +164,95 @@ def test_mock_identity_is_database_backed_for_audited_mutations(
         finally:
             if transaction.is_active:
                 transaction.rollback()
+
+
+def test_classification_review_events_are_database_append_only():
+    engine = create_engine(config.DATABASE_URL, pool_pre_ping=True)
+    user_id = uuid.uuid4()
+    review_id = uuid.uuid4()
+    event_id = uuid.uuid4()
+    with engine.connect() as connection:
+        transaction = connection.begin()
+        try:
+            connection.execute(
+                text(
+                    """
+                    INSERT INTO app_user (
+                        id, auth_provider, auth_subject, email, role,
+                        account_type, status
+                    ) VALUES (
+                        :user_id, 'oidc', :subject, :email, 'researcher',
+                        'research', 'active'
+                    )
+                    """
+                ),
+                {
+                    "user_id": user_id,
+                    "subject": f"append-only-{user_id}",
+                    "email": f"append-only-{user_id}@example.org",
+                },
+            )
+            connection.execute(
+                text(
+                    """
+                    INSERT INTO classification_review (
+                        id, source_snapshot_id, sample_id, provider_sample_id,
+                        sample_kind, rationale, evidence_json, content_sha256,
+                        state, version, created_by_user_id
+                    ) VALUES (
+                        :review_id, :snapshot_id, :sample_id, 'sample',
+                        'unknown', 'Evidence is inconclusive.',
+                        CAST(:evidence AS json), :content_sha256,
+                        'draft', 1, :user_id
+                    )
+                    """
+                ),
+                {
+                    "review_id": review_id,
+                    "snapshot_id": "1" * 64,
+                    "sample_id": "2" * 64,
+                    "evidence": "[]",
+                    "content_sha256": "3" * 64,
+                    "user_id": user_id,
+                },
+            )
+            connection.execute(
+                text(
+                    """
+                    INSERT INTO classification_review_event (
+                        id, review_id, sequence, event_type, from_state,
+                        to_state, actor_user_id, actor_role,
+                        actor_identity_json, occurred_at, content_sha256,
+                        event_sha256, review_snapshot_json, details_json
+                    ) VALUES (
+                        :event_id, :review_id, 1, 'created', NULL,
+                        'draft', :user_id, 'researcher',
+                        CAST(:identity AS json), CURRENT_TIMESTAMP,
+                        :content_sha256, :event_sha256,
+                        CAST(:snapshot AS json), CAST(:details AS json)
+                    )
+                    """
+                ),
+                {
+                    "event_id": event_id,
+                    "review_id": review_id,
+                    "user_id": user_id,
+                    "identity": "{}",
+                    "content_sha256": "3" * 64,
+                    "event_sha256": "4" * 64,
+                    "snapshot": "{}",
+                    "details": "{}",
+                },
+            )
+
+            for mutation in (
+                "UPDATE classification_review_event "
+                "SET details_json = '{}' WHERE id = :event_id",
+                "DELETE FROM classification_review_event WHERE id = :event_id",
+            ):
+                savepoint = connection.begin_nested()
+                with pytest.raises(DBAPIError, match="append-only"):
+                    connection.execute(text(mutation), {"event_id": event_id})
+                savepoint.rollback()
+        finally:
+            transaction.rollback()

@@ -6,10 +6,11 @@ import { getStats, getStatus } from "@/lib/api";
 import { useAppPreferences } from "@/lib/preferences";
 import type { CorpusStats, StatusResponse } from "@/types";
 
-const sourceOrder = ["ctd", "metagenome", "remote_sensing"];
+const sourceOrder = ["ctd", "metagenome", "edna_metabarcoding", "remote_sensing"];
 const sourceLabels: Record<string, string> = {
   ctd: "CTD casts",
   metagenome: "Metagenome samples",
+  edna_metabarcoding: "eDNA metabarcoding",
   remote_sensing: "Satellite SST days",
 };
 
@@ -95,6 +96,11 @@ export default function OverviewPage() {
     { label: ui("Model runtime"), value: String(status?.ollama?.available ?? "loading"), ok: Boolean(status?.ollama?.available) },
     { label: ui("Analysis docs"), value: String(stats?.analysis_docs ?? "loading"), ok: Boolean(stats?.analysis_docs) },
     { label: ui("Reliability docs"), value: String(stats?.reliability_docs ?? "loading"), ok: Boolean(stats?.reliability_docs) },
+    {
+      label: ui("eDNA publication"),
+      value: stats?.edna_publication || "loading",
+      ok: stats?.edna_publication === "ready" || stats?.edna_publication === "not_materialized",
+    },
   ];
   const routeGroups = [
     { label: ui("Data"), routes: ["/explore", "/data"] },

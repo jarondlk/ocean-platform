@@ -75,11 +75,50 @@ def test_classification_review_extends_schema_without_changing_raw_metadata():
     assert "raw_metadata_json" in table.columns
 
 
+def test_chat_outcome_migration_extends_the_single_alembic_head():
+    migration = importlib.import_module(
+        "migrations.versions.20260905_0009_chat_outcome"
+    )
+    assert migration.revision == "20260905_0009"
+    assert migration.down_revision == "20260903_0008"
+
+
+def test_authenticated_classification_review_extends_the_single_alembic_head():
+    migration = importlib.import_module(
+        "migrations.versions.20260905_0010_classification_review_domain"
+    )
+    assert migration.revision == "20260905_0010"
+    assert migration.down_revision == "20260905_0009"
+    assert {
+        "classification_review",
+        "classification_review_event",
+    }.issubset(bootstrap.REQUIRED_TABLES)
+
+
+def test_controlled_application_extends_the_single_alembic_head():
+    migration = importlib.import_module(
+        "migrations.versions.20260905_0011_classification_application"
+    )
+    assert migration.revision == "20260905_0011"
+    assert migration.down_revision == "20260905_0010"
+    assert {
+        "classification_application",
+        "classification_application_event",
+    }.issubset(bootstrap.REQUIRED_TABLES)
+
+
 @pytest.mark.parametrize("column_present", [True, False])
 def test_readiness_requires_review_column(monkeypatch, column_present):
+    def columns(table_name):
+        if table_name == "edna_sample":
+            return ([{"name": "classification_review_json"}] if column_present else [])
+        if table_name == "chat_interaction":
+            return [{"name": "outcome"}, {"name": "abstention_reason"}]
+        return []
+
     inspector = SimpleNamespace(
         get_table_names=lambda: list(bootstrap.REQUIRED_TABLES),
-        get_columns=lambda _: [{"name": "classification_review_json"}] if column_present else [],
+        get_columns=columns,
     )
     connection = SimpleNamespace(execute=lambda _: SimpleNamespace(scalar=lambda: True))
     monkeypatch.setattr(bootstrap, "get_engine", lambda: SimpleNamespace(connect=lambda: nullcontext(connection)))
@@ -87,3 +126,25 @@ def test_readiness_requires_review_column(monkeypatch, column_present):
     status = bootstrap.database_status()
     assert status["ready"] is column_present
     assert status["missing_columns"] == ([] if column_present else ["edna_sample.classification_review_json"])
+
+
+def test_readiness_requires_chat_outcome_columns(monkeypatch):
+    def columns(table_name):
+        if table_name == "edna_sample":
+            return [{"name": "classification_review_json"}]
+        if table_name == "chat_interaction":
+            return [{"name": "outcome"}]
+        return []
+
+    inspector = SimpleNamespace(
+        get_table_names=lambda: list(bootstrap.REQUIRED_TABLES),
+        get_columns=columns,
+    )
+    connection = SimpleNamespace(execute=lambda _: SimpleNamespace(scalar=lambda: True))
+    monkeypatch.setattr(bootstrap, "get_engine", lambda: SimpleNamespace(connect=lambda: nullcontext(connection)))
+    monkeypatch.setattr(bootstrap, "inspect", lambda _: inspector)
+
+    status = bootstrap.database_status()
+
+    assert status["ready"] is False
+    assert status["missing_columns"] == ["chat_interaction.abstention_reason"]

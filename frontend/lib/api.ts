@@ -4,6 +4,8 @@ import type {
   AnalysisResponse,
   ChatFeedback,
   ChatResponse,
+  ClassificationReviewList,
+  ClassificationReviewPreview,
   CorpusStats,
   CtdProfileResponse,
   DataCatalogResponse,
@@ -392,6 +394,33 @@ export async function getEdnaSamples(
 export async function getEdnaSample(sampleId: string): Promise<EdnaSampleDetailResponse> {
   return request<EdnaSampleDetailResponse>(
     `/data/edna/samples/${encodeURIComponent(sampleId)}`,
+  );
+}
+
+export async function getClassificationReviews(
+  sampleId: string,
+): Promise<ClassificationReviewList> {
+  return request<ClassificationReviewList>(
+    `/classification-reviews?${searchParams({ sample_id: sampleId, limit: 100 })}`,
+  );
+}
+
+export async function previewClassificationReview(
+  reviewId: string,
+  input: {
+    expected_version: number;
+    assignment_methods: string[];
+    rank: "genus" | "species";
+    min_read_count: number;
+    top_taxa_limit: number;
+  },
+): Promise<ClassificationReviewPreview> {
+  return request<ClassificationReviewPreview>(
+    `/classification-reviews/${encodeURIComponent(reviewId)}/preview`,
+    {
+      method: "POST",
+      body: JSON.stringify(input),
+    },
   );
 }
 

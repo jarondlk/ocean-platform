@@ -23,7 +23,7 @@ spec:
           containers:
             - image: REGION-docker.pkg.dev/PROJECT_ID/ARTIFACT_REPOSITORY/api@ANEMONE_IMAGE_DIGEST
               command: [python]
-              args: [scripts/run_anemone_job.py, --stage, materialize]
+              args: [scripts/run_anemone_job.py, --stage, apply-classification]
               env:
                 - name: DATABASE_URL
                   valueFrom:
@@ -58,6 +58,10 @@ spec:
                   value: "2"
                 - name: DATABASE_MAX_OVERFLOW
                   value: "0"
+                - name: DEPLOYMENT_ENV
+                  value: production
+                - name: CLASSIFICATION_APPLICATION_ACTOR_SUBJECT
+                  value: ocean-jobs@PROJECT_ID.iam.gserviceaccount.com
               resources:
                 limits:
                   cpu: "2"

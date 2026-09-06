@@ -81,6 +81,10 @@ Implemented in the current prototype:
 - Trustworthy multi-source answering with linked cross-source evidence,
   analysis/reliability context injection, Markdown answer rendering, and a
   deterministic Answer Trust Report / Citation Audit.
+- Pre-generation abstention when no usable evidence survives the applied
+  filters, with a recorded outcome/reason and an explicit model-run indicator.
+- Explicit eDNA publication state in corpus statistics and system status;
+  pending eDNA publication retains available legacy retrieval and metrics.
 - Validated citation deep links from chat evidence into exact provenance,
   sample, CTD, taxa, SST, derived-analysis, and reliability views.
 - Evaluation run management for standard and ablation runs, saved run browsing,
@@ -97,14 +101,15 @@ Implemented in the current prototype:
   default-deny API authorization, request limits, security headers, production
   rate limits, a private-service Compose topology, and hardened CI checks.
 
-Still intentionally future work:
+Implemented locally after the deployed release, but not yet shipped:
 
-- Complete the researcher-facing ANEMONE classification review and acceptance
-  workflow. The deployed pilot remains `sample_kind=unknown` and
-  `is_control=null`.
-- Deterministically abstain before model generation when filters leave no
-  evidence, and expose the active recipe-derived filters and empty cohort in
-  the research UI.
+- The authenticated ANEMONE review domain, read-only effect preview, and manual
+  controlled normalization/import/republication job are implemented through
+  local migration head `20260905_0011`. Production migration, deployment, a
+  real approved decision, and researcher acceptance remain pending. The
+  deployed pilot remains `sample_kind=unknown` and `is_control=null`.
+
+Still intentionally future work:
 - Automatic ingestion, file watching, or scheduled cloud sync.
 - Automatic deletion of database rows whose source keys disappear from a batch;
   idempotent upserts retain stale rows and report them for operator review.
@@ -460,6 +465,15 @@ FastAPI service:
 | `/admin/system` | API, database, model, artifact, and runtime status |
 | `/admin/debug` | Debug payloads and low-level diagnostic properties |
 | `/pipeline`, `/database`, `/system`, `/debug` | Compatibility redirects into the corresponding Admin section |
+
+The backend also exposes authenticated `/classification-reviews` endpoints.
+Researchers can draft and decide evidence-bound ANEMONE classifications; admins
+can record operational application outcomes. The selected eDNA sample view can
+preview current versus proposed analysis effects without changing canonical or
+published data. The existing Cloud Run processing job can manually consume an
+approved review ID and republish the affected canonical/retrieval/analysis/
+embedding/provenance chain with resumable receipts. Draft editing UI and any
+web-to-job execution bridge are intentionally absent.
 
 Local development:
 

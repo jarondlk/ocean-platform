@@ -9,6 +9,7 @@ import { EvidenceNavigator } from "@/components/EvidenceNavigator";
 import { MarkdownAnswer } from "@/components/MarkdownAnswer";
 import { askQuestion, getModels } from "@/lib/api";
 import { buildCitationTargetIndex, sourceTarget } from "@/lib/citation-navigation";
+import { abstentionReasonLabel, appliedFilterRows } from "@/lib/chat-presentation";
 import type { CitationTarget } from "@/lib/citation-navigation";
 import type { AnswerAudit, ChatResponse, CitationAuditRecord, ContextDocument, ModelsResponse, SourceDocument } from "@/types";
 import { SourceTable } from "@/components/SourceTable";
@@ -118,6 +119,10 @@ export default function ChatPage() {
     if (!response?.options) return null;
     return JSON.stringify(response.options, null, 2);
   }, [response]);
+  const appliedFilters = useMemo(
+    () => appliedFilterRows(response?.options),
+    [response],
+  );
   const contextRows = useMemo(() => {
     if (!response) return [];
     return [
@@ -260,6 +265,15 @@ export default function ChatPage() {
 
             <article className="card">
               <h3 className="section-title">{ui("Response")}</h3>
+              {response ? (
+                <div className="summary-strip chat-diagnostics">
+                  <SummaryCell label={ui("Outcome")} value={titleCase(response.outcome || "answered")} />
+                  <SummaryCell label={ui("Model run")} value={response.model_invoked === false ? ui("No") : ui("Yes")} />
+                  {response.outcome === "abstained" ? (
+                    <SummaryCell label={ui("Reason")} value={abstentionReasonLabel(response.abstention_reason)} />
+                  ) : null}
+                </div>
+              ) : null}
               <MarkdownAnswer
                 citationTargets={citationTargets}
                 onCitationSelect={setSelectedCitation}
@@ -356,6 +370,7 @@ export default function ChatPage() {
 
                 <div className="summary-strip chat-diagnostics">
                   <SummaryCell label={ui("Model")} value={response.model} />
+                  <SummaryCell label={ui("Model run")} value={response.model_invoked === false ? ui("No") : ui("Yes")} />
                   <SummaryCell label={ui("Primary")} value={response.n_sources} />
                   <SummaryCell label={ui("Linked")} value={response.n_linked_sources || 0} />
                   <SummaryCell label={ui("Coverage")} value={formatCoverage(retrievalDiagnostics.source_coverage_ratio)} />
@@ -364,6 +379,16 @@ export default function ChatPage() {
                   <SummaryCell label={ui("Prompt chars")} value={formatCell(promptDiagnostics.prompt_chars)} />
                   <SummaryCell label={ui("Missing")} value={missingSourceTypes || ui("None")} />
                 </div>
+
+                <div className="section-toolbar compact-toolbar">
+                  <h4 className="subsection-title">{ui("Applied Filters")}</h4>
+                </div>
+                <DataTable
+                  columns={["filter", "value"]}
+                  emptyText="No retrieval filters applied."
+                  rows={appliedFilters}
+                  rowKeyColumn="filter"
+                />
 
                 <div className="section-toolbar compact-toolbar">
                   <h4 className="subsection-title">{ui("Retrieved Evidence")}</h4>

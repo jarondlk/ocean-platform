@@ -17,6 +17,7 @@ import config
 
 from db.connection import get_session
 from db.vector_store import embed_text
+from ingestion.provenance_snapshot import SnapshotError
 from schema.time_range import sql_time_conditions
 
 logger = logging.getLogger(__name__)
@@ -82,7 +83,12 @@ def hybrid_search(
     params: Dict[str, Any] = {"k": k * 2}  # over-fetch for fusion
     if config.EDNA_ARTIFACT_URI:
         from ingestion.artifact_store import ArtifactStore
-        pointer, _ = ArtifactStore(config.EDNA_ARTIFACT_URI).pointer('retrieval/current.json')
+        try:
+            pointer, _ = ArtifactStore(config.EDNA_ARTIFACT_URI).pointer(
+                "retrieval/current.json"
+            )
+        except (ValueError, OSError, KeyError, SnapshotError):
+            pointer = None
         if not pointer or pointer.get('status') != 'ready':
             filters.append("source_type <> 'edna_metabarcoding'")
         else:

@@ -31,8 +31,12 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 import config
 from api.edna_analysis_routes import router as edna_analysis_router
+from api.classification_review_routes import router as classification_review_router
 from schema.time_range import matches_time
-from retrieval.edna_publication import retrieval_path as edna_retrieval_path
+from retrieval.edna_publication import (
+    publication_status as edna_publication_status,
+    retrieval_path as edna_retrieval_path,
+)
 from api.admin_feedback_routes import router as admin_feedback_router
 from api.auth import CurrentUser, authorization_middleware, get_current_user
 from api.auth_routes import router as auth_router
@@ -137,6 +141,11 @@ from evaluation.questions import BENCHMARK_QUESTIONS, QUESTION_CATEGORIES
 from evaluation.reference_answers import get_reference
 from db.backup import backup_capability
 from orchestration.answer_audit import audit_answer
+from orchestration.evidence_availability import (
+    abstention_message,
+    has_usable_evidence,
+    resolve_abstention_reason,
+)
 from orchestration.unified import build_prompt_with_context, retrieve, retrieve_with_expansion
 from retrieval.local_retriever import LocalRetriever
 from ingestion.lineage import (
@@ -166,7 +175,7 @@ async def _app_lifespan(_app: FastAPI):
 app = FastAPI(
     title="OCEAN Platform API",
     description="API layer for the Next.js migration of the provenance-aware marine RAG system.",
-    version="0.4.0",
+    version="0.4.1",
     lifespan=_app_lifespan,
 )
 
@@ -185,6 +194,7 @@ app.include_router(admin_feedback_router)
 app.include_router(feedback_router)
 app.include_router(retention_router)
 app.include_router(edna_analysis_router)
+app.include_router(classification_review_router)
 
 logger = logging.getLogger(__name__)
 
@@ -3564,13 +3574,18 @@ def _ollama_options(request: ChatRequest) -> Dict[str, Any]:
 
 def _artifact_status() -> Dict[str, Any]:
     docs_path = config.SERVING_DIR / "retrieval_documents.jsonl"
-    try:
-        edna_docs_path = edna_retrieval_path("jsonl")
-        edna_count = _count_jsonl(edna_docs_path)
-        edna_exists = edna_docs_path.exists()
-        publication = 'ready' if edna_exists else 'not_materialized'
-    except (ValueError, OSError, KeyError, SnapshotError):
-        edna_count, edna_exists, publication = None, False, 'unavailable'
+    publication = edna_publication_status()
+    edna_count: Optional[int] = None
+    edna_exists = False
+    if publication == "ready":
+        try:
+            edna_docs_path = edna_retrieval_path("jsonl")
+            edna_count = _count_jsonl(edna_docs_path)
+            edna_exists = edna_docs_path.exists()
+            if not edna_exists:
+                publication = "not_materialized"
+        except (ValueError, OSError, KeyError, SnapshotError):
+            publication = "unavailable"
     return {
         "retrieval_documents_jsonl": docs_path.exists(),
         "edna_retrieval_documents_jsonl": edna_exists,
@@ -3624,11 +3639,19 @@ def health() -> StatusResponse:
 @app.get("/stats", response_model=CorpusStats)
 def stats() -> CorpusStats:
     docs = _read_jsonl(config.SERVING_DIR / "retrieval_documents.jsonl")
-    docs.extend(
-        _read_jsonl(
-            edna_retrieval_path("jsonl")
-        )
-    )
+    publication = edna_publication_status()
+    edna_count: Optional[int] = None
+    if publication == "ready":
+        try:
+            edna_docs_path = edna_retrieval_path("jsonl")
+            if edna_docs_path.exists():
+                edna_docs = _read_jsonl(edna_docs_path)
+                edna_count = len(edna_docs)
+                docs.extend(edna_docs)
+            else:
+                publication = "not_materialized"
+        except (ValueError, OSError, KeyError, SnapshotError):
+            publication = "unavailable"
     counts: Dict[str, int] = {}
     for doc in docs:
         source_type = str(doc.get("source_type") or "unknown")
@@ -3636,6 +3659,8 @@ def stats() -> CorpusStats:
 
     return CorpusStats(
         documents=counts,
+        edna_publication=publication,
+        edna_retrieval_documents=edna_count,
         samples=_parquet_rows(config.SERVING_DIR / "sample_registry.parquet"),
         ctd_casts=_parquet_rows(config.NORMALIZED_DIR / "ctd_summary.parquet"),
         sst_days=_parquet_rows(config.NORMALIZED_DIR / "sst_daily_summary.parquet"),
@@ -5262,6 +5287,49 @@ def chat(
             prompt=prompt,
         )
 
+        if not has_usable_evidence(
+            rows,
+            linked_rows,
+            context.get("analysis", []),
+            context.get("reliability", []),
+        ):
+            reason = resolve_abstention_reason(
+                analysis_id=request.analysis_id,
+                retrieval_diagnostics=retrieval_diagnostics,
+            )
+            answer = abstention_message(reason)
+            complete_chat_interaction(
+                interaction_id=interaction_id,
+                user=user,
+                answer=answer,
+                answer_audit_snapshot=None,
+                latency_ms=_chat_latency_ms(started_at),
+                outcome="abstained",
+                abstention_reason=reason,
+            )
+            return ChatResponse(
+                interaction_id=interaction_id,
+                query=request.query,
+                answer=answer,
+                sources=sources,
+                linked_sources=linked_sources,
+                analysis_context=analysis_context,
+                reliability_context=reliability_context,
+                model=model,
+                n_sources=len(rows),
+                n_linked_sources=len(linked_rows),
+                n_context_documents=(
+                    len(analysis_context) + len(reliability_context)
+                ),
+                prompt_diagnostics=prompt_diagnostics,
+                retrieval_diagnostics=retrieval_diagnostics,
+                answer_audit=None,
+                options=response_options,
+                outcome="abstained",
+                abstention_reason=reason,
+                model_invoked=False,
+            )
+
         try:
             answer = get_model_runtime().chat(
                 model=model,
@@ -5304,6 +5372,8 @@ def chat(
             answer=answer,
             answer_audit_snapshot=json_safe(answer_audit),
             latency_ms=_chat_latency_ms(started_at),
+            outcome="answered",
+            abstention_reason=None,
         )
 
         return ChatResponse(
@@ -5324,6 +5394,9 @@ def chat(
             retrieval_diagnostics=retrieval_diagnostics,
             answer_audit=answer_audit,
             options=response_options,
+            outcome="answered",
+            abstention_reason=None,
+            model_invoked=True,
         )
     except HTTPException:
         raise

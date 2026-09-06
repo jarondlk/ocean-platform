@@ -37,8 +37,18 @@ class ClassificationEvidence(StrictRecord):
 class ClassificationDecision(StrictRecord):
     provider_sample_id: Annotated[str, Field(min_length=1, max_length=512)]
     sample_kind: Literal[
-        "environmental", "negative_control", "positive_control", "mock_community"
+        "environmental",
+        "negative_control",
+        "positive_control",
+        "mock_community",
+        "unknown",
     ]
+    review_id: Annotated[
+        str | None,
+        Field(pattern=r"^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"),
+    ] = None
+    review_version: Annotated[int | None, Field(ge=1)] = None
+    review_content_sha256: Sha256 | None = None
     reviewer: Annotated[str, Field(min_length=1, max_length=256)]
     reviewed_at: Annotated[str, Field(min_length=1, max_length=64)]
     rationale: Text
@@ -85,7 +95,9 @@ def parse_review(data: bytes) -> dict:
 
     try:
         payload = json.loads(data, object_pairs_hook=unique_object)
-        review = ClassificationReview.model_validate(payload).model_dump()
+        review = ClassificationReview.model_validate(payload).model_dump(
+            exclude_none=True
+        )
     except (ValueError, UnicodeError, ValidationError) as exc:
         raise ReviewError("Invalid or unapproved classification review.") from exc
     samples = [item["provider_sample_id"] for item in review["decisions"]]

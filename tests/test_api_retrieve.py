@@ -189,6 +189,9 @@ def test_chat_response_includes_context_ledger(tmp_path, monkeypatch):
     assert payload["answer_audit"]["reliability_context_cited"] == 1
     assert payload["answer_audit"]["citation_requirements"]["required_context_types"] == ["analysis", "reliability"]
     assert payload["answer_audit"]["citation_requirements"]["missing_source_types"] == []
+    assert payload["outcome"] == "answered"
+    assert payload["abstention_reason"] is None
+    assert payload["model_invoked"] is True
 
 
 def test_chat_can_disable_answer_audit(monkeypatch):
@@ -204,9 +207,9 @@ def test_chat_can_disable_answer_audit(monkeypatch):
             ],
             "linked": [],
             "diagnostics": {
-                "expected_source_types": ["ctd"],
+                "expected_source_types": ["ctd", "remote_sensing"],
                 "retrieved_source_types": ["ctd"],
-                "missing_source_types": [],
+                "missing_source_types": ["remote_sensing"],
             },
         }
 
@@ -237,3 +240,112 @@ def test_chat_can_disable_answer_audit(monkeypatch):
 
     assert response.status_code == 200
     assert response.json()["answer_audit"] is None
+    assert response.json()["outcome"] == "answered"
+    assert response.json()["model_invoked"] is True
+
+
+def test_chat_abstains_before_model_when_no_evidence(monkeypatch):
+    monkeypatch.setattr(
+        api_main,
+        "retrieve_with_expansion",
+        lambda *args, **kwargs: {
+            "primary": [],
+            "linked": [],
+            "diagnostics": {"edna_publication": "ready"},
+        },
+    )
+
+    class ForbiddenRuntime:
+        def chat(self, *args, **kwargs):
+            raise AssertionError("model must not be called without evidence")
+
+    monkeypatch.setattr(api_main, "get_model_runtime", lambda: ForbiddenRuntime())
+    response = client.post(
+        "/chat",
+        json={
+            "query": "Question with no matching evidence",
+            "inject_analysis": False,
+            "inject_reliability": False,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["outcome"] == "abstained"
+    assert payload["abstention_reason"] == "no_matching_evidence"
+    assert payload["model_invoked"] is False
+    assert payload["answer"] == (
+        "No evidence matched the current filters. The model was not run."
+    )
+    assert payload["answer_audit"] is None
+
+
+def test_chat_reports_empty_analysis_cohort_without_model(monkeypatch):
+    monkeypatch.setattr(
+        api_main,
+        "_resolve_analysis_request",
+        lambda request: (request, set(), set()),
+    )
+    monkeypatch.setattr(
+        api_main,
+        "retrieve_with_expansion",
+        lambda *args, **kwargs: {
+            "primary": [],
+            "linked": [],
+            "diagnostics": {"edna_publication": "ready"},
+        },
+    )
+
+    class ForbiddenRuntime:
+        def chat(self, *args, **kwargs):
+            raise AssertionError("model must not be called for an empty cohort")
+
+    monkeypatch.setattr(api_main, "get_model_runtime", lambda: ForbiddenRuntime())
+    response = client.post(
+        "/chat",
+        json={
+            "query": "Analyze this cohort",
+            "analysis_id": "a" * 64,
+            "inject_analysis": False,
+            "inject_reliability": False,
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json()["abstention_reason"] == "empty_analysis_cohort"
+    assert response.json()["model_invoked"] is False
+
+
+def test_chat_reports_pending_edna_publication_without_model(monkeypatch):
+    monkeypatch.setattr(
+        api_main,
+        "retrieve_with_expansion",
+        lambda *args, **kwargs: {
+            "primary": [],
+            "linked": [],
+            "diagnostics": {
+                "edna_publication": "pending",
+                "edna_scope_applied": True,
+            },
+        },
+    )
+
+    class ForbiddenRuntime:
+        def chat(self, *args, **kwargs):
+            raise AssertionError("model must not be called while publication is pending")
+
+    monkeypatch.setattr(api_main, "get_model_runtime", lambda: ForbiddenRuntime())
+    response = client.post(
+        "/chat",
+        json={
+            "query": "Which fish were detected?",
+            "source_type": "edna_metabarcoding",
+            "inject_analysis": False,
+            "inject_reliability": False,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["abstention_reason"] == "publication_pending"
+    assert payload["model_invoked"] is False

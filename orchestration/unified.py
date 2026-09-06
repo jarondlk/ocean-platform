@@ -13,7 +13,9 @@ from typing import Any, Dict, List, Optional, Set
 
 import config
 from model_runtime import get_model_runtime
+from orchestration.evidence_availability import abstention_message, has_usable_evidence
 from orchestration.prompt_safety import bound_prompt_section, safe_prompt_text
+from retrieval.edna_publication import publication_status
 
 logger = logging.getLogger(__name__)
 
@@ -497,6 +499,25 @@ def retrieve_with_expansion(
         expected_source_types=([_normalize_source_type(source_type)] if source_type else
             ['edna_metabarcoding'] if any(value is not None for value in (provider, provider_project_id, provider_run_id, assignment_method, taxon, sample_kind, is_control)) else None),
     )
+    edna_scope_applied = (
+        _normalize_source_type(source_type) == "edna_metabarcoding"
+        or sample_ids is not None
+        or assignment_methods is not None
+        or any(
+            value is not None
+            for value in (
+                provider,
+                provider_project_id,
+                provider_run_id,
+                assignment_method,
+                taxon,
+                sample_kind,
+                is_control,
+            )
+        )
+    )
+    diagnostics["edna_publication"] = publication_status()
+    diagnostics["edna_scope_applied"] = edna_scope_applied
     return {
         "primary": primary,
         "linked": linked,
@@ -753,11 +774,26 @@ def ask(
         time_from=time_from, time_to=time_to,
     )
 
-    # Build prompt
-    prompt = build_prompt(query, results)
+    # Build prompt and inspect every context source before generation.
+    prompt, context = build_prompt_with_context(query, results)
 
     # Call the configured model runtime.
     model = model or config.CHAT_MODEL
+    if not has_usable_evidence(
+        results,
+        context.get("analysis", []),
+        context.get("reliability", []),
+    ):
+        return {
+            "query": query,
+            "answer": abstention_message("no_matching_evidence"),
+            "sources": results,
+            "model": model,
+            "n_sources": len(results),
+            "outcome": "abstained",
+            "abstention_reason": "no_matching_evidence",
+            "model_invoked": False,
+        }
     try:
         answer = get_model_runtime().chat(
             model=model,
@@ -773,4 +809,7 @@ def ask(
         "sources": results,
         "model": model,
         "n_sources": len(results),
+        "outcome": "answered",
+        "abstention_reason": None,
+        "model_invoked": True,
     }

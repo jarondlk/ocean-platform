@@ -1,8 +1,8 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-09-05 JST
+> **Last updated**: 2026-09-06 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform release `v0.4.0` is live on Cloud Run service `ocean-platform`, including the bounded ANEMONE MiFish pilot. Classification remains unknown; researcher classification, deterministic no-evidence abstention, and full scientific/model-answer acceptance are deferred to the next patch. The deployed source remains `a63885a`; dependency/security maintenance has since merged to remote `main` and `gcp-dev` at `4a4bd38` but is not deployed. See the [release operations record](docs/RELEASE_0.4.0_OPERATIONS.md).
+> **Current status**: OCEAN Platform release `v0.4.0` is live on Cloud Run service `ocean-platform`, including the bounded ANEMONE MiFish pilot. Classification remains unknown. PR1 deterministic no-evidence safety, PR2's authenticated classification review domain, PR3's read-only effect preview, and PR4's manual controlled application/republication job are implemented locally but are uncommitted and not deployed. Production migration, a real approved decision, and full scientific/model-answer acceptance remain pending. The deployed source remains `a63885a`; dependency/security maintenance has since merged to remote `main` and `gcp-dev` at `4a4bd38` but is not deployed. See the [release operations record](docs/RELEASE_0.4.0_OPERATIONS.md).
 
 ---
 
@@ -42,6 +42,30 @@ used only as historical reference and parity material.
 ---
 
 ## 2. What Changed Recently
+
+### Next-patch PR1–PR4 (local, 2026-09-06)
+
+- PR1 adds deterministic abstention before model generation when no usable
+  evidence remains, durable answer/abstention outcomes, visible scientific
+  filters, and explicit pending eDNA publication state.
+- PR2 adds persistent authenticated classification drafts and append-only review
+  events. Researchers make scientific decisions; admins only record operational
+  application outcomes. Identity and time are server-derived, `unknown` remains
+  valid, and evidence is bound to snapshot/sample/file hash/TSV row/value.
+- PR3 adds a bounded, repeatable, read-only preview using the existing eDNA
+  analysis algorithm. Data shows current/proposed inclusion, method metrics,
+  composition, and table-count changes with a reproducibility digest.
+- PR4 adds the manual Cloud Run controlled-application path: durable resumable
+  stage receipts, fixed workload identity, immutable review registration,
+  exact-snapshot normalization, transactional import, affected republication,
+  safe recovery, idempotent replay, and superseding-review rollback.
+- Final local verification passed 688 backend tests with 12 expected
+  PostgreSQL-gated skips and 78.31% coverage; all 12 fresh PostgreSQL integration
+  tests; 18 frontend tests, TypeScript, and the 24-route production build; Ruff,
+  `pip check`, zero production npm vulnerabilities, one Alembic head
+  `20260905_0011`, downgrade/re-upgrade, and diff checks.
+- None of these PRs is committed, migrated, deployed, or production-auth
+  accepted. No real classification decision has been approved or applied.
 
 ### Post-release dependency and security maintenance (2026-09-04)
 
@@ -1163,19 +1187,17 @@ git diff --check
 | Evaluation execution | Serving instances deliberately reject in-process jobs; the UI start controls are not yet connected to the external Cloud Run evaluation job |
 | Security operations require repository settings | CodeQL and dependency automation exist; branch/environment protections, retention enforcement, cost review, and alerting still require operator review |
 | Historical milestone plans | `docs/PRE_MILESTONE_VALIDATION_PLAN.md`, `docs/PHASE7_RELEASE_RUNBOOK.md`, and `deploy/gcp/MIGRATION_PLAN.md` retain dated gates; current cloud evidence is in `docs/DEPLOYMENT.md` and `docs/RELEASE_0.4.0_OPERATIONS.md` |
-| ANEMONE classification | The pilot remains unknown. Researcher review, approval/rejection, audit identity, and end-to-end republication are next-patch work |
-| Empty evidence cohorts | Filters can leave no evidence; deterministic pre-generation abstention and visible recipe filters are required before accepting that workflow |
+| ANEMONE classification | The pilot remains unknown. Authenticated review/decision/audit persistence, read-only effect preview, and manual controlled end-to-end republication are implemented locally; production migration, deployment, a real decision, and researcher acceptance remain |
+| Empty evidence cohorts | Deterministic pre-generation abstention and visible recipe filters are implemented locally but not deployed or production-auth accepted |
 
 ---
 
 ## 13. Recommended Next Work Order
 
-1. Implement the next-patch ANEMONE classification workflow in
-   [`docs/ANEMONE_NEXT_PATCH.md`](docs/ANEMONE_NEXT_PATCH.md): evidence-backed
-   draft, real researcher review, approve/reject decision, immutable audit, and
-   end-to-end republication.
-2. Add deterministic no-evidence abstention before generation and make active
-   recipe-derived filters, exclusions, and empty cohorts visible in the UI.
+1. Finish CI-equivalent review, then commit the local PR1–PR4 no-evidence,
+   authenticated review, preview, and controlled-publication changes.
+2. Apply migration `20260905_0011`, register the fixed processing workload
+   identity, and deploy only after backup/restore and rollback rehearsal.
 3. Run the deferred researcher acceptance matrix without claiming taxonomic
    accuracy, contamination clearance, or environmental overlap beyond the
    reviewed evidence.

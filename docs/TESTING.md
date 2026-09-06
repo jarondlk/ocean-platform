@@ -348,6 +348,108 @@ paired method differences, explicit controls, units, distance/time/depth/domain,
 SST footprints/coverage, byte/row caps, immutable corruption/freshness, source
 scope, provenance snapshot roundtrips and export escaping.
 
+### No-evidence generation safety — 2026-09-05
+
+The PR1 safety regression boundary covers general no-match retrieval, empty
+analysis cohorts, disabled supplementary context, pending eDNA publication,
+durable abstention records, available-evidence generation, local legacy-corpus
+retention, `/stats`, migration readiness, and direct frontend presentation.
+
+```bash
+python -m pytest \
+  tests/test_evidence_availability.py \
+  tests/test_api_retrieve.py \
+  tests/test_chat_feedback.py \
+  tests/test_pr3_review_fixes.py \
+  tests/test_bootstrap_database.py -q
+cd frontend && npm test && npm run typecheck && npm run build
+```
+
+Verification passed 651 backend tests with 9 service-gated skips, 16 frontend
+tests, TypeScript checking, production build, Ruff, one Alembic head, and diff
+checks. The ANEMONE acquisition tests bind a temporary localhost fixture server;
+the full suite therefore needs local loopback access in restricted runners.
+
+### Authenticated classification review domain — 2026-09-05
+
+The PR2 domain regression boundary covers researcher/admin/viewer permissions,
+server-derived identity and time, strict request fields, `unknown` decisions,
+every supported state, invalid transitions, supersession, stale snapshots,
+optimistic versions, competing-current-review uniqueness, source hash/row/value
+checks, review-content tampering, event tampering, and append-only ORM behavior.
+
+```bash
+python -m pytest \
+  tests/test_classification_review_domain.py \
+  tests/test_auth.py \
+  tests/test_rate_limit.py \
+  tests/test_bootstrap_database.py \
+  tests/test_security_hardening.py -q
+```
+
+The focused run passed 79 tests. The combined PR1/PR2 repository run passed 666
+backend tests with 10 PostgreSQL-gated skips, 16 frontend tests, TypeScript,
+the 24-route production build, Ruff, `git diff --check`, and the single Alembic
+head `20260905_0010`.
+
+Migration `20260905_0010` was also applied from an empty disposable
+PostgreSQL 16/pgvector database. All three application-metadata integration
+tests passed, including direct SQL attempts to update and delete a review event;
+both were rejected by the PostgreSQL append-only trigger. The disposable
+container was removed after verification. Production migration, OIDC acceptance,
+canonical classification application, deployment, and live scientific review
+were not performed.
+
+### Classification effect preview — 2026-09-05
+
+The PR3 preview boundary covers researcher/admin read access, viewer denial,
+strict and bounded recipe fields, deterministic current/proposed comparisons,
+environmental inclusion, continued exclusion of unknown and control outcomes,
+stale versions and terminal states, incomplete provenance, resource limits,
+stable digests, and the absence of review-event or canonical-corpus writes.
+
+```bash
+python -m pytest \
+  tests/test_classification_review_domain.py \
+  tests/test_auth.py \
+  tests/test_rate_limit.py -q
+cd frontend && npm test && npm run typecheck && npm run build
+```
+
+The focused backend run passed 74 tests. The full repository run passed 673
+backend tests with 11 expected PostgreSQL-gated skips and 77.98% aggregate
+CI-boundary coverage (70% required); the frontend passed 18 tests, TypeScript
+checking, and the 24-route production build. Ruff, dependency consistency,
+`git diff --check`, and Alembic head `20260905_0010` passed.
+
+The complete 11-test CI-order integration selection passed against a freshly
+migrated PostgreSQL 16/pgvector database. Its PR3 case verifies repeatable-read
+isolation and rolls back its sample, review, and append-only event fixture as a
+single outer transaction. The disposable database was removed. No production
+migration, OIDC acceptance, controlled application, or deployment was run.
+
+### Controlled classification application — 2026-09-06
+
+PR4 connects approved database reviews to the existing manual processing job.
+Focused tests cover ordered durable stage receipts, completed replay, restart
+after an interrupted/failed stage, stale and superseded approvals, competing
+runs, event/application tamper detection, authenticated decision artifact
+conversion, valid `unknown`, matching superseding-review rollback, audited
+workload registration, offline-by-default CLI validation, affected analysis
+selection, and sample/source-scoped embedding refresh.
+
+Migration `20260905_0011` was applied to a fresh disposable PostgreSQL 16 /
+pgvector database, downgraded to `20260905_0010`, and re-applied. The complete
+12-test PostgreSQL integration set passed, including database-enforced
+append-only application events and one-running-run uniqueness. No production
+migration, Cloud Run execution, live model call, classification decision, or
+deployment was performed.
+
+The final CI-equivalent local gate passed 688 backend tests with 12 expected
+PostgreSQL-gated skips and 78.31% coverage, 18 frontend tests, TypeScript, and
+the 24-route production build. Ruff, `pip check`, the npm production audit with
+zero vulnerabilities, one Alembic head, and `git diff --check` also passed.
+
 Generate a reviewed analysis manually (set `DATABASE_URL` using the existing
 local secret configuration, never command-line credentials):
 
@@ -413,16 +515,21 @@ AUTH_MODE=disabled \
 DEPLOYMENT_ENV=test \
 python -m pytest \
   tests/integration/test_app_metadata_postgres.py \
+  tests/integration/test_classification_application_postgres.py \
+  tests/integration/test_classification_preview_postgres.py \
   tests/integration/test_operational_postgres.py \
   tests/integration/test_anemone_postgres.py \
+  tests/integration/test_edna_analysis_postgres.py \
   -q
 ```
 
 The tests verify migrated tables, invite acceptance, user persistence,
 database-backed mock identity suspension, audited invitation mutations,
-shared rate-limit behavior, the eDNA schema, idempotent eDNA merge,
-scientific-correction reporting, and scoped inactivation. Their records are
-isolated and cleaned up.
+append-only classification/republication events, controlled-run concurrency,
+shared rate-limit behavior, the eDNA schema,
+idempotent eDNA merge, scientific-correction reporting, and scoped inactivation.
+Their records are isolated or run only inside the disposable database. The PR3
+preview fixture is rolled back without weakening the append-only event trigger.
 
 Exercise the database mutation safety path:
 

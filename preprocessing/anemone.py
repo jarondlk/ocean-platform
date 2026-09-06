@@ -651,7 +651,9 @@ def build_anemone_bundle(
                 "decision": reviews[provider_sample_id],
             }
             sample_kind = review_record["decision"]["sample_kind"]
-            is_control = sample_kind != "environmental"
+            is_control = (
+                None if sample_kind == "unknown" else sample_kind != "environmental"
+            )
             classification_basis = "review:" + stable_sha256(review_record)
         if sample_kind not in SAMPLE_KINDS:
             raise AssertionError("unreachable")
