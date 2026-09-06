@@ -33,7 +33,7 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The bounded GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.4.0`. The active data plane now uses the
+  and OCEAN Platform release `v0.4.1`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
 - The bounded ANEMONE MiFish pilot is stored as a distinct
@@ -83,10 +83,10 @@ inventoried and cited but are not downloaded or processed by default. The
 short-lived download credential keeps acquisition manual until a reviewed
 machine-access arrangement exists.
 
-## Next MVP: ANEMONE Classification and No-Evidence Safety
+## Completed MVP: ANEMONE Classification and No-Evidence Safety
 
-The next patch completes the researcher workflow without changing the
-v0.4.0 scientific boundary. The detailed work order is in
+Released as `v0.4.1` without changing the retained pilot's `unknown`
+classification. The detailed work order is in
 [`docs/ANEMONE_NEXT_PATCH.md`](ANEMONE_NEXT_PATCH.md).
 
 - [x] Provide an authenticated, evidence-backed draft/review/approve-or-reject classification
@@ -105,6 +105,10 @@ v0.4.0 scientific boundary. The detailed work order is in
 - [ ] Complete exclusion-reason presentation across Data and analysis views.
 - [ ] Run the deferred researcher acceptance matrix, including source-only,
       environmental-only, invalid/empty-cohort, citation, and rollback cases.
+
+The two unchecked items are post-release scientific acceptance work, not
+permission to infer or apply a classification. `unknown` remains a valid final
+outcome.
 
 ## Near-Term Priority: Manual Scheduled Batch Updates
 

@@ -1,7 +1,8 @@
 # ANEMONE classification PR4 — controlled application and republication
 
-Status: implemented locally on `codex/mvp-pr4-controlled-application`.
-PR1–PR3 remain uncommitted prerequisites in the same worktree.
+Status: implemented, locally verified, merged with PR1–PR3, migrated, and
+deployed in `v0.4.1`. The workload identity is registered; no real scientific
+review has been approved or applied.
 
 ## Objective
 

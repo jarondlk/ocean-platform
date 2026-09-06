@@ -45,4 +45,5 @@ The release gate passed 688 backend tests with 12 expected service-gated skips
 and 78.31% coverage, 12 PostgreSQL integration tests, 18 frontend tests,
 TypeScript, the 24-route production build, Ruff, dependency checks, migration
 downgrade/re-upgrade, and diff validation. Live deployment checks are recorded
-separately and must not be inferred from local verification.
+in the [v0.4.1 operations record](RELEASE_0.4.1_OPERATIONS.md) and must not be
+inferred from local verification.

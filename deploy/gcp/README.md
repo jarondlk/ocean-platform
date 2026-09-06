@@ -16,13 +16,13 @@ Cost controls must be in place before runtime resources are created.
 
 ## Current deployed milestone
 
-Verified on 2026-09-03 JST:
+Verified on 2026-09-06 JST:
 
 - project `data-infra-infobio`, region `asia-northeast1`;
-- OCEAN Platform [GitHub release `v0.4.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.0);
-- build `76b31adb-28d6-4daa-a9cc-f114d36bd753`, revision
-  `ocean-platform-v040-a63885a`; immutable image digests, backup/restore checks,
-  pilot identities and limitations in the [operations record](../../docs/RELEASE_0.4.0_OPERATIONS.md);
+- OCEAN Platform [GitHub release `v0.4.1`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.1);
+- build `97dbe5d3-c464-4e14-9350-72c83b4b7ec1`, revision
+  `ocean-platform-v041-706348e`; immutable image digests, backup/restore checks,
+  workload registration, and limitations in the [operations record](../../docs/RELEASE_0.4.1_OPERATIONS.md);
 - Cloud Run service `ocean-platform` at 100% traffic;
 - Artifact Registry `ocean-platform`; service accounts `ocean-platform` and
   `ocean-jobs`; secrets and jobs under the `ocean-*` prefix;
@@ -35,18 +35,17 @@ Verified on 2026-09-03 JST:
 - reviewed Artifact Registry cleanup is active for both repositories, and
   transient Cloud Build source archives expire after 30 days;
 - minimum zero/maximum one service instance, concurrency 20; and
-- 325 documents/embeddings, schema head `20260903_0008`, pilot classification
-  still unknown. Complete classification and scientific acceptance next patch.
+- 325 documents/embeddings, schema head `20260905_0011`, pilot classification
+  still unknown. The review/application workflow is deployed; scientific
+  acceptance remains an explicit follow-up.
 
-The preceding revision `ocean-platform-v030-1bb38b8` and verified pre-release
+The preceding revision `ocean-platform-v040-a63885a` and verified pre-migration
 backup are retained. Review corpus/publication compatibility before rollback;
 do not automatically downgrade the schema or overwrite later user/chat records.
 
-Post-release repository maintenance is merged to remote `main` and `gcp-dev` at
-`4a4bd38`, including dependency refreshes and removal of the active NLTK
-dependency. It is not part of build `76b31adb-28d6-4daa-a9cc-f114d36bd753` or
-the deployed v0.4.0 revision. A new immutable build and normal release gates are
-required before those changes reach GCP.
+The v0.4.1 release source was synchronized to remote `main` and `gcp-dev` before
+tagging. Subsequent operations-record-only commits do not change the immutable
+build or deployed application.
 
 See [`../../docs/GCP_RESOURCE_AUDIT.md`](../../docs/GCP_RESOURCE_AUDIT.md) for
 the historical post-cutover inventory, absence checks, housekeeping controls,

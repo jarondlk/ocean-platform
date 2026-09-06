@@ -10,12 +10,12 @@ URL is
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
-Current release record as of 2026-09-03:
+Current release record as of 2026-09-06:
 
-- OCEAN Platform [GitHub release `v0.4.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.0),
-  source `a63885a573b18eb92c184fb88fdb85b5aae3cb09`, build
-  `76b31adb-28d6-4daa-a9cc-f114d36bd753`, revision `ocean-platform-v040-a63885a`;
-- previous revision `ocean-platform-v030-1bb38b8` and pre-release backup retained;
+- OCEAN Platform [GitHub release `v0.4.1`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.1),
+  source `706348eda354320c24f5a18c9600e3d6341bec8a`, build
+  `97dbe5d3-c464-4e14-9350-72c83b4b7ec1`, revision `ocean-platform-v041-706348e`;
+- previous revision `ocean-platform-v040-a63885a` and pre-migration backup retained;
   review corpus/publication compatibility before rollback, without schema
   downgrade or overwriting later user/chat records;
 - Cloud Run service `ocean-platform`, with minimum zero, maximum one instance,
@@ -29,13 +29,13 @@ Current release record as of 2026-09-03:
 - keep-five/delete-after-30-days Artifact Registry cleanup active and 30-day
   expiry applied to transient Cloud Build source archives;
 - 325 documents/embeddings including the unknown-classification pilot;
-  schema head `20260903_0008`, verified backup/isolated restore and authenticated
-  source-citation checks. See [operations and known limitations](RELEASE_0.4.0_OPERATIONS.md).
+  schema head `20260905_0011`, verified pre/post backup and isolated restore,
+  controlled workload registration, and fail-closed HTTP checks. See
+  [operations and known limitations](RELEASE_0.4.1_OPERATIONS.md).
 
-Repository state after the release: dependency refreshes and the NLTK-free
-evaluator are merged to remote `main` and `gcp-dev` at `4a4bd38`, with zero open
-Dependabot security alerts at the 2026-09-04 review. They are not included in
-the deployed v0.4.0 image or revision above.
+The v0.4.1 release source was synchronized to remote `main` and `gcp-dev` before
+tagging. Operations-record-only commits after the tag do not change the deployed
+images.
 
 The dated GCP inventory and remaining destructive retirement candidates are
 recorded in [`GCP_RESOURCE_AUDIT.md`](GCP_RESOURCE_AUDIT.md).

@@ -21,13 +21,13 @@ and can be audited against the evidence that was actually supplied.
 
 The bounded ANEMONE pilot retains its provider-supplied location and collection
 metadata. It is not assigned to one of these monitoring bays by inference, and
-its sample classification remains unknown in `v0.4.0`.
+its sample classification remains unknown in `v0.4.1`.
 
 ---
 
 ## Current Prototype Status
 
-Status as of **2026-09-05**: this is an active invite-only **Next.js +
+Status as of **2026-09-06**: this is an active invite-only **Next.js +
 FastAPI** prototype deployed on GCP, with PostgreSQL/pgvector retrieval,
 Vertex AI generation and embeddings, Google OIDC, and Cloud Run Jobs for
 operator-approved batch work. The same application remains runnable locally
@@ -37,18 +37,16 @@ service.
 
 Current managed milestone:
 
-- GitHub release [`v0.4.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.0)
-  adds bounded ANEMONE MiFish eDNA acquisition, canonical storage, retrieval,
-  citation navigation, descriptive analysis, and registered artifact
-  publication. The deployed source is `a63885a573b18eb92c184fb88fdb85b5aae3cb09`
-  and the active revision is `ocean-platform-v040-a63885a`.
-- The preceding `v0.3.0` revision `ocean-platform-v030-1bb38b8` and verified
-  pre-release backup remain the immediate rollback references. Review corpus
-  and schema compatibility before rollback; do not overwrite later user or
-  chat records.
-- Dependency refreshes and the NLTK-free evaluator have since merged to both
-  remote `main` and `gcp-dev` at `4a4bd38`. They are post-release maintenance
-  and are not part of the deployed `v0.4.0` image.
+- GitHub release [`v0.4.1`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.1)
+  adds deterministic no-evidence handling, authenticated classification review,
+  and controlled operator application while retaining `unknown` as a valid
+  outcome. The deployed source is
+  `706348eda354320c24f5a18c9600e3d6341bec8a` and the active revision is
+  `ocean-platform-v041-706348e`.
+- The preceding `v0.4.0` revision `ocean-platform-v040-a63885a` and verified
+  pre-migration backup remain the immediate rollback references. Review corpus
+  and schema compatibility before rollback; do not downgrade the schema or
+  overwrite later user or chat records.
 - The live data plane uses Artifact Registry `ocean-platform`, Cloud SQL
   `ocean-postgres` / database `ocean_platform`, jobs under the `ocean-*`
   prefix, OCEAN Secret Manager entries, and bucket
@@ -901,11 +899,10 @@ npm run build
 
 ### Current Test Matrix
 
-The current suite contains more than **640 tests** across unit, API, and
-integration modules. The deployed v0.4.0 release gate passed 638 backend tests
-with 9 PostgreSQL-gated skips and 77.11% coverage. Post-release validation of
-the merged dependency and NLTK-removal maintenance passed 642 tests with 9
-skips and 77.15% coverage; those later changes are not yet deployed.
+The current suite contains more than **680 tests** across unit, API, and
+integration modules. The deployed v0.4.1 release gate passed 688 backend tests
+with 12 expected service-gated skips and 78.31% coverage, plus 12 PostgreSQL
+integration tests through schema head `20260905_0011`.
 
 | Test area | Files |
 | --- | --- |
@@ -920,7 +917,7 @@ skips and 77.15% coverage; those later changes are not yet deployed.
 Latest verified local result:
 
 ```text
-642 passed, 9 skipped; 77.15% coverage
+688 passed, 12 skipped; 78.31% coverage
 ```
 
 ---

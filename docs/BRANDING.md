@@ -54,8 +54,8 @@ brand.
 - New default internal JWT values are `ocean-platform-frontend` and
   `ocean-platform-api`; environment variables remain the deployment control
   point during rollout.
-- Release `v0.4.0` is the current GCP application release. The preceding
-  `v0.3.0` revision and verified pre-release backup are the immediate rollback
+- Release `v0.4.1` is the current GCP application release. The preceding
+  `v0.4.0` revision and verified pre-migration backup are the immediate rollback
   references. Active application manifests and identities use the target names
   below. Legacy resources keep their historical IDs only as private,
   deletion-protected rollback assets.
@@ -78,6 +78,6 @@ brand.
 | Evaluation job | `ocean-evaluation` |
 | Cloud Storage bucket | `data-infra-infobio-ocean-data` |
 
-All target identifiers remain active in release `v0.4.0`. The former service
+All target identifiers remain active in release `v0.4.1`. The former service
 is private and the former Cloud SQL instance is stopped; do not reuse legacy
 identifiers for new components.

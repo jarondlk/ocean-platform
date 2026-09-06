@@ -1,8 +1,14 @@
-# ANEMONE classification and research safety — next patch
+# ANEMONE classification and research safety — v0.4.1
 
 Decision: on 2026-09-03 the user prioritized `v0.4.0` and explicitly deferred
 classification workflow completion. Keep the pilot `sample_kind=unknown` and
 `is_control=null`. Its proposed environmental classification is not approved.
+
+Release outcome (2026-09-06): PR1–PR4 were merged and deployed as `v0.4.1`.
+The database is at schema head `20260905_0011`; the fixed Cloud Run application
+identity is registered. No real review was created, approved, or applied.
+Authenticated researcher acceptance and the presentation work called out below
+remain follow-up gates.
 
 ## v0.4.0 boundary
 
@@ -24,14 +30,14 @@ classification workflow completion. Keep the pilot `sample_kind=unknown` and
 2. Provide a clear draft/review/approve-or-reject path with exact sample and
    source-row evidence, a real reviewer identity, timestamp and rationale.
    Review permissions and audit attribution must be explicit. **Implemented in
-   PR2; deployment and authenticated acceptance remain pending.**
+   PR2 and deployed in v0.4.1; authenticated acceptance remains pending.**
 3. Preview the effect on inclusion/exclusion and derived results before applying
    a decision. Unknown must remain a valid unresolved outcome. **Implemented in
-   PR3; deployment and authenticated acceptance remain pending.**
+   PR3 and deployed in v0.4.1; authenticated acceptance remains pending.**
 4. Validate and apply approved reviews through the controlled job workflow,
    regenerate retrieval/analysis/provenance, retain prior identities/citations,
    and test replay, failure recovery and explicit rollback. **Implemented in
-   PR4; deployment and authenticated acceptance remain pending.**
+   PR4 and deployed in v0.4.1; no real approved decision has been applied.**
 5. Validate the retained pilot with a qualified researcher. Verify control
    context, scientific outputs and model-answer limitations independently.
 6. Complete authenticated end-to-end tests, then document acceptance and ship
@@ -39,8 +45,7 @@ classification workflow completion. Keep the pilot `sample_kind=unknown` and
 
 ## PR1 research-safety implementation — 2026-09-05
 
-Status: implemented and locally verified on
-`codex/mvp-pr1-research-safety`; not yet merged or deployed.
+Status: implemented, merged, and deployed in `v0.4.1`.
 
 - `/chat` and the legacy orchestration entry point now stop before generation
   when no usable primary, linked, analysis, or reliability evidence remains.
@@ -65,8 +70,8 @@ fixture server; the complete rerun with local fixture access passed.
 
 ## PR2 authenticated classification domain — 2026-09-05
 
-Status: implemented on `codex/mvp-pr2-classification-review`; not yet committed,
-merged, migrated, deployed, or accepted with production OIDC.
+Status: implemented, merged, migrated, and deployed in `v0.4.1`; production
+researcher acceptance remains pending.
 
 - Researchers can create and revise evidence-bound drafts and submit `approved`
   or `rejected` decisions. Admins cannot make scientific decisions; they can
@@ -95,8 +100,8 @@ be substituted for a PR2 review.
 
 ## PR3 classification effect preview — 2026-09-05
 
-Status: implemented on `codex/mvp-pr3-classification-preview`; not yet committed,
-merged, deployed, or accepted with production OIDC.
+Status: implemented, merged, and deployed in `v0.4.1`; production researcher
+acceptance remains pending.
 
 - Researchers and admins can preview a draft, approved, or failed review through
   `POST /classification-reviews/{review_id}/preview`. Preview uses read permission
@@ -123,8 +128,8 @@ rollback remain PR4 work. Full contract: [PR3 plan](ANEMONE_CLASSIFICATION_PR3_P
 
 ## PR4 controlled application and republication — 2026-09-06
 
-Status: implemented on `codex/mvp-pr4-controlled-application`; not yet committed,
-merged, migrated, deployed, or run against a real approved decision.
+Status: implemented, merged, migrated, and deployed in `v0.4.1`; it has not run
+against a real approved decision.
 
 - The existing manually launched Cloud Run processing job accepts an approved
   database review UUID and runs immutable review registration, exact-snapshot
@@ -163,7 +168,8 @@ Full contract: [PR4 plan](ANEMONE_CLASSIFICATION_PR4_PLAN.md).
   counts. The audit marked all five citation occurrences invalid, but did not
   prevent the answer. Do not present that response as accepted research. PR1
   now blocks generation for that no-evidence state and displays the applied
-  filters. Authenticated live acceptance remains required before release.
+  filters. Authenticated live acceptance remains required before scientific
+  workflow acceptance.
 
 Inputs: [operator implementation](ANEMONE_CLASSIFICATION_REVIEW.md),
 [unapproved pilot proposal](ANEMONE_PILOT_CLASSIFICATION_PROPOSAL.md), and
