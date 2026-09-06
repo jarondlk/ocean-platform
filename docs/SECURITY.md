@@ -389,19 +389,19 @@ live-manifest alerts as unreachable.
 
 ## Authorization MVP Release Checklist
 
-Current deployed GCP evidence as of 2026-09-03: OCEAN Platform release `v0.4.0`
+Current deployed GCP evidence as of 2026-09-06: OCEAN Platform release `v0.4.1`
 runs with
 `DEPLOYMENT_ENV=production`, `AUTH_MODE=required`, Google OIDC, distinct Secret
 Manager-backed signing secrets, private FastAPI/Cloud SQL connectivity, and
-default-deny API authorization. The administrator and approved researcher have
-completed real-provider login; the OCEAN origin and callback are registered
-while the former service is private for rollback; all 14 user/Admin routes were
-smoke-tested against `ocean-postgres`; all 23 migrated tables matched the
+default-deny API authorization. Authenticated classification review derives
+scientific identity from the session, while controlled application uses the
+registered `ocean-jobs` workload identity. All 27 migrated tables matched the
 release contract; bounded OCEAN jobs retain manual execution and zero automatic
-retries; Cloud Run emitted no unresolved error-level or 5xx entries during
-final acceptance; and CI and CodeQL passed. Post-release dependency updates and
-the NLTK removal were merged on 2026-09-04 and resolved the remaining GitHub
-dependency alerts, but are not part of the deployed v0.4.0 image. A
+retries; protected review and health proxy routes returned 401 anonymously;
+Cloud Run emitted no error-level entries from the new revision during rollout;
+and CI and CodeQL passed. The dependency updates and NLTK removal are included
+in this release. The full authenticated researcher/admin browser matrix was not
+repeated during rollout because the local Mac session was locked. A
 database URL exposed by a failed migration traceback was immediately
 invalidated by rotating both affected database users and disabling both old
 secret versions before traffic resumed.

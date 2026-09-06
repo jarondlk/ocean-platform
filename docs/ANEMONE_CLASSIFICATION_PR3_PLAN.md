@@ -1,8 +1,7 @@
 # ANEMONE classification PR3 — effect preview
 
-Status: implemented and locally verified on
-`codex/mvp-pr3-classification-preview`.
-PR1 and PR2 remain uncommitted prerequisites in the same worktree.
+Status: implemented, locally verified, merged with PR1/PR2, and deployed in
+`v0.4.1`. Authenticated researcher acceptance remains pending.
 
 ## Objective
 

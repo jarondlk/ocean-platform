@@ -6,10 +6,11 @@ researcher workflow is [next-patch work](ANEMONE_NEXT_PATCH.md). No real
 classification review is approved or applied; its absence no longer blocks
 the limited v0.4.0 release.
 
-Status: the authenticated review domain, effect preview, and controlled manual
-application path are implemented locally through PR4. Deployment and
-authenticated researcher acceptance remain pending. The real canary has **not**
-been classified or scientifically accepted.
+Status (2026-09-06): the authenticated review domain, effect preview, and
+controlled manual application path are deployed in `v0.4.1`. The fixed Cloud
+Run workload identity is registered. Authenticated researcher acceptance
+remains pending, and the real canary has **not** been classified or
+scientifically accepted.
 No review is inferred from a sample name, collection device, coordinates, or
 permission to implement this workflow.
 

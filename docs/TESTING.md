@@ -2,21 +2,20 @@
 
 ## Current release evidence
 
-For OCEAN Platform release `v0.4.0`, the release gate passed 638 backend tests
-with 9 PostgreSQL-gated local skips and 77.11% aggregate coverage, all
-PostgreSQL integration checks in CI, 14 frontend navigation tests, frontend
-typecheck and production build, Ruff, dependency consistency, CodeQL, backup
-and isolated restore, migration head `20260903_0008`, and authenticated live
-source/citation checks. The immutable build, job executions, deployed revision,
-and scientific limitations are recorded in
-[`RELEASE_0.4.0_OPERATIONS.md`](RELEASE_0.4.0_OPERATIONS.md).
+For OCEAN Platform release `v0.4.1`, the release gate passed 688 backend tests
+with 12 expected service-gated skips and 78.31% aggregate coverage, 12
+PostgreSQL integration tests through schema head `20260905_0011`, 18 frontend
+tests, frontend typecheck and the 24-route production build, Ruff, dependency
+consistency, `pip check`, the production npm audit, CodeQL, two backup/isolated
+restore checks, migration verification, and fail-closed live HTTP checks. The
+immutable build, job executions, deployed revision, and scientific limitations
+are recorded in
+[`RELEASE_0.4.1_OPERATIONS.md`](RELEASE_0.4.1_OPERATIONS.md).
 
-Post-release dependency/security maintenance on 2026-09-04 passed 642 backend
-tests with 9 PostgreSQL-gated skips and 77.15% aggregate coverage. It refreshed
-the Python, frontend, and container dependencies and replaced the active
-`rouge-score`/NLTK dependency with the internal `snowballstemmer`-based ROUGE-L
-implementation. Those commits are merged to the remote long-lived branches but
-are not part of the deployed v0.4.0 image.
+The dependency/security maintenance merged after v0.4.0, including the
+NLTK-free evaluator, is included in the v0.4.1 images. An authenticated visual
+browser matrix was not repeated during deployment because the local Mac session
+was locked; it remains required before claiming scientific workflow acceptance.
 
 The entries below are dated release records, not the current release:
 

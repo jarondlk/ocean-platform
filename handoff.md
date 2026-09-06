@@ -2,7 +2,16 @@
 
 > **Last updated**: 2026-09-06 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform release `v0.4.0` is live on Cloud Run service `ocean-platform`, including the bounded ANEMONE MiFish pilot. Classification remains unknown. PR1 deterministic no-evidence safety, PR2's authenticated classification review domain, PR3's read-only effect preview, and PR4's manual controlled application/republication job are implemented locally but are uncommitted and not deployed. Production migration, a real approved decision, and full scientific/model-answer acceptance remain pending. The deployed source remains `a63885a`; dependency/security maintenance has since merged to remote `main` and `gcp-dev` at `4a4bd38` but is not deployed. See the [release operations record](docs/RELEASE_0.4.0_OPERATIONS.md).
+> **Current status**: OCEAN Platform release `v0.4.1` is live on Cloud Run
+> service `ocean-platform` at revision `ocean-platform-v041-706348e`. PR1
+> deterministic no-evidence safety, PR2 authenticated classification review,
+> PR3 read-only effect preview, and PR4 manual controlled
+> application/republication are merged, migrated through `20260905_0011`, and
+> deployed. The fixed Cloud Run workload identity is registered. The bounded
+> ANEMONE pilot remains `unknown`; no real review was approved or applied, and
+> full authenticated scientific acceptance remains pending. Source `706348e`
+> is tagged and synchronized to `main` and `gcp-dev`. See the
+> [v0.4.1 operations record](docs/RELEASE_0.4.1_OPERATIONS.md).
 
 ---
 
@@ -43,7 +52,7 @@ used only as historical reference and parity material.
 
 ## 2. What Changed Recently
 
-### Next-patch PR1–PR4 (local, 2026-09-06)
+### v0.4.1 released and deployed (2026-09-06)
 
 - PR1 adds deterministic abstention before model generation when no usable
   evidence remains, durable answer/abstention outcomes, visible scientific
@@ -59,15 +68,25 @@ used only as historical reference and parity material.
   stage receipts, fixed workload identity, immutable review registration,
   exact-snapshot normalization, transactional import, affected republication,
   safe recovery, idempotent replay, and superseding-review rollback.
-- Final local verification passed 688 backend tests with 12 expected
+- Release verification passed 688 backend tests with 12 expected
   PostgreSQL-gated skips and 78.31% coverage; all 12 fresh PostgreSQL integration
   tests; 18 frontend tests, TypeScript, and the 24-route production build; Ruff,
   `pip check`, zero production npm vulnerabilities, one Alembic head
   `20260905_0011`, downgrade/re-upgrade, and diff checks.
-- None of these PRs is committed, migrated, deployed, or production-auth
-  accepted. No real classification decision has been approved or applied.
+- PR #54 merged source `706348eda354320c24f5a18c9600e3d6341bec8a`; GitHub
+  release `v0.4.1`, Cloud Build `97dbe5d3-c464-4e14-9350-72c83b4b7ec1`, and
+  immutable API/frontend image digests are recorded in the operations record.
+- Migration `ocean-migrate-dvs49` reached 27 ready tables. The fixed
+  `ocean-jobs` workload identity was registered by
+  `ocean-anemone-process-4v2xv`; no classification was created or applied.
+- Revision `ocean-platform-v041-706348e` is Ready at 100% traffic. Pre/post
+  migration backups passed isolated restore checks. The previous v0.4.0
+  revision is retained for reviewed rollback.
+- Authenticated researcher acceptance was not repeated during rollout because
+  the local Mac session was locked. Automated auth/role tests and anonymous
+  fail-closed HTTP checks passed; scientific acceptance remains pending.
 
-### Post-release dependency and security maintenance (2026-09-04)
+### Dependency and security maintenance included in v0.4.1 (2026-09-04)
 
 - Dependabot refreshes for the Python locks, frontend packages, and pinned
   Python/Node container bases were reviewed and merged.
@@ -76,9 +95,8 @@ used only as historical reference and parity material.
   implementation with compatibility and hostile-path regressions.
 - Post-release validation passed 642 backend tests with 9 PostgreSQL-gated
   skips and 77.15% coverage. All open Dependabot security alerts were resolved.
-- Remote `main` and `gcp-dev` are synchronized at
-  `4a4bd38f661b5fbb058190fd1f00e96ade82c9c7`. The deployed v0.4.0 revision was
-  not rebuilt; production still runs source `a63885a573b18eb92c184fb88fdb85b5aae3cb09`.
+- This maintenance was subsequently included in source `706348e`, the deployed
+  v0.4.1 images, and both long-lived branches.
 - Existing evaluation scores retain their recorded implementation provenance.
   Do not silently recompute historical score series across the evaluator change.
 

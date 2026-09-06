@@ -5,7 +5,7 @@
 > through the GCP migration and Phase 7 runbooks. The stable `v0.1.0` GCP
 > prototype is live as of 2026-08-25. Keep this document as evidence of the
 > pre-cloud safety work; use [`DEPLOYMENT.md`](DEPLOYMENT.md) and
-> [`RELEASE_0.4.0_OPERATIONS.md`](RELEASE_0.4.0_OPERATIONS.md) for current
+> [`RELEASE_0.4.1_OPERATIONS.md`](RELEASE_0.4.1_OPERATIONS.md) for current
 > release status.
 
 This is the final validation gate for the authorization, feedback, evaluation,
