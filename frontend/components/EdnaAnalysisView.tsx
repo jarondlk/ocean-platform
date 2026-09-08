@@ -8,13 +8,15 @@ import { EdnaEnvironmentPlot } from "@/components/EdnaEnvironmentPlot";
 import { request } from "@/lib/api";
 import { ednaHref } from "@/lib/edna-navigation";
 import { analysisHref, analysisTables, parseAnalysisState, type AnalysisState, type AnalysisTable } from "@/lib/edna-analysis-navigation";
+import { exclusionReasonDisplay } from "@/lib/edna-exclusions";
 
 type Run = { analysis_id: string; status: string; recipe: { cohort: Record<string, unknown>; rank: string; assignment_methods: string[]; control_policy: string; min_read_count: number }; table_counts?: Record<string, number>; manifest?: { limitations: string[]; table_counts: Record<string, number> } };
 type Page = { total: number; rows: Record<string, unknown>[] };
 const base = "/data/edna/analysis";
-const mainTables: [AnalysisTable, string][] = [["composition", "Composition"], ["diversity", "Diversity"], ["turnover", "Turnover"], ["methods", "Methods"], ["controls", "Controls"], ["environment_pairs", "Environment"]];
+const mainTables: [AnalysisTable, string][] = [["membership", "Eligibility"], ["composition", "Composition"], ["diversity", "Diversity"], ["turnover", "Turnover"], ["exclusions", "Exclusions"], ["methods", "Methods"], ["controls", "Controls"], ["environment_pairs", "Environment"]];
 const apiBase = process.env.NEXT_PUBLIC_API_PROXY_BASE_URL || "/api/backend";
 const displayColumns: Partial<Record<AnalysisTable, string[]>> = {
+  membership: ["sample_id", "assay_id", "assignment_method", "status", "reason", "sample_kind", "is_control", "detection_count"],
   composition: ["sample_id", "assignment_method", "collection_date_utc", "taxon", "read_count", "read_proportion"],
   diversity: ["sample_id", "assignment_method", "richness", "shannon", "simpson_1d", "evenness", "retained_reads", "excluded_reads", "metric_status"],
   turnover: ["left_sample_id", "right_sample_id", "assignment_method", "pair_type", "jaccard_similarity", "bray_curtis_relative_reads", "distance_km"],
@@ -22,6 +24,7 @@ const displayColumns: Partial<Record<AnalysisTable, string[]>> = {
   controls: ["sample_id", "assignment_method", "sample_kind", "is_control", "status", "pairing_basis"],
   environment_pairs: ["sample_id", "assignment_method", "variable", "value", "unit", "evidence_type", "richness", "shannon"],
   environment_links: ["sample_id", "observation_id", "variable", "value", "unit", "status", "selected", "distance_km"],
+  exclusions: ["sample_id", "assay_id", "assignment_method", "detection_id", "reason", "read_count", "sample_kind", "is_control"],
 };
 
 export function EdnaAnalysisView() {
@@ -103,8 +106,14 @@ export function EdnaAnalysisView() {
       </div>
       {exportStatus ? <p role="status">{exportStatus}</p> : null}
       <p>{page?.total || 0} rows</p>
+      {page?.total === 0 && ["composition", "diversity", "turnover", "environment_pairs"].includes(state?.table || "") && (run.manifest?.table_counts.exclusions || 0) > 0 ? (
+        <p role="status">
+          No included rows. {run.manifest?.table_counts.exclusions} excluded detections.{" "}
+          <button className="document-link-button" type="button" onClick={() => navigate({ table: "exclusions", resultId: undefined, offset: 0 })}>View exclusions</button>
+        </p>
+      ) : null}
       {state?.table === "environment_pairs" && page?.rows.length ? <EdnaEnvironmentPlot key={query} rows={page.rows} onSelect={id => navigate({ resultId: id, offset: 0 })} /> : null}
-      <DataTable columns={columns} rows={page?.rows || []} rowKeyColumn="result_id" selectedKey={state?.resultId} onRowSelect={r => navigate({ resultId: String(r.result_id), offset: 0 })} renderCell={value => typeof value === "string" && /^[a-f0-9]{64}$/.test(value) ? <span title={value}>{value.slice(0, 12)}…</span> : formatCell(value)} />
+      <DataTable columns={columns} rows={page?.rows || []} rowKeyColumn="result_id" selectedKey={state?.resultId} onRowSelect={r => navigate({ resultId: String(r.result_id), offset: 0 })} renderCell={(value, column) => column === "reason" ? exclusionReasonDisplay(value) : typeof value === "string" && /^[a-f0-9]{64}$/.test(value) ? <span title={value}>{value.slice(0, 12)}…</span> : formatCell(value)} />
       <div className="button-row"><button type="button" className="button secondary-button" disabled={!state?.offset} onClick={() => navigate({ offset: Math.max(0, (state?.offset || 0)-100) })}>Previous</button><button type="button" className="button secondary-button" disabled={(state?.offset || 0)+100 >= (page?.total || 0)} onClick={() => navigate({ offset: (state?.offset || 0)+100 })}>Next</button></div>
       {sourceIds.length ? <div className="button-row">{sourceIds.map((id, index) => <Link key={id} className="button secondary-button" href={ednaHref({ sample_id: id, assignment_method: typeof result?.assignment_method === "string" ? result.assignment_method : undefined })}>Source sample{sourceIds.length > 1 ? ` ${index + 1}` : ""}</Link>)}</div> : null}
       {trace ? <details><summary>Result provenance</summary><pre className="json-view">{JSON.stringify(trace, null, 2)}</pre></details> : null}

@@ -109,3 +109,9 @@ budget controls: a Cloud Run spend cap of ¥2,250, a Cloud SQL alert threshold
 of ¥4,000, and a project monthly guardrail of ¥10,000. The active CLI account
 cannot list billing-account budget objects, so future budget edits still
 require the billing administrator or the signed-in billing console.
+
+Follow-up on 2026-09-08 confirmed those three controls remain configured. The
+budget views reported JPY 0 after savings/credits for the project and Cloud SQL,
+and JPY 32.95 for Cloud Run; billing can lag. The signed-in billing console is
+now available, but this did not constitute a full resource re-audit and no
+budget was changed.

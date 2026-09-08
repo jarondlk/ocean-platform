@@ -1,17 +1,24 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-09-06 JST
+> **Last updated**: 2026-09-08 JST
 > **Repository**: `jarondlk/ocean-platform`
 > **Current status**: OCEAN Platform release `v0.4.1` is live on Cloud Run
-> service `ocean-platform` at revision `ocean-platform-v041-706348e`. PR1
+> service `ocean-platform`; its recorded release revision is
+> `ocean-platform-v041-706348e`, and post-release custom-domain revision
+> `ocean-platform-00012-ps6` currently receives 100% traffic. PR1
 > deterministic no-evidence safety, PR2 authenticated classification review,
 > PR3 read-only effect preview, and PR4 manual controlled
 > application/republication are merged, migrated through `20260905_0011`, and
 > deployed. The fixed Cloud Run workload identity is registered. The bounded
 > ANEMONE pilot remains `unknown`; no real review was approved or applied, and
-> full authenticated scientific acceptance remains pending. Source `706348e`
+> administrator custom-domain logout/re-login and role access pass, while full
+> authenticated researcher scientific acceptance remains pending. Source `706348e`
 > is tagged and synchronized to `main` and `gcp-dev`. See the
-> [v0.4.1 operations record](docs/RELEASE_0.4.1_OPERATIONS.md).
+> [v0.4.1 operations record](docs/RELEASE_0.4.1_OPERATIONS.md). The canonical
+> application URL is now `https://oceaninfobio.com`; exclusion-reason
+> presentation is implemented on `gcp-dev` at `08f7a32` for the v0.4.2
+> candidate. [PR #56](https://github.com/jarondlk/ocean-platform/pull/56) is
+> open, conflict-free, and its checks pass; it is not merged or deployed.
 
 ---
 
@@ -79,9 +86,11 @@ used only as historical reference and parity material.
 - Migration `ocean-migrate-dvs49` reached 27 ready tables. The fixed
   `ocean-jobs` workload identity was registered by
   `ocean-anemone-process-4v2xv`; no classification was created or applied.
-- Revision `ocean-platform-v041-706348e` is Ready at 100% traffic. Pre/post
-  migration backups passed isolated restore checks. The previous v0.4.0
-  revision is retained for reviewed rollback.
+- Revision `ocean-platform-v041-706348e` was Ready at 100% traffic for release.
+  Post-release custom-domain revision `ocean-platform-00012-ps6` now receives
+  100% traffic using the same immutable images. Pre/post migration backups
+  passed isolated restore checks. The previous v0.4.0 revision is retained for
+  reviewed rollback.
 - Authenticated researcher acceptance was not repeated during rollout because
   the local Mac session was locked. Automated auth/role tests and anonymous
   fail-closed HTTP checks passed; scientific acceptance remains pending.
@@ -1204,24 +1213,24 @@ git diff --check
 | Managed OIDC deployment | Google OIDC is live and verified for the administrator and approved researcher; broader identity-provider recovery/MFA policy remains external to the application |
 | Evaluation execution | Serving instances deliberately reject in-process jobs; the UI start controls are not yet connected to the external Cloud Run evaluation job |
 | Security operations require repository settings | CodeQL and dependency automation exist; branch/environment protections, retention enforcement, cost review, and alerting still require operator review |
-| Historical milestone plans | `docs/PRE_MILESTONE_VALIDATION_PLAN.md`, `docs/PHASE7_RELEASE_RUNBOOK.md`, and `deploy/gcp/MIGRATION_PLAN.md` retain dated gates; current cloud evidence is in `docs/DEPLOYMENT.md` and `docs/RELEASE_0.4.0_OPERATIONS.md` |
-| ANEMONE classification | The pilot remains unknown. Authenticated review/decision/audit persistence, read-only effect preview, and manual controlled end-to-end republication are implemented locally; production migration, deployment, a real decision, and researcher acceptance remain |
-| Empty evidence cohorts | Deterministic pre-generation abstention and visible recipe filters are implemented locally but not deployed or production-auth accepted |
+| Historical milestone plans | `docs/PRE_MILESTONE_VALIDATION_PLAN.md`, `docs/PHASE7_RELEASE_RUNBOOK.md`, and `deploy/gcp/MIGRATION_PLAN.md` retain dated gates; current cloud evidence is in `docs/DEPLOYMENT.md` and `docs/RELEASE_0.4.1_OPERATIONS.md` |
+| ANEMONE classification | The pilot remains unknown. Authenticated review/decision/audit persistence, read-only effect preview, and manual controlled end-to-end republication are deployed; a real decision and researcher acceptance remain |
+| Empty evidence cohorts | Deterministic pre-generation abstention and visible recipe filters are deployed; authenticated production scientific acceptance remains |
 
 ---
 
 ## 13. Recommended Next Work Order
 
-1. Finish CI-equivalent review, then commit the local PR1–PR4 no-evidence,
-   authenticated review, preview, and controlled-publication changes.
-2. Apply migration `20260905_0011`, register the fixed processing workload
-   identity, and deploy only after backup/restore and rollback rehearsal.
+1. Review PR #56 and the completed v0.4.2 exclusion-reason UI. Local, push, and
+   PR checks pass.
+2. Complete the remaining custom-domain researcher-role, suspension, and
+   uninvited-account checks. Administrator logout/re-login, admin-route access,
+   invitation-register access, and anonymous fail-closed behavior pass.
 3. Run the deferred researcher acceptance matrix without claiming taxonomic
    accuracy, contamination clearance, or environmental overlap beyond the
    reviewed evidence.
-4. Decide whether to deploy the post-v0.4.0 dependency/security maintenance as
-   a patch release. Production currently remains on `a63885a`; the remote
-   branches are synchronized at `4a4bd38`.
+4. Merge PR #56 after review, build and deploy the immutable v0.4.2 candidate,
+   then publish the release only after live acceptance passes.
 5. Continue scheduled-update, evaluation-job bridge, restore-drill, retention,
    cost-review, and legacy-resource retirement work under their existing
    approval boundaries.

@@ -102,13 +102,14 @@ classification. The detailed work order is in
       durable outcome metadata and pending-publication handling.
 - [x] Show applied recipe/retrieval filters and empty-cohort outcomes directly
       in Chat.
-- [ ] Complete exclusion-reason presentation across Data and analysis views.
+- [x] Complete exclusion-reason presentation across Data and analysis views.
+      The v0.4.2 candidate exposes sample eligibility and exact reason codes in
+      Data, and makes Eligibility and Exclusions first-class analysis tables.
 - [ ] Run the deferred researcher acceptance matrix, including source-only,
       environmental-only, invalid/empty-cohort, citation, and rollback cases.
 
-The two unchecked items are post-release scientific acceptance work, not
-permission to infer or apply a classification. `unknown` remains a valid final
-outcome.
+The remaining unchecked item is scientific acceptance work, not permission to
+infer or apply a classification. `unknown` remains a valid final outcome.
 
 ## Near-Term Priority: Manual Scheduled Batch Updates
 

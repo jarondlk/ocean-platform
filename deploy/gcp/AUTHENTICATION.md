@@ -93,6 +93,18 @@ Before granting unauthenticated Cloud Run invocation:
 6. inspect logs to confirm tokens and secret values are never emitted; and
 7. only then allow browser traffic to the service.
 
+The production Google client currently retains both the canonical and fallback
+entries:
+
+- JavaScript origins: `https://oceaninfobio.com` and the default Cloud Run URL;
+- callbacks: `https://oceaninfobio.com/api/auth/callback/google` and the matching
+  default Cloud Run callback.
+
+The serving revision must set `AUTH_URL=https://oceaninfobio.com`. Keep the
+fallback entries until custom-domain login, logout/re-login, role enforcement,
+and rollback behavior have passed the release matrix. Do not register wildcard
+origins or callbacks.
+
 Do not enable IAP on the same prototype revision. IAP would add a second login
 and requires a deliberate adapter from IAP identity assertions to the
 application's invitation and role records.

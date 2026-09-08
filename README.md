@@ -27,7 +27,7 @@ its sample classification remains unknown in `v0.4.1`.
 
 ## Current Prototype Status
 
-Status as of **2026-09-06**: this is an active invite-only **Next.js +
+Status as of **2026-09-08**: this is an active invite-only **Next.js +
 FastAPI** prototype deployed on GCP, with PostgreSQL/pgvector retrieval,
 Vertex AI generation and embeddings, Google OIDC, and Cloud Run Jobs for
 operator-approved batch work. The same application remains runnable locally
@@ -40,9 +40,11 @@ Current managed milestone:
 - GitHub release [`v0.4.1`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.1)
   adds deterministic no-evidence handling, authenticated classification review,
   and controlled operator application while retaining `unknown` as a valid
-  outcome. The deployed source is
-  `706348eda354320c24f5a18c9600e3d6341bec8a` and the active revision is
-  `ocean-platform-v041-706348e`.
+  outcome. Its deployed source was
+  `706348eda354320c24f5a18c9600e3d6341bec8a` and its release revision was
+  `ocean-platform-v041-706348e`. The post-release custom-domain configuration is
+  active at revision `ocean-platform-00012-ps6`; it reuses the immutable v0.4.1
+  images and source.
 - The preceding `v0.4.0` revision `ocean-platform-v040-a63885a` and verified
   pre-migration backup remain the immediate rollback references. Review corpus
   and schema compatibility before rollback; do not downgrade the schema or
@@ -57,8 +59,10 @@ Current managed milestone:
 - The post-cutover [GCP resource audit](docs/GCP_RESOURCE_AUDIT.md) records the
   active housekeeping controls and the legacy resources that still require
   explicit approval before deletion.
-- The live application is
-  [`https://ocean-platform-469489188516.asia-northeast1.run.app`](https://ocean-platform-469489188516.asia-northeast1.run.app).
+- The canonical application URL is
+  [`https://oceaninfobio.com`](https://oceaninfobio.com). The default Cloud Run
+  URL remains available as an operational fallback but redirects authentication
+  to the canonical domain.
 - GitHub records the successful deployment against the `production`
   environment while `gcp-dev` remains the development branch and `main` the
   stable integration branch.
@@ -99,13 +103,14 @@ Implemented in the current prototype:
   default-deny API authorization, request limits, security headers, production
   rate limits, a private-service Compose topology, and hardened CI checks.
 
-Implemented locally after the deployed release, but not yet shipped:
+Deployed with acceptance still pending:
 
 - The authenticated ANEMONE review domain, read-only effect preview, and manual
-  controlled normalization/import/republication job are implemented through
-  local migration head `20260905_0011`. Production migration, deployment, a
-  real approved decision, and researcher acceptance remain pending. The
-  deployed pilot remains `sample_kind=unknown` and `is_control=null`.
+  controlled normalization/import/republication job are deployed through
+  migration head `20260905_0011`. No real approved decision has been applied;
+  the pilot remains `sample_kind=unknown` and `is_control=null`. Complete the
+  authenticated researcher matrix before claiming scientific workflow
+  acceptance.
 
 Still intentionally future work:
 - Automatic ingestion, file watching, or scheduled cloud sync.

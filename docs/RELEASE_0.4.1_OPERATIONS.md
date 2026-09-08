@@ -17,7 +17,7 @@ was published at 2026-09-06 09:45:22 UTC.
 - API digest: `sha256:5155e52191891e553877cfd630646d4fbbada9232ae2fa5f57bc69cd411b365a`.
 - Frontend digest: `sha256:639cf7262d6d491f4f9356d3530628b87cf378f709e2dd327b26c9d051f7dce5`.
 - Cloud Run: `ocean-platform-v041-706348e`, Ready, 100% traffic.
-  [Live application](https://ocean-platform-469489188516.asia-northeast1.run.app).
+  The release was initially verified at the default Cloud Run URL.
 - Previous revision retained: `ocean-platform-v040-a63885a`. Review schema and
   later user-data compatibility before rollback; do not automatically downgrade
   the database or overwrite later records.
@@ -91,7 +91,31 @@ objects, so current alert thresholds and posted spend require billing-console
 review by an authorized billing user.
 
 Remaining scientific acceptance work is tracked in
-[`ANEMONE_NEXT_PATCH.md`](ANEMONE_NEXT_PATCH.md): complete exclusion-reason
-presentation and run the deferred researcher matrix for source-only,
-environmental-only, empty-cohort, citation, controlled application, and
-rollback behavior. `unknown` remains a valid final result.
+[`ANEMONE_NEXT_PATCH.md`](ANEMONE_NEXT_PATCH.md). Exclusion-reason presentation
+is implemented in the v0.4.2 candidate; the deferred researcher matrix for
+source-only, environmental-only, empty-cohort, citation, controlled application,
+and rollback behavior remains. `unknown` is a valid final result.
+
+## Custom domain follow-up — 2026-09-08
+
+- [`https://oceaninfobio.com`](https://oceaninfobio.com) is the canonical URL.
+- Post-release revision `ocean-platform-00012-ps6` receives 100% traffic and
+  reuses the v0.4.1 API/frontend image digests. Frontend `AUTH_URL` is the
+  canonical domain. API `CORS_ORIGINS` still names the fallback Cloud Run
+  origin; render and verify both values from the canonical URL in the v0.4.2
+  deployment.
+- The apex domain serves a valid HTTPS login page. Auth.js reports the canonical
+  sign-in and `/api/auth/callback/google` URLs, the session endpoint returns
+  successfully, and anonymous protected-health access returns 401.
+- The default Cloud Run URL redirects authentication to `oceaninfobio.com` and
+  remains available for rollback/operations.
+- Google OAuth retains both exact origins and callbacks while custom-domain
+  login and role acceptance are completed. No wildcard redirect is permitted.
+- The existing administrator subsequently completed custom-domain sign-out and
+  Google sign-in again, reached the admin-only route, and read the account and
+  invitation register on 2026-09-08. Researcher-specific workflow, suspension,
+  and uninvited-account denial remain separate acceptance checks.
+- The billing console showed the configured JPY 10,000 project alert, JPY 4,000
+  Cloud SQL alert, and JPY 2,250 Cloud Run spend cap. Posted September values
+  were JPY 0 after savings/credits for the project and SQL views, and JPY 32.95
+  for Cloud Run. Billing can lag; no budget or resource limit was changed.

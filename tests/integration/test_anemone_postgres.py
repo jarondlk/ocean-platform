@@ -241,11 +241,18 @@ def test_anemone_migration_and_transactional_merge_are_idempotent(monkeypatch):
             assert edna_service.edna_catalog()["samples"] == 1
             sample_detail = edna_service.edna_sample_detail(identifiers["sample_id"])
             assert sample_detail["method_summaries"][0]["read_count_sum"] == 10
+            assert sample_detail["sample"]["analysis_eligibility"] == "included"
+            assert sample_detail["sample"]["exclusion_reasons"] == []
             assert edna_service.edna_assay_detail(_hash("d"))["internal_standards"][0]["read_count"] == 5
             detail = edna_service.edna_detection_detail(identifiers["detection_id"])
             assert detail["provenance"]["records"][-1]["source_row_locator"] == 2
             assert edna_service.edna_samples({"is_control": True}, limit=10, offset=0)["total"] == 0
-            assert edna_service.edna_samples({"assay_id": _hash("d")}, limit=10, offset=0)["total"] == 1
+            sample_listing = edna_service.edna_samples(
+                {"assay_id": _hash("d")}, limit=10, offset=0
+            )
+            assert sample_listing["total"] == 1
+            assert sample_listing["rows"][0]["analysis_eligibility"] == "included"
+            assert sample_listing["rows"][0]["exclusion_reasons"] == []
             listing = edna_service.edna_detections(
                 {"assignment_method": "qcauto_target", "lat_min": 38, "lat_max": 39},
                 limit=10, offset=0,
