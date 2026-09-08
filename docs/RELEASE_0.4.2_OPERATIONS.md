@@ -39,3 +39,27 @@ authorization acceptance gap, not a Cloud Run rollout failure.
 
 Billing controls were not changed. The user-confirmed project ceiling remains
 JPY 20,000 per month.
+
+## Post-rollout monitoring
+
+Read-only monitoring on 2026-09-08 covered the period from revision creation at
+06:42 UTC through approximately 12:02 UTC:
+
+- Cloud Run revision `ocean-platform-00013-djj` remained Ready, Active, and at
+  100% traffic. Its containers became healthy in 11.05 seconds during rollout.
+- Request logs contained 300 requests: 171 HTTP 200, 51 HTTP 302, 73 HTTP 307,
+  one HTTP 308, and four HTTP 404 responses. There were no HTTP 5xx responses
+  and no error-severity revision log entries.
+- Request latency was 15.11 ms at p50 and 26.21 ms at p95. The 11.68-second
+  maximum and one 6.58-second request were HTTP 307 redirects after idle
+  periods, consistent with the configured scale-to-zero cold-start boundary;
+  the next slowest request was 254.04 ms.
+- Cloud SQL `ocean-postgres` remained `RUNNABLE` with automatic backups enabled.
+  The `ocean_platform` database used at most two PostgreSQL backends and was at
+  zero when idle. No Cloud SQL error-severity entries were recorded after
+  rollout, and the latest scheduled backup operation completed successfully.
+- The Billing console reported Cloud Run at JPY 34.76 of its JPY 2,250 spend
+  cap, Cloud SQL at JPY 0 of its JPY 4,000 alert after JPY 908 savings, and the
+  project at JPY 0 of its JPY 10,000 guardrail after JPY 1,004 savings. Billing
+  data can lag. These overlapping controls must not be summed; the user's JPY
+  20,000 monthly ceiling remains unchanged.
