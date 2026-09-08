@@ -16,19 +16,16 @@ Cost controls must be in place before runtime resources are created.
 
 ## Current deployed milestone
 
-Release evidence was verified on 2026-09-06 JST; the custom-domain follow-up
-was verified on 2026-09-08 JST:
+Release evidence was verified on 2026-09-08 JST:
 
 - project `data-infra-infobio`, region `asia-northeast1`;
-- OCEAN Platform [GitHub release `v0.4.1`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.1);
-- build `97dbe5d3-c464-4e14-9350-72c83b4b7ec1`, revision
-  `ocean-platform-v041-706348e`; immutable image digests, backup/restore checks,
-  workload registration, and limitations in the [operations record](../../docs/RELEASE_0.4.1_OPERATIONS.md);
-- Cloud Run service `ocean-platform` at 100% traffic on post-release revision
-  `ocean-platform-00012-ps6`, using the immutable v0.4.1 image digests. The
-  frontend has `AUTH_URL=https://oceaninfobio.com`. The API still carries the
-  fallback Cloud Run origin in `CORS_ORIGINS`; the v0.4.2 deployment must render
-  both containers from the canonical public URL and verify the result;
+- OCEAN Platform [GitHub release `v0.4.2`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.2);
+- build `fd2a5970-692f-424e-a721-0144e1e2e005`, revision
+  `ocean-platform-00013-djj`; immutable images, migration, rollout, and live
+  checks are recorded in the [v0.4.2 operations record](../../docs/RELEASE_0.4.2_OPERATIONS.md);
+- Cloud Run service `ocean-platform` at 100% traffic on revision
+  `ocean-platform-00013-djj`. The frontend has `AUTH_URL=https://oceaninfobio.com`
+  and the API has `CORS_ORIGINS=https://oceaninfobio.com`;
 - Artifact Registry `ocean-platform`; service accounts `ocean-platform` and
   `ocean-jobs`; secrets and jobs under the `ocean-*` prefix;
 - Cloud SQL `ocean-postgres` / `ocean_platform` is PostgreSQL 16 and RUNNABLE;
@@ -44,13 +41,14 @@ was verified on 2026-09-08 JST:
   still unknown. The review/application workflow is deployed; scientific
   acceptance remains an explicit follow-up.
 
-The preceding revision `ocean-platform-v040-a63885a` and verified pre-migration
-backup are retained. Review corpus/publication compatibility before rollback;
-do not automatically downgrade the schema or overwrite later user/chat records.
+The v0.4.1 revision `ocean-platform-v041-706348e` and its verified backup, plus
+the earlier revision `ocean-platform-v040-a63885a`, are retained. Review
+corpus/publication compatibility before rollback; do not automatically downgrade
+the schema or overwrite later user/chat records.
 
-The v0.4.1 release source was synchronized to remote `main` and `gcp-dev` before
-tagging. Subsequent operations-record-only commits do not change the immutable
-build or deployed application.
+The v0.4.2 release source is synchronized to remote `main`. Subsequent
+operations-record-only commits do not change the immutable build or deployed
+application.
 
 See [`../../docs/GCP_RESOURCE_AUDIT.md`](../../docs/GCP_RESOURCE_AUDIT.md) for
 the historical post-cutover inventory, absence checks, housekeeping controls,

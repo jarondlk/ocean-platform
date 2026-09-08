@@ -3,7 +3,7 @@
 > Historical v0.1.0 phase record. Preserve the identities, counts, and checks
 > below as point-in-time evidence. Current deployment status is in
 > [`DEPLOYMENT.md`](DEPLOYMENT.md) and
-> [`RELEASE_0.4.1_OPERATIONS.md`](RELEASE_0.4.1_OPERATIONS.md).
+> [`RELEASE_0.4.2_OPERATIONS.md`](RELEASE_0.4.2_OPERATIONS.md).
 
 Phase 7 validates the authenticated Vertex-backed prototype with a deliberately
 small cohort before any broader research-team invitation. It does not increase

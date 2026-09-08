@@ -21,7 +21,7 @@ and can be audited against the evidence that was actually supplied.
 
 The bounded ANEMONE pilot retains its provider-supplied location and collection
 metadata. It is not assigned to one of these monitoring bays by inference, and
-its sample classification remains unknown in `v0.4.1`.
+its sample classification remains unknown in `v0.4.2`.
 
 ---
 
@@ -37,18 +37,17 @@ service.
 
 Current managed milestone:
 
-- GitHub release [`v0.4.1`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.1)
-  adds deterministic no-evidence handling, authenticated classification review,
-  and controlled operator application while retaining `unknown` as a valid
-  outcome. Its deployed source was
-  `706348eda354320c24f5a18c9600e3d6341bec8a` and its release revision was
-  `ocean-platform-v041-706348e`. The post-release custom-domain configuration is
-  active at revision `ocean-platform-00012-ps6`; it reuses the immutable v0.4.1
-  images and source.
-- The preceding `v0.4.0` revision `ocean-platform-v040-a63885a` and verified
-  pre-migration backup remain the immediate rollback references. Review corpus
-  and schema compatibility before rollback; do not downgrade the schema or
-  overwrite later user or chat records.
+- GitHub release [`v0.4.2`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.2)
+  adds direct environmental-eligibility and exclusion-reason presentation to
+  the v0.4.1 no-evidence and controlled-classification workflow. It was released
+  from merge `2731d464ae11a2064359d2696db3f2eab523c2ac`, built by Cloud Build
+  `fd2a5970-692f-424e-a721-0144e1e2e005`, and is active at revision
+  `ocean-platform-00013-djj`. See the
+  [v0.4.2 operations record](docs/RELEASE_0.4.2_OPERATIONS.md).
+- The retained `v0.4.1` revision `ocean-platform-v041-706348e`, its verified
+  backup, and the earlier `v0.4.0` revision `ocean-platform-v040-a63885a` remain
+  reviewed rollback references. Review corpus and schema compatibility before
+  rollback; do not downgrade the schema or overwrite later user or chat records.
 - The live data plane uses Artifact Registry `ocean-platform`, Cloud SQL
   `ocean-postgres` / database `ocean_platform`, jobs under the `ocean-*`
   prefix, OCEAN Secret Manager entries, and bucket
@@ -173,7 +172,7 @@ flowchart TB
     subgraph Storage["PostgreSQL + pgvector"]
         EMB["Vector Embeddings\n325 x 768-dim\nlocal: nomic / GCP: Gemini"]
         FTS["Full-Text Index\ntsvector + ts_rank_cd"]
-        DB["23 PostgreSQL Tables\nscientific + application metadata"]
+        DB["27 PostgreSQL Tables\nscientific + application metadata"]
     end
 
     RET["Hybrid Retrieval\nVector + FTS + RRF\n+ Linked cross-source evidence"]
@@ -904,10 +903,10 @@ npm run build
 
 ### Current Test Matrix
 
-The current suite contains more than **680 tests** across unit, API, and
-integration modules. The deployed v0.4.1 release gate passed 688 backend tests
-with 12 expected service-gated skips and 78.31% coverage, plus 12 PostgreSQL
-integration tests through schema head `20260905_0011`.
+The deployed v0.4.2 release gate passed 690 backend tests
+with 12 expected service-gated skips and 78.27% coverage, plus 12 PostgreSQL
+integration tests through schema head `20260905_0011`, 19 frontend tests,
+TypeScript checking, and the 24-route production build.
 
 | Test area | Files |
 | --- | --- |
@@ -922,7 +921,7 @@ integration tests through schema head `20260905_0011`.
 Latest verified local result:
 
 ```text
-688 passed, 12 skipped; 78.31% coverage
+690 passed, 12 skipped; 78.27% coverage
 ```
 
 ---

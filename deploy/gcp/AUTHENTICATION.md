@@ -105,6 +105,12 @@ fallback entries until custom-domain login, logout/re-login, role enforcement,
 and rollback behavior have passed the release matrix. Do not register wildcard
 origins or callbacks.
 
+The v0.4.2 rollout reconfirmed administrator logout/re-login, admin-route access,
+invitation-register access, canonical Auth.js URLs, and anonymous fail-closed
+behavior. Researcher-specific classification acceptance, suspension, and
+uninvited-account denial still require the corresponding test identities; do
+not infer those results from the earlier provider-login record.
+
 Do not enable IAP on the same prototype revision. IAP would add a second login
 and requires a deliberate adapter from IAP identity assertions to the
 application's invitation and role records.

@@ -1,10 +1,13 @@
 # ANEMONE pilot operations
 
-Status: the bounded unknown-classification pilot is deployed in `v0.4.0`;
-see the [verified operations record](../../docs/RELEASE_0.4.0_OPERATIONS.md).
-Full classification/scientific acceptance remains deferred. Use with
-`docs/ANEMONE_PR5_PLAN.md`. This runbook does not approve
-a download, paid execution, migration, deployment, or release.
+Status: the bounded unknown-classification pilot was introduced in `v0.4.0`
+and remains deployed in `v0.4.2`. The authenticated classification workflow was
+added in `v0.4.1`, but no real scientific decision has been approved or applied;
+full researcher acceptance remains pending. See the
+[v0.4.2 operations record](../../docs/RELEASE_0.4.2_OPERATIONS.md) and use this
+runbook with [`docs/ANEMONE_PR5_PLAN.md`](../../docs/ANEMONE_PR5_PLAN.md). This
+runbook does not approve a download, paid execution, migration, deployment, or
+release.
 
 Release scope update, 2026-09-03: the user approved keeping classification
 unknown for `v0.4.0` and completing the workflow in the

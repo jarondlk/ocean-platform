@@ -1,5 +1,8 @@
 # v0.4.1 deployment record
 
+> Historical release record. The current deployment is v0.4.2; see
+> [`RELEASE_0.4.2_OPERATIONS.md`](RELEASE_0.4.2_OPERATIONS.md).
+
 Verified 2026-09-06 JST. This records operational deployment evidence, not a
 scientific classification decision. The retained ANEMONE pilot remains
 `unknown`; no classification review was approved or applied during release.
@@ -92,18 +95,22 @@ review by an authorized billing user.
 
 Remaining scientific acceptance work is tracked in
 [`ANEMONE_NEXT_PATCH.md`](ANEMONE_NEXT_PATCH.md). Exclusion-reason presentation
-is implemented in the v0.4.2 candidate; the deferred researcher matrix for
+was subsequently deployed in v0.4.2; the deferred researcher matrix for
 source-only, environmental-only, empty-cohort, citation, controlled application,
 and rollback behavior remains. `unknown` is a valid final result.
 
 ## Custom domain follow-up — 2026-09-08
 
+This section is the pre-v0.4.2 custom-domain checkpoint. The later v0.4.2
+rollout corrected the API origin and supersedes its forward-looking rollout
+instructions; see the v0.4.2 operations record.
+
 - [`https://oceaninfobio.com`](https://oceaninfobio.com) is the canonical URL.
-- Post-release revision `ocean-platform-00012-ps6` receives 100% traffic and
-  reuses the v0.4.1 API/frontend image digests. Frontend `AUTH_URL` is the
-  canonical domain. API `CORS_ORIGINS` still names the fallback Cloud Run
-  origin; render and verify both values from the canonical URL in the v0.4.2
-  deployment.
+- Post-release revision `ocean-platform-00012-ps6` received 100% traffic at this
+  checkpoint and reused the v0.4.1 API/frontend image digests. Frontend
+  `AUTH_URL` was the canonical domain. API `CORS_ORIGINS` still named the
+  fallback Cloud Run origin; render and verify both values from the canonical
+  URL in the v0.4.2 deployment.
 - The apex domain serves a valid HTTPS login page. Auth.js reports the canonical
   sign-in and `/api/auth/callback/google` URLs, the session endpoint returns
   successfully, and anonymous protected-health access returns 401.

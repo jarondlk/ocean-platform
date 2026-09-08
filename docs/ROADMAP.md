@@ -33,7 +33,7 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The bounded GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.4.1`. The active data plane now uses the
+  and OCEAN Platform release `v0.4.2`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
 - The bounded ANEMONE MiFish pilot is stored as a distinct
@@ -85,8 +85,9 @@ machine-access arrangement exists.
 
 ## Completed MVP: ANEMONE Classification and No-Evidence Safety
 
-Released as `v0.4.1` without changing the retained pilot's `unknown`
-classification. The detailed work order is in
+The classification and no-evidence workflow was released as `v0.4.1`, and its
+direct exclusion-reason presentation was released as `v0.4.2`, without changing
+the retained pilot's `unknown` classification. The detailed work order is in
 [`docs/ANEMONE_NEXT_PATCH.md`](ANEMONE_NEXT_PATCH.md).
 
 - [x] Provide an authenticated, evidence-backed draft/review/approve-or-reject classification
@@ -103,7 +104,7 @@ classification. The detailed work order is in
 - [x] Show applied recipe/retrieval filters and empty-cohort outcomes directly
       in Chat.
 - [x] Complete exclusion-reason presentation across Data and analysis views.
-      The v0.4.2 candidate exposes sample eligibility and exact reason codes in
+      The v0.4.2 release exposes sample eligibility and exact reason codes in
       Data, and makes Eligibility and Exclusions first-class analysis tables.
 - [ ] Run the deferred researcher acceptance matrix, including source-only,
       environmental-only, invalid/empty-cohort, citation, and rollback cases.

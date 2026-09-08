@@ -11,6 +11,8 @@ controlled manual application path are deployed in `v0.4.1`. The fixed Cloud
 Run workload identity is registered. Authenticated researcher acceptance
 remains pending, and the real canary has **not** been classified or
 scientifically accepted.
+The `v0.4.2` release adds direct eligibility and exclusion-reason presentation
+without changing that scientific state.
 No review is inferred from a sample name, collection device, coordinates, or
 permission to implement this workflow.
 

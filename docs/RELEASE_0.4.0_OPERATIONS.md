@@ -1,5 +1,8 @@
 # v0.4.0 deployment record
 
+> Historical release record. The current deployment is v0.4.2; see
+> [`RELEASE_0.4.2_OPERATIONS.md`](RELEASE_0.4.2_OPERATIONS.md).
+
 Verified 2026-09-03 JST. Classification remains unknown by explicit user
 decision. This records operational verification, not researcher acceptance.
 

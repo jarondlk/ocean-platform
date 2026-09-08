@@ -2,23 +2,20 @@
 
 > **Last updated**: 2026-09-08 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform release `v0.4.1` is live on Cloud Run
-> service `ocean-platform`; its recorded release revision is
-> `ocean-platform-v041-706348e`, and post-release custom-domain revision
-> `ocean-platform-00012-ps6` currently receives 100% traffic. PR1
-> deterministic no-evidence safety, PR2 authenticated classification review,
+> **Current status**: OCEAN Platform release `v0.4.2` is live on Cloud Run
+> service `ocean-platform`; revision `ocean-platform-00013-djj` receives 100%
+> traffic. PR1 deterministic no-evidence safety, PR2 authenticated
+> classification review,
 > PR3 read-only effect preview, and PR4 manual controlled
 > application/republication are merged, migrated through `20260905_0011`, and
 > deployed. The fixed Cloud Run workload identity is registered. The bounded
 > ANEMONE pilot remains `unknown`; no real review was approved or applied, and
 > administrator custom-domain logout/re-login and role access pass, while full
-> authenticated researcher scientific acceptance remains pending. Source `706348e`
-> is tagged and synchronized to `main` and `gcp-dev`. See the
-> [v0.4.1 operations record](docs/RELEASE_0.4.1_OPERATIONS.md). The canonical
-> application URL is now `https://oceaninfobio.com`; exclusion-reason
-> presentation is implemented on `gcp-dev` at `08f7a32` for the v0.4.2
-> candidate. [PR #56](https://github.com/jarondlk/ocean-platform/pull/56) is
-> open, conflict-free, and its checks pass; it is not merged or deployed.
+> authenticated researcher scientific acceptance remains pending. Source `2731d46`
+> is tagged as `v0.4.2` and synchronized to `main`. See the
+> [v0.4.2 operations record](docs/RELEASE_0.4.2_OPERATIONS.md). The canonical
+> application URL is `https://oceaninfobio.com`; exclusion-reason
+> presentation is implemented and deployed in v0.4.2 from merged [PR #56](https://github.com/jarondlk/ocean-platform/pull/56).
 
 ---
 
@@ -59,7 +56,27 @@ used only as historical reference and parity material.
 
 ## 2. What Changed Recently
 
-### v0.4.1 released and deployed (2026-09-06)
+### v0.4.2 released and deployed (2026-09-08)
+
+- PR #56 merged as `2731d464ae11a2064359d2696db3f2eab523c2ac`; GitHub
+  release `v0.4.2` and Cloud Build
+  `fd2a5970-692f-424e-a721-0144e1e2e005` are complete.
+- Migration execution `ocean-migrate-w9z9s` succeeded at schema head
+  `20260905_0011`. Revision `ocean-platform-00013-djj` is Ready and receives
+  100% traffic.
+- The frontend uses `AUTH_URL=https://oceaninfobio.com`; the API uses
+  `CORS_ORIGINS=https://oceaninfobio.com`. Anonymous root access redirects to
+  login, and the login, session, and web-manifest endpoints passed live checks.
+- Data and analysis views now present API-owned environmental eligibility and
+  exact deterministic exclusion reasons. The pilot remains `unknown`; this
+  release created or applied no scientific classification decision.
+- Post-rollout monitoring found 300 requests, no HTTP 5xx responses, no
+  error-severity revision or Cloud SQL logs, 15.11 ms p50 and 26.21 ms p95
+  request latency, and at most two application database connections. See the
+  [v0.4.2 operations record](docs/RELEASE_0.4.2_OPERATIONS.md) for the complete
+  point-in-time evidence and billing observations.
+
+### v0.4.1 released and deployed (2026-09-06, historical)
 
 - PR1 adds deterministic abstention before model generation when no usable
   evidence remains, durable answer/abstention outcomes, visible scientific
@@ -87,10 +104,10 @@ used only as historical reference and parity material.
   `ocean-jobs` workload identity was registered by
   `ocean-anemone-process-4v2xv`; no classification was created or applied.
 - Revision `ocean-platform-v041-706348e` was Ready at 100% traffic for release.
-  Post-release custom-domain revision `ocean-platform-00012-ps6` now receives
-  100% traffic using the same immutable images. Pre/post migration backups
-  passed isolated restore checks. The previous v0.4.0 revision is retained for
-  reviewed rollback.
+  Post-release custom-domain revision `ocean-platform-00012-ps6` subsequently
+  received 100% traffic using the same immutable images. Pre/post migration
+  backups passed isolated restore checks. The previous v0.4.0 revision is
+  retained for reviewed rollback.
 - Authenticated researcher acceptance was not repeated during rollout because
   the local Mac session was locked. Automated auth/role tests and anonymous
   fail-closed HTTP checks passed; scientific acceptance remains pending.
@@ -1090,16 +1107,17 @@ Use this only to compare historical Streamlit behavior with the Next.js UI.
 
 ## 9. Testing and Verification
 
-The v0.4.0 release gate passed 638 backend tests with 9 PostgreSQL-gated skips
-and 77.11% coverage, all PostgreSQL integration checks in CI, 14 frontend
-navigation tests, typecheck, production build, Ruff, dependency checks, and
-CodeQL. Deployment, backup, migration, source-citation, and authenticated UI
-evidence is in [`docs/RELEASE_0.4.0_OPERATIONS.md`](docs/RELEASE_0.4.0_OPERATIONS.md).
+The v0.4.2 release gate passed 690 backend tests with 12 expected service-gated
+skips and 78.27% coverage, all 12 fresh PostgreSQL integration tests through
+schema head `20260905_0011`, 19 frontend tests, TypeScript checking, the
+24-route production build, Ruff, dependency checks, CodeQL, and a production
+npm audit with zero vulnerabilities. Deployment and monitoring evidence is in
+[`docs/RELEASE_0.4.2_OPERATIONS.md`](docs/RELEASE_0.4.2_OPERATIONS.md).
 
-Post-release dependency and security maintenance passed 642 backend tests with
-9 skips and 77.15% coverage. The existing local `.venv` must be recreated with
-`./scripts/bootstrap_dev.sh` after the lock update so `snowballstemmer` is
-installed. These maintenance changes are merged but not deployed.
+The v0.4.0 and v0.4.1 results below are retained as historical release evidence.
+Dependency and security maintenance, including the NLTK-free evaluator, is
+included in both the v0.4.1 and v0.4.2 deployed images. Recreate an older local
+`.venv` with `./scripts/bootstrap_dev.sh` so `snowballstemmer` is installed.
 
 The following table is retained as the historical v0.3.0 release validation:
 
@@ -1185,7 +1203,7 @@ git diff --check
 | Pipeline UI | Manual batch job controls, preflight checks, active/background job status, artifact freshness, per-stage logs, run history, manifests, and artifact diffs exist |
 | Database UI | Schema, table browsing, and read-only query surface exist |
 | Data exploration | Combined Explore corpus workbench plus combined Data domain workbench exist for expert browsing |
-| ANEMONE eDNA | One bounded unknown-classification pilot, separate assignment methods, exact source citations, descriptive analysis, registered publication, and provenance are deployed in v0.4.0 |
+| ANEMONE eDNA | One bounded unknown-classification pilot, separate assignment methods, exact source citations, descriptive analysis, registered publication, provenance, and direct exclusion reasons are deployed through v0.4.2 |
 | System/debug | Status and debug surfaces exist |
 | Invite-only identity | OIDC, invitations, viewer/researcher/admin roles, suspension, audit events, and a production-forbidden development mock-login harness exist |
 | User feedback | Persisted chat interactions, feedback revisions, admin review/filter/export exist |
@@ -1213,7 +1231,7 @@ git diff --check
 | Managed OIDC deployment | Google OIDC is live and verified for the administrator and approved researcher; broader identity-provider recovery/MFA policy remains external to the application |
 | Evaluation execution | Serving instances deliberately reject in-process jobs; the UI start controls are not yet connected to the external Cloud Run evaluation job |
 | Security operations require repository settings | CodeQL and dependency automation exist; branch/environment protections, retention enforcement, cost review, and alerting still require operator review |
-| Historical milestone plans | `docs/PRE_MILESTONE_VALIDATION_PLAN.md`, `docs/PHASE7_RELEASE_RUNBOOK.md`, and `deploy/gcp/MIGRATION_PLAN.md` retain dated gates; current cloud evidence is in `docs/DEPLOYMENT.md` and `docs/RELEASE_0.4.1_OPERATIONS.md` |
+| Historical milestone plans | `docs/PRE_MILESTONE_VALIDATION_PLAN.md`, `docs/PHASE7_RELEASE_RUNBOOK.md`, and `deploy/gcp/MIGRATION_PLAN.md` retain dated gates; current cloud evidence is in `docs/DEPLOYMENT.md` and `docs/RELEASE_0.4.2_OPERATIONS.md` |
 | ANEMONE classification | The pilot remains unknown. Authenticated review/decision/audit persistence, read-only effect preview, and manual controlled end-to-end republication are deployed; a real decision and researcher acceptance remain |
 | Empty evidence cohorts | Deterministic pre-generation abstention and visible recipe filters are deployed; authenticated production scientific acceptance remains |
 
@@ -1221,17 +1239,16 @@ git diff --check
 
 ## 13. Recommended Next Work Order
 
-1. Review PR #56 and the completed v0.4.2 exclusion-reason UI. Local, push, and
-   PR checks pass.
-2. Complete the remaining custom-domain researcher-role, suspension, and
+1. Complete the remaining custom-domain researcher-role, suspension, and
    uninvited-account checks. Administrator logout/re-login, admin-route access,
    invitation-register access, and anonymous fail-closed behavior pass.
-3. Run the deferred researcher acceptance matrix without claiming taxonomic
+2. Run the deferred researcher acceptance matrix without claiming taxonomic
    accuracy, contamination clearance, or environmental overlap beyond the
    reviewed evidence.
-4. Merge PR #56 after review, build and deploy the immutable v0.4.2 candidate,
-   then publish the release only after live acceptance passes.
-5. Continue scheduled-update, evaluation-job bridge, restore-drill, retention,
+3. Continue post-v0.4.2 log, latency, Cloud SQL connection, backup, and billing
+   review under the existing limits; investigate repeated cold-start outliers
+   before changing minimum scale.
+4. Continue scheduled-update, evaluation-job bridge, restore-drill, retention,
    cost-review, and legacy-resource retirement work under their existing
    approval boundaries.
 

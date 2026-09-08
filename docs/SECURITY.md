@@ -42,6 +42,8 @@ must never be identical.
 | Evidence search | Yes | Yes | Yes |
 | Data, provenance, and evaluation | No | Yes | Yes |
 | Run evaluations | No | Yes | Yes |
+| Draft and submit scientific classification decisions | No | Yes | No |
+| Record operational classification application outcomes | No | No | Yes |
 | Review and export all feedback | No | No | Yes |
 | Pipeline controls | No | No | Yes |
 | Database inspector and read-only SQL | No | No | Yes |
@@ -369,7 +371,7 @@ live-manifest alerts as unreachable.
   [`RELEASE_0.4.0_OPERATIONS.md`](RELEASE_0.4.0_OPERATIONS.md) and
   [`../deploy/gcp/ANEMONE_PILOT.md`](../deploy/gcp/ANEMONE_PILOT.md).
 
-## ANEMONE research-serving boundary (PR3)
+## ANEMONE research-serving boundary (historical PR3 gate)
 
 - eDNA research APIs are read-only under the existing data/evidence permissions;
   no download credential is accepted or returned by them.
@@ -381,15 +383,16 @@ live-manifest alerts as unreachable.
   measurements are not rewritten.
 - Materialization is operator-only, dry-run by default, and uses the corpus
   advisory lock. It never deletes canonical or immutable source records.
-- Only active evidence is served. eDNA cross-source expansion is disabled
-  pending reviewed PR4 linkage rules. Missing provenance hashes, row locators,
-  or normalized artifacts block eDNA snapshot publication.
+- Only active evidence is served. eDNA cross-source expansion remains disabled
+  without a reviewed PR4 environmental profile; no live profile is enabled.
+  Missing provenance hashes, row locators, or normalized artifacts block eDNA
+  snapshot publication.
 - No live ANEMONE download, production database mutation, credential change,
   or GCP deployment is part of PR3 verification.
 
 ## Authorization MVP Release Checklist
 
-Current deployed GCP evidence as of 2026-09-06: OCEAN Platform release `v0.4.1`
+Current deployed GCP evidence as of 2026-09-08: OCEAN Platform release `v0.4.2`
 runs with
 `DEPLOYMENT_ENV=production`, `AUTH_MODE=required`, Google OIDC, distinct Secret
 Manager-backed signing secrets, private FastAPI/Cloud SQL connectivity, and
@@ -398,15 +401,19 @@ scientific identity from the session, while controlled application uses the
 registered `ocean-jobs` workload identity. All 27 migrated tables matched the
 release contract; bounded OCEAN jobs retain manual execution and zero automatic
 retries; protected review and health proxy routes returned 401 anonymously;
-Cloud Run emitted no error-level entries from the new revision during rollout;
-and CI and CodeQL passed. The dependency updates and NLTK removal are included
-in this release. The full authenticated researcher/admin browser matrix was not
-repeated during rollout because the local Mac session was locked. A
+Post-rollout monitoring found no HTTP 5xx responses and no error-severity Cloud
+Run or Cloud SQL entries; CI and CodeQL passed. The dependency updates and NLTK
+removal are included in this release. Administrator custom-domain logout/login,
+admin-route access, and invitation-register access passed. Researcher-specific
+classification acceptance, suspension, and uninvited-account denial still
+require the corresponding test identities. A
 database URL exposed by a failed migration traceback was immediately
 invalidated by rotating both affected database users and disabling both old
 secret versions before traffic resumed.
 
-The checklist remains reusable for every future release. It is intentionally
+The complete point-in-time deployment and monitoring evidence is in
+[`RELEASE_0.4.2_OPERATIONS.md`](RELEASE_0.4.2_OPERATIONS.md). The checklist
+remains reusable for every future release. It is intentionally
 not marked permanently complete: secret rotation, dependency state, callback
 configuration, role tests, backups, logs, and retention must be re-evaluated
 for each deployment. The current unresolved operational items are audited
