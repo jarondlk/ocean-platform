@@ -2,7 +2,7 @@
 
 ## v0.4.2 release
 
-The candidate adds API-owned environmental eligibility fields and direct Data
+The release adds API-owned environmental eligibility fields and direct Data
 and analysis exclusion presentation. Local verification on 2026-09-08 passed
 690 backend tests with 12 expected service-gated skips and 78.27% coverage, 19
 frontend tests, TypeScript checking, the 24-route production build, Ruff,
@@ -22,7 +22,7 @@ reviewed, merged as `2731d46`, and released as `v0.4.2`. Cloud Build
 `fd2a5970-692f-424e-a721-0144e1e2e005` and the live rollout are recorded in
 [`RELEASE_0.4.2_OPERATIONS.md`](RELEASE_0.4.2_OPERATIONS.md).
 
-## Current release evidence
+## Previous release evidence
 
 For OCEAN Platform release `v0.4.1`, the release gate passed 688 backend tests
 with 12 expected service-gated skips and 78.31% aggregate coverage, 12

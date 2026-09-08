@@ -4,10 +4,11 @@ This is the historical local-canary record. The subsequent `v0.4.0` deployment,
 verified imports/backups, live citation checks and limitations are recorded
 in [release operations](RELEASE_0.4.0_OPERATIONS.md).
 
-Status: acquisition, canonical storage, evidence/provenance, signed API access
-and local recovery verified. Scientific acceptance and cloud rollout are not
-complete. No production import, model call, cloud build, GCP mutation, merge or
-release was performed during this canary.
+Status at this historical checkpoint: acquisition, canonical storage,
+evidence/provenance, signed API access, and local recovery verified. Scientific
+acceptance and cloud rollout were not complete. No production import, model
+call, cloud build, GCP mutation, merge, or release was performed during this
+canary.
 
 Subsequent release decision: the user explicitly requested `v0.4.0` with the
 pilot still unknown, deferring classification workflow completion to the

@@ -2,8 +2,11 @@
 
 > Status: PR1–PR5 completed and deployed in `v0.4.0` on 2026-09-03. This is the
 > implementation plan and historical decision record; deployment evidence is in
-> [`RELEASE_0.4.0_OPERATIONS.md`](RELEASE_0.4.0_OPERATIONS.md). Classification
-> and full researcher acceptance remain next-patch work.
+> [`RELEASE_0.4.0_OPERATIONS.md`](RELEASE_0.4.0_OPERATIONS.md). The authenticated
+> classification workflow was subsequently deployed in `v0.4.1`, and direct
+> exclusion presentation in `v0.4.2`; a real scientific decision and full
+> researcher acceptance remain pending. See
+> [`ANEMONE_NEXT_PATCH.md`](ANEMONE_NEXT_PATCH.md).
 > Released: `v0.4.0`
 > Source family: `edna_metabarcoding`
 > Initial provider: `anemone`

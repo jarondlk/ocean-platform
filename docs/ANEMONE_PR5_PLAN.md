@@ -1,8 +1,10 @@
 # ANEMONE PR5 — Live Pilot, Cloud Publication, and v0.4.0
 
 > Status: implemented, validated, and deployed in `v0.4.0` on 2026-09-03.
-> This is the historical rollout plan. Classification and the broader
-> scientific/model acceptance matrix remain deferred to the next patch.
+> This is the historical rollout plan. The classification workflow was later
+> deployed in `v0.4.1`, and direct exclusion presentation in `v0.4.2`; a real
+> scientific decision and the broader scientific/model acceptance matrix remain
+> deferred.
 > Audited: 2026-09-03 JST, local `gcp-dev` worktree
 > Dependency: accumulated PR1–PR4 implementation
 > The user authorized the gated rollout sequence on 2026-09-03; pilot inputs and acceptance gates remain required

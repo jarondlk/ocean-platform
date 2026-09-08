@@ -1,4 +1,4 @@
-# ANEMONE classification and research safety — v0.4.1
+# ANEMONE classification and research safety — v0.4.1/v0.4.2
 
 Decision: on 2026-09-03 the user prioritized `v0.4.0` and explicitly deferred
 classification workflow completion. Keep the pilot `sample_kind=unknown` and

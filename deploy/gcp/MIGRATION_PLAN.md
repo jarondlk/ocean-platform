@@ -2,10 +2,10 @@
 
 > Historical migration and validation record. The baseline below describes the
 > staged 2026-08 deployment and retains its original resource/count evidence.
-> The current deployed milestone is v0.4.1; use
+> The current deployed milestone is v0.4.2; use
 > [`README.md`](README.md),
 > [`../../docs/DEPLOYMENT.md`](../../docs/DEPLOYMENT.md), and
-> [`../../docs/RELEASE_0.4.1_OPERATIONS.md`](../../docs/RELEASE_0.4.1_OPERATIONS.md)
+> [`../../docs/RELEASE_0.4.2_OPERATIONS.md`](../../docs/RELEASE_0.4.2_OPERATIONS.md)
 > for current release state.
 
 This plan moves the current local prototype to GCP in independently testable

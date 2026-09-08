@@ -37,10 +37,13 @@ excluded from environmental-only analysis.
 - The researcher acceptance matrix must cover source-only, environmental-only,
   empty-cohort, citation, preview, controlled application, failure recovery, and
   rollback without inventing a scientific decision.
-- Billing was reviewed on 2026-09-08: the JPY 10,000 project alert, JPY 4,000
-  SQL alert, and JPY 2,250 Cloud Run spend cap remain configured. Posted values
+- Initial release billing was reviewed on 2026-09-08: the JPY 10,000 project
+  alert, JPY 4,000 SQL alert, and JPY 2,250 Cloud Run spend cap remain
+  configured. Posted values
   were JPY 0 after savings/credits for the project and SQL views, and JPY 32.95
-  for Cloud Run. Billing can lag; the JPY 20,000 user ceiling remains unchanged.
+  for Cloud Run. A later same-day monitoring snapshot reported JPY 34.76; see
+  the operations record. Billing can lag; the JPY 20,000 user ceiling remains
+  unchanged.
 - Deployment verified the API `CORS_ORIGINS` value as
   `https://oceaninfobio.com`; the fallback Google OAuth callback remains
   available for reviewed rollback.

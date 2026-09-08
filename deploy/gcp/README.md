@@ -41,9 +41,10 @@ Release evidence was verified on 2026-09-08 JST:
   still unknown. The review/application workflow is deployed; scientific
   acceptance remains an explicit follow-up.
 
-The preceding revision `ocean-platform-v040-a63885a` and verified pre-migration
-backup are retained. Review corpus/publication compatibility before rollback;
-do not automatically downgrade the schema or overwrite later user/chat records.
+The v0.4.1 revision `ocean-platform-v041-706348e` and its verified backup, plus
+the earlier revision `ocean-platform-v040-a63885a`, are retained. Review
+corpus/publication compatibility before rollback; do not automatically downgrade
+the schema or overwrite later user/chat records.
 
 The v0.4.2 release source is synchronized to remote `main`. Subsequent
 operations-record-only commits do not change the immutable build or deployed
