@@ -16,7 +16,9 @@
 > is tagged and synchronized to `main` and `gcp-dev`. See the
 > [v0.4.1 operations record](docs/RELEASE_0.4.1_OPERATIONS.md). The canonical
 > application URL is now `https://oceaninfobio.com`; exclusion-reason
-> presentation is implemented on `gcp-dev` for the v0.4.2 candidate.
+> presentation is implemented on `gcp-dev` at `08f7a32` for the v0.4.2
+> candidate. [PR #56](https://github.com/jarondlk/ocean-platform/pull/56) is
+> open, conflict-free, and its checks pass; it is not merged or deployed.
 
 ---
 
@@ -1219,16 +1221,16 @@ git diff --check
 
 ## 13. Recommended Next Work Order
 
-1. Review the completed v0.4.2 exclusion-reason UI and passing local release
-   gates on `gcp-dev`.
+1. Review PR #56 and the completed v0.4.2 exclusion-reason UI. Local, push, and
+   PR checks pass.
 2. Complete the remaining custom-domain researcher-role, suspension, and
    uninvited-account checks. Administrator logout/re-login, admin-route access,
    invitation-register access, and anonymous fail-closed behavior pass.
 3. Run the deferred researcher acceptance matrix without claiming taxonomic
    accuracy, contamination clearance, or environmental overlap beyond the
    reviewed evidence.
-4. Open a reviewed `gcp-dev` to `main` PR, build and deploy the immutable v0.4.2
-   candidate, then publish the release only after live acceptance passes.
+4. Merge PR #56 after review, build and deploy the immutable v0.4.2 candidate,
+   then publish the release only after live acceptance passes.
 5. Continue scheduled-update, evaluation-job bridge, restore-drill, retention,
    cost-review, and legacy-resource retirement work under their existing
    approval boundaries.

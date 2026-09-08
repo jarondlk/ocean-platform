@@ -1,6 +1,7 @@
 # OCEAN Platform v0.4.2
 
-Status: release candidate on `gcp-dev`; not yet released.
+Status: release candidate in [PR #56](https://github.com/jarondlk/ocean-platform/pull/56);
+not yet merged, deployed, or released.
 
 ## Included
 
