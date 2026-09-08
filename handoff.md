@@ -2,23 +2,22 @@
 
 > **Last updated**: 2026-09-08 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform release `v0.4.1` is live on Cloud Run
+> **Current status**: OCEAN Platform release `v0.4.2` is live on Cloud Run
 > service `ocean-platform`; its recorded release revision is
-> `ocean-platform-v041-706348e`, and post-release custom-domain revision
-> `ocean-platform-00012-ps6` currently receives 100% traffic. PR1
+> `ocean-platform-00013-djj` currently receives 100% traffic. PR1
 > deterministic no-evidence safety, PR2 authenticated classification review,
 > PR3 read-only effect preview, and PR4 manual controlled
 > application/republication are merged, migrated through `20260905_0011`, and
 > deployed. The fixed Cloud Run workload identity is registered. The bounded
 > ANEMONE pilot remains `unknown`; no real review was approved or applied, and
 > administrator custom-domain logout/re-login and role access pass, while full
-> authenticated researcher scientific acceptance remains pending. Source `706348e`
-> is tagged and synchronized to `main` and `gcp-dev`. See the
-> [v0.4.1 operations record](docs/RELEASE_0.4.1_OPERATIONS.md). The canonical
-> application URL is now `https://oceaninfobio.com`; exclusion-reason
-> presentation is implemented on `gcp-dev` at `08f7a32` for the v0.4.2
-> candidate. [PR #56](https://github.com/jarondlk/ocean-platform/pull/56) is
-> open, conflict-free, and its checks pass; it is not merged or deployed.
+> authenticated researcher scientific acceptance remains pending. Source `2731d46`
+> is tagged as `v0.4.2` and synchronized to `main`. See the
+> [v0.4.2 operations record](docs/RELEASE_0.4.2_OPERATIONS.md). The canonical
+> application URL is `https://oceaninfobio.com`; exclusion-reason
+> presentation is implemented and deployed in v0.4.2 from merged [PR #56](https://github.com/jarondlk/ocean-platform/pull/56).
+> The pilot remains unknown; no scientific classification was created or
+> applied. See the [v0.4.2 operations record](docs/RELEASE_0.4.2_OPERATIONS.md).
 
 ---
 

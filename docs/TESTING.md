@@ -1,6 +1,6 @@
 # Testing and CI
 
-## v0.4.2 candidate
+## v0.4.2 release
 
 The candidate adds API-owned environmental eligibility fields and direct Data
 and analysis exclusion presentation. Local verification on 2026-09-08 passed
@@ -17,9 +17,10 @@ and invitation register. Anonymous protected-health access remains fail-closed.
 Researcher-specific workflow acceptance, suspension, and an uninvited-account
 denial still require the corresponding test identities.
 
-Commit `08f7a32` passed gcp-dev CI run 180 and CodeQL run 151. PR #56 was then
-opened against `main`; its check summary reported 11 successful and one skipped
-check with no failures.
+Commit `08f7a32` passed gcp-dev CI run 180 and CodeQL run 151. PR #56 was
+reviewed, merged as `2731d46`, and released as `v0.4.2`. Cloud Build
+`fd2a5970-692f-424e-a721-0144e1e2e005` and the live rollout are recorded in
+[`RELEASE_0.4.2_OPERATIONS.md`](RELEASE_0.4.2_OPERATIONS.md).
 
 ## Current release evidence
 

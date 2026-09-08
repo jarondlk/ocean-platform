@@ -1,7 +1,9 @@
 # OCEAN Platform v0.4.2
 
-Status: release candidate in [PR #56](https://github.com/jarondlk/ocean-platform/pull/56);
-not yet merged, deployed, or released.
+Status: released and deployed on 2026-09-08 from merged PR [#56](https://github.com/jarondlk/ocean-platform/pull/56).
+
+Deployment evidence is recorded in
+[`RELEASE_0.4.2_OPERATIONS.md`](RELEASE_0.4.2_OPERATIONS.md).
 
 ## Included
 
@@ -11,13 +13,13 @@ not yet merged, deployed, or released.
   exact exclusion reason codes from the API.
 - Analysis exposes Eligibility and Exclusions directly. Empty result tables
   report the recorded exclusion count and link to the exclusion records.
-- Repository deployment, authentication, roadmap, testing, and handoff records
-  are aligned with the deployed v0.4.1 workflow and custom-domain follow-up.
+- Repository deployment, authentication, roadmap, testing, release, and handoff
+  records are aligned with the deployed v0.4.2 workflow and custom domain.
 
 ## Scientific boundary
 
 The retained ANEMONE pilot remains `sample_kind=unknown` and
-`is_control=null`. This candidate does not approve or apply a classification and
+`is_control=null`. This release does not approve or apply a classification and
 does not claim contamination clearance, taxonomic accuracy, environmental
 biodiversity validation, or CTD/SST overlap. Unknown and control samples remain
 excluded from environmental-only analysis.
@@ -39,6 +41,6 @@ excluded from environmental-only analysis.
   SQL alert, and JPY 2,250 Cloud Run spend cap remain configured. Posted values
   were JPY 0 after savings/credits for the project and SQL views, and JPY 32.95
   for Cloud Run. Billing can lag; the JPY 20,000 user ceiling remains unchanged.
-- Before rollout, verify that the rendered API replaces the current fallback
-  `CORS_ORIGINS` value with `https://oceaninfobio.com` while retaining the
-  fallback Google OAuth callback for reviewed rollback.
+- Deployment verified the API `CORS_ORIGINS` value as
+  `https://oceaninfobio.com`; the fallback Google OAuth callback remains
+  available for reviewed rollback.

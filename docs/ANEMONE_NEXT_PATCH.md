@@ -4,11 +4,12 @@ Decision: on 2026-09-03 the user prioritized `v0.4.0` and explicitly deferred
 classification workflow completion. Keep the pilot `sample_kind=unknown` and
 `is_control=null`. Its proposed environmental classification is not approved.
 
-Release outcome (2026-09-06): PR1–PR4 were merged and deployed as `v0.4.1`.
+Release outcome (2026-09-08): PR1–PR4 and the v0.4.2 exclusion presentation
+were merged and deployed as `v0.4.2`.
 The database is at schema head `20260905_0011`; the fixed Cloud Run application
 identity is registered. No real review was created, approved, or applied.
 Authenticated researcher acceptance remains a follow-up gate. Exclusion-reason
-presentation is implemented in the v0.4.2 candidate.
+presentation is implemented in the v0.4.2 release.
 
 ## v0.4.0 boundary
 

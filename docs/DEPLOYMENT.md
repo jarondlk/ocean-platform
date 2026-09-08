@@ -11,11 +11,14 @@ to the canonical domain.
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
-Current release record as of 2026-09-06:
+Current release record as of 2026-09-08:
 
-- OCEAN Platform [GitHub release `v0.4.1`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.1),
-  source `706348eda354320c24f5a18c9600e3d6341bec8a`, build
-  `97dbe5d3-c464-4e14-9350-72c83b4b7ec1`, revision `ocean-platform-v041-706348e`;
+- OCEAN Platform [GitHub release `v0.4.2`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.2),
+  merged commit `2731d464ae11a2064359d2696db3f2eab523c2ac`, Cloud Build
+  `fd2a5970-692f-424e-a721-0144e1e2e005`, and revision
+  `ocean-platform-00013-djj`; see [v0.4.2 operations](RELEASE_0.4.2_OPERATIONS.md);
+- v0.4.1 revision `ocean-platform-v041-706348e` and its verified backup remain
+  retained for reviewed rollback;
 - previous revision `ocean-platform-v040-a63885a` and pre-migration backup retained;
   review corpus/publication compatibility before rollback, without schema
   downgrade or overwriting later user/chat records;
@@ -31,19 +34,17 @@ Current release record as of 2026-09-06:
   expiry applied to transient Cloud Build source archives;
 - 325 documents/embeddings including the unknown-classification pilot;
   schema head `20260905_0011`, verified pre/post backup and isolated restore,
-  controlled workload registration, and fail-closed HTTP checks. See
-  [operations and known limitations](RELEASE_0.4.1_OPERATIONS.md).
+  controlled workload registration, and fail-closed HTTP checks. See the
+  [v0.4.2 operations record](RELEASE_0.4.2_OPERATIONS.md).
 
-The v0.4.1 release source was synchronized to remote `main` and `gcp-dev` before
-tagging. Operations-record-only commits after the tag do not change the deployed
-images.
+The v0.4.2 release source is synchronized to remote `main`; post-release
+operations-record commits do not change the immutable deployed images.
 
-Custom-domain follow-up on 2026-09-08 found post-release revision
-`ocean-platform-00012-ps6` at 100% traffic. It uses the immutable v0.4.1 image
-digests and sets frontend `AUTH_URL=https://oceaninfobio.com`. Its API
-`CORS_ORIGINS` still names the fallback Cloud Run origin; the v0.4.2 rollout
-must render the service from the canonical URL, verify both environment values,
-and preserve the fallback OAuth callback for reviewed rollback.
+The v0.4.2 rollout verified revision `ocean-platform-00013-djj` at 100% traffic,
+with immutable build `fd2a5970-692f-424e-a721-0144e1e2e005`, frontend
+`AUTH_URL=https://oceaninfobio.com`, and API
+`CORS_ORIGINS=https://oceaninfobio.com`. The fallback OAuth callback remains
+available for reviewed rollback.
 
 The dated GCP inventory and remaining destructive retirement candidates are
 recorded in [`GCP_RESOURCE_AUDIT.md`](GCP_RESOURCE_AUDIT.md).
