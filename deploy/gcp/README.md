@@ -16,14 +16,19 @@ Cost controls must be in place before runtime resources are created.
 
 ## Current deployed milestone
 
-Verified on 2026-09-06 JST:
+Release evidence was verified on 2026-09-06 JST; the custom-domain follow-up
+was verified on 2026-09-08 JST:
 
 - project `data-infra-infobio`, region `asia-northeast1`;
 - OCEAN Platform [GitHub release `v0.4.1`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.1);
 - build `97dbe5d3-c464-4e14-9350-72c83b4b7ec1`, revision
   `ocean-platform-v041-706348e`; immutable image digests, backup/restore checks,
   workload registration, and limitations in the [operations record](../../docs/RELEASE_0.4.1_OPERATIONS.md);
-- Cloud Run service `ocean-platform` at 100% traffic;
+- Cloud Run service `ocean-platform` at 100% traffic on post-release revision
+  `ocean-platform-00012-ps6`, using the immutable v0.4.1 image digests. The
+  frontend has `AUTH_URL=https://oceaninfobio.com`. The API still carries the
+  fallback Cloud Run origin in `CORS_ORIGINS`; the v0.4.2 deployment must render
+  both containers from the canonical public URL and verify the result;
 - Artifact Registry `ocean-platform`; service accounts `ocean-platform` and
   `ocean-jobs`; secrets and jobs under the `ocean-*` prefix;
 - Cloud SQL `ocean-postgres` / `ocean_platform` is PostgreSQL 16 and RUNNABLE;
@@ -53,8 +58,10 @@ and rollback resources that require explicit approval before deletion. Rerun
 the live audit before making current retirement, budget, IAM, or capacity
 decisions.
 
-The live URL is
-[`https://ocean-platform-469489188516.asia-northeast1.run.app`](https://ocean-platform-469489188516.asia-northeast1.run.app).
+The canonical live URL is
+[`https://oceaninfobio.com`](https://oceaninfobio.com). The default Cloud Run
+URL remains available for rollback and operations; Auth.js redirects it to the
+canonical origin.
 
 ## Target topology
 
@@ -182,7 +189,7 @@ The renderer accepts only non-secret values and writes ignored
 ```sh
 python scripts/render_gcp_templates.py \
   --image-tag=BUILD_ID \
-  --public-app-url=https://SERVICE_URL \
+  --public-app-url=https://oceaninfobio.com \
   --data-bucket=DATA_BUCKET \
   --oidc-client-id=GOOGLE_OAUTH_CLIENT_ID
 ```

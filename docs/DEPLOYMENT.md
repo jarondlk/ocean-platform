@@ -5,8 +5,9 @@
 The managed GCP prototype is live. It uses a public Cloud Run frontend with a
 private FastAPI sidecar, Cloud SQL PostgreSQL/pgvector, Cloud Storage, Secret
 Manager, Cloud Run Jobs, Google OIDC, and Vertex AI. The production application
-URL is
-[`https://ocean-platform-469489188516.asia-northeast1.run.app`](https://ocean-platform-469489188516.asia-northeast1.run.app).
+URL is [`https://oceaninfobio.com`](https://oceaninfobio.com). The default
+Cloud Run URL remains a rollback/operations endpoint and directs authentication
+to the canonical domain.
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
@@ -36,6 +37,13 @@ Current release record as of 2026-09-06:
 The v0.4.1 release source was synchronized to remote `main` and `gcp-dev` before
 tagging. Operations-record-only commits after the tag do not change the deployed
 images.
+
+Custom-domain follow-up on 2026-09-08 found post-release revision
+`ocean-platform-00012-ps6` at 100% traffic. It uses the immutable v0.4.1 image
+digests and sets frontend `AUTH_URL=https://oceaninfobio.com`. Its API
+`CORS_ORIGINS` still names the fallback Cloud Run origin; the v0.4.2 rollout
+must render the service from the canonical URL, verify both environment values,
+and preserve the fallback OAuth callback for reviewed rollback.
 
 The dated GCP inventory and remaining destructive retirement candidates are
 recorded in [`GCP_RESOURCE_AUDIT.md`](GCP_RESOURCE_AUDIT.md).

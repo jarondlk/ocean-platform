@@ -75,6 +75,7 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
         for setting in frontend["env"]
     }
     assert frontend_env["AUTH_TRUST_HOST"] == "true"
+    assert frontend_env["AUTH_URL"] == "https://example.run.app"
     assert frontend_env["INTERNAL_AUTH_ISSUER"] == "ocean-platform-frontend"
     assert frontend_env["INTERNAL_AUTH_AUDIENCE"] == "ocean-platform-api"
     assert frontend_env["OIDC_PROVIDER_NAME"] == "Google"
@@ -90,6 +91,7 @@ def test_gcp_templates_render_without_secret_values(tmp_path: Path):
         for setting in api["env"]
     }
     assert api_env["AUTH_ALLOWED_PROVIDERS"] == "google"
+    assert api_env["CORS_ORIGINS"] == "https://example.run.app"
     assert api_env["INTERNAL_AUTH_ISSUER"] == "ocean-platform-frontend"
     assert api_env["INTERNAL_AUTH_AUDIENCE"] == "ocean-platform-api"
     assert api_env["DATA_DIR"] == "/mnt/ocean-data"

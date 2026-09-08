@@ -7,8 +7,8 @@ classification workflow completion. Keep the pilot `sample_kind=unknown` and
 Release outcome (2026-09-06): PR1–PR4 were merged and deployed as `v0.4.1`.
 The database is at schema head `20260905_0011`; the fixed Cloud Run application
 identity is registered. No real review was created, approved, or applied.
-Authenticated researcher acceptance and the presentation work called out below
-remain follow-up gates.
+Authenticated researcher acceptance remains a follow-up gate. Exclusion-reason
+presentation is implemented in the v0.4.2 candidate.
 
 ## v0.4.0 boundary
 
@@ -42,6 +42,18 @@ remain follow-up gates.
    context, scientific outputs and model-answer limitations independently.
 6. Complete authenticated end-to-end tests, then document acceptance and ship
    the patch. Do not choose a final classification or approval in advance.
+
+## v0.4.2 exclusion presentation — 2026-09-08
+
+- Data sample lists and details report environmental-analysis eligibility and
+  the exact deterministic exclusion reason.
+- Analysis navigation exposes Eligibility and Exclusions directly. Empty result
+  tables link to the recorded exclusions without running a model or changing
+  the analysis.
+- Human-readable reason labels retain the underlying stable reason code.
+- Eligibility is computed by the API from canonical `sample_kind`, `is_control`,
+  and active-assay state using the same policy as the analysis engine. The UI
+  does not infer classification.
 
 ## PR1 research-safety implementation — 2026-09-05
 

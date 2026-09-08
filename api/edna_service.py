@@ -66,6 +66,26 @@ def _scalar(connection: Any, statement: str, params: Mapping[str, Any] | None = 
     return int(connection.execute(text(statement), dict(params or {})).scalar() or 0)
 
 
+def environmental_analysis_eligibility(
+    sample: Mapping[str, Any], assay_count: int
+) -> dict[str, Any]:
+    """Present the canonical environmental-only inclusion policy without inference."""
+    if assay_count == 0:
+        return {
+            "analysis_eligibility": "excluded",
+            "exclusion_reasons": ["no_active_assay"],
+        }
+    if (
+        sample.get("sample_kind") != "environmental"
+        or sample.get("is_control") is not False
+    ):
+        return {
+            "analysis_eligibility": "excluded",
+            "exclusion_reasons": ["control_or_unknown"],
+        }
+    return {"analysis_eligibility": "included", "exclusion_reasons": []}
+
+
 def _sample_conditions(filters: Mapping[str, Any]) -> tuple[list[str], dict[str, Any]]:
     conditions = ["s.active IS TRUE"]
     params: dict[str, Any] = {}
@@ -281,7 +301,14 @@ def edna_samples(
             ),
             params,
         ).fetchall()
-    return {"total": total, "limit": limit, "offset": offset, "rows": [_row(row) for row in rows]}
+    result_rows = []
+    for row in rows:
+        item = _row(row)
+        item.update(
+            environmental_analysis_eligibility(item, int(item["assay_count"]))
+        )
+        result_rows.append(item)
+    return {"total": total, "limit": limit, "offset": offset, "rows": result_rows}
 
 
 def _provenance(connection: Any, records: list[tuple[str, str, Any]]) -> dict[str, Any]:
@@ -351,8 +378,10 @@ def edna_sample_detail(sample_id: str) -> dict[str, Any] | None:
         provenance_records = [("sample", sample_id, sample)] + [
             ("assay", assay.assay_id, assay) for assay in assays
         ]
+        sample_payload = _row(sample)
+        sample_payload.update(environmental_analysis_eligibility(sample_payload, len(assays)))
         return {
-            "sample": _row(sample),
+            "sample": sample_payload,
             "assays": [_row(row) for row in assays],
             "method_summaries": [_row(row) for row in summaries],
             "provenance": _provenance(connection, provenance_records),

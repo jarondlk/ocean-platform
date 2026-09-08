@@ -22,6 +22,7 @@ import {
   classificationPreviewMethodRows,
 } from "@/lib/classification-preview";
 import { EDNA_METHODS, ednaHref, parseEdnaState } from "@/lib/edna-navigation";
+import { exclusionReasonDisplay } from "@/lib/edna-exclusions";
 import type {
   EdnaAssayDetailResponse,
   EdnaCatalogResponse,
@@ -205,19 +206,26 @@ export function EdnaDataView() {
     }
   }
 
-  const sampleRows = (samples?.rows || []).map((row) => ({
-    ...row,
-    sample: compactId(row.sample_id),
-    provider_sample_id: row.provider_sample_id,
-    project: row.provider_project_id,
-    run: row.provider_run_id,
-    sample_kind: row.sample_kind,
-    control_status: row.is_control === null ? "Unknown" : row.is_control ? "Control" : "Non-control",
-    collection_date_utc: row.collection_date_utc,
-    detection_count: row.detection_count,
-    "QCauto records": row.qcauto_detection_count,
-    "QCauto 95%-3NN records": row.three_nn_detection_count,
-  }));
+  const sampleRows = (samples?.rows || []).map((row) => {
+    const exclusionReasons = Array.isArray(row.exclusion_reasons)
+      ? row.exclusion_reasons
+      : [];
+    return {
+      ...row,
+      sample: compactId(row.sample_id),
+      provider_sample_id: row.provider_sample_id,
+      project: row.provider_project_id,
+      run: row.provider_run_id,
+      sample_kind: row.sample_kind,
+      control_status: row.is_control === null ? "Unknown" : row.is_control ? "Control" : "Non-control",
+      analysis_eligibility: row.analysis_eligibility,
+      exclusion_reason: exclusionReasons.map(exclusionReasonDisplay).join(", ") || "NA",
+      collection_date_utc: row.collection_date_utc,
+      detection_count: row.detection_count,
+      "QCauto records": row.qcauto_detection_count,
+      "QCauto 95%-3NN records": row.three_nn_detection_count,
+    };
+  });
   const detectionRows = (detections?.rows || []).map((row) => ({
     ...row,
     detection: compactId(row.detection_id),
@@ -328,7 +336,7 @@ export function EdnaDataView() {
             ))}
           </select>
         </div>
-        <DataTable columns={["sample", "provider_sample_id", "project", "run", "sample_kind", "control_status", "collection_date_utc", "QCauto records", "QCauto 95%-3NN records"]} rows={sampleRows} rowKeyColumn="sample_id" selectedKey={appliedFilters.sample_id} onRowSelect={(row) => selectSample(String(row.sample_id))} />
+        <DataTable columns={["sample", "provider_sample_id", "project", "run", "sample_kind", "control_status", "analysis_eligibility", "exclusion_reason", "collection_date_utc", "QCauto records", "QCauto 95%-3NN records"]} rows={sampleRows} rowKeyColumn="sample_id" selectedKey={appliedFilters.sample_id} onRowSelect={(row) => selectSample(String(row.sample_id))} />
         <Pagination page={samples} loading={loading} onPage={(offset) => page("sample", offset)} />
       </section>
 
@@ -336,6 +344,19 @@ export function EdnaDataView() {
         <section className="data-section">
           <h3 className="section-title">Sample</h3>
           <DataTable columns={["provider_sample_id", "provider_project_id", "provider_run_id", "sample_kind", "is_control", "collection_date_utc", "lat", "lon"]} rows={[sample.sample]} />
+          <h3 className="section-title">Environmental analysis eligibility</h3>
+          <DataTable
+            columns={["status", "reason", "sample_kind", "is_control", "active_assays"]}
+            rows={[{
+              status: sample.sample.analysis_eligibility,
+              reason: Array.isArray(sample.sample.exclusion_reasons)
+                ? sample.sample.exclusion_reasons.map(exclusionReasonDisplay).join(", ") || "NA"
+                : "NA",
+              sample_kind: sample.sample.sample_kind,
+              is_control: sample.sample.is_control,
+              active_assays: sample.assays.length,
+            }]}
+          />
           <h3 className="section-title">Methods</h3>
           <DataTable columns={["assignment_method", "detection_count", "read_count_sum", "copies_per_ml_record_count"]} rows={sample.method_summaries} />
           <h3 className="section-title">Assays</h3>
@@ -395,6 +416,21 @@ export function EdnaDataView() {
               <Metric label="Current kind" value={classificationPreview.baseline.sample_kind} />
               <Metric label="Proposed kind" value={classificationPreview.proposed.sample_kind} />
             </div>
+            <DataTable
+              columns={["scenario", "status", "reason"]}
+              rows={[
+                {
+                  scenario: "Current",
+                  status: classificationPreview.baseline.eligibility,
+                  reason: classificationPreview.baseline.exclusion_reasons.map(exclusionReasonDisplay).join(", ") || "NA",
+                },
+                {
+                  scenario: "Proposed",
+                  status: classificationPreview.proposed.eligibility,
+                  reason: classificationPreview.proposed.exclusion_reasons.map(exclusionReasonDisplay).join(", ") || "NA",
+                },
+              ]}
+            />
             <h3 className="section-title">Method results</h3>
             <DataTable
               columns={["scenario", "assay_id", "assignment_method", "status", "reason", "source_detection_count", "retained_detection_count", "excluded_detection_count", "source_reads", "retained_reads", "excluded_reads", "richness", "shannon", "simpson_1d", "evenness", "metric_status", "top_taxa"]}

@@ -1,5 +1,22 @@
 # Testing and CI
 
+## v0.4.2 candidate
+
+The candidate adds API-owned environmental eligibility fields and direct Data
+and analysis exclusion presentation. Local verification on 2026-09-08 passed
+690 backend tests with 12 expected service-gated skips and 78.27% coverage, 19
+frontend tests, TypeScript checking, the 24-route production build, Ruff,
+`pip check`, one Alembic head (`20260905_0011`), diff checks, and a production
+npm audit with zero vulnerabilities. PostgreSQL acceptance was then exercised
+against a fresh disposable PG16/pgvector
+database: all 12 integration tests passed after applying migrations through
+`20260905_0011`. The container and disposable data were removed afterward.
+On the live custom domain, the existing administrator completed sign-out and
+Google sign-in again, reached the admin-only route, and read the active account
+and invitation register. Anonymous protected-health access remains fail-closed.
+Researcher-specific workflow acceptance, suspension, and an uninvited-account
+denial still require the corresponding test identities.
+
 ## Current release evidence
 
 For OCEAN Platform release `v0.4.1`, the release gate passed 688 backend tests
