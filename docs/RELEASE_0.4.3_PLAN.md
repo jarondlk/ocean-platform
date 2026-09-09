@@ -1,7 +1,8 @@
 # OCEAN Platform v0.4.3 plan
 
 Status: PR1–PR4 are implemented and locally verified on `gcp-dev` as of
-2026-09-09. They are not yet committed, reviewed, merged, released, or
+2026-09-09. The combined release-candidate commit is `545366d`; it is pushed
+and CI/CodeQL are green, but it is not yet PR-reviewed, merged, released, or
 deployed.
 
 ## Objective
@@ -12,15 +13,15 @@ remains `sample_kind=unknown` and `is_control=null`; this plan does not authoriz
 or imply a scientific reclassification.
 
 Development starts on `gcp-dev`. Keep the four changes below independently
-reviewable as four logical commits in one combined `gcp-dev` → `main` release
+reviewable as four logical sections in one combined `gcp-dev` → `main` release
 PR. This preserves the repository policy of retaining only `main` and
 `gcp-dev` while keeping the dependency order auditable. Release and deploy only
 after the combined gate passes.
 
 ## PR1 — Classification integrity and fail-closed lineage
 
-Status: implemented and locally verified on `gcp-dev` on 2026-09-09; not yet
-committed, merged, released, or deployed.
+Status: implemented and locally verified on `gcp-dev` on 2026-09-09; included
+in candidate `545366d`; not yet PR-reviewed, merged, released, or deployed.
 
 - Define one canonical tri-state mapping:
   `environmental -> false`, every recognized control kind `-> true`, and
@@ -51,8 +52,8 @@ Verification evidence:
 
 ## PR2 — Controlled operational outcomes
 
-Status: implemented and locally verified on `gcp-dev` on 2026-09-09; not yet
-committed, merged, released, or deployed.
+Status: implemented and locally verified on `gcp-dev` on 2026-09-09; included
+in candidate `545366d`; not yet PR-reviewed, merged, released, or deployed.
 
 - Remove or disable the public mutation path that can record classification
   application failure outside the application ledger.
@@ -92,8 +93,8 @@ Verification evidence:
 
 ## PR3 — Hybrid retrieval isolation and contract consistency
 
-Status: implemented and locally verified on `gcp-dev` on 2026-09-09; not yet
-committed, merged, released, or deployed.
+Status: implemented and locally verified on `gcp-dev` on 2026-09-09; included
+in candidate `545366d`; not yet PR-reviewed, merged, released, or deployed.
 
 - Run vector and full-text retrieval in independent transaction scopes so one
   backend failure cannot poison the fallback query.
@@ -129,8 +130,8 @@ Verification evidence:
 
 ## PR4 — Shared scientific eligibility
 
-Status: implemented and locally verified on `gcp-dev` on 2026-09-09; not yet
-committed, merged, released, or deployed.
+Status: implemented and locally verified on `gcp-dev` on 2026-09-09; included
+in candidate `545366d`; not yet PR-reviewed, merged, released, or deployed.
 
 - Introduce one pure eligibility evaluator shared by Data APIs and analysis
   generation.
@@ -175,7 +176,7 @@ Verification evidence:
   vulnerabilities, and diff checks passed;
 - the disposable PostgreSQL container was removed after verification.
 
-This evidence validates the uncommitted combined worktree. It does not replace
+This evidence validates candidate commit `545366d`. It does not replace
 PR review, CI coverage/security checks, production build, backup/restore,
 deployment, or authenticated acceptance gates.
 
@@ -184,7 +185,7 @@ deployment, or authenticated acceptance gates.
 Before tagging `v0.4.3`:
 
 1. Update API/frontend version metadata to `0.4.3`, prepare release notes, and
-   freeze the four logical commits in one combined release PR.
+   freeze the four logical sections in one combined release PR.
 2. Review and merge the release PR in dependency order, then confirm exactly
    one Alembic head (`20260905_0011`). This release introduces no migration;
    the deployment gate must verify and apply the existing head only.

@@ -22,8 +22,8 @@
 > completed plans that remain only as historical records.
 > v0.4.3 PR1 classification integrity, PR2 controlled operational outcomes,
 > PR3 isolated hybrid retrieval, and PR4 shared scientific eligibility are
-> implemented and locally verified on `gcp-dev`; they are not yet committed,
-> reviewed, merged, released, or deployed.
+> implemented and locally verified in candidate `545366d` on `gcp-dev`; they
+> are not yet PR-reviewed, merged, released, or deployed.
 
 ---
 
@@ -82,8 +82,9 @@ used only as historical reference and parity material.
 - Combined local verification passed 732 backend tests with 13 expected skips,
   13 tests against a fresh migrated PostgreSQL 16/pgvector database, 19
   frontend tests, and TypeScript checking. The disposable database was removed.
-- These changes remain uncommitted on `gcp-dev`; CI, PR review, merge, release,
-  deployment, and authenticated production acceptance remain pending.
+- These changes are committed as `545366d` on `gcp-dev`; local CI-equivalent
+  checks and GitHub CI/CodeQL pass. PR review, merge, release, deployment, and
+  authenticated production acceptance remain pending.
 
 ### v0.4.2 released and deployed (2026-09-08)
 
@@ -1269,12 +1270,13 @@ git diff --check
 ## 13. Recommended Next Work Order
 
 Current `gcp-dev` status (2026-09-09): v0.4.3 PR1–PR4 are implemented and
-locally verified but remain uncommitted, unreviewed, and undeployed. The next
-step is one combined `gcp-dev` → `main` release PR containing four logical
-commits in dependency order, followed by the v0.4.3 release gates in
+locally verified in candidate `545366d`, but remain unreviewed, unmerged, and
+undeployed. The next step is one combined `gcp-dev` → `main` release PR
+containing four logical sections in dependency order, followed by the v0.4.3
+release gates in
 [`docs/RELEASE_0.4.3_PLAN.md`](docs/RELEASE_0.4.3_PLAN.md).
 
-1. Freeze the four logical commits, bump version metadata to `0.4.3`, and run
+1. Freeze the four logical sections, bump version metadata to `0.4.3`, and run
    the full local and CI-equivalent checks, including coverage, dependency
    audit, and CodeQL/security status.
 2. Complete the remaining custom-domain researcher-role, suspension, and

@@ -2,7 +2,7 @@
 
 ## v0.4.3 PR1–PR4 combined local verification
 
-The uncommitted `gcp-dev` implementation passed 732 backend tests with 13
+Candidate commit `545366d` on `gcp-dev` passed 732 backend tests with 13
 expected service-gated skips and 78.16% aggregate coverage on 2026-09-09. A
 fresh PostgreSQL 16/pgvector
 database was migrated through head `20260905_0011`; all 13 integration tests
