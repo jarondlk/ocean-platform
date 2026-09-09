@@ -113,7 +113,7 @@ def test_search_filters_edna_metadata_without_silent_control_exclusion(tmp_path)
     assert [
         row["doc_id"]
         for row in retriever.search(
-            "fish",
+            "detection",
             k=10,
             taxon="scomber japonicus",
             is_control=False,

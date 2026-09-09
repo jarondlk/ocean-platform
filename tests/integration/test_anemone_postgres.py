@@ -243,9 +243,25 @@ def test_anemone_migration_and_transactional_merge_are_idempotent(monkeypatch):
             assert sample_detail["method_summaries"][0]["read_count_sum"] == 10
             assert sample_detail["sample"]["analysis_eligibility"] == "included"
             assert sample_detail["sample"]["exclusion_reasons"] == []
-            assert edna_service.edna_assay_detail(_hash("d"))["internal_standards"][0]["read_count"] == 5
+            method_eligibility = {
+                row["assignment_method"]: row
+                for row in sample_detail["sample"]["method_eligibility"]
+            }
+            assert method_eligibility["qcauto_target"]["analysis_eligibility"] == "included"
+            assert method_eligibility["qcauto_95pct_3nn_target"] == {
+                "sample_id": identifiers["sample_id"],
+                "assay_id": _hash("d"),
+                "assignment_method": "qcauto_95pct_3nn_target",
+                "analysis_eligibility": "excluded",
+                "exclusion_reasons": ["method_unavailable"],
+            }
+            assay_detail = edna_service.edna_assay_detail(_hash("d"))
+            assert assay_detail["internal_standards"][0]["read_count"] == 5
+            assert assay_detail["assay"]["method_eligibility"] == sample_detail["sample"]["method_eligibility"]
             detail = edna_service.edna_detection_detail(identifiers["detection_id"])
             assert detail["provenance"]["records"][-1]["source_row_locator"] == 2
+            assert detail["detection"]["analysis_eligibility"] == "included"
+            assert detail["detection"]["exclusion_reasons"] == []
             assert edna_service.edna_samples({"is_control": True}, limit=10, offset=0)["total"] == 0
             sample_listing = edna_service.edna_samples(
                 {"assay_id": _hash("d")}, limit=10, offset=0
@@ -258,6 +274,8 @@ def test_anemone_migration_and_transactional_merge_are_idempotent(monkeypatch):
                 limit=10, offset=0,
             )
             assert listing["total"] == 1
+            assert listing["rows"][0]["analysis_eligibility"] == "included"
+            assert listing["rows"][0]["exclusion_reasons"] == []
             assert "sequence" not in listing["rows"][0]
             assert listing["rows"][0]["source_sha256"] == _hash("6")
             assert edna_service.edna_detections({"taxon": "missing"}, limit=10, offset=0)["total"] == 0
@@ -445,6 +463,65 @@ def test_reviewed_classification_import_replay_and_explicit_reversion(tmp_path, 
         finally:
             transaction.rollback()
     engine.dispose()
+
+
+def test_hybrid_retrieval_transactions_recover_each_branch(monkeypatch):
+    engine = create_engine(config.DATABASE_URL, pool_pre_ping=True)
+    CorpusBase.metadata.create_all(engine)
+    doc_id = "pr3-transaction-isolation"
+    sample_id = _hash("4")
+    embedding = str([0.1] * config.EMBEDDING_DIM)
+    with engine.begin() as connection:
+        connection.execute(
+            text(
+                """
+                INSERT INTO retrieval_document (
+                    doc_id, source_type, sample_id, title, text, text_tsv,
+                    embedding, active
+                ) VALUES (
+                    :doc_id, 'ctd', :sample_id, 'Isolation fixture',
+                    'isolationtoken', to_tsvector('english', 'isolationtoken'),
+                    CAST(:embedding AS vector), TRUE
+                )
+                ON CONFLICT (doc_id) DO UPDATE SET
+                    text = EXCLUDED.text,
+                    text_tsv = EXCLUDED.text_tsv,
+                    embedding = EXCLUDED.embedding,
+                    active = TRUE
+                """
+            ),
+            {"doc_id": doc_id, "sample_id": sample_id, "embedding": embedding},
+        )
+    monkeypatch.setattr(config, "EDNA_ARTIFACT_URI", "")
+    try:
+        # A dimension error aborts the vector transaction. FTS must execute in
+        # a fresh transaction and still return the matching document.
+        monkeypatch.setattr(hybrid_retriever, "embed_text", lambda _query: [0.1])
+        fts_recovery = hybrid_retriever.hybrid_search(
+            "isolationtoken", sample_id=sample_id
+        )
+        assert [row.doc_id for row in fts_recovery] == [doc_id]
+        assert fts_recovery[0].rank_sources == {"fts": 1}
+
+        # A NUL-containing FTS parameter is rejected by the driver. The vector
+        # branch has already committed independently and remains usable.
+        monkeypatch.setattr(
+            hybrid_retriever,
+            "embed_text",
+            lambda _query: [0.1] * config.EMBEDDING_DIM,
+        )
+        vector_recovery = hybrid_retriever.hybrid_search(
+            "\x00", sample_id=sample_id
+        )
+        assert [row.doc_id for row in vector_recovery] == [doc_id]
+        assert vector_recovery[0].rank_sources == {"vector": 1}
+    finally:
+        with engine.begin() as connection:
+            connection.execute(
+                text("DELETE FROM retrieval_document WHERE doc_id = :doc_id"),
+                {"doc_id": doc_id},
+            )
+        engine.dispose()
 
 
 def test_anemone_migration_downgrade_preserves_prior_schema_and_reupgrades():

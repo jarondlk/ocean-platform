@@ -338,7 +338,7 @@ def test_permissions_separate_scientific_decisions_from_application():
     assert route_permission("POST", "/classification-reviews") == "classification:decide"
     assert route_permission("PUT", f"/classification-reviews/{uuid.uuid4()}/draft") == "classification:decide"
     assert route_permission("POST", f"/classification-reviews/{uuid.uuid4()}/decision") == "classification:decide"
-    assert route_permission("POST", f"/classification-reviews/{uuid.uuid4()}/application") == "classification:apply"
+    assert route_permission("POST", f"/classification-reviews/{uuid.uuid4()}/application") is None
     assert route_permission("POST", f"/classification-reviews/{uuid.uuid4()}/preview") == "classification:read"
     assert route_permission("GET", "/classification-reviews") == "classification:read"
     assert "classification:decide" in ROLE_PERMISSIONS["researcher"]
@@ -346,6 +346,10 @@ def test_permissions_separate_scientific_decisions_from_application():
     assert "classification:apply" in ROLE_PERMISSIONS["admin"]
     assert "classification:apply" not in ROLE_PERMISSIONS["researcher"]
     assert "classification:read" not in ROLE_PERMISSIONS["viewer"]
+    assert all(
+        not path.endswith("/application")
+        for path in app.openapi()["paths"]
+    )
 
 
 def test_service_rejects_identity_that_does_not_match_persisted_user(monkeypatch):
@@ -406,8 +410,7 @@ def test_authenticated_unknown_review_and_operational_application(monkeypatch):
             "application_reference": "must-not-apply-a-draft",
         },
     )
-    assert invalid_application.status_code == 409
-    assert invalid_application.json()["detail"]["code"] == "invalid_review_transition"
+    assert invalid_application.status_code == 403
     assert admin.post(
         f"/classification-reviews/{draft['id']}/decision",
         json={"expected_version": 1, "decision": "approved"},
@@ -435,8 +438,7 @@ def test_authenticated_unknown_review_and_operational_application(monkeypatch):
             "application_reference": "classification-job/operation-123",
         },
     )
-    assert applied.status_code == 409
-    assert applied.json()["detail"]["code"] == "controlled_application_required"
+    assert applied.status_code == 403
     listed = admin.get(
         "/classification-reviews",
         params={"sample_id": SAMPLE_ID, "state": "approved"},
@@ -459,7 +461,7 @@ def test_authenticated_unknown_review_and_operational_application(monkeypatch):
     assert viewer.get(f"/classification-reviews/{draft['id']}").status_code == 403
 
 
-def test_rejected_failed_retry_and_superseded_states(monkeypatch):
+def test_rejected_and_superseded_states(monkeypatch):
     factory = _database()
     users = _seed(factory)
     _install_database(monkeypatch, factory)
@@ -484,29 +486,6 @@ def test_rejected_failed_retry_and_superseded_states(monkeypatch):
         f"/classification-reviews/{current_draft['id']}/decision",
         json={"expected_version": 1, "decision": "approved"},
     ).json()
-    admin = _client(monkeypatch, users["admin"])
-    failed = admin.post(
-        f"/classification-reviews/{approved['id']}/application",
-        json={
-            "expected_version": 2,
-            "outcome": "failed",
-            "failure_code": "job_failed",
-            "failure_detail": "Materialization failed before publication.",
-        },
-    )
-    assert failed.status_code == 200
-    assert failed.json()["state"] == "failed"
-    retried = admin.post(
-        f"/classification-reviews/{approved['id']}/application",
-        json={
-            "expected_version": 3,
-            "outcome": "applied",
-            "application_reference": "classification-job/retry-2",
-        },
-    )
-    assert retried.status_code == 409
-    assert retried.json()["detail"]["code"] == "controlled_application_required"
-
     researcher = _client(monkeypatch, users["researcher"])
     replacement = researcher.post(
         "/classification-reviews",
@@ -593,6 +572,29 @@ def test_stale_snapshot_tamper_and_optimistic_concurrency_fail_closed(monkeypatc
     )
     assert stale_snapshot.status_code == 409
     assert stale_snapshot.json()["detail"]["code"] == "stale_source_snapshot"
+
+
+@pytest.mark.parametrize(
+    "lineage",
+    ["{", "[]", '{"schema_version":1}'],
+)
+def test_draft_fails_closed_on_corrupt_canonical_lineage(monkeypatch, lineage):
+    factory = _database()
+    users = _seed(factory)
+    _install_database(monkeypatch, factory)
+    with factory() as session:
+        sample = session.get(EdnaSample, SAMPLE_ID)
+        sample.classification_basis = "review:" + "a" * 64
+        sample.classification_review_json = lineage
+        session.commit()
+
+    response = _client(monkeypatch, users["researcher"]).post(
+        "/classification-reviews",
+        json=_draft_payload(sample_kind="environmental"),
+    )
+
+    assert response.status_code == 409
+    assert response.json()["detail"]["code"] == "canonical_lineage_corrupt"
 
 
 def test_review_row_tamper_is_detected(monkeypatch):
@@ -812,34 +814,11 @@ def test_preview_rejects_stale_terminal_and_unbounded_requests(monkeypatch):
     ).status_code == 200
 
     admin = _client(monkeypatch, users["admin"])
-    failed = admin.post(
-        f"/classification-reviews/{approved_review['id']}/application",
-        json={
-            "expected_version": 2,
-            "outcome": "failed",
-            "failure_code": "preview_test",
-        },
-    )
-    assert failed.status_code == 200
-    assert admin.post(
+    approved_preview = admin.post(
         approved_path,
-        json={"expected_version": 3},
-    ).status_code == 200
-    applied = admin.post(
-        f"/classification-reviews/{approved_review['id']}/application",
-        json={
-            "expected_version": 3,
-            "outcome": "applied",
-            "application_reference": "classification-job/test",
-        },
+        json={"expected_version": 2},
     )
-    assert applied.status_code == 409
-    assert applied.json()["detail"]["code"] == "controlled_application_required"
-    applied_preview = admin.post(
-        approved_path,
-        json={"expected_version": 3},
-    )
-    assert applied_preview.status_code == 200
+    assert approved_preview.status_code == 200
 
 
 def test_preview_resource_limit_fails_closed(monkeypatch):

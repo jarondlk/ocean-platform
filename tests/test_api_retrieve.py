@@ -4,6 +4,7 @@ import api.main as api_main
 import config
 import model_runtime
 from api.main import app
+from retrieval.contract import RetrievalBackendError
 
 
 client = TestClient(app)
@@ -77,6 +78,41 @@ def test_retrieve_response_includes_rank_sources(monkeypatch):
     assert payload["linked_sources"][0]["retrieval_role"] == "linked"
     assert payload["linked_sources"][0]["linked_from_doc_id"] == "ctd:2024-01-O-s1"
     assert payload["diagnostics"]["source_coverage_ratio"] == 1.0
+
+
+def test_retrieve_reports_total_backend_failure_as_service_unavailable(monkeypatch):
+    monkeypatch.setattr(
+        api_main,
+        "retrieve_with_expansion",
+        lambda *args, **kwargs: (_ for _ in ()).throw(
+            RetrievalBackendError("all enabled branches failed")
+        ),
+    )
+
+    response = client.post("/retrieve", json={"query": "temperature"})
+
+    assert response.status_code == 503
+    assert response.json()["detail"] == {
+        "code": "retrieval_backends_failed",
+        "message": "No configured retrieval backend completed the request",
+    }
+
+
+def test_chat_reports_total_backend_failure_without_running_the_model(monkeypatch):
+    def fail_retrieval(*_args, **_kwargs):
+        raise RetrievalBackendError("all enabled branches failed")
+
+    class ForbiddenRuntime:
+        def chat(self, *_args, **_kwargs):
+            raise AssertionError("model must not run after retrieval failure")
+
+    monkeypatch.setattr(api_main, "retrieve_with_expansion", fail_retrieval)
+    monkeypatch.setattr(api_main, "get_model_runtime", lambda: ForbiddenRuntime())
+
+    response = client.post("/chat", json={"query": "temperature"})
+
+    assert response.status_code == 503
+    assert response.json()["detail"]["code"] == "retrieval_backends_failed"
 
 
 def test_chat_response_includes_context_ledger(tmp_path, monkeypatch):

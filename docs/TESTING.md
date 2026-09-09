@@ -1,5 +1,41 @@
 # Testing and CI
 
+## v0.4.3 PR1–PR4 combined local verification
+
+The uncommitted `gcp-dev` implementation passed 732 backend tests with 13
+expected service-gated skips and 78.16% aggregate coverage on 2026-09-09. A
+fresh PostgreSQL 16/pgvector
+database was migrated through head `20260905_0011`; all 13 integration tests
+passed, including real vector-transaction failure with FTS recovery and real
+FTS/driver failure with vector recovery. The disposable database was removed.
+Frontend TypeScript checking, all 19 frontend tests, the 24-route production
+build, repository-wide Ruff, dependency consistency, zero production frontend
+audit vulnerabilities, and diff checks passed.
+
+PR3 regressions additionally cover zero weights, normalized non-default
+weights, non-default `rrf_k`, total-backend failure, local/PostgreSQL fusion
+parity, deterministic ordering, and one database-availability resolution per
+request. PR4 regressions cover the classification/assay/protocol/method policy
+matrix, mixed availability, accumulated ordered reason codes, and exact shared
+evaluator-to-analysis membership parity. This is local evidence only; CI,
+review, production build, deployment, and authenticated acceptance remain
+release gates.
+
+## v0.4.3 PR1 local verification
+
+Classification-integrity and fail-closed-lineage changes were verified on
+2026-09-09. The full backend suite passed 711 tests with 12 expected
+service-gated skips. A fresh PostgreSQL 16/pgvector database was migrated
+through head `20260905_0011`, and all 12 integration tests passed; the
+disposable container was removed afterward. Ruff and diff checks also passed.
+
+The focused regressions cover canonical tri-state mapping, reviewed and applied
+unknown outcomes, rollback to unknown, required supersession, malformed JSON,
+wrong shapes, missing fields, invalid sample kinds, incomplete database review
+identity, classification-basis mismatch, and both direct and rehashed content
+digest tampering. This is local implementation evidence only; PR review, merge,
+release, deployment, and live acceptance have not occurred.
+
 ## v0.4.2 release
 
 The release adds API-owned environmental eligibility fields and direct Data
@@ -465,6 +501,22 @@ pgvector database, downgraded to `20260905_0010`, and re-applied. The complete
 append-only application events and one-running-run uniqueness. No production
 migration, Cloud Run execution, live model call, classification decision, or
 deployment was performed.
+
+### Controlled operational outcomes hardening — 2026-09-09
+
+The v0.4.3 PR2 focused classification, application, and authorization suite
+passes 88 tests. It verifies that the former public application-outcome path is
+denied to every role; only the controlled application service can derive an
+`applied` or `failed` transition from a real terminal ledger event. Coverage
+includes exact application/event/operation/actor/version/stage-result binding,
+idempotent terminal and failed-run replay, failure-to-success resume, identity
+mismatch, stale supersession, competing runs, forged bindings, and safe refusal
+when no matching active stage exists. Ruff and diff checks pass for the focused
+change. The combined PR1/PR2 backend suite passes 713 tests with 12 expected
+service-gated skips. The complete six-module integration selection passes 12
+tests against a fresh PostgreSQL 16/pgvector database migrated through head
+`20260905_0011`; that disposable database was removed. Repository-wide Ruff and
+diff checks pass. Frontend gates remain required before the combined release.
 
 The final CI-equivalent local gate passed 688 backend tests with 12 expected
 PostgreSQL-gated skips and 78.31% coverage, 18 frontend tests, TypeScript, and

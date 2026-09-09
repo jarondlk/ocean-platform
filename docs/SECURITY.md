@@ -43,7 +43,7 @@ must never be identical.
 | Data, provenance, and evaluation | No | Yes | Yes |
 | Run evaluations | No | Yes | Yes |
 | Draft and submit scientific classification decisions | No | Yes | No |
-| Record operational classification application outcomes | No | No | Yes |
+| Manually operate controlled classification job | No | No | Yes |
 | Review and export all feedback | No | No | Yes |
 | Pipeline controls | No | No | Yes |
 | Database inspector and read-only SQL | No | No | Yes |
@@ -224,8 +224,9 @@ remain only under `staging/` and are not evidence.
 ## Authenticated classification review boundary
 
 - Classification drafts and scientific decisions require the `researcher` role;
-  operational application outcomes require the `admin` role. Admin access does
-  not grant scientific-decision permission.
+  the manual processing job uses a fixed workload identity with the `admin`
+  role. Admin access does not grant scientific-decision permission and no
+  public API route accepts application success or failure.
 - The service re-resolves the actor against the active application user and
   rejects disabled authentication, suspended users, and mismatched identity
   claims. Reviewer/operator IDs, identity snapshots, roles, and timestamps are
@@ -247,6 +248,11 @@ remain only under `staging/` and are not evidence.
   stage receipts. Receipt history binds and revalidates the review, snapshot,
   sample, content digest, operational actor, results, and artifact IDs. A final
   `applied` outcome is written only after all publication stages succeed.
+- Terminal `applied` and `failed` review events are created atomically by the
+  controlled application service from a real terminal ledger event. Their
+  digested binding includes application and event IDs, operation ID, workload
+  actor, review versions and digest, stage result, failure code, and recovery.
+  Missing or inconsistent bindings fail closed during review reads.
 - Operation IDs, PostgreSQL advisory locks, and one-running-run uniqueness make
   replay explicit and reject concurrency. Failures store fixed recovery text,
   not arbitrary exception details. Rollback requires a new approved review that

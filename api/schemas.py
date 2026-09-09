@@ -118,30 +118,6 @@ class ClassificationReviewDecisionRequest(BaseModel):
     decision: Literal["approved", "rejected"]
 
 
-class ClassificationReviewApplicationRequest(BaseModel):
-    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
-
-    expected_version: int = Field(ge=1)
-    outcome: Literal["applied", "failed"]
-    application_reference: Optional[str] = Field(default=None, max_length=1000)
-    failure_code: Optional[str] = Field(
-        default=None,
-        pattern=r"^[a-z0-9][a-z0-9_.-]{0,63}$",
-    )
-    failure_detail: Optional[str] = Field(default=None, max_length=4000)
-
-    @model_validator(mode="after")
-    def validate_outcome_fields(self) -> "ClassificationReviewApplicationRequest":
-        if self.outcome == "applied":
-            if not self.application_reference:
-                raise ValueError("Applied reviews require an application reference")
-            if self.failure_code or self.failure_detail:
-                raise ValueError("Applied reviews cannot include failure fields")
-        elif not self.failure_code:
-            raise ValueError("Failed reviews require a failure code")
-        return self
-
-
 class ClassificationReviewEventResponse(BaseModel):
     id: uuid.UUID
     review_id: uuid.UUID
@@ -228,6 +204,7 @@ class ClassificationPreviewMethod(BaseModel):
     assignment_method: str
     status: str
     reason: Optional[str] = None
+    exclusion_reasons: List[str] = Field(default_factory=list)
     source_detection_count: int
     retained_detection_count: int
     excluded_detection_count: int
@@ -345,6 +322,12 @@ class RetrieveRequest(BaseModel):
 
     @model_validator(mode="after")
     def validate_edna_filters(self) -> "RetrieveRequest":
+        from retrieval.contract import normalized_weights
+
+        self.vector_weight, self.fts_weight = normalized_weights(
+            self.vector_weight,
+            self.fts_weight,
+        )
         validate_time_range(self.time_from, self.time_to)
         if (
             self.lat_min is not None

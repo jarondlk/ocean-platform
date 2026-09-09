@@ -1,10 +1,9 @@
 # ANEMONE classification review
 
-Release decision (2026-09-03): keep the pilot unknown for `v0.4.0`. The
-operator primitives below are implemented, but completing and validating the
-researcher workflow is [next-patch work](ANEMONE_NEXT_PATCH.md). No real
-classification review is approved or applied; its absence no longer blocks
-the limited v0.4.0 release.
+Historical release decision (2026-09-03): the pilot remained unknown for
+`v0.4.0`. The implementation once tracked as
+[next-patch work](ANEMONE_NEXT_PATCH.md) shipped in `v0.4.1` and `v0.4.2`;
+that file is no longer the current work queue.
 
 Status (2026-09-06): the authenticated review domain, effect preview, and
 controlled manual application path are deployed in `v0.4.1`. The fixed Cloud
@@ -13,6 +12,10 @@ remains pending, and the real canary has **not** been classified or
 scientifically accepted.
 The `v0.4.2` release adds direct eligibility and exclusion-reason presentation
 without changing that scientific state.
+The `v0.4.3` integrity, controlled-outcome, retrieval-isolation, and shared
+eligibility changes are implemented and locally verified on `gcp-dev`, but are
+not yet committed, reviewed, released, or deployed. Their current record is
+[`RELEASE_0.4.3_PLAN.md`](RELEASE_0.4.3_PLAN.md).
 No review is inferred from a sample name, collection device, coordinates, or
 permission to implement this workflow.
 
@@ -21,8 +24,9 @@ permission to implement this workflow.
 The `/classification-reviews` API stores drafts and append-only state events in
 application metadata, separate from the replaceable scientific corpus.
 Researchers may draft, revise, approve, reject, or supersede a decision. Admins
-may only record operational application success or failure. These are separate
-events even when one person operates through separate authorized accounts.
+may operate the manual processing job but cannot post an operational outcome to
+the API. The job alone records application success or failure from a verified
+terminal ledger event. Scientific and operational transitions remain separate.
 
 The API derives actor identity, role, and event time from the active
 database-backed login. Client-supplied reviewer names or timestamps are rejected.
@@ -30,10 +34,28 @@ Each review binds the exact source snapshot and sample to compressed-file hashes
 TSV row locators, values, rationale, and a content digest. `unknown` is a valid
 approved scientific outcome when evidence is inconclusive.
 
-An `applied` API state is an operational receipt, not a scientific decision.
-It is written by the controlled job only after canonical import and affected
-publication complete. Do not call the application endpoint directly or describe
-an approved but unapplied decision as visible in analysis or chat.
+The `v0.4.3` PR1 contract uses one tri-state mapping throughout normalization,
+review, application, retrieval, and provenance: environmental is
+`is_control=false`, recognized control kinds are `true`, and unknown is `null`.
+Persisted `classification_review_json` is parsed through one strict schema and
+must match the sample, snapshot, classification basis, review artifact digest,
+database review content, and authenticated decision identity. Missing,
+malformed, partially shaped, or rehashed-but-mismatched lineage fails closed.
+An applied unknown decision is still an applied scientific outcome and can be
+changed only by an explicit superseding review.
+
+An `applied` state is an operational receipt, not a scientific decision. It is
+written by the controlled job only after canonical import and affected
+publication complete. There is no public application-outcome endpoint. Do not
+describe an approved but unapplied decision as visible in analysis or chat.
+
+The v0.4.3 PR2 contract binds every `applied` or `failed` review event to the
+exact application UUID, operation ID, approved and expected review versions,
+review digest, workload actor, terminal ledger-event UUID/sequence/digest,
+stage result, error code, and fixed recovery instructions. Reads fail closed if
+the binding is missing, malformed, forged, or inconsistent. Retrying the same
+terminal operation is idempotent; a different actor, stage, error, stale
+approval, or competing operation is rejected before a receipt is written.
 
 ## Effect preview
 
@@ -56,6 +78,17 @@ an analysis bundle, update retrieval, or establish scientific validity. Draft,
 approved, and failed reviews are previewable. Rejected, superseded, applied,
 stale, tampered, oversized, or unverified inputs fail closed. Unknown and control
 proposals remain excluded from environmental-only results.
+
+## Scientific eligibility contract
+
+The v0.4.3 worktree evaluates classification, active-assay presence, required
+protocol fields (`target_gene`, `primer_set`, and `sequencing_method`), and
+assignment-method availability through one pure policy function. Data sample,
+assay, and detection responses and generated analysis membership use the same
+method-level `analysis_eligibility` and ordered `exclusion_reasons` fields. The
+top-level sample summary remains included when at least one requested method is
+consumable; each unavailable method remains explicitly excluded. The Data UI
+presents these server-owned decisions and does not infer eligibility.
 
 ## Scope and trust boundary
 

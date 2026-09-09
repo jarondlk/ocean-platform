@@ -20,6 +20,12 @@ import pandas as pd
 
 import config
 from ingestion.anemone import AnemoneError, load_contract_by_hash
+from preprocessing.anemone_classification import (
+    SAMPLE_KINDS,
+    build_review_lineage,
+    sample_kind_control_status,
+    validate_sample_review_lineage,
+)
 
 
 SNAPSHOT_ID_PATTERN = re.compile(r"^[0-9a-f]{64}$")
@@ -35,25 +41,18 @@ REQUIRED_ROLES = {
     "community_qc",
     "community_qc3nn",
 }
-SAMPLE_KINDS = {
-    "environmental",
-    "negative_control",
-    "positive_control",
-    "mock_community",
-    "unknown",
-}
 CLASSIFICATION_KEYS = ("sample_type", "sample_category", "control_type")
 CLASSIFICATION_VALUES = {
-    "environmental": ("environmental", False),
-    "environmental_sample": ("environmental", False),
-    "field_sample": ("environmental", False),
-    "negative_control": ("negative_control", True),
-    "blank": ("negative_control", True),
-    "field_blank": ("negative_control", True),
-    "extraction_blank": ("negative_control", True),
-    "pcr_blank": ("negative_control", True),
-    "positive_control": ("positive_control", True),
-    "mock_community": ("mock_community", True),
+    "environmental": "environmental",
+    "environmental_sample": "environmental",
+    "field_sample": "environmental",
+    "negative_control": "negative_control",
+    "blank": "negative_control",
+    "field_blank": "negative_control",
+    "extraction_blank": "negative_control",
+    "pcr_blank": "negative_control",
+    "positive_control": "positive_control",
+    "mock_community": "mock_community",
 }
 
 
@@ -305,7 +304,7 @@ def _classification(metadata: dict[str, str]) -> tuple[str, Optional[bool], str]
         normalized = re.sub(r"[^a-z0-9]+", "_", value.lower()).strip("_")
         mapped = CLASSIFICATION_VALUES.get(normalized)
         if mapped:
-            return mapped[0], mapped[1], f"metadata:{key}"
+            return mapped, sample_kind_control_status(mapped), f"metadata:{key}"
         return "unknown", None, f"unrecognized_metadata:{key}"
     return "unknown", None, "no_reviewed_classification_metadata"
 
@@ -643,17 +642,13 @@ def build_anemone_bundle(
         )
         review_record = None
         if provider_sample_id in reviews:
-            review_record = {
-                "schema_version": 1,
-                "source_snapshot_id": snapshot_id,
-                "review_sha256": stable_sha256(classification_review),
-                "provider_classification_basis": classification_basis,
-                "decision": reviews[provider_sample_id],
-            }
-            sample_kind = review_record["decision"]["sample_kind"]
-            is_control = (
-                None if sample_kind == "unknown" else sample_kind != "environmental"
+            review_record = build_review_lineage(
+                classification_review,
+                reviews[provider_sample_id],
+                provider_classification_basis=classification_basis,
             )
+            sample_kind = review_record["decision"]["sample_kind"]
+            is_control = sample_kind_control_status(sample_kind)
             classification_basis = "review:" + stable_sha256(review_record)
         if sample_kind not in SAMPLE_KINDS:
             raise AssertionError("unreachable")
@@ -1268,17 +1263,42 @@ def resolve_normalized_bundle(
             raise ValueError("Review missing")
         decisions = {d["provider_sample_id"]: d for d in review["decisions"]} if review else {}
         observed = set()
+        classification_columns = {
+            "sample_kind",
+            "is_control",
+            "classification_basis",
+            "source_snapshot_id",
+            "provider_sample_id",
+        }
+        declares_classification = bool(
+            {"sample_kind", "is_control", "classification_basis"}.intersection(
+                samples.columns
+            )
+        )
+        has_classification_columns = classification_columns.issubset(samples.columns)
+        if declares_classification and not has_classification_columns:
+            raise ValueError("Incomplete classification lineage columns")
+        if "classification_review_json" in samples and not has_classification_columns:
+            raise ValueError("Classification review lineage has no sample classification")
         for row in samples.to_dict(orient="records"):
+            if not has_classification_columns:
+                continue
             raw_record = row.get("classification_review_json")
-            record = json.loads(raw_record) if pd.notna(raw_record) else None
+            record = validate_sample_review_lineage(
+                raw_record if pd.notna(raw_record) else None,
+                sample_kind=row["sample_kind"],
+                is_control=row["is_control"],
+                classification_basis=row["classification_basis"],
+                source_snapshot_id=row["source_snapshot_id"],
+                provider_sample_id=row["provider_sample_id"],
+            )
             if record is not None:
                 sample = row["provider_sample_id"]
                 if (sample not in decisions or record["decision"] != decisions[sample]
                     or record["source_snapshot_id"] != manifest["source_snapshot_id"]
                     or record["review_sha256"] != stable_sha256(review)
                     or row["classification_basis"] != "review:" + stable_sha256(record)
-                    or row["sample_kind"] != record["decision"]["sample_kind"]
-                    or bool(row["is_control"]) != (row["sample_kind"] != "environmental")):
+                    or row["sample_kind"] != record["decision"]["sample_kind"]):
                     raise ValueError("Review decision mismatch")
                 observed.add(sample)
             elif str(row.get("classification_basis", "")).startswith("review:"):

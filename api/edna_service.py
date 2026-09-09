@@ -8,6 +8,13 @@ from typing import Any, Mapping
 from sqlalchemy import text
 
 from db.connection import get_engine
+from preprocessing.anemone_classification import (
+    ReviewError,
+    parse_review_lineage,
+    validate_sample_review_lineage,
+)
+from preprocessing.edna_eligibility import evaluate_analysis_eligibility
+from preprocessing.edna_recipe import METHODS
 from schema.time_range import sql_time_conditions
 
 
@@ -50,7 +57,6 @@ def _row(row: Any) -> dict[str, Any]:
         "raw_metadata_json",
         "taxonomy_json",
         "source_row_numbers_json",
-        "classification_review_json",
     ):
         value = result.get(key)
         if isinstance(value, str):
@@ -59,6 +65,31 @@ def _row(row: Any) -> dict[str, Any]:
             except json.JSONDecodeError:
                 result[key.removesuffix("_json")] = value
             del result[key]
+    if "classification_review_json" in result:
+        raw_lineage = result.pop("classification_review_json")
+        try:
+            required = {
+                "sample_kind",
+                "is_control",
+                "classification_basis",
+                "source_snapshot_id",
+                "provider_sample_id",
+            }
+            if required.issubset(result):
+                lineage = validate_sample_review_lineage(
+                    raw_lineage,
+                    sample_kind=result["sample_kind"],
+                    is_control=result["is_control"],
+                    classification_basis=result["classification_basis"],
+                    source_snapshot_id=result["source_snapshot_id"],
+                    provider_sample_id=result["provider_sample_id"],
+                )
+            else:
+                lineage = parse_review_lineage(raw_lineage) if raw_lineage is not None else None
+        except ReviewError as exc:
+            raise ValueError("Canonical classification lineage is invalid") from exc
+        if lineage is not None:
+            result["classification_review"] = lineage
     return result
 
 
@@ -69,21 +100,87 @@ def _scalar(connection: Any, statement: str, params: Mapping[str, Any] | None = 
 def environmental_analysis_eligibility(
     sample: Mapping[str, Any], assay_count: int
 ) -> dict[str, Any]:
-    """Present the canonical environmental-only inclusion policy without inference."""
-    if assay_count == 0:
-        return {
-            "analysis_eligibility": "excluded",
-            "exclusion_reasons": ["no_active_assay"],
-        }
-    if (
-        sample.get("sample_kind") != "environmental"
-        or sample.get("is_control") is not False
-    ):
-        return {
-            "analysis_eligibility": "excluded",
-            "exclusion_reasons": ["control_or_unknown"],
-        }
-    return {"analysis_eligibility": "included", "exclusion_reasons": []}
+    """Compatibility summary for callers that only know whether an assay exists."""
+    assays = (
+        [{"assay_id": "known", "target_gene": "known", "primer_set": "known", "sequencing_method": "known"}]
+        if assay_count
+        else []
+    )
+    result = evaluate_analysis_eligibility(
+        sample,
+        assays,
+        {"known": METHODS} if assay_count else {},
+        METHODS,
+    )
+    return {
+        "analysis_eligibility": result["analysis_eligibility"],
+        "exclusion_reasons": result["exclusion_reasons"],
+    }
+
+
+def _sample_eligibility(
+    connection: Any,
+    samples: list[Mapping[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    sample_ids = sorted({str(sample["sample_id"]) for sample in samples})
+    if not sample_ids:
+        return {}
+    rows = connection.execute(
+        text(
+            """
+            SELECT a.sample_id, a.assay_id, a.target_gene, a.primer_set,
+                   a.sequencing_method, a.library_layout,
+                   d.assignment_method
+            FROM edna_assay AS a
+            LEFT JOIN (
+                SELECT DISTINCT assay_id, assignment_method
+                FROM edna_detection
+                WHERE active IS TRUE
+            ) AS d ON d.assay_id = a.assay_id
+            WHERE a.active IS TRUE AND a.sample_id = ANY(:sample_ids)
+            ORDER BY a.sample_id, a.assay_id, d.assignment_method
+            """
+        ),
+        {"sample_ids": sample_ids},
+    ).fetchall()
+    assays_by_sample: dict[str, dict[str, dict[str, Any]]] = {}
+    methods_by_assay: dict[str, set[str]] = {}
+    for row in rows:
+        item = dict(row._mapping)
+        method = item.pop("assignment_method")
+        sample_id = str(item["sample_id"])
+        assay_id = str(item["assay_id"])
+        assays_by_sample.setdefault(sample_id, {})[assay_id] = item
+        if method is not None:
+            methods_by_assay.setdefault(assay_id, set()).add(str(method))
+    return {
+        str(sample["sample_id"]): evaluate_analysis_eligibility(
+            sample,
+            list(assays_by_sample.get(str(sample["sample_id"]), {}).values()),
+            methods_by_assay,
+            METHODS,
+        )
+        for sample in samples
+    }
+
+
+def _detection_eligibility(row: Mapping[str, Any]) -> dict[str, Any]:
+    """Evaluate the one assay/method represented by a detection API row."""
+    result = evaluate_analysis_eligibility(
+        row,
+        [
+            {
+                "assay_id": row["assay_id"],
+                "target_gene": row.get("target_gene"),
+                "primer_set": row.get("primer_set"),
+                "sequencing_method": row.get("sequencing_method"),
+                "active": True,
+            }
+        ],
+        {str(row["assay_id"]): {str(row["assignment_method"])}},
+        [str(row["assignment_method"])],
+    )
+    return result["method_eligibility"][0]
 
 
 def _sample_conditions(filters: Mapping[str, Any]) -> tuple[list[str], dict[str, Any]]:
@@ -301,13 +398,10 @@ def edna_samples(
             ),
             params,
         ).fetchall()
-    result_rows = []
-    for row in rows:
-        item = _row(row)
-        item.update(
-            environmental_analysis_eligibility(item, int(item["assay_count"]))
-        )
-        result_rows.append(item)
+        result_rows = [_row(row) for row in rows]
+        eligibility = _sample_eligibility(connection, result_rows)
+    for item in result_rows:
+        item.update(eligibility[str(item["sample_id"])])
     return {"total": total, "limit": limit, "offset": offset, "rows": result_rows}
 
 
@@ -379,7 +473,9 @@ def edna_sample_detail(sample_id: str) -> dict[str, Any] | None:
             ("assay", assay.assay_id, assay) for assay in assays
         ]
         sample_payload = _row(sample)
-        sample_payload.update(environmental_analysis_eligibility(sample_payload, len(assays)))
+        sample_payload.update(
+            _sample_eligibility(connection, [sample_payload])[sample_id]
+        )
         return {
             "sample": sample_payload,
             "assays": [_row(row) for row in assays],
@@ -427,9 +523,18 @@ def edna_assay_detail(assay_id: str) -> dict[str, Any] | None:
             ("assay", assay_id, assay),
             *[("internal_standard", row.internal_standard_id, row) for row in standards],
         ]
+        sample_payload = _row(sample)
+        eligibility = _sample_eligibility(connection, [sample_payload])[str(sample.sample_id)]
+        sample_payload.update(eligibility)
+        assay_payload = _row(assay)
+        assay_payload["method_eligibility"] = [
+            row
+            for row in eligibility["method_eligibility"]
+            if row["assay_id"] == str(assay.assay_id)
+        ]
         return {
-            "assay": _row(assay),
-            "sample": _row(sample),
+            "assay": assay_payload,
+            "sample": sample_payload,
             "method_summaries": [_row(row) for row in summaries],
             "internal_standards": [_row(row) for row in standards],
             "provenance": _provenance(connection, provenance_records),
@@ -490,7 +595,12 @@ def edna_detections(
             ),
             params,
         ).fetchall()
-    return {"total": total, "limit": limit, "offset": offset, "rows": [_row(row) for row in rows]}
+    result_rows = [_row(row) for row in rows]
+    for item in result_rows:
+        eligibility = _detection_eligibility(item)
+        item["analysis_eligibility"] = eligibility["analysis_eligibility"]
+        item["exclusion_reasons"] = eligibility["exclusion_reasons"]
+    return {"total": total, "limit": limit, "offset": offset, "rows": result_rows}
 
 
 def edna_detection_detail(detection_id: str) -> dict[str, Any] | None:
@@ -514,10 +624,27 @@ def edna_detection_detail(detection_id: str) -> dict[str, Any] | None:
         ).first()
         if sample is None:
             return None
+        sample_payload = _row(sample)
+        eligibility = _sample_eligibility(connection, [sample_payload])[str(sample.sample_id)]
+        sample_payload.update(eligibility)
+        assay_payload = _row(assay)
+        assay_payload["method_eligibility"] = [
+            row
+            for row in eligibility["method_eligibility"]
+            if row["assay_id"] == str(assay.assay_id)
+        ]
+        detection_payload = _row(detection)
+        selected_method = next(
+            row
+            for row in assay_payload["method_eligibility"]
+            if row["assignment_method"] == str(detection.assignment_method)
+        )
+        detection_payload["analysis_eligibility"] = selected_method["analysis_eligibility"]
+        detection_payload["exclusion_reasons"] = selected_method["exclusion_reasons"]
         return {
-            "detection": _row(detection),
-            "assay": _row(assay),
-            "sample": _row(sample),
+            "detection": detection_payload,
+            "assay": assay_payload,
+            "sample": sample_payload,
             "provenance": _provenance(
                 connection,
                 [

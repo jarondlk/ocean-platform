@@ -59,9 +59,12 @@ downloads. `deploy/env/production.example` documents the optional job settings;
 mount username/password files from a secret manager and provide them only to a
 separately reviewed acquisition job.
 
-The required migration sequence, integration gates, and cost controls are in
-[`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Install the
-project budget and Cloud Run spend cap before enabling runtime APIs.
+The completed initial migration sequence and historical cost-control rationale
+are retained in
+[`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Do not use it
+as the current release order. Use the active
+[`v0.4.3` plan](RELEASE_0.4.3_PLAN.md) for the next migration and release gates,
+and verify the project budget and Cloud Run spend cap before paid execution.
 
 The Cloud Run serving revision uses `JOB_EXECUTION_MODE=external`. Database
 migrations, pipeline runs, and evaluations belong in run-to-completion jobs;

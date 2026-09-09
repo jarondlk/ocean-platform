@@ -13,9 +13,12 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from api.auth import CurrentUser, ROLE_PERMISSIONS
+from api.classification_operational_contract import (
+    OperationalContractError,
+    validate_operational_event_binding,
+)
 from api.schemas import (
     ClassificationEvidenceInput,
-    ClassificationReviewApplicationRequest,
     ClassificationReviewDecisionRequest,
     ClassificationReviewDraftCreate,
     ClassificationReviewDraftUpdate,
@@ -36,7 +39,14 @@ from db.models import (
     ExternalSourceSnapshot,
 )
 from ingestion.immutable_bundle import digest as scientific_digest
+from preprocessing.anemone_classification import (
+    ReviewError,
+    canonical_sha256,
+    sample_kind_control_status,
+    validate_sample_review_lineage,
+)
 from preprocessing.edna_analysis import ALGORITHM_VERSION, build_analysis
+from preprocessing.edna_eligibility import REASON_ORDER
 from preprocessing.edna_recipe import AnalysisRecipe
 
 
@@ -310,12 +320,49 @@ def _active_sample(
     if sample.provider != "anemone":
         _fail(422, "provider_not_supported", "Only ANEMONE samples are supported")
     try:
-        applied = json.loads(sample.classification_review_json or "null")
-    except json.JSONDecodeError:
-        applied = None
-    decision = applied.get("decision") if isinstance(applied, dict) else None
-    applied_review_id = decision.get("review_id") if isinstance(decision, dict) else None
-    if applied_review_id is not None:
+        applied = validate_sample_review_lineage(
+            sample.classification_review_json,
+            sample_kind=sample.sample_kind,
+            is_control=sample.is_control,
+            classification_basis=sample.classification_basis,
+            source_snapshot_id=sample.source_snapshot_id,
+            provider_sample_id=sample.provider_sample_id,
+        )
+    except ReviewError:
+        _fail(
+            409,
+            "canonical_lineage_corrupt",
+            "Canonical classification lineage is invalid",
+        )
+    decision = applied["decision"] if applied is not None else None
+    applied_review_id = decision.get("review_id") if decision is not None else None
+    if applied is not None:
+        if applied_review_id is not None:
+            predecessor = session.get(ClassificationReview, uuid.UUID(applied_review_id))
+            if (
+                predecessor is None
+                or predecessor.sample_id != sample.sample_id
+                or predecessor.source_snapshot_id != sample.source_snapshot_id
+                or predecessor.sample_kind != sample.sample_kind
+                or decision.get("review_content_sha256") != predecessor.content_sha256
+            ):
+                _fail(
+                    409,
+                    "canonical_lineage_corrupt",
+                    "Canonical classification lineage is invalid",
+                )
+            _verify_integrity(session, predecessor)
+            expected_artifact = _database_review_artifact_payload(
+                session,
+                predecessor,
+                approved_version=decision["review_version"],
+            )
+            if canonical_sha256(expected_artifact) != applied["review_sha256"]:
+                _fail(
+                    409,
+                    "canonical_lineage_corrupt",
+                    "Canonical classification lineage is invalid",
+                )
         if (
             supersedes_review_id is None
             or applied_review_id != str(supersedes_review_id)
@@ -453,6 +500,7 @@ def _verify_integrity(
     events = _events(session, review.id)
     if len(events) != review.version:
         _fail(409, "event_history_incomplete", "Classification review history is incomplete")
+    bound_application_events: set[str] = set()
     for expected, event in enumerate(events, start=1):
         snapshot = event.review_snapshot_json
         if not isinstance(snapshot, dict):
@@ -492,6 +540,15 @@ def _verify_integrity(
             or _digest(payload) != event.event_sha256
         ):
             _fail(409, "event_integrity_failed", "Classification review event integrity failed")
+        try:
+            validate_operational_event_binding(session, review, event)
+        except OperationalContractError:
+            _fail(409, "operational_receipt_invalid", "Classification operational receipt is invalid")
+        if event.event_type in {"applied", "failed"}:
+            application_event_id = event.details_json["application_event_id"]
+            if application_event_id in bound_application_events:
+                _fail(409, "operational_receipt_invalid", "Classification operational receipt is invalid")
+            bound_application_events.add(application_event_id)
     latest = events[-1].review_snapshot_json
     if (
         latest.get("state") != review.state
@@ -574,6 +631,65 @@ def review_response(
         updated_at=review.updated_at,
         events=[_event_response(event) for event in events],
     )
+
+
+def _database_review_artifact_payload(
+    session: Session,
+    review: ClassificationReview,
+    *,
+    approved_version: int,
+) -> dict[str, Any]:
+    """Reconstruct the exact one-decision artifact bound into sample lineage."""
+    events = _verify_integrity(session, review)
+    approved_event = next(
+        (event for event in events if event.sequence == approved_version),
+        None,
+    )
+    if (
+        approved_event is None
+        or approved_event.event_type != "approved"
+        or approved_event.to_state != "approved"
+        or approved_event.content_sha256 != review.content_sha256
+    ):
+        _fail(
+            409,
+            "review_artifact_version_invalid",
+            "The classification review artifact version is invalid",
+        )
+    decided_by = session.get(AppUser, review.scientific_decided_by_user_id)
+    if decided_by is None or review.scientific_decided_at is None:
+        _fail(
+            409,
+            "review_identity_missing",
+            "The scientific decision identity is unavailable",
+        )
+    return {
+        "schema_version": 1,
+        "status": "approved",
+        "source_snapshot_id": review.source_snapshot_id,
+        "decisions": [
+            {
+                "provider_sample_id": review.provider_sample_id,
+                "sample_kind": review.sample_kind,
+                "review_id": str(review.id),
+                "review_version": approved_version,
+                "review_content_sha256": review.content_sha256,
+                "reviewer": decided_by.display_name or decided_by.email,
+                "reviewed_at": _timestamp(review.scientific_decided_at),
+                "rationale": review.rationale,
+                "evidence": [
+                    {
+                        "source_role": row["source_role"],
+                        "source_sha256": row["source_sha256"],
+                        "row_number": row["row_number"],
+                        "key": row["key"],
+                        "value": row["value"],
+                    }
+                    for row in review.evidence_json
+                ],
+            }
+        ],
+    }
 
 
 def create_draft(
@@ -776,61 +892,6 @@ def decide_review(
     return review_response(session, review)
 
 
-def record_application(
-    session: Session,
-    *,
-    review_id: uuid.UUID,
-    request: ClassificationReviewApplicationRequest,
-    actor: CurrentUser,
-    canonical_applied: bool = False,
-) -> ClassificationReviewResponse:
-    _require_actor(
-        session,
-        actor,
-        role="admin",
-        permission="classification:apply",
-    )
-    review = _load_review(session, review_id, lock=True)
-    _check_version(review, request.expected_version)
-    if review.state not in {"approved", "failed"}:
-        _fail(
-            409,
-            "invalid_review_transition",
-            "Only approved or failed reviews can record an application outcome",
-        )
-    if request.outcome == "applied":
-        if not canonical_applied:
-            _fail(
-                409,
-                "controlled_application_required",
-                "Applied outcomes are recorded only by the controlled processing job",
-            )
-    now = datetime.now(timezone.utc)
-    from_state = review.state
-    review.state = request.outcome
-    review.operational_actor_user_id = actor.id
-    review.operational_at = now
-    review.application_reference = request.application_reference
-    review.failure_code = request.failure_code
-    review.failure_detail = request.failure_detail
-    review.version += 1
-    _append_event(
-        session,
-        review=review,
-        actor=actor,
-        event_type=request.outcome,
-        from_state=from_state,
-        occurred_at=now,
-        details={
-            "application_reference": request.application_reference,
-            "failure_code": request.failure_code,
-            "failure_detail": request.failure_detail,
-        },
-    )
-    session.flush()
-    return review_response(session, review)
-
-
 def get_review(
     session: Session,
     review_id: uuid.UUID,
@@ -994,11 +1055,10 @@ def _preview_source(
 
 
 def _control_status(sample_kind: str) -> Optional[bool]:
-    if sample_kind == "environmental":
-        return False
-    if sample_kind == "unknown":
-        return None
-    return True
+    try:
+        return sample_kind_control_status(sample_kind)
+    except ReviewError:
+        _fail(409, "invalid_sample_kind", "Classification sample kind is invalid")
 
 
 def _scenario(
@@ -1064,6 +1124,7 @@ def _scenario(
                 assignment_method=assignment_method,
                 status=str(member.get("status") or "sample_excluded"),
                 reason=member.get("reason"),
+                exclusion_reasons=list(member.get("exclusion_reasons") or []),
                 source_detection_count=source_detection_count,
                 retained_detection_count=retained_detection_count,
                 excluded_detection_count=excluded_detection_count,
@@ -1095,13 +1156,18 @@ def _scenario(
             )
         )
     included = any(row.status == "included" for row in methods)
+    observed_reasons = {
+        reason
+        for row in methods
+        for reason in (row.exclusion_reasons or ([row.reason] if row.reason else []))
+    }
+    ordered_reasons = [reason for reason in REASON_ORDER if reason in observed_reasons]
+    ordered_reasons.extend(sorted(observed_reasons.difference(REASON_ORDER)))
     return ClassificationPreviewScenario(
         sample_kind=sample_kind,
         is_control=is_control,
         eligibility="included" if included else "excluded",
-        exclusion_reasons=sorted(
-            {row.reason for row in methods if row.reason is not None}
-        ),
+        exclusion_reasons=ordered_reasons,
         analysis_id=str(result["analysis_id"]),
         input_sha256=str(result["input_sha256"]),
         table_counts={name: len(rows) for name, rows in tables.items()},
@@ -1166,15 +1232,9 @@ def preview_review(
     proposed_sample["sample_kind"] = review.sample_kind
     proposed_sample["is_control"] = _control_status(review.sample_kind)
     proposed_sample["classification_basis"] = f"preview:{review.content_sha256}"
-    proposed_sample["classification_review_json"] = json.dumps(
-        {
-            "review_id": str(review.id),
-            "review_version": review.version,
-            "content_sha256": review.content_sha256,
-        },
-        sort_keys=True,
-        separators=(",", ":"),
-    )
+    # A preview is not canonical lineage and must never impersonate the strict
+    # persisted classification_review_json contract.
+    proposed_sample["classification_review_json"] = None
     proposed_sample["scientific_content_sha256"] = scientific_digest(
         {
             key: value

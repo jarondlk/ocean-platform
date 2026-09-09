@@ -18,6 +18,7 @@ import config
 from db.connection import get_session
 from db.vector_store import embed_text
 from ingestion.provenance_snapshot import SnapshotError
+from retrieval.contract import RetrievalBackendError, normalized_weights, validate_rrf_k
 from schema.time_range import sql_time_conditions
 
 logger = logging.getLogger(__name__)
@@ -78,6 +79,8 @@ def hybrid_search(
 
     Results are merged using Reciprocal Rank Fusion (RRF).
     """
+    vector_weight, fts_weight = normalized_weights(vector_weight, fts_weight)
+    rrf_k = validate_rrf_k(rrf_k)
     # Build filter clause
     filters = ["active IS TRUE"]
     params: Dict[str, Any] = {"k": k * 2}  # over-fetch for fusion
@@ -176,9 +179,12 @@ def hybrid_search(
     vector_results: Dict[str, int] = {}
     fts_results: Dict[str, int] = {}
     doc_map: Dict[str, dict] = {}
+    enabled_branches = int(vector_weight > 0) + int(fts_weight > 0)
+    failed_branches: list[str] = []
 
-    with get_session() as session:
-        # --- Vector search ---
+    # Each backend owns its transaction. A failed SQL statement must not leave
+    # the fallback branch in PostgreSQL's aborted-transaction state.
+    if vector_weight > 0:
         try:
             query_emb = embed_text(query)
             emb_str = "[" + ",".join(str(x) for x in query_emb) + "]"
@@ -198,10 +204,11 @@ def hybrid_search(
                        source_snapshot_id
                 FROM retrieval_document
                 {vector_where}
-                ORDER BY embedding <=> :emb
+                ORDER BY embedding <=> :emb, doc_id ASC
                 LIMIT :k
             """)
-            rows = session.execute(sql, params).fetchall()
+            with get_session() as session:
+                rows = session.execute(sql, params).fetchall()
             for rank, r in enumerate(rows):
                 vector_results[r.doc_id] = rank + 1
                 doc_map[r.doc_id] = {
@@ -224,9 +231,10 @@ def hybrid_search(
                     "source_snapshot_id": r.source_snapshot_id,
                 }
         except Exception as e:
+            failed_branches.append("vector")
             logger.warning("Vector search failed: %s", e)
 
-        # --- Full-text search ---
+    if fts_weight > 0:
         try:
             fts_where = where
             if fts_where:
@@ -245,10 +253,11 @@ def hybrid_search(
                        ts_rank_cd(text_tsv, plainto_tsquery('english', :query)) AS fts_rank
                 FROM retrieval_document
                 {fts_where}
-                ORDER BY fts_rank DESC
+                ORDER BY fts_rank DESC, doc_id ASC
                 LIMIT :k
             """)
-            rows = session.execute(sql, fts_params).fetchall()
+            with get_session() as session:
+                rows = session.execute(sql, fts_params).fetchall()
             for rank, r in enumerate(rows):
                 fts_results[r.doc_id] = rank + 1
                 if r.doc_id not in doc_map:
@@ -272,19 +281,30 @@ def hybrid_search(
                         "source_snapshot_id": r.source_snapshot_id,
                     }
         except Exception as e:
+            failed_branches.append("fts")
             logger.warning("FTS search failed: %s", e)
+
+    if len(failed_branches) == enabled_branches:
+        raise RetrievalBackendError(
+            "All enabled retrieval backends failed: " + ", ".join(failed_branches)
+        )
 
     # --- RRF fusion ---
     all_doc_ids = set(vector_results.keys()) | set(fts_results.keys())
     scored: List[RetrievalResult] = []
 
     for doc_id in all_doc_ids:
-        v_rank = vector_results.get(doc_id, k * 2 + 1)
-        f_rank = fts_results.get(doc_id, k * 2 + 1)
+        v_rank = vector_results.get(doc_id)
+        f_rank = fts_results.get(doc_id)
 
         rrf_score = (
             vector_weight * (1.0 / (rrf_k + v_rank))
-            + fts_weight * (1.0 / (rrf_k + f_rank))
+            if v_rank is not None
+            else 0.0
+        ) + (
+            fts_weight * (1.0 / (rrf_k + f_rank))
+            if f_rank is not None
+            else 0.0
         )
 
         info = doc_map[doc_id]
@@ -307,10 +327,14 @@ def hybrid_search(
             sample_kind=info["sample_kind"],
             is_control=info["is_control"],
             source_snapshot_id=info["source_snapshot_id"],
-            rank_sources={"vector": v_rank, "fts": f_rank},
+            rank_sources={
+                name: rank
+                for name, rank in (("vector", v_rank), ("fts", f_rank))
+                if rank is not None
+            },
         ))
 
-    scored.sort(key=lambda r: r.score, reverse=True)
+    scored.sort(key=lambda result: (-result.score, result.doc_id))
     results = scored[:k]
 
     logger.info(

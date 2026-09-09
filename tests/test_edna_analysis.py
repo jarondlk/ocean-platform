@@ -12,6 +12,7 @@ from ingestion.edna_analysis_bundle import (
     regenerate_affected_analyses,
 )
 from preprocessing.edna_analysis import alpha, beta, build_analysis
+from preprocessing.edna_eligibility import evaluate_analysis_eligibility
 from preprocessing.edna_recipe import AnalysisRecipe
 from tests.integration.test_anemone_postgres import _frames
 
@@ -69,6 +70,38 @@ def test_controls_unknowns_unresolved_taxa_and_missing_method():
     result = build_analysis(recipe, source)
     assert result['tables']['diversity'][0]['richness'] == 0
     assert any(r['reason'] == 'method_unavailable' for r in result['tables']['membership'])
+
+
+def test_data_policy_and_analysis_membership_have_exact_method_parity():
+    recipe, source = fixture()
+    source['edna_assay'][0]['primer_set'] = None
+    source['edna_detection'] = [
+        row for row in source['edna_detection']
+        if row['assignment_method'] == 'qcauto_target'
+    ]
+    expected = evaluate_analysis_eligibility(
+        source['edna_sample'][0],
+        source['edna_assay'],
+        {source['edna_assay'][0]['assay_id']: {'qcauto_target'}},
+        recipe.assignment_methods,
+    )
+
+    result = build_analysis(recipe, source)
+    actual = [
+        {
+            key: row[key]
+            for key in (
+                'sample_id',
+                'assay_id',
+                'assignment_method',
+                'analysis_eligibility',
+                'exclusion_reasons',
+            )
+        }
+        for row in result['tables']['membership']
+    ]
+
+    assert sorted(actual, key=lambda row: row['assignment_method']) == expected['method_eligibility']
 
 
 def test_control_overlap_does_not_subtract_and_protocol_partitions_do_not_pool():

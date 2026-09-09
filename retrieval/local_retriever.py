@@ -23,6 +23,7 @@ import numpy as np
 
 import config
 from schema.time_range import matches_time
+from retrieval.contract import RetrievalBackendError, normalized_weights, validate_rrf_k
 from retrieval.edna_publication import retrieval_path
 from ingestion.provenance_snapshot import SnapshotError
 
@@ -250,10 +251,15 @@ class LocalRetriever:
         lat_max: Optional[float] = None,
         lon_min: Optional[float] = None,
         lon_max: Optional[float] = None,
+        vector_weight: float = 0.6,
+        fts_weight: float = 0.4,
+        rrf_k: int = 60,
     ) -> List[dict]:
         """
         Hybrid search: BM25 + (optional) vector, fused with RRF.
         """
+        vector_weight, fts_weight = normalized_weights(vector_weight, fts_weight)
+        rrf_k = validate_rrf_k(rrf_k)
         if not self.documents:
             return []
 
@@ -324,47 +330,92 @@ class LocalRetriever:
             return []
 
         # BM25 scores
-        all_bm25 = self.bm25.score(query)
-        bm25_scored = [(i, all_bm25[i]) for i in valid_indices]
-        bm25_scored.sort(key=lambda x: x[1], reverse=True)
+        failed_branches = []
+        try:
+            all_bm25 = self.bm25.score(query) if fts_weight > 0 else []
+        except Exception as exc:
+            logger.warning("Local FTS search failed: %s", exc)
+            failed_branches.append("fts")
+            all_bm25 = []
+        bm25_scored = (
+            [(i, all_bm25[i]) for i in valid_indices if all_bm25[i] > 0]
+            if fts_weight > 0 and "fts" not in failed_branches
+            else []
+        )
+        bm25_scored.sort(
+            key=lambda item: (
+                -item[1],
+                str(self.documents[item[0]].get("doc_id") or ""),
+            )
+        )
         bm25_ranks = {idx: rank + 1 for rank, (idx, _) in enumerate(bm25_scored)}
 
         # Vector scores
         vector_ranks: Dict[int, int] = {}
-        if self._embed_available and self._embeddings is not None:
-            try:
-                from db.vector_store import embed_text
-                q_emb = np.array(embed_text(query), dtype="float32")
-                valid_embs = self._embeddings[valid_indices]
-                # Cosine similarity
-                norms = np.linalg.norm(valid_embs, axis=1) * np.linalg.norm(q_emb)
-                norms[norms == 0] = 1e-10
-                sims = valid_embs @ q_emb / norms
-                sim_order = np.argsort(-sims)
-                for rank, pos in enumerate(sim_order):
-                    vector_ranks[valid_indices[pos]] = rank + 1
-            except Exception as e:
-                logger.warning("Vector search failed: %s", e)
+        if vector_weight > 0:
+            if not self._embed_available or self._embeddings is None:
+                failed_branches.append("vector")
+            else:
+                try:
+                    from db.vector_store import embed_text
+                    q_emb = np.array(embed_text(query), dtype="float32")
+                    valid_embs = self._embeddings[valid_indices]
+                    # Cosine similarity
+                    norms = np.linalg.norm(valid_embs, axis=1) * np.linalg.norm(q_emb)
+                    norms[norms == 0] = 1e-10
+                    sims = valid_embs @ q_emb / norms
+                    sim_order = sorted(
+                        range(len(valid_indices)),
+                        key=lambda pos: (
+                            -float(sims[pos]),
+                            str(self.documents[valid_indices[pos]].get("doc_id") or ""),
+                        ),
+                    )
+                    for rank, pos in enumerate(sim_order):
+                        vector_ranks[valid_indices[pos]] = rank + 1
+                except Exception as exc:
+                    failed_branches.append("vector")
+                    logger.warning("Vector search failed: %s", exc)
+
+        enabled_branches = int(vector_weight > 0) + int(fts_weight > 0)
+        if len(failed_branches) == enabled_branches:
+            raise RetrievalBackendError(
+                "All enabled local retrieval backends failed: "
+                + ", ".join(failed_branches)
+            )
 
         # RRF fusion
-        rrf_k = 60
-        v_weight = 0.6 if vector_ranks else 0.0
-        b_weight = 1.0 - v_weight
-
         scored = []
-        for idx in valid_indices:
-            br = bm25_ranks.get(idx, len(valid_indices) + 1)
-            vr = vector_ranks.get(idx, len(valid_indices) + 1)
-            score = b_weight / (rrf_k + br) + v_weight / (rrf_k + vr)
+        for idx in set(bm25_ranks) | set(vector_ranks):
+            br = bm25_ranks.get(idx)
+            vr = vector_ranks.get(idx)
+            score = (
+                fts_weight / (rrf_k + br) if br is not None else 0.0
+            ) + (
+                vector_weight / (rrf_k + vr) if vr is not None else 0.0
+            )
             scored.append((idx, score))
 
-        scored.sort(key=lambda x: x[1], reverse=True)
+        scored.sort(
+            key=lambda item: (
+                -item[1],
+                str(self.documents[item[0]].get("doc_id") or ""),
+            )
+        )
         top_k = scored[:k]
 
         results = []
         for idx, score in top_k:
             doc = self.documents[idx].copy()
             doc["score"] = score
+            doc["rank_sources"] = {
+                name: rank
+                for name, rank in (
+                    ("vector", vector_ranks.get(idx)),
+                    ("fts", bm25_ranks.get(idx)),
+                )
+                if rank is not None
+            }
             results.append(doc)
 
         return results

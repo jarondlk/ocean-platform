@@ -1,6 +1,6 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-09-08 JST
+> **Last updated**: 2026-09-09 JST
 > **Repository**: `jarondlk/ocean-platform`
 > **Current status**: OCEAN Platform release `v0.4.2` is live on Cloud Run
 > service `ocean-platform`; revision `ocean-platform-00013-djj` receives 100%
@@ -16,6 +16,14 @@
 > [v0.4.2 operations record](docs/RELEASE_0.4.2_OPERATIONS.md). The canonical
 > application URL is `https://oceaninfobio.com`; exclusion-reason
 > presentation is implemented and deployed in v0.4.2 from merged [PR #56](https://github.com/jarondlk/ocean-platform/pull/56).
+> The current engineering work queue is the ordered
+> [v0.4.3 plan](docs/RELEASE_0.4.3_PLAN.md). The
+> [documentation status register](docs/DOCUMENTATION_STATUS.md) identifies older
+> completed plans that remain only as historical records.
+> v0.4.3 PR1 classification integrity, PR2 controlled operational outcomes,
+> PR3 isolated hybrid retrieval, and PR4 shared scientific eligibility are
+> implemented and locally verified on `gcp-dev`; they are not yet committed,
+> reviewed, merged, released, or deployed.
 
 ---
 
@@ -55,6 +63,27 @@ used only as historical reference and parity material.
 ---
 
 ## 2. What Changed Recently
+
+### v0.4.3 PR1–PR4 implemented locally (2026-09-09)
+
+- Classification values use one strict tri-state contract; corrupt review
+  lineage fails closed and reviewed `unknown` remains `null` through apply and
+  rollback.
+- Operational `applied` and `failed` events can only be emitted by the
+  controlled application ledger path; the old public mutation endpoint is
+  removed.
+- PostgreSQL vector and FTS retrieval use independent transactions. Local and
+  PostgreSQL retrieval share normalized weights, `rrf_k`, rank handling, and a
+  deterministic `doc_id` tie-breaker. Total enabled-backend failure is reported
+  as a controlled 503 rather than an empty scientific result.
+- A pure eDNA eligibility evaluator is shared by Data APIs and analysis.
+  Sample, assay, detection, and analysis membership surfaces expose method-level
+  eligibility and ordered exclusion reason codes.
+- Combined local verification passed 732 backend tests with 13 expected skips,
+  13 tests against a fresh migrated PostgreSQL 16/pgvector database, 19
+  frontend tests, and TypeScript checking. The disposable database was removed.
+- These changes remain uncommitted on `gcp-dev`; CI, PR review, merge, release,
+  deployment, and authenticated production acceptance remain pending.
 
 ### v0.4.2 released and deployed (2026-09-08)
 
@@ -1239,16 +1268,23 @@ git diff --check
 
 ## 13. Recommended Next Work Order
 
-1. Complete the remaining custom-domain researcher-role, suspension, and
+Current `gcp-dev` status (2026-09-09): v0.4.3 PR1–PR4 are implemented and
+locally verified but remain uncommitted, unreviewed, and undeployed. The next
+step is one combined `gcp-dev` → `main` release PR containing four logical
+commits in dependency order, followed by the v0.4.3 release gates in
+[`docs/RELEASE_0.4.3_PLAN.md`](docs/RELEASE_0.4.3_PLAN.md).
+
+1. Freeze the four logical commits, bump version metadata to `0.4.3`, and run
+   the full local and CI-equivalent checks, including coverage, dependency
+   audit, and CodeQL/security status.
+2. Complete the remaining custom-domain researcher-role, suspension, and
    uninvited-account checks. Administrator logout/re-login, admin-route access,
    invitation-register access, and anonymous fail-closed behavior pass.
-2. Run the deferred researcher acceptance matrix without claiming taxonomic
-   accuracy, contamination clearance, or environmental overlap beyond the
-   reviewed evidence.
-3. Continue post-v0.4.2 log, latency, Cloud SQL connection, backup, and billing
-   review under the existing limits; investigate repeated cold-start outliers
-   before changing minimum scale.
-4. Continue scheduled-update, evaluation-job bridge, restore-drill, retention,
+3. Run the isolated researcher acceptance matrix plus controlled application
+   replay/rollback rehearsal without changing the real pilot classification.
+4. Complete the pre-deployment backup/restore, immutable candidate deployment,
+   authenticated smoke checks, traffic change, and v0.4.3 operations record.
+5. Continue scheduled-update, evaluation-job bridge, restore-drill, retention,
    cost-review, and legacy-resource retirement work under their existing
    approval boundaries.
 
@@ -1284,8 +1320,9 @@ data to the PR1/PR2 boundary.
 
 ### 2. Validate the real PR5 pilot and release
 
-Use [`docs/ANEMONE_PR5_PLAN.md`](docs/ANEMONE_PR5_PLAN.md) as the current
-rollout sequence. Local code and audit repairs are implemented; next:
+At that historical checkpoint,
+[`docs/ANEMONE_PR5_PLAN.md`](docs/ANEMONE_PR5_PLAN.md) was the rollout sequence.
+The recorded next steps were:
 
 1. review the object-store/job implementation and validate it on approved GCP resources;
 2. approve the pilot, provider conditions, credentials and resource budgets;

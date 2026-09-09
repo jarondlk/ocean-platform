@@ -76,6 +76,7 @@ export type ClassificationPreviewMethod = {
   assignment_method: string;
   status: string;
   reason?: string | null;
+  exclusion_reasons?: string[];
   source_detection_count: number;
   retained_detection_count: number;
   excluded_detection_count: number;

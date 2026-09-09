@@ -1,5 +1,9 @@
 # ANEMONE classification and research safety — v0.4.1/v0.4.2
 
+> Superseded plan: the work recorded here shipped in `v0.4.1` and `v0.4.2`.
+> Retain this file as implementation history. Current work is in
+> [`RELEASE_0.4.3_PLAN.md`](RELEASE_0.4.3_PLAN.md).
+
 Decision: on 2026-09-03 the user prioritized `v0.4.0` and explicitly deferred
 classification workflow completion. Keep the pilot `sample_kind=unknown` and
 `is_control=null`. Its proposed environmental classification is not approved.

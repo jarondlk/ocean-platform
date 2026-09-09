@@ -849,8 +849,8 @@ def test_route_permission_map_is_explicit_for_sensitive_surfaces():
         (
             "POST",
             "/classification-reviews/00000000-0000-0000-0000-000000000000/application",
-            "classification:apply",
-            {"admin"},
+            None,
+            set(),
         ),
     ],
 )

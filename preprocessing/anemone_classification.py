@@ -7,15 +7,34 @@ reviewer's identity. Only a trusted operator may submit an approved review.
 from __future__ import annotations
 
 from datetime import datetime
+import hashlib
 import json
+import math
 from pathlib import Path
-from typing import Annotated, Literal
+from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    ValidationError,
+    field_validator,
+    model_validator,
+)
 
 MAX_REVIEW_BYTES = 1024 * 1024
 Sha256 = Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
 Text = Annotated[str, Field(min_length=1, max_length=4000)]
+SAMPLE_KINDS = frozenset(
+    {
+        "environmental",
+        "negative_control",
+        "positive_control",
+        "mock_community",
+        "unknown",
+    }
+)
+CONTROL_SAMPLE_KINDS = SAMPLE_KINDS - {"environmental", "unknown"}
 
 
 class ReviewError(ValueError):
@@ -64,6 +83,19 @@ class ClassificationDecision(StrictRecord):
             raise ValueError("Review time requires a timezone")
         return timestamp.isoformat()
 
+    @model_validator(mode="after")
+    def complete_database_identity(self) -> "ClassificationDecision":
+        identity = (
+            self.review_id,
+            self.review_version,
+            self.review_content_sha256,
+        )
+        if any(value is not None for value in identity) and any(
+            value is None for value in identity
+        ):
+            raise ValueError("Database review identity must be complete")
+        return self
+
 
 class ClassificationReview(StrictRecord):
     schema_version: Literal[1]
@@ -81,20 +113,190 @@ class ClassificationReview(StrictRecord):
         return value
 
 
-def parse_review(data: bytes) -> dict:
-    if len(data) > MAX_REVIEW_BYTES:
-        raise ReviewError("Classification review exceeds the 1 MiB limit.")
+class ClassificationReviewLineage(StrictRecord):
+    """Canonical sample lineage written by ANEMONE normalization."""
+
+    schema_version: Literal[1]
+    source_snapshot_id: Sha256
+    review_sha256: Sha256
+    provider_classification_basis: Text
+    decision: ClassificationDecision
+
+    @field_validator("schema_version", mode="before")
+    @classmethod
+    def integer_version(cls, value):
+        if type(value) is not int:
+            raise ValueError("Schema version must be an integer")
+        return value
+
+
+def canonical_sha256(value: Any) -> str:
+    encoded = json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def sample_kind_control_status(sample_kind: str) -> bool | None:
+    """Return the only valid tri-state control value for a sample kind."""
+    if sample_kind == "environmental":
+        return False
+    if sample_kind == "unknown":
+        return None
+    if sample_kind in CONTROL_SAMPLE_KINDS:
+        return True
+    raise ReviewError("Invalid canonical sample classification.")
+
+
+def _nullable_control_status(value: Any) -> bool | None:
+    if value is None:
+        return None
+    if type(value) is bool:
+        return value
+    if hasattr(value, "item"):
+        try:
+            value = value.item()
+        except (TypeError, ValueError):
+            pass
+        if type(value) is bool:
+            return value
+    if isinstance(value, float) and math.isnan(value):
+        return None
+    raise ReviewError("Invalid canonical control status.")
+
+
+def validate_sample_classification(sample_kind: str, is_control: Any) -> bool | None:
+    """Validate, without truthiness coercion, the canonical tri-state pair."""
+    expected = sample_kind_control_status(sample_kind)
+    observed = _nullable_control_status(is_control)
+    if observed is not expected:
+        raise ReviewError("Canonical sample classification is inconsistent.")
+    return expected
+
+
+def _unique_json(data: bytes | str, *, label: str) -> Any:
+    if isinstance(data, str):
+        encoded = data.encode("utf-8")
+    elif isinstance(data, bytes):
+        encoded = data
+    else:
+        raise ReviewError(f"{label} is not valid JSON.")
+    if len(encoded) > MAX_REVIEW_BYTES:
+        raise ReviewError(f"{label} exceeds the 1 MiB limit.")
 
     def unique_object(pairs):
         result = {}
         for key, value in pairs:
             if key in result:
-                raise ReviewError("Classification review contains duplicate JSON keys.")
+                raise ReviewError(f"{label} contains duplicate JSON keys.")
             result[key] = value
         return result
 
     try:
-        payload = json.loads(data, object_pairs_hook=unique_object)
+        return json.loads(encoded, object_pairs_hook=unique_object)
+    except (json.JSONDecodeError, UnicodeError) as exc:
+        raise ReviewError(f"{label} is not valid JSON.") from exc
+
+
+def parse_review_lineage(data: bytes | str) -> dict[str, Any]:
+    """Strictly parse one persisted ``classification_review_json`` value."""
+    try:
+        lineage = ClassificationReviewLineage.model_validate(
+            _unique_json(data, label="Classification review lineage")
+        ).model_dump(exclude_none=True)
+    except (ValueError, ValidationError) as exc:
+        raise ReviewError("Invalid classification review lineage.") from exc
+
+    decision = lineage["decision"]
+    sample_kind_control_status(decision["sample_kind"])
+    if decision.get("review_id") is not None:
+        # Database-backed reviews always produce a one-decision artifact. This
+        # binds every persisted decision field, including the review content
+        # digest, to the registered review artifact digest.
+        artifact = {
+            "schema_version": 1,
+            "status": "approved",
+            "source_snapshot_id": lineage["source_snapshot_id"],
+            "decisions": [decision],
+        }
+        if canonical_sha256(artifact) != lineage["review_sha256"]:
+            raise ReviewError("Classification review lineage digest mismatch.")
+    return lineage
+
+
+def build_review_lineage(
+    review: dict[str, Any],
+    decision: dict[str, Any],
+    *,
+    provider_classification_basis: str,
+) -> dict[str, Any]:
+    """Build and revalidate the canonical lineage for one review decision."""
+    lineage = {
+        "schema_version": 1,
+        "source_snapshot_id": review["source_snapshot_id"],
+        "review_sha256": canonical_sha256(review),
+        "provider_classification_basis": provider_classification_basis,
+        "decision": decision,
+    }
+    return parse_review_lineage(
+        json.dumps(
+            lineage,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+    )
+
+
+def validate_sample_review_lineage(
+    data: bytes | str | None,
+    *,
+    sample_kind: str,
+    is_control: Any,
+    classification_basis: str,
+    source_snapshot_id: str,
+    provider_sample_id: str,
+    expected_review_id: str | None = None,
+    expected_review_version: int | None = None,
+    expected_review_content_sha256: str | None = None,
+) -> dict[str, Any] | None:
+    """Validate optional review lineage against its canonical sample row."""
+    validate_sample_classification(sample_kind, is_control)
+    reviewed_basis = isinstance(classification_basis, str) and classification_basis.startswith(
+        "review:"
+    )
+    if data is None:
+        if reviewed_basis:
+            raise ReviewError("Canonical classification review lineage is missing.")
+        return None
+    if not reviewed_basis:
+        raise ReviewError("Canonical classification review basis is missing.")
+
+    lineage = parse_review_lineage(data)
+    decision = lineage["decision"]
+    if (
+        lineage["source_snapshot_id"] != source_snapshot_id
+        or decision["provider_sample_id"] != provider_sample_id
+        or decision["sample_kind"] != sample_kind
+        or classification_basis != "review:" + canonical_sha256(lineage)
+    ):
+        raise ReviewError("Canonical classification review lineage does not match the sample.")
+    for field, expected in (
+        ("review_id", expected_review_id),
+        ("review_version", expected_review_version),
+        ("review_content_sha256", expected_review_content_sha256),
+    ):
+        if expected is not None and decision.get(field) != expected:
+            raise ReviewError("Canonical classification review identity mismatch.")
+    return lineage
+
+
+def parse_review(data: bytes) -> dict:
+    payload = _unique_json(data, label="Classification review")
+    try:
         review = ClassificationReview.model_validate(payload).model_dump(
             exclude_none=True
         )
