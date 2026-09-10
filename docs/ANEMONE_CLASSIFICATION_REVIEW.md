@@ -5,7 +5,7 @@ Historical release decision (2026-09-03): the pilot remained unknown for
 [next-patch work](ANEMONE_NEXT_PATCH.md) shipped in `v0.4.1` and `v0.4.2`;
 that file is no longer the current work queue.
 
-Status (2026-09-06): the authenticated review domain, effect preview, and
+Status (2026-09-10): the authenticated review domain, effect preview, and
 controlled manual application path are deployed in `v0.4.1`. The fixed Cloud
 Run workload identity is registered. Authenticated researcher acceptance
 remains pending, and the real canary has **not** been classified or
@@ -13,9 +13,8 @@ scientifically accepted.
 The `v0.4.2` release adds direct eligibility and exclusion-reason presentation
 without changing that scientific state.
 The `v0.4.3` integrity, controlled-outcome, retrieval-isolation, and shared
-eligibility changes are implemented and locally verified on `gcp-dev`, but are
-not yet committed, reviewed, released, or deployed. Their current record is
-[`RELEASE_0.4.3_PLAN.md`](RELEASE_0.4.3_PLAN.md).
+eligibility changes are reviewed and deployed without changing the pilot. See
+[`RELEASE_0.4.3_OPERATIONS.md`](RELEASE_0.4.3_OPERATIONS.md).
 No review is inferred from a sample name, collection device, coordinates, or
 permission to implement this workflow.
 
@@ -81,7 +80,7 @@ proposals remain excluded from environmental-only results.
 
 ## Scientific eligibility contract
 
-The v0.4.3 worktree evaluates classification, active-assay presence, required
+The v0.4.3 release evaluates classification, active-assay presence, required
 protocol fields (`target_gene`, `primer_set`, and `sequencing_method`), and
 assignment-method availability through one pure policy function. Data sample,
 assay, and detection responses and generated analysis membership use the same

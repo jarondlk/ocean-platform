@@ -33,7 +33,7 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The bounded GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.4.2`. The active data plane now uses the
+  and OCEAN Platform release `v0.4.3`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
 - The bounded ANEMONE MiFish pilot is stored as a distinct
@@ -46,7 +46,7 @@ workflow that can later become automated.
 - The README screenshot set was refreshed from the authenticated OCEAN
   Platform Cloud Run deployment on 2026-08-25.
 
-## Current MVP hardening: v0.4.3
+## Completed MVP hardening: v0.4.3
 
 The ordered implementation plan is
 [`RELEASE_0.4.3_PLAN.md`](RELEASE_0.4.3_PLAN.md). It covers:
@@ -56,10 +56,10 @@ The ordered implementation plan is
 3. hybrid retrieval transaction isolation and request-contract consistency; and
 4. one shared scientific-eligibility contract for Data and analysis.
 
-The pilot remains scientifically `unknown`. All four PR scopes are implemented
-and locally verified on the uncommitted `gcp-dev` worktree. Commit and review
-them in order, then complete the combined release gate before tagging or
-deploying `v0.4.3`.
+The pilot remains scientifically `unknown`. All four PR scopes were reviewed in
+PR #58 and deployed on 2026-09-10. The backup, migration, immutable build, job
+canaries, rollout, and remaining acceptance work are recorded in
+[`RELEASE_0.4.3_OPERATIONS.md`](RELEASE_0.4.3_OPERATIONS.md).
 
 ## Completed MVP: ANEMONE eDNA Integration
 

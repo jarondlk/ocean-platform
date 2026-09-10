@@ -398,18 +398,20 @@ live-manifest alerts as unreachable.
 
 ## Authorization MVP Release Checklist
 
-Current deployed GCP evidence as of 2026-09-08: OCEAN Platform release `v0.4.2`
+Current deployed GCP evidence as of 2026-09-10: OCEAN Platform release `v0.4.3`
 runs with
 `DEPLOYMENT_ENV=production`, `AUTH_MODE=required`, Google OIDC, distinct Secret
 Manager-backed signing secrets, private FastAPI/Cloud SQL connectivity, and
 default-deny API authorization. Authenticated classification review derives
 scientific identity from the session, while controlled application uses the
-registered `ocean-jobs` workload identity. All 27 migrated tables matched the
-release contract; bounded OCEAN jobs retain manual execution and zero automatic
+registered `ocean-jobs` workload identity. Strict review-lineage validation,
+ledger-bound operational events, isolated hybrid retrieval, and shared
+scientific eligibility are deployed. All 27 migrated tables matched the release
+contract; bounded OCEAN jobs retain manual execution and zero automatic
 retries; protected review and health proxy routes returned 401 anonymously;
-Post-rollout monitoring found no HTTP 5xx responses and no error-severity Cloud
-Run or Cloud SQL entries; CI and CodeQL passed. The dependency updates and NLTK
-removal are included in this release. Administrator custom-domain logout/login,
+immediate post-rollout monitoring found no HTTP 5xx responses and no
+error-severity Cloud Run or Cloud SQL entries; CI and CodeQL passed.
+Administrator custom-domain logout/login,
 admin-route access, and invitation-register access passed. Researcher-specific
 classification acceptance, suspension, and uninvited-account denial still
 require the corresponding test identities. A
@@ -418,7 +420,7 @@ invalidated by rotating both affected database users and disabling both old
 secret versions before traffic resumed.
 
 The complete point-in-time deployment and monitoring evidence is in
-[`RELEASE_0.4.2_OPERATIONS.md`](RELEASE_0.4.2_OPERATIONS.md). The checklist
+[`RELEASE_0.4.3_OPERATIONS.md`](RELEASE_0.4.3_OPERATIONS.md). The checklist
 remains reusable for every future release. It is intentionally
 not marked permanently complete: secret rotation, dependency state, callback
 configuration, role tests, backups, logs, and retention must be re-evaluated

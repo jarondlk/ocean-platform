@@ -27,7 +27,7 @@ its sample classification remains unknown in the current release line.
 
 ## Current Prototype Status
 
-Status as of **2026-09-09**: this is an active invite-only **Next.js +
+Status as of **2026-09-10**: this is an active invite-only **Next.js +
 FastAPI** prototype deployed on GCP, with PostgreSQL/pgvector retrieval,
 Vertex AI generation and embeddings, Google OIDC, and Cloud Run Jobs for
 operator-approved batch work. The same application remains runnable locally
@@ -37,12 +37,13 @@ service.
 
 Current managed milestone:
 
-- `v0.4.3` is the current release candidate on `gcp-dev`. Its classification
-  integrity, controlled operational outcomes, retrieval isolation, and shared
-  scientific eligibility changes are locally verified but not yet released or
-  deployed. The release gate is documented in
-  [`docs/RELEASE_0.4.3_PLAN.md`](docs/RELEASE_0.4.3_PLAN.md).
-
+- GitHub release `v0.4.3` hardens classification lineage, controlled
+  operational outcomes, hybrid retrieval isolation, and shared scientific
+  eligibility. It was released from merged PR #58 commit
+  `26094fc2c1f1f9cad094c484aff4522ba738240f`, built by Cloud Build
+  `a8cac0c6-9ac2-49b4-bdc8-82c82089a0d2`, and is active at revision
+  `ocean-platform-v043-26094fc`. See the
+  [v0.4.3 operations record](docs/RELEASE_0.4.3_OPERATIONS.md).
 - GitHub release [`v0.4.2`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.2)
   adds direct environmental-eligibility and exclusion-reason presentation to
   the v0.4.1 no-evidence and controlled-classification workflow. It was released
@@ -50,10 +51,11 @@ Current managed milestone:
   `fd2a5970-692f-424e-a721-0144e1e2e005`, and is active at revision
   `ocean-platform-00013-djj`. See the
   [v0.4.2 operations record](docs/RELEASE_0.4.2_OPERATIONS.md).
-- The retained `v0.4.1` revision `ocean-platform-v041-706348e`, its verified
-  backup, and the earlier `v0.4.0` revision `ocean-platform-v040-a63885a` remain
-  reviewed rollback references. Review corpus and schema compatibility before
-  rollback; do not downgrade the schema or overwrite later user or chat records.
+- The retained `v0.4.2` revision `ocean-platform-00013-djj`, v0.4.1 revision
+  `ocean-platform-v041-706348e`, and v0.4.0 revision
+  `ocean-platform-v040-a63885a` remain reviewed rollback references. Review
+  corpus and schema compatibility before rollback; do not downgrade the schema
+  or overwrite later user or chat records.
 - The live data plane uses Artifact Registry `ocean-platform`, Cloud SQL
   `ocean-postgres` / database `ocean_platform`, jobs under the `ocean-*`
   prefix, OCEAN Secret Manager entries, and bucket
@@ -919,10 +921,11 @@ npm run build
 
 ### Current Test Matrix
 
-The deployed v0.4.2 release gate passed 690 backend tests
-with 12 expected service-gated skips and 78.27% coverage, plus 12 PostgreSQL
-integration tests through schema head `20260905_0011`, 19 frontend tests,
-TypeScript checking, and the 24-route production build.
+The deployed v0.4.3 release gate passed 732 backend tests with 13 expected
+service-gated skips and 78.16% coverage, plus 13 PostgreSQL integration tests
+through schema head `20260905_0011`, 19 frontend tests, TypeScript checking,
+and the 24-route production build. See
+[`docs/RELEASE_0.4.3_OPERATIONS.md`](docs/RELEASE_0.4.3_OPERATIONS.md).
 
 | Test area | Files |
 | --- | --- |

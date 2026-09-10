@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-09-09.
+Last reviewed: 2026-09-10.
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -9,11 +9,10 @@ recorded date or safe to delete. Historical research, release, migration, and
 audit records should remain immutable unless an explicit archival policy is
 approved.
 
-## Current planning authority
+## Current operating authority
 
-- [`RELEASE_0.4.3_PLAN.md`](RELEASE_0.4.3_PLAN.md) — current ordered engineering
-  plan for classification integrity, controlled outcomes, retrieval isolation,
-  and shared eligibility.
+- [`RELEASE_0.4.3_OPERATIONS.md`](RELEASE_0.4.3_OPERATIONS.md) — current release,
+  deployment, and remaining-acceptance record.
 - [`ROADMAP.md`](ROADMAP.md) — longer-term engineering priorities.
 - [`handoff.md`](../handoff.md) — current repository and production handoff.
 
@@ -25,6 +24,7 @@ but do not use them to decide the next implementation or deployment:
 
 | Document | Superseded by / present status |
 | --- | --- |
+| [`RELEASE_0.4.3_PLAN.md`](RELEASE_0.4.3_PLAN.md) | PR1–PR4 and the combined release gate completed in `v0.4.3`; use the operations record for current state. |
 | [`ANEMONE_INTEGRATION_PLAN.md`](ANEMONE_INTEGRATION_PLAN.md) | PR1–PR5 shipped in `v0.4.0`; classification follow-up shipped in `v0.4.1`/`v0.4.2`. |
 | [`ANEMONE_PR2_PLAN.md`](ANEMONE_PR2_PLAN.md) | Canonical schema and ingestion shipped in `v0.4.0`. |
 | [`ANEMONE_PR3_PLAN.md`](ANEMONE_PR3_PLAN.md) | Retrieval and evidence navigation shipped in `v0.4.0`. |
@@ -57,7 +57,7 @@ These remain useful, but their dated sections must not be mistaken for current
 state:
 
 - [`ANEMONE_CLASSIFICATION_REVIEW.md`](ANEMONE_CLASSIFICATION_REVIEW.md) — active
-  review/runbook contract with `v0.4.0`–`v0.4.2` history at the top.
+  review/runbook contract with `v0.4.0`–`v0.4.3` history at the top.
 - [`deploy/gcp/ANEMONE_PILOT.md`](../deploy/gcp/ANEMONE_PILOT.md) — active bounded
   pilot runbook with completed rollout language and old-plan links.
 - [`TESTING.md`](TESTING.md) — active test instructions followed by dated release

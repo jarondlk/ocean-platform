@@ -1,29 +1,21 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-09-09 JST
+> **Last updated**: 2026-09-10 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform release `v0.4.2` is live on Cloud Run
-> service `ocean-platform`; revision `ocean-platform-00013-djj` receives 100%
-> traffic. PR1 deterministic no-evidence safety, PR2 authenticated
-> classification review,
-> PR3 read-only effect preview, and PR4 manual controlled
-> application/republication are merged, migrated through `20260905_0011`, and
-> deployed. The fixed Cloud Run workload identity is registered. The bounded
-> ANEMONE pilot remains `unknown`; no real review was approved or applied, and
-> administrator custom-domain logout/re-login and role access pass, while full
-> authenticated researcher scientific acceptance remains pending. Source `2731d46`
-> is tagged as `v0.4.2` and synchronized to `main`. See the
-> [v0.4.2 operations record](docs/RELEASE_0.4.2_OPERATIONS.md). The canonical
-> application URL is `https://oceaninfobio.com`; exclusion-reason
-> presentation is implemented and deployed in v0.4.2 from merged [PR #56](https://github.com/jarondlk/ocean-platform/pull/56).
-> The current engineering work queue is the ordered
-> [v0.4.3 plan](docs/RELEASE_0.4.3_PLAN.md). The
+> **Current status**: OCEAN Platform release `v0.4.3` is live on Cloud Run
+> service `ocean-platform`; revision `ocean-platform-v043-26094fc` receives
+> 100% traffic. PR #58 merged as
+> `26094fc2c1f1f9cad094c484aff4522ba738240f`; immutable build
+> `a8cac0c6-9ac2-49b4-bdc8-82c82089a0d2`, backup/restore, migration, operator
+> canaries, zero-traffic smoke tests, and cutover passed. The bounded ANEMONE
+> pilot remains `unknown`; no real review was approved or applied. See the
+> [v0.4.3 operations record](docs/RELEASE_0.4.3_OPERATIONS.md). The canonical
+> application URL is `https://oceaninfobio.com`.
+> Researcher-specific authenticated scientific acceptance, suspension and
+> uninvited-account identities, Billing-console owner confirmation, and the
+> longer observation window remain follow-ups. The
 > [documentation status register](docs/DOCUMENTATION_STATUS.md) identifies older
 > completed plans that remain only as historical records.
-> v0.4.3 PR1 classification integrity, PR2 controlled operational outcomes,
-> PR3 isolated hybrid retrieval, and PR4 shared scientific eligibility are
-> implemented and locally verified in candidate `545366d` on `gcp-dev`; they
-> are not yet PR-reviewed, merged, released, or deployed.
 
 ---
 
@@ -64,7 +56,7 @@ used only as historical reference and parity material.
 
 ## 2. What Changed Recently
 
-### v0.4.3 PR1–PR4 implemented locally (2026-09-09)
+### v0.4.3 released and deployed (2026-09-10)
 
 - Classification values use one strict tri-state contract; corrupt review
   lineage fails closed and reviewed `unknown` remains `null` through apply and
@@ -79,12 +71,17 @@ used only as historical reference and parity material.
 - A pure eDNA eligibility evaluator is shared by Data APIs and analysis.
   Sample, assay, detection, and analysis membership surfaces expose method-level
   eligibility and ordered exclusion reason codes.
-- Combined local verification passed 732 backend tests with 13 expected skips,
+- Combined verification passed 732 backend tests with 13 expected skips,
   13 tests against a fresh migrated PostgreSQL 16/pgvector database, 19
   frontend tests, and TypeScript checking. The disposable database was removed.
-- These changes are committed as `545366d` on `gcp-dev`; local CI-equivalent
-  checks and GitHub CI/CodeQL pass. PR review, merge, release, deployment, and
-  authenticated production acceptance remain pending.
+- PR #58 merged as `26094fc`; CI and CodeQL passed. Cloud Build
+  `a8cac0c6-9ac2-49b4-bdc8-82c82089a0d2` published immutable images, and
+  revision `ocean-platform-v043-26094fc` receives 100% traffic after a verified
+  backup/restore, migration, job canaries, and zero-traffic smoke test.
+- No real classification review or application was run. Researcher-specific
+  authenticated scientific acceptance and Billing-console owner confirmation
+  remain follow-ups; see the
+  [v0.4.3 operations record](docs/RELEASE_0.4.3_OPERATIONS.md).
 
 ### v0.4.2 released and deployed (2026-09-08)
 
@@ -1137,16 +1134,16 @@ Use this only to compare historical Streamlit behavior with the Next.js UI.
 
 ## 9. Testing and Verification
 
-The v0.4.2 release gate passed 690 backend tests with 12 expected service-gated
-skips and 78.27% coverage, all 12 fresh PostgreSQL integration tests through
+The v0.4.3 release gate passed 732 backend tests with 13 expected service-gated
+skips and 78.16% coverage, all 13 fresh PostgreSQL integration tests through
 schema head `20260905_0011`, 19 frontend tests, TypeScript checking, the
 24-route production build, Ruff, dependency checks, CodeQL, and a production
 npm audit with zero vulnerabilities. Deployment and monitoring evidence is in
-[`docs/RELEASE_0.4.2_OPERATIONS.md`](docs/RELEASE_0.4.2_OPERATIONS.md).
+[`docs/RELEASE_0.4.3_OPERATIONS.md`](docs/RELEASE_0.4.3_OPERATIONS.md).
 
 The v0.4.0 and v0.4.1 results below are retained as historical release evidence.
 Dependency and security maintenance, including the NLTK-free evaluator, is
-included in both the v0.4.1 and v0.4.2 deployed images. Recreate an older local
+included in the v0.4.1 and later deployed images. Recreate an older local
 `.venv` with `./scripts/bootstrap_dev.sh` so `snowballstemmer` is installed.
 
 The following table is retained as the historical v0.3.0 release validation:
@@ -1233,7 +1230,7 @@ git diff --check
 | Pipeline UI | Manual batch job controls, preflight checks, active/background job status, artifact freshness, per-stage logs, run history, manifests, and artifact diffs exist |
 | Database UI | Schema, table browsing, and read-only query surface exist |
 | Data exploration | Combined Explore corpus workbench plus combined Data domain workbench exist for expert browsing |
-| ANEMONE eDNA | One bounded unknown-classification pilot, separate assignment methods, exact source citations, descriptive analysis, registered publication, provenance, and direct exclusion reasons are deployed through v0.4.2 |
+| ANEMONE eDNA | One bounded unknown-classification pilot, separate assignment methods, exact source citations, descriptive analysis, registered publication, provenance, strict lineage, shared eligibility, and direct exclusion reasons are deployed through v0.4.3 |
 | System/debug | Status and debug surfaces exist |
 | Invite-only identity | OIDC, invitations, viewer/researcher/admin roles, suspension, audit events, and a production-forbidden development mock-login harness exist |
 | User feedback | Persisted chat interactions, feedback revisions, admin review/filter/export exist |
@@ -1261,7 +1258,7 @@ git diff --check
 | Managed OIDC deployment | Google OIDC is live and verified for the administrator and approved researcher; broader identity-provider recovery/MFA policy remains external to the application |
 | Evaluation execution | Serving instances deliberately reject in-process jobs; the UI start controls are not yet connected to the external Cloud Run evaluation job |
 | Security operations require repository settings | CodeQL and dependency automation exist; branch/environment protections, retention enforcement, cost review, and alerting still require operator review |
-| Historical milestone plans | `docs/PRE_MILESTONE_VALIDATION_PLAN.md`, `docs/PHASE7_RELEASE_RUNBOOK.md`, and `deploy/gcp/MIGRATION_PLAN.md` retain dated gates; current cloud evidence is in `docs/DEPLOYMENT.md` and `docs/RELEASE_0.4.2_OPERATIONS.md` |
+| Historical milestone plans | `docs/PRE_MILESTONE_VALIDATION_PLAN.md`, `docs/PHASE7_RELEASE_RUNBOOK.md`, `deploy/gcp/MIGRATION_PLAN.md`, and `docs/RELEASE_0.4.3_PLAN.md` retain dated gates; current cloud evidence is in `docs/DEPLOYMENT.md` and `docs/RELEASE_0.4.3_OPERATIONS.md` |
 | ANEMONE classification | The pilot remains unknown. Authenticated review/decision/audit persistence, read-only effect preview, and manual controlled end-to-end republication are deployed; a real decision and researcher acceptance remain |
 | Empty evidence cohorts | Deterministic pre-generation abstention and visible recipe filters are deployed; authenticated production scientific acceptance remains |
 
@@ -1269,24 +1266,19 @@ git diff --check
 
 ## 13. Recommended Next Work Order
 
-Current `gcp-dev` status (2026-09-09): v0.4.3 PR1–PR4 are implemented and
-locally verified in candidate `545366d`, but remain unreviewed, unmerged, and
-undeployed. The next step is one combined `gcp-dev` → `main` release PR
-containing four logical sections in dependency order, followed by the v0.4.3
-release gates in
-[`docs/RELEASE_0.4.3_PLAN.md`](docs/RELEASE_0.4.3_PLAN.md).
+Current status (2026-09-10): v0.4.3 is reviewed, built, migrated, deployed, and
+serving 100% traffic. The next work is acceptance and operating hardening, not
+additional v0.4.3 feature scope:
 
-1. Freeze the four logical sections, bump version metadata to `0.4.3`, and run
-   the full local and CI-equivalent checks, including coverage, dependency
-   audit, and CodeQL/security status.
-2. Complete the remaining custom-domain researcher-role, suspension, and
+1. Complete the remaining custom-domain researcher-role, suspension, and
    uninvited-account checks. Administrator logout/re-login, admin-route access,
    invitation-register access, and anonymous fail-closed behavior pass.
-3. Run the isolated researcher acceptance matrix plus controlled application
-   replay/rollback rehearsal without changing the real pilot classification.
-4. Complete the pre-deployment backup/restore, immutable candidate deployment,
-   authenticated smoke checks, traffic change, and v0.4.3 operations record.
-5. Continue scheduled-update, evaluation-job bridge, restore-drill, retention,
+2. Confirm current spend and budget alert thresholds in the Billing console,
+   then record the 24-hour and seven-day observation results.
+3. Review chat output-budget/partial-answer handling. The first broader v0.4.3
+   log sweep found one controlled `llm_request_failed` 502 when Vertex returned
+   `MAX_TOKENS`; the model canary otherwise passed.
+4. Continue scheduled-update, evaluation-job bridge, restore-drill, retention,
    cost-review, and legacy-resource retirement work under their existing
    approval boundaries.
 

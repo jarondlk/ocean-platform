@@ -2,8 +2,8 @@
 
 ## v0.4.3 PR1–PR4 combined local verification
 
-Candidate commit `545366d` on `gcp-dev` passed 732 backend tests with 13
-expected service-gated skips and 78.16% aggregate coverage on 2026-09-09. A
+Merged release commit `26094fc` passed 732 backend tests with 13 expected
+service-gated skips and 78.16% aggregate coverage on 2026-09-10. A
 fresh PostgreSQL 16/pgvector
 database was migrated through head `20260905_0011`; all 13 integration tests
 passed, including real vector-transaction failure with FTS recovery and real
@@ -17,9 +17,10 @@ weights, non-default `rrf_k`, total-backend failure, local/PostgreSQL fusion
 parity, deterministic ordering, and one database-availability resolution per
 request. PR4 regressions cover the classification/assay/protocol/method policy
 matrix, mixed availability, accumulated ordered reason codes, and exact shared
-evaluator-to-analysis membership parity. This is local evidence only; CI,
-review, production build, deployment, and authenticated acceptance remain
-release gates.
+evaluator-to-analysis membership parity. PR #58 review, post-merge CI, CodeQL,
+Cloud Build, backup/restore, migration, job canaries, and production rollout
+also passed. See [`RELEASE_0.4.3_OPERATIONS.md`](RELEASE_0.4.3_OPERATIONS.md).
+Researcher-specific authenticated scientific acceptance remains a follow-up.
 
 ## v0.4.3 PR1 local verification
 
