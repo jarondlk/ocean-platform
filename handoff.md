@@ -1275,7 +1275,10 @@ additional v0.4.3 feature scope:
    invitation-register access, and anonymous fail-closed behavior pass.
 2. Confirm current spend and budget alert thresholds in the Billing console,
    then record the 24-hour and seven-day observation results.
-3. Continue scheduled-update, evaluation-job bridge, restore-drill, retention,
+3. Review chat output-budget/partial-answer handling. The first broader v0.4.3
+   log sweep found one controlled `llm_request_failed` 502 when Vertex returned
+   `MAX_TOKENS`; the model canary otherwise passed.
+4. Continue scheduled-update, evaluation-job bridge, restore-drill, retention,
    cost-review, and legacy-resource retirement work under their existing
    approval boundaries.
 

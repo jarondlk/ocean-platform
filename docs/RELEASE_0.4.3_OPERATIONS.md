@@ -103,8 +103,8 @@ precision, source coverage, citation accuracy, and context utilization, with
 - Initial production requests returned the expected 200, 307, and fail-closed
   401 statuses. Successful request latency in the Cloud Run logs was
   approximately 8–26 ms after startup.
-- No HTTP 5xx or ERROR-level new-revision entries were observed in the
-  immediate post-cutover window.
+- No HTTP 5xx or ERROR-level new-revision entries were observed in the initial
+  post-cutover smoke window.
 - No Cloud SQL ERROR-level entries were observed after rollout. Successful
   migration and evaluation executions independently confirmed database and
   pgvector connectivity.
@@ -117,6 +117,19 @@ precision, source coverage, citation accuracy, and context utilization, with
   JPY 20,000 monthly ceiling therefore remains the governing limit, with a
   current-spend and budget-alert confirmation still required from the Billing
   console.
+
+A broader same-day sweep then covered 115 requests: 56 HTTP 200, 24 HTTP 302,
+29 HTTP 307, two expected anonymous HTTP 401 responses, three HTTP 404
+responses, and one HTTP 502. Mixed-route latency was 17.18 ms at p50, 10.70 s
+at p95, and 17.43 s maximum; this includes authenticated generation and
+redirect/cold-start traffic rather than only application handlers. The single
+502 was an authenticated `POST /api/backend/chat`: Vertex AI returned finish
+reason `MAX_TOKENS`, the API mapped it to the controlled
+`llm_request_failed` response, and the interaction was safely marked failed.
+The successful evaluation canary and absence of Cloud SQL errors rule out a
+general model or database outage. This does not require release rollback, but
+output-budget/partial-answer handling should be reviewed before treating long
+answers as fully reliable.
 
 ## Remaining acceptance
 
