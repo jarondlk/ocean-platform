@@ -147,6 +147,7 @@ from orchestration.evidence_availability import (
     resolve_abstention_reason,
 )
 from orchestration.unified import build_prompt_with_context, retrieve, retrieve_with_expansion
+from retrieval.contract import RetrievalBackendError
 from retrieval.local_retriever import LocalRetriever
 from ingestion.lineage import (
     build_document_trace,
@@ -175,7 +176,7 @@ async def _app_lifespan(_app: FastAPI):
 app = FastAPI(
     title="OCEAN Platform API",
     description="API layer for the Next.js migration of the provenance-aware marine RAG system.",
-    version="0.4.2",
+    version="0.4.3",
     lifespan=_app_lifespan,
 )
 
@@ -5082,33 +5083,42 @@ def documents(
 @app.post("/retrieve", response_model=RetrieveResponse)
 def retrieve_sources(request: RetrieveRequest) -> RetrieveResponse:
     request, analysis_members, analysis_methods = _resolve_analysis_request(request)
-    bundle = retrieve_with_expansion(
-        request.query,
-        k=request.k,
-        sample_ids=None if analysis_members is None else sorted(analysis_members),
-        assignment_methods=None if analysis_methods is None else sorted(analysis_methods),
-        source_type=request.source_type,
-        sample_id=request.sample_id,
-        bay=request.bay,
-        time_from=request.time_from,
-        time_to=request.time_to,
-        provider=request.provider,
-        provider_project_id=request.provider_project_id,
-        provider_run_id=request.provider_run_id,
-        assignment_method=request.assignment_method,
-        taxon=request.taxon,
-        sample_kind=request.sample_kind,
-        is_control=request.is_control,
-        lat_min=request.lat_min,
-        lat_max=request.lat_max,
-        lon_min=request.lon_min,
-        lon_max=request.lon_max,
-        vector_weight=request.vector_weight,
-        fts_weight=request.fts_weight,
-        rrf_k=request.rrf_k,
-        expand_evidence=request.expand_evidence,
-        max_linked_sources=request.max_linked_sources,
-    )
+    try:
+        bundle = retrieve_with_expansion(
+            request.query,
+            k=request.k,
+            sample_ids=None if analysis_members is None else sorted(analysis_members),
+            assignment_methods=None if analysis_methods is None else sorted(analysis_methods),
+            source_type=request.source_type,
+            sample_id=request.sample_id,
+            bay=request.bay,
+            time_from=request.time_from,
+            time_to=request.time_to,
+            provider=request.provider,
+            provider_project_id=request.provider_project_id,
+            provider_run_id=request.provider_run_id,
+            assignment_method=request.assignment_method,
+            taxon=request.taxon,
+            sample_kind=request.sample_kind,
+            is_control=request.is_control,
+            lat_min=request.lat_min,
+            lat_max=request.lat_max,
+            lon_min=request.lon_min,
+            lon_max=request.lon_max,
+            vector_weight=request.vector_weight,
+            fts_weight=request.fts_weight,
+            rrf_k=request.rrf_k,
+            expand_evidence=request.expand_evidence,
+            max_linked_sources=request.max_linked_sources,
+        )
+    except RetrievalBackendError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail={
+                "code": "retrieval_backends_failed",
+                "message": "No configured retrieval backend completed the request",
+            },
+        ) from exc
     primary_rows = bundle.get("primary") or []
     linked_rows = bundle.get("linked") or []
     if analysis_members is not None:
@@ -5398,6 +5408,25 @@ def chat(
             abstention_reason=None,
             model_invoked=True,
         )
+    except RetrievalBackendError as exc:
+        _mark_chat_failed_safely(
+            interaction_id=interaction_id,
+            user=user,
+            error_code="retrieval_backends_failed",
+            started_at=started_at,
+        )
+        raise HTTPException(
+            status_code=503,
+            detail={
+                "code": "retrieval_backends_failed",
+                "message": "No configured retrieval backend completed the request",
+                **(
+                    {"interaction_id": str(interaction_id)}
+                    if interaction_id is not None
+                    else {}
+                ),
+            },
+        ) from exc
     except HTTPException:
         raise
     except Exception as exc:

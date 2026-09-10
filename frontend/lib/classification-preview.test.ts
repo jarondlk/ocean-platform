@@ -42,6 +42,7 @@ const preview = {
       assay_id: "b".repeat(64),
       assignment_method: "qcauto_target",
       status: "included",
+      exclusion_reasons: [],
       source_detection_count: 2,
       retained_detection_count: 1,
       excluded_detection_count: 1,
@@ -64,6 +65,7 @@ test("classification preview rows preserve scenario and scientific values", () =
   assert.equal(rows.length, 1);
   assert.equal(rows[0].scenario, "Proposed");
   assert.equal(rows[0].retained_reads, 3);
+  assert.equal(rows[0].reason, undefined);
   assert.deepEqual(rows[0].top_taxa, [
     { taxon: "Beta", read_count: 3, read_proportion: 1 },
   ]);

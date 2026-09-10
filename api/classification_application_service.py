@@ -1,7 +1,6 @@
 """Durable, resumable execution ledger for approved classification reviews."""
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import re
@@ -15,22 +14,33 @@ from sqlalchemy.orm import Session
 
 import config
 from api.auth import CurrentUser, ROLE_PERMISSIONS
+from api.classification_operational_contract import (
+    OperationalContractError,
+    application_event_sha256,
+    operational_receipt_details,
+)
 from api.classification_review_service import (
     ClassificationReviewDomainError,
     _actor_identity,
+    _append_event as _append_review_event,
+    _database_review_artifact_payload,
     _load_review,
     _require_actor,
-    record_application,
     review_response,
     validate_current_evidence,
     validate_evidence_rows,
 )
-from api.schemas import ClassificationReviewApplicationRequest
 from db.app_models import (
     AppUser,
     ClassificationApplication,
     ClassificationApplicationEvent,
     ClassificationReview,
+)
+from preprocessing.anemone_classification import (
+    ReviewError,
+    canonical_sha256,
+    sample_kind_control_status,
+    validate_sample_review_lineage,
 )
 
 
@@ -45,6 +55,7 @@ APPLICATION_STAGES = (
     "finalize",
 )
 OPERATION_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$")
+ERROR_CODE_PATTERN = re.compile(r"^[a-z0-9][a-z0-9_.-]{0,63}$")
 RECOVERY = {
     "register_review": ["Verify the approved review and immutable artifact store, then replay the same operation ID."],
     "normalize": ["Verify the raw artifact registration and snapshot evidence, then replay the same operation ID."],
@@ -72,27 +83,27 @@ def _canonical(value: Any) -> bytes:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), default=str).encode()
 
 
-def _digest(value: Any) -> str:
-    return hashlib.sha256(_canonical(value)).hexdigest()
+def _review_artifact_sha256(
+    session: Session,
+    review: ClassificationReview,
+    *,
+    approved_version: int,
+) -> str:
+    try:
+        artifact = _database_review_artifact_payload(
+            session,
+            review,
+            approved_version=approved_version,
+        )
+    except ClassificationReviewDomainError as exc:
+        _fail(exc.code, exc.detail)
+    return canonical_sha256(artifact)
 
 
 def _utc_iso(value: datetime) -> str:
     if value.tzinfo is None:
         value = value.replace(tzinfo=timezone.utc)
     return value.astimezone(timezone.utc).isoformat()
-
-
-def _event_payload(event: ClassificationApplicationEvent) -> dict[str, Any]:
-    return {
-        "application_id": str(event.application_id),
-        "sequence": event.sequence,
-        "event_type": event.event_type,
-        "stage": event.stage,
-        "occurred_at": _utc_iso(event.occurred_at),
-        "result": event.result_json,
-        "error_code": event.error_code,
-        "recovery": event.recovery_json,
-    }
 
 
 def _application_contract(application: ClassificationApplication) -> dict[str, Any]:
@@ -159,7 +170,7 @@ def _append_event(
         recovery_json=list(recovery or []),
         event_sha256="0" * 64,
     )
-    event.event_sha256 = _digest(_event_payload(event))
+    event.event_sha256 = application_event_sha256(event)
     session.add(event)
     session.flush()
     return event
@@ -178,7 +189,7 @@ def _events(
     )
     if not events or [row.sequence for row in events] != list(range(1, len(events) + 1)):
         _fail("application_history_invalid", "Application event history is incomplete")
-    if any(row.event_sha256 != _digest(_event_payload(row)) for row in events):
+    if any(row.event_sha256 != application_event_sha256(row) for row in events):
         _fail("application_history_invalid", "Application event history failed integrity validation")
     if events[0].event_type != "run_started" or events[0].result_json != _application_contract(
         application
@@ -199,6 +210,19 @@ def _events(
         expected = "run_applied" if application.status == "applied" else "run_rolled_back"
         if completed != list(APPLICATION_STAGES) or events[-1].event_type != expected:
             _fail("application_history_invalid", "Application completion receipt is invalid")
+    if application.status == "failed":
+        if (
+            len(events) < 2
+            or events[-2].event_type != "stage_failed"
+            or events[-1].event_type != "run_failed"
+            or events[-2].stage != application.current_stage
+            or events[-1].stage != application.current_stage
+            or events[-2].error_code != application.error_code
+            or events[-1].error_code != application.error_code
+            or events[-2].recovery_json != application.recovery_json
+            or events[-1].recovery_json != application.recovery_json
+        ):
+            _fail("application_history_invalid", "Application failure receipt is invalid")
     return events
 
 
@@ -242,6 +266,83 @@ def _review_for_application(
     return review
 
 
+def _require_application_actor(
+    session: Session,
+    application: ClassificationApplication,
+    actor: CurrentUser,
+) -> None:
+    _require_actor(session, actor, role="admin", permission="classification:apply")
+    if (
+        actor.id != application.actor_user_id
+        or _actor_identity(actor) != application.actor_identity_json
+    ):
+        _fail(
+            "operation_actor_conflict",
+            "The application is registered to another workload identity",
+        )
+
+
+def _record_operational_outcome(
+    session: Session,
+    application: ClassificationApplication,
+    terminal_event: ClassificationApplicationEvent,
+    actor: CurrentUser,
+) -> ClassificationReview:
+    """Atomically bind a terminal review transition to a verified ledger event."""
+    _require_application_actor(session, application, actor)
+    review = _review_for_application(session, application)
+    outcome = "failed" if terminal_event.event_type == "run_failed" else "applied"
+    if terminal_event.application_id != application.id:
+        _fail("operational_receipt_invalid", "Terminal receipt belongs to another application")
+    events = _events(session, application)
+    if not events or events[-1].id != terminal_event.id:
+        _fail("operational_receipt_invalid", "Terminal receipt is not the latest ledger event")
+    expected_status = (
+        "failed"
+        if outcome == "failed"
+        else "rolled_back" if terminal_event.event_type == "run_rolled_back" else "applied"
+    )
+    if application.status != expected_status:
+        _fail("operational_receipt_invalid", "Terminal receipt does not match application state")
+    if outcome == "failed" and review.state == "applied":
+        _fail("stale_approval", "An applied review cannot be replaced by a failure receipt")
+    if review.state not in {"approved", "failed"}:
+        _fail("stale_approval", "Review is not eligible for an operational outcome")
+    expected_review_version = review.version
+    try:
+        details = operational_receipt_details(
+            application,
+            terminal_event,
+            expected_review_version=expected_review_version,
+        )
+    except OperationalContractError as exc:
+        _fail("operational_receipt_invalid", str(exc))
+    now = datetime.now(timezone.utc)
+    from_state = review.state
+    review.state = outcome
+    review.operational_actor_user_id = actor.id
+    review.operational_at = now
+    review.application_reference = application.operation_id
+    review.failure_code = terminal_event.error_code if outcome == "failed" else None
+    review.failure_detail = (
+        f"Controlled application stopped at {terminal_event.stage}."
+        if outcome == "failed"
+        else None
+    )
+    review.version += 1
+    _append_review_event(
+        session,
+        review=review,
+        actor=actor,
+        event_type=outcome,
+        from_state=from_state,
+        occurred_at=now,
+        details=details,
+    )
+    session.flush()
+    return review
+
+
 def _validate_application_sample(
     session: Session,
     review: ClassificationReview,
@@ -254,14 +355,24 @@ def _validate_application_sample(
     if sample is None or not sample.active or sample.source_snapshot_id != review.source_snapshot_id:
         _fail("stale_approval", "The active canonical sample no longer matches the review snapshot")
     try:
-        applied = json.loads(sample.classification_review_json or "null")
-    except json.JSONDecodeError:
-        applied = None
-    decision = applied.get("decision") if isinstance(applied, dict) else None
+        applied = validate_sample_review_lineage(
+            sample.classification_review_json,
+            sample_kind=sample.sample_kind,
+            is_control=sample.is_control,
+            classification_basis=sample.classification_basis,
+            source_snapshot_id=sample.source_snapshot_id,
+            provider_sample_id=sample.provider_sample_id,
+        )
+    except ReviewError:
+        _fail(
+            "canonical_lineage_corrupt",
+            "Canonical classification lineage is invalid",
+        )
+    decision = applied["decision"] if applied is not None else None
     if (
         sample.sample_kind == "unknown"
         and sample.is_control is None
-        and not isinstance(decision, dict)
+        and decision is None
     ):
         validate_current_evidence(
             session,
@@ -270,14 +381,16 @@ def _validate_application_sample(
             evidence=review.evidence_json,
         )
         return
-    expected_control = None if review.sample_kind == "unknown" else review.sample_kind != "environmental"
-    applied_review_id = decision.get("review_id") if isinstance(decision, dict) else None
+    try:
+        expected_control = sample_kind_control_status(review.sample_kind)
+    except ReviewError:
+        _fail("stale_approval", "The approved review sample kind is invalid")
+    applied_review_id = decision.get("review_id") if decision is not None else None
     predecessor = None
     if review.supersedes_review_id:
-        predecessor = session.get(ClassificationReview, review.supersedes_review_id)
+        predecessor = _load_review(session, review.supersedes_review_id)
         if (
-            predecessor is None
-            or predecessor.sample_id != review.sample_id
+            predecessor.sample_id != review.sample_id
             or predecessor.source_snapshot_id != review.source_snapshot_id
         ):
             _fail("canonical_application_mismatch", "Superseded classification provenance is unavailable")
@@ -287,13 +400,29 @@ def _validate_application_sample(
             and sample.is_control is expected_control
             and decision.get("review_version") == approved_version
             and decision.get("review_content_sha256") == review.content_sha256
+            and applied["review_sha256"] == _review_artifact_sha256(
+                session,
+                review,
+                approved_version=approved_version,
+            )
         )
     else:
-        exact_decision = predecessor is not None and applied_review_id == str(predecessor.id)
+        exact_decision = (
+            predecessor is not None
+            and applied_review_id == str(predecessor.id)
+            and sample.sample_kind == predecessor.sample_kind
+            and sample.is_control is sample_kind_control_status(predecessor.sample_kind)
+            and decision.get("review_content_sha256") == predecessor.content_sha256
+            and applied["review_sha256"] == _review_artifact_sha256(
+                session,
+                predecessor,
+                approved_version=decision["review_version"],
+            )
+        )
     if (
         sample.provider != "anemone"
-        or not isinstance(applied, dict)
-        or not isinstance(decision, dict)
+        or applied is None
+        or decision is None
         or not exact_decision
     ):
         _fail("canonical_application_mismatch", "Canonical classification does not match the approved review")
@@ -338,36 +467,20 @@ def database_review_artifact(
     response = review_response(session, review)
     if response.state not in {"approved", "failed"}:
         _fail("stale_approval", "Only an approved scientific decision can be registered")
-    decided_by = session.get(AppUser, review.scientific_decided_by_user_id)
-    if decided_by is None or review.scientific_decided_at is None:
-        _fail("review_identity_missing", "The scientific decision identity is unavailable")
-    return {
-        "schema_version": 1,
-        "status": "approved",
-        "source_snapshot_id": review.source_snapshot_id,
-        "decisions": [
-            {
-                "provider_sample_id": review.provider_sample_id,
-                "sample_kind": review.sample_kind,
-                "review_id": str(review.id),
-                "review_version": approved_version or review.version,
-                "review_content_sha256": review.content_sha256,
-                "reviewer": decided_by.display_name or decided_by.email,
-                "reviewed_at": _utc_iso(review.scientific_decided_at),
-                "rationale": review.rationale,
-                "evidence": [
-                    {
-                        "source_role": row["source_role"],
-                        "source_sha256": row["source_sha256"],
-                        "row_number": row["row_number"],
-                        "key": row["key"],
-                        "value": row["value"],
-                    }
-                    for row in review.evidence_json
-                ],
-            }
-        ],
-    }
+    scientific_version = next(
+        (event.sequence for event in response.events if event.event_type == "approved"),
+        None,
+    )
+    if scientific_version is None:
+        _fail("review_identity_missing", "The scientific approval event is unavailable")
+    try:
+        return _database_review_artifact_payload(
+            session,
+            review,
+            approved_version=approved_version or scientific_version,
+        )
+    except ClassificationReviewDomainError as exc:
+        _fail(exc.code, exc.detail)
 
 
 def begin_application(
@@ -390,8 +503,7 @@ def begin_application(
         _events(session, existing)
         if existing.review_id != review_id or existing.rollback_of_application_id != rollback_of_application_id:
             _fail("operation_identity_conflict", "Operation ID is registered to different inputs")
-        if existing.actor_user_id != actor.id:
-            _fail("operation_actor_conflict", "Operation ID is registered to another workload identity")
+        _require_application_actor(session, existing, actor)
         if existing.status in {"applied", "rolled_back"}:
             return existing
         _review_for_application(session, existing)
@@ -404,9 +516,15 @@ def begin_application(
         return existing
 
     review = _load_review(session, review_id, lock=True)
-    review_response(session, review)
+    response = review_response(session, review)
     if review.state not in {"approved", "failed"}:
         _fail("stale_approval", "Only an approved review can start an application")
+    scientific_version = next(
+        (event.sequence for event in response.events if event.event_type == "approved"),
+        None,
+    )
+    if scientific_version is None:
+        _fail("review_identity_missing", "The scientific approval event is unavailable")
     validate_current_evidence(
         session,
         source_snapshot_id=review.source_snapshot_id,
@@ -425,7 +543,7 @@ def begin_application(
         id=uuid.uuid4(),
         operation_id=operation_id,
         review_id=review.id,
-        review_version=review.version,
+        review_version=scientific_version,
         review_content_sha256=review.content_sha256,
         source_snapshot_id=review.source_snapshot_id,
         sample_id=review.sample_id,
@@ -522,19 +640,17 @@ def finalize_application(
     actor: CurrentUser,
 ) -> ClassificationApplication:
     application = _load_application(session, application_id, lock=True)
+    _require_application_actor(session, application, actor)
     review = _review_for_application(session, application)
-    if review.state != "applied":
-        record_application(
-            session,
-            review_id=review.id,
-            request=ClassificationReviewApplicationRequest(
-                expected_version=review.version,
-                outcome="applied",
-                application_reference=application.operation_id,
-            ),
-            actor=actor,
-            canonical_applied=True,
-        )
+    if application.status in {"applied", "rolled_back"}:
+        if (
+            review.state != "applied"
+            or review.application_reference != application.operation_id
+        ):
+            _fail("operational_receipt_invalid", "Completed application has no matching review receipt")
+        return application
+    if application.status != "running":
+        _fail("application_not_running", "Resume a failed application before finalizing it")
     complete_stage(
         session,
         application.id,
@@ -547,11 +663,13 @@ def finalize_application(
     application.current_stage = None
     application.error_code = None
     application.recovery_json = []
-    _append_event(
+    terminal_event = _append_event(
         session,
         application,
         event_type="run_rolled_back" if application.mode == "rollback" else "run_applied",
+        result=dict(application.results_json.get("finalize") or {}),
     )
+    _record_operational_outcome(session, application, terminal_event, actor)
     return application
 
 
@@ -563,32 +681,52 @@ def fail_application(
     error_code: str,
     actor: CurrentUser,
 ) -> ClassificationApplication:
+    if stage not in APPLICATION_STAGES:
+        _fail("invalid_application_stage", "Unknown classification application stage")
+    if not ERROR_CODE_PATTERN.fullmatch(error_code):
+        _fail("invalid_error_code", "Application error code is invalid")
     application = _load_application(session, application_id, lock=True)
+    _require_application_actor(session, application, actor)
+    review = _review_for_application(session, application)
+    if application.status in {"applied", "rolled_back"} or review.state == "applied":
+        _fail("application_already_completed", "A completed application cannot fail")
+    if application.status == "failed":
+        if application.current_stage == stage and application.error_code == error_code:
+            if (
+                review.state != "failed"
+                or review.application_reference != application.operation_id
+            ):
+                _fail("operational_receipt_invalid", "Failed application has no matching review receipt")
+            return application
+        _fail("application_replay_conflict", "Replayed failure does not match its receipt")
+    if application.status != "running" or application.current_stage != stage:
+        _fail("application_stage_order", "Only the active application stage can fail")
     recovery = RECOVERY.get(stage, ["Inspect the application record and replay the same operation ID."])
     application.status = "failed"
     application.current_stage = stage
     application.error_code = error_code
     application.recovery_json = recovery
     application.finished_at = datetime.now(timezone.utc)
-    _append_event(session, application, event_type="stage_failed", stage=stage, error_code=error_code, recovery=recovery)
-    _append_event(session, application, event_type="run_failed", stage=stage, error_code=error_code, recovery=recovery)
-    try:
-        review = _review_for_application(session, application)
-        if review.state != "applied":
-            record_application(
-                session,
-                review_id=review.id,
-                request=ClassificationReviewApplicationRequest(
-                    expected_version=review.version,
-                    outcome="failed",
-                    application_reference=application.operation_id,
-                    failure_code=error_code,
-                    failure_detail=f"Controlled application stopped at {stage}.",
-                ),
-                actor=actor,
-            )
-    except (ClassificationApplicationError, ClassificationReviewDomainError):
-        pass
+    stage_result = dict(application.results_json.get(stage) or {})
+    _append_event(
+        session,
+        application,
+        event_type="stage_failed",
+        stage=stage,
+        result=stage_result,
+        error_code=error_code,
+        recovery=recovery,
+    )
+    terminal_event = _append_event(
+        session,
+        application,
+        event_type="run_failed",
+        stage=stage,
+        result=stage_result,
+        error_code=error_code,
+        recovery=recovery,
+    )
+    _record_operational_outcome(session, application, terminal_event, actor)
     return application
 
 

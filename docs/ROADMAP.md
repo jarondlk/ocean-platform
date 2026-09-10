@@ -46,6 +46,21 @@ workflow that can later become automated.
 - The README screenshot set was refreshed from the authenticated OCEAN
   Platform Cloud Run deployment on 2026-08-25.
 
+## Current MVP hardening: v0.4.3
+
+The ordered implementation plan is
+[`RELEASE_0.4.3_PLAN.md`](RELEASE_0.4.3_PLAN.md). It covers:
+
+1. classification tri-state validation and corrupt-lineage fail-closed handling;
+2. controlled operational application/failure events;
+3. hybrid retrieval transaction isolation and request-contract consistency; and
+4. one shared scientific-eligibility contract for Data and analysis.
+
+The pilot remains scientifically `unknown`. All four PR scopes are implemented
+and locally verified on the uncommitted `gcp-dev` worktree. Commit and review
+them in order, then complete the combined release gate before tagging or
+deploying `v0.4.3`.
+
 ## Completed MVP: ANEMONE eDNA Integration
 
 Released as `v0.4.0`: ANEMONE MiFish environmental-DNA metabarcoding

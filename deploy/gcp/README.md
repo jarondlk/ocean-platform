@@ -6,8 +6,12 @@ running a guarded script is always an explicit operator action; repository
 checkout, rendering, tests, and Cloud Build do not provision runtime resources
 automatically.
 
-Follow [`MIGRATION_PLAN.md`](MIGRATION_PLAN.md) for the phased deployment order,
-integration gates, historical per-component budgets and technical cost ceilings.
+[`MIGRATION_PLAN.md`](MIGRATION_PLAN.md) is the historical initial-migration
+record; retain its dated resource evidence and cost-control rationale, but do
+not treat it as the current release order. Use
+[`../../docs/DEPLOYMENT.md`](../../docs/DEPLOYMENT.md) and the current
+[`v0.4.3` plan](../../docs/RELEASE_0.4.3_PLAN.md) for present operations and
+release gates.
 The user confirmed a **JPY 20,000 total monthly project ceiling on 2026-09-03**;
 this does not automatically raise the earlier JPY 10,000 alert or component
 limits. Current spend and live settings still need verification before paid

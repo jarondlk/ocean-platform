@@ -12,6 +12,7 @@ import logging
 from typing import Any, Dict, List, Optional, Set
 
 import config
+from db.connection import get_engine
 from model_runtime import get_model_runtime
 from orchestration.evidence_availability import abstention_message, has_usable_evidence
 from orchestration.prompt_safety import bound_prompt_section, safe_prompt_text
@@ -102,9 +103,8 @@ SOURCE_TYPE_ALIASES = {
 def _pg_available() -> bool:
     """Check if PostgreSQL is reachable."""
     try:
-        from sqlalchemy import create_engine, text
-        engine = create_engine(config.DATABASE_URL, pool_pre_ping=True)
-        with engine.connect() as conn:
+        from sqlalchemy import text
+        with get_engine().connect() as conn:
             conn.execute(text("SELECT 1"))
         return True
     except Exception:
@@ -136,13 +136,20 @@ def retrieve(
     vector_weight: float = 0.6,
     fts_weight: float = 0.4,
     rrf_k: int = 60,
+    pg_available: Optional[bool] = None,
 ) -> List[dict]:
     """
     Retrieve relevant documents using the best available backend.
     """
+    from retrieval.contract import normalized_weights, validate_rrf_k
+
+    vector_weight, fts_weight = normalized_weights(vector_weight, fts_weight)
+    rrf_k = validate_rrf_k(rrf_k)
     if source_type:
         source_type = _normalize_source_type(source_type)
-    if _pg_available():
+    if pg_available is None:
+        pg_available = _pg_available()
+    if pg_available:
         logger.info("Using PostgreSQL hybrid retriever")
         from retrieval.hybrid_retriever import hybrid_search
         results = hybrid_search(
@@ -194,6 +201,8 @@ def retrieve(
             assignment_method=assignment_method, taxon=taxon,
             sample_kind=sample_kind, is_control=is_control,
             lat_min=lat_min, lat_max=lat_max, lon_min=lon_min, lon_max=lon_max,
+            vector_weight=vector_weight, fts_weight=fts_weight,
+            rrf_k=rrf_k,
         )
 
 
@@ -451,6 +460,7 @@ def retrieve_with_expansion(
     expand_evidence: bool = True,
     max_linked_sources: int = 5,
 ) -> Dict[str, Any]:
+    pg_available = _pg_available()
     primary = _mark_primary_results(retrieve(
         query,
         k=k,
@@ -475,11 +485,10 @@ def retrieve_with_expansion(
         vector_weight=vector_weight,
         fts_weight=fts_weight,
         rrf_k=rrf_k,
+        pg_available=pg_available,
     ))
     linked: List[dict] = []
     expansion_error: Optional[str] = None
-    pg_available = _pg_available()
-
     if sample_ids is not None or assignment_methods is not None:
         expand_evidence = False
     if expand_evidence and max_linked_sources > 0 and pg_available:

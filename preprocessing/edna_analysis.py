@@ -7,6 +7,7 @@ import platform
 from importlib.metadata import version
 
 from ingestion.immutable_bundle import canonical_bytes, digest
+from preprocessing.edna_eligibility import evaluate_analysis_eligibility
 from preprocessing.edna_recipe import AnalysisRecipe, METHODS
 from schema.time_range import matches_time
 
@@ -163,31 +164,68 @@ def build_analysis(recipe: AnalysisRecipe, source: dict, environment=None):
     detections = defaultdict(list)
     for d in inputs['edna_detection']:
         detections[(d['assay_id'], d['assignment_method'])].append(d)
+    assays_by_sample = defaultdict(list)
+    method_availability = defaultdict(set)
+    for assay in assays.values():
+        assays_by_sample[assay['sample_id']].append(assay)
+    for assay_id, assignment_method in detections:
+        if detections[(assay_id, assignment_method)]:
+            method_availability[assay_id].add(assignment_method)
+    eligibility = {
+        sample_id: evaluate_analysis_eligibility(
+            sample,
+            assays_by_sample.get(sample_id, []),
+            method_availability,
+            recipe.assignment_methods,
+        )
+        for sample_id, sample in samples.items()
+    }
+    method_eligibility = {
+        (row['assay_id'], row['assignment_method']): row
+        for result in eligibility.values()
+        for row in result['method_eligibility']
+        if row['assay_id'] is not None
+    }
     sites = {s.sample_id: s for s in recipe.sites}
     tables = {name: [] for name in ('membership', 'composition', 'diversity', 'turnover', 'exclusions', 'methods', 'method_summary')}
     vectors, partitions, common_by_key = {}, defaultdict(list), {}
     all_taxa = set()
     for sid, sample in sorted(samples.items()):
-        if not any(a['sample_id'] == sid for a in assays.values()):
-            tables['membership'].append(dict(sample_id=sid, status='sample_excluded', reason='no_active_assay'))
+        if not assays_by_sample.get(sid):
+            for row in eligibility[sid]['method_eligibility']:
+                tables['membership'].append({
+                    **row,
+                    'status': 'sample_excluded',
+                    'reason': row['exclusion_reasons'][0],
+                    'sample_kind': sample.get('sample_kind'),
+                    'is_control': sample.get('is_control'),
+                })
     for aid, assay in sorted(assays.items()):
         sample = samples[assay['sample_id']]
-        environmental = sample.get('sample_kind') == 'environmental' and sample.get('is_control') is False
         p = protocol(assay)
-        comparable = all(p.get(k) for k in ('target_gene', 'primer_set', 'sequencing_method'))
         for method in recipe.assignment_methods:
             rows = detections.get((aid, method), [])
+            eligibility_row = method_eligibility[(aid, method)]
             common = dict(sample_id=sample['sample_id'], assay_id=aid, assignment_method=method, rank=recipe.rank,
                           provider=sample['provider'], provider_project_id=sample['provider_project_id'],
                           provider_run_id=sample['provider_run_id'], sample_kind=sample.get('sample_kind'),
                           is_control=sample.get('is_control'), collection_date_utc=sample.get('collection_date_utc'),
                           temporal_precision=sample.get('temporal_precision'), lat=sample.get('lat'), lon=sample.get('lon'))
-            status = 'included' if environmental and rows and comparable else 'sample_excluded'
-            reason = (None if status == 'included' else 'control_or_unknown' if not environmental
-                      else 'method_unavailable' if not rows else 'protocol_incomplete')
+            exclusion_reasons = eligibility_row['exclusion_reasons']
+            analysis_eligibility = eligibility_row['analysis_eligibility']
+            status = 'included' if analysis_eligibility == 'included' else 'sample_excluded'
+            reason = exclusion_reasons[0] if exclusion_reasons else None
             partition = digest([sample['provider'], sample['provider_project_id'], sample['provider_run_id'], p, method, recipe.rank])
             common['partition_id'] = partition
-            tables['membership'].append({**common, 'status': status, 'reason': reason, 'protocol': p, 'detection_count': len(rows)})
+            tables['membership'].append({
+                **common,
+                'status': status,
+                'reason': reason,
+                'analysis_eligibility': analysis_eligibility,
+                'exclusion_reasons': exclusion_reasons,
+                'protocol': p,
+                'detection_count': len(rows),
+            })
             counts, contributing = defaultdict(int), defaultdict(list)
             excluded_reads = 0
             for row in rows:

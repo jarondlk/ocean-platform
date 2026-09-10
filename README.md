@@ -21,13 +21,13 @@ and can be audited against the evidence that was actually supplied.
 
 The bounded ANEMONE pilot retains its provider-supplied location and collection
 metadata. It is not assigned to one of these monitoring bays by inference, and
-its sample classification remains unknown in `v0.4.2`.
+its sample classification remains unknown in the current release line.
 
 ---
 
 ## Current Prototype Status
 
-Status as of **2026-09-08**: this is an active invite-only **Next.js +
+Status as of **2026-09-09**: this is an active invite-only **Next.js +
 FastAPI** prototype deployed on GCP, with PostgreSQL/pgvector retrieval,
 Vertex AI generation and embeddings, Google OIDC, and Cloud Run Jobs for
 operator-approved batch work. The same application remains runnable locally
@@ -36,6 +36,12 @@ historical reference; new product work happens in the Next.js UI and FastAPI
 service.
 
 Current managed milestone:
+
+- `v0.4.3` is the current release candidate on `gcp-dev`. Its classification
+  integrity, controlled operational outcomes, retrieval isolation, and shared
+  scientific eligibility changes are locally verified but not yet released or
+  deployed. The release gate is documented in
+  [`docs/RELEASE_0.4.3_PLAN.md`](docs/RELEASE_0.4.3_PLAN.md).
 
 - GitHub release [`v0.4.2`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.2)
   adds direct environmental-eligibility and exclusion-reason presentation to
@@ -77,8 +83,9 @@ Implemented in the current prototype:
 - A bounded ANEMONE MiFish evidence path with separate QCauto and QCauto+3-NN
   assignments, exact source-row citations, method-separated retrieval, and
   explicit exclusion of unknown/control samples from environmental-only work.
-- Hybrid retrieval over pgvector + PostgreSQL full-text search with local
-  fallback retrieval when PostgreSQL is unavailable.
+- Hybrid retrieval over pgvector + PostgreSQL full-text search with isolated
+  branch transactions, deterministic RRF, explicit total-backend failure, and
+  a contract-compatible local fallback when PostgreSQL is unavailable.
 - Trustworthy multi-source answering with linked cross-source evidence,
   analysis/reliability context injection, Markdown answer rendering, and a
   deterministic Answer Trust Report / Citation Audit.
@@ -86,6 +93,9 @@ Implemented in the current prototype:
   filters, with a recorded outcome/reason and an explicit model-run indicator.
 - Explicit eDNA publication state in corpus statistics and system status;
   pending eDNA publication retains available legacy retrieval and metrics.
+- Shared eDNA scientific eligibility across Data and analysis, including
+  method-level status and stable reasons for classification, assay, protocol,
+  or assignment-method exclusion.
 - Validated citation deep links from chat evidence into exact provenance,
   sample, CTD, taxa, SST, derived-analysis, and reliability views.
 - Evaluation run management for standard and ablation runs, saved run browsing,
@@ -129,6 +139,10 @@ Documentation map:
 
 - `README.md` is the current public project guide and screenshot source.
 - `handoff.md` is the operator/developer handoff for resuming work.
+- `docs/RELEASE_0.4.3_PLAN.md` is the current ordered implementation and release
+  plan.
+- `docs/DOCUMENTATION_STATUS.md` identifies superseded plans and separates them
+  from retained historical evidence.
 - `docs/ROADMAP.md` tracks completed and planned engineering work.
 - `docs/SECURITY.md` defines the authorization and application-security model.
 - `docs/DEPLOYMENT.md` covers the supported production topology and operations.
@@ -469,8 +483,10 @@ FastAPI service:
 | `/pipeline`, `/database`, `/system`, `/debug` | Compatibility redirects into the corresponding Admin section |
 
 The backend also exposes authenticated `/classification-reviews` endpoints.
-Researchers can draft and decide evidence-bound ANEMONE classifications; admins
-can record operational application outcomes. The selected eDNA sample view can
+Researchers can draft and decide evidence-bound ANEMONE classifications.
+Operational outcomes have no public mutation endpoint: the manually launched
+Cloud Run processing job records them from its verified application ledger and
+fixed workload identity. The selected eDNA sample view can
 preview current versus proposed analysis effects without changing canonical or
 published data. The existing Cloud Run processing job can manually consume an
 approved review ID and republish the affected canonical/retrieval/analysis/

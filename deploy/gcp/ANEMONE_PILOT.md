@@ -5,17 +5,18 @@ and remains deployed in `v0.4.2`. The authenticated classification workflow was
 added in `v0.4.1`, but no real scientific decision has been approved or applied;
 full researcher acceptance remains pending. See the
 [v0.4.2 operations record](../../docs/RELEASE_0.4.2_OPERATIONS.md) and use this
-runbook with [`docs/ANEMONE_PR5_PLAN.md`](../../docs/ANEMONE_PR5_PLAN.md). This
-runbook does not approve a download, paid execution, migration, deployment, or
-release.
+runbook with the current
+[`v0.4.3` plan](../../docs/RELEASE_0.4.3_PLAN.md). The former PR5 and
+next-patch plans are retained only as implementation history. This runbook does
+not approve a download, paid execution, migration, deployment, or release.
 
-Release scope update, 2026-09-03: the user approved keeping classification
-unknown for `v0.4.0` and completing the workflow in the
-[next patch](../../docs/ANEMONE_NEXT_PATCH.md). For this release, validate
-retained source evidence, citations and explicit unknown-sample exclusions.
-The full classified environmental/model-answer acceptance described below is
-deferred, not passed. Backup, migrations, authorization, artifact integrity,
-cost bounds and deployment verification still apply.
+Historical release scope, 2026-09-03: the user approved keeping classification
+unknown for `v0.4.0`; the controlled workflow later shipped without changing
+that classification. Retained source evidence, citations, and explicit
+unknown-sample exclusions remain the valid pilot boundary. The full classified
+environmental/model-answer acceptance described below is deferred, not passed.
+Backup, migrations, authorization, artifact integrity, cost bounds, and
+deployment verification still apply.
 
 The first bounded real-data local canary is recorded in
 [`../../docs/ANEMONE_PILOT_2026-09-03.md`](../../docs/ANEMONE_PILOT_2026-09-03.md).
@@ -301,8 +302,8 @@ extraction, site/unit/coverage review and actual temporal/spatial overlap must
 precede environmental linking. Missing overlap does not block ANEMONE-only
 research; it does block claims of validated live cross-source integration.
 
-Release `v0.4.0` only after the operational checks for the limited scope above:
-real source/GCS integrity, backup/restore, authenticated UI/API/export checks,
-correct unknown-sample exclusions, approved spend, a committed image build
-and deployment verification. The broader classified scientific/model-output
-acceptance remains next-patch work, not a completed gate.
+Historical `v0.4.0` gate: release followed real source/GCS integrity,
+backup/restore, authenticated UI/API/export checks, correct unknown-sample
+exclusions, approved spend, a committed image build, and deployment
+verification. Broader classified scientific/model-output acceptance remains a
+deferred scientific gate, not a completed one.

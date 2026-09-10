@@ -1,4 +1,5 @@
 import type { ClassificationReviewPreview } from "@/types";
+import { exclusionReasonDisplay } from "./edna-exclusions.ts";
 
 export function classificationPreviewMethodRows(
   preview: ClassificationReviewPreview,
@@ -11,7 +12,7 @@ export function classificationPreviewMethodRows(
     assay_id: row.assay_id,
     assignment_method: row.assignment_method,
     status: row.status,
-    reason: row.reason,
+    reason: row.exclusion_reasons?.map(exclusionReasonDisplay).join(", ") || row.reason,
     source_detection_count: row.source_detection_count,
     retained_detection_count: row.retained_detection_count,
     excluded_detection_count: row.excluded_detection_count,

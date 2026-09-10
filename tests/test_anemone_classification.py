@@ -22,9 +22,15 @@ from preprocessing.anemone import (
 from preprocessing.anemone_classification import (
     MAX_REVIEW_BYTES,
     ReviewError,
+    build_review_lineage,
+    canonical_sha256,
     parse_review,
+    parse_review_lineage,
     read_review,
     review_template,
+    sample_kind_control_status,
+    validate_sample_classification,
+    validate_sample_review_lineage,
 )
 from tests.test_anemone_normalization import _acquire_snapshot
 from tests.test_anemone_ingestion import PROJECT, RUN, SAMPLE
@@ -204,6 +210,41 @@ def test_reviewed_controls_never_gain_environmental_anchor(unknown_snapshot, kin
     assert bundle.frames["edna_anchor_event"].empty
 
 
+def test_reviewed_unknown_round_trips_without_boolean_coercion(
+    unknown_snapshot, tmp_path
+):
+    sid, kwargs, draft = unknown_snapshot
+    review = approve_fixture(draft, "unknown")
+    result = normalize_anemone_snapshot(
+        sid,
+        **kwargs,
+        execute=True,
+        classification_review=review,
+        normalized_root=tmp_path / "normalized",
+    )
+
+    _, manifest = resolve_normalized_bundle(
+        result["normalization_id"],
+        normalized_root=tmp_path / "normalized",
+    )
+    bundle = build_anemone_bundle(sid, **kwargs, classification_review=review)
+    sample = bundle.frames["edna_sample"].iloc[0]
+
+    assert manifest["classification_review"] == review
+    assert sample["sample_kind"] == "unknown"
+    assert sample_kind_control_status(sample["sample_kind"]) is None
+    assert pd.isna(sample["is_control"])
+    lineage = validate_sample_review_lineage(
+        sample["classification_review_json"],
+        sample_kind=sample["sample_kind"],
+        is_control=sample["is_control"],
+        classification_basis=sample["classification_basis"],
+        source_snapshot_id=sample["source_snapshot_id"],
+        provider_sample_id=sample["provider_sample_id"],
+    )
+    assert lineage["decision"]["sample_kind"] == "unknown"
+
+
 @pytest.mark.parametrize("change", ["snapshot", "sample", "sha", "row", "key", "value"])
 def test_review_rejects_wrong_evidence_scope(unknown_snapshot, change):
     sid, kwargs, draft = unknown_snapshot
@@ -331,6 +372,71 @@ def minimal_review():
             }
         ],
     }
+
+
+@pytest.mark.parametrize(
+    ("sample_kind", "is_control"),
+    [
+        ("environmental", False),
+        ("negative_control", True),
+        ("positive_control", True),
+        ("mock_community", True),
+        ("unknown", None),
+        ("unknown", float("nan")),
+    ],
+)
+def test_canonical_sample_kind_control_mapping(sample_kind, is_control):
+    assert validate_sample_classification(sample_kind, is_control) is (
+        None if sample_kind == "unknown" else sample_kind != "environmental"
+    )
+
+
+@pytest.mark.parametrize(
+    ("sample_kind", "is_control"),
+    [("environmental", None), ("unknown", False), ("negative_control", False)],
+)
+def test_inconsistent_sample_kind_control_mapping_is_rejected(sample_kind, is_control):
+    with pytest.raises(ReviewError, match="inconsistent"):
+        validate_sample_classification(sample_kind, is_control)
+
+
+def test_review_lineage_is_strict_and_digest_bound():
+    review = minimal_review()
+    decision = review["decisions"][0]
+    decision.update(
+        review_id="00000000-0000-4000-8000-000000000001",
+        review_version=2,
+        review_content_sha256="c" * 64,
+    )
+    review = parse_review(json.dumps(review).encode())
+    lineage = build_review_lineage(
+        review,
+        review["decisions"][0],
+        provider_classification_basis="no_reviewed_classification_metadata",
+    )
+    assert parse_review_lineage(json.dumps(lineage)) == lineage
+
+    tampered = deepcopy(lineage)
+    tampered["decision"]["review_content_sha256"] = "d" * 64
+    with pytest.raises(ReviewError, match="digest"):
+        parse_review_lineage(json.dumps(tampered))
+
+    tampered = deepcopy(lineage)
+    tampered["unexpected"] = True
+    with pytest.raises(ReviewError):
+        parse_review_lineage(json.dumps(tampered))
+
+    basis = "review:" + canonical_sha256(lineage)
+    with pytest.raises(ReviewError, match="identity"):
+        validate_sample_review_lineage(
+            json.dumps(lineage),
+            sample_kind="environmental",
+            is_control=False,
+            classification_basis=basis,
+            source_snapshot_id=lineage["source_snapshot_id"],
+            provider_sample_id=decision["provider_sample_id"],
+            expected_review_content_sha256="d" * 64,
+        )
 
 
 @pytest.mark.parametrize(

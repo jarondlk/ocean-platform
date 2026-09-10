@@ -16,6 +16,8 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 import pandas as pd
+
+from preprocessing.anemone_classification import validate_sample_review_lineage
 from sqlalchemy import create_engine, text
 
 import config
@@ -953,6 +955,26 @@ def build_anemone_row_traces() -> List[Dict[str, Any]]:
         frame = pd.read_parquet(root / str(artifact["path"]))
         for row in frame.to_dict(orient="records"):
             source_file_id = str(row.get("source_file_id") or "")
+            classification_lineage: Dict[str, Any] = {}
+            classification_fields = {
+                "sample_kind",
+                "is_control",
+                "classification_basis",
+                "source_snapshot_id",
+                "provider_sample_id",
+            }
+            if table_name == "edna_sample" and classification_fields.issubset(row):
+                raw_lineage = row.get("classification_review_json")
+                lineage = validate_sample_review_lineage(
+                    None if pd.isna(raw_lineage) else raw_lineage,
+                    sample_kind=row["sample_kind"],
+                    is_control=row["is_control"],
+                    classification_basis=row["classification_basis"],
+                    source_snapshot_id=row["source_snapshot_id"],
+                    provider_sample_id=row["provider_sample_id"],
+                )
+                if lineage is not None:
+                    classification_lineage["classification_review"] = lineage
             traces.append(
                 {
                     "table": table_name,
@@ -970,9 +992,7 @@ def build_anemone_row_traces() -> List[Dict[str, Any]]:
                     "normalization_artifact_id": (
                         f"normalized:anemone:{normalization_id}:{table_name}"
                     ),
-                    **({"classification_review": json.loads(row["classification_review_json"])}
-                       if table_name == "edna_sample" and pd.notna(row.get("classification_review_json"))
-                       else {}),
+                    **classification_lineage,
                 }
             )
     return traces

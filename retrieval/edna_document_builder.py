@@ -7,6 +7,8 @@ from typing import Any, Iterable
 
 import pandas as pd
 
+from preprocessing.anemone_classification import validate_sample_review_lineage
+
 from retrieval.document_builder import RetrievalDocument
 
 
@@ -236,8 +238,15 @@ def build_edna_documents(
             + _control_label(sample_kind, is_control)
             + "."
         )
-        classification_review = _text(sample.get("classification_review_json"))
-        if classification_review:
+        classification_review = validate_sample_review_lineage(
+            _text(sample.get("classification_review_json")),
+            sample_kind=sample_kind,
+            is_control=sample.get("is_control"),
+            classification_basis=_text(sample.get("classification_basis")),
+            source_snapshot_id=_text(sample.get("source_snapshot_id")),
+            provider_sample_id=provider_sample,
+        )
+        if classification_review is not None:
             lines.append("Classification basis: researcher review; original provider classification unknown.")
         assay_parts = [
             f"target gene {target_gene}" if target_gene else None,
@@ -307,8 +316,8 @@ def build_edna_documents(
             "read_count_sum": total_reads,
             "copies_per_ml_record_count": supplied_copies,
         }
-        if classification_review:
-            metadata["classification_review"] = json.loads(classification_review)
+        if classification_review is not None:
+            metadata["classification_review"] = classification_review
             metadata["classification_basis"] = _text(sample.get("classification_basis"))
         documents.append(
             RetrievalDocument(

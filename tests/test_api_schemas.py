@@ -13,6 +13,19 @@ def test_retrieve_request_accepts_top_k_alias():
     assert request.k == 2
 
 
+def test_retrieve_request_normalizes_weights_and_rejects_disabled_backends():
+    request = RetrieveRequest.model_validate(
+        {"query": "temperature observations", "vector_weight": 0.2, "fts_weight": 0.2}
+    )
+    assert request.vector_weight == 0.5
+    assert request.fts_weight == 0.5
+
+    with pytest.raises(ValidationError, match="weight must be greater than zero"):
+        RetrieveRequest.model_validate(
+            {"query": "temperature observations", "vector_weight": 0, "fts_weight": 0}
+        )
+
+
 def test_chat_request_exposes_expert_knobs():
     request = ChatRequest.model_validate(
         {

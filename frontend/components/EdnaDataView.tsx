@@ -45,6 +45,21 @@ function compactId(value: unknown): string {
   return text.length > 18 ? `${text.slice(0, 10)}…${text.slice(-6)}` : text;
 }
 
+function eligibilityRows(value: unknown): Record<string, unknown>[] {
+  if (!Array.isArray(value)) return [];
+  return value.map((item) => {
+    const row = item as Record<string, unknown>;
+    const reasons = Array.isArray(row.exclusion_reasons)
+      ? row.exclusion_reasons.map(exclusionReasonDisplay).join(", ")
+      : "";
+    return {
+      ...row,
+      status: row.analysis_eligibility,
+      reason: reasons || "NA",
+    };
+  });
+}
+
 export function EdnaDataView() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -234,6 +249,10 @@ export function EdnaDataView() {
     assigned_taxon_rank: row.assigned_taxon_rank,
     read_count: row.read_count,
     "Source-supplied copies/mL": row.copies_per_ml,
+    eligibility: row.analysis_eligibility,
+    exclusion_reason: Array.isArray(row.exclusion_reasons)
+      ? row.exclusion_reasons.map(exclusionReasonDisplay).join(", ") || "NA"
+      : "NA",
     source_row_number: row.source_row_number,
   }));
 
@@ -359,6 +378,11 @@ export function EdnaDataView() {
           />
           <h3 className="section-title">Methods</h3>
           <DataTable columns={["assignment_method", "detection_count", "read_count_sum", "copies_per_ml_record_count"]} rows={sample.method_summaries} />
+          <h3 className="section-title">Eligibility by assay and method</h3>
+          <DataTable
+            columns={["assay_id", "assignment_method", "status", "reason"]}
+            rows={eligibilityRows(sample.sample.method_eligibility)}
+          />
           <h3 className="section-title">Assays</h3>
           <DataTable columns={["assay_id", "target_gene", "primer_set", "sequencing_method"]} rows={sample.assays} rowKeyColumn="assay_id" selectedKey={appliedFilters.assay_id} onRowSelect={(row) => router.push(ednaHref({ ...appliedFilters, assay_id: String(row.assay_id) }), { scroll: false })} />
         </section>
@@ -454,6 +478,11 @@ export function EdnaDataView() {
         <section className="data-section">
           <h3 className="section-title">Assay</h3>
           <DataTable columns={["assay_id", "target_gene", "primer_set", "sequencing_method", "library_layout", "instrument_model"]} rows={[assay.assay]} />
+          <h3 className="section-title">Eligibility by method</h3>
+          <DataTable
+            columns={["assignment_method", "status", "reason"]}
+            rows={eligibilityRows(assay.assay.method_eligibility)}
+          />
           <h3 className="section-title">Internal standards</h3>
           <DataTable columns={["standard_name", "sequence_sha256", "read_count", "source_row_number"]} rows={assay.internal_standards} />
           <div className="section-toolbar">
@@ -469,13 +498,13 @@ export function EdnaDataView() {
       {detection ? (
         <section className="data-section">
           <h3 className="section-title">Detection</h3>
-          <DataTable columns={["detection_id", "assignment_method", "assigned_taxon_name", "assigned_taxon_rank", "read_count", "copies_per_ml", "sequence_sha256", "source_row_number"]} rows={[detection.detection]} />
+          <DataTable columns={["detection_id", "assignment_method", "analysis_eligibility", "exclusion_reasons", "assigned_taxon_name", "assigned_taxon_rank", "read_count", "copies_per_ml", "sequence_sha256", "source_row_number"]} rows={[detection.detection]} />
         </section>
       ) : null}
 
       <section className="data-section">
         <h3 className="section-title">Detections ({formatCell(detections?.total)})</h3>
-        <DataTable columns={["detection", "method", "assigned_taxon_name", "assigned_taxon_rank", "read_count", "Source-supplied copies/mL", "source_row_number"]} rows={detectionRows} rowKeyColumn="detection_id" selectedKey={searchParams.get("detection_id") || undefined} onRowSelect={(row) => router.push(ednaHref({ ...appliedFilters, sample_id: String(row.sample_id), assay_id: String(row.assay_id), assignment_method: String(row.assignment_method) }, { detectionId: String(row.detection_id) }), { scroll: false })} />
+        <DataTable columns={["detection", "method", "eligibility", "exclusion_reason", "assigned_taxon_name", "assigned_taxon_rank", "read_count", "Source-supplied copies/mL", "source_row_number"]} rows={detectionRows} rowKeyColumn="detection_id" selectedKey={searchParams.get("detection_id") || undefined} onRowSelect={(row) => router.push(ednaHref({ ...appliedFilters, sample_id: String(row.sample_id), assay_id: String(row.assay_id), assignment_method: String(row.assignment_method) }, { detectionId: String(row.detection_id) }), { scroll: false })} />
         <Pagination page={detections} loading={loading} onPage={(offset) => page("detection", offset)} />
       </section>
       <SourceRecords provenance={detection?.provenance || assay?.provenance || sample?.provenance} />

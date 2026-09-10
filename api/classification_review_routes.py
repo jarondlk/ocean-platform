@@ -1,4 +1,4 @@
-"""Authenticated scientific decision and operational application routes."""
+"""Authenticated scientific classification-review routes."""
 from __future__ import annotations
 
 import uuid
@@ -14,11 +14,9 @@ from api.classification_review_service import (
     get_review,
     list_reviews,
     preview_review,
-    record_application,
     update_draft,
 )
 from api.schemas import (
-    ClassificationReviewApplicationRequest,
     ClassificationReviewDecisionRequest,
     ClassificationReviewDraftCreate,
     ClassificationReviewDraftUpdate,
@@ -141,24 +139,6 @@ def preview_classification_review(
     try:
         with get_session() as session:
             return preview_review(
-                session,
-                review_id=review_id,
-                request=request,
-                actor=actor,
-            )
-    except ClassificationReviewDomainError as exc:
-        raise _as_http_error(exc) from exc
-
-
-@router.post("/{review_id}/application", response_model=ClassificationReviewResponse)
-def record_classification_review_application(
-    review_id: uuid.UUID,
-    request: ClassificationReviewApplicationRequest,
-    actor: CurrentUser = Depends(get_current_user),
-) -> ClassificationReviewResponse:
-    try:
-        with get_session() as session:
-            return record_application(
                 session,
                 review_id=review_id,
                 request=request,

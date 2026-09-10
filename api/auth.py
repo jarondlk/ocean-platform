@@ -454,7 +454,7 @@ def route_permission(method: str, path: str) -> Optional[str]:
         if path.endswith("/preview") and method == "POST":
             return "classification:read"
         if path.endswith("/application") and method == "POST":
-            return "classification:apply"
+            return None
         return "classification:decide"
     if path == "/retrieve" or path == "/documents":
         return "evidence:search"
