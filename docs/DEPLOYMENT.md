@@ -11,12 +11,15 @@ to the canonical domain.
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
-Current release record as of 2026-09-08:
+Current release record as of 2026-09-10:
 
-- OCEAN Platform [GitHub release `v0.4.2`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.2),
-  merged commit `2731d464ae11a2064359d2696db3f2eab523c2ac`, Cloud Build
-  `fd2a5970-692f-424e-a721-0144e1e2e005`, and revision
-  `ocean-platform-00013-djj`; see [v0.4.2 operations](RELEASE_0.4.2_OPERATIONS.md);
+- OCEAN Platform GitHub release `v0.4.3`, merged commit
+  `26094fc2c1f1f9cad094c484aff4522ba738240f`, Cloud Build
+  `a8cac0c6-9ac2-49b4-bdc8-82c82089a0d2`, and revision
+  `ocean-platform-v043-26094fc`; see
+  [v0.4.3 operations](RELEASE_0.4.3_OPERATIONS.md);
+- v0.4.2 revision `ocean-platform-00013-djj` remains the immediate application
+  rollback target;
 - v0.4.1 revision `ocean-platform-v041-706348e` and its verified backup remain
   retained for reviewed rollback;
 - previous revision `ocean-platform-v040-a63885a` and pre-migration backup retained;
@@ -35,13 +38,13 @@ Current release record as of 2026-09-08:
 - 325 documents/embeddings including the unknown-classification pilot;
   schema head `20260905_0011`, verified pre/post backup and isolated restore,
   controlled workload registration, and fail-closed HTTP checks. See the
-  [v0.4.2 operations record](RELEASE_0.4.2_OPERATIONS.md).
+  [v0.4.3 operations record](RELEASE_0.4.3_OPERATIONS.md).
 
-The v0.4.2 release source is synchronized to remote `main`; post-release
+The v0.4.3 release source is synchronized to remote `main`; post-release
 operations-record commits do not change the immutable deployed images.
 
-The v0.4.2 rollout verified revision `ocean-platform-00013-djj` at 100% traffic,
-with immutable build `fd2a5970-692f-424e-a721-0144e1e2e005`, frontend
+The v0.4.3 rollout verified revision `ocean-platform-v043-26094fc` at 100%
+traffic, with immutable build `a8cac0c6-9ac2-49b4-bdc8-82c82089a0d2`, frontend
 `AUTH_URL=https://oceaninfobio.com`, and API
 `CORS_ORIGINS=https://oceaninfobio.com`. The fallback OAuth callback remains
 available for reviewed rollback.
@@ -62,9 +65,10 @@ separately reviewed acquisition job.
 The completed initial migration sequence and historical cost-control rationale
 are retained in
 [`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Do not use it
-as the current release order. Use the active
-[`v0.4.3` plan](RELEASE_0.4.3_PLAN.md) for the next migration and release gates,
-and verify the project budget and Cloud Run spend cap before paid execution.
+as the current release order. Use the completed
+[`v0.4.3` operations record](RELEASE_0.4.3_OPERATIONS.md) for the current
+deployment and verify the project budget and Cloud Run spend cap before paid
+execution.
 
 The Cloud Run serving revision uses `JOB_EXECUTION_MODE=external`. Database
 migrations, pipeline runs, and evaluations belong in run-to-completion jobs;

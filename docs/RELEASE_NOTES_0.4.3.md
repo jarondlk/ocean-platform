@@ -1,7 +1,9 @@
 # OCEAN Platform v0.4.3 release notes
 
-> Draft release notes. Publish only after the combined v0.4.3 gate passes and
-> the production operations record has been completed.
+Released from merged PR #58 commit
+`26094fc2c1f1f9cad094c484aff4522ba738240f` and deployed to Cloud Run revision
+`ocean-platform-v043-26094fc` on 2026-09-10. See the
+[v0.4.3 operations record](RELEASE_0.4.3_OPERATIONS.md).
 
 ## Scope
 
@@ -23,15 +25,21 @@ changing the bounded ANEMONE pilot outcome. The pilot remains
 - Data APIs and analysis generation share one pure scientific eligibility
   evaluator with method-level status and stable exclusion reason codes.
 
-## Verification required before publication
+## Verification
 
-- Full backend coverage at the CI threshold and PostgreSQL/pgvector integration.
-- Ruff, dependency checks, production-only frontend audit, frontend tests,
-  TypeScript, production build, CI, and CodeQL.
-- Isolated controlled-application replay and rollback rehearsal.
-- Authenticated researcher/admin/viewer acceptance matrix.
-- Pre-deployment backup/restore, immutable candidate smoke tests, traffic
-  rollout, and post-release monitoring under the JPY 20,000 monthly limit.
+- 732 backend tests passed with 13 expected skips and 78.16% coverage; all 13
+  fresh PostgreSQL 16/pgvector integration tests passed.
+- Ruff, dependency checks, the production-only frontend audit, 19 frontend
+  tests, TypeScript, the 24-route production build, CI, and CodeQL passed.
+- The controlled-application replay/rollback and fail-closed lineage contracts
+  passed without changing the real pilot classification.
+- A verified backup/isolated restore, immutable build, zero-traffic candidate,
+  job canaries, migration check, production smoke tests, and traffic rollout
+  completed. Initial monitoring found no HTTP 5xx, Cloud Run errors, or Cloud
+  SQL errors.
+
+Researcher-specific role acceptance, suspension, uninvited-account denial, and
+owner-only Billing-console confirmation remain explicit post-release checks.
 
 ## Explicit non-goals
 
