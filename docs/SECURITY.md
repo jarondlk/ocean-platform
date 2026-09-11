@@ -351,6 +351,23 @@ provenance and should not be silently recomputed for longitudinal comparison.
 The dependency removal addresses the NLTK advisory rather than dismissing its
 live-manifest alerts as unreachable.
 
+### Stale Dependabot alert closure — 2026-09-11
+
+GitHub retained 41 open alerts after the root dependency manifests were moved
+under `requirements/`. All 41 referenced deleted root paths last checked at
+commit `4a4bd38`: 36 NLTK findings across `requirements.txt`,
+`requirements-dev.txt`, `requirements-analysis.txt`, and
+`requirements-archive.txt`, plus five GitPython findings against the deleted
+`requirements-archive.txt` path.
+
+The findings were closed as inaccurate only after verifying the replacement
+dependency graph. NLTK is absent from every current input and hash-locked file.
+The optional archived application pins GitPython `3.1.61`, above GitHub's
+`3.1.59` patched floor for all five reported GitPython advisories. Regression
+tests prohibit NLTK from returning to the current dependency files and enforce
+the GitPython security floor. This closure does not waive future alerts against
+the current `requirements/` manifests.
+
 ### Publication boundaries
 
 - Analyses require an independently registered digest and complete file
