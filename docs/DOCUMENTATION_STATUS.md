@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-09-10.
+Last reviewed: 2026-09-11.
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -11,7 +11,7 @@ approved.
 
 ## Current operating authority
 
-- [`RELEASE_0.4.3_OPERATIONS.md`](RELEASE_0.4.3_OPERATIONS.md) — current release,
+- [`RELEASE_0.4.4_OPERATIONS.md`](RELEASE_0.4.4_OPERATIONS.md) — current release,
   deployment, and remaining-acceptance record.
 - [`ROADMAP.md`](ROADMAP.md) — longer-term engineering priorities.
 - [`handoff.md`](../handoff.md) — current repository and production handoff.

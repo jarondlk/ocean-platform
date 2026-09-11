@@ -11,15 +11,15 @@ to the canonical domain.
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
-Current release record as of 2026-09-10:
+Current release record as of 2026-09-11:
 
-- OCEAN Platform GitHub release `v0.4.3`, merged commit
-  `26094fc2c1f1f9cad094c484aff4522ba738240f`, Cloud Build
-  `a8cac0c6-9ac2-49b4-bdc8-82c82089a0d2`, and revision
-  `ocean-platform-v043-26094fc`; see
-  [v0.4.3 operations](RELEASE_0.4.3_OPERATIONS.md);
-- v0.4.2 revision `ocean-platform-00013-djj` remains the immediate application
-  rollback target;
+- OCEAN Platform GitHub release `v0.4.4`, merged commit
+  `d3aa6a975e7405eaa291d53b50c33985e07f28ff`, Cloud Build
+  `bbff6249-7f41-4375-8ee8-97b5ce6c06a2`, and revision
+  `ocean-platform-v044-d3aa6a9`; see
+  [v0.4.4 operations](RELEASE_0.4.4_OPERATIONS.md);
+- v0.4.3 revision `ocean-platform-v043-26094fc` is retained; compatibility
+  with the new v2 eDNA publication must be reviewed before rollback;
 - v0.4.1 revision `ocean-platform-v041-706348e` and its verified backup remain
   retained for reviewed rollback;
 - previous revision `ocean-platform-v040-a63885a` and pre-migration backup retained;
@@ -36,15 +36,15 @@ Current release record as of 2026-09-10:
 - keep-five/delete-after-30-days Artifact Registry cleanup active and 30-day
   expiry applied to transient Cloud Build source archives;
 - 325 documents/embeddings including the unknown-classification pilot;
-  schema head `20260905_0011`, verified pre/post backup and isolated restore,
-  controlled workload registration, and fail-closed HTTP checks. See the
-  [v0.4.3 operations record](RELEASE_0.4.3_OPERATIONS.md).
+  schema head `20260905_0011`, verified pre-deployment backup and isolated
+  restore, controlled taxonomy rebuild, preserved classification, and fail-closed HTTP checks. See the
+  [v0.4.4 operations record](RELEASE_0.4.4_OPERATIONS.md).
 
-The v0.4.3 release source is synchronized to remote `main`; post-release
+The v0.4.4 release source is synchronized to remote `main`; post-release
 operations-record commits do not change the immutable deployed images.
 
-The v0.4.3 rollout verified revision `ocean-platform-v043-26094fc` at 100%
-traffic, with immutable build `a8cac0c6-9ac2-49b4-bdc8-82c82089a0d2`, frontend
+The v0.4.4 rollout verified revision `ocean-platform-v044-d3aa6a9` at 100%
+traffic, with immutable build `bbff6249-7f41-4375-8ee8-97b5ce6c06a2`, frontend
 `AUTH_URL=https://oceaninfobio.com`, and API
 `CORS_ORIGINS=https://oceaninfobio.com`. The fallback OAuth callback remains
 available for reviewed rollback.
@@ -66,7 +66,7 @@ The completed initial migration sequence and historical cost-control rationale
 are retained in
 [`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Do not use it
 as the current release order. Use the completed
-[`v0.4.3` operations record](RELEASE_0.4.3_OPERATIONS.md) for the current
+[`v0.4.4` operations record](RELEASE_0.4.4_OPERATIONS.md) for the current
 deployment and verify the project budget and Cloud Run spend cap before paid
 execution.
 

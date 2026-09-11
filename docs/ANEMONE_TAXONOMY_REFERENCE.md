@@ -1,8 +1,8 @@
 # ANEMONE taxonomy reference and interpretation
 
-Status: implemented in the working tree on 2026-09-11; not yet deployed or
-applied to the production corpus. This changes taxonomy interpretation, not
-environmental/control classification.
+Status: released and deployed in v0.4.4 on 2026-09-11 and applied to the
+retained production pilot. See the [operations record](RELEASE_0.4.4_OPERATIONS.md).
+This changes taxonomy interpretation, not environmental/control classification.
 
 ## Reference scope
 
@@ -114,6 +114,7 @@ preview, and provenance subset passed 87 tests.
 
 The normalization fixtures use a temporary localhost HTTP server; the complete
 run used local fixture access after the sandbox-only attempt blocked socket
-binding. No ANEMONE acquisition, production database test, deployment, or
-scientific classification change was performed. PostgreSQL integration remains
-a separate service-gated release check.
+binding. These local tests did not acquire ANEMONE data or change scientific
+classification. The later release passed PostgreSQL integration in GitHub CI
+and rebuilt the retained production pilot; cloud verification is recorded in
+the [release operations record](RELEASE_0.4.4_OPERATIONS.md).
