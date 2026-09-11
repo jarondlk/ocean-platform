@@ -23,6 +23,11 @@ The bounded ANEMONE pilot retains its provider-supplied location and collection
 metadata. It is not assigned to one of these monitoring bays by inference, and
 its sample classification remains unknown in the current release line.
 
+The [ANEMONE taxonomy reference](docs/ANEMONE_TAXONOMY_REFERENCE.md) documents
+the user-approved TSV regression fixture, interpretation of unresolved ranks,
+and the rebuild procedure for existing eDNA data. The taxonomy fix is local
+development work and has not yet changed the deployed pilot.
+
 ---
 
 ## Current Prototype Status

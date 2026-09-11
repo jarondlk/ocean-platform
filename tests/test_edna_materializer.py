@@ -22,7 +22,7 @@ def test_materialized_artifacts_round_trip_structured_filters(tmp_path, monkeypa
     assert isinstance(results[0]["metadata"]["canonical_records"], list)
     parquet = pd.read_parquet(retrieval_path("parquet"))
     assert len(parquet) == 2
-    assert json.loads(parquet.iloc[0]["metadata_json"])["edna_retrieval_document_version"] == 1
+    assert json.loads(parquet.iloc[0]["metadata_json"])["edna_retrieval_document_version"] == 2
 
 
 def test_empty_materialization_keeps_a_valid_empty_fallback(tmp_path, monkeypatch):

@@ -92,7 +92,8 @@ def test_prepare_snapshot_rejects_unsafe_manifest_id():
         prepare_snapshot(_manifest(), manifest_id="../escape")
 
 
-def test_edna_publication_requires_complete_source_and_row_provenance():
+@pytest.mark.parametrize("document_version", [1, 2])
+def test_edna_publication_requires_complete_source_and_row_provenance(document_version):
     manifest = _manifest()
     snapshot_id, file_id = "a" * 64, "b" * 64
     manifest["source_files"] = [{
@@ -110,7 +111,7 @@ def test_edna_publication_requires_complete_source_and_row_provenance():
         "source_file_ids": [f"raw:anemone:{file_id}"],
         "source_artifact_ids": ["normalized:anemone:fixture"],
         "metadata": {
-            "edna_retrieval_document_version": 1,
+            "edna_retrieval_document_version": document_version,
             "source_snapshot_ids": [snapshot_id],
             "detection_set_sha256": "0" * 64,
             "canonical_records": [{
@@ -121,6 +122,11 @@ def test_edna_publication_requires_complete_source_and_row_provenance():
         },
     }]
     assert prepare_snapshot(manifest, manifest_id="edna-complete").documents[0]["metadata"]
+    for version in (None, True, 3, "2"):
+        changed = json.loads(json.dumps(manifest))
+        changed["documents"][0]["metadata"]["edna_retrieval_document_version"] = version
+        with pytest.raises(SnapshotError, match="missing document version"):
+            prepare_snapshot(changed, manifest_id="edna-version-invalid")
     for path in ("file", "hash", "artifact", "locator"):
         changed = json.loads(json.dumps(manifest))
         if path == "file":

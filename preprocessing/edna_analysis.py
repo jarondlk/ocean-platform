@@ -9,9 +9,10 @@ from importlib.metadata import version
 from ingestion.immutable_bundle import canonical_bytes, digest
 from preprocessing.edna_eligibility import evaluate_analysis_eligibility
 from preprocessing.edna_recipe import AnalysisRecipe, METHODS
+from preprocessing.edna_taxonomy import ANALYSIS_RANKS, resolved_lineage
 from schema.time_range import matches_time
 
-ALGORITHM_VERSION = 'edna-descriptive-v1'
+ALGORITHM_VERSION = 'edna-descriptive-v2'
 MAX_ANALYSIS_BYTES = 128 * 1024 * 1024
 
 
@@ -24,7 +25,7 @@ def check_size(value):
         raise ValueError('Analysis byte resource limit exceeded (128 MiB)')
 
 
-RANKS = ('superkingdom', 'kingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species')
+RANKS = ANALYSIS_RANKS
 LIMITATIONS = [
     'Indices describe assigned sequence-read composition, not organism abundance.',
     'Missing detection records do not establish biological absence.',
@@ -45,9 +46,10 @@ def protocol(assay):
 
 
 def taxon_key(row, rank):
-    if not row.get(rank) or str(row[rank]).strip().casefold() in {'na', 'unassigned', 'unidentified', 'unknown'}:
+    lineage = resolved_lineage(row)
+    if rank not in lineage:
         return None
-    return tuple((k, str(row.get(k) or '').strip()) for k in RANKS[:RANKS.index(rank) + 1])
+    return tuple((k, lineage.get(k, '')) for k in RANKS[:RANKS.index(rank) + 1])
 
 
 def alpha(counts):
@@ -130,8 +132,8 @@ def method_comparison(detections):
         a, b = (methods.get(m) for m in METHODS)
         status = 'method_only_sequence'
         if a and b:
-            left = {r: a[r] for r in RANKS if a.get(r)}
-            right = {r: b[r] for r in RANKS if b.get(r)}
+            left = {r: v for r, v in resolved_lineage(a).items() if r in RANKS}
+            right = {r: v for r, v in resolved_lineage(b).items() if r in RANKS}
             if not left or not right:
                 status = 'unassigned'
             elif left == right:

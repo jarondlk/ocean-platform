@@ -8,12 +8,13 @@ from typing import Any, Iterable
 import pandas as pd
 
 from preprocessing.anemone_classification import validate_sample_review_lineage
+from preprocessing.edna_taxonomy import detection_assignment
 
 from retrieval.document_builder import RetrievalDocument
 
 
 EDNA_SOURCE_TYPE = "edna_metabarcoding"
-EDNA_RETRIEVAL_DOCUMENT_VERSION = 1
+EDNA_RETRIEVAL_DOCUMENT_VERSION = 2
 EDNA_ASSIGNMENT_METHODS = frozenset(
     {"qcauto_target", "qcauto_95pct_3nn_target"}
 )
@@ -267,8 +268,9 @@ def build_edna_documents(
 
         featured: list[str] = []
         for _, detection in top_rows.iterrows():
-            taxon = _text(detection.get("assigned_taxon_name")) or "unassigned"
-            rank = _text(detection.get("assigned_taxon_rank")) or "rank unknown"
+            taxon, rank = detection_assignment(detection)
+            taxon = taxon or "unassigned"
+            rank = rank or "rank unknown"
             count = int(detection.get("read_count") or 0)
             featured.append(f"{taxon} ({rank}), read count {count}")
         if featured:

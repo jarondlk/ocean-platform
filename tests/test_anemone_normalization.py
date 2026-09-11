@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import csv
+from collections import Counter
 import lzma
 import sys
 from pathlib import Path
@@ -223,6 +225,49 @@ def test_unknown_classification_is_explicit_and_preserved(tmp_path: Path) -> Non
     assert {issue.code for issue in bundle.issues} == {
         "sample_classification_unknown"
     }
+
+
+def test_reference_taxonomy_normalizes_without_losing_raw_evidence(tmp_path: Path) -> None:
+    from preprocessing.edna_taxonomy import SOURCE_RANKS
+    from tests.test_anemone_ingestion import _tsv_xz
+    from tests.test_edna_taxonomy import REFERENCE, reference_rows
+
+    reference_bytes = REFERENCE.read_bytes()
+    originals = reference_rows()
+    header = list(originals[0])
+    # Use the existing synthetic sample/assay wrapper. This does not classify
+    # the real reference sample or pretend to supply its missing metadata.
+    rows = [[SAMPLE, *list(row.values())[1:]] for row in originals]
+
+    def replace_community(payloads):
+        path = f"/dist/MiFish/ANEMONE/{PROJECT}/{RUN}/{SAMPLE}/community_qc3nn_target.tsv.xz"
+        payloads[path] = _tsv_xz(header, rows)
+
+    raw_root = tmp_path / "raw"
+    snapshot_id, contract = _acquire_snapshot(raw_root, mutate=replace_community)
+    bundle = build_anemone_bundle(snapshot_id, raw_root=raw_root, contract=contract)
+    frame = bundle.frames["edna_detection"]
+    detections = frame[frame["assignment_method"] == "qcauto_95pct_3nn_target"].sort_values("source_row_number")
+    assert Counter(detections["assigned_taxon_rank"]) == {"species": 37, "genus": 18, "family": 1}
+    for original, detection in zip(originals, detections.to_dict(orient="records"), strict=True):
+        expected_rank = next(rank for rank in ("species", "genus", "family") if not original[rank].startswith("unidentified "))
+        assert detection["assigned_taxon_name"] == original[expected_rank]
+        assert detection["assigned_taxon_rank"] == expected_rank
+        assert json.loads(detection["taxonomy_json"]) == {rank: original[rank] for rank in SOURCE_RANKS}
+        assert detection["species"] == original["species"]
+        assert detection["sequence"] == original["sequence"]
+        assert detection["read_count"] == int(original["nreads"])
+        assert detection["copies_per_ml"] == float(original["ncopiesperml"])
+        assert detection["source_snapshot_id"] == snapshot_id
+    assert list(detections["source_row_number"]) == list(range(2, 58))
+    assert frame[frame["assignment_method"] == "qcauto_target"]["read_count"].tolist() == [17]
+    # Check the verified raw snapshot still contains every source label.
+    raw_file = next((raw_root / "snapshots" / snapshot_id).rglob("community_qc3nn_target.tsv.xz"))
+    with lzma.open(raw_file, "rt") as handle:
+        assert list(csv.reader(handle, delimiter="\t")) == [header, *rows]
+    manifest = normalize_anemone_snapshot(snapshot_id, raw_root=raw_root, contract=contract)
+    assert manifest["taxonomy_policy_version"] == "edna-taxonomy-v1"
+    assert REFERENCE.read_bytes() == reference_bytes
 
 
 def test_invalid_coordinate_fails_normalization_without_output(tmp_path: Path) -> None:

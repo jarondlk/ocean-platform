@@ -155,7 +155,7 @@ def test_document_build_is_deterministic_and_persists_metadata():
 
     frame = documents_to_dataframe(first)
     metadata = json.loads(frame.iloc[0]["metadata_json"])
-    assert metadata["edna_retrieval_document_version"] == 1
+    assert metadata["edna_retrieval_document_version"] == 2
     assert "Scomber" in metadata["taxon_terms"]
     assert frame.iloc[0]["provider"] == "anemone"
     assert bool(frame.iloc[0]["active"]) is True
