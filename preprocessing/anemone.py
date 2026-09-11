@@ -26,6 +26,7 @@ from preprocessing.anemone_classification import (
     sample_kind_control_status,
     validate_sample_review_lineage,
 )
+from preprocessing.edna_taxonomy import TAXONOMY_POLICY_VERSION, deepest_resolved_assignment
 
 
 SNAPSHOT_ID_PATTERN = re.compile(r"^[0-9a-f]{64}$")
@@ -813,10 +814,7 @@ def build_anemone_bundle(
                     rank: _nullable_text(row[index[rank]])
                     for rank in taxonomy_columns
                 }
-                assigned_rank = next(
-                    (rank for rank in reversed(taxonomy_columns) if taxonomy[rank]),
-                    None,
-                )
+                assigned_name, assigned_rank = deepest_resolved_assignment(taxonomy)
                 scientific = {
                     "assay_id": assay_id,
                     "assignment_method": assignment_method,
@@ -830,7 +828,7 @@ def build_anemone_bundle(
                         row[index["ncopiesperml"]]
                     ),
                     **{rank: taxonomy.get(rank) for rank in indexed_ranks},
-                    "assigned_taxon_name": taxonomy.get(assigned_rank or ""),
+                    "assigned_taxon_name": assigned_name,
                     "assigned_taxon_rank": assigned_rank,
                     "taxonomy_json": _canonical_json(taxonomy),
                 }
@@ -986,6 +984,7 @@ def build_anemone_bundle(
         "source_snapshot_id": snapshot_id,
         "contract_sha256": contract_sha,
         "normalization_version": config.ANEMONE_NORMALIZATION_VERSION,
+        "taxonomy_policy_version": TAXONOMY_POLICY_VERSION,
         "tables": {
             name: {
                 "columns": list(frame.columns),
@@ -1054,6 +1053,7 @@ def _bundle_manifest(
     return {
         "schema_version": 1,
         "normalization_version": config.ANEMONE_NORMALIZATION_VERSION,
+        "taxonomy_policy_version": TAXONOMY_POLICY_VERSION,
         "normalization_id": bundle.normalization_id,
         "source_provider": "anemone",
         "source_family": "edna_metabarcoding",

@@ -670,7 +670,7 @@ def test_preview_compares_existing_analysis_without_writing(monkeypatch):
     preview = response.json()
     assert preview["review_id"] == review["id"]
     assert preview["review_version"] == 1
-    assert preview["algorithm_version"] == "edna-descriptive-v1"
+    assert preview["algorithm_version"] == "edna-descriptive-v2"
     assert preview["baseline"]["eligibility"] == "excluded"
     assert preview["baseline"]["exclusion_reasons"] == ["control_or_unknown"]
     assert preview["proposed"]["eligibility"] == "included"

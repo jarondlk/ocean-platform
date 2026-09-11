@@ -145,7 +145,7 @@ ANEMONE_MAX_BYTES = _environment_int(
 )
 ANEMONE_NORMALIZATION_VERSION = _environment_int(
     "ANEMONE_NORMALIZATION_VERSION",
-    2,
+    3,
     minimum=1,
 )
 

@@ -150,6 +150,26 @@ def test_immutable_publication_recovery_freshness_and_context(tmp_path, monkeypa
         load_analysis(result['analysis_id'])
 
 
+def test_taxonomy_algorithm_change_marks_previous_analyses_historical(tmp_path, monkeypatch):
+    import preprocessing.edna_analysis as analysis
+    from ingestion.edna_analysis_bundle import analysis_status
+
+    recipe, source = fixture()
+    monkeypatch.setattr(config, 'ANALYSIS_DIR', tmp_path)
+    monkeypatch.setattr('ingestion.edna_analysis_bundle.read_canonical', lambda _: source)
+    current_version = analysis.ALGORITHM_VERSION
+    with monkeypatch.context() as previous:
+        previous.setattr(analysis, 'ALGORITHM_VERSION', 'edna-descriptive-v1')
+        historical = build_analysis(recipe, source)
+        publish_analysis(historical)
+    bundle = load_analysis(historical['analysis_id'])
+    assert analysis_status(bundle) == 'historical'
+    assert bundle['manifest']['algorithm_version'] == 'edna-descriptive-v1'
+    current = build_analysis(recipe, source)
+    assert current['algorithm_version'] == current_version == 'edna-descriptive-v2'
+    assert current['analysis_id'] != historical['analysis_id']
+
+
 def test_turnover_protocol_partitions_and_method_disagreements():
     recipe, source = fixture()
     sample = dict(source['edna_sample'][0], sample_id='6'*64)

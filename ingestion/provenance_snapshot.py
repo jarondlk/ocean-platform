@@ -219,7 +219,8 @@ def _validate_edna_provenance(snapshot: ProvenanceSnapshot) -> None:
         snapshot_ids = set(metadata.get("source_snapshot_ids") or [])
         file_ids = document.get("source_file_ids") or []
         records = metadata.get("canonical_records") or []
-        if metadata.get("edna_retrieval_document_version") != 1 or not snapshot_ids or not file_ids or len(records) < 3:
+        document_version = metadata.get("edna_retrieval_document_version")
+        if type(document_version) is not int or document_version not in (1, 2) or not snapshot_ids or not file_ids or len(records) < 3:
             raise SnapshotError(prefix + "missing document version, snapshots, files, or canonical records")
         if not sha256.fullmatch(str(metadata.get("detection_set_sha256") or "")):
             raise SnapshotError(prefix + "missing detection-set hash")
