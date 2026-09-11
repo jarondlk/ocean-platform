@@ -37,4 +37,18 @@ def test_archive_gitpython_security_floor_is_explicitly_locked() -> None:
     lock_version = _locked_version(archive_lock, "gitpython")
 
     assert input_version == lock_version
-    assert input_version >= (3, 1, 58)
+    assert input_version >= (3, 1, 59)
+
+
+def test_current_dependency_inputs_and_locks_exclude_nltk() -> None:
+    """Keep the removed NLTK dependency out of every active lock surface."""
+    dependency_files = sorted((PROJECT_ROOT / "requirements").glob("*.in"))
+    dependency_files.extend(sorted((PROJECT_ROOT / "requirements").glob("*.txt")))
+
+    for dependency_file in dependency_files:
+        package_names = {
+            line.partition("==")[0].strip().lower()
+            for line in dependency_file.read_text().splitlines()
+            if "==" in line and not line.lstrip().startswith("#")
+        }
+        assert "nltk" not in package_names, dependency_file
