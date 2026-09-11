@@ -10,7 +10,7 @@ automatically.
 record; retain its dated resource evidence and cost-control rationale, but do
 not treat it as the current release order. Use
 [`../../docs/DEPLOYMENT.md`](../../docs/DEPLOYMENT.md) and the completed
-[`v0.4.3` operations record](../../docs/RELEASE_0.4.3_OPERATIONS.md) for the
+[`v0.4.4` operations record](../../docs/RELEASE_0.4.4_OPERATIONS.md) for the
 current deployment.
 The user confirmed a **JPY 20,000 total monthly project ceiling on 2026-09-03**;
 this does not automatically raise the earlier JPY 10,000 alert or component
@@ -20,15 +20,15 @@ Cost controls must be in place before runtime resources are created.
 
 ## Current deployed milestone
 
-Release evidence was verified on 2026-09-10 JST:
+Release evidence was verified on 2026-09-11 JST:
 
 - project `data-infra-infobio`, region `asia-northeast1`;
-- OCEAN Platform GitHub release `v0.4.3`;
-- build `a8cac0c6-9ac2-49b4-bdc8-82c82089a0d2`, revision
-  `ocean-platform-v043-26094fc`; immutable images, migration, rollout, and live
-  checks are recorded in the [v0.4.3 operations record](../../docs/RELEASE_0.4.3_OPERATIONS.md);
+- OCEAN Platform GitHub release `v0.4.4`;
+- build `bbff6249-7f41-4375-8ee8-97b5ce6c06a2`, revision
+  `ocean-platform-v044-d3aa6a9`; immutable images, schema checks, rollout, and live
+  checks are recorded in the [v0.4.4 operations record](../../docs/RELEASE_0.4.4_OPERATIONS.md);
 - Cloud Run service `ocean-platform` at 100% traffic on revision
-  `ocean-platform-v043-26094fc`. The frontend has `AUTH_URL=https://oceaninfobio.com`
+  `ocean-platform-v044-d3aa6a9`. The frontend has `AUTH_URL=https://oceaninfobio.com`
   and the API has `CORS_ORIGINS=https://oceaninfobio.com`;
 - Artifact Registry `ocean-platform`; service accounts `ocean-platform` and
   `ocean-jobs`; secrets and jobs under the `ocean-*` prefix;
@@ -45,13 +45,14 @@ Release evidence was verified on 2026-09-10 JST:
   still unknown. The review/application workflow is deployed; scientific
   acceptance remains an explicit follow-up.
 
-The v0.4.2 revision `ocean-platform-00013-djj`, v0.4.1 revision
+The v0.4.3 revision `ocean-platform-v043-26094fc`, v0.4.2 revision
+`ocean-platform-00013-djj`, v0.4.1 revision
 `ocean-platform-v041-706348e`, and v0.4.0 revision
 `ocean-platform-v040-a63885a` are retained. Review
 corpus/publication compatibility before rollback; do not automatically downgrade
 the schema or overwrite later user/chat records.
 
-The v0.4.3 release source is synchronized to remote `main`. Subsequent
+The v0.4.4 release source is synchronized to remote `main`. Subsequent
 operations-record-only commits do not change the immutable build or deployed
 application.
 

@@ -1,15 +1,15 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-09-10 JST
+> **Last updated**: 2026-09-11 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform release `v0.4.3` is live on Cloud Run
-> service `ocean-platform`; revision `ocean-platform-v043-26094fc` receives
-> 100% traffic. PR #58 merged as
-> `26094fc2c1f1f9cad094c484aff4522ba738240f`; immutable build
-> `a8cac0c6-9ac2-49b4-bdc8-82c82089a0d2`, backup/restore, migration, operator
-> canaries, zero-traffic smoke tests, and cutover passed. The bounded ANEMONE
-> pilot remains `unknown`; no real review was approved or applied. See the
-> [v0.4.3 operations record](docs/RELEASE_0.4.3_OPERATIONS.md). The canonical
+> **Current status**: OCEAN Platform release `v0.4.4` is live on Cloud Run
+> service `ocean-platform`; revision `ocean-platform-v044-d3aa6a9` receives
+> 100% traffic. PR #62 merged as `d3aa6a975e7405eaa291d53b50c33985e07f28ff`;
+> immutable build `bbff6249-7f41-4375-8ee8-97b5ce6c06a2` passed. Backup/restore,
+> schema verification, candidate smoke checks, and the controlled taxonomy
+> rebuild completed. The 70 pilot detections retain their source fields and
+> unknown sample classification; no classification review was applied. See the
+> [v0.4.4 operations record](docs/RELEASE_0.4.4_OPERATIONS.md). The canonical
 > application URL is `https://oceaninfobio.com`.
 > Researcher-specific authenticated scientific acceptance, suspension and
 > uninvited-account identities, Billing-console owner confirmation, and the
@@ -55,6 +55,17 @@ used only as historical reference and parity material.
 ---
 
 ## 2. What Changed Recently
+
+### v0.4.4 released and deployed (2026-09-11)
+
+The user-approved ANEMONE TSV is an unchanged regression reference for current
+and future files. Shared taxonomy interpretation removes unresolved labels
+from named-rank calculations and corrects derived assignments. Normalization
+version 3, analysis version 2, and retrieval document version 2 are deployed.
+The retained pilot was rebuilt through validated import, retrieval, two
+embedding updates, registered analysis, and provenance publication. Source
+fields, counts, and unknown classification remain unchanged; historical
+bundles remain verifiable. See the [release record](docs/RELEASE_0.4.4_OPERATIONS.md).
 
 ### v0.4.3 released and deployed (2026-09-10)
 
@@ -1134,12 +1145,12 @@ Use this only to compare historical Streamlit behavior with the Next.js UI.
 
 ## 9. Testing and Verification
 
-The v0.4.3 release gate passed 732 backend tests with 13 expected service-gated
-skips and 78.16% coverage, all 13 fresh PostgreSQL integration tests through
+The v0.4.4 release gate passed 760 backend tests with 13 expected service-gated
+skips and 78.26% coverage, all 13 fresh PostgreSQL integration tests through
 schema head `20260905_0011`, 19 frontend tests, TypeScript checking, the
 24-route production build, Ruff, dependency checks, CodeQL, and a production
 npm audit with zero vulnerabilities. Deployment and monitoring evidence is in
-[`docs/RELEASE_0.4.3_OPERATIONS.md`](docs/RELEASE_0.4.3_OPERATIONS.md).
+[`docs/RELEASE_0.4.4_OPERATIONS.md`](docs/RELEASE_0.4.4_OPERATIONS.md).
 
 The v0.4.0 and v0.4.1 results below are retained as historical release evidence.
 Dependency and security maintenance, including the NLTK-free evaluator, is
@@ -1230,7 +1241,7 @@ git diff --check
 | Pipeline UI | Manual batch job controls, preflight checks, active/background job status, artifact freshness, per-stage logs, run history, manifests, and artifact diffs exist |
 | Database UI | Schema, table browsing, and read-only query surface exist |
 | Data exploration | Combined Explore corpus workbench plus combined Data domain workbench exist for expert browsing |
-| ANEMONE eDNA | One bounded unknown-classification pilot, separate assignment methods, exact source citations, descriptive analysis, registered publication, provenance, strict lineage, shared eligibility, and direct exclusion reasons are deployed through v0.4.3 |
+| ANEMONE eDNA | One bounded unknown-classification pilot, separate assignment methods, exact source citations, descriptive analysis, registered publication, provenance, strict lineage, shared eligibility, and direct exclusion reasons are deployed through v0.4.4, including shared taxonomy resolution |
 | System/debug | Status and debug surfaces exist |
 | Invite-only identity | OIDC, invitations, viewer/researcher/admin roles, suspension, audit events, and a production-forbidden development mock-login harness exist |
 | User feedback | Persisted chat interactions, feedback revisions, admin review/filter/export exist |
@@ -1266,7 +1277,7 @@ git diff --check
 
 ## 13. Recommended Next Work Order
 
-Current status (2026-09-10): v0.4.3 is reviewed, built, migrated, deployed, and
+Current status (2026-09-11): v0.4.4 is reviewed, built, schema-verified, deployed, and
 serving 100% traffic. The next work is acceptance and operating hardening, not
 additional v0.4.3 feature scope:
 

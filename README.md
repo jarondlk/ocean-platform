@@ -25,14 +25,14 @@ its sample classification remains unknown in the current release line.
 
 The [ANEMONE taxonomy reference](docs/ANEMONE_TAXONOMY_REFERENCE.md) documents
 the user-approved TSV regression fixture, interpretation of unresolved ranks,
-and the rebuild procedure for existing eDNA data. The taxonomy fix is local
-development work and has not yet changed the deployed pilot.
+and the rebuild procedure for existing eDNA data. The taxonomy fix is deployed in v0.4.4 and has been applied to the retained
+pilot, preserving source fields and its unknown sample classification.
 
 ---
 
 ## Current Prototype Status
 
-Status as of **2026-09-10**: this is an active invite-only **Next.js +
+Status as of **2026-09-11**: this is an active invite-only **Next.js +
 FastAPI** prototype deployed on GCP, with PostgreSQL/pgvector retrieval,
 Vertex AI generation and embeddings, Google OIDC, and Cloud Run Jobs for
 operator-approved batch work. The same application remains runnable locally
@@ -42,21 +42,21 @@ service.
 
 Current managed milestone:
 
-- GitHub release `v0.4.3` hardens classification lineage, controlled
-  operational outcomes, hybrid retrieval isolation, and shared scientific
-  eligibility. It was released from merged PR #58 commit
-  `26094fc2c1f1f9cad094c484aff4522ba738240f`, built by Cloud Build
-  `a8cac0c6-9ac2-49b4-bdc8-82c82089a0d2`, and is active at revision
-  `ocean-platform-v043-26094fc`. See the
-  [v0.4.3 operations record](docs/RELEASE_0.4.3_OPERATIONS.md).
+- GitHub release [`v0.4.4`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.4)
+  corrects unresolved ANEMONE taxonomy and retains the approved TSV regression
+  reference. PR #62 merged as `d3aa6a975e7405eaa291d53b50c33985e07f28ff`;
+  Cloud Build `bbff6249-7f41-4375-8ee8-97b5ce6c06a2` produced active revision
+  `ocean-platform-v044-d3aa6a9`. The existing pilot's 70 assignments,
+  retrieval, embeddings, analysis, and provenance were rebuilt from retained
+  source data. See the [v0.4.4 operations record](docs/RELEASE_0.4.4_OPERATIONS.md).
 - GitHub release [`v0.4.2`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.2)
   adds direct environmental-eligibility and exclusion-reason presentation to
   the v0.4.1 no-evidence and controlled-classification workflow. It was released
   from merge `2731d464ae11a2064359d2696db3f2eab523c2ac`, built by Cloud Build
-  `fd2a5970-692f-424e-a721-0144e1e2e005`, and is active at revision
+  `fd2a5970-692f-424e-a721-0144e1e2e005`, and remains retained at revision
   `ocean-platform-00013-djj`. See the
   [v0.4.2 operations record](docs/RELEASE_0.4.2_OPERATIONS.md).
-- The retained `v0.4.2` revision `ocean-platform-00013-djj`, v0.4.1 revision
+- The retained `v0.4.3` revision `ocean-platform-v043-26094fc`, `v0.4.2` revision `ocean-platform-00013-djj`, v0.4.1 revision
   `ocean-platform-v041-706348e`, and v0.4.0 revision
   `ocean-platform-v040-a63885a` remain reviewed rollback references. Review
   corpus and schema compatibility before rollback; do not downgrade the schema
@@ -926,11 +926,11 @@ npm run build
 
 ### Current Test Matrix
 
-The deployed v0.4.3 release gate passed 732 backend tests with 13 expected
-service-gated skips and 78.16% coverage, plus 13 PostgreSQL integration tests
+The deployed v0.4.4 release gate passed 760 backend tests with 13 expected
+service-gated skips and 78.26% coverage, plus 13 PostgreSQL integration tests
 through schema head `20260905_0011`, 19 frontend tests, TypeScript checking,
 and the 24-route production build. See
-[`docs/RELEASE_0.4.3_OPERATIONS.md`](docs/RELEASE_0.4.3_OPERATIONS.md).
+[`docs/RELEASE_0.4.4_OPERATIONS.md`](docs/RELEASE_0.4.4_OPERATIONS.md).
 
 | Test area | Files |
 | --- | --- |
