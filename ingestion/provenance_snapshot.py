@@ -220,10 +220,22 @@ def _validate_edna_provenance(snapshot: ProvenanceSnapshot) -> None:
         file_ids = document.get("source_file_ids") or []
         records = metadata.get("canonical_records") or []
         document_version = metadata.get("edna_retrieval_document_version")
-        if type(document_version) is not int or document_version not in (1, 2) or not snapshot_ids or not file_ids or len(records) < 3:
+        if type(document_version) is not int or document_version not in (1, 2, 3) or not snapshot_ids or not file_ids or len(records) < 3:
             raise SnapshotError(prefix + "missing document version, snapshots, files, or canonical records")
         if not sha256.fullmatch(str(metadata.get("detection_set_sha256") or "")):
             raise SnapshotError(prefix + "missing detection-set hash")
+        if document_version == 3:
+            supplied = metadata.get('internal_standards_supplied')
+            count = metadata.get('internal_standard_count')
+            featured = metadata.get('featured_internal_standard_ids')
+            standard_records = [r['entity_id'] for r in records if r.get('entity_type') == 'internal_standard' and r.get('entity_id')]
+            if (type(supplied) is not bool or not isinstance(featured, list)
+                    or not sha256.fullmatch(str(metadata.get('internal_standard_set_sha256') or ''))
+                    or (supplied and (type(count) is not int or count < 0 or len(featured) != min(count, 20)))
+                    or (not supplied and (count is not None or featured))
+                    or len(set(featured)) != len(featured)
+                    or set(featured) != set(standard_records)):
+                raise SnapshotError(prefix + "invalid internal-standard provenance")
         for file_id in file_ids:
             source = files.get(file_id, {})
             if not sha256.fullmatch(str(source.get("sha256") or "")) or source.get("source_snapshot_id") not in snapshot_ids or not source.get("source_url"):

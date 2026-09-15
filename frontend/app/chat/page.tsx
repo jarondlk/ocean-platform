@@ -7,7 +7,7 @@ import { ChatFeedback } from "@/components/ChatFeedback";
 import { DataTable, formatCell } from "@/components/DataTable";
 import { EvidenceNavigator } from "@/components/EvidenceNavigator";
 import { MarkdownAnswer } from "@/components/MarkdownAnswer";
-import { askQuestion, getModels } from "@/lib/api";
+import { ApiError, askQuestion, getModels } from "@/lib/api";
 import { buildCitationTargetIndex, sourceTarget } from "@/lib/citation-navigation";
 import { abstentionReasonLabel, appliedFilterRows } from "@/lib/chat-presentation";
 import type { CitationTarget } from "@/lib/citation-navigation";
@@ -205,7 +205,9 @@ export default function ChatPage() {
       });
       setResponse(result);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
+      setError(err instanceof ApiError
+        ? `${err.message}${err.code ? ` (${err.code})` : ""}${err.interaction_id ? ` Reference: ${err.interaction_id}` : ""}`
+        : err instanceof Error ? err.message : "Request failed");
     } finally {
       setLoading(false);
     }
@@ -290,15 +292,16 @@ export default function ChatPage() {
             {answerAudit ? (
               <article className="card">
                 <div className="section-toolbar">
-                  <h3 className="section-title">{ui("Trust Report")}</h3>
+                  <h3 className="section-title">{ui("Citation and evidence checks")}</h3>
                   <span className="empty-state">
                     {answerAudit.valid_citation_count} valid | {answerAudit.invalid_citation_count} invalid | {answerAudit.warnings.length} warnings
                   </span>
                 </div>
 
+                <p className="empty-state">{ui("These checks assess citation references and evidence coverage. They do not verify scientific claims.")}</p>
                 <div className="summary-strip chat-diagnostics">
-                  <SummaryCell label={ui("Trust")} value={titleCase(answerAudit.trust_level)} />
-                  <SummaryCell label={ui("Score")} value={formatCoverage(answerAudit.trust_score)} />
+                  <SummaryCell label={ui("Citation checks")} value={titleCase(answerAudit.citation_check_status || "historical")} />
+                  <SummaryCell label={ui("Claim verification")} value={ui("Not performed")} />
                   <SummaryCell label={ui("Citations")} value={answerAudit.citation_count} />
                   <SummaryCell label={ui("Valid")} value={answerAudit.valid_citation_count} />
                   <SummaryCell label={ui("Invalid")} value={answerAudit.invalid_citation_count} />
@@ -314,7 +317,7 @@ export default function ChatPage() {
                   <h4 className="subsection-title">{ui("Audit Warnings")}</h4>
                   <CsvExportButton
                     columns={["warning"]}
-                    filename="chat_trust_warnings"
+                    filename="chat_citation_warnings"
                     rows={auditWarningRows}
                   />
                 </div>
@@ -577,7 +580,7 @@ export default function ChatPage() {
               />
               <CheckboxControl
                 checked={settings.runAnswerAudit}
-                label="Run trust report"
+                label="Run citation checks"
                 help="Audit answer citations against retrieved evidence, linked evidence, analysis context, and reliability context."
                 onChange={(value) => updateSetting("runAnswerAudit", value)}
               />
@@ -652,8 +655,10 @@ export default function ChatPage() {
                 <OptionalIntegerControl
                   id="chat-num-predict"
                   label="Max tokens"
-                  help="Maximum generated tokens. Leave blank for the configured runtime default."
-                  max={8192}
+                  help={models?.max_output_tokens
+                    ? `Maximum generated tokens. This deployment allows up to ${models.max_output_tokens}; leave blank to use that limit.`
+                    : "Maximum generated tokens. Leave blank for the configured runtime default."}
+                  max={models?.max_output_tokens ?? 8192}
                   min={1}
                   value={settings.numPredict}
                   onChange={(value) => updateSetting("numPredict", value)}

@@ -264,7 +264,13 @@ def materialize_edna_retrieval(
             with connection.begin():
                 connection.exec_driver_sql("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ")
                 samples, assays, detections = _read_active_frames(connection)
-                documents = build_edna_documents(samples, assays, detections)
+                standards = pd.read_sql_query(text(
+                    "SELECT * FROM edna_internal_standard WHERE active IS TRUE "
+                    "ORDER BY assay_id, internal_standard_id LIMIT 10001"
+                ), connection)
+                if len(standards) > 10000:
+                    raise ValueError('eDNA materialization exceeds internal-standard row limit')
+                documents = build_edna_documents(samples, assays, detections, standards)
                 frame = _document_frame(documents)
                 if execute:
                     if write_artifacts:

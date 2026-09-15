@@ -27,6 +27,18 @@ class ModelRuntimeConfigurationError(ValueError):
     """Raised when the selected model provider is unsupported."""
 
 
+class ModelOutputLimitError(ValueError):
+    """An unfinished answer must not enter the completed-answer path."""
+
+    def __init__(self, *, max_output_tokens: int, output_tokens: Optional[int] = None):
+        super().__init__("Vertex AI answer did not finish cleanly: MAX_TOKENS")
+        self.diagnostics = {
+            "finish_reason": "MAX_TOKENS",
+            "max_output_tokens": max_output_tokens,
+            "output_tokens": output_tokens if type(output_tokens) is int else None,
+        }
+
+
 class ModelRuntime(Protocol):
     provider: str
     endpoint: str
@@ -291,6 +303,12 @@ class VertexRuntime:
             ),
         )
         finish_reason = _finish_reason(response)
+        if finish_reason == "MAX_TOKENS":
+            usage = getattr(response, "usage_metadata", None)
+            raise ModelOutputLimitError(
+                max_output_tokens=output_limit,
+                output_tokens=getattr(usage, "candidates_token_count", None),
+            )
         if finish_reason not in {None, "STOP"}:
             raise ValueError(
                 f"Vertex AI answer did not finish cleanly: {finish_reason}"

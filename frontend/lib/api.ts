@@ -68,28 +68,52 @@ export async function request<T>(path: string, init?: RequestInit): Promise<T> {
   });
 
   if (!response.ok) {
-    throw new Error(await responseErrorMessage(response));
+    throw await responseError(response);
   }
 
   return response.json() as Promise<T>;
 }
 
-async function responseErrorMessage(response: Response): Promise<string> {
+export class ApiError extends Error {
+  status: number;
+  code?: string;
+  interaction_id?: string;
+
+  constructor(message: string, status: number, code?: string, interactionId?: string) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+    this.code = code;
+    this.interaction_id = interactionId;
+  }
+}
+
+async function responseError(response: Response): Promise<ApiError> {
   const body = await response.text();
-  let message = body;
+  let message = `Request failed with ${response.status}`;
+  let code: string | undefined;
+  let interactionId: string | undefined;
   try {
-    const payload = JSON.parse(body) as {
-      detail?: string | { message?: string };
-    };
-    if (typeof payload.detail === "string") {
-      message = payload.detail;
-    } else if (payload.detail?.message) {
-      message = payload.detail.message;
+    const payload = JSON.parse(body);
+    const detail = payload?.detail;
+    if (typeof detail === "string") {
+      message = detail;
+    } else if (Array.isArray(detail)) {
+      message = detail.map((item) => {
+        const field = Array.isArray(item.loc) ? item.loc.filter((part: unknown) => part !== "body").join(".") : "";
+        const text = typeof item.msg === "string" ? item.msg.replace(/^Value error, /, "") : "Invalid value";
+        return field ? `${field}: ${text}` : text;
+      }).join("; ") || message;
+      code = "validation_error";
+    } else if (detail && typeof detail === "object") {
+      if (typeof detail.message === "string") message = detail.message;
+      if (typeof detail.code === "string") code = detail.code;
+      if (typeof detail.interaction_id === "string") interactionId = detail.interaction_id;
     }
   } catch {
-    // Preserve a non-JSON response body as the most useful error message.
+    // Proxy HTML and raw request bodies are not useful user-facing diagnostics.
   }
-  return message || `Request failed with ${response.status}`;
+  return new ApiError(message, response.status, code, interactionId);
 }
 
 export async function getStatus(): Promise<StatusResponse> {
@@ -181,7 +205,7 @@ export async function downloadAdminFeedbackCsv(
     { cache: "no-store" },
   );
   if (!response.ok) {
-    throw new Error(await responseErrorMessage(response));
+    throw await responseError(response);
   }
   const disposition = response.headers.get("Content-Disposition") || "";
   const filenameMatch = disposition.match(/filename="([^"]+)"/);
@@ -451,7 +475,7 @@ export async function downloadEdnaCsv(
     `${API_BASE_URL}/data/edna/export?${searchParams(params)}`,
     { cache: "no-store" },
   );
-  if (!response.ok) throw new Error(await responseErrorMessage(response));
+  if (!response.ok) throw await responseError(response);
   const disposition = response.headers.get("Content-Disposition") || "";
   return {
     blob: await response.blob(),

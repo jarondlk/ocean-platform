@@ -16,9 +16,7 @@ Metrics:
 """
 from __future__ import annotations
 
-import json
 import logging
-import re
 import time
 from dataclasses import asdict, dataclass
 from typing import Any, Dict, List, Optional
@@ -28,7 +26,8 @@ import pandas as pd
 
 import config
 from model_runtime import OllamaRuntime, get_model_runtime
-from orchestration.unified import build_prompt
+from orchestration.unified import build_prompt_with_context
+from orchestration.citations import prepare_citations
 
 logger = logging.getLogger(__name__)
 
@@ -158,19 +157,12 @@ class EvalResult:
 # ─────────────────────────────────────────────
 # Citation Extraction
 # ─────────────────────────────────────────────
-_CITATION_RE = re.compile(
-    r"\[("
-    r"(?:ctd|meta|sst|doc)_[\w\-]+"             # doc citations
-    r"|analysis_[\w]+"                            # analysis citations
-    r"|reliability_[\w]+"                         # reliability citations
-    r")\]",
-    re.IGNORECASE,
-)
 
 
 def extract_citations(text: str) -> List[str]:
-    """Extract all [doc_id], [analysis_*], [reliability_*] citations from text."""
-    return _CITATION_RE.findall(text)
+    """Parse canonical IDs and citation groups, including eDNA identifiers."""
+    from orchestration.citation_syntax import canonical_tokens
+    return [token['citation_id'] for token in canonical_tokens(text)]
 
 
 def compute_citation_accuracy(
@@ -255,33 +247,22 @@ def run_single_evaluation(
             result.source_coverage = 1.0
 
         # 2. Build prompt with mode-specific injection
-        prompt_text = build_prompt(
+        prompt_text, context = build_prompt_with_context(
             question.question,
             retrieved,
             inject_analysis=mode.inject_analysis,
             inject_reliability=mode.inject_reliability,
         )
 
-        # Collect available context IDs for citation accuracy
-        analysis_ids = []
-        reliability_ids = []
-        if mode.inject_analysis:
-            adoc_path = config.ANALYSIS_DIR / "analysis_documents.jsonl"
-            if adoc_path.exists():
-                with open(adoc_path, encoding="utf-8") as f:
-                    for line in f:
-                        if line.strip():
-                            d = json.loads(line)
-                            analysis_ids.append(d.get("id", ""))
-
-        if mode.inject_reliability:
-            rdoc_path = config.RELIABILITY_DIR / "reliability_documents.jsonl"
-            if rdoc_path.exists():
-                with open(rdoc_path, encoding="utf-8") as f:
-                    for line in f:
-                        if line.strip():
-                            d = json.loads(line)
-                            reliability_ids.append(d.get("id", ""))
+        retrieved = context['primary']
+        ret_ids = [row.get('doc_id') or row.get('id', '') for row in retrieved]
+        cited_prompt = prepare_citations(
+            prompt_text, retrieved, context["analysis"], context["reliability"],
+        )
+        prompt_text = cited_prompt.prompt
+        # Score only the supplementary evidence actually included in this prompt.
+        analysis_ids = [row.get("id", "") for row in context["analysis"]]
+        reliability_ids = [row.get("id", "") for row in context["reliability"]]
 
         # 3. Call LLM
         t0 = time.time()
@@ -295,6 +276,7 @@ def run_single_evaluation(
             timeout=180,
         )
 
+        full_response = cited_prompt.resolve(full_response)
         result.latency_seconds = round(time.time() - t0, 2)
         result.response = full_response
 
@@ -449,33 +431,22 @@ def run_single_ablation(
             result.source_coverage = 1.0
 
         # 2. Build prompt with variant-specific injection
-        prompt_text = build_prompt(
+        prompt_text, context = build_prompt_with_context(
             question.question,
             retrieved,
             inject_analysis=variant.inject_analysis,
             inject_reliability=variant.inject_reliability,
         )
 
-        # Collect available context IDs for citation accuracy
-        analysis_ids = []
-        reliability_ids = []
-        if variant.inject_analysis:
-            adoc_path = config.ANALYSIS_DIR / "analysis_documents.jsonl"
-            if adoc_path.exists():
-                with open(adoc_path, encoding="utf-8") as f:
-                    for line in f:
-                        if line.strip():
-                            d = json.loads(line)
-                            analysis_ids.append(d.get("id", ""))
-
-        if variant.inject_reliability:
-            rdoc_path = config.RELIABILITY_DIR / "reliability_documents.jsonl"
-            if rdoc_path.exists():
-                with open(rdoc_path, encoding="utf-8") as f:
-                    for line in f:
-                        if line.strip():
-                            d = json.loads(line)
-                            reliability_ids.append(d.get("id", ""))
+        retrieved = context['primary']
+        ret_ids = [row.get('doc_id') or row.get('id', '') for row in retrieved]
+        cited_prompt = prepare_citations(
+            prompt_text, retrieved, context["analysis"], context["reliability"],
+        )
+        prompt_text = cited_prompt.prompt
+        # Score only the supplementary evidence actually included in this prompt.
+        analysis_ids = [row.get("id", "") for row in context["analysis"]]
+        reliability_ids = [row.get("id", "") for row in context["reliability"]]
 
         # 3. Call LLM
         t0 = time.time()
@@ -489,6 +460,7 @@ def run_single_ablation(
             timeout=180,
         )
 
+        full_response = cited_prompt.resolve(full_response)
         result.latency_seconds = round(time.time() - t0, 2)
         result.response = full_response
 

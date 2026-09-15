@@ -24,7 +24,7 @@ from db.app_models import (
 
 
 def test_new_chat_records_use_ocean_prompt_version():
-    assert chat_records.PROMPT_VERSION == "ocean-chat-v2"
+    assert chat_records.PROMPT_VERSION == "ocean-chat-v4"
 
 
 def _database():
@@ -357,3 +357,116 @@ def test_feedback_is_hidden_from_other_users(monkeypatch):
         ).status_code
         == 404
     )
+
+
+def test_chat_restores_citations_before_response_audit_and_persistence(monkeypatch):
+    import hashlib
+    from types import SimpleNamespace
+
+    factory = _database()
+    user = _add_user(factory, 'citations@example.org')
+    _install_database(monkeypatch, factory)
+    _stub_chat_dependencies(monkeypatch)
+    monkeypatch.setattr(api_auth, 'authenticate_request', lambda _: user)
+    prompts = []
+
+    def chat(**kwargs):
+        prompts.append(kwargs['prompt'])
+        assert '[S1] (ctd' in kwargs['prompt']
+        return 'The temperature was 12 C [S1].'
+
+    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: SimpleNamespace(chat=chat))
+    response = TestClient(api_main.app).post('/chat', json={
+        'query': 'What was the surface temperature?', 'inject_analysis': False,
+        'inject_reliability': False,
+    })
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload['answer'] == 'The temperature was 12 C [ctd:2024-01-O-s1].'
+    assert payload['answer_audit']['invalid_citation_count'] == 0
+    with factory() as session:
+        row = session.get(ChatInteraction, uuid.UUID(payload['interaction_id']))
+        assert row.answer == payload['answer']
+        assert row.evidence_snapshot['citation_aliases'] == {'S1': 'ctd:2024-01-O-s1'}
+        assert row.prompt_version == 'ocean-chat-v4'
+        assert row.prompt_sha256 == hashlib.sha256(prompts[0].encode()).hexdigest()
+
+
+def test_output_limit_has_specific_error_and_no_partial_answer(monkeypatch):
+    from types import SimpleNamespace
+
+    factory = _database()
+    user = _add_user(factory, 'limit@example.org')
+    _install_database(monkeypatch, factory)
+    _stub_chat_dependencies(monkeypatch)
+    monkeypatch.setattr(api_auth, 'authenticate_request', lambda _: user)
+
+    def chat(**kwargs):
+        raise model_runtime.ModelOutputLimitError(max_output_tokens=1600, output_tokens=1596)
+
+    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: SimpleNamespace(chat=chat))
+    response = TestClient(api_main.app).post('/chat', json={'query': 'fetch me some edna metabarcoding samples'})
+    assert response.status_code == 502
+    detail = response.json()['detail']
+    assert detail['code'] == 'llm_output_limit'
+    assert 'shorter summary' in detail['message']
+    assert detail['generation']['finish_reason'] == 'MAX_TOKENS'
+    with factory() as session:
+        row = session.get(ChatInteraction, uuid.UUID(detail['interaction_id']))
+        assert row.status == 'failed'
+        assert row.error_code == 'llm_output_limit'
+        assert row.answer is None and row.outcome is None
+        assert row.answer_audit_snapshot is None
+        assert row.request_options['generation_result']['output_tokens'] == 1596
+
+
+def test_unknown_alias_is_rejected_even_when_answer_audit_disabled(monkeypatch):
+    from types import SimpleNamespace
+
+    factory = _database()
+    user = _add_user(factory, 'unknown-label@example.org')
+    _install_database(monkeypatch, factory)
+    _stub_chat_dependencies(monkeypatch)
+    monkeypatch.setattr(api_auth, 'authenticate_request', lambda _: user)
+    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: SimpleNamespace(chat=lambda **_: 'Claim [S999].'))
+    response = TestClient(api_main.app).post('/chat', json={'query': 'temperature', 'run_answer_audit': False})
+    assert response.status_code == 502
+    detail = response.json()['detail']
+    assert detail['code'] == 'llm_invalid_citation'
+    with factory() as session:
+        row = session.get(ChatInteraction, uuid.UUID(detail['interaction_id']))
+        assert row.status == 'failed' and row.answer is None
+
+
+def test_issue59_unfiltered_eight_document_request_keeps_canonical_edna_citations(monkeypatch):
+    from types import SimpleNamespace
+    factory = _database()
+    user = _add_user(factory, 'edna-citations@example.org')
+    _install_database(monkeypatch, factory)
+    monkeypatch.setattr(api_auth, 'authenticate_request', lambda _: user)
+    identifiers = ['edna_' + 'a' * 64 + '_' + method for method in ['qcauto_target', 'qcauto_95pct_3nn_target']]
+    rows = [{'doc_id': identity, 'source_type': 'edna_metabarcoding', 'sample_id': 'b' * 64,
+             'text': 'One unknown-classification MiFish sample; 35 detections and 9635 reads per method.'}
+            for identity in identifiers]
+    rows += [{'doc_id': f'meta_2024_O_s{i}', 'source_type': 'metagenome', 'text': 'Shotgun metagenome evidence.'} for i in range(6)]
+
+    def retrieve(query, **kwargs):
+        assert query == 'fetch me some edna metabarcoding samples'
+        assert kwargs['source_type'] is None and kwargs['k'] == 8
+        return {'primary': rows, 'linked': [], 'diagnostics': {'expected_source_types': ['edna_metabarcoding']}}
+
+    def chat(**kwargs):
+        assert 'a' * 64 not in kwargs['prompt']
+        assert '[S8] (metagenome' in kwargs['prompt']
+        return 'One MiFish sample has two assignment methods, with unknown classification [S1; S2].'
+
+    monkeypatch.setattr(api_main, 'retrieve_with_expansion', retrieve)
+    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: SimpleNamespace(chat=chat))
+    response = TestClient(api_main.app).post('/chat', json={'query': 'fetch me some edna metabarcoding samples'})
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload['n_sources'] == 8
+    assert payload['answer_audit']['valid_citation_count'] == 2
+    assert payload['answer_audit']['invalid_citation_count'] == 0
+    assert all(identity in payload['answer'] for identity in identifiers)
+    assert '[S1' not in payload['answer']

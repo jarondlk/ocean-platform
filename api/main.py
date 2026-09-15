@@ -155,7 +155,8 @@ from ingestion.lineage import (
     build_upsert_dry_run_plan,
 )
 from ingestion.provenance_snapshot import SnapshotError
-from model_runtime import get_model_runtime
+from model_runtime import ModelOutputLimitError, get_model_runtime
+from orchestration.citations import InvalidCitationAlias, prepare_citations
 
 
 def _cors_origins() -> List[str]:
@@ -176,7 +177,7 @@ async def _app_lifespan(_app: FastAPI):
 app = FastAPI(
     title="OCEAN Platform API",
     description="API layer for the Next.js migration of the provenance-aware marine RAG system.",
-    version="0.4.4",
+    version="0.4.5",
     lifespan=_app_lifespan,
 )
 
@@ -686,6 +687,7 @@ def _prompt_diagnostics(
         "retrieved_text_chars": retrieved_chars,
         "linked_text_chars": linked_chars,
         "supplementary_text_chars": context_chars,
+        "evidence_omissions": context.get("omitted", []),
         "ranked_documents": sum(1 for row in retrieved if row.get("rank_sources")),
     }
 
@@ -3566,6 +3568,11 @@ def _ollama_options(request: ChatRequest) -> Dict[str, Any]:
     }
     if request.num_predict is not None:
         options["num_predict"] = request.num_predict
+    if config.MODEL_PROVIDER == "vertex":
+        options["num_predict"] = min(
+            options.get("num_predict", config.CHAT_MAX_OUTPUT_TOKENS),
+            config.CHAT_MAX_OUTPUT_TOKENS,
+        )
     if request.sampling_top_k is not None:
         options["top_k"] = request.sampling_top_k
     if request.seed is not None:
@@ -3691,6 +3698,7 @@ def models() -> ModelsResponse:
         ]
         return ModelsResponse(
             default_model=config.CHAT_MODEL,
+            max_output_tokens=config.CHAT_MAX_OUTPUT_TOKENS if config.MODEL_PROVIDER == "vertex" else None,
             embedding_model=config.EMBEDDING_MODEL,
             provider=runtime.provider,
             ollama_base_url=runtime.endpoint,
@@ -3701,6 +3709,7 @@ def models() -> ModelsResponse:
         logger.warning("Model discovery unavailable: %s", exc)
         return ModelsResponse(
             default_model=config.CHAT_MODEL,
+            max_output_tokens=config.CHAT_MAX_OUTPUT_TOKENS if config.MODEL_PROVIDER == "vertex" else None,
             embedding_model=config.EMBEDDING_MODEL,
             provider=config.MODEL_PROVIDER,
             ollama_base_url=config.OLLAMA_BASE_URL,
@@ -5154,6 +5163,7 @@ def _mark_chat_failed_safely(
     user: CurrentUser,
     error_code: str,
     started_at: float,
+    generation_diagnostics: Optional[Dict[str, Any]] = None,
 ) -> None:
     try:
         fail_chat_interaction(
@@ -5161,6 +5171,7 @@ def _mark_chat_failed_safely(
             user=user,
             error_code=error_code,
             latency_ms=_chat_latency_ms(started_at),
+            generation_diagnostics=generation_diagnostics,
         )
     except Exception:
         logger.exception(
@@ -5266,6 +5277,13 @@ def chat(
             inject_analysis=request.inject_analysis,
             inject_reliability=request.inject_reliability,
         )
+        rows = context.get('primary', rows)
+        linked_rows = context.get('linked', linked_rows)
+        cited_prompt = prepare_citations(
+            prompt, rows, linked_rows,
+            context.get("analysis", []), context.get("reliability", []),
+        )
+        prompt = cited_prompt.prompt
         sources = [_source_document(row) for row in rows]
         linked_sources = [_source_document(row) for row in linked_rows]
         analysis_context = [
@@ -5283,6 +5301,7 @@ def chat(
             linked_rows,
         )
         evidence_snapshot = {
+            "citation_aliases": dict(cited_prompt.aliases),
             "sources": sources,
             "linked_sources": linked_sources,
             "analysis_context": analysis_context,
@@ -5347,18 +5366,35 @@ def chat(
                 options=ollama_options,
                 timeout=120,
             )
+            answer = cited_prompt.resolve(answer)
         except Exception as exc:
+            error_code = "llm_request_failed"
+            message = "The language model could not complete the request"
+            generation_diagnostics = None
+            if isinstance(exc, ModelOutputLimitError):
+                error_code = "llm_output_limit"
+                message = (
+                    "The answer reached the output limit before it could finish. "
+                    "Please request a shorter summary or fewer details."
+                )
+                generation_diagnostics = exc.diagnostics
+            elif isinstance(exc, InvalidCitationAlias):
+                error_code = "llm_invalid_citation"
+                message = "The answer contained an unrecognized citation. Please try again."
             _mark_chat_failed_safely(
                 interaction_id=interaction_id,
                 user=user,
-                error_code="llm_request_failed",
+                error_code=error_code,
                 started_at=started_at,
+                generation_diagnostics=generation_diagnostics,
             )
             logger.exception("Language model request failed")
             detail = {
-                "code": "llm_request_failed",
-                "message": "The language model could not complete the request",
+                "code": error_code,
+                "message": message,
             }
+            if generation_diagnostics is not None:
+                detail["generation"] = generation_diagnostics
             if interaction_id is not None:
                 detail["interaction_id"] = str(interaction_id)
             raise HTTPException(status_code=502, detail=detail) from exc

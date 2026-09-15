@@ -92,7 +92,7 @@ def test_prepare_snapshot_rejects_unsafe_manifest_id():
         prepare_snapshot(_manifest(), manifest_id="../escape")
 
 
-@pytest.mark.parametrize("document_version", [1, 2])
+@pytest.mark.parametrize("document_version", [1, 2, 3])
 def test_edna_publication_requires_complete_source_and_row_provenance(document_version):
     manifest = _manifest()
     snapshot_id, file_id = "a" * 64, "b" * 64
@@ -121,8 +121,19 @@ def test_edna_publication_requires_complete_source_and_row_provenance(document_v
             } for kind in ("sample", "assay", "detection")],
         },
     }]
+    if document_version == 3:
+        manifest['documents'][0]['metadata'].update(
+            internal_standards_supplied=True, internal_standard_count=0,
+            featured_internal_standard_ids=[], internal_standard_set_sha256='2' * 64)
     assert prepare_snapshot(manifest, manifest_id="edna-complete").documents[0]["metadata"]
-    for version in (None, True, 3, "2"):
+    if document_version == 3:
+        for field, value in [('internal_standard_count', 1), ('internal_standard_set_sha256', None),
+                             ('internal_standards_supplied', None), ('featured_internal_standard_ids', ['invented'])]:
+            changed = json.loads(json.dumps(manifest))
+            changed['documents'][0]['metadata'][field] = value
+            with pytest.raises(SnapshotError, match='internal-standard provenance'):
+                prepare_snapshot(changed, manifest_id='edna-standards-invalid')
+    for version in (None, True, 4, "2"):
         changed = json.loads(json.dumps(manifest))
         changed["documents"][0]["metadata"]["edna_retrieval_document_version"] = version
         with pytest.raises(SnapshotError, match="missing document version"):

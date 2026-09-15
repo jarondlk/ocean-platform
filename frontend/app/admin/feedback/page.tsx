@@ -568,11 +568,11 @@ function FeedbackDetail({
             <pre>{JSON.stringify(detail.evidence_snapshot, null, 2)}</pre>
           </details>
           <details className="debug-block feedback-debug-block">
-            <summary>{ui("Trust report")}</summary>
+            <summary>{ui("Citation and evidence checks")}</summary>
             <pre>
               {JSON.stringify(
                 detail.answer_audit_snapshot || {
-                  status: ui("No trust report was recorded."),
+                  status: ui("No citation checks were recorded."),
                 },
                 null,
                 2,

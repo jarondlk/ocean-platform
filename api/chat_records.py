@@ -15,7 +15,7 @@ from db.connection import get_session
 
 
 # Existing ``onagawa-chat-v1`` rows remain unchanged as historical provenance.
-PROMPT_VERSION = "ocean-chat-v2"
+PROMPT_VERSION = "ocean-chat-v4"
 
 
 def json_safe(value: Any) -> Any:
@@ -158,6 +158,7 @@ def fail_chat_interaction(
     user: CurrentUser,
     error_code: str,
     latency_ms: int,
+    generation_diagnostics: Optional[Dict[str, Any]] = None,
 ) -> None:
     if interaction_id is None:
         return
@@ -170,5 +171,10 @@ def fail_chat_interaction(
             return
         interaction.status = "failed"
         interaction.error_code = error_code[:64]
+        if generation_diagnostics is not None:
+            interaction.request_options = {
+                **(interaction.request_options or {}),
+                "generation_result": json_safe(generation_diagnostics),
+            }
         interaction.latency_ms = max(0, latency_ms)
         interaction.completed_at = datetime.now(timezone.utc)

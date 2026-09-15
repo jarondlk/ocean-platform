@@ -322,6 +322,9 @@ class RetrieveRequest(BaseModel):
 
     @model_validator(mode="after")
     def validate_edna_filters(self) -> "RetrieveRequest":
+        self.query = self.query.strip()
+        if not self.query:
+            raise ValueError("query must contain non-whitespace characters")
         from retrieval.contract import normalized_weights
 
         self.vector_weight, self.fts_weight = normalized_weights(
@@ -436,7 +439,11 @@ class CitationAuditRecord(BaseModel):
 
 
 class AnswerAudit(BaseModel):
-    trust_level: str = "weak"
+    citation_check_status: str = "unknown"
+    claim_verification: str = "not_performed"
+    audit_kind: str = "citation_and_coverage"
+    # Legacy fields retained for saved-record compatibility, not claim confidence.
+    trust_level: str = "not_assessed"
     trust_score: float = 0.0
     citation_count: int = 0
     valid_citation_count: int = 0
@@ -574,6 +581,7 @@ class ModelsResponse(BaseModel):
     provider: str = "ollama"
     ollama_base_url: str
     available: bool
+    max_output_tokens: Optional[int] = None
     models: List[OllamaModel] = Field(default_factory=list)
     error: Optional[str] = None
 
