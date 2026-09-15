@@ -18,7 +18,8 @@ from retrieval.edna_document_builder import build_edna_documents
 def test_structured_edna_scope_suppresses_legacy_context_even_without_results(scope):
     with patch('orchestration.unified._read_context_documents') as loader:
         _, context = build_prompt_with_context('Compare diversity', [], evidence_scope=scope)
-    assert context == {'analysis': [], 'reliability': []}
+    assert context['analysis'] == [] and context['reliability'] == []
+    assert context['primary'] == [] and context['linked'] == []
     loader.assert_not_called()
 
 

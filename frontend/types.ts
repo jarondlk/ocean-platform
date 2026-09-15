@@ -178,6 +178,9 @@ export type CitationAuditRecord = {
 };
 
 export type AnswerAudit = {
+  citation_check_status?: string;
+  claim_verification?: string;
+  audit_kind?: string;
   trust_level: string;
   trust_score: number;
   citation_count: number;
@@ -315,6 +318,7 @@ export type ModelsResponse = {
   provider: string;
   ollama_base_url: string;
   available: boolean;
+  max_output_tokens?: number | null;
   models: OllamaModel[];
   error?: string | null;
 };

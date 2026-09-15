@@ -14,7 +14,7 @@ from retrieval.document_builder import RetrievalDocument
 
 
 EDNA_SOURCE_TYPE = "edna_metabarcoding"
-EDNA_RETRIEVAL_DOCUMENT_VERSION = 2
+EDNA_RETRIEVAL_DOCUMENT_VERSION = 3
 EDNA_ASSIGNMENT_METHODS = frozenset(
     {"qcauto_target", "qcauto_95pct_3nn_target"}
 )
@@ -160,11 +160,13 @@ def build_edna_documents(
     samples: pd.DataFrame,
     assays: pd.DataFrame,
     detections: pd.DataFrame,
+    internal_standards: pd.DataFrame | None = None,
 ) -> list[RetrievalDocument]:
     """Build one bounded document per active sample/assay/assignment method."""
     active_samples = _active(samples)
     active_assays = _active(assays)
     active_detections = _active(detections)
+    active_standards = _active(internal_standards) if internal_standards is not None else pd.DataFrame()
     if active_samples.empty or active_assays.empty or active_detections.empty:
         return []
 
@@ -266,6 +268,22 @@ def build_edna_documents(
             f"Records with source-supplied copies/mL: {supplied_copies}."
         )
 
+        standards = active_standards[
+            active_standards['assay_id'].astype(str) == assay_id
+        ].sort_values('internal_standard_id') if not active_standards.empty else pd.DataFrame()
+        featured_standards = standards.head(20)
+        if internal_standards is None:
+            lines.append("Internal-standard records were not supplied to this retrieval build; their presence cannot be determined from this context.")
+        elif standards.empty:
+            lines.append("No active internal-standard records are recorded for this assay in the current source snapshot. This does not establish that no standards were used.")
+        else:
+            lines.append(f"Assay-level internal-standard records: {len(standards)} (shared across assignment methods, not biological detections). "
+                         f"First {len(featured_standards)} records: " + "; ".join(
+                             f"{row['standard_name']}, read count {int(row['read_count'])}"
+                             for _, row in featured_standards.iterrows()) + ".")
+        lines.append("Missing copies/mL does not establish absent internal standards. Standard presence alone does not establish calibrated abundance or contamination-free water.")
+
+        lines.append("Calibration status: not established from the supplied records. Missing copies/mL does not establish whether calibration was performed; the calibration status remains unknown.")
         featured: list[str] = []
         for _, detection in top_rows.iterrows():
             taxon, rank = detection_assignment(detection)
@@ -291,6 +309,8 @@ def build_edna_documents(
             [assay.get("source_file_id")],
             rows.get("source_file_id", pd.Series(dtype="string")).tolist(),
         )
+        snapshot_ids = sorted(set(snapshot_ids) | set(_source_ids(standards.get('source_snapshot_id', pd.Series(dtype='string')).tolist())))
+        source_file_ids = sorted(set(source_file_ids) | set(_source_ids(standards.get('source_file_id', pd.Series(dtype='string')).tolist())))
         featured_ids = [str(value) for value in top_rows["detection_id"].tolist()]
         canonical_records = [
             _record_provenance("sample", sample_id, sample),
@@ -300,7 +320,20 @@ def build_edna_documents(
                 for _, row in top_rows.iterrows()
             ],
         ]
+        canonical_records.extend(
+            _record_provenance('internal_standard', str(row['internal_standard_id']), row)
+            for _, row in featured_standards.iterrows()
+        )
         metadata = {
+            "calibration_status": "not_established",
+            "internal_standards_supplied": internal_standards is not None,
+            "internal_standard_count": len(standards) if internal_standards is not None else None,
+            "featured_internal_standard_ids": featured_standards.get('internal_standard_id', pd.Series(dtype='string')).tolist(),
+            "internal_standard_set_sha256": hashlib.sha256(_canonical_json([
+                [str(row['internal_standard_id']), _text(row.get('source_row_hash')),
+                 str(row['standard_name']), int(row['read_count'])]
+                for _, row in standards.iterrows()
+            ]).encode('utf-8')).hexdigest(),
             "edna_retrieval_document_version": EDNA_RETRIEVAL_DOCUMENT_VERSION,
             "source_family": EDNA_SOURCE_TYPE,
             "source_snapshot_ids": snapshot_ids,

@@ -221,3 +221,25 @@ def test_runtime_factory_builds_vertex_from_config(monkeypatch):
     assert isinstance(runtime, model_runtime.VertexRuntime)
     assert runtime.project == "example-project"
     assert runtime.location == "global"
+
+
+def test_output_limit_records_budget_without_retrying_or_returning_partial_text():
+    from types import SimpleNamespace
+    client = _VertexClient()
+    calls = []
+
+    def generate(**kwargs):
+        calls.append(kwargs)
+        return SimpleNamespace(
+            candidates=[SimpleNamespace(finish_reason='MAX_TOKENS')],
+            usage_metadata=SimpleNamespace(candidates_token_count=28),
+            text='private unfinished answer [S1',
+        )
+
+    client.models.generate_content = generate
+    runtime = model_runtime.VertexRuntime(project='example-project', location='global', embedding_dim=2, client=client)
+    with pytest.raises(model_runtime.ModelOutputLimitError) as failure:
+        runtime.chat(model='gemini-flash', prompt='question', options={'num_predict': 32})
+    assert len(calls) == 1
+    assert failure.value.diagnostics == {'finish_reason': 'MAX_TOKENS', 'max_output_tokens': 32, 'output_tokens': 28}
+    assert 'private unfinished' not in str(failure.value)

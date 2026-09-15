@@ -19,7 +19,7 @@ def test_audit_accepts_valid_citations_across_all_evidence_roles():
         },
     )
 
-    assert audit["trust_level"] == "strong"
+    assert audit["citation_check_status"] == "passed"
     assert audit["trust_score"] == 1.0
     assert audit["citation_count"] == 4
     assert audit["invalid_citation_count"] == 0
@@ -45,7 +45,7 @@ def test_audit_flags_invalid_and_unused_linked_evidence():
         },
     )
 
-    assert audit["trust_level"] == "weak"
+    assert audit["citation_check_status"] == "failed"
     assert audit["valid_citation_count"] == 1
     assert audit["invalid_citation_count"] == 1
     assert audit["invalid_citations"][0]["citation_id"] == "not_in_context"
@@ -70,7 +70,7 @@ def test_audit_requires_gap_acknowledgement_when_retrieval_misses_source_type():
         },
     )
 
-    assert audit["trust_level"] == "strong"
+    assert audit["citation_check_status"] == "passed"
     assert audit["missing_expected_citations"] == ["remote_sensing"]
     assert "Retrieval diagnostics reported missing source types, but the answer did not acknowledge the gap." not in audit["warnings"]
 
@@ -98,7 +98,7 @@ def test_reliability_context_can_satisfy_ctd_sst_source_requirements():
     )
 
     requirements = audit["citation_requirements"]
-    assert audit["trust_level"] == "strong"
+    assert audit["citation_check_status"] == "passed"
     assert audit["missing_expected_citations"] == []
     assert requirements["context_satisfied_source_types"] == ["ctd", "remote_sensing"]
     assert requirements["missing_source_types"] == []
@@ -129,7 +129,7 @@ def test_analysis_context_can_satisfy_trend_source_requirements():
         },
     )
 
-    assert audit["trust_level"] == "strong"
+    assert audit["citation_check_status"] == "passed"
     assert audit["missing_expected_citations"] == []
     assert audit["citation_requirements"]["required_context_types"] == ["analysis"]
     assert audit["citation_requirements"]["context_satisfied_source_types"] == ["ctd"]
@@ -157,7 +157,7 @@ def test_raw_measurement_question_still_requires_raw_source_citation():
         },
     )
 
-    assert audit["trust_level"] == "caution"
+    assert audit["citation_check_status"] == "warnings"
     assert audit["missing_expected_citations"] == ["ctd"]
     assert audit["citation_requirements"]["raw_source_required"] is True
     assert audit["citation_requirements"]["context_satisfied_source_types"] == []
@@ -186,6 +186,6 @@ def test_required_reliability_context_warns_when_not_cited():
         },
     )
 
-    assert audit["trust_level"] == "caution"
+    assert audit["citation_check_status"] == "warnings"
     assert audit["citation_requirements"]["missing_context_types"] == ["reliability"]
     assert "Reliability context is required for this query but was not cited." in audit["warnings"]

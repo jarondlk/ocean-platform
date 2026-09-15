@@ -1,0 +1,267 @@
+{
+  "version": "0.4.5",
+  "date": "2026-09-12",
+  "status": "local_candidate_not_deployed",
+  "scope": "Generation and canonical citation audit using saved production evidence and the candidate citation helper; no candidate API/frontend deployment or new retrieval.",
+  "pass_definition": "The per-case passed field checks successful generation and citation identifier validity only. It is not an assertion that every scientific claim is supported.",
+  "final_helper_sha256": "1aa394a12ce1ff16bffb90b8959c3fa53e3bcf015e24cbdae23c8ec2231d21da",
+  "local_checks": {
+    "backend_passed": 783,
+    "backend_skipped": 13,
+    "backend_coverage_percent": 79.35,
+    "frontend_passed": 19,
+    "frontend_typecheck": "passed",
+    "frontend_production_build": "passed",
+    "ruff": "passed",
+    "git_diff_check": "passed"
+  },
+  "semantic_review": {
+    "original": "Two method records correctly share the same provider sample ID, date and coordinates. Wording should explicitly distinguish one physical sample from two records; the response does not explicitly say one unique sample.",
+    "detailed_methods": "Both methods retain 35 detections and 9,635 reads; five featured taxa match the retained evidence, including Siganus species versus genus assignment.",
+    "mixed_sources": "Correctly keeps the 2017 MiFish sample separate from Onagawa 2024–2025 shotgun records and does not pool reads. Broader statements about microbial succession, blooms, bacterial profiles and strictly teleost scope are not established by the retrieved records alone. Scientific acceptance remains pending."
+  },
+  "remaining_checks": [
+    "Complete nine-question authenticated browser acceptance pass including citation navigation and history.",
+    "Repeat critical questions to measure response variability.",
+    "Review claim-level scientific support, especially mixed-source generalizations.",
+    "Protected-branch PostgreSQL/CI checks before release."
+  ],
+  "trials": [
+    {
+      "stage": "initial",
+      "execution": "ocean-anemone-process-9r9hj",
+      "cases": [
+        {
+          "case": "original",
+          "helper_sha256": "75455b865fbbfd13a3458c1dbe80cfd0595c3963169182313347b049e013166e",
+          "evidence_documents": 8,
+          "prompt_sha256": "fda8039d64c3f39c954d77c11bbcdaf3626d62874004ac4cdaf5361bbcfff062",
+          "model": "gemini-3.6-flash",
+          "output_limit": 1600,
+          "answer": "Here are the requested eDNA metabarcoding sample records retrieved from the dataset:\n\n*   **ANEMONE MiFish Sample (`2019KibanSRUN01__20171218T0103-KUM-Otomi-Surface__MiFish`) — QCauto 95%-3NN Method**\n    *   **Collection Time:** 2017-12-18 01:03:00+00:00 [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target].\n    *   **Coordinates:** 35.541667°N, 135.562500°E [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target].\n    *   **Sample & Control Status:** Classification and control status are unknown [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target].\n    *   **Assay Details:** Target gene 12S rRNA using NextSeq 500 sequencing [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target].\n    *   **Detection Summary:** 35 detection records totaling 9,635 reads (0 records with source-supplied copies/mL) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target]. \n    *   **Highest Read Detections:** *Girella punctata* (1,305 reads), *Siganus fuscescens* (846 reads), *Enneapterygius etheostomus* (712 reads), *Sebastiscus marmoratus* (683 reads), and *Pseudolabrus sieboldi* (666 reads) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target].\n\n*   **ANEMONE MiFish Sample (`2019KibanSRUN01__20171218T0103-KUM-Otomi-Surface__MiFish`) — QCauto Method**\n    *   **Collection Time:** 2017-12-18 01:03:00+00:00 [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n    *   **Coordinates:** 35.541667°N, 135.562500°E [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n    *   **Sample & Control Status:** Classification and control status are unknown [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n    *   **Assay Details:** Target gene 12S rRNA using NextSeq 500 sequencing [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n    *   **Detection Summary:** 35 detection records totaling 9,635 reads (0 records with source-supplied copies/mL) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n    *   **Highest Read Detections:** *Girella punctata* (1,305 reads), *Siganus* genus (846 reads), *Enneapterygius etheostomus* (712 reads), *Sebastiscus marmoratus* (683 reads), and *Pseudolabrus sieboldi* (666 reads) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n\n**Methodological Notes & Data Gaps:**\n*   **Data Types:** Read counts represent sequencing counts and must not be interpreted as organism abundance, biomass, or concentration [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. \n*   **Assignment Methods:** The assignment methods (`qcauto_95pct_3nn_target` vs. `qcauto_target`) yield different taxonomic assignments (e.g., *Siganus fuscescens* vs. genus *Siganus*) and are kept separate [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. \n*   **Missing Data:** CTD measurements, shotgun metagenome data for this specific location/time, and satellite SST measurements are missing for these eDNA records [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. No reliability validation data or pre-computed analysis files were provided for these samples.",
+          "valid_citations": 18,
+          "invalid_citations": 0,
+          "warnings": [],
+          "passed": true,
+          "finish_reason": "STOP",
+          "usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 792,
+            "candidates_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 792
+              }
+            ],
+            "prompt_token_count": 3129,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 3129
+              }
+            ],
+            "thoughts_token_count": null,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 3921,
+            "traffic_type": "ON_DEMAND"
+          }
+        },
+        {
+          "case": "detailed_methods",
+          "helper_sha256": "75455b865fbbfd13a3458c1dbe80cfd0595c3963169182313347b049e013166e",
+          "evidence_documents": 2,
+          "prompt_sha256": "92e2d8d6ef92cc08513e97d5dc3e26758fb77ba46485c2f42a6202e5987b4ba1",
+          "model": "gemini-3.6-flash",
+          "output_limit": 1600,
+          "answer": "Below is the comparison between the **QCauto** and **QCauto 95%-3NN** assignment methods for the single available ANEMONE MiFish surface sample collected on 2017-12-18T01:03:00+00:00 (coordinates: 35.541667°N, 135.562500°E) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n\n### MiFish Assignment Method Comparison\n\n| Metric / Feature | QCauto 95%-3NN [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target] | QCauto [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target] |\n| :--- | :--- | :--- |\n| **Detection Records** | 35 | 35 |\n| **Total Read Count** | 9,635 | 9,635 |\n| **Top 5 Featured Taxa (by Read Count)** | 1. *Girella punctata* (1,305 reads)<br>2. *Siganus fuscescens* (846 reads)<br>3. *Enneapterygius etheostomus* (712 reads)<br>4. *Sebastiscus marmoratus* (683 reads)<br>5. *Pseudolabrus sieboldi* (666 reads) | 1. *Girella punctata* (1,305 reads)<br>2. *Siganus* [genus] (846 reads)<br>3. *Enneapterygius etheostomus* (712 reads)<br>4. *Sebastiscus marmoratus* (683 reads)<br>5. *Pseudolabrus sieboldi* (666 reads) |\n\n### Key Evidence Notes\n* **Data Discrepancy:** Both assignment methods return identical total detection counts (35) and identical total sequencing reads (9,635) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. However, taxonomic resolution differs at specific ranks; for example, the second highest-read record is assigned to the species *Siganus fuscescens* under **QCauto 95%-3NN** [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target], whereas **QCauto** leaves it assigned at the genus level as *Siganus* [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. \n* **Data Limitations & Missing Sources:** Read counts represent sequencing output counts, not organism abundance, biomass, or concentration [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. The sample control status is listed as unknown [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. No corresponding CTD, shotgun metagenome, or satellite SST records were provided for this sample location/time [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].",
+          "valid_citations": 14,
+          "invalid_citations": 1,
+          "warnings": [
+            "Answer contains citations not present in supplied evidence."
+          ],
+          "passed": false,
+          "finish_reason": "STOP",
+          "usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 573,
+            "candidates_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 573
+              }
+            ],
+            "prompt_token_count": 2027,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 2027
+              }
+            ],
+            "thoughts_token_count": null,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 2600,
+            "traffic_type": "ON_DEMAND"
+          }
+        },
+        {
+          "case": "mixed_sources",
+          "helper_sha256": "75455b865fbbfd13a3458c1dbe80cfd0595c3963169182313347b049e013166e",
+          "evidence_documents": 8,
+          "prompt_sha256": "2d6c7afb2e7b62674ac433d8071108ba7de41066fa2ab374dc24a08c6bdc0b10",
+          "model": "gemini-3.6-flash",
+          "output_limit": 1600,
+          "answer": "### Methodological and Spatial Differences\n\nThe provided evidence includes two distinct dataset types that differ in their sampling locations, target assays, and analytical methods:\n\n*   **ANEMONE MiFish eDNA Metabarcoding:** Samples collected on 2017-12-18 at coordinates 35.541667, 135.562500 (outside the Onagawa Bay legacy site) targeting the 12S rRNA gene via NextSeq 500 sequencing [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. The analysis evaluates targeted amplicon detection records using specific assignment pipelines (`qcauto_95pct_3nn_target` and `qcauto_target`), yielding sequence read counts (e.g., *Girella punctata* with 1,305 reads) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. Read counts represent sequencing counts only, not organism abundance, concentration, or biomass [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. \n*   **Onagawa Shotgun Metagenomes:** Samples collected within Onagawa Bay (stations s1, s4, and s8) between May 2024 and April 2025 [meta_2024-07-O-s8, meta_2025-04-O-s4, meta_2024-06-O-s1, meta_2024-05-O-s4, meta_2024-08-O-s4, meta_2024-07-O-s4]. These untargeted whole-genome sequencing runs measure the relative abundance of total taxonomic groups (e.g., Copepoda, Dinophyceae, Coscinodiscophyceae) and MetaEuk functional gene/genus annotations (e.g., *Meganyctiphanes*, *Tripos*, *Flammeovirga*) [meta_2024-07-O-s8, meta_2025-04-O-s4, meta_2024-06-O-s1, meta_2024-05-O-s4, meta_2024-08-O-s4, meta_2024-07-O-s4].\n\n### Ecological Findings Comparison\n\nThe two datasets **do not** establish the same ecological findings:\n\n1.  **Geographic and Temporal Disconnect:** The MiFish data originates from 2017 at 35.541667°N, 135.562500°E [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target], whereas the shotgun metagenome samples were collected in Onagawa Bay (approx. 38.44°N, 141.45°E) during 2024–2025 [meta_2024-07-O-s8, meta_2025-04-O-s4, meta_2024-06-O-s1, meta_2024-05-O-s4, meta_2024-08-O-s4, meta_2024-07-O-s4]. They share no explicitly qualified environmental pairing.\n2.  **Taxonomic Scope:** The MiFish records profile teleost fish taxa (e.g., *Girella punctata*, *Siganus fuscescens*, *Sebastiscus marmoratus*) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. In contrast, the Onagawa metagenomes capture broad planktonic, microbial, and invertebrate communities dominated by microalgae and small metazoans (e.g., Dinophyceae up to 8.09%, Copepoda up to 4.38%, and *Flammeovirga* up to 7.48%), with no featured teleost fish detections [meta_2024-07-O-s8, meta_2025-04-O-s4, meta_2024-06-O-s1, meta_2024-05-O-s4, meta_2024-08-O-s4, meta_2024-07-O-s4].\n3.  **Absence of Cross-Validation:** A missing detection record in targeted metabarcoding does not establish biological absence, and assignment methods are kept separate rather than merged [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. \n\n### Data Gaps and Constraints\n\n*   **CTD & Satellite SST Measurements:** No CTD profiles or satellite SST observation records were provided in the evidence to evaluate environmental context or cross-source physical reliability.\n*   **Sample Metadata:** The ANEMONE MiFish records list the sample classification and control status as \"unknown\" [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target], preventing the establishment of calibrated or contamination-free results.",
+          "valid_citations": 38,
+          "invalid_citations": 0,
+          "warnings": [],
+          "passed": true,
+          "finish_reason": "STOP",
+          "usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 781,
+            "candidates_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 781
+              }
+            ],
+            "prompt_token_count": 3158,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 3158
+              }
+            ],
+            "thoughts_token_count": null,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 3939,
+            "traffic_type": "ON_DEMAND"
+          }
+        }
+      ]
+    },
+    {
+      "stage": "final",
+      "execution": "ocean-anemone-process-vh6ps",
+      "cases": [
+        {
+          "case": "original",
+          "helper_sha256": "1aa394a12ce1ff16bffb90b8959c3fa53e3bcf015e24cbdae23c8ec2231d21da",
+          "evidence_documents": 8,
+          "prompt_sha256": "8eb2f1cbe910dbf9101ea98f277ce0ae4f62880e7cca7e7de410bbe21901770f",
+          "model": "gemini-3.6-flash",
+          "output_limit": 1600,
+          "answer": "Here are two eDNA metabarcoding sample records retrieved from the dataset:\n\n### Retrieved eDNA Metabarcoding Samples\n\n* **Sample ID:** `2019KibanSRUN01__20171218T0103-KUM-Otomi-Surface__MiFish` (Assignment Method: `QCauto 95%-3NN`) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target]\n  * **Collection Time:** 2017-12-18T01:03:00+00:00 [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target]\n  * **Coordinates:** 35.541667, 135.562500 (Note: Outside Onagawa Bay legacy coordinates; refer to source metadata) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target]\n  * **Assay Details:** Target gene 12S rRNA; Sequenced via NextSeq 500 [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target]\n  * **Sample & Control Status:** Classification unknown; control status unknown [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target]\n  * **Detection Metrics:** 35 detection records; total sum of read counts is 9,635 (0 records with source-supplied copies/mL) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target]\n  * **Highest-Read Detections (read_count):** *Girella punctata* (1,305), *Siganus fuscescens* (846), *Enneapterygius etheostomus* (712), *Sebastiscus marmoratus* (683), *Pseudolabrus sieboldi* (666), *Sebastes* genus (570), *Mugil cephalus* (536), *Dictyosoma rubrimaculatum* (464), *Ernogrammus hexagrammus* (427), and *Takifugu alboplumbeus* (425) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target].\n\n* **Sample ID:** `2019KibanSRUN01__20171218T0103-KUM-Otomi-Surface__MiFish` (Assignment Method: `QCauto`) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]\n  * **Collection Time:** 2017-12-18T01:03:00+00:00 [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]\n  * **Coordinates:** 35.541667, 135.562500 [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]\n  * **Assay Details:** Target gene 12S rRNA; Sequenced via NextSeq 500 [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]\n  * **Sample & Control Status:** Classification unknown; control status unknown [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]\n  * **Detection Metrics:** 35 detection records; total sum of read counts is 9,635 (0 records with source-supplied copies/mL) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]\n  * **Highest-Read Detections (read_count):** *Girella punctata* (1,305), *Siganus* genus (846), *Enneapterygius etheostomus* (712), *Sebastiscus marmoratus* (683), *Pseudolabrus sieboldi* (666), *Sebastes* genus (570), *Mugil cephalus* (536), *Dictyosoma rubrimaculatum* (464), Stichaeinae subfamily (427), and *Takifugu alboplumbeus* (425) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n\n---\n\n### Data Gaps & Contextual Limitations\n* **Data Limitations:** Read counts represent sequencing counts only, not absolute abundance, biomass, concentration, or organism counts [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. Unknown control status prevents verification of contamination calibration [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. A missing detection record does not indicate biological absence [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n* **Data Gaps:** Concurrent CTD profiles, satellite SST observations, pre-computed analytical docs, and cross-source reliability/validation reports are missing for these eDNA records [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].",
+          "valid_citations": 22,
+          "invalid_citations": 0,
+          "warnings": [],
+          "passed": true,
+          "finish_reason": "STOP",
+          "usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 891,
+            "candidates_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 891
+              }
+            ],
+            "prompt_token_count": 3151,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 3151
+              }
+            ],
+            "thoughts_token_count": null,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 4042,
+            "traffic_type": "ON_DEMAND"
+          }
+        },
+        {
+          "case": "detailed_methods",
+          "helper_sha256": "1aa394a12ce1ff16bffb90b8959c3fa53e3bcf015e24cbdae23c8ec2231d21da",
+          "evidence_documents": 2,
+          "prompt_sha256": "120aab02d5b852a2c43416e5757511c8108770273e5b2e23bbe36577dd8f986b",
+          "model": "gemini-3.6-flash",
+          "output_limit": 1600,
+          "answer": "### Method Comparison for MiFish Sample `2019KibanSRUN01__20171218T0103-KUM-Otomi-Surface__MiFish`\n\nBelow is a comparison of the target assignment methods applied to the sample collected on December 18, 2017 (coordinates: 35.541667°N, 135.562500°E) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. \n\n#### Summary Table\n\n| Metric / Parameter | QCauto 95%-3NN (`qcauto_95pct_3nn_target`) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target] | QCauto (`qcauto_target`) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target] |\n| :--- | :--- | :--- |\n| **Detection Records** | 35 | 35 |\n| **Total Read Count** | 9,635 | 9,635 |\n| **Featured Taxon 1** | *Girella punctata* (species): 1,305 reads | *Girella punctata* (species): 1,305 reads |\n| **Featured Taxon 2** | *Siganus fuscescens* (species): 846 reads | *Siganus* (genus): 846 reads |\n| **Featured Taxon 3** | *Enneapterygius etheostomus* (species): 712 reads | *Enneapterygius etheostomus* (species): 712 reads |\n| **Featured Taxon 4** | *Sebastiscus marmoratus* (species): 683 reads | *Sebastiscus marmoratus* (species): 683 reads |\n| **Featured Taxon 5** | *Pseudolabrus sieboldi* (species): 666 reads | *Pseudolabrus sieboldi* (species): 666 reads |\n\n---\n\n### Key Observations & Evidence Bullets\n\n* **Sample & Assay Metadata**: The sample was sequenced using the NextSeq 500 system targeting the 12S rRNA gene [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. Control status and sample classification are unknown [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n* **Method Performance**: Both assignment methods yielded identical total detection record counts (35 records) and identical total sequencing read counts (9,635 reads) [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n* **Taxonomic Resolution Differences**: Read counts represent sequencing counts and do not reflect organism abundance, concentration, or biomass [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. While top detections like *Girella punctata* (1,305 reads), *Enneapterygius etheostomus* (712 reads), *Sebastiscus marmoratus* (683 reads), and *Pseudolabrus sieboldi* (666 reads) match across both pipelines, the second highest-read record (846 reads) is resolved to species level (*Siganus fuscescens*) by QCauto 95%-3NN [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target] and to genus level (*Siganus*) by QCauto [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. \n* **Data Gaps**: No source-supplied copies/mL records were present [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. Additionally, complementary CTD water profiles, shotgun metagenome taxonomy, and satellite SST measurements were unavailable for this specific sample entry [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].",
+          "valid_citations": 18,
+          "invalid_citations": 0,
+          "warnings": [],
+          "passed": true,
+          "finish_reason": "STOP",
+          "usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 745,
+            "candidates_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 745
+              }
+            ],
+            "prompt_token_count": 2049,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 2049
+              }
+            ],
+            "thoughts_token_count": null,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 2794,
+            "traffic_type": "ON_DEMAND"
+          }
+        },
+        {
+          "case": "mixed_sources",
+          "helper_sha256": "1aa394a12ce1ff16bffb90b8959c3fa53e3bcf015e24cbdae23c8ec2231d21da",
+          "evidence_documents": 8,
+          "prompt_sha256": "4209dde480c7ed0f7877cb936a08fa0e8e398e06e1d16a97c1eae9306181bd43",
+          "model": "gemini-3.6-flash",
+          "output_limit": 1600,
+          "answer": "### Methodological and Spatial Comparison\n\n**Metagenome vs. eDNA Metabarcoding Methods:**\n* **Shotgun Metagenomics:** Shotgun metagenome samples from Onagawa Bay (stations s1, s4, s8) target untargeted total microbial and eukaryotic DNA [meta_2024-07-O-s8, meta_2025-04-O-s4, meta_2024-06-O-s1, meta_2024-05-O-s4, meta_2024-08-O-s4, meta_2024-07-O-s4]. Taxonomic assignments use the MetaEuk pipeline, reporting broad taxonomic groups (e.g., Copepoda, Dinophyceae, Coscinodiscophyceae) and relative sequence percentages [meta_2024-07-O-s8, meta_2025-04-O-s4, meta_2024-06-O-s1, meta_2024-05-O-s4, meta_2024-08-O-s4, meta_2024-07-O-s4].\n* **Targeted eDNA Metabarcoding:** ANEMONE MiFish records utilize targeted PCR amplification of the 12S rRNA gene sequenced on a NextSeq 500 system [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target]. Sequences are assigned using taxonomic pipelines like QCauto and QCauto 95%-3NN, yielding sequencing read counts per fish taxon (e.g., *Girella punctata*, *Siganus fuscescens*, *Sebastiscus marmoratus*) rather than total community percentages [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n\n**Geographic Locations and Resolution:**\n* **Onagawa Metagenomes:** Collected within Onagawa Bay (approx. 38.44°N, 141.45°E) across seasonal sampling campaigns from May 2024 through April 2025 [meta_2024-07-O-s8, meta_2025-04-O-s4, meta_2024-06-O-s1, meta_2024-05-O-s4, meta_2024-08-O-s4, meta_2024-07-O-s4].\n* **ANEMONE MiFish eDNA:** Collected on 2017-12-18 at coordinates 35.541667°N, 135.562500°E (KUM-Otomi-Surface), located hundreds of kilometers away from Onagawa Bay [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n\n---\n\n### Ecological Findings\n\nThe two dataset types **do not establish the same ecological finding**:\n\n1. **Spatial and Temporal Separation:** The eDNA sampling took place in December 2017 at a completely distinct geographical site [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target], whereas the shotgun metagenomes reflect seasonal planktonic and microbial community succession in Onagawa Bay during 2024–2025 [meta_2024-07-O-s8, meta_2025-04-O-s4, meta_2024-06-O-s1, meta_2024-05-O-s4, meta_2024-08-O-s4, meta_2024-07-O-s4].\n2. **Taxonomic Scope:** Metagenomic profiles track planktonic microalgae, bacteria, and invertebrates—such as microalgal blooms (*Tripos*, *Stephanodiscus*) and copepods [meta_2024-07-O-s8, meta_2024-05-O-s4, meta_2024-07-O-s4]—while MiFish eDNA focuses strictly on teleost fish species detection [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n3. **Data Interpretation:** MiFish read counts represent raw sequencing output and cannot be directly interpreted as biological abundance, biomass, or organism counts [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n\n---\n\n### Data Gaps and Context\n\n* **Environmental Measurements:** CTD profile measurements (salinity, temperature, dissolved oxygen) and satellite SST observations are missing from the provided record for these sampling events.\n* **Qualified Environmental Matches:** No qualified spatial or temporal matching pairs exist between the 2017 MiFish eDNA sample and the 2024–2025 Onagawa metagenomes [meta_2024-07-O-s8, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, meta_2025-04-O-s4, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].\n* **Controls:** Control statuses for the MiFish eDNA records are marked as unknown [edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_95pct_3nn_target, edna_7accad26a070766dbc7c1847b88640d26d7dd0ee96545e2c07c4c631a3d39d45_qcauto_target].",
+          "valid_citations": 45,
+          "invalid_citations": 0,
+          "warnings": [],
+          "passed": true,
+          "finish_reason": "STOP",
+          "usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 740,
+            "candidates_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 740
+              }
+            ],
+            "prompt_token_count": 3180,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 3180
+              }
+            ],
+            "thoughts_token_count": null,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 3920,
+            "traffic_type": "ON_DEMAND"
+          }
+        }
+      ]
+    }
+  ]
+}

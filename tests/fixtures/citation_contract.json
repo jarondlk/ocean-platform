@@ -1,0 +1,111 @@
+[
+  {
+    "name": "plain",
+    "answer": "12 C [ctd_qa].",
+    "ids": [
+      "ctd_qa"
+    ]
+  },
+  {
+    "name": "bold",
+    "answer": "**12 C [ctd_qa].**",
+    "ids": [
+      "ctd_qa"
+    ]
+  },
+  {
+    "name": "italic",
+    "answer": "*12 C [ctd_qa].*",
+    "ids": [
+      "ctd_qa"
+    ]
+  },
+  {
+    "name": "group",
+    "answer": "12 C [ctd_qa, ctd_other].",
+    "ids": [
+      "ctd_qa",
+      "ctd_other"
+    ]
+  },
+  {
+    "name": "link",
+    "answer": "12 C [ctd_qa](https://example.org/qa).",
+    "ids": []
+  },
+  {
+    "name": "inline code",
+    "answer": "12 C `[ctd_qa]`.",
+    "ids": []
+  },
+  {
+    "name": "code block",
+    "answer": "```text\n[ctd_qa]\n```\nActual [ctd_other].",
+    "ids": [
+      "ctd_other"
+    ]
+  },
+  {
+    "name": "unclosed block",
+    "answer": "```\n[ctd_qa]",
+    "ids": []
+  },
+  {
+    "name": "table",
+    "answer": "| Value | Source |\n| --- | --- |\n| 12 C | [ctd_qa] |",
+    "ids": [
+      "ctd_qa"
+    ]
+  },
+  {
+    "name": "mixed",
+    "answer": "**[ctd_qa](https://example.org)** and `[ctd_other]` then [ctd_qa]",
+    "ids": [
+      "ctd_qa"
+    ]
+  },
+  {
+    "name": "ordinary bracket prose",
+    "answer": "[a note about data]",
+    "ids": []
+  },
+  {
+    "name": "code cannot span paragraphs",
+    "answer": "`example\n\n[ctd_qa]`",
+    "ids": [
+      "ctd_qa"
+    ]
+  },
+  {
+    "name": "code cannot span table cells",
+    "answer": "| A | B |\n| --- | --- |\n| `example | [ctd_qa]` |",
+    "ids": [
+      "ctd_qa"
+    ]
+  },
+  {
+    "name": "extra table cells are not rendered",
+    "answer": "| A | B |\n| --- | --- |\n| x | y | [ctd_qa] |",
+    "ids": []
+  },
+  {
+    "name": "code can span paragraph lines",
+    "answer": "`example\n[ctd_qa]`",
+    "ids": []
+  },
+  {
+    "name": "blockquote citation group",
+    "answer": "> [ctd_qa,\n> ctd_other]",
+    "ids": [
+      "ctd_qa",
+      "ctd_other"
+    ]
+  },
+  {
+    "name": "links cannot cross paragraphs",
+    "answer": "[ctd_qa]\n\n(https://example.org)",
+    "ids": [
+      "ctd_qa"
+    ]
+  }
+]

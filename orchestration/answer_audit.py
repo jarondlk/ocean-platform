@@ -1,11 +1,10 @@
 """Deterministic answer citation and evidence-use audit."""
 from __future__ import annotations
 
-import re
 from typing import Any, Dict, List, Optional, Set
 
 
-CITATION_PATTERN = re.compile(r"\[([^\[\]]+)\]")
+from orchestration.citation_syntax import canonical_tokens
 GAP_TERMS = {
     "gap", "gaps", "missing", "insufficient", "limited", "limitation",
     "limitations", "unavailable", "not available", "not retrieved",
@@ -83,19 +82,7 @@ def _document_text(document: Dict[str, Any]) -> str:
 
 
 def _citation_tokens(answer: str) -> List[Dict[str, Any]]:
-    tokens: List[Dict[str, Any]] = []
-    for match in CITATION_PATTERN.finditer(answer or ""):
-        raw = match.group(0)
-        inside = match.group(1)
-        for part in re.split(r"[,;]", inside):
-            citation_id = part.strip().strip(".")
-            if citation_id:
-                tokens.append({
-                    "citation_id": citation_id,
-                    "raw": raw,
-                    "position": match.start(),
-                })
-    return tokens
+    return canonical_tokens(answer or "")
 
 
 def _evidence_index(
@@ -155,14 +142,6 @@ def _audit_record(token: Dict[str, Any], evidence: Optional[Dict[str, Any]]) -> 
         "title": evidence.get("title") if evidence else None,
         "detail": "Resolved against supplied evidence." if valid else "Citation was not present in supplied evidence.",
     }
-
-
-def _trust_level(score: float) -> str:
-    if score >= 0.85:
-        return "strong"
-    if score >= 0.55:
-        return "caution"
-    return "weak"
 
 
 def _query_requires_raw_sources(query: str) -> bool:
@@ -368,9 +347,18 @@ def audit_answer(
         warnings.append("Linked cross-source evidence was retrieved but not cited.")
         score -= 0.15
 
+    scope_violations = retrieval_diagnostics.get('scope_violations') or []
+    if scope_violations:
+        warnings.append("Evidence scope checks failed.")
+    if invalid_records or scope_violations:
+        score = min(score, 0.54)
+    check_status = 'failed' if invalid_records or scope_violations else ('warnings' if warnings else 'passed')
     score = max(0.0, min(1.0, round(score, 3)))
     return {
-        "trust_level": _trust_level(score),
+        "citation_check_status": check_status,
+        "claim_verification": "not_performed",
+        "audit_kind": "citation_and_coverage",
+        "trust_level": "not_assessed",
         "trust_score": score,
         "citation_count": len(tokens),
         "valid_citation_count": len(valid_records),

@@ -178,8 +178,7 @@ def test_chat_response_includes_context_ledger(tmp_path, monkeypatch):
             return {
                 "message": {
                     "content": (
-                        "answer with citations [ctd:2024-01-O-s1] [sst:2024-01-01] "
-                        "[analysis_trends] [reliability_sst_ctd]"
+                        "answer with citations [S1, S2] [S3; S4]"
                     )
                 }
             }
@@ -187,7 +186,9 @@ def test_chat_response_includes_context_ledger(tmp_path, monkeypatch):
     def fake_post(*args, **kwargs):
         prompt = kwargs["json"]["messages"][0]["content"]
         assert "LINKED CROSS-SOURCE EVIDENCE" in prompt
-        assert "sst:2024-01-01" in prompt
+        assert "[S2] (remote_sensing" in prompt
+        assert "[S3] (trend)" in prompt
+        assert "[S4] (cross_source_validation)" in prompt
         return FakeOllamaResponse()
 
     monkeypatch.setattr(api_main, "retrieve_with_expansion", fake_retrieve_with_expansion)
@@ -217,7 +218,7 @@ def test_chat_response_includes_context_ledger(tmp_path, monkeypatch):
     assert payload["prompt_diagnostics"]["linked_documents"] == 1
     assert payload["prompt_diagnostics"]["context_documents"] == 2
     assert payload["retrieval_diagnostics"]["source_coverage_ratio"] == 1.0
-    assert payload["answer_audit"]["trust_level"] == "strong"
+    assert payload["answer_audit"]["citation_check_status"] == "passed"
     assert payload["answer_audit"]["citation_count"] == 4
     assert payload["answer_audit"]["invalid_citation_count"] == 0
     assert payload["answer_audit"]["linked_sources_cited"] == 1

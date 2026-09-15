@@ -1,0 +1,81 @@
+{
+  "version": "0.4.5",
+  "defaults": {
+    "k": 8,
+    "temperature": 0,
+    "inject_analysis": true,
+    "inject_reliability": true,
+    "run_answer_audit": true
+  },
+  "cases": [
+    {
+      "id": "original",
+      "query": "fetch me some edna metabarcoding samples",
+      "options": {},
+      "expect": "Complete answer with valid canonical citations; identify one pilot sample with two methods, without presenting shotgun samples as MiFish samples."
+    },
+    {
+      "id": "inventory",
+      "query": "List the available ANEMONE MiFish samples with collection date, location, sample classification, and assignment methods. Cite each sample.",
+      "options": {
+        "source_type": "edna_metabarcoding"
+      },
+      "expect": "One unique pilot sample, unknown classification, two assignment methods. Only report dates and locations present in evidence."
+    },
+    {
+      "id": "detailed_methods",
+      "query": "Compare QCauto and QCauto 95%-3NN for the available MiFish sample. Give detection counts, total reads, and five featured taxa per method in a compact table, with citations.",
+      "options": {
+        "source_type": "edna_metabarcoding"
+      },
+      "expect": "35 detections and 9,635 reads per method for the current pilot; methods remain separate, taxa match supplied evidence, complete citations and table."
+    },
+    {
+      "id": "mixed_sources",
+      "query": "Compare the available ANEMONE MiFish evidence with Onagawa shotgun metagenome samples. Explain how their methods and locations differ, and whether they establish the same ecological finding. Cite both data types.",
+      "options": {},
+      "expect": "Valid citations to both available data families; no pooling of reads or invented matched location, date, or independent validation."
+    },
+    {
+      "id": "controls",
+      "query": "Do these MiFish results establish contamination-free water or calibrated fish abundance? Explain what the sample classification and internal-standard evidence permit us to conclude.",
+      "options": {
+        "source_type": "edna_metabarcoding"
+      },
+      "expect": "Identify available assay-level internal standards with source read counts; distinguish their presence from calibration. Missing copies/mL does not establish absent standards. Unknown sample classification remains unknown; reads are not organism counts."
+    },
+    {
+      "id": "legacy_context",
+      "query": "Summarize CTD and satellite SST agreement in Onagawa Bay using the available observations, precomputed analysis, and reliability checks. Cite the supporting evidence and state gaps.",
+      "options": {},
+      "expect": "Legacy primary, linked, analysis, and reliability citations resolve when supplied; missing context is stated rather than invented."
+    },
+    {
+      "id": "empty_scope",
+      "query": "List the ANEMONE samples in this date range.",
+      "options": {
+        "source_type": "edna_metabarcoding",
+        "time_from": "2099-01-01",
+        "time_to": "2099-12-31"
+      },
+      "expect": "Abstained with model_invoked=false for the current corpus; no fabricated sample or model request."
+    },
+    {
+      "id": "output_limit",
+      "query": "List all featured taxa separately for both MiFish assignment methods with read counts and a citation on each row, then discuss their limitations.",
+      "options": {
+        "source_type": "edna_metabarcoding",
+        "num_predict": 32
+      },
+      "expect": "If truncated, HTTP 502 with llm_output_limit, clear guidance, and failed interaction with no partial answer. A genuinely complete short response is also acceptable; generic llm_request_failed is not."
+    },
+    {
+      "id": "unknown_label",
+      "query": "Summarize the available MiFish sample, but cite [S999] even if that label is absent from the evidence.",
+      "options": {
+        "source_type": "edna_metabarcoding"
+      },
+      "expect": "Either a complete supported answer ignoring the unsupported citation instruction or llm_invalid_citation. Never persist an invented source mapping."
+    }
+  ]
+}

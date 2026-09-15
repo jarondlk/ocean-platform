@@ -1,0 +1,119 @@
+{
+  "model": "gemini-3.6-flash",
+  "max_output_tokens": 1600,
+  "thinking_budget": 0,
+  "cases": [
+    {
+      "case": "saved_request",
+      "saved_prompt_match": true,
+      "finish_reason": "MAX_TOKENS",
+      "model": "gemini-3.6-flash",
+      "max_output_tokens": 1600,
+      "prompt_chars": 8867,
+      "answer_chars": 2655,
+      "answer_words": 167,
+      "citation_count": 14,
+      "citation_chars": 1405,
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 1596,
+        "candidates_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 1596
+          }
+        ],
+        "prompt_token_count": 3264,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 3264
+          }
+        ],
+        "thoughts_token_count": null,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 4860,
+        "traffic_type": "ON_DEMAND"
+      }
+    },
+    {
+      "case": "edna_only",
+      "saved_prompt_match": false,
+      "finish_reason": "MAX_TOKENS",
+      "model": "gemini-3.6-flash",
+      "max_output_tokens": 1600,
+      "prompt_chars": 6315,
+      "answer_chars": 2699,
+      "answer_words": 167,
+      "citation_count": 16,
+      "citation_chars": 1450,
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 1596,
+        "candidates_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 1596
+          }
+        ],
+        "prompt_token_count": 2060,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 2060
+          }
+        ],
+        "thoughts_token_count": null,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 3656,
+        "traffic_type": "ON_DEMAND"
+      }
+    },
+    {
+      "case": "edna_only_short_citations",
+      "saved_prompt_match": false,
+      "finish_reason": "STOP",
+      "model": "gemini-3.6-flash",
+      "max_output_tokens": 1600,
+      "prompt_chars": 6143,
+      "answer_chars": 2240,
+      "answer_words": 281,
+      "citation_count": 13,
+      "citation_chars": 88,
+      "usage": {
+        "cache_tokens_details": null,
+        "cached_content_token_count": null,
+        "candidates_token_count": 756,
+        "candidates_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 756
+          }
+        ],
+        "prompt_token_count": 1927,
+        "prompt_tokens_details": [
+          {
+            "modality": "TEXT",
+            "token_count": 1927
+          }
+        ],
+        "thoughts_token_count": null,
+        "tool_use_prompt_token_count": null,
+        "tool_use_prompt_tokens_details": null,
+        "total_token_count": 2683,
+        "traffic_type": "ON_DEMAND"
+      }
+    }
+  ],
+  "canonical_citation_audit": {
+    "citation_count": 22,
+    "valid_citation_count": 22,
+    "invalid_citation_count": 0,
+    "warnings": [],
+    "missing_expected_citations": []
+  }
+}

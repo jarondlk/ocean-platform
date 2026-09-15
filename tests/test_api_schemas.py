@@ -77,3 +77,31 @@ def test_chat_request_exposes_expert_knobs():
 def test_security_sensitive_request_strings_are_bounded(factory):
     with pytest.raises(ValidationError):
         factory()
+
+
+@pytest.mark.parametrize(('requested', 'effective'), [(None, 1600), (4096, 1600), (32, 32)])
+def test_vertex_options_report_effective_output_limit(monkeypatch, requested, effective):
+    import config
+    monkeypatch.setattr(config, 'MODEL_PROVIDER', 'vertex')
+    monkeypatch.setattr(config, 'CHAT_MAX_OUTPUT_TOKENS', 1600)
+    request = ChatRequest(query='edna samples', num_predict=requested)
+    assert _ollama_options(request)['num_predict'] == effective
+
+
+@pytest.mark.parametrize('available', [True, False])
+def test_model_discovery_exposes_server_limit_even_when_provider_unavailable(monkeypatch, available):
+    from types import SimpleNamespace
+    import api.main as api_main
+    import config
+    monkeypatch.setattr(config, 'MODEL_PROVIDER', 'vertex')
+    monkeypatch.setattr(config, 'CHAT_MAX_OUTPUT_TOKENS', 1600)
+
+    def list_models(**kwargs):
+        if not available:
+            raise ConnectionError('unavailable')
+        return [{'name': config.CHAT_MODEL}]
+
+    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: SimpleNamespace(list_models=list_models, provider='vertex', endpoint='vertex://project/global'))
+    payload = api_main.models()
+    assert payload.available == available
+    assert payload.max_output_tokens == 1600
