@@ -47,6 +47,7 @@ additive IAM bindings. It enables the Security Token Service API.
 | Existing jobs `ocean-pipeline` and `ocean-migrate` | Execute jobs with argument overrides for backup/restore verification and read-only schema checks |
 | Service accounts `ocean-release-build`, `ocean-platform`, `ocean-jobs` | Deployment account may attach these identities to builds or Cloud Run resources (`serviceAccountUser`); no service-account keys are created |
 | Existing source bucket `data-infra-infobio_cloudbuild` | Deployment account may inspect the bucket and create/read build-source objects; build account may read source objects |
+| Existing `ocean-platform` Artifact Registry repository | Deployment account may read the images it deploys, as required by Cloud Run |
 | `ocean-release-build` | Write images to the existing `ocean-platform` Artifact Registry repository and write build logs |
 
 The deployment account receives no Owner, Editor, IAM-administration, billing,

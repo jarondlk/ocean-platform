@@ -62,6 +62,8 @@ def commands(role_dir):
     yield ['storage', 'buckets', 'add-iam-policy-binding', bucket, '--member=serviceAccount:' + BUILDER, '--role=roles/storage.objectViewer']
     yield ['artifacts', 'repositories', 'add-iam-policy-binding', 'ocean-platform', '--location=asia-northeast1',
            '--member=serviceAccount:' + BUILDER, '--role=roles/artifactregistry.writer']
+    yield ['artifacts', 'repositories', 'add-iam-policy-binding', 'ocean-platform', '--location=asia-northeast1',
+           '--member=' + member, '--role=roles/artifactregistry.reader']
     yield ['projects', 'add-iam-policy-binding', PROJECT, '--member=serviceAccount:' + BUILDER,
            '--role=roles/logging.logWriter', '--condition=None']
 
