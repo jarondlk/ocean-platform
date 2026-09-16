@@ -198,6 +198,8 @@ def test_workflow_is_manual_scoped_and_uses_pinned_actions():
     job = workflow['jobs']['deploy']
     assert job['if'] == "github.ref == 'refs/heads/main'"
     assert job['environment']['name'] == 'production'
+    assert all('runner.' not in value for value in job.get('env', {}).values())
+    assert any('$RUNNER_TEMP/ocean-release' in step.get('run', '') for step in job['steps'])
     for step in job['steps']:
         if 'uses' in step:
             assert re.fullmatch(r'.+@[a-f0-9]{40}', step['uses'])
