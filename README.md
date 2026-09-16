@@ -32,7 +32,7 @@ pilot, preserving source fields and its unknown sample classification.
 
 ## Current Prototype Status
 
-Status as of **2026-09-11**: this is an active invite-only **Next.js +
+Status as of **2026-09-16**: this is an active invite-only **Next.js +
 FastAPI** prototype deployed on GCP, with PostgreSQL/pgvector retrieval,
 Vertex AI generation and embeddings, Google OIDC, and Cloud Run Jobs for
 operator-approved batch work. The same application remains runnable locally
@@ -42,10 +42,16 @@ service.
 
 Current managed milestone:
 
+- GitHub release [`v0.4.5`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.5)
+  fixes chat citation integrity, evidence scope, and eDNA standard context.
+  Revision `ocean-platform-v045-cc3b3af` serves 100% of production traffic.
+  Two eDNA summaries and embeddings were refreshed, with canonical records
+  unchanged and `v045-provenance` published. All 12 deployment QA cases met
+  their expected outcomes. See the [v0.4.5 operations record](docs/RELEASE_0.4.5_OPERATIONS.md).
 - GitHub release [`v0.4.4`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.4)
   corrects unresolved ANEMONE taxonomy and retains the approved TSV regression
   reference. PR #62 merged as `d3aa6a975e7405eaa291d53b50c33985e07f28ff`;
-  Cloud Build `bbff6249-7f41-4375-8ee8-97b5ce6c06a2` produced active revision
+  Cloud Build `bbff6249-7f41-4375-8ee8-97b5ce6c06a2` produced retained revision
   `ocean-platform-v044-d3aa6a9`. The existing pilot's 70 assignments,
   retrieval, embeddings, analysis, and provenance were rebuilt from retained
   source data. See the [v0.4.4 operations record](docs/RELEASE_0.4.4_OPERATIONS.md).
@@ -926,11 +932,13 @@ npm run build
 
 ### Current Test Matrix
 
-The deployed v0.4.4 release gate passed 760 backend tests with 13 expected
-service-gated skips and 78.26% coverage, plus 13 PostgreSQL integration tests
-through schema head `20260905_0011`, 19 frontend tests, TypeScript checking,
-and the 24-route production build. See
-[`docs/RELEASE_0.4.4_OPERATIONS.md`](docs/RELEASE_0.4.4_OPERATIONS.md).
+The deployed v0.4.5 passed backend, frontend, PostgreSQL integration, and
+CodeQL release gates. Cloud Build reported 796 backend passes and 23 expected
+skips in its Python container; separate frontend checks passed 37 tests,
+TypeScript checking, and production build. The dedicated PostgreSQL suite
+passed 13 tests. All 12 refreshed-index deployment QA cases met their expected
+outcomes. See [`docs/RELEASE_0.4.5_OPERATIONS.md`](docs/RELEASE_0.4.5_OPERATIONS.md)
+for environment-specific counts and verification limits.
 
 | Test area | Files |
 | --- | --- |
@@ -942,11 +950,8 @@ and the 24-route production build. See
 | Database safety and loading | `test_database_backup.py`, `test_load_db_upsert.py` |
 | PostgreSQL integration | `integration/test_app_metadata_postgres.py`, `integration/test_operational_postgres.py` |
 
-Latest verified local result:
-
-```text
-690 passed, 12 skipped; 78.27% coverage
-```
+Dated local and candidate results are retained in the
+[issue #59 fix QA report](docs/ISSUE_59_FIX_QA_2026-09-15.md).
 
 ---
 

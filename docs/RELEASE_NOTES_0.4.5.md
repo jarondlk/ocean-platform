@@ -2,7 +2,8 @@
 
 Release scope and pre-deployment verification are documented below. See the
 [fix verification report](ISSUE_59_FIX_QA_2026-09-15.md) for candidate QA evidence.
-Deployment completion is recorded separately in the release operations record.
+Production deployment and the eDNA refresh completed on 2026-09-16. See the
+[release operations record](RELEASE_0.4.5_OPERATIONS.md) for deployment QA and limits.
 
 This release fixes the chat failures and evidence-handling defects tracked in
 [issue #59](https://github.com/jarondlk/ocean-platform/issues/59).

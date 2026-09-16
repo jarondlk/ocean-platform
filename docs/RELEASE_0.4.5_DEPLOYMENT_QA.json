@@ -1,0 +1,162 @@
+{
+  "release": "v0.4.5",
+  "verified_date": "2026-09-16",
+  "release_commit": "cc3b3af3e2b4900e7ff8ed7ff26a42e91250faa5",
+  "revision": "ocean-platform-v045-cc3b3af",
+  "production_traffic_percent": 100,
+  "provenance_manifest": "v045-provenance",
+  "corpus_documents": 325,
+  "corpus_embeddings": 325,
+  "edna_summaries_updated": 2,
+  "edna_embeddings_refreshed": 2,
+  "canonical_checksums_unchanged": true,
+  "qa_environment": "Exact release image, real Vertex, refreshed production index read-only, temporary local chat history; no preview document substitution",
+  "cases": [
+    {
+      "id": "original",
+      "http_status": 200,
+      "outcome": "answered",
+      "error_code": null,
+      "expected_outcome_passed": true
+    },
+    {
+      "id": "inventory",
+      "http_status": 200,
+      "outcome": "answered",
+      "error_code": null,
+      "expected_outcome_passed": true
+    },
+    {
+      "id": "detailed_methods",
+      "http_status": 200,
+      "outcome": "answered",
+      "error_code": null,
+      "expected_outcome_passed": true
+    },
+    {
+      "id": "mixed_sources",
+      "http_status": 200,
+      "outcome": "answered",
+      "error_code": null,
+      "expected_outcome_passed": true
+    },
+    {
+      "id": "controls",
+      "http_status": 200,
+      "outcome": "answered",
+      "error_code": null,
+      "expected_outcome_passed": true
+    },
+    {
+      "id": "legacy_context",
+      "http_status": 200,
+      "outcome": "answered",
+      "error_code": null,
+      "expected_outcome_passed": true
+    },
+    {
+      "id": "empty_scope",
+      "http_status": 200,
+      "outcome": "abstained",
+      "error_code": null,
+      "expected_outcome_passed": true
+    },
+    {
+      "id": "output_limit",
+      "http_status": 502,
+      "outcome": null,
+      "error_code": "llm_output_limit",
+      "expected_outcome_passed": true
+    },
+    {
+      "id": "unknown_label",
+      "http_status": 200,
+      "outcome": "answered",
+      "error_code": null,
+      "expected_outcome_passed": true
+    },
+    {
+      "id": "empty_ctd_context",
+      "http_status": 200,
+      "outcome": "abstained",
+      "error_code": null,
+      "expected_outcome_passed": true
+    },
+    {
+      "id": "japanese_edna",
+      "http_status": 200,
+      "outcome": "answered",
+      "error_code": null,
+      "expected_outcome_passed": true
+    },
+    {
+      "id": "leading_abundance",
+      "http_status": 200,
+      "outcome": "answered",
+      "error_code": null,
+      "expected_outcome_passed": true
+    }
+  ],
+  "renderer_checks": [
+    {
+      "id": "original",
+      "clickable_citations": 24,
+      "passed": true
+    },
+    {
+      "id": "inventory",
+      "clickable_citations": 28,
+      "passed": true
+    },
+    {
+      "id": "detailed_methods",
+      "clickable_citations": 20,
+      "passed": true
+    },
+    {
+      "id": "mixed_sources",
+      "clickable_citations": 60,
+      "passed": true
+    },
+    {
+      "id": "controls",
+      "clickable_citations": 30,
+      "passed": true
+    },
+    {
+      "id": "legacy_context",
+      "clickable_citations": 18,
+      "passed": true
+    },
+    {
+      "id": "unknown_label",
+      "clickable_citations": 30,
+      "passed": true
+    },
+    {
+      "id": "japanese_edna",
+      "clickable_citations": 28,
+      "passed": true
+    },
+    {
+      "id": "leading_abundance",
+      "clickable_citations": 34,
+      "passed": true
+    }
+  ],
+  "authenticated_production_browser": {
+    "original_question_answered": true,
+    "valid_citations": 54,
+    "invalid_citations": 0,
+    "warnings": 0,
+    "claim_verification": "not_performed",
+    "citation_provenance_trace_found": true
+  },
+  "observed_production_error_or_5xx_entries": 0,
+  "limitations": [
+    "Technical acceptance does not verify every scientific claim.",
+    "Broad ecological interpretations and occasional overconfident wording remain possible.",
+    "Sample/control classification and calibration are not established.",
+    "The deliberate output-limit case is an expected error, not a successful answer."
+  ]
+}

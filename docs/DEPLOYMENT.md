@@ -11,41 +11,29 @@ to the canonical domain.
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
-Current release record as of 2026-09-11:
+Current release record as of 2026-09-16:
 
-- OCEAN Platform GitHub release `v0.4.4`, merged commit
-  `d3aa6a975e7405eaa291d53b50c33985e07f28ff`, Cloud Build
-  `bbff6249-7f41-4375-8ee8-97b5ce6c06a2`, and revision
-  `ocean-platform-v044-d3aa6a9`; see
-  [v0.4.4 operations](RELEASE_0.4.4_OPERATIONS.md);
-- v0.4.3 revision `ocean-platform-v043-26094fc` is retained; compatibility
-  with the new v2 eDNA publication must be reviewed before rollback;
-- v0.4.1 revision `ocean-platform-v041-706348e` and its verified backup remain
-  retained for reviewed rollback;
-- previous revision `ocean-platform-v040-a63885a` and pre-migration backup retained;
-  review corpus/publication compatibility before rollback, without schema
-  downgrade or overwriting later user/chat records;
-- Cloud Run service `ocean-platform`, with minimum zero, maximum one instance,
-  concurrency 20, and an immutable release-tagged image;
-- Artifact Registry `ocean-platform`, runtime identities `ocean-platform` and
-  `ocean-jobs`, Cloud SQL `ocean-postgres` / `ocean_platform`, OCEAN secrets,
-  OCEAN jobs, and bucket `data-infra-infobio-ocean-data`;
-- former `onagawa-source-chat` service private and deletion-protected
-  `onagawa-postgres` stopped as reversible rollback resources, with both
-  legacy runtime identities disabled;
-- keep-five/delete-after-30-days Artifact Registry cleanup active and 30-day
-  expiry applied to transient Cloud Build source archives;
-- 325 documents/embeddings including the unknown-classification pilot;
-  schema head `20260905_0011`, verified pre-deployment backup and isolated
-  restore, controlled taxonomy rebuild, preserved classification, and fail-closed HTTP checks. See the
-  [v0.4.4 operations record](RELEASE_0.4.4_OPERATIONS.md).
+- GitHub release `v0.4.5`, merged commit
+  `cc3b3af3e2b4900e7ff8ed7ff26a42e91250faa5`, Cloud Build
+  `50943356-0c01-4520-9da1-1de7cd92bd14`, revision
+  `ocean-platform-v045-cc3b3af`, serving 100% of production traffic.
+- Two eDNA summaries updated to version 3, two embeddings refreshed, and
+  `v045-provenance` published. All 325 documents are embedded. Canonical
+  eDNA records and unknown sample classification are unchanged.
+- Fresh database backup and isolated 27-table restore verified. Schema remains
+  `20260905_0011`; no migration was needed.
+- All five jobs use the release API digest. Service/job settings are preserved,
+  including minimum zero/maximum one instance and concurrency 20.
+- Twelve refreshed-index QA cases met expected outcomes; authenticated live
+  chat and citation-to-provenance navigation passed. See the
+  [v0.4.5 operations record](RELEASE_0.4.5_OPERATIONS.md) for evidence and limits.
+- Previous revision `ocean-platform-v044-d3aa6a9` and older rollback resources
+  remain retained. Review corpus/publication compatibility before rollback;
+  do not downgrade the schema or overwrite later user/chat records.
 
-The v0.4.4 release source is synchronized to remote `main`; post-release
+The v0.4.5 release source is synchronized to remote `main`; subsequent
 operations-record commits do not change the immutable deployed images.
-
-The v0.4.4 rollout verified revision `ocean-platform-v044-d3aa6a9` at 100%
-traffic, with immutable build `bbff6249-7f41-4375-8ee8-97b5ce6c06a2`, frontend
-`AUTH_URL=https://oceaninfobio.com`, and API
+The frontend retains `AUTH_URL=https://oceaninfobio.com` and the API retains
 `CORS_ORIGINS=https://oceaninfobio.com`. The fallback OAuth callback remains
 available for reviewed rollback.
 
@@ -66,7 +54,7 @@ The completed initial migration sequence and historical cost-control rationale
 are retained in
 [`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Do not use it
 as the current release order. Use the completed
-[`v0.4.4` operations record](RELEASE_0.4.4_OPERATIONS.md) for the current
+[`v0.4.5` operations record](RELEASE_0.4.5_OPERATIONS.md) for the current
 deployment and verify the project budget and Cloud Run spend cap before paid
 execution.
 
