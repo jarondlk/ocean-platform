@@ -39,7 +39,6 @@ jobs:
       deployments: write
     env:
       RELEASE_TAG: ${{ inputs.release_tag }}
-      STATE_DIR: ${{ runner.temp }}/ocean-release
       GH_TOKEN: ${{ github.token }}
     steps:
       - name: Check out trusted deployment tooling and release history
@@ -64,14 +63,14 @@ jobs:
       - name: Validate published release, live settings, and data compatibility
         env:
           CLOUDSDK_AUTH_ACCESS_TOKEN: ${{ steps.auth.outputs.access_token }}
-        run: python3 scripts/deploy_release.py preflight --tag "$RELEASE_TAG" --state-dir "$STATE_DIR"
+        run: python3 scripts/deploy_release.py preflight --tag "$RELEASE_TAG" --state-dir "$RUNNER_TEMP/ocean-release"
 
       - name: Build and test exact release source
         if: inputs.mode == 'deploy'
         timeout-minutes: 47
         env:
           CLOUDSDK_AUTH_ACCESS_TOKEN: ${{ steps.auth.outputs.access_token }}
-        run: python3 scripts/deploy_release.py build --state-dir "$STATE_DIR"
+        run: python3 scripts/deploy_release.py build --state-dir "$RUNNER_TEMP/ocean-release"
 
       # Obtain a new token after the build, so deployment has its own full lifetime.
       - name: Renew deployment credentials
@@ -90,14 +89,14 @@ jobs:
         timeout-minutes: 45
         env:
           CLOUDSDK_AUTH_ACCESS_TOKEN: ${{ steps.deploy-auth.outputs.access_token }}
-        run: python3 scripts/deploy_release.py deploy --state-dir "$STATE_DIR"
+        run: python3 scripts/deploy_release.py deploy --state-dir "$RUNNER_TEMP/ocean-release"
 
       - name: Record deployment against the release commit
         if: inputs.mode == 'deploy'
-        run: python3 scripts/deploy_release.py record --state-dir "$STATE_DIR"
+        run: python3 scripts/deploy_release.py record --state-dir "$RUNNER_TEMP/ocean-release"
 
       - name: Recover interrupted promotion when possible
         if: (failure() || cancelled()) && inputs.mode == 'deploy' && steps.deploy-auth.outcome == 'success'
         env:
           CLOUDSDK_AUTH_ACCESS_TOKEN: ${{ steps.deploy-auth.outputs.access_token }}
-        run: python3 scripts/deploy_release.py rollback --state-dir "$STATE_DIR"
+        run: python3 scripts/deploy_release.py rollback --state-dir "$RUNNER_TEMP/ocean-release"
