@@ -171,6 +171,13 @@ The apply path uses checksum comparisons, verifies the remote raw object and
 byte totals, then writes the manifest under `manifests/`. The current seed is
 1,860 objects and 89,159,370 bytes. Do not use `gcloud storage rsync data/`.
 
+## Manual GitHub deployment
+
+The manually triggered **Deploy release** workflow uses repository-scoped
+Workload Identity Federation. See the [setup and operations guide](../../docs/GITHUB_RELEASE_DEPLOYMENT.md)
+for activation status, permissions, release compatibility gates, and rollback.
+Publishing a GitHub release does not automatically deploy it.
+
 ## Build
 
 Create an Artifact Registry Docker repository named `ocean-platform` in
