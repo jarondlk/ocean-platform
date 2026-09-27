@@ -1,7 +1,7 @@
 import type { EdnaFilters } from "./api.ts";
 import { safeIsoDate } from "./citation-navigation.ts";
 
-export const EDNA_METHODS = ["qcauto_target", "qcauto_95pct_3nn_target"];
+export const EDNA_METHODS = ["qcauto_target", "qcauto_95pct_3nn_target", "qcauto_nontarget", "qcauto_95pct_3nn_nontarget"];
 const sampleKinds = new Set([
   "environmental", "negative_control", "positive_control", "mock_community", "unknown",
 ]);
@@ -27,7 +27,7 @@ export function parseEdnaState(query: string): EdnaUrlState {
   const detectionId = params.get("detection_id") || undefined;
   if (detectionId && !/^[a-f0-9]{64}$/.test(detectionId)) fail("detection_id");
   for (const [key, max] of [
-    ["provider", 64], ["provider_project_id", 128], ["provider_run_id", 128],
+    ["provider_locus", 128], ["provider_team", 128], ["target_status", 16], ["provider", 64], ["provider_project_id", 128], ["provider_run_id", 128],
     ["taxon", 200], ["assignment_method", 64], ["sample_kind", 32],
   ] as const) {
     const value = params.get(key);
@@ -36,6 +36,7 @@ export function parseEdnaState(query: string): EdnaUrlState {
       filters[key] = value;
     }
   }
+  if (filters.target_status && !["target", "nontarget"].includes(filters.target_status)) fail("target_status");
   if (filters.assignment_method && !EDNA_METHODS.includes(filters.assignment_method)) fail("assignment_method");
   if (filters.sample_kind && !sampleKinds.has(filters.sample_kind)) fail("sample_kind");
   const control = params.get("is_control");

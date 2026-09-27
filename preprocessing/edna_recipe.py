@@ -12,6 +12,8 @@ class StrictModel(BaseModel):
 
 
 class Cohort(StrictModel):
+    provider_locus: str | None = Field(None, min_length=1, max_length=128)
+    provider_team: str | None = Field(None, min_length=1, max_length=128)
     provider: Literal['anemone'] = 'anemone'
     provider_project_id: str | None = Field(None, min_length=1, max_length=255)
     provider_run_id: str | None = Field(None, min_length=1, max_length=255)

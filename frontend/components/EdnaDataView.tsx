@@ -37,6 +37,8 @@ import type {
 function methodLabel(value: unknown): string {
   if (value === "qcauto_target") return "QCauto";
   if (value === "qcauto_95pct_3nn_target") return "QCauto 95%-3NN";
+  if (value === "qcauto_nontarget") return "QCauto (nontarget)";
+  if (value === "qcauto_95pct_3nn_nontarget") return "QCauto 95%-3NN (nontarget)";
   return formatCell(value);
 }
 
@@ -274,6 +276,28 @@ export function EdnaDataView() {
             {(catalog?.providers || []).map((value) => <option key={value}>{value}</option>)}
           </select>
         </label>
+        <label className="settings-field" htmlFor="edna-locus">
+          <span>Locus</span>
+          <select id="edna-locus" className="field" value={filters.provider_locus || ""} onChange={(event) => setFilter("provider_locus", event.target.value)}>
+            <option value="">All</option>
+            {(catalog?.loci || []).map((value) => <option key={value}>{value}</option>)}
+          </select>
+        </label>
+        <label className="settings-field" htmlFor="edna-team">
+          <span>Team</span>
+          <select id="edna-team" className="field" value={filters.provider_team || ""} onChange={(event) => setFilter("provider_team", event.target.value)}>
+            <option value="">All</option>
+            {(catalog?.teams || []).map((value) => <option key={value}>{value}</option>)}
+          </select>
+        </label>
+        <label className="settings-field" htmlFor="edna-target-status">
+          <span>Target status</span>
+          <select id="edna-target-status" className="field" value={filters.target_status || ""} onChange={(event) => setFilter("target_status", event.target.value)}>
+            <option value="">All</option>
+            <option value="target">Target</option>
+            <option value="nontarget">Nontarget</option>
+          </select>
+        </label>
         <label className="settings-field" htmlFor="edna-project">
           <span>Project</span>
           <select id="edna-project" className="field" value={filters.provider_project_id || ""} onChange={(event) => setFilter("provider_project_id", event.target.value)}>
@@ -291,7 +315,7 @@ export function EdnaDataView() {
         <label className="settings-field" htmlFor="edna-method">
           <span>Assignment</span>
           <select id="edna-method" className="field" value={filters.assignment_method || ""} onChange={(event) => setFilter("assignment_method", event.target.value)}>
-            <option value="">Both methods</option>
+            <option value="">All assignments</option>
             {EDNA_METHODS.map((value) => <option key={value} value={value}>{methodLabel(value)}</option>)}
           </select>
         </label>
@@ -339,11 +363,12 @@ export function EdnaDataView() {
       {exportNote ? <p role="status">{exportNote}</p> : null}
 
       <div className="summary-strip">
-        <Metric label="Samples" value={catalog?.samples} />
+        <Metric label="Source occurrences" value={catalog?.samples} />
         <Metric label="Assays" value={catalog?.assays} />
         <Metric label="Detections" value={catalog?.detections} />
         <Metric label="Controls" value={catalog?.controls} />
       </div>
+      <p>Source occurrences may include repeated sequencing of the same physical sample. Assignment methods describe alternative interpretations of the same reads.</p>
 
       <section className="data-section">
         <div className="section-toolbar">

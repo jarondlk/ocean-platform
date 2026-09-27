@@ -134,7 +134,8 @@ export function EvidenceNavigator({
                 href={link.href}
                 key={`${link.kind}-${link.href}`}
                 rel="noopener noreferrer"
-                target="_blank"
+                target={link.download ? undefined : "_blank"}
+                download={link.download}
               >
                 <ExternalLink aria-hidden="true" size={14} />
                 {ui(link.label)}

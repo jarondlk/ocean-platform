@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "contract_version": 3,
+  "provider": "anemone",
+  "source_family": "edna_metabarcoding",
+  "base_url": "https://db.anemone.bio/dist/",
+  "supported_scope_levels": [
+    "sample",
+    "run"
+  ],
+  "unexpected_file_policy": "block_execution",
+  "download_policy": {
+    "default": "inventory_only",
+    "execution_selection": "interpreted_tsv_only",
+    "raw_fastq": "metadata_only",
+    "nontarget_communities": "selected_when_present",
+    "presentation_assets": "metadata_only",
+    "provider_notes": "selected_when_present"
+  },
+  "limits": {
+    "maximum_files": 2000,
+    "maximum_download_bytes": 536870912,
+    "maximum_directory_bytes": 2000000,
+    "maximum_uncompressed_tsv_bytes": 67108864,
+    "maximum_provider_note_bytes": 65536,
+    "maximum_metadata_rows": 10000
+  },
+  "required_selected_roles": [
+    "sample_metadata",
+    "experiment_metadata",
+    "community_standard",
+    "community_qc",
+    "community_qc3nn"
+  ],
+  "file_roles": [
+    {
+      "role": "forward_fastq",
+      "pattern": ".*\\.forward\\.fastq\\.xz$",
+      "selection": "metadata_only",
+      "compression": "xz",
+      "content": "fastq"
+    },
+    {
+      "role": "reverse_fastq",
+      "pattern": ".*\\.reverse\\.fastq\\.xz$",
+      "selection": "metadata_only",
+      "compression": "xz",
+      "content": "fastq"
+    },
+    {
+      "role": "community_qc3nn",
+      "pattern": "^community_qc3nn_target\\.tsv\\.xz$",
+      "selection": "selected",
+      "compression": "xz",
+      "media_type": "text/tab-separated-values",
+      "table_contract": "community"
+    },
+    {
+      "role": "community_qc",
+      "pattern": "^community_qc_target\\.tsv\\.xz$",
+      "selection": "selected",
+      "compression": "xz",
+      "media_type": "text/tab-separated-values",
+      "table_contract": "community"
+    },
+    {
+      "role": "community_qc3nn_nontarget",
+      "pattern": "^community_qc3nn_nontarget\\.tsv\\.xz$",
+      "selection": "selected",
+      "compression": "xz",
+      "media_type": "text/tab-separated-values",
+      "table_contract": "community"
+    },
+    {
+      "role": "community_qc_nontarget",
+      "pattern": "^community_qc_nontarget\\.tsv\\.xz$",
+      "selection": "selected",
+      "compression": "xz",
+      "media_type": "text/tab-separated-values",
+      "table_contract": "community"
+    },
+    {
+      "role": "community_standard",
+      "pattern": "^community_standard\\.tsv\\.xz$",
+      "selection": "selected",
+      "compression": "xz",
+      "media_type": "text/tab-separated-values",
+      "table_contract": "standard"
+    },
+    {
+      "role": "experiment_metadata",
+      "pattern": "^experiment\\.tsv\\.xz$",
+      "selection": "selected",
+      "compression": "xz",
+      "media_type": "text/tab-separated-values",
+      "table_contract": "key_value_experiment"
+    },
+    {
+      "role": "sample_metadata",
+      "pattern": "^sample\\.tsv\\.xz$",
+      "selection": "selected",
+      "compression": "xz",
+      "media_type": "text/tab-separated-values",
+      "table_contract": "key_value_sample"
+    },
+    {
+      "role": "presentation_asset",
+      "pattern": "^wordcloud\\.(phylum|class|order|family|genus|species)\\.png$",
+      "selection": "metadata_only",
+      "media_type": "image/png"
+    },
+    {
+      "role": "provider_note",
+      "pattern": "^README\\.txt$",
+      "selection": "selected",
+      "media_type": "text/plain",
+      "content": "provider_note"
+    }
+  ],
+  "tables": {
+    "community": {
+      "columns": [
+        "samplename",
+        "superkingdom",
+        "kingdom",
+        "subkingdom",
+        "superphylum",
+        "phylum",
+        "subphylum",
+        "superclass",
+        "class",
+        "subclass",
+        "infraclass",
+        "cohort",
+        "subcohort",
+        "superorder",
+        "order",
+        "suborder",
+        "infraorder",
+        "parvorder",
+        "superfamily",
+        "family",
+        "subfamily",
+        "tribe",
+        "subtribe",
+        "genus",
+        "subgenus",
+        "section",
+        "subsection",
+        "series",
+        "species group",
+        "species subgroup",
+        "species",
+        "subspecies",
+        "varietas",
+        "forma",
+        "forma specialis",
+        "strain",
+        "isolate",
+        "sequence",
+        "nreads",
+        "ncopiesperml"
+      ],
+      "minimum_rows": 0,
+      "constraints": {
+        "sequence": {
+          "pattern": "^[ACGTNacgtn]+$",
+          "nullable": false
+        },
+        "nreads": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ncopiesperml": {
+          "type": "number",
+          "minimum": 0,
+          "nullable_values": [
+            "",
+            "NA",
+            "N/A"
+          ]
+        }
+      },
+      "optional_trailing_columns": [
+        "ncopiesperml"
+      ]
+    },
+    "standard": {
+      "columns": [
+        "samplename",
+        "standard",
+        "sequence",
+        "nreads"
+      ],
+      "minimum_rows": 0,
+      "constraints": {
+        "sequence": {
+          "pattern": "^[ACGTNacgtn]+$",
+          "nullable": false
+        },
+        "nreads": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "key_value_sample": {
+      "columns": [
+        "samplename",
+        "key",
+        "value"
+      ],
+      "minimum_rows": 1,
+      "required_keys": [
+        "samp_name",
+        "project_name",
+        "collection_date_utc"
+      ],
+      "preserve_duplicate_keys": true
+    },
+    "key_value_experiment": {
+      "columns": [
+        "samplename",
+        "key",
+        "value"
+      ],
+      "minimum_rows": 1,
+      "required_keys": [
+        "target_gene",
+        "pcr_primers",
+        "seq_meth"
+      ],
+      "preserve_duplicate_keys": true
+    }
+  },
+  "normalization_policy": "catalogue_v1",
+  "availability_evidence_version": 1
+}

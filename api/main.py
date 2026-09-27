@@ -23,7 +23,7 @@ from urllib.parse import urlsplit, urlunsplit
 import pandas as pd
 from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from sqlalchemy import create_engine, inspect, text
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -53,6 +53,7 @@ from api.edna_service import (
     EDNA_SAMPLE_KINDS,
     edna_assay_detail,
     edna_catalog,
+    edna_summary,
     edna_detection_detail,
     edna_detections,
     edna_sample_detail,
@@ -177,7 +178,7 @@ async def _app_lifespan(_app: FastAPI):
 app = FastAPI(
     title="OCEAN Platform API",
     description="API layer for the Next.js migration of the provenance-aware marine RAG system.",
-    version="0.4.5",
+    version="0.5.0",
     lifespan=_app_lifespan,
 )
 
@@ -659,6 +660,7 @@ def _context_document(doc: Dict[str, Any], context_type: str) -> ContextDocument
         analysis_type=doc.get("analysis_type"),
         text=str(doc.get("text") or ""),
         analysis_id=doc.get("analysis_id"),
+        aggregate_id=doc.get("aggregate_id"),
         table=doc.get("table"),
         result_ids=doc.get("result_ids", []),
         source_family=doc.get("source_family"),
@@ -3838,6 +3840,16 @@ def provenance_manifest(
 
 @app.get("/provenance/trace/{doc_id}", response_model=ProvenanceTraceResponse)
 def provenance_trace(doc_id: str) -> ProvenanceTraceResponse:
+    if doc_id.startswith("aggregate_edna_"):
+        from ingestion.edna_aggregate import aggregate_trace, AggregateUnavailable
+        from sqlalchemy.exc import SQLAlchemyError
+        identity = doc_id.removeprefix("aggregate_edna_")
+        if not re.fullmatch(r"[a-f0-9]{64}", identity):
+            raise HTTPException(400, "Invalid aggregate citation")
+        try:
+            return ProvenanceTraceResponse(**aggregate_trace(identity))
+        except (AggregateUnavailable, SQLAlchemyError, ValueError, OSError) as exc:
+            raise HTTPException(503, "Aggregate evidence unavailable or invalid") from exc
     if config.PROVENANCE_READ_MODE == "snapshot":
         try:
             payload = get_provenance_snapshot_service().trace_payload(doc_id)
@@ -4073,6 +4085,9 @@ def _edna_filters(
     provider: Optional[str] = None,
     provider_project_id: Optional[str] = None,
     provider_run_id: Optional[str] = None,
+    provider_locus: Optional[str] = None,
+    provider_team: Optional[str] = None,
+    target_status: Optional[str] = None,
     assignment_method: Optional[str] = None,
     taxon: Optional[str] = None,
     sample_kind: Optional[str] = None,
@@ -4089,6 +4104,10 @@ def _edna_filters(
         validate_time_range(time_from, time_to)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+    if target_status not in {None, "target", "nontarget"}:
+        raise HTTPException(status_code=400, detail="Unsupported target_status")
+    if any(value is not None and (not value.strip() or len(value) > 128) for value in (provider_locus, provider_team)):
+        raise HTTPException(status_code=400, detail="Invalid provider namespace")
     if assignment_method and assignment_method not in EDNA_ASSIGNMENT_METHODS:
         raise HTTPException(status_code=400, detail="Unsupported assignment_method")
     if sample_kind and sample_kind not in EDNA_SAMPLE_KINDS:
@@ -4112,6 +4131,9 @@ def _edna_filters(
             "provider": provider,
             "provider_project_id": provider_project_id,
             "provider_run_id": provider_run_id,
+            "provider_locus": provider_locus,
+            "provider_team": provider_team,
+            "target_status": target_status,
             "assignment_method": assignment_method,
             "taxon": taxon,
             "sample_kind": sample_kind,
@@ -4159,9 +4181,69 @@ def _documents_source_type(
     return normalized
 
 
+@app.get("/data/edna/aggregates/{aggregate_id}")
+def data_edna_aggregate(aggregate_id: str):
+    from ingestion.edna_aggregate import load_aggregate, AggregateUnavailable
+    from sqlalchemy.exc import SQLAlchemyError
+    if not re.fullmatch(r"[a-f0-9]{64}", aggregate_id):
+        raise HTTPException(400, "Invalid aggregate identifier")
+    try:
+        bundle = load_aggregate(aggregate_id)
+    except (AggregateUnavailable, SQLAlchemyError, ValueError, OSError) as exc:
+        raise HTTPException(503, "Aggregate evidence unavailable or invalid") from exc
+    if bundle is None:
+        raise HTTPException(404, "Unknown aggregate")
+    return JSONResponse(bundle, headers={"Content-Disposition": f'attachment; filename="edna-aggregate-{aggregate_id}.json"'})
+
+
 @app.get("/data/edna/catalog", response_model=EdnaCatalogResponse)
 def data_edna_catalog() -> EdnaCatalogResponse:
     return EdnaCatalogResponse(**edna_catalog())
+
+
+@app.get("/data/edna/summary")
+def data_edna_summary(
+    sample_id: Optional[str] = Query(default=None, max_length=64),
+    assay_id: Optional[str] = Query(default=None, max_length=64),
+    provider: Optional[str] = Query(default=None, max_length=64),
+    provider_project_id: Optional[str] = Query(default=None, max_length=128),
+    provider_run_id: Optional[str] = Query(default=None, max_length=128),
+    provider_locus: Optional[str] = None,
+    provider_team: Optional[str] = None,
+    target_status: Optional[str] = None,
+    assignment_method: Optional[str] = Query(default=None, max_length=64),
+    taxon: Optional[str] = Query(default=None, min_length=1, max_length=200),
+    sample_kind: Optional[str] = Query(default=None, max_length=32),
+    is_control: Optional[bool] = None,
+    time_from: Optional[str] = Query(default=None, max_length=64),
+    time_to: Optional[str] = Query(default=None, max_length=64),
+    lat_min: Optional[float] = Query(default=None, ge=-90, le=90),
+    lat_max: Optional[float] = Query(default=None, ge=-90, le=90),
+    lon_min: Optional[float] = Query(default=None, ge=-180, le=180),
+    lon_max: Optional[float] = Query(default=None, ge=-180, le=180),
+) -> Dict[str, Any]:
+    filters = _edna_filters(
+        sample_id=sample_id,
+        assay_id=assay_id,
+        provider=provider,
+        provider_project_id=provider_project_id,
+        provider_run_id=provider_run_id,
+        provider_locus=provider_locus,
+        provider_team=provider_team,
+        target_status=target_status,
+        assignment_method=assignment_method,
+        taxon=taxon,
+        sample_kind=sample_kind,
+        is_control=is_control,
+        time_from=time_from,
+        time_to=time_to,
+        lat_min=lat_min,
+        lat_max=lat_max,
+        lon_min=lon_min,
+        lon_max=lon_max,
+        strict_ids=True,
+    )
+    return edna_summary(filters)
 
 
 @app.get("/data/edna/samples", response_model=EdnaPageResponse)
@@ -4171,6 +4253,9 @@ def data_edna_samples(
     provider: Optional[str] = Query(default=None, max_length=64),
     provider_project_id: Optional[str] = Query(default=None, max_length=128),
     provider_run_id: Optional[str] = Query(default=None, max_length=128),
+    provider_locus: Optional[str] = None,
+    provider_team: Optional[str] = None,
+    target_status: Optional[str] = None,
     assignment_method: Optional[str] = Query(default=None, max_length=64),
     taxon: Optional[str] = Query(default=None, min_length=1, max_length=200),
     sample_kind: Optional[str] = Query(default=None, max_length=32),
@@ -4192,6 +4277,9 @@ def data_edna_samples(
         provider=provider,
         provider_project_id=provider_project_id,
         provider_run_id=provider_run_id,
+        provider_locus=provider_locus,
+        provider_team=provider_team,
+        target_status=target_status,
         assignment_method=assignment_method,
         taxon=taxon,
         sample_kind=sample_kind,
@@ -4253,6 +4341,9 @@ def data_edna_detections(
     provider: Optional[str] = Query(default=None, max_length=64),
     provider_project_id: Optional[str] = Query(default=None, max_length=128),
     provider_run_id: Optional[str] = Query(default=None, max_length=128),
+    provider_locus: Optional[str] = None,
+    provider_team: Optional[str] = None,
+    target_status: Optional[str] = None,
     assignment_method: Optional[str] = Query(default=None, max_length=64),
     taxon: Optional[str] = Query(default=None, min_length=1, max_length=200),
     sample_kind: Optional[str] = Query(default=None, max_length=32),
@@ -4275,6 +4366,9 @@ def data_edna_detections(
         provider=provider,
         provider_project_id=provider_project_id,
         provider_run_id=provider_run_id,
+        provider_locus=provider_locus,
+        provider_team=provider_team,
+        target_status=target_status,
         assignment_method=assignment_method,
         taxon=taxon,
         sample_kind=sample_kind,
@@ -4339,6 +4433,9 @@ def data_edna_export(
     provider: Optional[str] = Query(default=None, max_length=64),
     provider_project_id: Optional[str] = Query(default=None, max_length=128),
     provider_run_id: Optional[str] = Query(default=None, max_length=128),
+    provider_locus: Optional[str] = None,
+    provider_team: Optional[str] = None,
+    target_status: Optional[str] = None,
     assignment_method: Optional[str] = Query(default=None, max_length=64),
     taxon: Optional[str] = Query(default=None, min_length=1, max_length=200),
     sample_kind: Optional[str] = Query(default=None, max_length=32),
@@ -4356,6 +4453,9 @@ def data_edna_export(
         provider=provider,
         provider_project_id=provider_project_id,
         provider_run_id=provider_run_id,
+        provider_locus=provider_locus,
+        provider_team=provider_team,
+        target_status=target_status,
         assignment_method=assignment_method,
         taxon=taxon,
         sample_kind=sample_kind,
@@ -5180,6 +5280,50 @@ def _mark_chat_failed_safely(
         )
 
 
+def _aggregate_chat_response(request, plan, *, user, model, interaction_id, started_at, options):
+    from ingestion.edna_aggregate import AggregateUnavailable, build_aggregate
+    from orchestration.edna_aggregation import evidence_document, render_answer
+    documents, bundle = [], None
+    reason = "aggregate_scope_required" if plan.clarification else None
+    answer = plan.clarification
+    if reason is None:
+        try:
+            bundle = build_aggregate(plan.filters, plan.group_by)
+            documents = [evidence_document(bundle)]
+            answer = render_answer(bundle)
+        except AggregateUnavailable:
+            reason = "aggregate_unavailable"
+            answer = "Exact catalogue counts are unavailable because the published data or immutable evidence could not be verified. Please retry after publication or database access is restored. No totals were inferred from retrieved examples."
+            logger.warning("Exact eDNA aggregation unavailable", exc_info=True)
+    if bundle:
+        options["context"]["aggregate_scope"] = {"filters": plan.filters, "group_by": list(plan.group_by)}
+    contexts = [_context_document(row, "analysis") for row in documents]
+    diagnostics = {"backend": "structured_sql", "aggregate": True, "filters": plan.filters,
+                   "group_by": list(plan.group_by), "expected_source_types": ["edna_metabarcoding"],
+                   "retrieved_source_types": ["edna_metabarcoding"] if documents else [],
+                   "missing_source_types": [] if documents else ["edna_metabarcoding"],
+                   "aggregate_id": bundle["aggregate_id"] if bundle else None,
+                   "publication": bundle["payload"]["publication"] if bundle else None,
+                   "failure": reason, "top_k_applied": False}
+    prompt_diagnostics = {"answer_mode": "deterministic_aggregate", "model_invoked": False}
+    audit = audit_answer(query=request.query, answer=answer, primary_sources=[], linked_sources=[],
+                         analysis_context=documents, reliability_context=[], retrieval_diagnostics=diagnostics, exact_aggregate=True) if documents and request.run_answer_audit else None
+    record_chat_context(interaction_id=interaction_id, user=user,
+        evidence_snapshot={"citation_aliases": {}, "sources": [], "linked_sources": [],
+            "analysis_context": contexts, "reliability_context": [], "retrieval_diagnostics": diagnostics,
+            "prompt_diagnostics": prompt_diagnostics},
+        prompt="Deterministic SQL aggregate; no model prompt was sent.\n" + (documents[0]["text"] if documents else answer))
+    outcome = "abstained" if reason else "answered"
+    complete_chat_interaction(interaction_id=interaction_id, user=user, answer=answer,
+        answer_audit_snapshot=json_safe(audit), latency_ms=_chat_latency_ms(started_at),
+        outcome=outcome, abstention_reason=reason)
+    return ChatResponse(interaction_id=interaction_id, query=request.query, answer=answer,
+        sources=[], analysis_context=contexts, linked_sources=[], reliability_context=[],
+        model=model, n_sources=0, n_linked_sources=0, n_context_documents=len(contexts),
+        prompt_diagnostics=prompt_diagnostics, retrieval_diagnostics=diagnostics,
+        answer_audit=audit, options=options, outcome=outcome, abstention_reason=reason, model_invoked=False)
+
+
 @app.post("/chat", response_model=ChatResponse)
 def chat(
     request: ChatRequest,
@@ -5222,6 +5366,7 @@ def chat(
         },
         "context": {
             "analysis_id": request.analysis_id,
+            "aggregation": request.aggregation.model_dump() if request.aggregation else None,
             "inject_analysis": request.inject_analysis,
             "inject_reliability": request.inject_reliability,
             "run_answer_audit": request.run_answer_audit,
@@ -5235,6 +5380,11 @@ def chat(
     )
 
     try:
+        from orchestration.edna_aggregation import plan_aggregation
+        aggregate_plan = plan_aggregation(request.model_dump())
+        if aggregate_plan is not None:
+            return _aggregate_chat_response(request, aggregate_plan, user=user, model=model,
+                interaction_id=interaction_id, started_at=started_at, options=response_options)
         bundle = retrieve_with_expansion(
             request.query,
             k=request.k,

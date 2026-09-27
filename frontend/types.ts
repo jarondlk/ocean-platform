@@ -161,6 +161,7 @@ export type ContextDocument = {
   text: string;
   source_family?: string | null;
   analysis_id?: string | null;
+  aggregate_id?: string | null;
   table?: string | null;
   result_ids?: string[];
 };
@@ -237,7 +238,7 @@ export type ChatResponse = {
   answer_audit?: AnswerAudit | null;
   options: Record<string, unknown>;
   outcome?: "answered" | "abstained";
-  abstention_reason?: "no_matching_evidence" | "empty_analysis_cohort" | "publication_pending" | null;
+  abstention_reason?: "no_matching_evidence" | "empty_analysis_cohort" | "publication_pending" | "aggregate_scope_required" | "aggregate_unavailable" | null;
   model_invoked?: boolean;
 };
 
@@ -443,6 +444,10 @@ export type SstDataResponse = {
 };
 
 export type EdnaCatalogResponse = {
+  loci?: string[];
+  teams?: string[];
+  physical_sample_count?: number | null;
+  sample_count_definition?: string;
   samples: number;
   assays: number;
   detections: number;

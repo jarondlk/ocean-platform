@@ -34,7 +34,10 @@ SEQUENCE_PATTERN = re.compile(r"^[ACGTN]+$")
 ASSIGNMENT_METHODS = {
     "community_qc": "qcauto_target",
     "community_qc3nn": "qcauto_95pct_3nn_target",
+    "community_qc_nontarget": "qcauto_nontarget",
+    "community_qc3nn_nontarget": "qcauto_95pct_3nn_nontarget",
 }
+OPTIONAL_ROLES = {"community_qc_nontarget", "community_qc3nn_nontarget", "provider_note"}
 REQUIRED_ROLES = {
     "sample_metadata",
     "experiment_metadata",
@@ -86,6 +89,7 @@ class AnemoneNormalizedBundle:
     contract_sha256: str
     generated_at: str
     classification_review: Optional[dict[str, Any]] = None
+    reconciliation_mode: str = "complete_scope"
 
 
 def _json_value(value: Any) -> Any:
@@ -221,6 +225,7 @@ def _metadata_map(
     rows: list[list[str]],
     *,
     expected_sample: str,
+    preserve_duplicates: bool = False,
 ) -> tuple[dict[str, str], list[int]]:
     if header != ["samplename", "key", "value"]:
         raise AnemoneNormalizationError(
@@ -236,12 +241,19 @@ def _metadata_map(
                 "ANEMONE metadata sample does not match its source directory.",
             )
         key = row[1].strip()
-        if not key or key in values:
+        if not key or (key in values and not preserve_duplicates):
             raise AnemoneNormalizationError(
                 "metadata_key_invalid",
                 "ANEMONE metadata contains a blank or duplicate key.",
             )
-        values[key] = row[2].strip()
+        # All rows are retained separately in v3. Ambiguous interpreted keys
+        # cannot silently use the first or last provider value.
+        interpreted = {"samp_name", "project_name", "lat_lon", "collection_date_utc",
+                       "target_gene", "pcr_primers", "seq_meth", "lib_layout",
+                       "instrument_model", "samp_taxon_id", "worldmesh", *CLASSIFICATION_KEYS}
+        if key in values and key in interpreted and values[key] != row[2].strip():
+            raise AnemoneNormalizationError("metadata_value_conflict", "Conflicting interpreted metadata values.")
+        values.setdefault(key, row[2].strip())
         row_numbers.append(row_number)
     return values, row_numbers
 
@@ -457,7 +469,8 @@ def _verify_snapshot(
         sample_name = str(item.get("sample_name") or "")
         role = str(item.get("role") or "")
         key = (sample_name, role)
-        if not sample_name or role not in REQUIRED_ROLES or key in selected:
+        allowed_roles = REQUIRED_ROLES | (OPTIONAL_ROLES if contract.get("normalization_policy") == "catalogue_v1" else set())
+        if not sample_name or role not in allowed_roles or key in selected:
             raise AnemoneNormalizationError(
                 "snapshot_selected_roles_invalid",
                 "ANEMONE snapshot has invalid or duplicate selected roles.",
@@ -488,8 +501,7 @@ def _verify_snapshot(
         selected[key] = {**item, "path": path}
     samples = {sample for sample, _ in selected}
     if not samples or any(
-        {role for sample_name, role in selected if sample_name == sample}
-        != REQUIRED_ROLES
+        not REQUIRED_ROLES.issubset({role for sample_name, role in selected if sample_name == sample})
         for sample in samples
     ):
         raise AnemoneNormalizationError(
@@ -530,7 +542,16 @@ def build_anemone_bundle(
         reviews = {d["provider_sample_id"]: d for d in classification_review["decisions"]}
     scope_level = str(manifest.get("scope_level") or "")
     scope_url = str(manifest.get("scope_url") or "")
-    project_id, run_id = _source_segments(scope_url, scope_level)
+    catalogue = source_contract.get("normalization_policy") == "catalogue_v1"
+    if catalogue:
+        from ingestion.anemone import validate_scope_url
+        scope = validate_scope_url(scope_url, base_url=source_contract["base_url"],
+                                   allow_insecure_http=scope_url.startswith("http://"))
+        parts = urlsplit(scope.url).path.strip("/").split("/")
+        locus, team, project_id, run_id = parts[1:5]
+    else:
+        project_id, run_id = _source_segments(scope_url, scope_level)
+        locus, team = "MiFish", "ANEMONE"
     contract_sha = stable_sha256(source_contract)
     issues: list[NormalizationIssue] = []
 
@@ -611,6 +632,7 @@ def build_anemone_bundle(
             sample_header,
             sample_source_rows,
             expected_sample=provider_sample_id,
+            preserve_duplicates=catalogue,
         )
         experiment_item = selected[(provider_sample_id, "experiment_metadata")]
         experiment_header, experiment_source_rows = _read_xz_tsv(
@@ -620,6 +642,7 @@ def build_anemone_bundle(
             experiment_header,
             experiment_source_rows,
             expected_sample=provider_sample_id,
+            preserve_duplicates=catalogue,
         )
         for key in source_contract["tables"]["key_value_sample"]["required_keys"]:
             if not _nullable_text(sample_metadata.get(key)):
@@ -634,13 +657,33 @@ def build_anemone_bundle(
                     f"ANEMONE experiment metadata is missing required value {key}.",
                 )
 
-        sample_id = stable_edna_id("sample", "anemone", provider_sample_id)
+        # Keep the pilot's public IDs where the upstream identifier already
+        # embeds its sequencing run. Other namespaces use the full occurrence.
+        identity = provider_sample_id
+        if catalogue and (locus != "MiFish" or team != "ANEMONE" or not provider_sample_id.startswith(run_id + "__")):
+            identity = "/".join((locus, team, project_id, run_id, provider_sample_id))
+        sample_id = stable_edna_id("sample", "anemone", identity)
         assay_id = stable_edna_id(
-            "assay", "anemone", provider_sample_id, "experiment_metadata"
+            "assay", "anemone", identity, "experiment_metadata"
         )
         sample_kind, is_control, classification_basis = _classification(
             sample_metadata
         )
+        note = selected.get((provider_sample_id, "provider_note"))
+        note_text = note["path"].read_text(encoding="utf-8") if note else None
+        if catalogue:
+            evidence = []
+            if sample_metadata.get("samp_taxon_id", "").strip().casefold() == "blank sample":
+                evidence.append("metadata:samp_taxon_id=blank sample")
+            # Only the observed exact provider declaration has policy meaning.
+            # Arbitrary source text is evidence, never an executable instruction.
+            if note_text and note_text.strip() == "This sample is NEGATIVE CONTROL. DO NOT USE for normal analysis.":
+                evidence.append("provider_note:negative_control")
+            if evidence:
+                if sample_kind not in {"unknown", "negative_control"}:
+                    raise AnemoneNormalizationError("classification_evidence_conflict", "Provider control evidence conflicts with classification metadata.")
+                sample_kind, is_control = "negative_control", True
+                classification_basis = "provider-policy:anemone-controls-v1:" + ";".join(evidence)
         review_record = None
         if provider_sample_id in reviews:
             review_record = build_review_lineage(
@@ -679,7 +722,7 @@ def build_anemone_bundle(
                 "anchor_event",
                 "edna_metabarcoding",
                 "anemone",
-                provider_sample_id,
+                identity,
             )
             if sample_kind == "environmental"
             else None
@@ -706,6 +749,18 @@ def build_anemone_bundle(
             "source_file_id": source_file_ids[(provider_sample_id, "sample_metadata")],
             "source_row_numbers_json": _canonical_json(sample_row_numbers),
         }
+        if catalogue:
+            sample_scientific.update({
+                "provider_locus": locus, "provider_team": team,
+                "source_occurrence_id": stable_edna_id("occurrence", "anemone", locus, team, project_id, run_id, provider_sample_id),
+                "physical_sample_id": None,
+                "identity_status": "unresolved_physical_sample",
+                "coordinate_precision": "provider_grid_unconfirmed" if sample_metadata.get("worldmesh") else "unspecified",
+            })
+            sample_source.update({
+                "raw_metadata_rows_json": _canonical_json(sample_source_rows),
+                "provider_note_json": _canonical_json({"text": note_text, "source_file_id": source_file_ids.get((provider_sample_id, "provider_note")), "policy": "anemone-controls-v1"}) if note else None,
+            })
         if review_record is not None:
             sample_scientific["classification_review_json"] = _canonical_json(review_record)
         sample_scientific_hash, sample_source_hash = _scientific_and_source_hashes(
@@ -765,6 +820,14 @@ def build_anemone_bundle(
             ],
             "source_row_numbers_json": _canonical_json(experiment_row_numbers),
         }
+        if catalogue:
+            assay_source["raw_metadata_rows_json"] = _canonical_json(experiment_source_rows)
+            assay_scientific["community_availability_json"] = _canonical_json({
+                method: {"status": "available", "source_file_id": source_file_ids[(provider_sample_id, role)],
+                         "source_snapshot_id": snapshot_id, "row_count": selected[(provider_sample_id, role)].get("row_count")}
+                for role, method in ASSIGNMENT_METHODS.items()
+                if (provider_sample_id, role) in selected
+            })
         assay_scientific_hash, assay_source_hash = _scientific_and_source_hashes(
             assay_scientific,
             assay_source,
@@ -783,10 +846,12 @@ def build_anemone_bundle(
         )
 
         for role, assignment_method in ASSIGNMENT_METHODS.items():
+            if (provider_sample_id, role) not in selected:
+                continue
             item = selected[(provider_sample_id, role)]
             header, rows = _read_xz_tsv(item["path"])
             expected_header = source_contract["tables"]["community"]["columns"]
-            if header != expected_header:
+            if header != expected_header and not (catalogue and header == expected_header[:-1]):
                 raise AnemoneNormalizationError(
                     "community_columns_invalid",
                     "ANEMONE community columns do not match the PR2 contract.",
@@ -825,7 +890,7 @@ def build_anemone_bundle(
                         field="read_count",
                     ),
                     "copies_per_ml": _copies_per_ml(
-                        row[index["ncopiesperml"]]
+                        row[index["ncopiesperml"]] if "ncopiesperml" in index else ""
                     ),
                     **{rank: taxonomy.get(rank) for rank in indexed_ranks},
                     "assigned_taxon_name": assigned_name,
@@ -837,6 +902,12 @@ def build_anemone_bundle(
                     "source_file_id": source_file_ids[(provider_sample_id, role)],
                     "source_row_number": row_number,
                 }
+                if catalogue:
+                    scientific.update({
+                        "assignment_algorithm": "qcauto_95pct_3nn" if "3nn" in assignment_method else "qcauto",
+                        "target_status": "nontarget" if role.endswith("_nontarget") else "target",
+                        "concentration_status": "column_absent" if "ncopiesperml" not in index else ("missing" if scientific["copies_per_ml"] is None else "reported"),
+                    })
                 scientific_hash, source_hash = _scientific_and_source_hashes(
                     scientific,
                     source,
@@ -923,6 +994,7 @@ def build_anemone_bundle(
                 "detection_id",
                 "assay_id",
                 "assignment_method",
+                *(["assignment_algorithm", "target_status", "concentration_status"] if catalogue else []),
                 "sequence",
                 "sequence_sha256",
                 "read_count",
@@ -1010,6 +1082,7 @@ def build_anemone_bundle(
         contract_sha256=contract_sha,
         generated_at=generated_at or datetime.now(timezone.utc).isoformat(),
         classification_review=classification_review,
+        reconciliation_mode=str(manifest.get("reconciliation_mode", "complete_scope")),
     )
 
 
@@ -1060,6 +1133,7 @@ def _bundle_manifest(
         "source_snapshot_id": bundle.source_snapshot_id,
         "source_scope_level": bundle.source_scope_level,
         "source_scope_url": bundle.source_scope_url,
+        "reconciliation_mode": bundle.reconciliation_mode,
         "input_manifest_sha256": bundle.input_manifest_sha256,
         "contract_sha256": bundle.contract_sha256,
         "generated_at": bundle.generated_at,

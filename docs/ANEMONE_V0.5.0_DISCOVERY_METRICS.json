@@ -1,0 +1,907 @@
+{
+  "as_of": "2026-09-17",
+  "catalogue": {
+    "observed_at": "2026-09-17T12:04:33.134407+09:00",
+    "directory_status": {
+      "complete": 3498
+    },
+    "file_count": 45144,
+    "total_bytes": 35555980361,
+    "files_by_name_excluding_fastq": {
+      "community_qc3nn_target.tsv.xz": 3498,
+      "community_qc_target.tsv.xz": 3498,
+      "community_standard.tsv.xz": 3498,
+      "experiment.tsv.xz": 3498,
+      "sample.tsv.xz": 3498,
+      "wordcloud.class.png": 3415,
+      "wordcloud.family.png": 3415,
+      "wordcloud.genus.png": 3415,
+      "wordcloud.order.png": 3415,
+      "wordcloud.phylum.png": 3415,
+      "wordcloud.species.png": 3415,
+      "README.txt": 168
+    },
+    "projects": {
+      "2019KibanS": {
+        "fastq_files": 384,
+        "fastq_bytes": 1034645440,
+        "tsv_files": 960,
+        "tsv_bytes": 968548,
+        "image_files": 1116,
+        "image_bytes": 268635863
+      },
+      "2020EarthWatch": {
+        "fastq_files": 130,
+        "fastq_bytes": 185091764,
+        "tsv_files": 325,
+        "tsv_bytes": 441888,
+        "image_files": 390,
+        "image_bytes": 117588082
+      },
+      "2020KibanS": {
+        "fastq_files": 1648,
+        "fastq_bytes": 5992105304,
+        "tsv_files": 4120,
+        "tsv_bytes": 5241780,
+        "image_files": 4722,
+        "image_bytes": 1321134021
+      },
+      "2021EarthWatch": {
+        "fastq_files": 124,
+        "fastq_bytes": 543316696,
+        "tsv_files": 310,
+        "tsv_bytes": 521712,
+        "image_files": 372,
+        "image_bytes": 129550189
+      },
+      "2021KanagawaPref": {
+        "fastq_files": 146,
+        "fastq_bytes": 387827704,
+        "tsv_files": 365,
+        "tsv_bytes": 410164,
+        "image_files": 438,
+        "image_bytes": 101846394
+      },
+      "2021KibanS": {
+        "fastq_files": 1248,
+        "fastq_bytes": 3086405712,
+        "tsv_files": 3120,
+        "tsv_bytes": 4161456,
+        "image_files": 3576,
+        "image_bytes": 1038137456,
+        "other_files": 77,
+        "other_bytes": 4928
+      },
+      "2021NipponYusen": {
+        "fastq_files": 14,
+        "fastq_bytes": 28531452,
+        "other_files": 3,
+        "other_bytes": 192,
+        "tsv_files": 35,
+        "tsv_bytes": 32480,
+        "image_files": 36,
+        "image_bytes": 9558341
+      },
+      "2022EarthWatch": {
+        "fastq_files": 516,
+        "fastq_bytes": 1554650132,
+        "tsv_files": 1290,
+        "tsv_bytes": 2614148,
+        "image_files": 1548,
+        "image_bytes": 626161522
+      },
+      "2022KibanS": {
+        "fastq_files": 1444,
+        "fastq_bytes": 8782607892,
+        "tsv_files": 3610,
+        "tsv_bytes": 6019456,
+        "image_files": 4290,
+        "image_bytes": 1635781341,
+        "other_files": 86,
+        "other_bytes": 5504
+      },
+      "2023KibanS": {
+        "fastq_files": 1342,
+        "fastq_bytes": 7182975840,
+        "tsv_files": 3355,
+        "tsv_bytes": 5563212,
+        "image_files": 4002,
+        "image_bytes": 1503443620,
+        "other_files": 2,
+        "other_bytes": 128
+      }
+    },
+    "runs": {
+      "2019KibanSRUN01": {
+        "fastq_files": 160,
+        "fastq_bytes": 573911844,
+        "tsv_files": 400,
+        "tsv_bytes": 398408,
+        "image_files": 444,
+        "image_bytes": 109259872
+      },
+      "2019KibanSRUN02": {
+        "fastq_files": 220,
+        "fastq_bytes": 453903152,
+        "tsv_files": 550,
+        "tsv_bytes": 560444,
+        "image_files": 660,
+        "image_bytes": 156277212
+      },
+      "2019KibanSRUN04": {
+        "fastq_files": 4,
+        "fastq_bytes": 6830444,
+        "tsv_files": 10,
+        "tsv_bytes": 9696,
+        "image_files": 12,
+        "image_bytes": 3098779
+      },
+      "2020EarthWatchRUN01": {
+        "fastq_files": 130,
+        "fastq_bytes": 185091764,
+        "tsv_files": 325,
+        "tsv_bytes": 441888,
+        "image_files": 390,
+        "image_bytes": 117588082
+      },
+      "2020KibanSRUN01": {
+        "fastq_files": 1556,
+        "fastq_bytes": 5217309656,
+        "tsv_files": 3890,
+        "tsv_bytes": 4974096,
+        "image_files": 4452,
+        "image_bytes": 1255543825
+      },
+      "2020KibanSRUN02": {
+        "fastq_files": 92,
+        "fastq_bytes": 774795648,
+        "tsv_files": 230,
+        "tsv_bytes": 267684,
+        "image_files": 270,
+        "image_bytes": 65590196
+      },
+      "2021EarthWatchRUN01": {
+        "fastq_files": 124,
+        "fastq_bytes": 543316696,
+        "tsv_files": 310,
+        "tsv_bytes": 521712,
+        "image_files": 372,
+        "image_bytes": 129550189
+      },
+      "2021KanagawaPrefRUN01": {
+        "fastq_files": 146,
+        "fastq_bytes": 387827704,
+        "tsv_files": 365,
+        "tsv_bytes": 410164,
+        "image_files": 438,
+        "image_bytes": 101846394
+      },
+      "2021KibanSRUN01": {
+        "fastq_files": 1248,
+        "fastq_bytes": 3086405712,
+        "tsv_files": 3120,
+        "tsv_bytes": 4161456,
+        "image_files": 3576,
+        "image_bytes": 1038137456,
+        "other_files": 77,
+        "other_bytes": 4928
+      },
+      "2021NipponYusenRUN01": {
+        "fastq_files": 14,
+        "fastq_bytes": 28531452,
+        "other_files": 3,
+        "other_bytes": 192,
+        "tsv_files": 35,
+        "tsv_bytes": 32480,
+        "image_files": 36,
+        "image_bytes": 9558341
+      },
+      "2022EarthWatchRUN01": {
+        "fastq_files": 256,
+        "fastq_bytes": 744026148,
+        "tsv_files": 640,
+        "tsv_bytes": 1292192,
+        "image_files": 768,
+        "image_bytes": 309238773
+      },
+      "2022EarthWatchRUN04": {
+        "fastq_files": 260,
+        "fastq_bytes": 810623984,
+        "tsv_files": 650,
+        "tsv_bytes": 1321956,
+        "image_files": 780,
+        "image_bytes": 316922749
+      },
+      "2022KibanSRUN01": {
+        "fastq_files": 98,
+        "fastq_bytes": 871600844,
+        "tsv_files": 245,
+        "tsv_bytes": 483580,
+        "image_files": 294,
+        "image_bytes": 124313042,
+        "other_files": 2,
+        "other_bytes": 128
+      },
+      "2022KibanSRUN02": {
+        "fastq_files": 118,
+        "fastq_bytes": 659467560,
+        "tsv_files": 295,
+        "tsv_bytes": 472104,
+        "image_files": 354,
+        "image_bytes": 129050828,
+        "other_files": 6,
+        "other_bytes": 384
+      },
+      "2022KibanSRUN03": {
+        "fastq_files": 60,
+        "fastq_bytes": 505791456,
+        "other_files": 3,
+        "other_bytes": 192,
+        "tsv_files": 150,
+        "tsv_bytes": 224748,
+        "image_files": 180,
+        "image_bytes": 63744512
+      },
+      "2022KibanSRUN04": {
+        "fastq_files": 1156,
+        "fastq_bytes": 6629719780,
+        "tsv_files": 2890,
+        "tsv_bytes": 4810632,
+        "image_files": 3426,
+        "image_bytes": 1311569414,
+        "other_files": 75,
+        "other_bytes": 4800
+      },
+      "2022KibanSRUN06": {
+        "fastq_files": 12,
+        "fastq_bytes": 116028252,
+        "tsv_files": 30,
+        "tsv_bytes": 28392,
+        "image_files": 36,
+        "image_bytes": 7103545
+      },
+      "2023KibanSRUN01": {
+        "fastq_files": 40,
+        "fastq_bytes": 308713908,
+        "tsv_files": 100,
+        "tsv_bytes": 226476,
+        "image_files": 120,
+        "image_bytes": 58017792,
+        "other_files": 2,
+        "other_bytes": 128
+      },
+      "2023KibanSRUN02": {
+        "fastq_files": 1302,
+        "fastq_bytes": 6874261932,
+        "tsv_files": 3255,
+        "tsv_bytes": 5336736,
+        "image_files": 3882,
+        "image_bytes": 1445425828
+      }
+    },
+    "source_listing_modification_times": {
+      "2024-12-14T03:24:00": 228,
+      "2024-12-14T03:25:00": 2206,
+      "2024-12-14T03:26:00": 1282,
+      "2024-12-14T03:27:00": 3897,
+      "2024-12-14T03:28:00": 4012,
+      "2024-12-14T03:29:00": 7585,
+      "2024-12-14T03:30:00": 6812,
+      "2024-12-14T03:31:00": 903,
+      "2025-09-01T02:51:00": 88,
+      "2025-09-01T13:36:00": 639,
+      "2025-09-01T13:37:00": 773,
+      "2025-09-01T13:38:00": 393,
+      "2025-09-01T13:40:00": 533,
+      "2025-09-01T13:41:00": 2045,
+      "2025-09-01T13:42:00": 1994,
+      "2025-09-01T13:43:00": 1984,
+      "2025-09-01T13:44:00": 991,
+      "2025-09-01T13:46:00": 78,
+      "2025-09-01T13:47:00": 310,
+      "2025-09-01T13:48:00": 1769,
+      "2025-09-01T13:49:00": 1781,
+      "2025-09-01T13:50:00": 1742,
+      "2025-09-01T13:51:00": 1728,
+      "2025-09-01T13:52:00": 1371
+    }
+  },
+  "tables": {
+    "profiled_files": 17490,
+    "sample_metadata_files": 3498,
+    "distinct_samp_name": 3318,
+    "repeated_samp_name_groups": 180,
+    "extra_occurrences_with_repeated_samp_name": 180,
+    "utc_min": "2017-12-18T01:03:00+00:00",
+    "utc_max": "2023-12-16T02:40:00+00:00",
+    "coordinate_records": 3174,
+    "coordinate_bounds": {
+      "lat_min": 17.45833333,
+      "lat_max": 45.54166667,
+      "lon_min": 123.8125,
+      "lon_max": 148.6875
+    },
+    "method_pairs": {
+      "paired_occurrences": 3498,
+      "same_row_count": 3498,
+      "same_read_sum": 3498,
+      "same_sequence_read_pairs": 3498
+    },
+    "standard_row_distribution": {
+      "4": 3479,
+      "0": 9,
+      "1": 6,
+      "3": 2,
+      "2": 2
+    },
+    "missing_pilot_required_metadata": {
+      "sample.tsv.xz:lat_lon": 324
+    },
+    "file_totals": {
+      "community_qc3nn_target.tsv.xz": {
+        "files": 3498,
+        "rows": 174819,
+        "reads": 157426611,
+        "empty_files": 83,
+        "read_errors": 0,
+        "copy_errors": 0,
+        "malformed_rows": 0,
+        "duplicate_sequences": 0,
+        "duplicate_metadata_keys": 0,
+        "copy_missing": 3246,
+        "copy_zero": 0,
+        "copy_positive": 171250
+      },
+      "community_qc_target.tsv.xz": {
+        "files": 3498,
+        "rows": 174819,
+        "reads": 157426611,
+        "empty_files": 83,
+        "read_errors": 0,
+        "copy_errors": 0,
+        "malformed_rows": 0,
+        "duplicate_sequences": 0,
+        "duplicate_metadata_keys": 0,
+        "copy_missing": 3246,
+        "copy_zero": 0,
+        "copy_positive": 171250
+      },
+      "community_standard.tsv.xz": {
+        "files": 3498,
+        "rows": 13932,
+        "reads": 442404272,
+        "empty_files": 9,
+        "read_errors": 0,
+        "copy_errors": 0,
+        "malformed_rows": 0,
+        "duplicate_sequences": 0,
+        "duplicate_metadata_keys": 0,
+        "copy_missing": 0,
+        "copy_zero": 0,
+        "copy_positive": 0
+      },
+      "experiment.tsv.xz": {
+        "files": 3498,
+        "rows": 52378,
+        "reads": 0,
+        "empty_files": 0,
+        "read_errors": 0,
+        "copy_errors": 0,
+        "malformed_rows": 0,
+        "duplicate_sequences": 0,
+        "duplicate_metadata_keys": 0,
+        "copy_missing": 0,
+        "copy_zero": 0,
+        "copy_positive": 0
+      },
+      "sample.tsv.xz": {
+        "files": 3498,
+        "rows": 63423,
+        "reads": 0,
+        "empty_files": 0,
+        "read_errors": 0,
+        "copy_errors": 0,
+        "malformed_rows": 0,
+        "duplicate_sequences": 0,
+        "duplicate_metadata_keys": 0,
+        "copy_missing": 0,
+        "copy_zero": 0,
+        "copy_positive": 0
+      }
+    },
+    "schemas": {
+      "community_qc3nn_target.tsv.xz": [
+        {
+          "columns": [
+            "samplename",
+            "superkingdom",
+            "kingdom",
+            "subkingdom",
+            "superphylum",
+            "phylum",
+            "subphylum",
+            "superclass",
+            "class",
+            "subclass",
+            "infraclass",
+            "cohort",
+            "subcohort",
+            "superorder",
+            "order",
+            "suborder",
+            "infraorder",
+            "parvorder",
+            "superfamily",
+            "family",
+            "subfamily",
+            "tribe",
+            "subtribe",
+            "genus",
+            "subgenus",
+            "section",
+            "subsection",
+            "series",
+            "species group",
+            "species subgroup",
+            "species",
+            "subspecies",
+            "varietas",
+            "forma",
+            "forma specialis",
+            "strain",
+            "isolate",
+            "sequence",
+            "nreads",
+            "ncopiesperml"
+          ],
+          "files": 3489
+        },
+        {
+          "columns": [
+            "samplename",
+            "superkingdom",
+            "kingdom",
+            "subkingdom",
+            "superphylum",
+            "phylum",
+            "subphylum",
+            "superclass",
+            "class",
+            "subclass",
+            "infraclass",
+            "cohort",
+            "subcohort",
+            "superorder",
+            "order",
+            "suborder",
+            "infraorder",
+            "parvorder",
+            "superfamily",
+            "family",
+            "subfamily",
+            "tribe",
+            "subtribe",
+            "genus",
+            "subgenus",
+            "section",
+            "subsection",
+            "series",
+            "species group",
+            "species subgroup",
+            "species",
+            "subspecies",
+            "varietas",
+            "forma",
+            "forma specialis",
+            "strain",
+            "isolate",
+            "sequence",
+            "nreads"
+          ],
+          "files": 9
+        }
+      ],
+      "community_qc_target.tsv.xz": [
+        {
+          "columns": [
+            "samplename",
+            "superkingdom",
+            "kingdom",
+            "subkingdom",
+            "superphylum",
+            "phylum",
+            "subphylum",
+            "superclass",
+            "class",
+            "subclass",
+            "infraclass",
+            "cohort",
+            "subcohort",
+            "superorder",
+            "order",
+            "suborder",
+            "infraorder",
+            "parvorder",
+            "superfamily",
+            "family",
+            "subfamily",
+            "tribe",
+            "subtribe",
+            "genus",
+            "subgenus",
+            "section",
+            "subsection",
+            "series",
+            "species group",
+            "species subgroup",
+            "species",
+            "subspecies",
+            "varietas",
+            "forma",
+            "forma specialis",
+            "strain",
+            "isolate",
+            "sequence",
+            "nreads",
+            "ncopiesperml"
+          ],
+          "files": 3489
+        },
+        {
+          "columns": [
+            "samplename",
+            "superkingdom",
+            "kingdom",
+            "subkingdom",
+            "superphylum",
+            "phylum",
+            "subphylum",
+            "superclass",
+            "class",
+            "subclass",
+            "infraclass",
+            "cohort",
+            "subcohort",
+            "superorder",
+            "order",
+            "suborder",
+            "infraorder",
+            "parvorder",
+            "superfamily",
+            "family",
+            "subfamily",
+            "tribe",
+            "subtribe",
+            "genus",
+            "subgenus",
+            "section",
+            "subsection",
+            "series",
+            "species group",
+            "species subgroup",
+            "species",
+            "subspecies",
+            "varietas",
+            "forma",
+            "forma specialis",
+            "strain",
+            "isolate",
+            "sequence",
+            "nreads"
+          ],
+          "files": 9
+        }
+      ],
+      "community_standard.tsv.xz": [
+        {
+          "columns": [
+            "samplename",
+            "standard",
+            "sequence",
+            "nreads"
+          ],
+          "files": 3498
+        }
+      ],
+      "experiment.tsv.xz": [
+        {
+          "columns": [
+            "samplename",
+            "key",
+            "value"
+          ],
+          "files": 3498
+        }
+      ],
+      "sample.tsv.xz": [
+        {
+          "columns": [
+            "samplename",
+            "key",
+            "value"
+          ],
+          "files": 3498
+        }
+      ]
+    },
+    "sample_records_by_run": {
+      "2019KibanSRUN01": 80,
+      "2019KibanSRUN02": 110,
+      "2019KibanSRUN04": 2,
+      "2020EarthWatchRUN01": 65,
+      "2020KibanSRUN01": 778,
+      "2020KibanSRUN02": 46,
+      "2021EarthWatchRUN01": 62,
+      "2021KanagawaPrefRUN01": 73,
+      "2021KibanSRUN01": 624,
+      "2021NipponYusenRUN01": 7,
+      "2022EarthWatchRUN01": 128,
+      "2022EarthWatchRUN04": 130,
+      "2022KibanSRUN01": 49,
+      "2022KibanSRUN02": 59,
+      "2022KibanSRUN03": 30,
+      "2022KibanSRUN04": 578,
+      "2022KibanSRUN06": 6,
+      "2023KibanSRUN01": 20,
+      "2023KibanSRUN02": 651
+    },
+    "issues": {}
+  },
+  "compatibility": {
+    "audited_tsv_files": 17490,
+    "current_contract_file_failures": {
+      "metadata_keys_missing": 324,
+      "tsv_row_count_below_contract": 173,
+      "tsv_columns_invalid": 18
+    },
+    "current_contract_failed_sample_directories": 335,
+    "examples": {
+      "metadata_keys_missing": "https://db.anemone.bio/dist/MiFish/ANEMONE/2019KibanS/2019KibanSRUN01/2019KibanSRUN01__20180902T0220-KUM-Otomi-NC__MiFish/sample.tsv.xz",
+      "tsv_row_count_below_contract": "https://db.anemone.bio/dist/MiFish/ANEMONE/2019KibanS/2019KibanSRUN01/2019KibanSRUN01__20190215T0455-HUF-MutsuSekine-NC__MiFish/community_qc3nn_target.tsv.xz",
+      "tsv_columns_invalid": "https://db.anemone.bio/dist/MiFish/ANEMONE/2019KibanS/2019KibanSRUN04/2019KibanSRUN04__20190314T0500-HUF-Amaharashi-NC__MiFish/community_qc3nn_target.tsv.xz"
+    },
+    "README_unknown_file_sample_directories": 168,
+    "combined_known_blocked_sample_directories": 355,
+    "sample_records_with_current_classifier_keys": 0,
+    "provider_blank_metadata_records": 323,
+    "provider_negative_README_records": 168,
+    "negative_evidence_union_records": 343,
+    "README_with_generic_metagenome_metadata": 20,
+    "README_without_NC_suffix": 20,
+    "assignment_ranks_by_method": {
+      "community_qc3nn_target.tsv.xz": {
+        "species": 109832,
+        "genus": 53376,
+        "subspecies": 963,
+        "subfamily": 2608,
+        "family": 5002,
+        "cohort": 1243,
+        "infraorder": 751,
+        "suborder": 48,
+        "order": 856,
+        "infraclass": 21,
+        "tribe": 67,
+        "superfamily": 52
+      },
+      "community_qc_target.tsv.xz": {
+        "species": 60937,
+        "genus": 86059,
+        "subfamily": 9274,
+        "family": 13429,
+        "cohort": 1699,
+        "infraorder": 1505,
+        "suborder": 352,
+        "order": 1143,
+        "subspecies": 83,
+        "infraclass": 94,
+        "tribe": 176,
+        "superfamily": 68
+      }
+    },
+    "distinct_taxa_under_ocean_policy": {
+      "community_qc3nn_target.tsv.xz": {
+        "superkingdom": 1,
+        "kingdom": 1,
+        "phylum": 1,
+        "class": 4,
+        "order": 83,
+        "family": 215,
+        "genus": 695,
+        "species": 880,
+        "subspecies": 8
+      },
+      "community_qc_target.tsv.xz": {
+        "superkingdom": 1,
+        "kingdom": 1,
+        "phylum": 1,
+        "class": 4,
+        "order": 82,
+        "family": 206,
+        "genus": 606,
+        "species": 527,
+        "subspecies": 3
+      }
+    },
+    "seconds": 59
+  },
+  "geography": {
+    "worldmesh_records": 3174,
+    "coordinate_records_on_regular_grid_centres": 3174,
+    "observed_grid_latitude_step_degrees": "1/12",
+    "observed_grid_longitude_step_degrees": "1/8",
+    "interpretation": "Observed grid pattern; provider precision semantics require confirmation."
+  },
+  "scope": "Complete acquisition of all files exposed under the authenticated ANEMONE /dist/ catalogue observation. Transfer, XZ and PNG integrity checks are complete; FASTQ record structure and mate IDs were sampled. No production import.",
+  "identity": {
+    "table_sample_identifiers_not_matching_directory": [],
+    "repeated_sample_names": {
+      "groups": 180,
+      "same_utc_metadata": 180,
+      "same_coordinate_metadata": 180,
+      "different_sequencing_platform": 45,
+      "same_sequence_read_pairs": 1,
+      "both_target_tables_empty": 1
+    }
+  },
+  "coverage": {
+    "reference_url": "https://db.anemone.bio/dist/MiFish/ANEMONE/2021EarthWatch/2021EarthWatchRUN01/2021EarthWatchRUN01__20210905T0705-MNC-IshinomakiKotakehama__MiFish/community_qc3nn_target.tsv.xz",
+    "reference_sha256": "e9923f5b0251ec30d61c6b22347c0b0040d6aec4f444e83f0e67975a61defb16",
+    "decompressed_archive_sha256": "e9923f5b0251ec30d61c6b22347c0b0040d6aec4f444e83f0e67975a61defb16",
+    "by_collection_year": {
+      "2017": {
+        "source_records": 2,
+        "names": 2,
+        "control_evidence": 0,
+        "with_coordinates": 2
+      },
+      "2018": {
+        "source_records": 12,
+        "names": 12,
+        "control_evidence": 1,
+        "with_coordinates": 11
+      },
+      "2019": {
+        "source_records": 178,
+        "names": 177,
+        "control_evidence": 35,
+        "with_coordinates": 143
+      },
+      "2020": {
+        "source_records": 946,
+        "names": 901,
+        "control_evidence": 81,
+        "with_coordinates": 864
+      },
+      "2021": {
+        "source_records": 1051,
+        "names": 1049,
+        "control_evidence": 115,
+        "with_coordinates": 955
+      },
+      "2022": {
+        "source_records": 944,
+        "names": 812,
+        "control_evidence": 70,
+        "with_coordinates": 875
+      },
+      "2023": {
+        "source_records": 365,
+        "names": 365,
+        "control_evidence": 41,
+        "with_coordinates": 324
+      }
+    },
+    "distinct_coordinate_pairs": 216,
+    "distinct_worldmesh_values": 216
+  },
+  "environment_metadata": {
+    "salinity": {
+      "records_with_key": 2132,
+      "numeric_values": 2130,
+      "min": 0.01,
+      "max": 4.2,
+      "zero_values": 0,
+      "nonnumeric": {
+        "3..44": 1,
+        "3..39": 1
+      },
+      "zero_examples": [],
+      "malformed_examples": [
+        {
+          "url": "https://db.anemone.bio/dist/MiFish/ANEMONE/2020KibanS/2020KibanSRUN01/2020KibanSRUN01__20200702T0530-RUI-Iriomote__MiFish/sample.tsv.xz",
+          "value": [
+            "3..44"
+          ]
+        },
+        {
+          "url": "https://db.anemone.bio/dist/MiFish/ANEMONE/2022KibanS/2022KibanSRUN01/2022KibanSRUN01__20210628T0100-SMB-SugashimaRinkai__MiFish/sample.tsv.xz",
+          "value": [
+            "3..39"
+          ]
+        }
+      ]
+    },
+    "temp": {
+      "records_with_key": 2796,
+      "numeric_values": 2796,
+      "min": -1.7,
+      "max": 34.5,
+      "zero_values": 0,
+      "nonnumeric": {},
+      "zero_examples": []
+    },
+    "samp_size": {
+      "records_with_key": 3498,
+      "numeric_values": 3498,
+      "min": 80.0,
+      "max": 48330.0,
+      "zero_values": 0,
+      "nonnumeric": {},
+      "zero_examples": []
+    }
+  },
+  "archive": {
+    "completed_at": "2026-09-17T13:56:28.476098+00:00",
+    "source_root": "https://db.anemone.bio/dist/",
+    "files": 45144,
+    "bytes": 35555980361,
+    "status_counts": {
+      "downloaded": 45144
+    },
+    "file_roles": {
+      "fastq": 6996,
+      "tsv": 17490,
+      "image": 20490,
+      "other": 168
+    },
+    "manifest_sha256": "9a4a871adb65a78c02ea395b08d9b6b642e364dc89fcaab92e8fc98bd04c3912",
+    "raw_qc": {
+      "aggregate": {
+        "files": 6996,
+        "compressed_bytes": 28778157936,
+        "expanded_bytes": 460098792796,
+        "line_count": 4929275752,
+        "records_if_four_line_fastq": 1232318938,
+        "sampled_records": 6972912
+      },
+      "pairs": {
+        "sample_pairs": 3498,
+        "matching_record_counts": 3498,
+        "matching_sampled_ids": 3498,
+        "forward_records": 616159469,
+        "reverse_records": 616159469
+      },
+      "sampled_bounds": {
+        "sampled_length_min": {
+          "min": 22,
+          "max": 123
+        },
+        "sampled_length_max": {
+          "min": 116,
+          "max": 132
+        },
+        "sampled_quality_ascii_min": {
+          "min": 35,
+          "max": 65
+        },
+        "sampled_quality_ascii_max": {
+          "min": 69,
+          "max": 73
+        }
+      },
+      "failed_files": [],
+      "scope": "SHA-256 and full XZ integrity for every file; line counts across the full stream; FASTQ structure, sequence lengths, IDs and quality range sampled up to 1,000 records per file."
+    },
+    "production_imported": false,
+    "location": "/Volumes/VIDEOS/ANEMONE-OCEAN/2026-09-17"
+  },
+  "png_qc": {
+    "files_checked": 20490,
+    "files_failed": 0,
+    "errors": [],
+    "dimensions": {
+      "1500x1000": 20490
+    },
+    "scope": "PNG signature, required chunks, per-chunk CRCs and end-of-file; not a pixel-content or scientific-meaning review."
+  }
+}

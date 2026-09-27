@@ -1,0 +1,319 @@
+{
+  "catalogue_observation": "2026-09-17",
+  "target": "local gcp-dev candidate, not deployed production",
+  "cases": [
+    {
+      "id": "catalogue",
+      "query": "How many ANEMONE samples and assays are available?",
+      "options": {},
+      "expected_behavior": "Give 3,498 source occurrences and assays; physical sample identity remains unresolved.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "source_occurrences": 3498,
+        "assays": 3498
+      }
+    },
+    {
+      "id": "physical",
+      "query": "How many physical samples are included in ANEMONE?",
+      "options": {},
+      "expected_behavior": "Do not call 3,498 distinct physical samples; explicitly state unresolved identity.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "physical_sample_count": null
+      }
+    },
+    {
+      "id": "negative_controls",
+      "query": "How many ANEMONE negative controls are there?",
+      "options": {},
+      "expected_behavior": "343 negative-control occurrences, explicitly scoped.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "source_occurrences": 343,
+        "controls": 343
+      }
+    },
+    {
+      "id": "unknown",
+      "query": "How many ANEMONE samples have unknown control status?",
+      "options": {},
+      "expected_behavior": "3,155 unknown-control-status occurrences; distinguish them from environmental samples.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "unknown_control_status": 3155
+      }
+    },
+    {
+      "id": "environmental",
+      "query": "How many ANEMONE environmental samples are available?",
+      "options": {},
+      "expected_behavior": "Zero explicitly classified environmental occurrences; explain this is classification, not biological absence.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "source_occurrences": 0,
+        "environmental_classified": 0
+      }
+    },
+    {
+      "id": "method_reads",
+      "query": "How many ANEMONE reads are available per method?",
+      "options": {},
+      "expected_behavior": "157,426,611 reads and 174,819 assignments in each method, never sum shared reads.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "methods.qcauto_target.read_count_sum": 157426611,
+        "methods.qcauto_95pct_3nn_target.read_count_sum": 157426611
+      }
+    },
+    {
+      "id": "qc3nn",
+      "query": "How many ANEMONE QCauto+3-NN assignment rows are available?",
+      "options": {},
+      "expected_behavior": "174,819 rows in the selected method.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "methods.qcauto_95pct_3nn_target.assignment_rows": 174819
+      }
+    },
+    {
+      "id": "empty_tables",
+      "query": "How many ANEMONE community tables are empty?",
+      "options": {},
+      "expected_behavior": "83 valid empty source tables per method; distinguish empty from missing.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "community_availability.qcauto_target.empty_tables": 83,
+        "community_availability.qcauto_95pct_3nn_target.empty_tables": 83
+      }
+    },
+    {
+      "id": "standards",
+      "query": "How many ANEMONE internal standard reads are available?",
+      "options": {},
+      "expected_behavior": "442,404,272 standard reads across 13,932 rows; do not treat standards as biological detections or proof of calibration.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "internal_standards.reads": 442404272,
+        "internal_standards.rows": 13932
+      }
+    },
+    {
+      "id": "concentrations",
+      "query": "How many ANEMONE concentrations are missing or unavailable?",
+      "options": {},
+      "expected_behavior": "Report missing and source-column-absent counts separately, per method.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "methods.qcauto_target.concentration_missing": 3246,
+        "methods.qcauto_target.concentration_column_absent": 323
+      }
+    },
+    {
+      "id": "projects",
+      "query": "How many ANEMONE samples are available by project?",
+      "options": {},
+      "expected_behavior": "Complete 10-project breakdown summing to 3,498 source occurrences.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "source_occurrences": 3498,
+        "namespaces.projects": 10,
+        "group_count": 10
+      }
+    },
+    {
+      "id": "nontarget",
+      "query": "How many ANEMONE nontarget reads are available?",
+      "options": {},
+      "expected_behavior": "Cited zero matching records/available tables in this imported catalogue, not ecological absence.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "source_occurrences": 0,
+        "assays": 0
+      }
+    },
+    {
+      "id": "rare_taxon",
+      "query": "How many ANEMONE samples of Ablabys taenianotus are available?",
+      "options": {
+        "taxon": "Ablabys taenianotus",
+        "assignment_method": "qcauto_target"
+      },
+      "expected_behavior": "One occurrence and one QCauto assignment, with exact scoped evidence.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "source_occurrences": 1,
+        "methods.qcauto_target.assignment_rows": 1
+      }
+    },
+    {
+      "id": "future",
+      "query": "How many ANEMONE samples are in this date range?",
+      "options": {
+        "time_from": "2099-01-01",
+        "time_to": "2099-12-31"
+      },
+      "expected_behavior": "Cited zero for explicit 2099 interval; no historical data substitution.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "source_occurrences": 0
+      }
+    },
+    {
+      "id": "missing_project",
+      "query": "How many ANEMONE samples are in the selected project?",
+      "options": {
+        "provider_project_id": "QA-NONEXISTENT"
+      },
+      "expected_behavior": "Cited zero for explicit nonexistent project.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "source_occurrences": 0
+      }
+    },
+    {
+      "id": "polite_summary",
+      "query": "Can you summarize the ANEMONE database?",
+      "options": {},
+      "expected_behavior": "Recognize an ordinary paraphrase of an unfiltered catalogue summary.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "source_occurrences": 3498
+      }
+    },
+    {
+      "id": "polite_count",
+      "query": "Please tell me how many ANEMONE samples we currently have.",
+      "options": {},
+      "expected_behavior": "Same whole-catalogue count with valid citations.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "source_occurrences": 3498
+      }
+    },
+    {
+      "id": "count_paraphrase",
+      "query": "What is the ANEMONE sample count?",
+      "options": {},
+      "expected_behavior": "Same whole-catalogue count, independent of wording.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "source_occurrences": 3498
+      }
+    },
+    {
+      "id": "japanese",
+      "query": "ANEMONEにはいくつのサンプルがありますか？",
+      "options": {},
+      "expected_behavior": "Answer the Japanese count request accurately, or explicitly state the language limitation; do not falsely ask for missing geographic scope.",
+      "expected_kind": "answer",
+      "expected_metrics": {
+        "source_occurrences": 3498
+      }
+    },
+    {
+      "id": "unresolved_place",
+      "query": "How many ANEMONE samples were collected in Japan in 2020?",
+      "options": {},
+      "expected_behavior": "Ask for explicit geography/date filters; do not give unfiltered totals.",
+      "expected_kind": "clarify",
+      "expected_metrics": {}
+    },
+    {
+      "id": "unsupported_richness",
+      "query": "How many species are detected in ANEMONE?",
+      "options": {},
+      "expected_behavior": "State that exact richness is not implemented in this aggregate; no top-k estimate.",
+      "expected_kind": "clarify",
+      "expected_metrics": {}
+    },
+    {
+      "id": "compound_scope",
+      "query": "How many ANEMONE negative and positive controls are there?",
+      "options": {},
+      "expected_behavior": "Ideally give separate counts; current bounded scope may request clarification. Record as capability limitation if so.",
+      "expected_kind": "bounded",
+      "expected_metrics": {}
+    },
+    {
+      "id": "abundance_count",
+      "query": "Does a higher ANEMONE read count mean there are more fish?",
+      "options": {},
+      "expected_behavior": "Explain that read counts are not organism abundance; this is interpretation, not a count request.",
+      "expected_kind": "explanation",
+      "expected_metrics": {}
+    },
+    {
+      "id": "sum_reads",
+      "query": "Can I add the reads from QCauto and QCauto+3-NN to estimate fish abundance in ANEMONE?",
+      "options": {
+        "source_type": "edna_metabarcoding"
+      },
+      "expected_behavior": "Reject double counting and organism abundance inference with cited method evidence.",
+      "expected_kind": "explanation",
+      "expected_metrics": {}
+    },
+    {
+      "id": "controls_interpretation",
+      "query": "Do ANEMONE negative controls prove the environmental samples are contamination-free?",
+      "options": {
+        "source_type": "edna_metabarcoding"
+      },
+      "expected_behavior": "Reject proof of absence of contamination; cite provider controls and unknown classifications.",
+      "expected_kind": "explanation",
+      "expected_metrics": {}
+    },
+    {
+      "id": "copies_interpretation",
+      "query": "Do ANEMONE copies per mL establish fish abundance without checking internal standards and protocols?",
+      "options": {
+        "source_type": "edna_metabarcoding"
+      },
+      "expected_behavior": "Distinguish concentration from abundance; disclose calibration/protocol limits.",
+      "expected_kind": "explanation",
+      "expected_metrics": {}
+    },
+    {
+      "id": "rare_lookup",
+      "query": "What evidence supports the ANEMONE detection of Ablabys taenianotus?",
+      "options": {
+        "source_type": "edna_metabarcoding",
+        "taxon": "Ablabys taenianotus",
+        "assignment_method": "qcauto_target"
+      },
+      "expected_behavior": "Cite the filtered assay/detection; distinguish sequence assignment from confirmed occurrence.",
+      "expected_kind": "explanation",
+      "expected_metrics": {}
+    },
+    {
+      "id": "missing_vs_zero",
+      "query": "Does missing ANEMONE concentration data mean the concentration is zero?",
+      "options": {
+        "source_type": "edna_metabarcoding"
+      },
+      "expected_behavior": "Explicitly reject missing=zero with cited concentration-status evidence.",
+      "expected_kind": "explanation",
+      "expected_metrics": {}
+    },
+    {
+      "id": "method_compare",
+      "query": "Compare QCauto and QCauto+3-NN in ANEMONE. Is agreement independent validation?",
+      "options": {
+        "source_type": "edna_metabarcoding"
+      },
+      "expected_behavior": "Separate alternate interpretations of shared sequence evidence; agreement is not independent validation.",
+      "expected_kind": "explanation",
+      "expected_metrics": {}
+    },
+    {
+      "id": "freshness",
+      "query": "Has ANEMONE data from last week arrived?",
+      "options": {
+        "source_type": "edna_metabarcoding"
+      },
+      "expected_behavior": "Distinguish collection date from acquisition/publication; no invented provider freshness.",
+      "expected_kind": "explanation",
+      "expected_metrics": {}
+    }
+  ]
+}

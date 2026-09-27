@@ -37,8 +37,8 @@ def publication_status() -> str:
         state = payload.get("status")
         if state == "pending":
             return "pending"
-        if state == "ready":
-            return "ready"
+        if state in {"ready", "not_materialized"}:
+            return state
         return "unavailable"
     except (ValueError, OSError, KeyError, json.JSONDecodeError, SnapshotError):
         return "unavailable"
@@ -47,12 +47,39 @@ def publication_status() -> str:
 def set_pending():
     if config.EDNA_ARTIFACT_URI:
         store = ArtifactStore(config.EDNA_ARTIFACT_URI)
-        _, generation = store.pointer('retrieval/current.json')
+        previous, generation = store.pointer('retrieval/current.json')
         updated = store.replace_pointer('retrieval/current.json',
             {'status': 'pending', 'operation_id': uuid.uuid4().hex}, generation)
         _pending.set((config.EDNA_ARTIFACT_URI, updated))
-        return
-    atomic_json(config.SERVING_DIR / "edna_current.json", {"status": "pending"})
+        return previous
+    path = config.SERVING_DIR / "edna_current.json"
+    previous = json.loads(path.read_bytes()) if path.exists() else None
+    token = uuid.uuid4().hex
+    atomic_json(path, {"status": "pending", "operation_id": token})
+    _pending.set((str(path), token))
+    return previous
+
+
+def restore_pending(previous):
+    """Restore the last good pointer only if this operation still owns pending."""
+    token = _pending.get()
+    payload = previous or {"status": "not_materialized"}
+    if token is None:
+        raise ValueError("No pending publication owned by this operation")
+    if config.EDNA_ARTIFACT_URI:
+        if token[0] != config.EDNA_ARTIFACT_URI:
+            raise ValueError("Publication store changed")
+        ArtifactStore(config.EDNA_ARTIFACT_URI).replace_pointer('retrieval/current.json', payload, token[1])
+    else:
+        path = config.SERVING_DIR / "edna_current.json"
+        current = json.loads(path.read_bytes())
+        if token[0] != str(path) or current.get("operation_id") != token[1]:
+            raise ValueError("Publication pointer changed")
+        if previous is None:
+            path.unlink()
+        else:
+            atomic_json(path, payload)
+    _pending.set(None)
 
 
 def set_ready(manifest):
@@ -75,13 +102,14 @@ def set_ready(manifest):
     atomic_json(config.SERVING_DIR / "edna_current.json", {
         "status": "ready", "generation_id": manifest["id"], "manifest_sha256": digest(manifest),
     })
+    _pending.set(None)
 
 
 def current_manifest():
     if config.EDNA_ARTIFACT_URI:
         store = ArtifactStore(config.EDNA_ARTIFACT_URI)
         payload, _ = store.pointer('retrieval/current.json')
-        if payload is None:
+        if payload is None or payload.get("status") == "not_materialized":
             return None
         if payload.get('status') != 'ready':
             raise ValueError('eDNA retrieval publication is incomplete')

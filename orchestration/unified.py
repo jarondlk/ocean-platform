@@ -724,6 +724,9 @@ RULES:
    Only explicitly qualified environmental pairs support cross-source context;
    a missing qualified match is unavailable, not a nearest-date substitute.
    Featured result rows are not the complete analysis cohort.
+   Retrieved examples cannot establish whole-catalogue totals, complete taxon
+   lists, or absence. Use exact aggregate evidence for such claims; otherwise
+   state that a complete count is unavailable.
    Cite analysis docs with [analysis_*] notation.
 8. If reliability ensurance data is provided, mention cross-source validation
    results when relevant (e.g., SST-CTD agreement, data confidence levels).

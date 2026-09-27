@@ -1,6 +1,7 @@
 const reasonLabels: Record<string, string> = {
   below_min_read_count: "Below minimum read count",
   control_or_unknown: "Control or unknown classification",
+  method_not_supported: "Assignment method not supported by environmental analysis",
   method_unavailable: "Assignment method unavailable",
   no_active_assay: "No active assay",
   protocol_incomplete: "Assay protocol incomplete",

@@ -76,7 +76,7 @@ def beta(left, right):
 
 
 def _matches(sample, cohort):
-    for key in ('provider', 'provider_project_id', 'provider_run_id'):
+    for key in ('provider', 'provider_locus', 'provider_team', 'provider_project_id', 'provider_run_id'):
         if getattr(cohort, key) is not None and sample.get(key) != getattr(cohort, key):
             return False
     if cohort.sample_ids and sample['sample_id'] not in cohort.sample_ids:
@@ -96,11 +96,13 @@ def select_inputs(recipe, source):
         return [r for r in source.get(name, []) if r.get('active', True) is True]
     samples = active('edna_sample')
     selected = [s for s in samples if _matches(s, recipe.cohort)]
-    scopes = {(s['provider'], s['provider_project_id'], s['provider_run_id']) for s in selected}
+    def scope(s):
+        return (s['provider'], s.get('provider_locus', 'MiFish'), s.get('provider_team', 'ANEMONE'), s['provider_project_id'], s['provider_run_id'])
+    scopes = {scope(s) for s in selected}
     selected_ids = {s['sample_id'] for s in selected}
     samples = [s for s in samples if s['sample_id'] in selected_ids or (
         s.get('sample_kind') != 'environmental' and
-        (s['provider'], s['provider_project_id'], s['provider_run_id']) in scopes)]
+        scope(s) in scopes)]
     ids = {s['sample_id'] for s in samples}
     assays = [a for a in active('edna_assay') if a['sample_id'] in ids]
     aids = {a['assay_id'] for a in assays}
@@ -170,6 +172,9 @@ def build_analysis(recipe: AnalysisRecipe, source: dict, environment=None):
     method_availability = defaultdict(set)
     for assay in assays.values():
         assays_by_sample[assay['sample_id']].append(assay)
+        availability = assay.get('community_availability_json')
+        if availability:
+            method_availability[assay['assay_id']].update(json.loads(availability))
     for assay_id, assignment_method in detections:
         if detections[(assay_id, assignment_method)]:
             method_availability[assay_id].add(assignment_method)

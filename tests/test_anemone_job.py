@@ -305,3 +305,27 @@ def test_review_can_be_delivered_as_registered_cloud_configuration(tmp_path, mon
     review["decisions"][0]["reviewer"] = "Changed locally"
     path.write_text(json.dumps(review))
     assert json.loads(store.read("classification-reviews", published["artifact_id"])[1]["review.json"])["decisions"][0]["reviewer"] == "Fixture reviewer"
+
+
+def test_provenance_restores_referenced_snapshots_without_loading_all_history(tmp_path, monkeypatch):
+    import pandas as pd
+    from ingestion.immutable_bundle import digest
+    store = ArtifactStore((tmp_path / "store").as_uri())
+    monkeypatch.setattr(config, "ANEMONE_NORMALIZED_DIR", tmp_path / "normalized")
+    needed = []
+    for index in range(25):
+        snapshot = digest(["snapshot", index])
+        identity = digest(["normalization", index])
+        store.publish("normalized", identity, {"fixture.txt": b"bounded evidence"},
+                      metadata={"normalization_id": identity, "snapshot_id": snapshot})
+        if index < 21:
+            needed.append(snapshot)
+    documents = pd.DataFrame([{"source_type": "edna_metabarcoding", "metadata": {"source_snapshot_ids": needed}}])
+    result = job.restore_referenced_normalizations(store, documents)
+    assert result["bundles"] == 21
+    assert len(list((config.ANEMONE_NORMALIZED_DIR / "snapshots").iterdir())) == 21
+    with pytest.raises(ValueError, match="byte limit"):
+        job.restore_referenced_normalizations(store, documents, max_bytes=1)
+    documents.iloc[0]["metadata"]["source_snapshot_ids"].append(digest(["unregistered"]))
+    with pytest.raises(ValueError, match="not registered"):
+        job.restore_referenced_normalizations(store, documents)

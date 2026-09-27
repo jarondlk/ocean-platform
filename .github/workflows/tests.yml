@@ -179,6 +179,8 @@ jobs:
           tests/integration/test_classification_preview_postgres.py
           tests/integration/test_operational_postgres.py
           tests/integration/test_anemone_postgres.py
+          tests/integration/test_anemone_catalogue_postgres.py
+          tests/integration/test_edna_aggregate_postgres.py
           tests/integration/test_edna_analysis_postgres.py
           -q
 

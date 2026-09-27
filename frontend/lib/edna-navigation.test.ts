@@ -26,3 +26,11 @@ test("eDNA invalid destinations never fall back to another method or sample", ()
 test("an unfiltered eDNA URL has no hidden method or control choice", () => {
   assert.deepEqual(parseEdnaState("view=edna").filters, {});
 });
+
+test("catalogue namespace and nontarget filters survive URL navigation", () => {
+  const state = parseEdnaState("provider_locus=MiFish&provider_team=ANEMONE&target_status=nontarget&assignment_method=qcauto_nontarget");
+  assert.equal(state.filters.provider_locus, "MiFish");
+  assert.equal(state.filters.provider_team, "ANEMONE");
+  assert.equal(state.filters.target_status, "nontarget");
+  assert.equal(state.filters.assignment_method, "qcauto_nontarget");
+});

@@ -251,6 +251,14 @@ class EdnaSample(CorpusBase):
     sample_id = Column(String(64), primary_key=True)
     provider = Column(String(64), nullable=False, index=True)
     provider_sample_id = Column(Text, nullable=False)
+    provider_locus = Column(String(128), nullable=False, server_default="MiFish")
+    provider_team = Column(String(128), nullable=False, server_default="ANEMONE")
+    source_occurrence_id = Column(String(64), unique=True)
+    physical_sample_id = Column(String(64), index=True)
+    identity_status = Column(String(64), nullable=False, server_default="unresolved_physical_sample")
+    coordinate_precision = Column(String(64), nullable=False, server_default="unspecified")
+    raw_metadata_rows_json = Column(Text)
+    provider_note_json = Column(Text)
     provider_project_id = Column(String(255), nullable=False, index=True)
     provider_run_id = Column(String(255), nullable=False, index=True)
     project_name = Column(Text, nullable=False)
@@ -293,6 +301,10 @@ class EdnaSample(CorpusBase):
     __table_args__ = (
         UniqueConstraint(
             "provider",
+            "provider_locus",
+            "provider_team",
+            "provider_project_id",
+            "provider_run_id",
             "provider_sample_id",
             name="uq_edna_sample_provider_identity",
         ),
@@ -328,6 +340,8 @@ class EdnaAssay(CorpusBase):
     library_layout = Column(Text)
     instrument_model = Column(Text)
     raw_metadata_json = Column(Text, nullable=False)
+    raw_metadata_rows_json = Column(Text)
+    community_availability_json = Column(Text)
     source_snapshot_id = Column(
         String(64),
         ForeignKey("external_source_snapshot.snapshot_id", ondelete="RESTRICT"),
@@ -365,6 +379,9 @@ class EdnaDetection(CorpusBase):
         index=True,
     )
     assignment_method = Column(String(64), nullable=False, index=True)
+    assignment_algorithm = Column(String(32), index=True)
+    target_status = Column(String(16), nullable=False, server_default="target", index=True)
+    concentration_status = Column(String(32))
     sequence = Column(Text, nullable=False)
     sequence_sha256 = Column(String(64), nullable=False, index=True)
     read_count = Column(BigInteger, nullable=False)
@@ -415,8 +432,14 @@ class EdnaDetection(CorpusBase):
         ),
         CheckConstraint(
             "assignment_method IN "
-            "('qcauto_target', 'qcauto_95pct_3nn_target')",
+            "('qcauto_target', 'qcauto_95pct_3nn_target', 'qcauto_nontarget', 'qcauto_95pct_3nn_nontarget')",
             name="ck_edna_detection_assignment_method",
+        ),
+        CheckConstraint(
+            "target_status IN ('target', 'nontarget') AND "
+            "((target_status = 'target' AND assignment_method IN ('qcauto_target', 'qcauto_95pct_3nn_target')) OR "
+            "(target_status = 'nontarget' AND assignment_method IN ('qcauto_nontarget', 'qcauto_95pct_3nn_nontarget')))",
+            name="ck_edna_detection_target_status",
         ),
         CheckConstraint(
             "read_count >= 0",

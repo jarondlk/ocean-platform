@@ -372,7 +372,18 @@ class RetrieveRequest(BaseModel):
         return self
 
 
+class EdnaAggregationRequest(BaseModel):
+    """Explicit extra scope for exact catalogue summaries."""
+    model_config = ConfigDict(extra="forbid")
+    group_by: List[Literal["provider_locus", "provider_team", "provider_project_id", "provider_run_id"]] = Field(default_factory=list, max_length=2)
+    provider_locus: Optional[str] = Field(default=None, min_length=1, max_length=128)
+    provider_team: Optional[str] = Field(default=None, min_length=1, max_length=128)
+    target_status: Optional[Literal["target", "nontarget"]] = None
+    assay_id: Optional[str] = Field(default=None, pattern=r"^[a-f0-9]{64}$")
+
+
 class ChatRequest(RetrieveRequest):
+    aggregation: Optional[EdnaAggregationRequest] = None
     model: Optional[str] = Field(default=None, max_length=255)
     inject_analysis: bool = True
     inject_reliability: bool = True
@@ -422,6 +433,7 @@ class ContextDocument(BaseModel):
     text: str = ""
     source_family: Optional[str] = None
     analysis_id: Optional[str] = None
+    aggregate_id: Optional[str] = None
     table: Optional[str] = None
     result_ids: List[str] = Field(default_factory=list)
 
@@ -491,6 +503,8 @@ class ChatResponse(BaseModel):
         "no_matching_evidence",
         "empty_analysis_cohort",
         "publication_pending",
+        "aggregate_scope_required",
+        "aggregate_unavailable",
     ]] = None
     model_invoked: bool = True
 
@@ -725,6 +739,10 @@ class SstDataResponse(BaseModel):
 
 
 class EdnaCatalogResponse(BaseModel):
+    loci: List[str] = Field(default_factory=list)
+    teams: List[str] = Field(default_factory=list)
+    physical_sample_count: Optional[int] = None
+    sample_count_definition: str = "provider source occurrences"
     samples: int
     assays: int
     detections: int
