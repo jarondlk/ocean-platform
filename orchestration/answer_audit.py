@@ -171,14 +171,15 @@ def _citation_requirements(
     analysis_cited_ids: Set[str],
     reliability_cited_ids: Set[str],
     valid_records: List[Dict[str, Any]],
+    exact_aggregate: bool = False,
 ) -> Dict[str, Any]:
     required_context_types: List[str] = []
-    if analysis_context and _query_requires_analysis(query):
+    if analysis_context and (exact_aggregate or _query_requires_analysis(query)):
         required_context_types.append("analysis")
     if reliability_context and _query_requires_reliability(query):
         required_context_types.append("reliability")
 
-    raw_source_required = _query_requires_raw_sources(query)
+    raw_source_required = _query_requires_raw_sources(query) and not exact_aggregate
     context_satisfied_source_types: Set[str] = set()
     context_satisfaction: Dict[str, List[str]] = {}
     if not raw_source_required:
@@ -259,6 +260,7 @@ def audit_answer(
     analysis_context: List[Dict[str, Any]],
     reliability_context: List[Dict[str, Any]],
     retrieval_diagnostics: Dict[str, Any],
+    exact_aggregate: bool = False,
 ) -> Dict[str, Any]:
     """Audit whether an answer cites and uses the supplied evidence bundle."""
     index = _evidence_index(primary_sources, linked_sources, analysis_context, reliability_context)
@@ -308,6 +310,7 @@ def audit_answer(
         analysis_cited_ids=analysis_cited_ids,
         reliability_cited_ids=reliability_cited_ids,
         valid_records=valid_records,
+        exact_aggregate=exact_aggregate,
     )
     missing_expected_citations = citation_requirements["missing_source_types"]
 

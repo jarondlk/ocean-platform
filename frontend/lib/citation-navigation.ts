@@ -28,6 +28,7 @@ export type EvidenceDeepLink = {
   kind: EvidenceDeepLinkKind;
   label: string;
   href: string;
+  download?: string;
 };
 
 export type AnalysisWorkspaceView = "trends" | "correlations" | "diversity" | "cooccurrence" | "bay_comparison" | "reliability";
@@ -166,6 +167,13 @@ export function evidenceDeepLinks(target: CitationTarget): EvidenceDeepLink[] {
   }
 
   if (target.context) {
+    const aggregateId = target.context.aggregate_id;
+    if (aggregateId && /^[a-f0-9]{64}$/.test(aggregateId) && target.context.doc_id === `aggregate_edna_${aggregateId}`) {
+      return [
+        { kind: "provenance", label: "Aggregate provenance", href: buildHref("/provenance", { view: "trace", doc_id: target.context.doc_id }) },
+        { kind: "data", label: "Download aggregate JSON", download: `edna-aggregate-${aggregateId}.json`, href: `${process.env.NEXT_PUBLIC_API_PROXY_BASE_URL || "/api/backend"}/data/edna/aggregates/${aggregateId}` },
+      ];
+    }
     const analysisId = target.context.analysis_id;
     const table = target.context.table;
     if (target.context.source_family === "edna_metabarcoding" && analysisId && /^[a-f0-9]{64}$/.test(analysisId)

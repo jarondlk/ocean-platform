@@ -27,3 +27,10 @@ test("abstentionReasonLabel presents stable direct labels", () => {
   assert.equal(abstentionReasonLabel("publication_pending"), "eDNA publication pending");
   assert.equal(abstentionReasonLabel(null), "None");
 });
+
+
+test("resolved aggregate filters display inferred and explicit scope", () => {
+  assert.deepEqual(appliedFilterRows({ retrieval: {}, context: { aggregate_scope: { filters: { provider: "anemone", is_control: false } } } }), [
+    { filter: "provider", value: "anemone" }, { filter: "is_control", value: false },
+  ]);
+});

@@ -287,7 +287,19 @@ def _anemone_source_file_traces(normalization_id: Optional[str] = None) -> List[
 
 
 def _database_anemone_source_file_traces() -> List[SourceFileTrace]:
-    """Read immutable external-file provenance across all loaded eDNA scopes."""
+    """Read immutable files only for snapshots cited by this retrieval generation."""
+    needed = set()
+    for row in _read_retrieval_documents().to_dict(orient="records"):
+        if row.get("source_type") != "edna_metabarcoding":
+            continue
+        metadata = row.get("metadata")
+        if not isinstance(metadata, dict):
+            metadata = json.loads(row.get("metadata_json") or "{}")
+        needed.update(metadata.get("source_snapshot_ids") or [])
+    if not needed:
+        return []
+    if len(needed) > 2048:
+        raise ValueError("Referenced source snapshot count exceeds provenance budget")
     try:
         engine = create_engine(config.DATABASE_URL, pool_pre_ping=True)
         with engine.connect() as connection:
@@ -296,8 +308,8 @@ def _database_anemone_source_file_traces() -> List[SourceFileTrace]:
                     "SELECT source_file_id, snapshot_id, relative_path, "
                     "source_url, role, sha256, size_bytes, last_modified, "
                     "selection_status, validation_status "
-                    "FROM external_source_file ORDER BY source_file_id"
-                )
+                    "FROM external_source_file WHERE snapshot_id = ANY(:ids) ORDER BY source_file_id"
+                ), {"ids": sorted(needed)}
             ).mappings().all()
     except Exception:
         return []
@@ -444,6 +456,11 @@ def _anemone_artifact_specs(normalization_id: Optional[str] = None) -> List[Dict
             str(row["sample_id"]): row.get("source_row_hash")
             for row in samples.to_dict(orient="records")
         }
+    assay_row_hashes = {}
+    assay_artifact = manifest.get("artifacts", {}).get("edna_assay")
+    if assay_artifact:
+        assays = pd.read_parquet(root / str(assay_artifact["path"]), columns=["assay_id", "source_row_hash"])
+        assay_row_hashes = dict(zip(assays["assay_id"].astype(str), assays["source_row_hash"]))
     for name, artifact in sorted(manifest.get("artifacts", {}).items()):
         table_name, key_columns = table_keys.get(name, (None, []))
         specs.append(
@@ -459,6 +476,7 @@ def _anemone_artifact_specs(normalization_id: Optional[str] = None) -> List[Dict
                 "key_columns": key_columns,
                 "source_snapshot_id": str(manifest["source_snapshot_id"]),
                 "sample_row_hashes": sample_row_hashes,
+                "assay_row_hashes": assay_row_hashes,
                 "notes": (
                     f"normalization_id={normalization_id}; "
                     f"source_snapshot_id={manifest['source_snapshot_id']}; "
@@ -860,7 +878,15 @@ def build_document_traces(limit_documents: Optional[int] = 500) -> List[Document
             source_artifact_ids.extend(
                 spec["id"] for spec in anemone_artifacts
                 if spec["source_snapshot_id"] in metadata_value.get("source_snapshot_ids", [])
-                and spec["sample_row_hashes"].get(sample_id) == sample_row_hash
+                and (spec["sample_row_hashes"].get(sample_id) == sample_row_hash or any(
+                    record.get("entity_type") == "assay"
+                    and record.get("source_snapshot_id") == spec["source_snapshot_id"]
+                    and spec.get("assay_row_hashes", {}).get(record.get("entity_id")) == record.get("source_row_hash")
+                    and any(sample_record.get("entity_type") == "sample"
+                            and sample_record.get("source_snapshot_id") != spec["source_snapshot_id"]
+                            for sample_record in metadata_value.get("canonical_records", []))
+                    for record in metadata_value.get("canonical_records", [])
+                ))
             )
         rows.append(
             DocumentTrace(

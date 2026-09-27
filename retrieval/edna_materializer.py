@@ -12,7 +12,7 @@ from sqlalchemy import text
 
 import config
 from ingestion.immutable_bundle import digest, seal_bundle, read_bundle
-from retrieval.edna_publication import publication_root, set_pending, set_ready
+from retrieval.edna_publication import publication_root, set_pending, set_ready, restore_pending
 from db.connection import get_engine
 from db.models import RetrievalDocument as RetrievalDocumentRow
 from retrieval.document_builder import documents_to_dataframe
@@ -27,6 +27,51 @@ logger = logging.getLogger(__name__)
 
 EDNA_RETRIEVAL_PARQUET = "anemone_retrieval_documents.parquet"
 EDNA_RETRIEVAL_JSONL = "anemone_retrieval_documents.jsonl"
+
+
+def _active_partitions(connection: Any, batch_size: int = 128):
+    """Keyset partitions inside one caller-owned repeatable-read transaction."""
+    after = ""
+    while True:
+        samples = pd.read_sql_query(text(
+            "SELECT * FROM edna_sample WHERE active IS TRUE AND sample_id > :after "
+            "ORDER BY sample_id LIMIT :batch_size"
+        ), connection, params={"after": after, "batch_size": batch_size})
+        if samples.empty:
+            return
+        ids = samples["sample_id"].tolist()
+        assays = pd.read_sql_query(text(
+            "SELECT * FROM edna_assay WHERE active IS TRUE AND sample_id = ANY(:ids) "
+            "ORDER BY assay_id LIMIT 1025"
+        ), connection, params={"ids": ids})
+        if len(assays) > 1024:
+            raise ValueError("eDNA partition exceeds assay budget")
+        assay_ids = assays.get("assay_id", pd.Series(dtype="string")).tolist()
+        frames = []
+        for table, key, maximum in (("edna_detection", "detection_id", 100000),
+                                     ("edna_internal_standard", "internal_standard_id", 10000)):
+            frame = pd.read_sql_query(text(
+                f"SELECT * FROM {table} WHERE active IS TRUE AND assay_id = ANY(:ids) "
+                f"ORDER BY assay_id, {key} LIMIT :maximum"
+            ), connection, params={"ids": assay_ids, "maximum": maximum + 1})
+            if len(frame) > maximum:
+                raise ValueError(f"eDNA partition exceeds {table} budget")
+            frames.append(frame)
+        yield samples, assays, *frames
+        after = str(samples.iloc[-1]["sample_id"])
+
+
+def collect_active_documents(connection: Any):
+    documents, counts = [], {"samples": 0, "assays": 0, "detections": 0, "standards": 0}
+    for samples, assays, detections, standards in _active_partitions(connection):
+        for name, frame in zip(counts, (samples, assays, detections, standards)):
+            counts[name] += len(frame)
+        documents.extend(build_edna_documents(samples, assays, detections, standards))
+        if len(documents) > 100000:
+            raise ValueError("eDNA publication exceeds document budget")
+    # Deterministic across partition sizes and query implementation changes.
+    documents.sort(key=lambda d: d.doc_id)
+    return documents, counts
 
 
 def _read_active_frames(connection: Any) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
@@ -94,6 +139,7 @@ def _merge_documents(connection: Any, frame: pd.DataFrame) -> dict[str, int]:
         if_exists="fail",
         index=False,
         method="multi",
+        chunksize=500,
         dtype={
             column: RetrievalDocumentRow.__table__.c[column].type
             for column in frame.columns
@@ -220,25 +266,32 @@ def _write_artifacts(documents: list[Any], frame: pd.DataFrame, *, publish=True)
         )
     artifact_frame.to_parquet(parquet_temp, index=False)
     with jsonl_temp.open("w", encoding="utf-8") as handle:
-        for document in documents:
-            row = artifact_frame.loc[
-                artifact_frame["doc_id"] == document.doc_id
-            ].iloc[0].to_dict()
+        for document, row in zip(documents, artifact_frame.to_dict(orient="records")):
             row["id"] = row["doc_id"]
             row["date"] = row.get("time") or ""
             row["metadata"] = document.metadata
             row.pop("metadata_json", None)
             handle.write(json.dumps(row, ensure_ascii=False, default=str) + "\n")
     manifest = seal_bundle(staging, root, generation, {"document_count": len(documents)})
+    _, files = read_bundle(root, generation, expected_digest=digest(manifest))
     if config.EDNA_ARTIFACT_URI:
         from ingestion.artifact_store import ArtifactStore
-        _, files = read_bundle(root, generation, expected_digest=digest(manifest))
         ArtifactStore(config.EDNA_ARTIFACT_URI).publish('retrieval', generation, files,
             metadata={'manifest_sha256': digest(manifest)})
     if publish:
         set_ready(manifest)
     return {"parquet": str(root / generation / EDNA_RETRIEVAL_PARQUET),
             "jsonl": str(root / generation / EDNA_RETRIEVAL_JSONL), "manifest": manifest}
+
+
+def bind_canonical_publication(connection):
+    """Record which canonical generation the retrieval publication was built from."""
+    connection.execute(text("DELETE FROM corpus_publication WHERE channel='edna-canonical'"))
+    connection.execute(text(
+        "INSERT INTO corpus_publication(channel,generation_id,manifest_sha256) "
+        "SELECT 'edna-canonical',generation_id,manifest_sha256 FROM corpus_publication "
+        "WHERE channel='anemone-canonical'"
+    ))
 
 
 def materialize_edna_retrieval(
@@ -258,29 +311,29 @@ def materialize_edna_retrieval(
         if execute:
             connection.exec_driver_sql("SELECT pg_advisory_lock(hashtext('ocean_platform_corpus_upsert'))")
             connection.commit()
+        pending, committed, previous = False, False, None
         try:
-            if execute:
-                set_pending()
             with connection.begin():
                 connection.exec_driver_sql("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ")
-                samples, assays, detections = _read_active_frames(connection)
-                standards = pd.read_sql_query(text(
-                    "SELECT * FROM edna_internal_standard WHERE active IS TRUE "
-                    "ORDER BY assay_id, internal_standard_id LIMIT 10001"
-                ), connection)
-                if len(standards) > 10000:
-                    raise ValueError('eDNA materialization exceeds internal-standard row limit')
-                documents = build_edna_documents(samples, assays, detections, standards)
+                documents, counts = collect_active_documents(connection)
                 frame = _document_frame(documents)
                 if execute:
                     if write_artifacts:
                         artifacts = _write_artifacts(documents, frame, publish=False)
+                    previous = set_pending()
+                    pending = True
                     merge = _merge_documents(connection, frame)
                     manifest = artifacts.get("manifest")
                     if manifest:
                         connection.execute(text("INSERT INTO corpus_publication (channel, generation_id, manifest_sha256) VALUES ('edna', :generation, :sha) ON CONFLICT (channel) DO UPDATE SET generation_id=EXCLUDED.generation_id, manifest_sha256=EXCLUDED.manifest_sha256"), {"generation": manifest["id"], "sha": digest(manifest)})
+                        bind_canonical_publication(connection)
+            committed = True
             if artifacts:
                 set_ready(artifacts["manifest"])
+        except BaseException:
+            if pending and not committed:
+                restore_pending(previous)
+            raise
         finally:
             if execute:
                 connection.rollback()
@@ -289,9 +342,9 @@ def materialize_edna_retrieval(
     return {
         "execute": execute,
         "source_type": EDNA_SOURCE_TYPE,
-        "active_samples": len(samples),
-        "active_assays": len(assays),
-        "active_detections": len(detections),
+        "active_samples": counts["samples"],
+        "active_assays": counts["assays"],
+        "active_detections": counts["detections"],
         "documents": len(documents),
         "merge": merge,
         "artifacts": artifacts,

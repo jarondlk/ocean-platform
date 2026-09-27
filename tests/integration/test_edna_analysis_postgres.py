@@ -83,16 +83,16 @@ def test_snapshot_queries_and_serialized_publication(tmp_path, monkeypatch):
         row = connection.execute(text("SELECT text, metadata_json FROM retrieval_document WHERE assay_id=:assay AND active IS TRUE"),
                                  {'assay': frames['edna_assay'].iloc[0]['assay_id']}).first()
         metadata = json.loads(row.metadata_json)
-        assert metadata['edna_retrieval_document_version'] == 3
+        assert metadata['edna_retrieval_document_version'] == 4
         assert metadata['internal_standards_supplied'] is True
         assert metadata['internal_standard_count'] == len(frames['edna_internal_standard'])
         assert metadata['featured_internal_standard_ids'] == frames['edna_internal_standard']['internal_standard_id'].tolist()
         assert frames['edna_internal_standard'].iloc[0]['standard_name'] in row.text
+    previous = current_manifest()
     monkeypatch.setattr(materializer, '_write_artifacts', lambda *a, **kw: (_ for _ in ()).throw(OSError('fixture disk failure')))
     with pytest.raises(OSError, match='fixture disk'):
         materializer.materialize_edna_retrieval(execute=True)
-    with pytest.raises(ValueError, match='incomplete'):
-        current_manifest()
+    assert current_manifest() == previous
     engine.dispose()
 
 

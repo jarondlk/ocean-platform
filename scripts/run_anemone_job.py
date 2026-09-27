@@ -302,6 +302,39 @@ def restore_normalized(store, artifact_id):
     return identity, receipt["metadata"]
 
 
+
+def restore_referenced_normalizations(store, documents, *, max_bytes=512 * 1024 * 1024):
+    """Restore only source snapshots cited by the selected complete generation.
+
+    Historical published provenance remains immutable in its own snapshots;
+    it need not be copied into every new publication. Multiple normalizations
+    for a referenced source are retained to resolve review-specific row hashes.
+    """
+    needed = set()
+    for row in documents.to_dict(orient="records"):
+        if row.get("source_type") != "edna_metabarcoding":
+            continue
+        metadata = row.get("metadata")
+        if not isinstance(metadata, dict):
+            metadata = json.loads(row.get("metadata_json") or "{}")
+        needed.update(validate_id(value) for value in metadata.get("source_snapshot_ids", []))
+    entries = store.entries("normalized")
+    selected = {key: entry for key, entry in entries.items()
+                if entry.get("metadata", {}).get("snapshot_id") in needed}
+    covered = {entry["metadata"]["snapshot_id"] for entry in selected.values()}
+    if covered != needed:
+        raise ValueError("Referenced ANEMONE source normalization is not registered")
+    if len(selected) > 2048:
+        raise ValueError("Referenced normalization count exceeds staging budget")
+    total = 0
+    for identity, entry in sorted(selected.items()):
+        receipt, _ = store.read("normalized", identity, max_bytes=max_bytes-total)
+        if receipt["metadata"] != entry["metadata"]:
+            raise ValueError("Normalization index metadata differs from verified receipt")
+        total += sum(file["size"] for file in receipt["files"].values())
+        restore_normalized(store, identity)
+    return {"bundles": len(selected), "bytes": total, "source_snapshots": len(needed)}
+
 def execute_stage(args):
     store = ArtifactStore(config.EDNA_ARTIFACT_URI)
     if args.stage == "apply-classification":
@@ -446,18 +479,8 @@ def execute_stage(args):
         from ingestion.lineage import build_provenance_manifest
         from ingestion.provenance_snapshot import prepare_snapshot, publish_snapshot
 
-        # All retained pilot normalizations are required by historical source
-        # traces; fail on budget overflow instead of emitting partial provenance.
-        entries = store.entries("normalized")
-        if len(entries) > 20:
-            raise ValueError("Pilot provenance limit exceeded (20 normalized bundles)")
-        total = 0
-        for artifact_id in entries:
-            receipt, _ = store.read("normalized", artifact_id)
-            total += sum(f["size"] for f in receipt["files"].values())
-            if total > 512 * 1024 * 1024:
-                raise ValueError("Pilot provenance staging limit exceeded")
-            restore_normalized(store, artifact_id)
+        from ingestion.lineage import _read_retrieval_documents
+        restore_referenced_normalizations(store, _read_retrieval_documents())
         manifest = build_provenance_manifest(
             limit_documents=None, include_embeddings=True
         )

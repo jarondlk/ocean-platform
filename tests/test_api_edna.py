@@ -172,3 +172,11 @@ def test_edna_export_contains_provenance_and_no_credentials(monkeypatch):
     assert "'=HYPERLINK" in body
     assert "password" not in body.lower()
     assert "authorization" not in body.lower()
+
+
+def test_summary_accepts_namespace_and_target_filters_and_rejects_invalid(monkeypatch):
+    monkeypatch.setattr(api_main, "edna_summary", lambda filters: {"filters": filters})
+    response = client.get('/data/edna/summary?provider_locus=MiFish&provider_team=ANEMONE&target_status=nontarget&assignment_method=qcauto_nontarget')
+    assert response.status_code == 200
+    assert response.json()["filters"]["target_status"] == "nontarget"
+    assert client.get('/data/edna/summary?target_status=invalid').status_code == 400

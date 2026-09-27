@@ -30,11 +30,21 @@ export function appliedFilterRows(
   if (isApplied(context.analysis_id)) {
     rows.push({ filter: "analysis_id", value: context.analysis_id });
   }
+  const resolved = asRecord(context.aggregate_scope);
+  if (resolved.filters) {
+    return Object.entries(asRecord(resolved.filters)).map(([filter, value]) => ({ filter, value }));
+  }
+  const aggregation = asRecord(context.aggregation);
+  Object.entries(aggregation).forEach(([filter, value]) => {
+    if (isApplied(value)) rows.push({ filter, value });
+  });
   return rows;
 }
 
 export function abstentionReasonLabel(reason?: string | null): string {
   const labels: Record<string, string> = {
+    aggregate_scope_required: "Exact count needs explicit filters",
+    aggregate_unavailable: "Exact aggregate unavailable",
     no_matching_evidence: "No matching evidence",
     empty_analysis_cohort: "Empty analysis cohort",
     publication_pending: "eDNA publication pending",

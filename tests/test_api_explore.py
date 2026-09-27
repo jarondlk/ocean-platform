@@ -60,7 +60,9 @@ def test_explore_sample_detail_joins_sample_rows():
     assert payload["ctd"]
 
 
-def test_debug_state_redacts_database_url():
+def test_debug_state_redacts_database_url(monkeypatch):
+    import config
+    monkeypatch.setattr(config, "DATABASE_URL", "postgresql://ocean:test-password@localhost/ocean_test")
     client = TestClient(app)
 
     response = client.get("/debug")

@@ -116,7 +116,9 @@ def qualified_links(recipe, samples, measurements, observations):
                 lower = max(0, (c-b).total_seconds(), (a-d).total_seconds())/3600
             except (TypeError, ValueError, KeyError):
                 reason = 'time_unavailable'
-            if not site or site.domain_id != profile.domain_id or t['domain_id'] != profile.domain_id:
+            if sample.get('coordinate_precision') == 'provider_grid_unconfirmed':
+                reason = 'provider_coordinate_precision_unconfirmed'
+            elif not site or site.domain_id != profile.domain_id or t['domain_id'] != profile.domain_id:
                 reason = 'domain_unverified'
             elif any(r.get('lat') is None or r.get('lon') is None or not (profile.lat_min <= r['lat'] <= profile.lat_max and profile.lon_min <= r['lon'] <= profile.lon_max) for r in (sample, t)):
                 reason = 'outside_reviewed_domain'

@@ -272,3 +272,15 @@ test("rejects unsafe or malformed deep-link values", () => {
   assert.ok(invalid);
   assert.deepEqual(evidenceDeepLinks(invalid), []);
 });
+
+
+test("aggregate citations link to retained evidence and reject mismatched identities", () => {
+  const id = "a".repeat(64);
+  const context = { doc_id: `aggregate_edna_${id}`, aggregate_id: id, title: "Exact count", context_type: "analysis" as const, text: "Summary" };
+  const links = evidenceDeepLinks(contextTarget(context));
+  assert.equal(links.length, 2);
+  assert.equal(links[0].href, `/provenance?view=trace&doc_id=aggregate_edna_${id}`);
+  assert.equal(links[1].href, `/api/backend/data/edna/aggregates/${id}`);
+  assert.equal(links[1].download, `edna-aggregate-${id}.json`);
+  assert.deepEqual(evidenceDeepLinks(contextTarget({ ...context, aggregate_id: "b".repeat(64) })), []);
+});

@@ -75,10 +75,10 @@ def read_canonical(recipe):
             return [{k: _json_value(v) for k,v in r.items()} for r in rows]
 
         selected = read('SELECT s.* FROM edna_sample s WHERE ' + ' AND '.join(conditions), params)
-        scopes = sorted({(s['provider'], s['provider_project_id'], s['provider_run_id']) for s in selected})
+        scopes = sorted({(s['provider'], s['provider_locus'], s['provider_team'], s['provider_project_id'], s['provider_run_id']) for s in selected})
         controls = []
-        for provider, project, run in scopes:
-            controls.extend(read("SELECT * FROM edna_sample WHERE active IS TRUE AND sample_kind <> 'environmental' AND provider=:p AND provider_project_id=:j AND provider_run_id=:r", {'p':provider, 'j':project, 'r':run}))
+        for provider, locus, team, project, run in scopes:
+            controls.extend(read("SELECT * FROM edna_sample WHERE active IS TRUE AND sample_kind <> 'environmental' AND provider=:p AND provider_locus=:locus AND provider_team=:team AND provider_project_id=:j AND provider_run_id=:r", {'p':provider, 'locus':locus, 'team':team, 'j':project, 'r':run}))
         samples = list({s['sample_id']: s for s in selected+controls}.values())
         if len(samples) > 1000:
             raise ValueError('Sample snapshot resource limit exceeded')

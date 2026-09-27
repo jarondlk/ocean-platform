@@ -388,6 +388,9 @@ export async function getSstData(params: {
 }
 
 export type EdnaFilters = {
+  provider_locus?: string;
+  provider_team?: string;
+  target_status?: string;
   sample_id?: string;
   assay_id?: string;
   provider?: string;

@@ -15,6 +15,7 @@ import sys
 import time
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path, PurePosixPath
 from typing import Any, Callable, Mapping, Optional
@@ -28,7 +29,7 @@ import config
 USER_AGENT = "OCEAN-Platform-ANEMONE-sync/0.4"
 SAFE_SEGMENT = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]*$")
 SEQUENCE_PATTERN = re.compile(r"^[ACGTNacgtn]+$")
-RETRYABLE_HTTP_STATUS = {429, 500, 502, 503, 504}
+RETRYABLE_HTTP_STATUS = {429, *range(500, 600)}
 
 
 class AnemoneError(RuntimeError):
@@ -246,6 +247,7 @@ def load_contract_by_hash(contract_sha256: str) -> dict[str, Any]:
     """Resolve only repository-approved contracts, never paths from a manifest."""
     candidates = (
         config.ANEMONE_CONTRACT_PATH,
+        config.PROJECT_ROOT / "data_contracts" / "anemone_catalogue.json",
         config.PROJECT_ROOT / "data_contracts" / "history" / "anemone_mifish_v1.json",
     )
     for path in candidates:
@@ -303,7 +305,9 @@ def validate_scope_url(
         )
     tail = parsed.path[len(base_path) : -1]
     segments = tuple(part for part in tail.split("/") if part)
-    if len(segments) not in {2, 3}:
+    catalogue_base = base_path.rstrip("/") == "/dist"
+    run_depth = 4 if catalogue_base else 2
+    if len(segments) not in {run_depth, run_depth + 1}:
         raise AnemoneError(
             "scope_level_invalid",
             "ANEMONE scope must identify one sequencing run or sample.",
@@ -317,7 +321,7 @@ def validate_scope_url(
     normalized = urlunsplit((parsed.scheme, parsed.netloc, normalized_path, "", ""))
     return AnemoneScope(
         url=normalized,
-        level="sample" if len(segments) == 3 else "run",
+        level="sample" if len(segments) == run_depth + 1 else "run",
         segments=segments,
     )
 
@@ -359,6 +363,7 @@ class AnemoneHttpClient:
             **(headers or {}),
         }
         for attempt in range(1, self.max_attempts + 1):
+            retry_after = 0.0
             try:
                 response = self.opener.open(
                     Request(url, method=method, headers=request_headers),
@@ -377,13 +382,24 @@ class AnemoneHttpClient:
                         "http_request_failed",
                         f"ANEMONE request failed with HTTP {exc.code}.",
                     ) from exc
+                hint = exc.headers.get("Retry-After") if exc.headers else None
+                if hint:
+                    try:
+                        retry_after = max(0.0, float(hint))
+                    except ValueError:
+                        try:
+                            retry_after = max(0.0, (parsedate_to_datetime(hint) - datetime.now(timezone.utc)).total_seconds())
+                        except (ValueError, TypeError, OverflowError):
+                            retry_after = 0.0
+                    if retry_after > 300:
+                        raise AnemoneError("provider_retry_later", "Provider requested a later retry; no publication changed.") from exc
             except URLError as exc:
                 if attempt == self.max_attempts:
                     raise AnemoneError(
                         "network_request_failed",
                         "ANEMONE request failed due to a network error.",
                     ) from exc
-            self.sleep_fn(self.retry_initial_seconds * (2 ** (attempt - 1)))
+            self.sleep_fn(max(retry_after, self.retry_initial_seconds * (2 ** (attempt - 1))))
         raise AssertionError("unreachable")
 
     def _validate_final_url(self, url: str) -> None:
@@ -605,7 +621,7 @@ def inventory_anemone(
                     )
                 )
                 continue
-            if sample_scope.level != "sample" or sample_scope.segments[:2] != scope.segments:
+            if sample_scope.level != "sample" or sample_scope.segments[:-1] != scope.segments:
                 issues.append(
                     AnemoneIssue(
                         "error",
@@ -994,11 +1010,23 @@ def _validate_interpreted_file(
         contract.get("limits", {}).get("maximum_uncompressed_tsv_bytes")
         or 67_108_864
     )
+    if item.role == "provider_note":
+        maximum = int(contract["limits"].get("maximum_provider_note_bytes", 65536))
+        with path.open("rb") as handle:
+            payload = handle.read(maximum + 1)
+        if len(payload) > maximum:
+            raise AnemoneError("provider_note_too_large", "Provider note exceeds its byte budget.")
+        try:
+            payload.decode("utf-8")
+        except UnicodeError as exc:
+            raise AnemoneError("provider_note_encoding", "Provider note must be UTF-8 text.") from exc
+        return len(payload.splitlines()), {item.sample_name}
     header, rows = _read_xz_tsv(path, maximum)
     table_name = item.table_contract or ""
     table = dict(contract.get("tables", {}).get(table_name) or {})
     expected = list(table.get("columns") or [])
-    if header != expected:
+    optional = table.get("optional_trailing_columns") or []
+    if header != expected and not (optional and header == expected[:-len(optional)] and expected[-len(optional):] == optional):
         raise AnemoneError(
             "tsv_columns_invalid",
             f"ANEMONE {item.role} TSV columns do not match the contract.",
@@ -1008,6 +1036,8 @@ def _validate_interpreted_file(
             "tsv_row_count_below_contract",
             f"ANEMONE {item.role} TSV has too few rows.",
         )
+    if table_name.startswith("key_value") and len(rows) > int(contract.get("limits", {}).get("maximum_metadata_rows", 10000)):
+        raise AnemoneError("metadata_row_limit_exceeded", "ANEMONE metadata exceeds its row budget.")
     width = len(header)
     if any(len(row) != width for row in rows):
         raise AnemoneError(
@@ -1015,6 +1045,8 @@ def _validate_interpreted_file(
             f"ANEMONE {item.role} TSV contains a malformed row.",
         )
     sample_names = {row[0].strip() for row in rows if row and row[0].strip()}
+    if not rows and int(table.get("minimum_rows", 1)) == 0:
+        sample_names = {item.sample_name}
     if len(sample_names) != 1:
         raise AnemoneError(
             "tsv_sample_set_invalid",
@@ -1034,7 +1066,7 @@ def _validate_interpreted_file(
                     "community_reads_invalid",
                     "ANEMONE community TSV contains an invalid read count.",
                 )
-            copies = row[index["ncopiesperml"]].strip()
+            copies = row[index["ncopiesperml"]].strip() if "ncopiesperml" in index else ""
             if copies.upper() not in {"", "NA", "N/A"} and not _nonnegative_number(copies):
                 raise AnemoneError(
                     "community_copies_invalid",
@@ -1054,7 +1086,7 @@ def _validate_interpreted_file(
                 )
     elif table_name.startswith("key_value_"):
         keys = [row[index["key"]].strip() for row in rows]
-        if any(not key for key in keys) or len(keys) != len(set(keys)):
+        if any(not key for key in keys) or (not table.get("preserve_duplicate_keys") and len(keys) != len(set(keys))):
             raise AnemoneError(
                 "metadata_keys_invalid",
                 f"ANEMONE {item.role} contains blank or duplicate metadata keys.",

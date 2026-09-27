@@ -32,6 +32,15 @@ class AppBase(DeclarativeBase):
     pass
 
 
+class EdnaAggregateEvidence(AppBase):
+    """Immutable chat evidence survives scientific corpus rebuilds."""
+    __tablename__ = "edna_aggregate_evidence"
+    aggregate_id = Column(String(64), primary_key=True)
+    algorithm_version = Column(String(64), nullable=False)
+    payload_json = Column(Text, nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+
+
 class AppUser(AppBase):
     __tablename__ = "app_user"
 
@@ -169,7 +178,7 @@ class ChatInteraction(AppBase):
         CheckConstraint(
             "abstention_reason IS NULL OR abstention_reason IN "
             "('no_matching_evidence', 'empty_analysis_cohort', "
-            "'publication_pending')",
+            "'publication_pending', 'aggregate_scope_required', 'aggregate_unavailable')",
             name="ck_chat_interaction_abstention_reason",
         ),
         CheckConstraint(

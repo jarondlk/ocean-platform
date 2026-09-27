@@ -120,3 +120,10 @@ def test_shared_eligibility_accumulates_stable_reason_codes():
 def test_shared_eligibility_rejects_an_unexplained_empty_method_scope():
     with pytest.raises(ValueError, match="assignment method"):
         evaluate_analysis_eligibility(_sample(), [_assay()], {}, [])
+
+
+def test_nontarget_is_queryable_but_not_advertised_as_supported_environmental_analysis():
+    from api.edna_service import _detection_eligibility
+    result = _detection_eligibility({**_sample(), **_assay(), "assignment_method": "qcauto_nontarget"})
+    assert result["analysis_eligibility"] == "excluded"
+    assert result["exclusion_reasons"] == ["method_not_supported"]

@@ -220,11 +220,11 @@ def _validate_edna_provenance(snapshot: ProvenanceSnapshot) -> None:
         file_ids = document.get("source_file_ids") or []
         records = metadata.get("canonical_records") or []
         document_version = metadata.get("edna_retrieval_document_version")
-        if type(document_version) is not int or document_version not in (1, 2, 3) or not snapshot_ids or not file_ids or len(records) < 3:
+        if type(document_version) is not int or document_version not in (1, 2, 3, 4) or not snapshot_ids or not file_ids or len(records) < (2 if document_version == 4 and metadata.get("detection_count") == 0 else 3):
             raise SnapshotError(prefix + "missing document version, snapshots, files, or canonical records")
         if not sha256.fullmatch(str(metadata.get("detection_set_sha256") or "")):
             raise SnapshotError(prefix + "missing detection-set hash")
-        if document_version == 3:
+        if document_version >= 3:
             supplied = metadata.get('internal_standards_supplied')
             count = metadata.get('internal_standard_count')
             featured = metadata.get('featured_internal_standard_ids')
@@ -236,6 +236,13 @@ def _validate_edna_provenance(snapshot: ProvenanceSnapshot) -> None:
                     or len(set(featured)) != len(featured)
                     or set(featured) != set(standard_records)):
                 raise SnapshotError(prefix + "invalid internal-standard provenance")
+        if document_version == 4 and metadata.get("detection_count") == 0:
+            evidence = metadata.get("community_evidence") or {}
+            if (evidence.get("status") != "available" or type(evidence.get("row_count")) is not int or evidence.get("row_count") != 0
+                    or evidence.get("source_snapshot_id") not in snapshot_ids
+                    or f"raw:anemone:{evidence.get('source_file_id')}" not in file_ids
+                    or not {"sample", "assay"}.issubset({r.get("entity_type") for r in records})):
+                raise SnapshotError(prefix + "missing empty-community source evidence")
         for file_id in file_ids:
             source = files.get(file_id, {})
             if not sha256.fullmatch(str(source.get("sha256") or "")) or source.get("source_snapshot_id") not in snapshot_ids or not source.get("source_url"):

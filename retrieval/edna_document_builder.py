@@ -14,9 +14,9 @@ from retrieval.document_builder import RetrievalDocument
 
 
 EDNA_SOURCE_TYPE = "edna_metabarcoding"
-EDNA_RETRIEVAL_DOCUMENT_VERSION = 3
+EDNA_RETRIEVAL_DOCUMENT_VERSION = 4
 EDNA_ASSIGNMENT_METHODS = frozenset(
-    {"qcauto_target", "qcauto_95pct_3nn_target"}
+    {"qcauto_target", "qcauto_95pct_3nn_target", "qcauto_nontarget", "qcauto_95pct_3nn_nontarget"}
 )
 TAXON_COLUMNS = (
     "superkingdom",
@@ -99,6 +99,8 @@ def _method_label(method: str) -> str:
     return {
         "qcauto_target": "QCauto",
         "qcauto_95pct_3nn_target": "QCauto 95%-3NN",
+        "qcauto_nontarget": "QCauto (nontarget)",
+        "qcauto_95pct_3nn_nontarget": "QCauto 95%-3NN (nontarget)",
     }[method]
 
 
@@ -167,7 +169,7 @@ def build_edna_documents(
     active_assays = _active(assays)
     active_detections = _active(detections)
     active_standards = _active(internal_standards) if internal_standards is not None else pd.DataFrame()
-    if active_samples.empty or active_assays.empty or active_detections.empty:
+    if active_samples.empty or active_assays.empty:
         return []
 
     sample_by_id = {
@@ -180,11 +182,17 @@ def build_edna_documents(
     }
     documents: list[RetrievalDocument] = []
 
-    grouped = active_detections.groupby(
+    grouped = list(active_detections.groupby(
         ["assay_id", "assignment_method"],
         dropna=False,
         sort=True,
-    )
+    ))
+    present = {key for key, _ in grouped}
+    for assay_id, assay in assay_by_id.items():
+        availability = json.loads(_text(assay.get("community_availability_json")) or "{}")
+        for method in availability:
+            if (assay_id, method) not in present:
+                grouped.append(((assay_id, method), active_detections.iloc[:0]))
     for (assay_id_value, method_value), rows in grouped:
         assay_id = _text(assay_id_value)
         method = _text(method_value)
@@ -224,7 +232,7 @@ def build_edna_documents(
         )
 
         lines = [
-            f"ANEMONE MiFish sample {provider_sample}.",
+            f"ANEMONE {_text(sample.get('provider_locus')) or 'MiFish'} sample {provider_sample}.",
             f"Provider: {provider}.",
         ]
         scope = [value for value in (project, run) if value]
@@ -236,6 +244,8 @@ def build_edna_documents(
         lon = float(sample["lon"]) if _present(sample.get("lon")) else None
         if lat is not None and lon is not None:
             lines.append(f"Coordinates: {lat:.6f}, {lon:.6f}.")
+            if sample.get("coordinate_precision") == "provider_grid_unconfirmed":
+                lines.append("Reported coordinates follow the provider's grid; exact sampling position and spatial precision are unconfirmed.")
         lines.append(
             "Sample classification: "
             + _control_label(sample_kind, is_control)
@@ -311,6 +321,14 @@ def build_edna_documents(
         )
         snapshot_ids = sorted(set(snapshot_ids) | set(_source_ids(standards.get('source_snapshot_id', pd.Series(dtype='string')).tolist())))
         source_file_ids = sorted(set(source_file_ids) | set(_source_ids(standards.get('source_file_id', pd.Series(dtype='string')).tolist())))
+        availability = json.loads(_text(assay.get("community_availability_json")) or "{}")
+        method_evidence = availability.get(method)
+        if isinstance(method_evidence, dict):
+            source_file_ids = sorted(set(source_file_ids) | set(_source_ids([method_evidence.get("source_file_id")])))
+            snapshot_ids = sorted(set(snapshot_ids) | set(_source_ids([method_evidence.get("source_snapshot_id")])))
+        provider_note = json.loads(_text(sample.get("provider_note_json")) or "{}")
+        if provider_note.get("source_file_id"):
+            source_file_ids = sorted(set(source_file_ids) | {provider_note["source_file_id"]})
         featured_ids = [str(value) for value in top_rows["detection_id"].tolist()]
         canonical_records = [
             _record_provenance("sample", sample_id, sample),
@@ -325,6 +343,14 @@ def build_edna_documents(
             for _, row in featured_standards.iterrows()
         )
         metadata = {
+            "classification_basis": _text(sample.get("classification_basis")),
+            "community_evidence": method_evidence if isinstance(method_evidence, dict) else None,
+            "target_status": "nontarget" if method.endswith("_nontarget") else "target",
+            "provider_locus": _text(sample.get("provider_locus")) or "MiFish",
+            "provider_team": _text(sample.get("provider_team")) or "ANEMONE",
+            "source_occurrence_id": _text(sample.get("source_occurrence_id")),
+            "physical_sample_id": _text(sample.get("physical_sample_id")),
+            "coordinate_precision": _text(sample.get("coordinate_precision")),
             "calibration_status": "not_established",
             "internal_standards_supplied": internal_standards is not None,
             "internal_standard_count": len(standards) if internal_standards is not None else None,
@@ -366,7 +392,7 @@ def build_edna_documents(
                 bay=None,
                 station=None,
                 title=(
-                    f"ANEMONE MiFish {provider_sample} — {_method_label(method)}"
+                    f"ANEMONE {_text(sample.get('provider_locus')) or 'MiFish'} {provider_sample} — {_method_label(method)}"
                 ),
                 text=" ".join(lines),
                 provider=provider,

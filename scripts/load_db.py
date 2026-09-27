@@ -89,19 +89,28 @@ def add_source_row_hash(df: pd.DataFrame) -> pd.DataFrame:
 
 def _database_column_definitions(
     table_name: str,
+    connection: Any = None,
 ) -> dict[str, dict[str, Any]]:
     return {
         column["name"]: column
-        for column in sa_inspect(get_engine()).get_columns(table_name)
+        for column in sa_inspect(connection if connection is not None else get_engine()).get_columns(table_name)
     }
 
 
-def _prepare_dataframe(df: pd.DataFrame, table_name: str) -> pd.DataFrame:
-    definitions = _database_column_definitions(table_name)
+def _prepare_dataframe(df: pd.DataFrame, table_name: str, connection: Any = None) -> pd.DataFrame:
+    definitions = (_database_column_definitions(table_name, connection) if connection is not None
+                   else _database_column_definitions(table_name))
     db_columns = set(definitions)
     if (table_name == "edna_sample" and "classification_review_json" in df
         and "classification_review_json" not in db_columns):
         raise ValueError("ANEMONE classification review requires database migration 20260903_0008")
+    catalogue_columns = {
+        "edna_sample": {"provider_locus", "provider_team", "source_occurrence_id", "raw_metadata_rows_json", "coordinate_precision"},
+        "edna_assay": {"community_availability_json", "raw_metadata_rows_json"},
+        "edna_detection": {"assignment_algorithm", "target_status", "concentration_status"},
+    }
+    if (set(df.columns) & catalogue_columns.get(table_name, set())) - db_columns:
+        raise ValueError("ANEMONE catalogue requires database migration 20260924_0012")
     df = df.copy()
     for column in df.columns:
         definition = definitions.get(column)
@@ -345,7 +354,7 @@ def _upsert_dataframe(
     incoming: pd.DataFrame,
     key_columns: list[str],
 ) -> dict[str, int]:
-    incoming = _prepare_dataframe(incoming, table_name)
+    incoming = _prepare_dataframe(incoming, table_name, connection)
     missing_keys = [
         column for column in key_columns if column not in incoming.columns
     ]
@@ -393,6 +402,7 @@ def _upsert_dataframe(
         if_exists="fail",
         index=False,
         method="multi",
+        chunksize=500,
     )
     matched = int(
         connection.exec_driver_sql(
@@ -452,7 +462,7 @@ def _immutable_insert_dataframe(
     key_columns: list[str],
 ) -> dict[str, int]:
     """Insert append-only rows and reject identity/content conflicts."""
-    incoming = _prepare_dataframe(incoming, table_name)
+    incoming = _prepare_dataframe(incoming, table_name, connection)
     if incoming.empty:
         return {
             "incoming": 0,
@@ -475,13 +485,12 @@ def _immutable_insert_dataframe(
         if_exists="fail",
         index=False,
         method="multi",
+        chunksize=500,
     )
-    join = _quoted_join(
-        preparer,
-        target_alias="target",
-        source_alias="source",
-        key_columns=key_columns,
-    )
+    key_sql = ", ".join(preparer.quote(key) for key in key_columns)
+    connection.exec_driver_sql(f"CREATE UNIQUE INDEX ON {quoted_temporary} ({key_sql})")
+    connection.exec_driver_sql(f"ANALYZE {quoted_temporary}")
+    join = " AND ".join(f"target.{preparer.quote(key)} = source.{preparer.quote(key)}" for key in key_columns)
     compare_columns = [
         column for column in incoming.columns if column not in key_columns
     ]
@@ -534,7 +543,7 @@ def _merge_edna_dataframe(
     key_column: str,
 ) -> dict[str, int]:
     """Merge current eDNA rows without deleting referenced parent records."""
-    incoming = _prepare_dataframe(incoming, table_name)
+    incoming = _prepare_dataframe(incoming, table_name, connection)
     if incoming.empty:
         return {
             "incoming": 0,
@@ -573,10 +582,20 @@ def _merge_edna_dataframe(
         if_exists="fail",
         index=False,
         method="multi",
+        chunksize=500,
     )
-    join = (
-        f"target.{quoted_key} IS NOT DISTINCT FROM source.{quoted_key}"
-    )
+    connection.exec_driver_sql(f"CREATE UNIQUE INDEX ON {quoted_temporary} ({quoted_key})")
+    connection.exec_driver_sql(f"ANALYZE {quoted_temporary}")
+    # These keys were checked non-null above. Equality permits indexed/hash
+    # joins; null-safe comparison forced quadratic joins at catalogue scale.
+    join = f"target.{quoted_key} = source.{quoted_key}"
+    if table_name == "edna_sample":
+        identity_columns = [c for c in ("provider", "provider_locus", "provider_team", "provider_project_id", "provider_run_id", "provider_sample_id") if c in incoming]
+        differences = " OR ".join(f"target.{c} IS DISTINCT FROM source.{c}" for c in identity_columns)
+        if connection.exec_driver_sql(
+            f"SELECT EXISTS (SELECT 1 FROM {quoted_table} target JOIN {quoted_temporary} source ON {join} WHERE {differences})"
+        ).scalar():
+            raise ValueError("Existing sample ID belongs to a different provider occurrence")
     matched = int(
         connection.exec_driver_sql(
             f"SELECT count(*) FROM {quoted_table} AS target "
@@ -715,15 +734,29 @@ def _scope_parameters(
 ) -> tuple[str, dict[str, Any]]:
     if samples.empty:
         raise ValueError("ANEMONE bundle contains no samples")
+    mode = manifest.get("reconciliation_mode", "complete_scope")
+    if mode == "complete_samples":
+        # A catalogue partition contains complete files for these occurrences,
+        # but does not assert anything about absent samples elsewhere in a run.
+        return "{alias}.sample_id = ANY(:sample_ids)", {"sample_ids": samples["sample_id"].astype(str).tolist()}
+    if mode != "complete_scope":
+        raise ValueError("Unsupported ANEMONE reconciliation mode")
     first = samples.iloc[0]
-    parameters = {"provider": str(first["provider"])}
+    parameters = {"provider": str(first["provider"]),
+                  "provider_locus": str(first.get("provider_locus", "MiFish")),
+                  "provider_team": str(first.get("provider_team", "ANEMONE"))}
+    namespace = "{alias}.provider_locus = :provider_locus AND {alias}.provider_team = :provider_team AND "
     if manifest.get("source_scope_level") == "sample":
         if len(samples) != 1:
             raise ValueError("ANEMONE sample scope contains multiple samples")
         parameters["provider_sample_id"] = str(first["provider_sample_id"])
+        parameters["provider_project_id"] = str(first["provider_project_id"])
+        parameters["provider_run_id"] = str(first["provider_run_id"])
         return (
-            "{alias}.provider = :provider AND "
-            "{alias}.provider_sample_id = :provider_sample_id",
+            namespace + "{alias}.provider = :provider AND "
+            "{alias}.provider_sample_id = :provider_sample_id AND "
+            "{alias}.provider_project_id = :provider_project_id AND "
+            "{alias}.provider_run_id = :provider_run_id",
             parameters,
         )
     projects = set(samples["provider_project_id"].astype(str))
@@ -733,7 +766,7 @@ def _scope_parameters(
     parameters["provider_project_id"] = projects.pop()
     parameters["provider_run_id"] = runs.pop()
     return (
-        "{alias}.provider = :provider AND "
+        namespace + "{alias}.provider = :provider AND "
         "{alias}.provider_project_id = :provider_project_id AND "
         "{alias}.provider_run_id = :provider_run_id",
         parameters,
@@ -870,7 +903,7 @@ def _upsert_anemone_bundle(
             incoming=frames[table_name],
             key_column=key_column,
         )
-    inactive = _inactivate_missing_anemone_rows(
+    inactive = {} if manifest.get("reconciliation_mode") == "partial_upsert" else _inactivate_missing_anemone_rows(
         connection,
         frames=frames,
         manifest=manifest,
