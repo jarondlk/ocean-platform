@@ -22,6 +22,8 @@ import logging
 import sys
 import uuid
 from datetime import date, datetime
+from io import StringIO
+from itertools import islice
 from pathlib import Path
 from typing import Any
 
@@ -535,6 +537,59 @@ def _immutable_insert_dataframe(
     }
 
 
+def _stage_edna_dataframe(
+    connection: Any, incoming: pd.DataFrame, *, table_name: str, temporary_table: str
+) -> None:
+    """Bulk-load typed session-local rows without writing intermediate data to WAL."""
+    if (connection.dialect.name, connection.dialect.driver) != (
+        "postgresql",
+        "psycopg2",
+    ):
+        incoming.to_sql(
+            temporary_table,
+            connection,
+            if_exists="fail",
+            index=False,
+            method="multi",
+            chunksize=500,
+        )
+        return
+    preparer = connection.dialect.identifier_preparer
+    columns = ", ".join(preparer.quote(column) for column in incoming.columns)
+    quoted_temporary = preparer.quote(temporary_table)
+    connection.exec_driver_sql(
+        f"CREATE TEMP TABLE {quoted_temporary} ON COMMIT DROP AS "
+        f"SELECT {columns} FROM {preparer.quote(table_name)} WITH NO DATA"
+    )
+
+    def field(value: Any) -> str:
+        value = _json_value(value)
+        if value is None:
+            return r"\N"
+        return (
+            str(value)
+            .replace("\\", "\\\\")
+            .replace("\t", r"\t")
+            .replace("\n", r"\n")
+            .replace("\r", r"\r")
+        )
+
+    # Keep serialization memory bounded. Literal backslashes are escaped before
+    # COPY's null marker/control characters, preserving empty strings and '\N'.
+    rows = iter(incoming.itertuples(index=False, name=None))
+    with connection.connection.driver_connection.cursor() as cursor:
+        while batch := list(islice(rows, 5000)):
+            payload = StringIO(
+                "".join(
+                    "\t".join(field(value) for value in row) + "\n" for row in batch
+                )
+            )
+            cursor.copy_expert(
+                f"COPY {quoted_temporary} ({columns}) FROM STDIN WITH (FORMAT text)",
+                payload,
+            )
+
+
 def _merge_edna_dataframe(
     connection: Any,
     *,
@@ -576,49 +631,63 @@ def _merge_edna_dataframe(
     quoted_key = preparer.quote(key_column)
     temporary_table = f"_ocean_edna_{table_name}_{uuid.uuid4().hex[:10]}"
     quoted_temporary = preparer.quote(temporary_table)
-    incoming.to_sql(
-        temporary_table,
+    _stage_edna_dataframe(
         connection,
-        if_exists="fail",
-        index=False,
-        method="multi",
-        chunksize=500,
+        incoming,
+        table_name=table_name,
+        temporary_table=temporary_table,
     )
-    connection.exec_driver_sql(f"CREATE UNIQUE INDEX ON {quoted_temporary} ({quoted_key})")
+    connection.exec_driver_sql(
+        f"CREATE UNIQUE INDEX ON {quoted_temporary} ({quoted_key})"
+    )
     connection.exec_driver_sql(f"ANALYZE {quoted_temporary}")
     # These keys were checked non-null above. Equality permits indexed/hash
     # joins; null-safe comparison forced quadratic joins at catalogue scale.
     join = f"target.{quoted_key} = source.{quoted_key}"
     if table_name == "edna_sample":
-        identity_columns = [c for c in ("provider", "provider_locus", "provider_team", "provider_project_id", "provider_run_id", "provider_sample_id") if c in incoming]
-        differences = " OR ".join(f"target.{c} IS DISTINCT FROM source.{c}" for c in identity_columns)
+        identity_columns = [
+            c
+            for c in (
+                "provider",
+                "provider_locus",
+                "provider_team",
+                "provider_project_id",
+                "provider_run_id",
+                "provider_sample_id",
+            )
+            if c in incoming
+        ]
+        differences = " OR ".join(
+            f"target.{c} IS DISTINCT FROM source.{c}" for c in identity_columns
+        )
         if connection.exec_driver_sql(
             f"SELECT EXISTS (SELECT 1 FROM {quoted_table} target JOIN {quoted_temporary} source ON {join} WHERE {differences})"
         ).scalar():
-            raise ValueError("Existing sample ID belongs to a different provider occurrence")
-    matched = int(
-        connection.exec_driver_sql(
-            f"SELECT count(*) FROM {quoted_table} AS target "
-            f"JOIN {quoted_temporary} AS source ON {join}"
-        ).scalar_one()
+            raise ValueError(
+                "Existing sample ID belongs to a different provider occurrence"
+            )
+    changed = (
+        "target.source_row_hash IS DISTINCT FROM source.source_row_hash "
+        "OR target.active IS DISTINCT FROM TRUE"
     )
-    scientific = int(
+    # Classify matches in one pass. Repeated joins scan the growing catalogue
+    # even when a new source unit contains no previously imported detections.
+    counts = (
         connection.exec_driver_sql(
-            f"SELECT count(*) FROM {quoted_table} AS target "
-            f"JOIN {quoted_temporary} AS source ON {join} "
-            "WHERE target.scientific_content_sha256 "
-            "IS DISTINCT FROM source.scientific_content_sha256"
-        ).scalar_one()
-    )
-    provenance = int(
-        connection.exec_driver_sql(
-            f"SELECT count(*) FROM {quoted_table} AS target "
-            f"JOIN {quoted_temporary} AS source ON {join} "
-            "WHERE target.scientific_content_sha256 "
+            "SELECT count(*) AS matched, "
+            "count(*) FILTER (WHERE target.scientific_content_sha256 "
+            "IS DISTINCT FROM source.scientific_content_sha256) AS scientific, "
+            "count(*) FILTER (WHERE target.scientific_content_sha256 "
             "IS NOT DISTINCT FROM source.scientific_content_sha256 "
-            "AND (target.source_row_hash IS DISTINCT FROM source.source_row_hash "
-            "OR target.active IS DISTINCT FROM TRUE)"
-        ).scalar_one()
+            f"AND ({changed})) AS provenance, "
+            f"count(*) FILTER (WHERE {changed}) AS updates "
+            f"FROM {quoted_table} AS target JOIN {quoted_temporary} AS source ON {join}"
+        )
+        .mappings()
+        .one()
+    )
+    matched, scientific, provenance = (
+        int(counts[name]) for name in ("matched", "scientific", "provenance")
     )
     update_columns = [
         column
@@ -629,27 +698,28 @@ def _merge_edna_dataframe(
         f"{preparer.quote(column)} = source.{preparer.quote(column)}"
         for column in update_columns
     )
-    connection.exec_driver_sql(
-        f"UPDATE {quoted_table} AS target SET {assignments} "
-        f"FROM {quoted_temporary} AS source WHERE {join} "
-        "AND (target.source_row_hash IS DISTINCT FROM source.source_row_hash "
-        "OR target.active IS DISTINCT FROM TRUE)"
-    )
+    # Corpus writers serialize the comparison and merge with an advisory lock.
+    # A first load or unchanged replay needs no second target scan for UPDATE.
+    if counts["updates"]:
+        updated = connection.exec_driver_sql(
+            f"UPDATE {quoted_table} AS target SET {assignments} "
+            f"FROM {quoted_temporary} AS source WHERE {join} AND ({changed})"
+        ).rowcount
+        if updated != counts["updates"]:
+            raise RuntimeError(f"{table_name}: concurrent change during eDNA update")
     columns = list(incoming.columns)
     quoted_columns = ", ".join(preparer.quote(column) for column in columns)
-    source_columns = ", ".join(
-        f"source.{preparer.quote(column)}" for column in columns
-    )
+    source_columns = ", ".join(f"source.{preparer.quote(column)}" for column in columns)
     inserted = int(
         connection.exec_driver_sql(
             f"INSERT INTO {quoted_table} ({quoted_columns}) "
             f"SELECT {source_columns} FROM {quoted_temporary} AS source "
-            f"WHERE NOT EXISTS ("
-            f"SELECT 1 FROM {quoted_table} AS target WHERE {join}"
-            f")"
+            f"ON CONFLICT ({quoted_key}) DO NOTHING"
         ).rowcount
         or 0
     )
+    if inserted != len(incoming) - matched:
+        raise RuntimeError(f"{table_name}: concurrent change during eDNA insert")
     connection.exec_driver_sql(f"DROP TABLE IF EXISTS {quoted_temporary}")
     return {
         "incoming": len(incoming),
