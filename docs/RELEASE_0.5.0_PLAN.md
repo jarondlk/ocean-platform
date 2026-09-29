@@ -30,7 +30,7 @@ One-time sequence exception requested by the user: the GitHub source release pre
 
 ## 2. GCP preflight and isolated rehearsal
 
-Renew operator GCP authentication when execution starts. Read the actual service revision, job images, schema, publication generations, database major version, free storage, resource limits, access permissions and spend before choosing commands. The existing deployment uses Cloud Run, Cloud SQL, Cloud Storage and Vertex; reuse its established identities and secrets where possible. Check the previously agreed JPY 20,000 monthly project ceiling before extra capacity or persistent staging resources.
+Renew operator GCP authentication when execution starts. Read the actual service revision, job images, schema, publication generations, database major version, free storage, resource limits, access permissions and spend before choosing commands. The existing deployment uses Cloud Run, Cloud SQL, Cloud Storage and Vertex; reuse its established identities and secrets where possible. The user increased the total monthly project ceiling from JPY 20,000 to JPY 100,000 on 2026-09-28 and requested optimization first. Check current spend and projected total costs before extra capacity or persistent staging resources; the ceiling is not a spending target. See the [import performance recovery plan](ANEMONE_IMPORT_PERFORMANCE_PLAN.md).
 
 Rehearse against an **isolated database and artifact prefix** on the deployed PostgreSQL major version. A zero-traffic Cloud Run revision connected to production is not an isolated data rehearsal. Verify a fresh backup restores successfully and includes application history and aggregate evidence, not only corpus tables.
 
