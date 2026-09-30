@@ -60,3 +60,9 @@ The tested importer and regression tests are committed as `4016d78a5b8eaabdf113b
 ## Answer-quality follow-up
 
 [Issue #70](https://github.com/jarondlk/ocean-platform/issues/70) was created before GCP deployment with `bug` and `logic` labels. It records the confirmed local routing and response-focus limitations. Production reproduction remains pending; the staging checks must distinguish accepted wording limitations from blocking numeric, retrieval, citation or scientific-support failures.
+
+## Staging answer QA and accepted deferral (2026-09-30)
+
+Staging provenance publication completed. Thirty real hybrid/model/API cases completed with HTTP 200 at a 2 GiB job limit (peak process RSS 971.2 MiB). Answered cases had valid citation identifiers, successful traces and matching aggregate export hashes. This is not a 30/30 answer-quality pass. Supported exact counts passed; polite-summary, abundance-interpretation and Japanese count routing remain defective. Manual review also found a rare-taxon false denial caused by a top-ten assay summary omitting the requested taxon, and an unsupported freshness claim inferred from sampling dates. The canonical rare-taxon QCauto result is one occurrence, one assignment and 122 reads.
+
+The user explicitly accepted deferring these scoped chat defects to issue #70 while continuing deployment and testing. They affect answer reliability for particular requests, not canonical data integrity. Unfinished chat fixes were preserved outside the deployment source. The validated runtime remains commit `4016d78`; citation syntax alone does not establish scientific support. Additional interpretation repetitions, fresh backup, production publication and authenticated v0.5.0 browser checks remain outstanding. The manual processing job was restored to its normal 4 GiB setting after QA.
