@@ -1,5 +1,7 @@
 # v0.5.0 release and deployment record
 
+**Current status (2026-09-30 JST): deployed to production and verified.** The chronological preparation notes below retain earlier pending states; the completed rollout record is at the end.
+
 Started 2026-09-27 JST. The user requested a one-time **GitHub-first release**, followed by manual GCP deployment when authentication permits. No GitHub deployment workflow or workload federation is being reinstated.
 
 ## GitHub preparation
@@ -66,3 +68,24 @@ The tested importer and regression tests are committed as `4016d78a5b8eaabdf113b
 Staging provenance publication completed. Thirty real hybrid/model/API cases completed with HTTP 200 at a 2 GiB job limit (peak process RSS 971.2 MiB). Answered cases had valid citation identifiers, successful traces and matching aggregate export hashes. This is not a 30/30 answer-quality pass. Supported exact counts passed; polite-summary, abundance-interpretation and Japanese count routing remain defective. Manual review also found a rare-taxon false denial caused by a top-ten assay summary omitting the requested taxon, and an unsupported freshness claim inferred from sampling dates. The canonical rare-taxon QCauto result is one occurrence, one assignment and 122 reads.
 
 The user explicitly accepted deferring these scoped chat defects to issue #70 while continuing deployment and testing. They affect answer reliability for particular requests, not canonical data integrity. Unfinished chat fixes were preserved outside the deployment source. The validated runtime remains commit `4016d78`; citation syntax alone does not establish scientific support. Additional interpretation repetitions, fresh backup, production publication and authenticated v0.5.0 browser checks remain outstanding. The manual processing job was restored to its normal 4 GiB setting after QA.
+
+## Production rollout completed (2026-09-30 JST)
+
+Production now serves the validated v0.5.0 deployment amendment at `https://oceaninfobio.com/`, with all traffic on `ocean-platform-v050-prod0930`. Runtime commit `4016d78a5b8eaabdf113b6ee6902fb68ffbd86df` was built from an exact Git archive. PR #71 merged as `2be74fb8ff01a3e629308710aa9c2b9b11a059e9`; only documentation differs between that merge and the runtime source. Required PR and post-merge checks passed. The original v0.5.0 tag remains unchanged. API/frontend immutable image digests are those listed in the optimization-source section above.
+
+The rollout used a verified maintenance revision, removed old candidate routes, and drained existing requests before a fresh backup. The new backup restored successfully in isolation across all 27 tables, including 118 existing chat interactions. Its SHA-256 is `8211d9f386818acd289020035075b2f814e33b0f58b33fa23f896fd6452eb36f`. Backup locations and execution identifiers are retained in the private operator record.
+
+The production import passed in 346.69 seconds of import work (7 minutes 10 seconds total execution). It applied schema head `20260925_0013` and reconciled 3,498 source occurrences/assays, 349,638 assignment rows, 13,932 standard rows, 6,996 ANEMONE documents and 323 other documents. All 22 indexes are valid. The 6,996 ANEMONE embeddings were copied from staging only where document identity, title, text and source-row hash matched exactly; no embedding refresh candidates remained. Production provenance published as `v050-production-provenance`.
+
+Before QA writes or reopening traffic, exact fingerprints verified all 14 checked application-history and other-scientific-source tables unchanged. All 325 previous document IDs, pilot sample/assay IDs and exact content of all 323 non-ANEMONE documents were preserved. Authentication settings, runtime identities and resource limits were retained. Both containers' staging/maintenance command overrides were cleared, and production artifact locations explicitly restored. All existing manual jobs now use the validated API image; the ANEMONE job is back at its normal 4 GiB limit. No automatic deployment or ingestion schedule was enabled.
+
+### Production acceptance and remaining limitations
+
+- Ten additional staging interpretation requests completed with no automated citation/trace/export failures, at a 981.2 MiB process peak under a 2 GiB limit. Their main scientific cautions held, but scope wording and unmatched method-comparison examples still need improvement.
+- Eight production API questions completed with HTTP 200, correct supported exact metrics, valid citation IDs, successful traces and hash-verified exports. Peak process RSS was 959.1 MiB. Manual review reproduced the accepted rare-taxon false denial and unsupported freshness claim; this is **not an eight-of-eight semantic-quality pass**. Issue #70 remains open.
+- The production revision passed readiness/health checks; anonymous health/stats access returned 401. An authenticated browser showed 7,319 total documents, 6,996 eDNA documents and healthy database/model/publication signals. An old pre-deployment tab retained stale sign-in state; a fresh tab opened normally with the existing authenticated session.
+- Authenticated live chat answered the catalogue-count question with 3,498 occurrences/assays, explicit unresolved physical identity, no model invocation, seven valid citations and zero invalid citations. The citation inspector, actual JSON download and aggregate provenance page passed. Downloaded payload SHA-256 matched aggregate ID `032dff2467276e8df96c4c36e7a88e7a92df443bb61883b4227d7e0333c0f111`. The provenance page resolved the same canonical generation.
+
+The older Overview “Registered samples” and raw-registry counters remain separate legacy registries; they are not the ANEMONE source-occurrence total. Use canonical catalogue counts for ANEMONE coverage. The observation remains the accessible 2026-09-17 catalogue, not a claim of current provider freshness or resolved physical-sample identity.
+
+Recovery must account for the now-published v4 catalogue and migrations. Do not point traffic to an incompatible v0.4.5 reader, downgrade populated history migrations, or overwrite later user activity with the pre-cutover backup. Retain the maintenance revision for controlled recovery and prefer forward repair of the current publication.
