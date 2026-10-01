@@ -10,6 +10,14 @@
   Storage failures remain usable within the session; corrupt scope needs reset.
 - Transient analysis reset and late asynchronous responses have regression
   coverage. All-disabled source settings remain all-disabled across reload.
+- Environmental/non-control scopes explain their exclusion of unclassified
+  records. Answer instructions preserve unknown classifications and separate
+  empty concentration tables from missing values/columns. Source-selection
+  settings are described without invented scientific citations.
+- The operator scientific QA runner meters the actual API generation client
+  and emits bounded, hash-checked evidence records. Initial model acceptance
+  failed and a fresh capped batch remains pending; corrected instructions
+  alone do not establish answer quality.
 
 No schema migration, corpus import or embedding refresh is required. Japanese
 work and acceptance are deferred by the user; existing support remains.

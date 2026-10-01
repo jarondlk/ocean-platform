@@ -20,8 +20,10 @@ scientific-answer QA deferred. See the
 [implementation verification](docs/RELEASE_0.6.0_IMPLEMENTATION.md).
 Subsequent [production browser QA](docs/RELEASE_0.6.0_BROWSER_QA_2026-10-01.md)
 verified the current-admin workflows and found a remaining count-routing issue.
-The fix and outstanding acceptance checks are assigned to the
-[v0.6.1 patch in progress](docs/RELEASE_0.6.1_IMPLEMENTATION.md).
+The [v0.6.1 source fixes](docs/RELEASE_0.6.1_IMPLEMENTATION.md) are merged;
+candidate acceptance and release remain pending. The
+[scientific QA record](docs/RELEASE_0.6.1_SCIENTIFIC_QA.md) records a stopped
+model batch and the corrected runner. Japanese work/acceptance is deferred.
 
 ## Study Sites
 

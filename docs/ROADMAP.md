@@ -354,4 +354,4 @@ These are intentionally **not** the immediate plan.
 - [ ] Add file-watcher or object-storage event ingestion only if data arrival
       becomes frequent enough to justify it.
 
-Implementation authorized 2026-10-02 with Japanese-specific work/acceptance deferred. Count/settings fixes and isolated local checks are recorded in [implementation evidence](RELEASE_0.6.1_IMPLEMENTATION.md); candidate/live gates remain pending.
+Implementation authorized 2026-10-02 with Japanese-specific work/acceptance deferred. Count/settings and acceptance-runner fixes are merged; the replacement zero-traffic candidate passed source/build/security and 48 deterministic checks. [Scientific QA](RELEASE_0.6.1_SCIENTIFIC_QA.md) records the stopped first model batch and pending fresh capped-batch approval. Live role/mobile/candidate-history acceptance and release/cutover remain pending; production is v0.6.0.

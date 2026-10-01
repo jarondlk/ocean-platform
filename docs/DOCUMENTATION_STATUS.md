@@ -112,3 +112,4 @@ must not be treated as canonical classification.
 - [Implementation and QA](RELEASE_0.6.1_IMPLEMENTATION.md) — local patch evidence; live acceptance pending.
 - [Candidate release notes](RELEASE_NOTES_0.6.1.md) — tag/promotion pending.
 - [Operations](RELEASE_0.6.1_OPERATIONS.md) — refreshed baseline and outstanding gates.
+- [Scientific QA dispositions](RELEASE_0.6.1_SCIENTIFIC_QA.md) — first deterministic results, stopped model batch and remaining acceptance requirements.
