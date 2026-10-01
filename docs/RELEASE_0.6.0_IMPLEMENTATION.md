@@ -165,7 +165,7 @@ compatible with old application writes. A downgrade refuses to remove support
 while history contains the new reasons; retain that history and its backup.
 An application rollback can leave the expanded constraint in place.
 
-Before publishing or deploying:
+Source release and deployment gates:
 
 The user authorized GitHub release publication and manual GCP deployment on
 2026-10-01. Execution and evidence are tracked in the
@@ -185,5 +185,7 @@ migration invocation preserves encoded Cloud SQL socket/password URLs.
    migration-before-traffic order.
 
 These are release gates, not evidence that the local implementation or test
-suite failed. Production/private-state verification is still limited by the
-expired saved GCP session recorded in the readiness audit.
+suite failed. The GCP authentication limit in the original readiness audit has since been
+resolved. Source publication, remote checks, backup, migration and read-only
+runtime acceptance are now recorded in the operations record. Authenticated
+browser and repeated real-provider claim acceptance remain pending.

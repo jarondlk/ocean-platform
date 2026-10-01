@@ -11,9 +11,9 @@ and can be audited against the evidence that was actually supplied.
 
 ---
 
-The v0.6.0 release candidate adds chat source checkboxes, independent filters
-and available-data selection controls. GitHub publication and manual GCP
-deployment are authorized and in preparation; see the
+The published [v0.6.0 release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.6.0)
+adds chat source checkboxes, independent filters and available-data selections.
+Its migrated GCP candidate is ready at zero traffic while live acceptance runs; see the
 [release and deployment record](docs/RELEASE_0.6.0_OPERATIONS.md) and
 [implementation verification](docs/RELEASE_0.6.0_IMPLEMENTATION.md).
 Production remains the v0.5.0 release described below.

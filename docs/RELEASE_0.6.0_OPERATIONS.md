@@ -3,9 +3,10 @@
 Started 2026-10-01 JST. The user authorized closing local previews, updating
 documentation, publishing a new GitHub release and deploying through GCP.
 
-**Status: source preparation in progress; GCP deployment pending.** No v0.6.0
-production rollout is claimed by this initial record. The last verified
-production deployment remains v0.5.0 at `ocean-platform-v050-prod0930`.
+**Status: GitHub v0.6.0 released; migrated zero-traffic GCP candidate ready.**
+Production still routes 100% to v0.5.0 at `ocean-platform-v050-prod0930`.
+Read-only live runtime acceptance passed; authenticated browser acceptance is
+blocked by unavailable browser controls. No production cutover is claimed.
 
 ## Scope and source
 
@@ -51,7 +52,7 @@ CodeQL alert 27 (`py/polynomial-redos`) in the eDNA unknown-status answer
 selection. The regular expression was replaced by a linear per-line scan.
 Regression cases cover case-insensitive matching, line boundaries, Japanese
 queries and 100,000 repeated `unknown` tokens, with and without a following
-control label. The updated remote security result remains a release gate.
+control label. The updated CodeQL security result and all remote CI checks passed before merge.
 
 The user explicitly approved the bounded temporary `ocean-v060-readcheck` job
 after automatic review requested specific approval for its identity/database
@@ -63,6 +64,65 @@ source occurrences/assays, 349,638 assignment rows and 13,932 internal standards
 The ready eDNA publication matches the database generation/digest, and the
 provenance snapshot remains `v050-production-provenance`. The database is about
 1.21 GB. Production traffic remains on v0.5.0.
+
+## Published source, build, backup and candidate
+
+- Source PR [#78](https://github.com/jarondlk/ocean-platform/pull/78) merged
+  after backend/frontend/PostgreSQL integration/dependency/CodeQL checks passed.
+  GitHub [v0.6.0](https://github.com/jarondlk/ocean-platform/releases/tag/v0.6.0)
+  pins `91d8567bfd0d13b8a6d1450cdeaccbfc2ce90f9e`.
+- Cloud Build `956e81b6-9724-423f-a063-19d81ee52140` succeeded from a clean
+  Git archive of that tag. Its Python and frontend checks and both image builds
+  passed. Immutable API digest:
+  `sha256:0b432b0b025038e0768660e3148063ad359450d18e495b2d627dcae7e19cf9c0`.
+  Frontend digest:
+  `sha256:5e08bf7d4a223b42b191c98ce4b4349e552000e91a99719716490c6ea77e3eeb`.
+- Fresh backup execution `ocean-v060-backup-fbcfd` passed structural/digest
+  verification and an isolated restore across all **28** tables, including
+  160 chat interactions. SHA-256:
+  `07ed4aa1c3e3ea97bcf00eab1bd90586f283852809186b70d8f9d1b0bce5557d`;
+  size 207,959,925 bytes. The disposable restore database and backup job were
+  removed; the archive and manifest are retained in the private operator record.
+- The existing `ocean-migrate` job retained its standard bootstrap command,
+  identity, secrets and limits while moving to the release API image. Execution
+  `ocean-migrate-5h687` applied `20260925_0013 -> 20261001_0014` normally and
+  verified all required tables/columns and the vector extension. No parser
+  workaround was used. The additive constraint remains compatible with v0.5.0.
+- Revision `ocean-platform-v060-cand1001` is Ready with tag `v060-candidate`
+  and zero traffic. Its configuration was derived from the live service,
+  retaining authentication, identity, secrets, data locations, concurrency 20,
+  min zero/max one and container resource limits. All previous routes remain.
+- Candidate HTTP smoke passed: login/session returned 200 and anonymous
+  health/stats/capabilities/filter-options/chat requests returned 401.
+  Authenticated browser verification is pending; those HTTP checks do not
+  establish authenticated UI or model-answer acceptance.
+
+## Live runtime acceptance
+
+The user explicitly approved `ocean-v060-runtime-qa` after automatic review
+required specific approval for its broader read-only script and access path.
+Execution `ocean-v060-runtime-qa-68sk2` passed in 20.59 seconds and the job was
+removed afterward. It wrote no chat history, canonical records or publications.
+
+- All 16 source combinations had the expected live SQL membership.
+- Every source reported available. eDNA choices included `anemone` and both
+  supported assignment methods; canonical taxon search found
+  `Ablabys taenianotus`. CTD station `s1` correctly narrowed sample choices.
+- Exact catalogue/classification counts matched the frozen observation. The
+  rare-taxon/method cohort had one occurrence, one assay, one assignment and
+  122 reads. Summary/physical/unknown-count routing and English/Japanese
+  freshness detection passed.
+- Four source-only retrievals returned eligible documents: CTD 2,389 ms,
+  metagenome 1,309 ms, SST 1,359 ms and scoped rare eDNA 3,132 ms. These are
+  individual job measurements, not a concurrency or p95 claim.
+- Vertex capabilities excluded unsupported context-window/repetition controls.
+- No disposable restore database remained. The candidate had no recent
+  ERROR-level logs at the check.
+
+This job called runtime functions directly and made no chat-generation calls.
+It does not establish authenticated browser behavior, persisted new-reason
+history or repeated real-provider scientific claim support. Those remain
+explicit cutover gates; issue #70 remains open.
 
 ## Deployment order
 

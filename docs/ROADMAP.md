@@ -44,22 +44,24 @@ workflow that can later become automated.
   excluded from environmental-only analysis. Physical sample identity is
   unresolved; exact aggregate citations and provenance are live.
 - Production has 7,319 documents and matching embeddings, with schema head
-  `20260925_0013`. Scoped chat answer-quality defects are tracked in
+  `20261001_0014`. Scoped chat answer-quality defects are tracked in
   [issue #70](https://github.com/jarondlk/ocean-platform/issues/70).
 - Operational administration is consolidated under `/admin` with Users,
   Feedback, Pipeline, Database, System, and Debug sections.
 - The README screenshot set was refreshed from the authenticated OCEAN
   Platform Cloud Run deployment on 2026-08-25.
 
-## v0.6.0 local candidate: chat settings
+## v0.6.0 published release: chat settings
 
-The [adopted v0.6.0 plan](RELEASE_0.6.0_PLAN.md) is implemented locally:
+The [adopted v0.6.0 plan](RELEASE_0.6.0_PLAN.md) is implemented and released:
 independent source checkboxes, per-source filters, enforcement across evidence
 paths, provider-effective generation controls, per-account browser settings
 and bounded issue #70 fixes. [Verification and live release gates](RELEASE_0.6.0_IMPLEMENTATION.md)
-include history constraint migration `20261001_0014`. Production remains v0.5.0.
+include the applied history constraint migration `20261001_0014`. The immutable
+GCP candidate is Ready at zero traffic, with live acceptance and cutover pending.
+Production remains v0.5.0. See the [operations record](RELEASE_0.6.0_OPERATIONS.md).
 The [readiness audit](V0.6.0_READINESS_AUDIT_2026-10-01.md) records the baseline
-and the outstanding private-cloud authentication check.
+and the historical private-cloud authentication limit, since resolved.
 
 ## Completed MVP hardening: v0.4.3
 
