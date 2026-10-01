@@ -10,12 +10,12 @@
     "test": "node --test --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON lib/citation-navigation.test.ts lib/edna-navigation.test.ts lib/edna-analysis-navigation.test.ts lib/chat-presentation.test.ts lib/classification-preview.test.ts lib/edna-exclusions.test.ts lib/chat-contract.test.cjs lib/chat-settings.test.ts lib/chat-filter-options.test.ts"
   },
   "dependencies": {
-    "jose": "^6.2.10",
+    "jose": "^6.2.12",
     "lucide-react": "^0.577.0",
-    "next": "^15.5.24",
+    "next": "^15.5.26",
     "next-auth": "5.0.0-beta.32",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   },
   "overrides": {
     "nanoid": "3.3.18",
@@ -23,9 +23,9 @@
     "sharp": "0.35.4"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.5",
+    "@types/node": "^22.20.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "typescript": "^5.6.0"
   }
 }
