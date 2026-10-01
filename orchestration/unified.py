@@ -742,6 +742,11 @@ RULES:
    that calibration was not performed. Report calibration status as unknown
    unless the evidence explicitly establishes it; do not label the data
    "uncalibrated" or "not calibrated" merely because copies/mL are missing.
+   Zero concentration records may describe an empty table; do not call values
+   or source columns missing unless the supplied evidence distinguishes that.
+   Read calibration status directly from evidence, not as a consequence of
+   missing concentrations. Keep an unknown sample classification unknown;
+   names or coordinates do not establish environmental or field classification.
    Report named taxa and recorded metrics without inferring habitat, ecological
    roles, assay selectivity, or community dynamics from taxon names alone.
    Do not add ecological or assay claims that the supplied records do not support.
