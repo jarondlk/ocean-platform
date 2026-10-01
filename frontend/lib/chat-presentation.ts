@@ -51,7 +51,7 @@ export function appliedFilterRows(
 
 export function abstentionReasonLabel(reason?: string | null): string {
   const labels: Record<string, string> = {
-    aggregate_scope_required: "Exact count needs explicit filters",
+    aggregate_scope_required: "Exact count needs clarification",
     aggregate_unavailable: "Exact aggregate unavailable",
     no_sources_selected: "No evidence sources selected",
     source_disabled: "Requested source is unchecked",

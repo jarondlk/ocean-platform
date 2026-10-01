@@ -24,6 +24,7 @@ test("appliedFilterRows includes only explicit scientific scope", () => {
 });
 
 test("abstentionReasonLabel presents stable direct labels", () => {
+  assert.equal(abstentionReasonLabel("aggregate_scope_required"), "Exact count needs clarification");
   assert.equal(abstentionReasonLabel("publication_pending"), "eDNA publication pending");
   assert.equal(abstentionReasonLabel(null), "None");
 });

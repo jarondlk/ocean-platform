@@ -65,6 +65,44 @@ def test_supported_count_questions(query):
     assert plan.filters["provider"] == "anemone"
 
 
+COUNT_REPRODUCTIONS = [
+    "For the selected Ablabys taenianotus and QCauto scope, how many source occurrences, assays, assignment rows and sequencing reads are supported?",
+    "How many ANEMONE source occurrences contain Ablabys taenianotus under qcauto_target, and how many reads support that assignment?",
+]
+
+
+@pytest.mark.parametrize("query", COUNT_REPRODUCTIONS)
+def test_selected_rare_taxon_count_paraphrases(client, monkeypatch, query):
+    expected = {"provider": "anemone", "taxon": "Ablabys taenianotus", "assignment_method": "qcauto_target"}
+    item = bundle()
+    item["payload"]["filters"] = expected
+    item["payload"]["summary"].update(source_occurrences=1, assays=1)
+    item["payload"]["summary"]["methods"] = [{"assignment_method": "qcauto_target", "assignment_rows": 1, "read_count_sum": 122}]
+    def build(filters, group_by):
+        assert filters == expected and not group_by
+        return item
+    monkeypatch.setattr(aggregates, "build_aggregate", build)
+    from retrieval.source_scope import FAMILIES
+    envelope = {"version": 1, "sources": {family: {"enabled": family == "edna_metabarcoding", "filters": expected if family == "edna_metabarcoding" else {}} for family in FAMILIES}}
+    result = client.post("/chat", json={"query": query, "evidence_scope": envelope}).json()
+    assert result["outcome"] == "answered"
+    assert result["model_invoked"] is False
+    assert "122" in result["answer"] and "1 matching assays" in result["answer"]
+    assert result["options"]["context"]["aggregate_scope"]["filters"] == expected
+
+
+def test_unsupported_wording_is_distinct_from_missing_or_conflicting_filters():
+    scope = {"taxon": "Ablabys taenianotus", "assignment_method": "qcauto_target"}
+    unsupported = plan_aggregation({"query": "How many ANEMONE samples contain Scomber japonicus?", **scope})
+    assert "unsupported" in unsupported.clarification.lower()
+    assert "Set the project" not in unsupported.clarification
+    conflict = plan_aggregation({"query": "How many ANEMONE QCauto+3-NN reads?", **scope})
+    assert "conflict" in conflict.clarification.lower()
+    assert conflict.filters["assignment_method"] == "qcauto_target"
+    missing = plan_aggregation({"query": "How many ANEMONE samples in the selected project?"})
+    assert "filter" in missing.clarification.lower()
+
+
 @pytest.mark.parametrize(
     "query",
     [
@@ -238,6 +276,33 @@ def test_unknown_status_detection_handles_repeated_input(query, expected):
 def test_unknown_status_answer_leads_with_exact_count():
     answer = render_answer(bundle(), "How many occurrences have UNKNOWN status?")
     assert answer.startswith("**3,155 source occurrences have unknown control status**")
+
+
+@pytest.mark.parametrize("query, expected", [
+    ("How many internal standard reads?", "**442,404,272 internal-standard reads across 13,932 rows**"),
+    ("How many concentrations are missing?", "Concentration records by assignment method: qcauto_target: 171,250 reported, 3,246 missing, 323 with the source column absent"),
+    ("How many community tables are empty?", "Community tables by assignment method: qcauto_target: 83 valid empty tables of 3,498 available tables"),
+    ("How many environmental samples?", "**0 explicitly classified environmental source occurrences**"),
+    ("How many negative controls?", "**343 explicitly classified control source occurrences**"),
+    ("How many QCauto assignment rows?", "Assignment rows by method: qcauto_target=174,819"),
+])
+def test_requested_metric_leads_the_answer(query, expected):
+    assert render_answer(bundle(), query).startswith(expected)
+
+
+@pytest.mark.parametrize("query", [
+    "Does a higher ANEMONE read count mean there are more fish?",
+    "How many reads imply higher organism abundance in ANEMONE?",
+    "Interpret the ANEMONE read counts for this taxon",
+])
+def test_scientific_interpretation_is_not_routed_as_an_exact_count(query):
+    assert plan_aggregation({"query": query, "taxon": "Ablabys taenianotus"}) is None
+
+
+def test_method_alias_cannot_override_selected_alternative():
+    plan = plan_aggregation({"query": "How many ANEMONE QCauto reads?", "assignment_method": "qcauto_95pct_3nn_target"})
+    assert "conflict" in plan.clarification.lower()
+    assert plan.filters["assignment_method"] == "qcauto_95pct_3nn_target"
 
 
 @pytest.mark.parametrize(

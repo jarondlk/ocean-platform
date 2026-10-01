@@ -18,6 +18,10 @@ The user approved promotion with authenticated UI/history and repeated
 scientific-answer QA deferred. See the
 [release and deployment record](docs/RELEASE_0.6.0_OPERATIONS.md) and
 [implementation verification](docs/RELEASE_0.6.0_IMPLEMENTATION.md).
+Subsequent [production browser QA](docs/RELEASE_0.6.0_BROWSER_QA_2026-10-01.md)
+verified the current-admin workflows and found a remaining count-routing issue.
+The fix and outstanding acceptance checks are assigned to the
+[v0.6.1 patch in progress](docs/RELEASE_0.6.1_IMPLEMENTATION.md).
 
 ## Study Sites
 
