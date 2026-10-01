@@ -30,6 +30,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 import config
+from retrieval.source_scope import EvidenceScope, EdnaFilters, enabled_sources, legacy_scope
 from api.edna_analysis_routes import router as edna_analysis_router
 from api.classification_review_routes import router as classification_review_router
 from schema.time_range import matches_time
@@ -64,6 +65,7 @@ from api.provenance_snapshot_service import get_provenance_snapshot_service
 from api.retention_routes import router as retention_router
 from api.schemas import (
     ChatRequest,
+    ChatFilterOptionsRequest,
     ChatResponse,
     ColumnProfile,
     ContextDocument,
@@ -178,7 +180,7 @@ async def _app_lifespan(_app: FastAPI):
 app = FastAPI(
     title="OCEAN Platform API",
     description="API layer for the Next.js migration of the provenance-aware marine RAG system.",
-    version="0.5.0",
+    version="0.6.0",
     lifespan=_app_lifespan,
 )
 
@@ -648,6 +650,7 @@ def _source_document(doc: Dict[str, Any]) -> SourceDocument:
         sample_kind=doc.get("sample_kind"),
         is_control=doc.get("is_control"),
         source_snapshot_id=doc.get("source_snapshot_id"),
+        lat=doc.get("lat"), lon=doc.get("lon"), metadata=doc.get("metadata") or {},
     )
 
 
@@ -3571,6 +3574,8 @@ def _ollama_options(request: ChatRequest) -> Dict[str, Any]:
     if request.num_predict is not None:
         options["num_predict"] = request.num_predict
     if config.MODEL_PROVIDER == "vertex":
+        options.pop("repeat_penalty", None)
+        options.pop("num_ctx", None)
         options["num_predict"] = min(
             options.get("num_predict", config.CHAT_MAX_OUTPUT_TOKENS),
             config.CHAT_MAX_OUTPUT_TOKENS,
@@ -5189,6 +5194,31 @@ def documents(
     return [_source_document(row) for row in rows]
 
 
+@app.get("/chat/capabilities")
+def chat_capabilities():
+    from retrieval.source_scope import FAMILIES, SourceSelections
+    schema = SourceSelections.model_json_schema()
+    return {"scope_version": 1, "sources": list(FAMILIES), "source_schema": schema,
+            "provider": config.MODEL_PROVIDER,
+            "generation_fields": ["temperature", "top_p", "sampling_top_k", "seed", "num_predict"] + ([] if config.MODEL_PROVIDER == "vertex" else ["repeat_penalty", "num_ctx"]),
+            "max_output_tokens": config.CHAT_MAX_OUTPUT_TOKENS if config.MODEL_PROVIDER == "vertex" else 8192}
+
+
+@app.post("/chat/filter-options")
+def chat_filter_options(request: ChatFilterOptionsRequest):
+    from orchestration.unified import _pg_available
+    from retrieval.filter_options import filter_options
+    from sqlalchemy.exc import SQLAlchemyError
+    request, members, methods = _resolve_analysis_request(request)
+    try:
+        return filter_options(request.evidence_scope.canonical(), pg_available=_pg_available(),
+                              family=request.family, field=request.field, search=request.search,
+                              members=members, methods=methods)
+    except (SQLAlchemyError, OSError, ValueError) as exc:
+        logger.warning('Chat filter choices are unavailable: %s', type(exc).__name__)
+        raise HTTPException(503, 'Filter choices are unavailable. Try again.') from exc
+
+
 @app.post("/retrieve", response_model=RetrieveResponse)
 def retrieve_sources(request: RetrieveRequest) -> RetrieveResponse:
     request, analysis_members, analysis_methods = _resolve_analysis_request(request)
@@ -5199,6 +5229,8 @@ def retrieve_sources(request: RetrieveRequest) -> RetrieveResponse:
             sample_ids=None if analysis_members is None else sorted(analysis_members),
             assignment_methods=None if analysis_methods is None else sorted(analysis_methods),
             source_type=request.source_type,
+            station=request.station,
+            **({"evidence_scope": request.evidence_scope.canonical()} if request.evidence_scope else {}),
             sample_id=request.sample_id,
             bay=request.bay,
             time_from=request.time_from,
@@ -5231,8 +5263,9 @@ def retrieve_sources(request: RetrieveRequest) -> RetrieveResponse:
     primary_rows = bundle.get("primary") or []
     linked_rows = bundle.get("linked") or []
     if analysis_members is not None:
-        primary_rows = [r for r in primary_rows if r.get('sample_id') in analysis_members and r.get('assignment_method') in analysis_methods]
-        linked_rows = []
+        primary_rows = [r for r in primary_rows if (request.evidence_scope and r.get('source_type') != 'edna_metabarcoding') or (r.get('sample_id') in analysis_members and r.get('assignment_method') in analysis_methods)]
+        if request.evidence_scope is None:
+            linked_rows = []
     return RetrieveResponse(
         query=request.query,
         sources=[_source_document(row) for row in primary_rows],
@@ -5242,6 +5275,19 @@ def retrieve_sources(request: RetrieveRequest) -> RetrieveResponse:
 
 
 def _resolve_analysis_request(request):
+    if request.evidence_scope:
+        scope = request.evidence_scope.canonical()
+        selection = scope["sources"]["edna_metabarcoding"]
+        if not selection["enabled"] or not selection.get("analysis_id"):
+            return request, None, None
+        from ingestion.edna_analysis_bundle import request_scope
+        from ingestion.provenance_snapshot import SnapshotError
+        try:
+            updates, members, methods = request_scope({**selection["filters"], "analysis_id": selection["analysis_id"]})
+            selection["filters"].update({k: v for k, v in updates.items() if k in EdnaFilters.model_fields})
+            return request.model_copy(update={"evidence_scope": EvidenceScope.model_validate(scope)}), members, methods
+        except (ValueError, OSError, KeyError, SnapshotError) as exc:
+            raise HTTPException(409, str(exc)) from exc
     if not request.analysis_id:
         return request, None, None
     from ingestion.edna_analysis_bundle import request_scope
@@ -5290,7 +5336,7 @@ def _aggregate_chat_response(request, plan, *, user, model, interaction_id, star
         try:
             bundle = build_aggregate(plan.filters, plan.group_by)
             documents = [evidence_document(bundle)]
-            answer = render_answer(bundle)
+            answer = render_answer(bundle, request.query)
         except AggregateUnavailable:
             reason = "aggregate_unavailable"
             answer = "Exact catalogue counts are unavailable because the published data or immutable evidence could not be verified. Please retry after publication or database access is restored. No totals were inferred from retrieved examples."
@@ -5324,12 +5370,29 @@ def _aggregate_chat_response(request, plan, *, user, model, interaction_id, star
         answer_audit=audit, options=options, outcome=outcome, abstention_reason=reason, model_invoked=False)
 
 
+def _chat_scope_abstention(request, user, model, interaction_id, started_at, options, reason, answer):
+    diagnostics = {"failure": reason, "no_sources_selected": reason == "no_sources_selected",
+                   "evidence_scope": options["evidence_scope"], "model_invoked": False}
+    record_chat_context(interaction_id=interaction_id, user=user,
+        evidence_snapshot={"sources": [], "linked_sources": [], "analysis_context": [], "reliability_context": [],
+                           "retrieval_diagnostics": diagnostics}, prompt=answer)
+    complete_chat_interaction(interaction_id=interaction_id, user=user, answer=answer,
+        answer_audit_snapshot=None, latency_ms=_chat_latency_ms(started_at), outcome="abstained", abstention_reason=reason)
+    return ChatResponse(interaction_id=interaction_id, query=request.query, answer=answer, sources=[],
+        linked_sources=[], analysis_context=[], reliability_context=[], model=model, n_sources=0,
+        n_linked_sources=0, n_context_documents=0, prompt_diagnostics={"model_invoked": False},
+        retrieval_diagnostics=diagnostics, options=options, outcome="abstained", abstention_reason=reason, model_invoked=False)
+
+
 @app.post("/chat", response_model=ChatResponse)
 def chat(
     request: ChatRequest,
     user: CurrentUser = Depends(get_current_user),
 ) -> ChatResponse:
+    requested_options = request.model_dump(mode="json", exclude_none=True)
     request, analysis_members, analysis_methods = _resolve_analysis_request(request)
+    active_analysis_id = (request.evidence_scope.sources.edna_metabarcoding.analysis_id
+        if request.evidence_scope and request.evidence_scope.sources.edna_metabarcoding.enabled else request.analysis_id)
     started_at = time.perf_counter()
     model = _allowed_model(
         request.model,
@@ -5339,11 +5402,15 @@ def chat(
     )
     ollama_options = _ollama_options(request)
     response_options = {
+        "requested": {k: v for k, v in requested_options.items() if k != "query"},
+        "evidence_scope": request.evidence_scope.canonical() if request.evidence_scope else legacy_scope(request.model_dump()),
+        "generation_ignored": ["repeat_penalty", "num_ctx"] if config.MODEL_PROVIDER == "vertex" else [],
         "generation": ollama_options,
         "retrieval": {
             "k": request.k,
             "source_type": request.source_type,
             "sample_id": request.sample_id,
+            "station": request.station,
             "bay": request.bay,
             "time_from": request.time_from,
             "time_to": request.time_to,
@@ -5365,7 +5432,7 @@ def chat(
             "max_linked_sources": request.max_linked_sources,
         },
         "context": {
-            "analysis_id": request.analysis_id,
+            "analysis_id": active_analysis_id,
             "aggregation": request.aggregation.model_dump() if request.aggregation else None,
             "inject_analysis": request.inject_analysis,
             "inject_reliability": request.inject_reliability,
@@ -5381,6 +5448,14 @@ def chat(
 
     try:
         from orchestration.edna_aggregation import plan_aggregation
+        if request.evidence_scope and not enabled_sources(request.evidence_scope.canonical()):
+            return _chat_scope_abstention(request, user, model, interaction_id, started_at, response_options, "no_sources_selected", abstention_message("no_sources_selected"))
+        scope = request.evidence_scope.canonical() if request.evidence_scope else None
+        if scope and not scope["sources"]["edna_metabarcoding"]["enabled"] and request.aggregation is not None:
+            return _chat_scope_abstention(request, user, model, interaction_id, started_at, response_options, "source_disabled", "ANEMONE eDNA is unchecked. Enable it to request an exact catalogue summary.")
+        from orchestration.edna_aggregation import freshness_question
+        if freshness_question(request.model_dump()):
+            return _chat_scope_abstention(request, user, model, interaction_id, started_at, response_options, "freshness_unavailable", "Data arrival cannot be verified from collection dates. The supplied catalogue does not establish whether ANEMONE data arrived or changed during the requested period. No absence or freshness claim was inferred.")
         aggregate_plan = plan_aggregation(request.model_dump())
         if aggregate_plan is not None:
             return _aggregate_chat_response(request, aggregate_plan, user=user, model=model,
@@ -5391,6 +5466,8 @@ def chat(
             sample_ids=None if analysis_members is None else sorted(analysis_members),
             assignment_methods=None if analysis_methods is None else sorted(analysis_methods),
             source_type=request.source_type,
+            station=request.station,
+            **({"evidence_scope": request.evidence_scope.canonical()} if request.evidence_scope else {}),
             sample_id=request.sample_id,
             bay=request.bay,
             time_from=request.time_from,
@@ -5414,9 +5491,9 @@ def chat(
         )
         rows = bundle.get("primary") or []
         if analysis_members is not None:
-            rows = [r for r in rows if r.get('sample_id') in analysis_members and r.get('assignment_method') in analysis_methods]
+            rows = [r for r in rows if (request.evidence_scope and r.get('source_type') != 'edna_metabarcoding') or (r.get('sample_id') in analysis_members and r.get('assignment_method') in analysis_methods)]
         linked_rows = bundle.get("linked") or []
-        if analysis_members is not None:
+        if analysis_members is not None and request.evidence_scope is None:
             linked_rows = []
         retrieval_diagnostics = bundle.get("diagnostics") or {}
         prompt, context = build_prompt_with_context(
@@ -5427,6 +5504,25 @@ def chat(
             inject_analysis=request.inject_analysis,
             inject_reliability=request.inject_reliability,
         )
+        edna_filters = (scope['sources']['edna_metabarcoding']['filters'] if scope and scope['sources']['edna_metabarcoding']['enabled'] else {} if scope else request.model_dump())
+        if edna_filters.get('taxon') and not (scope and scope['sources']['edna_metabarcoding'].get('analysis_id')) and not request.analysis_id:
+            from ingestion.edna_aggregate import build_aggregate, AggregateUnavailable
+            from orchestration.edna_aggregation import evidence_document, FILTERS
+            try:
+                exact = build_aggregate({k: v for k, v in edna_filters.items() if k in FILTERS and v is not None})
+                document = evidence_document(exact)
+                # Add only a retained, correctly scoped document, through the same prompt packer.
+                context.setdefault('analysis', []).append(document)
+                from orchestration.unified import _build_prompt_from_context
+                manifest = {}
+                prompt = _build_prompt_from_context(request.query, context.get('primary', rows), context,
+                    linked_results=context.get('linked', linked_rows), evidence_scope=request.model_dump(), manifest=manifest)
+                manifest['omitted'] = context.get('omitted', []) + manifest.get('omitted', [])
+                context = manifest
+                response_options['context']['taxon_evidence_scope'] = exact['payload']['filters']
+            except AggregateUnavailable:
+                return _chat_scope_abstention(request, user, model, interaction_id, started_at, response_options,
+                    "aggregate_unavailable", "The requested taxon evidence could not be verified against the published catalogue. No absence was inferred from retrieved examples.")
         rows = context.get('primary', rows)
         linked_rows = context.get('linked', linked_rows)
         cited_prompt = prepare_citations(
@@ -5473,7 +5569,7 @@ def chat(
             context.get("reliability", []),
         ):
             reason = resolve_abstention_reason(
-                analysis_id=request.analysis_id,
+                analysis_id=active_analysis_id,
                 retrieval_diagnostics=retrieval_diagnostics,
             )
             answer = abstention_message(reason)

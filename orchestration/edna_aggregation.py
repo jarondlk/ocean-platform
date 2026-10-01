@@ -43,12 +43,12 @@ EDNA_ALIASES = {
     "anemone",
 }
 COUNT = re.compile(
-    r"\b(how many|number of|counts?|totals?|summary|summarize|summarise|breakdown|proportion|percentage)\b|何件|いくつ|何サンプル",
+    r"\b(how many|number of|counts?|totals?|summary|summarize|summarise|breakdown|proportion|percentage)\b|何件|いくつ|何サンプル|何個|何種類|何回",
     re.I,
 )
-TOPIC = re.compile(r"\b(anemone|edna|mifish|metabarcoding)\b", re.I)
+TOPIC = re.compile(r"(?<![a-z])(anemone|edna|mifish|metabarcoding)(?![a-z])", re.I)
 WORDS = set(
-    """give please tell me how many what is are the a an of in on from for do we have there and or with without versus vs compare can i add them their these those this that our currently available included include published imported detected recorded reported overall entire whole all database db catalogue catalog ocean platform anemone edna mifish metabarcoding data dataset sample samples sampling physical independent unique source sources occurrence occurrences assay assays assignment assignments detection detections row rows reads read sequencing count counts total totals number summary summarize summarise breakdown proportion percentage coverage locus loci team teams project projects run runs by per each both methods method qcauto qc 3nn nn auto target nontarget non targets controls control negative positive mock community environmental classified classifications classification unknown status empty missing unavailable tables table standards standard internal concentration concentrations copies ml column columns selected current filters filtered scope cohort date range time period location coordinates taxon taxonomy results records versus between anemone's what's what's""".split()
+    """give please tell me you how many what is are the a an of in on from for do we have there and or with without versus vs compare can i add them their these those this that our currently available included include published imported detected recorded reported overall entire whole all database db catalogue catalog ocean platform anemone edna mifish metabarcoding data dataset sample samples sampling physical independent unique source sources occurrence occurrences assay assays assignment assignments detection detections row rows reads read sequencing count counts total totals number summary summarize summarise breakdown proportion percentage coverage locus loci team teams project projects run runs by per each both methods method qcauto qc 3nn nn auto target nontarget non targets controls control negative positive mock community environmental classified classifications classification unknown status empty missing unavailable tables table standards standard internal concentration concentrations copies ml column columns selected current filters filtered scope cohort date range time period location coordinates taxon taxonomy results records versus between anemone's what's what's""".split()
 )
 
 
@@ -68,10 +68,28 @@ SCOPE_MESSAGE = (
 )
 
 
+def freshness_question(request: dict) -> bool:
+    query = request.get("query", "")
+    return bool(TOPIC.search(query) and re.search(
+        r"\b(arriv(?:e|ed|al|als)|newly|latest|freshness|recently (?:added|imported|updated))\b|新着|更新|追加|到着", query, re.I))
+
+
 def plan_aggregation(request: dict) -> AggregatePlan | None:
     query = request.get("query", "")
+    envelope = request.get("evidence_scope")
+    if envelope:
+        selected = [family for family, selection in envelope["sources"].items() if selection["enabled"]]
+        if request.get("aggregation") is None and selected != ["edna_metabarcoding"] and not TOPIC.search(query):
+            return None
+        selection = envelope["sources"]["edna_metabarcoding"]
+        if not selection["enabled"]:
+            return None
+        request = {**request, **selection["filters"], "analysis_id": selection.get("analysis_id"),
+                   "source_type": "edna_metabarcoding"}
     options = request.get("aggregation")
     forced = options is not None
+    if not forced and re.search(r"\b(mean|imply|indicate|interpret|higher|more fish|abundance)\b|意味|魚が多|個体数", query, re.I):
+        return None
     source = str(request.get("source_type") or "").lower().strip()
     scoped = source in EDNA_ALIASES or any(
         request.get(k) is not None
@@ -109,6 +127,16 @@ def plan_aggregation(request: dict) -> AggregatePlan | None:
         or filters["provider"] != "anemone"
     ):
         return AggregatePlan(filters, clarification=SCOPE_MESSAGE)
+    # Resolve only a bounded set of Japanese catalogue questions. Unrecognized
+    # qualifiers still require explicit filters instead of a wider total.
+    if re.search(r"[ぁ-んァ-ン一-龯]", query):
+        replacements = {"ANEMONE": "anemone", "アッセイ": "assays", "サンプル": "samples",
+                        "読み取り": "reads", "リード": "reads", "コントロール": "controls",
+                        "件数": "count", "何件": "how many", "いくつ": "how many",
+                        "何サンプル": "how many samples", "物理的な": "physical", "未知": "unknown"}
+        for phrase in sorted(replacements, key=len, reverse=True):
+            query = query.replace(phrase, " " + replacements[phrase] + " ")
+        query = re.sub(r"には|では|の|は|が|を|に|ですか|ありますか|ある|あります|？|。", " ", query)
     query = re.sub(r"qcauto\s*\+\s*3-?nn", "qcauto 3nn", query.lower())
     query = query.replace("qcauto 95%-3nn", "qcauto 3nn")
     query = re.sub(r"\bnon[ -]+target\b", "nontarget", query)
@@ -234,11 +262,13 @@ def evidence_document(bundle):
         "covered_source_types": ["edna_metabarcoding"],
         "analysis_type": "edna_catalogue_summary",
         "aggregate_id": identity,
-        "text": json.dumps(payload["summary"], sort_keys=True, ensure_ascii=False),
+        "metadata": payload["filters"],
+        "text": json.dumps({"filters": payload["filters"], "summary": payload["summary"],
+                            "limitations": "Exact catalogue records for these filters. Reads are not organism counts; unknown controls are not environmental. Collection dates do not establish data arrival."}, sort_keys=True, ensure_ascii=False),
     }
 
 
-def render_answer(bundle):
+def render_answer(bundle, query=""):
     payload = bundle["payload"]
     summary = payload["summary"]
     cite = "[aggregate_edna_" + bundle["aggregate_id"] + "]"
@@ -252,6 +282,15 @@ def render_answer(bundle):
     scope = "; ".join(
         label(k) + "=" + label(v) for k, v in sorted(payload["filters"].items())
     )
+    lead = None
+    if re.search(r"physical|物理|independent|unique samples", query, re.I):
+        lead = "The number of distinct physical samples is unresolved: source occurrences and assays do not establish unique physical samples. " + cite
+    elif re.search(r"unknown.*(?:control|status)|unknown control|未知", query, re.I):
+        lead = f"**{summary['unknown_control_status']:,} source occurrences have unknown control status**. Unknown does not mean environmental or non-control. {cite}"
+    elif re.search(r"\breads?\b|リード|読み取り", query, re.I):
+        lead = "Sequence reads by assignment method: " + "; ".join(
+            f"{label(row['assignment_method'])}={row.get('read_count_sum', 0):,}"
+            for row in summary['methods']) + ". Methods share reads and must not be added. Reads are not organism counts. " + cite
     lines = [
         f"For the published OCEAN catalogue with filters {scope}: **{summary['source_occurrences']:,} source occurrences and {summary['assays']:,} matching assays**. The number of distinct physical samples is unresolved. {cite}",
         f"Classifications: {summary['controls']:,} controls, {summary['unknown_control_status']:,} with unknown control status, and {summary['environmental_classified']:,} explicitly classified environmental occurrences. Kinds: "
@@ -306,4 +345,4 @@ def render_answer(bundle):
         "Assignment methods describe alternative interpretations of shared reads; do not add them as independent observations. Reads are not organism counts. Missing concentrations are not zero. These are published OCEAN totals; coverage of unpublished or subsequently changed ANEMONE data is not established. "
         + cite
     )
-    return "\n\n".join(lines)
+    return "\n\n".join(([lead] if lead else []) + lines)

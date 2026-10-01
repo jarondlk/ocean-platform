@@ -4,7 +4,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 SCOPE_KEYS = (
-    'source_type', 'bay', 'sample_id', 'time_from', 'time_to', 'provider',
+    'source_type', 'bay', 'station', 'sample_id', 'time_from', 'time_to', 'provider',
     'provider_project_id', 'provider_run_id', 'assignment_method', 'taxon',
     'sample_kind', 'is_control', 'lat_min', 'lat_max', 'lon_min', 'lon_max', 'analysis_id',
 )
@@ -62,5 +62,32 @@ def context_matches_scope(document: dict, scope: dict) -> bool:
             except (ValueError, TypeError):
                 return False
         elif values.get(key) != expected:
+            return False
+    return True
+
+
+def context_matches_source_scope(document: dict, scope: dict) -> bool:
+    """Every contributing family must be enabled and wholly in its own cohort."""
+    from retrieval.source_scope import FAMILIES, enabled_sources, document_matches
+    metadata = document.get('metadata') or {}
+    values = {**metadata, **document}
+    if values.get('source_type') in FAMILIES:
+        return document_matches(values, scope)
+    covered = values.get('covered_source_types') or ([values['source_family']] if values.get('source_family') else [])
+    if not covered:
+        # Preserve unrestricted legacy context only when no family can be excluded.
+        return set(enabled_sources(scope)) == set(FAMILIES) and all(
+            not selection['filters'] and not selection.get('analysis_id')
+            for selection in scope['sources'].values())
+    for family in covered:
+        selection = scope['sources'].get(family)
+        if not selection or not selection['enabled']:
+            return False
+        component = (values.get('source_scopes') or {}).get(family)
+        if len(covered) > 1 and selection['filters'] and component is None:
+            return False
+        if not context_matches_scope(component or values, selection['filters']):
+            return False
+        if selection.get('analysis_id') and values.get('analysis_id') != selection['analysis_id']:
             return False
     return True

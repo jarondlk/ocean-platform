@@ -255,9 +255,13 @@ def context_documents(scope):
                 continue
             featured = rows[:5]
             documents.append(dict(id=f'analysis_edna_{identity}_{name}', title=f'eDNA {name}',
-                source_type='analysis', source_family='edna_metabarcoding', covered_source_types=sorted({'edna_metabarcoding'} | ({r['source_type'] for r in featured} if name == 'environment_links' else set())),
+                source_type='analysis', source_family='edna_metabarcoding', covered_source_types=sorted({'edna_metabarcoding'} | ({r['source_type'] for r in rows} if name == 'environment_links' else set())),
                 analysis_type='edna_'+name, analysis_id=identity, table=name,
                 result_ids=[r['result_id'] for r in featured], recipe=recipe,
+                metadata={**{k: v for k, v in cohort.items() if k != 'sample_ids' and v is not None},
+                          **({'sample_kind': 'environmental', 'is_control': False} if name != 'controls' else {}),
+                          **({'sample_id': cohort['sample_ids'][0]} if len(cohort.get('sample_ids') or []) == 1 else {}),
+                          **({'assignment_method': scope['assignment_method']} if scope.get('assignment_method') and name != 'method_summary' else {})},
                 text=f"Cohort: {json.dumps(cohort, sort_keys=True)}. Rank: {recipe['rank']}. Methods: {recipe['assignment_methods']}. Control policy: environmental_only. Minimum reads: {recipe['min_read_count']}. Table rows: {len(rows)}. First {len(featured)} rows (not the complete cohort): {json.dumps(featured, sort_keys=True)}. " + ' '.join(bundle['manifest']['limitations'])))
         return documents
     except (ValueError, OSError, KeyError, SnapshotError):

@@ -236,6 +236,8 @@ class LocalRetriever:
         sample_ids: Optional[list[str]] = None,
         assignment_methods: Optional[list[str]] = None,
         source_type: Optional[str] = None,
+        station: Optional[str] = None,
+        evidence_scope: Optional[dict] = None,
         sample_id: Optional[str] = None,
         bay: Optional[str] = None,
         time_from: Optional[str] = None,
@@ -282,16 +284,22 @@ class LocalRetriever:
         members = None if sample_ids is None else set(sample_ids)
         methods = None if assignment_methods is None else set(assignment_methods)
         valid_indices = []
+        from retrieval.source_scope import document_matches
         for i, doc in enumerate(self.documents):
-            if members is not None and doc.get('sample_id') not in members:
+            if evidence_scope is not None and not document_matches(doc, evidence_scope):
                 continue
-            if methods is not None and doc.get('assignment_method') not in methods:
+            membership_applies = evidence_scope is None or doc.get("source_type") == "edna_metabarcoding"
+            if membership_applies and members is not None and doc.get('sample_id') not in members:
+                continue
+            if membership_applies and methods is not None and doc.get('assignment_method') not in methods:
                 continue
             if doc.get("active", True) is False:
                 continue
             if source_type and doc.get("source_type") != source_type:
                 continue
             if sample_id and doc.get("sample_id") != sample_id:
+                continue
+            if station and doc.get("station") != station:
                 continue
             if bay and doc.get("bay") != bay:
                 continue

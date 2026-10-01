@@ -5,6 +5,7 @@ from typing import Any, Iterable, Mapping, Optional
 
 
 ABSTENTION_MESSAGES = {
+    "no_sources_selected": "No sources are selected. Select at least one source to ask a question. The model was not run.",
     "no_matching_evidence": (
         "No evidence matched the current filters. The model was not run."
     ),
@@ -35,6 +36,8 @@ def resolve_abstention_reason(
     retrieval_diagnostics: Mapping[str, Any],
 ) -> str:
     """Choose the most specific reason for a no-evidence response."""
+    if retrieval_diagnostics.get("no_sources_selected"):
+        return "no_sources_selected"
     if (
         retrieval_diagnostics.get("edna_scope_applied") is True
         and retrieval_diagnostics.get("edna_publication") == "pending"

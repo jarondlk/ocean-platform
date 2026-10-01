@@ -56,6 +56,9 @@ jobs:
             scripts \
             tests
 
+      - name: Check generated chat scope contract
+        run: python scripts/export_chat_scope.py --check
+
       - name: Run tests with coverage
         env:
           AUTH_MODE: disabled
@@ -182,6 +185,8 @@ jobs:
           tests/integration/test_anemone_catalogue_postgres.py
           tests/integration/test_edna_aggregate_postgres.py
           tests/integration/test_edna_analysis_postgres.py
+          tests/integration/test_chat_source_scope_postgres.py
+          tests/integration/test_chat_filter_options_postgres.py
           -q
 
       - name: Verify transactional corpus upsert is idempotent

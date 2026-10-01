@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
+import json
 from typing import Any, Dict, List, Optional
 
 from sqlalchemy import text
@@ -45,6 +46,9 @@ class RetrievalResult:
     sample_kind: Optional[str] = None
     is_control: Optional[bool] = None
     source_snapshot_id: Optional[str] = None
+    lat: Optional[float] = None
+    lon: Optional[float] = None
+    metadata: dict = field(default_factory=dict)
     rank_sources: Dict[str, int] = field(default_factory=dict)
 
 
@@ -55,6 +59,8 @@ def hybrid_search(
     sample_ids: Optional[list[str]] = None,
     assignment_methods: Optional[list[str]] = None,
     source_type: Optional[str] = None,
+    station: Optional[str] = None,
+    evidence_scope: Optional[dict] = None,
     sample_id: Optional[str] = None,
     bay: Optional[str] = None,
     time_from: Optional[str] = None,
@@ -116,6 +122,9 @@ def hybrid_search(
     if edna_only and source_type is None:
         source_type = "edna_metabarcoding"
 
+    if station:
+        filters.append("station = :station")
+        params["station"] = station
     if source_type:
         filters.append("source_type = :source_type")
         params["source_type"] = source_type
@@ -123,7 +132,7 @@ def hybrid_search(
         filters.append("sample_id = :sample_id")
         params["sample_id"] = sample_id
     for column, values in (("sample_id", sample_ids), ("assignment_method", assignment_methods)):
-        if values is not None:
+        if values is not None and evidence_scope is None:
             filters.append(f"{column} = ANY(:allowed_{column})")
             params[f"allowed_{column}"] = sorted(set(values))
     if bay:
@@ -174,6 +183,13 @@ def hybrid_search(
         )
         params["taxon"] = taxon
 
+    if evidence_scope is not None:
+        from retrieval.source_scope import scope_sql, enabled_sources
+        if not enabled_sources(evidence_scope):
+            return []
+        clause, scope_params = scope_sql(evidence_scope, sample_ids=sample_ids, assignment_methods=assignment_methods)
+        filters.append(clause)
+        params.update(scope_params)
     where = "WHERE " + " AND ".join(filters)
 
     vector_results: Dict[str, int] = {}
@@ -198,7 +214,7 @@ def hybrid_search(
 
             sql = text(f"""
                 SELECT doc_id, source_type, sample_id, event_id, time,
-                       bay, station, title, text, provider,
+                       bay, station, title, text, lat, lon, metadata_json, provider,
                        provider_project_id, provider_run_id, assay_id,
                        assignment_method, sample_kind, is_control,
                        source_snapshot_id
@@ -229,6 +245,8 @@ def hybrid_search(
                     "sample_kind": r.sample_kind,
                     "is_control": r.is_control,
                     "source_snapshot_id": r.source_snapshot_id,
+                    "lat": getattr(r, "lat", None), "lon": getattr(r, "lon", None),
+                    "metadata": json.loads(getattr(r, "metadata_json", "{}") or "{}"),
                 }
         except Exception as e:
             failed_branches.append("vector")
@@ -246,7 +264,7 @@ def hybrid_search(
 
             sql = text(f"""
                 SELECT doc_id, source_type, sample_id, event_id, time,
-                       bay, station, title, text, provider,
+                       bay, station, title, text, lat, lon, metadata_json, provider,
                        provider_project_id, provider_run_id, assay_id,
                        assignment_method, sample_kind, is_control,
                        source_snapshot_id,
@@ -279,6 +297,8 @@ def hybrid_search(
                         "sample_kind": r.sample_kind,
                         "is_control": r.is_control,
                         "source_snapshot_id": r.source_snapshot_id,
+                    "lat": getattr(r, "lat", None), "lon": getattr(r, "lon", None),
+                    "metadata": json.loads(getattr(r, "metadata_json", "{}") or "{}"),
                     }
         except Exception as e:
             failed_branches.append("fts")
@@ -327,6 +347,7 @@ def hybrid_search(
             sample_kind=info["sample_kind"],
             is_control=info["is_control"],
             source_snapshot_id=info["source_snapshot_id"],
+            lat=info["lat"], lon=info["lon"], metadata=info["metadata"],
             rank_sources={
                 name: rank
                 for name, rank in (("vector", v_rank), ("fts", f_rank))
