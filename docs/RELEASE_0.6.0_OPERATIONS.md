@@ -5,7 +5,8 @@ documentation, publishing a new GitHub release and deploying through GCP.
 
 **Status: GitHub v0.6.0 released; migrated zero-traffic GCP candidate ready.**
 Production still routes 100% to v0.5.0 at `ocean-platform-v050-prod0930`.
-Read-only live runtime acceptance passed; authenticated browser acceptance is
+Read-only live runtime acceptance passed for the initial image. A dependency-only
+security amendment is being validated/rebuilt; authenticated browser acceptance is
 blocked by unavailable browser controls. No production cutover is claimed.
 
 ## Scope and source
@@ -123,6 +124,32 @@ This job called runtime functions directly and made no chat-generation calls.
 It does not establish authenticated browser behavior, persisted new-reason
 history or repeated real-provider scientific claim support. Those remain
 explicit cutover gates; issue #70 remains open.
+
+## Provider smoke and dependency security amendment
+
+Existing evaluation job execution `ocean-evaluation-rz4hd` ran only `ctd_01`
+in `Full` mode with the initial v0.6.0 API image. Vertex embedding/generation
+requests returned 200. The answer had eight valid citations, measured generation
+latency 4.4 seconds and whole-run duration 7.4 seconds. Normal evaluation artifacts
+were retained; this single question does not close issue #70 or semantic review.
+
+GitHub's push notice prompted a fresh dependency review. All 16 active runtime
+alerts concerned the pinned PyJWT 2.13.0 and urllib3 2.7.0 versions. The
+[PyJWT advisory](https://github.com/jpadilla/pyjwt/security/advisories/GHSA-ffc3-869f-jxw9)
+requires mixed asymmetric/HMAC verification and a public PEM key; OCEAN uses
+only `HS256` with a dedicated internal secret, so those prerequisites are absent.
+The [urllib3 streaming advisory](https://github.com/urllib3/urllib3/security/advisories/GHSA-vxq7-64xx-v4gw)
+and the remaining library advisories are addressed by updating the dependencies.
+
+The runtime amendment pins PyJWT **2.15.1** and urllib3 **2.8.0**, regenerating
+all four hash locks. A version comparison verified that no unrelated package
+changed. The hash-locked development install and dependency consistency check
+passed. Full backend regression remained 914 passed / 35 PostgreSQL-gated skips,
+79.25% coverage. `pip-audit` reported no known vulnerabilities in the complete
+amended runtime lock. The existing `v0.6.0` tag is retained; the separately
+recorded tested amendment commit and immutable rebuild are required before
+candidate promotion. PR [#80](https://github.com/jarondlk/ocean-platform/pull/80)
+contains the dependency amendment and current operational documentation.
 
 ## Deployment order
 
