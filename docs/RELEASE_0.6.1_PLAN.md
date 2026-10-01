@@ -3,14 +3,14 @@
 Prepared 2026-10-02 JST against `gcp-dev` / `main` commit
 `e6244b7b4dbd0247c00c699078fee394549f51e8`.
 
-**Status: implementation in progress; release pending.**
+**Status: source fixes merged; replacement candidate acceptance and release pending.**
 
 On 2026-10-02 the user authorized implementation and explicitly deferred
 Japanese-specific work and acceptance checks. Existing Japanese support and
 regressions remain in place; English acceptance gates below still apply. The user asked
 for the remaining v0.6.0 work to be planned under **v0.6.1**. This document is
-the patch work queue. Application/package versions and published Git tags stay
-at their existing values until the patch candidate is prepared and validated.
+the patch work queue. Application/package metadata is now `0.6.1` on the built
+candidate; the published Git tag remains pending acceptance.
 
 ## Starting point and retained evidence
 
@@ -243,8 +243,8 @@ does not itself claim implementation, a Git release tag or a production update.
 ## Patch completion checklist
 
 - [x] V061-01: both count reproductions fixed with scoped regression coverage.
-- [ ] V061-02: settings/account/storage lifecycle verified; defects resolved.
+- [x] V061-02: settings/account/storage lifecycle verified with mounted-component and isolated authenticated role fixtures; defects resolved.
 - [ ] V061-03: role/UI and new-history readback checks completed.
 - [ ] V061-04: bounded scientific matrix reviewed with every failure disposed.
-- [ ] V061-05: 0.6.1 exact candidate and required CI/security checks passed.
+- [x] V061-05: 0.6.1 exact candidate, source CI/security/build gates and deterministic checks passed; scientific/live acceptance remains tracked by V061-03/04.
 - [ ] V061-06: GitHub tag/release, verified GCP rollout and records completed.
