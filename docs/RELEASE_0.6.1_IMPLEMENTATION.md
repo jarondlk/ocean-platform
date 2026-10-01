@@ -16,7 +16,10 @@ Existing Japanese support and automated regressions remain unchanged.
   concentration, community-table or assignment metric. Multiple requested
   occurrence/assay/assignment/read metrics appear together. Alternative methods
   remain separate; physical identity, abundance, calibration and missing-value
-  caveats remain explicit. Historical aggregate payloads/IDs are unchanged.
+  caveats remain explicit. Historical aggregate payloads/IDs are unchanged. Containment wording without
+  an explicit taxon filter remains blocked, and rejected method combinations
+  cannot partially mutate inferred filters. Empty cohorts state zero recorded
+  reads rather than leaving the requested metric blank.
 - Settings hydration is tied to the account that was actually loaded. Before
   hydration, a different account cannot see, submit or persist the earlier
   account's scope. Reads initialize fresh state/notices; malformed saved scope
@@ -37,9 +40,10 @@ Existing Japanese support and automated regressions remain unchanged.
 | --- | --- |
 | Original count regressions before fix | Both API reproductions failed as expected; clarification distinction also failed |
 | Focused routing/source tests | 96 passed; later source-envelope regression refinement: 58 routing tests passed |
-| Full backend/coverage | 932 passed, 36 integration skips, 78.23% coverage; exact-source remote CI pending |
+| Full backend/coverage | 935 passed, 36 integration skips, 78.24% coverage; exact-source remote CI pending |
 | QA matrix and actual-attempt budget | 2 passed |
 | Python lint / generated scope | Passed |
+| Runtime dependency audit | 64 locked packages, zero known vulnerabilities; pip consistency passed |
 | Frontend | 52 tests passed, typecheck/build passed; serving dependency audit: zero known vulnerabilities |
 | PostgreSQL 16 / pgvector | Fresh migration to retained head `20261001_0014`; 36 integration tests passed |
 | History | Real API/record lifecycle independently read with fresh ORM sessions: answer, freshness, clarification, no-source, no-evidence; exact scope, effective Vertex settings, evidence hash and citation audit retained |
@@ -67,6 +71,9 @@ inspection confirmed the viewport remained 1280 pixels wide. Mobile acceptance
 is pending, not passed. Live viewer/researcher sign-ins were requested and are
 pending. Live candidate admin/history and repeated scientific claim review are
 also pending. Earlier v0.6.0 QA does not silently waive these gates.
+
+The owned feedback section exposes its interaction ID as a DOM data attribute
+for bounded independent readback; QA need not scan unrelated history.
 
 Private raw captures/operator outputs remain under `/tmp/ocean-v061-release`.
 No private accounts or credentials are committed.

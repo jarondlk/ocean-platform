@@ -201,18 +201,18 @@ def plan_aggregation(request: dict) -> AggregatePlan | None:
         method = "qcauto_95pct_3nn" if three_nn else "qcauto"
         status = enums.get("target_status", filters.get("target_status", "target"))
         enums["assignment_method"] = method + "_" + status
-    for key, value in enums.items():
-        if key in filters and filters[key] != value:
-            return AggregatePlan(filters, clarification=CONFLICT_MESSAGE)
-        filters[key] = value
+    if any(key in filters and filters[key] != value for key, value in enums.items()):
+        return AggregatePlan(filters, clarification=CONFLICT_MESSAGE)
+    resolved_filters = {**filters, **enums}
     if (
-        filters.get("sample_kind") == "environmental"
-        and filters.get("is_control") is True
-        or filters.get("assignment_method")
-        and filters.get("target_status")
-        and not filters["assignment_method"].endswith("_" + filters["target_status"])
+        resolved_filters.get("sample_kind") == "environmental"
+        and resolved_filters.get("is_control") is True
+        or resolved_filters.get("assignment_method")
+        and resolved_filters.get("target_status")
+        and not resolved_filters["assignment_method"].endswith("_" + resolved_filters["target_status"])
     ):
         return AggregatePlan(filters, clarification=CONFLICT_MESSAGE)
+    filters = resolved_filters
     inferred = []
     grouping = re.search(r"\b(?:by|per|in each|for each)\s+(.+)", query)
     if grouping:
@@ -221,7 +221,7 @@ def plan_aggregation(request: dict) -> AggregatePlan | None:
             word not in {*GROUPS, "and", "then", "per", "method", "methods"}
             for word in tail
         ):
-            return AggregatePlan(filters, clarification=SCOPE_MESSAGE)
+            return AggregatePlan(filters, clarification=UNSUPPORTED_MESSAGE)
         inferred = list(dict.fromkeys(GROUPS[word] for word in tail if word in GROUPS))
         query = query[: grouping.start()]
     group_by = options.get("group_by") or inferred
@@ -235,6 +235,11 @@ def plan_aggregation(request: dict) -> AggregatePlan | None:
     # Remaining punctuation is harmless; remaining numbers or unknown words
     # are not silently treated as filler (e.g. 2020, Japan, >10, species).
     words = re.findall(r"[\w]+(?:'[\w]+)?", query)
+    # "Occurrences containing <selected taxon>" has an exact canonical
+    # predicate. "Samples containing reads" could instead exclude empty
+    # tables; never infer that different cohort from a filler verb.
+    if any(word in words for word in ("contain", "contains", "containing")) and "taxon" not in filters:
+        return AggregatePlan(filters, tuple(group_by), UNSUPPORTED_MESSAGE)
     if not words or any(word not in WORDS for word in words):
         return AggregatePlan(filters, tuple(group_by), UNSUPPORTED_MESSAGE)
     if any(word in words for word in ("selected", "filtered")) and set(filters) == {"provider"}:
@@ -313,29 +318,29 @@ def render_answer(bundle, query=""):
         standards = summary['internal_standards']
         lead = f"**{standards['reads']:,} internal-standard reads across {standards['rows']:,} rows** in the matching assays. Standards are separate from biological assignments and do not establish calibration validity. {cite}"
     elif re.search(r"\bconcentrations?\b|copies", query, re.I):
-        lead = "Concentration records by assignment method: " + "; ".join(
+        lead = "Concentration records by assignment method: " + ("; ".join(
             f"{label(row['assignment_method'])}: {row.get('concentration_records', 0):,} reported, {row.get('concentration_missing', 0):,} missing, {row.get('concentration_column_absent', 0):,} with the source column absent"
-            for row in summary['methods']) + ". Missing or absent does not mean zero. " + cite
+            for row in summary['methods']) or "no matching assignment records for this scope") + ". Missing or absent does not mean zero. " + cite
     elif re.search(r"\btables?\b", query, re.I):
-        lead = "Community tables by assignment method: " + "; ".join(
+        lead = "Community tables by assignment method: " + ("; ".join(
             f"{label(row['assignment_method'])}: {row['empty_tables']:,} valid empty tables of {row['available_tables']:,} available tables"
-            for row in summary['community_availability']) + ". Valid empty tables are distinct from unavailable tables. " + cite
+            for row in summary['community_availability']) or "no documented available tables for this scope") + ". Valid empty tables are distinct from unavailable tables. " + cite
     elif re.search(r"\benvironmental\b", query, re.I):
         lead = f"**{summary['environmental_classified']:,} explicitly classified environmental source occurrences**. This is recorded classification, not biological absence. {cite}"
     elif re.search(r"\bcontrols?\b", query, re.I):
         lead = f"**{summary['controls']:,} explicitly classified control source occurrences**. Controls do not establish contamination-free samples. {cite}"
     elif re.search(r"\bassignments?|assays?|occurrences?\b", query, re.I) and re.search(r"\breads?\b", query, re.I):
-        lead = f"**{summary['source_occurrences']:,} source occurrences and {summary['assays']:,} matching assays**; " + "; ".join(
+        lead = f"**{summary['source_occurrences']:,} source occurrences and {summary['assays']:,} matching assays**; " + ("; ".join(
             f"{label(row['assignment_method'])}: {row.get('assignment_rows', 0):,} assignment rows and {row.get('read_count_sum', 0):,} sequencing reads"
-            for row in summary['methods']) + ". Physical sample identity remains unresolved; reads are not organism counts. " + cite
+            for row in summary['methods']) or "0 matching assignment rows and sequencing reads recorded") + ". Physical sample identity remains unresolved; reads are not organism counts. " + cite
     elif re.search(r"\bassignments?\b", query, re.I):
-        lead = "Assignment rows by method: " + "; ".join(
+        lead = "Assignment rows by method: " + ("; ".join(
             f"{label(row['assignment_method'])}={row.get('assignment_rows', 0):,}"
-            for row in summary['methods']) + ". Alternative methods share sequence evidence. " + cite
+            for row in summary['methods']) or "0 matching assignment rows") + ". Alternative methods share sequence evidence. " + cite
     elif re.search(r"\breads?\b|リード|読み取り", query, re.I):
-        lead = "Sequence reads by assignment method: " + "; ".join(
+        lead = "Sequence reads by assignment method: " + ("; ".join(
             f"{label(row['assignment_method'])}={row.get('read_count_sum', 0):,}"
-            for row in summary['methods']) + ". Methods share reads and must not be added. Reads are not organism counts. " + cite
+            for row in summary['methods']) or "0 sequencing reads recorded in matching assignments") + ". Methods share reads and must not be added. Reads are not organism counts. " + cite
     lines = [
         f"For the published OCEAN catalogue with filters {scope}: **{summary['source_occurrences']:,} source occurrences and {summary['assays']:,} matching assays**. The number of distinct physical samples is unresolved. {cite}",
         f"Classifications: {summary['controls']:,} controls, {summary['unknown_control_status']:,} with unknown control status, and {summary['environmental_classified']:,} explicitly classified environmental occurrences. Kinds: "
