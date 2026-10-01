@@ -1,21 +1,20 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-09-11 JST
+> **Last updated**: 2026-10-01 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform release `v0.4.4` is live on Cloud Run
-> service `ocean-platform`; revision `ocean-platform-v044-d3aa6a9` receives
-> 100% traffic. PR #62 merged as `d3aa6a975e7405eaa291d53b50c33985e07f28ff`;
-> immutable build `bbff6249-7f41-4375-8ee8-97b5ce6c06a2` passed. Backup/restore,
-> schema verification, candidate smoke checks, and the controlled taxonomy
-> rebuild completed. The 70 pilot detections retain their source fields and
-> unknown sample classification; no classification review was applied. See the
-> [v0.4.4 operations record](docs/RELEASE_0.4.4_OPERATIONS.md). The canonical
-> application URL is `https://oceaninfobio.com`.
-> Researcher-specific authenticated scientific acceptance, suspension and
-> uninvited-account identities, Billing-console owner confirmation, and the
-> longer observation window remain follow-ups. The
-> [documentation status register](docs/DOCUMENTATION_STATUS.md) identifies older
-> completed plans that remain only as historical records.
+> **Current status**: OCEAN Platform `v0.5.0` is live at
+> [oceaninfobio.com](https://oceaninfobio.com/). Cloud Run revision
+> `ocean-platform-v050-prod0930` receives 100% traffic from the validated
+> runtime source `4016d78`. Production has 3,498 ANEMONE source
+> occurrences/assays, 349,638 assignment rows, 13,932 standard rows, 6,996
+> eDNA documents and 323 other documents. All 7,319 documents have matching
+> embeddings; schema head is `20260925_0013` and provenance publication is
+> `v050-production-provenance`. A fresh backup restored in isolation, existing
+> history and pilot identities were preserved, and authenticated citation,
+> download and provenance checks passed. See the
+> [v0.5.0 operations record](docs/RELEASE_0.5.0_OPERATIONS.md). Scoped chat
+> answer defects remain in [issue #70](https://github.com/jarondlk/ocean-platform/issues/70).
+> The older rollout accounts below are dated history.
 
 ---
 
@@ -23,7 +22,7 @@
 
 This repository contains a provenance-aware Retrieval-Augmented Generation
 system for marine environmental monitoring. It combines CTD water profiles,
-shotgun metagenome summaries, satellite SST observations, and bounded ANEMONE
+shotgun metagenome summaries, satellite SST observations, and ANEMONE
 MiFish eDNA evidence into a citation-grounded question-answering system with
 cross-source evidence expansion and deterministic answer citation auditing.
 
@@ -36,7 +35,8 @@ application shape:
 - **LLM runtime**: Ollama, usually host-run locally; optional compose overlay
 - **Ingestion**: manual batch-run pipeline scripts, not automatic ingestion
 - **ANEMONE/eDNA**: bounded external-source acquisition, immutable canonical
-  records, method-separated retrieval, descriptive analyses, and exact citations
+  records, catalogue-scale method-separated retrieval, descriptive analyses,
+  exact aggregate citations and provenance
 - **Provenance**: strict raw-source contracts, SHA-256 manifests, row hashes,
   lineage inspection, and transactional upsert planning
 - **Identity**: invite-only OpenID Connect through Auth.js; viewer, researcher,
@@ -55,6 +55,21 @@ used only as historical reference and parity material.
 ---
 
 ## 2. What Changed Recently
+
+### v0.5.0 released and deployed (2026-09-30)
+
+The accessible ANEMONE catalogue observation from 2026-09-17 was imported with
+3,498 source occurrences/assays and 349,638 assignment rows. All 6,996 eDNA
+documents have matching embeddings, making 7,319 total documents. Backup,
+isolated restore, existing-data preservation, citation download/hash and
+provenance navigation passed. The release tag is unchanged; production uses
+the validated importer amendment. Physical sample identity remains unresolved,
+and scoped chat answer defects remain in
+[issue #70](https://github.com/jarondlk/ocean-platform/issues/70). See the
+[v0.5.0 operations record](docs/RELEASE_0.5.0_OPERATIONS.md) for exact evidence.
+
+The following v0.4.x sections preserve what was true at their respective
+release dates. They do not describe current production traffic or corpus size.
 
 ### v0.4.4 released and deployed (2026-09-11)
 
@@ -1241,7 +1256,7 @@ git diff --check
 | Pipeline UI | Manual batch job controls, preflight checks, active/background job status, artifact freshness, per-stage logs, run history, manifests, and artifact diffs exist |
 | Database UI | Schema, table browsing, and read-only query surface exist |
 | Data exploration | Combined Explore corpus workbench plus combined Data domain workbench exist for expert browsing |
-| ANEMONE eDNA | One bounded unknown-classification pilot, separate assignment methods, exact source citations, descriptive analysis, registered publication, provenance, strict lineage, shared eligibility, and direct exclusion reasons are deployed through v0.4.4, including shared taxonomy resolution |
+| ANEMONE eDNA | The accessible 2026-09-17 catalogue is deployed in v0.5.0: 3,498 source occurrences/assays, 349,638 assignment rows, 6,996 eDNA documents, separate methods, exact aggregate citations and provenance. Control status and physical sample identity remain qualified. |
 | System/debug | Status and debug surfaces exist |
 | Invite-only identity | OIDC, invitations, viewer/researcher/admin roles, suspension, audit events, and a production-forbidden development mock-login harness exist |
 | User feedback | Persisted chat interactions, feedback revisions, admin review/filter/export exist |
@@ -1269,27 +1284,28 @@ git diff --check
 | Managed OIDC deployment | Google OIDC is live and verified for the administrator and approved researcher; broader identity-provider recovery/MFA policy remains external to the application |
 | Evaluation execution | Serving instances deliberately reject in-process jobs; the UI start controls are not yet connected to the external Cloud Run evaluation job |
 | Security operations require repository settings | CodeQL and dependency automation exist; branch/environment protections, retention enforcement, cost review, and alerting still require operator review |
-| Historical milestone plans | `docs/PRE_MILESTONE_VALIDATION_PLAN.md`, `docs/PHASE7_RELEASE_RUNBOOK.md`, `deploy/gcp/MIGRATION_PLAN.md`, and `docs/RELEASE_0.4.3_PLAN.md` retain dated gates; current cloud evidence is in `docs/DEPLOYMENT.md` and `docs/RELEASE_0.4.3_OPERATIONS.md` |
-| ANEMONE classification | The pilot remains unknown. Authenticated review/decision/audit persistence, read-only effect preview, and manual controlled end-to-end republication are deployed; a real decision and researcher acceptance remain |
+| Historical milestone plans | `docs/PRE_MILESTONE_VALIDATION_PLAN.md`, `docs/PHASE7_RELEASE_RUNBOOK.md`, `deploy/gcp/MIGRATION_PLAN.md`, `docs/RELEASE_0.4.3_PLAN.md`, and `docs/RELEASE_0.5.0_PLAN.md` retain dated gates; current cloud evidence is in `docs/DEPLOYMENT.md` and `docs/RELEASE_0.5.0_OPERATIONS.md` |
+| ANEMONE classification | The accessible observation has 343 explicit negative controls and 3,155 occurrences with unknown control status. Review/decision/audit and controlled republication exist; a real environmental-classification decision and researcher acceptance remain. |
+| Chat answer quality | Exact aggregate counts and citation integrity passed, but rare-taxon false denial, unsupported freshness claims and some routing/wording issues remain in issue #70. |
 | Empty evidence cohorts | Deterministic pre-generation abstention and visible recipe filters are deployed; authenticated production scientific acceptance remains |
 
 ---
 
 ## 13. Recommended Next Work Order
 
-Current status (2026-09-11): v0.4.4 is reviewed, built, schema-verified, deployed, and
-serving 100% traffic. The next work is acceptance and operating hardening, not
-additional v0.4.3 feature scope:
+Current status (2026-10-01): v0.5.0 is deployed. The next work is scoped chat
+answer-quality repair, scientific acceptance and operating hardening:
 
 1. Complete the remaining custom-domain researcher-role, suspension, and
    uninvited-account checks. Administrator logout/re-login, admin-route access,
    invitation-register access, and anonymous fail-closed behavior pass.
 2. Confirm current spend and budget alert thresholds in the Billing console,
    then record the 24-hour and seven-day observation results.
-3. Review chat output-budget/partial-answer handling. The first broader v0.4.3
-   log sweep found one controlled `llm_request_failed` 502 when Vertex returned
-   `MAX_TOKENS`; the model canary otherwise passed.
-4. Continue scheduled-update, evaluation-job bridge, restore-drill, retention,
+3. Fix and retest issue #70 against rare-taxon lookup, freshness support,
+   answer focus and method-aware scientific interpretation.
+4. Plan the next manually approved ANEMONE refresh; no weekly/monthly schedule
+   or provider API is currently enabled.
+5. Continue evaluation-job bridge, restore-drill, retention,
    cost-review, and legacy-resource retirement work under their existing
    approval boundaries.
 

@@ -11,28 +11,31 @@ to the canonical domain.
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
-Current release record as of 2026-09-16:
+Current release record as of 2026-09-30:
 
-- GitHub release `v0.4.5`, merged commit
-  `cc3b3af3e2b4900e7ff8ed7ff26a42e91250faa5`, Cloud Build
-  `50943356-0c01-4520-9da1-1de7cd92bd14`, revision
-  `ocean-platform-v045-cc3b3af`, serving 100% of production traffic.
-- Two eDNA summaries updated to version 3, two embeddings refreshed, and
-  `v045-provenance` published. All 325 documents are embedded. Canonical
-  eDNA records and unknown sample classification are unchanged.
-- Fresh database backup and isolated 27-table restore verified. Schema remains
-  `20260905_0011`; no migration was needed.
-- All five jobs use the release API digest. Service/job settings are preserved,
-  including minimum zero/maximum one instance and concurrency 20.
-- Twelve refreshed-index QA cases met expected outcomes; authenticated live
-  chat and citation-to-provenance navigation passed. See the
-  [v0.4.5 operations record](RELEASE_0.4.5_OPERATIONS.md) for evidence and limits.
-- Previous revision `ocean-platform-v044-d3aa6a9` and older rollback resources
-  remain retained. Review corpus/publication compatibility before rollback;
-  do not downgrade the schema or overwrite later user/chat records.
+- GitHub release `v0.5.0` is deployed; the validated runtime source is
+  `4016d78a5b8eaabdf113b6ee6902fb68ffbd86df` and revision
+  `ocean-platform-v050-prod0930` serves 100% of production traffic. The
+  release tag remains unchanged; the importer amendment is recorded in the
+  [v0.5.0 operations record](RELEASE_0.5.0_OPERATIONS.md).
+- Production has 3,498 ANEMONE source occurrences/assays, 349,638 assignment
+  rows, 13,932 standard rows, 6,996 eDNA documents and 323 other documents.
+  All 7,319 documents have matching embeddings. Schema head is
+  `20260925_0013`; provenance publication is `v050-production-provenance`.
+- A fresh database backup restored in isolation across all 27 tables. Existing
+  chat history, pilot identities and non-ANEMONE content were preserved. All
+  five manual jobs use the validated API image; service limits remain minimum
+  zero/maximum one instance and concurrency 20.
+- Live readiness, authentication, counts, aggregate citation/download/hash and
+  provenance navigation passed. Scoped chat-answer defects remain in
+  [issue #70](https://github.com/jarondlk/ocean-platform/issues/70).
+- After the v0.5.0 schema and catalogue publication, older application
+  revisions must not simply receive traffic. Recovery requires a compatible
+  reader or forward repair; never downgrade populated migrations or overwrite
+  later user/chat records with a pre-cutover backup.
 
-The v0.4.5 release source is synchronized to remote `main`; subsequent
-operations-record commits do not change the immutable deployed images.
+The validated runtime was built from an exact source archive. Later
+documentation commits do not change the immutable deployed images.
 The frontend retains `AUTH_URL=https://oceaninfobio.com` and the API retains
 `CORS_ORIGINS=https://oceaninfobio.com`. The fallback OAuth callback remains
 available for reviewed rollback.
@@ -54,7 +57,7 @@ The completed initial migration sequence and historical cost-control rationale
 are retained in
 [`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Do not use it
 as the current release order. Use the completed
-[`v0.4.5` operations record](RELEASE_0.4.5_OPERATIONS.md) for the current
+[`v0.5.0` operations record](RELEASE_0.5.0_OPERATIONS.md) for the current
 deployment and verify the project budget and Cloud Run spend cap before paid
 execution.
 

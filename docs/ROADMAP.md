@@ -31,16 +31,21 @@ workflow that can later become automated.
   available to administrators through a filtered review/export surface.
 - Production-like environments fail closed on unsafe authentication, secret,
   CORS, or local-persistence configuration.
-- The bounded GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
+- The GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.4.3`. The active data plane now uses the
+  and OCEAN Platform release `v0.5.0`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
-- The bounded ANEMONE MiFish pilot is stored as a distinct
-  `edna_metabarcoding` source family. One unknown sample, two method-separated
-  retrieval documents, exact source citations, descriptive comparisons, and
-  registered analysis/provenance artifacts are live. Unknown samples remain
-  excluded from environmental-only analyses and links.
+- The accessible 2026-09-17 ANEMONE MiFish catalogue is stored as the
+  `edna_metabarcoding` source family: 3,498 source occurrences/assays,
+  349,638 assignment rows, 13,932 standard rows and 6,996 method-separated
+  retrieval documents. There are 343 explicit negative controls and 3,155
+  occurrences with unknown control status. Unknown/control records remain
+  excluded from environmental-only analysis. Physical sample identity is
+  unresolved; exact aggregate citations and provenance are live.
+- Production has 7,319 documents and matching embeddings, with schema head
+  `20260925_0013`. Scoped chat answer-quality defects are tracked in
+  [issue #70](https://github.com/jarondlk/ocean-platform/issues/70).
 - Operational administration is consolidated under `/admin` with Users,
   Feedback, Pipeline, Database, System, and Debug sections.
 - The README screenshot set was refreshed from the authenticated OCEAN

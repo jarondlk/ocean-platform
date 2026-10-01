@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-09-11.
+Last reviewed: 2026-10-01.
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -11,7 +11,7 @@ approved.
 
 ## Current operating authority
 
-- [`RELEASE_0.4.4_OPERATIONS.md`](RELEASE_0.4.4_OPERATIONS.md) — current release,
+- [`RELEASE_0.5.0_OPERATIONS.md`](RELEASE_0.5.0_OPERATIONS.md) — current release,
   deployment, and remaining-acceptance record.
 - [`ROADMAP.md`](ROADMAP.md) — longer-term engineering priorities.
 - [`handoff.md`](../handoff.md) — current repository and production handoff.
@@ -25,6 +25,8 @@ but do not use them to decide the next implementation or deployment:
 | Document | Superseded by / present status |
 | --- | --- |
 | [`RELEASE_0.4.3_PLAN.md`](RELEASE_0.4.3_PLAN.md) | PR1–PR4 and the combined release gate completed in `v0.4.3`; use the operations record for current state. |
+| [`RELEASE_0.5.0_PLAN.md`](RELEASE_0.5.0_PLAN.md) | Catalogue import and production rollout completed on 2026-09-30; use the v0.5.0 operations record for current state. |
+| [`ANEMONE_V0.5.0_PLAN.md`](ANEMONE_V0.5.0_PLAN.md) | The accessible 2026-09-17 catalogue was imported; future provider refresh and API negotiation remain separate work. |
 | [`ANEMONE_INTEGRATION_PLAN.md`](ANEMONE_INTEGRATION_PLAN.md) | PR1–PR5 shipped in `v0.4.0`; classification follow-up shipped in `v0.4.1`/`v0.4.2`. |
 | [`ANEMONE_PR2_PLAN.md`](ANEMONE_PR2_PLAN.md) | Canonical schema and ingestion shipped in `v0.4.0`. |
 | [`ANEMONE_PR3_PLAN.md`](ANEMONE_PR3_PLAN.md) | Retrieval and evidence navigation shipped in `v0.4.0`. |
