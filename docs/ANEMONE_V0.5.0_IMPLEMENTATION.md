@@ -1,5 +1,11 @@
 # ANEMONE v0.5.0 implementation and local QA
 
+**Dated local implementation record.** The catalogue was subsequently deployed
+on 2026-09-30. The release-gate list below describes the state at local QA,
+not current production. See the [v0.5.0 operations record](RELEASE_0.5.0_OPERATIONS.md)
+for rollout results and [issue #70](https://github.com/jarondlk/ocean-platform/issues/70)
+for accepted answer-quality follow-up. Recurring ingestion is still disabled.
+
 Implemented 2026-09-24; final checks completed 2026-09-25 JST. Branch: `gcp-dev`. This is a locally validated implementation
 against the complete **2026-09-17 accessible catalogue**, not a production release
 or a newer provider observation. Production services, scheduling and GCP IAM were
