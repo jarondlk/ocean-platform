@@ -2,8 +2,9 @@
 
 Updated 2026-10-01 JST. Implemented locally on `gcp-dev`, from baseline
 `fecfa7d`. API and frontend package metadata now identify the candidate as
-`0.6.0`. Production remains the recorded v0.5.0 deployment; this document does
-not confirm a source release, remote CI run, merge or deployment.
+`0.6.0`. The [operations record](RELEASE_0.6.0_OPERATIONS.md) now confirms source
+publication, passing remote checks and production deployment of the security
+amendment. This document retains implementation evidence and its QA limits.
 
 The user authorized implementation of the [adopted plan](RELEASE_0.6.0_PLAN.md),
 including the bounded issue #70 fixes and browser persistence per account.
@@ -169,9 +170,10 @@ Source release and deployment gates:
 
 The user authorized GitHub release publication and manual GCP deployment on
 2026-10-01. Execution and evidence are tracked in the
-[v0.6.0 operations record](RELEASE_0.6.0_OPERATIONS.md); the gates below still
-apply. Alembic now escapes ConfigParser percent interpolation, so standard
-migration invocation preserves encoded Cloud SQL socket/password URLs.
+[v0.6.0 operations record](RELEASE_0.6.0_OPERATIONS.md). The original gates
+below are retained; the user later explicitly approved production promotion
+with authenticated UI/history and repeated scientific-answer QA deferred. Alembic now escapes ConfigParser percent interpolation, so
+standard migration invocation preserves encoded Cloud SQL socket/password URLs.
 
 1. Run remote CI/security checks against the committed candidate.
 2. Renew GCP authentication and inspect current revisions, secrets, schema,
@@ -188,4 +190,5 @@ These are release gates, not evidence that the local implementation or test
 suite failed. The GCP authentication limit in the original readiness audit has since been
 resolved. Source publication, remote checks, backup, migration and read-only
 runtime acceptance are now recorded in the operations record. Authenticated
-browser and repeated real-provider claim acceptance remain pending.
+browser/history and repeated real-provider claim acceptance are deferred by
+explicit user approval. Production promotion does not claim those checks passed.

@@ -13,11 +13,11 @@ and can be audited against the evidence that was actually supplied.
 
 The published [v0.6.0 release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.6.0)
 adds chat source checkboxes, independent filters and available-data selections.
-Its security-amended GCP candidate is verified at zero traffic; authenticated
-UI and repeated scientific-answer acceptance remain pending. See the
+The security-amended v0.6.0 revision now serves 100% of production traffic.
+The user approved promotion with authenticated UI/history and repeated
+scientific-answer QA deferred. See the
 [release and deployment record](docs/RELEASE_0.6.0_OPERATIONS.md) and
 [implementation verification](docs/RELEASE_0.6.0_IMPLEMENTATION.md).
-Production remains the v0.5.0 release described below.
 
 ## Study Sites
 
@@ -52,15 +52,15 @@ service.
 
 Current managed milestone:
 
-- GitHub release [`v0.5.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.5.0)
+- GitHub release [`v0.6.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.6.0)
   is deployed at [`oceaninfobio.com`](https://oceaninfobio.com). Revision
-  `ocean-platform-v050-prod0930` serves 100% of traffic using the validated
-  importer amendment from commit `4016d78`. The accessible 2026-09-17 ANEMONE
+  `ocean-platform-v060-sec1001` serves 100% of traffic from security amendment
+  `6fd37eb`; the release tag remains at `91d8567`. The accessible 2026-09-17 ANEMONE
   observation contributes 3,498 source occurrences/assays, 349,638 assignment
   rows and 6,996 eDNA retrieval documents. The complete corpus contains 7,319
   documents and matching embeddings. Physical sample identity across source
   occurrences remains unresolved. See the
-  [v0.5.0 operations record](docs/RELEASE_0.5.0_OPERATIONS.md).
+  [v0.6.0 operations record](docs/RELEASE_0.6.0_OPERATIONS.md).
 - Exact catalogue questions have hash-verified aggregate citations, downloads
   and provenance traces. Scoped chat-answer defects remain open in
   [issue #70](https://github.com/jarondlk/ocean-platform/issues/70), including

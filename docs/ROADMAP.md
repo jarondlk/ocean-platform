@@ -33,7 +33,7 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.5.0`. The active data plane now uses the
+  and OCEAN Platform release `v0.6.0`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
 - The accessible 2026-09-17 ANEMONE MiFish catalogue is stored as the
@@ -58,9 +58,9 @@ independent source checkboxes, per-source filters, enforcement across evidence
 paths, provider-effective generation controls, per-account browser settings
 and bounded issue #70 fixes. [Verification and live release gates](RELEASE_0.6.0_IMPLEMENTATION.md)
 include the applied history constraint migration `20261001_0014`. The immutable
-GCP security-amended candidate is verified at zero traffic. Authenticated UI,
-repeated scientific-answer acceptance and cutover remain pending.
-Production remains v0.5.0. See the [operations record](RELEASE_0.6.0_OPERATIONS.md).
+GCP security-amended revision now serves 100% of production traffic. The user
+approved promotion with authenticated UI/history and repeated scientific-answer
+QA deferred. Issue #70 remains open. See the [operations record](RELEASE_0.6.0_OPERATIONS.md).
 The [readiness audit](V0.6.0_READINESS_AUDIT_2026-10-01.md) records the baseline
 and the historical private-cloud authentication limit, since resolved.
 
