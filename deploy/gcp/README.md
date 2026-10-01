@@ -70,6 +70,16 @@ The canonical live URL is
 URL remains available for rollback and operations; Auth.js redirects it to the
 canonical origin.
 
+## v0.6.0 candidate (2026-10-01)
+
+GitHub v0.6.0 is published at `91d8567`, with passing remote checks and an
+immutable source-archive build. A fresh backup restored across all 28 tables,
+and the standard migration job applied `20261001_0014`. Revision
+`ocean-platform-v060-cand1001` is Ready at zero traffic. Production retains the
+compatible v0.5.0 runtime above while runtime and authenticated UI acceptance
+complete. Follow the [v0.6.0 operations record](../../docs/RELEASE_0.6.0_OPERATIONS.md)
+for the current rollout gates; do not apply stale rendered templates.
+
 ## Target topology
 
 - One Cloud Run service with Next.js as the ingress container and FastAPI as a

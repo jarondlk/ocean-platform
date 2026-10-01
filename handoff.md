@@ -8,7 +8,7 @@
 > runtime source `4016d78`. Production has 3,498 ANEMONE source
 > occurrences/assays, 349,638 assignment rows, 13,932 standard rows, 6,996
 > eDNA documents and 323 other documents. All 7,319 documents have matching
-> embeddings; schema head is `20260925_0013` and provenance publication is
+> embeddings; schema head is now `20261001_0014` (v0.6.0 additive migration) and provenance publication is
 > `v050-production-provenance`. A fresh backup restored in isolation, existing
 > history and pilot identities were preserved, and authenticated citation,
 > download and provenance checks passed. See the
@@ -16,7 +16,7 @@
 > answer defects remain in [issue #70](https://github.com/jarondlk/ocean-platform/issues/70).
 > The older rollout accounts below are dated history.
 
-## v0.6.0 release preparation
+## v0.6.0 published source and GCP candidate
 
 The user authorized implementation on 2026-10-01. Chat source selection,
 independent filters, prompt/history enforcement, per-account browser settings
@@ -25,8 +25,13 @@ and bounded answer-support fixes are implemented and locally verified. See
 new history constraint revision `20261001_0014` and pending live release gates.
 On 2026-10-01 the user also authorized GitHub release publication and manual
 GCP deployment. The [operations record](docs/RELEASE_0.6.0_OPERATIONS.md)
-tracks source/CI, authentication, backup, migration and rollout. Production
-above remains the last verified baseline until live acceptance completes.
+records the published tag at `91d8567`, passing remote checks and Cloud Build,
+a fresh verified 28-table backup/isolated restore, applied migration
+`20261001_0014` and Ready zero-traffic revision `ocean-platform-v060-cand1001`.
+Read-only runtime QA passed. A two-library security amendment is being validated
+and rebuilt before promotion. Browser control is unavailable, so authenticated
+UI verification and production cutover remain pending. Production above remains
+on the compatible v0.5.0 runtime.
 
 ---
 

@@ -19,10 +19,10 @@ approved.
 ## Next-release implementation
 
 - [`RELEASE_0.6.0_OPERATIONS.md`](RELEASE_0.6.0_OPERATIONS.md) — authorized
-  GitHub release and manual GCP deployment preparation; completed steps and
+  published GitHub release and migrated zero-traffic GCP candidate; completed steps and
   remaining gates are recorded separately from the v0.5.0 production baseline.
 - [`RELEASE_NOTES_0.6.0.md`](RELEASE_NOTES_0.6.0.md) — source changes, migration,
-  compatibility and limits for the v0.6.0 release candidate.
+  compatibility and limits for the published v0.6.0 source release.
 
 - [`RELEASE_0.6.0_PLAN.md`](RELEASE_0.6.0_PLAN.md) — adopted chat source-settings
   contract, implementation sequence and acceptance gates.

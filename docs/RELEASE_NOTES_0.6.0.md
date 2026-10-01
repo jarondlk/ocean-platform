@@ -47,3 +47,8 @@ The accessible ANEMONE observation remains the 2026-09-17 catalogue. Physical
 sample identity and unknown environmental classifications remain unresolved.
 Settings are local to each browser/account; synchronization, presets and
 scheduled ingestion are outside this release.
+
+The initial release tag is retained. A dependency-only runtime amendment updates
+PyJWT to 2.15.1 and urllib3 to 2.8.0 after newly reported security advisories;
+use the tested amendment and image digests in the operations record for GCP
+rollout. The initial candidate must not be promoted without this amendment.
