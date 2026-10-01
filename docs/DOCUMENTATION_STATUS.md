@@ -16,6 +16,21 @@ approved.
 - [`ROADMAP.md`](ROADMAP.md) — longer-term engineering priorities.
 - [`handoff.md`](../handoff.md) — current repository and production handoff.
 
+## Next-release implementation
+
+- [`RELEASE_0.6.0_OPERATIONS.md`](RELEASE_0.6.0_OPERATIONS.md) — authorized
+  GitHub release and manual GCP deployment preparation; completed steps and
+  remaining gates are recorded separately from the v0.5.0 production baseline.
+- [`RELEASE_NOTES_0.6.0.md`](RELEASE_NOTES_0.6.0.md) — source changes, migration,
+  compatibility and limits for the v0.6.0 release candidate.
+
+- [`RELEASE_0.6.0_PLAN.md`](RELEASE_0.6.0_PLAN.md) — adopted chat source-settings
+  contract, implementation sequence and acceptance gates.
+- [`RELEASE_0.6.0_IMPLEMENTATION.md`](RELEASE_0.6.0_IMPLEMENTATION.md) — local
+  candidate changes, migration, verification and remaining live release gates.
+- [`V0.6.0_READINESS_AUDIT_2026-10-01.md`](V0.6.0_READINESS_AUDIT_2026-10-01.md)
+  — verified repository baseline and stated limits of current system inspection.
+
 ## Superseded plans
 
 The following documents describe work that has already shipped or a gate that

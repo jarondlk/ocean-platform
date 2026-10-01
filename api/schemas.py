@@ -6,6 +6,7 @@ from typing import Any, Dict, List, Literal, Optional
 
 from pydantic import AliasChoices, BaseModel, ConfigDict, Field, model_validator
 from schema.time_range import time_bounds
+from retrieval.source_scope import EvidenceScope, ALIASES, LEGACY_FIELDS
 
 
 EDNA_ASSIGNMENT_METHODS = (
@@ -285,7 +286,25 @@ class UserUpdate(BaseModel):
     status: Optional[str] = None
 
 
+class ChatFilterOptionsRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    evidence_scope: EvidenceScope
+    family: Optional[Literal['ctd', 'metagenome', 'remote_sensing', 'edna_metabarcoding']] = None
+    field: Optional[str] = Field(default=None, min_length=1, max_length=64)
+    search: str = Field(default='', max_length=200)
+
+    @model_validator(mode='after')
+    def selection_field(self):
+        from retrieval.filter_options import OPTION_FIELDS
+        if self.field is not None and (self.family is None or self.field not in OPTION_FIELDS[self.family]):
+            raise ValueError('Unknown selection field')
+        return self
+
+
 class RetrieveRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    evidence_scope: Optional[EvidenceScope] = None
+    station: Optional[str] = Field(default=None, min_length=1, max_length=64)
     analysis_id: Optional[str] = Field(default=None, pattern=r'^[a-f0-9]{64}$')
     query: str = Field(..., min_length=1, max_length=4000)
     k: int = Field(default=8, ge=1, le=25, validation_alias=AliasChoices("k", "top_k"))
@@ -322,6 +341,13 @@ class RetrieveRequest(BaseModel):
 
     @model_validator(mode="after")
     def validate_edna_filters(self) -> "RetrieveRequest":
+        if self.evidence_scope and any(getattr(self, k, None) is not None for k in LEGACY_FIELDS):
+            raise ValueError("evidence_scope cannot be combined with legacy scientific-scope fields")
+        if self.source_type:
+            source = self.source_type.strip().lower()
+            if source not in ALIASES:
+                raise ValueError("Unknown source_type")
+            self.source_type = ALIASES[source]
         self.query = self.query.strip()
         if not self.query:
             raise ValueError("query must contain non-whitespace characters")
@@ -398,6 +424,9 @@ class ChatRequest(RetrieveRequest):
 
 
 class SourceDocument(BaseModel):
+    lat: Optional[float] = None
+    lon: Optional[float] = None
+    metadata: Dict[str, Any] = Field(default_factory=dict)
     doc_id: str
     title: str = ""
     source_type: str = "unknown"
@@ -505,6 +534,9 @@ class ChatResponse(BaseModel):
         "publication_pending",
         "aggregate_scope_required",
         "aggregate_unavailable",
+        "no_sources_selected",
+        "source_disabled",
+        "freshness_unavailable",
     ]] = None
     model_invoked: bool = True
 

@@ -442,9 +442,11 @@ def route_permission(method: str, path: str) -> Optional[str]:
         return "profile:read"
     if path in {"/health", "/stats"}:
         return "overview:read"
-    if path == "/models":
+    if path == "/models" or path == "/chat/capabilities":
         return "chat:use"
     if path == "/chat" and method == "POST":
+        return "chat:use"
+    if path == "/chat/filter-options" and method == "POST":
         return "chat:use"
     if path.startswith("/chat/interactions/"):
         return "feedback:write"

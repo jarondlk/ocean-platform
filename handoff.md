@@ -16,6 +16,18 @@
 > answer defects remain in [issue #70](https://github.com/jarondlk/ocean-platform/issues/70).
 > The older rollout accounts below are dated history.
 
+## v0.6.0 release preparation
+
+The user authorized implementation on 2026-10-01. Chat source selection,
+independent filters, prompt/history enforcement, per-account browser settings
+and bounded answer-support fixes are implemented and locally verified. See
+[the implementation record](docs/RELEASE_0.6.0_IMPLEMENTATION.md) for tests,
+new history constraint revision `20261001_0014` and pending live release gates.
+On 2026-10-01 the user also authorized GitHub release publication and manual
+GCP deployment. The [operations record](docs/RELEASE_0.6.0_OPERATIONS.md)
+tracks source/CI, authentication, backup, migration and rollout. Production
+above remains the last verified baseline until live acceptance completes.
+
 ---
 
 ## 1. Executive Summary

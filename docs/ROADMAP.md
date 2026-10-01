@@ -51,6 +51,16 @@ workflow that can later become automated.
 - The README screenshot set was refreshed from the authenticated OCEAN
   Platform Cloud Run deployment on 2026-08-25.
 
+## v0.6.0 local candidate: chat settings
+
+The [adopted v0.6.0 plan](RELEASE_0.6.0_PLAN.md) is implemented locally:
+independent source checkboxes, per-source filters, enforcement across evidence
+paths, provider-effective generation controls, per-account browser settings
+and bounded issue #70 fixes. [Verification and live release gates](RELEASE_0.6.0_IMPLEMENTATION.md)
+include history constraint migration `20261001_0014`. Production remains v0.5.0.
+The [readiness audit](V0.6.0_READINESS_AUDIT_2026-10-01.md) records the baseline
+and the outstanding private-cloud authentication check.
+
 ## Completed MVP hardening: v0.4.3
 
 The ordered implementation plan is

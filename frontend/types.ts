@@ -238,7 +238,7 @@ export type ChatResponse = {
   answer_audit?: AnswerAudit | null;
   options: Record<string, unknown>;
   outcome?: "answered" | "abstained";
-  abstention_reason?: "no_matching_evidence" | "empty_analysis_cohort" | "publication_pending" | "aggregate_scope_required" | "aggregate_unavailable" | null;
+  abstention_reason?: "no_matching_evidence" | "empty_analysis_cohort" | "publication_pending" | "aggregate_scope_required" | "aggregate_unavailable" | "no_sources_selected" | "source_disabled" | "freshness_unavailable" | null;
   model_invoked?: boolean;
 };
 

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { LogOut } from "lucide-react";
 
 import { auth, signOut } from "@/auth";
+import { ChatIdentityProvider } from "@/components/ChatIdentityProvider";
 import { AppNavigation } from "@/components/AppNavigation";
 import { PermissionGate } from "@/components/PermissionGate";
 import { PRODUCT_NAME } from "@/lib/brand";
@@ -40,7 +41,7 @@ export async function AppShell({ children }: { children: ReactNode }) {
     );
   }
   return (
-    <div className="app-shell">
+    <ChatIdentityProvider key={user.id} accountId={user.id}><div className="app-shell">
       <aside className="sidebar" aria-label="Primary navigation">
         <div className="brand-block">
           <h1>{PRODUCT_NAME}</h1>
@@ -69,6 +70,6 @@ export async function AppShell({ children }: { children: ReactNode }) {
       <main className="main-panel">
         <PermissionGate permissions={user.permissions}>{children}</PermissionGate>
       </main>
-    </div>
+    </div></ChatIdentityProvider>
   );
 }

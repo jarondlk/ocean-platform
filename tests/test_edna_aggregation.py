@@ -3,7 +3,11 @@ from fastapi.testclient import TestClient
 
 import api.main as api_main
 from ingestion import edna_aggregate as aggregates
-from orchestration.edna_aggregation import plan_aggregation, render_answer
+from orchestration.edna_aggregation import (
+    _asks_unknown_control_status,
+    plan_aggregation,
+    render_answer,
+)
 
 
 def bundle():
@@ -212,6 +216,28 @@ def test_provider_labels_cannot_inject_new_citations():
     assert {r["citation_id"] for r in canonical_tokens(answer)} == {
         "aggregate_edna_" + "a" * 64
     }
+
+
+@pytest.mark.parametrize(
+    "query, expected",
+    [
+        ("UNKNOWN sample CONTROL", True),
+        ("unknown samples with unknown status", True),
+        ("control before unknown", False),
+        ("unknown\ncontrol", False),
+        ("unknown\nunknown status", True),
+        ("未知サンプル", True),
+        ("unknown " * 100_000, False),
+        ("unknown " * 100_000 + "control", True),
+    ],
+)
+def test_unknown_status_detection_handles_repeated_input(query, expected):
+    assert _asks_unknown_control_status(query) is expected
+
+
+def test_unknown_status_answer_leads_with_exact_count():
+    answer = render_answer(bundle(), "How many occurrences have UNKNOWN status?")
+    assert answer.startswith("**3,155 source occurrences have unknown control status**")
 
 
 @pytest.mark.parametrize(
