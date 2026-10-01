@@ -3,24 +3,24 @@
 fastapi==0.141.1
 # Security floor for the Starlette advisories tracked by GitHub. FastAPI and
 # the archived Streamlit app both permit the patched 1.x release.
-starlette==1.6.0
-uvicorn[standard]==0.52.4
+starlette==1.7.0
+uvicorn[standard]==0.54.0
 pandas==2.3.3
 pyarrow==23.0.1
-numpy==2.5.2
+numpy==2.5.3
 scipy==1.18.1
 requests==2.34.2
 # Security floor for response streaming and HTTPS proxy advisories.
 urllib3==2.8.0
-google-genai==2.20.0
-google-cloud-storage==3.13.1
-sqlalchemy==2.0.52
+google-genai==2.25.0
+google-cloud-storage==3.15.0
+sqlalchemy==2.1.1
 # SQLAlchemy requires greenlet on the Linux/x86_64 Cloud Build and Cloud Run
 # targets, but pip-compile omits that conditional dependency on Apple Silicon.
-greenlet==3.5.5
-psycopg2-binary==2.9.12
+greenlet==3.5.6
+psycopg2-binary==2.9.13
 pgvector==0.5.0
-alembic==1.19.1
+alembic==1.20.0
 PyJWT==2.15.1
 xarray==2026.7.0
 netCDF4==1.7.4
