@@ -11,16 +11,18 @@ approved.
 
 ## Current operating authority
 
-- [`RELEASE_0.5.0_OPERATIONS.md`](RELEASE_0.5.0_OPERATIONS.md) — current release,
-  deployment, and remaining-acceptance record.
+- [`RELEASE_0.6.0_OPERATIONS.md`](RELEASE_0.6.0_OPERATIONS.md) — current release,
+  production deployment, security amendment and user-approved QA deferrals.
+- [`RELEASE_0.5.0_OPERATIONS.md`](RELEASE_0.5.0_OPERATIONS.md) — historical
+  catalogue rollout and retained compatible application rollback baseline.
 - [`ROADMAP.md`](ROADMAP.md) — longer-term engineering priorities.
 - [`handoff.md`](../handoff.md) — current repository and production handoff.
 
-## Next-release implementation
+## Current-release implementation
 
-- [`RELEASE_0.6.0_OPERATIONS.md`](RELEASE_0.6.0_OPERATIONS.md) — authorized
-  published GitHub release and migrated zero-traffic GCP candidate; completed steps and
-  remaining gates are recorded separately from the v0.5.0 production baseline.
+- [`RELEASE_0.6.0_OPERATIONS.md`](RELEASE_0.6.0_OPERATIONS.md) — published GitHub
+  release and verified production traffic switch; deferred acceptance is
+  recorded separately from completed checks.
 - [`RELEASE_NOTES_0.6.0.md`](RELEASE_NOTES_0.6.0.md) — source changes, migration,
   compatibility and limits for the published v0.6.0 source release.
 

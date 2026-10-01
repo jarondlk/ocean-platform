@@ -3,11 +3,14 @@
 Started 2026-10-01 JST. The user authorized closing local previews, updating
 documentation, publishing a new GitHub release and deploying through GCP.
 
-**Status: GitHub v0.6.0 released; migrated zero-traffic GCP candidate ready.**
-Production still routes 100% to v0.5.0 at `ocean-platform-v050-prod0930`.
-Read-only live runtime acceptance passed for the initial image. A dependency-only
-security amendment is being validated/rebuilt; authenticated browser acceptance is
-blocked by unavailable browser controls. No production cutover is claimed.
+**Status: GitHub v0.6.0 released and security-amended GCP runtime deployed.**
+Production routes 100% to Ready revision `ocean-platform-v060-sec1001`, built
+from runtime amendment `6fd37eba2173ad86b704e775c6edba997082b4e8`.
+The user explicitly answered **“Promote now; defer remaining QA”** after being
+informed that browser access was unavailable. Authenticated UI/history/citation
+checks and repeated issue #70 scientific-answer acceptance are deferred, not
+claimed passed. The compatible `ocean-platform-v050-prod0930` revision remains
+available for application rollback; issue #70 remains open.
 
 ## Scope and source
 
@@ -25,9 +28,9 @@ workaround. The regression checks URL round-trip and absence from SQL output.
 
 ## Verified preparation
 
-- Local API and frontend preview processes were stopped. The browser preview
-  panel close operation encountered a browser-control timeout; closure remains
-  to be confirmed separately.
+- Local API and frontend preview processes were stopped; no listener remained
+  on port 3006. The browser panel was hidden and its visibility verified false.
+  Individual tab closure remains blocked by the browser connection timeout.
 - Final backend regression: 914 passed, 35 PostgreSQL-gated skips, 79.25%
   coverage (70% gate). Frontend: 48 tests, typecheck and production build
   passed. The source-contract export, Python lint, dependency consistency and
@@ -122,8 +125,9 @@ removed afterward. It wrote no chat history, canonical records or publications.
 
 This job called runtime functions directly and made no chat-generation calls.
 It does not establish authenticated browser behavior, persisted new-reason
-history or repeated real-provider scientific claim support. Those remain
-explicit cutover gates; issue #70 remains open.
+history or repeated real-provider scientific claim support. Those were
+original cutover gates and were later deferred by explicit user approval;
+issue #70 remains open.
 
 ## Provider smoke and dependency security amendment
 
@@ -151,7 +155,82 @@ recorded tested amendment commit and immutable rebuild are required before
 candidate promotion. PR [#80](https://github.com/jarondlk/ocean-platform/pull/80)
 contains the dependency amendment and current operational documentation.
 
-## Deployment order
+After amendment merge, the runtime manifest had zero open Dependabot alerts.
+GitHub still listed 69 repository-wide alerts: 67 on four old root manifest
+paths that are absent from the current Git tree, plus two medium GitPython
+alerts in the optional archived Streamlit dependency input/lock. GitPython is
+absent from the serving runtime lock. Those notices were not dismissed, and
+this record does not claim the entire historical repository is alert-free.
+
+## Final amended candidate verification
+
+PR #80 merged after all remote checks passed at runtime source
+`6fd37eba2173ad86b704e775c6edba997082b4e8`. Cloud Build
+`e9f7f595-435c-483c-9b1d-8e164de73262` succeeded from its clean Git archive,
+including Python/frontend checks and both image builds. Final immutable digests:
+
+- API: `sha256:d1e779bf41cada9ff8aee00b3df62b98b89e99b748bff0de4cac0c029124741c`.
+- Frontend: `sha256:82f9e240b245220b360f5aaad869f1d157248f142e99de7801465a8484ca9c36`.
+
+Revision `ocean-platform-v060-sec1001` is Ready at zero traffic with the
+`v060-candidate` tag. Configuration/resource/authentication preservation and
+continued 100% traffic on `ocean-platform-v050-prod0930` were verified.
+Login/session again returned 200; anonymous protected routes returned 401.
+No recent ERROR-level candidate logs were found.
+
+The unchanged, user-approved read-only QA script ran against the amended image
+as `ocean-v060-runtime-qa-vzwlr` and passed in 22.16 seconds. It reverified schema
+`20261001_0014`, all 16 source combinations, live available options/cascading,
+exact catalogue and rare-taxon counts, freshness routing and provider controls.
+Source-only retrieval latency was CTD 2,287 ms, metagenome 1,363 ms, SST 1,416 ms
+and scoped rare eDNA 2,789 ms. It made no database/history/publication writes or
+chat-generation calls, and its job was removed afterward.
+
+All five existing manual jobs now use the amended API digest and source marker.
+A before/after inventory verified unchanged normal commands, identities,
+resources, timeouts and retry limits. Exactly those five jobs remain; no
+additional ingestion, embedding refresh, migration execution or schedule was
+started by this alignment.
+
+The initial candidate/images above are historical build evidence and must not
+be promoted. The expanded migration remains compatible with the retained v0.5.0
+runtime. The authenticated browser/history/citation and repeated scientific
+claim-support gates below were deferred by explicit user approval at cutover;
+the one CTD provider smoke is not a substitute for those checks.
+
+## Production cutover and deferred QA
+
+On 2026-10-01, after the final amended candidate checks above, the user approved
+promotion with the remaining QA deferred. Cloud Run switched 100% traffic to
+`ocean-platform-v060-sec1001`; Ready/RoutesReady and both immutable image digests
+were verified from the live service. The traffic change completed at
+`2026-10-01T08:46:34Z` (17:46 JST). The `v060-production` tag was retained and the
+temporary `v060-candidate` preview tag was removed. The v0.5.0 production,
+maintenance and staging routes were retained, with no production traffic.
+
+At `2026-10-01T08:51:52Z`, canonical-domain login and session checks returned
+200. Anonymous health, statistics, chat capabilities, filter-options and chat
+requests returned 401. The first login check took 12.2 seconds; subsequent
+checks took 168–235 ms. These are individual measurements, not a p95 claim.
+No recent ERROR-level revision logs were found. These checks establish the
+public login route and anonymous access protections, not authenticated chat UI.
+
+Deferred work remains: authenticated account/settings/history behavior,
+citation/download/provenance navigation for v0.6.0, and repeated real-provider
+scientific claim review against issue #70. No new history or publication was
+written by the read-only runtime QA. Local preview servers are stopped and the
+browser panel is hidden; individual tab closure could not be confirmed because
+browser controls timed out.
+
+No publication generation changed during rollout. The pre-migration backup is
+retained at
+`gs://data-infra-infobio-ocean-data/backups/v060/20261001T074007Z-v060-pre-migration-ocean_platform.dump`
+with its manifest. Normal job limits, serving capacity and IAM remain unchanged.
+
+GitHub production deployment `6780170581` records runtime source `6fd37eb` and
+the successful traffic switch with the user-approved QA deferrals.
+
+## Original deployment order and final disposition
 
 1. Commit and review the exact candidate; pass required remote CI/security
    checks, merge to `main` and publish the immutable v0.6.0 source release.
@@ -165,8 +244,12 @@ contains the dependency amendment and current operational documentation.
 6. Verify active source choices, scoped retrieval/answers/history, known issue
    #70 cases, citations/downloads/provenance and authenticated UI before routing
    production traffic. Record measured latency and remaining limitations.
-7. Switch traffic only after the applicable gates pass, verify the live revision
-   and update this record, release status and current operating documentation.
+7. Switch traffic after applicable gates pass or an explicit user-approved
+   deferral, verify the live revision and update release/operating records.
+
+Steps 1–5 completed. Step 6's direct runtime/source/filter checks and provider
+smoke passed; its remaining authenticated/manual scientific checks were
+explicitly deferred by the user. Step 7 completed with those deferrals recorded.
 
 No ingestion/reimport, embedding refresh, publication replacement, new IAM grant,
 schedule or capacity increase is part of this settings release.

@@ -39,9 +39,11 @@ remote checks, immutable images, migration, rollout and live acceptance as
 they complete. The [implementation record](RELEASE_0.6.0_IMPLEMENTATION.md)
 contains local verification and scientific limits.
 
-Until that record confirms rollout, production remains the recorded v0.5.0
-deployment. Live issue #70 acceptance remains pending; these changes do not
-claim that every scientific or Japanese-language answer is validated.
+The security-amended runtime at `6fd37eb` now serves 100% of production traffic
+as `ocean-platform-v060-sec1001`. The user approved promotion with authenticated
+UI/history and repeated scientific-answer QA deferred. Live issue #70 acceptance
+remains open; these changes do not claim every scientific or Japanese-language
+answer is validated.
 
 The accessible ANEMONE observation remains the 2026-09-17 catalogue. Physical
 sample identity and unknown environmental classifications remain unresolved.

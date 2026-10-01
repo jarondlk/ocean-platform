@@ -2,36 +2,40 @@
 
 > **Last updated**: 2026-10-01 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform `v0.5.0` is live at
+> **Current status**: OCEAN Platform `v0.6.0` is live at
 > [oceaninfobio.com](https://oceaninfobio.com/). Cloud Run revision
-> `ocean-platform-v050-prod0930` receives 100% traffic from the validated
-> runtime source `4016d78`. Production has 3,498 ANEMONE source
+> `ocean-platform-v060-sec1001` receives 100% traffic from security-amended
+> runtime source `6fd37eb` (immutable release tag `91d8567`). Production has 3,498 ANEMONE source
 > occurrences/assays, 349,638 assignment rows, 13,932 standard rows, 6,996
 > eDNA documents and 323 other documents. All 7,319 documents have matching
 > embeddings; schema head is now `20261001_0014` (v0.6.0 additive migration) and provenance publication is
 > `v050-production-provenance`. A fresh backup restored in isolation, existing
-> history and pilot identities were preserved, and authenticated citation,
-> download and provenance checks passed. See the
-> [v0.5.0 operations record](docs/RELEASE_0.5.0_OPERATIONS.md). Scoped chat
+> history and pilot identities were preserved. Live source/filter/retrieval
+> checks and anonymous HTTP protections passed. The user approved promotion
+> with authenticated UI/history and repeated scientific-answer QA deferred.
+> See the [v0.6.0 operations record](docs/RELEASE_0.6.0_OPERATIONS.md). Scoped chat
 > answer defects remain in [issue #70](https://github.com/jarondlk/ocean-platform/issues/70).
 > The older rollout accounts below are dated history.
 
-## v0.6.0 published source and GCP candidate
+## v0.6.0 released and deployed
 
 The user authorized implementation on 2026-10-01. Chat source selection,
 independent filters, prompt/history enforcement, per-account browser settings
 and bounded answer-support fixes are implemented and locally verified. See
 [the implementation record](docs/RELEASE_0.6.0_IMPLEMENTATION.md) for tests,
-new history constraint revision `20261001_0014` and pending live release gates.
+new history constraint revision `20261001_0014` and documented QA limits.
 On 2026-10-01 the user also authorized GitHub release publication and manual
 GCP deployment. The [operations record](docs/RELEASE_0.6.0_OPERATIONS.md)
 records the published tag at `91d8567`, passing remote checks and Cloud Build,
 a fresh verified 28-table backup/isolated restore, applied migration
 `20261001_0014` and Ready zero-traffic revision `ocean-platform-v060-cand1001`.
-Read-only runtime QA passed. A two-library security amendment is being validated
-and rebuilt before promotion. Browser control is unavailable, so authenticated
-UI verification and production cutover remain pending. Production above remains
-on the compatible v0.5.0 runtime.
+The two-library security amendment merged at `6fd37eb`, passed all source
+checks and an immutable rebuild, and is Ready as `ocean-platform-v060-sec1001`
+at 100% production traffic after explicit user approval to defer remaining QA.
+Read-only runtime QA passed again. All five manual job images are aligned,
+with their normal commands/identities/limits retained. Authenticated UI/history
+and repeated scientific claim-support QA remain deferred because browser
+control is unavailable. The compatible v0.5.0 revision remains a rollback route.
 
 ---
 
@@ -1310,7 +1314,7 @@ git diff --check
 
 ## 13. Recommended Next Work Order
 
-Current status (2026-10-01): v0.5.0 is deployed. The next work is scoped chat
+Current status (2026-10-01): v0.6.0 is deployed. The next work is scoped chat
 answer-quality repair, scientific acceptance and operating hardening:
 
 1. Complete the remaining custom-domain researcher-role, suspension, and

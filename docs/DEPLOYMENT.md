@@ -13,34 +13,28 @@ operations.
 
 Current release record as of 2026-10-01:
 
-- GitHub release `v0.5.0` is deployed; the validated runtime source is
-  `4016d78a5b8eaabdf113b6ee6902fb68ffbd86df` and revision
-  `ocean-platform-v050-prod0930` serves 100% of production traffic. The
-  release tag remains unchanged; the importer amendment is recorded in the
-  [v0.5.0 operations record](RELEASE_0.5.0_OPERATIONS.md).
-- Production has 3,498 ANEMONE source occurrences/assays, 349,638 assignment
+- GitHub release `v0.6.0` retains tag commit `91d8567`; the deployed runtime
+  security amendment is `6fd37eba2173ad86b704e775c6edba997082b4e8`.
+  Ready revision `ocean-platform-v060-sec1001` serves 100% of production traffic.
+  Immutable images and all rollout evidence are in the
+  [v0.6.0 operations record](RELEASE_0.6.0_OPERATIONS.md).
+- Production retains 3,498 ANEMONE source occurrences/assays, 349,638 assignment
   rows, 13,932 standard rows, 6,996 eDNA documents and 323 other documents.
   All 7,319 documents have matching embeddings. Schema head is
-  `20261001_0014`; provenance publication is `v050-production-provenance`.
-- A fresh database backup restored in isolation across all 27 tables. Existing
-  chat history, pilot identities and non-ANEMONE content were preserved. All
-  five manual jobs use the validated API image; service limits remain minimum
+  `20261001_0014`; provenance publication remains `v050-production-provenance`.
+- A fresh database backup restored in isolation across all 28 tables before
+  the additive migration. All five manual jobs use the amended API image with
+  their commands, identities and limits retained. Service limits remain minimum
   zero/maximum one instance and concurrency 20.
-- Live readiness, authentication, counts, aggregate citation/download/hash and
-  provenance navigation passed. Scoped chat-answer defects remain in
-  [issue #70](https://github.com/jarondlk/ocean-platform/issues/70).
-- After the v0.5.0 schema and catalogue publication, older application
-  revisions must not simply receive traffic. Recovery requires a compatible
-  reader or forward repair; never downgrade populated migrations or overwrite
-  later user/chat records with a pre-cutover backup.
-
-GitHub `v0.6.0` is published at `91d8567`. A fresh 28-table backup restored in
-isolation, and the normal migration job applied the additive history constraint
-`20261001_0014`. The immutable release build succeeded; revision
-`ocean-platform-v060-cand1001` is Ready at zero traffic. Runtime and authenticated
-UI acceptance remain pending; production still uses the compatible v0.5.0
-runtime. See the [v0.6.0 operations record](RELEASE_0.6.0_OPERATIONS.md) before
-continuing rollout.
+- All 16 source combinations, live filter choices, exact counts and four scoped
+  retrievals passed read-only runtime checks. Production login/session returned
+  200 and anonymous protected routes returned 401 after cutover.
+- The user explicitly approved promotion with authenticated UI/history and
+  repeated scientific-answer QA deferred. These checks are not claimed passed;
+  [issue #70](https://github.com/jarondlk/ocean-platform/issues/70) remains open.
+- `ocean-platform-v050-prod0930` remains a compatible application rollback
+  route. Keep the expanded history constraint during rollback; never downgrade
+  populated migrations or overwrite later user/chat records with a backup.
 
 The validated runtime was built from an exact source archive. Later
 documentation commits do not change the immutable deployed images.
@@ -65,7 +59,7 @@ The completed initial migration sequence and historical cost-control rationale
 are retained in
 [`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Do not use it
 as the current release order. Use the completed
-[`v0.5.0` operations record](RELEASE_0.5.0_OPERATIONS.md) for the current
+[`v0.6.0` operations record](RELEASE_0.6.0_OPERATIONS.md) for the current
 deployment and verify the project budget and Cloud Run spend cap before paid
 execution.
 
