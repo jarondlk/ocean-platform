@@ -64,6 +64,25 @@ QA deferred. Issue #70 remains open. See the [operations record](RELEASE_0.6.0_O
 The [readiness audit](V0.6.0_READINESS_AUDIT_2026-10-01.md) records the baseline
 and the historical private-cloud authentication limit, since resolved.
 
+## Patch in progress: v0.6.1
+
+The user assigned the remaining v0.6.0 work to
+[the v0.6.1 patch plan](RELEASE_0.6.1_PLAN.md) on 2026-10-02. The
+[production browser QA](RELEASE_0.6.0_BROWSER_QA_2026-10-01.md) verified current-admin
+settings, live source choices, scoped answers, downloads and provenance, while
+reproducing two count-question paraphrases that wrongly ask for already-applied
+filters. Track implementation separately from acceptance and release:
+
+- [x] V061-01: fix exact-count routing/clarification and regressions.
+- [ ] V061-02: complete settings/account/storage lifecycle checks and repairs.
+- [ ] V061-03: finish role, keyboard/mobile/Japanese and new-history readback QA.
+- [ ] V061-04: complete repeated scientific claim-support review for issue #70.
+- [ ] V061-05: prepare 0.6.1 metadata, release records and validated candidate.
+- [ ] V061-06: publish the validated v0.6.1 tag/release and deploy manually to GCP.
+
+Production remains the recorded v0.6.0 runtime. The v0.6.1 release tag is created
+at the validated-source stage, not on this unfinished work plan.
+
 ## Completed MVP hardening: v0.4.3
 
 The ordered implementation plan is
@@ -334,3 +353,5 @@ These are intentionally **not** the immediate plan.
       runner, Airflow, Prefect, or cloud scheduled jobs.
 - [ ] Add file-watcher or object-storage event ingestion only if data arrival
       becomes frequent enough to justify it.
+
+Implementation authorized 2026-10-02 with Japanese-specific work/acceptance deferred. Count/settings fixes and isolated local checks are recorded in [implementation evidence](RELEASE_0.6.1_IMPLEMENTATION.md); candidate/live gates remain pending.

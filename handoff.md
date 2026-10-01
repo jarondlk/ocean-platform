@@ -1,6 +1,6 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-10-01 JST
+> **Last updated**: 2026-10-02 JST
 > **Repository**: `jarondlk/ocean-platform`
 > **Current status**: OCEAN Platform `v0.6.0` is live at
 > [oceaninfobio.com](https://oceaninfobio.com/). Cloud Run revision
@@ -35,7 +35,23 @@ at 100% production traffic after explicit user approval to defer remaining QA.
 Read-only runtime QA passed again. All five manual job images are aligned,
 with their normal commands/identities/limits retained. Authenticated UI/history
 and repeated scientific claim-support QA remain deferred because browser
-control is unavailable. The compatible v0.5.0 revision remains a rollback route.
+control was unavailable at cutover. A subsequent fresh in-app browser tab
+completed the current-admin checks in the
+[dated production QA report](docs/RELEASE_0.6.0_BROWSER_QA_2026-10-01.md),
+including options/settings/scoped answers/downloads/provenance; two count
+paraphrases still wrongly request filters that are already applied. The
+compatible v0.5.0 revision remains a rollback route.
+
+## v0.6.1 planned patch
+
+On 2026-10-02, the user requested that the remaining v0.6.0 work be planned and
+tracked as **v0.6.1**. Follow [the patch plan](docs/RELEASE_0.6.1_PLAN.md): fix the
+count-routing reproductions, verify settings/account/storage edge cases,
+complete role/UI/new-history readback and repeated scientific-answer acceptance,
+then validate, publish and deploy the patch. Current-admin browser passes do
+not establish other-account behavior or the complete scientific matrix.
+Implementation and a v0.6.1 release tag remain pending; production remains the
+recorded v0.6.0 runtime.
 
 ---
 
@@ -1508,3 +1524,7 @@ Ignored local artifacts that may be intentionally kept:
 
 - `onagawa_sst_subset/`
 - optional raw satellite staging directories
+
+### v0.6.1 implementation in progress — 2026-10-02
+
+Branch `codex/v061-chat-patch`: count paraphrases/metric focus, account hydration and transient-reset fixes are implemented. Local backend/frontend/PostgreSQL checks pass; English scientific runner/matrix is prepared. Japanese work/acceptance is explicitly deferred. Live role sessions, mobile viewport, candidate/history/scientific checks and release/cutover are pending; production remains v0.6.0. See `docs/RELEASE_0.6.1_IMPLEMENTATION.md` and `docs/RELEASE_0.6.1_OPERATIONS.md`.

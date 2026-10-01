@@ -83,11 +83,14 @@ export default function ChatPage() {
 
   useEffect(() => {
     if (!ready) return;
+    let active = true;
     Promise.all([getModels(), getChatCapabilities()]).then(([payload, contract]) => {
+      if (!active) return;
       if (contract.scope_version !== 1) throw new Error("Chat settings require an updated app. Reload to continue.");
       setModels(payload); setCapabilities(contract);
       setSettings(current => ({...current, model: current.model || payload.default_model}));
-    }).catch((err: Error) => setError(err.message));
+    }).catch((err: Error) => { if (active) setError(err.message); });
+    return () => { active = false; };
   }, [ready, setSettings]);
 
   const appliedSettings = useMemo(() => {

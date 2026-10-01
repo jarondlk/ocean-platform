@@ -50,6 +50,7 @@ TOPIC = re.compile(r"(?<![a-z])(anemone|edna|mifish|metabarcoding)(?![a-z])", re
 WORDS = set(
     """give please tell me you how many what is are the a an of in on from for do we have there and or with without versus vs compare can i add them their these those this that our currently available included include published imported detected recorded reported overall entire whole all database db catalogue catalog ocean platform anemone edna mifish metabarcoding data dataset sample samples sampling physical independent unique source sources occurrence occurrences assay assays assignment assignments detection detections row rows reads read sequencing count counts total totals number summary summarize summarise breakdown proportion percentage coverage locus loci team teams project projects run runs by per each both methods method qcauto qc 3nn nn auto target nontarget non targets controls control negative positive mock community environmental classified classifications classification unknown status empty missing unavailable tables table standards standard internal concentration concentrations copies ml column columns selected current filters filtered scope cohort date range time period location coordinates taxon taxonomy results records versus between anemone's what's what's""".split()
 )
+WORDS.update({"contain", "contains", "containing", "under", "support", "supported"})
 
 
 @dataclass(frozen=True)
@@ -65,6 +66,18 @@ SCOPE_MESSAGE = (
     "source occurrences, assays, classifications, assignments and reads; I cannot "
     "infer physical-sample counts, species richness or ecological abundance from "
     "these records. No database-wide total was substituted."
+)
+UNSUPPORTED_MESSAGE = (
+    "That exact-count request contains unsupported wording or a qualifier that "
+    "the selected filters do not resolve. The existing filters were retained. "
+    "Use source occurrences, assays, assignment rows or reads, and express "
+    "taxon, place and date restrictions in the source filters. No database-wide "
+    "total was substituted."
+)
+CONFLICT_MESSAGE = (
+    "The requested method or classification conflicts with the selected filters. "
+    "Review the assignment method, sample kind and control status before asking "
+    "again. The existing filters were retained; no wider count was substituted."
 )
 
 
@@ -188,18 +201,18 @@ def plan_aggregation(request: dict) -> AggregatePlan | None:
         method = "qcauto_95pct_3nn" if three_nn else "qcauto"
         status = enums.get("target_status", filters.get("target_status", "target"))
         enums["assignment_method"] = method + "_" + status
-    for key, value in enums.items():
-        if key in filters and filters[key] != value:
-            return AggregatePlan(filters, clarification=SCOPE_MESSAGE)
-        filters[key] = value
+    if any(key in filters and filters[key] != value for key, value in enums.items()):
+        return AggregatePlan(filters, clarification=CONFLICT_MESSAGE)
+    resolved_filters = {**filters, **enums}
     if (
-        filters.get("sample_kind") == "environmental"
-        and filters.get("is_control") is True
-        or filters.get("assignment_method")
-        and filters.get("target_status")
-        and not filters["assignment_method"].endswith("_" + filters["target_status"])
+        resolved_filters.get("sample_kind") == "environmental"
+        and resolved_filters.get("is_control") is True
+        or resolved_filters.get("assignment_method")
+        and resolved_filters.get("target_status")
+        and not resolved_filters["assignment_method"].endswith("_" + resolved_filters["target_status"])
     ):
-        return AggregatePlan(filters, clarification=SCOPE_MESSAGE)
+        return AggregatePlan(filters, clarification=CONFLICT_MESSAGE)
+    filters = resolved_filters
     inferred = []
     grouping = re.search(r"\b(?:by|per|in each|for each)\s+(.+)", query)
     if grouping:
@@ -208,7 +221,7 @@ def plan_aggregation(request: dict) -> AggregatePlan | None:
             word not in {*GROUPS, "and", "then", "per", "method", "methods"}
             for word in tail
         ):
-            return AggregatePlan(filters, clarification=SCOPE_MESSAGE)
+            return AggregatePlan(filters, clarification=UNSUPPORTED_MESSAGE)
         inferred = list(dict.fromkeys(GROUPS[word] for word in tail if word in GROUPS))
         query = query[: grouping.start()]
     group_by = options.get("group_by") or inferred
@@ -222,12 +235,14 @@ def plan_aggregation(request: dict) -> AggregatePlan | None:
     # Remaining punctuation is harmless; remaining numbers or unknown words
     # are not silently treated as filler (e.g. 2020, Japan, >10, species).
     words = re.findall(r"[\w]+(?:'[\w]+)?", query)
-    if (
-        not words
-        or any(word not in WORDS for word in words)
-        or any(word in words for word in ("selected", "filtered"))
-        and set(filters) == {"provider"}
-    ):
+    # "Occurrences containing <selected taxon>" has an exact canonical
+    # predicate. "Samples containing reads" could instead exclude empty
+    # tables; never infer that different cohort from a filler verb.
+    if any(word in words for word in ("contain", "contains", "containing")) and "taxon" not in filters:
+        return AggregatePlan(filters, tuple(group_by), UNSUPPORTED_MESSAGE)
+    if not words or any(word not in WORDS for word in words):
+        return AggregatePlan(filters, tuple(group_by), UNSUPPORTED_MESSAGE)
+    if any(word in words for word in ("selected", "filtered")) and set(filters) == {"provider"}:
         return AggregatePlan(filters, tuple(group_by), SCOPE_MESSAGE)
     if (
         any(
@@ -248,7 +263,7 @@ def plan_aggregation(request: dict) -> AggregatePlan | None:
     ):
         return AggregatePlan(filters, tuple(group_by), SCOPE_MESSAGE)
     if re.search(r"\b(without|except|exclude|excluding|only|not)\b", query):
-        return AggregatePlan(filters, tuple(group_by), SCOPE_MESSAGE)
+        return AggregatePlan(filters, tuple(group_by), UNSUPPORTED_MESSAGE)
     return AggregatePlan(filters, tuple(group_by))
 
 
@@ -299,10 +314,33 @@ def render_answer(bundle, query=""):
         lead = "The number of distinct physical samples is unresolved: source occurrences and assays do not establish unique physical samples. " + cite
     elif _asks_unknown_control_status(query):
         lead = f"**{summary['unknown_control_status']:,} source occurrences have unknown control status**. Unknown does not mean environmental or non-control. {cite}"
+    elif re.search(r"\bstandards?\b", query, re.I):
+        standards = summary['internal_standards']
+        lead = f"**{standards['reads']:,} internal-standard reads across {standards['rows']:,} rows** in the matching assays. Standards are separate from biological assignments and do not establish calibration validity. {cite}"
+    elif re.search(r"\bconcentrations?\b|copies", query, re.I):
+        lead = "Concentration records by assignment method: " + ("; ".join(
+            f"{label(row['assignment_method'])}: {row.get('concentration_records', 0):,} reported, {row.get('concentration_missing', 0):,} missing, {row.get('concentration_column_absent', 0):,} with the source column absent"
+            for row in summary['methods']) or "no matching assignment records for this scope") + ". Missing or absent does not mean zero. " + cite
+    elif re.search(r"\btables?\b", query, re.I):
+        lead = "Community tables by assignment method: " + ("; ".join(
+            f"{label(row['assignment_method'])}: {row['empty_tables']:,} valid empty tables of {row['available_tables']:,} available tables"
+            for row in summary['community_availability']) or "no documented available tables for this scope") + ". Valid empty tables are distinct from unavailable tables. " + cite
+    elif re.search(r"\benvironmental\b", query, re.I):
+        lead = f"**{summary['environmental_classified']:,} explicitly classified environmental source occurrences**. This is recorded classification, not biological absence. {cite}"
+    elif re.search(r"\bcontrols?\b", query, re.I):
+        lead = f"**{summary['controls']:,} explicitly classified control source occurrences**. Controls do not establish contamination-free samples. {cite}"
+    elif re.search(r"\bassignments?|assays?|occurrences?\b", query, re.I) and re.search(r"\breads?\b", query, re.I):
+        lead = f"**{summary['source_occurrences']:,} source occurrences and {summary['assays']:,} matching assays**; " + ("; ".join(
+            f"{label(row['assignment_method'])}: {row.get('assignment_rows', 0):,} assignment rows and {row.get('read_count_sum', 0):,} sequencing reads"
+            for row in summary['methods']) or "0 matching assignment rows and sequencing reads recorded") + ". Physical sample identity remains unresolved; reads are not organism counts. " + cite
+    elif re.search(r"\bassignments?\b", query, re.I):
+        lead = "Assignment rows by method: " + ("; ".join(
+            f"{label(row['assignment_method'])}={row.get('assignment_rows', 0):,}"
+            for row in summary['methods']) or "0 matching assignment rows") + ". Alternative methods share sequence evidence. " + cite
     elif re.search(r"\breads?\b|リード|読み取り", query, re.I):
-        lead = "Sequence reads by assignment method: " + "; ".join(
+        lead = "Sequence reads by assignment method: " + ("; ".join(
             f"{label(row['assignment_method'])}={row.get('read_count_sum', 0):,}"
-            for row in summary['methods']) + ". Methods share reads and must not be added. Reads are not organism counts. " + cite
+            for row in summary['methods']) or "0 sequencing reads recorded in matching assignments") + ". Methods share reads and must not be added. Reads are not organism counts. " + cite
     lines = [
         f"For the published OCEAN catalogue with filters {scope}: **{summary['source_occurrences']:,} source occurrences and {summary['assays']:,} matching assays**. The number of distinct physical samples is unresolved. {cite}",
         f"Classifications: {summary['controls']:,} controls, {summary['unknown_control_status']:,} with unknown control status, and {summary['environmental_classified']:,} explicitly classified environmental occurrences. Kinds: "

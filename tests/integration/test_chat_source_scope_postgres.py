@@ -1,5 +1,5 @@
 """Exercise source-owned predicates and history constraints on PostgreSQL/pgvector."""
-from contextlib import nullcontext
+from contextlib import nullcontext, contextmanager
 from itertools import product
 import os
 import uuid
@@ -95,6 +95,72 @@ def test_migrated_history_retains_new_abstention_reasons():
                     session.add(interaction)
                     session.flush()
                     assert session.get(ChatInteraction, interaction.id).abstention_reason == reason
+        finally:
+            transaction.rollback()
+    engine.dispose()
+
+
+def test_chat_lifecycle_independent_readback_retains_scope_effective_settings_and_evidence(monkeypatch):
+    """Call the real API/record lifecycle, then read with a fresh ORM session."""
+    from fastapi.testclient import TestClient
+    import api.auth as auth
+    import api.chat_records as records
+    import api.main as api
+    import config
+    from api.auth import CurrentUser, ROLE_PERMISSIONS
+    engine = create_engine(config.DATABASE_URL)
+    with engine.connect() as connection:
+        transaction = connection.begin()
+        try:
+            @contextmanager
+            def session_scope():
+                with Session(bind=connection, join_transaction_mode='create_savepoint') as session:
+                    with session.begin():
+                        yield session
+            with session_scope() as session:
+                user = AppUser(id=uuid.uuid4(), email=uuid.uuid4().hex+'@test.invalid', auth_provider='test', auth_subject=uuid.uuid4().hex,
+                               role='researcher', account_type='research', status='active')
+                session.add(user)
+                session.flush()
+                current = CurrentUser(id=user.id, email=user.email, display_name=None, auth_provider='test', role=user.role,
+                                      account_type=user.account_type, status=user.status, permissions=ROLE_PERMISSIONS[user.role])
+            monkeypatch.setattr(records, 'get_session', session_scope)
+            monkeypatch.setattr(auth, 'authenticate_request', lambda request: current)
+            monkeypatch.setattr(config, 'MODEL_PROVIDER', 'vertex')
+            document = {'doc_id': 'ctd-history-qa', 'source_type': 'ctd', 'title': 'CTD fixture', 'text': 'Surface temperature is 12 C.'}
+            monkeypatch.setattr(api, 'retrieve_with_expansion', lambda *a, **k: {'primary': [document], 'linked': [], 'diagnostics': {}})
+            class Runtime:
+                def chat(self, **kwargs):
+                    return 'Surface temperature is 12 C [ctd-history-qa].'
+            monkeypatch.setattr(api, 'get_model_runtime', lambda: Runtime())
+            client = TestClient(api.app)
+            cases = [
+                ('Explain the recorded temperature', scope('ctd'), 'answered', None),
+                ('Has ANEMONE data from last week arrived?', scope('edna_metabarcoding'), 'abstained', 'freshness_unavailable'),
+                ('How many ANEMONE samples in Japan?', scope('edna_metabarcoding'), 'abstained', 'aggregate_scope_required'),
+                ('Explain the recorded temperature', scope(), 'abstained', 'no_sources_selected'),
+            ]
+            for query, envelope, outcome, reason in cases:
+                response = client.post('/chat', json={'query': query, 'evidence_scope': envelope, 'inject_analysis': False, 'inject_reliability': False, 'repeat_penalty': 1.5, 'num_ctx': 2048})
+                assert response.status_code == 200, response.text
+                data = response.json()
+                with session_scope() as reader:
+                    row = reader.get(ChatInteraction, uuid.UUID(data['interaction_id']))
+                    assert row.status == 'completed' and row.outcome == outcome and row.abstention_reason == reason
+                    assert row.answer == data['answer'] and row.query == query
+                    assert row.request_options['evidence_scope'] == data['options']['evidence_scope']
+                    assert row.request_options['generation'] == data['options']['generation']
+                    assert 'repeat_penalty' not in row.request_options['generation'] and 'num_ctx' not in row.request_options['generation']
+                    assert row.corpus_fingerprint == records.content_sha256(row.evidence_snapshot)
+                    assert row.prompt_sha256 and row.completed_at and row.latency_ms >= 0
+                    assert [d['doc_id'] for d in row.evidence_snapshot['sources']] == ([document['doc_id']] if outcome == 'answered' else [])
+                    assert row.answer_audit_snapshot == data['answer_audit']
+            monkeypatch.setattr(api, 'retrieve_with_expansion', lambda *a, **k: {'primary': [], 'linked': [], 'diagnostics': {}})
+            data = client.post('/chat', json={'query': 'Explain absent temperature records', 'evidence_scope': scope('ctd'), 'inject_analysis': False, 'inject_reliability': False}).json()
+            with session_scope() as reader:
+                row = reader.get(ChatInteraction, uuid.UUID(data['interaction_id']))
+                assert row.outcome == 'abstained' and row.abstention_reason == 'no_matching_evidence'
+                assert row.answer == data['answer'] and row.evidence_snapshot['sources'] == []
         finally:
             transaction.rollback()
     engine.dispose()

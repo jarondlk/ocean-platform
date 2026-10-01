@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-10-01.
+Last reviewed: 2026-10-02.
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -17,6 +17,15 @@ approved.
   catalogue rollout and retained compatible application rollback baseline.
 - [`ROADMAP.md`](ROADMAP.md) — longer-term engineering priorities.
 - [`handoff.md`](../handoff.md) — current repository and production handoff.
+
+## Planned patch work queue
+
+- [`RELEASE_0.6.1_PLAN.md`](RELEASE_0.6.1_PLAN.md) — user-requested v0.6.1
+  routing fix, remaining settings/access/history/scientific QA and patch release
+  sequence. Implementation, tag publication and deployment remain pending.
+- [`RELEASE_0.6.0_BROWSER_QA_2026-10-01.md`](RELEASE_0.6.0_BROWSER_QA_2026-10-01.md)
+  — subsequent production browser checks, count-routing reproductions and
+  precise remaining acceptance limits.
 
 ## Current-release implementation
 
@@ -97,3 +106,9 @@ The root `README.md`, root `SECURITY.md`, `docs/BRANDING.md`,
 [`ANEMONE_PILOT_CLASSIFICATION_PROPOSAL.md`](ANEMONE_PILOT_CLASSIFICATION_PROPOSAL.md)
 is unresolved scientific input, not an obsolete plan; it remains unapproved and
 must not be treated as canonical classification.
+
+### v0.6.1 implementation records (2026-10-02)
+
+- [Implementation and QA](RELEASE_0.6.1_IMPLEMENTATION.md) — local patch evidence; live acceptance pending.
+- [Candidate release notes](RELEASE_NOTES_0.6.1.md) — tag/promotion pending.
+- [Operations](RELEASE_0.6.1_OPERATIONS.md) — refreshed baseline and outstanding gates.

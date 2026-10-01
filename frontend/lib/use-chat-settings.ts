@@ -9,17 +9,22 @@ export function useChatSettings(transientAnalysisId: string) {
   const accountId = useChatIdentity();
   const [settings, setSettings] = useState<ChatSettings>({...defaultSettings});
   const [scope, setScope] = useState<EvidenceScope>(defaultScope);
-  const [ready, setReady] = useState(false);
+  const [hydratedAccount, setHydratedAccount] = useState<string | null>(null);
+  const ready = !!accountId && hydratedAccount === accountId;
   const [blocked, setBlocked] = useState("");
   const [storageNotice, setStorageNotice] = useState("");
   useEffect(() => {
+    setHydratedAccount(null);
+    setSettings({...defaultSettings}); setScope(defaultScope());
+    savedScope.current = defaultScope();
+    setBlocked(""); setStorageNotice("");
     if (!accountId) return;
     let raw: string | null;
     try { raw = window.localStorage.getItem(settingsStorageKey(accountId)); }
-    catch { setStorageNotice("Settings are available for this session; browser storage is unavailable."); setReady(true); return; }
+    catch { setStorageNotice("Settings are available for this session; browser storage is unavailable."); setHydratedAccount(accountId); return; }
     try { const saved = decodeSettings(raw); setSettings(saved.settings); setScope(saved.scope); savedScope.current = saved.scope; }
     catch { setBlocked("Saved source settings need review. Reset settings to continue."); }
-    setReady(true);
+    setHydratedAccount(accountId);
   }, [accountId]);
   useEffect(() => {
     if (!ready || !accountId || blocked || scopeErrors(scope).length || settingsErrors(settings).length) return;
@@ -28,7 +33,12 @@ export function useChatSettings(transientAnalysisId: string) {
     catch { setStorageNotice("Settings are available for this session; browser storage is unavailable."); }
   }, [accountId, ready, blocked, scope, settings, transientAnalysisId]);
   function reset(model: string) {
+    savedScope.current = defaultScope();
     setSettings({...defaultSettings, model}); setScope(defaultScope()); setBlocked("");
   }
-  return {settings, setSettings, scope, setScope, ready, blocked, storageNotice, reset};
+  // Identity can change before its hydration effect runs. Do not expose the
+  // previous account's scientific scope during that render or persist it.
+  return {settings: ready ? settings : {...defaultSettings}, setSettings,
+    scope: ready ? scope : defaultScope(), setScope, ready,
+    blocked: ready ? blocked : "", storageNotice: ready ? storageNotice : "", reset};
 }
