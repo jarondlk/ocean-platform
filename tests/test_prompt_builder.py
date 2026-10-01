@@ -86,7 +86,8 @@ class TestBuildPrompt:
 
         assert "[content truncated]" in prompt
         assert len(prompt) < 40000
-        assert "citation in every factual" in prompt
+        assert "citation in every paragraph or" in prompt
+        assert "Request-setting descriptions" in prompt
 
     def test_prompt_contains_study_sites(self):
         """System prompt includes study site coordinates."""

@@ -299,6 +299,19 @@ def test_empty_cohort_has_explicit_read_count_without_biological_absence_claim()
     assert "does not establish biological absence" in answer
 
 
+@pytest.mark.parametrize("filters", [{"sample_kind": "environmental"}, {"is_control": False}])
+def test_environmental_filter_explains_exclusion_of_unclassified_occurrences(filters):
+    item = bundle()
+    item['payload']['filters'].update(filters)
+    item['payload']['summary'].update(source_occurrences=0, assays=0, controls=0,
+        unknown_control_status=0, sample_kinds={}, methods=[], community_availability=[],
+        internal_standards={'rows': 0, 'reads': 0})
+    answer = render_answer(item, "How many source occurrences are in the selected scope?")
+    assert "Unclassified source occurrences are excluded" in answer
+    assert "does not mean the published catalogue has no unclassified records" in answer
+    assert "3,155" not in answer
+
+
 @pytest.mark.parametrize("query", [
     "Does a higher ANEMONE read count mean there are more fish?",
     "How many reads imply higher organism abundance in ANEMONE?",

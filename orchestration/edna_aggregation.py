@@ -350,6 +350,12 @@ def render_answer(bundle, query=""):
         )
         + f". {cite}",
     ]
+    if payload['filters'].get('sample_kind') == 'environmental' or payload['filters'].get('is_control') is False:
+        lines.append(
+            "Unclassified source occurrences are excluded by the selected environmental/non-control filter. "
+            "Zero unknowns within this cohort does not mean the published catalogue has no unclassified records. "
+            + cite
+        )
     if summary.get("namespaces"):
         lines.append(
             "Distinct recorded namespaces: "
