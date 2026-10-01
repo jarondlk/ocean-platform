@@ -268,6 +268,18 @@ def evidence_document(bundle):
     }
 
 
+def _asks_unknown_control_status(query):
+    if "未知" in query:
+        return True
+    # Search each line once. A greedy regex starting at every repeated
+    # "unknown" can take quadratic time when no control/status follows.
+    for line in query.casefold().split("\n"):
+        _, marker, suffix = line.partition("unknown")
+        if marker and ("control" in suffix or "status" in suffix):
+            return True
+    return False
+
+
 def render_answer(bundle, query=""):
     payload = bundle["payload"]
     summary = payload["summary"]
@@ -285,7 +297,7 @@ def render_answer(bundle, query=""):
     lead = None
     if re.search(r"physical|物理|independent|unique samples", query, re.I):
         lead = "The number of distinct physical samples is unresolved: source occurrences and assays do not establish unique physical samples. " + cite
-    elif re.search(r"unknown.*(?:control|status)|unknown control|未知", query, re.I):
+    elif _asks_unknown_control_status(query):
         lead = f"**{summary['unknown_control_status']:,} source occurrences have unknown control status**. Unknown does not mean environmental or non-control. {cite}"
     elif re.search(r"\breads?\b|リード|読み取り", query, re.I):
         lead = "Sequence reads by assignment method: " + "; ".join(

@@ -128,7 +128,7 @@ Issue #70 remains open until those live acceptance checks pass.
 | --- | --- |
 | Active Python Ruff lint and `git diff --check` | Passed |
 | Generated contract check | Passed |
-| Complete backend suite | 905 passed, 35 PostgreSQL checks skipped in the final release run; 79.24% coverage, above the 70% gate |
+| Complete backend suite | 914 passed, 35 PostgreSQL checks skipped in the final release run; 79.25% coverage, above the 70% gate |
 | Disposable PostgreSQL 16 / pgvector integration | Initial candidate: 34 passed in CI order, migrated from empty database to `20261001_0014`. Selection refinement: 1 additional test passed in a fresh isolated database/schema, verifying cascading choices, local/SQL agreement, canonical taxonomy, false controls, inactive rows, bound search and pinned membership. |
 | Vector/FTS/local source subsets and independent filters | All 16 combinations; source values bound as SQL parameters; false controls, zero coordinates and day-inclusive dates tested |
 | Linked evidence and migrated history reasons | Passed PostgreSQL checks |
