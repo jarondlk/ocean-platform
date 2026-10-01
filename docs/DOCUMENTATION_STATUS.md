@@ -19,7 +19,7 @@ approved.
 ## Next-release implementation
 
 - [`RELEASE_0.6.0_OPERATIONS.md`](RELEASE_0.6.0_OPERATIONS.md) — authorized
-  published GitHub release and migrated zero-traffic GCP candidate; completed steps and
+  published GitHub release and verified security-amended zero-traffic GCP candidate; completed steps and
   remaining gates are recorded separately from the v0.5.0 production baseline.
 - [`RELEASE_NOTES_0.6.0.md`](RELEASE_NOTES_0.6.0.md) — source changes, migration,
   compatibility and limits for the published v0.6.0 source release.

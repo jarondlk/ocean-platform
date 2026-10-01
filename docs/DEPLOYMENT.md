@@ -37,8 +37,10 @@ Current release record as of 2026-10-01:
 GitHub `v0.6.0` is published at `91d8567`. A fresh 28-table backup restored in
 isolation, and the normal migration job applied the additive history constraint
 `20261001_0014`. The immutable release build succeeded; revision
-`ocean-platform-v060-cand1001` is Ready at zero traffic. Runtime and authenticated
-UI acceptance remain pending; production still uses the compatible v0.5.0
+`ocean-platform-v060-sec1001` is Ready at zero traffic from security amendment
+`6fd37eb`. Read-only live runtime acceptance passed; authenticated UI and repeated
+scientific-answer acceptance remain pending. All five manual jobs use the amended
+API image with their normal settings retained. Production uses the compatible v0.5.0
 runtime. See the [v0.6.0 operations record](RELEASE_0.6.0_OPERATIONS.md) before
 continuing rollout.
 

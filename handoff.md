@@ -28,8 +28,11 @@ GCP deployment. The [operations record](docs/RELEASE_0.6.0_OPERATIONS.md)
 records the published tag at `91d8567`, passing remote checks and Cloud Build,
 a fresh verified 28-table backup/isolated restore, applied migration
 `20261001_0014` and Ready zero-traffic revision `ocean-platform-v060-cand1001`.
-Read-only runtime QA passed. A two-library security amendment is being validated
-and rebuilt before promotion. Browser control is unavailable, so authenticated
+The two-library security amendment merged at `6fd37eb`, passed all source
+checks and an immutable rebuild, and is Ready as `ocean-platform-v060-sec1001`
+at zero traffic. Read-only runtime QA passed again. All five manual job images
+are aligned, with their normal commands/identities/limits retained. Browser
+control is unavailable, so authenticated
 UI verification and production cutover remain pending. Production above remains
 on the compatible v0.5.0 runtime.
 

@@ -3,11 +3,12 @@
 Started 2026-10-01 JST. The user authorized closing local previews, updating
 documentation, publishing a new GitHub release and deploying through GCP.
 
-**Status: GitHub v0.6.0 released; migrated zero-traffic GCP candidate ready.**
+**Status: GitHub v0.6.0 released; security-amended GCP candidate verified at zero traffic.**
 Production still routes 100% to v0.5.0 at `ocean-platform-v050-prod0930`.
-Read-only live runtime acceptance passed for the initial image. A dependency-only
-security amendment is being validated/rebuilt; authenticated browser acceptance is
-blocked by unavailable browser controls. No production cutover is claimed.
+The final candidate is `ocean-platform-v060-sec1001`, built from runtime
+amendment `6fd37eba2173ad86b704e775c6edba997082b4e8`. Authenticated browser
+acceptance is blocked by unavailable browser controls; repeated issue #70
+scientific-answer acceptance remains pending. No production cutover is claimed.
 
 ## Scope and source
 
@@ -25,9 +26,9 @@ workaround. The regression checks URL round-trip and absence from SQL output.
 
 ## Verified preparation
 
-- Local API and frontend preview processes were stopped. The browser preview
-  panel close operation encountered a browser-control timeout; closure remains
-  to be confirmed separately.
+- Local API and frontend preview processes were stopped; no listener remained
+  on port 3006. The browser panel was hidden and its visibility verified false.
+  Individual tab closure remains blocked by the browser connection timeout.
 - Final backend regression: 914 passed, 35 PostgreSQL-gated skips, 79.25%
   coverage (70% gate). Frontend: 48 tests, typecheck and production build
   passed. The source-contract export, Python lint, dependency consistency and
@@ -150,6 +151,42 @@ amended runtime lock. The existing `v0.6.0` tag is retained; the separately
 recorded tested amendment commit and immutable rebuild are required before
 candidate promotion. PR [#80](https://github.com/jarondlk/ocean-platform/pull/80)
 contains the dependency amendment and current operational documentation.
+
+## Final amended candidate verification
+
+PR #80 merged after all remote checks passed at runtime source
+`6fd37eba2173ad86b704e775c6edba997082b4e8`. Cloud Build
+`e9f7f595-435c-483c-9b1d-8e164de73262` succeeded from its clean Git archive,
+including Python/frontend checks and both image builds. Final immutable digests:
+
+- API: `sha256:d1e779bf41cada9ff8aee00b3df62b98b89e99b748bff0de4cac0c029124741c`.
+- Frontend: `sha256:82f9e240b245220b360f5aaad869f1d157248f142e99de7801465a8484ca9c36`.
+
+Revision `ocean-platform-v060-sec1001` is Ready at zero traffic with the
+`v060-candidate` tag. Configuration/resource/authentication preservation and
+continued 100% traffic on `ocean-platform-v050-prod0930` were verified.
+Login/session again returned 200; anonymous protected routes returned 401.
+No recent ERROR-level candidate logs were found.
+
+The unchanged, user-approved read-only QA script ran against the amended image
+as `ocean-v060-runtime-qa-vzwlr` and passed in 22.16 seconds. It reverified schema
+`20261001_0014`, all 16 source combinations, live available options/cascading,
+exact catalogue and rare-taxon counts, freshness routing and provider controls.
+Source-only retrieval latency was CTD 2,287 ms, metagenome 1,363 ms, SST 1,416 ms
+and scoped rare eDNA 2,789 ms. It made no database/history/publication writes or
+chat-generation calls, and its job was removed afterward.
+
+All five existing manual jobs now use the amended API digest and source marker.
+A before/after inventory verified unchanged normal commands, identities,
+resources, timeouts and retry limits. Exactly those five jobs remain; no
+additional ingestion, embedding refresh, migration execution or schedule was
+started by this alignment.
+
+The initial candidate/images above are historical build evidence and must not
+be promoted. The expanded migration remains compatible with the current v0.5.0
+runtime. Final cutover still requires the authenticated browser/history/citation
+and repeated scientific claim-support gates below; the one CTD provider smoke
+is not a substitute for those checks.
 
 ## Deployment order
 

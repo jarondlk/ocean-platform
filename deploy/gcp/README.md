@@ -75,9 +75,10 @@ canonical origin.
 GitHub v0.6.0 is published at `91d8567`, with passing remote checks and an
 immutable source-archive build. A fresh backup restored across all 28 tables,
 and the standard migration job applied `20261001_0014`. Revision
-`ocean-platform-v060-cand1001` is Ready at zero traffic. Production retains the
-compatible v0.5.0 runtime above while runtime and authenticated UI acceptance
-complete. Follow the [v0.6.0 operations record](../../docs/RELEASE_0.6.0_OPERATIONS.md)
+`ocean-platform-v060-sec1001` is Ready at zero traffic from the checked security
+amendment `6fd37eb`; all five manual jobs use its API image. Read-only live runtime
+QA passed again. Production retains the compatible v0.5.0 runtime above while
+authenticated UI and repeated scientific-answer acceptance complete. Follow the [v0.6.0 operations record](../../docs/RELEASE_0.6.0_OPERATIONS.md)
 for the current rollout gates; do not apply stale rendered templates.
 
 ## Target topology

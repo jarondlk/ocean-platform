@@ -13,7 +13,8 @@ and can be audited against the evidence that was actually supplied.
 
 The published [v0.6.0 release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.6.0)
 adds chat source checkboxes, independent filters and available-data selections.
-Its migrated GCP candidate is ready at zero traffic while live acceptance runs; see the
+Its security-amended GCP candidate is verified at zero traffic; authenticated
+UI and repeated scientific-answer acceptance remain pending. See the
 [release and deployment record](docs/RELEASE_0.6.0_OPERATIONS.md) and
 [implementation verification](docs/RELEASE_0.6.0_IMPLEMENTATION.md).
 Production remains the v0.5.0 release described below.
