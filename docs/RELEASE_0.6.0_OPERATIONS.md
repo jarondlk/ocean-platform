@@ -152,6 +152,13 @@ recorded tested amendment commit and immutable rebuild are required before
 candidate promotion. PR [#80](https://github.com/jarondlk/ocean-platform/pull/80)
 contains the dependency amendment and current operational documentation.
 
+After amendment merge, the runtime manifest had zero open Dependabot alerts.
+GitHub still listed 69 repository-wide alerts: 67 on four old root manifest
+paths that are absent from the current Git tree, plus two medium GitPython
+alerts in the optional archived Streamlit dependency input/lock. GitPython is
+absent from the serving runtime lock. Those notices were not dismissed, and
+this record does not claim the entire historical repository is alert-free.
+
 ## Final amended candidate verification
 
 PR #80 merged after all remote checks passed at runtime source
