@@ -42,7 +42,7 @@ including options/settings/scoped answers/downloads/provenance; two count
 paraphrases still wrongly request filters that are already applied. The
 compatible v0.5.0 revision remains a rollback route.
 
-## v0.6.1 planned patch
+## v0.6.1 acceptance in progress
 
 On 2026-10-02, the user requested that the remaining v0.6.0 work be planned and
 tracked as **v0.6.1**. Follow [the patch plan](docs/RELEASE_0.6.1_PLAN.md): fix the
@@ -50,8 +50,10 @@ count-routing reproductions, verify settings/account/storage edge cases,
 complete role/UI/new-history readback and repeated scientific-answer acceptance,
 then validate, publish and deploy the patch. Current-admin browser passes do
 not establish other-account behavior or the complete scientific matrix.
-Implementation and a v0.6.1 release tag remain pending; production remains the
-recorded v0.6.0 runtime.
+Implementation is merged; candidate access, current-admin/mobile/keyboard and
+retained history/download checks passed. The bounded English scientific matrix passed;
+live viewer/researcher disposition remains pending. The v0.6.1 release tag is
+not published; production remains the recorded v0.6.0 runtime.
 
 ---
 
@@ -1534,3 +1536,34 @@ The first model batch stopped on answer 14 when rare-taxon repeat 2 invented a `
 Live viewer/researcher sign-ins and mobile acceptance remain pending. The final candidate's chat tag redirects to canonical production login, so positive candidate UI/history cannot be claimed from that route. Isolated role/account/storage and independent PostgreSQL history tests passed. Production remains `ocean-platform-v060-sec1001` at 100%; no v0.6.1 tag/release/promotion. Before promotion, complete scientific/live gates or obtain specific recorded deferrals. After acceptance, tag the built source exactly, promote the verified revision, align only `ocean-evaluation` (shared prompt changed), complete post-cutover verification and synchronize branches.
 
 The temporary GCP acceptance job is deleted; all five original manual job specifications are unchanged. Local preview listeners are stopped, owned fixture container removed, Podman VM restored to stopped. Private outputs/captures remain in `/tmp/ocean-v061-release`; old stale preview UI closure failed twice. See implementation, operations and scientific QA documents for precise dispositions.
+
+### Latest v0.6.1 acceptance state — 2026-10-02
+
+Use the [scientific QA record](docs/RELEASE_0.6.1_SCIENTIFIC_QA.md) and
+[operations record](docs/RELEASE_0.6.1_OPERATIONS.md) for current facts. Candidate
+Google access is resolved with one approved temporary callback; remove it and
+the QA route after acceptance. Source `fd7dd41` merged PR #93 with all eight CI
+checks passed; its immutable build is pending. Prior complete scientific batches
+failed manual claim support despite structural passes. Repeat six affected rare-taxon
+cases; retain 25 reviewed byte-identical model prompts.
+Ten normal live admin interactions passed read-only independent readback. Mobile/keyboard/
+all-off reload/reset and historical aggregate download/hash checks passed.
+Viewer/researcher live account availability or explicit user deferral remains
+pending; do not manufacture users or change roles. No v0.6.1 publication or
+production promotion has occurred. Production remains v0.6.0 at 100%.
+
+### Final English candidate acceptance — 2026-10-02
+
+Source `fd7dd4175eebb87b20450fe67d2bfac1cff3f8a2` passed all eight CI checks
+and immutable Cloud Build `2415f393-6608-4f91-988a-324ce2640d1c`. Revisions
+`ocean-platform-v061-assay1002` (canonical) and `ocean-platform-v061-assayqa1002`
+(QA origin) are Ready at zero traffic. Six final rare-taxon repeats passed
+manual claim/citation review; 25 byte-identical reviewed prompts are retained,
+for 31 successful bounded English model cases. Earlier failures and a guarded
+citation rejection remain recorded. Ten live candidate admin interactions
+passed independent readback; the final-source count reproduction also passed
+and its eleventh record passed read-only verification. Live viewer/researcher disposition
+remains the release gate. Do not inherit the v0.6.0 QA waiver. Tag the exact
+built source only after that disposition, then promote the canonical revision,
+align only `ocean-evaluation`, check production and remove temporary callback/
+QA job/routes. Production remains v0.6.0 at 100%; no v0.6.1 publication yet.

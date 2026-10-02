@@ -21,9 +21,12 @@ scientific-answer QA deferred. See the
 Subsequent [production browser QA](docs/RELEASE_0.6.0_BROWSER_QA_2026-10-01.md)
 verified the current-admin workflows and found a remaining count-routing issue.
 The [v0.6.1 source fixes](docs/RELEASE_0.6.1_IMPLEMENTATION.md) are merged;
-candidate acceptance and release remain pending. The
-[scientific QA record](docs/RELEASE_0.6.1_SCIENTIFIC_QA.md) records a stopped
-model batch and the corrected runner. Japanese work/acceptance is deferred.
+live role disposition and release remain pending. The
+[scientific QA record](docs/RELEASE_0.6.1_SCIENTIFIC_QA.md) records complete but rejected
+model batches and corrective work. Candidate Google sign-in, mobile/keyboard
+and retained history/download checks passed. The bounded English scientific
+matrix is accepted; live viewer/researcher disposition remains pending. Japanese work/acceptance
+is deferred.
 
 ## Study Sites
 

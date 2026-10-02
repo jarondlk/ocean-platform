@@ -79,23 +79,26 @@ passed: returning to the viewer restores its retained all-disabled/s1 scope,
 keyboard reset restores all four sources with no filters, and an admin fixture
 starts with independent defaults and the expected administration/model controls.
 
-The first zero-traffic candidate's tagged `/chat` URL redirected to the
-canonical production login. Authentication remained required, but this route
-could not establish authenticated candidate UI/history acceptance. The model
-operator runner does not replace those checks.
+Candidate access is resolved through an approved temporary Google callback and
+a separate zero-traffic QA origin revision with the same immutable images.
+Normal admin sign-in, source controls, keyboard/mobile checks and eleven recorded
+UI interactions passed independent read-only history verification. One retained answer from each v0.5.0/v0.6.0
+period and a historical aggregate hash/provenance/download remain readable.
+Live viewer/researcher sessions or an explicit user disposition remain pending.
 
-Replacement candidate source `5f68c34`, revision `ocean-platform-v061-patch1002b`,
-passed its immutable Cloud Build and all 48 deterministic runs with zero
-actual generation calls. Environmental exclusion wording passed both repeats.
-Anonymous chat/filter/capability proxy requests returned 401. Final tagged chat
-navigation again ended at production login, so positive candidate UI/history
-acceptance remains pending.
-
-Two in-app-browser attempts to apply a mobile viewport timed out; read-only DOM
-inspection confirmed the viewport remained 1280 pixels wide. Mobile acceptance
-is pending, not passed. Live viewer/researcher sign-ins were requested and are
-pending. Live candidate admin/history and repeated scientific claim review are
-also pending. Earlier v0.6.0 QA does not silently waive these gates.
+Scientific review found and corrected invented citations, unknown samples
+called environmental, unsupported method/protocol explanations, calibration/
+concentration conflation, unresolved physical sample linkage and month-only
+dates upgraded to a day. PRs #90/#91/#92 preserve those evidence distinctions. PR #93 separates
+aggregate-supported counts from assay-specific citation claims.
+The current source is `fd7dd4175eebb87b20450fe67d2bfac1cff3f8a2`, with all eight
+required checks passed and 947 local backend tests passed (36 integration
+skips; separate PostgreSQL CI passed). All 48 corrected deterministic runs are
+retained. Twenty-five reviewed model prompts remain byte-identical; six rare-taxon
+repetitions passed on the final immutable build. The 31-case bounded English
+scientific matrix is accepted; live role disposition remains pending. See the scientific and
+operations records for exact execution dispositions. Production remains
+v0.6.0; no v0.6.1 tag/release/promotion is claimed.
 
 The owned feedback section exposes its interaction ID as a DOM data attribute
 for bounded independent readback; QA need not scan unrelated history.
