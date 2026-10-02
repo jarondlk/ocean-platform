@@ -426,6 +426,10 @@ The [repository maintenance audit](REPOSITORY_MAINTENANCE_AUDIT_2026-10-02.md)
 records the remaining PR and alert triage. Deleted-manifest alerts require
 dependency graph reconciliation and evidence for any inaccurate disposition;
 the current archive advisory is addressed by upgrading the package.
+See the [maintenance execution record](REPOSITORY_MAINTENANCE_2026-10-02.md)
+for the individual obsolete-path dispositions and the separate remaining
+container image findings. Zero open repository alerts does not establish a
+vulnerability-free deployed image.
 
 ## Authorization MVP Release Checklist
 

@@ -1,5 +1,9 @@
 # Repository maintenance audit — 2026-10-02
 
+This is the pre-maintenance snapshot. See the
+[execution record](REPOSITORY_MAINTENANCE_2026-10-02.md) for completed changes,
+alert dispositions, image scan findings and remaining work.
+
 Prepared against `main` / `gcp-dev` commit
 `a0caf5569d43289ed484770616225c745fd7cf36`, following the v0.6.1 rollout.
 This is a preparation record. No branch deletion, PR merge/closure, alert
