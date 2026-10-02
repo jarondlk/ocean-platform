@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-10-01.
+Last reviewed: 2026-10-02.
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -11,16 +11,27 @@ approved.
 
 ## Current operating authority
 
-- [`RELEASE_0.5.0_OPERATIONS.md`](RELEASE_0.5.0_OPERATIONS.md) — current release,
-  deployment, and remaining-acceptance record.
+- [`RELEASE_0.6.0_OPERATIONS.md`](RELEASE_0.6.0_OPERATIONS.md) — current release,
+  production deployment, security amendment and user-approved QA deferrals.
+- [`RELEASE_0.5.0_OPERATIONS.md`](RELEASE_0.5.0_OPERATIONS.md) — historical
+  catalogue rollout and retained compatible application rollback baseline.
 - [`ROADMAP.md`](ROADMAP.md) — longer-term engineering priorities.
 - [`handoff.md`](../handoff.md) — current repository and production handoff.
 
-## Next-release implementation
+## Planned patch work queue
 
-- [`RELEASE_0.6.0_OPERATIONS.md`](RELEASE_0.6.0_OPERATIONS.md) — authorized
-  published GitHub release and migrated zero-traffic GCP candidate; completed steps and
-  remaining gates are recorded separately from the v0.5.0 production baseline.
+- [`RELEASE_0.6.1_PLAN.md`](RELEASE_0.6.1_PLAN.md) — user-requested v0.6.1
+  routing fix, remaining settings/access/history/scientific QA and patch release
+  sequence. Implementation, exact-source tag publication and verified deployment are complete; live viewer/researcher and Japanese acceptance are explicitly user-deferred.
+- [`RELEASE_0.6.0_BROWSER_QA_2026-10-01.md`](RELEASE_0.6.0_BROWSER_QA_2026-10-01.md)
+  — subsequent production browser checks, count-routing reproductions and
+  precise remaining acceptance limits.
+
+## Current-release implementation
+
+- [`RELEASE_0.6.0_OPERATIONS.md`](RELEASE_0.6.0_OPERATIONS.md) — published GitHub
+  release and verified production traffic switch; deferred acceptance is
+  recorded separately from completed checks.
 - [`RELEASE_NOTES_0.6.0.md`](RELEASE_NOTES_0.6.0.md) — source changes, migration,
   compatibility and limits for the published v0.6.0 source release.
 
@@ -95,3 +106,10 @@ The root `README.md`, root `SECURITY.md`, `docs/BRANDING.md`,
 [`ANEMONE_PILOT_CLASSIFICATION_PROPOSAL.md`](ANEMONE_PILOT_CLASSIFICATION_PROPOSAL.md)
 is unresolved scientific input, not an obsolete plan; it remains unapproved and
 must not be treated as canonical classification.
+
+### v0.6.1 implementation records (2026-10-02)
+
+- [Implementation and QA](RELEASE_0.6.1_IMPLEMENTATION.md) — patch/CI evidence; current-admin, mobile and history checks passed; bounded English scientific acceptance passed; live viewer/researcher checks explicitly user-deferred.
+- [Published release notes](RELEASE_NOTES_0.6.1.md) — v0.6.1 published and deployed with recorded deferrals.
+- [Operations](RELEASE_0.6.1_OPERATIONS.md) — exact-source release, verified GCP traffic, cleanup, rollback and explicit deferrals.
+- [Scientific QA dispositions](RELEASE_0.6.1_SCIENTIFIC_QA.md) — deterministic results, complete rejected model batches, claim-level findings and final bounded English acceptance.

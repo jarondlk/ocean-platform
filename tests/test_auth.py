@@ -513,6 +513,23 @@ def test_viewer_cannot_access_admin_pipeline(monkeypatch):
     assert "pipeline:read" in response.text
 
 
+@pytest.mark.parametrize("role", ["viewer", "researcher", "admin"])
+def test_chat_settings_contract_and_filter_choices_use_chat_permission(monkeypatch, role):
+    from retrieval.source_scope import FAMILIES
+    user = CurrentUser(id=uuid.uuid4(), email=f"{role}@test.invalid", display_name=None,
+                       role=role, account_type="research", status="active",
+                       permissions=ROLE_PERMISSIONS[role], auth_provider="test")
+    monkeypatch.setattr(api_auth, "authenticate_request", lambda request: user)
+    monkeypatch.setattr("orchestration.unified._pg_available", lambda: False)
+    monkeypatch.setattr("retrieval.filter_options.filter_options", lambda *a, **kw: {"backend": "local", "sources": {}})
+    client = TestClient(app)
+    assert client.get("/chat/capabilities").status_code == 200
+    envelope = {"version": 1, "sources": {family: {"enabled": True, "filters": {}} for family in FAMILIES}}
+    assert client.post("/chat/filter-options", json={"evidence_scope": envelope}).status_code == 200
+    assert api_auth.route_permission("POST", "/chat/filter-options") == "chat:use"
+    assert api_auth.route_permission("GET", "/chat/capabilities") == "chat:use"
+
+
 def test_non_admin_cannot_access_user_administration(monkeypatch):
     researcher = CurrentUser(
         id=__import__("uuid").uuid4(),
