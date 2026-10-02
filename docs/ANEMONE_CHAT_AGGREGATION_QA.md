@@ -1,5 +1,11 @@
 # ANEMONE exact chat aggregation
 
+**Dated local QA record.** Exact aggregation was subsequently deployed with
+the v0.5.0 catalogue on 2026-09-30. See the
+[production operations record](RELEASE_0.5.0_OPERATIONS.md) for live checks and
+[issue #70](https://github.com/jarondlk/ocean-platform/issues/70) for remaining
+chat answer-quality defects.
+
 Implemented on `gcp-dev`; local QA completed 2026-09-26 JST. This extends the
 [v0.5.0 catalogue implementation](ANEMONE_V0.5.0_IMPLEMENTATION.md). It has not
 been released or deployed to GCP. The source observation remains 2026-09-17.

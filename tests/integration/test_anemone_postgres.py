@@ -599,6 +599,11 @@ def test_edna_materialization_retains_scopes_and_filters_nonfeatured_taxa(monkey
             results = hybrid_retriever.hybrid_search("MiFish", taxon="raretaxon", provider_project_id="project-first")
             assert [row.doc_id for row in results] == [rare.doc_id]
             assert hybrid_retriever.hybrid_search("MiFish", taxon="RareTaxon", assignment_method="qcauto_95pct_3nn_target") == []
+            from tests.test_chat_source_scope import scope
+            envelope = scope('edna_metabarcoding')
+            envelope['sources']['edna_metabarcoding']['filters'] = {'taxon': 'raretaxon', 'provider_project_id': 'project-first'}
+            assert [r.doc_id for r in hybrid_retriever.hybrid_search('MiFish', evidence_scope=envelope)] == [rare.doc_id]
+
             for index in range(20):
                 connection.execute(text("INSERT INTO retrieval_document (doc_id, source_type, sample_id, assignment_method, title, text, text_tsv, active) VALUES (:id, 'edna_metabarcoding', :sample, 'qcauto_target', 'MiFish', :body, to_tsvector('english', :body), TRUE)"),
                     {'id': f'pr5-excluded-{index}', 'sample':'0'*64, 'body':'MiFish '*100})

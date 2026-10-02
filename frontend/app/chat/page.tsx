@@ -7,7 +7,7 @@ import { ChatFeedback } from "@/components/ChatFeedback";
 import { DataTable, formatCell } from "@/components/DataTable";
 import { EvidenceNavigator } from "@/components/EvidenceNavigator";
 import { MarkdownAnswer } from "@/components/MarkdownAnswer";
-import { ApiError, askQuestion, getModels } from "@/lib/api";
+import { ApiError, askQuestion, getModels, getChatCapabilities, type ChatCapabilities } from "@/lib/api";
 import { buildCitationTargetIndex, sourceTarget } from "@/lib/citation-navigation";
 import { abstentionReasonLabel, appliedFilterRows } from "@/lib/chat-presentation";
 import type { CitationTarget } from "@/lib/citation-navigation";
@@ -15,53 +15,9 @@ import type { AnswerAudit, ChatResponse, CitationAuditRecord, ContextDocument, M
 import { SourceTable } from "@/components/SourceTable";
 import { useAppPreferences } from "@/lib/preferences";
 
-type ChatSettings = {
-  model: string;
-  k: number;
-  sourceType: string;
-  bay: string;
-  timeFrom: string;
-  timeTo: string;
-  vectorWeight: number;
-  ftsWeight: number;
-  rrfK: number;
-  expandEvidence: boolean;
-  maxLinkedSources: number;
-  injectAnalysis: boolean;
-  injectReliability: boolean;
-  runAnswerAudit: boolean;
-  temperature: number;
-  topP: number;
-  repeatPenalty: number;
-  numCtx: number;
-  numPredict: string;
-  samplingTopK: string;
-  seed: string;
-};
-
-const defaultSettings: ChatSettings = {
-  model: "",
-  k: 8,
-  sourceType: "",
-  bay: "",
-  timeFrom: "",
-  timeTo: "",
-  vectorWeight: 0.6,
-  ftsWeight: 0.4,
-  rrfK: 60,
-  expandEvidence: true,
-  maxLinkedSources: 5,
-  injectAnalysis: true,
-  injectReliability: true,
-  runAnswerAudit: true,
-  temperature: 0,
-  topP: 0.9,
-  repeatPenalty: 1.1,
-  numCtx: 8192,
-  numPredict: "",
-  samplingTopK: "",
-  seed: "",
-};
+import { ChatSourceSettings, filterLabels } from "@/components/ChatSourceSettings";
+import { useChatSettings } from "@/lib/use-chat-settings";
+import { sourceLabels, scopeErrors, settingsErrors, type SourceFamily, type ChatSettings } from "@/lib/chat-settings";
 
 const quickQuestions = [
   {
@@ -90,8 +46,26 @@ export default function ChatPage() {
   const { ui } = useAppPreferences();
   const [query, setQuery] = useState("");
   const [analysisId, setAnalysisId] = useState("");
-  const [settings, setSettings] = useState<ChatSettings>(defaultSettings);
+  const {settings, setSettings, scope, setScope, ready, blocked, storageNotice, reset} = useChatSettings(analysisId);
   const [models, setModels] = useState<ModelsResponse | null>(null);
+  const [capabilities, setCapabilities] = useState<ChatCapabilities | null>(null);
+  const submittedScope = {...scope, sources: {...scope.sources, edna_metabarcoding: {
+    ...scope.sources.edna_metabarcoding,
+    ...(analysisId.trim() && scope.sources.edna_metabarcoding.enabled ? {analysis_id: analysisId.trim()} : {}),
+  }}};
+  const validationErrors = [...scopeErrors(submittedScope), ...settingsErrors(settings, capabilities?.max_output_tokens || 8192)];
+  function validationLabel(message: string) {
+    const [path, detail] = message.split(": ");
+    if (!detail) return ui(message);
+    const family = Object.keys(sourceLabels).find(key => path.split(".").includes(key)) as SourceFamily | undefined;
+    const key = path.split(".").pop() || "";
+    const label = family ? `${ui(sourceLabels[family])}${filterLabels[key] ? ` / ${ui(filterLabels[key])}` : ""}`
+      : ui(({model: "Model", numPredict: "Max tokens", samplingTopK: "Sampling top-k", numCtx: "Context window", seed: "Seed", vectorWeight: "Vector weight", ftsWeight: "FTS weight", rrfK: "RRF-k", k: "Top-K sources", maxLinkedSources: "Max linked", temperature: "Temperature", topP: "Top-P", repeatPenalty: "Repeat penalty"} as Record<string, string>)[path] || "Source filters");
+    return `${label}: ${ui(detail)}`;
+  }
+  const hasSources = Object.values(scope.sources).some(source => source.enabled);
+  const canAsk = ready && !blocked && !!capabilities && !!models && hasSources && !validationErrors.length;
+  const supports = (field: string) => capabilities?.generation_fields.includes(field) || false;
   const [response, setResponse] = useState<ChatResponse | null>(null);
   const [selectedCitation, setSelectedCitation] = useState<CitationTarget | null>(null);
   const [loading, setLoading] = useState(false);
@@ -99,21 +73,25 @@ export default function ChatPage() {
   const providerLabel = models?.provider === "vertex" ? "Vertex AI" : models?.provider || "Model runtime";
 
   useEffect(() => {
+    if (!ready) return;
     const id = new URLSearchParams(window.location.search).get("analysis_id");
-    if (id) { setAnalysisId(id); setSettings(current => ({ ...current, sourceType: "edna_metabarcoding" })); }
-  }, []);
+    if (id) {
+      setAnalysisId(id);
+      setScope(current => ({...current, sources: Object.fromEntries(Object.entries(current.sources).map(([key, source]) => [key, {...source, enabled: key === "edna_metabarcoding"}])) as typeof current.sources}));
+    }
+  }, [ready, setScope]);
 
   useEffect(() => {
-    getModels()
-      .then((payload) => {
-        setModels(payload);
-        setSettings((current) => ({
-          ...current,
-          model: current.model || payload.default_model,
-        }));
-      })
-      .catch((err: Error) => setError(err.message));
-  }, []);
+    if (!ready) return;
+    let active = true;
+    Promise.all([getModels(), getChatCapabilities()]).then(([payload, contract]) => {
+      if (!active) return;
+      if (contract.scope_version !== 1) throw new Error("Chat settings require an updated app. Reload to continue.");
+      setModels(payload); setCapabilities(contract);
+      setSettings(current => ({...current, model: current.model || payload.default_model}));
+    }).catch((err: Error) => { if (active) setError(err.message); });
+    return () => { active = false; };
+  }, [ready, setSettings]);
 
   const appliedSettings = useMemo(() => {
     if (!response?.options) return null;
@@ -163,15 +141,12 @@ export default function ChatPage() {
 
   function resetControls() {
     setAnalysisId("");
-    setSettings({
-      ...defaultSettings,
-      model: models?.default_model || defaultSettings.model,
-    });
+    reset(models?.default_model || "");
   }
 
   async function runQuestion(nextQuery: string) {
     const trimmedQuery = nextQuery.trim();
-    if (!trimmedQuery || loading) return;
+    if (!trimmedQuery || loading || !canAsk) return;
     setQuery(nextQuery);
     setLoading(true);
     setError("");
@@ -180,12 +155,8 @@ export default function ChatPage() {
     try {
       const result = await askQuestion({
         query: trimmedQuery,
-        analysis_id: analysisId.trim() || undefined,
+        evidence_scope: submittedScope,
         k: settings.k,
-        source_type: settings.sourceType || undefined,
-        bay: settings.bay || undefined,
-        time_from: settings.timeFrom || undefined,
-        time_to: settings.timeTo || undefined,
         vector_weight: settings.vectorWeight,
         fts_weight: settings.ftsWeight,
         rrf_k: settings.rrfK,
@@ -197,8 +168,8 @@ export default function ChatPage() {
         run_answer_audit: settings.runAnswerAudit,
         temperature: settings.temperature,
         top_p: settings.topP,
-        repeat_penalty: settings.repeatPenalty,
-        num_ctx: settings.numCtx,
+        repeat_penalty: supports("repeat_penalty") ? settings.repeatPenalty : undefined,
+        num_ctx: supports("num_ctx") ? settings.numCtx : undefined,
         num_predict: optionalInteger(settings.numPredict),
         sampling_top_k: optionalInteger(settings.samplingTopK),
         seed: optionalInteger(settings.seed),
@@ -239,11 +210,14 @@ export default function ChatPage() {
                 aria-label={ui("Question")}
                 placeholder={ui("Enter question")}
               />
+              {ready ? <p className="empty-state" role="status">
+                {ui("Selected sources")}: {Object.entries(scope.sources).filter(([, selection]) => selection.enabled).map(([family]) => ui(sourceLabels[family as SourceFamily])).join(", ") || ui("None")}. {ui("Selection makes evidence eligible; it does not guarantee matching results.")}
+              </p> : null}
               <div className="quick-question-grid" aria-label={ui("Quick questions")}>
                 {quickQuestions.map((item) => (
                   <button
                     className="button secondary-button quick-question-button"
-                    disabled={loading}
+                    disabled={loading || !canAsk}
                     key={item.label}
                     onClick={() => void runQuestion(item.query)}
                     title={item.query}
@@ -257,11 +231,16 @@ export default function ChatPage() {
                 <span className="empty-state">
                   {response ? `${response.n_sources} ${ui("primary")} | ${response.n_linked_sources || 0} ${ui("linked")}` : ui("No response.")}
                 </span>
-                <button className="button" disabled={loading || !query.trim()}>
+                <button className="button" disabled={loading || !canAsk || !query.trim()}>
                   <Send size={16} aria-hidden="true" />
                   {loading ? ui("Asking") : ui("Ask")}
                 </button>
               </div>
+              {!ready ? <p role="status">{ui("Loading saved settings…")}</p> : null}
+              {blocked ? <p className="error-text" role="alert">{ui(blocked)}</p> : null}
+              {ready && !hasSources ? <p role="status">{ui("Select at least one evidence source to ask a question.")}</p> : null}
+              {validationErrors.length ? <p className="error-text" role="alert">{validationErrors.map(validationLabel).join("; ")}</p> : null}
+              {storageNotice ? <p role="status">{ui(storageNotice)}</p> : null}
               {error ? <p className="error-text">{error}</p> : null}
             </article>
 
@@ -447,11 +426,13 @@ export default function ChatPage() {
           <aside className="chat-settings" aria-label={ui("Chat settings")}>
             <div className="settings-header">
               <h3 className="section-title">{ui("Settings")}</h3>
-              <button className="button secondary-button icon-button" onClick={resetControls} title={ui("Reset all chat controls to defaults.")} type="button">
+              <button className="button secondary-button icon-button" disabled={!ready} onClick={resetControls} title={ui("Reset all chat controls to defaults.")} type="button">
                 <RotateCcw size={15} aria-hidden="true" />
               </button>
             </div>
 
+            <ChatSourceSettings disabled={!ready} scope={submittedScope} onChange={setScope} analysisId={analysisId} onAnalysisChange={setAnalysisId} />
+            <details className="chat-advanced"><summary>{ui("Advanced settings")}</summary>
             <fieldset className="settings-section">
               <legend>{ui("Retrieval")}</legend>
               <NumericControl
@@ -464,57 +445,6 @@ export default function ChatPage() {
                 value={settings.k}
                 onChange={(value) => updateSetting("k", value)}
               />
-              <label className="settings-field" htmlFor="chat-source-type" title="Restrict retrieval to one source type.">
-                  <span>{ui("Source type")}</span>
-                <select
-                  id="chat-source-type"
-                  className="field"
-                  value={settings.sourceType}
-                  onChange={(event) => updateSetting("sourceType", event.target.value)}
-                >
-                  <option value="">{ui("All source types")}</option>
-                  <option value="ctd">CTD</option>
-                  <option value="metagenome">Metagenome</option>
-                  <option value="edna_metabarcoding">eDNA metabarcoding</option>
-                  <option value="remote_sensing">{ui("Satellite SST")}</option>
-                </select>
-              </label>
-              <label className="settings-field" htmlFor="chat-bay" title="Restrict retrieval to one bay when source metadata supports it.">
-                <span>{ui("Bay")}</span>
-                <select
-                  id="chat-bay"
-                  className="field"
-                  value={settings.bay}
-                  onChange={(event) => updateSetting("bay", event.target.value)}
-                >
-                  <option value="">{ui("All bays")}</option>
-                  <option value="O">Onagawa</option>
-                  <option value="I">Ishinomaki</option>
-                  <option value="M">Mutsu</option>
-                </select>
-              </label>
-              <div className="settings-pair">
-                <label className="settings-field" htmlFor="chat-time-from" title="Inclusive lower bound for document time metadata.">
-                  <span>{ui("From")}</span>
-                  <input
-                    id="chat-time-from"
-                    className="field"
-                    type="date"
-                    value={settings.timeFrom}
-                    onChange={(event) => updateSetting("timeFrom", event.target.value)}
-                  />
-                </label>
-                <label className="settings-field" htmlFor="chat-time-to" title="Inclusive upper bound for document time metadata.">
-                  <span>{ui("To")}</span>
-                  <input
-                    id="chat-time-to"
-                    className="field"
-                    type="date"
-                    value={settings.timeTo}
-                    onChange={(event) => updateSetting("timeTo", event.target.value)}
-                  />
-                </label>
-              </div>
               <NumericControl
                 id="chat-vector-weight"
                 label="Vector weight"
@@ -565,7 +495,6 @@ export default function ChatPage() {
 
             <fieldset className="settings-section">
               <legend>{ui("Prompt Context")}</legend>
-              <label className="settings-field" htmlFor="chat-analysis-id"><span>eDNA analysis ID</span><input id="chat-analysis-id" className="field" value={analysisId} onChange={event => setAnalysisId(event.target.value)} /></label>
               <CheckboxControl
                 checked={settings.injectAnalysis}
                 label="Inject analysis"
@@ -626,6 +555,7 @@ export default function ChatPage() {
                 value={settings.topP}
                 onChange={(value) => updateSetting("topP", value)}
               />
+{supports("repeat_penalty") ? (
               <NumericControl
                 id="chat-repeat-penalty"
                 label="Repeat penalty"
@@ -636,6 +566,8 @@ export default function ChatPage() {
                 value={settings.repeatPenalty}
                 onChange={(value) => updateSetting("repeatPenalty", value)}
               />
+              ) : null}
+{supports("num_ctx") ? (
               <label className="settings-field" htmlFor="chat-num-ctx" title="Maximum model context window requested from the configured runtime when supported.">
                 <span>{ui("Context window")}</span>
                 <select
@@ -651,6 +583,7 @@ export default function ChatPage() {
                   ))}
                 </select>
               </label>
+              ) : null}
               <div className="settings-pair">
                 <OptionalIntegerControl
                   id="chat-num-predict"
@@ -682,6 +615,7 @@ export default function ChatPage() {
                 onChange={(value) => updateSetting("seed", value)}
               />
             </fieldset>
+            </details>
           </aside>
         </div>
       </form>

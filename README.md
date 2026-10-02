@@ -11,6 +11,18 @@ and can be audited against the evidence that was actually supplied.
 
 ---
 
+The published [v0.6.1 release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.6.1)
+is deployed at [oceaninfobio.com](https://oceaninfobio.com). It repairs scoped
+count phrasing, account settings isolation and scientific claim/citation
+boundaries on top of v0.6.0 source checkboxes and available-data filters.
+Admin sign-in, mobile/keyboard behavior, 11 candidate history readbacks and
+the bounded 31-response English scientific matrix passed. Production sign-in,
+scoped counts/citations and anonymous access protections passed after cutover.
+Live viewer/researcher checks and Japanese-specific acceptance are explicitly
+user-deferred. See [implementation](docs/RELEASE_0.6.1_IMPLEMENTATION.md),
+[scientific dispositions](docs/RELEASE_0.6.1_SCIENTIFIC_QA.md) and
+[deployment/rollback records](docs/RELEASE_0.6.1_OPERATIONS.md).
+
 ## Study Sites
 
 | Bay | Code | Coordinates | Data |
@@ -19,20 +31,22 @@ and can be audited against the evidence that was actually supplied.
 | Ishinomaki Bay | I | ~38.41°N, 141.30°E | CTD + Metagenome |
 | Mutsu Bay | M | source metadata | CTD + Metagenome |
 
-The bounded ANEMONE pilot retains its provider-supplied location and collection
-metadata. It is not assigned to one of these monitoring bays by inference, and
-its sample classification remains unknown in the current release line.
+ANEMONE records retain provider-supplied location and collection metadata.
+They are not assigned to one of these monitoring bays by inference. The
+accessible catalogue includes 343 explicit negative controls and 3,155 source
+occurrences with unknown control status; no environmental classification is
+inferred from an unknown value.
 
 The [ANEMONE taxonomy reference](docs/ANEMONE_TAXONOMY_REFERENCE.md) documents
 the user-approved TSV regression fixture, interpretation of unresolved ranks,
-and the rebuild procedure for existing eDNA data. The taxonomy fix is deployed in v0.4.4 and has been applied to the retained
-pilot, preserving source fields and its unknown sample classification.
+and the rebuild procedure for existing eDNA data. The v0.4.4 taxonomy fix
+remains part of the v0.5.0 full-catalogue import.
 
 ---
 
 ## Current Prototype Status
 
-Status as of **2026-09-16**: this is an active invite-only **Next.js +
+Status as of **2026-10-02**: this is an active invite-only **Next.js +
 FastAPI** prototype deployed on GCP, with PostgreSQL/pgvector retrieval,
 Vertex AI generation and embeddings, Google OIDC, and Cloud Run Jobs for
 operator-approved batch work. The same application remains runnable locally
@@ -42,31 +56,20 @@ service.
 
 Current managed milestone:
 
-- GitHub release [`v0.4.5`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.5)
-  fixes chat citation integrity, evidence scope, and eDNA standard context.
-  Revision `ocean-platform-v045-cc3b3af` serves 100% of production traffic.
-  Two eDNA summaries and embeddings were refreshed, with canonical records
-  unchanged and `v045-provenance` published. All 12 deployment QA cases met
-  their expected outcomes. See the [v0.4.5 operations record](docs/RELEASE_0.4.5_OPERATIONS.md).
-- GitHub release [`v0.4.4`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.4)
-  corrects unresolved ANEMONE taxonomy and retains the approved TSV regression
-  reference. PR #62 merged as `d3aa6a975e7405eaa291d53b50c33985e07f28ff`;
-  Cloud Build `bbff6249-7f41-4375-8ee8-97b5ce6c06a2` produced retained revision
-  `ocean-platform-v044-d3aa6a9`. The existing pilot's 70 assignments,
-  retrieval, embeddings, analysis, and provenance were rebuilt from retained
-  source data. See the [v0.4.4 operations record](docs/RELEASE_0.4.4_OPERATIONS.md).
-- GitHub release [`v0.4.2`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.4.2)
-  adds direct environmental-eligibility and exclusion-reason presentation to
-  the v0.4.1 no-evidence and controlled-classification workflow. It was released
-  from merge `2731d464ae11a2064359d2696db3f2eab523c2ac`, built by Cloud Build
-  `fd2a5970-692f-424e-a721-0144e1e2e005`, and remains retained at revision
-  `ocean-platform-00013-djj`. See the
-  [v0.4.2 operations record](docs/RELEASE_0.4.2_OPERATIONS.md).
-- The retained `v0.4.3` revision `ocean-platform-v043-26094fc`, `v0.4.2` revision `ocean-platform-00013-djj`, v0.4.1 revision
-  `ocean-platform-v041-706348e`, and v0.4.0 revision
-  `ocean-platform-v040-a63885a` remain reviewed rollback references. Review
-  corpus and schema compatibility before rollback; do not downgrade the schema
-  or overwrite later user or chat records.
+- GitHub release [`v0.6.1`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.6.1)
+  is deployed at [`oceaninfobio.com`](https://oceaninfobio.com). Revision
+  `ocean-platform-v061-assay1002` serves 100% of traffic from the validated
+  source/tag `fd7dd41`. The accessible 2026-09-17 ANEMONE
+  observation contributes 3,498 source occurrences/assays, 349,638 assignment
+  rows and 6,996 eDNA retrieval documents. The complete corpus contains 7,319
+  documents and matching embeddings. Physical sample identity across source
+  occurrences remains unresolved. See the
+  [v0.6.1 operations record](docs/RELEASE_0.6.1_OPERATIONS.md).
+- Exact catalogue questions have hash-verified aggregate citations, downloads
+  and provenance traces. The agreed English routing/claim-support matrix for
+  [issue #70](https://github.com/jarondlk/ocean-platform/issues/70) passed and the
+  issue is closed. Scientific answers still require review of cited records;
+  bounded acceptance does not establish correctness for arbitrary questions.
 - The live data plane uses Artifact Registry `ocean-platform`, Cloud SQL
   `ocean-postgres` / database `ocean_platform`, jobs under the `ocean-*`
   prefix, OCEAN Secret Manager entries, and bucket
@@ -93,9 +96,10 @@ Implemented in the current prototype:
   treatment, strict raw-source validation, and upsert planning.
 - Expert data workbenches for source observations, CTD profiles, taxa, SST,
   ANEMONE eDNA, derived ecological analysis, and reliability review.
-- A bounded ANEMONE MiFish evidence path with separate QCauto and QCauto+3-NN
-  assignments, exact source-row citations, method-separated retrieval, and
-  explicit exclusion of unknown/control samples from environmental-only work.
+- Full accessible ANEMONE MiFish processed-data integration with separate
+  QCauto and QCauto+3-NN assignments, exact source-row citations, catalogue
+  summaries and explicit exclusion of unknown/control samples from
+  environmental-only work.
 - Hybrid retrieval over pgvector + PostgreSQL full-text search with isolated
   branch transactions, deterministic RRF, explicit total-backend failure, and
   a contract-compatible local fallback when PostgreSQL is unavailable.
@@ -129,10 +133,9 @@ Deployed with acceptance still pending:
 
 - The authenticated ANEMONE review domain, read-only effect preview, and manual
   controlled normalization/import/republication job are deployed through
-  migration head `20260905_0011`. No real approved decision has been applied;
-  the pilot remains `sample_kind=unknown` and `is_control=null`. Complete the
-  authenticated researcher matrix before claiming scientific workflow
-  acceptance.
+  migration head `20260925_0013`. No real approved environmental-classification
+  decision has been applied. Complete the authenticated researcher matrix
+  before claiming scientific workflow acceptance.
 
 Still intentionally future work:
 - Automatic ingestion, file watching, or scheduled cloud sync.
@@ -152,8 +155,8 @@ Documentation map:
 
 - `README.md` is the current public project guide and screenshot source.
 - `handoff.md` is the operator/developer handoff for resuming work.
-- `docs/RELEASE_0.4.3_PLAN.md` is the current ordered implementation and release
-  plan.
+- `docs/RELEASE_0.5.0_OPERATIONS.md` records the current deployment and
+  acceptance results; earlier release plans are historical.
 - `docs/DOCUMENTATION_STATUS.md` identifies superseded plans and separates them
   from retained historical evidence.
 - `docs/ROADMAP.md` tracks completed and planned engineering work.
@@ -174,7 +177,7 @@ flowchart TB
         CTD["CTD\n1 TSV, 10,955 profiles"]
         META["Metagenome\n11 TSV files"]
         SST["Satellite SST\n1,848 NetCDF"]
-        EDNA["ANEMONE MiFish\n1 pilot sample, 70 detections"]
+        EDNA["ANEMONE MiFish\n3,498 source occurrences\n349,638 assignments"]
     end
 
     PROV["Provenance Registry\nSHA-256 files, rows, and publications"]
@@ -194,12 +197,12 @@ flowchart TB
         RELIAB["Reliability Ensurance\n4 validation outputs\n4 RAG documents"]
     end
 
-    RETDOCS["Retrieval Documents\n325 total\n323 legacy + 2 eDNA"]
+    RETDOCS["Retrieval Documents\n7,319 total\n323 other + 6,996 eDNA"]
 
     subgraph Storage["PostgreSQL + pgvector"]
-        EMB["Vector Embeddings\n325 x 768-dim\nlocal: nomic / GCP: Gemini"]
+        EMB["Vector Embeddings\n7,319 x 768-dim\nlocal: nomic / GCP: Gemini"]
         FTS["Full-Text Index\ntsvector + ts_rank_cd"]
-        DB["27 PostgreSQL Tables\nscientific + application metadata"]
+        DB["PostgreSQL Tables\nscientific + application metadata"]
     end
 
     RET["Hybrid Retrieval\nVector + FTS + RRF\n+ Linked cross-source evidence"]
@@ -695,7 +698,7 @@ ocean-platform/
 | CTD (Onagawa) | 1 TSV | 1.2 MB | Jan 2024 – Mar 2026 |
 | Metagenome | 11 TSV/TXT | 34 MB | Apr 2024 – Feb 2026 |
 | Satellite SST subset | 1,848 NetCDF | ~51 MB locally | Dec 2025 – Feb 2026 |
-| ANEMONE MiFish pilot | 1 bounded source snapshot | Operator-managed | Provider metadata |
+| ANEMONE MiFish catalogue observation | 39 bounded source units | Operator-managed | Provider metadata as observed 2026-09-17 |
 
 ### Processed Output
 
@@ -709,9 +712,14 @@ ocean-platform/
 | SST daily summaries | 79 days |
 | Anchor events | 286 (207 sample + 79 SST) |
 | Cross-source links | 496 temporal matches |
-| ANEMONE eDNA | 1 unknown sample, 1 assay, 70 detections, 4 internal standards |
-| Retrieval documents | 325 (323 legacy + 2 method-separated eDNA) |
-| Embeddings | 325 × 768-dim |
+| ANEMONE eDNA | 3,498 source occurrences/assays, 349,638 assignment rows, 13,932 standard rows |
+| Retrieval documents | 7,319 (323 other + 6,996 method-separated eDNA) |
+| Embeddings | 7,319 × 768-dim |
+
+ANEMONE's two assignment methods each contain 174,819 rows and 157,426,611
+reads. They are alternative analyses of sequence evidence, not independent
+observations to add together. Source occurrences are not proven to represent
+3,498 distinct physical samples.
 
 ### Pre-Analysis
 
@@ -744,19 +752,18 @@ ocean-platform/
 | `metagenome_sample` | 82 | Sequencing + top taxa |
 | `sst_point_observation` | 1,848 | Hourly satellite SST |
 | `sst_daily_summary` | 79 | Daily regional SST |
-| `retrieval_document` | 325 | Text + embeddings + tsvector |
+| `retrieval_document` | 7,319 | Text + embeddings + tsvector |
 | `cross_source_link` | 496 | CTD/meta ↔ SST links |
 | `provenance_record` | 0 | (tracked via JSONL) |
 
 The eDNA extension adds `external_source_snapshot`, `external_source_file`,
 `edna_sample`, `edna_assay`, `edna_detection`, and `edna_internal_standard`.
-The deployed pilot contains 1 snapshot, 13 registered source-file records,
-1 sample, 1 assay, 70 detections, and 4 standards.
+The v0.5.0 catalogue observation contains 3,498 source occurrences/assays,
+349,638 assignment rows and 13,932 standard rows. The former pilot identities
+were preserved during import.
 
-Six external-source/eDNA tables, the corpus-publication table, and the
-Alembic-managed identity, invitation, chat, feedback, audit, and rate-limit
-tables bring the deployed database to 23 tables at migration head
-`20260903_0008`.
+The deployed schema is at migration head `20260925_0013`. The verified
+production backup and isolated restore covered all 27 tables.
 
 ---
 
@@ -766,7 +773,7 @@ tables bring the deployed database to 23 tables at migration head
 
 1. **Query** → embedded at 768 dimensions using `gemini-embedding-001` on GCP
    or `nomic-embed-text` locally
-2. **Vector search** — pgvector cosine similarity over 325 embeddings
+2. **Vector search** — pgvector cosine similarity over 7,319 embeddings
 3. **Full-text search** — PostgreSQL tsvector with ts_rank_cd
 4. **SQL filters** — bay, source type, time range, and structured eDNA scope
 5. **RRF fusion** — merges vector + FTS rankings: `score = w_v/(k+r_v) + w_f/(k+r_f)` where k=60
@@ -932,13 +939,14 @@ npm run build
 
 ### Current Test Matrix
 
-The deployed v0.4.5 passed backend, frontend, PostgreSQL integration, and
-CodeQL release gates. Cloud Build reported 796 backend passes and 23 expected
-skips in its Python container; separate frontend checks passed 37 tests,
-TypeScript checking, and production build. The dedicated PostgreSQL suite
-passed 13 tests. All 12 refreshed-index deployment QA cases met their expected
-outcomes. See [`docs/RELEASE_0.4.5_OPERATIONS.md`](docs/RELEASE_0.4.5_OPERATIONS.md)
-for environment-specific counts and verification limits.
+The v0.5.0 source and importer amendment passed the required backend,
+frontend, PostgreSQL integration and security checks. Production verification
+covered catalogue counts, all 7,319 embeddings, citation/trace/export
+integrity and an authenticated browser session. Eight production chat requests
+passed automated integrity checks; manual review found scoped answer-quality
+failures. See the [v0.5.0 operations record](docs/RELEASE_0.5.0_OPERATIONS.md)
+and [issue #70](https://github.com/jarondlk/ocean-platform/issues/70) for
+the exact evidence and limits.
 
 | Test area | Files |
 | --- | --- |

@@ -2,6 +2,7 @@ const FILTER_KEYS = [
   "source_type",
   "sample_id",
   "bay",
+  "station",
   "time_from",
   "time_to",
   "provider",
@@ -21,6 +22,13 @@ export function appliedFilterRows(
   options: Record<string, unknown> | undefined,
 ): Record<string, unknown>[] {
   if (!options) return [];
+  const envelope = asRecord(options.evidence_scope);
+  const scopedRows = Object.entries(asRecord(envelope.sources)).flatMap(([family, raw]) => {
+    const selection = asRecord(raw);
+    return [{filter: `${family}.enabled`, value: selection.enabled},
+      ...Object.entries(asRecord(selection.filters)).filter(([, value]) => isApplied(value)).map(([key, value]) => ({filter: `${family}.${key}`, value})),
+      ...(isApplied(selection.analysis_id) ? [{filter: `${family}.analysis_id`, value: selection.analysis_id}] : [])];
+  });
   const retrieval = asRecord(options.retrieval);
   const context = asRecord(options.context);
   const rows: Record<string, unknown>[] = FILTER_KEYS.flatMap((key) => {
@@ -32,19 +40,22 @@ export function appliedFilterRows(
   }
   const resolved = asRecord(context.aggregate_scope);
   if (resolved.filters) {
-    return Object.entries(asRecord(resolved.filters)).map(([filter, value]) => ({ filter, value }));
+    return [...scopedRows, ...Object.entries(asRecord(resolved.filters)).map(([filter, value]) => ({ filter: scopedRows.length ? `aggregate.${filter}` : filter, value }))];
   }
   const aggregation = asRecord(context.aggregation);
   Object.entries(aggregation).forEach(([filter, value]) => {
     if (isApplied(value)) rows.push({ filter, value });
   });
-  return rows;
+  return scopedRows.length ? scopedRows : rows;
 }
 
 export function abstentionReasonLabel(reason?: string | null): string {
   const labels: Record<string, string> = {
-    aggregate_scope_required: "Exact count needs explicit filters",
+    aggregate_scope_required: "Exact count needs clarification",
     aggregate_unavailable: "Exact aggregate unavailable",
+    no_sources_selected: "No evidence sources selected",
+    source_disabled: "Requested source is unchecked",
+    freshness_unavailable: "Data arrival cannot be verified",
     no_matching_evidence: "No matching evidence",
     empty_analysis_cohort: "Empty analysis cohort",
     publication_pending: "eDNA publication pending",
