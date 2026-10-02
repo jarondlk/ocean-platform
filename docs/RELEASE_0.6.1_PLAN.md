@@ -245,6 +245,6 @@ does not itself claim implementation, a Git release tag or a production update.
 - [x] V061-01: both count reproductions fixed with scoped regression coverage.
 - [x] V061-02: settings/account/storage lifecycle verified with mounted-component and isolated authenticated role fixtures; defects resolved.
 - [ ] V061-03: role/UI and new-history readback checks completed.
-- [ ] V061-04: bounded scientific matrix reviewed with every failure disposed.
+- [x] V061-04: bounded English scientific matrix reviewed; corrected claims rerun, guarded citation rejection retained; Japanese acceptance user-deferred.
 - [x] V061-05: 0.6.1 exact candidate, source CI/security/build gates and deterministic checks passed; scientific/live acceptance remains tracked by V061-03/04.
 - [ ] V061-06: GitHub tag/release, verified GCP rollout and records completed.

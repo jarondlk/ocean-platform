@@ -74,10 +74,10 @@ reproducing two count-question paraphrases that wrongly ask for already-applied
 filters. Track implementation separately from acceptance and release:
 
 - [x] V061-01: fix exact-count routing/clarification and regressions.
-- [ ] V061-02: complete settings/account/storage lifecycle checks and repairs.
-- [ ] V061-03: finish role, keyboard/mobile/Japanese and new-history readback QA.
-- [ ] V061-04: complete repeated scientific claim-support review for issue #70.
-- [ ] V061-05: prepare 0.6.1 metadata, release records and validated candidate.
+- [x] V061-02: settings/account/storage lifecycle checks and repairs passed in isolated fixtures.
+- [ ] V061-03: live viewer/researcher disposition pending; admin, keyboard/mobile and history checks passed. Japanese acceptance is user-deferred.
+- [x] V061-04: bounded English scientific matrix reviewed; corrected claims rerun and guarded rejection recorded.
+- [x] V061-05: 0.6.1 metadata, source CI/build records and candidate prepared; live/scientific acceptance tracked above.
 - [ ] V061-06: publish the validated v0.6.1 tag/release and deploy manually to GCP.
 
 Production remains the recorded v0.6.0 runtime. The v0.6.1 release tag is created

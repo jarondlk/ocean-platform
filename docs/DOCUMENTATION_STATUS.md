@@ -109,7 +109,7 @@ must not be treated as canonical classification.
 
 ### v0.6.1 implementation records (2026-10-02)
 
-- [Implementation and QA](RELEASE_0.6.1_IMPLEMENTATION.md) — local patch evidence; live acceptance pending.
+- [Implementation and QA](RELEASE_0.6.1_IMPLEMENTATION.md) — patch/CI evidence; current-admin, mobile and history checks passed; bounded English scientific acceptance passed; live role disposition pending.
 - [Candidate release notes](RELEASE_NOTES_0.6.1.md) — tag/promotion pending.
 - [Operations](RELEASE_0.6.1_OPERATIONS.md) — refreshed baseline and outstanding gates.
-- [Scientific QA dispositions](RELEASE_0.6.1_SCIENTIFIC_QA.md) — first deterministic results, stopped model batch and remaining acceptance requirements.
+- [Scientific QA dispositions](RELEASE_0.6.1_SCIENTIFIC_QA.md) — deterministic results, complete rejected model batches, claim-level findings and final bounded English acceptance.
