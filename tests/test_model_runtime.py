@@ -143,6 +143,60 @@ def test_vertex_runtime_maps_options_and_embedding_task(monkeypatch):
     }
 
 
+def test_vertex_sdk_serializes_effective_controls_and_meters_transport(monkeypatch):
+    """Exercise the installed SDK with a local transport, without provider calls."""
+    import json
+    from types import SimpleNamespace
+
+    import httpx
+    from google import genai
+    from google.oauth2.credentials import Credentials
+    from google.genai import types
+
+    from evaluation.qa.run_v061_acceptance import GenerationBudgetExceeded, MeteredModels
+
+    requests = []
+
+    def respond(request):
+        requests.append(json.loads(request.content))
+        return httpx.Response(200, json={
+            "candidates": [{"content": {"role": "model", "parts": [{"text": "bounded answer"}]},
+                            "finishReason": "STOP"}],
+            "usageMetadata": {"promptTokenCount": 5, "candidatesTokenCount": 2,
+                              "totalTokenCount": 7},
+        })
+
+    monkeypatch.setattr(config, "CHAT_MAX_OUTPUT_TOKENS", 100)
+    monkeypatch.setattr(config, "VERTEX_THINKING_BUDGET", 0)
+    with httpx.Client(transport=httpx.MockTransport(respond)) as transport:
+        client = genai.Client(vertexai=True, project="fixture", location="global",
+                              credentials=Credentials(token="fixture-token"),
+                              http_options=types.HttpOptions(httpx_client=transport,
+                                  retry_options=types.HttpRetryOptions(attempts=1)))
+        try:
+            meter = MeteredModels(client.models, limit=1)
+            runtime = model_runtime.VertexRuntime(project="fixture", location="global",
+                embedding_dim=2, client=SimpleNamespace(models=meter))
+            options = {"temperature": 0.2, "top_p": 0.8, "top_k": 10, "seed": 7,
+                       "num_predict": 250, "num_ctx": 2048, "repeat_penalty": 1.5}
+            assert runtime.chat(model="gemini-fixture", prompt="question",
+                                options=options) == "bounded answer"
+            with pytest.raises(GenerationBudgetExceeded):
+                runtime.chat(model="gemini-fixture", prompt="question", options=options)
+        finally:
+            client.close()
+    assert len(requests) == len(meter.generations) == 1
+    generation = dict(requests[0]["generationConfig"])
+    thinking = types.ThinkingConfig.model_validate(generation.pop("thinkingConfig"))
+    assert thinking.model_dump(exclude_none=True) == {
+        "thinking_budget": 0, "include_thoughts": False,
+    }
+    assert generation == {
+        "temperature": 0.2, "topP": 0.8, "topK": 10, "seed": 7,
+        "maxOutputTokens": 100,
+    }
+
+
 def test_vertex_runtime_retries_only_transient_statuses():
     delays = []
     attempts = 0
