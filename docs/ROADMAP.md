@@ -85,6 +85,19 @@ validated source/tag `fd7dd41`. The compatible v0.6.0 rollback is retained.
 The agreed English matrix for issue #70 passed and the issue is closed; see
 [operations](RELEASE_0.6.1_OPERATIONS.md) for deployment and deferred checks.
 
+## Repository maintenance after v0.6.1
+
+The [2026-10-02 maintenance record](REPOSITORY_MAINTENANCE_2026-10-02.md)
+tracks merged dependency updates, completed branch cleanup and evidence-backed
+security notice dispositions. These source changes are separate from the
+published v0.6.1 deployment.
+
+Remaining maintenance work: reconcile obsolete dependency-graph submissions,
+harden the container OS/tooling findings recorded by candidate/production image
+scans, and plan an explicit SQLAlchemy 2.1 database-driver migration. The
+compatible maintenance patch retains SQLAlchemy 2.0 / psycopg2. A production
+rollout requires the normal release and acceptance gates.
+
 ## Completed MVP hardening: v0.4.3
 
 The ordered implementation plan is

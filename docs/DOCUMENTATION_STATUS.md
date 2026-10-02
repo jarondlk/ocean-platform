@@ -99,6 +99,12 @@ state:
 
 ## Current reference and operating documents
 
+- [Repository maintenance audit](REPOSITORY_MAINTENANCE_AUDIT_2026-10-02.md) —
+  dated pre-maintenance branch, PR and alert snapshot.
+- [Repository maintenance execution](REPOSITORY_MAINTENANCE_2026-10-02.md) —
+  dependency/branch/alert dispositions, container verification and outstanding
+  hardening work; distinct from the deployed v0.6.1 release.
+
 The root `README.md`, root `SECURITY.md`, `docs/BRANDING.md`,
 `docs/DEPLOYMENT.md`, `docs/SECURITY.md`, `deploy/README.md`,
 `deploy/gcp/AUTHENTICATION.md`, `deploy/gcp/README.md`, and
