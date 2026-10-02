@@ -33,7 +33,7 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.6.0`. The active data plane now uses the
+  and OCEAN Platform release `v0.6.1`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
 - The accessible 2026-09-17 ANEMONE MiFish catalogue is stored as the
@@ -58,13 +58,13 @@ independent source checkboxes, per-source filters, enforcement across evidence
 paths, provider-effective generation controls, per-account browser settings
 and bounded issue #70 fixes. [Verification and live release gates](RELEASE_0.6.0_IMPLEMENTATION.md)
 include the applied history constraint migration `20261001_0014`. The immutable
-GCP security-amended revision now serves 100% of production traffic. The user
+GCP security-amended revision served 100% of production traffic before v0.6.1. The user
 approved promotion with authenticated UI/history and repeated scientific-answer
-QA deferred. Issue #70 remains open. See the [operations record](RELEASE_0.6.0_OPERATIONS.md).
+QA deferred. Issue #70 was subsequently resolved for its agreed English scope in v0.6.1. See the [operations record](RELEASE_0.6.0_OPERATIONS.md).
 The [readiness audit](V0.6.0_READINESS_AUDIT_2026-10-01.md) records the baseline
 and the historical private-cloud authentication limit, since resolved.
 
-## Patch in progress: v0.6.1
+## Published patch: v0.6.1
 
 The user assigned the remaining v0.6.0 work to
 [the v0.6.1 patch plan](RELEASE_0.6.1_PLAN.md) on 2026-10-02. The
@@ -74,14 +74,16 @@ reproducing two count-question paraphrases that wrongly ask for already-applied
 filters. Track implementation separately from acceptance and release:
 
 - [x] V061-01: fix exact-count routing/clarification and regressions.
-- [ ] V061-02: complete settings/account/storage lifecycle checks and repairs.
-- [ ] V061-03: finish role, keyboard/mobile/Japanese and new-history readback QA.
-- [ ] V061-04: complete repeated scientific claim-support review for issue #70.
-- [ ] V061-05: prepare 0.6.1 metadata, release records and validated candidate.
-- [ ] V061-06: publish the validated v0.6.1 tag/release and deploy manually to GCP.
+- [x] V061-02: settings/account/storage lifecycle checks and repairs passed in isolated fixtures.
+- [x] V061-03: admin, keyboard/mobile and history checks passed; live viewer/researcher checks explicitly user-deferred. Japanese acceptance is separately user-deferred.
+- [x] V061-04: bounded English scientific matrix reviewed; corrected claims rerun and guarded rejection recorded.
+- [x] V061-05: 0.6.1 metadata, source CI/build records and candidate prepared; live/scientific acceptance tracked above.
+- [x] V061-06: exact-source v0.6.1 tag/release published; canonical GCP rollout and post-cutover checks passed; temporary QA access/resources removed.
 
-Production remains the recorded v0.6.0 runtime. The v0.6.1 release tag is created
-at the validated-source stage, not on this unfinished work plan.
+Production revision `ocean-platform-v061-assay1002` serves 100% traffic from
+validated source/tag `fd7dd41`. The compatible v0.6.0 rollback is retained.
+The agreed English matrix for issue #70 passed and the issue is closed; see
+[operations](RELEASE_0.6.1_OPERATIONS.md) for deployment and deferred checks.
 
 ## Completed MVP hardening: v0.4.3
 
@@ -354,4 +356,4 @@ These are intentionally **not** the immediate plan.
 - [ ] Add file-watcher or object-storage event ingestion only if data arrival
       becomes frequent enough to justify it.
 
-Implementation authorized 2026-10-02 with Japanese-specific work/acceptance deferred. Count/settings fixes and isolated local checks are recorded in [implementation evidence](RELEASE_0.6.1_IMPLEMENTATION.md); candidate/live gates remain pending.
+v0.6.1 was published and deployed on 2026-10-02 after source/build/security, 48 deterministic runs and the bounded 31-response English scientific matrix passed. Admin/mobile/keyboard and 11 candidate history readbacks passed. Live viewer/researcher and Japanese acceptance are explicitly user-deferred. [Scientific QA](RELEASE_0.6.1_SCIENTIFIC_QA.md) retains earlier rejected attempts and accepted case dispositions; [operations](RELEASE_0.6.1_OPERATIONS.md) records verified deployment, cleanup and rollback.

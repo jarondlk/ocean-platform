@@ -56,8 +56,10 @@ class CitedPrompt:
                 elif ALIAS.search(token):
                     raise InvalidCitationAlias("Unrecognized generation citation label")
                 else:
-                    # Preserve other bracket text for the existing citation audit.
-                    resolved.append(token)
+                    # Generation reserves brackets for supplied evidence only.
+                    # Multiword inventions such as [Scope Settings] are not
+                    # canonical tokens and would otherwise evade the audit.
+                    raise InvalidCitationAlias("Citation is absent from supplied evidence")
             return "[" + ", ".join(resolved) + "]" if changed else match[0]
 
         parts, cursor = [], 0

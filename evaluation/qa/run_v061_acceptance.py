@@ -8,6 +8,7 @@ modified. Live authenticated UI/history checks remain a separate gate.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -29,6 +30,45 @@ from model_runtime import get_model_runtime
 
 class GenerationBudgetExceeded(RuntimeError):
     pass
+
+
+def emit_case(payload):
+    """Keep each stdout entry well below Cloud Run's 100 KiB line limit."""
+    brief = {key: payload[key] for key in ('id', 'repeat', 'issues', 'provider_calls', 'latency_ms')}
+    print('V061_QA_RESULT=' + json.dumps(brief), flush=True)
+    serialized = json.dumps(payload, ensure_ascii=True)
+    if len(serialized) <= 48_000:
+        print('V061_QA_CASE=' + serialized, flush=True)
+        return
+    chunks = [serialized[start:start + 16_000] for start in range(0, len(serialized), 16_000)]
+    checksum = hashlib.sha256(serialized.encode()).hexdigest()
+    for index, chunk in enumerate(chunks):
+        print('V061_QA_CHUNK=' + json.dumps({'id': payload['id'], 'repeat': payload['repeat'],
+            'index': index, 'count': len(chunks), 'sha256': checksum, 'payload': chunk}), flush=True)
+
+
+def decode_cases(lines):
+    """Reassemble captured records; never grade incomplete or corrupted evidence."""
+    cases, groups = [], {}
+    for line in lines:
+        if line.startswith('V061_QA_CASE='):
+            cases.append(json.loads(line.split('=', 1)[1]))
+        elif line.startswith('V061_QA_CHUNK='):
+            chunk = json.loads(line.split('=', 1)[1])
+            groups.setdefault((chunk['id'], chunk['repeat']), []).append(chunk)
+    for chunks in groups.values():
+        first = chunks[0]
+        if (len(chunks) != first['count'] or {c['index'] for c in chunks} != set(range(first['count']))
+                or any(c['count'] != first['count'] or c['sha256'] != first['sha256'] for c in chunks)):
+            raise ValueError('Incomplete or inconsistent QA chunks')
+        serialized = ''.join(c['payload'] for c in sorted(chunks, key=lambda c: c['index']))
+        if hashlib.sha256(serialized.encode()).hexdigest() != first['sha256']:
+            raise ValueError('QA evidence hash mismatch')
+        case = json.loads(serialized)
+        if (case['id'], case['repeat']) != (first['id'], first['repeat']):
+            raise ValueError('QA case identity mismatch')
+        cases.append(case)
+    return cases
 
 
 class MeteredModels:
@@ -58,6 +98,28 @@ class MeteredModels:
             record["latency_ms"] = round((time.perf_counter() - started) * 1000)
 
 
+def install_generation_meter(runtime, limit):
+    """Bind the application's generation factory to this process's metered client.
+
+    get_model_runtime normally returns a fresh runtime. Wrapping an unused
+    instance cannot meter api.chat; only this non-serving operator process
+    reuses the concrete Vertex runtime. Embedding clients remain unchanged.
+    """
+    client = runtime._client()
+    meter = MeteredModels(client.models, limit)
+    class ClientProxy:
+        models = meter
+        def __getattr__(self, name):
+            return getattr(client, name)
+    runtime.client = ClientProxy()
+    def factory(provider=None):
+        if provider not in (None, 'vertex'):
+            raise ValueError('QA generation must use Vertex')
+        return runtime
+    api.get_model_runtime = factory
+    return meter
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--phase", required=True, choices=("deterministic", "model"))
@@ -74,15 +136,7 @@ def main():
             "SELECT channel,generation_id,manifest_sha256 FROM corpus_publication ORDER BY channel"
         )).mappings()]
     runtime = get_model_runtime()
-    client = runtime._client()
-    meter = MeteredModels(client.models, matrix["provider_generation_limit"] if args.phase == "model" else 0)
-    # Only this process's provider client is wrapped; normal production limits
-    # and retry behavior are retained and every actual generation is counted.
-    class ClientProxy:
-        models = meter
-        def __getattr__(self, name):
-            return getattr(client, name)
-    runtime.client = ClientProxy()
+    meter = install_generation_meter(runtime, matrix["provider_generation_limit"] if args.phase == "model" else 0)
     user = CurrentUser(id=uuid.UUID(int=0), email="acceptance@test.invalid", display_name=None,
         role="researcher", account_type="research", status="active", auth_provider="disabled",
         permissions=ROLE_PERMISSIONS["researcher"])
@@ -105,6 +159,8 @@ def main():
                     issues.append("unsupported_freshness")
                 if result["model_invoked"] != case["provider_generation"]:
                     issues.append("unexpected_generation_route")
+                if result["model_invoked"] != (len(meter.generations) > before):
+                    issues.append("generation_meter_route_mismatch")
                 audit = result.get("answer_audit") or {}
                 if result["outcome"] == "answered" and (audit.get("invalid_citation_count") != 0 or not audit.get("valid_citation_count")):
                     issues.append("citation_audit_failed")
@@ -125,7 +181,7 @@ def main():
                     "provider_calls": meter.generations[before:],
                     "latency_ms": round((time.perf_counter() - started) * 1000),
                     "claim_review": "pending", "expected_behavior": case["expected_behavior"]}
-                print("V061_QA_CASE=" + json.dumps(payload), flush=True)
+                emit_case(payload)
                 completed += 1
                 if issues:
                     raise RuntimeError("Structural acceptance failed; stop before further generations")

@@ -22,7 +22,7 @@ approved.
 
 - [`RELEASE_0.6.1_PLAN.md`](RELEASE_0.6.1_PLAN.md) — user-requested v0.6.1
   routing fix, remaining settings/access/history/scientific QA and patch release
-  sequence. Implementation, tag publication and deployment remain pending.
+  sequence. Implementation, exact-source tag publication and verified deployment are complete; live viewer/researcher and Japanese acceptance are explicitly user-deferred.
 - [`RELEASE_0.6.0_BROWSER_QA_2026-10-01.md`](RELEASE_0.6.0_BROWSER_QA_2026-10-01.md)
   — subsequent production browser checks, count-routing reproductions and
   precise remaining acceptance limits.
@@ -109,6 +109,7 @@ must not be treated as canonical classification.
 
 ### v0.6.1 implementation records (2026-10-02)
 
-- [Implementation and QA](RELEASE_0.6.1_IMPLEMENTATION.md) — local patch evidence; live acceptance pending.
-- [Candidate release notes](RELEASE_NOTES_0.6.1.md) — tag/promotion pending.
-- [Operations](RELEASE_0.6.1_OPERATIONS.md) — refreshed baseline and outstanding gates.
+- [Implementation and QA](RELEASE_0.6.1_IMPLEMENTATION.md) — patch/CI evidence; current-admin, mobile and history checks passed; bounded English scientific acceptance passed; live viewer/researcher checks explicitly user-deferred.
+- [Published release notes](RELEASE_NOTES_0.6.1.md) — v0.6.1 published and deployed with recorded deferrals.
+- [Operations](RELEASE_0.6.1_OPERATIONS.md) — exact-source release, verified GCP traffic, cleanup, rollback and explicit deferrals.
+- [Scientific QA dispositions](RELEASE_0.6.1_SCIENTIFIC_QA.md) — deterministic results, complete rejected model batches, claim-level findings and final bounded English acceptance.

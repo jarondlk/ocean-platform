@@ -11,17 +11,17 @@ and can be audited against the evidence that was actually supplied.
 
 ---
 
-The published [v0.6.0 release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.6.0)
-adds chat source checkboxes, independent filters and available-data selections.
-The security-amended v0.6.0 revision now serves 100% of production traffic.
-The user approved promotion with authenticated UI/history and repeated
-scientific-answer QA deferred. See the
-[release and deployment record](docs/RELEASE_0.6.0_OPERATIONS.md) and
-[implementation verification](docs/RELEASE_0.6.0_IMPLEMENTATION.md).
-Subsequent [production browser QA](docs/RELEASE_0.6.0_BROWSER_QA_2026-10-01.md)
-verified the current-admin workflows and found a remaining count-routing issue.
-The fix and outstanding acceptance checks are assigned to the
-[v0.6.1 patch in progress](docs/RELEASE_0.6.1_IMPLEMENTATION.md).
+The published [v0.6.1 release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.6.1)
+is deployed at [oceaninfobio.com](https://oceaninfobio.com). It repairs scoped
+count phrasing, account settings isolation and scientific claim/citation
+boundaries on top of v0.6.0 source checkboxes and available-data filters.
+Admin sign-in, mobile/keyboard behavior, 11 candidate history readbacks and
+the bounded 31-response English scientific matrix passed. Production sign-in,
+scoped counts/citations and anonymous access protections passed after cutover.
+Live viewer/researcher checks and Japanese-specific acceptance are explicitly
+user-deferred. See [implementation](docs/RELEASE_0.6.1_IMPLEMENTATION.md),
+[scientific dispositions](docs/RELEASE_0.6.1_SCIENTIFIC_QA.md) and
+[deployment/rollback records](docs/RELEASE_0.6.1_OPERATIONS.md).
 
 ## Study Sites
 
@@ -46,7 +46,7 @@ remains part of the v0.5.0 full-catalogue import.
 
 ## Current Prototype Status
 
-Status as of **2026-10-01**: this is an active invite-only **Next.js +
+Status as of **2026-10-02**: this is an active invite-only **Next.js +
 FastAPI** prototype deployed on GCP, with PostgreSQL/pgvector retrieval,
 Vertex AI generation and embeddings, Google OIDC, and Cloud Run Jobs for
 operator-approved batch work. The same application remains runnable locally
@@ -56,20 +56,20 @@ service.
 
 Current managed milestone:
 
-- GitHub release [`v0.6.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.6.0)
+- GitHub release [`v0.6.1`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.6.1)
   is deployed at [`oceaninfobio.com`](https://oceaninfobio.com). Revision
-  `ocean-platform-v060-sec1001` serves 100% of traffic from security amendment
-  `6fd37eb`; the release tag remains at `91d8567`. The accessible 2026-09-17 ANEMONE
+  `ocean-platform-v061-assay1002` serves 100% of traffic from the validated
+  source/tag `fd7dd41`. The accessible 2026-09-17 ANEMONE
   observation contributes 3,498 source occurrences/assays, 349,638 assignment
   rows and 6,996 eDNA retrieval documents. The complete corpus contains 7,319
   documents and matching embeddings. Physical sample identity across source
   occurrences remains unresolved. See the
-  [v0.6.0 operations record](docs/RELEASE_0.6.0_OPERATIONS.md).
+  [v0.6.1 operations record](docs/RELEASE_0.6.1_OPERATIONS.md).
 - Exact catalogue questions have hash-verified aggregate citations, downloads
-  and provenance traces. Scoped chat-answer defects remain open in
-  [issue #70](https://github.com/jarondlk/ocean-platform/issues/70), including
-  a rare-taxon false denial and an unsupported freshness claim. Scientific
-  answers still require review of the cited records.
+  and provenance traces. The agreed English routing/claim-support matrix for
+  [issue #70](https://github.com/jarondlk/ocean-platform/issues/70) passed and the
+  issue is closed. Scientific answers still require review of cited records;
+  bounded acceptance does not establish correctness for arbitrary questions.
 - The live data plane uses Artifact Registry `ocean-platform`, Cloud SQL
   `ocean-postgres` / database `ocean_platform`, jobs under the `ocean-*`
   prefix, OCEAN Secret Manager entries, and bucket
