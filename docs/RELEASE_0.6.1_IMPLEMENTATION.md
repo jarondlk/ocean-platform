@@ -84,7 +84,9 @@ a separate zero-traffic QA origin revision with the same immutable images.
 Normal admin sign-in, source controls, keyboard/mobile checks and eleven recorded
 UI interactions passed independent read-only history verification. One retained answer from each v0.5.0/v0.6.0
 period and a historical aggregate hash/provenance/download remain readable.
-Live viewer/researcher sessions or an explicit user disposition remain pending.
+Live viewer/researcher sessions were explicitly user-deferred on 2026-10-02.
+They are unperformed; isolated role checks and the live admin pass remain the
+available account-boundary evidence.
 
 Scientific review found and corrected invented citations, unknown samples
 called environmental, unsupported method/protocol explanations, calibration/
@@ -96,9 +98,13 @@ required checks passed and 947 local backend tests passed (36 integration
 skips; separate PostgreSQL CI passed). All 48 corrected deterministic runs are
 retained. Twenty-five reviewed model prompts remain byte-identical; six rare-taxon
 repetitions passed on the final immutable build. The 31-case bounded English
-scientific matrix is accepted; live role disposition remains pending. See the scientific and
-operations records for exact execution dispositions. Production remains
-v0.6.0; no v0.6.1 tag/release/promotion is claimed.
+scientific matrix is accepted. The user explicitly authorized publication and
+deployment with the two live role checks deferred. The v0.6.1 source tag pins
+this exact built commit; canonical revision `ocean-platform-v061-assay1002`
+serves 100% production traffic. Normal production sign-in, the original scoped
+one/one/one/122 reproduction with seven valid citations, and anonymous HTTP 401
+protections passed after cutover. See the scientific and operations records for
+exact execution dispositions and remaining limits.
 
 The owned feedback section exposes its interaction ID as a DOM data attribute
 for bounded independent readback; QA need not scan unrelated history.
