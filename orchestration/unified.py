@@ -860,11 +860,24 @@ LEGACY STUDY SITES (do not assign these to eDNA samples without source metadata)
             "are unavailable. Unknown calibration status means only that calibration is not "
             "established by the supplied records; never turn it into absent calibrated "
             "concentrations, absent calibration or uncalibrated data. Source-supplied copies/mL "
-            "and verified calibration are different facts. Citation labels identify evidence, "
+            "are reported DNA concentration values, not sequencing read counts or fish counts. "
+            "Never group copies/mL with read counts as sequencing output or say copies/mL "
+            "are not concentration. Reported DNA concentration and verified calibration are "
+            "different facts. Physical sample linkage is unresolved: do not assert that "
+            "different records, assays or runs are the same physical sample. Alternative "
+            "assignment outputs are not independent validation; do not invent the algorithm, "
+            "database behavior or laboratory relationship that explains their agreement. "
+            "A statement about what missing values would mean is conditional, not proof "
+            "that values are missing in these records. An empty detection table is not a "
+            "missing-value table. Do not derive unknown calibration from missing values; "
+            "say only that calibration is not established by the supplied records. "
+            "Citation labels identify evidence, "
             "not samples; use recorded sample identifiers when a sample is requested. "
-            "For a methodological yes/no question, use at most four sentences: direct answer, "
-            "cited evidence limitation, and any necessary unknown-status caveat. Include no "
-            "sample examples, taxon lists or incidental numbers. If the question explicitly "
+            "For a methodological yes/no question, write one short paragraph with two or "
+            "three sentences: direct answer, the relevant cited limitation, and only a "
+            "necessary unknown-status caveat. Use one or two relevant evidence citations. "
+            "Do not add headings, bullets, a scope section, sample examples, taxon lists, "
+            "incidental numbers or unrelated caveats. If the question explicitly "
             "requests records or counts, report only the requested supported details.\n"
         )
 
@@ -874,7 +887,10 @@ LEGACY STUDY SITES (do not assign these to eDNA samples without source metadata)
         time_bounds = (
             "\nMETAGENOME TIME BOUNDS: Index/association dates do not establish collection "
             "days. If the evidence text records only a collection month, report that month "
-            "without inventing a day, even if the index date is the first day of the month.\n"
+            "without inventing a day, even if the index date is the first day of the month. "
+            "When a diversity index or analysis document is not supplied, say it is not "
+            "available in this evidence. Do not claim it was disabled or deliberately "
+            "excluded by request settings unless the applied settings explicitly say so.\n"
         )
 
     return (
