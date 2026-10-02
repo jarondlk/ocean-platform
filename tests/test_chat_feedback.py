@@ -438,6 +438,26 @@ def test_unknown_alias_is_rejected_even_when_answer_audit_disabled(monkeypatch):
         assert row.status == 'failed' and row.answer is None
 
 
+def test_invented_multiword_citation_cannot_be_persisted_as_answered(monkeypatch):
+    from types import SimpleNamespace
+
+    factory = _database()
+    user = _add_user(factory, 'scope-label@example.org')
+    _install_database(monkeypatch, factory)
+    _stub_chat_dependencies(monkeypatch)
+    monkeypatch.setattr(api_auth, 'authenticate_request', lambda _: user)
+    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: SimpleNamespace(
+        chat=lambda **_: 'Temperature 12 C [S1]. CTD selected [Scope Settings].'))
+    response = TestClient(api_main.app).post('/chat', json={'query': 'temperature', 'run_answer_audit': False})
+    assert response.status_code == 502
+    detail = response.json()['detail']
+    assert detail['code'] == 'llm_invalid_citation'
+    with factory() as session:
+        row = session.get(ChatInteraction, uuid.UUID(detail['interaction_id']))
+        assert row.status == 'failed' and row.answer is None and row.outcome is None
+        assert row.answer_audit_snapshot is None
+
+
 def test_issue59_unfiltered_eight_document_request_keeps_canonical_edna_citations(monkeypatch):
     from types import SimpleNamespace
     factory = _database()
