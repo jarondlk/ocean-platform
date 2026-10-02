@@ -134,3 +134,12 @@ def test_cli_generation_propagates_failure_instead_of_marking_it_answered(monkey
     monkeypatch.setattr(unified, 'get_model_runtime', lambda: SimpleNamespace(chat=fail))
     with pytest.raises(ModelOutputLimitError):
         unified.ask('temperature')
+
+
+def test_month_only_metagenome_evidence_does_not_present_index_date_as_collection_day():
+    rows = [{'doc_id': 'meta_2024-04-O-s0', 'source_type': 'metagenome',
+             'time': '2024-04-01', 'text': 'Metagenome sample 2024-04-O-s0 (2024-04).'}]
+    prompt = _build_prompt_from_context('When was this sample collected?', rows,
+        {'analysis': [], 'reliability': []})
+    assert '(metagenome, index/association date 2024-04-01;' in prompt
+    assert 'If the evidence text records only a collection month, report that month' in prompt
