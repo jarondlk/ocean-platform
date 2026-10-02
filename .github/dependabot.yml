@@ -14,6 +14,16 @@ updates:
           - version-update:semver-minor
           - version-update:semver-patch
     groups:
+      # SQLAlchemy 2.1 changes the default PostgreSQL driver. Review this
+      # dependency separately from broad routine updates; security updates
+      # continue to use the existing python-security group below.
+      python-sqlalchemy:
+        applies-to: version-updates
+        patterns:
+          - sqlalchemy
+        update-types:
+          - minor
+          - patch
       python-routine:
         applies-to: version-updates
         patterns:

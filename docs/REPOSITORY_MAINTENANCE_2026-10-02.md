@@ -38,6 +38,24 @@ migrate drivers and validate PostgreSQL/pgvector migrations, retrieval,
 transactions, history and backup/restore. See the
 [upstream migration notes](https://docs.sqlalchemy.org/en/21/changelog/migration_21.html#default-postgresql-driver-changed-to-psycopg-psycopg-3).
 
+## New PR opened during maintenance
+
+[PR #96](https://github.com/jarondlk/ocean-platform/pull/96) was opened by
+Dependabot while the original work was being merged. Against `c8c032b`, its
+remaining changes are SQLAlchemy 2.0.52 → 2.1.1, cftime 1.6.5 → 1.6.6,
+google-auth 2.58.1 → 2.59.0 and googleapis-common-protos 1.75.2 → 1.75.4 across
+the inherited locks. Retain it and its branch for separate review; the known
+SQLAlchemy driver transition is excluded from this maintenance.
+
+The Dependabot configuration now puts SQLAlchemy routine updates in a separate
+`python-sqlalchemy` group before the broad catch-all. This keeps patch updates
+eligible and prevents minor driver transitions from blocking unrelated routine
+updates. The existing `python-security` group is unchanged, and SQLAlchemy
+security alerts/updates are not disabled. Group ordering follows
+[GitHub's documented first-matching-group behavior](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference#groups).
+A subsequent bot refresh may replace #96 with separate routine/SQLAlchemy PRs;
+preserve genuine remaining updates rather than treating them as a duplicate.
+
 ## Branch cleanup
 
 All 11 local/remote branch names listed in the audit were rechecked for ancestry,
