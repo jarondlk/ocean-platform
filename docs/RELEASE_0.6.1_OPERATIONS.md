@@ -1,12 +1,12 @@
 # v0.6.1 operations
 
-**Updated 2026-10-02 JST. Source merged; candidate acceptance, release and rollout pending.**
+**Updated 2026-10-02 JST. v0.6.1 published and deployed; live viewer/researcher and Japanese acceptance explicitly deferred.**
 
 The authorized sequence is recorded in [the patch plan](RELEASE_0.6.1_PLAN.md).
-Japanese-specific work/acceptance is explicitly deferred; other acceptance gates
-remain in force. No production schema/publication mutation is planned.
+Japanese-specific work/acceptance and the two live viewer/researcher checks are
+explicitly user-deferred; the other acceptance gates passed. No production schema/publication mutation is planned.
 
-## Refreshed baseline
+## Historical pre-cutover baseline
 
 Cloud Run inventory on 2026-10-02 confirmed `ocean-platform-v060-sec1001` still
 receives 100% traffic, with the `v060-production` tag. The v0.5.0 production,
@@ -21,14 +21,14 @@ works.
 The source/package candidate version is `0.6.1`; it is not yet a published Git tag.
 The compatible v0.6.0 rollback revision and schema head `20261001_0014` remain.
 
-## Release gates still pending
+## Final acceptance and rollout
 
-- Live viewer/researcher account checks or an explicit user disposition; current-admin, mobile/keyboard and history checks passed below.
-- The bounded English scientific matrix is accepted; retain earlier rejected attempts and recorded limits.
-- GitHub tag/release only after candidate acceptance or an explicit recorded
-  user deferral; traffic promotion and post-cutover checks afterward.
-- Align the evaluation job after acceptance/promotion; retain other unchanged
-  manual job runtimes and complete development-branch synchronization.
+The user explicitly deferred the two live viewer/researcher checks on 2026-10-02
+and authorized publication/deployment. These checks are unperformed. Admin,
+keyboard/mobile, 11 candidate history readbacks, isolated role coverage and the
+bounded English scientific matrix passed. Japanese acceptance remains separately
+user-deferred. The final deployment and cleanup record is at the end of this
+document; earlier candidate sections preserve their historical states.
 
 ## Source and build
 
@@ -158,7 +158,7 @@ VM is restored to its original stopped state. Local preview listeners on
 the older stale preview tab failed debugger synchronization twice, so its UI
 closure is not claimed. Existing user containers are unrelated and retained.
 
-## Current response-bounds candidate
+## Historical response-bounds candidate
 
 PR #91 merged as `27e821cf7a0634aab1d744708788ff8f6efa8584` after all eight required
 checks passed. Cloud Build `3bd02481-153e-49fe-8732-96621759e54a` succeeded from that
@@ -181,7 +181,7 @@ merged as `009ab8e97052f5d5bb2e958630d0371561792c5c`, all eight checks passed,
 and the new immutable build is pending. The same historical aggregate downloaded through
 the chat citation panel and its payload matches its original SHA-256.
 
-## Current metric/identity correction build
+## Historical metric/identity correction build
 
 Source `009ab8e97052f5d5bb2e958630d0371561792c5c` passed all eight required
 GitHub checks. Cloud Build `2a56297c-ee3c-4be5-a0c6-39386dd0c47a` succeeded;
@@ -202,7 +202,7 @@ Read-only execution `ocean-v061-acceptance-rtjt5` verified the ninth admin UI
 interaction in 18 seconds. No schema/publication migration or corpus rewrite
 has occurred. Live viewer/researcher disposition remains pending.
 
-## Current assay-citation correction
+## Assay-citation correction before final acceptance
 
 PR #93 merged source `fd7dd4175eebb87b20450fe67d2bfac1cff3f8a2`, with all eight
 required CI checks passed and 947 local backend tests passed. Its exact-source
@@ -219,7 +219,7 @@ verification in `ocean-v061-acceptance-g2tdc`. Live viewer/researcher account
 availability or explicit user disposition remains pending. Production still
 serves v0.6.0 at 100%; no v0.6.1 tag or release exists.
 
-## Final built candidate artifacts
+## Final built artifacts (captured before promotion)
 
 | Artifact | Immutable value |
 | --- | --- |
@@ -239,3 +239,70 @@ browser count reproduction and its eleventh saved record passed independent
 read-only scope/fingerprint/prompt/audit verification in
 `ocean-v061-acceptance-wqp7g`.
 Live viewer/researcher disposition remains pending; no tag/release/promotion.
+
+
+## Published release and production rollout — 2026-10-02
+
+GitHub [v0.6.1](https://github.com/jarondlk/ocean-platform/releases/tag/v0.6.1)
+(release ID `401675060`) was published at `2026-10-02T09:10:55Z`. Its annotated
+source tag resolves to the exact built and accepted commit
+`fd7dd4175eebb87b20450fe67d2bfac1cff3f8a2`. Acceptance documentation merged in
+PR #94 (`c9b8dd5`); subsequent documentation-only commits do not change the
+immutable runtime source. All eight required source checks passed; final backend
+validation was 947 passed and 36 integration skips, with PostgreSQL CI passing.
+
+Traffic promotion began at `2026-10-02T09:11:11Z`; Cloud Run reported Ready at
+`09:11:19Z`. Canonical revision `ocean-platform-v061-assay1002` receives **100%**
+traffic under `v061-production`. Its two immutable image digests and build are
+exactly those in the final built-artifact table above. `AUTH_URL` remains
+`https://oceaninfobio.com`; auth-required, mock-disabled, existing identity,
+secrets, Cloud SQL connection, read-only serving data mount and resource limits
+are retained. The QA-origin revision was not promoted.
+
+Post-cutover verification:
+
+- A fresh browser tab reached the normal production sign-in screen and completed
+  sign-in with the existing administrator; controls hydrated normally.
+- Available eDNA assignment/taxon options loaded. With only eDNA enabled,
+  `assignment_method=qcauto_target` and `taxon=Ablabys taenianotus`, the original
+  count reproduction returned **1 occurrence, 1 assay, 1 assignment row and
+  122 reads**, `Model run: No`, and **7 valid / 0 invalid / 0 warning** citations.
+  Its retained aggregate is
+  `a31af7add9c777881bfb6d5ec24c40bf1117df2bcb3308a8efd778820b876962`.
+  This normal smoke request creates one further persisted chat interaction.
+- Anonymous chat/capability/filter requests each returned HTTP 401, without
+  browser credentials. The bounded revision-log query from cutover through the
+  smoke check found zero ERROR/HTTP 5xx entries; this is not a load test.
+- Production preferences were restored to all four sources with no filters.
+- GitHub production deployment `6805296652` records the same source and successful
+  manual rollout. Issue #70 is closed after the agreed English checks passed;
+  general scientific correctness and live Japanese acceptance are not claimed.
+
+Only `ocean-evaluation` was aligned to the final API digest and `SOURCE_COMMIT`.
+Fresh specification comparison verified that its command, arguments, identity,
+secrets, mounts, limits, task count, retries and timeout are retained. It was not
+executed. The other four manual job runtimes remain unchanged at the compatible
+v0.6.0 images. No migration, corpus import, embedding refresh or classification
+publication was performed; schema head remains `20261001_0014` and accepted
+publication generations are retained.
+
+Cleanup is verified: temporary job `ocean-v061-acceptance` is deleted; only the
+five normal jobs remain. Tags `v061-candidate` and `v061-final` are removed. The
+exact temporary candidate OAuth callback was removed and a fresh client-detail
+readback showed only the original canonical and default Cloud Run callbacks;
+both authorized origins and the existing secret remain. A transient Google
+Console readback error recovered with its Retry control; no second save was
+needed. Private evidence captures remain outside Git.
+
+Compatible rollback is retained as `ocean-platform-v060-sec1001` under
+`v060-production`, and the older v0.5.0 tags remain unchanged. To roll back the
+application without changing schema/publications:
+
+```sh
+gcloud run services update-traffic ocean-platform \
+  --to-revisions=ocean-platform-v060-sec1001=100 \
+  --project=data-infra-infobio --region=asia-northeast1
+```
+
+Rolling back the serving application does not revert the separately aligned
+manual evaluation job. No production rollback was required during this rollout.

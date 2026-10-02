@@ -1,9 +1,11 @@
 # v0.6.1 scientific acceptance
 
 Updated 2026-10-02 JST. **The bounded English scientific matrix is accepted.
-Live viewer/researcher disposition and release promotion remain pending.** Japanese-specific work/acceptance is deferred
-by the user. Issue [#70](https://github.com/jarondlk/ocean-platform/issues/70)
-remains open.
+Live viewer/researcher checks were explicitly user-deferred before publication
+and production promotion.** Japanese-specific work/acceptance is separately
+user-deferred. Issue [#70](https://github.com/jarondlk/ocean-platform/issues/70)
+is closed after its agreed English cases passed. The earlier candidate sections
+below preserve rejected attempts and their dated deployment states.
 
 ## First candidate and frozen data
 

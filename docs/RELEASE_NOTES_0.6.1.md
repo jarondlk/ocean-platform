@@ -1,6 +1,6 @@
 # v0.6.1 — Chat scope and settings patch
 
-**Candidate; Git tag and production promotion pending acceptance.**
+**Published and deployed on 2026-10-02.**
 
 - Selected eDNA filters now support ordinary exact-count paraphrases, including
   the rare-taxon questions that previously requested filters already set.
@@ -29,7 +29,9 @@
   successful responses; earlier failures/rejections remain in the QA record.
 
 No schema migration, corpus import or embedding refresh is required. Japanese
-work and acceptance are deferred by the user; existing support remains.
+work and acceptance are deferred by the user; existing support remains. Live
+viewer/researcher account checks were explicitly deferred on 2026-10-02; live
+admin checks and isolated role-boundary coverage passed.
 
 See [implementation and QA](RELEASE_0.6.1_IMPLEMENTATION.md) and
 [operations](RELEASE_0.6.1_OPERATIONS.md) for actual validation/deployment status.

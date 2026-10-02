@@ -2,19 +2,20 @@
 
 > **Last updated**: 2026-10-02 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform `v0.6.0` is live at
+> **Current status**: OCEAN Platform `v0.6.1` is live at
 > [oceaninfobio.com](https://oceaninfobio.com/). Cloud Run revision
-> `ocean-platform-v060-sec1001` receives 100% traffic from security-amended
-> runtime source `6fd37eb` (immutable release tag `91d8567`). Production has 3,498 ANEMONE source
+> `ocean-platform-v061-assay1002` receives 100% traffic from accepted
+> runtime source/tag `fd7dd41`. Production has 3,498 ANEMONE source
 > occurrences/assays, 349,638 assignment rows, 13,932 standard rows, 6,996
 > eDNA documents and 323 other documents. All 7,319 documents have matching
 > embeddings; schema head is now `20261001_0014` (v0.6.0 additive migration) and provenance publication is
 > `v050-production-provenance`. A fresh backup restored in isolation, existing
 > history and pilot identities were preserved. Live source/filter/retrieval
 > checks and anonymous HTTP protections passed. The user approved promotion
-> with authenticated UI/history and repeated scientific-answer QA deferred.
-> See the [v0.6.0 operations record](docs/RELEASE_0.6.0_OPERATIONS.md). Scoped chat
-> answer defects remain in [issue #70](https://github.com/jarondlk/ocean-platform/issues/70).
+> with live viewer/researcher checks explicitly deferred; Japanese acceptance is
+> separately deferred. Admin/mobile/keyboard/history and bounded English scientific
+> QA passed. See the [v0.6.1 operations record](docs/RELEASE_0.6.1_OPERATIONS.md).
+> The agreed English checks for [issue #70](https://github.com/jarondlk/ocean-platform/issues/70) passed and it is closed.
 > The older rollout accounts below are dated history.
 
 ## v0.6.0 released and deployed
@@ -42,7 +43,7 @@ including options/settings/scoped answers/downloads/provenance; two count
 paraphrases still wrongly request filters that are already applied. The
 compatible v0.5.0 revision remains a rollback route.
 
-## v0.6.1 acceptance in progress
+## v0.6.1 released and deployed
 
 On 2026-10-02, the user requested that the remaining v0.6.0 work be planned and
 tracked as **v0.6.1**. Follow [the patch plan](docs/RELEASE_0.6.1_PLAN.md): fix the
@@ -52,8 +53,13 @@ then validate, publish and deploy the patch. Current-admin browser passes do
 not establish other-account behavior or the complete scientific matrix.
 Implementation is merged; candidate access, current-admin/mobile/keyboard and
 retained history/download checks passed. The bounded English scientific matrix passed;
-live viewer/researcher disposition remains pending. The v0.6.1 release tag is
-not published; production remains the recorded v0.6.0 runtime.
+live viewer/researcher checks were explicitly user-deferred. The v0.6.1 tag
+pins exact built source `fd7dd41`, and canonical revision
+`ocean-platform-v061-assay1002` serves 100% production traffic. Production sign-in,
+scoped one/one/one/122 counts with valid citations and anonymous 401 boundaries
+passed. Only the evaluation job image/source metadata changed; no batch job ran.
+The temporary OAuth callback, QA job and candidate routes are removed. Compatible
+v0.6.0 rollback is retained. Older sections below preserve dated history.
 
 ---
 
@@ -1527,7 +1533,7 @@ Ignored local artifacts that may be intentionally kept:
 - `onagawa_sst_subset/`
 - optional raw satellite staging directories
 
-### v0.6.1 implementation in progress — 2026-10-02
+### Historical v0.6.1 implementation stage — 2026-10-02
 
 PRs #85 and #87 are merged. Built source `5f68c34017827e042749ef87432022c750fd6b91`, successful Cloud Build `a36d7ad7-5f0a-4ebb-ad5b-af9223a9dc7e`, Ready revision `ocean-platform-v061-patch1002b` at zero traffic under `v061-candidate`. Backend 939 passed / 36 integration skips / 78.30% coverage, frontend 52 tests/typecheck/build, PostgreSQL 36 integration tests, all eight required CI/CodeQL checks on the final source head, and all 48 final deterministic runs passed (corrected meter: zero generation calls). Japanese-specific work/acceptance is explicitly deferred.
 
@@ -1537,7 +1543,7 @@ Live viewer/researcher sign-ins and mobile acceptance remain pending. The final 
 
 The temporary GCP acceptance job is deleted; all five original manual job specifications are unchanged. Local preview listeners are stopped, owned fixture container removed, Podman VM restored to stopped. Private outputs/captures remain in `/tmp/ocean-v061-release`; old stale preview UI closure failed twice. See implementation, operations and scientific QA documents for precise dispositions.
 
-### Latest v0.6.1 acceptance state — 2026-10-02
+### Historical v0.6.1 acceptance stage — 2026-10-02
 
 Use the [scientific QA record](docs/RELEASE_0.6.1_SCIENTIFIC_QA.md) and
 [operations record](docs/RELEASE_0.6.1_OPERATIONS.md) for current facts. Candidate
@@ -1567,3 +1573,20 @@ remains the release gate. Do not inherit the v0.6.0 QA waiver. Tag the exact
 built source only after that disposition, then promote the canonical revision,
 align only `ocean-evaluation`, check production and remove temporary callback/
 QA job/routes. Production remains v0.6.0 at 100%; no v0.6.1 publication yet.
+
+
+### v0.6.1 final release disposition — 2026-10-02
+
+The user explicitly deferred live viewer/researcher checks and authorized rollout.
+v0.6.1 is published at exact built source `fd7dd41`; canonical revision
+`ocean-platform-v061-assay1002` receives 100% traffic. GitHub production deployment
+`6805296652` is successful. Normal production sign-in and the original scoped
+count reproduction passed, and all anonymous protected endpoints returned 401.
+The bounded post-cutover log query found zero ERROR/HTTP 5xx entries.
+Only `ocean-evaluation` image/source metadata is aligned; other job runtime
+settings and source/publication/schema state are retained. No job was executed
+for deployment. Temporary QA job, preview tags and exact OAuth callback are
+removed. The original two callbacks and existing rollback tags remain.
+Issue #70 is closed for the agreed English scope; Japanese live acceptance
+and viewer/researcher live sessions are unperformed, explicitly deferred.
+See the v0.6.1 operations record for digests, timestamps, caveats and rollback.
