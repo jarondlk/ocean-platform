@@ -1,10 +1,10 @@
 # Optional dependencies for the archived Streamlit reference application.
 -r analysis.in
 
-streamlit==1.62.0
+streamlit==1.64.0
 # Streamlit requires watchdog off macOS; keep the Linux archive lock complete
 # when pip-compile runs on an Apple Silicon development host.
 watchdog==6.0.0
 
-# Security floor for GitPython advisories affecting versions through 3.1.58.
-gitpython==3.1.61
+# Security floor for GHSA-59cr-6r3x-644w, affecting versions through 3.1.61.
+gitpython==3.1.62

@@ -1,21 +1,65 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-09-11 JST
+> **Last updated**: 2026-10-02 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform release `v0.4.4` is live on Cloud Run
-> service `ocean-platform`; revision `ocean-platform-v044-d3aa6a9` receives
-> 100% traffic. PR #62 merged as `d3aa6a975e7405eaa291d53b50c33985e07f28ff`;
-> immutable build `bbff6249-7f41-4375-8ee8-97b5ce6c06a2` passed. Backup/restore,
-> schema verification, candidate smoke checks, and the controlled taxonomy
-> rebuild completed. The 70 pilot detections retain their source fields and
-> unknown sample classification; no classification review was applied. See the
-> [v0.4.4 operations record](docs/RELEASE_0.4.4_OPERATIONS.md). The canonical
-> application URL is `https://oceaninfobio.com`.
-> Researcher-specific authenticated scientific acceptance, suspension and
-> uninvited-account identities, Billing-console owner confirmation, and the
-> longer observation window remain follow-ups. The
-> [documentation status register](docs/DOCUMENTATION_STATUS.md) identifies older
-> completed plans that remain only as historical records.
+> **Current status**: OCEAN Platform `v0.6.1` is live at
+> [oceaninfobio.com](https://oceaninfobio.com/). Cloud Run revision
+> `ocean-platform-v061-assay1002` receives 100% traffic from accepted
+> runtime source/tag `fd7dd41`. Production has 3,498 ANEMONE source
+> occurrences/assays, 349,638 assignment rows, 13,932 standard rows, 6,996
+> eDNA documents and 323 other documents. All 7,319 documents have matching
+> embeddings; schema head is now `20261001_0014` (v0.6.0 additive migration) and provenance publication is
+> `v050-production-provenance`. A fresh backup restored in isolation, existing
+> history and pilot identities were preserved. Live source/filter/retrieval
+> checks and anonymous HTTP protections passed. The user approved promotion
+> with live viewer/researcher checks explicitly deferred; Japanese acceptance is
+> separately deferred. Admin/mobile/keyboard/history and bounded English scientific
+> QA passed. See the [v0.6.1 operations record](docs/RELEASE_0.6.1_OPERATIONS.md).
+> The agreed English checks for [issue #70](https://github.com/jarondlk/ocean-platform/issues/70) passed and it is closed.
+> The older rollout accounts below are dated history.
+
+## v0.6.0 released and deployed
+
+The user authorized implementation on 2026-10-01. Chat source selection,
+independent filters, prompt/history enforcement, per-account browser settings
+and bounded answer-support fixes are implemented and locally verified. See
+[the implementation record](docs/RELEASE_0.6.0_IMPLEMENTATION.md) for tests,
+new history constraint revision `20261001_0014` and documented QA limits.
+On 2026-10-01 the user also authorized GitHub release publication and manual
+GCP deployment. The [operations record](docs/RELEASE_0.6.0_OPERATIONS.md)
+records the published tag at `91d8567`, passing remote checks and Cloud Build,
+a fresh verified 28-table backup/isolated restore, applied migration
+`20261001_0014` and Ready zero-traffic revision `ocean-platform-v060-cand1001`.
+The two-library security amendment merged at `6fd37eb`, passed all source
+checks and an immutable rebuild, and is Ready as `ocean-platform-v060-sec1001`
+at 100% production traffic after explicit user approval to defer remaining QA.
+Read-only runtime QA passed again. All five manual job images are aligned,
+with their normal commands/identities/limits retained. Authenticated UI/history
+and repeated scientific claim-support QA remain deferred because browser
+control was unavailable at cutover. A subsequent fresh in-app browser tab
+completed the current-admin checks in the
+[dated production QA report](docs/RELEASE_0.6.0_BROWSER_QA_2026-10-01.md),
+including options/settings/scoped answers/downloads/provenance; two count
+paraphrases still wrongly request filters that are already applied. The
+compatible v0.5.0 revision remains a rollback route.
+
+## v0.6.1 released and deployed
+
+On 2026-10-02, the user requested that the remaining v0.6.0 work be planned and
+tracked as **v0.6.1**. Follow [the patch plan](docs/RELEASE_0.6.1_PLAN.md): fix the
+count-routing reproductions, verify settings/account/storage edge cases,
+complete role/UI/new-history readback and repeated scientific-answer acceptance,
+then validate, publish and deploy the patch. Current-admin browser passes do
+not establish other-account behavior or the complete scientific matrix.
+Implementation is merged; candidate access, current-admin/mobile/keyboard and
+retained history/download checks passed. The bounded English scientific matrix passed;
+live viewer/researcher checks were explicitly user-deferred. The v0.6.1 tag
+pins exact built source `fd7dd41`, and canonical revision
+`ocean-platform-v061-assay1002` serves 100% production traffic. Production sign-in,
+scoped one/one/one/122 counts with valid citations and anonymous 401 boundaries
+passed. Only the evaluation job image/source metadata changed; no batch job ran.
+The temporary OAuth callback, QA job and candidate routes are removed. Compatible
+v0.6.0 rollback is retained. Older sections below preserve dated history.
 
 ---
 
@@ -23,7 +67,7 @@
 
 This repository contains a provenance-aware Retrieval-Augmented Generation
 system for marine environmental monitoring. It combines CTD water profiles,
-shotgun metagenome summaries, satellite SST observations, and bounded ANEMONE
+shotgun metagenome summaries, satellite SST observations, and ANEMONE
 MiFish eDNA evidence into a citation-grounded question-answering system with
 cross-source evidence expansion and deterministic answer citation auditing.
 
@@ -36,7 +80,8 @@ application shape:
 - **LLM runtime**: Ollama, usually host-run locally; optional compose overlay
 - **Ingestion**: manual batch-run pipeline scripts, not automatic ingestion
 - **ANEMONE/eDNA**: bounded external-source acquisition, immutable canonical
-  records, method-separated retrieval, descriptive analyses, and exact citations
+  records, catalogue-scale method-separated retrieval, descriptive analyses,
+  exact aggregate citations and provenance
 - **Provenance**: strict raw-source contracts, SHA-256 manifests, row hashes,
   lineage inspection, and transactional upsert planning
 - **Identity**: invite-only OpenID Connect through Auth.js; viewer, researcher,
@@ -55,6 +100,21 @@ used only as historical reference and parity material.
 ---
 
 ## 2. What Changed Recently
+
+### v0.5.0 released and deployed (2026-09-30)
+
+The accessible ANEMONE catalogue observation from 2026-09-17 was imported with
+3,498 source occurrences/assays and 349,638 assignment rows. All 6,996 eDNA
+documents have matching embeddings, making 7,319 total documents. Backup,
+isolated restore, existing-data preservation, citation download/hash and
+provenance navigation passed. The release tag is unchanged; production uses
+the validated importer amendment. Physical sample identity remains unresolved,
+and scoped chat answer defects remain in
+[issue #70](https://github.com/jarondlk/ocean-platform/issues/70). See the
+[v0.5.0 operations record](docs/RELEASE_0.5.0_OPERATIONS.md) for exact evidence.
+
+The following v0.4.x sections preserve what was true at their respective
+release dates. They do not describe current production traffic or corpus size.
 
 ### v0.4.4 released and deployed (2026-09-11)
 
@@ -1241,7 +1301,7 @@ git diff --check
 | Pipeline UI | Manual batch job controls, preflight checks, active/background job status, artifact freshness, per-stage logs, run history, manifests, and artifact diffs exist |
 | Database UI | Schema, table browsing, and read-only query surface exist |
 | Data exploration | Combined Explore corpus workbench plus combined Data domain workbench exist for expert browsing |
-| ANEMONE eDNA | One bounded unknown-classification pilot, separate assignment methods, exact source citations, descriptive analysis, registered publication, provenance, strict lineage, shared eligibility, and direct exclusion reasons are deployed through v0.4.4, including shared taxonomy resolution |
+| ANEMONE eDNA | The accessible 2026-09-17 catalogue is deployed in v0.5.0: 3,498 source occurrences/assays, 349,638 assignment rows, 6,996 eDNA documents, separate methods, exact aggregate citations and provenance. Control status and physical sample identity remain qualified. |
 | System/debug | Status and debug surfaces exist |
 | Invite-only identity | OIDC, invitations, viewer/researcher/admin roles, suspension, audit events, and a production-forbidden development mock-login harness exist |
 | User feedback | Persisted chat interactions, feedback revisions, admin review/filter/export exist |
@@ -1269,27 +1329,28 @@ git diff --check
 | Managed OIDC deployment | Google OIDC is live and verified for the administrator and approved researcher; broader identity-provider recovery/MFA policy remains external to the application |
 | Evaluation execution | Serving instances deliberately reject in-process jobs; the UI start controls are not yet connected to the external Cloud Run evaluation job |
 | Security operations require repository settings | CodeQL and dependency automation exist; branch/environment protections, retention enforcement, cost review, and alerting still require operator review |
-| Historical milestone plans | `docs/PRE_MILESTONE_VALIDATION_PLAN.md`, `docs/PHASE7_RELEASE_RUNBOOK.md`, `deploy/gcp/MIGRATION_PLAN.md`, and `docs/RELEASE_0.4.3_PLAN.md` retain dated gates; current cloud evidence is in `docs/DEPLOYMENT.md` and `docs/RELEASE_0.4.3_OPERATIONS.md` |
-| ANEMONE classification | The pilot remains unknown. Authenticated review/decision/audit persistence, read-only effect preview, and manual controlled end-to-end republication are deployed; a real decision and researcher acceptance remain |
+| Historical milestone plans | `docs/PRE_MILESTONE_VALIDATION_PLAN.md`, `docs/PHASE7_RELEASE_RUNBOOK.md`, `deploy/gcp/MIGRATION_PLAN.md`, `docs/RELEASE_0.4.3_PLAN.md`, and `docs/RELEASE_0.5.0_PLAN.md` retain dated gates; current cloud evidence is in `docs/DEPLOYMENT.md` and `docs/RELEASE_0.5.0_OPERATIONS.md` |
+| ANEMONE classification | The accessible observation has 343 explicit negative controls and 3,155 occurrences with unknown control status. Review/decision/audit and controlled republication exist; a real environmental-classification decision and researcher acceptance remain. |
+| Chat answer quality | Exact aggregate counts and citation integrity passed, but rare-taxon false denial, unsupported freshness claims and some routing/wording issues remain in issue #70. |
 | Empty evidence cohorts | Deterministic pre-generation abstention and visible recipe filters are deployed; authenticated production scientific acceptance remains |
 
 ---
 
 ## 13. Recommended Next Work Order
 
-Current status (2026-09-11): v0.4.4 is reviewed, built, schema-verified, deployed, and
-serving 100% traffic. The next work is acceptance and operating hardening, not
-additional v0.4.3 feature scope:
+Current status (2026-10-01): v0.6.0 is deployed. The next work is scoped chat
+answer-quality repair, scientific acceptance and operating hardening:
 
 1. Complete the remaining custom-domain researcher-role, suspension, and
    uninvited-account checks. Administrator logout/re-login, admin-route access,
    invitation-register access, and anonymous fail-closed behavior pass.
 2. Confirm current spend and budget alert thresholds in the Billing console,
    then record the 24-hour and seven-day observation results.
-3. Review chat output-budget/partial-answer handling. The first broader v0.4.3
-   log sweep found one controlled `llm_request_failed` 502 when Vertex returned
-   `MAX_TOKENS`; the model canary otherwise passed.
-4. Continue scheduled-update, evaluation-job bridge, restore-drill, retention,
+3. Fix and retest issue #70 against rare-taxon lookup, freshness support,
+   answer focus and method-aware scientific interpretation.
+4. Plan the next manually approved ANEMONE refresh; no weekly/monthly schedule
+   or provider API is currently enabled.
+5. Continue evaluation-job bridge, restore-drill, retention,
    cost-review, and legacy-resource retirement work under their existing
    approval boundaries.
 
@@ -1471,3 +1532,61 @@ Ignored local artifacts that may be intentionally kept:
 
 - `onagawa_sst_subset/`
 - optional raw satellite staging directories
+
+### Historical v0.6.1 implementation stage — 2026-10-02
+
+PRs #85 and #87 are merged. Built source `5f68c34017827e042749ef87432022c750fd6b91`, successful Cloud Build `a36d7ad7-5f0a-4ebb-ad5b-af9223a9dc7e`, Ready revision `ocean-platform-v061-patch1002b` at zero traffic under `v061-candidate`. Backend 939 passed / 36 integration skips / 78.30% coverage, frontend 52 tests/typecheck/build, PostgreSQL 36 integration tests, all eight required CI/CodeQL checks on the final source head, and all 48 final deterministic runs passed (corrected meter: zero generation calls). Japanese-specific work/acceptance is explicitly deferred.
+
+The first model batch stopped on answer 14 when rare-taxon repeat 2 invented a `Scope` citation. Its meter was attached to an unused runtime and reported an invalid zero; six exports were truncated. The follow-up now binds actual API generation to the meter, preserves hash-checked evidence chunks, and clarifies classification/missing-value/settings-citation boundaries. A fresh English batch capped at 33 actual generation attempts requires the pending explicit user approval; do not treat the old zero as unused budget or silently rerun. Issue #70 remains open.
+
+Live viewer/researcher sign-ins and mobile acceptance remain pending. The final candidate's chat tag redirects to canonical production login, so positive candidate UI/history cannot be claimed from that route. Isolated role/account/storage and independent PostgreSQL history tests passed. Production remains `ocean-platform-v060-sec1001` at 100%; no v0.6.1 tag/release/promotion. Before promotion, complete scientific/live gates or obtain specific recorded deferrals. After acceptance, tag the built source exactly, promote the verified revision, align only `ocean-evaluation` (shared prompt changed), complete post-cutover verification and synchronize branches.
+
+The temporary GCP acceptance job is deleted; all five original manual job specifications are unchanged. Local preview listeners are stopped, owned fixture container removed, Podman VM restored to stopped. Private outputs/captures remain in `/tmp/ocean-v061-release`; old stale preview UI closure failed twice. See implementation, operations and scientific QA documents for precise dispositions.
+
+### Historical v0.6.1 acceptance stage — 2026-10-02
+
+Use the [scientific QA record](docs/RELEASE_0.6.1_SCIENTIFIC_QA.md) and
+[operations record](docs/RELEASE_0.6.1_OPERATIONS.md) for current facts. Candidate
+Google access is resolved with one approved temporary callback; remove it and
+the QA route after acceptance. Source `fd7dd41` merged PR #93 with all eight CI
+checks passed; its immutable build is pending. Prior complete scientific batches
+failed manual claim support despite structural passes. Repeat six affected rare-taxon
+cases; retain 25 reviewed byte-identical model prompts.
+Ten normal live admin interactions passed read-only independent readback. Mobile/keyboard/
+all-off reload/reset and historical aggregate download/hash checks passed.
+Viewer/researcher live account availability or explicit user deferral remains
+pending; do not manufacture users or change roles. No v0.6.1 publication or
+production promotion has occurred. Production remains v0.6.0 at 100%.
+
+### Final English candidate acceptance — 2026-10-02
+
+Source `fd7dd4175eebb87b20450fe67d2bfac1cff3f8a2` passed all eight CI checks
+and immutable Cloud Build `2415f393-6608-4f91-988a-324ce2640d1c`. Revisions
+`ocean-platform-v061-assay1002` (canonical) and `ocean-platform-v061-assayqa1002`
+(QA origin) are Ready at zero traffic. Six final rare-taxon repeats passed
+manual claim/citation review; 25 byte-identical reviewed prompts are retained,
+for 31 successful bounded English model cases. Earlier failures and a guarded
+citation rejection remain recorded. Ten live candidate admin interactions
+passed independent readback; the final-source count reproduction also passed
+and its eleventh record passed read-only verification. Live viewer/researcher disposition
+remains the release gate. Do not inherit the v0.6.0 QA waiver. Tag the exact
+built source only after that disposition, then promote the canonical revision,
+align only `ocean-evaluation`, check production and remove temporary callback/
+QA job/routes. Production remains v0.6.0 at 100%; no v0.6.1 publication yet.
+
+
+### v0.6.1 final release disposition — 2026-10-02
+
+The user explicitly deferred live viewer/researcher checks and authorized rollout.
+v0.6.1 is published at exact built source `fd7dd41`; canonical revision
+`ocean-platform-v061-assay1002` receives 100% traffic. GitHub production deployment
+`6805296652` is successful. Normal production sign-in and the original scoped
+count reproduction passed, and all anonymous protected endpoints returned 401.
+The bounded post-cutover log query found zero ERROR/HTTP 5xx entries.
+Only `ocean-evaluation` image/source metadata is aligned; other job runtime
+settings and source/publication/schema state are retained. No job was executed
+for deployment. Temporary QA job, preview tags and exact OAuth callback are
+removed. The original two callbacks and existing rollback tags remain.
+Issue #70 is closed for the agreed English scope; Japanese live acceptance
+and viewer/researcher live sessions are unperformed, explicitly deferred.
+See the v0.6.1 operations record for digests, timestamps, caveats and rollback.

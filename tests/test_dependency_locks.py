@@ -20,12 +20,11 @@ def _locked_version(requirements: str, package: str) -> tuple[int, ...]:
 def test_linux_sqlalchemy_greenlet_dependency_is_explicitly_locked() -> None:
     """Apple Silicon lock generation must retain the Linux Cloud Run extra."""
     runtime_input = (PROJECT_ROOT / "requirements/runtime.in").read_text()
-    runtime_lock = (PROJECT_ROOT / "requirements/runtime.txt").read_text()
-    dev_lock = (PROJECT_ROOT / "requirements/dev.txt").read_text()
-
-    assert "greenlet==3.5.5" in runtime_input
-    assert "greenlet==3.5.5" in runtime_lock
-    assert "greenlet==3.5.5" in dev_lock
+    input_version = _locked_version(runtime_input, "greenlet")
+    assert input_version >= (3, 5, 5)
+    for dependency_set in ("runtime", "dev", "analysis", "archive"):
+        lock = (PROJECT_ROOT / f"requirements/{dependency_set}.txt").read_text()
+        assert _locked_version(lock, "greenlet") == input_version, dependency_set
 
 
 def test_archive_gitpython_security_floor_is_explicitly_locked() -> None:
@@ -37,7 +36,7 @@ def test_archive_gitpython_security_floor_is_explicitly_locked() -> None:
     lock_version = _locked_version(archive_lock, "gitpython")
 
     assert input_version == lock_version
-    assert input_version >= (3, 1, 59)
+    assert input_version >= (3, 1, 62)
 
 
 def test_current_dependency_inputs_and_locks_exclude_nltk() -> None:

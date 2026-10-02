@@ -31,20 +31,59 @@ workflow that can later become automated.
   available to administrators through a filtered review/export surface.
 - Production-like environments fail closed on unsafe authentication, secret,
   CORS, or local-persistence configuration.
-- The bounded GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
+- The GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.4.3`. The active data plane now uses the
+  and OCEAN Platform release `v0.6.1`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
-- The bounded ANEMONE MiFish pilot is stored as a distinct
-  `edna_metabarcoding` source family. One unknown sample, two method-separated
-  retrieval documents, exact source citations, descriptive comparisons, and
-  registered analysis/provenance artifacts are live. Unknown samples remain
-  excluded from environmental-only analyses and links.
+- The accessible 2026-09-17 ANEMONE MiFish catalogue is stored as the
+  `edna_metabarcoding` source family: 3,498 source occurrences/assays,
+  349,638 assignment rows, 13,932 standard rows and 6,996 method-separated
+  retrieval documents. There are 343 explicit negative controls and 3,155
+  occurrences with unknown control status. Unknown/control records remain
+  excluded from environmental-only analysis. Physical sample identity is
+  unresolved; exact aggregate citations and provenance are live.
+- Production has 7,319 documents and matching embeddings, with schema head
+  `20261001_0014`. Scoped chat answer-quality defects are tracked in
+  [issue #70](https://github.com/jarondlk/ocean-platform/issues/70).
 - Operational administration is consolidated under `/admin` with Users,
   Feedback, Pipeline, Database, System, and Debug sections.
 - The README screenshot set was refreshed from the authenticated OCEAN
   Platform Cloud Run deployment on 2026-08-25.
+
+## v0.6.0 published release: chat settings
+
+The [adopted v0.6.0 plan](RELEASE_0.6.0_PLAN.md) is implemented and released:
+independent source checkboxes, per-source filters, enforcement across evidence
+paths, provider-effective generation controls, per-account browser settings
+and bounded issue #70 fixes. [Verification and live release gates](RELEASE_0.6.0_IMPLEMENTATION.md)
+include the applied history constraint migration `20261001_0014`. The immutable
+GCP security-amended revision served 100% of production traffic before v0.6.1. The user
+approved promotion with authenticated UI/history and repeated scientific-answer
+QA deferred. Issue #70 was subsequently resolved for its agreed English scope in v0.6.1. See the [operations record](RELEASE_0.6.0_OPERATIONS.md).
+The [readiness audit](V0.6.0_READINESS_AUDIT_2026-10-01.md) records the baseline
+and the historical private-cloud authentication limit, since resolved.
+
+## Published patch: v0.6.1
+
+The user assigned the remaining v0.6.0 work to
+[the v0.6.1 patch plan](RELEASE_0.6.1_PLAN.md) on 2026-10-02. The
+[production browser QA](RELEASE_0.6.0_BROWSER_QA_2026-10-01.md) verified current-admin
+settings, live source choices, scoped answers, downloads and provenance, while
+reproducing two count-question paraphrases that wrongly ask for already-applied
+filters. Track implementation separately from acceptance and release:
+
+- [x] V061-01: fix exact-count routing/clarification and regressions.
+- [x] V061-02: settings/account/storage lifecycle checks and repairs passed in isolated fixtures.
+- [x] V061-03: admin, keyboard/mobile and history checks passed; live viewer/researcher checks explicitly user-deferred. Japanese acceptance is separately user-deferred.
+- [x] V061-04: bounded English scientific matrix reviewed; corrected claims rerun and guarded rejection recorded.
+- [x] V061-05: 0.6.1 metadata, source CI/build records and candidate prepared; live/scientific acceptance tracked above.
+- [x] V061-06: exact-source v0.6.1 tag/release published; canonical GCP rollout and post-cutover checks passed; temporary QA access/resources removed.
+
+Production revision `ocean-platform-v061-assay1002` serves 100% traffic from
+validated source/tag `fd7dd41`. The compatible v0.6.0 rollback is retained.
+The agreed English matrix for issue #70 passed and the issue is closed; see
+[operations](RELEASE_0.6.1_OPERATIONS.md) for deployment and deferred checks.
 
 ## Completed MVP hardening: v0.4.3
 
@@ -316,3 +355,5 @@ These are intentionally **not** the immediate plan.
       runner, Airflow, Prefect, or cloud scheduled jobs.
 - [ ] Add file-watcher or object-storage event ingestion only if data arrival
       becomes frequent enough to justify it.
+
+v0.6.1 was published and deployed on 2026-10-02 after source/build/security, 48 deterministic runs and the bounded 31-response English scientific matrix passed. Admin/mobile/keyboard and 11 candidate history readbacks passed. Live viewer/researcher and Japanese acceptance are explicitly user-deferred. [Scientific QA](RELEASE_0.6.1_SCIENTIFIC_QA.md) retains earlier rejected attempts and accepted case dispositions; [operations](RELEASE_0.6.1_OPERATIONS.md) records verified deployment, cleanup and rollback.

@@ -10,7 +10,9 @@ from db.app_models import AppBase
 
 
 alembic_config = context.config
-alembic_config.set_main_option("sqlalchemy.url", app_config.DATABASE_URL)
+# ConfigParser treats percent-encoded socket paths/passwords as interpolation.
+# Escape for storage; get_main_option/get_section return the original URL.
+alembic_config.set_main_option("sqlalchemy.url", app_config.DATABASE_URL.replace("%", "%%"))
 
 if alembic_config.config_file_name is not None:
     fileConfig(alembic_config.config_file_name)

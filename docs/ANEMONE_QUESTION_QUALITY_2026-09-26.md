@@ -1,5 +1,11 @@
 # ANEMONE question and citation quality review — 2026-09-26
 
+**Dated local QA record.** Subsequent staging and production model tests are in
+the [v0.5.0 operations record](RELEASE_0.5.0_OPERATIONS.md). Production deployed
+on 2026-09-30, and [issue #70](https://github.com/jarondlk/ocean-platform/issues/70)
+tracks the remaining scoped answer-quality failures. The local results and
+pending statements below reflect the 2026-09-26 test conditions.
+
 Tested the current **local `gcp-dev` candidate**, not the deployed 0.4.5 service. The corpus is the 2026-09-17 ANEMONE observation. Application behavior was not changed during this QA; only the question set, runner and report were added.
 
 ## Findings

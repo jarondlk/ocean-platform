@@ -1,5 +1,10 @@
 # v0.5.0 GitHub release and GCP deployment plan
 
+**Historical release checklist.** GitHub release and GCP deployment completed
+on 2026-09-30. Use the [v0.5.0 operations record](RELEASE_0.5.0_OPERATIONS.md)
+for current rollout and recovery status. The sequence and pending gates below
+are retained as the original plan.
+
 Prepared 2026-09-26; sequence revised by the user on 2026-09-27. **Execution authorized: complete GitHub work first, then GCP deployment as authentication allows.** Proposed source branch: `gcp-dev`, integrated through a reviewed PR to `main`. Deployment remains manual; do not restore the canceled GitHub deployment/federation setup.
 
 ## Scope and current evidence

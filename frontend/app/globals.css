@@ -3355,3 +3355,10 @@ td span {
     grid-column: span 1;
   }
 }
+
+.chat-source-panel { border-top: 1px solid var(--line); padding: 0.65rem 0; }
+.chat-source-panel summary { cursor: pointer; font-size: 0.8rem; margin: 0.4rem 0; }
+.chat-source-filters { min-width: 0; margin: 0; padding: 0; border: 0; display: grid; gap: 0.65rem; }
+.chat-source-filters:disabled { opacity: 0.6; }
+
+.chat-advanced > summary { cursor: pointer; font-weight: 600; padding: 0.6rem 0; }

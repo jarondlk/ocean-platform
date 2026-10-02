@@ -60,7 +60,7 @@ export function ChatFeedback({
   }
 
   return (
-    <section className="chat-feedback" aria-label="Answer feedback">
+    <section className="chat-feedback" aria-label="Answer feedback" data-interaction-id={interactionId}>
       <div className="chat-feedback-heading">
         <span>Was this answer useful?</span>
         <div className="chat-feedback-rating">

@@ -10,29 +10,33 @@ automatically.
 record; retain its dated resource evidence and cost-control rationale, but do
 not treat it as the current release order. Use
 [`../../docs/DEPLOYMENT.md`](../../docs/DEPLOYMENT.md) and the completed
-[`v0.4.5` operations record](../../docs/RELEASE_0.4.5_OPERATIONS.md) for the
+[`v0.6.0` operations record](../../docs/RELEASE_0.6.0_OPERATIONS.md) for the
 current deployment.
-The user confirmed a **JPY 20,000 total monthly project ceiling on 2026-09-03**;
-this does not automatically raise the earlier JPY 10,000 alert or component
-limits. Current spend and live settings still need verification before paid
-pilot work. See [`../../docs/ANEMONE_PILOT_2026-09-03.md`](../../docs/ANEMONE_PILOT_2026-09-03.md).
+The user later allowed up to **JPY 100,000/month** for the project while asking
+for import optimization first. This does not change any budget alert or
+component limit automatically. The current database compute and 10 GiB SSD
+list estimate is about JPY 10,835/month, excluding other project costs,
+backups, networking and taxes; verify the actual bill and alert settings before
+further paid changes. See the
+[performance recovery plan](../../docs/ANEMONE_IMPORT_PERFORMANCE_PLAN.md).
 Cost controls must be in place before runtime resources are created.
 
 ## Current deployed milestone
 
-Release evidence was verified on 2026-09-16 JST:
+Release evidence was verified on 2026-10-01 JST:
 
 - project `data-infra-infobio`, region `asia-northeast1`;
-- OCEAN Platform GitHub release `v0.4.5`;
-- build `50943356-0c01-4520-9da1-1de7cd92bd14`, revision
-  `ocean-platform-v045-cc3b3af`; immutable images, schema checks, rollout, and live
-  checks are recorded in the [v0.4.5 operations record](../../docs/RELEASE_0.4.5_OPERATIONS.md);
+- OCEAN Platform GitHub release `v0.6.0` at immutable tag `91d8567`; validated
+  runtime security amendment `6fd37eba2173ad86b704e775c6edba997082b4e8`, revision
+  `ocean-platform-v060-sec1001`; immutable images, schema checks, rollout and
+  deferred QA are recorded in the [v0.6.0 operations record](../../docs/RELEASE_0.6.0_OPERATIONS.md);
 - Cloud Run service `ocean-platform` at 100% traffic on revision
-  `ocean-platform-v045-cc3b3af`. The frontend has `AUTH_URL=https://oceaninfobio.com`
+  `ocean-platform-v060-sec1001`. The frontend has `AUTH_URL=https://oceaninfobio.com`
   and the API has `CORS_ORIGINS=https://oceaninfobio.com`;
 - Artifact Registry `ocean-platform`; service accounts `ocean-platform` and
   `ocean-jobs`; secrets and jobs under the `ocean-*` prefix;
-- Cloud SQL `ocean-postgres` / `ocean_platform` is PostgreSQL 16 and RUNNABLE;
+- Cloud SQL `ocean-postgres` / `ocean_platform` is PostgreSQL 16 on
+  `db-custom-1-4096`; the verified production backup restored in isolation;
 - bucket `data-infra-infobio-ocean-data` contains the verified copied data;
 - former `onagawa-source-chat` is private and deletion-protected
   `onagawa-postgres` is stopped for reversible rollback; the two legacy
@@ -41,21 +45,19 @@ Release evidence was verified on 2026-09-16 JST:
 - reviewed Artifact Registry cleanup is active for both repositories, and
   transient Cloud Build source archives expire after 30 days;
 - minimum zero/maximum one service instance, concurrency 20; and
-- 325 documents/embeddings, schema head `20260905_0011`, pilot classification
-  still unknown. The review/application workflow is deployed; scientific
-  acceptance remains an explicit follow-up. Two eDNA summaries and embeddings
-  were refreshed and `v045-provenance` published; canonical records are unchanged.
+- 7,319 documents and matching embeddings (6,996 ANEMONE eDNA plus 323 other),
+  schema head `20261001_0014`, and unchanged `v050-production-provenance`. The accessible
+  catalogue has 3,498 source occurrences/assays, 343 negative controls and
+  3,155 occurrences of unknown control status. Physical sample identity and
+  environmental classification remain unresolved.
 
-The v0.4.4 revision `ocean-platform-v044-d3aa6a9`, v0.4.3 revision `ocean-platform-v043-26094fc`, v0.4.2 revision
-`ocean-platform-00013-djj`, v0.4.1 revision
-`ocean-platform-v041-706348e`, and v0.4.0 revision
-`ocean-platform-v040-a63885a` are retained. Review
-corpus/publication compatibility before rollback; do not automatically downgrade
-the schema or overwrite later user/chat records.
+The retained `ocean-platform-v050-prod0930` revision is compatible with the
+additive v0.6.0 history constraint and remains an application rollback route.
+Older pre-v0.5.0 readers must not receive this catalogue. Do not downgrade
+populated migrations or overwrite later user/chat records.
 
-The v0.4.5 release source is synchronized to remote `main`. Subsequent
-operations-record-only commits do not change the immutable build or deployed
-application.
+The immutable runtime was built from the validated amendment commit; later
+documentation commits do not change the deployed application.
 
 See [`../../docs/GCP_RESOURCE_AUDIT.md`](../../docs/GCP_RESOURCE_AUDIT.md) for
 the historical post-cutover inventory, absence checks, housekeeping controls,
@@ -67,6 +69,19 @@ The canonical live URL is
 [`https://oceaninfobio.com`](https://oceaninfobio.com). The default Cloud Run
 URL remains available for rollback and operations; Auth.js redirects it to the
 canonical origin.
+
+## v0.6.0 rollout (2026-10-01)
+
+GitHub v0.6.0 is published at `91d8567`, with passing remote checks and an
+immutable source-archive build. A fresh backup restored across all 28 tables,
+and the standard migration job applied `20261001_0014`. Revision
+`ocean-platform-v060-sec1001` is Ready at 100% production traffic from the checked
+security amendment `6fd37eb`; all five manual jobs use its API image. Read-only
+live runtime QA and post-cutover anonymous HTTP checks passed. The user approved
+promotion with authenticated UI/history and repeated scientific-answer QA
+deferred. The temporary `v060-candidate` tag was removed; the v0.5.0 rollback
+route remains. Follow the [v0.6.0 operations record](../../docs/RELEASE_0.6.0_OPERATIONS.md)
+for exact evidence and deferred checks; do not apply stale rendered templates.
 
 ## Target topology
 

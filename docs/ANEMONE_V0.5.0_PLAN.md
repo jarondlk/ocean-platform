@@ -1,5 +1,11 @@
 # ANEMONE integration plan for OCEAN v0.5.0
 
+**Historical implementation plan.** The accessible 2026-09-17 catalogue was
+deployed on 2026-09-30. Use the [v0.5.0 operations record](RELEASE_0.5.0_OPERATIONS.md)
+for current production state and [issue #70](https://github.com/jarondlk/ocean-platform/issues/70)
+for remaining chat answer-quality work. The planning baseline and proposed
+steps below are retained as dated design evidence.
+
 Planning baseline: 2026-09-17 JST, repository commit `059d289`.
 Status: implementation underway on `gcp-dev`; see [implementation and local QA](ANEMONE_V0.5.0_IMPLEMENTATION.md) for completed work and remaining release gates. Full catalogue discovery and processed-table
 investigation and the complete source archive are finished; see the
