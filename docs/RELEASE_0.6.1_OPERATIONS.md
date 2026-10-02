@@ -294,6 +294,13 @@ both authorized origins and the existing secret remain. A transient Google
 Console readback error recovered with its Retry control; no second save was
 needed. Private evidence captures remain outside Git.
 
+The completed candidate/OAuth/evidence/fresh production QA tabs are closed.
+Two older tabs (the stale localhost preview and an earlier production tab)
+remain in the UI because browser controls time out; native Codex app control is
+unavailable. Their closure is not claimed. A final listener check found no
+servers on ports 3006/8006/11436. This UI cleanup limit does not retain a cloud
+QA route or temporary authentication callback.
+
 Compatible rollback is retained as `ocean-platform-v060-sec1001` under
 `v060-production`, and the older v0.5.0 tags remain unchanged. To roll back the
 application without changing schema/publications:
