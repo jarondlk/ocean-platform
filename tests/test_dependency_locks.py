@@ -37,7 +37,7 @@ def test_archive_gitpython_security_floor_is_explicitly_locked() -> None:
     lock_version = _locked_version(archive_lock, "gitpython")
 
     assert input_version == lock_version
-    assert input_version >= (3, 1, 59)
+    assert input_version >= (3, 1, 62)
 
 
 def test_current_dependency_inputs_and_locks_exclude_nltk() -> None:

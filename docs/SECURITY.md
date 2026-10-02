@@ -413,6 +413,20 @@ the current `requirements/` manifests.
 - No live ANEMONE download, production database mutation, credential change,
   or GCP deployment is part of PR3 verification.
 
+## Archive GitPython security patch — 2026-10-02
+
+The optional archived Streamlit dependency set pins GitPython 3.1.62 in its
+input and hash-verified lock. This addresses
+[GHSA-59cr-6r3x-644w](https://github.com/advisories/GHSA-59cr-6r3x-644w),
+which affects versions through 3.1.61. The dependency regression now enforces
+3.1.62 as the minimum. GitPython is absent from the serving runtime, development
+and analysis locks; this patch does not alter deployed application dependencies.
+
+The [repository maintenance audit](REPOSITORY_MAINTENANCE_AUDIT_2026-10-02.md)
+records the remaining PR and alert triage. Deleted-manifest alerts require
+dependency graph reconciliation and evidence for any inaccurate disposition;
+the current archive advisory is addressed by upgrading the package.
+
 ## Authorization MVP Release Checklist
 
 Current deployed GCP evidence as of 2026-09-10: OCEAN Platform release `v0.4.3`
