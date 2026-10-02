@@ -143,3 +143,18 @@ def test_month_only_metagenome_evidence_does_not_present_index_date_as_collectio
         {'analysis': [], 'reliability': []})
     assert '(metagenome, index/association date 2024-04-01;' in prompt
     assert 'If the evidence text records only a collection month, report that month' in prompt
+
+
+def test_edna_aggregate_and_assay_citation_roles_are_kept_separate():
+    assay = {'doc_id': 'edna_1', 'source_type': 'edna_metabarcoding',
+             'text': 'Target gene 12S rRNA; sequencing method MiSeq.'}
+    aggregate = {'id': 'aggregate_edna_' + 'c' * 64,
+                 'analysis_type': 'edna_catalogue_summary',
+                 'text': 'One source occurrence, one assignment, 122 reads.'}
+    prompt = _build_prompt_from_context('What evidence supports this detection?',
+        [assay], {'analysis': [aggregate], 'reliability': []})
+    assert 'EDNA AGGREGATE CITATION BOUNDS:' in prompt
+    assert 'Cite the individual assay evidence for those details.' in prompt
+    without_aggregate = _build_prompt_from_context('Explain read counts.',
+        [assay], {'analysis': [], 'reliability': []})
+    assert 'EDNA AGGREGATE CITATION BOUNDS:' not in without_aggregate
