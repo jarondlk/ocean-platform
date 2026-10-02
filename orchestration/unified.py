@@ -777,6 +777,10 @@ RULES:
    evidence bullets; include at least one valid citation in every paragraph or
    bullet making a scientific evidence claim. Request-setting descriptions
    do not need a source citation.
+   Lead with the direct answer to the question. Do not add incidental sample examples,
+   classifications, taxa, coordinates or counts to methodological yes/no answers.
+   When a sample's classification matters, use its evidence header literally;
+   unknown must remain unknown. Keep request-scope exclusions to one uncited sentence.
 
 LEGACY STUDY SITES (do not assign these to eDNA samples without source metadata):
 • Onagawa Bay (O) ≈ 38.44°N 141.45°E
@@ -824,6 +828,11 @@ LEGACY STUDY SITES (do not assign these to eDNA samples without source metadata)
         if row.get('link_type'):
             link = '; linked via ' + safe_prompt_text(row['link_type']) + ' from ' + safe_prompt_text(
                 row.get('linked_from_doc_id') or row.get('linked_from_event_id') or 'primary evidence')
+        if row.get('source_type') == 'edna_metabarcoding':
+            classification = safe_prompt_text(row.get('sample_kind') or 'unknown')
+            control = row.get('is_control')
+            control_status = 'true' if control is True else 'false' if control is False else 'unknown'
+            link += f'; sample classification: {classification}; control status: {control_status}'
         marker = '\n[content truncated]' if row.get('prompt_text_truncated') else ''
         return f"\n[{identity}] ({source}, {time}{link})\n{safe_prompt_text(row['text'])}{marker}\n"
 

@@ -69,8 +69,26 @@ def test_duplicates_and_omitted_sources_do_not_create_extra_labels():
     rows = [{'doc_id': 'ctd_1'}, {'doc_id': 'ctd_1'}, {'doc_id': 'not_in_prompt'}]
     cited = prepare_citations('\n[ctd_1] (ctd)\n12 C.', rows)
     assert dict(cited.aliases) == {'S1': 'ctd_1'}
-    assert cited.resolve('Already canonical [ctd_1]; ordinary [note].') == 'Already canonical [ctd_1]; ordinary [note].'
+    assert cited.resolve('Already canonical [ctd_1]; ordinary (note).') == 'Already canonical [ctd_1]; ordinary (note).'
     assert prepare_citations('No evidence.', []).prompt == 'No evidence.'
+
+
+@pytest.mark.parametrize('answer', ['Disabled sources [Scope Settings].',
+    'Disabled sources [Scope].', 'Measurements [S1, Scope Settings].',
+    'Measurements [not_supplied].'])
+def test_invented_citations_fail_before_answer_persistence(answer):
+    cited = prepare_citations('\n[ctd_1] (ctd)\n12 C.', [{'doc_id': 'ctd_1'}])
+    with pytest.raises(InvalidCitationAlias):
+        cited.resolve(answer)
+
+
+def test_prompt_exposes_unknown_edna_classification_in_evidence_header():
+    rows = [{'doc_id': 'edna_1', 'source_type': 'edna_metabarcoding',
+        'sample_kind': 'unknown', 'is_control': None, 'text': '59,308 reads.'}]
+    prompt = _build_prompt_from_context('Does this mean more fish?', rows,
+        {'analysis': [], 'reliability': []})
+    assert '[edna_1] (edna_metabarcoding, ; sample classification: unknown; control status: unknown)' in prompt
+    assert 'Do not add incidental sample examples' in prompt
 
 
 @pytest.mark.parametrize('ablation', [False, True])
