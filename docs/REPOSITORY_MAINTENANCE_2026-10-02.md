@@ -56,6 +56,29 @@ security alerts/updates are not disabled. Group ordering follows
 A subsequent bot refresh may replace #96 with separate routine/SQLAlchemy PRs;
 preserve genuine remaining updates rather than treating them as a duplicate.
 
+### Routine dependency review — 2026-10-04
+
+Dependabot closed #96 after regrouping and replaced its compatible updates with
+[PR #98](https://github.com/jarondlk/ocean-platform/pull/98). Review against
+`e3034a99b31e561eefed3759c5ab1a31e46522a1` confirms only cftime 1.6.5 → 1.6.6,
+google-auth 2.58.1 → 2.59.0 and googleapis-common-protos 1.75.2 → 1.75.4 change
+across the four inherited locks. SQLAlchemy remains 2.0.52 and the psycopg2
+driver is unchanged; no dependency inputs or application code change.
+
+Each updated package's hashes were verified against its exact official PyPI
+release and agree across all four locks. An isolated Python 3.12 dev installation
+passed package consistency, lint, chat-scope export verification and 948 backend
+tests with 78.32% coverage. The 36 PostgreSQL integration tests are skipped locally;
+the original PR's PostgreSQL CI job passed. Hash-enforced archive resolution also
+passed. Additional offline smoke checks passed calendar/NetCDF round trips,
+OAuth refresh/header handling and common-proto serialization.
+
+The original PR head passed backend, frontend, PostgreSQL and dependency-review
+CI, but its neutral CodeQL result reported missing analyses for all three
+configured languages. That result is not a completed security scan. This review
+update requests fresh checks; verify complete analysis on the final PR head
+before merging. Production and the v0.6.1 release tag remain unchanged.
+
 ## Branch cleanup
 
 All 11 local/remote branch names listed in the audit were rechecked for ancestry,
