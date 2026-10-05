@@ -440,6 +440,7 @@ class SourceDocument(BaseModel):
     text: str = ""
     score: Optional[float] = None
     rank_sources: Dict[str, int] = Field(default_factory=dict)
+    source_local_rank: Optional[int] = None
     retrieval_role: str = "primary"
     link_type: Optional[str] = None
     linked_from_doc_id: Optional[str] = None
@@ -546,6 +547,8 @@ class ChatResponse(BaseModel):
         "no_sources_selected",
         "source_disabled",
         "freshness_unavailable",
+        "incomplete_source_coverage",
+        "overlap_unverified",
     ]] = None
     model_invoked: bool = True
 

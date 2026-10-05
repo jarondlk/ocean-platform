@@ -125,6 +125,8 @@ def retrieve(
     fts_weight: float = 0.4,
     rrf_k: int = 60,
     pg_available: Optional[bool] = None,
+    query_embedding=None,
+    branch_diagnostics: Optional[dict] = None,
 ) -> List[dict]:
     """
     Retrieve relevant documents using the best available backend.
@@ -151,6 +153,7 @@ def retrieve(
             lat_min=lat_min, lat_max=lat_max, lon_min=lon_min, lon_max=lon_max,
             vector_weight=vector_weight, fts_weight=fts_weight,
             rrf_k=rrf_k,
+            query_embedding=query_embedding, branch_diagnostics=branch_diagnostics,
         )
         return [
             {
@@ -193,6 +196,7 @@ def retrieve(
             lat_min=lat_min, lat_max=lat_max, lon_min=lon_min, lon_max=lon_max,
             vector_weight=vector_weight, fts_weight=fts_weight,
             rrf_k=rrf_k,
+            query_embedding=query_embedding, branch_diagnostics=branch_diagnostics,
         )
 
 
@@ -461,13 +465,32 @@ def retrieve_with_expansion(
     if evidence_scope is not None and not enabled_sources(evidence_scope):
         return {"primary": [], "linked": [], "diagnostics": {"no_sources_selected": True, "expected_source_types": [], "retrieved_source_types": [], "missing_source_types": [], "excluded_source_types": list(evidence_scope["sources"])}}
     pg_available = _pg_available()
-    primary = _mark_primary_results(retrieve(
-        query,
-        k=k,
+    from retrieval.source_scope import legacy_scope
+    from retrieval.source_aware import scoped_retrieve
+    canonical_scope = evidence_scope if evidence_scope is not None else legacy_scope(locals())
+    cached_embedding = None
+    embedding_error = None
+
+    def query_embedding():
+        nonlocal cached_embedding, embedding_error
+        if embedding_error is not None:
+            raise embedding_error
+        if cached_embedding is None:
+            try:
+                from db.vector_store import embed_text
+                cached_embedding = embed_text(query)
+            except Exception as exc:
+                embedding_error = exc
+                raise
+        return cached_embedding
+
+    primary, source_diagnostics = scoped_retrieve(
+        query, scope=canonical_scope, k=k, backend='postgres' if pg_available else 'local',
+        search=retrieve, options=dict(
         sample_ids=sample_ids,
         assignment_methods=assignment_methods,
         source_type=source_type,
-        station=station, evidence_scope=evidence_scope,
+        station=station,
         sample_id=sample_id,
         bay=bay,
         time_from=time_from,
@@ -487,7 +510,9 @@ def retrieve_with_expansion(
         fts_weight=fts_weight,
         rrf_k=rrf_k,
         pg_available=pg_available,
+        query_embedding=query_embedding,
     ))
+    primary = _mark_primary_results(primary)
     linked: List[dict] = []
     expansion_error: Optional[str] = None
     if evidence_scope is None and (sample_ids is not None or assignment_methods is not None):
@@ -497,7 +522,7 @@ def retrieve_with_expansion(
             linked = (_expand_linked_evidence(primary, max_linked_sources, evidence_scope) if evidence_scope is not None
                       else _expand_linked_evidence(primary, max_linked_sources))
         except Exception as exc:  # pragma: no cover - defensive runtime guard
-            expansion_error = str(exc)
+            expansion_error = "linked_evidence_expansion_failed"
             logger.warning("Linked evidence expansion failed: %s", exc)
 
     linked_scope = dict(source_type=_normalize_source_type(source_type) if source_type else None,
@@ -542,6 +567,13 @@ def retrieve_with_expansion(
         edna_scope_applied = "edna_metabarcoding" in enabled_sources(evidence_scope)
     diagnostics["edna_publication"] = publication_status()
     diagnostics["edna_scope_applied"] = edna_scope_applied
+    diagnostics.update(source_diagnostics)
+    for family, item in diagnostics['per_source'].items():
+        item['linked_count'] = sum(row.get('source_type') == family for row in linked)
+        if family == 'edna_metabarcoding' and item['enabled']:
+            item['publication_state'] = diagnostics['edna_publication']
+            if diagnostics['edna_publication'] != 'ready' and not item['candidate_count'] and item['state'] != 'backend_failed':
+                item['state'] = 'publication_unavailable'
     return {
         "primary": primary,
         "linked": linked,
@@ -729,7 +761,11 @@ RULES:
 2. Cite scientific evidence claims using [doc_id] notation.
 3. Distinguish data types: CTD measurements, shotgun metagenome taxonomy,
    targeted eDNA metabarcoding detections, and satellite SST.
-4. State data gaps explicitly. Report values with units.
+4. State data gaps explicitly. Report finite values with units. A NaN, null or
+   missing numeric value is unavailable, not a measured temperature. Do not infer
+   cloud cover, data loss, instrument failure or any other cause for a gap unless
+   the supplied evidence explicitly establishes that cause. A recorded raw input
+   count does not establish how many valid observations contributed to a mean.
 5. When comparing across time/space, note the resolution.
 6. If pre-computed analyses are provided, use them to support your answer about
    trends, correlations, diversity patterns, or cross-source relationships.
@@ -798,25 +834,47 @@ LEGACY STUDY SITES (do not assign these to eDNA samples without source metadata)
 
     def pack(rows, role, initial, formatter):
         section = initial
-        for row in rows:
+        from retrieval.source_aware import fair_order
+        pending = {row.get('source_type') for row in rows if row.get('doc_id') and str(row.get('text') or '').strip()} if role == 'primary' else set()
+        for row in fair_order(rows) if role in ('primary', 'linked') else rows:
             identity = str(row.get('doc_id') or row.get('id') or '')
             body = str(row.get('text') or '')
             if not identity or not body.strip() or identity in seen:
-                supplied['omitted'].append({'doc_id': identity, 'role': role, 'reason': 'empty_or_duplicate'})
+                supplied['omitted'].append({'doc_id': identity, 'role': role, 'source_type': row.get('source_type'), 'reason': 'empty_or_duplicate'})
                 continue
             # Store the exact raw excerpt represented in the prompt, not the full
             # retrieved body. Escape once when formatting, keeping delimiters safe.
             excerpt = body[:MAX_PROMPT_FIELD_CHARS]
             selected = {**row, 'text': excerpt, 'prompt_text_truncated': len(excerpt) < len(body)}
             block = formatter(selected)
+            if role == 'primary' and row.get('source_type') in pending:
+                available = (MAX_PROMPT_SECTION_CHARS - len(section)) // max(1, len(pending))
+                if len(block) > available:
+                    # Account for escaped characters and metadata overhead, not
+                    # just the raw excerpt size, while reserving other families.
+                    low, high = 0, len(excerpt)
+                    while low < high:
+                        midpoint = (low + high + 1) // 2
+                        candidate = {**row, 'text': excerpt[:midpoint], 'prompt_text_truncated': True}
+                        if len(formatter(candidate)) <= available:
+                            low = midpoint
+                        else:
+                            high = midpoint - 1
+                    excerpt = excerpt[:low]
+                    selected = {**row, 'text': excerpt, 'prompt_text_truncated': True}
+                    block = formatter(selected)
+                    if len(excerpt) < min(256, len(body)) or len(block) > available:
+                        supplied['omitted'].append({'doc_id': identity, 'role': role, 'source_type': row.get('source_type'), 'reason': 'prompt_budget'})
+                        continue
             if len(section) + len(block) > MAX_PROMPT_SECTION_CHARS:
-                supplied['omitted'].append({'doc_id': identity, 'role': role, 'reason': 'prompt_budget'})
+                supplied['omitted'].append({'doc_id': identity, 'role': role, 'source_type': row.get('source_type'), 'reason': 'prompt_budget'})
                 continue
             section += block
             supplied[role].append(selected)
+            pending.discard(row.get('source_type'))
             seen.add(identity)
             if len(excerpt) < len(body):
-                supplied['omitted'].append({'doc_id': identity, 'role': role, 'reason': 'text_truncated',
+                supplied['omitted'].append({'doc_id': identity, 'role': role, 'source_type': row.get('source_type'), 'reason': 'text_truncated',
                                              'original_chars': len(body), 'supplied_chars': len(excerpt)})
         return section
 
@@ -849,6 +907,11 @@ LEGACY STUDY SITES (do not assign these to eDNA samples without source metadata)
         manifest.update(supplied)
     scope_text = safe_prompt_text(json.dumps((evidence_scope or {}).get("evidence_scope") or explicit_scope(evidence_scope or {}), sort_keys=True))
     system += f"\nAPPLIED EVIDENCE SCOPE: {scope_text}\nAnswer within this scope. Missing scoped evidence is a gap; do not substitute other dates or locations."
+    system += ('\nSOURCE COVERAGE BOUNDS: Retrieved documents are a bounded subset, not a complete catalogue. '
+               'Missing retrieved evidence does not establish absent database records or non-overlap. '
+               'Co-retrieved sources and link counts alone do not prove temporal or spatial overlap. '
+               'Do not infer collection dates, geographic coverage or sampling matches beyond supplied metadata. '
+               'Keep satellite retrieval, foundation analysis and assimilative model SST semantics distinct.')
 
     edna_bounds = ""
     if any(row.get('source_type') == 'edna_metabarcoding'
@@ -954,36 +1017,45 @@ def ask(
     Full RAG pipeline: retrieve → build prompt → call LLM → return answer + sources.
     """
     # Retrieve
-    results = retrieve(
+    bundle = retrieve_with_expansion(
         query, k=k, source_type=source_type, bay=bay,
         time_from=time_from, time_to=time_to,
+        expand_evidence=False,
     )
+    results = bundle['primary']
 
     # Build prompt and inspect every context source before generation.
     prompt, context = build_prompt_with_context(query, results, evidence_scope={
         'source_type': source_type, 'bay': bay, 'time_from': time_from, 'time_to': time_to,
     })
     results = context['primary']
+    from retrieval.source_scope import legacy_scope
+    from retrieval.source_aware import reconcile_coverage
+    from orchestration.comparison_guard import comparison_guard
+    source_scope = legacy_scope(dict(source_type=source_type, bay=bay, time_from=time_from, time_to=time_to))
+    diagnostics = reconcile_coverage(bundle['diagnostics'], results, [], context, scope=source_scope)
+    guard = comparison_guard(query, source_scope, diagnostics)
     from orchestration.citations import prepare_citations
-    cited_prompt = prepare_citations(prompt, results, context["analysis"], context["reliability"])
+    cited_prompt = prepare_citations(prompt, results, context['analysis'], context['reliability'])
     prompt = cited_prompt.prompt
 
     # Call the configured model runtime.
     model = model or config.CHAT_MODEL
-    if not has_usable_evidence(
+    if guard or not has_usable_evidence(
         results,
         context.get("analysis", []),
         context.get("reliability", []),
     ):
         return {
             "query": query,
-            "answer": abstention_message("no_matching_evidence"),
+            "answer": guard[1] if guard else abstention_message("no_matching_evidence"),
             "sources": results,
             "model": model,
             "n_sources": len(results),
             "outcome": "abstained",
-            "abstention_reason": "no_matching_evidence",
+            "abstention_reason": guard[0] if guard else "no_matching_evidence",
             "model_invoked": False,
+            "retrieval_diagnostics": diagnostics,
         }
     answer = get_model_runtime().chat(
         model=model,
@@ -1000,5 +1072,6 @@ def ask(
         "n_sources": len(results),
         "outcome": "answered",
         "abstention_reason": None,
+        "retrieval_diagnostics": diagnostics,
         "model_invoked": True,
     }

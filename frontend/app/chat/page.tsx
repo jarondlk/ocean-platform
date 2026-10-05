@@ -17,6 +17,7 @@ import { useAppPreferences } from "@/lib/preferences";
 
 import { ChatSourceSettings, filterLabels } from "@/components/ChatSourceSettings";
 import { ResearchResultCards } from "@/components/ResearchResultCards";
+import { SourceCoverage } from "@/components/SourceCoverage";
 import type { ResearchIntent } from "@/types";
 import { useChatSettings } from "@/lib/use-chat-settings";
 import { sourceLabels, scopeErrors, settingsErrors, type SourceFamily, type ChatSettings } from "@/lib/chat-settings";
@@ -259,6 +260,7 @@ export default function ChatPage() {
                   ) : null}
                 </div>
               ) : null}
+              {response ? <SourceCoverage diagnostics={response.retrieval_diagnostics} /> : null}
               <MarkdownAnswer
                 citationTargets={citationTargets}
                 onCitationSelect={setSelectedCitation}
@@ -442,7 +444,7 @@ export default function ChatPage() {
               <legend>{ui("Retrieval")}</legend>
               <NumericControl
                 id="chat-top-k"
-                label="Top-K sources"
+                label="Evidence documents (total)"
                 help="Number of retrieved documents sent into the prompt."
                 min={1}
                 max={25}

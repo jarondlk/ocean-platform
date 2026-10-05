@@ -59,6 +59,8 @@ export function abstentionReasonLabel(reason?: string | null): string {
     no_matching_evidence: "No matching evidence",
     empty_analysis_cohort: "Empty analysis cohort",
     publication_pending: "eDNA publication pending",
+    incomplete_source_coverage: "Required source evidence unavailable",
+    overlap_unverified: "Date/location overlap not verified",
   };
   return reason ? labels[reason] || reason : "None";
 }

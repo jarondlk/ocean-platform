@@ -32,6 +32,10 @@ and a conditional privileged-ACL residual risk; the images have no critical
 findings or reported Node/Python vulnerabilities. Complete deferred live role
 checks before using real research approvals.
 
+The v0.7.1 source-retrieval patch is in development; production remains v0.7.0.
+See its [implementation/acceptance record](docs/RELEASE_0.7.1_IMPLEMENTATION.md)
+and [candidate release notes](docs/RELEASE_NOTES_0.7.1.md).
+
 ## Study Sites
 
 | Bay | Code | Coordinates | Data |

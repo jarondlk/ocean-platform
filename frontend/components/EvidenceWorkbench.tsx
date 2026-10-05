@@ -5,6 +5,7 @@ import { RotateCcw, Search } from "lucide-react";
 import { CsvExportButton } from "@/components/CsvExportButton";
 import { getDocuments, retrieveSources } from "@/lib/api";
 import { SourceTable } from "@/components/SourceTable";
+import { SourceCoverage } from "@/components/SourceCoverage";
 import { useAppPreferences } from "@/lib/preferences";
 import type { SourceDocument } from "@/types";
 
@@ -277,6 +278,7 @@ export function EvidenceWorkbench() {
 
       <section className="explore-section">
         <h3 className="section-title">{ui("Result Diagnostics")}</h3>
+        <SourceCoverage diagnostics={retrievalDiagnostics} />
         <div className="summary-strip">
           <SummaryCell label={ui("Displayed")} value={visibleDocuments.length} />
           <SummaryCell label={ui("Fetched")} value={documents.length} />

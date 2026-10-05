@@ -178,7 +178,7 @@ class ChatInteraction(AppBase):
         CheckConstraint(
             "abstention_reason IS NULL OR abstention_reason IN "
             "('no_matching_evidence', 'empty_analysis_cohort', "
-            "'publication_pending', 'aggregate_scope_required', 'aggregate_unavailable', 'no_sources_selected', 'source_disabled', 'freshness_unavailable')",
+            "'publication_pending', 'aggregate_scope_required', 'aggregate_unavailable', 'no_sources_selected', 'source_disabled', 'freshness_unavailable', 'incomplete_source_coverage', 'overlap_unverified')",
             name="ck_chat_interaction_abstention_reason",
         ),
         CheckConstraint(

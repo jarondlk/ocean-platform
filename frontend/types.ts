@@ -137,6 +137,7 @@ export type SourceDocument = {
   text: string;
   score?: number | null;
   rank_sources?: Record<string, number>;
+  source_local_rank?: number | null;
   retrieval_role?: string;
   link_type?: string | null;
   linked_from_doc_id?: string | null;
@@ -245,7 +246,7 @@ export type ChatResponse = {
   answer_audit?: AnswerAudit | null;
   options: Record<string, unknown>;
   outcome?: "answered" | "abstained";
-  abstention_reason?: "no_matching_evidence" | "empty_analysis_cohort" | "publication_pending" | "aggregate_scope_required" | "aggregate_unavailable" | "no_sources_selected" | "source_disabled" | "freshness_unavailable" | null;
+  abstention_reason?: "no_matching_evidence" | "empty_analysis_cohort" | "publication_pending" | "aggregate_scope_required" | "aggregate_unavailable" | "no_sources_selected" | "source_disabled" | "freshness_unavailable" | "incomplete_source_coverage" | "overlap_unverified" | null;
   model_invoked?: boolean;
 };
 
