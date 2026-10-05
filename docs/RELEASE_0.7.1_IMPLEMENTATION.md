@@ -62,7 +62,7 @@ regressions cover dominant SST, all 16 selections, original filters, k limits,
 shared embeddings, partial/total search failure, fair escaped prompt packing,
 final omissions, deterministic API/standalone guards and retained evidence.
 
-The final local backend suite passed 1,034 tests, with 39 integration skips
+The initial implementation local backend suite passed 1,034 tests, with 39 integration skips
 and 79.24% coverage. Those integration tests run separately against PostgreSQL.
 Real isolated PostgreSQL 18.3/pgvector 0.8.2 passed all 38 existing integration
 checks. Additional migration preservation/downgrade checks and final history
@@ -71,18 +71,21 @@ All 64 frontend tests passed, including mounted coverage announcements and
 legacy-history rendering; typecheck and production build passed. The exact-source initial CI run
 [333](https://github.com/jarondlk/ocean-platform/actions/runs/37298471710) passed
 all four jobs, including production PostgreSQL 16 migration/metadata checks.
-The final diagnostic hardening has a separate regression and requires fresh CI/build.
+The final hardening and routing fixes passed fresh exact-source CI/build, recorded
+in [container verification](V0.7.1_CONTAINER_QA_2026-10-05.md).
 
 ## Remaining acceptance
 
-Final hardening-source CI/container verification and candidate replacement;
-actual viewer/researcher checks under #101, including isolated disposable review
+Actual viewer/researcher checks under #101, including isolated disposable review
 transitions and direct API denials; saved-history/admin acceptance; final production
 regression/history/anonymous-denial checks and cleanup. Initial source CI, container,
 backup/restore, candidate admin sign-in and paired retrieval checks passed below.
 
-The user has confirmed that legitimately invited viewer and researcher accounts
-are available. No live role check is marked passed by that confirmation. Issues
+The user clarified that separate viewer/researcher accounts are unavailable. A
+reviewable alternative temporarily changes the existing principal’s role only in
+the isolated QA database, using ordinary Google sign-in and restoring its original
+role afterward. That additional role-change scope awaits approval; no role has
+been changed and no live role check is marked passed. Issues
 #102, #103 and #89 retain their separate scientific dependencies; #104 requires
 current full image/security disposition review. No release is published yet.
 
@@ -130,8 +133,8 @@ existing 2*k overfetch bounds. The two-source k=1 case reported incomplete cover
 k=25 supplied 13 SST and 12 eDNA, retaining the unverified-overlap guard.
 
 Final review additionally bounded linked-expansion errors to a safe code instead
-of exposing backend exception text. Its focused regression passed; exact-source
-CI/rebuild and live role/history/denial acceptance remain required.
+of exposing backend exception text. Its focused regression and fresh exact-source CI/rebuild passed; live
+role/history/denial acceptance remains required.
 
 ## Additional live routing regression
 
@@ -150,3 +153,41 @@ guidance now explicitly treats missing/non-finite numbers as unavailable and
 forbids invented gap causes or interpreting raw counts as valid observations.
 This is model guidance, not deterministic claim verification; repeated final
 ordinary-answer review is required and citation validity alone is insufficient.
+
+## Final candidate and repeated answer checks
+
+Final runtime source `e157fb004871083df25d5d094852fed417a9c8c6` is deployed
+at zero traffic as `ocean-platform-v071-sourceqa1005b`. Exact-source CI and
+Cloud Build `edac2319-6969-4553-9505-182e25a0b017` passed; image digests and
+complete security disposition are recorded in the container QA document.
+Production remains on v0.7.0 and schema 0015.
+
+Read-only execution `ocean-v071-retrieval-qa-zkz5m` ran three ordinary summaries
+against final-source retrieval and prompt code, using both eDNA and SST with SST
+restricted to 2026-02-07. Each run supplied one SST and seven eDNA documents.
+The multi-source query bypassed the catalogue-count router and invoked the model.
+All citation audits reported zero invalid citations; citation counts were 46, 48
+and 55. Private results include the exact supplied texts and generated answers.
+No Chat histories or provider records were written by the job.
+
+A bounded manual review compared numeric values, dates and locations with those
+supplied texts. All three answers treated the station NaN as unavailable, avoided
+invented cloud/data-loss causes and did not claim verified overlap, non-overlap or
+database absence. Read counts were qualified as sequencing evidence rather than
+organism abundance. Provider labels do not establish approved physical identity.
+This verifies those three answers only: automated claim verification was not
+performed, and these checks do not replace real-data demonstrations or role QA.
+
+Final-candidate normal Google admin sign-in repeated the exact reported question:
+four SST and four eDNA documents supplied, `overlap_unverified`, abstained,
+model not run, and all eight evidence rows retained. Anonymous protected health,
+admin feedback and review proxy requests returned 401. This verifies the current
+candidate regression; actual viewer/researcher permission tests remain pending.
+
+The final-candidate normal-auth UI also answered “Summarize ANEMONE eDNA and
+SST evidence. Include dates, locations and scientific limitations.” through
+ordinary model routing, supplying four documents from each family. All eight were
+cited; 45 citations were valid, zero invalid, zero warnings. The response treated
+the station NaN as missing and retained unknown classification/calibration and
+provider-grid limitations. This is an additional bounded UI sample, not automated
+scientific claim verification or a substitute for the role checklist.
