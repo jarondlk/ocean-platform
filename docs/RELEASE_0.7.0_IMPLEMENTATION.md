@@ -3,7 +3,11 @@
 Recorded 2026-10-05. Branch: `codex/v070-data-foundation`, based on `main`
 `55d41469fb0694444e8c5b2211002179f09a776e`. Implements the
 [accepted plan](RELEASE_0.7.0_PLAN.md) for [issue #89](https://github.com/jarondlk/ocean-platform/issues/89).
-This is a review candidate, not a release or scientific acceptance record.
+This records implementation and dated candidate checks, not scientific acceptance.
+On 2026-10-05 JST, the user authorized publishing/deploying the software while
+explicitly deferring the six original real-data demonstrations. The
+[release notes](RELEASE_NOTES_0.7.0.md) and
+[operations record](RELEASE_0.7.0_OPERATIONS.md) carry that scope and final rollout.
 Implementation review: [draft PR #99](https://github.com/jarondlk/ocean-platform/pull/99).
 Exact-source candidate `ff8dfe51141cf549277a389174594b28753c547f` passed
 all four jobs in [CI run 324](https://github.com/jarondlk/ocean-platform/actions/runs/37262348375):
@@ -106,7 +110,9 @@ bundles remain readable as historical. These fixes are included in the candidate
 
 ## Original real-data case dispositions
 
-All six are currently **data_blocked**, not accepted/deferred by the user.
+All six remain **data_blocked** scientifically and are now **explicitly deferred**
+from software release acceptance by the user on 2026-10-05 JST. They are not
+accepted demonstrations; issue #89 stays open.
 
 | Case | Required evidence before real acceptance |
 | --- | --- |
@@ -210,7 +216,8 @@ An October 5 read-only traffic check confirms 100% remains on
 
 ## Remaining acceptance and rollout
 
-Scientific decisions and full historical data preparation are pending. Complete
+Scientific decisions and full historical data preparation are pending and the
+original demonstrations are explicitly deferred from this software release. Complete
 the original-case dispositions with independent count/link/trace review, real
 coverage/performance profiling, designated live viewer/researcher/admin and
 history acceptance, responsive/keyboard/empty/error checks and the accepted
@@ -222,5 +229,6 @@ review, container image build/scan, fresh backup/restore and a zero-traffic GCP
 candidate before a release. Review and merge the draft candidate only when its
 scope/limits are accepted. Follow the existing exact-source build/tag, rollback,
 manual job-image alignment and traffic-promotion procedure. No v0.7.0 release
-or deployment is implied by local synthetic checks. Version declarations remain
-at the currently published v0.6.1 until release preparation.
+or deployment is implied by local synthetic checks. Version declarations are
+now prepared as 0.7.0 for the authorized final candidate; follow the operations
+record for the actual publication/deployment state.

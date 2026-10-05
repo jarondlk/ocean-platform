@@ -22,6 +22,11 @@ approved.
 
 ## Active release work queue
 
+On 2026-10-05 JST the user authorized the v0.7.0 software release/deployment and
+explicitly deferred the six original real-data demonstrations. Issue #89 stays
+open. [Release notes](RELEASE_NOTES_0.7.0.md) and
+[operations](RELEASE_0.7.0_OPERATIONS.md) record the scope and execution state.
+
 - [`RELEASE_0.7.0_PLAN.md`](RELEASE_0.7.0_PLAN.md) — accepted
   implementation/acceptance sequence for issue #89's detection-frequency and SST
   demo. Planning does not approve scientific data decisions or claim a release.
