@@ -448,6 +448,8 @@ def route_permission(method: str, path: str) -> Optional[str]:
         return "chat:use"
     if path == "/chat/filter-options" and method == "POST":
         return "chat:use"
+    if path == "/chat/analysis-options" and method == "GET":
+        return "chat:use"
     if path.startswith("/chat/interactions/"):
         return "feedback:write"
     if path.startswith("/classification-reviews"):
@@ -458,6 +460,14 @@ def route_permission(method: str, path: str) -> Optional[str]:
         if path.endswith("/application") and method == "POST":
             return None
         return "classification:decide"
+    if path == "/research-registry-reviews" or path.startswith("/research-registry-reviews/"):
+        if method == "GET" or (method == "POST" and path.endswith("/preview")):
+            return "classification:read"
+        if method == "POST" and path.endswith("/apply"):
+            return "classification:apply"
+        if method == "POST":
+            return "classification:decide"
+        return None
     if path == "/retrieve" or path == "/documents":
         return "evidence:search"
     if path.startswith('/data/edna/analysis/') and path.endswith('/export'):

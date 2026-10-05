@@ -23,6 +23,16 @@ user-deferred. See [implementation](docs/RELEASE_0.6.1_IMPLEMENTATION.md),
 [scientific dispositions](docs/RELEASE_0.6.1_SCIENTIFIC_QA.md) and
 [deployment/rollback records](docs/RELEASE_0.6.1_OPERATIONS.md).
 
+The **v0.7.0 implementation candidate** adds reviewed physical-sample/area and
+SST registries, deterministic detection-frequency analyses and six published-result
+Chat workflows with maps, time series and exports. Local checks use synthetic data;
+real ANEMONE sampling decisions and historical SST acceptance remain pending.
+See the [candidate record](docs/RELEASE_0.7.0_IMPLEMENTATION.md) and
+[draft PR #99](https://github.com/jarondlk/ocean-platform/pull/99), with the
+[scientific review packet](docs/V0.7.0_SCIENTIFIC_REVIEW.md) and
+[container QA record](docs/V0.7.0_CONTAINER_QA_2026-10-05.md). No v0.7.0 release or
+production deployment has occurred.
+
 ## Study Sites
 
 | Bay | Code | Coordinates | Data |

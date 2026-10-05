@@ -32,6 +32,7 @@ NAMESPACES = {
     "classification-reviews",
     "evaluation",
     "operations",
+    "sst-panels",
 }
 
 

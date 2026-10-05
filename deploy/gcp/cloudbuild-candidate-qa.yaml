@@ -1,0 +1,41 @@
+# Build verification only. No Cloud Run deployment or production database access.
+steps:
+  - id: build-api
+    name: gcr.io/cloud-builders/docker
+    args: [build, -f, Containerfile.api, -t, ocean-candidate-api, -t, '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/api:candidate-${BUILD_ID}', .]
+  - id: build-frontend
+    name: gcr.io/cloud-builders/docker
+    args: [build, -f, frontend/Containerfile, -t, ocean-candidate-frontend, -t, '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/frontend:candidate-${BUILD_ID}', frontend]
+  - id: runtime-smoke
+    name: gcr.io/cloud-builders/docker
+    entrypoint: bash
+    args: [scripts/verify_candidate_containers.sh]
+  - id: save-images
+    name: gcr.io/cloud-builders/docker
+    entrypoint: bash
+    args:
+      - -ceu
+      - |
+        docker save ocean-candidate-api -o /workspace/candidate-api.tar
+        docker save ocean-candidate-frontend -o /workspace/candidate-frontend.tar
+  - id: scan-api
+    name: aquasec/trivy@sha256:7cced7cae583819fc7806d4cbc0dbbc7cad18b99f7d3e235192e6da8c091045c
+    args: [image, --scanners, vuln, --format, json, --timeout, 10m, --exit-code, '0', --input, /workspace/candidate-api.tar, --output, /workspace/candidate-reports/api-scan.json]
+  - id: scan-frontend
+    name: aquasec/trivy@sha256:7cced7cae583819fc7806d4cbc0dbbc7cad18b99f7d3e235192e6da8c091045c
+    args: [image, --scanners, vuln, --format, json, --timeout, 10m, --exit-code, '0', --input, /workspace/candidate-frontend.tar, --output, /workspace/candidate-reports/frontend-scan.json]
+# Scans retain all severities/unfixed findings. Exit 0 is collection, not acceptance.
+images:
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/api:candidate-${BUILD_ID}'
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/frontend:candidate-${BUILD_ID}'
+artifacts:
+  objects:
+    location: 'gs://${PROJECT_ID}_cloudbuild/v070-qa/${BUILD_ID}/'
+    paths: [candidate-reports/*.json, candidate-reports/*.log]
+substitutions:
+  _REGION: asia-northeast1
+  _REPOSITORY: ocean-platform
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: E2_HIGHCPU_8
+timeout: 2400s

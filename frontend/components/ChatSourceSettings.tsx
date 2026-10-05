@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { ChatFilterSelect } from "@/components/ChatFilterSelect";
-import { getChatFilterOptions } from "@/lib/api";
+import { getChatFilterOptions, request } from "@/lib/api";
+import type { ResearchIntent } from "@/types";
 import type { ChatFilterOptions } from "@/lib/chat-filter-options";
 import { useAppPreferences } from "@/lib/preferences";
 import { sourceLabels, scopeErrors, type SourceFamily } from "@/lib/chat-settings";
@@ -18,14 +19,28 @@ const filterSchemas = {
   remote_sensing: evidenceScopeSchema.$defs.Coordinates, edna_metabarcoding: evidenceScopeSchema.$defs.EdnaFilters,
 };
 type Field = {type?: string; enum?: readonly string[]; minimum?: number; maximum?: number; maxLength?: number; anyOf?: readonly Field[]};
-export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChange, disabled }: {
+type PublishedOption = { analysis_id: string; status: string; analysis_kind: string; label: string; time_from?: string; time_to?: string; protocol_ids: string[]; protocol_labels?: Record<string, string>; workflows: {kind: ResearchIntent["kind"]; question: string}[] };
+export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChange, disabled, researchIntent, onResearchChange }: {
   disabled?: boolean; scope: EvidenceScope; onChange: (value: EvidenceScope) => void; analysisId: string; onAnalysisChange: (value: string) => void;
+  researchIntent?: ResearchIntent; onResearchChange?: (intent: ResearchIntent | undefined, question?: string) => void;
 }) {
   const {ui} = useAppPreferences();
   const [catalog, setCatalog] = useState<ChatFilterOptions | null>(null);
   const [loadingChoices, setLoadingChoices] = useState(true);
   const [choicesFailed, setChoicesFailed] = useState(false);
   const [retry, setRetry] = useState(0);
+  const [analysisOptions, setAnalysisOptions] = useState<PublishedOption[]>([]);
+  const [analysisError, setAnalysisError] = useState("");
+  const selectedAnalysis = analysisOptions.find(option => option.analysis_id === analysisId);
+  useEffect(() => {
+    if (disabled) return;
+    let active = true;
+    setAnalysisError("");
+    request<{options: PublishedOption[]}>("/chat/analysis-options")
+      .then(value => { if (active) setAnalysisOptions(value.options); })
+      .catch(() => { if (active) setAnalysisError("Published analysis choices are unavailable. Your selection was retained."); });
+    return () => { active = false; };
+  }, [disabled, retry]);
   const scopeJson = JSON.stringify(scope);
   const invalid = scopeErrors(scope).length > 0;
   useEffect(() => {
@@ -84,7 +99,22 @@ export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChan
                   onChange={event => setFilter(family, key, event.target.value, kind)} />
               </label>;
             })}
-            {family === "edna_metabarcoding" ? <label className="settings-field" htmlFor="chat-analysis-id"><span>{ui("eDNA analysis ID")}</span><input id="chat-analysis-id" className="field" value={analysisId} onChange={event => onAnalysisChange(event.target.value)} /><small>{ui("Analysis links apply to this chat and are not saved as defaults.")}</small></label> : null}
+            {family === "edna_metabarcoding" ? <>
+              <label className="settings-field" htmlFor="chat-analysis-id"><span>{ui("Published eDNA analysis")}</span>
+                <select id="chat-analysis-id" className="field" value={analysisId} onChange={event => { onAnalysisChange(event.target.value); onResearchChange?.(undefined); }}>
+                  <option value="">No analysis selected</option>
+                  {analysisId && !selectedAnalysis ? <option value={analysisId}>Selected analysis · {analysisId.slice(0, 12)} · unavailable</option> : null}
+                  {analysisOptions.map(option => <option key={option.analysis_id} value={option.analysis_id} disabled={option.status !== "current"}>{option.label} · {option.time_from || ""}–{option.time_to || ""} · {option.status.replaceAll("_", " ")} · {option.analysis_id.slice(0, 12)}</option>)}
+                </select>
+                <small>{ui("Analysis links apply to this chat and are not saved as defaults.")}</small>
+              </label>
+              {analysisError ? <p role="status">{analysisError}</p> : null}
+              {selectedAnalysis?.analysis_kind === "detection_frequency" ? <>
+                <label className="settings-field">Research workflow<select className="field" value={researchIntent?.kind || ""} onChange={event => { const workflow = selectedAnalysis.workflows.find(value => value.kind === event.target.value); onResearchChange?.(workflow ? {kind: workflow.kind, protocol_id: researchIntent?.protocol_id} : undefined, workflow?.question); }}><option value="">Recognize a supported question</option>{selectedAnalysis.workflows.map(workflow => <option key={workflow.kind} value={workflow.kind}>{workflow.question}</option>)}</select></label>
+                {researchIntent && selectedAnalysis.protocol_ids.length > 1 ? <label className="settings-field">Assay protocol<select className="field" value={researchIntent.protocol_id || ""} onChange={event => onResearchChange?.({...researchIntent, protocol_id: event.target.value || undefined})}><option value="">Select a comparable protocol</option>{selectedAnalysis.protocol_ids.map(id => <option key={id} value={id}>{selectedAnalysis.protocol_labels?.[id] || id.slice(0, 12)}</option>)}</select></label> : null}
+                <small>Published cohorts and product panels are fixed. Conflicting source filters require clarification; check SST explicitly for temperature workflows.</small>
+              </> : null}
+            </> : null}
           </fieldset>
         </details>
       </section>;

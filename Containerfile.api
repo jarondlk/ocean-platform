@@ -10,6 +10,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 RUN apt-get update \
+    && apt-get upgrade -y --no-install-recommends \
     && apt-get install -y --no-install-recommends \
         libgomp1 \
         liblz4-1 \
@@ -34,7 +35,15 @@ RUN pg_dump --version | grep -Eq '^pg_dump \(PostgreSQL\) 16\.'
 
 COPY requirements/runtime.txt ./requirements.txt
 RUN pip install --upgrade pip \
-    && pip install --require-hashes -r requirements.txt
+    && pip install --require-hashes -r requirements.txt \
+    && pip check \
+    && python -m pip uninstall --yes pip setuptools wheel
+
+# Runtime jobs do not mount filesystems, enter namespaces or inspect terminfo.
+# Retain package metadata for complete scans, but remove these unused CLI paths
+# and privilege bits rather than relying only on the application's default UID.
+RUN rm -f /usr/bin/infocmp /usr/bin/nsenter /usr/bin/mount /usr/bin/umount \
+    && find / -xdev -type f -perm /6000 -exec chmod a-s {} +
 
 COPY --chown=app:app . .
 
