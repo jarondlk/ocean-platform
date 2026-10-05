@@ -76,16 +76,18 @@ in [container verification](V0.7.1_CONTAINER_QA_2026-10-05.md).
 
 ## Remaining acceptance
 
-Actual viewer/researcher checks under #101, including isolated disposable review
-transitions and direct API denials; saved-history/admin acceptance; final production
-regression/history/anonymous-denial checks and cleanup. Initial source CI, container,
-backup/restore, candidate admin sign-in and paired retrieval checks passed below.
+Normal viewer/researcher permission, synthetic-review and saved-history checks
+passed, with all QA identities/roles restored. Remaining work is the live mobile
+layout disposition, production backup/migration, exact-source publication and
+canonical rollout, production regression/history/anonymous-denial checks and
+temporary-resource cleanup. CI, container checks, initial backup/restore, candidate
+normal sign-in and paired retrieval checks passed below.
 
 The user clarified that separate viewer/researcher accounts are unavailable. A
 reviewable alternative temporarily changes the existing principal’s role only in
 the isolated QA database, using ordinary Google sign-in and restoring its original
-role afterward. That additional role-change scope awaits approval; no role has
-been changed and no live role check is marked passed. Issues
+role afterward. The user approved that additional scope; the role checks and complete restoration
+passed as recorded in [live acceptance](V0.7.1_LIVE_QA.md). Issues
 #102, #103 and #89 retain their separate scientific dependencies; #104 requires
 current full image/security disposition review. No release is published yet.
 
@@ -128,13 +130,18 @@ These are only three paired samples per case, including cold/warm execution, not
 an SLA or load test. Peak Python allocations after cold initialization were below
 1.1 MB for independent retrieval; this is not process RSS. Primary count remained
 8. Candidate prompt lengths were 8,068 / 18,699 / 15,918 characters respectively,
-within the existing section budgets. Each ranker's vector and text branches keep
+within the existing section budgets. The candidate acceptance envelope for these
+bounded paired samples is an independent median below twice the corresponding
+pooled median (observed 1.15x / 1.38x / 1.54x), one embedding per request, at most
+four families, total k <= 25 and at most 4*k post-fusion candidates. This accepts
+the measured representation/latency tradeoff for this patch, not an SLA, peak RSS
+guarantee or representative cohort/load qualification. Each ranker's vector and text branches keep
 existing 2*k overfetch bounds. The two-source k=1 case reported incomplete coverage;
 k=25 supplied 13 SST and 12 eDNA, retaining the unverified-overlap guard.
 
 Final review additionally bounded linked-expansion errors to a safe code instead
 of exposing backend exception text. Its focused regression and fresh exact-source CI/rebuild passed; live
-role/history/denial acceptance remains required.
+role/history/denial acceptance subsequently passed below.
 
 ## Additional live routing regression
 
@@ -182,7 +189,8 @@ Final-candidate normal Google admin sign-in repeated the exact reported question
 four SST and four eDNA documents supplied, `overlap_unverified`, abstained,
 model not run, and all eight evidence rows retained. Anonymous protected health,
 admin feedback and review proxy requests returned 401. This verifies the current
-candidate regression; actual viewer/researcher permission tests remain pending.
+candidate regression; normal viewer/researcher permission checks subsequently
+passed as recorded below.
 
 The final-candidate normal-auth UI also answered “Summarize ANEMONE eDNA and
 SST evidence. Include dates, locations and scientific limitations.” through
@@ -191,3 +199,17 @@ cited; 45 citations were valid, zero invalid, zero warnings. The response treate
 the station NaN as missing and retained unknown classification/calibration and
 provider-grid limitations. This is an additional bounded UI sample, not automated
 scientific claim verification or a substitute for the role checklist.
+
+
+## Normal-account role acceptance
+
+The approved isolated-role alternative completed actual Google viewer/researcher
+sessions, source/card/feedback/history checks, cross-user 404s, direct privilege
+403s and stale-version 409 enforcement. Cached UI controls submitted ordinary
+same-origin requests after a QA role change; the backend used the current database
+role and rejected the operation. Synthetic approve/reject/application transitions
+and immutable chains passed. All original QA identities/roles were restored;
+production permissions, scientific content and histories were preserved, and no
+synthetic review existed in production. Full outcomes and observed transient
+errors are recorded in the live QA document. Temporary-resource cleanup and
+production release acceptance remain outstanding.

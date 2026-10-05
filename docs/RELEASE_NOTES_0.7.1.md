@@ -20,8 +20,10 @@ omission cannot establish absent data or non-overlap.
 
 This patch does not perform historical SST acquisition or approve ANEMONE
 physical sampling, environmental classifications, areas or the six real-data
-research demonstrations. Those remain tracked in #102, #103 and #89. Live role
-acceptance (#101) and container maintenance (#104) retain their independent gates.
+research demonstrations. Those remain tracked in #102, #103 and #89. Normal
+viewer/researcher acceptance passed using explicitly approved role switches only
+in an isolated QA copy; all original identities/roles were restored. Container
+maintenance (#104) remains open for the retained OS findings.
 
 Migration 0016 only extends saved Chat abstention reasons. Keep that additive
 constraint during application rollback; do not erase new histories to downgrade.

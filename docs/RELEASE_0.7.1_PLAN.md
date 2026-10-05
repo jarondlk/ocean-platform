@@ -1,8 +1,9 @@
 # v0.7.1 patch plan — Source-aware retrieval and honest coverage
 
-Status: implementation in progress, 2026-10-05 JST. The source retrieval,
-prompt coverage, deterministic guards and UI are implemented on the patch branch.
-Candidate, live acceptance, release and deployment are pending.
+Status: candidate acceptance in progress, 2026-10-05 JST. Source retrieval, prompt
+coverage, deterministic guards and UI are implemented. Exact-source CI/image QA
+and normal-account role/workflow acceptance passed. Live mobile disposition,
+production migration, publication, rollout and cleanup remain pending.
 
 Repository baseline: clean `main` at
 `39f50faf2eed8b4da5096a85bfe28c2a04dfbbd9`. Published v0.7.0 runtime source:
