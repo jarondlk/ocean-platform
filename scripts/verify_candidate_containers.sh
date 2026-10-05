@@ -92,5 +92,7 @@ if (!osRelease.includes("VERSION_ID=\"13\"")) throw new Error("Expected Debian 1
 console.log(JSON.stringify({uid:process.getuid(), node:process.versions.node, os_release:osRelease, installation_tools:"absent"}));
 ' > "$report_dir/frontend-runtime.json"
 docker exec ocean-v070-qa-api id > "$report_dir/api-user.log"
+docker exec -i ocean-v070-qa-api sh -s < scripts/verify_runtime_security.sh > "$report_dir/api-security-inventory.log"
+docker exec -i ocean-v070-qa-frontend sh -s < scripts/verify_runtime_security.sh > "$report_dir/frontend-security-inventory.log"
 docker logs ocean-v070-qa-api > "$report_dir/api-startup.log" 2>&1
 docker logs ocean-v070-qa-frontend > "$report_dir/frontend-startup.log" 2>&1

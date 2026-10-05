@@ -22,6 +22,9 @@ RUN apt-get update \
     /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack \
     /usr/local/bin/yarn /usr/local/bin/yarnpkg /usr/local/bin/pnpm /usr/local/bin/pnpx
 
+RUN rm -f /usr/bin/infocmp /usr/bin/nsenter /usr/bin/mount /usr/bin/umount \
+    && find / -xdev -type f -perm /6000 -exec chmod a-s {} +
+
 WORKDIR /app
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \

@@ -39,6 +39,12 @@ RUN pip install --upgrade pip \
     && pip check \
     && python -m pip uninstall --yes pip setuptools wheel
 
+# Runtime jobs do not mount filesystems, enter namespaces or inspect terminfo.
+# Retain package metadata for complete scans, but remove these unused CLI paths
+# and privilege bits rather than relying only on the application's default UID.
+RUN rm -f /usr/bin/infocmp /usr/bin/nsenter /usr/bin/mount /usr/bin/umount \
+    && find / -xdev -type f -perm /6000 -exec chmod a-s {} +
+
 COPY --chown=app:app . .
 
 USER app
