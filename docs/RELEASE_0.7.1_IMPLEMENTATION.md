@@ -68,18 +68,67 @@ Real isolated PostgreSQL 18.3/pgvector 0.8.2 passed all 38 existing integration
 checks. Additional migration preservation/downgrade checks and final history
 checks passed afterward. CI must also verify the production PostgreSQL 16 path.
 All 64 frontend tests passed, including mounted coverage announcements and
-legacy-history rendering; typecheck and production build passed. CI/build
-identifiers will be recorded after the source is frozen.
+legacy-history rendering; typecheck and production build passed. The exact-source initial CI run
+[333](https://github.com/jarondlk/ocean-platform/actions/runs/37298471710) passed
+all four jobs, including production PostgreSQL 16 migration/metadata checks.
+The final diagnostic hardening has a separate regression and requires fresh CI/build.
 
 ## Remaining acceptance
 
-Exact-source CI/container runtime/security review; paired latency/query/embedding
-and prompt-budget measurements; fresh private backup and restore verification;
-zero-traffic normal-auth candidate; actual admin/viewer/researcher checks under
-#101, including isolated disposable review transitions; final production
-regression/history/anonymous-denial checks and cleanup.
+Final hardening-source CI/container verification and candidate replacement;
+actual viewer/researcher checks under #101, including isolated disposable review
+transitions and direct API denials; saved-history/admin acceptance; final production
+regression/history/anonymous-denial checks and cleanup. Initial source CI, container,
+backup/restore, candidate admin sign-in and paired retrieval checks passed below.
 
 The user has confirmed that legitimately invited viewer and researcher accounts
 are available. No live role check is marked passed by that confirmation. Issues
 #102, #103 and #89 retain their separate scientific dependencies; #104 requires
 current full image/security disposition review. No release is published yet.
+
+## Isolated candidate verification
+
+The user explicitly approved a private full backup, isolated restore test and
+QA database copy on the existing Cloud SQL instance. The 208,268,759-byte backup
+SHA-256 is `16763f7711b01598b4739d1c513aa3858867dabf5fee31890990cfa85db70890`.
+Restore verification passed and removed its disposable restore-test database.
+The separate role-QA copy retained every corpus, completed-history and identity/role
+hash. Migrating only that copy to 0016 preserved all row counts and hashes, while
+production remained on 0015. No account roles or IAM permissions were changed.
+Private backup/receipts are under `backups/v071/source-aware-20261005` in the existing
+private data bucket; QA account records and history are not public artifacts.
+
+Initial zero-traffic revision `ocean-platform-v071-sourceqa1005` uses the QA copy
+and the exact-source initial images above. The canonical service continues to
+send 100% of traffic to `ocean-platform-v070-software1005`. Normal Google admin
+sign-in passed with invitation/role checks unchanged. The temporary candidate
+callback was saved with explicit user approval and must be removed after QA.
+
+The exact reported question supplied four SST and four eDNA documents in the
+final prompt, publication ready, no prompt omissions. Outcome was `abstained`,
+reason `overlap_unverified`, model not run. The UI prominently showed both counts
+and the unverified matching limitation. This fixes the observed competition
+regression without claiming a spatial/temporal match or biological absence.
+
+Read-only QA execution `ocean-v071-retrieval-qa-2x67j` passed all 16 source selections,
+18 paired retrieval samples, k=1/25 limits, final packing and an impossible future
+scope. It wrote no Chat history or generated answers. Both pooled and independent
+retrieval used one embedding call per nonempty vector request.
+
+| Enabled families | Pooled median ms | Independent median ms | SELECT count pooled / independent | Independent primary counts |
+| --- | ---: | ---: | --- | --- |
+| SST | 1233.4 | 1416.5 | 2 / 3 | SST 8 |
+| SST + eDNA | 1191.8 | 1640.8 | 2 / 5 | SST 4, eDNA 4 |
+| All four | 1277.4 | 1965.7 | 2 / 9 | 2 per family |
+
+These are only three paired samples per case, including cold/warm execution, not
+an SLA or load test. Peak Python allocations after cold initialization were below
+1.1 MB for independent retrieval; this is not process RSS. Primary count remained
+8. Candidate prompt lengths were 8,068 / 18,699 / 15,918 characters respectively,
+within the existing section budgets. Each ranker's vector and text branches keep
+existing 2*k overfetch bounds. The two-source k=1 case reported incomplete coverage;
+k=25 supplied 13 SST and 12 eDNA, retaining the unverified-overlap guard.
+
+Final review additionally bounded linked-expansion errors to a safe code instead
+of exposing backend exception text. Its focused regression passed; exact-source
+CI/rebuild and live role/history/denial acceptance remain required.

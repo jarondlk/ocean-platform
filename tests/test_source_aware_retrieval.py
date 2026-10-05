@@ -79,6 +79,20 @@ def test_all_source_failures_preserve_service_error(monkeypatch):
         unified.retrieve_with_expansion('ANEMONE and SST', evidence_scope=scope('remote_sensing', 'edna_metabarcoding'), expand_evidence=False)
 
 
+def test_linked_failure_diagnostics_do_not_expose_backend_details(monkeypatch):
+    setup_retrieval(monkeypatch, {'remote_sensing': [document('remote_sensing')]})
+    monkeypatch.setattr(unified, '_pg_available', lambda: True)
+
+    def failed_expansion(*args):
+        raise RuntimeError('private SQL and connection credentials')
+
+    monkeypatch.setattr(unified, '_expand_linked_evidence', failed_expansion)
+    result = unified.retrieve_with_expansion('SST observations', evidence_scope=scope('remote_sensing'))
+    assert result['primary'] and not result['linked']
+    assert result['diagnostics']['expansion_error'] == 'linked_evidence_expansion_failed'
+    assert 'private SQL' not in str(result['diagnostics'])
+
+
 def test_small_budget_reports_omission_and_empty_family_donates_slots(monkeypatch):
     setup_retrieval(monkeypatch, {f: [document(f, n) for n in range(8)] for f in FAMILIES})
     result = unified.retrieve_with_expansion('observations', k=1, evidence_scope=scope(*FAMILIES), expand_evidence=False)

@@ -522,7 +522,7 @@ def retrieve_with_expansion(
             linked = (_expand_linked_evidence(primary, max_linked_sources, evidence_scope) if evidence_scope is not None
                       else _expand_linked_evidence(primary, max_linked_sources))
         except Exception as exc:  # pragma: no cover - defensive runtime guard
-            expansion_error = str(exc)
+            expansion_error = "linked_evidence_expansion_failed"
             logger.warning("Linked evidence expansion failed: %s", exc)
 
     linked_scope = dict(source_type=_normalize_source_type(source_type) if source_type else None,
