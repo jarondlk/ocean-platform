@@ -256,12 +256,16 @@ class LocalRetriever:
         vector_weight: float = 0.6,
         fts_weight: float = 0.4,
         rrf_k: int = 60,
+        query_embedding=None,
+        branch_diagnostics: Optional[dict] = None,
     ) -> List[dict]:
         """
         Hybrid search: BM25 + (optional) vector, fused with RRF.
         """
         vector_weight, fts_weight = normalized_weights(vector_weight, fts_weight)
         rrf_k = validate_rrf_k(rrf_k)
+        if branch_diagnostics is not None:
+            branch_diagnostics['failed_branches'] = []
         if not self.documents:
             return []
 
@@ -366,7 +370,7 @@ class LocalRetriever:
             else:
                 try:
                     from db.vector_store import embed_text
-                    q_emb = np.array(embed_text(query), dtype="float32")
+                    q_emb = np.array(query_embedding() if query_embedding is not None else embed_text(query), dtype="float32")
                     valid_embs = self._embeddings[valid_indices]
                     # Cosine similarity
                     norms = np.linalg.norm(valid_embs, axis=1) * np.linalg.norm(q_emb)
@@ -386,6 +390,8 @@ class LocalRetriever:
                     logger.warning("Vector search failed: %s", exc)
 
         enabled_branches = int(vector_weight > 0) + int(fts_weight > 0)
+        if branch_diagnostics is not None:
+            branch_diagnostics['failed_branches'] = list(failed_branches)
         if len(failed_branches) == enabled_branches:
             raise RetrievalBackendError(
                 "All enabled local retrieval backends failed: "

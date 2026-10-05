@@ -30,7 +30,7 @@ images:
   - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/frontend:candidate-${BUILD_ID}'
 artifacts:
   objects:
-    location: 'gs://${PROJECT_ID}_cloudbuild/v070-qa/${BUILD_ID}/'
+    location: 'gs://${PROJECT_ID}_cloudbuild/v071-qa/${BUILD_ID}/'
     paths: [candidate-reports/*.json, candidate-reports/*.log]
 substitutions:
   _REGION: asia-northeast1

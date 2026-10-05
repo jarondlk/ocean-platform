@@ -24,7 +24,7 @@ from db.app_models import (
 
 
 def test_new_chat_records_use_ocean_prompt_version():
-    assert chat_records.PROMPT_VERSION == "ocean-chat-v4"
+    assert chat_records.PROMPT_VERSION == "ocean-chat-v5-source-coverage"
 
 
 def _database():
@@ -388,7 +388,7 @@ def test_chat_restores_citations_before_response_audit_and_persistence(monkeypat
         row = session.get(ChatInteraction, uuid.UUID(payload['interaction_id']))
         assert row.answer == payload['answer']
         assert row.evidence_snapshot['citation_aliases'] == {'S1': 'ctd:2024-01-O-s1'}
-        assert row.prompt_version == 'ocean-chat-v4'
+        assert row.prompt_version == 'ocean-chat-v5-source-coverage'
         assert row.prompt_sha256 == hashlib.sha256(prompts[0].encode()).hexdigest()
 
 
@@ -476,9 +476,12 @@ def test_issue59_unfiltered_eight_document_request_keeps_canonical_edna_citation
         return {'primary': rows, 'linked': [], 'diagnostics': {'expected_source_types': ['edna_metabarcoding']}}
 
     def chat(**kwargs):
+        import re
         assert 'a' * 64 not in kwargs['prompt']
         assert '[S8] (metagenome' in kwargs['prompt']
-        return 'One MiFish sample has two assignment methods, with unknown classification [S1; S2].'
+        aliases = re.findall(r'\[(S\d+)\] \(edna_metabarcoding', kwargs['prompt'])
+        assert len(aliases) == 2
+        return 'One MiFish sample has two assignment methods, with unknown classification [' + '; '.join(aliases) + '].'
 
     monkeypatch.setattr(api_main, 'retrieve_with_expansion', retrieve)
     monkeypatch.setattr(api_main, 'get_model_runtime', lambda: SimpleNamespace(chat=chat))

@@ -92,7 +92,7 @@ def test_small_budget_reports_omission_and_empty_family_donates_slots(monkeypatc
 
 def test_prompt_packing_keeps_both_families_even_with_long_sst_first():
     rows = [document('remote_sensing', n, 'SST data '*1500) for n in range(8)]
-    rows.append(document('edna_metabarcoding', text='ANEMONE collection at recorded coordinates.'))
+    rows.append(document('edna_metabarcoding', text='ANEMONE collection at recorded coordinates. '*300))
     prompt, manifest = unified.build_prompt_with_context('Explain ANEMONE and SST records', rows,
         evidence_scope={'evidence_scope': scope('remote_sensing', 'edna_metabarcoding')},
         inject_analysis=False, inject_reliability=False)
@@ -121,5 +121,101 @@ def test_overlap_never_runs_model_without_verified_matching(monkeypatch, familie
     assert data['abstention_reason'] == reason
     assert 'does not establish' in data['answer']
     assert 'do not overlap' not in data['answer']
-    assert [r['doc_id'] for r in captured['evidence_snapshot']['sources']] == [r['doc_id'] for r in data['sources']]
+    assert [r.doc_id for r in captured['evidence_snapshot']['sources']] == [r['doc_id'] for r in data['sources']]
     assert captured['evidence_snapshot']['retrieval_diagnostics']['coverage_status'] != 'complete'
+
+
+def test_four_families_survive_large_escaped_prompt_fields():
+    rows = [document(f, n, '<record>Temperature & sampling</record>'*400) for f in FAMILIES for n in range(4)]
+    prompt, manifest = unified.build_prompt_with_context('Explain the supplied observations', rows,
+        evidence_scope={'evidence_scope': scope(*FAMILIES)}, inject_analysis=False, inject_reliability=False)
+    assert {r['source_type'] for r in manifest['primary']} == set(FAMILIES)
+    assert '<record>' not in prompt and '&lt;record&gt;' in prompt
+    assert any(r['reason'] == 'text_truncated' for r in manifest['omitted'])
+
+
+def test_shared_query_embedding_is_computed_once_and_failure_is_reused(monkeypatch):
+    from db import vector_store
+    calls = []
+    monkeypatch.setattr(unified, '_pg_available', lambda: False)
+    monkeypatch.setattr(unified, 'publication_status', lambda: 'ready')
+    monkeypatch.setattr(vector_store, 'embed_text', lambda query: calls.append(query) or [0.1, 0.2])
+    def retrieve(query, **kwargs):
+        assert kwargs['query_embedding']() == [0.1, 0.2]
+        return [document(enabled_sources(kwargs['evidence_scope'])[0])]
+    monkeypatch.setattr(unified, 'retrieve', retrieve)
+    unified.retrieve_with_expansion('shared embedding', evidence_scope=scope(*FAMILIES), expand_evidence=False)
+    assert calls == ['shared embedding']
+    def failed(query):
+        calls.append(query)
+        raise ValueError('embedding failed')
+    monkeypatch.setattr(vector_store, 'embed_text', failed)
+    def fallback(query, **kwargs):
+        with pytest.raises(ValueError):
+            kwargs['query_embedding']()
+        kwargs['branch_diagnostics']['failed_branches'] = ['vector']
+        return [document(enabled_sources(kwargs['evidence_scope'])[0])]
+    monkeypatch.setattr(unified, 'retrieve', fallback)
+    result = unified.retrieve_with_expansion('failed embedding', evidence_scope=scope(*FAMILIES), expand_evidence=False)
+    assert calls == ['shared embedding', 'failed embedding']
+    assert all(r['failed_branches'] == ['vector'] for r in result['diagnostics']['per_source'].values())
+
+
+def test_malformed_or_cross_scope_backend_rows_are_not_merged(monkeypatch):
+    setup_retrieval(monkeypatch, {'ctd': [document('ctd'), document('ctd')]})
+    result = unified.retrieve_with_expansion('duplicates', evidence_scope=scope('ctd'), expand_evidence=False)
+    assert len(result['primary']) == 1
+    envelope = scope('ctd')
+    envelope['sources']['ctd']['filters'] = {'bay': 'O'}
+    assert unified.retrieve_with_expansion('scope', evidence_scope=envelope, expand_evidence=False)['primary'] == []
+
+
+@pytest.mark.parametrize('query', [
+    'Which ANEMONE observations have matching SST data?',
+    'Do eDNA sampling locations coincide with sea-surface temperature observations?',
+    'Where do MiFish observations align with satellite records?',
+])
+def test_supported_overlap_paraphrases_require_verified_matching(query):
+    from orchestration.comparison_guard import comparison_guard
+    diagnostics = {'supplied_source_types': ['remote_sensing', 'edna_metabarcoding']}
+    guard = comparison_guard(query, scope('remote_sensing', 'edna_metabarcoding'), diagnostics)
+    assert guard[0] == 'overlap_unverified'
+
+
+def test_all_enabled_does_not_make_unrelated_sources_mandatory():
+    from orchestration.comparison_guard import comparison_guard
+    assert comparison_guard('Explain ANEMONE sampling metadata', scope(*FAMILIES), {'supplied_source_types': ['edna_metabarcoding']}) is None
+
+
+@pytest.mark.parametrize('budget', [0, -1, 26, 1.5, True])
+def test_primary_budget_is_bounded_before_backend_work(monkeypatch, budget):
+    calls = setup_retrieval(monkeypatch, {'ctd': [document('ctd')]})
+    with pytest.raises(ValueError, match='between 1 and 25'):
+        unified.retrieve_with_expansion('observations', k=budget, evidence_scope=scope('ctd'))
+    assert calls == []
+
+
+def test_disabled_required_source_and_ambiguous_summary_are_distinct():
+    from orchestration.comparison_guard import comparison_guard
+    diagnostics = {'supplied_source_types': ['remote_sensing']}
+    assert comparison_guard('Compare ANEMONE and SST records', scope('remote_sensing'), diagnostics)[0] == 'source_disabled'
+    assert comparison_guard('Summarize ANEMONE and SST records', scope(*FAMILIES), {}) is None
+
+
+def test_final_coverage_exposes_prompt_budget_omission():
+    from retrieval.source_aware import reconcile_coverage
+    diagnostics = {'per_source': {'ctd': {'enabled': True, 'state': 'retrieved', 'merged_count': 1}}}
+    context = {'omitted': [{'source_type': 'ctd', 'doc_id': 'ctd-0', 'reason': 'prompt_budget'}]}
+    final = reconcile_coverage(diagnostics, [], [], context, scope=scope('ctd'))
+    assert final['per_source']['ctd']['state'] == 'prompt_budget_omitted'
+    assert final['per_source']['ctd']['prompt_count'] == 0
+    assert final['coverage_stage'] == 'final_prompt'
+    assert final['missing_enabled_source_types'] == ['ctd']
+
+
+def test_standalone_overlap_uses_the_same_no_model_guard(monkeypatch):
+    setup_retrieval(monkeypatch, {f: [document(f)] for f in ('remote_sensing', 'edna_metabarcoding')})
+    monkeypatch.setattr(unified, 'get_model_runtime', lambda: pytest.fail('unverified overlap must not run model'))
+    data = unified.ask('Where do ANEMONE and SST observations overlap?')
+    assert data['abstention_reason'] == 'overlap_unverified'
+    assert data['model_invoked'] is False

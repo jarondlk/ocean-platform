@@ -1,0 +1,29 @@
+# v0.7.1 — Source-aware retrieval and evidence coverage
+
+Candidate notes; publication and deployment are pending acceptance.
+
+Chat searches selected sources individually and combines their ranked evidence
+within the existing total document budget. A dominant source can no longer
+consume every slot when the budget can represent all nonempty selected sources.
+Prompt packing preserves source representation and reports its final omissions.
+
+Answers and the evidence workbench show per-source coverage, including source
+search failures, unavailable publications and budget limitations. Saved feedback
+history retains the exact final evidence and diagnostics; older histories keep
+their original content.
+
+Explicit supported cross-source comparisons abstain when required evidence is
+missing or unchecked. Date/location overlap remains unverified without an
+approved matching result even when both sources retrieve evidence. These
+responses skip the language model and retain the available evidence; retrieval
+omission cannot establish absent data or non-overlap.
+
+This patch does not perform historical SST acquisition or approve ANEMONE
+physical sampling, environmental classifications, areas or the six real-data
+research demonstrations. Those remain tracked in #102, #103 and #89. Live role
+acceptance (#101) and container maintenance (#104) retain their independent gates.
+
+Migration 0016 only extends saved Chat abstention reasons. Keep that additive
+constraint during application rollback; do not erase new histories to downgrade.
+See [implementation evidence](RELEASE_0.7.1_IMPLEMENTATION.md) and the
+[accepted patch plan](RELEASE_0.7.1_PLAN.md).

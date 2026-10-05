@@ -68,6 +68,13 @@ def test_sixteen_subsets_and_independent_filters_match_both_rankers(monkeypatch)
                 assert {r['doc_id'] for r in local.search(query, k=25, evidence_scope=envelope, vector_weight=0, fts_weight=1)} == expected
                 vector_results = hybrid_retriever.hybrid_search(query, k=25, evidence_scope=envelope, vector_weight=1, fts_weight=0)
                 assert {r.doc_id for r in vector_results} == expected
+                import orchestration.unified as unified
+                monkeypatch.setattr(unified, '_pg_available', lambda: True)
+                monkeypatch.setattr(unified, 'publication_status', lambda: 'ready')
+                scoped = unified.retrieve_with_expansion(query, k=max(1, len(enabled)), evidence_scope=envelope,
+                                                        vector_weight=0, fts_weight=1, expand_evidence=False)
+                assert {r['doc_id'] for r in scoped['primary']} == expected
+                assert all(item['attempted'] == (family in enabled) for family, item in scoped['diagnostics'].get('per_source', {}).items())
             from orchestration.unified import _expand_linked_evidence
             monkeypatch.setattr('db.connection.get_session', lambda: nullcontext(connection))
             ctd = next(d for d in docs if d['source_type'] == 'ctd' and d['doc_id'].endswith('True'))
@@ -91,7 +98,7 @@ def test_migrated_history_retains_new_abstention_reasons():
                                role='researcher', account_type='research', status='active')
                 session.add(user)
                 session.flush()
-                for reason in ('no_sources_selected', 'source_disabled', 'freshness_unavailable'):
+                for reason in ('no_sources_selected', 'source_disabled', 'freshness_unavailable', 'incomplete_source_coverage', 'overlap_unverified'):
                     interaction = ChatInteraction(user_id=user.id, query='source check', model='test', status='completed',
                         request_options={'evidence_scope': scope()}, outcome='abstained', abstention_reason=reason)
                     session.add(interaction)
@@ -141,6 +148,7 @@ def test_chat_lifecycle_independent_readback_retains_scope_effective_settings_an
                 ('Has ANEMONE data from last week arrived?', scope('edna_metabarcoding'), 'abstained', 'freshness_unavailable'),
                 ('How many ANEMONE samples in Japan?', scope('edna_metabarcoding'), 'abstained', 'aggregate_scope_required'),
                 ('Explain the recorded temperature', scope(), 'abstained', 'no_sources_selected'),
+                ('Compare CTD and SST records', scope('ctd', 'remote_sensing'), 'abstained', 'incomplete_source_coverage'),
             ]
             for query, envelope, outcome, reason in cases:
                 response = client.post('/chat', json={'query': query, 'evidence_scope': envelope, 'inject_analysis': False, 'inject_reliability': False, 'repeat_penalty': 1.5, 'num_ctx': 2048})
@@ -155,7 +163,11 @@ def test_chat_lifecycle_independent_readback_retains_scope_effective_settings_an
                     assert 'repeat_penalty' not in row.request_options['generation'] and 'num_ctx' not in row.request_options['generation']
                     assert row.corpus_fingerprint == records.content_sha256(row.evidence_snapshot)
                     assert row.prompt_sha256 and row.completed_at and row.latency_ms >= 0
-                    assert [d['doc_id'] for d in row.evidence_snapshot['sources']] == ([document['doc_id']] if outcome == 'answered' else [])
+                    assert [d['doc_id'] for d in row.evidence_snapshot['sources']] == [d['doc_id'] for d in data['sources']]
+                    if reason == 'incomplete_source_coverage':
+                        assert data['model_invoked'] is False
+                        assert row.evidence_snapshot['retrieval_diagnostics']['comparison_status'] == reason
+                        assert row.evidence_snapshot['retrieval_diagnostics']['per_source']['ctd']['prompt_count'] == 1
                     assert row.answer_audit_snapshot == data['answer_audit']
             monkeypatch.setattr(api, 'retrieve_with_expansion', lambda *a, **k: {'primary': [], 'linked': [], 'diagnostics': {}})
             data = client.post('/chat', json={'query': 'Explain absent temperature records', 'evidence_scope': scope('ctd'), 'inject_analysis': False, 'inject_reliability': False}).json()
@@ -163,6 +175,43 @@ def test_chat_lifecycle_independent_readback_retains_scope_effective_settings_an
                 row = reader.get(ChatInteraction, uuid.UUID(data['interaction_id']))
                 assert row.outcome == 'abstained' and row.abstention_reason == 'no_matching_evidence'
                 assert row.answer == data['answer'] and row.evidence_snapshot['sources'] == []
+        finally:
+            transaction.rollback()
+    engine.dispose()
+
+
+def test_coverage_reason_migration_preserves_legacy_rows_and_blocks_destructive_downgrade(monkeypatch):
+    import importlib
+    from alembic.migration import MigrationContext
+    from alembic.operations import Operations
+    migration = importlib.import_module('migrations.versions.20261005_0016_source_coverage')
+    engine = create_engine(config.DATABASE_URL)
+    with engine.connect() as connection:
+        transaction = connection.begin()
+        try:
+            monkeypatch.setattr(migration, 'op', Operations(MigrationContext.configure(connection)))
+            with Session(bind=connection, join_transaction_mode='create_savepoint') as session:
+                user = AppUser(id=uuid.uuid4(), email=uuid.uuid4().hex+'@test.invalid', auth_provider='test',
+                               auth_subject=uuid.uuid4().hex, role='researcher', account_type='research', status='active')
+                session.add(user)
+                session.flush()
+                legacy = ChatInteraction(user_id=user.id, query='legacy history', model='test', status='completed',
+                                         outcome='abstained', abstention_reason='no_matching_evidence')
+                current = ChatInteraction(user_id=user.id, query='unverified overlap', model='test', status='completed',
+                                          outcome='abstained', abstention_reason='overlap_unverified')
+                session.add_all([legacy, current])
+                session.flush()
+                with pytest.raises(RuntimeError, match='Retain comparison coverage history'):
+                    migration.downgrade()
+                assert session.get(ChatInteraction, current.id).abstention_reason == 'overlap_unverified'
+                session.delete(current)
+                session.flush()
+                migration.downgrade()
+                assert session.get(ChatInteraction, legacy.id).query == 'legacy history'
+                migration.upgrade()
+                session.add(ChatInteraction(user_id=user.id, query='after upgrade', model='test', status='completed',
+                                            outcome='abstained', abstention_reason='incomplete_source_coverage'))
+                session.flush()
         finally:
             transaction.rollback()
     engine.dispose()

@@ -1,5 +1,7 @@
 "use client";
 
+import { SourceCoverage } from "@/components/SourceCoverage";
+
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import {
   Download,
@@ -565,6 +567,7 @@ function FeedbackDetail({
 
           <details className="debug-block feedback-debug-block">
             <summary>{ui("Evidence snapshot")} ({evidenceCount})</summary>
+            <SourceCoverage diagnostics={detail.evidence_snapshot.retrieval_diagnostics} />
             <pre>{JSON.stringify(detail.evidence_snapshot, null, 2)}</pre>
           </details>
           <details className="debug-block feedback-debug-block">

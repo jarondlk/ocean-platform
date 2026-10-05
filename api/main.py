@@ -181,7 +181,7 @@ async def _app_lifespan(_app: FastAPI):
 app = FastAPI(
     title="OCEAN Platform API",
     description="API layer for the Next.js migration of the provenance-aware marine RAG system.",
-    version="0.7.0",
+    version="0.7.1",
     lifespan=_app_lifespan,
 )
 
@@ -638,6 +638,7 @@ def _source_document(doc: Dict[str, Any]) -> SourceDocument:
         text=str(doc.get("text") or ""),
         score=doc.get("score"),
         rank_sources=doc.get("rank_sources") or {},
+        source_local_rank=doc.get('source_local_rank'),
         retrieval_role=str(doc.get("retrieval_role") or "primary"),
         link_type=doc.get("link_type"),
         linked_from_doc_id=doc.get("linked_from_doc_id"),
@@ -5621,6 +5622,11 @@ def chat(
                     "aggregate_unavailable", "The requested taxon evidence could not be verified against the published catalogue. No absence was inferred from retrieved examples.")
         rows = context.get('primary', rows)
         linked_rows = context.get('linked', linked_rows)
+        from retrieval.source_aware import reconcile_coverage
+        from orchestration.comparison_guard import comparison_guard
+        final_scope = scope or response_options['evidence_scope']
+        retrieval_diagnostics = reconcile_coverage(retrieval_diagnostics, rows, linked_rows, context, scope=final_scope)
+        guarded_comparison = comparison_guard(request.query, final_scope, retrieval_diagnostics)
         cited_prompt = prepare_citations(
             prompt, rows, linked_rows,
             context.get("analysis", []), context.get("reliability", []),
@@ -5642,6 +5648,10 @@ def chat(
             context,
             linked_rows,
         )
+        if guarded_comparison:
+            prompt_diagnostics.update(answer_mode='deterministic_comparison_guard', model_invoked=False)
+        else:
+            prompt_diagnostics['model_invoked'] = has_usable_evidence(rows, linked_rows, context.get('analysis', []), context.get('reliability', []))
         evidence_snapshot = {
             "citation_aliases": dict(cited_prompt.aliases),
             "sources": sources,
@@ -5658,17 +5668,17 @@ def chat(
             prompt=prompt,
         )
 
-        if not has_usable_evidence(
+        if guarded_comparison or not has_usable_evidence(
             rows,
             linked_rows,
             context.get("analysis", []),
             context.get("reliability", []),
         ):
-            reason = resolve_abstention_reason(
+            reason = guarded_comparison[0] if guarded_comparison else resolve_abstention_reason(
                 analysis_id=active_analysis_id,
                 retrieval_diagnostics=retrieval_diagnostics,
             )
-            answer = abstention_message(reason)
+            answer = guarded_comparison[1] if guarded_comparison else abstention_message(reason)
             complete_chat_interaction(
                 interaction_id=interaction_id,
                 user=user,
@@ -5709,6 +5719,13 @@ def chat(
                 timeout=120,
             )
             answer = cited_prompt.resolve(answer)
+            if retrieval_diagnostics.get('coverage_status') == 'partial':
+                from orchestration.comparison_guard import LABELS
+                missing = retrieval_diagnostics.get('missing_source_types', [])
+                if missing:
+                    answer = ('Evidence coverage is partial: ' + ', '.join(LABELS[f] for f in missing)
+                              + ' was not supplied in the final context. This is a retrieval limitation, '
+                              'not proof of absent source data.\n\n' + answer)
         except Exception as exc:
             error_code = "llm_request_failed"
             message = "The language model could not complete the request"

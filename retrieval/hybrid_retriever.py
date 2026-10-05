@@ -79,6 +79,8 @@ def hybrid_search(
     vector_weight: float = 0.6,
     fts_weight: float = 0.4,
     rrf_k: int = 60,
+    query_embedding=None,
+    branch_diagnostics: Optional[dict] = None,
 ) -> List[RetrievalResult]:
     """
     Run a hybrid search combining vector similarity and full-text search.
@@ -87,6 +89,8 @@ def hybrid_search(
     """
     vector_weight, fts_weight = normalized_weights(vector_weight, fts_weight)
     rrf_k = validate_rrf_k(rrf_k)
+    if branch_diagnostics is not None:
+        branch_diagnostics['failed_branches'] = []
     # Build filter clause
     filters = ["active IS TRUE"]
     params: Dict[str, Any] = {"k": k * 2}  # over-fetch for fusion
@@ -202,7 +206,7 @@ def hybrid_search(
     # the fallback branch in PostgreSQL's aborted-transaction state.
     if vector_weight > 0:
         try:
-            query_emb = embed_text(query)
+            query_emb = query_embedding() if query_embedding is not None else embed_text(query)
             emb_str = "[" + ",".join(str(x) for x in query_emb) + "]"
             params["emb"] = emb_str
 
@@ -304,6 +308,8 @@ def hybrid_search(
             failed_branches.append("fts")
             logger.warning("FTS search failed: %s", e)
 
+    if branch_diagnostics is not None:
+        branch_diagnostics['failed_branches'] = list(failed_branches)
     if len(failed_branches) == enabled_branches:
         raise RetrievalBackendError(
             "All enabled retrieval backends failed: " + ", ".join(failed_branches)
