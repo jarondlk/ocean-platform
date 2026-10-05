@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-10-05 (v0.7.0 implementation candidate).
+Last reviewed: 2026-10-05 (v0.7.0 software release).
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -11,8 +11,11 @@ approved.
 
 ## Current operating authority
 
-- [`RELEASE_0.6.1_OPERATIONS.md`](RELEASE_0.6.1_OPERATIONS.md) — latest published
-  release/production record, with explicit live-role and Japanese QA deferrals.
+- [`RELEASE_0.7.0_OPERATIONS.md`](RELEASE_0.7.0_OPERATIONS.md) — current published
+  software release/production, verified rollout, cleanup and rollback record;
+  six scientific demos and live viewer/researcher QA explicitly deferred.
+- [`RELEASE_0.6.1_OPERATIONS.md`](RELEASE_0.6.1_OPERATIONS.md) — prior published
+  release/rollback record, with its historical live-role and Japanese QA deferrals.
 - [`RELEASE_0.6.0_OPERATIONS.md`](RELEASE_0.6.0_OPERATIONS.md) — retained prior
   release/deployment record, security amendment and historical QA deferrals.
 - [`RELEASE_0.5.0_OPERATIONS.md`](RELEASE_0.5.0_OPERATIONS.md) — historical
@@ -20,18 +23,19 @@ approved.
 - [`ROADMAP.md`](ROADMAP.md) — longer-term engineering priorities.
 - [`handoff.md`](../handoff.md) — current repository and production handoff.
 
-## Active release work queue
+## v0.7.0 software release and deferred research work
 
 On 2026-10-05 JST the user authorized the v0.7.0 software release/deployment and
-explicitly deferred the six original real-data demonstrations. Issue #89 stays
-open. [Release notes](RELEASE_NOTES_0.7.0.md) and
+explicitly deferred the six original real-data demonstrations and, separately,
+live viewer/researcher sign-in QA. Software publication/deployment and cleanup
+are complete; issue #89 stays open. [Release notes](RELEASE_NOTES_0.7.0.md) and
 [operations](RELEASE_0.7.0_OPERATIONS.md) record the scope and execution state.
 
 - [`RELEASE_0.7.0_PLAN.md`](RELEASE_0.7.0_PLAN.md) — accepted
   implementation/acceptance sequence for issue #89's detection-frequency and SST
   demo. Planning does not approve scientific data decisions or claim a release.
-- [`RELEASE_0.7.0_IMPLEMENTATION.md`](RELEASE_0.7.0_IMPLEMENTATION.md) — candidate
-  scope, verification, operational procedure and remaining release gates.
+- [`RELEASE_0.7.0_IMPLEMENTATION.md`](RELEASE_0.7.0_IMPLEMENTATION.md) — implemented
+  software scope, verification, operational procedure and deferred scientific gates.
 - [`V0.7.0_CONTAINER_QA_2026-10-05.md`](V0.7.0_CONTAINER_QA_2026-10-05.md) —
   isolated image/runtime verification, exact build bindings and residual advisory review.
 - [`V0.7.0_SCIENTIFIC_REVIEW.md`](V0.7.0_SCIENTIFIC_REVIEW.md) — precise provider/
@@ -51,8 +55,12 @@ open. [Release notes](RELEASE_NOTES_0.7.0.md) and
 
 ## Current-release implementation
 
+- [`RELEASE_0.7.0_IMPLEMENTATION.md`](RELEASE_0.7.0_IMPLEMENTATION.md) and
+  [`RELEASE_NOTES_0.7.0.md`](RELEASE_NOTES_0.7.0.md) — published research software
+  and explicitly deferred real-demo/live-role checks; use its operations record.
+
 - [`RELEASE_0.6.1_IMPLEMENTATION.md`](RELEASE_0.6.1_IMPLEMENTATION.md) and
-  [`RELEASE_NOTES_0.6.1.md`](RELEASE_NOTES_0.6.1.md) — current published patch
+  [`RELEASE_NOTES_0.6.1.md`](RELEASE_NOTES_0.6.1.md) — prior published patch
   implementation and source changes; use its operations record for deployment.
 - [`RELEASE_0.6.0_OPERATIONS.md`](RELEASE_0.6.0_OPERATIONS.md) — published GitHub
   predecessor release and verified historical production traffic switch;

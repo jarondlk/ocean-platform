@@ -1,7 +1,6 @@
 # v0.7.0 operations
 
-Prepared 2026-10-05 JST. **Release preparation in progress; production remains
-v0.6.1.** The user explicitly authorized release/deployment of the software and
+Updated 2026-10-05 JST. **v0.7.0 is published and deployed at 100% traffic.** The user explicitly authorized release/deployment of the software and
 deferral of the six original real ANEMONE/SST demonstrations. Issue #89 remains
 open; this authorization does not approve scientific registry or data decisions.
 
@@ -14,12 +13,12 @@ qualification as part of the unmet scientific evidence preparation. No actual
 classifications, sampling/SST registries or research publications will be applied
 to manufacture a demo.
 
-Final-source CI/image QA, residual OS advisory disposition, fresh production
-backup/isolated restore, migration/count preservation, authenticated candidate
-UI/history/access checks and production verification remain required. Prior
-v0.6.1 viewer/researcher waivers are not inherited.
+Final-source CI/image QA, scoped residual OS dispositions, fresh production
+backup/isolated restore, migration/count preservation, actual admin candidate
+UI/history/access and production verification passed. Live viewer/researcher QA
+was separately user-deferred on 2026-10-05 JST; no prior waiver was inherited.
 
-## Baseline and prepared procedure
+## Historical baseline and prepared procedure
 
 - Project `data-infra-infobio`, region `asia-northeast1`, service `ocean-platform`,
   canonical origin `https://oceaninfobio.com`.
@@ -44,7 +43,7 @@ v0.6.1 viewer/researcher waivers are not inherited.
   the canonical revision. Align changed manual job images without running their
   ingestion/embedding/evaluation commands. Verify production before cleanup.
 
-## Runtime security disposition preparation
+## Historical runtime disposition preparation
 
 The stable Debian OS package advisories remain visible in full scans. The final
 runtime build removes `infocmp`, `nsenter`, `mount`, `umount` and setuid/setgid
@@ -136,3 +135,53 @@ and digests; do not rebuild or retag a different source merely for operational
 documentation. The prepared promotion definition restores the canonical auth
 origin as the latest service template, retains prior rollback tags, and removes
 temporary QA tags.
+
+## Published rollout and cleanup — 2026-10-05 JST
+
+The user explicitly instructed: “Proceed; defer live viewer/researcher QA.” The
+six real-data demos remain separately deferred. Both dispositions are recorded
+in the published [v0.7.0 release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.0).
+The annotated tag pins exact built source `6167949177e437843b3390ca6fbc9ec9ab705bfc`;
+operational documentation follows in PR #100 without retagging the runtime.
+
+`ocean-platform-v070-software1005` now serves **100% production traffic** with
+`v070-production` tag. The latest service template is the canonical revision and
+`AUTH_URL=https://oceaninfobio.com`; all historical rollback tags remain. The
+compatible v0.6.1 rollback revision is `ocean-platform-v061-assay1002`, retained
+with the additive 0015 schema. Temporary `v070-final` / `v070-candidate` tags were
+removed during promotion. The temporary callback was removed and re-opening
+Google client settings verified exactly the original two callbacks/origins.
+
+Canonical Google admin sign-in passed. Overview showed 7,319 retrieval documents,
+162 CTD casts, 79 SST days and healthy API/database/model/publication signals.
+An eDNA-only exact query again returned 3,498 source occurrences / matching assays,
+343 controls and 3,155 unknown-control records without the model, with 7 valid
+citations and none invalid. Preferences were restored to all four sources/no
+filters. Anonymous research/analysis/history proxy requests remained 401;
+login/provider discovery were 200. A bounded 20-minute query for HTTP 5xx errors
+on the new serving revision returned zero records; this is a deployment-window
+check, not ongoing monitoring or arbitrary scientific-answer acceptance.
+
+All five existing manual jobs (`ocean-anemone-process`, `ocean-embedding`,
+`ocean-evaluation`, `ocean-migrate`, `ocean-pipeline`) now pin the exact verified
+API digest and release source metadata. New shared research/database/runtime
+modules justify backend alignment. Each functional job definition was compared
+before/after: command/args, identity, secret refs, mounts, resource/task/timeout/
+retry settings were retained. Only image/source metadata and CLI-generated nonce
+changed. No ingestion, embedding, evaluation or other manual batch command ran.
+Original job definitions remain in the private release records for rollback.
+
+Final read-only execution `ocean-v070-release-ops-n4bl9` passed with schema 0015:
+old corpus/publications/user roles/completed history hashes are preserved, all
+six new registry tables are empty, and Chat count is 186 (baseline 183 plus three
+actual UI QA records). The post-promotion record preserved admin ownership,
+eDNA-only scope, evidence fingerprint/prompt hash and zero invalid citations.
+The private `verify-verification.json` receipt is retained with the backup.
+Temporary `ocean-v070-release-ops` was deleted; exactly the five original manual
+jobs remain. Task-owned OAuth/QA browser tabs are closed after evidence capture.
+
+Remaining follow-up is explicit: live viewer/researcher sign-in and role checks
+before real research approval use; all six real ANEMONE/SST demos and their
+scientific preparation; stable OS advisory maintenance. Issue #89 remains open.
+The older checkpoint above records the pre-promotion state and is superseded by
+this section for current operating state.

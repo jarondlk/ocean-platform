@@ -1,4 +1,4 @@
-# v0.7.0 implementation candidate
+# v0.7.0 software implementation and verification
 
 Recorded 2026-10-05. Branch: `codex/v070-data-foundation`, based on `main`
 `55d41469fb0694444e8c5b2211002179f09a776e`. Implements the
@@ -8,12 +8,15 @@ On 2026-10-05 JST, the user authorized publishing/deploying the software while
 explicitly deferring the six original real-data demonstrations. The
 [release notes](RELEASE_NOTES_0.7.0.md) and
 [operations record](RELEASE_0.7.0_OPERATIONS.md) carry that scope and final rollout.
-Implementation review: [draft PR #99](https://github.com/jarondlk/ocean-platform/pull/99).
+Implementation review: [merged PR #99](https://github.com/jarondlk/ocean-platform/pull/99).
 Exact-source candidate `ff8dfe51141cf549277a389174594b28753c547f` passed
 all four jobs in [CI run 324](https://github.com/jarondlk/ocean-platform/actions/runs/37262348375):
 backend, frontend, PostgreSQL 16 migration/integration and dependency review.
-Production remains v0.6.1; no production migration, registry application,
-research publication, tag, traffic switch or batch job was performed.
+That candidate checkpoint preceded release. Final merged source `6167949` is
+now tagged/published as v0.7.0 and serves 100% production traffic. Migration
+0015, backup/restore, candidate/production verification and cleanup passed;
+manual-job images are aligned without batch execution. No real scientific
+registry or research publication was applied. See operations for exact evidence.
 
 ## Implemented behavior
 
@@ -99,7 +102,7 @@ Caps currently allow 10,000 occurrences, 1,000,000 detections, 5,000 taxon keys,
 200,000 result rows and 128 MiB bounded input/result snapshots; SST preparation
 has separate grid/granule/observation limits. Work exceeding limits fails before
 unbounded allocation. Representative real-cohort and request-latency profiling
-remain required before release.
+remain deferred real-cohort qualification before scientific acceptance.
 
 Browser QA caught and fixed duplicate React sibling keys between answer cards
 and feedback, regionless Q4 bin aggregation, missing resolved taxon labels and
@@ -214,21 +217,20 @@ candidate images, not a live Cloud Run candidate or release authorization.
 An October 5 read-only traffic check confirms 100% remains on
 `ocean-platform-v061-assay1002`.
 
-## Remaining acceptance and rollout
+## Software release and deferred acceptance
 
-Scientific decisions and full historical data preparation are pending and the
-original demonstrations are explicitly deferred from this software release. Complete
-the original-case dispositions with independent count/link/trace review, real
-coverage/performance profiling, designated live viewer/researcher/admin and
-history acceptance, responsive/keyboard/empty/error checks and the accepted
-language requirements. The third research paper's detailed methods/supplement
-still need a complete reading record before those protocols are reused.
+Final source CI, full image/runtime/security review, fresh private backup/isolated
+restore, additive migration/count/hash preservation, normal-auth zero-traffic
+candidate and production admin/Chat/history/anonymous checks passed. Exact-source
+v0.7.0 publication, traffic promotion, five manual-job image/source updates and
+temporary access/job cleanup are complete; use the
+[operations record](RELEASE_0.7.0_OPERATIONS.md) for immutable identifiers.
 
-Require passing exact-commit CI (including PostgreSQL 16), dependency/security
-review, container image build/scan, fresh backup/restore and a zero-traffic GCP
-candidate before a release. Review and merge the draft candidate only when its
-scope/limits are accepted. Follow the existing exact-source build/tag, rollback,
-manual job-image alignment and traffic-promotion procedure. No v0.7.0 release
-or deployment is implied by local synthetic checks. Version declarations are
-now prepared as 0.7.0 for the authorized final candidate; follow the operations
-record for the actual publication/deployment state.
+The user separately authorized deferral of the six original real-data demos and
+live viewer/researcher sign-in QA. Complete those role checks before using real
+research approvals. Environmental classifications, physical sampling identity,
+repeated-run representative assays, area geometry, valid-empty-QC inclusion and
+historical SST coverage still need evidence review. Real-cohort performance/
+coverage and full third-reference methods reading remain deferred scientific
+preparation. No real result was manufactured from synthetic checks; issue #89
+stays open. Version declarations are 0.7.0.
