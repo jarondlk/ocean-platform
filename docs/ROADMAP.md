@@ -33,7 +33,7 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.6.1`. The active data plane now uses the
+  and OCEAN Platform release `v0.7.0`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
 - The accessible 2026-09-17 ANEMONE MiFish catalogue is stored as the
@@ -44,8 +44,9 @@ workflow that can later become automated.
   excluded from environmental-only analysis. Physical sample identity is
   unresolved; exact aggregate citations and provenance are live.
 - Production has 7,319 documents and matching embeddings, with schema head
-  `20261001_0014`. Scoped chat answer-quality defects are tracked in
-  [issue #70](https://github.com/jarondlk/ocean-platform/issues/70).
+  `20261004_0015`. The agreed English scope of issue #70 is complete;
+  [issue #89](https://github.com/jarondlk/ocean-platform/issues/89) remains open
+  for the explicitly deferred real research demonstrations.
 - Operational administration is consolidated under `/admin` with Users,
   Feedback, Pipeline, Database, System, and Debug sections.
 - The README screenshot set was refreshed from the authenticated OCEAN
@@ -98,7 +99,7 @@ scans, and plan an explicit SQLAlchemy 2.1 database-driver migration. The
 compatible maintenance patch retains SQLAlchemy 2.0 / psycopg2. A production
 rollout requires the normal release and acceptance gates.
 
-## In progress v0.7.0: ANEMONE detection patterns and SST
+## v0.7.0 software published; real research demonstrations deferred
 
 The [accepted v0.7.0 plan](RELEASE_0.7.0_PLAN.md) translates
 [issue #89](https://github.com/jarondlk/ocean-platform/issues/89) and its research
@@ -107,10 +108,14 @@ The [2026-10-04 investigation](V0.7.0_DISCOVERY_2026-10-04.md) records the curre
 code/data gaps. The [implementation candidate](RELEASE_0.7.0_IMPLEMENTATION.md)
 adds reviewed registries, product-aware SST panels, exact detection-frequency
 calculations, immutable publication and six typed Chat workflows with charts and
-exports. Core synthetic and PostgreSQL 16 CI checks passed in
-[draft PR #99](https://github.com/jarondlk/ocean-platform/pull/99); remaining
-candidate/security acceptance, real cohort/product approval and release
-acceptance remain pending. Production remains v0.6.1.
+exports. [PR #99](https://github.com/jarondlk/ocean-platform/pull/99) is merged;
+exact-source CI, image/security review, backup/isolated restore, additive migration
+and real admin candidate/production Chat/history/auth checks passed. The exact
+v0.7.0 source is published and serves 100% traffic. The six real demos and live
+viewer/researcher sign-in checks are explicitly user-deferred. No real registry
+or research publication was applied; complete live role checks before research
+approvals. See [operations](RELEASE_0.7.0_OPERATIONS.md) for verified rollout,
+cleanup, manual-job alignment, rollback and retained residual security findings.
 
 Implementation order: establish a reviewed physical-sample denominator and
 eligible geographic cohort; obtain historical product-aware SST; qualify

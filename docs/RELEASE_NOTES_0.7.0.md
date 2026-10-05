@@ -54,3 +54,19 @@ Final release source, image digests, backup/restore, security dispositions and
 candidate/production acceptance are recorded in
 [operations](RELEASE_0.7.0_OPERATIONS.md). The full scan reports are retained;
 zero critical findings does not imply zero remaining OS advisories.
+
+## Release verification and explicit live-role deferral
+
+Published v0.7.0 pins merged source `6167949177e437843b3390ca6fbc9ec9ab705bfc`.
+The canonical GCP revision serves 100% traffic after passing exact-source CI,
+image/runtime/security review, fresh backup/isolated restore, additive migration,
+real admin candidate/production sign-in, source-scoped Chat/history and anonymous
+access checks. Five existing manual job images/source metadata were aligned
+without batch execution; temporary QA access and operator resources were removed.
+
+On 2026-10-05 JST, the user separately approved deferring live viewer/researcher
+sign-in QA. Isolated role tests passed; actual live sessions for those roles were
+not tested. Complete those checks before real research approval use. Full image
+scans retain eight high OS CVEs with scoped runtime mitigations and a conditional
+privileged-ACL library risk; no findings were suppressed. See operations and the
+[security dispositions](V0.7.0_CONTAINER_QA_2026-10-05.md) for evidence and limits.

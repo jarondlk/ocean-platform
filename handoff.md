@@ -2,35 +2,46 @@
 
 > **Last updated**: 2026-10-05 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN Platform `v0.6.1` is live at
-> [oceaninfobio.com](https://oceaninfobio.com/). Cloud Run revision
-> `ocean-platform-v061-assay1002` receives 100% traffic from accepted
-> runtime source/tag `fd7dd41`. Production has 3,498 ANEMONE source
-> occurrences/assays, 349,638 assignment rows, 13,932 standard rows, 6,996
-> eDNA documents and 323 other documents. All 7,319 documents have matching
-> embeddings; schema head is now `20261001_0014` (v0.6.0 additive migration) and provenance publication is
-> `v050-production-provenance`. A fresh backup restored in isolation, existing
-> history and pilot identities were preserved. Live source/filter/retrieval
-> checks and anonymous HTTP protections passed. The user approved promotion
-> with live viewer/researcher checks explicitly deferred; Japanese acceptance is
-> separately deferred. Admin/mobile/keyboard/history and bounded English scientific
-> QA passed. See the [v0.6.1 operations record](docs/RELEASE_0.6.1_OPERATIONS.md).
-> The agreed English checks for [issue #70](https://github.com/jarondlk/ocean-platform/issues/70) passed and it is closed.
-> The older rollout accounts below are dated history.
+> **Current status**: OCEAN `v0.7.0` is published and live at
+> [oceaninfobio.com](https://oceaninfobio.com/). Revision
+> `ocean-platform-v070-software1005` serves 100% traffic from exact runtime
+> source/tag `6167949177e437843b3390ca6fbc9ec9ab705bfc`. Schema is
+> `20261004_0015`; 3,498 ANEMONE source occurrences/assays, 349,638 assignment
+> rows, 13,932 standards and 7,319 documents/embeddings are preserved.
+> The fresh 208 MB backup passed isolated restore; existing users/roles,
+> publications and completed history hashes were preserved. Final-source
+> CI/image QA, real admin candidate/production sign-in, source-scoped
+> Vertex/exact-count Chat, history readbacks and anonymous denials passed.
+> Six real scientific demos and live viewer/researcher sign-in QA are explicitly
+> user-deferred. No scientific registries or publications were applied;
+> [issue #89](https://github.com/jarondlk/ocean-platform/issues/89) remains open.
+> Read [operations](docs/RELEASE_0.7.0_OPERATIONS.md) and
+> [security dispositions](docs/V0.7.0_CONTAINER_QA_2026-10-05.md).
 
-## v0.7.0 implementation candidate
+## v0.7.0 software released and deployed
 
-Branch `codex/v070-data-foundation` implements the accepted
-[issue #89 plan](docs/RELEASE_0.7.0_PLAN.md). The
-[candidate record](docs/RELEASE_0.7.0_IMPLEMENTATION.md) records code, synthetic
-QA and manual publication procedures. Migration `20261004_0015` has only been
-applied to disposable local test databases; production remains at `0014`.
-No real sampling/product reviews, v0.7.0 tag or deployment have been applied.
-The [scientific review packet](docs/V0.7.0_SCIENTIFIC_REVIEW.md) needs evidence
-for environmental eligibility, physical units/resequencing, region/grid footprints
-and historical SST choice/coverage. All six original cases remain data-blocked.
-Continue independent code review/CI and prepare reviewed inputs; synthetic results
-must not be presented as Miyagi research results or release acceptance.
+Merged implementation [PR #99](https://github.com/jarondlk/ocean-platform/pull/99)
+ships the reviewed registry, exact analysis/publication/API/Chat and shared
+figure/export software. Final build `2aa26d29-c08d-415c-a81c-863ff495cf00` pins
+both image digests documented in the operations record. Full scans retain eight
+high OS CVEs with component/privilege mitigations and a conditional privileged
+ACL residual risk; zero critical and no reported Node/Python findings do not
+mean zero vulnerability. Recheck stable fixes for future image updates.
+
+All five existing manual job images/source metadata are aligned; commands,
+identities, secret references, volumes and resource limits are retained. No
+batch ingestion/embedding/evaluation work ran. Temporary candidate tags, OAuth
+callback and release operator job were removed. The prior v0.6.1 revision and
+job definitions are retained for compatible rollback; keep the additive schema.
+
+Next scientific work: obtain environmental/physical-unit/resequencing and
+area-footprint evidence, reviewed historical SST coverage and valid-empty-QC
+policy, complete third-reference methods review and real-cohort performance/
+coverage qualification, then publish and independently verify the six real
+results. Complete real viewer/researcher checks before research approval use.
+The [scientific review packet](docs/V0.7.0_SCIENTIFIC_REVIEW.md) defines the
+required evidence. Synthetic results are software QA, not Miyagi observations.
+Older rollout accounts below are dated history.
 
 ## v0.6.0 released and deployed
 
