@@ -1604,3 +1604,36 @@ removed. The original two callbacks and existing rollback tags remain.
 Issue #70 is closed for the agreed English scope; Japanese live acceptance
 and viewer/researcher live sessions are unperformed, explicitly deferred.
 See the v0.6.1 operations record for digests, timestamps, caveats and rollback.
+
+### v0.7.0 implementation candidate — 2026-10-05
+
+Implementation is in draft PR #99 on `codex/v070-data-foundation`. Subsequent
+commits add documentation only after tested application/image source
+`ff8dfe51141cf549277a389174594b28753c547f`.
+CI run 324 passed all four jobs including PostgreSQL 16. Local backend 996 passed,
+38 PostgreSQL-only skips covered separately; frontend 57 passed, type/build passed.
+The six deterministic research intents, reviewed registries, immutable publication,
+shared map/series/exports and source-scope/history checks use synthetic QA data.
+Algorithm `physical-detection-frequency-v3` fixes Q2 to Q1's top-ten candidates;
+old research v1/v2 bundles remain historical.
+
+Google Cloud login was refreshed successfully. Isolated build
+`6815e352-275a-40fe-b4e7-d7bf5103b0c5` passed builds, migration/isolated backup
+restore, runtime/import/numeric/NetCDF/auth-denial checks and full scan collection.
+Both images report zero critical and no reported Node/Python vulnerabilities;
+eight distinct high OS CVEs remain for applicability/disposition review.
+Exact image bindings and reports are in `docs/V0.7.0_CONTAINER_QA_2026-10-05.md`.
+No advisories were suppressed, alerts dismissed, production migration/registry
+application/publication performed, v0.7.0 tag/release created or traffic switched.
+Read-only October 5 traffic check confirms 100% on `ocean-platform-v061-assay1002`.
+
+All original real-data Q1–Q6 cases remain data_blocked. Provider evidence is needed
+for environmental classification, physical units (`num_filter=2`), seven repeated
+RUN01/RUN04 assay relationships and approved worldmesh/Miyagi geometry. Historical
+SST product/coverage decision, successful-empty-assay policy support, fresh active
+data census, full third-paper methods review and real/live candidate acceptance
+remain gates; no prior waiver applies. See `docs/V0.7.0_SCIENTIFIC_REVIEW.md` and
+`docs/RELEASE_0.7.0_IMPLEMENTATION.md` before proceeding with real preparation.
+
+Task-created QA tab and ports 3007/8007 were closed/stopped; the user's 3006 tab
+was retained. The signed-in ANEMONE tab is preserved for follow-up evidence review.
