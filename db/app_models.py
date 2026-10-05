@@ -605,3 +605,79 @@ class RateLimitBucket(AppBase):
         ),
         Index("ix_rate_limit_bucket_updated_at", "updated_at"),
     )
+
+
+class ResearchRegistryReview(AppBase):
+    """Human scientific approval is independent of operational application."""
+    __tablename__ = "research_registry_review"
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    kind = Column(String(32), nullable=False)
+    registry_key = Column(String(255), nullable=False, index=True)
+    definition_json = Column(JSON, nullable=False)
+    content_sha256 = Column(String(64), nullable=False)
+    state = Column(String(16), nullable=False, default="draft")
+    version = Column(Integer, nullable=False, default=1)
+    created_by_user_id = Column(Uuid(as_uuid=True), ForeignKey("app_user.id", ondelete="RESTRICT"), nullable=False)
+    decided_by_user_id = Column(Uuid(as_uuid=True), ForeignKey("app_user.id", ondelete="RESTRICT"))
+    applied_by_user_id = Column(Uuid(as_uuid=True), ForeignKey("app_user.id", ondelete="RESTRICT"))
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        CheckConstraint("kind IN ('sampling', 'sst_product')", name="ck_research_registry_review_kind"),
+        CheckConstraint("state IN ('draft', 'approved', 'rejected', 'applied')", name="ck_research_registry_review_state"),
+        CheckConstraint("version >= 1", name="ck_research_registry_review_version"),
+        CheckConstraint("state = 'draft' OR decided_by_user_id IS NOT NULL", name="ck_research_registry_review_decided"),
+        CheckConstraint("state <> 'applied' OR applied_by_user_id IS NOT NULL", name="ck_research_registry_review_applied"),
+    )
+
+
+class ResearchRegistryEvent(AppBase):
+    __tablename__ = "research_registry_event"
+    review_id = Column(Uuid(as_uuid=True), ForeignKey("research_registry_review.id", ondelete="RESTRICT"), primary_key=True)
+    sequence = Column(Integer, primary_key=True)
+    event_sha256 = Column(String(64), nullable=False, unique=True)
+    payload_json = Column(JSON, nullable=False)
+    __table_args__ = (CheckConstraint("sequence >= 1", name="ck_research_registry_event_sequence"),)
+
+
+class ResearchRegistryVersion(AppBase):
+    """Immutable evidence ledger survives canonical refreshes and corpus rebuilds."""
+    __tablename__ = "research_registry_version"
+    registry_id = Column(String(64), primary_key=True)
+    review_id = Column(Uuid(as_uuid=True), ForeignKey("research_registry_review.id", ondelete="RESTRICT"), nullable=False, unique=True)
+    registry_key = Column(String(255), nullable=False, index=True)
+    payload_json = Column(JSON, nullable=False)
+
+
+class ResearchRegistryHead(AppBase):
+    __tablename__ = "research_registry_head"
+    registry_key = Column(String(255), primary_key=True)
+    registry_id = Column(String(64), ForeignKey("research_registry_version.registry_id", ondelete="RESTRICT"), nullable=False)
+
+
+class ResearchPhysicalMembership(AppBase):
+    __tablename__ = "research_physical_membership"
+    registry_id = Column(String(64), ForeignKey("research_registry_version.registry_id", ondelete="RESTRICT"), primary_key=True)
+    sample_id = Column(String(64), primary_key=True)
+    physical_sample_id = Column(String(64), nullable=False, index=True)
+    scientific_content_sha256 = Column(String(64), nullable=False)
+    representative_assay_id = Column(String(64), nullable=False)
+    representative_assay_sha256 = Column(String(64), nullable=False)
+    area_id = Column(String(255), nullable=False)
+    area_version = Column(String(64), nullable=False)
+
+
+class ResearchAreaDefinition(AppBase):
+    __tablename__ = "research_area_definition"
+    registry_id = Column(String(64), ForeignKey("research_registry_version.registry_id", ondelete="RESTRICT"), primary_key=True)
+    area_id = Column(String(255), primary_key=True)
+    area_version = Column(String(64), nullable=False)
+    definition_json = Column(JSON, nullable=False)
+
+
+def _research_record_is_immutable(*_args):
+    raise ValueError("Research evidence records are immutable")
+
+
+for _research_model in (ResearchRegistryEvent, ResearchRegistryVersion, ResearchPhysicalMembership, ResearchAreaDefinition):
+    event.listen(_research_model, "before_update", _research_record_is_immutable)
+    event.listen(_research_model, "before_delete", _research_record_is_immutable)

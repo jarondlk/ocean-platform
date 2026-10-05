@@ -112,7 +112,14 @@ def validate_input_provenance(inputs):
 
 def publish_analysis(result):
     validate_input_provenance(result['inputs']['canonical'])
-    if set(result['tables']) != set(TABLES):
+    research = result.get('schema_version') == 2
+    if research:
+        from ingestion.research_analysis_bundle import RESEARCH_TABLES, RESEARCH_FILES, validate_research_inputs
+        from preprocessing.research_recipe import DetectionFrequencyRecipe
+        validate_research_inputs(DetectionFrequencyRecipe.model_validate(result['recipe']), result['inputs'])
+    tables = RESEARCH_TABLES if research else TABLES
+    required_files = RESEARCH_FILES if research else ANALYSIS_FILES
+    if set(result['tables']) != set(tables):
         raise ValueError('Incomplete analysis table contract')
     root = analysis_root()
     root.mkdir(parents=True, exist_ok=True)
@@ -122,6 +129,7 @@ def publish_analysis(result):
     for name, rows in result['tables'].items():
         (staging / f'{name}.json').write_bytes(canonical_bytes(rows))
     manifest = seal_bundle(staging, root, result['analysis_id'], {
+        **({'schema_version': 2, 'analysis_kind': 'detection_frequency'} if research else {}),
         'algorithm_version': result['algorithm_version'], 'input_sha256': result['input_sha256'],
         'recipe_sha256': digest(result['recipe']), 'limitations': result['limitations'],
         'table_counts': {k: len(v) for k,v in result['tables'].items()},
@@ -129,7 +137,7 @@ def publish_analysis(result):
     # Validate before registration; a previous unregistered bundle is accepted
     # only if rebuilding from canonical inputs produced exactly the same bytes.
     _decode_analysis(manifest['id'], *read_bundle(root, manifest['id'],
-        expected_digest=digest(manifest), required_files=ANALYSIS_FILES))
+        expected_digest=digest(manifest), required_files=required_files))
     record = canonical_bytes({'analysis_id': manifest['id'], 'manifest_sha256': digest(manifest)})
     if (root / 'registry').is_symlink():
         raise ValueError('Invalid analysis registry path')
@@ -142,7 +150,7 @@ def publish_analysis(result):
     # A pointer per recipe prevents concurrent unrelated analyses overwriting each other.
     atomic_json(root / 'recipes' / f"{digest(result['recipe'])}.json", {'analysis_id': manifest['id'], 'manifest_sha256': digest(manifest)})
     if config.EDNA_ARTIFACT_URI:
-        _, files = read_bundle(root, manifest['id'], expected_digest=digest(manifest), required_files=ANALYSIS_FILES)
+        _, files = read_bundle(root, manifest['id'], expected_digest=digest(manifest), required_files=required_files)
         _remote_store().publish('analysis', manifest['id'], files,
             metadata={'manifest_sha256': digest(manifest), 'recipe_sha256': digest(result['recipe'])})
     return manifest
@@ -168,12 +176,23 @@ def load_analysis(identity):
         raise ValueError('Analysis registration mismatch')
     manifest, contents = read_bundle(root, identity,
         expected_digest=validate_id(record.get('manifest_sha256')),
-        required_files=ANALYSIS_FILES, max_bytes=MAX_ANALYSIS_BYTES)
+        max_bytes=MAX_ANALYSIS_BYTES)
     return _decode_analysis(identity, manifest, contents)
 
 
 def _decode_analysis(identity, manifest, contents):
-    if manifest.get('id') != identity or set(contents) != ANALYSIS_FILES | {'manifest.json'} or set(manifest['files']) != ANALYSIS_FILES:
+    research = manifest.get('schema_version') == 2
+    if research:
+        from ingestion.research_analysis_bundle import RESEARCH_TABLES, RESEARCH_FILES, validate_research_inputs
+        from preprocessing.research_recipe import DetectionFrequencyRecipe
+        from preprocessing.edna_detection_frequency import READABLE_ALGORITHM_VERSIONS
+        if manifest.get('analysis_kind') != 'detection_frequency' or manifest.get('algorithm_version') not in READABLE_ALGORITHM_VERSIONS:
+            raise ValueError('Unknown research analysis contract')
+    elif manifest.get('schema_version') not in {None, 1}:
+        raise ValueError('Unknown analysis schema version')
+    tables_contract = RESEARCH_TABLES if research else TABLES
+    required_files = RESEARCH_FILES if research else ANALYSIS_FILES
+    if manifest.get('id') != identity or set(contents) != required_files | {'manifest.json'} or set(manifest['files']) != required_files:
         raise ValueError('Incomplete analysis file contract')
     for name, sha in manifest['files'].items():
         if hashlib.sha256(contents[name]).hexdigest() != sha:
@@ -185,11 +204,14 @@ def _decode_analysis(identity, manifest, contents):
     if digest({'algorithm':manifest['algorithm_version'], 'recipe':recipe, 'input_sha256':digest(inputs)}) != identity:
         raise ValueError('Analysis identity mismatch')
     validate_input_provenance(inputs['canonical'])
-    AnalysisRecipe.model_validate(recipe)
-    if set(manifest['table_counts']) != set(TABLES):
+    if research:
+        validate_research_inputs(DetectionFrequencyRecipe.model_validate(recipe), inputs)
+    else:
+        AnalysisRecipe.model_validate(recipe)
+    if set(manifest['table_counts']) != set(tables_contract):
         raise ValueError('Incomplete analysis table counts')
     tables = {}
-    for name in TABLES:
+    for name in tables_contract:
         rows = json.loads(contents[name + '.json'])
         if not isinstance(rows, list) or len(rows) != manifest['table_counts'][name]:
             raise ValueError('Invalid analysis table shape/count')
@@ -206,6 +228,9 @@ def _decode_analysis(identity, manifest, contents):
 
 
 def analysis_status(bundle):
+    if bundle['manifest'].get('schema_version') == 2:
+        from ingestion.research_analysis_bundle import research_status
+        return research_status(bundle)
     recipe = AnalysisRecipe.model_validate(bundle['recipe'])
     try:
         current = select_inputs(recipe, read_canonical(recipe))
@@ -231,6 +256,10 @@ def context_documents(scope):
         return []
     try:
         bundle = load_analysis(identity)
+        if bundle.get('manifest', {}).get('schema_version') == 2:
+            # Version-two Chat uses typed exact-result intents, never arbitrary
+            # truncations of frequency tables as model-generated statistics.
+            return []
         if analysis_status(bundle) != 'current':
             return []
         cohort, recipe = bundle['recipe']['cohort'], bundle['recipe']
@@ -274,6 +303,8 @@ def request_scope(scope):
     if analysis_status(bundle) != 'current':
         raise ValueError('Analysis is historical or its current inputs cannot be verified')
     recipe = bundle['recipe']
+    if bundle['manifest'].get('schema_version') == 2:
+        raise ValueError('Detection-frequency analyses require a supported research intent')
     cohort = recipe['cohort']
     for key in ('provider', 'provider_project_id', 'provider_run_id', 'time_from', 'time_to', 'lat_min', 'lat_max', 'lon_min', 'lon_max'):
         if scope.get(key) is not None and scope[key] != cohort.get(key):
@@ -309,7 +340,7 @@ def analysis_trace(doc_id, descriptors):
         return None
     identity, table = match.groups()
     descriptor = next((d for d in descriptors if d['analysis_id'] == identity), None)
-    if not descriptor or table not in TABLES:
+    if not descriptor or table+'.json' not in descriptor['manifest']['files']:
         return None
     manifest = descriptor['manifest']
     return dict(doc_id=doc_id, found=True, trace={
@@ -343,6 +374,7 @@ def regenerate_affected_analyses(sample_id: str, *, maximum: int = 100) -> dict:
     if len(records) > maximum:
         raise ValueError("Registered analysis regeneration limit exceeded")
     regenerated = []
+    pending = []
     for record in records:
         bundle = load_analysis(record['analysis_id'])
         canonical_samples = bundle['inputs']['canonical']['edna_sample']
@@ -352,6 +384,11 @@ def regenerate_affected_analyses(sample_id: str, *, maximum: int = 100) -> dict:
         ):
             continue
         environment = bundle['inputs'].get('environment') or []
+        if bundle.get('manifest', {}).get('schema_version') == 2:
+            # Classification changes stale the reviewed identity bindings. A
+            # manual new review/publication is required; never silently rebind.
+            pending.append({'analysis_id': record['analysis_id'], 'reason': 'research_review_and_manual_publication_required'})
+            continue
         result = run_analysis(
             AnalysisRecipe.model_validate(bundle['recipe']),
             execute=True,
@@ -363,6 +400,7 @@ def regenerate_affected_analyses(sample_id: str, *, maximum: int = 100) -> dict:
         })
     return {
         'sample_id': sample_id,
-        'affected': len(regenerated),
+        'affected': len(regenerated) + len(pending),
         'analysis_ids': regenerated,
+        **({'pending': pending} if pending else {}),
     }

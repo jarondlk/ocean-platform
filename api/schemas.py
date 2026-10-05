@@ -7,6 +7,7 @@ from typing import Any, Dict, List, Literal, Optional
 from pydantic import AliasChoices, BaseModel, ConfigDict, Field, model_validator
 from schema.time_range import time_bounds
 from retrieval.source_scope import EvidenceScope, ALIASES, LEGACY_FIELDS
+from orchestration.research_intents import ResearchIntent
 
 
 EDNA_ASSIGNMENT_METHODS = (
@@ -410,6 +411,7 @@ class EdnaAggregationRequest(BaseModel):
 
 class ChatRequest(RetrieveRequest):
     aggregation: Optional[EdnaAggregationRequest] = None
+    research_intent: Optional[ResearchIntent] = None
     model: Optional[str] = Field(default=None, max_length=255)
     inject_analysis: bool = True
     inject_reliability: bool = True
@@ -465,6 +467,13 @@ class ContextDocument(BaseModel):
     aggregate_id: Optional[str] = None
     table: Optional[str] = None
     result_ids: List[str] = Field(default_factory=list)
+    result_rows: List[Dict[str, Any]] = Field(default_factory=list, max_length=500)
+    plot_areas: List[Dict[str, Any]] = Field(default_factory=list, max_length=1000)
+    plot_taxa: List[Dict[str, str]] = Field(default_factory=list, max_length=500)
+    analysis_recipe: Optional[Dict[str, Any]] = None
+    covered_source_types: List[str] = Field(default_factory=list, max_length=4)
+    total_rows: int = Field(0, ge=0)
+    rows_truncated: bool = False
 
 
 class CitationAuditRecord(BaseModel):

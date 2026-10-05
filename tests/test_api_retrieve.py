@@ -319,6 +319,10 @@ def test_chat_abstains_before_model_when_no_evidence(monkeypatch):
 
 def test_chat_reports_empty_analysis_cohort_without_model(monkeypatch):
     monkeypatch.setattr(
+        "ingestion.edna_analysis_bundle.load_analysis",
+        lambda identity: {"manifest": {"id": identity}},
+    )
+    monkeypatch.setattr(
         api_main,
         "_resolve_analysis_request",
         lambda request: (request, set(), set()),

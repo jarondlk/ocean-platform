@@ -187,6 +187,7 @@ jobs:
           tests/integration/test_edna_analysis_postgres.py
           tests/integration/test_chat_source_scope_postgres.py
           tests/integration/test_chat_filter_options_postgres.py
+          tests/integration/test_research_registry_postgres.py
           -q
 
       - name: Verify transactional corpus upsert is idempotent

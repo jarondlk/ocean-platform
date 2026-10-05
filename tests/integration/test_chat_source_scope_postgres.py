@@ -9,6 +9,8 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session
 
 import config
+from alembic.config import Config
+from alembic.script import ScriptDirectory
 from db.models import CorpusBase
 from db.app_models import AppUser, ChatInteraction
 from retrieval import hybrid_retriever
@@ -83,7 +85,7 @@ def test_migrated_history_retains_new_abstention_reasons():
     with engine.connect() as connection:
         transaction = connection.begin()
         try:
-            assert connection.execute(text('SELECT version_num FROM alembic_version')).scalar_one() == '20261001_0014'
+            assert connection.execute(text('SELECT version_num FROM alembic_version')).scalar_one() == ScriptDirectory.from_config(Config('alembic.ini')).get_current_head()
             with Session(bind=connection, join_transaction_mode='create_savepoint') as session:
                 user = AppUser(id=uuid.uuid4(), email=uuid.uuid4().hex+'@test.invalid', auth_provider='test', auth_subject=uuid.uuid4().hex,
                                role='researcher', account_type='research', status='active')
