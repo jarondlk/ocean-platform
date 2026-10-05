@@ -65,6 +65,26 @@ def test_supported_count_questions(query):
     assert plan.filters["provider"] == "anemone"
 
 
+@pytest.mark.parametrize('query', [
+    'Summarize ANEMONE eDNA and SST evidence. Include dates, locations and scientific limitations.',
+    'Summarize the ANEMONE eDNA and SST records supplied, including their dates, locations and limitations.',
+    'Give a summary of ANEMONE and CTD evidence',
+    'Summarise MiFish and metagenome evidence',
+])
+def test_named_multi_source_summary_is_not_an_exact_count(query):
+    assert plan_aggregation({'query': query}) is None
+
+
+def test_explicit_multi_source_counts_and_forced_aggregation_still_fail_closed():
+    request = {'query': 'Summarize ANEMONE and SST evidence'}
+    assert plan_aggregation({**request, 'aggregation': {}}).clarification
+    assert plan_aggregation({'query': 'How many ANEMONE and SST records are available?'}).clarification
+    # Merely selecting SST does not reroute a catalogue-only summary.
+    from tests.test_chat_source_scope import scope
+    assert plan_aggregation({'query': 'Give a summary of ANEMONE data',
+        'evidence_scope': scope('remote_sensing', 'edna_metabarcoding')}).clarification is None
+
+
 COUNT_REPRODUCTIONS = [
     "For the selected Ablabys taenianotus and QCauto scope, how many source occurrences, assays, assignment rows and sequencing reads are supported?",
     "How many ANEMONE source occurrences contain Ablabys taenianotus under qcauto_target, and how many reads support that assignment?",

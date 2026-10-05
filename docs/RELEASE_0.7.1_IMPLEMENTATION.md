@@ -132,3 +132,14 @@ k=25 supplied 13 SST and 12 eDNA, retaining the unverified-overlap guard.
 Final review additionally bounded linked-expansion errors to a safe code instead
 of exposing backend exception text. Its focused regression passed; exact-source
 CI/rebuild and live role/history/denial acceptance remain required.
+
+## Additional live routing regression
+
+Normal-auth candidate QA found that ordinary “Summarize ANEMONE eDNA and SST
+evidence” wording was intercepted by the existing exact-catalogue router and
+returned `aggregate_scope_required` before retrieval. The patch now routes soft
+summary requests naming multiple families to ordinary retrieval. Explicit counts,
+forced aggregation and eDNA-only catalogue summaries keep their conservative
+contracts. Planner and full API regressions verify model invocation and both
+final evidence families. This defect was fixed before final candidate acceptance;
+the superseded intermediate build is not release evidence.

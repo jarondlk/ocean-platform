@@ -27,3 +27,9 @@ Migration 0016 only extends saved Chat abstention reasons. Keep that additive
 constraint during application rollback; do not erase new histories to downgrade.
 See [implementation evidence](RELEASE_0.7.1_IMPLEMENTATION.md) and the
 [accepted patch plan](RELEASE_0.7.1_PLAN.md).
+
+Ordinary summaries naming multiple source families now reach retrieval instead of
+being mistaken for an exact eDNA catalogue count. Explicit count requests and
+single-source catalogue summaries retain their bounded exact-count routing.
+Linked-search failures return a safe diagnostic code rather than raw exception
+text.

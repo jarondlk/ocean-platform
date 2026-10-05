@@ -29,8 +29,12 @@ LIMITATIONS = {
 }
 
 
+def mentioned_source_types(query):
+    return [f for f, pattern in MENTIONS.items() if re.search(pattern, query, re.I)]
+
+
 def comparison_requirement(query):
-    families = [f for f, pattern in MENTIONS.items() if re.search(pattern, query, re.I)]
+    families = mentioned_source_types(query)
     if len(families) < 2:
         return None
     if re.search(OVERLAP, query, re.I):

@@ -8,6 +8,8 @@ from dataclasses import dataclass
 import json
 import re
 
+from orchestration.comparison_guard import mentioned_source_types
+
 FILTERS = (
     "sample_id",
     "provider",
@@ -44,6 +46,10 @@ EDNA_ALIASES = {
 }
 COUNT = re.compile(
     r"\b(how many|number of|counts?|totals?|summary|summarize|summarise|breakdown|proportion|percentage)\b|何件|いくつ|何サンプル|何個|何種類|何回",
+    re.I,
+)
+EXPLICIT_COUNT = re.compile(
+    r"\b(how many|number of|counts?|totals?|breakdown|proportion|percentage)\b|何件|いくつ|何サンプル|何個|何種類|何回",
     re.I,
 )
 TOPIC = re.compile(r"(?<![a-z])(anemone|edna|mifish|metabarcoding)(?![a-z])", re.I)
@@ -101,6 +107,11 @@ def plan_aggregation(request: dict) -> AggregatePlan | None:
                    "source_type": "edna_metabarcoding"}
     options = request.get("aggregation")
     forced = options is not None
+    # A summary of explicitly named families is ordinary evidence synthesis.
+    # Preserve fail-closed catalogue routing for explicit counts and forced
+    # aggregation; selecting siblings alone does not change eDNA summaries.
+    if not forced and len(mentioned_source_types(query)) > 1 and not EXPLICIT_COUNT.search(query):
+        return None
     if not forced and re.search(r"\b(mean|imply|indicate|interpret|higher|more fish|abundance)\b|意味|魚が多|個体数", query, re.I):
         return None
     source = str(request.get("source_type") or "").lower().strip()

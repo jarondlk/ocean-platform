@@ -139,6 +139,27 @@ def test_overlap_never_runs_model_without_verified_matching(monkeypatch, familie
     assert captured['evidence_snapshot']['retrieval_diagnostics']['coverage_status'] != 'complete'
 
 
+def test_multi_source_summary_reaches_model_and_preserves_final_coverage(monkeypatch):
+    rows = [document(f) for f in ('remote_sensing', 'edna_metabarcoding')]
+    monkeypatch.setattr(api, 'retrieve_with_expansion', lambda *a, **kw: {'primary': rows, 'linked': [], 'diagnostics': {}})
+    calls = []
+
+    class Runtime:
+        def chat(self, **kwargs):
+            calls.append(kwargs['prompt'])
+            return 'Scoped source evidence [remote_sensing-0] [edna_metabarcoding-0].'
+
+    monkeypatch.setattr(api, 'get_model_runtime', lambda: Runtime())
+    response = TestClient(api.app).post('/chat', json={
+        'query': 'Summarize ANEMONE eDNA and SST evidence. Include dates, locations and scientific limitations.',
+        'evidence_scope': scope('remote_sensing', 'edna_metabarcoding'),
+        'inject_analysis': False, 'inject_reliability': False})
+    assert response.status_code == 200, response.text
+    result = response.json()
+    assert len(calls) == 1 and result['model_invoked'] and result['outcome'] == 'answered'
+    assert {r['source_type'] for r in result['sources']} == {'remote_sensing', 'edna_metabarcoding'}
+
+
 def test_four_families_survive_large_escaped_prompt_fields():
     rows = [document(f, n, '<record>Temperature & sampling</record>'*400) for f in FAMILIES for n in range(4)]
     prompt, manifest = unified.build_prompt_with_context('Explain the supplied observations', rows,
