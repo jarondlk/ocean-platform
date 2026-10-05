@@ -11,18 +11,24 @@ __pycache__/
 
 .env
 .envrc
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.production.example
 .venv/
 env/
 venv/
 
 .mypy_cache/
 .ruff_cache/
+.cache/
 .coverage
 htmlcov/
 
 frontend/node_modules/
 frontend/.next/
 frontend/out/
+/data/
 
 onagawa_sst_subset/
 onagawa_sst_raw/

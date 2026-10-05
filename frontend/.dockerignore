@@ -2,4 +2,8 @@ node_modules/
 .next/
 out/
 .env.local
+.env
+.env.*
+!.env.example
+!.env.production.example
 npm-debug.log*
