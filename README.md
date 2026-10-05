@@ -28,7 +28,9 @@ SST registries, deterministic detection-frequency analyses and six published-res
 Chat workflows with maps, time series and exports. Local checks use synthetic data;
 real ANEMONE sampling decisions and historical SST acceptance remain pending.
 See the [candidate record](docs/RELEASE_0.7.0_IMPLEMENTATION.md) and
-[scientific review packet](docs/V0.7.0_SCIENTIFIC_REVIEW.md). No v0.7.0 release or
+[draft PR #99](https://github.com/jarondlk/ocean-platform/pull/99), with the
+[scientific review packet](docs/V0.7.0_SCIENTIFIC_REVIEW.md) and
+[container QA record](docs/V0.7.0_CONTAINER_QA_2026-10-05.md). No v0.7.0 release or
 production deployment has occurred.
 
 ## Study Sites

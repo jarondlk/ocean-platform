@@ -4,6 +4,10 @@ Recorded 2026-10-05. Branch: `codex/v070-data-foundation`, based on `main`
 `55d41469fb0694444e8c5b2211002179f09a776e`. Implements the
 [accepted plan](RELEASE_0.7.0_PLAN.md) for [issue #89](https://github.com/jarondlk/ocean-platform/issues/89).
 This is a review candidate, not a release or scientific acceptance record.
+Implementation review: [draft PR #99](https://github.com/jarondlk/ocean-platform/pull/99).
+Exact-source candidate `ff8dfe51141cf549277a389174594b28753c547f` passed
+all four jobs in [CI run 324](https://github.com/jarondlk/ocean-platform/actions/runs/37262348375):
+backend, frontend, PostgreSQL 16 migration/integration and dependency review.
 Production remains v0.6.1; no production migration, registry application,
 research publication, tag, traffic switch or batch job was performed.
 
@@ -75,12 +79,12 @@ the original Miyagi examples or live Google sign-in/role behavior.
 | Check | Evidence / result |
 | --- | --- |
 | Full backend regression | 996 passed, 38 skipped; 79.03% coverage (required floor 70%). Skips include PostgreSQL-only tests, run separately. |
-| Fresh PostgreSQL integration | 38 passed on PostgreSQL 18.3/pgvector, including migration/immutability, approved application, real repeatable-read input capture and current/historical publication. PostgreSQL 16 remains a remote CI gate. |
+| Fresh PostgreSQL integration | 38 passed on PostgreSQL 18.3/pgvector, including migration/immutability, approved application, real repeatable-read input capture and current/historical publication. The PostgreSQL 16 integration/migration and isolated backup/restore CI job also passed at the recorded candidate commit. |
 | Frontend | 57 tests passed, including five mounted research checks; TypeScript passed. Isolated production build passed with required authentication configuration. |
 | Research answer matrix | All six intents × all 16 source combinations; all 18 supported English phrasings; exact row and citation checks; saved viewer snapshots, stale-source rejection and instantaneous/model monthly-context boundaries. No model invocation permitted in these checks. |
 | Browser, synthetic disposable preview | Viewer source-disabled abstention and explicit SST re-enable; current/historical selection; Q4 sampled zero/positive/unsampled maps and exact row selection; researcher preview/rationale controls; admin cannot approve drafts. Data CSV reported export complete. |
 | Export/provenance API | CSV metadata and exact filters, full ZIP contents, result trace and retained review approval hashes verified by regression tests. Downloaded CSV and SVG files were found and inspected locally: recipe metadata, exact plotted IDs/footprints and sampled-zero/null distinctions agree. The browser download-event hook did not expose them; full ZIP is independently verified through the API tests. |
-| Lint/contracts/security | Ruff active paths, generated Chat scope check and diff whitespace checks pass. Production npm audit reports zero vulnerabilities. Container OS updates and runtime installation-tool removal are prepared separately; image build/scanning and remote security checks remain gates until their recorded results pass. |
+| Lint/contracts/security | Ruff active paths, generated Chat scope check and diff whitespace checks pass. Production npm audit and remote dependency review pass. Both candidate images build and pass runtime QA; full scans report zero critical and zero reported Node/Python findings. Eight distinct high OS advisories remain for applicability/disposition review; a successful scan is not blanket security acceptance. |
 
 The synthetic size probe uses 3,498 occurrences and 349,638 assignment rows with
 three repeating fish taxa. Membership preparation took 1.056 s and calculation
@@ -174,7 +178,7 @@ templates; the sample paths/IDs must be replaced with actual reviewed inputs.
 
 The API image applies available OS updates, validates the hash-locked dependency
 installation and removes pip/setuptools/wheel afterward. The standalone frontend
-runner applies OS updates and removes global npm/npx/corepack package-manager trees;
+runner uses a pinned official Node 22 Debian 13 slim base, applies OS updates and removes global npm/npx/corepack package-manager trees;
 startup remains `node server.js`. Non-root users and PostgreSQL 16 backup tools are
 retained. Source/image exclusions now cover local archive caches, data and nested
 real environment files. No credentials or retained archive should enter a build.
@@ -188,10 +192,21 @@ from a clean exact-commit export, not the working directory containing the retai
 archive. Scan exit code zero means collection completed; review every high/critical
 finding and preserve all severities/unfixed results before acceptance.
 
-Execution currently awaits the refreshed Google Cloud passkey sign-in. The
-prepared Containerfile changes are not claimed verified until image QA passes.
-Inherited Perl/MiniZip and SBOM-only records remain open for evidence-based
-applicability and scan comparison; no blanket suppression is applied.
+Google Cloud sign-in was refreshed on 2026-10-05. Final isolated build
+`6815e352-275a-40fe-b4e7-d7bf5103b0c5` used the exact candidate commit above,
+exported cleanly with 484 uploaded files (9.6 MiB), excluding real environment
+files, caches and retained scientific data. It passed both image builds, PostgreSQL
+16 migration/isolated backup restore, imports, the 7/15 numeric fixture, NetCDF,
+non-root/tooling checks and startup/auth-denial checks. After the frontend base
+correction, both scans report zero critical and no reported Node/Python findings.
+API/frontend retain 44/43 high package/advisory records for the same eight OS CVEs,
+with no fixed versions offered for the scanned distribution. No findings were
+suppressed or security alerts dismissed. Exact digests, complete report locations,
+the superseded first build and residual advisory review are in the
+[container QA record](V0.7.0_CONTAINER_QA_2026-10-05.md). These are isolated
+candidate images, not a live Cloud Run candidate or release authorization.
+An October 5 read-only traffic check confirms 100% remains on
+`ocean-platform-v061-assay1002`.
 
 ## Remaining acceptance and rollout
 

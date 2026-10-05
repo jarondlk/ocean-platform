@@ -107,8 +107,10 @@ The [2026-10-04 investigation](V0.7.0_DISCOVERY_2026-10-04.md) records the curre
 code/data gaps. The [implementation candidate](RELEASE_0.7.0_IMPLEMENTATION.md)
 adds reviewed registries, product-aware SST panels, exact detection-frequency
 calculations, immutable publication and six typed Chat workflows with charts and
-exports. Synthetic verification is complete; real cohort/product approval and
-release acceptance remain pending. Production remains v0.6.1.
+exports. Core synthetic and PostgreSQL 16 CI checks passed in
+[draft PR #99](https://github.com/jarondlk/ocean-platform/pull/99); remaining
+candidate/security acceptance, real cohort/product approval and release
+acceptance remain pending. Production remains v0.6.1.
 
 Implementation order: establish a reviewed physical-sample denominator and
 eligible geographic cohort; obtain historical product-aware SST; qualify

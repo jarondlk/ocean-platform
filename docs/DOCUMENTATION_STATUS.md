@@ -27,6 +27,8 @@ approved.
   demo. Planning does not approve scientific data decisions or claim a release.
 - [`RELEASE_0.7.0_IMPLEMENTATION.md`](RELEASE_0.7.0_IMPLEMENTATION.md) — candidate
   scope, verification, operational procedure and remaining release gates.
+- [`V0.7.0_CONTAINER_QA_2026-10-05.md`](V0.7.0_CONTAINER_QA_2026-10-05.md) —
+  isolated image/runtime verification, exact build bindings and residual advisory review.
 - [`V0.7.0_SCIENTIFIC_REVIEW.md`](V0.7.0_SCIENTIFIC_REVIEW.md) — precise provider/
   researcher decisions needed before publishing a real research cohort.
 - [`V0.7.0_DISCOVERY_2026-10-04.md`](V0.7.0_DISCOVERY_2026-10-04.md) — dated
