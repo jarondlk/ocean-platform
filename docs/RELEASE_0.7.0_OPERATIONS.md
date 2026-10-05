@@ -63,3 +63,76 @@ job definitions/images. Roll back traffic to that known-good application while
 retaining the additive schema. Restore prior manual-job images/metadata as needed.
 Do not downgrade/restore production automatically or erase immutable evidence.
 A destructive database restore would require a separately reviewed decision.
+
+## Verified execution checkpoint — 2026-10-05 JST
+
+PR [#99](https://github.com/jarondlk/ocean-platform/pull/99) is merged at
+`6167949177e437843b3390ca6fbc9ec9ab705bfc`. Final PR CI run 328 and merged-source
+CI run 329 passed. Fresh repository Dependabot/code-scanning open-alert queries
+returned zero; these are separate from the retained OS image findings.
+
+Exact merged-source Cloud Build `2aa26d29-c08d-415c-a81c-863ff495cf00` passed all
+six steps. API digest is
+`sha256:363cf5674796e0051cc6a0901b88144fb4267e80b1ef55228fb8bc9c3e36d862`;
+frontend is
+`sha256:e89fa409630b2a29fa5519a454749ceec66cac1b4602090fa0e34754b698e9ef`.
+Final runtime inventory and scoped eight-CVE dispositions are in
+[V0.7.0_CONTAINER_QA_2026-10-05.md](V0.7.0_CONTAINER_QA_2026-10-05.md).
+
+The separate bounded `ocean-v070-release-ops` job used the existing jobs identity,
+Cloud SQL connection and DB secret, with one task, no retries and a 15-minute
+limit. Its backup execution `ocean-v070-release-ops-6c8l8` succeeded: 208,065,119
+bytes, SHA-256
+`a243183a06f0a42a593bff2b00d9efe34779cbade3a18a72b9667f664863121b`.
+The isolated restore verified counts and removed its temporary database. The
+private backup and sanitized receipts are retained under
+`gs://data-infra-infobio-ocean-data/backups/v070/software-20261005/`; bucket IAM
+contained no public principals and public-access prevention is enforced.
+
+Migration execution `ocean-v070-release-ops-df95v` successfully advanced production
+from `20261001_0014` to additive `20261004_0015`. All prior table counts,
+source-publication references, retrieval/embedding counts, user identity/role
+hashes and completed history hashes were preserved. The six new registry tables
+remain empty. Counts included 3,498 eDNA occurrences/assays, 349,638 assignment
+rows, 13,932 standards and 7,319 retrieval documents. The application rollback
+remains v0.6.1 with this compatible additive schema retained.
+
+Canonical `ocean-platform-v070-software1005` and normal-auth QA
+`ocean-platform-v070-softwareqa1005` are deployed at **zero production traffic**.
+Both were derived from the actual serving revision, preserving identities,
+secrets, read-only mounted data, resources and auth enforcement. The temporary
+`v070-candidate` callback was explicitly approved and saved in the existing
+Google OAuth client, with existing callbacks unchanged.
+
+Real Google admin sign-in succeeded. Research reviews rendered zero records
+with the expected role separation; existing admin feedback/history rendered.
+Source checkboxes and actual eDNA filter choices loaded. Clearing all sources
+disabled Ask. eDNA-only scope persisted across page navigation. One real Vertex
+request returned only eDNA citations and explained that overall detection
+frequency was unavailable; it was a legacy scoped retrieval answer, not a
+published research result. An exact catalogue request returned 3,498 occurrences,
+343 controls and 3,155 unresolved-control records without invoking the model.
+Candidate preferences were restored to all four sources with no filters.
+Anonymous review/analysis/history proxy requests returned 401; login/provider
+discovery returned 200.
+
+Read-only execution `ocean-v070-release-ops-mgvg7` verified both newly generated
+admin Chat records: completed status, owner role, eDNA-only scope, evidence
+fingerprint, prompt hash and zero invalid citations. Baseline completed histories
+and all corpus/publication/user hashes remained intact; the chat count advanced
+from 183 to 185. New audit/history/aggregate records are normal QA effects;
+ephemeral rate-limit bucket counts are observed, not treated as immutable corpus.
+
+**Awaiting separate user disposition:** live viewer/researcher sign-in sessions
+are unavailable. Their isolated role tests passed, but no prior waiver is
+inherited. The six scientific demos are already explicitly deferred. The GitHub
+release is an unpublished draft; v0.7.0 has not been tagged or promoted. Production
+still serves v0.6.1. Manual-job alignment, final verification, temporary callback/
+QA route/operator cleanup and publication remain pending that live-role decision.
+
+Private reviewable operator scripts, service definitions, image metadata and
+receipts are under `/tmp/ocean-v070-release/`. Preserve the draft's exact source
+and digests; do not rebuild or retag a different source merely for operational
+documentation. The prepared promotion definition restores the canonical auth
+origin as the latest service template, retains prior rollback tags, and removes
+temporary QA tags.
