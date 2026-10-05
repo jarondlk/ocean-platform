@@ -7,6 +7,7 @@ import { AnalysisWorkbench } from "@/components/AnalysisWorkbench";
 import { DataTable, formatCell } from "@/components/DataTable";
 import { EdnaDataView } from "@/components/EdnaDataView";
 import { EdnaAnalysisView } from "@/components/EdnaAnalysisView";
+import { ResearchRegistryView } from "@/components/ResearchRegistryView";
 import { getCtdProfile, getDataCatalog, getSstData, getTaxaSample } from "@/lib/api";
 import {
   buildHref,
@@ -25,7 +26,7 @@ import type {
   TaxaSampleResponse,
 } from "@/types";
 
-type DataView = "observations" | "ctd" | "taxa" | "edna" | "edna_analysis" | "sst" | "analysis" | "reliability";
+type DataView = "observations" | "ctd" | "taxa" | "edna" | "edna_analysis" | "research_reviews" | "sst" | "analysis" | "reliability";
 
 const ctdLabels: Record<string, string> = {
   temperature: "Temperature",
@@ -84,7 +85,7 @@ function DataPageContent() {
 
   useEffect(() => {
     setError("");
-    if (urlView === "edna" || urlView === "edna_analysis") return;
+    if (urlView === "edna" || urlView === "edna_analysis" || urlView === "research_reviews") return;
     let active = true;
     getDataCatalog()
       .then((payload) => {
@@ -273,6 +274,7 @@ function DataPageContent() {
           SST
         </button>
         <button className={view === "edna_analysis" ? "active" : ""} onClick={() => changeView("edna_analysis")} type="button">eDNA analysis</button>
+        <button className={view === "research_reviews" ? "active" : ""} onClick={() => changeView("research_reviews")} type="button">Research reviews</button>
         <button className={view === "analysis" ? "active" : ""} onClick={() => changeView("analysis")} type="button">
           {ui("Derived Analysis")}
         </button>
@@ -472,6 +474,7 @@ function DataPageContent() {
 
       {view === "edna" ? <EdnaDataView /> : null}
       {view === "edna_analysis" ? <EdnaAnalysisView /> : null}
+      {view === "research_reviews" ? <ResearchRegistryView /> : null}
 
       {view === "analysis" ? (
         requestedContextRaw && (!requestedContext || !contextTarget || contextTarget.scope !== "analysis") ? (
@@ -733,6 +736,6 @@ function formatDate(value: string): string {
 }
 
 function isDataView(value: string | null): value is DataView {
-  if (value === "edna_analysis") return true;
+  if (value === "edna_analysis" || value === "research_reviews") return true;
   return value === "observations" || value === "ctd" || value === "taxa" || value === "edna" || value === "sst" || value === "analysis" || value === "reliability";
 }

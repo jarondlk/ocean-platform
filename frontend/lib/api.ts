@@ -238,6 +238,7 @@ export async function askQuestion(input: {
   query: string;
   evidence_scope?: EvidenceScope;
   analysis_id?: string;
+  research_intent?: import("@/types").ResearchIntent;
   k: number;
   source_type?: string;
   bay?: string;

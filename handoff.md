@@ -1,6 +1,6 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-10-02 JST
+> **Last updated**: 2026-10-05 JST
 > **Repository**: `jarondlk/ocean-platform`
 > **Current status**: OCEAN Platform `v0.6.1` is live at
 > [oceaninfobio.com](https://oceaninfobio.com/). Cloud Run revision
@@ -17,6 +17,20 @@
 > QA passed. See the [v0.6.1 operations record](docs/RELEASE_0.6.1_OPERATIONS.md).
 > The agreed English checks for [issue #70](https://github.com/jarondlk/ocean-platform/issues/70) passed and it is closed.
 > The older rollout accounts below are dated history.
+
+## v0.7.0 implementation candidate
+
+Branch `codex/v070-data-foundation` implements the accepted
+[issue #89 plan](docs/RELEASE_0.7.0_PLAN.md). The
+[candidate record](docs/RELEASE_0.7.0_IMPLEMENTATION.md) records code, synthetic
+QA and manual publication procedures. Migration `20261004_0015` has only been
+applied to disposable local test databases; production remains at `0014`.
+No real sampling/product reviews, v0.7.0 tag or deployment have been applied.
+The [scientific review packet](docs/V0.7.0_SCIENTIFIC_REVIEW.md) needs evidence
+for environmental eligibility, physical units/resequencing, region/grid footprints
+and historical SST choice/coverage. All six original cases remain data-blocked.
+Continue independent code review/CI and prepare reviewed inputs; synthetic results
+must not be presented as Miyagi research results or release acceptance.
 
 ## v0.6.0 released and deployed
 

@@ -16,6 +16,8 @@ import { SourceTable } from "@/components/SourceTable";
 import { useAppPreferences } from "@/lib/preferences";
 
 import { ChatSourceSettings, filterLabels } from "@/components/ChatSourceSettings";
+import { ResearchResultCards } from "@/components/ResearchResultCards";
+import type { ResearchIntent } from "@/types";
 import { useChatSettings } from "@/lib/use-chat-settings";
 import { sourceLabels, scopeErrors, settingsErrors, type SourceFamily, type ChatSettings } from "@/lib/chat-settings";
 
@@ -46,6 +48,7 @@ export default function ChatPage() {
   const { ui } = useAppPreferences();
   const [query, setQuery] = useState("");
   const [analysisId, setAnalysisId] = useState("");
+  const [researchIntent, setResearchIntent] = useState<ResearchIntent | undefined>();
   const {settings, setSettings, scope, setScope, ready, blocked, storageNotice, reset} = useChatSettings(analysisId);
   const [models, setModels] = useState<ModelsResponse | null>(null);
   const [capabilities, setCapabilities] = useState<ChatCapabilities | null>(null);
@@ -77,7 +80,6 @@ export default function ChatPage() {
     const id = new URLSearchParams(window.location.search).get("analysis_id");
     if (id) {
       setAnalysisId(id);
-      setScope(current => ({...current, sources: Object.fromEntries(Object.entries(current.sources).map(([key, source]) => [key, {...source, enabled: key === "edna_metabarcoding"}])) as typeof current.sources}));
     }
   }, [ready, setScope]);
 
@@ -141,6 +143,7 @@ export default function ChatPage() {
 
   function resetControls() {
     setAnalysisId("");
+    setResearchIntent(undefined);
     reset(models?.default_model || "");
   }
 
@@ -156,6 +159,7 @@ export default function ChatPage() {
       const result = await askQuestion({
         query: trimmedQuery,
         evidence_scope: submittedScope,
+        research_intent: researchIntent,
         k: settings.k,
         vector_weight: settings.vectorWeight,
         fts_weight: settings.ftsWeight,
@@ -260,6 +264,7 @@ export default function ChatPage() {
                 onCitationSelect={setSelectedCitation}
                 text={response?.answer || ""}
               />
+              {response ? <ResearchResultCards key={`research:${response.interaction_id || response.answer}`} documents={response.analysis_context || []} /> : null}
               {response?.interaction_id ? (
                 <ChatFeedback
                   interactionId={response.interaction_id}
@@ -280,7 +285,7 @@ export default function ChatPage() {
                 <p className="empty-state">{ui("These checks assess citation references and evidence coverage. They do not verify scientific claims.")}</p>
                 <div className="summary-strip chat-diagnostics">
                   <SummaryCell label={ui("Citation checks")} value={titleCase(answerAudit.citation_check_status || "historical")} />
-                  <SummaryCell label={ui("Claim verification")} value={ui("Not performed")} />
+                  <SummaryCell label={ui("Claim verification")} value={answerAudit.claim_verification === "published_result_rows_verified" ? "Published result rows checked" : ui("Not performed")} />
                   <SummaryCell label={ui("Citations")} value={answerAudit.citation_count} />
                   <SummaryCell label={ui("Valid")} value={answerAudit.valid_citation_count} />
                   <SummaryCell label={ui("Invalid")} value={answerAudit.invalid_citation_count} />
@@ -431,7 +436,7 @@ export default function ChatPage() {
               </button>
             </div>
 
-            <ChatSourceSettings disabled={!ready} scope={submittedScope} onChange={setScope} analysisId={analysisId} onAnalysisChange={setAnalysisId} />
+            <ChatSourceSettings disabled={!ready} scope={submittedScope} onChange={setScope} analysisId={analysisId} onAnalysisChange={setAnalysisId} researchIntent={researchIntent} onResearchChange={(intent, question) => { setResearchIntent(intent); if (question) setQuery(question); }} />
             <details className="chat-advanced"><summary>{ui("Advanced settings")}</summary>
             <fieldset className="settings-section">
               <legend>{ui("Retrieval")}</legend>

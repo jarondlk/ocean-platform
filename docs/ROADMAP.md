@@ -98,6 +98,33 @@ scans, and plan an explicit SQLAlchemy 2.1 database-driver migration. The
 compatible maintenance patch retains SQLAlchemy 2.0 / psycopg2. A production
 rollout requires the normal release and acceptance gates.
 
+## In progress v0.7.0: ANEMONE detection patterns and SST
+
+The [accepted v0.7.0 plan](RELEASE_0.7.0_PLAN.md) translates
+[issue #89](https://github.com/jarondlk/ocean-platform/issues/89) and its research
+references into six reproducible time-series, spatial and matched-year questions.
+The [2026-10-04 investigation](V0.7.0_DISCOVERY_2026-10-04.md) records the current
+code/data gaps. The [implementation candidate](RELEASE_0.7.0_IMPLEMENTATION.md)
+adds reviewed registries, product-aware SST panels, exact detection-frequency
+calculations, immutable publication and six typed Chat workflows with charts and
+exports. Synthetic verification is complete; real cohort/product approval and
+release acceptance remain pending. Production remains v0.6.1.
+
+Implementation order: establish a reviewed physical-sample denominator and
+eligible geographic cohort; obtain historical product-aware SST; qualify
+area/time links; compute deterministic detection frequencies and matched
+comparisons; publish immutable results shared by Chat, charts and exports;
+complete real-data, role/history, security and release acceptance.
+
+The local SST filename range is December 2025–February 2026, and the inspected
+files are JCOPE-T model products. They cannot satisfy a 2020–2023 satellite-SST
+comparison. Source-occurrence counts, unconfirmed grids and unknown
+classification cannot silently become physical-sample detection frequencies.
+Finalize the demonstrable region/period/product after the readiness census;
+retain explicit dispositions for the original and any accepted alternative
+examples. SQLAlchemy 2.1, autonomous refresh and inferential distribution models
+remain separate work.
+
 ## Completed MVP hardening: v0.4.3
 
 The ordered implementation plan is

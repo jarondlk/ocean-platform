@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-10-02.
+Last reviewed: 2026-10-05 (v0.7.0 implementation candidate).
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -11,14 +11,29 @@ approved.
 
 ## Current operating authority
 
-- [`RELEASE_0.6.0_OPERATIONS.md`](RELEASE_0.6.0_OPERATIONS.md) — current release,
-  production deployment, security amendment and user-approved QA deferrals.
+- [`RELEASE_0.6.1_OPERATIONS.md`](RELEASE_0.6.1_OPERATIONS.md) — latest published
+  release/production record, with explicit live-role and Japanese QA deferrals.
+- [`RELEASE_0.6.0_OPERATIONS.md`](RELEASE_0.6.0_OPERATIONS.md) — retained prior
+  release/deployment record, security amendment and historical QA deferrals.
 - [`RELEASE_0.5.0_OPERATIONS.md`](RELEASE_0.5.0_OPERATIONS.md) — historical
   catalogue rollout and retained compatible application rollback baseline.
 - [`ROADMAP.md`](ROADMAP.md) — longer-term engineering priorities.
 - [`handoff.md`](../handoff.md) — current repository and production handoff.
 
-## Planned patch work queue
+## Active release work queue
+
+- [`RELEASE_0.7.0_PLAN.md`](RELEASE_0.7.0_PLAN.md) — accepted
+  implementation/acceptance sequence for issue #89's detection-frequency and SST
+  demo. Planning does not approve scientific data decisions or claim a release.
+- [`RELEASE_0.7.0_IMPLEMENTATION.md`](RELEASE_0.7.0_IMPLEMENTATION.md) — candidate
+  scope, verification, operational procedure and remaining release gates.
+- [`V0.7.0_SCIENTIFIC_REVIEW.md`](V0.7.0_SCIENTIFIC_REVIEW.md) — precise provider/
+  researcher decisions needed before publishing a real research cohort.
+- [`V0.7.0_DISCOVERY_2026-10-04.md`](V0.7.0_DISCOVERY_2026-10-04.md) — dated
+  issue/reference/code investigation and local archive/SST coverage probes;
+  not a fresh production census or approved scientific cohort.
+
+## Completed patch and retained QA records
 
 - [`RELEASE_0.6.1_PLAN.md`](RELEASE_0.6.1_PLAN.md) — user-requested v0.6.1
   routing fix, remaining settings/access/history/scientific QA and patch release
@@ -29,11 +44,14 @@ approved.
 
 ## Current-release implementation
 
+- [`RELEASE_0.6.1_IMPLEMENTATION.md`](RELEASE_0.6.1_IMPLEMENTATION.md) and
+  [`RELEASE_NOTES_0.6.1.md`](RELEASE_NOTES_0.6.1.md) — current published patch
+  implementation and source changes; use its operations record for deployment.
 - [`RELEASE_0.6.0_OPERATIONS.md`](RELEASE_0.6.0_OPERATIONS.md) — published GitHub
-  release and verified production traffic switch; deferred acceptance is
-  recorded separately from completed checks.
+  predecessor release and verified historical production traffic switch;
+  deferred acceptance is recorded separately from completed checks.
 - [`RELEASE_NOTES_0.6.0.md`](RELEASE_NOTES_0.6.0.md) — source changes, migration,
-  compatibility and limits for the published v0.6.0 source release.
+  compatibility and limits for the predecessor v0.6.0 source release.
 
 - [`RELEASE_0.6.0_PLAN.md`](RELEASE_0.6.0_PLAN.md) — adopted chat source-settings
   contract, implementation sequence and acceptance gates.

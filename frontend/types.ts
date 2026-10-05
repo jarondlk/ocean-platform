@@ -164,6 +164,13 @@ export type ContextDocument = {
   aggregate_id?: string | null;
   table?: string | null;
   result_ids?: string[];
+  result_rows?: Record<string, unknown>[];
+  plot_areas?: {area_id: string; label: string; west: number; east: number; south: number; north: number; coordinate_uncertainty_km: number}[];
+  plot_taxa?: {taxon_key: string; species: string}[];
+  analysis_recipe?: Record<string, unknown> | null;
+  covered_source_types?: string[];
+  total_rows?: number;
+  rows_truncated?: boolean;
 };
 
 export type CitationAuditRecord = {
@@ -240,6 +247,11 @@ export type ChatResponse = {
   outcome?: "answered" | "abstained";
   abstention_reason?: "no_matching_evidence" | "empty_analysis_cohort" | "publication_pending" | "aggregate_scope_required" | "aggregate_unavailable" | "no_sources_selected" | "source_disabled" | "freshness_unavailable" | null;
   model_invoked?: boolean;
+};
+
+export type ResearchIntent = {
+  kind: "fish_frequency" | "temperature_comparison" | "monthly_spatial" | "spatial_temperature" | "distribution_change" | "follow_through";
+  protocol_id?: string;
 };
 
 export type ChatFeedback = {
