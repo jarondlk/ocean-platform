@@ -77,8 +77,8 @@ in [container verification](V0.7.1_CONTAINER_QA_2026-10-05.md).
 ## Remaining acceptance
 
 Normal viewer/researcher permission, synthetic-review and saved-history checks
-passed, with all QA identities/roles restored. Remaining work is the live mobile
-layout disposition, production backup/migration, exact-source publication and
+passed, with all QA identities/roles restored. The user explicitly deferred live
+mobile layout acceptance. Remaining work is production backup/migration, exact-source publication and
 canonical rollout, production regression/history/anonymous-denial checks and
 temporary-resource cleanup. CI, container checks, initial backup/restore, candidate
 normal sign-in and paired retrieval checks passed below.

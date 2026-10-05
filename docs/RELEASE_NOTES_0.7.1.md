@@ -35,3 +35,6 @@ being mistaken for an exact eDNA catalogue count. Explicit count requests and
 single-source catalogue summaries retain their bounded exact-count routing.
 Linked-search failures return a safe diagnostic code rather than raw exception
 text.
+
+The user explicitly deferred live mobile layout acceptance. Desktop/keyboard,
+mounted UI and static CSS checks passed; no live mobile pass is claimed.

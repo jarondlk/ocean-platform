@@ -18,15 +18,16 @@ synthetic review in production. [Live acceptance](V0.7.1_LIVE_QA.md) records act
 403/404/409 enforcement, feedback/history and synthetic review transitions.
 No real scientific registry or result was approved.
 
-The remaining live responsive check requires a narrower rendered browser; the
-viewport override did not change document width. Do not infer a mobile pass.
+The user explicitly deferred the remaining live responsive check on 2026-10-05
+JST; the viewport override did not change document width. No mobile pass is
+claimed. This disposition permits release after the other verified gates.
 One transient sign-out error recovered on reload/retry; its cause is unresolved.
 Vertex embedding 429s produced safe degraded limitations; retrieval subsequently
 recovered without permission, quota or model changes.
 
 ## Prepared release procedure
 
-1. Complete or explicitly dispose of the remaining live responsive check. Keep
+1. The live responsive check is explicitly deferred. Keep
    exact-source CI, image dispositions and candidate acceptance tied to the
    published source; do not label documentation-only commits as the old build.
 2. Take a fresh private native production backup into

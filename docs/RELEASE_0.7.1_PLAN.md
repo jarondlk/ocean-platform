@@ -2,7 +2,8 @@
 
 Status: candidate acceptance in progress, 2026-10-05 JST. Source retrieval, prompt
 coverage, deterministic guards and UI are implemented. Exact-source CI/image QA
-and normal-account role/workflow acceptance passed. Live mobile disposition,
+and normal-account role/workflow acceptance passed. Live mobile was explicitly
+user-deferred;
 production migration, publication, rollout and cleanup remain pending.
 
 Repository baseline: clean `main` at
