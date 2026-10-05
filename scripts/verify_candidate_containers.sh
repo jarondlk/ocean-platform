@@ -21,7 +21,8 @@ docker run --rm --network cloudbuild -e DATABASE_URL="$qa_database" \
   python scripts/database_backup.py create --output-dir /tmp/candidate-backups --label candidate-qa --restore-test
 docker run --rm --network cloudbuild -e DEPLOYMENT_ENV=test -e AUTH_MODE=disabled \
   ocean-candidate-api python -c '
-import importlib, importlib.util, json
+import importlib, importlib.util, json, os
+assert os.getuid() != 0, "API must run as non-root"
 for module in ("api.main", "scripts.run_pipeline", "scripts.run_research_analysis", "scripts.run_research_sst_panel", "preprocessing.research_sst"):
     importlib.import_module(module)
 for module in ("pip", "setuptools", "wheel"):
@@ -85,7 +86,10 @@ for (const path of ["/usr/local/lib/node_modules/npm", "/usr/local/lib/node_modu
   if (fs.existsSync(path)) throw new Error("Unexpected runtime tooling: " + path);
 }
 if (process.getuid() === 0) throw new Error("Frontend must run as non-root");
-console.log(JSON.stringify({uid:process.getuid(), installation_tools:"absent"}));
+if (process.versions.node.split(".")[0] !== "22") throw new Error("Expected Node 22 runtime");
+const osRelease = fs.readFileSync("/etc/os-release", "utf8");
+if (!osRelease.includes("VERSION_ID=\"13\"")) throw new Error("Expected Debian 13 runtime");
+console.log(JSON.stringify({uid:process.getuid(), node:process.versions.node, os_release:osRelease, installation_tools:"absent"}));
 ' > "$report_dir/frontend-runtime.json"
 docker exec ocean-v070-qa-api id > "$report_dir/api-user.log"
 docker logs ocean-v070-qa-api > "$report_dir/api-startup.log" 2>&1
