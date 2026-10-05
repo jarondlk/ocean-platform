@@ -143,3 +143,10 @@ forced aggregation and eDNA-only catalogue summaries keep their conservative
 contracts. Planner and full API regressions verify model invocation and both
 final evidence families. This defect was fixed before final candidate acceptance;
 the superseded intermediate build is not release evidence.
+
+An initial ordinary generated explanation also attributed a station SST NaN to
+cloud cover/data loss although the supplied document did not give a cause. Prompt
+guidance now explicitly treats missing/non-finite numbers as unavailable and
+forbids invented gap causes or interpreting raw counts as valid observations.
+This is model guidance, not deterministic claim verification; repeated final
+ordinary-answer review is required and citation validity alone is insufficient.

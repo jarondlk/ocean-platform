@@ -761,7 +761,11 @@ RULES:
 2. Cite scientific evidence claims using [doc_id] notation.
 3. Distinguish data types: CTD measurements, shotgun metagenome taxonomy,
    targeted eDNA metabarcoding detections, and satellite SST.
-4. State data gaps explicitly. Report values with units.
+4. State data gaps explicitly. Report finite values with units. A NaN, null or
+   missing numeric value is unavailable, not a measured temperature. Do not infer
+   cloud cover, data loss, instrument failure or any other cause for a gap unless
+   the supplied evidence explicitly establishes that cause. A recorded raw input
+   count does not establish how many valid observations contributed to a mean.
 5. When comparing across time/space, note the resolution.
 6. If pre-computed analyses are provided, use them to support your answer about
    trends, correlations, diversity patterns, or cross-source relationships.
