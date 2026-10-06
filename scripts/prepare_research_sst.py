@@ -1,84 +1,23 @@
 """Preflight or acquire a bounded NOAA MUR pilot; no approval or cloud publication."""
 
 import argparse
-from datetime import date
-import math
 from pathlib import Path
 import sys
-from urllib.parse import quote, urlsplit
-from urllib.request import HTTPRedirectHandler, build_opener
+from urllib.request import build_opener
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from ingestion.immutable_bundle import atomic_json, digest
 from ingestion.anemone_catalogue import file_sha256
 
-HOST = "coastwatch.pfeg.noaa.gov"
-ENDPOINT = f"https://{HOST}/erddap/griddap/jplMURSST41.nc"
-MAX_FILE_BYTES = 8 * 1024 * 1024
-
-
-def acquisition_plan(days, south, north, west, east):
-    days = sorted({date.fromisoformat(day).isoformat() for day in days})
-    bounds = (south, north, west, east)
-    if not all(math.isfinite(v) for v in bounds) or not (
-        1 <= len(days) <= 32
-        and -89.9 <= south < north <= 89.9
-        and -179.9 <= west < east <= 179.9
-        and north - south <= 2
-        and east - west <= 2
-    ):
-        raise ValueError(
-            "Pilot requires 1–32 days and a bounded footprint ≤2° per axis"
-        )
-    if any(not "2002-06-01" <= day <= date.today().isoformat() for day in days):
-        raise ValueError("Pilot dates are outside the daily MUR product interval")
-    requests = []
-    for day in days:
-        stamp = day + "T09:00:00Z"
-        constraints = (
-            f"[({stamp})][({south:.6f}):1:({north:.6f})][({west:.6f}):1:({east:.6f})]"
-        )
-        query = ",".join(
-            v + constraints
-            for v in ("analysed_sst", "analysis_error", "mask", "sea_ice_fraction")
-        )
-        requests.append(
-            {
-                "day": day,
-                "expected_time_utc": stamp,
-                "filename": day + ".nc",
-                "source_url": ENDPOINT + "?" + quote(query, safe="(),:"),
-            }
-        )
-    plan = {
-        "schema_version": 1,
-        "product_id": "mur_l4_foundation_sst",
-        "measurement_type": "satellite_in_situ_analysis",
-        "status": "unapproved_pilot",
-        "footprint": dict(zip(("south", "north", "west", "east"), bounds)),
-        "maximum_download_bytes": len(days) * MAX_FILE_BYTES,
-        "estimated_uncompressed_grid_bytes": len(days)
-        * (math.ceil((north - south) / 0.01) + 2)
-        * (math.ceil((east - west) / 0.01) + 2)
-        * 25,
-        "cloud_writes": False,
-        "requests": requests,
-    }
-    return {**plan, "plan_sha256": digest(plan)}
-
-
-class SameProviderRedirect(HTTPRedirectHandler):
-    def redirect_request(self, req, fp, code, msg, headers, newurl):
-        target = urlsplit(newurl)
-        if (
-            target.scheme != "https"
-            or target.hostname != HOST
-            or target.username
-            or target.password
-        ):
-            raise ValueError("Pilot redirect outside the approved provider")
-        return super().redirect_request(req, fp, code, msg, headers, newurl)
+# Re-export the established pilot contract for existing callers and receipts.
+from ingestion.sst_acquisition import (
+    ENDPOINT as ENDPOINT,
+    HOST as HOST,
+    MAX_FILE_BYTES,
+    SameProviderRedirect,
+    acquisition_plan,
+)
 
 
 def download_pilot(plan, directory):
