@@ -1,13 +1,15 @@
 # ANEMONE pilot operations
 
-Status: the bounded unknown-classification pilot was introduced in `v0.4.0`
-and remains deployed in `v0.4.3`. The authenticated classification workflow was
-added in `v0.4.1`, but no real scientific decision has been approved or applied;
-full researcher acceptance remains pending. See the
-[v0.4.3 operations record](../../docs/RELEASE_0.4.3_OPERATIONS.md) and use this
-runbook for future controlled work. The former PR5, v0.4.3, and
-next-patch plans are retained only as implementation history. This runbook does
-not approve a download, paid execution, migration, deployment, or release.
+Current status reviewed 2026-10-06: the full accessible catalogue and the
+controlled classification workflow remain deployed in v0.7.1. Normal researcher
+and viewer role/workflow checks passed in an isolated candidate; no real
+scientific classification, registry or research result was approved. See
+[v0.7.1 operations](../../docs/RELEASE_0.7.1_OPERATIONS.md),
+[scientific review](../../docs/V0.7.0_SCIENTIFIC_REVIEW.md) and
+[script inventory](../../scripts/README.md). Use this runbook for explicitly
+reviewed bounded pilot/classification work, not as the full-catalogue import or
+next release plan. The former PR5, v0.4.3 and next-patch plans are retained as
+history. This runbook does not itself approve download or paid execution.
 
 Historical release scope, 2026-09-03: the user approved keeping classification
 unknown for `v0.4.0`; the controlled workflow later shipped without changing
@@ -20,7 +22,9 @@ deployment verification still apply.
 The first bounded real-data local canary is recorded in
 [`../../docs/ANEMONE_PILOT_2026-09-03.md`](../../docs/ANEMONE_PILOT_2026-09-03.md).
 It confirms storage/citation behavior; classification remains unknown under the
-limited release scope above. The user confirmed JPY 20,000/month total. The canary record includes the
+limited release scope above. At that historical checkpoint the user confirmed JPY 20,000/month total.
+Later budget authorization and current posted costs must be checked separately;
+see [GCP guidance](README.md). The canary record includes the
 read-only billing check: JPY 10,000 project and JPY 4,000 SQL alert budgets,
 plus a JPY 2,250 Cloud Run spend cap. Visibility is resolved; refresh posted
 charges and headroom before paid execution. Do not raise these controls implicitly.

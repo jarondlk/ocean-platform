@@ -1,5 +1,21 @@
 # Testing and CI
 
+## Current verification and dated evidence
+
+Use [Development setup](#development-setup) below and
+[the CI workflow](../.github/workflows/tests.yml) for maintained commands.
+[The 2026-10-06 pre-deployment audit](PRE_DEPLOYMENT_AUDIT_2026-10-06.md) records
+fresh repository checks. [v0.7.1 operations](RELEASE_0.7.1_OPERATIONS.md),
+[live QA](V0.7.1_LIVE_QA.md) and
+[container QA](V0.7.1_CONTAINER_QA_2026-10-05.md) bind prior deployment checks to
+exact source/images. Test counts below are historical; they are not the current
+suite census or current cloud state. Normal role acceptance passed v0.7.1;
+real scientific demos and live mobile QA remain outstanding separately.
+
+Operator entrypoints, defaults and historical probes are inventoried in
+[`scripts/README.md`](../scripts/README.md). In particular, the Phase 7 load
+probe and version-specific QA matrices do not define current release acceptance.
+
 ## v0.4.3 PR1–PR4 combined local verification
 
 Merged release commit `26094fc` passed 732 backend tests with 13 expected

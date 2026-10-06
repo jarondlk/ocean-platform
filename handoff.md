@@ -1,24 +1,45 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-10-05 JST
+> **Last updated**: 2026-10-06 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN `v0.7.0` is published and live at
-> [oceaninfobio.com](https://oceaninfobio.com/). Revision
-> `ocean-platform-v070-software1005` serves 100% traffic from exact runtime
-> source/tag `6167949177e437843b3390ca6fbc9ec9ab705bfc`. Schema is
-> `20261004_0015`; 3,498 ANEMONE source occurrences/assays, 349,638 assignment
-> rows, 13,932 standards and 7,319 documents/embeddings are preserved.
-> The fresh 208 MB backup passed isolated restore; existing users/roles,
-> publications and completed history hashes were preserved. Final-source
-> CI/image QA, real admin candidate/production sign-in, source-scoped
-> Vertex/exact-count Chat, history readbacks and anonymous denials passed.
-> Six real scientific demos and live viewer/researcher sign-in QA are explicitly
-> user-deferred. No scientific registries or publications were applied;
-> [issue #89](https://github.com/jarondlk/ocean-platform/issues/89) remains open.
-> Read [operations](docs/RELEASE_0.7.0_OPERATIONS.md) and
-> [security dispositions](docs/V0.7.0_CONTAINER_QA_2026-10-05.md).
+> **Current status**: OCEAN `v0.7.1` is published and deployed at
+> [oceaninfobio.com](https://oceaninfobio.com/), revision
+> `ocean-platform-v071-source1005`, exact runtime/tag source
+> `e157fb004871083df25d5d094852fed417a9c8c6`, schema `20261005_0016`.
+> The verified corpus remains 7,319 documents/embeddings, 3,498 ANEMONE source
+> occurrences/assays and 349,638 assignment rows. Normal Google role/workflow QA
+> passed in an isolated candidate database; original roles and data were restored
+> and temporary resources removed. Live mobile QA is explicitly deferred (#107).
+> `main` contains the source-map-js 1.2.2 fix (#111), pending a separate immutable
+> build and patch deployment (#110). No next release version is declared here.
+> Read [v0.7.1 operations](docs/RELEASE_0.7.1_OPERATIONS.md),
+> [pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md) and
+> [script inventory](scripts/README.md). Fresh cloud configuration inspection
+> requires refreshed CLI authentication; release receipts are dated evidence.
 
-## v0.7.0 software released and deployed
+## v0.7.1 completed; next patch preparation
+
+Source-isolated retrieval and final evidence coverage resolved #105; the original
+SST/eDNA question supplied four documents from each source and safely abstained
+with `overlap_unverified`, without running the model. Role/workflow QA and cleanup
+resolved #101. Six real research demos (#89/#102/#103), OS maintenance (#104),
+live mobile QA (#107) and transient sign-out investigation (#108) remain open.
+Research QA did not approve real scientific registries or results. Production
+retains compatible v0.7.0 rollback and additive schema 0016.
+
+The 2026-10-06 audit fixes schema readiness and CLI inspection safety and updates
+current operating docs. Version metadata stays 0.7.1 until a separate release is
+prepared. Do not deploy old ignored rendered templates or rerun foundation/raw
+seed scripts as a routine image patch. See the audit for the exact source checks
+and cloud verification gates before deployment.
+
+## Historical release accounts
+
+The following dated sections retain earlier evidence. Current release and
+remaining work are summarized above; historical future-tense statements are not
+current execution authority.
+
+## v0.7.0 software released and deployed (historical)
 
 Merged implementation [PR #99](https://github.com/jarondlk/ocean-platform/pull/99)
 ships the reviewed registry, exact analysis/publication/API/Chat and shared
@@ -1354,30 +1375,28 @@ git diff --check
 | Managed OIDC deployment | Google OIDC is live and verified for the administrator and approved researcher; broader identity-provider recovery/MFA policy remains external to the application |
 | Evaluation execution | Serving instances deliberately reject in-process jobs; the UI start controls are not yet connected to the external Cloud Run evaluation job |
 | Security operations require repository settings | CodeQL and dependency automation exist; branch/environment protections, retention enforcement, cost review, and alerting still require operator review |
-| Historical milestone plans | `docs/PRE_MILESTONE_VALIDATION_PLAN.md`, `docs/PHASE7_RELEASE_RUNBOOK.md`, `deploy/gcp/MIGRATION_PLAN.md`, `docs/RELEASE_0.4.3_PLAN.md`, and `docs/RELEASE_0.5.0_PLAN.md` retain dated gates; current cloud evidence is in `docs/DEPLOYMENT.md` and `docs/RELEASE_0.5.0_OPERATIONS.md` |
-| ANEMONE classification | The accessible observation has 343 explicit negative controls and 3,155 occurrences with unknown control status. Review/decision/audit and controlled republication exist; a real environmental-classification decision and researcher acceptance remain. |
-| Chat answer quality | Exact aggregate counts and citation integrity passed, but rare-taxon false denial, unsupported freshness claims and some routing/wording issues remain in issue #70. |
+| Historical milestone plans | `docs/PRE_MILESTONE_VALIDATION_PLAN.md`, `docs/PHASE7_RELEASE_RUNBOOK.md`, `deploy/gcp/MIGRATION_PLAN.md`, `docs/RELEASE_0.4.3_PLAN.md`, and `docs/RELEASE_0.5.0_PLAN.md` retain dated gates; current cloud evidence is in `docs/DEPLOYMENT.md` and `docs/RELEASE_0.7.1_OPERATIONS.md` |
+| ANEMONE classification | The accessible observation has 343 explicit negative controls and 3,155 occurrences with unknown control status. Review/decision/audit and controlled republication exist; a real environmental-classification decision and real-cohort acceptance remain; normal role checks passed v0.7.1. |
+| Chat answer quality | Issue #70 closed for its bounded English scope; #105 closed after source-isolated retrieval/overlap guards. Arbitrary scientific claims still need cited-record review. |
 | Empty evidence cohorts | Deterministic pre-generation abstention and visible recipe filters are deployed; authenticated production scientific acceptance remains |
 
 ---
 
 ## 13. Recommended Next Work Order
 
-Current status (2026-10-01): v0.6.0 is deployed. The next work is scoped chat
-answer-quality repair, scientific acceptance and operating hardening:
-
-1. Complete the remaining custom-domain researcher-role, suspension, and
-   uninvited-account checks. Administrator logout/re-login, admin-route access,
-   invitation-register access, and anonymous fail-closed behavior pass.
-2. Confirm current spend and budget alert thresholds in the Billing console,
-   then record the 24-hour and seven-day observation results.
-3. Fix and retest issue #70 against rare-taxon lookup, freshness support,
-   answer focus and method-aware scientific interpretation.
-4. Plan the next manually approved ANEMONE refresh; no weekly/monthly schedule
-   or provider API is currently enabled.
-5. Continue evaluation-job bridge, restore-drill, retention,
-   cost-review, and legacy-resource retirement work under their existing
-   approval boundaries.
+1. Review/merge the [pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md)
+   fixes, prepare a separately versioned security patch for #110, and run
+   exact-source image acceptance before zero-traffic candidate/promotion.
+2. Refresh GCP CLI authentication and inspect current service/jobs/SQL, storage,
+   IAM and cost headroom; the last rollout receipts do not prove current drift
+   or posted charges. Preserve production settings and rollback.
+3. Investigate transient sign-out (#108) and complete explicitly deferred live
+   mobile QA (#107) when practical.
+4. Obtain scientific/provider evidence (#102) and approved historical SST (#103),
+   then independently qualify/publish the six real research demos (#89).
+5. Continue OS maintenance (#104), external evaluation-job bridge, periodic
+   restore/retention drills, cost review and reviewed legacy resource retirement.
+   Refresh/catalogue tools remain manual; no autonomous schedule is enabled.
 
 ## Appendix: Completed pre-v0.4 Work Order
 

@@ -10,12 +10,12 @@ automatically.
 record; retain its dated resource evidence and cost-control rationale, but do
 not treat it as the current release order. Use
 [`../../docs/DEPLOYMENT.md`](../../docs/DEPLOYMENT.md) and the completed
-[`v0.6.0` operations record](../../docs/RELEASE_0.6.0_OPERATIONS.md) for the
+[`v0.7.1` operations record](../../docs/RELEASE_0.7.1_OPERATIONS.md) for the
 current deployment.
 The user later allowed up to **JPY 100,000/month** for the project while asking
 for import optimization first. This does not change any budget alert or
-component limit automatically. The current database compute and 10 GiB SSD
-list estimate is about JPY 10,835/month, excluding other project costs,
+component limit automatically. The historical database compute and 10 GiB SSD
+list estimate in that performance plan is about JPY 10,835/month, excluding other project costs,
 backups, networking and taxes; verify the actual bill and alert settings before
 further paid changes. See the
 [performance recovery plan](../../docs/ANEMONE_IMPORT_PERFORMANCE_PLAN.md).
@@ -23,41 +23,34 @@ Cost controls must be in place before runtime resources are created.
 
 ## Current deployed milestone
 
-Release evidence was verified on 2026-10-01 JST:
+Last verified at the 2026-10-05 JST rollout; fresh cloud inspection requires
+renewed CLI authentication. See [v0.7.1 operations](../../docs/RELEASE_0.7.1_OPERATIONS.md)
+for exact build/digests, backup/restore, migration, acceptance and cleanup.
 
-- project `data-infra-infobio`, region `asia-northeast1`;
-- OCEAN Platform GitHub release `v0.6.0` at immutable tag `91d8567`; validated
-  runtime security amendment `6fd37eba2173ad86b704e775c6edba997082b4e8`, revision
-  `ocean-platform-v060-sec1001`; immutable images, schema checks, rollout and
-  deferred QA are recorded in the [v0.6.0 operations record](../../docs/RELEASE_0.6.0_OPERATIONS.md);
-- Cloud Run service `ocean-platform` at 100% traffic on revision
-  `ocean-platform-v060-sec1001`. The frontend has `AUTH_URL=https://oceaninfobio.com`
-  and the API has `CORS_ORIGINS=https://oceaninfobio.com`;
-- Artifact Registry `ocean-platform`; service accounts `ocean-platform` and
-  `ocean-jobs`; secrets and jobs under the `ocean-*` prefix;
-- Cloud SQL `ocean-postgres` / `ocean_platform` is PostgreSQL 16 on
-  `db-custom-1-4096`; the verified production backup restored in isolation;
-- bucket `data-infra-infobio-ocean-data` contains the verified copied data;
-- former `onagawa-source-chat` is private and deletion-protected
-  `onagawa-postgres` is stopped for reversible rollback; the two legacy
-  runtime identities are disabled and the four orphan legacy job definitions
-  have been removed;
-- reviewed Artifact Registry cleanup is active for both repositories, and
-  transient Cloud Build source archives expire after 30 days;
-- minimum zero/maximum one service instance, concurrency 20; and
-- 7,319 documents and matching embeddings (6,996 ANEMONE eDNA plus 323 other),
-  schema head `20261001_0014`, and unchanged `v050-production-provenance`. The accessible
-  catalogue has 3,498 source occurrences/assays, 343 negative controls and
-  3,155 occurrences of unknown control status. Physical sample identity and
-  environmental classification remain unresolved.
+- Project `data-infra-infobio`, region `asia-northeast1`.
+- GitHub release `v0.7.1`, exact tag/runtime source `e157fb0`, 100% traffic on
+  `ocean-platform-v071-source1005`; schema `20261005_0016`.
+- Canonical auth/CORS origin `https://oceaninfobio.com`; five manual jobs aligned
+  to the exact API image without execution. API storage is read-only; job mode is
+  external. Normal role acceptance passed in the isolated candidate; cleanup passed.
+- Artifact Registry `ocean-platform`; identities `ocean-platform`/`ocean-jobs`,
+  Cloud SQL `ocean-postgres` / `ocean_platform` (PostgreSQL 16), private bucket
+  `data-infra-infobio-ocean-data`. Retained limits: min zero/max one, concurrency 20.
+- Corpus remains 7,319 documents/embeddings, including 6,996 eDNA; 3,498 source
+  occurrences/assays and 349,638 assignment rows. Scientific classification,
+  physical identity/areas and historical SST decisions remain unresolved.
+- Compatible v0.7.0 rollback and historical rollback tags retained. Temporary
+  v071 callback/tags/jobs/QA revisions/database were removed.
+- Live mobile QA (#107) is explicitly deferred; sign-out (#108), OS maintenance
+  (#104) and real demos/evidence (#89/#102/#103) remain separate open work.
 
-The retained `ocean-platform-v050-prod0930` revision is compatible with the
-additive v0.6.0 history constraint and remains an application rollback route.
-Older pre-v0.5.0 readers must not receive this catalogue. Do not downgrade
-populated migrations or overwrite later user/chat records.
-
-The immutable runtime was built from the validated amendment commit; later
-documentation commits do not change the deployed application.
+`main` includes the source-map-js 1.2.2 fix (#111), pending new patch images and
+rollout (#110). Preserve the published v0.7.1 tag. Read the
+[pre-deployment audit](../../docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md) and
+[script inventory](../../scripts/README.md) before cloud work. The generic
+bootstrap templates are not the current service specification; derive patches
+from a freshly read serving definition and preserve secrets, IAM, mounts,
+resources, canonical auth and rollback routes. Never replay old rendered YAML.
 
 See [`../../docs/GCP_RESOURCE_AUDIT.md`](../../docs/GCP_RESOURCE_AUDIT.md) for
 the historical post-cutover inventory, absence checks, housekeeping controls,
@@ -118,7 +111,7 @@ only immediately before this reviewed revision is deployed; keep maximum
 instances at one and the shared `/chat` limit at 10 requests per user per
 minute.
 
-## Baseline APIs
+## Baseline APIs (initial provisioning)
 
 Enable these after billing is linked:
 
@@ -136,14 +129,15 @@ gcloud services enable \
   --project=data-infra-infobio
 ```
 
-Compute Engine remains optional. Enable Vertex AI only when executing the
-Phase 6 credential probe and canary described below.
+Compute Engine remains optional. Vertex AI is already in use by production.
+The Phase 6 enablement/grant/canary sequence below describes initial onboarding,
+not an instruction to change existing IAM during a routine patch.
 
 See [`AUTHENTICATION.md`](AUTHENTICATION.md) for the selected authentication
 transfer, callback URL, provider identity rules, and IAP/Identity Platform
 tradeoffs.
 
-## Foundation preparation
+## Foundation preparation (initial provisioning only)
 
 `prepare-foundation.sh` is guarded by `CONFIRM_GCP_PROJECT` and creates only
 APIs, the Artifact Registry repository, service accounts, empty secret
@@ -188,6 +182,11 @@ byte totals, then writes the manifest under `manifests/`. The current seed is
 
 ## Build
 
+A routine image patch does not rerun foundation, SQL creation or raw seed upload.
+Freeze the exact clean source commit, run CI-equivalent checks, then build both
+images. The ordinary build below runs source checks and npm production audit; it
+does not replace candidate image/runtime/security acceptance.
+
 Create an Artifact Registry Docker repository named `ocean-platform` in
 `asia-northeast1`, then submit both images:
 
@@ -198,10 +197,25 @@ gcloud builds submit \
   .
 ```
 
-Cloud Build produces immutable images tagged with its build ID. Replace
-`IMAGE_TAG` in `service.template.yaml` with that ID.
+Cloud Build produces images tagged with its build ID; resolve and record exact
+digests for acceptance/deployment. The reusable candidate gate additionally
+checks isolated PostgreSQL migration/restore, runtime imports, HTTP/auth
+boundaries, non-root/tooling/capabilities, and full unsuppressed image scans:
 
-## Render without deploying
+```sh
+gcloud builds submit --project=data-infra-infobio \
+  --config=deploy/gcp/cloudbuild-candidate-qa.yaml \
+  --substitutions=_QA_REPORT_PREFIX=candidate-qa .
+```
+
+Reports default to `gs://PROJECT_ID_cloudbuild/candidate-qa/BUILD_ID/`; a
+reviewed release-specific `_QA_REPORT_PREFIX` can override that path. Scan exit
+zero means report collection, not security acceptance. Review all findings
+against #104 and require the patched dependency in the exact runtime image.
+`cloudbuild-frontend.yaml` is an operator-only single-image rebuild helper; it
+does not run the combined source, migration or image-acceptance gates.
+
+## Render without deploying (bootstrap/recovery examples)
 
 The renderer accepts only non-secret values and writes ignored
 `*.rendered.yaml` files:
@@ -211,7 +225,8 @@ python scripts/render_gcp_templates.py \
   --image-tag=BUILD_ID \
   --public-app-url=https://oceaninfobio.com \
   --data-bucket=DATA_BUCKET \
-  --oidc-client-id=GOOGLE_OAUTH_CLIENT_ID
+  --oidc-client-id=GOOGLE_OAUTH_CLIENT_ID \
+  --output-dir=/tmp/ocean-template-review
 ```
 
 Review every rendered file before using `gcloud run services replace` or
@@ -263,7 +278,7 @@ postgresql://USER:PASSWORD@/ocean_platform?host=/cloudsql/PROJECT_ID:REGION:CLOU
 Add secret versions only after the OAuth client and database user exist.
 Never pass secret values as renderer arguments or place them in rendered YAML.
 
-## Cloud Run Jobs
+## Cloud Run Jobs (bootstrap examples)
 
 Render the migration, pipeline, embedding, and evaluation templates alongside
 the service. The migration job runs the combined bootstrap command so both
@@ -348,6 +363,14 @@ into a fully POSIX filesystem. Before production, move job state transitions
 and atomic manifests to a database or native Cloud Storage object operations.
 
 ## Deployment safety
+
+For an existing deployment, use [current operations](../../docs/RELEASE_0.7.1_OPERATIONS.md)
+and the [audit checklist](../../docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md). Create
+a zero-traffic revision from the fresh live definition, verify exact images and
+normal candidate access, then promote after acceptance. Preserve existing IAM and
+canonical/fallback callbacks; remove only any explicitly approved temporary
+callback. The initial provisioning sequence below is historical bootstrap
+guidance, not an instruction to reset production access.
 
 Before replacing the service:
 
