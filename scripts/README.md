@@ -47,7 +47,8 @@ and underlying module tests; lack of a UI caller is intentional.
 | `check_research_readiness.py` | v0.7.0 implementation/readiness contract | Reads retained candidate metadata; writes census; no registry approval. |
 | `inventory_historical_sst.py` | #103 all-location/year acquisition census | Explicit production READ ONLY snapshot or verified candidate; writes local inventory only; no account/history reads. |
 | `acquire_historical_sst.py` | #103 historical acquisition operator | Preflight and bounded metadata queries; only explicit child-ID `batch --execute` downloads; persistent resume/reconciliation; no cloud publication. |
-| `compare_historical_sst.py` | #103 product/access comparison | Prepares fixed probes; `--execute-mur-probes` downloads small MUR cases; records Himawari comparison as pending. |
+| `compare_historical_sst.py` | #103 product/access comparison | Prepares fixed probes; optional small MUR downloads and private retained Himawari footprint inspection; preserves differing versions/statistics/time offsets; scientific selection stays pending. |
+| `probe_himawari_sst.py` | #103 authenticated archive comparison | Dry-run default; explicit execution lists a directory or downloads 1–4 selected files over verified encrypted FTPS. Private credentials, bounded bytes, checksums/atomic generations; no scientific publication or bulk queue. |
 | `prepare_anemone_catalogue.py` | v0.5.0 catalogue/import workflow | Reads observed archive; writes staged bounded candidates. |
 | `import_anemone_catalogue.py` | Catalogue importer regression/integration tests | Explicit database destination; default merge is rolled back, execute commits. It can still take locks or stage local artifacts. |
 | `qa_anemone_catalogue.py` | v0.5.0 full-candidate reconciliation | Isolated candidate/database/serving tree required; reads counts, provenance and hashes; writes QA report. |

@@ -15,7 +15,8 @@ invocation, account read/change or Chat history read/change was performed.
 | `acquire_historical_sst.py batch` | Explicit child-ID execution; serial bounded requests, atomic files/journal, checksum resume, provider-scoped HTTPS redirects, bounded retries and Retry-After handling. |
 | `acquire_historical_sst.py time-axis` | Public mirror timestamp inventory, with exact absent dates and raw response checksum. Mirror absence does not establish source-archive absence. |
 | `acquire_historical_sst.py source-gap-check` | Bounded official NASA catalogue metadata check for specified missing dates; validates complete response and exact product/version titles. Never fetches protected binaries. |
-| `compare_historical_sst.py` | Reproducible geographical/seasonal access probes, with optional small MUR downloads, product/time/hash and unfiltered ocean-grid diagnostics. Always reports the MUR/Himawari comparison as pending until both products are assessed. |
+| `compare_historical_sst.py` | Reproducible geographical/seasonal probes, optional small MUR downloads and retained Himawari full-disk footprint diagnostics. Scientific comparison/selection stays pending; offsets, native grid and differing statistics remain explicit. |
+| `probe_himawari_sst.py` | Explicit historical directory listings or at most four selected files; certificate-verified implicit FTPS, private credential file, provider checksum/local SHA-256, atomic generation files and verified reuse. No bulk downloader or scientific publication. |
 | `run_research_sst_collection.py` | Operator preflight/publication of an explicit bounded set of verified child panels and reviewed area IDs, bound to current applied product/sampling reviews. |
 
 The original `prepare_research_sst.py` pilot API, deterministic plan hashes,
@@ -106,10 +107,15 @@ record reprocessing for 2022-10-03 through 2023-05-21; verify the served generat
 Usage terms and acknowledgement are part of product selection, including the
 historical research/education scope described in the FAQ.
 
-No Himawari downloader is represented as working without that authenticated
-access/file probe. No full-disk file or archive was substituted with JCOPE model
-outputs. Final comparison still needs matching footprint/time/statistics,
-cloud/quality coverage, numeric differences and independent reviewer selection.
+Authenticated access has now passed using the existing P-Tree research account.
+Four historical files (402,428,224 bytes) passed provider checksums and local
+SHA-256; twelve bounded geographical footprint diagnostics were recorded beside
+the six MUR subsets. [Dated comparison and recommendation](HISTORICAL_SST_PRODUCT_COMPARISON_2026-10-06.md)
+record version/statistic differences, retrieval gaps, minimum-specific uncertainty,
+the full-disk longitude wrap and unresolved leap-second time interpretation.
+The user selected MUR v4.1 as primary with Himawari as optional comparator.
+Scientific product/QC/time review remains pending. No JCOPE substitution or full
+archive/publication ran.
 
 ## Operator commands
 
@@ -133,6 +139,42 @@ connection; do not put passwords in command arguments.
 `--candidate-root` is the alternative to `--production-read-only`; the provenance
 then explicitly identifies a retained candidate rather than current production.
 Comparison probes download only when `--execute-mur-probes` is added.
+
+Himawari access uses a separate private JSON file with exactly `username` and
+`password`, owned by the operator with mode 0600. Keep it outside Git and never
+put credential values in command arguments. Both listing and file transfer are
+dry-run by default; add `--execute` for the selected operation:
+
+```sh
+.venv/bin/python scripts/probe_himawari_sst.py \
+  --credentials-file /private/operator/ptree.json \
+  --list-directory /pub/himawari/L3/SST \
+  --output-dir /tmp/sst103/himawari-list
+```
+
+Select 1–4 exact `.nc` paths from verified archive listings in
+`{"remote_paths":["/pub/himawari/L3/SST/.../exact-versioned-file.nc"]}`:
+
+```sh
+.venv/bin/python scripts/probe_himawari_sst.py \
+  --credentials-file /private/operator/ptree.json \
+  --selection /tmp/sst103/himawari-selection.json \
+  --output-dir /tmp/sst103/himawari-raw
+.venv/bin/python scripts/compare_historical_sst.py \
+  --inventory /tmp/sst103/inventory.json --output-dir /tmp/sst103/comparison \
+  --execute-mur-probes --himawari-probe /tmp/sst103/himawari-raw/probe.json
+```
+
+The Himawari transfer ceiling is 256 MiB per file, four files per invocation;
+verify available disk against listing sizes first. No gzip extraction or bulk
+automatic queue is implemented. Interrupted temporary files are removed; repeat
+the same selection to verify/reuse completed raw files and download outstanding
+files. Changed provider checksums create new content-addressed generations;
+damaged prior files fail instead of being overwritten. A hard-killed process can
+leave `.himawari-probe.lock`; verify no writer runs before removing a stale lock.
+The comparison reads at most 100,000 grid values per footprint, preserving
+native values/statistic labels and recording leap-second offsets without a
+scientific time correction. It never marks scientific comparison/approval complete.
 
 For an individually reviewed child from preflight, replace `CHILD_PLAN_SHA256`
 with its exact ID. Without `--execute`, this prints bounded bytes/requests only:
@@ -195,8 +237,13 @@ running the synthetic localhost fixture servers with the required permission.
 Service-gated PostgreSQL tests are separate from the passed production READ ONLY
 census; the census is not a production write/migration or real scientific QA test.
 
-Issue #103 remains open for authenticated Himawari comparison, recorded product
-selection, measured/reconciled bulk acquisition, same-product gap recovery,
+The updated backend suite passes **1,103 tests**, with 39 service-gated skips;
+the historical SST/panel/collection focused suite passes 50 tests. The earlier
+1,079-test/coverage run above records the first implementation stage. Updated
+CLI help, generated scope and active Python Ruff checks pass.
+
+Issue #103 remains open for completed scientific comparison, recorded scientific
+product/QC decisions, measured/reconciled bulk acquisition, same-product gap recovery,
 current applied #102 sampling/area reviews, SST product/QC/time-window reviews,
 real normalization/linkage/publication and scientific acceptance. Issue #89's six
 demonstrations remain open; the broader acquisition scope does not rescope them.

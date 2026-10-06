@@ -47,8 +47,9 @@ Historical SST work for [#103](https://github.com/jarondlk/ocean-platform/issues
 now has an [implementation/runbook](docs/HISTORICAL_SST_ISSUE_103_IMPLEMENTATION.md)
 for the all-ANEMONE-location/year census, product comparison, resumable bounded
 acquisition and compatible SST collections. This work is separate from deployed
-v0.7.2; historical product selection, full acquisition and reviewed publication
-remain pending.
+v0.7.2; scientific product/QC decisions, full acquisition and reviewed publication
+remain pending. The [initial MUR/Himawari comparison](docs/HISTORICAL_SST_PRODUCT_COMPARISON_2026-10-06.md)
+records verified historical access and the user's MUR v4.1 primary archive choice.
 
 ## Study Sites
 

@@ -28,6 +28,9 @@ approved.
   [`HISTORICAL_SST_ISSUE_103_IMPLEMENTATION.md`](HISTORICAL_SST_ISSUE_103_IMPLEMENTATION.md)
   — all-location/year acquisition scope, fresh census, bounded tooling/collection
   contracts and remaining product/scientific decisions; separate from deployed v0.7.2.
+- [`HISTORICAL_SST_PRODUCT_COMPARISON_2026-10-06.md`](HISTORICAL_SST_PRODUCT_COMPARISON_2026-10-06.md)
+  — authenticated four-file Himawari access, six MUR/twelve Himawari footprint
+  diagnostics, native metadata/time issues and preliminary primary-product recommendation.
 - [`RELEASE_0.7.0_OPERATIONS.md`](RELEASE_0.7.0_OPERATIONS.md) — prior software
   rollout and compatible rollback record; its live-role deferral is historical.
 - [`RELEASE_0.6.1_OPERATIONS.md`](RELEASE_0.6.1_OPERATIONS.md) — prior published
