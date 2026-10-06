@@ -1,6 +1,7 @@
 # v0.7.1 — Source-aware retrieval and evidence coverage
 
-Candidate notes; publication and deployment are pending acceptance.
+Published and deployed on 2026-10-05 JST. See [operations](RELEASE_0.7.1_OPERATIONS.md)
+for exact source/digests, backup/migration, acceptance and cleanup.
 
 Chat searches selected sources individually and combines their ranked evidence
 within the existing total document budget. A dominant source can no longer

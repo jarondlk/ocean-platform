@@ -1,7 +1,8 @@
 # v0.7.1 operations
 
-Prepared 2026-10-05 JST. v0.7.1 is not published or promoted. Production remains
-100% on `ocean-platform-v070-software1005`, schema `20261004_0015`.
+Updated 2026-10-05 JST. **v0.7.1 is published and deployed at 100% traffic.**
+Production revision is `ocean-platform-v071-source1005`, schema `20261005_0016`.
+The user explicitly deferred live mobile QA; normal role/workflow acceptance passed.
 
 ## Accepted candidate evidence
 
@@ -60,3 +61,71 @@ or restore production as a routine rollback.
 
 #104 retains unresolved OS maintenance. #102/#103/#89 retain scientific evidence,
 historical SST and six real-data demos. Japanese QA remains outside scope.
+
+## Verified publication, rollout and cleanup
+
+[PR #106](https://github.com/jarondlk/ocean-platform/pull/106) merged as
+`7f93fea5390bb0efd1bb0fbca27a0f01dd2e4b8a`. Final branch CI
+[37310978832](https://github.com/jarondlk/ocean-platform/actions/runs/37310978832)
+passed. Only documentation differs between the merged source and exact runtime
+source `e157fb004871083df25d5d094852fed417a9c8c6`; the annotated
+[v0.7.1 tag/release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.1)
+pins that exact built and live-tested source. Operational documentation follows
+without retagging or pretending the images were built from the later doc commits.
+Final repository Dependabot/code-scanning open-alert queries returned zero; this
+is separate from the retained container OS findings in #104.
+
+Fresh backup execution `ocean-v071-preparation-4jpxn` created a 208,268,918-byte
+private native backup, SHA-256
+`1ec036207a8000a7811effb3abc16db7ac1230405790d50213761c8172ea96b4`.
+The isolated restore verified the backup and removed its temporary database.
+Backup, manifest and immutable receipts are retained privately under
+`gs://data-infra-infobio-ocean-data/backups/v071/release-20261005/`.
+No production restore was performed.
+
+Migration execution `ocean-v071-preparation-h4qd5` advanced production from 0015
+to additive 0016. Old history hashes, all identity/role hashes, publication bindings
+and retrieval corpus hashes were preserved. No synthetic QA review was copied
+into production. Canonical revision `ocean-platform-v071-source1005` uses the
+verified digests in container QA, normal production startup/database and canonical
+auth origin. It served zero traffic before promotion and now serves 100% with
+`v071-production` tag. All historical rollback tags remain; temporary
+`v071-final` and `v071-candidate` routes were removed.
+
+Normal authenticated canonical Chat repeated the exact reported question with
+SST/eDNA selected and no source filters: four SST plus four eDNA final documents,
+`overlap_unverified`, abstained, model not run, all eight retained. Post-promotion
+read-only execution `ocean-v071-preparation-qlcgj` independently verified the new
+normal-admin history record's scope, exact snapshot fingerprint, prompt hash/version,
+final coverage and guard/model flags. Original histories, roles, scientific
+corpus/publications and absence of synthetic production reviews were verified.
+Legacy feedback/history UI also rendered normally. Overview showed 7,319
+retrieval documents, 162 CTD casts, 79 SST days and healthy API/database/model
+signals with eDNA publication ready. Saving an additional marked
+production QA feedback entry was rejected by automatic approval review as an
+unapproved persistent production write; no retry or workaround was used. The
+read-only history audit supplied verification.
+
+Anonymous protected health/admin/review proxies returned 401; login and provider
+discovery returned 200. A bounded deployment-window query for revision HTTP 5xx
+returned zero records, not an ongoing availability/SLA guarantee. All five existing
+manual jobs pin the verified API digest/source; command, arguments, identity,
+secrets, mounts, resource/retry/timeout settings were compared and preserved. No
+manual ingestion, embedding, evaluation or research batch was executed. Original
+job definitions are retained privately for application rollback.
+
+Cleanup execution `ocean-v071-preparation-l67mm` reverified original QA roles
+restored and removed only `ocean_v071_role_qa_1005`; production database and
+private backups remain. The three task-owned QA/operator jobs and two untagged QA
+revisions were removed. Only the five original manual jobs remain. The temporary
+OAuth callback was removed through normal client settings; re-opening verified
+exactly the original two callbacks and two origins. Task-owned QA browser tabs
+are closed; the canonical app is the user-facing result.
+
+#105's production regression is complete; #101's normal role/workflow checks and
+cleanup are complete. Deferred mobile acceptance is tracked independently in
+[#107](https://github.com/jarondlk/ocean-platform/issues/107); the transient sign-out
+observation remains unresolved in [#108](https://github.com/jarondlk/ocean-platform/issues/108).
+#104/#102/#103/#89 remain open for their distinct OS/scientific work. Embedding
+429 capacity and representative cohort/load qualification remain limitations; the
+observed safe degraded path and later recovery do not prove future availability.

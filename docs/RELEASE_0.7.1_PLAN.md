@@ -1,10 +1,9 @@
 # v0.7.1 patch plan — Source-aware retrieval and honest coverage
 
-Status: candidate acceptance in progress, 2026-10-05 JST. Source retrieval, prompt
-coverage, deterministic guards and UI are implemented. Exact-source CI/image QA
-and normal-account role/workflow acceptance passed. Live mobile was explicitly
-user-deferred;
-production migration, publication, rollout and cleanup remain pending.
+Status: implemented, published and deployed, 2026-10-05 JST. Exact-source CI/image
+QA, normal-account roles/workflows, production migration/regression and cleanup
+passed. Live mobile QA was explicitly user-deferred (#107); transient sign-out
+investigation remains #108. See [operations](RELEASE_0.7.1_OPERATIONS.md).
 
 Repository baseline: clean `main` at
 `39f50faf2eed8b4da5096a85bfe28c2a04dfbbd9`. Published v0.7.0 runtime source:
