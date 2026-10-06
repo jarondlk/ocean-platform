@@ -35,8 +35,9 @@ Current release record, last verified during the 2026-10-05 JST rollout:
   production as routine application rollback.
 
 Repository `main` additionally contains the source-map-js 1.2.2 fix (#111), pending
-an exact image build/security review and a new patch deployment (#110). Version
-metadata remains 0.7.1. The [2026-10-06 audit](PRE_DEPLOYMENT_AUDIT_2026-10-06.md)
+an exact image build/security review and a new patch deployment (#110). The v0.7.2 source patch now carries the security and readiness fixes;
+production remains v0.7.1 until image acceptance and rollout. See
+[v0.7.2 operations](RELEASE_0.7.2_OPERATIONS.md). The [2026-10-06 audit](PRE_DEPLOYMENT_AUDIT_2026-10-06.md)
 is a fresh repository/GitHub check, not a refreshed cloud inventory: CLI sign-in
 expired after the completed rollout. Recheck live service/jobs/SQL/IAM after
 authentication, before deploying. Do not apply old local `*.rendered.yaml` files.

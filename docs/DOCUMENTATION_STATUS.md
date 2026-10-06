@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-10-06 (v0.7.1 deployed; post-release patch pending).
+Last reviewed: 2026-10-06 (v0.7.1 deployed; v0.7.2 source patch; GCP rollout pending).
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -10,6 +10,11 @@ audit records should remain immutable unless an explicit archival policy is
 approved.
 
 ## Current operating authority
+
+- [`RELEASE_0.7.2_OPERATIONS.md`](RELEASE_0.7.2_OPERATIONS.md) and
+  [`RELEASE_NOTES_0.7.2.md`](RELEASE_NOTES_0.7.2.md) — source security/readiness
+  patch; exact-image acceptance and GCP rollout are pending. Production remains
+  v0.7.1; preserve the prior tag and deployment record.
 
 - [`RELEASE_0.7.1_OPERATIONS.md`](RELEASE_0.7.1_OPERATIONS.md) — current published
   release, verified production rollout, role acceptance, cleanup and rollback.
@@ -46,7 +51,8 @@ blocked on scientific evidence/product decisions (#89/#102/#103).
 
 Source-map-js 1.2.2 is merged in #111 but is outside the v0.7.1 immutable tag and
 production images. #110 requires a separate verified patch build and rollout.
-Current declarations stay 0.7.1 until that release is prepared. OS findings are
+The v0.7.2 metadata now identifies the prepared source patch; production stays
+v0.7.1 until cloud acceptance/promotion. OS findings are
 tracked separately in #104. The audit above is local/GitHub verification; a fresh
 cloud census requires renewed CLI authentication.
 

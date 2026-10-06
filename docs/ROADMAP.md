@@ -62,6 +62,10 @@ source-map-js 1.2.2 (#111), but deployment of its verified immutable image remai
 [pre-deployment audit](PRE_DEPLOYMENT_AUDIT_2026-10-06.md) records readiness fixes
 and [script status](../scripts/README.md).
 
+The merged audit #112 and source-map-js fix are included in the separately
+versioned [v0.7.2 source patch](RELEASE_NOTES_0.7.2.md); see
+[operations](RELEASE_0.7.2_OPERATIONS.md) for pending exact-image/cloud gates.
+
 Open work remains independently tracked: scientific ANEMONE evidence (#102),
 historical SST preparation (#103), six real research demos (#89), OS advisories
 (#104), explicitly deferred live mobile QA (#107) and transient sign-out (#108).
