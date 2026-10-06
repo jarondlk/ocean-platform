@@ -32,10 +32,12 @@ registry or research result was approved for release. See
 Eight high OS CVEs remain in the release image scans, with recorded mitigations
 and residual risk tracked in [#104](https://github.com/jarondlk/ocean-platform/issues/104).
 
-Repository `main` also contains the tested source-map-js 1.2.2 fix from
-[PR #111](https://github.com/jarondlk/ocean-platform/pull/111). That fix is not in
-the immutable v0.7.1 tag or deployed image; a separate patch build/deployment is
+The [v0.7.2 source patch](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.2)
+includes source-map-js 1.2.2 and audited database/CLI/build readiness fixes.
+It is separate from the deployed v0.7.1 images; GCP verification/rollout remains
 pending in [#110](https://github.com/jarondlk/ocean-platform/issues/110).
+See [patch notes](docs/RELEASE_NOTES_0.7.2.md) and
+[operations](docs/RELEASE_0.7.2_OPERATIONS.md).
 The [pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md) and
 [script inventory](scripts/README.md) distinguish current operations from legacy
 and operator-only tools.

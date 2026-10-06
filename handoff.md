@@ -10,8 +10,9 @@
 > occurrences/assays and 349,638 assignment rows. Normal Google role/workflow QA
 > passed in an isolated candidate database; original roles and data were restored
 > and temporary resources removed. Live mobile QA is explicitly deferred (#107).
-> `main` contains the source-map-js 1.2.2 fix (#111), pending a separate immutable
-> build and patch deployment (#110). No next release version is declared here.
+> `main` contains the source-map-js 1.2.2 fix (#111) and merged audit (#112);
+> v0.7.2 source release metadata/notes are prepared. Exact immutable image
+> acceptance and GCP deployment remain pending (#110).
 > Read [v0.7.1 operations](docs/RELEASE_0.7.1_OPERATIONS.md),
 > [pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md) and
 > [script inventory](scripts/README.md). Fresh cloud configuration inspection
@@ -28,8 +29,8 @@ Research QA did not approve real scientific registries or results. Production
 retains compatible v0.7.0 rollback and additive schema 0016.
 
 The 2026-10-06 audit fixes schema readiness and CLI inspection safety and updates
-current operating docs. Version metadata stays 0.7.1 until a separate release is
-prepared. Do not deploy old ignored rendered templates or rerun foundation/raw
+current operating docs. Version metadata identifies the v0.7.2 source patch; production still runs
+v0.7.1. See [v0.7.2 operations](docs/RELEASE_0.7.2_OPERATIONS.md). Do not deploy old ignored rendered templates or rerun foundation/raw
 seed scripts as a routine image patch. See the audit for the exact source checks
 and cloud verification gates before deployment.
 
@@ -1384,8 +1385,8 @@ git diff --check
 
 ## 13. Recommended Next Work Order
 
-1. Review/merge the [pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md)
-   fixes, prepare a separately versioned security patch for #110, and run
+1. The [pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md)
+   fixes merged in #112. Finish the v0.7.2 source release for #110, then run
    exact-source image acceptance before zero-traffic candidate/promotion.
 2. Refresh GCP CLI authentication and inspect current service/jobs/SQL, storage,
    IAM and cost headroom; the last rollout receipts do not prove current drift
