@@ -206,9 +206,22 @@ def validate_research_inputs(recipe, inputs):
     if bool(panel) != bool(recipe.sst_panel_id):
         raise ValueError("Research SST panel contract mismatch")
     if panel:
+        collection = (
+            panel["definition"].get("algorithm_version")
+            == "reviewed-area-sst-collection-v1"
+        )
         if (
             set(panel)
-            != {"panel_id", "manifest", "manifest_sha256", "definition", "observations"}
+            != (
+                {
+                    "panel_id",
+                    "manifest",
+                    "manifest_sha256",
+                    "definition",
+                    "observations",
+                }
+                | ({"children"} if collection else set())
+            )
             or digest(panel["definition"]) != recipe.sst_panel_id
             or panel["panel_id"] != recipe.sst_panel_id
             or panel["definition"]["sampling_registry"] != inputs["sampling_registry"]
@@ -217,16 +230,20 @@ def validate_research_inputs(recipe, inputs):
         validate_id(panel["manifest_sha256"])
         if digest(panel["manifest"]) != panel["manifest_sha256"]:
             raise ValueError("Research SST manifest mismatch")
-        decode_panel(
-            panel["panel_id"],
-            panel["manifest"],
-            {
-                "manifest.json": canonical_bytes(panel["manifest"]),
-                "definition.json": canonical_bytes(panel["definition"]),
-                "observations.json": canonical_bytes(panel["observations"]),
-            },
-            metadata_only=True,
-        )
+        files = {
+            "manifest.json": canonical_bytes(panel["manifest"]),
+            "definition.json": canonical_bytes(panel["definition"]),
+            "observations.json": canonical_bytes(panel["observations"]),
+        }
+        if collection:
+            from ingestion.research_sst_collection import decode_collection
+
+            files["children.json"] = canonical_bytes(panel["children"])
+            decode_collection(panel["panel_id"], panel["manifest"], files)
+        else:
+            decode_panel(
+                panel["panel_id"], panel["manifest"], files, metadata_only=True
+            )
     return sampling
 
 
@@ -234,6 +251,7 @@ def panel_reference(panel):
     return (
         {k: panel[k] for k in ("panel_id", "manifest", "definition", "observations")}
         | {"manifest_sha256": digest(panel["manifest"])}
+        | ({"children": panel["children"]} if "children" in panel else {})
         if panel
         else None
     )

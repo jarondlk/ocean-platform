@@ -69,6 +69,13 @@ historical SST preparation (#103), six real research demos (#89), OS advisories
 (#104), explicitly deferred live mobile QA (#107) and transient sign-out (#108).
 No real scientific approval is implied by completed synthetic or role checks.
 
+Historical SST #103 now has implemented census/comparison/acquisition tooling and
+bounded collection compatibility. The fresh READ ONLY census covers 216 reported
+coordinate locations in 75 acquisition tiles, 2017–2023; unresolved coordinates
+remain explicit. [Implementation evidence and remaining acceptance](HISTORICAL_SST_ISSUE_103_IMPLEMENTATION.md)
+distinguish tested software/MUR probes from pending authenticated Himawari
+comparison, product selection, full archive and reviewed publication.
+
 The release sections below preserve earlier decisions and evidence; v0.7.2
 supersedes their statements about current production traffic and role deferrals.
 

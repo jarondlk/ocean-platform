@@ -43,6 +43,13 @@ The [pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md) and
 [script inventory](scripts/README.md) distinguish current operations from legacy
 and operator-only tools.
 
+Historical SST work for [#103](https://github.com/jarondlk/ocean-platform/issues/103)
+now has an [implementation/runbook](docs/HISTORICAL_SST_ISSUE_103_IMPLEMENTATION.md)
+for the all-ANEMONE-location/year census, product comparison, resumable bounded
+acquisition and compatible SST collections. This work is separate from deployed
+v0.7.2; historical product selection, full acquisition and reviewed publication
+remain pending.
+
 ## Study Sites
 
 | Bay | Code | Coordinates | Data |

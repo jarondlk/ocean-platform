@@ -238,6 +238,10 @@ def publish_panel(product_registry, sampling_registry, granules):
 
 def load_panel(identity):
     validate_id(identity)
+    from ingestion.research_sst_collection import collection_registered, load_collection
+
+    if collection_registered(identity):
+        return load_collection(identity)
     if config.EDNA_ARTIFACT_URI:
         receipt, files = ArtifactStore(config.EDNA_ARTIFACT_URI).read(
             "sst-panels", identity, max_bytes=MAX_PANEL_BYTES

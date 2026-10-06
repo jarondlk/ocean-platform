@@ -24,6 +24,10 @@ approved.
   fresh repository/docs/script/dependency checks and next deployment gates.
 - [`scripts/README.md`](../scripts/README.md) — active, operator-only and legacy
   entrypoints, side effects and supported execution paths.
+- [`HISTORICAL_SST_ISSUE_103_PLAN.md`](HISTORICAL_SST_ISSUE_103_PLAN.md) and
+  [`HISTORICAL_SST_ISSUE_103_IMPLEMENTATION.md`](HISTORICAL_SST_ISSUE_103_IMPLEMENTATION.md)
+  — all-location/year acquisition scope, fresh census, bounded tooling/collection
+  contracts and remaining product/scientific decisions; separate from deployed v0.7.2.
 - [`RELEASE_0.7.0_OPERATIONS.md`](RELEASE_0.7.0_OPERATIONS.md) — prior software
   rollout and compatible rollback record; its live-role deferral is historical.
 - [`RELEASE_0.6.1_OPERATIONS.md`](RELEASE_0.6.1_OPERATIONS.md) — prior published

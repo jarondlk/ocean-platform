@@ -45,6 +45,9 @@ and underlying module tests; lack of a UI caller is intentional.
 | --- | --- | --- |
 | `build_gcp_seed_manifest.py` | Called by raw-seed upload helper; manifest tests | Offline bounded raw-file inventory; writes manifest only. Initial seed workflow, not historical SST research acquisition. |
 | `check_research_readiness.py` | v0.7.0 implementation/readiness contract | Reads retained candidate metadata; writes census; no registry approval. |
+| `inventory_historical_sst.py` | #103 all-location/year acquisition census | Explicit production READ ONLY snapshot or verified candidate; writes local inventory only; no account/history reads. |
+| `acquire_historical_sst.py` | #103 historical acquisition operator | Preflight and bounded metadata queries; only explicit child-ID `batch --execute` downloads; persistent resume/reconciliation; no cloud publication. |
+| `compare_historical_sst.py` | #103 product/access comparison | Prepares fixed probes; `--execute-mur-probes` downloads small MUR cases; records Himawari comparison as pending. |
 | `prepare_anemone_catalogue.py` | v0.5.0 catalogue/import workflow | Reads observed archive; writes staged bounded candidates. |
 | `import_anemone_catalogue.py` | Catalogue importer regression/integration tests | Explicit database destination; default merge is rolled back, execute commits. It can still take locks or stage local artifacts. |
 | `qa_anemone_catalogue.py` | v0.5.0 full-candidate reconciliation | Isolated candidate/database/serving tree required; reads counts, provenance and hashes; writes QA report. |
@@ -52,6 +55,7 @@ and underlying module tests; lack of a UI caller is intentional.
 | `register_classification_workload.py` | ANEMONE pilot/review runbook and tests | Creates explicit auditable classification workload actor; not web identity impersonation. |
 | `prepare_research_sst.py` | v0.7.0 acquisition plan; acquisition tests | Offline plan by default; execute downloads/stages granules. Product approval remains separate. |
 | `run_research_sst_panel.py` | v0.7.0 implementation and container import gate | Preflight/build panel from applied sampling/product reviews; execute publishes immutable panel. |
+| `run_research_sst_collection.py` | #103 bounded multi-panel research input | Explicit child/area selection; current applied review preflight; execute publishes immutable collection with verified child raw provenance. |
 | `run_research_analysis.py` | Research bundle implementation and image import gate | Preflight default; execute creates approved-registry-bound research bundle. |
 | `evaluate_edna_pilot.py` | Saved-record evaluator and ANEMONE runbook | Reads evidence/human review; no model generation; not a substitute for six real research demos. |
 | `render_gcp_templates.py` | GCP runbook; renderer tests | Offline YAML rendering; use a private temporary output directory. Bootstrap templates are not fresh production definitions. |
