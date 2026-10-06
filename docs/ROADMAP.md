@@ -77,6 +77,9 @@ distinguish tested software and authenticated MUR/Himawari probes from pending
 scientific comparison, product/QC review, full archive and reviewed publication.
 [Dated comparison](HISTORICAL_SST_PRODUCT_COMPARISON_2026-10-06.md) records the user's
 MUR v4.1 primary archive choice and Himawari's optional separate retrieval role.
+The [dated acquisition evidence](HISTORICAL_SST_ACQUISITION_PILOT_2026-10-06.md)
+adds private cloud storage/resume verification, recovered `04.1nrt` originals
+that retain final-series gaps, and a capped serial raw worker.
 
 The release sections below preserve earlier decisions and evidence; v0.7.2
 supersedes their statements about current production traffic and role deferrals.

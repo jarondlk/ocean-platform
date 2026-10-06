@@ -1,6 +1,8 @@
 from copy import deepcopy
 import io
 import json
+import socket
+import ssl
 from urllib.error import HTTPError
 
 import pytest
@@ -12,6 +14,10 @@ from ingestion.sst_acquisition import (
     download_batch,
     mur_time_axis,
     mur_source_gap_inventory,
+    _provider_ipv4_connection,
+    ProviderIPv4HTTPSConnection,
+    provider_opener,
+    inspect_mur_source_original,
 )
 from ingestion.sst_inventory import build_inventory
 
@@ -211,3 +217,120 @@ def test_source_catalogue_gap_check_never_claims_binary_coverage():
     payload["feed"]["entry"] = []
     with pytest.raises(ValueError, match="incomplete"):
         mur_source_gap_inventory(["2021-02-20"], open_url=response)
+
+
+def test_ipv4_provider_connection_is_scoped_and_preserves_tls(monkeypatch):
+    from ingestion import sst_acquisition as module
+
+    calls, sockets = [], []
+    original_resolver = socket.getaddrinfo
+
+    def addresses(host, port, family, kind):
+        calls.append((host, port, family, kind))
+        return [
+            (family, kind, 6, "", ("192.0.2.1", port)),
+            (family, kind, 6, "", ("192.0.2.2", port)),
+        ]
+
+    class Connection:
+        def __init__(self, *args):
+            self.closed = False
+            sockets.append(self)
+
+        def settimeout(self, timeout):
+            self.timeout = timeout
+
+        def connect(self, target):
+            if target[0] == "192.0.2.1":
+                raise TimeoutError("unreachable")
+            self.target = target
+
+        def close(self):
+            self.closed = True
+
+    monkeypatch.setattr(module.socket, "getaddrinfo", addresses)
+    monkeypatch.setattr(module.socket, "socket", Connection)
+    for address in (("untrusted.example", 443), (module.HOST, 80)):
+        with pytest.raises(ValueError, match="approved provider"):
+            _provider_ipv4_connection(address)
+    connection = _provider_ipv4_connection((module.HOST, 443), 7)
+    assert sockets[0].closed and connection.target == ("192.0.2.2", 443)
+    assert connection.timeout == 7
+    assert calls == [(module.HOST, 443, socket.AF_INET, socket.SOCK_STREAM)]
+    tls = ProviderIPv4HTTPSConnection(module.HOST)
+    assert tls._context.check_hostname
+    assert tls._context.verify_mode == ssl.CERT_REQUIRED
+    assert tls._create_connection is _provider_ipv4_connection
+    provider_opener(ipv4_only=True)
+    # Construction never installs a process-wide resolver override.
+    assert module.socket.getaddrinfo is addresses
+    monkeypatch.setattr(module.socket, "getaddrinfo", original_resolver)
+
+
+def test_ipv4_connection_closes_failed_socket_and_rejects_absent_dns(monkeypatch):
+    from ingestion import sst_acquisition as module
+
+    monkeypatch.setattr(module.socket, "getaddrinfo", lambda *args: [])
+    with pytest.raises(OSError, match="no IPv4"):
+        _provider_ipv4_connection((module.HOST, 443))
+
+
+def mur_original_fixture(
+    path, *, version="04.1nrt", title=None, stamp="2021-02-20T09:00:00"
+):
+    import numpy as np
+    import xarray as xr
+
+    ds = xr.Dataset(
+        {
+            name: (("time", "lat", "lon"), np.ones((1, 2, 2)))
+            for name in ("analysed_sst", "analysis_error", "mask", "sea_ice_fraction")
+        },
+        coords={
+            "time": [np.datetime64(stamp)],
+            "lat": [38.6, 38.61],
+            "lon": [141.4, 141.41],
+        },
+        attrs={
+            "id": "MUR-JPL-L4-GLOB-v04.1",
+            "product_version": version,
+            "title": title or "Daily MUR SST, Interim near-real-time (nrt) product",
+        },
+    )
+    ds.analysed_sst.attrs["units"] = "kelvin"
+    ds.to_netcdf(path)
+
+
+def test_original_nrt_is_verified_without_resolving_final_series_gap(tmp_path):
+    path = tmp_path / "original.nc"
+    mur_original_fixture(path)
+    result = inspect_mur_source_original(path, "2021-02-20")
+    assert result["processing_generation"] == "interim_near_real_time"
+    assert result["product_metadata"]["product_version"] == "04.1nrt"
+    assert result["final_series_gap_resolved"] is False
+    assert result["scientific_approval"] is False
+    assert result["receipt_id"] == digest(
+        {k: v for k, v in result.items() if k != "receipt_id"}
+    )
+    mur_original_fixture(path, version="04.1", title="Daily MUR SST, Final product")
+    final = inspect_mur_source_original(path, "2021-02-20")
+    assert (
+        final["processing_generation"] == "final" and not final["scientific_approval"]
+    )
+    assert final["raw_sha256"] != result["raw_sha256"]
+
+
+def test_original_date_version_generation_conflicts_and_symlinks_fail(tmp_path):
+    path = tmp_path / "original.nc"
+    for changes, message in [
+        ({"version": "04.2"}, "product/version"),
+        ({"stamp": "2021-02-21T09:00:00"}, "time mismatch"),
+        ({"version": "04.1"}, "labels disagree"),
+    ]:
+        mur_original_fixture(path, **changes)
+        with pytest.raises(ValueError, match=message):
+            inspect_mur_source_original(path, "2021-02-20")
+    link = tmp_path / "alias.nc"
+    link.symlink_to(path)
+    with pytest.raises(ValueError, match="regular file"):
+        inspect_mur_source_original(link, "2021-02-20")

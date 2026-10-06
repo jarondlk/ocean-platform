@@ -4,15 +4,17 @@ from collections import Counter
 from datetime import date, datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 import hashlib
+from http.client import HTTPSConnection
 import json
 import math
 import os
+import socket
 from pathlib import Path
 import tempfile
 import time
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlsplit
-from urllib.request import HTTPRedirectHandler, build_opener
+from urllib.request import HTTPRedirectHandler, HTTPSHandler, build_opener
 
 from ingestion.anemone_catalogue import file_sha256
 from ingestion.immutable_bundle import atomic_json, digest, validate_id
@@ -86,6 +88,50 @@ class SameProviderRedirect(HTTPRedirectHandler):
         ):
             raise ValueError("Pilot redirect outside the approved provider")
         return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+def _provider_ipv4_connection(address, timeout=30, source_address=None):
+    """Avoid unreachable IPv6 routes without changing TLS origin verification."""
+    host, port = address
+    if host != HOST or port != 443:
+        raise ValueError("IPv4 connection outside the approved provider")
+    errors = []
+    for family, kind, protocol, _, target in socket.getaddrinfo(
+        host, port, socket.AF_INET, socket.SOCK_STREAM
+    ):
+        connection = socket.socket(family, kind, protocol)
+        try:
+            connection.settimeout(timeout)
+            if source_address:
+                connection.bind(source_address)
+            connection.connect(target)
+            return connection
+        except OSError as error:
+            connection.close()
+            errors.append(error)
+    if errors:
+        raise errors[-1]
+    raise OSError("Provider has no IPv4 address")
+
+
+class ProviderIPv4HTTPSConnection(HTTPSConnection):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # HTTPSConnection.connect still wraps this socket with its verifying
+        # SSL context and the original hostname. No global DNS monkeypatch.
+        self._create_connection = _provider_ipv4_connection
+
+
+class ProviderIPv4HTTPSHandler(HTTPSHandler):
+    def https_open(self, request):
+        return self.do_open(ProviderIPv4HTTPSConnection, request, context=self._context)
+
+
+def provider_opener(*, ipv4_only=False):
+    handlers = [SameProviderRedirect()]
+    if ipv4_only:
+        handlers.append(ProviderIPv4HTTPSHandler())
+    return build_opener(*handlers)
 
 
 def validate_batch(plan):
@@ -241,7 +287,14 @@ def _retry_delay(error, attempt):
 
 
 def download_batch(
-    plan, directory, *, attempts=3, recheck=False, opener=None, sleep=time.sleep
+    plan,
+    directory,
+    *,
+    attempts=3,
+    recheck=False,
+    opener=None,
+    sleep=time.sleep,
+    ipv4_only=False,
 ):
     """Resume a pilot-sized batch with atomic generations and an explicit journal.
 
@@ -266,7 +319,14 @@ def download_batch(
     with os.fdopen(fd, "w") as handle:
         handle.write(str(os.getpid()))
     try:
-        return _download_locked(plan, directory, attempts, recheck, opener, sleep)
+        return _download_locked(
+            plan,
+            directory,
+            attempts,
+            recheck,
+            opener or provider_opener(ipv4_only=ipv4_only),
+            sleep,
+        )
     finally:
         lock.unlink()
 
@@ -485,6 +545,94 @@ def mur_time_axis(start, end, *, opener=None):
         "absence_basis": "mirror_only_source_archive_not_checked",
     }
     return report, data
+
+
+def inspect_mur_source_original(path, day):
+    """Inspect a retained NASA binary, preserving final/NRT generation semantics.
+
+    This is an operator metadata check, not normalization or scientific approval.
+    Only axes/time are loaded; never materialize a global SST array.
+    """
+    import numpy as np
+    import xarray as xr
+    from preprocessing.research_sst import _axis
+
+    path = Path(path)
+    day = date.fromisoformat(day).isoformat()
+    if not "2002-06-01" <= day <= date.today().isoformat():
+        raise ValueError("MUR original date outside product interval")
+    if (
+        path.is_symlink()
+        or not path.is_file()
+        or not 8 <= path.stat().st_size <= 1024**3
+    ):
+        raise ValueError("MUR original requires a regular file of at most 1 GiB")
+    sha = file_sha256(path)
+    with xr.open_dataset(path) as ds:
+        version = ds.attrs.get("product_version")
+        if (
+            ds.attrs.get("id") != "MUR-JPL-L4-GLOB-v04.1"
+            or version not in {"04.1", "04.1nrt"}
+            or "MUR" not in str(ds.attrs.get("title"))
+            or set(("time", "lat", "lon", *VARIABLES)) - set(ds.variables)
+            or ds.time.dims != ("time",)
+            or ds.time.size != 1
+            or not 2 <= ds.lat.size <= 18001
+            or not 2 <= ds.lon.size <= 36001
+        ):
+            raise ValueError("MUR original product/version/axes mismatch")
+        expected = day + "T09:00:00"
+        if np.datetime_as_string(ds.time.values[0], unit="s") != expected:
+            raise ValueError("MUR original requested/file time mismatch")
+        lat, _ = _axis(ds, "lat")
+        lon, _ = _axis(ds, "lon")
+        if lat.min() < -90 or lat.max() > 90 or lon.min() < -180 or lon.max() > 180:
+            raise ValueError("MUR original coordinates outside geographic limits")
+        for variable in VARIABLES:
+            if set(ds[variable].dims) != {"time", "lat", "lon"}:
+                raise ValueError("MUR original field dimensions mismatch")
+        if ds.analysed_sst.attrs.get("units") not in {"K", "kelvin"}:
+            raise ValueError("MUR original requires declared Kelvin units")
+        nrt = version == "04.1nrt"
+        labeled_nrt = "nrt" in str(ds.attrs.get("title")).lower()
+        if nrt != labeled_nrt:
+            raise ValueError("MUR original processing generation labels disagree")
+        metadata = {
+            key: str(ds.attrs.get(key, ""))
+            for key in (
+                "id",
+                "title",
+                "product_version",
+                "date_created",
+                "history",
+                "comment",
+                "file_quality_level",
+            )
+        }
+        if sum(map(len, metadata.values())) > 16384:
+            raise ValueError("MUR original metadata byte limit exceeded")
+        report = {
+            "schema_version": 1,
+            "status": "verified_source_original_scientific_review_pending",
+            "day": day,
+            "expected_time_utc": expected + "Z",
+            "raw_sha256": sha,
+            "bytes": path.stat().st_size,
+            "product_metadata": metadata,
+            "dimensions": dict(ds.sizes),
+            "processing_generation": "interim_near_real_time" if nrt else "final",
+            "final_series_gap_resolved": False,
+            "scientific_approval": False,
+            "required_review": "NRT generation must not silently replace final MUR"
+            if nrt
+            else "Applied product/QC/time and sampling reviews required",
+            "source_url": "https://archive.podaac.earthdata.nasa.gov/podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1/"
+            + day.replace("-", "")
+            + "090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc",
+        }
+    if file_sha256(path) != sha:
+        raise ValueError("MUR original changed during inspection")
+    return {**report, "receipt_id": digest(report)}
 
 
 def mur_source_gap_inventory(days, *, open_url=None):

@@ -106,13 +106,21 @@ remains pending; the acquisition choice does not approve those rules.
 No bulk acquisition has started.
 
 MUR's NOAA mirror has 2,554/2,556 requested dates. NASA catalogue metadata confirms
-the two missing dates exist in v4.1, but binaries remain unacquired.
+the two missing dates are catalogued in v4.1. Authenticated original-file
+recovery now passes checksum, actual date and field checks, but both binaries
+explicitly identify **`04.1nrt` interim near-real-time generations**. Keep their
+scientific use separate and retain final-series gaps pending review.
 [NASA's OPeNDAP service](https://podaac.jpl.nasa.gov/OPeNDAP-in-the-Cloud) supports
 regional variable subsets with Earthdata login. An authenticated, checksum-pinned
-same-product recovery path remains to be implemented and verified.
+recovery was attempted: Harmony failed on the first missing granule with a
+provider-side OPeNDAP-link error. The two exact protected originals were then
+retrieved through NASA-signed redirects without forwarding the bearer credential
+to CloudFront. The [dated acquisition receipt](HISTORICAL_SST_ACQUISITION_PILOT_2026-10-06.md)
+records hashes, generation distinctions and measured cloud storage evidence.
 
-Before full execution: confirm scientific product/quality/time rules,
-measured full-plan runtime/storage and a suitable durable destination.
+Before scientific use: apply product/quality/time and sampling rules. Raw
+acquisition uses the user-selected primary product, measured storage/access
+evidence, explicit exclusions, a capped worker and a private durable destination.
 The estimated MUR raw archive is about 55 GB before other evidence/artifacts;
 the local workspace had only about 28 GiB free during this probe. Full acquisition
 must use bounded staging and reviewed durable storage. Keep every gap explicit.
@@ -123,5 +131,7 @@ unchanged.
 Private receipts are under `/tmp/ocean-issue103-implementation/`:
 `himawari-raw/probe.json`, `himawari-selection.json`, `himawari-listing-2023/`,
 `himawari-reprocessing-list/`, `ptree-2017-listings.json` and
-`comparison/comparison.json`. Raw NetCDF and credentials are outside Git and have
-not been attached to GitHub, uploaded to GCS or published into Chat.
+`comparison/comparison.json`. Raw NetCDF and credentials are outside Git. Himawari originals remain local;
+MUR pilot files and the separate NASA originals are retained in private GCS.
+No raw NetCDF was attached to GitHub or published into Chat. The temporary
+Earthdata token file is removed after retrieval; no credential enters receipts.

@@ -15,6 +15,7 @@ from ingestion.sst_acquisition import (
     download_batch,
     mur_time_axis,
     mur_source_gap_inventory,
+    inspect_mur_source_original,
     validate_batch,
 )
 
@@ -32,6 +33,10 @@ def main():
     gaps = commands.add_parser("source-gap-check")
     gaps.add_argument("--day", action="append", required=True)
     gaps.add_argument("--output-dir", type=Path, required=True)
+    original = commands.add_parser("source-original-check")
+    original.add_argument("--path", type=Path, required=True)
+    original.add_argument("--day", required=True)
+    original.add_argument("--output", type=Path, required=True)
     run = commands.add_parser("batch")
     run.add_argument("--plan", type=Path, required=True)
     run.add_argument(
@@ -39,6 +44,11 @@ def main():
     )
     run.add_argument("--output-dir", type=Path, required=True)
     run.add_argument("--execute", action="store_true")
+    run.add_argument(
+        "--ipv4-only",
+        action="store_true",
+        help="Use provider-scoped IPv4 sockets with normal HTTPS certificate verification",
+    )
     run.add_argument(
         "--recheck",
         action="store_true",
@@ -50,6 +60,12 @@ def main():
         atomic_json(args.output, plan)
         print(
             f"Preflight {plan['plan_sha256']}: {plan['request_count']} requests in {plan['batch_count']} batches; maximum {plan['maximum_download_bytes']} bytes"
+        )
+    elif args.command == "source-original-check":
+        report = inspect_mur_source_original(args.path, args.day)
+        atomic_json(args.output, report)
+        print(
+            f"Original {report['receipt_id']}: {report['processing_generation']}; scientific approval pending; final-series gap not resolved"
         )
     elif args.command in {"time-axis", "source-gap-check"}:
         report, data = (
@@ -94,7 +110,9 @@ def main():
                 f"Batch {args.batch_id}: {len(child['requests'])} requests; maximum {child['maximum_download_bytes']} bytes; no downloads"
             )
             return
-        result = download_batch(child, args.output_dir, recheck=args.recheck)
+        result = download_batch(
+            child, args.output_dir, recheck=args.recheck, ipv4_only=args.ipv4_only
+        )
         print(
             f"{result['status']}: {result['outcomes']}; reconciliation {args.output_dir / 'reconciliation.json'}"
         )

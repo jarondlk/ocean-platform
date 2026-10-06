@@ -14,7 +14,9 @@ invocation, account read/change or Chat history read/change was performed.
 | `acquire_historical_sst.py preflight` | Compact, deterministic all-location/year manifest. Full calendar years per acquisition tile, partitioned by month and at most 12 days per child. No downloads by default. |
 | `acquire_historical_sst.py batch` | Explicit child-ID execution; serial bounded requests, atomic files/journal, checksum resume, provider-scoped HTTPS redirects, bounded retries and Retry-After handling. |
 | `acquire_historical_sst.py time-axis` | Public mirror timestamp inventory, with exact absent dates and raw response checksum. Mirror absence does not establish source-archive absence. |
+| `acquire_historical_sst.py source-original-check` | Hash-verified retained NASA binary metadata/time inspection; preserves `04.1nrt` interim generations and never silently resolves a final-series gap. At most 1 GiB, with only axes/time loaded. |
 | `acquire_historical_sst.py source-gap-check` | Bounded official NASA catalogue metadata check for specified missing dates; validates complete response and exact product/version titles. Never fetches protected binaries. |
+| `acquire_historical_sst_cloud.py` | Dry-run default; capped serial private raw archive, CAS writer lease, one-child staging, byte-verified checkpoint resume, explicit exclusions and terminal reconciliation. No scientific publication or DB access. |
 | `compare_historical_sst.py` | Reproducible geographical/seasonal probes, optional small MUR downloads and retained Himawari full-disk footprint diagnostics. Scientific comparison/selection stays pending; offsets, native grid and differing statistics remain explicit. |
 | `probe_himawari_sst.py` | Explicit historical directory listings or at most four selected files; certificate-verified implicit FTPS, private credential file, provider checksum/local SHA-256, atomic generation files and verified reuse. No bulk downloader or scientific publication. |
 | `run_research_sst_collection.py` | Operator preflight/publication of an explicit bounded set of verified child panels and reviewed area IDs, bound to current applied product/sampling reviews. |
@@ -75,8 +77,13 @@ tiles/runtime and existing storage/billing review precede bulk execution.
 The fresh NOAA timestamp query returned 2,554 of 2,556 dates for 2017–2023, missing
 2021-02-20 and 2021-02-21. NASA's official catalogue lists corresponding exact
 MUR v4.1 granules `G3068632390-POCLOUD` and `G3068631322-POCLOUD`; their protected
-raw files were not downloaded. Preserve the mirror gaps until an authenticated
-or independently verified same-product binary acquisition is implemented.
+original files were recovered after Earthdata authentication. However, both
+NetCDF files explicitly identify **`product_version=04.1nrt`**, with an interim
+near-real-time title/history/comment. Their catalogue/filename `fv04.1` label
+does not establish a final generation. Both actual 09:00 UTC timestamps and
+required fields pass inspection; preserve the two **final-series gaps** pending
+scientific generation review. Originals are retained separately in private
+storage, without scientific approval. See the [acquisition pilot receipt](HISTORICAL_SST_ACQUISITION_PILOT_2026-10-06.md).
 
 Six small MUR probes across three distinct geographical representatives and two
 seasonal dates (2017-12-18 and 2023-07-15) verified product title/version, nominal
@@ -88,7 +95,16 @@ a completed MUR/Himawari numeric comparison.
 Private local evidence is retained under `/tmp/ocean-issue103-implementation/`:
 `production-inventory.json`, `census-receipt.json`, `mur-history-preflight.json`,
 `mur-time-axis/`, `nasa-gap-check/`, `comparison/`, `full-tile-sizing/` and QA logs.
-Only the scientific inventory receipt was uploaded; raw probe files remain local.
+The census, six-batch MUR storage pilot and separate NASA original files are
+retained in private GCS. Himawari raw probes remain local. Raw acquisition does
+not update the Chat corpus or constitute scientific publication.
+
+A six-batch cloud pilot now verifies 72 files / 20,524,608 raw bytes, including
+immutable private publication, full byte read-back, and checksum-pinned resume
+of four previously completed batches. The final two batches each take about
+18 seconds with provider-scoped IPv4, versus about 380 seconds through the
+unreachable IPv6 fallback path. Temporary pilot/timing jobs were removed.
+This is measured access/storage evidence, not full historical acquisition.
 
 ## Product comparison and remaining decisions
 
@@ -186,7 +202,10 @@ with its exact ID. Without `--execute`, this prints bounded bytes/requests only:
 ```
 
 After product selection and measured resource checks, add `--execute` for that
-specific batch. Resume with the same plan/ID/directory. Every acquired generation
+specific batch. On hosts with an unreachable provider IPv6 route, add
+`--ipv4-only`; this uses a provider-scoped IPv4 socket while retaining the original
+TLS hostname and certificate verification, without a global DNS override. It
+fails if a configured proxy changes the connection target. Resume with the same plan/ID/directory. Every acquired generation
 has a content-addressed filename; `--recheck` contacts the provider again and
 retains changed bytes. `journal.json` and `reconciliation.json` account for all
 requests. Only all-acquired batches get `acquisition.json`; scientific NetCDF
@@ -244,7 +263,12 @@ CLI help, generated scope and active Python Ruff checks pass.
 
 Issue #103 remains open for completed scientific comparison, recorded scientific
 product/QC decisions, measured/reconciled bulk acquisition, same-product gap recovery,
-current applied #102 sampling/area reviews, SST product/QC/time-window reviews,
+review of the recovered interim-NRT generations, current applied #102 sampling/area reviews, SST product/QC/time-window reviews,
 real normalization/linkage/publication and scientific acceptance. Issue #89's six
 demonstrations remain open; the broader acquisition scope does not rescope them.
 No new software release/version is assigned or deployed by these operator probes.
+
+Cloud raw execution and source-original inspection are documented in the
+[dated pilot/resource packet](HISTORICAL_SST_ACQUISITION_PILOT_2026-10-06.md).
+The original full-plan conservative file-byte bound remains a preflight estimate;
+the cloud worker imposes a smaller explicit 64 GiB cumulative raw cap.

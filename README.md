@@ -50,6 +50,9 @@ acquisition and compatible SST collections. This work is separate from deployed
 v0.7.2; scientific product/QC decisions, full acquisition and reviewed publication
 remain pending. The [initial MUR/Himawari comparison](docs/HISTORICAL_SST_PRODUCT_COMPARISON_2026-10-06.md)
 records verified historical access and the user's MUR v4.1 primary archive choice.
+The [acquisition pilot](docs/HISTORICAL_SST_ACQUISITION_PILOT_2026-10-06.md) records
+private storage/resume proof, recovered interim-NRT originals and the capped raw
+worker; scientific final-series gaps and publication gates remain explicit.
 
 ## Study Sites
 

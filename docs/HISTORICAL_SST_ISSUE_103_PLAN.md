@@ -210,7 +210,9 @@ representative probe tooling and bounded SST collection compatibility are
 implemented in the #103 branch. The production census resolves the provisional
 scope to 216 reported coordinate locations in 75 acquisition tiles, 2017–2023;
 324 occurrences lack resolved coordinates. No scientific eligibility is inferred.
-The two NOAA mirror gaps have corresponding NASA catalogue granules; their raw
-source files have not been acquired. The Himawari file comparison and scientific
-selection remain pending. See the [implementation and operator runbook](HISTORICAL_SST_ISSUE_103_IMPLEMENTATION.md)
+The user selected MUR v4.1 primary after authenticated Himawari comparison.
+The two NOAA gaps now have verified NASA original bytes; both are explicitly
+`04.1nrt` interim generations, so final-series gaps remain pending review.
+Private storage/resume proof and bounded cloud-worker acceptance pass; full
+raw acquisition and scientific product/QC decisions remain independently tracked. See the [implementation and operator runbook](HISTORICAL_SST_ISSUE_103_IMPLEMENTATION.md)
 for exact evidence, commands and remaining acceptance gates. Production remains v0.7.2.
