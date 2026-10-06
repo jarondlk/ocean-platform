@@ -1,8 +1,8 @@
 # v0.7.1 source retrieval patch
 
-Implementation in progress on `codex/v071-source-retrieval`, 2026-10-05 JST.
-Production remains v0.7.0. This record does not claim candidate, role or release
-acceptance. See the [accepted plan](RELEASE_0.7.1_PLAN.md) and
+Published and deployed on 2026-10-05 JST. Candidate, normal-role and production
+acceptance passed; live mobile QA was explicitly deferred. See
+[operations](RELEASE_0.7.1_OPERATIONS.md), the [accepted plan](RELEASE_0.7.1_PLAN.md) and
 [issue #105](https://github.com/jarondlk/ocean-platform/issues/105).
 
 ## Confirmed production regression
@@ -74,22 +74,16 @@ all four jobs, including production PostgreSQL 16 migration/metadata checks.
 The final hardening and routing fixes passed fresh exact-source CI/build, recorded
 in [container verification](V0.7.1_CONTAINER_QA_2026-10-05.md).
 
-## Remaining acceptance
+## Current acceptance
 
-Normal viewer/researcher permission, synthetic-review and saved-history checks
-passed, with all QA identities/roles restored. The user explicitly deferred live
-mobile layout acceptance. Remaining work is production backup/migration, exact-source publication and
-canonical rollout, production regression/history/anonymous-denial checks and
-temporary-resource cleanup. CI, container checks, initial backup/restore, candidate
-normal sign-in and paired retrieval checks passed below.
-
-The user clarified that separate viewer/researcher accounts are unavailable. A
-reviewable alternative temporarily changes the existing principal’s role only in
-the isolated QA database, using ordinary Google sign-in and restoring its original
-role afterward. The user approved that additional scope; the role checks and complete restoration
-passed as recorded in [live acceptance](V0.7.1_LIVE_QA.md). Issues
-#102, #103 and #89 retain their separate scientific dependencies; #104 requires
-current full image/security disposition review. No release is published yet.
+Normal viewer/researcher permissions, synthetic-review transitions and saved
+history passed with every QA identity/role restored. The user explicitly deferred
+live mobile layout acceptance, tracked in #107. Publication, fresh private backup/
+restore, additive production migration, canonical rollout, original-query/history/
+anonymous-denial checks and cleanup are complete; see
+[operations](RELEASE_0.7.1_OPERATIONS.md). The unresolved one-off sign-out
+observation is tracked in #108. #102/#103/#89 retain scientific work and #104
+retains OS maintenance. No scientific result was approved by synthetic QA.
 
 ## Isolated candidate verification
 
@@ -212,4 +206,4 @@ and immutable chains passed. All original QA identities/roles were restored;
 production permissions, scientific content and histories were preserved, and no
 synthetic review existed in production. Full outcomes and observed transient
 errors are recorded in the live QA document. Temporary-resource cleanup and
-production release acceptance remain outstanding.
+production release acceptance subsequently completed; see operations.
