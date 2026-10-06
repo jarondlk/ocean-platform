@@ -39,3 +39,8 @@ text.
 
 The user explicitly deferred live mobile layout acceptance. Desktop/keyboard,
 mounted UI and static CSS checks passed; no live mobile pass is claimed.
+
+A subsequent 2026-10-06 dependency audit flags `source-map-js` 1.2.1
+(GHSA-68fv-2mgg-jv7q). The tested 1.2.2 fix is prepared separately in PR #111;
+production deployment remains tracked in #110. The published v0.7.1 tag/images
+are unchanged. See the post-release audit section in operations.

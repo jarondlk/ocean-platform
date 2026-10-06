@@ -130,3 +130,22 @@ observation remains unresolved in [#108](https://github.com/jarondlk/ocean-platf
 #104/#102/#103/#89 remain open for their distinct OS/scientific work. Embedding
 429 capacity and representative cohort/load qualification remain limitations; the
 observed safe degraded path and later recovery do not prove future availability.
+
+## Post-release dependency audit — 2026-10-06
+
+The final documentation PR's current npm audit flags transitive `source-map-js`
+1.2.1 via PostCSS, [GHSA-68fv-2mgg-jv7q](https://github.com/advisories/GHSA-68fv-2mgg-jv7q)
+/ CVE-2026-93749. This later registry result does not rewrite the release-time
+CI/image reports or prove an exploited request path. Dependabot's open-alert
+query remained empty; npm audit is still enforced.
+
+[PR #111](https://github.com/jarondlk/ocean-platform/pull/111) prepares the
+maintainer-supported 1.2.2 pin with unrelated lockfile metadata preserved. Clean
+install/audit (zero production dependency findings), all 64 existing frontend
+tests, typecheck and build passed. Its required CI and merged-source status are
+recorded in that PR. This is a separate post-release runtime dependency change,
+not part of v0.7.1's immutable tag/images. [#110](https://github.com/jarondlk/ocean-platform/issues/110)
+stays open until exact patched images are verified and deployed under a new
+patch release. The CLI login expired after the completed v0.7.1 rollout and must
+be refreshed before further cloud work. The final documentation PR is rebased
+after the security fix so its required audit can pass without suppression.
