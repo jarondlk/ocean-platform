@@ -116,8 +116,16 @@ shared free-tier availability is not assumed. The existing regional Standard buc
 has uniform access, enforced public-access prevention and versioning. Its current
 seven-day live-file lifecycle rule applies only to `tmp/`, not this archive prefix.
 
-Full execution is prepared; its exact started execution/status is recorded in
-GitHub issue #103 after the required checks. Completion must reconcile all requested
+Full raw execution **started at 2026-10-06 12:11 UTC**, after all required CI,
+CodeQL and migration/dependency checks passed for operator-code commit
+`1878b057cd3dcef596c61234230b0d2e2f130ba2`. Job
+`ocean-sst103-historical-acquire`, execution
+`ocean-sst103-historical-acquire-p2lkt`, is acquiring new historical batches
+after verifying and reusing the two acceptance checkpoints. The operator
+bundle SHA-256 is `66387a87b6ce8b463ce110ba091976f5ad84c5f34bf6e5fe5292675fac9b956c`.
+Live progress and final disposition are tracked in
+[issue #103](https://github.com/jarondlk/ocean-platform/issues/103).
+This dated note is startup evidence, not a claim of full-run completion. Completion must reconcile all requested
 and excluded tile/date pairs, verify preserved originals/checkpoints, and undergo
 scientific acceptance before issue #103 or #89 can close.
 
