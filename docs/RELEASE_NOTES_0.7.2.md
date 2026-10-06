@@ -1,8 +1,10 @@
 # v0.7.2 — Dependency security and deployment readiness
 
 This source patch includes the post-v0.7.1 dependency and repository audit fixes.
-GCP rollout is a separate next step; production remains v0.7.1 until exact-image
-acceptance and promotion are recorded in [operations](RELEASE_0.7.2_OPERATIONS.md).
+Published and deployed on 2026-10-06 from exact runtime source `03638e6`.
+Revision `ocean-platform-v072-patch1006` serves 100% of production traffic.
+Exact images, backup/restore, browser/history acceptance, cleanup and rollback
+are recorded in [operations](RELEASE_0.7.2_OPERATIONS.md).
 
 - Pin transitive `source-map-js` to **1.2.2**, the patched release for indexed
   source-map event-loop denial of service
@@ -27,14 +29,17 @@ source patch. Keep the additive schema when rolling back the application.
 The preceding audit passed 1,066 backend tests, 39 isolated PostgreSQL integration
 checks and a complete 34-table synthetic backup/restore, plus 64 frontend tests,
 typecheck/build, lint, scope generation and dependency consistency. Exact-source
-release CI is verified before publication; fresh Linux image scans/runtime
-checks and normal candidate/production checks remain deployment gates. See
+release CI passed before publication. Fresh Linux image/runtime checks and
+normal candidate/production admin checks passed; no fresh viewer/researcher QA
+is claimed for this dependency patch. See
 [the dated audit](PRE_DEPLOYMENT_AUDIT_2026-10-06.md).
 
-[#110](https://github.com/jarondlk/ocean-platform/issues/110) remains open until
-the patched production image is independently verified and deployed. Prior
-container OS findings remain in #104; repository advisory checks do not clear
-them. Real ANEMONE physical/classification/area evidence, historical SST and the
+[#110](https://github.com/jarondlk/ocean-platform/issues/110) is resolved: the
+installed standalone frontend independently reports source-map-js 1.2.2 and the
+accepted digest is deployed. Full OS findings are unchanged and remain in #104;
+repository advisory checks do not clear them. See [image QA](V0.7.2_CONTAINER_QA_2026-10-06.md).
+
+Real ANEMONE physical/classification/area evidence, historical SST and the
 six real research demos remain in #102/#103/#89. Live mobile QA is explicitly
 deferred (#107); transient sign-out remains under investigation (#108). This
 patch does not claim those checks or real scientific approvals passed.

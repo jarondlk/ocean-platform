@@ -11,7 +11,7 @@ and can be audited against the evidence that was actually supplied.
 
 ---
 
-The published [v0.7.1 release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.1)
+The published [v0.7.2 release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.2)
 is deployed at [oceaninfobio.com](https://oceaninfobio.com). It retrieves evidence
 independently for each selected source and reports final supplied coverage.
 When ANEMONE/SST overlap is unverified, Chat abstains before generation rather
@@ -25,17 +25,18 @@ mobile layout check is explicitly user-deferred. Six real ANEMONE/SST demos
 still require scientific evidence and approvals in
 [issue #89](https://github.com/jarondlk/ocean-platform/issues/89); no real sampling
 registry or research result was approved for release. See
-[release notes](docs/RELEASE_NOTES_0.7.1.md),
-[operations/rollback](docs/RELEASE_0.7.1_OPERATIONS.md),
+[release notes](docs/RELEASE_NOTES_0.7.2.md),
+[operations/rollback](docs/RELEASE_0.7.2_OPERATIONS.md),
 [live QA](docs/V0.7.1_LIVE_QA.md) and
-[container/security dispositions](docs/V0.7.1_CONTAINER_QA_2026-10-05.md).
+[container/security dispositions](docs/V0.7.2_CONTAINER_QA_2026-10-06.md).
+The isolated role checks above were completed in v0.7.1; fresh v0.7.2 normal
+admin candidate/production, history and all 16 source-selection checks passed.
 Eight high OS CVEs remain in the release image scans, with recorded mitigations
 and residual risk tracked in [#104](https://github.com/jarondlk/ocean-platform/issues/104).
 
-The [v0.7.2 source patch](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.2)
-includes source-map-js 1.2.2 and audited database/CLI/build readiness fixes.
-It is separate from the deployed v0.7.1 images; GCP verification/rollout remains
-pending in [#110](https://github.com/jarondlk/ocean-platform/issues/110).
+The v0.7.2 patch includes source-map-js 1.2.2 and audited database/CLI/build
+readiness fixes. The installed standalone frontend version and exact production
+digests were verified, resolving [#110](https://github.com/jarondlk/ocean-platform/issues/110).
 See [patch notes](docs/RELEASE_NOTES_0.7.2.md) and
 [operations](docs/RELEASE_0.7.2_OPERATIONS.md).
 The [pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md) and
@@ -75,15 +76,15 @@ service.
 
 Current managed milestone:
 
-- GitHub release [`v0.7.1`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.1)
+- GitHub release [`v0.7.2`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.2)
   is deployed at [`oceaninfobio.com`](https://oceaninfobio.com). Revision
-  `ocean-platform-v071-source1005` serves 100% of traffic from the validated
-  source/tag `e157fb0`. Schema head is `20261005_0016`. The accessible 2026-09-17 ANEMONE
+  `ocean-platform-v072-patch1006` serves 100% of traffic from the validated
+  source/tag `03638e6`. Schema head is `20261005_0016`. The accessible 2026-09-17 ANEMONE
   observation contributes 3,498 source occurrences/assays, 349,638 assignment
   rows and 6,996 eDNA retrieval documents. The complete corpus contains 7,319
   documents and matching embeddings. Physical sample identity across source
   occurrences remains unresolved. See the
-  [v0.7.1 operations record](docs/RELEASE_0.7.1_OPERATIONS.md).
+  [v0.7.2 operations record](docs/RELEASE_0.7.2_OPERATIONS.md).
 - Exact catalogue questions have hash-verified aggregate citations, downloads
   and provenance traces. The agreed English routing/claim-support matrix for
   [issue #70](https://github.com/jarondlk/ocean-platform/issues/70) passed and the
