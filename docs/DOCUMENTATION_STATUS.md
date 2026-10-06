@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-10-05 (v0.7.0 software release).
+Last reviewed: 2026-10-06 (v0.7.1 deployed; post-release patch pending).
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -11,9 +11,14 @@ approved.
 
 ## Current operating authority
 
-- [`RELEASE_0.7.0_OPERATIONS.md`](RELEASE_0.7.0_OPERATIONS.md) — current published
-  software release/production, verified rollout, cleanup and rollback record;
-  six scientific demos and live viewer/researcher QA explicitly deferred.
+- [`RELEASE_0.7.1_OPERATIONS.md`](RELEASE_0.7.1_OPERATIONS.md) — current published
+  release, verified production rollout, role acceptance, cleanup and rollback.
+- [`PRE_DEPLOYMENT_AUDIT_2026-10-06.md`](PRE_DEPLOYMENT_AUDIT_2026-10-06.md) —
+  fresh repository/docs/script/dependency checks and next deployment gates.
+- [`scripts/README.md`](../scripts/README.md) — active, operator-only and legacy
+  entrypoints, side effects and supported execution paths.
+- [`RELEASE_0.7.0_OPERATIONS.md`](RELEASE_0.7.0_OPERATIONS.md) — prior software
+  rollout and compatible rollback record; its live-role deferral is historical.
 - [`RELEASE_0.6.1_OPERATIONS.md`](RELEASE_0.6.1_OPERATIONS.md) — prior published
   release/rollback record, with its historical live-role and Japanese QA deferrals.
 - [`RELEASE_0.6.0_OPERATIONS.md`](RELEASE_0.6.0_OPERATIONS.md) — retained prior
@@ -23,12 +28,35 @@ approved.
 - [`ROADMAP.md`](ROADMAP.md) — longer-term engineering priorities.
 - [`handoff.md`](../handoff.md) — current repository and production handoff.
 
-## v0.7.0 software release and deferred research work
+## v0.7.1 completed and post-release patch preparation
+
+v0.7.1 is published and deployed. Normal Google role/workflow acceptance passed
+using approved isolated candidate role changes, and temporary resources were
+removed. #101/#105 are closed. Live mobile QA remains explicitly deferred (#107),
+with transient sign-out tracked in #108. The six real demonstrations remain
+blocked on scientific evidence/product decisions (#89/#102/#103).
+
+- [`RELEASE_0.7.1_PLAN.md`](RELEASE_0.7.1_PLAN.md) — completed patch design and
+  acceptance sequence; retained historical plan, not the next work queue.
+- [`RELEASE_0.7.1_IMPLEMENTATION.md`](RELEASE_0.7.1_IMPLEMENTATION.md) and
+  [`RELEASE_NOTES_0.7.1.md`](RELEASE_NOTES_0.7.1.md) — shipped implementation.
+- [`V0.7.1_LIVE_QA.md`](V0.7.1_LIVE_QA.md) and
+  [`V0.7.1_CONTAINER_QA_2026-10-05.md`](V0.7.1_CONTAINER_QA_2026-10-05.md) —
+  dated candidate/live acceptance and exact image/security evidence.
+
+Source-map-js 1.2.2 is merged in #111 but is outside the v0.7.1 immutable tag and
+production images. #110 requires a separate verified patch build and rollout.
+Current declarations stay 0.7.1 until that release is prepared. OS findings are
+tracked separately in #104. The audit above is local/GitHub verification; a fresh
+cloud census requires renewed CLI authentication.
+
+## v0.7.0 historical rollout and deferred research work
 
 On 2026-10-05 JST the user authorized the v0.7.0 software release/deployment and
 explicitly deferred the six original real-data demonstrations and, separately,
 live viewer/researcher sign-in QA. Software publication/deployment and cleanup
-are complete; issue #89 stays open. [Release notes](RELEASE_NOTES_0.7.0.md) and
+are complete; issue #89 stays open. v0.7.1 supersedes the live-role deferral and
+production revision; real-data demos remain deferred. [Release notes](RELEASE_NOTES_0.7.0.md) and
 [operations](RELEASE_0.7.0_OPERATIONS.md) record the scope and execution state.
 
 - [`RELEASE_0.7.0_PLAN.md`](RELEASE_0.7.0_PLAN.md) — accepted
@@ -53,7 +81,7 @@ are complete; issue #89 stays open. [Release notes](RELEASE_NOTES_0.7.0.md) and
   — subsequent production browser checks, count-routing reproductions and
   precise remaining acceptance limits.
 
-## Current-release implementation
+## Retained predecessor implementation
 
 - [`RELEASE_0.7.0_IMPLEMENTATION.md`](RELEASE_0.7.0_IMPLEMENTATION.md) and
   [`RELEASE_NOTES_0.7.0.md`](RELEASE_NOTES_0.7.0.md) — published research software

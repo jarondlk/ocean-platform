@@ -11,6 +11,7 @@ Cross-source validation and corroboration:
 Usage:
     python scripts/run_reliability.py
 """
+import argparse
 import logging
 import sys
 from pathlib import Path
@@ -28,6 +29,7 @@ import config
 
 
 def main():
+    argparse.ArgumentParser(description=__doc__).parse_args()
     print("=" * 60)
     print("Reliability Ensurance Pipeline")
     print("=" * 60)

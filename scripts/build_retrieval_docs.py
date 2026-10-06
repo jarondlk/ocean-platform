@@ -12,6 +12,7 @@ Usage:
 """
 from __future__ import annotations
 
+import argparse
 import logging
 import sys
 from pathlib import Path
@@ -39,6 +40,7 @@ logger = logging.getLogger("build_docs")
 
 
 def main() -> None:
+    argparse.ArgumentParser(description=__doc__).parse_args()
     config.ensure_dirs()
 
     logger.info("=" * 60)

@@ -1,5 +1,13 @@
 # ANEMONE classification review
 
+Current acceptance reviewed 2026-10-06: v0.7.1 normal Google role/workflow QA
+passed against the explicitly approved isolated candidate, including actual
+permission/conflict enforcement and synthetic review transitions. Original roles
+were restored and temporary resources removed. No real classification decision
+was approved/applied; real scientific evidence remains in #102/#89. See
+[live QA](V0.7.1_LIVE_QA.md) and [operations](RELEASE_0.7.1_OPERATIONS.md).
+The dated pilot/release statements below retain their historical scope.
+
 Historical release decision (2026-09-03): the pilot remained unknown for
 `v0.4.0`. The implementation once tracked as
 [next-patch work](ANEMONE_NEXT_PATCH.md) shipped in `v0.4.1` and `v0.4.2`;

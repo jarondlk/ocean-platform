@@ -33,7 +33,7 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.7.0`. The active data plane now uses the
+  and OCEAN Platform release `v0.7.1`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
 - The accessible 2026-09-17 ANEMONE MiFish catalogue is stored as the
@@ -44,13 +44,31 @@ workflow that can later become automated.
   excluded from environmental-only analysis. Physical sample identity is
   unresolved; exact aggregate citations and provenance are live.
 - Production has 7,319 documents and matching embeddings, with schema head
-  `20261004_0015`. The agreed English scope of issue #70 is complete;
+  `20261005_0016`. The agreed English scope of issue #70 is complete;
   [issue #89](https://github.com/jarondlk/ocean-platform/issues/89) remains open
   for the explicitly deferred real research demonstrations.
 - Operational administration is consolidated under `/admin` with Users,
   Feedback, Pipeline, Database, System, and Debug sections.
 - The README screenshot set was refreshed from the authenticated OCEAN
   Platform Cloud Run deployment on 2026-08-25.
+
+## Current patch and outstanding work (2026-10-06)
+
+v0.7.1 is published/deployed from exact source `e157fb0`; see
+[operations](RELEASE_0.7.1_OPERATIONS.md). Source-balanced retrieval/coverage and
+normal role/workflow acceptance closed #105 and #101. The repository includes
+source-map-js 1.2.2 (#111), but deployment of its verified immutable image remains
+[#110](https://github.com/jarondlk/ocean-platform/issues/110). The
+[pre-deployment audit](PRE_DEPLOYMENT_AUDIT_2026-10-06.md) records readiness fixes
+and [script status](../scripts/README.md).
+
+Open work remains independently tracked: scientific ANEMONE evidence (#102),
+historical SST preparation (#103), six real research demos (#89), OS advisories
+(#104), explicitly deferred live mobile QA (#107) and transient sign-out (#108).
+No real scientific approval is implied by completed synthetic or role checks.
+
+The release sections below preserve earlier decisions and evidence; v0.7.1
+supersedes their statements about current production traffic and role deferrals.
 
 ## v0.6.0 published release: chat settings
 
@@ -93,13 +111,13 @@ tracks merged dependency updates, completed branch cleanup and evidence-backed
 security notice dispositions. These source changes are separate from the
 published v0.6.1 deployment.
 
-Remaining maintenance work: reconcile obsolete dependency-graph submissions,
+Retired-manifest alerts were reconciled on 2026-10-06. Remaining maintenance:
 harden the container OS/tooling findings recorded by candidate/production image
 scans, and plan an explicit SQLAlchemy 2.1 database-driver migration. The
 compatible maintenance patch retains SQLAlchemy 2.0 / psycopg2. A production
 rollout requires the normal release and acceptance gates.
 
-## v0.7.0 software published; real research demonstrations deferred
+## v0.7.0 software published; real research demonstrations deferred (historical rollout)
 
 The [accepted v0.7.0 plan](RELEASE_0.7.0_PLAN.md) translates
 [issue #89](https://github.com/jarondlk/ocean-platform/issues/89) and its research

@@ -11,30 +11,34 @@ and can be audited against the evidence that was actually supplied.
 
 ---
 
-The published [v0.7.0 software release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.0)
-is deployed at [oceaninfobio.com](https://oceaninfobio.com). It adds reviewed
-physical-sample/area and SST registries, exact detection-frequency analyses and
-six published-result Chat workflows with maps, time series and exports. Existing
-source-scoped Chat, available-data filters and immutable history remain usable.
+The published [v0.7.1 release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.1)
+is deployed at [oceaninfobio.com](https://oceaninfobio.com). It retrieves evidence
+independently for each selected source and reports final supplied coverage.
+When ANEMONE/SST overlap is unverified, Chat abstains before generation rather
+than treating missing retrieval evidence as proof of no overlap. The v0.7.0
+reviewed registry, detection-frequency and six published-result workflows remain
+available for approved, explicitly published research cohorts.
 
-The six original real ANEMONE/SST demonstrations and live viewer/researcher
-sign-in QA are explicitly user-deferred. No real sampling/product reviews or
-research publications were manufactured for release; those workflows need an
-approved, explicitly published cohort. [Issue #89](https://github.com/jarondlk/ocean-platform/issues/89)
-stays open. Final-source CI/image verification, a private backup/isolated restore,
-additive migration, real admin candidate/production sign-in, scoped Chat/history
-and anonymous access checks passed. See [release notes](docs/RELEASE_NOTES_0.7.0.md),
-[operations/rollback](docs/RELEASE_0.7.0_OPERATIONS.md),
-[scientific review](docs/V0.7.0_SCIENTIFIC_REVIEW.md) and
-[full image/security dispositions](docs/V0.7.0_CONTAINER_QA_2026-10-05.md).
-Eight high OS CVEs remain in the full scans with verified runtime mitigations
-and a conditional privileged-ACL residual risk; the images have no critical
-findings or reported Node/Python vulnerabilities. Complete deferred live role
-checks before using real research approvals.
+Normal Google admin/viewer/researcher acceptance passed in an isolated candidate
+database; roles were restored and temporary access/resources removed. The live
+mobile layout check is explicitly user-deferred. Six real ANEMONE/SST demos
+still require scientific evidence and approvals in
+[issue #89](https://github.com/jarondlk/ocean-platform/issues/89); no real sampling
+registry or research result was approved for release. See
+[release notes](docs/RELEASE_NOTES_0.7.1.md),
+[operations/rollback](docs/RELEASE_0.7.1_OPERATIONS.md),
+[live QA](docs/V0.7.1_LIVE_QA.md) and
+[container/security dispositions](docs/V0.7.1_CONTAINER_QA_2026-10-05.md).
+Eight high OS CVEs remain in the release image scans, with recorded mitigations
+and residual risk tracked in [#104](https://github.com/jarondlk/ocean-platform/issues/104).
 
-The v0.7.1 source-retrieval patch is in development; production remains v0.7.0.
-See its [implementation/acceptance record](docs/RELEASE_0.7.1_IMPLEMENTATION.md)
-and [candidate release notes](docs/RELEASE_NOTES_0.7.1.md).
+Repository `main` also contains the tested source-map-js 1.2.2 fix from
+[PR #111](https://github.com/jarondlk/ocean-platform/pull/111). That fix is not in
+the immutable v0.7.1 tag or deployed image; a separate patch build/deployment is
+pending in [#110](https://github.com/jarondlk/ocean-platform/issues/110).
+The [pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md) and
+[script inventory](scripts/README.md) distinguish current operations from legacy
+and operator-only tools.
 
 ## Study Sites
 
@@ -59,7 +63,7 @@ remains part of the v0.5.0 full-catalogue import.
 
 ## Current Prototype Status
 
-Status as of **2026-10-05**: this is an active invite-only **Next.js +
+Status as of **2026-10-06**: this is an active invite-only **Next.js +
 FastAPI** prototype deployed on GCP, with PostgreSQL/pgvector retrieval,
 Vertex AI generation and embeddings, Google OIDC, and Cloud Run Jobs for
 operator-approved batch work. The same application remains runnable locally
@@ -69,15 +73,15 @@ service.
 
 Current managed milestone:
 
-- GitHub release [`v0.7.0`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.0)
+- GitHub release [`v0.7.1`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.1)
   is deployed at [`oceaninfobio.com`](https://oceaninfobio.com). Revision
-  `ocean-platform-v070-software1005` serves 100% of traffic from the validated
-  source/tag `6167949`. Schema head is `20261004_0015`. The accessible 2026-09-17 ANEMONE
+  `ocean-platform-v071-source1005` serves 100% of traffic from the validated
+  source/tag `e157fb0`. Schema head is `20261005_0016`. The accessible 2026-09-17 ANEMONE
   observation contributes 3,498 source occurrences/assays, 349,638 assignment
   rows and 6,996 eDNA retrieval documents. The complete corpus contains 7,319
   documents and matching embeddings. Physical sample identity across source
   occurrences remains unresolved. See the
-  [v0.7.0 operations record](docs/RELEASE_0.7.0_OPERATIONS.md).
+  [v0.7.1 operations record](docs/RELEASE_0.7.1_OPERATIONS.md).
 - Exact catalogue questions have hash-verified aggregate citations, downloads
   and provenance traces. The agreed English routing/claim-support matrix for
   [issue #70](https://github.com/jarondlk/ocean-platform/issues/70) passed and the
@@ -142,13 +146,14 @@ Implemented in the current prototype:
   default-deny API authorization, request limits, security headers, production
   rate limits, a private-service Compose topology, and hardened CI checks.
 
-Deployed with acceptance still pending:
+Deployed scientific workflows with real-data acceptance still pending:
 
-- The authenticated ANEMONE review domain, read-only effect preview, and manual
-  controlled normalization/import/republication job are deployed through
-  migration head `20260925_0013`. No real approved environmental-classification
-  decision has been applied. Complete the authenticated researcher matrix
-  before claiming scientific workflow acceptance.
+- Authenticated classification and research registry review, effect preview,
+  controlled application and publication are deployed through schema
+  `20261005_0016`. Normal role enforcement passed isolated live candidate QA.
+  Real environmental classification, physical sample identity/areas, historical
+  SST product review and the six real demonstrations remain unapproved; see
+  [the scientific review packet](docs/V0.7.0_SCIENTIFIC_REVIEW.md).
 
 Still intentionally future work:
 - Automatic ingestion, file watching, or scheduled cloud sync.
@@ -775,8 +780,9 @@ The v0.5.0 catalogue observation contains 3,498 source occurrences/assays,
 349,638 assignment rows and 13,932 standard rows. The former pilot identities
 were preserved during import.
 
-The deployed schema is at migration head `20260925_0013`. The verified
-production backup and isolated restore covered all 27 tables.
+The deployed schema is at migration head `20261005_0016`. The complete database
+backup and isolated restore, including users/history and research registries, are
+recorded in [v0.7.1 operations](docs/RELEASE_0.7.1_OPERATIONS.md).
 
 ---
 
@@ -793,7 +799,10 @@ production backup and isolated restore covered all 27 tables.
 
 ### Trustworthy Multi-Source Answering
 
-Retrieval can expand the primary top-K result set through anchor-event links so
+Primary retrieval runs separately for each selected source within the shared
+request budget, then merges results deterministically. Final coverage records
+empty, filtered, failed and disabled sources. Retrieval can expand the primary
+result set through anchor-event links so
 nearby CTD, metagenome, and satellite SST records are available as corroborating
 evidence. The `/retrieve` and `/chat` endpoints return primary `sources`,
 separate `linked_sources`, and diagnostics that report expected, retrieved, and
@@ -857,9 +866,14 @@ Cross-source validation layer that uses overlapping data to reinforce system con
 
 ---
 
-## Key Ecological Findings
+## Exploratory Local Analysis Snapshot
 
-### Taxa–Environment Correlations (21/100 significant, p<0.05)
+These are retained exploratory outputs from the local CTD/metagenome pipeline,
+not independent scientific validation or the deferred ANEMONE/SST research
+demonstrations. Correlations use unadjusted p-values; apparent anomalies need
+scientific review and do not establish a bloom or cause.
+
+### Taxa–Environment Correlations (21/100 nominal p<0.05)
 
 | Genus | Variable | ρ | Direction |
 | --- | --- | --- | --- |
@@ -876,7 +890,7 @@ Cross-source validation layer that uses overlapping data to reinforce system con
 
 ### Detected Anomaly
 
-Sample **2024-07-O-s1** (Onagawa Bay, July 2024): Shannon H' = 1.601 vs predicted 3.453 (−2.3σ). Indicates possible bloom event or dominance shift.
+Sample **2024-07-O-s1** (Onagawa Bay, July 2024): Shannon H' = 1.601 vs predicted 3.453 (−2.3σ). This is an exploratory anomaly flag; bloom or dominance-change interpretation requires independent evidence.
 
 ---
 
@@ -952,14 +966,11 @@ npm run build
 
 ### Current Test Matrix
 
-The v0.5.0 source and importer amendment passed the required backend,
-frontend, PostgreSQL integration and security checks. Production verification
-covered catalogue counts, all 7,319 embeddings, citation/trace/export
-integrity and an authenticated browser session. Eight production chat requests
-passed automated integrity checks; manual review found scoped answer-quality
-failures. See the [v0.5.0 operations record](docs/RELEASE_0.5.0_OPERATIONS.md)
-and [issue #70](https://github.com/jarondlk/ocean-platform/issues/70) for
-the exact evidence and limits.
+Use [the current testing guide](docs/TESTING.md) for local/CI commands and
+[the pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md) for fresh
+results. Release-specific counts and live checks remain dated evidence in the
+[v0.7.1 operations record](docs/RELEASE_0.7.1_OPERATIONS.md). Bounded QA does not
+establish scientific correctness for arbitrary questions or approve real cohorts.
 
 | Test area | Files |
 | --- | --- |

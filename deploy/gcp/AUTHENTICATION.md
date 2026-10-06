@@ -7,13 +7,15 @@ Run URL. The application remains public only at the Cloud Run invocation layer;
 Next.js requires an Auth.js session for application pages and FastAPI remains
 a localhost sidecar protected by short-lived internal JWTs.
 
-The invited administrator and the approved researcher have both completed
-provider-backed login. The administrator is resolved as `admin` / `internal`,
-and `akane.kitamura.e7@tohoku.ac.jp` is active as `researcher` / `research`.
-The consolidated `/admin` workspace is absent for the researcher through both
-navigation and backend authorization. No local password store, downloaded
-service-account key, mock login, IAP layer, or Identity Platform tenant was
-introduced for `v0.2.1`.
+The canonical origin is `https://oceaninfobio.com`; the fallback Cloud Run origin
+is retained for operations/rollback. Normal Google admin, viewer and researcher
+workflow acceptance passed during v0.7.1 in the explicitly approved isolated QA
+database. Original roles were restored; temporary OAuth access and resources
+were removed. This is distinct from real scientific registry/result approval.
+See [live QA](../../docs/V0.7.1_LIVE_QA.md) and
+[operations](../../docs/RELEASE_0.7.1_OPERATIONS.md). A transient sign-out error
+recovered on reload/retry and remains under investigation in #108; repeated
+successful sign-ins do not establish its root cause.
 
 ## Selected prototype path
 
@@ -105,7 +107,8 @@ fallback entries until custom-domain login, logout/re-login, role enforcement,
 and rollback behavior have passed the release matrix. Do not register wildcard
 origins or callbacks.
 
-The v0.4.2 rollout reconfirmed administrator logout/re-login, admin-route access,
+Historical v0.4.2 evidence (superseded by the v0.7.1 role/workflow checks above):
+the rollout reconfirmed administrator logout/re-login, admin-route access,
 invitation-register access, canonical Auth.js URLs, and anonymous fail-closed
 behavior. Researcher-specific classification acceptance, suspension, and
 uninvited-account denial still require the corresponding test identities; do

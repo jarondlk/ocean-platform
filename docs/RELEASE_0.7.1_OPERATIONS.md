@@ -8,8 +8,8 @@ The user explicitly deferred live mobile QA; normal role/workflow acceptance pas
 ## Accepted candidate evidence
 
 Runtime source `e157fb004871083df25d5d094852fed417a9c8c6`, Cloud Build
-`edac2319-6969-4553-9505-182e25a0b017`, is deployed at zero traffic as
-`ocean-platform-v071-sourceqa1005b`. Exact digests, CI and unsuppressed security
+`edac2319-6969-4553-9505-182e25a0b017`, was accepted at zero traffic as
+`ocean-platform-v071-sourceqa1005b`; that QA revision was removed after rollout. Exact digests, CI and unsuppressed security
 dispositions are in [container QA](V0.7.1_CONTAINER_QA_2026-10-05.md).
 Later documentation commits do not change that runtime source or its images.
 
@@ -27,7 +27,7 @@ One transient sign-out error recovered on reload/retry; its cause is unresolved.
 Vertex embedding 429s produced safe degraded limitations; retrieval subsequently
 recovered without permission, quota or model changes.
 
-## Prepared release procedure
+## Executed release procedure (retained sequence)
 
 1. The live responsive check is explicitly deferred. Keep
    exact-source CI, image dispositions and candidate acceptance tied to the
@@ -139,7 +139,7 @@ The final documentation PR's current npm audit flags transitive `source-map-js`
 CI/image reports or prove an exploited request path. Dependabot's open-alert
 query remained empty; npm audit is still enforced.
 
-[PR #111](https://github.com/jarondlk/ocean-platform/pull/111) prepares the
+[PR #111](https://github.com/jarondlk/ocean-platform/pull/111) merged the
 maintainer-supported 1.2.2 pin with unrelated lockfile metadata preserved. Clean
 install/audit (zero production dependency findings), all 64 existing frontend
 tests, typecheck and build passed. Its required CI and merged-source status are
@@ -149,3 +149,8 @@ stays open until exact patched images are verified and deployed under a new
 patch release. The CLI login expired after the completed v0.7.1 rollout and must
 be refreshed before further cloud work. The final documentation PR is rebased
 after the security fix so its required audit can pass without suppression.
+
+The [2026-10-06 pre-deployment audit](PRE_DEPLOYMENT_AUDIT_2026-10-06.md) updates
+current operating indexes and reviews maintained versus historical scripts. Its
+readiness/CLI/build fixes belong to the next patch; they do not alter the v0.7.1
+release source or images.

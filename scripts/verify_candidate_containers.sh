@@ -15,7 +15,10 @@ done
 docker exec ocean-candidate-qa-postgres pg_isready -U ocean -d ocean_platform
 qa_database='postgresql://ocean:candidate-only-password@ocean-candidate-qa-postgres:5432/ocean_platform'
 docker run --rm --network cloudbuild -e DATABASE_URL="$qa_database" \
-  ocean-candidate-api python -m alembic upgrade head
+  ocean-candidate-api python scripts/bootstrap_database.py --json
+docker run --rm --network cloudbuild -e DATABASE_URL="$qa_database" \
+  ocean-candidate-api python scripts/bootstrap_database.py --check-only --json \
+  > "$report_dir/schema-readiness.json"
 docker run --rm --network cloudbuild -e DATABASE_URL="$qa_database" \
   -e DATABASE_BACKUP_CONTAINER='' ocean-candidate-api \
   python scripts/database_backup.py create --output-dir /tmp/candidate-backups --label candidate-qa --restore-test

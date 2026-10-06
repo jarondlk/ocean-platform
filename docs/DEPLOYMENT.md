@@ -11,30 +11,35 @@ to the canonical domain.
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
-Current release record as of 2026-10-01:
+Current release record, last verified during the 2026-10-05 JST rollout:
 
-- GitHub release `v0.6.0` retains tag commit `91d8567`; the deployed runtime
-  security amendment is `6fd37eba2173ad86b704e775c6edba997082b4e8`.
-  Ready revision `ocean-platform-v060-sec1001` serves 100% of production traffic.
-  Immutable images and all rollout evidence are in the
-  [v0.6.0 operations record](RELEASE_0.6.0_OPERATIONS.md).
-- Production retains 3,498 ANEMONE source occurrences/assays, 349,638 assignment
-  rows, 13,932 standard rows, 6,996 eDNA documents and 323 other documents.
-  All 7,319 documents have matching embeddings. Schema head is
-  `20261001_0014`; provenance publication remains `v050-production-provenance`.
-- A fresh database backup restored in isolation across all 28 tables before
-  the additive migration. All five manual jobs use the amended API image with
-  their commands, identities and limits retained. Service limits remain minimum
-  zero/maximum one instance and concurrency 20.
-- All 16 source combinations, live filter choices, exact counts and four scoped
-  retrievals passed read-only runtime checks. Production login/session returned
-  200 and anonymous protected routes returned 401 after cutover.
-- The user explicitly approved promotion with authenticated UI/history and
-  repeated scientific-answer QA deferred. These checks are not claimed passed;
-  [issue #70](https://github.com/jarondlk/ocean-platform/issues/70) remains open.
-- `ocean-platform-v050-prod0930` remains a compatible application rollback
-  route. Keep the expanded history constraint during rollback; never downgrade
-  populated migrations or overwrite later user/chat records with a backup.
+- GitHub release `v0.7.1` pins exact runtime source
+  `e157fb004871083df25d5d094852fed417a9c8c6`. Revision
+  `ocean-platform-v071-source1005` serves 100% traffic. Immutable image digests,
+  rollout and cleanup evidence are in [v0.7.1 operations](RELEASE_0.7.1_OPERATIONS.md).
+- Schema head is `20261005_0016`. Production retains 3,498 ANEMONE source
+  occurrences/assays, 349,638 assignment rows, 13,932 standards, 6,996 eDNA
+  documents and 323 other documents, with all 7,319 embeddings preserved.
+- A fresh private native backup passed isolated restore before migration; users,
+  roles, history, corpus and publication hashes were preserved. Five existing
+  manual jobs use the verified API image without command/configuration changes
+  or batch execution. Scale remains minimum zero/maximum one, concurrency 20.
+- Normal Google admin/viewer/researcher acceptance passed in the approved isolated
+  candidate. Temporary roles/access/resources were restored or removed. The
+  original SST/eDNA question supplied four records per source and safely abstained
+  with `overlap_unverified`, without generation. #101/#105 are closed.
+- Live mobile QA is explicitly deferred (#107); transient sign-out (#108),
+  OS findings (#104) and real scientific demos/evidence (#89/#102/#103) remain open.
+- `ocean-platform-v070-software1005` remains compatible rollback. Keep additive
+  schema 0016 and later history; do not downgrade populated migrations or restore
+  production as routine application rollback.
+
+Repository `main` additionally contains the source-map-js 1.2.2 fix (#111), pending
+an exact image build/security review and a new patch deployment (#110). Version
+metadata remains 0.7.1. The [2026-10-06 audit](PRE_DEPLOYMENT_AUDIT_2026-10-06.md)
+is a fresh repository/GitHub check, not a refreshed cloud inventory: CLI sign-in
+expired after the completed rollout. Recheck live service/jobs/SQL/IAM after
+authentication, before deploying. Do not apply old local `*.rendered.yaml` files.
 
 The validated runtime was built from an exact source archive. Later
 documentation commits do not change the immutable deployed images.
@@ -59,7 +64,7 @@ The completed initial migration sequence and historical cost-control rationale
 are retained in
 [`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Do not use it
 as the current release order. Use the completed
-[`v0.6.0` operations record](RELEASE_0.6.0_OPERATIONS.md) for the current
+[`v0.7.1` operations record](RELEASE_0.7.1_OPERATIONS.md) for the current
 deployment and verify the project budget and Cloud Run spend cap before paid
 execution.
 
@@ -170,7 +175,9 @@ podman compose \
   up -d --build
 ```
 
-The API container applies Alembic migrations before starting FastAPI. Bootstrap
+The API container runs `bootstrap_database.py` before FastAPI: Alembic upgrades,
+corpus initialization and verification of both model registries and migration
+head. Use `--check-only --json` for read-only schema verification. Bootstrap
 the first administrator from an API container:
 
 ```bash

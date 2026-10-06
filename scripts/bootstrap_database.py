@@ -9,44 +9,34 @@ from pathlib import Path
 
 from alembic import command
 from alembic.config import Config
+from alembic.migration import MigrationContext
+from alembic.script import ScriptDirectory
 from sqlalchemy import inspect, text
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from db.connection import get_engine, init_db  # noqa: E402
+from db.app_models import AppBase  # noqa: E402
+from db.models import CorpusBase  # noqa: E402
 
 
-REQUIRED_TABLES = frozenset(
-    {
-        "app_user",
-        "user_invitation",
-        "chat_interaction",
-        "chat_feedback",
-        "classification_review",
-        "classification_review_event",
-        "classification_application",
-        "classification_application_event",
-        "audit_event",
-        "rate_limit_bucket",
-        "provenance_record",
-        "anchor_event",
-        "ctd_profile",
-        "ctd_summary",
-        "metagenome_sample",
-        "external_source_snapshot",
-        "external_source_file",
-        "edna_sample",
-        "edna_assay",
-        "edna_detection",
-        "edna_internal_standard",
-        "sst_point_observation",
-        "sst_daily_summary",
-        "retrieval_document",
-        "cross_source_link",
-        "corpus_publication",
-    }
+# Use both maintained model registries so new application tables cannot silently
+# fall outside the deployment readiness boundary.
+REQUIRED_TABLES = (
+    frozenset(AppBase.metadata.tables) | frozenset(CorpusBase.metadata.tables)
 )
+
+
+def migration_status(connection) -> dict[str, object]:
+    configuration = Config(str(PROJECT_ROOT / "alembic.ini"))
+    expected = sorted(ScriptDirectory.from_config(configuration).get_heads())
+    current = sorted(MigrationContext.configure(connection).get_current_heads())
+    return {
+        "migration_current_heads": current,
+        "migration_expected_heads": expected,
+        "migrations_current": current == expected,
+    }
 
 
 def database_status() -> dict[str, object]:
@@ -66,6 +56,7 @@ def database_status() -> dict[str, object]:
             if column_name not in chat_columns:
                 missing_columns.append(f"chat_interaction.{column_name}")
     with engine.connect() as connection:
+        migrations = migration_status(connection)
         vector_installed = bool(
             connection.execute(
                 text(
@@ -77,7 +68,13 @@ def database_status() -> dict[str, object]:
         )
     missing_tables = sorted(REQUIRED_TABLES - tables)
     return {
-        "ready": vector_installed and not missing_tables and not missing_columns,
+        "ready": (
+            vector_installed
+            and not missing_tables
+            and not missing_columns
+            and migrations["migrations_current"]
+        ),
+        **migrations,
         "vector_extension": vector_installed,
         "missing_tables": missing_tables,
         "missing_columns": missing_columns,
@@ -113,6 +110,8 @@ def main() -> int:
         print(f"missing_tables={','.join(status['missing_tables'])}")
         print(f"missing_columns={','.join(status.get('missing_columns', []))}")
         print(f"table_count={status['table_count']}")
+        print(f"migration_current_heads={','.join(status['migration_current_heads'])}")
+        print(f"migration_expected_heads={','.join(status['migration_expected_heads'])}")
     return 0 if status["ready"] else 1
 
 

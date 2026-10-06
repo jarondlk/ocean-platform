@@ -12,6 +12,7 @@ Computes ecological relationships between CTD, metagenome, and SST data:
 Usage:
     python scripts/run_pre_analysis.py
 """
+import argparse
 import logging
 import sys
 from pathlib import Path
@@ -29,6 +30,7 @@ import config
 
 
 def main():
+    argparse.ArgumentParser(description=__doc__).parse_args()
     print("=" * 60)
     print("Pre-Analysis Pipeline")
     print("=" * 60)

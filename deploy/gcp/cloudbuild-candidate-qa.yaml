@@ -30,11 +30,12 @@ images:
   - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/frontend:candidate-${BUILD_ID}'
 artifacts:
   objects:
-    location: 'gs://${PROJECT_ID}_cloudbuild/v071-qa/${BUILD_ID}/'
+    location: 'gs://${PROJECT_ID}_cloudbuild/${_QA_REPORT_PREFIX}/${BUILD_ID}/'
     paths: [candidate-reports/*.json, candidate-reports/*.log]
 substitutions:
   _REGION: asia-northeast1
   _REPOSITORY: ocean-platform
+  _QA_REPORT_PREFIX: candidate-qa
 options:
   logging: CLOUD_LOGGING_ONLY
   machineType: E2_HIGHCPU_8

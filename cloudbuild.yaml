@@ -18,6 +18,7 @@ steps:
       - |
         test -f app/data/page.tsx
         npm ci
+        npm audit --omit=dev --audit-level=moderate
         npm test
         npm run typecheck
         npm run build

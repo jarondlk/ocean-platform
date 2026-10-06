@@ -10,6 +10,14 @@ import scripts.bootstrap_database as bootstrap
 from db.models import CorpusBase
 
 
+def _current_migrations(monkeypatch, *, current=True):
+    monkeypatch.setattr(bootstrap, "migration_status", lambda _: {
+        "migration_current_heads": ["20261005_0016" if current else "20261004_0015"],
+        "migration_expected_heads": ["20261005_0016"],
+        "migrations_current": current,
+    })
+
+
 def test_bootstrap_runs_migrations_before_corpus_initialization(monkeypatch):
     calls: list[str] = []
 
@@ -109,6 +117,7 @@ def test_controlled_application_extends_the_single_alembic_head():
 
 @pytest.mark.parametrize("column_present", [True, False])
 def test_readiness_requires_review_column(monkeypatch, column_present):
+    _current_migrations(monkeypatch)
     def columns(table_name):
         if table_name == "edna_sample":
             return ([{"name": "classification_review_json"}] if column_present else [])
@@ -129,6 +138,7 @@ def test_readiness_requires_review_column(monkeypatch, column_present):
 
 
 def test_readiness_requires_chat_outcome_columns(monkeypatch):
+    _current_migrations(monkeypatch)
     def columns(table_name):
         if table_name == "edna_sample":
             return [{"name": "classification_review_json"}]
@@ -148,3 +158,49 @@ def test_readiness_requires_chat_outcome_columns(monkeypatch):
 
     assert status["ready"] is False
     assert status["missing_columns"] == ["chat_interaction.abstention_reason"]
+
+
+@pytest.mark.parametrize("missing_table", [
+    "edna_aggregate_evidence",
+    "research_registry_review",
+    "research_registry_event",
+    "research_registry_version",
+    "research_registry_head",
+    "research_physical_membership",
+    "research_area_definition",
+    None,
+])
+@pytest.mark.parametrize("current", [True, False])
+def test_readiness_rejects_missing_research_tables_and_old_migrations(
+    monkeypatch, missing_table, current,
+):
+    _current_migrations(monkeypatch, current=current)
+    inspector = SimpleNamespace(
+        get_table_names=lambda: list(bootstrap.REQUIRED_TABLES - {missing_table}),
+        get_columns=lambda _: [{"name": name} for name in (
+            "classification_review_json", "outcome", "abstention_reason",
+        )],
+    )
+    connection = SimpleNamespace(execute=lambda _: SimpleNamespace(scalar=lambda: True))
+    monkeypatch.setattr(bootstrap, "get_engine", lambda: SimpleNamespace(connect=lambda: nullcontext(connection)))
+    monkeypatch.setattr(bootstrap, "inspect", lambda _: inspector)
+    status = bootstrap.database_status()
+    assert status["ready"] is (current and missing_table is None)
+    assert status["missing_tables"] == ([missing_table] if missing_table else [])
+    assert status["migrations_current"] is current
+
+
+@pytest.mark.parametrize("revision", [None, "20261004_0015", "20261005_0016"])
+def test_migration_status_reads_actual_version_without_upgrading(revision):
+    from sqlalchemy import create_engine, text
+
+    engine = create_engine("sqlite://")
+    with engine.begin() as connection:
+        if revision:
+            connection.execute(text("CREATE TABLE alembic_version (version_num VARCHAR(32) PRIMARY KEY)"))
+            connection.execute(text("INSERT INTO alembic_version VALUES (:revision)"), {"revision": revision})
+        status = bootstrap.migration_status(connection)
+        assert status["migration_current_heads"] == ([revision] if revision else [])
+        assert status["migration_expected_heads"] == ["20261005_0016"]
+        assert status["migrations_current"] is (revision == "20261005_0016")
+    engine.dispose()
