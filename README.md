@@ -785,7 +785,7 @@ were preserved during import.
 
 The deployed schema is at migration head `20261005_0016`. The complete database
 backup and isolated restore, including users/history and research registries, are
-recorded in [v0.7.1 operations](docs/RELEASE_0.7.1_OPERATIONS.md).
+recorded in [v0.7.2 operations](docs/RELEASE_0.7.2_OPERATIONS.md).
 
 ---
 
@@ -972,7 +972,7 @@ npm run build
 Use [the current testing guide](docs/TESTING.md) for local/CI commands and
 [the pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md) for fresh
 results. Release-specific counts and live checks remain dated evidence in the
-[v0.7.1 operations record](docs/RELEASE_0.7.1_OPERATIONS.md). Bounded QA does not
+[v0.7.2 operations record](docs/RELEASE_0.7.2_OPERATIONS.md). Bounded QA does not
 establish scientific correctness for arbitrary questions or approve real cohorts.
 
 | Test area | Files |

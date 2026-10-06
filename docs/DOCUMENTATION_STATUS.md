@@ -35,7 +35,7 @@ approved.
 - [`ROADMAP.md`](ROADMAP.md) — longer-term engineering priorities.
 - [`handoff.md`](../handoff.md) — current repository and production handoff.
 
-## v0.7.1 completed and post-release patch preparation
+## v0.7.1 completed and retained role acceptance
 
 v0.7.1 is published and deployed. Normal Google role/workflow acceptance passed
 using approved isolated candidate role changes, and temporary resources were
