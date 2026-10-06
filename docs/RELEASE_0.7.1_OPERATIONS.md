@@ -1,6 +1,7 @@
 # v0.7.1 operations
 
-Updated 2026-10-05 JST. **v0.7.1 is published and deployed at 100% traffic.**
+Updated 2026-10-06 JST. **v0.7.1 was published and deployed at 100% traffic
+on 2026-10-05 JST.**
 Production revision is `ocean-platform-v071-source1005`, schema `20261005_0016`.
 The user explicitly deferred live mobile QA; normal role/workflow acceptance passed.
 
