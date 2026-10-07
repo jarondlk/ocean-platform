@@ -53,6 +53,10 @@ records verified historical access and the user's MUR v4.1 primary archive choic
 The [acquisition pilot](docs/HISTORICAL_SST_ACQUISITION_PILOT_2026-10-06.md) records
 private storage/resume proof, recovered interim-NRT originals and the capped raw
 worker; scientific final-series gaps and publication gates remain explicit.
+The user-selected [hybrid approach](docs/HISTORICAL_SST_HYBRID_2026-10-07.md) now
+supersedes the interrupted full-resolution bulk job: daily coarse regional context
+plus small native-resolution patches, estimated at 20.9 GB in 48,562 requests.
+Provider access and live hybrid acceptance remain pending; retained files are preserved.
 
 ## Study Sites
 

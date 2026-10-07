@@ -4,6 +4,12 @@ Prepared 2026-10-06 JST against main `05deee7` / deployed v0.7.2. This is a
 proposed implementation and acquisition plan, not an approved SST definition
 or a completed download/publication. No new application version is assigned yet.
 
+On 2026-10-07 the user selected a [hybrid acquisition strategy](HISTORICAL_SST_HYBRID_2026-10-07.md):
+coarse daily regional context plus small native-resolution patches at all reported
+coordinates. It supersedes this document's 75-tile native bulk strategy. The
+original scope/evidence and scientific acceptance requirements below remain
+historical planning context; no physical sampling areas are approved by the switch.
+
 ## Scope agreed during planning
 
 - Compare MUR and Himawari geophysical SST before choosing a product.

@@ -80,6 +80,10 @@ MUR v4.1 primary archive choice and Himawari's optional separate retrieval role.
 The [dated acquisition evidence](HISTORICAL_SST_ACQUISITION_PILOT_2026-10-06.md)
 adds private cloud storage/resume verification, recovered `04.1nrt` originals
 that retain final-series gaps, and a capped serial raw worker.
+The current [hybrid strategy](HISTORICAL_SST_HYBRID_2026-10-07.md) supersedes the
+interrupted native-tile bulk run, retains its verified archive, and reduces the
+planned raw volume/request count. Provider recovery and live hybrid acceptance
+precede acquisition; scientific review and publication remain separate gates.
 
 The release sections below preserve earlier decisions and evidence; v0.7.2
 supersedes their statements about current production traffic and role deferrals.

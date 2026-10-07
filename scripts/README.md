@@ -1,6 +1,6 @@
 # Script and deployment entrypoint inventory
 
-Reviewed 2026-10-06 against repository callers, CLI implementations, tests,
+Reviewed 2026-10-07 against repository callers, CLI implementations, tests,
 templates and operating guidance. No script executes automatically merely
 because it is present. Cloud Run serving uses `JOB_EXECUTION_MODE=external`;
 batch work remains manual. An operator CLI without an application caller is
@@ -48,6 +48,9 @@ and underlying module tests; lack of a UI caller is intentional.
 | `inventory_historical_sst.py` | #103 all-location/year acquisition census | Explicit production READ ONLY snapshot or verified candidate; writes local inventory only; no account/history reads. |
 | `acquire_historical_sst.py` | #103 historical acquisition operator | Preflight and bounded metadata queries; only explicit child-ID `batch --execute` downloads; persistent resume/reconciliation; optional provider-scoped IPv4 with verified TLS; original metadata inspection preserves NRT/final distinction; no cloud publication. |
 | `acquire_historical_sst_cloud.py` | #103 capped private raw archive | Dry-run default; explicit execution uses one writer, bounded staging, byte-verified immutable raw/checkpoint resume and terminal reconciliation; 64 GiB raw ceiling. No DB, registry approval, corpus/model calls or serving deployment. |
+| `acquire_hybrid_sst.py` | Current #103 hybrid acquisition operator | Dry-run default; coarse daily context and small native multi-day patches have distinct plan/role identities; explicit acquisition keeps 8 MiB/file and 32 GiB raw limits, verified resume, private failure journals and terminal coverage counts. No DB, credentials, scientific approval or Chat publication. The former full-resolution bulk job is superseded and must not auto-resume. |
+| `acquire_nasa_sst_context.py` | #103 selected context-first recovery | Dry-run default; bounded daily NASA regional context, 4 GiB cumulative raw cap, immutable generation/byte receipts, CAS lease and verified resume. Interim raw is explicitly separate and ineligible for final-series evidence. Uses a private local token; native patches and scientific publication remain pending. |
+| `qualify_nasa_hybrid_sst.py` | #103 authenticated fallback qualification | Dry-run default; selects hybrid child hashes and expands at most 16 NASA one-day subsets. Owned private local bearer file, fixed HTTPS origin, no redirects, sanitized resume journals and independent final-generation/grid/unit validation. No cloud credential storage, bulk acquisition, DB or scientific publication. |
 | `compare_historical_sst.py` | #103 product/access comparison | Prepares fixed probes; optional small MUR downloads and private retained Himawari footprint inspection; preserves differing versions/statistics/time offsets; scientific selection stays pending. |
 | `probe_himawari_sst.py` | #103 authenticated archive comparison | Dry-run default; explicit execution lists a directory or downloads 1–4 selected files over verified encrypted FTPS. Private credentials, bounded bytes, checksums/atomic generations; no scientific publication or bulk queue. |
 | `prepare_anemone_catalogue.py` | v0.5.0 catalogue/import workflow | Reads observed archive; writes staged bounded candidates. |

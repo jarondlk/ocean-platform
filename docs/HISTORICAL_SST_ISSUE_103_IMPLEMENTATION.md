@@ -6,6 +6,11 @@ or a deployed release. Production remains v0.7.2, schema `20261005_0016`.
 No migration, production scientific review, source-corpus replacement, model
 invocation, account read/change or Chat history read/change was performed.
 
+Current acquisition strategy: the user-selected [2026-10-07 hybrid plan](HISTORICAL_SST_HYBRID_2026-10-07.md)
+uses daily coarse context and multi-day native patches. The interrupted original
+bulk worker must not restart; its verified archive remains retained. Provider
+recovery, measured live hybrid acceptance and scientific publication are pending.
+
 ## Implemented behavior
 
 | Component | Supported contract |
@@ -17,6 +22,7 @@ invocation, account read/change or Chat history read/change was performed.
 | `acquire_historical_sst.py source-original-check` | Hash-verified retained NASA binary metadata/time inspection; preserves `04.1nrt` interim generations and never silently resolves a final-series gap. At most 1 GiB, with only axes/time loaded. |
 | `acquire_historical_sst.py source-gap-check` | Bounded official NASA catalogue metadata check for specified missing dates; validates complete response and exact product/version titles. Never fetches protected binaries. |
 | `acquire_historical_sst_cloud.py` | Dry-run default; capped serial private raw archive, CAS writer lease, one-child staging, byte-verified checkpoint resume, explicit exclusions and terminal reconciliation. No scientific publication or DB access. |
+| `acquire_hybrid_sst.py` | Current hybrid preflight/private operator: separate context/native identities, daily context, at most 12 consecutive native days per raw file, 8 MiB/file and 32 GiB raw caps, byte-verified resume, retained failure journals and role-specific reconciliation. Dry-run default; no scientific publication. |
 | `compare_historical_sst.py` | Reproducible geographical/seasonal probes, optional small MUR downloads and retained Himawari full-disk footprint diagnostics. Scientific comparison/selection stays pending; offsets, native grid and differing statistics remain explicit. |
 | `probe_himawari_sst.py` | Explicit historical directory listings or at most four selected files; certificate-verified implicit FTPS, private credential file, provider checksum/local SHA-256, atomic generation files and verified reuse. No bulk downloader or scientific publication. |
 | `run_research_sst_collection.py` | Operator preflight/publication of an explicit bounded set of verified child panels and reviewed area IDs, bound to current applied product/sampling reviews. |

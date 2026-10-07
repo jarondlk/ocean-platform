@@ -103,7 +103,10 @@ It does not replace scientific QC or claim that analysis values are direct
 satellite observations. The user selected **MUR v4.1 as primary, with Himawari
 as optional comparator**, on 2026-10-06. Named scientific product/QC/time review
 remains pending; the acquisition choice does not approve those rules.
-No bulk acquisition has started.
+This statement of product selection predates bulk execution. The original
+native-tile worker started on 2026-10-06 and stopped after retained partial
+acquisition. On 2026-10-07 the user selected the [hybrid acquisition strategy](HISTORICAL_SST_HYBRID_2026-10-07.md)
+while retaining MUR as primary. The old bulk worker must not restart.
 
 MUR's NOAA mirror has 2,554/2,556 requested dates. NASA catalogue metadata confirms
 the two missing dates are catalogued in v4.1. Authenticated original-file

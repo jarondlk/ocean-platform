@@ -5,6 +5,11 @@ acquires and verifies private raw scientific data; it does not approve scientifi
 registries, normalize/publish an SST research panel or update the Chat corpus.
 The user selected MUR v4.1 as primary, with Himawari as optional comparator.
 
+Subsequent status: the full worker stopped on 2026-10-07 at 07:18 JST after
+19,278 verified files. The user then selected a [hybrid strategy](HISTORICAL_SST_HYBRID_2026-10-07.md).
+The startup and resource evidence below is retained history; the old bulk
+execution must not be restarted. Its raw files/checkpoints remain preserved.
+
 ## Completed access/storage evidence
 
 The six-batch storage pilot covers three provisional acquisition tiles and two
