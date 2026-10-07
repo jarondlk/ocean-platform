@@ -91,10 +91,15 @@ service.
 
 Current managed milestone:
 
+- The Overview timeline application patch was deployed on 2026-10-07 JST at
+  100% traffic on `ocean-platform-overview1007b`, exact source `ad60f2e`. The
+  [rollout record](docs/OVERVIEW_GCP_ROLLOUT_2026-10-07.md) records live acceptance,
+  unchanged scientific data/schema/auth/settings and six original batch jobs.
+  [Next release notes](docs/RELEASE_NOTES_NEXT.md) retain the feature for the next tag.
 - GitHub release [`v0.7.2`](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.2)
-  is deployed at [`oceaninfobio.com`](https://oceaninfobio.com). Revision
-  `ocean-platform-v072-patch1006` serves 100% of traffic from the validated
-  source/tag `03638e6`. Schema head is `20261005_0016`. The accessible 2026-09-17 ANEMONE
+  is the immutable base release at [`oceaninfobio.com`](https://oceaninfobio.com).
+  Prior revision `ocean-platform-v072-patch1006` and source/tag `03638e6` remain
+  compatible application rollback. Schema head is `20261005_0016`. The accessible 2026-09-17 ANEMONE
   observation contributes 3,498 source occurrences/assays, 349,638 assignment
   rows and 6,996 eDNA retrieval documents. The complete corpus contains 7,319
   documents and matching embeddings. Physical sample identity across source
@@ -515,7 +520,7 @@ FastAPI service:
 
 | Route | Description |
 | --- | --- |
-| `/` | Overview page with per-tab feature map, corpus summary, and health signals |
+| `/` | Overview page with monthly source coverage and overlap, corpus summary, and health signals |
 | `/explore` | Corpus workbench for source coverage, filters, charts, sample detail, and evidence retrieval |
 | `/data` | Source observations, CTD, taxa, SST, eDNA, derived analysis, and reliability workbench |
 | `/analysis` | Compatibility redirect to `/data?view=analysis` |

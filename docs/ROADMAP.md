@@ -52,7 +52,15 @@ workflow that can later become automated.
 - The README screenshot set was refreshed from the authenticated OCEAN
   Platform Cloud Run deployment on 2026-08-25.
 
-## Current patch and outstanding work (2026-10-06)
+## Overview patch (2026-10-07)
+
+The source timeline replaces Interface Register and is deployed as an application
+patch ahead of the next tagged release. See [next release notes](RELEASE_NOTES_NEXT.md)
+and [the rollout record](OVERVIEW_GCP_ROLLOUT_2026-10-07.md) for exact source/images,
+live time coverage and preserved jobs/data/settings. The historical SST branch
+and download operations are unchanged; scientific publication remains separate.
+
+## Previous versioned patch and outstanding work (2026-10-06)
 
 v0.7.2 is published/deployed from exact source `03638e6`; see
 [operations](RELEASE_0.7.2_OPERATIONS.md) and

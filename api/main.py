@@ -31,6 +31,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 import config
 from retrieval.source_scope import EvidenceScope, EdnaFilters, enabled_sources, legacy_scope
+from api.overview_routes import router as overview_router
 from api.edna_analysis_routes import router as edna_analysis_router
 from api.research_registry_routes import router as research_registry_router
 from api.classification_review_routes import router as classification_review_router
@@ -196,6 +197,7 @@ app.add_middleware(
 
 app.middleware("http")(authorization_middleware)
 app.include_router(auth_router)
+app.include_router(overview_router)
 app.include_router(admin_feedback_router)
 app.include_router(feedback_router)
 app.include_router(retention_router)

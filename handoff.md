@@ -1,22 +1,20 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-10-06 JST
+> **Last updated**: 2026-10-07 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: OCEAN `v0.7.2` is published and deployed at
+> **Current status**: Overview source time coverage is deployed at
 > [oceaninfobio.com](https://oceaninfobio.com/), revision
-> `ocean-platform-v072-patch1006`, exact runtime/tag source
-> `03638e653f998902545b2ca19f902f1253718de8`, schema `20261005_0016`.
-> Fresh image, private backup/restore, all 16 source combinations, normal admin
-> candidate/production sign-in/sign-out and saved history/preservation checks
-> passed. Five manual jobs are aligned without batch execution; temporary
-> access/resources are removed. Source-map-js 1.2.2 is verified in the deployed
-> standalone image, resolving #110. Corpus remains 7,319 documents/embeddings,
-> 3,498 ANEMONE occurrences/assays and 349,638 assignment rows.
-> Read [v0.7.2 operations](docs/RELEASE_0.7.2_OPERATIONS.md),
-> [image QA](docs/V0.7.2_CONTAINER_QA_2026-10-06.md),
-> [pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md) and
-> [script inventory](scripts/README.md). Later document/verifier commits do not
-> change the immutable published runtime source/images.
+> `ocean-platform-overview1007b`, 100% traffic, exact runtime source `ad60f2e`.
+> The v0.7.2 tag/application version remain unchanged; include the feature in
+> [the next release](docs/RELEASE_NOTES_NEXT.md). Live coverage/admin UI and
+> read-only preservation passed. Schema remains `20261005_0016`; all six
+> original batch jobs, data/history/roles, auth/secrets/mounts/limits and prior
+> rollback tags are unchanged. Original SST checkout/download operations were
+> untouched. The task-owned verifier and candidate tag are removed.
+> Read [the rollout record](docs/OVERVIEW_GCP_ROLLOUT_2026-10-07.md) for exact
+> build/digests, source units, role/scientific limits, full scans and rollback.
+> [v0.7.2 operations](docs/RELEASE_0.7.2_OPERATIONS.md) retains the base release
+> evidence. Later documentation commits do not change immutable serving images.
 
 ## v0.7.2 completed; remaining work
 
