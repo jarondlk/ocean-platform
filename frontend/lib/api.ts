@@ -1,3 +1,4 @@
+import type { OverviewCoverage } from "./temporal-coverage";
 import type { EvidenceScope } from "./generated/chat-scope";
 import type { ChatFilterOptions, ChatFilterOptionsRequest } from "./chat-filter-options";
 import type {
@@ -120,6 +121,10 @@ async function responseError(response: Response): Promise<ApiError> {
 
 export async function getStatus(): Promise<StatusResponse> {
   return request<StatusResponse>("/health");
+}
+
+export async function getOverviewCoverage(): Promise<OverviewCoverage> {
+  return request<OverviewCoverage>("/overview/coverage");
 }
 
 export async function getStats(): Promise<CorpusStats> {

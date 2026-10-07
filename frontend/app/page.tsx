@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { DataTable } from "@/components/DataTable";
+import { OverviewTemporalCoverage } from "@/components/TemporalCoverageTimeline";
 import { getStats, getStatus } from "@/lib/api";
 import { useAppPreferences } from "@/lib/preferences";
 import type { CorpusStats, StatusResponse } from "@/types";
@@ -13,58 +13,6 @@ const sourceLabels: Record<string, string> = {
   edna_metabarcoding: "eDNA metabarcoding",
   remote_sensing: "Satellite SST days",
 };
-
-const interfaceTabs = [
-  {
-    tab: "Overview",
-    route: "/",
-    purpose: "System-level register for corpus size, source balance, service health, and interface map.",
-    primary_controls: "Read-only refresh by page load",
-    outputs: "Corpus metrics, service status, tab feature inventory",
-  },
-  {
-    tab: "Explore",
-    route: "/explore",
-    purpose: "Corpus workbench for normalized tables, time series, sample detail, and evidence retrieval.",
-    primary_controls: "View tabs, dataset, bay, station, source, date range, search, sort, evidence query, score threshold",
-    outputs: "Tables, column profiles, time series, sample detail, ranked source documents, retrieval diagnostics",
-  },
-  {
-    tab: "Data",
-    route: "/data",
-    purpose: "Domain workbench for observations, CTD, taxa, SST, derived analysis, and reliability outputs.",
-    primary_controls: "View tabs, sample selectors, CTD variables, SST bounds, analysis filters, reliability checks",
-    outputs: "Observation catalog, CTD profiles, taxa summaries, SST charts, derived-analysis tables, reliability matrices",
-  },
-  {
-    tab: "Provenance",
-    route: "/provenance",
-    purpose: "Traceability register for source files, artifact versions, retrieval documents, embeddings, and upsert planning.",
-    primary_controls: "Manifest document limit, embedding status inclusion, doc_id trace lookup, dry-run sample key limit",
-    outputs: "Lineage manifest, document trace path, source/artifact hashes, embedding treatment, upsert dry-run plan",
-  },
-  {
-    tab: "Evaluation",
-    route: "/evaluation",
-    purpose: "Benchmark control and evaluation artifact inspection.",
-    primary_controls: "Run browser, question catalog, standard/ablation controls, comparison, cancel",
-    outputs: "Metrics, traces, reports, background job progress, CSV-backed run records",
-  },
-  {
-    tab: "Chat",
-    route: "/chat",
-    purpose: "Expert RAG query interface with retrieval and generation knobs.",
-    primary_controls: "Query, k, filters, retrieval weights, model, context injection, sampling controls",
-    outputs: "Citation-grounded answer, source list, model/options trace",
-  },
-  {
-    tab: "Admin",
-    route: "/admin",
-    purpose: "Administration workspace for access, feedback, operations, database inspection, system health, and debugging.",
-    primary_controls: "Users, feedback, pipeline, database, system, and debug subtabs",
-    outputs: "Account controls, review records, job status, database metadata, health signals, and diagnostics",
-  },
-];
 
 export default function OverviewPage() {
   const { ui } = useAppPreferences();
@@ -154,14 +102,7 @@ export default function OverviewPage() {
         </article>
       </section>
 
-      <section className="data-section overview-register">
-        <h3 className="section-title">{ui("Interface Register")}</h3>
-        <DataTable
-          columns={["tab", "route", "purpose", "primary_controls", "outputs"]}
-          rows={interfaceTabs}
-          rowKeyColumn="route"
-        />
-      </section>
+      <OverviewTemporalCoverage />
     </section>
   );
 }

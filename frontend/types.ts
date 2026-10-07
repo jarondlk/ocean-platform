@@ -890,3 +890,5 @@ export type EvaluationCompareResponse = {
   markdown: string;
   by_mode: Record<string, unknown>[];
 };
+
+export type { OverviewCoverage, CoverageSource, CoverageBin } from "./lib/temporal-coverage";

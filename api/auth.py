@@ -440,6 +440,8 @@ def route_permission(method: str, path: str) -> Optional[str]:
     method = method.upper()
     if path == "/me":
         return "profile:read"
+    if path == "/overview/coverage" and method == "GET":
+        return "overview:read"
     if path in {"/health", "/stats"}:
         return "overview:read"
     if path == "/models" or path == "/chat/capabilities":

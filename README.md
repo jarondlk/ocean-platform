@@ -499,7 +499,7 @@ FastAPI service:
 
 | Route | Description |
 | --- | --- |
-| `/` | Overview page with per-tab feature map, corpus summary, and health signals |
+| `/` | Overview page with monthly source coverage and overlap, corpus summary, and health signals |
 | `/explore` | Corpus workbench for source coverage, filters, charts, sample detail, and evidence retrieval |
 | `/data` | Source observations, CTD, taxa, SST, eDNA, derived analysis, and reliability workbench |
 | `/analysis` | Compatibility redirect to `/data?view=analysis` |
