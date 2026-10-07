@@ -15,7 +15,8 @@ approved.
   [release notes](RELEASE_NOTES_0.7.3.md) — current exact-source/images, accepted
   rollout, preservation, cleanup, rollback and explicit scientific limits.
 - [Historical SST integration](HISTORICAL_SST_CONTEXT_INTEGRATION_2026-10-07.md)
-  — completed context acquisition, final-only staging and unresolved scientific/
+  — completed context acquisition, final-only staging, follow-on local diagnostic
+  processor and concrete reviewer inputs; unresolved scientific/
   publication gates. Historical evidence is not available in Chat.
 - [Overview GCP rollout](OVERVIEW_GCP_ROLLOUT_2026-10-07.md) — preceding patch
   evidence; the source timeline is included in v0.7.3.
