@@ -1,5 +1,10 @@
 # OCEAN Platform
 
+**v0.7.3 release preparation:** [release notes](docs/RELEASE_NOTES_0.7.3.md)
+combine the merged Overview coverage feature and bounded historical SST tooling.
+Historical scientific publication remains pending. The dated deployed-state
+records below are updated only after verified rollout.
+
 **Ocean Coastal Ecosystem Archive Nexus (OCEAN)** — a provenance-aware
 research platform for marine environmental monitoring, centered on Miyagi
 Prefecture, Japan, with separately qualified external evidence.
