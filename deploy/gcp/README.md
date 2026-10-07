@@ -10,8 +10,8 @@ automatically.
 record; retain its dated resource evidence and cost-control rationale, but do
 not treat it as the current release order. Use
 [`../../docs/DEPLOYMENT.md`](../../docs/DEPLOYMENT.md) and the completed
-[`v0.7.2` operations record](../../docs/RELEASE_0.7.2_OPERATIONS.md) for the
-current deployment.
+[Overview rollout record](../../docs/OVERVIEW_GCP_ROLLOUT_2026-10-07.md) for the
+current deployment. The v0.7.2 operations record retains the base release evidence.
 The user later allowed up to **JPY 100,000/month** for the project while asking
 for import optimization first. This does not change any budget alert or
 component limit automatically. The historical database compute and 10 GiB SSD
@@ -23,12 +23,20 @@ Cost controls must be in place before runtime resources are created.
 
 ## Current deployed milestone
 
-Last verified at the 2026-10-06 JST rollout with refreshed CLI/Console access.
+Current application patch was verified on 2026-10-07 JST: 100% traffic on
+`ocean-platform-overview1007b`, exact runtime source `ad60f2e`. See
+[the rollout record](../../docs/OVERVIEW_GCP_ROLLOUT_2026-10-07.md) for immutable
+images, live coverage/admin acceptance and preservation/cleanup. All six original
+jobs and the SST checkout/download operations are unchanged. No schema, auth,
+IAM, cost limit or acquisition change accompanies this application patch.
+The v0.7.2 tag remains immutable; source-map-js 1.2.2 and sharp 0.35.5 are verified.
+
+The following base-release inventory was verified at the 2026-10-06 JST rollout.
 See [v0.7.2 operations](../../docs/RELEASE_0.7.2_OPERATIONS.md) for exact
 build/digests, private backup/restore, unchanged schema, acceptance and cleanup.
 
 - Project `data-infra-infobio`, region `asia-northeast1`.
-- GitHub release `v0.7.2`, exact tag/runtime source `03638e6`, 100% traffic on
+- GitHub release `v0.7.2`, exact tag/runtime source `03638e6`, 100% traffic at that rollout on
   `ocean-platform-v072-patch1006`; schema `20261005_0016`.
 - Canonical auth/CORS origin `https://oceaninfobio.com`; five manual jobs aligned
   to the exact API image without execution. API storage is read-only; job mode is
