@@ -11,6 +11,11 @@ approved.
 
 ## Current operating authority
 
+- [Overview GCP rollout](OVERVIEW_GCP_ROLLOUT_2026-10-07.md) — current application
+  patch at 100% traffic, exact images/source, live acceptance and unchanged
+  original jobs/data/settings. [Next release notes](RELEASE_NOTES_NEXT.md) retain
+  the feature for the next immutable versioned release.
+
 - [`RELEASE_0.7.2_OPERATIONS.md`](RELEASE_0.7.2_OPERATIONS.md) and
   [`RELEASE_NOTES_0.7.2.md`](RELEASE_NOTES_0.7.2.md) — source security/readiness
   patch; exact-image acceptance, GCP rollout, preservation and cleanup passed.

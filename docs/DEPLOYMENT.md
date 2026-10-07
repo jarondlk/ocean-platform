@@ -11,11 +11,18 @@ to the canonical domain.
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
-Current release record, independently verified during the 2026-10-06 JST rollout:
+Current application patch, verified 2026-10-07 JST: the Overview source timeline
+serves 100% on `ocean-platform-overview1007b`, exact source `ad60f2e`. The
+[rollout record](OVERVIEW_GCP_ROLLOUT_2026-10-07.md) records digests, live acceptance,
+unchanged schema/data/auth/resource settings and all six original jobs, cleanup
+and v0.7.2 rollback. The v0.7.2 tag/application version remain unchanged; include
+the feature in [the next release](RELEASE_NOTES_NEXT.md). Standalone sharp is 0.35.5.
+
+Previous versioned release record, verified during the 2026-10-06 JST rollout:
 
 - GitHub release `v0.7.2` pins exact runtime source
   `03638e653f998902545b2ca19f902f1253718de8`. Revision
-  `ocean-platform-v072-patch1006` serves 100% traffic. Immutable image digests,
+  `ocean-platform-v072-patch1006` served 100% traffic at that rollout. Immutable image digests,
   rollout and cleanup evidence are in [v0.7.2 operations](RELEASE_0.7.2_OPERATIONS.md).
 - Schema head is `20261005_0016`. Production retains 3,498 ANEMONE source
   occurrences/assays, 349,638 assignment rows, 13,932 standards, 6,996 eDNA
@@ -67,7 +74,7 @@ The completed initial migration sequence and historical cost-control rationale
 are retained in
 [`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Do not use it
 as the current release order. Use the completed
-[`v0.7.2` operations record](RELEASE_0.7.2_OPERATIONS.md) for the current
+[Overview rollout record](OVERVIEW_GCP_ROLLOUT_2026-10-07.md) for the current
 deployment and verify the project budget and Cloud Run spend cap before paid
 execution.
 

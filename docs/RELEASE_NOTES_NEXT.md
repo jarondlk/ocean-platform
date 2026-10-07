@@ -35,9 +35,13 @@ configuration and existing jobs remain unchanged except for the reviewed app
 images, source identity and serving revision/traffic. The v0.7.2 tag remains
 immutable; this entry is not a new version announcement.
 
-Current rollout evidence belongs in
-`OVERVIEW_GCP_ROLLOUT_2026-10-07.md`; update that record with actual candidate
-acceptance, production traffic and preservation results before calling the
-feature deployed. Refer to
-`OVERVIEW_TEMPORAL_COVERAGE_IMPLEMENTATION_2026-10-07.md` for implementation and
-local QA. Live scientific acceptance remains separate from this dashboard.
+Deployed on 2026-10-07 JST at 100% traffic on
+`ocean-platform-overview1007b`, exact source `ad60f2e`. The final patch also
+avoids crowded first-year axis labels. All four live sources and authenticated
+admin UI checks passed; original data/history/roles, serving settings, rollback
+tags and all six batch job definitions were preserved. The SST working branch
+and download operations were untouched. Exact build/digests, QA, cleanup and
+rollback are in [the rollout record](OVERVIEW_GCP_ROLLOUT_2026-10-07.md).
+
+Refer to [implementation QA](OVERVIEW_TEMPORAL_COVERAGE_IMPLEMENTATION_2026-10-07.md)
+for the initial source/browser checks. Live scientific approval remains separate.

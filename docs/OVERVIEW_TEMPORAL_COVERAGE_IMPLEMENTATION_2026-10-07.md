@@ -58,17 +58,27 @@ Historical raw MUR acquisitions are not treated as published coverage.
   arrow-key month navigation were checked. At the 390px mobile viewport, the
   document had no horizontal overflow and the chart scrolled within its panel.
 
-## Isolation and remaining acceptance
+## Initial isolation and remaining acceptance
 
 The original checkout stayed on `codex/issue-103-historical-sst` at
 `df1c23622fc81f4b6438899f0df6d0d6c0cc6cde`. Its only pre-existing working-file
 change was the untracked planning document; its SHA-1 remained
 `82cf717ac3730c467cb8178e6557e122bc1bd73d`. Dependencies were copied into the
 new worktree instead of symlinking mutable build output to the original.
-No primary-branch checkout, downloader operation, scientific-data write,
+At this initial implementation checkpoint, no primary-branch checkout,
+downloader operation, scientific-data write,
 database mutation, cloud action, merge, push or deployment was performed.
 
-Live eDNA database acceptance and authenticated deployed-role QA remain before
-release. Historical MUR rows require verified, review-bound publication and
+Live eDNA database acceptance and authenticated deployed-role QA were still
+pending at that checkpoint. Historical MUR rows require verified, review-bound
+publication and
 will be a separate integration. The chart describes temporal co-presence,
 not spatial matching, physical-sample identity or analysis eligibility.
+
+## Subsequent GCP acceptance
+
+The production-based subset and the year-label spacing correction were deployed
+on 2026-10-07 JST. Live eDNA and authenticated admin Overview acceptance passed,
+with read-only baseline/post-cutover preservation and original jobs/checkout
+unchanged. See [the rollout record](OVERVIEW_GCP_ROLLOUT_2026-10-07.md) for exact
+source/images, tested role limits, security findings and cleanup.
