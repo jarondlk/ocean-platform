@@ -260,6 +260,12 @@ multi-day journal binding, exact calendar/exclusions, role and stride separation
 NRT rejection, private byte-verified resume/tamper detection, provider redirect
 boundaries, retained failure journals and full terminal reconciliation.
 
+CI also surfaced the newly published [sharp advisory GHSA-wq5f-xc86-pv6w](https://github.com/advisories/GHSA-wq5f-xc86-pv6w).
+The existing override is patched from 0.35.4 to 0.35.5 and its lockfile refreshed.
+The patched production audit reports zero vulnerabilities; all 64 frontend
+tests, typecheck and production build pass locally. This fixes the blocked branch audit; production remains v0.7.2 until a separately
+authorized software release/deployment. Acquisition does not deploy this patch.
+
 The completion follow-up must track the new hybrid plan/qualified execution,
 never restart the old worker, and reconcile both evidence roles separately.
 Scientific approval/publication remain prerequisite to historical-data Chat QA.
