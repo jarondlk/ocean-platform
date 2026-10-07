@@ -8,11 +8,13 @@ docker inspect ocean-candidate-api ocean-candidate-frontend > "$report_dir/image
 docker run -d --name ocean-candidate-qa-postgres --network cloudbuild \
   -e POSTGRES_USER=ocean -e POSTGRES_PASSWORD=candidate-only-password \
   -e POSTGRES_DB=ocean_platform pgvector/pgvector:pg16
+# Initialization briefly starts a socket-only server before restarting. Probe
+# TCP so readiness means the final server used by the API is accepting clients.
 for attempt in $(seq 1 60); do
-  if docker exec ocean-candidate-qa-postgres pg_isready -U ocean -d ocean_platform; then break; fi
+  if docker exec ocean-candidate-qa-postgres pg_isready -h 127.0.0.1 -U ocean -d ocean_platform; then break; fi
   sleep 1
 done
-docker exec ocean-candidate-qa-postgres pg_isready -U ocean -d ocean_platform
+docker exec ocean-candidate-qa-postgres pg_isready -h 127.0.0.1 -U ocean -d ocean_platform
 qa_database='postgresql://ocean:candidate-only-password@ocean-candidate-qa-postgres:5432/ocean_platform'
 docker run --rm --network cloudbuild -e DATABASE_URL="$qa_database" \
   ocean-candidate-api python scripts/bootstrap_database.py --json
