@@ -64,7 +64,7 @@ export function TemporalCoverageTimeline({ coverage, loading = false, error = ""
       {months.length ? <div className="temporal-scroll" role="region" aria-label={ui("Monthly source timeline")} tabIndex={0}>
         <div className="temporal-chart" style={{ minWidth: Math.max(620, months.length * 9 + 210) }}>
           <div className="temporal-axis"><span>{ui("Source")}</span><div className="temporal-months" style={gridStyle}>
-            {months.map((month, index) => <span className="temporal-year" key={month}>{index === 0 || month.endsWith("-01") ? month.slice(0, 4) : ""}</span>)}
+            {months.map((month, index) => <span className="temporal-year" key={month}>{month.endsWith("-01") || (index === 0 && !months.slice(1, 4).some(value => value.endsWith("-01"))) ? month.slice(0, 4) : ""}</span>)}
           </div></div>
           {sources.map(source => {
             const bins = new Map(source.bins.map(bin => [bin.month, bin]));
