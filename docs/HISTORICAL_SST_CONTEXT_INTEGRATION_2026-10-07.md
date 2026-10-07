@@ -159,7 +159,37 @@ integration and other repository CI checks are run separately in GitHub.
 
 ### Concrete reviewer inputs before serving
 
-Provide a named researcher and evidence references for these decisions:
+#### User decisions recorded after the diagnostic implementation
+
+The user selected the following handling on 2026-10-07:
+
+- **Reviewer label: `ANEMONE`.** Use this organization label in prepared review
+  metadata. The selection came from the user; it does not establish that the
+  ANEMONE provider supplied or endorsed an SST method. Actual approval/application
+  actors and evidence references remain separately recorded by the registry
+  workflow. A separate personal reviewer name is not required for this label.
+- **Empty target tables: display `empty`.** Preserve the raw table and sample/
+  assay/source identities, and defer interpretation of assay success. An empty
+  table alone establishes neither fish absence nor a faulty assay. Pending that
+  distinction, the existing frequency pipeline excludes unresolved empty tables
+  from both positive and non-detection denominators; it does not insert zeros.
+- **Faults: retain an evidence-backed review list.** Record confirmed parsing,
+  file-integrity or provider-reported assay faults separately from empty tables.
+  Include the affected sample/assay/method, source binding, reason and review
+  status. Missing metadata or uncertain assay quality is `needs_review`, not a
+  confirmed biological fault. The retained census reports 83 empty tables per
+  target method; it is not a census of 83 faulty samples. No confirmed biological
+  fault list was supplied with this decision.
+
+The downloaded context is sufficient input to begin regional historical SST
+processing: 2,521 final daily files across 2017–2023, with 35 explicit final-series
+gaps. Native-resolution patches provide additional coastal/sample-area support
+where the chosen analysis requires it. Software normalization/publication and
+the product/QC/area/time definitions below are still required before historical
+Chat acceptance. The download's completeness is separate from those steps.
+
+Retain evidence references and resolve the remaining method decisions below;
+do not treat the chosen display label as approval of unspecified definitions.
 
 | Decision | Required recorded input |
 | --- | --- |
