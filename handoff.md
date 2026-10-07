@@ -2,38 +2,39 @@
 
 > **Last updated**: 2026-10-07 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: Overview source time coverage is deployed at
-> [oceaninfobio.com](https://oceaninfobio.com/), revision
-> `ocean-platform-overview1007b`, 100% traffic, exact runtime source `ad60f2e`.
-> The v0.7.2 tag/application version remain unchanged; include the feature in
-> [the next release](docs/RELEASE_NOTES_NEXT.md). Live coverage/admin UI and
-> read-only preservation passed. Schema remains `20261005_0016`; all six
-> original batch jobs, data/history/roles, auth/secrets/mounts/limits and prior
-> rollback tags are unchanged. Original SST checkout/download operations were
-> untouched. The task-owned verifier and candidate tag are removed.
-> Read [the rollout record](docs/OVERVIEW_GCP_ROLLOUT_2026-10-07.md) for exact
-> build/digests, source units, role/scientific limits, full scans and rollback.
-> [v0.7.2 operations](docs/RELEASE_0.7.2_OPERATIONS.md) retains the base release
-> evidence. Later documentation commits do not change immutable serving images.
+> **Current status**: v0.7.3 is published/deployed at
+> [oceaninfobio.com](https://oceaninfobio.com/), Ready revision
+> `ocean-platform-v073-patch1007`, 100% traffic, exact runtime/tag source `f65efdf`.
+> [Operations](docs/RELEASE_0.7.3_OPERATIONS.md) records exact images/source,
+> backup/restore, normal admin Chat/Overview, preservation, cleanup and rollback.
+> Schema remains `20261005_0016`. Later docs do not change serving images/tags.
 
-## v0.7.2 completed; remaining work
+## v0.7.3 completed; remaining work
 
-Source-isolated retrieval and final evidence coverage resolved #105 in v0.7.1;
-normal isolated role/workflow acceptance resolved #101. Fresh v0.7.2 SST/eDNA
-candidate and production queries supplied four documents per source, safely
-abstaining with `overlap_unverified` without running the model. No fresh
-viewer/researcher QA or real scientific approvals are claimed by this patch.
+Overview #116, historical SST software #115 and version/notes #117 are merged.
+CI/image acceptance, all 16 source combinations, normal admin Chat/Overview and
+post-promotion history/role/publication/corpus/artifact preservation passed.
+Production sign-out, protected-route redirect and Google re-login passed.
+Temporary callback/verifier/QA revision/restore database were removed. Five
+manual job images were aligned without execution; all six original jobs and
+rollback tags remain. The old SST job was unchanged and was not restarted.
+IAM, budgets, identities/secrets, mounts and resource limits are preserved.
 
-Six real research demos (#89/#102/#103), OS maintenance (#104), explicitly
-deferred live mobile QA (#107) and sign-out cause investigation (#108) remain
-open. Fresh sign-out passed; that does not resolve its transient cause. Keep
-schema 0016 and compatible `ocean-platform-v071-source1005` application rollback.
-No new migration/production restore or original batch job execution ran.
+#103 stays open. NASA context acquisition is complete: 2,554 files, 2,521 final /
+33 interim, 35 unsupported final-series dates. Final-only staging software is
+implemented, but historical evidence was not approved/published into Chat.
+Native patches await qualified provider recovery. #102 environmental eligibility,
+physical sample/assay identity and area evidence, #103 product/QC/time/weighting
+review and controlled normalization/linkage/publication remain prerequisites
+for #89's real demonstrations. Read
+[the integration handoff](docs/HISTORICAL_SST_CONTEXT_INTEGRATION_2026-10-07.md).
 
-The 2026-10-06 inventory found SQL disk automatically grown to 15 GiB, limit
-20 GiB. IAM, budgets, canonical auth, identities/secrets, mounts and resource
-limits were preserved. Derive future patches from fresh live definitions; do
-not deploy old rendered templates or replay foundation/raw seeds as an image patch.
+OS maintenance (#104), user-deferred mobile QA (#107) and sign-out cause
+investigation (#108) remain open. Fresh admin checks do not repeat prior v0.7.1
+isolated viewer/researcher acceptance or approve science. Immediate compatible
+rollback is `ocean-platform-overview1007b`; retain schema 0016 and newer history.
+Derive future patches from fresh definitions; do not replay old rendered YAML,
+foundation/raw seeds or restore production for an application rollback.
 
 ## Historical release accounts
 
