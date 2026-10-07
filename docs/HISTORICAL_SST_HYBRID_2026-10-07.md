@@ -253,6 +253,17 @@ preparation/authorization. The old 75-tile bulk job must not restart.
 
 ## Verification and completion
 
+The context worker completed at 19:49 JST on 2026-10-07: **2,554 files /
+1,029,809,920 bytes**, comprising **2,521 final and 33 interim** files, with no
+unexpected requested-date gaps. The two excluded February 2021 dates and all
+interim dates remain unsupported in a final-only series. The writer lease is
+released. Native recovery and scientific publication remain pending.
+
+See the [context integration handoff](HISTORICAL_SST_CONTEXT_INTEGRATION_2026-10-07.md)
+for exact reconciliation identities, bounded verified review staging, completed
+production Chat QA and remaining scientific/publication prerequisites. Earlier
+pilot counts above describe qualification evidence, not the completed archive.
+
 The full backend/security suite passes **1,128 tests**, with 39 service-gated
 skips and **79.78% coverage**. The 31-test hybrid/NASA/previous-acquisition group
 passes. Active Python Ruff and the generated Chat-scope check pass. Tests cover

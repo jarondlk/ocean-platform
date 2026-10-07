@@ -1,6 +1,6 @@
 # Historical SST implementation and operator runbook — #103
 
-Prepared 2026-10-06 JST. This branch implements acquisition/comparison foundations
+Initial preparation 2026-10-06 JST. This branch implements acquisition/comparison foundations
 and bounded scientific SST collections. It is not a completed historical archive
 or a deployed release. Production remains v0.7.2, schema `20261005_0016`.
 No migration, production scientific review, source-corpus replacement, model
@@ -10,6 +10,13 @@ Current acquisition strategy: the user-selected [2026-10-07 hybrid plan](HISTORI
 uses daily coarse context and multi-day native patches. The interrupted original
 bulk worker must not restart; its verified archive remains retained. Provider
 recovery, measured live hybrid acceptance and scientific publication are pending.
+
+Update 2026-10-07: NASA context is complete (2,554 retained files; 2,521 final,
+33 interim). The [context integration handoff](HISTORICAL_SST_CONTEXT_INTEGRATION_2026-10-07.md)
+records exact completion evidence and the new bounded archive-to-review operator.
+Full hybrid acquisition and scientific publication remain pending. The original
+no-Chat-invocation statement above describes initial preparation; subsequent
+production QA exercised existing published evidence, not this historical archive.
 
 ## Implemented behavior
 
@@ -23,6 +30,7 @@ recovery, measured live hybrid acceptance and scientific publication are pending
 | `acquire_historical_sst.py source-gap-check` | Bounded official NASA catalogue metadata check for specified missing dates; validates complete response and exact product/version titles. Never fetches protected binaries. |
 | `acquire_historical_sst_cloud.py` | Dry-run default; capped serial private raw archive, CAS writer lease, one-child staging, byte-verified checkpoint resume, explicit exclusions and terminal reconciliation. No scientific publication or DB access. |
 | `acquire_hybrid_sst.py` | Current hybrid preflight/private operator: separate context/native identities, daily context, at most 12 consecutive native days per raw file, 8 MiB/file and 32 GiB raw caps, byte-verified resume, retained failure journals and role-specific reconciliation. Dry-run default; no scientific publication. |
+| `prepare_historical_sst_context.py` | Final-only integration preflight and one-batch immutable local review staging from verified private NASA context; preserves original provenance and explicit scientific/publication gates. |
 | `compare_historical_sst.py` | Reproducible geographical/seasonal probes, optional small MUR downloads and retained Himawari full-disk footprint diagnostics. Scientific comparison/selection stays pending; offsets, native grid and differing statistics remain explicit. |
 | `probe_himawari_sst.py` | Explicit historical directory listings or at most four selected files; certificate-verified implicit FTPS, private credential file, provider checksum/local SHA-256, atomic generation files and verified reuse. No bulk downloader or scientific publication. |
 | `run_research_sst_collection.py` | Operator preflight/publication of an explicit bounded set of verified child panels and reviewed area IDs, bound to current applied product/sampling reviews. |
