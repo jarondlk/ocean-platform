@@ -77,6 +77,22 @@ historical SST preparation (#103), six real research demos (#89), OS advisories
 (#104), explicitly deferred live mobile QA (#107) and transient sign-out (#108).
 No real scientific approval is implied by completed synthetic or role checks.
 
+Historical SST #103 now has implemented census/comparison/acquisition tooling and
+bounded collection compatibility. The fresh READ ONLY census covers 216 reported
+coordinate locations in 75 acquisition tiles, 2017–2023; unresolved coordinates
+remain explicit. [Implementation evidence and remaining acceptance](HISTORICAL_SST_ISSUE_103_IMPLEMENTATION.md)
+distinguish tested software and authenticated MUR/Himawari probes from pending
+scientific comparison, product/QC review, full archive and reviewed publication.
+[Dated comparison](HISTORICAL_SST_PRODUCT_COMPARISON_2026-10-06.md) records the user's
+MUR v4.1 primary archive choice and Himawari's optional separate retrieval role.
+The [dated acquisition evidence](HISTORICAL_SST_ACQUISITION_PILOT_2026-10-06.md)
+adds private cloud storage/resume verification, recovered `04.1nrt` originals
+that retain final-series gaps, and a capped serial raw worker.
+The current [hybrid strategy](HISTORICAL_SST_HYBRID_2026-10-07.md) supersedes the
+interrupted native-tile bulk run, retains its verified archive, and reduces the
+planned raw volume/request count. Provider recovery and live hybrid acceptance
+precede acquisition; scientific review and publication remain separate gates.
+
 The release sections below preserve earlier decisions and evidence; v0.7.2
 supersedes their statements about current production traffic and role deferrals.
 

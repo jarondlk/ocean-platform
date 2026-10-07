@@ -43,6 +43,21 @@ The [pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md) and
 [script inventory](scripts/README.md) distinguish current operations from legacy
 and operator-only tools.
 
+Historical SST work for [#103](https://github.com/jarondlk/ocean-platform/issues/103)
+now has an [implementation/runbook](docs/HISTORICAL_SST_ISSUE_103_IMPLEMENTATION.md)
+for the all-ANEMONE-location/year census, product comparison, resumable bounded
+acquisition and compatible SST collections. This work is separate from deployed
+v0.7.2; scientific product/QC decisions, full acquisition and reviewed publication
+remain pending. The [initial MUR/Himawari comparison](docs/HISTORICAL_SST_PRODUCT_COMPARISON_2026-10-06.md)
+records verified historical access and the user's MUR v4.1 primary archive choice.
+The [acquisition pilot](docs/HISTORICAL_SST_ACQUISITION_PILOT_2026-10-06.md) records
+private storage/resume proof, recovered interim-NRT originals and the capped raw
+worker; scientific final-series gaps and publication gates remain explicit.
+The user-selected [hybrid approach](docs/HISTORICAL_SST_HYBRID_2026-10-07.md) now
+supersedes the interrupted full-resolution bulk job: daily coarse regional context
+plus small native-resolution patches, estimated at 20.9 GB in 48,562 requests.
+Provider access and live hybrid acceptance remain pending; retained files are preserved.
+
 ## Study Sites
 
 | Bay | Code | Coordinates | Data |

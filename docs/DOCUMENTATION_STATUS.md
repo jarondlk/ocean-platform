@@ -29,6 +29,19 @@ approved.
   fresh repository/docs/script/dependency checks and next deployment gates.
 - [`scripts/README.md`](../scripts/README.md) — active, operator-only and legacy
   entrypoints, side effects and supported execution paths.
+- [`HISTORICAL_SST_ISSUE_103_PLAN.md`](HISTORICAL_SST_ISSUE_103_PLAN.md) and
+  [`HISTORICAL_SST_ISSUE_103_IMPLEMENTATION.md`](HISTORICAL_SST_ISSUE_103_IMPLEMENTATION.md)
+  — all-location/year acquisition scope, fresh census, bounded tooling/collection
+  contracts and remaining product/scientific decisions; separate from deployed v0.7.2.
+- [`HISTORICAL_SST_PRODUCT_COMPARISON_2026-10-06.md`](HISTORICAL_SST_PRODUCT_COMPARISON_2026-10-06.md)
+  — authenticated four-file Himawari access, six MUR/twelve Himawari footprint
+  diagnostics, native metadata/time issues and preliminary primary-product recommendation.
+- [`HISTORICAL_SST_ACQUISITION_PILOT_2026-10-06.md`](HISTORICAL_SST_ACQUISITION_PILOT_2026-10-06.md)
+  — 72-file storage/resume proof, protected NASA originals with explicit NRT
+  distinction, cloud-worker acceptance and full-run resource/reconciliation limits.
+- [`HISTORICAL_SST_HYBRID_2026-10-07.md`](HISTORICAL_SST_HYBRID_2026-10-07.md)
+  — current user-selected acquisition strategy, estimated 20.9 GB/48,562 requests,
+  coarse/native role separation, superseded-worker preservation and provider recovery gates.
 - [`RELEASE_0.7.0_OPERATIONS.md`](RELEASE_0.7.0_OPERATIONS.md) — prior software
   rollout and compatible rollback record; its live-role deferral is historical.
 - [`RELEASE_0.6.1_OPERATIONS.md`](RELEASE_0.6.1_OPERATIONS.md) — prior published
