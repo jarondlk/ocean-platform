@@ -10,8 +10,8 @@ automatically.
 record; retain its dated resource evidence and cost-control rationale, but do
 not treat it as the current release order. Use
 [`../../docs/DEPLOYMENT.md`](../../docs/DEPLOYMENT.md) and the completed
-[Overview rollout record](../../docs/OVERVIEW_GCP_ROLLOUT_2026-10-07.md) for the
-current deployment. The v0.7.2 operations record retains the base release evidence.
+[v0.7.3 operations record](../../docs/RELEASE_0.7.3_OPERATIONS.md) for the
+current deployment. Earlier records retain their dated evidence.
 The user later allowed up to **JPY 100,000/month** for the project while asking
 for import optimization first. This does not change any budget alert or
 component limit automatically. The historical database compute and 10 GiB SSD
@@ -23,13 +23,15 @@ Cost controls must be in place before runtime resources are created.
 
 ## Current deployed milestone
 
-Current application patch was verified on 2026-10-07 JST: 100% traffic on
-`ocean-platform-overview1007b`, exact runtime source `ad60f2e`. See
-[the rollout record](../../docs/OVERVIEW_GCP_ROLLOUT_2026-10-07.md) for immutable
-images, live coverage/admin acceptance and preservation/cleanup. All six original
-jobs and the SST checkout/download operations are unchanged. No schema, auth,
-IAM, cost limit or acquisition change accompanies this application patch.
-The v0.7.2 tag remains immutable; source-map-js 1.2.2 and sharp 0.35.5 are verified.
+v0.7.3 was verified on 2026-10-07 JST: 100% traffic on
+`ocean-platform-v073-patch1007`, exact runtime/tag source `f65efdf`.
+See [operations](../../docs/RELEASE_0.7.3_OPERATIONS.md) for accepted digests,
+private backup/restore, normal admin Chat/Overview, preservation, cleanup and
+compatible Overview rollback. Five manual job images were aligned without
+execution; all six original jobs remain, and the superseded SST job is unchanged.
+Schema/auth/IAM/mount/resource settings and scientific publications are preserved.
+Historical SST remains unapproved/unpublished; native patches and #102/#103
+scientific decisions remain pending. Source-map-js 1.2.2 and sharp 0.35.5 are verified.
 
 The following base-release inventory was verified at the 2026-10-06 JST rollout.
 See [v0.7.2 operations](../../docs/RELEASE_0.7.2_OPERATIONS.md) for exact
@@ -373,7 +375,7 @@ and atomic manifests to a database or native Cloud Storage object operations.
 
 ## Deployment safety
 
-For an existing deployment, use [current operations](../../docs/RELEASE_0.7.1_OPERATIONS.md)
+For an existing deployment, use [current operations](../../docs/RELEASE_0.7.3_OPERATIONS.md)
 and the [audit checklist](../../docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md). Create
 a zero-traffic revision from the fresh live definition, verify exact images and
 normal candidate access, then promote after acceptance. Preserve existing IAM and

@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-10-06 (v0.7.2 published/deployed; exact-image acceptance and cleanup passed).
+Last reviewed: 2026-10-07 (v0.7.3 published/deployed; exact-image acceptance, preservation and cleanup passed).
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -11,15 +11,19 @@ approved.
 
 ## Current operating authority
 
-- [Overview GCP rollout](OVERVIEW_GCP_ROLLOUT_2026-10-07.md) — current application
-  patch at 100% traffic, exact images/source, live acceptance and unchanged
-  original jobs/data/settings. [Next release notes](RELEASE_NOTES_NEXT.md) retain
-  the feature for the next immutable versioned release.
+- [v0.7.3 operations](RELEASE_0.7.3_OPERATIONS.md) and
+  [release notes](RELEASE_NOTES_0.7.3.md) — current exact-source/images, accepted
+  rollout, preservation, cleanup, rollback and explicit scientific limits.
+- [Historical SST integration](HISTORICAL_SST_CONTEXT_INTEGRATION_2026-10-07.md)
+  — completed context acquisition, final-only staging and unresolved scientific/
+  publication gates. Historical evidence is not available in Chat.
+- [Overview GCP rollout](OVERVIEW_GCP_ROLLOUT_2026-10-07.md) — preceding patch
+  evidence; the source timeline is included in v0.7.3.
 
 - [`RELEASE_0.7.2_OPERATIONS.md`](RELEASE_0.7.2_OPERATIONS.md) and
   [`RELEASE_NOTES_0.7.2.md`](RELEASE_NOTES_0.7.2.md) — source security/readiness
   patch; exact-image acceptance, GCP rollout, preservation and cleanup passed.
-  Production is v0.7.2; preserve immutable tags and prior rollback records.
+  This is preceding release evidence; preserve immutable tags and rollback records.
 - [`V0.7.2_CONTAINER_QA_2026-10-06.md`](V0.7.2_CONTAINER_QA_2026-10-06.md) —
   fresh exact-image bindings, standalone dependency and full OS scan evidence.
 
@@ -32,7 +36,7 @@ approved.
 - [`HISTORICAL_SST_ISSUE_103_PLAN.md`](HISTORICAL_SST_ISSUE_103_PLAN.md) and
   [`HISTORICAL_SST_ISSUE_103_IMPLEMENTATION.md`](HISTORICAL_SST_ISSUE_103_IMPLEMENTATION.md)
   — all-location/year acquisition scope, fresh census, bounded tooling/collection
-  contracts and remaining product/scientific decisions; separate from deployed v0.7.2.
+  contracts shipped in v0.7.3 with remaining scientific/publication decisions.
 - [`HISTORICAL_SST_PRODUCT_COMPARISON_2026-10-06.md`](HISTORICAL_SST_PRODUCT_COMPARISON_2026-10-06.md)
   — authenticated four-file Himawari access, six MUR/twelve Himawari footprint
   diagnostics, native metadata/time issues and preliminary primary-product recommendation.

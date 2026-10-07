@@ -33,7 +33,7 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.7.2`. The active data plane now uses the
+  and OCEAN Platform release `v0.7.3`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
 - The accessible 2026-09-17 ANEMONE MiFish catalogue is stored as the
@@ -52,13 +52,15 @@ workflow that can later become automated.
 - The README screenshot set was refreshed from the authenticated OCEAN
   Platform Cloud Run deployment on 2026-08-25.
 
-## Overview patch (2026-10-07)
+## v0.7.3 software release (2026-10-07)
 
-The source timeline replaces Interface Register and is deployed as an application
-patch ahead of the next tagged release. See [next release notes](RELEASE_NOTES_NEXT.md)
-and [the rollout record](OVERVIEW_GCP_ROLLOUT_2026-10-07.md) for exact source/images,
-live time coverage and preserved jobs/data/settings. The historical SST branch
-and download operations are unchanged; scientific publication remains separate.
+Overview coverage and bounded historical SST acquisition/review-staging software
+are published/deployed at exact source `f65efdf`. See
+[release notes](RELEASE_NOTES_0.7.3.md) and
+[operations](RELEASE_0.7.3_OPERATIONS.md) for accepted images, normal admin
+Chat/Overview, preservation, cleanup and rollback. Private context is acquired;
+native patches, #102/#103 reviews, controlled publication and #89's six real
+demonstrations remain pending. Historical evidence is not yet available in Chat.
 
 ## Previous versioned patch and outstanding work (2026-10-06)
 

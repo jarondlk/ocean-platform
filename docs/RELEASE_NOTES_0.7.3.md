@@ -36,9 +36,12 @@ head remains `20261005_0016`. Existing publication and history preservation are
 required acceptance checks. The already deployed Overview feature from #116 is
 included; the original superseded SST worker must not restart.
 
-The candidate must pass exact-source CI, image/runtime/security verification,
-zero-traffic acceptance and preservation checks before promotion. Record actual
-image digests, source, backup/restore evidence, rollout and compatible rollback
-in the dated operations record. Release preparation alone is not deployment.
+Published/deployed on 2026-10-07 JST from exact source `f65efdf` at 100%
+traffic on `ocean-platform-v073-patch1007`. Exact-source CI, image/runtime/full
+scan acceptance, private backup/isolated restore, all 16 source combinations,
+normal admin candidate/production Chat/Overview and preservation passed.
+Temporary access/resources were removed; compatible Overview rollback and prior
+tags remain. See [operations](RELEASE_0.7.3_OPERATIONS.md) for accepted digests,
+backup evidence, acceptance scope and scientific limits.
 Live mobile workflow QA (#107), sign-out follow-up (#108), OS maintenance (#104)
 and scientific demonstrations (#89/#102/#103) retain their existing scopes.
