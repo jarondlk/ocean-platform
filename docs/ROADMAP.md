@@ -33,7 +33,7 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.7.1`. The active data plane now uses the
+  and OCEAN Platform release `v0.7.2`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
 - The accessible 2026-09-17 ANEMONE MiFish catalogue is stored as the
@@ -54,24 +54,22 @@ workflow that can later become automated.
 
 ## Current patch and outstanding work (2026-10-06)
 
-v0.7.1 is published/deployed from exact source `e157fb0`; see
-[operations](RELEASE_0.7.1_OPERATIONS.md). Source-balanced retrieval/coverage and
-normal role/workflow acceptance closed #105 and #101. The repository includes
-source-map-js 1.2.2 (#111), but deployment of its verified immutable image remains
-[#110](https://github.com/jarondlk/ocean-platform/issues/110). The
-[pre-deployment audit](PRE_DEPLOYMENT_AUDIT_2026-10-06.md) records readiness fixes
-and [script status](../scripts/README.md).
-
-The merged audit #112 and source-map-js fix are included in the separately
-versioned [v0.7.2 source patch](RELEASE_NOTES_0.7.2.md); see
-[operations](RELEASE_0.7.2_OPERATIONS.md) for pending exact-image/cloud gates.
+v0.7.2 is published/deployed from exact source `03638e6`; see
+[operations](RELEASE_0.7.2_OPERATIONS.md) and
+[image QA](V0.7.2_CONTAINER_QA_2026-10-06.md). Source-balanced retrieval/coverage
+and v0.7.1 normal isolated role acceptance closed #105/#101. The deployed
+standalone frontend independently reports source-map-js 1.2.2, resolving #110.
+Fresh inventory, private backup/restore, source-combination/filter checks and
+normal v0.7.2 admin candidate/production/history checks passed; cleanup is complete.
+The [pre-deployment audit](PRE_DEPLOYMENT_AUDIT_2026-10-06.md) records source
+readiness fixes and [script status](../scripts/README.md).
 
 Open work remains independently tracked: scientific ANEMONE evidence (#102),
 historical SST preparation (#103), six real research demos (#89), OS advisories
 (#104), explicitly deferred live mobile QA (#107) and transient sign-out (#108).
 No real scientific approval is implied by completed synthetic or role checks.
 
-The release sections below preserve earlier decisions and evidence; v0.7.1
+The release sections below preserve earlier decisions and evidence; v0.7.2
 supersedes their statements about current production traffic and role deferrals.
 
 ## v0.6.0 published release: chat settings

@@ -11,36 +11,38 @@ to the canonical domain.
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
-Current release record, last verified during the 2026-10-05 JST rollout:
+Current release record, independently verified during the 2026-10-06 JST rollout:
 
-- GitHub release `v0.7.1` pins exact runtime source
-  `e157fb004871083df25d5d094852fed417a9c8c6`. Revision
-  `ocean-platform-v071-source1005` serves 100% traffic. Immutable image digests,
-  rollout and cleanup evidence are in [v0.7.1 operations](RELEASE_0.7.1_OPERATIONS.md).
+- GitHub release `v0.7.2` pins exact runtime source
+  `03638e653f998902545b2ca19f902f1253718de8`. Revision
+  `ocean-platform-v072-patch1006` serves 100% traffic. Immutable image digests,
+  rollout and cleanup evidence are in [v0.7.2 operations](RELEASE_0.7.2_OPERATIONS.md).
 - Schema head is `20261005_0016`. Production retains 3,498 ANEMONE source
   occurrences/assays, 349,638 assignment rows, 13,932 standards, 6,996 eDNA
   documents and 323 other documents, with all 7,319 embeddings preserved.
-- A fresh private native backup passed isolated restore before migration; users,
+- A fresh private native backup passed isolated restore; no migration ran. Users,
   roles, history, corpus and publication hashes were preserved. Five existing
   manual jobs use the verified API image without command/configuration changes
   or batch execution. Scale remains minimum zero/maximum one, concurrency 20.
-- Normal Google admin/viewer/researcher acceptance passed in the approved isolated
-  candidate. Temporary roles/access/resources were restored or removed. The
+- Normal Google admin/viewer/researcher acceptance passed in the approved v0.7.1
+  isolated candidate. Fresh v0.7.2 admin candidate/production, sign-out and history
+  checks passed; temporary access/resources were removed. The
   original SST/eDNA question supplied four records per source and safely abstained
   with `overlap_unverified`, without generation. #101/#105 are closed.
 - Live mobile QA is explicitly deferred (#107); transient sign-out (#108),
   OS findings (#104) and real scientific demos/evidence (#89/#102/#103) remain open.
-- `ocean-platform-v070-software1005` remains compatible rollback. Keep additive
+- `ocean-platform-v071-source1005` remains compatible rollback. Keep additive
   schema 0016 and later history; do not downgrade populated migrations or restore
   production as routine application rollback.
 
-Repository `main` additionally contains the source-map-js 1.2.2 fix (#111), pending
-an exact image build/security review and a new patch deployment (#110). The v0.7.2 source patch now carries the security and readiness fixes;
-production remains v0.7.1 until image acceptance and rollout. See
-[v0.7.2 operations](RELEASE_0.7.2_OPERATIONS.md). The [2026-10-06 audit](PRE_DEPLOYMENT_AUDIT_2026-10-06.md)
-is a fresh repository/GitHub check, not a refreshed cloud inventory: CLI sign-in
-expired after the completed rollout. Recheck live service/jobs/SQL/IAM after
-authentication, before deploying. Do not apply old local `*.rendered.yaml` files.
+The deployed standalone frontend independently reports source-map-js 1.2.2;
+#110 is resolved. Full OS scan findings are unchanged and retained in #104.
+Fresh service/jobs/SQL/storage/IAM and Console budget checks passed before
+rollout. SQL disk is now 15 GiB with a 20 GiB growth limit; the automatic growth
+is recorded in [v0.7.2 operations](RELEASE_0.7.2_OPERATIONS.md).
+The [2026-10-06 repository audit](PRE_DEPLOYMENT_AUDIT_2026-10-06.md) remains
+dated source evidence. Derive future revisions from fresh live definitions;
+do not apply old local `*.rendered.yaml` files.
 
 The validated runtime was built from an exact source archive. Later
 documentation commits do not change the immutable deployed images.
@@ -65,7 +67,7 @@ The completed initial migration sequence and historical cost-control rationale
 are retained in
 [`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Do not use it
 as the current release order. Use the completed
-[`v0.7.1` operations record](RELEASE_0.7.1_OPERATIONS.md) for the current
+[`v0.7.2` operations record](RELEASE_0.7.2_OPERATIONS.md) for the current
 deployment and verify the project budget and Cloud Run spend cap before paid
 execution.
 

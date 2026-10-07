@@ -10,7 +10,7 @@ automatically.
 record; retain its dated resource evidence and cost-control rationale, but do
 not treat it as the current release order. Use
 [`../../docs/DEPLOYMENT.md`](../../docs/DEPLOYMENT.md) and the completed
-[`v0.7.1` operations record](../../docs/RELEASE_0.7.1_OPERATIONS.md) for the
+[`v0.7.2` operations record](../../docs/RELEASE_0.7.2_OPERATIONS.md) for the
 current deployment.
 The user later allowed up to **JPY 100,000/month** for the project while asking
 for import optimization first. This does not change any budget alert or
@@ -23,29 +23,30 @@ Cost controls must be in place before runtime resources are created.
 
 ## Current deployed milestone
 
-Last verified at the 2026-10-05 JST rollout; fresh cloud inspection requires
-renewed CLI authentication. See [v0.7.1 operations](../../docs/RELEASE_0.7.1_OPERATIONS.md)
-for exact build/digests, backup/restore, migration, acceptance and cleanup.
+Last verified at the 2026-10-06 JST rollout with refreshed CLI/Console access.
+See [v0.7.2 operations](../../docs/RELEASE_0.7.2_OPERATIONS.md) for exact
+build/digests, private backup/restore, unchanged schema, acceptance and cleanup.
 
 - Project `data-infra-infobio`, region `asia-northeast1`.
-- GitHub release `v0.7.1`, exact tag/runtime source `e157fb0`, 100% traffic on
-  `ocean-platform-v071-source1005`; schema `20261005_0016`.
+- GitHub release `v0.7.2`, exact tag/runtime source `03638e6`, 100% traffic on
+  `ocean-platform-v072-patch1006`; schema `20261005_0016`.
 - Canonical auth/CORS origin `https://oceaninfobio.com`; five manual jobs aligned
   to the exact API image without execution. API storage is read-only; job mode is
-  external. Normal role acceptance passed in the isolated candidate; cleanup passed.
+  external. v0.7.1 isolated normal role QA and fresh v0.7.2 admin/history QA
+  passed; cleanup passed. SQL disk is 15 GiB, with growth limit 20 GiB.
 - Artifact Registry `ocean-platform`; identities `ocean-platform`/`ocean-jobs`,
   Cloud SQL `ocean-postgres` / `ocean_platform` (PostgreSQL 16), private bucket
   `data-infra-infobio-ocean-data`. Retained limits: min zero/max one, concurrency 20.
 - Corpus remains 7,319 documents/embeddings, including 6,996 eDNA; 3,498 source
   occurrences/assays and 349,638 assignment rows. Scientific classification,
   physical identity/areas and historical SST decisions remain unresolved.
-- Compatible v0.7.0 rollback and historical rollback tags retained. Temporary
-  v071 callback/tags/jobs/QA revisions/database were removed.
+- Compatible v0.7.1 rollback and all historical rollback tags retained. Temporary
+  v072 callback/tags/verifier/QA revision/restore database were removed.
 - Live mobile QA (#107) is explicitly deferred; sign-out (#108), OS maintenance
   (#104) and real demos/evidence (#89/#102/#103) remain separate open work.
 
-`main` includes the source-map-js 1.2.2 fix (#111), pending new patch images and
-rollout (#110). Preserve the published v0.7.1 tag. Read the
+The deployed standalone frontend reports source-map-js 1.2.2, resolving #110.
+Published tags remain immutable. Read the
 [pre-deployment audit](../../docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md) and
 [script inventory](../../scripts/README.md) before cloud work. The generic
 bootstrap templates are not the current service specification; derive patches

@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-10-06 (v0.7.1 deployed; v0.7.2 source patch; GCP rollout pending).
+Last reviewed: 2026-10-06 (v0.7.2 published/deployed; exact-image acceptance and cleanup passed).
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -13,11 +13,13 @@ approved.
 
 - [`RELEASE_0.7.2_OPERATIONS.md`](RELEASE_0.7.2_OPERATIONS.md) and
   [`RELEASE_NOTES_0.7.2.md`](RELEASE_NOTES_0.7.2.md) — source security/readiness
-  patch; exact-image acceptance and GCP rollout are pending. Production remains
-  v0.7.1; preserve the prior tag and deployment record.
+  patch; exact-image acceptance, GCP rollout, preservation and cleanup passed.
+  Production is v0.7.2; preserve immutable tags and prior rollback records.
+- [`V0.7.2_CONTAINER_QA_2026-10-06.md`](V0.7.2_CONTAINER_QA_2026-10-06.md) —
+  fresh exact-image bindings, standalone dependency and full OS scan evidence.
 
-- [`RELEASE_0.7.1_OPERATIONS.md`](RELEASE_0.7.1_OPERATIONS.md) — current published
-  release, verified production rollout, role acceptance, cleanup and rollback.
+- [`RELEASE_0.7.1_OPERATIONS.md`](RELEASE_0.7.1_OPERATIONS.md) — prior published
+  release, verified isolated role acceptance and compatible application rollback.
 - [`PRE_DEPLOYMENT_AUDIT_2026-10-06.md`](PRE_DEPLOYMENT_AUDIT_2026-10-06.md) —
   fresh repository/docs/script/dependency checks and next deployment gates.
 - [`scripts/README.md`](../scripts/README.md) — active, operator-only and legacy
@@ -33,7 +35,7 @@ approved.
 - [`ROADMAP.md`](ROADMAP.md) — longer-term engineering priorities.
 - [`handoff.md`](../handoff.md) — current repository and production handoff.
 
-## v0.7.1 completed and post-release patch preparation
+## v0.7.1 completed and retained role acceptance
 
 v0.7.1 is published and deployed. Normal Google role/workflow acceptance passed
 using approved isolated candidate role changes, and temporary resources were
@@ -49,12 +51,12 @@ blocked on scientific evidence/product decisions (#89/#102/#103).
   [`V0.7.1_CONTAINER_QA_2026-10-05.md`](V0.7.1_CONTAINER_QA_2026-10-05.md) —
   dated candidate/live acceptance and exact image/security evidence.
 
-Source-map-js 1.2.2 is merged in #111 but is outside the v0.7.1 immutable tag and
-production images. #110 requires a separate verified patch build and rollout.
-The v0.7.2 metadata now identifies the prepared source patch; production stays
-v0.7.1 until cloud acceptance/promotion. OS findings are
-tracked separately in #104. The audit above is local/GitHub verification; a fresh
-cloud census requires renewed CLI authentication.
+Source-map-js 1.2.2 is merged in #111 and independently verified in the deployed
+v0.7.2 standalone frontend. #110 is resolved. Fresh cloud inventory, image/runtime
+acceptance, backup/restore, normal admin/history and all 16 source-combination
+checks passed; cleanup is complete. The v0.7.1 tag and rollback remain immutable.
+OS findings are unchanged and tracked separately in #104. Scientific/mobile
+and transient sign-out work remains open as described in v0.7.2 operations.
 
 ## v0.7.0 historical rollout and deferred research work
 
