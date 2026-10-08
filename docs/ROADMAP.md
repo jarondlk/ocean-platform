@@ -33,7 +33,7 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.7.4`. The active data plane now uses the
+  and OCEAN Platform release `v0.7.5`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
 - The accessible 2026-09-17 ANEMONE MiFish catalogue is stored as the
@@ -51,6 +51,16 @@ workflow that can later become automated.
   Feedback, Pipeline, Database, System, and Debug sections.
 - The README screenshot set was refreshed from the authenticated OCEAN
   Platform Cloud Run deployment on 2026-08-25.
+
+## v0.7.5 ordinary historical evidence integration (2026-10-08)
+
+The user-accepted retained Miyagi publication is integrated into Overview, Data,
+Explore, source filters and Chat. Historical citations trace immutable publication
+lineage and retain their exact date/product scope. The 1,455 final historical days,
+six gaps, original two method-separated analyses and occurrence-proxy limitations
+remain explicit. [Operations](RELEASE_0.7.5_OPERATIONS.md) records source `7a100dd`,
+acceptance, preservation, cleanup and compatible v0.7.4 rollback. No new downloads,
+formal review, canonical corpus, role or schema changes. Full #89/#102/#103 scope remains open.
 
 ## v0.7.4 provisional Miyagi demo (2026-10-08)
 

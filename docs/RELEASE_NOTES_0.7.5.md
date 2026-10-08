@@ -1,6 +1,6 @@
 # OCEAN v0.7.5 — historical SST in normal system use
 
-Prepared release; deployment acceptance is recorded separately.
+Published and deployed on 2026-10-08 from runtime/tag source `7a100dd`. See [operations](RELEASE_0.7.5_OPERATIONS.md) for exact acceptance and rollback evidence.
 
 The existing Miyagi 2020–2023 MUR dataset is promoted from the demo-only presentation to ordinary system use, following the user's explicit operational acceptance on 2026-10-08. Overview counts and coverage, Data SST, Explore, source filters and normal Chat retrieval include the immutable regional publication. Linked ANEMONE frequency analyses retain their original IDs, source bindings, result rows and separate methods/protocols, and appear as published regional analyses.
 
@@ -12,7 +12,7 @@ The existing Miyagi 2020–2023 MUR dataset is promoted from the demo-only prese
 
 ## Usage
 
-Choose SST in Chat, optionally select `mur-miyagi-2020-2023` and a date range. Ordinary retrieval can cite historical coverage and daily regional temperatures. For exact fish rankings or high/low comparisons, enable ANEMONE eDNA too, select the published Miyagi analysis, workflow and comparable assay protocol. CSV exports and result citations retain exact original analysis identities.
+Choose SST in Chat, optionally select `mur-miyagi-2020-2023` and a date range. Ordinary retrieval can cite historical coverage and daily regional temperatures. For exact fish rankings or high/low comparisons, enable ANEMONE eDNA too, select the published Miyagi analysis, workflow and comparable assay protocol. CSV exports and result citations retain exact original analysis identities. Historical SST citations open validated, retained publication-wide provenance; scoped dates stay on the citation and Data link.
 
 ## Interpretation notes
 
