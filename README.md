@@ -1,18 +1,19 @@
 # OCEAN Platform
 
-**Current release: [v0.7.3](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.3)**
-is deployed at [oceaninfobio.com](https://oceaninfobio.com), Ready revision
-`ocean-platform-v073-patch1007` at 100% traffic, exact runtime/tag source `f65efdf`.
-It includes Overview monthly coverage and bounded historical SST acquisition and
-review-staging software. [Operations](docs/RELEASE_0.7.3_OPERATIONS.md) records
-accepted images, CI, private backup/isolated restore, normal admin Chat/Overview,
-history/artifact preservation, cleanup and compatible Overview rollback.
-Historical SST remains scientifically unpublished. NASA context acquisition is
-complete: 2,554 files (2,521 final / 33 interim), 35 unsupported final-series dates.
-Native patches, #102/#103 scientific acceptance and controlled publication remain
-prerequisites for #89's six real demonstrations. Coarse context is not native
-sample-area evidence. OS maintenance (#104), mobile QA (#107) and intermittent
-sign-out investigation (#108) remain open.
+**Current release: [v0.7.4](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.4)**
+is deployed at [oceaninfobio.com](https://oceaninfobio.com/chat), Ready revision
+`ocean-platform-v074-patch1008` at 100% traffic, exact runtime/tag source `f73d5fd`.
+The user-approved **provisional Miyagi 2020–2023 demo** answers top-fish detection
+frequencies, seasonal/yearly changes, separate read rankings and high/low regional
+SST comparisons. Select a PROVISIONAL DEMO analysis and one assay protocol in Chat;
+enable ANEMONE eDNA and Satellite SST for temperature questions.
+[Demo instructions/limits](docs/MIYAGI_PROVISIONAL_DEMO_2026-10-08.md) and
+[operations](docs/RELEASE_0.7.4_OPERATIONS.md) record the retained-data results,
+normal candidate/production Chat, verified exports, backup/restore, preservation
+and compatible v0.7.3 rollback. No new provider downloads ran. This demo uses
+occurrence proxies and coarse regional context; it does not establish fish
+abundance, weather causation, confirmed physical sampling units or spatial
+redistribution. #89/#102/#103 remain open; #104/#107/#108 retain their follow-ups.
 
 **Ocean Coastal Ecosystem Archive Nexus (OCEAN)** — a provenance-aware
 research platform for marine environmental monitoring, centered on Miyagi
@@ -26,7 +27,7 @@ and can be audited against the evidence that was actually supplied.
 ---
 
 The preceding [v0.7.2 release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.2)
-is retained as immutable prior evidence. Its safeguards remain in v0.7.3. Chat retrieves evidence
+is retained as immutable prior evidence. Its safeguards remain in v0.7.4. Chat retrieves evidence
 independently for each selected source and reports final supplied coverage.
 When ANEMONE/SST overlap is unverified, Chat abstains before generation rather
 than treating missing retrieval evidence as proof of no overlap. The v0.7.0
@@ -35,10 +36,10 @@ available for approved, explicitly published research cohorts.
 
 Normal Google admin/viewer/researcher acceptance passed in an isolated candidate
 database; roles were restored and temporary access/resources removed. The live
-mobile layout check is explicitly user-deferred. Six real ANEMONE/SST demos
+mobile layout check is explicitly user-deferred. The original full scientific demonstrations
 still require scientific evidence and approvals in
-[issue #89](https://github.com/jarondlk/ocean-platform/issues/89); no real sampling
-registry or research result was approved for release. See
+[issue #89](https://github.com/jarondlk/ocean-platform/issues/89); the v0.7.4 provisional demo has a separate explicit user approval and leaves
+canonical scientific registries unchanged. See
 [release notes](docs/RELEASE_NOTES_0.7.2.md),
 [operations/rollback](docs/RELEASE_0.7.2_OPERATIONS.md),
 [live QA](docs/V0.7.1_LIVE_QA.md) and
@@ -70,8 +71,9 @@ worker; scientific final-series gaps and publication gates remain explicit.
 The user-selected [hybrid approach](docs/HISTORICAL_SST_HYBRID_2026-10-07.md) now
 supersedes the interrupted full-resolution bulk job: daily coarse regional context
 plus small native-resolution patches, estimated at 20.9 GB in 48,562 requests.
-NASA coarse context acquisition is complete; NOAA native-provider recovery and
-scientific/live historical acceptance remain pending. Retained files are preserved.
+NASA coarse context acquisition is complete. The user subsequently chose to stop
+NOAA acquisition and use retained data for the v0.7.4 provisional Miyagi demo.
+Native/full-scope scientific acceptance remains pending; retained files are preserved.
 
 ## Study Sites
 
@@ -96,7 +98,7 @@ remains part of the v0.5.0 full-catalogue import.
 
 ## Current Prototype Status
 
-Status as of **2026-10-07**: this is an active invite-only **Next.js +
+Status as of **2026-10-08**: this is an active invite-only **Next.js +
 FastAPI** prototype deployed on GCP, with PostgreSQL/pgvector retrieval,
 Vertex AI generation and embeddings, Google OIDC, and Cloud Run Jobs for
 operator-approved batch work. The same application remains runnable locally
@@ -106,15 +108,15 @@ service.
 
 Current managed milestone:
 
-- [v0.7.3](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.3) serves
-  100% on `ocean-platform-v073-patch1007`, exact runtime/tag source `f65efdf`.
-  [Operations](docs/RELEASE_0.7.3_OPERATIONS.md) records immutable image digests,
-  backup/restore, normal admin Chat/Overview, preservation and cleanup.
-  `ocean-platform-overview1007b` and all prior tags remain compatible rollback.
-  Schema head remains `20261005_0016`; the corpus remains 7,319 documents and
-  embeddings, including 6,996 eDNA documents, 3,498 occurrences/assays and
-  349,638 assignments. Environmental/physical identity and historical publication
-  remain unresolved; no scientific data was republished by this image rollout.
+- [v0.7.4](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.4) serves
+  100% on `ocean-platform-v074-patch1008`, runtime/tag source `f73d5fd`.
+  [Operations](docs/RELEASE_0.7.4_OPERATIONS.md) records exact images, backup,
+  provisional analysis publication, normal Chat/CSV and preservation acceptance.
+  Schema 0016, canonical corpus/classifications/roles remain unchanged.
+  Two provisional methods each retain 104 singleton proxies and 104 regional SST
+  matches ; 14 unresolved repeats and six final SST gaps remain explicit.
+  v0.7.3 is the immediate compatible rollback. Full scientific objectives remain
+  open; raw SST search coverage is unchanged by the analysis publication.
 - Exact catalogue questions have hash-verified aggregate citations, downloads
   and provenance traces. The agreed English routing/claim-support matrix for
   [issue #70](https://github.com/jarondlk/ocean-platform/issues/70) passed and the
@@ -206,7 +208,7 @@ Documentation map:
 
 - `README.md` is the current public project guide and screenshot source.
 - `handoff.md` is the operator/developer handoff for resuming work.
-- `docs/RELEASE_0.7.3_OPERATIONS.md` records the current deployment and
+- `docs/RELEASE_0.7.4_OPERATIONS.md` records the current deployment and
   acceptance results; earlier release plans are historical.
 - `docs/DOCUMENTATION_STATUS.md` identifies superseded plans and separates them
   from retained historical evidence.
@@ -1002,7 +1004,7 @@ npm run build
 Use [the current testing guide](docs/TESTING.md) for local/CI commands and
 [the pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md) for fresh
 results. Release-specific counts and live checks remain dated evidence in the
-[v0.7.3 operations record](docs/RELEASE_0.7.3_OPERATIONS.md). Bounded QA does not
+[v0.7.4 operations record](docs/RELEASE_0.7.4_OPERATIONS.md). Bounded QA does not
 establish scientific correctness for arbitrary questions or approve real cohorts.
 
 | Test area | Files |

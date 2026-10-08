@@ -1,40 +1,41 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-10-07 JST
+> **Last updated**: 2026-10-08 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: v0.7.3 is published/deployed at
-> [oceaninfobio.com](https://oceaninfobio.com/), Ready revision
-> `ocean-platform-v073-patch1007`, 100% traffic, exact runtime/tag source `f65efdf`.
-> [Operations](docs/RELEASE_0.7.3_OPERATIONS.md) records exact images/source,
-> backup/restore, normal admin Chat/Overview, preservation, cleanup and rollback.
-> Schema remains `20261005_0016`. Later docs do not change serving images/tags.
+> **Current status**: v0.7.4 published/deployed at
+> [oceaninfobio.com](https://oceaninfobio.com/chat), Ready revision
+> `ocean-platform-v074-patch1008`, 100% traffic, runtime/tag source `f73d5fd`.
+> [Operations](docs/RELEASE_0.7.4_OPERATIONS.md) records exact images/source,
+> provisional publication IDs, backup/restore, normal Chat/CSV and preservation.
+> Schema remains `20261005_0016`; later docs do not change runtime images/tags.
 
-## v0.7.3 completed; remaining work
+## v0.7.4 completed; remaining work
 
-Overview #116, historical SST software #115 and version/notes #117 are merged.
-CI/image acceptance, all 16 source combinations, normal admin Chat/Overview and
-post-promotion history/role/publication/corpus/artifact preservation passed.
-Production sign-out, protected-route redirect and Google re-login passed.
-Temporary callback/verifier/QA revision/restore database were removed. Five
-manual job images were aligned without execution; all six original jobs and
-rollback tags remain. The old SST job was unchanged and was not restarted.
-IAM, budgets, identities/secrets, mounts and resource limits are preserved.
+PR #119 merged; all eight CI and final build checks passed. The user-approved
+provisional Miyagi 2020–2023 demo now answers top-fish detection frequency,
+seasonal/yearly changes, separate read rankings and high/low regional SST.
+Select a PROVISIONAL DEMO analysis and one protocol; enable eDNA/SST. Two methods
+each contain 104 singleton occurrence proxies/104 SST matches ; 14 repeats remain
+excluded. Processing used existing bytes only: 1,455 final regional days/six gaps.
+Canonical identities/classifications/formal reviews/roles/publications are unchanged.
+No independent researcher approval/provider endorsement is claimed. Species-specific
+sardine and spatial redistribution remain unsupported; read sums are not abundance.
+See [demo limits](docs/MIYAGI_PROVISIONAL_DEMO_2026-10-08.md).
 
-#103 stays open. NASA context acquisition is complete: 2,554 files, 2,521 final /
-33 interim, 35 unsupported final-series dates. Final-only staging software is
-implemented, but historical evidence was not approved/published into Chat.
-Native patches await qualified provider recovery. #102 environmental eligibility,
-physical sample/assay identity and area evidence, #103 product/QC/time/weighting
-review and controlled normalization/linkage/publication remain prerequisites
-for #89's real demonstrations. Read
-[the integration handoff](docs/HISTORICAL_SST_CONTEXT_INTEGRATION_2026-10-07.md).
+Normal candidate/production Chat, citations, source selection and verified CSV
+passed. Clearing analysis after filter edits was fixed and checked. Independent
+history/accounts/corpus/publication/artifact preservation passed. Temporary
+callback/jobs/QA revisions/tags removed. Five manual job pins aligned without
+execution; both SST acquisition jobs remain unchanged/stopped and follow-up paused.
+No new provider acquisition. Auth/IAM/budgets/resources remain unchanged.
 
-OS maintenance (#104), user-deferred mobile QA (#107) and sign-out cause
-investigation (#108) remain open. Fresh admin checks do not repeat prior v0.7.1
-isolated viewer/researcher acceptance or approve science. Immediate compatible
-rollback is `ocean-platform-overview1007b`; retain schema 0016 and newer history.
-Derive future patches from fresh definitions; do not replay old rendered YAML,
-foundation/raw seeds or restore production for an application rollback.
+#89/#102/#103 remain open for full formal environmental/physical/area evidence,
+latest-assay selection, scope expansion/native evidence if needed and remaining
+spatial demonstrations. #104 OS maintenance, user-deferred mobile #107 and
+sign-out investigation #108 remain. Immediate compatible rollback is
+`ocean-platform-v073-patch1007`; retain schema 0016/newer history/private artifacts.
+Do not replay stale rendered definitions, restore production for app rollback,
+restart acquisition or treat the provisional proxy cohort as confirmed samples.
 
 ## Historical release accounts
 
