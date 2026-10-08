@@ -55,6 +55,7 @@ function DataPageContent() {
   const requestedView = searchParams.get("view");
   const requestedSampleRaw = searchParams.get("sample_id");
   const requestedSample = safeEvidenceIdentifier(requestedSampleRaw);
+  const requestedDataset = searchParams.get("dataset_id") || "";
   const requestedFromRaw = searchParams.get("time_from");
   const requestedToRaw = searchParams.get("time_to");
   const requestedFrom = safeIsoDate(requestedFromRaw);
@@ -73,6 +74,7 @@ function DataPageContent() {
   const [ctdProfile, setCtdProfile] = useState<CtdProfileResponse | null>(null);
   const [taxa, setTaxa] = useState<TaxaSampleResponse | null>(null);
   const [sst, setSst] = useState<SstDataResponse | null>(null);
+  const [sstDataset, setSstDataset] = useState("");
   const [sstFrom, setSstFrom] = useState("");
   const [sstTo, setSstTo] = useState("");
   const [sstLimit, setSstLimit] = useState(1000);
@@ -140,6 +142,8 @@ function DataPageContent() {
     }
 
     if (urlView === "sst") {
+      if (!["", "current-sst", "mur-miyagi-2020-2023"].includes(requestedDataset)) { setSst(null); setError("Unknown SST dataset."); return; }
+      setSstDataset(requestedDataset);
       if ((requestedFromRaw && !requestedFrom) || (requestedToRaw && !requestedTo)) {
         setSst(null);
         setError("The requested SST date range is invalid.");
@@ -149,10 +153,10 @@ function DataPageContent() {
       const nextTo = requestedTo || "";
       setSstFrom(nextFrom);
       setSstTo(nextTo);
-      void loadSst({ nextFrom, nextTo });
+      void loadSst({ nextFrom, nextTo, nextDataset: requestedDataset });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [catalog, requestedFrom, requestedFromRaw, requestedSample, requestedSampleRaw, requestedTo, requestedToRaw, urlView]);
+  }, [catalog, requestedDataset, requestedFrom, requestedFromRaw, requestedSample, requestedSampleRaw, requestedTo, requestedToRaw, urlView]);
 
   async function loadCtd(sampleId = ctdSample) {
     if (!sampleId) return;
@@ -188,6 +192,7 @@ function DataPageContent() {
   }
 
   async function loadSst({
+    nextDataset = sstDataset,
     nextFrom = sstFrom,
     nextTo = sstTo,
     nextLimit = sstLimit,
@@ -195,12 +200,14 @@ function DataPageContent() {
     nextFrom?: string;
     nextTo?: string;
     nextLimit?: number;
+    nextDataset?: string;
   } = {}) {
     setLoading(true);
     setError("");
     setSst(null);
     try {
       setSst(await getSstData({
+        dataset_id: nextDataset || undefined,
         time_from: nextFrom || undefined,
         time_to: nextTo || undefined,
         limit: nextLimit,
@@ -223,10 +230,11 @@ function DataPageContent() {
     }
     router.replace(buildHref("/data", {
       view: "sst",
+      dataset_id: sstDataset || undefined,
       time_from: nextFrom,
       time_to: nextTo,
     }), { scroll: false });
-    if ((requestedFrom || "") === (nextFrom || "") && (requestedTo || "") === (nextTo || "")) {
+    if (requestedDataset === sstDataset && (requestedFrom || "") === (nextFrom || "") && (requestedTo || "") === (nextTo || "")) {
       void loadSst({ nextFrom: nextFrom || "", nextTo: nextTo || "" });
     }
   }
@@ -431,6 +439,14 @@ function DataPageContent() {
       {view === "sst" ? (
         <section className="data-view">
           <form className="data-controls" onSubmit={submitSst}>
+            <label className="settings-field" htmlFor="sst-dataset"><span>SST dataset</span>
+              <select id="sst-dataset" className="field" value={sstDataset} onChange={event => setSstDataset(event.target.value)}>
+                <option value="">All published SST datasets</option>
+                <option value="current-sst">Current satellite SST</option>
+                {(sst?.datasets || []).filter(dataset => dataset.dataset_id !== "current-sst").map(dataset => <option key={dataset.dataset_id} value={dataset.dataset_id}>{dataset.label}</option>)}
+                {sstDataset && !sst?.datasets?.some(dataset => dataset.dataset_id === sstDataset) && sstDataset !== "current-sst" ? <option value={sstDataset}>MUR v4.1 · Miyagi · 2020–2023</option> : null}
+              </select>
+            </label>
             <label className="settings-field" htmlFor="sst-from" title="Inclusive lower bound for SST timestamps.">
               <span>{ui("From")}</span>
               <input id="sst-from" className="field" type="date" value={sstFrom} onChange={(event) => setSstFrom(event.target.value)} />
@@ -465,10 +481,12 @@ function DataPageContent() {
             <h3 className="section-title">{ui("Point SST")}</h3>
             <SstPointChart points={sst?.points || []} />
           </section>
-          <section className="data-section">
-            <h3 className="section-title">{ui("Daily Regional Range")}</h3>
-            <SstDailyChart points={sst?.daily || []} />
-          </section>
+          {(sst?.datasets || [{dataset_id: "current-sst", label: "Daily Regional Range", days: sst?.days || 0, notes: [], final_series_gaps: []}]).map(dataset => <section className="data-section" key={dataset.dataset_id}>
+            <h3 className="section-title">{ui(dataset.label)} · {dataset.days} days</h3>
+            {dataset.notes.length ? <details><summary>Data notes</summary>{dataset.notes.map(note => <p key={note}>{note}</p>)}</details> : null}
+            {dataset.final_series_gaps.length ? <p>Final-series gaps: {dataset.final_series_gaps.map(gap => gap.day).join(", ")}. These dates remain empty.</p> : null}
+            <SstDailyChart points={(sst?.daily || []).filter(point => (point.dataset_id || "current-sst") === dataset.dataset_id)} />
+          </section>)}
         </section>
       ) : null}
 
@@ -678,7 +696,7 @@ function LineChart({
   const maxY = maxYRaw + yPad;
   const xScale = (value: number) => pad.left + safeRatio(value - minX, maxX - minX) * (width - pad.left - pad.right);
   const yScale = (value: number) => height - pad.bottom - safeRatio(value - minY, maxY - minY) * (height - pad.top - pad.bottom);
-  const line = valid.map((point, index) => `${index === 0 ? "M" : "L"} ${xScale(point.x)} ${yScale(point.y)}`).join(" ");
+  const line = valid.map((point, index) => `${index === 0 || point.x - valid[index - 1].x > (ranges ? 86400000 : 3600000) * 1.5 ? "M" : "L"} ${xScale(point.x)} ${yScale(point.y)}`).join(" ");
   return (
     <div className="chart-wrap">
       <svg className="simple-chart" viewBox={`0 0 ${width} ${height}`} role="img">

@@ -389,6 +389,7 @@ export async function getTaxaSample(sampleId: string): Promise<TaxaSampleRespons
 }
 
 export async function getSstData(params: {
+  dataset_id?: string;
   time_from?: string;
   time_to?: string;
   limit?: number;

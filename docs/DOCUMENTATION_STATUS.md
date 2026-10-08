@@ -11,6 +11,8 @@ approved.
 
 ## Current operating authority
 
+- [Historical regional publication](HISTORICAL_REGIONAL_PUBLICATION.md) and [v0.7.5 prepared release](RELEASE_NOTES_0.7.5.md) — user-requested integration of existing Miyagi evidence into normal product surfaces. Deployment pending acceptance; v0.7.4 remains live.
+
 - [Miyagi provisional demo](MIYAGI_PROVISIONAL_DEMO_2026-10-08.md) — latest user
   direction: stop NOAA acquisition, use retained regional context for Miyagi
   2020–2023, and record explicit user approval separately from formal scientific

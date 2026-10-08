@@ -54,6 +54,22 @@ def scoped_retrieve(query, *, scope, k, backend, search, options):
         finally:
             diagnostic['elapsed_ms'] = round((perf_counter() - started) * 1000, 3)
             diagnostic['failed_branches'] = branches.get('failed_branches', [])
+        if family == 'remote_sensing':
+            from retrieval.regional_sst import supplement_sst
+            from ingestion.provenance_snapshot import SnapshotError
+            try:
+                rows, regional = supplement_sst(query, rows, isolated, k)
+                diagnostic.update(regional)
+            except (ValueError, KeyError, OSError, SnapshotError):
+                diagnostic['failed_branches'].append('regional_publication')
+                diagnostic['regional_state'] = 'publication_unavailable'
+                if not rows and diagnostic['state'] != 'backend_failed':
+                    failures += 1
+                    diagnostic['state'] = 'backend_failed'
+                    diagnostic['error_code'] = 'regional_publication_unavailable'
+            if rows and diagnostic['state'] == 'backend_failed':
+                failures -= 1
+                diagnostic['state'] = 'regional_fallback'
         # Defense in depth: a broken backend cannot broaden family or filters.
         unique = {}
         for row in rows:

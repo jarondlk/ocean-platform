@@ -14,7 +14,7 @@ from retrieval.source_scope import FAMILIES, document_matches, scope_sql
 OPTION_FIELDS = {
     'ctd': ('bay', 'station', 'sample_id'),
     'metagenome': ('bay', 'station', 'sample_id'),
-    'remote_sensing': (),
+    'remote_sensing': ('dataset_id',),
     'edna_metabarcoding': ('sample_id', 'provider', 'provider_project_id', 'provider_run_id',
                          'assignment_method', 'taxon', 'sample_kind', 'is_control'),
 }
@@ -75,6 +75,8 @@ def _postgres_options(scope, fields, search, members, methods):
                                               sample_ids=members, assignment_methods=methods)
                 joins = ''
                 column = f'CAST(rd.{field} AS text)'
+                if field == 'dataset_id':
+                    column = "COALESCE(NULLIF(CAST(rd.metadata_json AS jsonb)->>'dataset_id', ''), 'current-sst')"
                 if field == 'taxon':
                     # Full canonical taxonomy, including terms outside featured text.
                     joins = ('JOIN edna_detection detection ON detection.assay_id = rd.assay_id '
@@ -90,7 +92,14 @@ def _postgres_options(scope, fields, search, members, methods):
                              'ORDER BY value LIMIT :limit')
                 rows = session.execute(text(statement), {**params, **published_params,
                                                           'search': search, 'limit': OPTION_LIMIT + 1})
-                options[field] = _page([str(row.value) for row in rows])
+                values = [str(row.value) for row in rows]
+                if family == 'remote_sensing' and field == 'dataset_id':
+                    from retrieval.regional_sst import dataset_choices
+                    values = sorted(set(values + dataset_choices(_facet_scope(scope, family, field), search)))
+                options[field] = _page(values)
+            if family == 'remote_sensing':
+                from ingestion.regional_publication import current_publication
+                available = available or current_publication() is not None
             sources[family] = {'available': available, 'fields': options}
     return {'backend': 'postgres', 'sources': sources}
 
@@ -99,6 +108,10 @@ def _local_options(scope, fields, search, members, methods):
     # load() reads and normalizes the published JSONL; it never embeds or calls a model.
     retriever = LocalRetriever()
     retriever.load()
+    from ingestion.regional_publication import current_publication, documents
+    publication = current_publication()
+    if publication:
+        retriever.documents.extend(documents(publication))
     sources = {}
     for family, keys in fields.items():
         documents = [d for d in retriever.documents if d.get('source_type') == family]
@@ -115,6 +128,8 @@ def _local_options(scope, fields, search, members, methods):
                     if methods is not None and document.get('assignment_method') not in methods:
                         continue
                 metadata = {**(document.get('metadata') or {}), **document}
+                if family == 'remote_sensing':
+                    metadata.setdefault('dataset_id', 'current-sst')
                 candidates = metadata.get('taxon_terms', []) if field == 'taxon' else [metadata.get(field)]
                 values.update(_value(value) for value in candidates if value is not None
                               and str(value) and search.casefold() in _value(value).casefold())

@@ -1,0 +1,13 @@
+# Historical regional publication
+
+The app reads a distinct immutable `regional-publications` registration and generation-conditional `current.json` pointer under `EDNA_ARTIFACT_URI`. An operational publication binds the exact two original analysis manifests and the exact period preview to an explicit user acceptance record. It never rewrites original scientific flags, unknown sample classifications, physical IDs or review registries.
+
+`python scripts/publish_regional_research.py --decision PRIVATE_DECISION.json --output RECEIPT.json` is a read-only preflight. Add `--execute` only within the authorized release/data-publication workflow. The decision records origin `user`, basis `explicit_user_accepted_operational_publication`, the verbatim instruction and zoned timestamp, period ID and two analysis IDs. It expressly disallows provider endorsement and independent researcher approval.
+
+Before activation, both sealed analyses must be current against canonical production inputs; their methods and period must agree. Exact retained bytes/generations are read back. The app verifies publication identity, receipt, decision bindings, observation hashes, final generation, fixed product/region and complete date/gap reconciliation before serving it. A changed/unavailable pointer cannot manufacture historical evidence. A corrupt historical retrieval branch reports failure; other readable sources retain their normal scope and budget.
+
+The normal SST branch combines ranked historical BM25 candidates and existing SST candidates by interleaving ranked streams, inside the existing per-source primary budget. Source selections, dates, dataset ID and coordinate filters remain enforced. Historical context does not claim point coordinates; coordinate-scoped requests cannot substitute a regional centroid for a physical sampling location. A deterministic coverage citation is computed over the exact eligible retained days. No provider or embedding request is required.
+
+`current-sst` identifies the legacy product. `mur-miyagi-2020-2023` identifies the retained regional foundation series. Data and Explore preserve dataset IDs. Overview deduplicates observed dates and calculates gaps only inside published product windows, without inventing expected coverage for 2024–2025. Analysis/result IDs and original CSV provenance remain unchanged; operational publication metadata is separate. Existing chat histories retain their original evidence snapshots.
+
+Rollback: return serving traffic to v0.7.4, which does not consume the regional-publications namespace. Keep all registered artifacts and the original analyses. No destructive restore, provider re-download or scientific registry modification is needed.

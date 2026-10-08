@@ -11,7 +11,7 @@ import { ednaHref } from "@/lib/edna-navigation";
 import { analysisHref, legacyAnalysisTables, researchAnalysisTables, parseAnalysisState, type AnalysisState, type AnalysisTable } from "@/lib/edna-analysis-navigation";
 import { exclusionReasonDisplay } from "@/lib/edna-exclusions";
 
-type Run = { analysis_id: string; status: string; recipe: { schema_version?: number; analysis_kind?: string; region_id?: string; time_from?: string; time_to?: string; calendar?: string; analysis_unit?: string; cohort?: Record<string, unknown>; rank: string; assignment_methods?: string[]; assignment_method?: string; control_policy: string; min_read_count: number }; tables?: AnalysisTable[]; table_counts?: Record<string, number>; manifest?: { limitations: string[]; table_counts: Record<string, number> } };
+type Run = { operational_publication?: {label: string} | null; analysis_id: string; status: string; recipe: { schema_version?: number; analysis_kind?: string; region_id?: string; time_from?: string; time_to?: string; calendar?: string; analysis_unit?: string; cohort?: Record<string, unknown>; rank: string; assignment_methods?: string[]; assignment_method?: string; control_policy: string; min_read_count: number }; tables?: AnalysisTable[]; table_counts?: Record<string, number>; manifest?: { limitations: string[]; table_counts: Record<string, number> } };
 type Page = { total: number; rows: Record<string, unknown>[] };
 type RunChoices = {areas: ResearchArea[]; taxa: {taxon_key: string; species: string}[]; protocols: {protocol_id: string; primer_set: string; target_gene: string; sequencing_method: string; library_layout: string}[]; tables: Record<string, Record<string, string[]>>};
 const researchFilters = [["protocolId", "protocol_id", "Assay protocol"], ["taxonKey", "taxon_key", "Fish species"], ["areaId", "area_id", "Area"], ["periodKind", "period_kind", "Period"], ["bin", "bin", "Temperature bin"]] as const;
@@ -104,7 +104,7 @@ export function EdnaAnalysisView() {
       <select className="field" value={state?.analysisId || ""} disabled={!state} onChange={e => navigate({ analysisId: e.target.value || undefined, table: runs.find(r => r.analysis_id === e.target.value)?.recipe.schema_version === 2 ? "ranking" : "diversity", resultId: undefined, offset: 0, method: undefined })}>
         <option value="">Select a run</option>
         {state?.analysisId && !runs.some(r => r.analysis_id === state.analysisId) ? <option value={state.analysisId}>{state.analysisId}</option> : null}
-        {runs.map(r => <option key={r.analysis_id} value={r.analysis_id}>{String(r.recipe.region_id || r.recipe.cohort?.provider_project_id || r.recipe.cohort?.provider_run_id || "Selected cohort")} · {r.recipe.analysis_unit === "provisional_singleton_occurrence" ? "PROVISIONAL DEMO" : r.recipe.schema_version === 2 ? "Detection frequency" : r.recipe.rank} · {r.status.replaceAll("_", " ")} · {r.analysis_id.slice(0, 12)}</option>)}
+        {runs.map(r => <option key={r.analysis_id} value={r.analysis_id}>{String(r.recipe.region_id || r.recipe.cohort?.provider_project_id || r.recipe.cohort?.provider_run_id || "Selected cohort")} · {r.operational_publication ? "Regional analysis" : r.recipe.analysis_unit === "provisional_singleton_occurrence" ? "PROVISIONAL DEMO" : r.recipe.schema_version === 2 ? "Detection frequency" : r.recipe.rank} · {r.status.replaceAll("_", " ")} · {r.analysis_id.slice(0, 12)}</option>)}
       </select>
     </label>
     {showRunControls ? <>
@@ -120,7 +120,7 @@ export function EdnaAnalysisView() {
     {loading || (!showRunControls && !error) ? <p role="status">Loading analysis…</p> : null}
     {run && showRunControls && !loading && !error ? <>
       <p>{run.recipe.rank} · {run.recipe.control_policy.replaceAll("_", " ")} · minimum reads {run.recipe.min_read_count} · {run.status.replaceAll("_", " ")}</p>
-      {research ? <p>{run.recipe.region_id} · {run.recipe.time_from}–{run.recipe.time_to} · {run.recipe.calendar}. {run.recipe.analysis_unit === "provisional_singleton_occurrence" ? "User-approved provisional demo. Frequencies use singleton occurrence proxies, not confirmed water collections. Read counts are sequencing signals, not fish abundance." : "Frequencies use eligible physical samples."} Unsampled areas have no rate; temperature-linked counts are separate.</p> : null}
+      {research ? <p>{run.recipe.region_id} · {run.recipe.time_from}–{run.recipe.time_to} · {run.recipe.calendar}. {run.recipe.analysis_unit === "provisional_singleton_occurrence" ? "Regional analysis. Frequencies use singleton occurrence proxies, not confirmed water collections. Read counts are sequencing signals, not fish abundance." : "Frequencies use eligible physical samples."} Unsampled areas have no rate; temperature-linked counts are separate.</p> : null}
       <div className="button-row">
         <button type="button" className="button secondary-button" onClick={() => download("csv")}>Export table CSV</button>
         <button type="button" className="button secondary-button" onClick={() => download("bundle")}>Download analysis bundle</button>

@@ -273,7 +273,8 @@ def analysis_catalog():
         bundle = load_analysis(pointer['analysis_id'])
         if digest(bundle['manifest']) != pointer.get('manifest_sha256'):
             raise ValueError('Analysis pointer integrity check failed')
-        output.append({'analysis_id':pointer['analysis_id'], 'recipe':bundle['recipe'],
+        from ingestion.regional_publication import analysis_publication
+        output.append({'analysis_id':pointer['analysis_id'], 'operational_publication': analysis_publication(bundle), 'recipe':bundle['recipe'],
                        'table_counts':bundle['manifest']['table_counts'], 'status':analysis_status(bundle)})
     return output
 

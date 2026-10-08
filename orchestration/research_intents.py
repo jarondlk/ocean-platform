@@ -151,7 +151,8 @@ def check_scope(bundle, scope, kind):
     if kind in SST_INTENTS:
         for key, value in selections["remote_sensing"]["filters"].items():
             if value is not None and (
-                key not in {"time_from", "time_to"} or value != recipe[key]
+                (key == "dataset_id" and (bundle["manifest"].get("schema_version") != 3 or value != "mur-miyagi-2020-2023"))
+                or (key != "dataset_id" and (key not in {"time_from", "time_to"} or value != recipe[key]))
             ):
                 return abstain(
                     "aggregate_scope_required",
@@ -226,6 +227,8 @@ def result_rows(bundle, kind, protocol_id):
 def render_research(bundle, scope, query, intent=None):
     recipe = bundle["recipe"]
     provisional = bundle["manifest"].get("schema_version") == 3
+    from ingestion.regional_publication import analysis_publication
+    accepted = analysis_publication(bundle) if provisional else None
     recognized = parse_intent(query, recipe)
     if not recognized or (intent and recognized != intent.kind):
         return abstain(
@@ -367,10 +370,10 @@ def render_research(bundle, scope, query, intent=None):
         documents.append(
             {
                 "id": doc_id,
-                "title": ("Provisional demo: " if provisional else "") + table.replace("_", " ").capitalize(),
+                "title": ("Miyagi regional analysis: " if accepted else "Provisional demo: " if provisional else "") + table.replace("_", " ").capitalize(),
                 "analysis_id": identity,
                 "table": table,
-                "analysis_type": "provisional_demo"
+                "analysis_type": "regional_frequency" if accepted else "provisional_demo"
                 if provisional
                 else "detection_frequency",
                 "source_family": "edna_metabarcoding",
@@ -459,7 +462,7 @@ def render_research(bundle, scope, query, intent=None):
     title = f"Published detection-frequency analysis for {_escape(recipe['region_id'])}, {recipe['time_from']}–{recipe['time_to']} ({recipe['calendar']}); one assay protocol."
     explanation = "Frequency = detected / eligible physical samples. An unsampled group has no rate. Low-support and partial periods retain their flags. These descriptive differences do not establish abundance, occupancy or causation."
     if provisional:
-        title = f"User-approved provisional Miyagi demo, {recipe['time_from']}–{recipe['time_to']} ({recipe['calendar']}); one assignment method and assay protocol."
+        title = f"{'Published Miyagi regional analysis' if accepted else 'User-approved provisional Miyagi demo'}, {recipe['time_from']}–{recipe['time_to']} ({recipe['calendar']}); one assignment method and assay protocol."
         explanation = "Frequency = detected / eligible singleton occurrence proxies, not confirmed physical water collections. Canonical unknown classifications and identities are unchanged; known controls, empty tables and unresolved repeats are excluded. Read-ranking tables show sequencing read sums, not fish abundance. ANEMONE is the user-selected reviewer display label; this is not independent researcher approval or provider endorsement. Sparse groups retain warnings. A regional rectangle cannot establish within-region spatial distribution."
         if kind in SST_INTENTS:
             explanation += " SST uses final MUR 04.1 only: 0.05-degree subsampled regional foundation analysis with cosine-latitude grid-point weighting, not native coastal/sample-point temperatures. Low/high thresholds use each region/season's supported daily SST over the displayed study years, not a long-term climatology. Sampling-time links use 24 hours, extended to 48 hours only if over 20% are unmatched; matched and all-eDNA denominators differ. Missing or interim dates remain explicit final-series gaps; nearby-date links retain their actual timestamps. These comparisons show association, not weather causing abundance changes."
@@ -506,6 +509,7 @@ def render_research(bundle, scope, query, intent=None):
         "retrieved_source_types": covered,
         "missing_source_types": [],
         "result_rows_verified": True,
+        "operational_publication": accepted,
         "display_row_limit_per_table": MAX_CARD_ROWS,
     }
     return ResearchAnswer(answer, documents, None, diagnostics)

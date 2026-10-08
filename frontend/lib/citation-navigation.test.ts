@@ -284,3 +284,14 @@ test("aggregate citations link to retained evidence and reject mismatched identi
   assert.equal(links[1].download, `edna-aggregate-${id}.json`);
   assert.deepEqual(evidenceDeepLinks(contextTarget({ ...context, aggregate_id: "b".repeat(64) })), []);
 });
+
+
+test("historical SST coverage citations preserve product and complete extent", () => {
+  const source = {doc_id: "mur_coverage_a", title: "Coverage", source_type: "remote_sensing", time: "2020-01-01T09:00:00+00:00", text: "1455 final days", metadata: {dataset_id: "mur-miyagi-2020-2023", observed_start: "2020-01-01", observed_end: "2023-12-31"}};
+  const links = evidenceDeepLinks({citationId: source.doc_id, kind: "source", valid: true, cited: true, evidenceRole: "primary", title: source.title, detail: "", source});
+  const link = links.find(value => value.kind === "data");
+  assert.ok(link);
+  const url = new URL(link.href, "https://example.org");
+  assert.equal(url.searchParams.get("dataset_id"), "mur-miyagi-2020-2023");
+  assert.equal(url.searchParams.get("time_to"), "2023-12-31");
+});
