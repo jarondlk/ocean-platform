@@ -5,7 +5,7 @@ import { ExternalLink, FileSearch, X } from "lucide-react";
 import { DataTable, formatCell } from "@/components/DataTable";
 import { SampleDetail } from "@/components/SampleDetail";
 import { getProvenanceTrace, getSampleDetail } from "@/lib/api";
-import { evidenceDeepLinks, type CitationTarget } from "@/lib/citation-navigation";
+import { evidenceDeepLinks, evidenceProvenanceId, type CitationTarget } from "@/lib/citation-navigation";
 import type { ProvenanceTraceResponse, SampleDetailResponse } from "@/types";
 import { useAppPreferences } from "@/lib/preferences";
 
@@ -56,7 +56,7 @@ export function EvidenceNavigator({
     }
 
     setTraceLoading(true);
-    getProvenanceTrace(target.source.doc_id)
+    getProvenanceTrace(evidenceProvenanceId(target.source) || target.source.doc_id)
       .then((payload) => {
         if (active) setTrace(payload);
       })

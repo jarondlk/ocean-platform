@@ -131,9 +131,10 @@ def publish_regional(decision, *, store=None):
             'days': len(period['observations']), 'gaps': period['final_series_gaps'], 'analyses': analyses}
 
 
-def _read_publication(store, identity, receipt_sha256):
+def _read_publication(store, identity, receipt_sha256=None):
     receipt, files = store.read(NAMESPACE, validate_id(identity), max_bytes=MAX_BYTES)
-    if digest(receipt) != validate_id(receipt_sha256) or set(files) != {'publication.json', 'period.json'}:
+    if ((receipt_sha256 is not None and digest(receipt) != validate_id(receipt_sha256))
+            or set(files) != {'publication.json', 'period.json'}):
         raise ValueError('Regional publication receipt integrity failure')
     payload, period = json.loads(files['publication.json']), json.loads(files['period.json'])
     if digest(payload) != identity:
@@ -193,3 +194,46 @@ def documents(publication):
                                     'raw_sha256': row['raw_sha256'], 'warnings': row['warnings']},
                        'text': f"Miyagi coastal regional SST on {day}: {row['sst_celsius']:.6g}°C. Final MUR 04.1 daily foundation analysis, satellite and in-situ input. Region 38–39N, 141–142E. Valid open-ocean grid points: {row['valid_ocean_points']}; valid fraction: {row['valid_fraction']}. " + ' '.join(NOTES[:2])})
     return result
+
+
+def publication_trace(identity):
+    """Read retained publication lineage independently of the current pointer.
+
+    This publication-wide trace does not claim every retained observation was
+    supplied for an answer; the frozen citation metadata records answer scope.
+    """
+    from ingestion.provenance_snapshot import SnapshotNotFound
+    validate_id(identity)
+    doc_id = 'regional_publication_' + identity
+    if not config.EDNA_ARTIFACT_URI:
+        return {'doc_id': doc_id, 'found': False, 'trace': {}}
+    try:
+        publication = _read_publication(ArtifactStore(config.EDNA_ARTIFACT_URI), identity)
+    except SnapshotNotFound:
+        return {'doc_id': doc_id, 'found': False, 'trace': {}}
+    payload, period = publication['payload'], publication['period']
+    return {
+        'doc_id': doc_id, 'found': True,
+        'trace': {
+            'document': {'doc_id': doc_id, 'source_type': 'remote_sensing', 'title': LABEL,
+                         'text': 'Publication-wide retained lineage; the citation metadata records the answer scope.',
+                         'metadata': {**payload, 'publication_id': identity,
+                                      'period_preview_id': period['period_preview_id'],
+                                      'days': len(period['observations']),
+                                      'final_series_gaps': period['final_series_gaps']},
+                         'lineage_level': 'immutable_regional_publication'},
+            'embedding': {'embedding_status': 'not_applicable'},
+            'artifacts': [{'id': identity, 'sha256': identity,
+                           'path': NAMESPACE + '/objects/' + identity + '/publication.json'},
+                          {'id': period['period_preview_id'], 'sha256': payload['period_sha256'],
+                           'path': NAMESPACE + '/objects/' + identity + '/period.json'}],
+            'source_files': [{'id': r['observation_id'], 'sha256': r['raw_sha256'],
+                              'path': r['source_url'], 'time_utc': r['time_utc'],
+                              'processing_generation': r['processing_generation']}
+                             for r in period['observations']],
+            'trace_path': [{'level': 'operational_publication', 'key': identity},
+                           {'level': 'retained_period_preview', 'key': period['period_preview_id']},
+                           *[{'level': 'original_analysis_manifest', 'key': k,
+                              'keys': [v['manifest_sha256']]} for k, v in sorted(payload['analyses'].items())]],
+        },
+    }

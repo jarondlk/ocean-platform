@@ -207,3 +207,34 @@ def test_known_empty_dates_return_gap_receipts_not_invented_measurements(publish
     assert 'not SST measurements' in rows[0]['text']
     envelope['sources']['remote_sensing']['filters']['lat_min']=38.0
     assert regional_search('SST',envelope,8)[0]==[]  # a regional receipt is not a point location
+
+
+def test_retained_publication_trace_ignores_current_pointer_and_fails_closed(published, monkeypatch):
+    from ingestion.regional_publication import publication_trace
+    from ingestion.artifact_store import ArtifactStore
+    import api.main as api
+    result, period, _, _ = published
+    identity = result['publication_id']
+    original = ArtifactStore.pointer
+    def guarded_pointer(self, key):
+        if key == 'regional-publications/current.json':
+            raise AssertionError('Retained trace must not depend on the current pointer')
+        return original(self, key)
+    monkeypatch.setattr(ArtifactStore, 'pointer', guarded_pointer)
+    trace = api.provenance_trace('regional_publication_' + identity)
+    assert trace.found and trace.trace['document']['metadata']['days'] == 1461
+    assert trace.trace['document']['metadata']['decision']['provider_endorsement'] is False
+    assert trace.trace['embedding']['embedding_status'] == 'not_applicable'
+    assert trace.trace['source_files'][0]['sha256'] == period['observations'][0]['raw_sha256']
+    assert len(trace.trace['source_files']) == 1461
+    assert 'Publication-wide' in trace.trace['document']['text']
+    assert publication_trace(digest('missing'))['found'] is False
+    with pytest.raises(api.HTTPException) as error:
+        api.provenance_trace('regional_publication_bad')
+    assert error.value.status_code == 400
+    def invalid(*args, **kwargs):
+        raise ValueError('retained object integrity failure')
+    monkeypatch.setattr(ArtifactStore, 'read', invalid)
+    with pytest.raises(api.HTTPException) as error:
+        api.provenance_trace('regional_publication_' + identity)
+    assert error.value.status_code == 503
