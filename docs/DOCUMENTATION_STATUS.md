@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-10-08 (v0.7.4 published/deployed; PR #119 merged; provisional Miyagi Chat acceptance passed).
+Last reviewed: 2026-10-08 (v0.7.5 published/deployed; PRs #121–#124 merged; normal historical SST/Chat/provenance acceptance passed).
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -11,9 +11,9 @@ approved.
 
 ## Current operating authority
 
-- [Historical regional publication](HISTORICAL_REGIONAL_PUBLICATION.md) and [v0.7.5 prepared release](RELEASE_NOTES_0.7.5.md) — user-requested integration of existing Miyagi evidence into normal product surfaces. Deployment pending acceptance; v0.7.4 remains live.
+- [Historical regional publication](HISTORICAL_REGIONAL_PUBLICATION.md) and [v0.7.5 release](RELEASE_NOTES_0.7.5.md) — user-requested integration of existing Miyagi evidence into normal product surfaces. Deployment and normal product acceptance passed; see [v0.7.5 operations](RELEASE_0.7.5_OPERATIONS.md).
 
-- [Miyagi provisional demo](MIYAGI_PROVISIONAL_DEMO_2026-10-08.md) — latest user
+- [Miyagi provisional demo](MIYAGI_PROVISIONAL_DEMO_2026-10-08.md) — dated user
   direction: stop NOAA acquisition, use retained regional context for Miyagi
   2020–2023, and record explicit user approval separately from formal scientific
   registries. Processing, private provisional publication and normal production Chat passed.
@@ -21,7 +21,7 @@ approved.
   as prerequisites for this explicitly labelled provisional first demo.
 
 - [v0.7.4 operations](RELEASE_0.7.4_OPERATIONS.md) and
-  [release notes](RELEASE_NOTES_0.7.4.md) — current exact-source/images, accepted
+  [release notes](RELEASE_NOTES_0.7.4.md) — preceding exact-source/images, accepted
   rollout, preservation, cleanup, rollback and explicit scientific limits.
 - [Historical SST integration](HISTORICAL_SST_CONTEXT_INTEGRATION_2026-10-07.md)
   — completed context acquisition, final-only staging, follow-on local diagnostic

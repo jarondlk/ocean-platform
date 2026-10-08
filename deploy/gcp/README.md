@@ -10,7 +10,7 @@ automatically.
 record; retain its dated resource evidence and cost-control rationale, but do
 not treat it as the current release order. Use
 [`../../docs/DEPLOYMENT.md`](../../docs/DEPLOYMENT.md) and the completed
-[v0.7.4 operations record](../../docs/RELEASE_0.7.4_OPERATIONS.md) for the
+[v0.7.5 operations record](../../docs/RELEASE_0.7.5_OPERATIONS.md) for the
 current deployment. Earlier records retain their dated evidence.
 The user later allowed up to **JPY 100,000/month** for the project while asking
 for import optimization first. This does not change any budget alert or
@@ -23,15 +23,15 @@ Cost controls must be in place before runtime resources are created.
 
 ## Current deployed milestone
 
-v0.7.4 was verified on 2026-10-08 JST: 100% traffic on
-`ocean-platform-v074-patch1008`, runtime/tag source `f73d5fd`.
-See [operations](../../docs/RELEASE_0.7.4_OPERATIONS.md) for accepted digests,
-backup/restore, provisional analysis publication, normal admin Chat/CSV,
+v0.7.5 was verified on 2026-10-08 JST: 100% traffic on
+`ocean-platform-v075-patch1008`, runtime/tag source `7a100dd`.
+See [operations](../../docs/RELEASE_0.7.5_OPERATIONS.md) for accepted digests,
+verified-backup reuse, retained regional publication, normal admin Chat/CSV/provenance,
 preservation and cleanup. Five manual jobs were aligned without execution;
 both superseded acquisition jobs remain unchanged. No new provider downloads.
 Schema/auth/IAM/mounts/resources/canonical scientific publications are preserved.
-The provisional Miyagi demo is explicitly user-approved; formal identities/areas
-and remaining spatial objectives stay open. Immediate rollback is v0.7.3.
+User operational acceptance integrates the Miyagi evidence into ordinary system use;
+formal identities/areas and spatial objectives stay open. Immediate rollback is v0.7.4.
 
 The following base-release inventory was verified at the 2026-10-06 JST rollout.
 See [v0.7.2 operations](../../docs/RELEASE_0.7.2_OPERATIONS.md) for exact
@@ -375,7 +375,7 @@ and atomic manifests to a database or native Cloud Storage object operations.
 
 ## Deployment safety
 
-For an existing deployment, use [current operations](../../docs/RELEASE_0.7.4_OPERATIONS.md)
+For an existing deployment, use [current operations](../../docs/RELEASE_0.7.5_OPERATIONS.md)
 and the [audit checklist](../../docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md). Create
 a zero-traffic revision from the fresh live definition, verify exact images and
 normal candidate access, then promote after acceptance. Preserve existing IAM and

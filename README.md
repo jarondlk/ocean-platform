@@ -1,18 +1,20 @@
 # OCEAN Platform
 
-**Current release: [v0.7.4](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.4)**
+**Current release: [v0.7.5](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.5)**
 is deployed at [oceaninfobio.com](https://oceaninfobio.com/chat), Ready revision
-`ocean-platform-v074-patch1008` at 100% traffic, exact runtime/tag source `f73d5fd`.
-The user-approved **provisional Miyagi 2020–2023 demo** answers top-fish detection
-frequencies, seasonal/yearly changes, separate read rankings and high/low regional
-SST comparisons. Select a PROVISIONAL DEMO analysis and one assay protocol in Chat;
-enable ANEMONE eDNA and Satellite SST for temperature questions.
-[Demo instructions/limits](docs/MIYAGI_PROVISIONAL_DEMO_2026-10-08.md) and
-[operations](docs/RELEASE_0.7.4_OPERATIONS.md) record the retained-data results,
-normal candidate/production Chat, verified exports, backup/restore, preservation
-and compatible v0.7.3 rollback. No new provider downloads ran. This demo uses
-occurrence proxies and coarse regional context; it does not establish fish
-abundance, weather causation, confirmed physical sampling units or spatial
+`ocean-platform-v075-patch1008` at 100% traffic, exact runtime/tag source `7a100dd`.
+The retained **Miyagi 2020–2023 MUR dataset** is integrated into Overview,
+Data SST, Explore, source filters and ordinary Chat retrieval: 1,455 historical
+final days plus 79 current SST days, with products and statistics kept separate.
+For exact fish frequencies, seasonal/yearly series, separate read rankings and
+relative high/low SST comparisons, select a published Miyagi analysis, workflow
+and assay protocol; enable ANEMONE eDNA and SST for temperature comparisons.
+[Publication contract](docs/HISTORICAL_REGIONAL_PUBLICATION.md) and
+[operations](docs/RELEASE_0.7.5_OPERATIONS.md) record explicit user acceptance,
+original analysis IDs, normal Chat/citation/CSV checks, preservation and compatible
+v0.7.4 rollback. Six historical final gaps and unresolved repeats stay visible.
+No new provider downloads ran. Occurrence proxies and coarse regional SST do not
+establish abundance, weather causation, confirmed physical units or spatial
 redistribution. #89/#102/#103 remain open; #104/#107/#108 retain their follow-ups.
 
 **Ocean Coastal Ecosystem Archive Nexus (OCEAN)** — a provenance-aware
@@ -27,7 +29,7 @@ and can be audited against the evidence that was actually supplied.
 ---
 
 The preceding [v0.7.2 release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.2)
-is retained as immutable prior evidence. Its safeguards remain in v0.7.4. Chat retrieves evidence
+is retained as immutable prior evidence. Its safeguards remain in v0.7.5. Chat retrieves evidence
 independently for each selected source and reports final supplied coverage.
 When ANEMONE/SST overlap is unverified, Chat abstains before generation rather
 than treating missing retrieval evidence as proof of no overlap. The v0.7.0
@@ -108,15 +110,15 @@ service.
 
 Current managed milestone:
 
-- [v0.7.4](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.4) serves
-  100% on `ocean-platform-v074-patch1008`, runtime/tag source `f73d5fd`.
-  [Operations](docs/RELEASE_0.7.4_OPERATIONS.md) records exact images, backup,
-  provisional analysis publication, normal Chat/CSV and preservation acceptance.
+- [v0.7.5](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.5) serves
+  100% on `ocean-platform-v075-patch1008`, runtime/tag source `7a100dd`.
+  [Operations](docs/RELEASE_0.7.5_OPERATIONS.md) records exact images, reused verified
+  backup, immutable operational publication, normal Chat/CSV/provenance and preservation.
   Schema 0016, canonical corpus/classifications/roles remain unchanged.
-  Two provisional methods each retain 104 singleton proxies and 104 regional SST
-  matches ; 14 unresolved repeats and six final SST gaps remain explicit.
-  v0.7.3 is the immediate compatible rollback. Full scientific objectives remain
-  open; raw SST search coverage is unchanged by the analysis publication.
+  Two assignment methods each retain 104 singleton proxies and 104 regional SST
+  matches; 14 unresolved repeats and six final SST gaps remain explicit.
+  v0.7.4 is the immediate compatible rollback. Full scientific objectives remain
+  open; historical regional SST now participates in ordinary retrieval.
 - Exact catalogue questions have hash-verified aggregate citations, downloads
   and provenance traces. The agreed English routing/claim-support matrix for
   [issue #70](https://github.com/jarondlk/ocean-platform/issues/70) passed and the
@@ -187,8 +189,8 @@ Deployed formal scientific workflows with full-scope acceptance still pending:
   controlled application and publication are deployed through schema
   `20261005_0016`. Normal role enforcement passed isolated live candidate QA.
   Real environmental classification, physical sample identity/areas, historical
-  SST product review and the full six demonstrations remain open. The v0.7.4
-  user-approved provisional first demo is available separately; see
+  SST product review and the full six demonstrations remain open. The v0.7.5
+  user-accepted Miyagi evidence is integrated into ordinary system use; see
   [the scientific review packet](docs/V0.7.0_SCIENTIFIC_REVIEW.md).
 
 Still intentionally future work:
@@ -209,7 +211,7 @@ Documentation map:
 
 - `README.md` is the current public project guide and screenshot source.
 - `handoff.md` is the operator/developer handoff for resuming work.
-- `docs/RELEASE_0.7.4_OPERATIONS.md` records the current deployment and
+- `docs/RELEASE_0.7.5_OPERATIONS.md` records the current deployment and
   acceptance results; earlier release plans are historical.
 - `docs/DOCUMENTATION_STATUS.md` identifies superseded plans and separates them
   from retained historical evidence.
@@ -1005,7 +1007,7 @@ npm run build
 Use [the current testing guide](docs/TESTING.md) for local/CI commands and
 [the pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md) for fresh
 results. Release-specific counts and live checks remain dated evidence in the
-[v0.7.4 operations record](docs/RELEASE_0.7.4_OPERATIONS.md). Bounded QA does not
+[v0.7.5 operations record](docs/RELEASE_0.7.5_OPERATIONS.md). Bounded QA does not
 establish scientific correctness for arbitrary questions or approve real cohorts.
 
 | Test area | Files |
