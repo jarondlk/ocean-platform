@@ -38,7 +38,7 @@ def planner_catalog():
     from orchestration.unified import _pg_available
     from retrieval.filter_options import filter_options
     empty = {'version': 1, 'sources': {f: {'enabled': True, 'filters': {}} for f in FAMILIES}}
-    catalog = statistics_catalog()
+    catalog = compact_statistics_catalog(statistics_catalog())
     facets = filter_options(empty, pg_available=_pg_available())
     # The complete canonical taxon/sample catalogue stays in backend services.
     for item in facets['sources'].values():
@@ -50,6 +50,31 @@ def planner_catalog():
     if len(json.dumps(catalog, ensure_ascii=False, default=str)) > MAX_CATALOG_CHARS:
         raise PlanningError('The published catalogue is too large to plan safely. Use manual selections.', status='unavailable')
     return catalog
+
+
+def compact_statistics_catalog(catalog):
+    """Keep published identities/scope without repeating full primer/PCR payloads."""
+    from ingestion.immutable_bundle import digest
+
+    result = deepcopy(catalog)
+    for analysis in result['analyses']:
+        protocols = {}
+        labels = {}
+        for identity in analysis['protocol_ids']:
+            value = analysis.get('protocols', {}).get(identity)
+            if value is None:
+                continue
+            summary = {field: value.get(field) for field in ('target_gene', 'sequencing_method', 'library_layout')}
+            summary['primer_set_sha256'] = digest(value.get('primer_set'))
+            summary['pcr_metadata_sha256'] = digest(value.get('pcr', {}))
+            protocols[identity] = summary
+            labels[identity] = ' · '.join(str(summary[field] or 'unspecified') for field in
+                                         ('target_gene', 'sequencing_method', 'library_layout')) + ' · ' + identity[:8]
+        analysis['protocols'] = protocols
+        analysis['protocol_labels'] = labels
+    result['protocol_identity_note'] = ('Protocol IDs retain the full published primer/PCR identity. '
+                                        'Summaries omit sequence payloads; ambiguous protocols require a manual selection.')
+    return result
 
 
 def _validate_constraints(proposal, request, catalog):

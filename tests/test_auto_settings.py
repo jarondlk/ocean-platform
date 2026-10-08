@@ -353,3 +353,49 @@ def test_publication_disappearing_after_planning_abstains_before_answer_generati
     assert data['outcome'] == 'abstained' and not data['model_invoked']
     assert data['abstention_reason'] == 'aggregate_unavailable'
     assert 'private storage diagnostic' not in response.text
+
+
+def test_large_protocol_payloads_do_not_overflow_planner_catalogue(monkeypatch):
+    from ingestion.immutable_bundle import digest
+    protocol_id = 'a' * 64
+    metadata = {'target_gene': '12S rRNA', 'sequencing_method': 'MiSeq', 'library_layout': 'paired',
+                'primer_set': 'ACGT' * 10000, 'pcr': {'pcr_notes': 'cycles' * 10000}}
+    original = {**catalogue(), 'analyses': [{'analysis_id': 'b' * 64, 'status': 'current',
+                'protocol_ids': [protocol_id], 'protocols': {protocol_id: metadata, 'c' * 64: metadata},
+                'protocol_labels': {protocol_id: metadata['primer_set']},
+                'recipe_scope': {'time_from': '2020-01-01', 'time_to': '2023-12-31'},
+                'limitations': ['Occurrence proxies are not confirmed independent samples.']}]}
+    import retrieval.filter_options as facets
+    import orchestration.unified as unified
+    monkeypatch.setattr(planner, 'statistics_catalog', lambda: original)
+    monkeypatch.setattr(planner, 'context_choices', lambda: original['contexts'])
+    monkeypatch.setattr(unified, '_pg_available', lambda: False)
+    monkeypatch.setattr(facets, 'filter_options', lambda *args, **kwargs: {'sources': original['sources']})
+    result = planner.planner_catalog()
+    assert len(json.dumps(result)) < planner.MAX_CATALOG_CHARS
+    analysis = result['analyses'][0]
+    assert set(analysis['protocols']) == {protocol_id}
+    assert analysis['protocols'][protocol_id]['sequencing_method'] == 'MiSeq'
+    assert analysis['protocols'][protocol_id]['library_layout'] == 'paired'
+    assert analysis['protocols'][protocol_id]['primer_set_sha256'] == digest(metadata['primer_set'])
+    assert analysis['protocols'][protocol_id]['pcr_metadata_sha256'] == digest(metadata['pcr'])
+    assert analysis['recipe_scope'] == original['analyses'][0]['recipe_scope']
+    assert analysis['limitations'] == original['analyses'][0]['limitations']
+    assert original['analyses'][0]['protocols'][protocol_id]['primer_set'] == metadata['primer_set']
+
+
+def test_catalogue_only_offers_protocols_with_published_membership(tmp_path, monkeypatch):
+    from tests.test_research_chat import research_chat_fixture
+    from orchestration.statistics_catalog import analysis_choices
+    import ingestion.edna_analysis_bundle as analyses
+    from preprocessing.edna_analysis import protocol
+    from ingestion.immutable_bundle import digest
+    bundle, _ = research_chat_fixture(tmp_path, monkeypatch)
+    changed = deepcopy(bundle)
+    extra = deepcopy(changed['inputs']['canonical']['edna_assay'][0])
+    extra['sequencing_method'] = 'Unpublished instrument'
+    changed['inputs']['canonical']['edna_assay'].append(extra)
+    monkeypatch.setattr(analyses, 'load_analysis', lambda identity: changed)
+    choices = analysis_choices()[0]
+    assert digest(protocol(extra)) not in choices['protocols']
+    assert set(choices['protocols']) == set(choices['protocol_ids'])

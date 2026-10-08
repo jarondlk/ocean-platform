@@ -33,7 +33,9 @@ def analysis_choices():
         recipe = bundle['recipe']
         research = bundle['manifest'].get('schema_version') in {2, 3}
         accepted = analysis_publication(bundle)
-        protocols = {digest(protocol(a)): protocol(a) for a in bundle['inputs']['canonical']['edna_assay']} if research else {}
+        protocol_ids = sorted({r['protocol_id'] for r in bundle['tables']['membership']}) if research else []
+        protocols = {digest(protocol(a)): protocol(a) for a in bundle['inputs']['canonical']['edna_assay']
+                     if digest(protocol(a)) in protocol_ids} if research else {}
         option = {
             'analysis_id': record['analysis_id'], 'status': analysis_status(bundle),
             'analysis_kind': 'regional_frequency' if accepted else 'provisional_demo' if bundle['manifest'].get('schema_version') == 3 else 'detection_frequency' if research else 'edna_descriptive',
@@ -41,7 +43,7 @@ def analysis_choices():
             'time_from': recipe.get('time_from') or recipe.get('cohort', {}).get('time_from'),
             'time_to': recipe.get('time_to') or recipe.get('cohort', {}).get('time_to'),
             'assignment_methods': [recipe['assignment_method']] if research else recipe['assignment_methods'],
-            'protocol_ids': sorted({r['protocol_id'] for r in bundle['tables']['membership']}) if research else [],
+            'protocol_ids': protocol_ids,
             'protocol_labels': {key: ' · '.join(str(value[field] or 'unspecified') for field in ('target_gene', 'primer_set', 'sequencing_method', 'library_layout')) + ' · ' + key[:8] for key, value in protocols.items()},
             'protocols': protocols, 'sst_available': bool(recipe.get('sst_panel_id')) if research else False,
             'workflows': [{'kind': kind, 'question': aliases[0], 'description': DESCRIPTIONS[kind]} for kind, aliases in QUESTIONS.items()] if research else [],
