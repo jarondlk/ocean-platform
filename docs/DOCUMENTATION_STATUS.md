@@ -22,6 +22,9 @@ approved.
   — user-selected scope, controls, filters, latest-assay/calendar/metric choices,
   plus accepted provisional QC/weighting and comparable-cohort defaults. Local
   matching/sensitivity previews do not apply registries or scientific publication.
+- [Historical integration validation](HISTORICAL_SST_INTEGRATION_VALIDATION_2026-10-08.md)
+  — local backend/frontend and retained-data checks, plus the Next.js dependency
+  audit correction in draft PR #119; release/publication acceptance remains pending.
 - [Overview GCP rollout](OVERVIEW_GCP_ROLLOUT_2026-10-07.md) — preceding patch
   evidence; the source timeline is included in v0.7.3.
 
