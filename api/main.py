@@ -1052,7 +1052,10 @@ def _sst_daily_df(*, publication=...) -> pd.DataFrame:
     if publication is ...:
         publication = current_publication()
     if publication:
-        return pd.concat([legacy, pd.DataFrame(daily_rows(publication))], ignore_index=True)
+        legacy = pd.concat([legacy, pd.DataFrame(daily_rows(publication))], ignore_index=True)
+    # Existing parquet stores Python dates; regional receipts use ISO strings.
+    # One calendar-date type keeps combined Data and Explore sorting consistent.
+    legacy['date_jst'] = pd.to_datetime(legacy['date_jst'], errors='raise').dt.strftime('%Y-%m-%d')
     return legacy
 
 
