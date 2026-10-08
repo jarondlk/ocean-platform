@@ -41,6 +41,17 @@ const {ChatSourceSettings} = require(path.join(temp,'source-settings.cjs'));
 const {defaultScope} = require(path.join(temp,'settings.cjs'));
 const areas = ['A','B','C'].map((id,index) => ({area_id:id,label:id,west:140+index,east:141+index,south:38,north:39,coordinate_uncertainty_km:1}));
 
+test('regional demo rectangles show unknown coordinate uncertainty without inventing zero precision', async () => {
+  let renderer;
+  try {
+    await act(() => {renderer = create(React.createElement(ResearchAreaPlot,{areas:[{...areas[0],coordinate_uncertainty_km:null}],rows:[{area_id:'A',result_id:'unloaded',frequency:null,eligible:0}]}));});
+    const label = renderer.root.findByType('rect').props['aria-label'];
+    assert(label.includes('coordinate uncertainty not established'));
+    assert(!label.includes('null km'));
+    assert(!label.includes('0 km'));
+  } finally {await act(() => renderer?.unmount());}
+});
+
 test('reviewed maps distinguish sampled zero, unsampled null and unloaded cells; keyboard selects exact row', async () => {
   let renderer, selected;
   try {

@@ -11,6 +11,13 @@ approved.
 
 ## Current operating authority
 
+- [Miyagi provisional demo](MIYAGI_PROVISIONAL_DEMO_2026-10-08.md) — latest user
+  direction: stop NOAA acquisition, use retained regional context for Miyagi
+  2020–2023, and record explicit user approval separately from formal scientific
+  registries. Processing and calculation passed; live rollout remains pending.
+  This supersedes waiting for native patches or a separate researcher account
+  as prerequisites for this explicitly labelled provisional first demo.
+
 - [v0.7.3 operations](RELEASE_0.7.3_OPERATIONS.md) and
   [release notes](RELEASE_NOTES_0.7.3.md) — current exact-source/images, accepted
   rollout, preservation, cleanup, rollback and explicit scientific limits.

@@ -5246,15 +5246,15 @@ def chat_analysis_options():
         for record in records:
             bundle = load_analysis(record['analysis_id'])
             recipe = bundle['recipe']
-            research = bundle['manifest'].get('schema_version') == 2
+            research = bundle['manifest'].get('schema_version') in {2, 3}
             options.append({'analysis_id': record['analysis_id'], 'status': analysis_status(bundle),
-                'analysis_kind': 'detection_frequency' if research else 'edna_descriptive',
-                'label': recipe.get('region_id') or recipe.get('cohort', {}).get('provider_project_id') or 'Selected cohort',
+                'analysis_kind': 'provisional_demo' if bundle['manifest'].get('schema_version') == 3 else 'detection_frequency' if research else 'edna_descriptive',
+                'label': ('PROVISIONAL DEMO · ' + recipe['region_id'] + ' · ' + recipe['assignment_method']) if bundle['manifest'].get('schema_version') == 3 else recipe.get('region_id') or recipe.get('cohort', {}).get('provider_project_id') or 'Selected cohort',
                 'time_from': recipe.get('time_from') or recipe.get('cohort', {}).get('time_from'),
                 'time_to': recipe.get('time_to') or recipe.get('cohort', {}).get('time_to'),
                 'assignment_methods': [recipe['assignment_method']] if research else recipe['assignment_methods'],
                 'protocol_ids': sorted({r['protocol_id'] for r in bundle['tables']['membership']}) if research else [],
-                'protocol_labels': {digest(protocol(assay)): ' · '.join(str(protocol(assay)[key] or 'unspecified') for key in ('target_gene', 'primer_set', 'sequencing_method', 'library_layout')) for assay in bundle['inputs']['canonical']['edna_assay']} if research else {},
+                'protocol_labels': {digest(protocol(assay)): ' · '.join(str(protocol(assay)[key] or 'unspecified') for key in ('target_gene', 'primer_set', 'sequencing_method', 'library_layout')) + ' · ' + digest(protocol(assay))[:8] for assay in bundle['inputs']['canonical']['edna_assay']} if research else {},
                 'sst_available': bool(recipe.get('sst_panel_id')) if research else False,
                 'workflows': [{'kind':kind, 'question':aliases[0]} for kind,aliases in QUESTIONS.items()] if research else []})
         return {'options': options}
@@ -5329,7 +5329,7 @@ def _resolve_analysis_request(request):
             if isinstance(request, ChatFilterOptionsRequest):
                 from ingestion.edna_analysis_bundle import load_analysis
                 selected = load_analysis(selection['analysis_id'])
-                if selected['manifest'].get('schema_version') == 2:
+                if selected['manifest'].get('schema_version') in {2, 3}:
                     # Choice lookup retains selections and uses the published
                     # membership; it does not generate scientific answers.
                     members = {sid for row in selected['tables']['membership'] for sid in row['occurrence_ids']}
@@ -5440,7 +5440,7 @@ def _research_chat_response(request, bundle, *, user, model, interaction_id, sta
     from orchestration.research_intents import render_research
     if not options['evidence_scope']['sources']['edna_metabarcoding']['enabled']:
         return _chat_scope_abstention(request, user, model, interaction_id, started_at, options, 'source_disabled', 'Enable eDNA explicitly to use a published research workflow. Your source selection was retained.')
-    if not bundle or bundle['manifest'].get('schema_version') != 2:
+    if not bundle or bundle['manifest'].get('schema_version') not in {2, 3}:
         return _chat_scope_abstention(request, user, model, interaction_id, started_at, options, 'aggregate_scope_required', 'Select a published detection-frequency analysis for this research workflow.')
     if analysis_status(bundle) != 'current':
         return _chat_scope_abstention(request, user, model, interaction_id, started_at, options, 'aggregate_unavailable', 'This analysis is historical or its current inputs cannot be verified. Historical results remain in Data; no current scientific answer was generated.')
@@ -5481,7 +5481,7 @@ def chat(
         from ingestion.provenance_snapshot import SnapshotError
         try:
             selected = load_analysis(selection_id)
-            if selected['manifest'].get('schema_version') == 2:
+            if selected['manifest'].get('schema_version') in {2, 3}:
                 research_bundle = selected
         except (ValueError, KeyError, OSError, SnapshotError):
             if not request.research_intent:

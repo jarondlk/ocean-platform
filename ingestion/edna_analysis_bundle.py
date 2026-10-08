@@ -33,8 +33,14 @@ def _remote_store():
 
 def _registered_records():
     if config.EDNA_ARTIFACT_URI:
-        return [{'analysis_id': identity, **entry['metadata']}
-                for identity, entry in sorted(_remote_store().entries('analysis').items())]
+        records = {}
+        for namespace in ('analysis', 'provisional-demos'):
+            for identity, entry in _remote_store().entries(namespace).items():
+                record = {'analysis_id': identity, **entry['metadata']}
+                if identity in records and records[identity] != record:
+                    raise ValueError('Conflicting analysis registration')
+                records[identity] = record
+        return [records[key] for key in sorted(records)]
     records = []
     directory = analysis_root() / 'registry'
     if directory.is_symlink():
@@ -113,12 +119,16 @@ def validate_input_provenance(inputs):
 def publish_analysis(result):
     validate_input_provenance(result['inputs']['canonical'])
     research = result.get('schema_version') == 2
-    if research:
+    demo = result.get('schema_version') == 3
+    if demo:
+        from ingestion.provisional_research_bundle import TABLES as DEMO_TABLES, FILES as DEMO_FILES, ProvisionalRecipe, validate_inputs
+        validate_inputs(ProvisionalRecipe.model_validate(result['recipe']), result['inputs'])
+    elif research:
         from ingestion.research_analysis_bundle import RESEARCH_TABLES, RESEARCH_FILES, validate_research_inputs
         from preprocessing.research_recipe import DetectionFrequencyRecipe
         validate_research_inputs(DetectionFrequencyRecipe.model_validate(result['recipe']), result['inputs'])
-    tables = RESEARCH_TABLES if research else TABLES
-    required_files = RESEARCH_FILES if research else ANALYSIS_FILES
+    tables = DEMO_TABLES if demo else RESEARCH_TABLES if research else TABLES
+    required_files = DEMO_FILES if demo else RESEARCH_FILES if research else ANALYSIS_FILES
     if set(result['tables']) != set(tables):
         raise ValueError('Incomplete analysis table contract')
     root = analysis_root()
@@ -129,7 +139,7 @@ def publish_analysis(result):
     for name, rows in result['tables'].items():
         (staging / f'{name}.json').write_bytes(canonical_bytes(rows))
     manifest = seal_bundle(staging, root, result['analysis_id'], {
-        **({'schema_version': 2, 'analysis_kind': 'detection_frequency'} if research else {}),
+        **({'schema_version': 3, 'analysis_kind': 'provisional_demo'} if demo else {'schema_version': 2, 'analysis_kind': 'detection_frequency'} if research else {}),
         'algorithm_version': result['algorithm_version'], 'input_sha256': result['input_sha256'],
         'recipe_sha256': digest(result['recipe']), 'limitations': result['limitations'],
         'table_counts': {k: len(v) for k,v in result['tables'].items()},
@@ -151,7 +161,7 @@ def publish_analysis(result):
     atomic_json(root / 'recipes' / f"{digest(result['recipe'])}.json", {'analysis_id': manifest['id'], 'manifest_sha256': digest(manifest)})
     if config.EDNA_ARTIFACT_URI:
         _, files = read_bundle(root, manifest['id'], expected_digest=digest(manifest), required_files=required_files)
-        _remote_store().publish('analysis', manifest['id'], files,
+        _remote_store().publish('provisional-demos' if demo else 'analysis', manifest['id'], files,
             metadata={'manifest_sha256': digest(manifest), 'recipe_sha256': digest(result['recipe'])})
     return manifest
 
@@ -160,7 +170,11 @@ def load_analysis(identity):
     root = analysis_root()
     validate_id(identity)
     if config.EDNA_ARTIFACT_URI:
-        receipt, contents = _remote_store().read('analysis', identity, max_bytes=MAX_ANALYSIS_BYTES)
+        from ingestion.provenance_snapshot import SnapshotNotFound
+        try:
+            receipt, contents = _remote_store().read('analysis', identity, max_bytes=MAX_ANALYSIS_BYTES)
+        except SnapshotNotFound:
+            receipt, contents = _remote_store().read('provisional-demos', identity, max_bytes=MAX_ANALYSIS_BYTES)
         manifest = json.loads(contents['manifest.json'])
         if digest(manifest) != receipt['metadata']['manifest_sha256']:
             raise ValueError('Analysis manifest integrity failure')
@@ -182,7 +196,12 @@ def load_analysis(identity):
 
 def _decode_analysis(identity, manifest, contents):
     research = manifest.get('schema_version') == 2
-    if research:
+    demo = manifest.get('schema_version') == 3
+    if demo:
+        from ingestion.provisional_research_bundle import ALGORITHM, TABLES as DEMO_TABLES, FILES as DEMO_FILES, ProvisionalRecipe, build_demo
+        if manifest.get('analysis_kind') != 'provisional_demo' or manifest.get('algorithm_version') != ALGORITHM:
+            raise ValueError('Unknown provisional demo contract')
+    elif research:
         from ingestion.research_analysis_bundle import RESEARCH_TABLES, RESEARCH_FILES, validate_research_inputs
         from preprocessing.research_recipe import DetectionFrequencyRecipe
         from preprocessing.edna_detection_frequency import READABLE_ALGORITHM_VERSIONS
@@ -190,8 +209,8 @@ def _decode_analysis(identity, manifest, contents):
             raise ValueError('Unknown research analysis contract')
     elif manifest.get('schema_version') not in {None, 1}:
         raise ValueError('Unknown analysis schema version')
-    tables_contract = RESEARCH_TABLES if research else TABLES
-    required_files = RESEARCH_FILES if research else ANALYSIS_FILES
+    tables_contract = DEMO_TABLES if demo else RESEARCH_TABLES if research else TABLES
+    required_files = DEMO_FILES if demo else RESEARCH_FILES if research else ANALYSIS_FILES
     if manifest.get('id') != identity or set(contents) != required_files | {'manifest.json'} or set(manifest['files']) != required_files:
         raise ValueError('Incomplete analysis file contract')
     for name, sha in manifest['files'].items():
@@ -204,7 +223,11 @@ def _decode_analysis(identity, manifest, contents):
     if digest({'algorithm':manifest['algorithm_version'], 'recipe':recipe, 'input_sha256':digest(inputs)}) != identity:
         raise ValueError('Analysis identity mismatch')
     validate_input_provenance(inputs['canonical'])
-    if research:
+    if demo:
+        expected = build_demo(ProvisionalRecipe.model_validate(recipe), inputs)
+        if manifest.get('limitations') != expected['limitations']:
+            raise ValueError('Provisional demo limitations mismatch')
+    elif research:
         validate_research_inputs(DetectionFrequencyRecipe.model_validate(recipe), inputs)
     else:
         AnalysisRecipe.model_validate(recipe)
@@ -224,10 +247,15 @@ def _decode_analysis(identity, manifest, contents):
                 raise ValueError('Analysis result identity mismatch')
             seen.add(result_id)
         tables[name] = rows
+    if demo and tables != expected['tables']:
+        raise ValueError('Provisional results differ from complete immutable inputs')
     return {'manifest':manifest, 'recipe':recipe, 'inputs':inputs, 'tables':tables, 'files':contents}
 
 
 def analysis_status(bundle):
+    if bundle['manifest'].get('schema_version') == 3:
+        from ingestion.provisional_research_bundle import demo_status
+        return demo_status(bundle)
     if bundle['manifest'].get('schema_version') == 2:
         from ingestion.research_analysis_bundle import research_status
         return research_status(bundle)
@@ -256,7 +284,7 @@ def context_documents(scope):
         return []
     try:
         bundle = load_analysis(identity)
-        if bundle.get('manifest', {}).get('schema_version') == 2:
+        if bundle.get('manifest', {}).get('schema_version') in {2, 3}:
             # Version-two Chat uses typed exact-result intents, never arbitrary
             # truncations of frequency tables as model-generated statistics.
             return []
@@ -303,7 +331,7 @@ def request_scope(scope):
     if analysis_status(bundle) != 'current':
         raise ValueError('Analysis is historical or its current inputs cannot be verified')
     recipe = bundle['recipe']
-    if bundle['manifest'].get('schema_version') == 2:
+    if bundle['manifest'].get('schema_version') in {2, 3}:
         raise ValueError('Detection-frequency analyses require a supported research intent')
     cohort = recipe['cohort']
     for key in ('provider', 'provider_project_id', 'provider_run_id', 'time_from', 'time_to', 'lat_min', 'lat_max', 'lon_min', 'lon_max'):
@@ -384,7 +412,7 @@ def regenerate_affected_analyses(sample_id: str, *, maximum: int = 100) -> dict:
         ):
             continue
         environment = bundle['inputs'].get('environment') or []
-        if bundle.get('manifest', {}).get('schema_version') == 2:
+        if bundle.get('manifest', {}).get('schema_version') in {2, 3}:
             # Classification changes stale the reviewed identity bindings. A
             # manual new review/publication is required; never silently rebind.
             pending.append({'analysis_id': record['analysis_id'], 'reason': 'research_review_and_manual_publication_required'})

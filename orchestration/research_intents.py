@@ -134,6 +134,9 @@ def check_scope(bundle, scope, kind):
         "time_from": recipe["time_from"],
         "time_to": recipe["time_to"],
     }
+    if bundle["manifest"].get("schema_version") == 3:
+        permitted.pop("sample_kind")
+        permitted.pop("is_control")
     for key in ("provider", "provider_project_id", "provider_run_id"):
         values = {sample.get(key) for sample in samples}
         if len(values) == 1:
@@ -182,11 +185,30 @@ def _value(value):
 
 def result_rows(bundle, kind, protocol_id):
     output = {}
-    for table in TABLES_BY_INTENT[kind]:
+    tables = TABLES_BY_INTENT[kind]
+    if bundle["manifest"].get("schema_version") == 3:
+        tables += (
+            ("read_ranking",)
+            if kind == "fish_frequency"
+            else ("relative_sst_thresholds",)
+            if kind in SST_INTENTS
+            else ()
+        )
+    for table in tables:
         rows = bundle["tables"][table]
         rows = [r for r in rows if r.get("protocol_id", protocol_id) == protocol_id]
         if kind == "fish_frequency" and table == "series":
             rows = [r for r in rows if r["period_kind"] in {"year", "season"}]
+        if table == "read_ranking":
+            # Highest sequencing-read sums, separately ranked for each period.
+            counts = {}
+            selected = []
+            for row in rows:
+                group = (row["period_kind"], row["period"])
+                counts[group] = counts.get(group, 0) + 1
+                if counts[group] <= 10:
+                    selected.append(row)
+            rows = selected
         if kind == "spatial_temperature" and table == "area_month_sst":
             selected = next(
                 (
@@ -203,6 +225,7 @@ def result_rows(bundle, kind, protocol_id):
 
 def render_research(bundle, scope, query, intent=None):
     recipe = bundle["recipe"]
+    provisional = bundle["manifest"].get("schema_version") == 3
     recognized = parse_intent(query, recipe)
     if not recognized or (intent and recognized != intent.kind):
         return abstain(
@@ -225,11 +248,18 @@ def render_research(bundle, scope, query, intent=None):
         if not matches:
             return abstain(
                 "aggregate_scope_required",
-                "This analysis does not establish Sardinops melanostictus as its spatial taxon. Select the reviewed sardine analysis; no taxon was substituted.",
+                "This cohort has no species-resolved Sardinops melanostictus evidence. Unidentified Sardinops records cannot establish Japanese-sardine detections or absence. A genus-level analysis needs a separately labelled recipe; no taxon was substituted."
+                if provisional
+                else "This analysis does not establish Sardinops melanostictus as its spatial taxon. Select the reviewed sardine analysis; no taxon was substituted.",
             )
     failure = check_scope(bundle, scope, kind)
     if failure:
         return failure
+    if provisional and kind in {"distribution_change", "follow_through"}:
+        return abstain(
+            "no_matching_evidence",
+            "This provisional demo uses one Miyagi regional rectangle. It cannot establish changes in spatial distribution; reviewed comparable sampling areas are still needed. The regional time series remains available.",
+        )
     protocols = sorted({row["protocol_id"] for row in bundle["tables"]["membership"]})
     if not protocols:
         return abstain(
@@ -257,8 +287,10 @@ def render_research(bundle, scope, query, intent=None):
             "no_matching_evidence",
             "No area-season strata meet the fixed endpoint support rule. Distribution-change rankings and follow-through are unavailable; unobserved groups were not treated as zero.",
         )
-    if kind == "temperature_comparison" and not any(
-        r["representative"] for r in rows_by_table["temperature_contrasts"]
+    if (
+        kind == "temperature_comparison"
+        and not any(r["representative"] for r in rows_by_table["temperature_contrasts"])
+        and not provisional
     ):
         return abstain(
             "no_matching_evidence",
@@ -320,7 +352,11 @@ def render_research(bundle, scope, query, intent=None):
                         "coordinate_uncertainty_km",
                     )
                 }
-                for area in bundle["inputs"]["sampling_registry"]["definition"]["areas"]
+                for area in (
+                    bundle["inputs"]["provisional_sampling"]["areas"]
+                    if provisional
+                    else bundle["inputs"]["sampling_registry"]["definition"]["areas"]
+                )
             ]
             if table in {"spatial", "spatial_temperature_bins", "area_month_sst"}
             else []
@@ -331,10 +367,12 @@ def render_research(bundle, scope, query, intent=None):
         documents.append(
             {
                 "id": doc_id,
-                "title": table.replace("_", " ").capitalize(),
+                "title": ("Provisional demo: " if provisional else "") + table.replace("_", " ").capitalize(),
                 "analysis_id": identity,
                 "table": table,
-                "analysis_type": "detection_frequency",
+                "analysis_type": "provisional_demo"
+                if provisional
+                else "detection_frequency",
                 "source_family": "edna_metabarcoding",
                 "covered_source_types": covered,
                 "result_ids": [r["result_id"] for r in featured],
@@ -365,6 +403,12 @@ def render_research(bundle, scope, query, intent=None):
                 "detected",
                 "eligible",
                 "frequency",
+                "read_count",
+                "low_max_celsius",
+                "high_min_celsius",
+                "baseline_from",
+                "baseline_to",
+                "supported_days",
                 "low_detected",
                 "low_eligible",
                 "high_detected",
@@ -414,11 +458,19 @@ def render_research(bundle, scope, query, intent=None):
             )
     title = f"Published detection-frequency analysis for {_escape(recipe['region_id'])}, {recipe['time_from']}–{recipe['time_to']} ({recipe['calendar']}); one assay protocol."
     explanation = "Frequency = detected / eligible physical samples. An unsampled group has no rate. Low-support and partial periods retain their flags. These descriptive differences do not establish abundance, occupancy or causation."
-    if kind in SST_INTENTS:
+    if provisional:
+        title = f"User-approved provisional Miyagi demo, {recipe['time_from']}–{recipe['time_to']} ({recipe['calendar']}); one assignment method and assay protocol."
+        explanation = "Frequency = detected / eligible singleton occurrence proxies, not confirmed physical water collections. Canonical unknown classifications and identities are unchanged; known controls, empty tables and unresolved repeats are excluded. Read-ranking tables show sequencing read sums, not fish abundance. ANEMONE is the user-selected reviewer display label; this is not independent researcher approval or provider endorsement. Sparse groups retain warnings. A regional rectangle cannot establish within-region spatial distribution."
+        if kind in SST_INTENTS:
+            explanation += " SST uses final MUR 04.1 only: 0.05-degree subsampled regional foundation analysis with cosine-latitude grid-point weighting, not native coastal/sample-point temperatures. Low/high thresholds use each region/season's supported daily SST over the displayed study years, not a long-term climatology. Sampling-time links use 24 hours, extended to 48 hours only if over 20% are unmatched; matched and all-eDNA denominators differ. Missing or interim dates remain explicit final-series gaps; nearby-date links retain their actual timestamps. These comparisons show association, not weather causing abundance changes."
+            explanation += f" Final-series gaps: {', '.join(g['day'] for g in bundle['inputs']['period_preview']['final_series_gaps']) or 'none'}."
+    elif kind in SST_INTENTS:
         product = bundle["inputs"]["sst_panel"]["definition"]["product_registry"][
             "definition"
         ]
         explanation += f" SST product: {_escape(product['provider'])}, {_escape(product['product_id'])}, {_escape(product['version'])}; {_escape(product['measurement_type'])}. All-eDNA and SST-matched denominators remain separate. Full-month context uses available daily area values under the recorded coverage rule."
+        if product.get("regional_context"):
+            explanation += " Historical SST uses 0.05-degree subsampled regional context with cosine-latitude grid-point weighting. It is not native coastal or point-sample temperature evidence. Missing ice fractions may use the open-sea mask with recorded warnings; interim generations and unsupported dates remain gaps."
         if product["temporal_statistic"] not in {
             "daily_mean",
             "daily_foundation_analysis",

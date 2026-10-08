@@ -166,7 +166,7 @@ export type ContextDocument = {
   table?: string | null;
   result_ids?: string[];
   result_rows?: Record<string, unknown>[];
-  plot_areas?: {area_id: string; label: string; west: number; east: number; south: number; north: number; coordinate_uncertainty_km: number}[];
+  plot_areas?: {area_id: string; label: string; west: number; east: number; south: number; north: number; coordinate_uncertainty_km: number | null}[];
   plot_taxa?: {taxon_key: string; species: string}[];
   analysis_recipe?: Record<string, unknown> | null;
   covered_source_types?: string[];

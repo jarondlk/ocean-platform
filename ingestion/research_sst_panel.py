@@ -194,6 +194,17 @@ def decode_panel(identity, manifest, files, *, metadata_only=False):
             != granule.expected_time_utc.astimezone(timezone.utc).isoformat()
         ):
             raise ValueError("SST panel observation provenance mismatch")
+        context = product.regional_context
+        if context and (
+            row.get("evidence_role") != "regional_context"
+            or row.get("spatial_operation") != "grid_point_subsampling"
+            or row.get("source_plan_sha256") != context.source_plan_sha256
+            or row.get("grid_step_degrees") != context.expected_grid_step_degrees
+            or row.get("processing_generation") != "final"
+            or row.get("native_sample_area_evidence") is not False
+            or row.get("weighting") != "cosine_latitude_grid_point_approximation"
+        ):
+            raise ValueError("SST panel regional context semantics mismatch")
         seen.add(pair)
     return {
         "panel_id": identity,

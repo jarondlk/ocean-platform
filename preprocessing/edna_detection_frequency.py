@@ -99,6 +99,7 @@ def _season_interval(year, label):
 
 def prepare_membership(recipe, source, areas, memberships):
     """Validate evidence bindings; stale decisions exclude units, never broaden scope."""
+    provisional = recipe.analysis_unit == "provisional_singleton_occurrence"
     versions = registry_versions(areas, memberships)
     if versions != {
         "region_version": recipe.region_version,
@@ -139,11 +140,18 @@ def prepare_membership(recipe, source, areas, memberships):
         if any(
             not r
             or r.get("active", True) is not True
-            or r.get("sample_kind") != "environmental"
-            or r.get("is_control") is not False
+            or r.get("sample_kind")
+            not in ({"environmental", "unknown"} if provisional else {"environmental"})
+            or (
+                r.get("is_control") is True
+                if provisional
+                else r.get("is_control") is not False
+            )
             for r in rows
         ):
             reasons.append("inactive_control_or_unknown")
+        if provisional and len(ids) != 1:
+            reasons.append("provisional_repeated_identity_unresolved")
         if (
             not assay
             or assay.get("active", True) is not True
@@ -162,6 +170,14 @@ def prepare_membership(recipe, source, areas, memberships):
                 if when.tzinfo is None:
                     raise ValueError("Unqualified source time")
                 local = when.astimezone(ZoneInfo(recipe.calendar)).date()
+            except (KeyError, TypeError, ValueError):
+                pass
+        if provisional and sample and sample.get("temporal_precision") == "date":
+            try:
+                from datetime import time
+
+                local = date.fromisoformat(str(sample["collection_date_utc"])[:10])
+                when = datetime.combine(local, time(12), ZoneInfo(recipe.calendar))
             except (KeyError, TypeError, ValueError):
                 pass
         if local is None:
@@ -187,6 +203,20 @@ def prepare_membership(recipe, source, areas, memberships):
             "decision_id": digest(decision.model_dump(mode="json")),
             "area_id": decision.area_id,
         }
+        if provisional:
+            common.update(
+                analysis_unit="provisional_singleton_occurrence",
+                physical_identity_confirmed=False,
+                environmental_classification_confirmed=all(
+                    r
+                    and r.get("sample_kind") == "environmental"
+                    and r.get("is_control") is False
+                    for r in rows
+                ),
+                collection_time_assumed=bool(
+                    sample and sample.get("temporal_precision") == "date"
+                ),
+            )
         if reasons:
             excluded.append({**common, "reasons": sorted(set(reasons))})
         else:
@@ -489,6 +519,14 @@ def build_detection_frequency(
                 bins[
                     "low" if value <= low else "high" if value >= high else "middle"
                 ].append(m)
+        elif partition.kind == "regional_season_thirds":
+            for member in matched:
+                label = links[member["physical_sample_id"]].get("relative_bin")
+                if label not in {"low", "middle", "high", "unpartitioned_ties"}:
+                    raise ValueError(
+                        "Regional relative bins require a verified daily baseline"
+                    )
+                bins[label].append(member)
         else:
             bins["unpartitioned_ties"].extend(matched)
         contrasts = []

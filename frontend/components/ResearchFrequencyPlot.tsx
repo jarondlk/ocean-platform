@@ -2,7 +2,7 @@
 
 import { useId, useRef } from "react";
 
-export type ResearchArea = {area_id: string; label: string; west: number; east: number; south: number; north: number; coordinate_uncertainty_km: number};
+export type ResearchArea = {area_id: string; label: string; west: number; east: number; south: number; north: number; coordinate_uncertainty_km: number | null};
 type Row = Record<string, unknown>;
 type ExportMetadata = Record<string, unknown>;
 
@@ -44,7 +44,8 @@ export function ResearchAreaPlot({ rows, areas, onSelect, exportMetadata }: {row
         const value = typeof row?.frequency === "number" ? row.frequency : typeof row?.sst_celsius === "number" ? row.sst_celsius : null;
         const opacity = value === null ? 1 : typeof row?.frequency === "number" ? .2+.8*value : .25+.75*(max === min ? .5 : (value-min)/(max-min));
         const status = row ? String(row.sampling_status || row.status || "unavailable") : "not loaded";
-        const label = `${area.label}: ${status}; detected ${row?.detected ?? "unavailable"}, eligible ${row?.eligible ?? "unavailable"}, value ${value ?? "unavailable"}; coordinate uncertainty ${area.coordinate_uncertainty_km} km`;
+        const uncertainty = area.coordinate_uncertainty_km == null ? "not established" : `${area.coordinate_uncertainty_km} km`;
+        const label = `${area.label}: ${status}; detected ${row?.detected ?? "unavailable"}, eligible ${row?.eligible ?? "unavailable"}, value ${value ?? "unavailable"}; coordinate uncertainty ${uncertainty}`;
         return <g key={area.area_id}><rect x={x(area.west)} y={y(area.north)} width={x(area.east)-x(area.west)} height={y(area.south)-y(area.north)} fill={value === null ? `url(#${patternId})` : typeof row?.frequency === "number" ? "#2563eb" : "#0f766e"} fillOpacity={opacity} stroke={row?.low_support ? "#b45309" : "#64748b"} strokeDasharray={row ? undefined : "3 3"} tabIndex={row ? 0 : undefined} role={row ? "button" : undefined} aria-label={label} onClick={() => row && onSelect(String(row.result_id))} onKeyDown={event => { if (row && ["Enter", " "].includes(event.key)) { event.preventDefault(); onSelect(String(row.result_id)); } }}><title>{label}</title></rect></g>;
       })}
       <text x="60" y="280">{west.toFixed(3)}°E</text><text x="640" y="280">{east.toFixed(3)}°E</text>
