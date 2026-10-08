@@ -399,3 +399,20 @@ def test_catalogue_only_offers_protocols_with_published_membership(tmp_path, mon
     choices = analysis_choices()[0]
     assert digest(protocol(extra)) not in choices['protocols']
     assert set(choices['protocols']) == set(choices['protocol_ids'])
+
+
+def test_provider_schema_is_small_but_does_not_relax_filter_validation():
+    from orchestration.settings_plan import planner_response_schema
+    schema = planner_response_schema()
+    assert len(json.dumps(schema)) < 4000
+    assert '$ref' not in json.dumps(schema)
+    sources = schema['properties']['evidence_scope']['properties']['sources']['properties']
+    assert set(sources) == set(FAMILIES)
+    assert sources['ctd']['properties']['filters'] == {'type': 'object', 'additionalProperties': True}
+    invalid = proposal()
+    invalid['evidence_scope']['sources']['ctd']['filters'] = {'sql': 'SELECT * FROM private'}
+    with pytest.raises(ValidationError):
+        SettingsProposal.model_validate(invalid)
+    invalid['evidence_scope']['sources']['ctd']['filters'] = {'lat_min': 200}
+    with pytest.raises(ValidationError):
+        SettingsProposal.model_validate(invalid)

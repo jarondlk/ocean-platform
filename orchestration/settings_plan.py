@@ -9,6 +9,33 @@ from retrieval.source_scope import EvidenceScope
 SourceFamily = Literal['ctd', 'metagenome', 'remote_sensing', 'edna_metabarcoding']
 
 
+def planner_response_schema():
+    """Bound provider grammar complexity; full proposal validation remains mandatory."""
+    schema = SettingsProposal.model_json_schema()
+    definitions = schema['$defs']
+
+    def simplify(node):
+        if isinstance(node, list):
+            return [simplify(value) for value in node]
+        if not isinstance(node, dict):
+            return node
+        if '$ref' in node:
+            name = node['$ref'].rsplit('/', 1)[-1]
+            if name in {'SampleFilters', 'SatelliteFilters', 'EdnaFilters'}:
+                # Filter keys/types/limits are checked by EvidenceScope and the
+                # quoted-constraint validator, rather than a large nullable grammar.
+                return {'type': 'object', 'additionalProperties': True}
+            return simplify(definitions[name])
+        result = {key: simplify(value) for key, value in node.items() if key not in
+                  {'$defs', 'title', 'default', 'const', 'minLength', 'maxLength',
+                   'minItems', 'maxItems', 'minimum', 'maximum', 'pattern', 'format'}}
+        if result.get('type') == 'object' and result.get('properties'):
+            result['required'] = list(result['properties'])
+        return result
+
+    return simplify(schema)
+
+
 class QuestionConstraint(BaseModel):
     model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
     family: SourceFamily

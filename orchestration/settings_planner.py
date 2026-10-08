@@ -6,11 +6,11 @@ import time
 
 import config
 from model_runtime import get_model_runtime
-from orchestration.settings_plan import SettingsProposal
+from orchestration.settings_plan import SettingsProposal, planner_response_schema
 from orchestration.statistics_catalog import statistics_catalog
 from retrieval.source_scope import FAMILIES, enabled_sources
 
-PLAN_VERSION = 'auto-settings-v1'
+PLAN_VERSION = 'auto-settings-v2'
 MAX_PLAN_CHARS = 20000
 MAX_CATALOG_CHARS = 36000
 BAY_NAMES = {'O': ('onagawa', '女川'), 'I': ('ishinomaki', '石巻'), 'M': ('mutsu', '陸奥')}
@@ -241,7 +241,7 @@ Put every unsupported/unresolved constraint in unresolved_constraints. Never set
     }, ensure_ascii=False, default=str)
     try:
         raw = get_model_runtime().structured_chat(
-            model=config.CHAT_PLANNER_MODEL, prompt=prompt, schema=SettingsProposal.model_json_schema(),
+            model=config.CHAT_PLANNER_MODEL, prompt=prompt, schema=planner_response_schema(),
             max_output_tokens=config.CHAT_PLANNER_MAX_OUTPUT_TOKENS,
             timeout=config.CHAT_PLANNER_TIMEOUT_SECONDS)
     except Exception as exc:
