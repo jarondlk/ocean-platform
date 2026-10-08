@@ -77,9 +77,13 @@ class SampleSelection(ScopeModel):
     filters: SampleFilters
 
 
+class SatelliteFilters(Coordinates):
+    dataset_id: str | None = Field(default=None, min_length=1, max_length=128)
+
+
 class SatelliteSelection(ScopeModel):
     enabled: StrictBool
-    filters: Coordinates
+    filters: SatelliteFilters
 
 
 class EdnaSelection(ScopeModel):
@@ -131,6 +135,8 @@ def document_matches(document, scope):
     if not selection or not selection['enabled']:
         return False
     values = {**(document.get('metadata') or {}), **document}
+    if family == 'remote_sensing':
+        values.setdefault('dataset_id', 'current-sst')
     filters = selection['filters']
     if not matches_time(values.get('time'), filters.get('time_from'), filters.get('time_to')):
         return False
@@ -173,7 +179,9 @@ def scope_sql(scope, *, alias='', sample_ids=None, assignment_methods=None):
                 continue
             name = stem+key
             params[name] = value
-            if key == 'taxon':
+            if key == 'dataset_id' and family == 'remote_sensing':
+                branch.append(f"COALESCE(NULLIF(CAST({prefix}metadata_json AS jsonb)->>'dataset_id', ''), 'current-sst') = :{name}")
+            elif key == 'taxon':
                 table = alias or 'retrieval_document'
                 ranks = ('assigned_taxon_name', 'superkingdom', 'kingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species', 'subspecies')
                 terms = ' OR '.join(f'lower(detection."{rank}") = lower(:{name})' for rank in ranks)

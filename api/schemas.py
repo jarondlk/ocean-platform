@@ -768,6 +768,7 @@ class SstPoint(BaseModel):
 
 
 class SstDailyPoint(BaseModel):
+    dataset_id: str = "current-sst"
     date_jst: str
     mean_sst: Optional[float] = None
     min_sst: Optional[float] = None
@@ -775,6 +776,7 @@ class SstDailyPoint(BaseModel):
 
 
 class SstDataResponse(BaseModel):
+    datasets: List[Dict[str, Any]] = Field(default_factory=list)
     observations: int
     days: int
     stats: Dict[str, Any]

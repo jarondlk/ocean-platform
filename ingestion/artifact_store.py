@@ -29,6 +29,7 @@ NAMESPACES = {
     "retrieval",
     "analysis",
     "provisional-demos",
+    "regional-publications",
     "recipes",
     "classification-reviews",
     "evaluation",

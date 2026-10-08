@@ -70,7 +70,8 @@ def catalog():
 @router.get('/runs/{analysis_id}')
 def detail(analysis_id: str):
     bundle = _load(analysis_id)
-    return dict(analysis_id=analysis_id, status=analysis_status(bundle), recipe=bundle['recipe'],
+    from ingestion.regional_publication import analysis_publication
+    return dict(analysis_id=analysis_id, operational_publication=analysis_publication(bundle), status=analysis_status(bundle), recipe=bundle['recipe'],
                 manifest=bundle['manifest'], tables=list(bundle['tables']))
 
 
@@ -142,6 +143,12 @@ def export(analysis_id: str, table: str = 'diversity', assignment_method: str | 
         from ingestion.immutable_bundle import digest
         metadata['sampling_registry_id'] = digest(bundle['inputs']['provisional_sampling'] if bundle['manifest'].get('schema_version') == 3 else bundle['inputs']['sampling_registry'])
         fixed += list(metadata)
+    from ingestion.regional_publication import analysis_publication
+    accepted = analysis_publication(bundle)
+    if accepted:
+        metadata['operational_publication_id'] = accepted['publication_id']
+        metadata['operational_approval_basis'] = accepted['approval_basis']
+        fixed.extend(['operational_publication_id', 'operational_approval_basis'])
     columns = fixed + sorted({k for r in rows for k in r if k not in fixed})
     stream = io.StringIO()
     writer = csv.DictWriter(stream, fieldnames=columns)

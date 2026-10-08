@@ -145,7 +145,11 @@ export function evidenceDeepLinks(target: CitationTarget): EvidenceDeepLink[] {
         links.push({
           kind: "data",
           label: "SST record",
-          href: buildHref("/data", { view: "sst", time_from: date, time_to: date, doc_id: docId }),
+          href: buildHref("/data", { view: "sst",
+            dataset_id: safeEvidenceIdentifier(typeof target.source.metadata?.dataset_id === "string" ? target.source.metadata.dataset_id : null),
+            time_from: safeIsoDate(typeof target.source.metadata?.observed_start === "string" ? target.source.metadata.observed_start : null) || date,
+            time_to: safeIsoDate(typeof target.source.metadata?.observed_end === "string" ? target.source.metadata.observed_end : null) || date,
+            doc_id: docId }),
         });
       }
     } else if (target.source.source_type === "edna_metabarcoding" && sampleId) {

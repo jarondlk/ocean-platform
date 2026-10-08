@@ -182,7 +182,7 @@ async def _app_lifespan(_app: FastAPI):
 app = FastAPI(
     title="OCEAN Platform API",
     description="API layer for the Next.js migration of the provenance-aware marine RAG system.",
-    version="0.7.3",
+    version="0.7.5",
     lifespan=_app_lifespan,
 )
 
@@ -256,15 +256,15 @@ EXPLORE_DATASETS: Dict[str, Dict[str, Any]] = {
         ],
     },
     "sst_daily": {
-        "label": "Satellite SST daily",
+        "label": "Published satellite SST daily",
         "path": config.NORMALIZED_DIR / "sst_daily_summary.parquet",
         "date_columns": ["date_jst"],
         "bay_column": None,
         "station_column": None,
-        "source_column": None,
+        "source_column": "dataset_id",
         "default_x": "date_jst",
         "default_y": "mean_sst",
-        "default_columns": ["date_jst", "mean_sst", "min_sst", "max_sst", "std_sst", "n_files"],
+        "default_columns": ["dataset_id", "date_jst", "mean_sst", "min_sst", "max_sst", "std_sst", "n_files"],
     },
     "diversity": {
         "label": "Diversity indices",
@@ -1045,8 +1045,15 @@ def _sst_points_df() -> pd.DataFrame:
     return _read_parquet_artifact(str(config.NORMALIZED_DIR / "sst_point_timeseries.parquet"))
 
 
-def _sst_daily_df() -> pd.DataFrame:
-    return _read_explore_dataset("sst_daily")
+def _sst_daily_df(*, publication=...) -> pd.DataFrame:
+    from ingestion.regional_publication import current_publication, daily_rows
+    legacy = _read_explore_dataset("sst_daily").copy()
+    legacy['dataset_id'] = 'current-sst'
+    if publication is ...:
+        publication = current_publication()
+    if publication:
+        return pd.concat([legacy, pd.DataFrame(daily_rows(publication))], ignore_index=True)
+    return legacy
 
 
 def _parse_taxa_json(value: Any, *, label_keys: Iterable[str]) -> List[TaxaEntry]:
@@ -3679,6 +3686,10 @@ def stats() -> CorpusStats:
                 publication = "not_materialized"
         except (ValueError, OSError, KeyError, SnapshotError):
             publication = "unavailable"
+    from ingestion.regional_publication import current_publication, documents
+    regional = current_publication()
+    if regional:
+        docs.extend(documents(regional))
     counts: Dict[str, int] = {}
     for doc in docs:
         source_type = str(doc.get("source_type") or "unknown")
@@ -3690,7 +3701,7 @@ def stats() -> CorpusStats:
         edna_retrieval_documents=edna_count,
         samples=_parquet_rows(config.SERVING_DIR / "sample_registry.parquet"),
         ctd_casts=_parquet_rows(config.NORMALIZED_DIR / "ctd_summary.parquet"),
-        sst_days=_parquet_rows(config.NORMALIZED_DIR / "sst_daily_summary.parquet"),
+        sst_days=_sst_daily_df()["date_jst"].astype(str).str[:10].nunique(),
         analysis_docs=_count_jsonl(config.ANALYSIS_DIR / "analysis_documents.jsonl"),
         reliability_docs=_count_jsonl(config.RELIABILITY_DIR / "reliability_documents.jsonl"),
         provenance_records=_count_jsonl(config.PROVENANCE_DIR / "provenance.jsonl"),
@@ -3895,7 +3906,7 @@ def debug_state() -> Dict[str, Any]:
     datasets: Dict[str, Dict[str, Any]] = {}
     for dataset, cfg in EXPLORE_DATASETS.items():
         try:
-            df = _read_explore_dataset(dataset)
+            df = _sst_daily_df() if dataset == "sst_daily" else _read_explore_dataset(dataset)
             datasets[dataset] = {
                 "label": cfg["label"],
                 "path": str(cfg["path"]),
@@ -4007,7 +4018,7 @@ def data_catalog() -> DataCatalogResponse:
         taxa_samples=taxa_samples,
         ctd_variables=variables,
         sst_observations=len(sst_points),
-        sst_days=len(sst_daily),
+        sst_days=sst_daily["date_jst"].astype(str).str[:10].nunique(),
         context_rows=len(context),
     )
 
@@ -4048,21 +4059,30 @@ def data_taxa(sample_id: str) -> TaxaSampleResponse:
 
 @app.get("/data/sst", response_model=SstDataResponse)
 def data_sst(
+    dataset_id: Optional[str] = None,
     time_from: Optional[str] = None,
     time_to: Optional[str] = None,
     limit: int = Query(default=1000, ge=1, le=5000),
 ) -> SstDataResponse:
+    from ingestion.regional_publication import current_publication, DATASET, LABEL, NOTES
+    from schema.time_range import matches_time
+    try:
+        validate_time_range(time_from, time_to)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    publication = current_publication()
+    if dataset_id not in (None, 'current-sst', DATASET):
+        raise HTTPException(400, 'Unknown SST dataset')
+    if dataset_id == DATASET and publication is None:
+        raise HTTPException(404, 'Historical SST is not published')
     points = _sst_points_df().copy()
-    daily = _sst_daily_df().copy()
-
-    if time_from:
-        start = pd.to_datetime(time_from)
-        points = points[pd.to_datetime(points["time_jst"], errors="coerce") >= start]
-        daily = daily[pd.to_datetime(daily["date_jst"], errors="coerce") >= start]
-    if time_to:
-        end = pd.to_datetime(time_to)
-        points = points[pd.to_datetime(points["time_jst"], errors="coerce") <= end]
-        daily = daily[pd.to_datetime(daily["date_jst"], errors="coerce") <= end]
+    daily = _sst_daily_df(publication=publication).copy()
+    if dataset_id:
+        daily = daily[daily['dataset_id'] == dataset_id]
+        if dataset_id != 'current-sst':
+            points = points.iloc[0:0]
+    points = points[points['time_jst'].map(lambda t: matches_time(str(t), time_from, time_to)).astype(bool)]
+    daily = daily[daily['date_jst'].map(lambda t: matches_time(str(t)[:10], time_from, time_to)).astype(bool)]
 
     points = points.sort_values("time_jst").head(limit)
     daily = daily.sort_values("date_jst")
@@ -4075,9 +4095,24 @@ def data_sst(
         "nearest_lon": _json_safe_value(points["nearest_lon"].dropna().iloc[0]) if "nearest_lon" in points and points["nearest_lon"].notna().any() else None,
     }
 
+    datasets = [{'dataset_id': 'current-sst', 'label': 'Current satellite SST', 'notes': [], 'final_series_gaps': []}]
+    if publication:
+        datasets.append({'dataset_id': DATASET, 'label': LABEL, 'notes': NOTES,
+                         'publication_id': publication['publication_id'],
+                         'final_series_gaps': [g for g in publication['period']['final_series_gaps'] if matches_time(g['day'], time_from, time_to)]})
+    for dataset in datasets:
+        rows = daily[daily['dataset_id'] == dataset['dataset_id']]
+        dataset['days'] = len(rows)
+    selected_datasets = set(daily['dataset_id'])
+    if selected_datasets == {DATASET}:
+        values = pd.to_numeric(daily['mean_sst'], errors='coerce')
+        stats_payload.update(mean_sst=_json_safe_value(values.mean()), min_sst=_json_safe_value(values.min()), max_sst=_json_safe_value(values.max()))
+    elif len(selected_datasets) > 1:
+        stats_payload.update(mean_sst=None, min_sst=None, max_sst=None)
     return SstDataResponse(
+        datasets=datasets,
         observations=len(points),
-        days=len(daily),
+        days=daily['date_jst'].astype(str).str[:10].nunique(),
         stats=stats_payload,
         points=[
             SstPoint(time_jst=str(_json_safe_value(row["time_jst"])), sst=float(row["sst"]))
@@ -4085,6 +4120,7 @@ def data_sst(
         ],
         daily=[
             SstDailyPoint(
+                dataset_id=row["dataset_id"],
                 date_jst=str(_json_safe_value(row["date_jst"])),
                 mean_sst=_json_safe_value(row.get("mean_sst")),
                 min_sst=_json_safe_value(row.get("min_sst")),
@@ -4932,7 +4968,7 @@ def database_table(
 def explore_catalog() -> List[DatasetCatalogItem]:
     items: List[DatasetCatalogItem] = []
     for dataset, cfg in EXPLORE_DATASETS.items():
-        df = _read_explore_dataset(dataset)
+        df = _sst_daily_df() if dataset == "sst_daily" else _read_explore_dataset(dataset)
         filters: Dict[str, str] = {}
         for filter_name, column_key in [
             ("bay", "bay_column"),
@@ -4976,7 +5012,7 @@ def explore_table(
     offset: int = Query(default=0, ge=0),
 ) -> ExploreTableResponse:
     cfg = _dataset_config(dataset)
-    df = _read_explore_dataset(dataset)
+    df = _sst_daily_df() if dataset == "sst_daily" else _read_explore_dataset(dataset)
     filtered = _filter_explore_df(
         df,
         cfg,
@@ -5021,7 +5057,7 @@ def explore_summary(
     search: Optional[str] = Query(default=None, max_length=200),
 ) -> ExploreSummaryResponse:
     cfg = _dataset_config(dataset)
-    df = _read_explore_dataset(dataset)
+    df = _sst_daily_df() if dataset == "sst_daily" else _read_explore_dataset(dataset)
     filtered = _filter_explore_df(
         df,
         cfg,
@@ -5057,7 +5093,7 @@ def explore_timeseries(
     limit: int = Query(default=500, ge=1, le=2000),
 ) -> TimeSeriesResponse:
     cfg = _dataset_config(dataset)
-    df = _read_explore_dataset(dataset)
+    df = _sst_daily_df() if dataset == "sst_daily" else _read_explore_dataset(dataset)
     filtered = _filter_explore_df(
         df,
         cfg,
@@ -5079,7 +5115,7 @@ def explore_timeseries(
 
     meta_columns = [
         column
-        for column in ["sample_id", "bay", "source", "source_type"]
+        for column in ["sample_id", "bay", "source", "source_type", "dataset_id"]
         if column in filtered.columns and column not in {x, y}
     ]
     plot_columns = [x, y] + meta_columns
@@ -5103,6 +5139,8 @@ def explore_timeseries(
                     if "source" in plot_df.columns and not pd.isna(row.get("source"))
                     else str(row["source_type"])
                     if "source_type" in plot_df.columns and not pd.isna(row.get("source_type"))
+                    else str(row["dataset_id"])
+                    if "dataset_id" in plot_df.columns and not pd.isna(row.get("dataset_id"))
                     else None
                 ),
             )
@@ -5113,7 +5151,7 @@ def explore_timeseries(
 @app.get("/explore/sample/{sample_id}", response_model=SampleDetailResponse)
 def explore_sample(sample_id: str) -> SampleDetailResponse:
     def sample_rows(dataset: str) -> List[Dict[str, Any]]:
-        df = _read_explore_dataset(dataset)
+        df = _sst_daily_df() if dataset == "sst_daily" else _read_explore_dataset(dataset)
         if "sample_id" not in df.columns:
             return []
         return _records(df[df["sample_id"].astype("string") == sample_id])
@@ -5247,9 +5285,11 @@ def chat_analysis_options():
             bundle = load_analysis(record['analysis_id'])
             recipe = bundle['recipe']
             research = bundle['manifest'].get('schema_version') in {2, 3}
+            from ingestion.regional_publication import analysis_publication
+            accepted = analysis_publication(bundle)
             options.append({'analysis_id': record['analysis_id'], 'status': analysis_status(bundle),
-                'analysis_kind': 'provisional_demo' if bundle['manifest'].get('schema_version') == 3 else 'detection_frequency' if research else 'edna_descriptive',
-                'label': ('PROVISIONAL DEMO · ' + recipe['region_id'] + ' · ' + recipe['assignment_method']) if bundle['manifest'].get('schema_version') == 3 else recipe.get('region_id') or recipe.get('cohort', {}).get('provider_project_id') or 'Selected cohort',
+                'analysis_kind': 'regional_frequency' if accepted else 'provisional_demo' if bundle['manifest'].get('schema_version') == 3 else 'detection_frequency' if research else 'edna_descriptive',
+                'label': (accepted['label'] + ' · ' + recipe['assignment_method']) if accepted else ('PROVISIONAL DEMO · ' + recipe['region_id'] + ' · ' + recipe['assignment_method']) if bundle['manifest'].get('schema_version') == 3 else recipe.get('region_id') or recipe.get('cohort', {}).get('provider_project_id') or 'Selected cohort',
                 'time_from': recipe.get('time_from') or recipe.get('cohort', {}).get('time_from'),
                 'time_to': recipe.get('time_to') or recipe.get('cohort', {}).get('time_to'),
                 'assignment_methods': [recipe['assignment_method']] if research else recipe['assignment_methods'],

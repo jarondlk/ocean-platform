@@ -28,7 +28,7 @@ SOURCE_DEFINITIONS = (
     ("ctd", "CTD casts", "casts", "day", "ctd_date", "Normalized CTD casts"),
     ("metagenome", "Metagenome samples", "samples", "month", "sample_year_month", "Samples with Kraken or MetaEuk data"),
     ("edna_metabarcoding", "ANEMONE eDNA", "occurrences", "mixed", "collection_date_utc", "All active provider occurrences, including controls and unknown classifications"),
-    ("remote_sensing", "Current satellite SST", "days", "day", "date_jst", "Daily summaries with usable mean SST"),
+    ("remote_sensing", "Satellite SST", "days", "day", "date_jst", "Daily summaries with usable mean SST"),
 )
 
 
@@ -114,7 +114,7 @@ def calendar_value(value, precision: str) -> str | None:
 
 
 def aggregate_source(identity: str, records: list[tuple[str, str | None]], *,
-                     binding=None, categories=None, excluded=0) -> CoverageSource:
+                     binding=None, categories=None, excluded=0, expected_windows=None) -> CoverageSource:
     """Count source units once; contradictory dates fail rather than picking one."""
     source = source_definition(identity)
     unique: dict[str, str | None] = {}
@@ -146,14 +146,20 @@ def aggregate_source(identity: str, records: list[tuple[str, str | None]], *,
         if dates:
             available = set(dates)
             expected = Counter()
-            cursor, end = date.fromisoformat(dates[0]), date.fromisoformat(dates[-1])
-            while cursor <= end:
-                expected[cursor.isoformat()[:7]] += 1
-                if cursor.isoformat() not in available:
+            expected_dates = set()
+            for first, last in expected_windows or [(dates[0], dates[-1])]:
+                cursor, end = date.fromisoformat(first), date.fromisoformat(last)
+                if cursor > end or (end - cursor).days > 3660:
+                    raise ValueError('Invalid SST coverage window')
+                while cursor <= end:
+                    expected_dates.add(cursor.isoformat())
+                    cursor += timedelta(days=1)
+            for day in sorted(expected_dates):
+                expected[day[:7]] += 1
+                if day not in available:
                     source.missing_day_count += 1
                     if len(source.missing_dates_within_extent) < MAX_MISSING_DATES:
-                        source.missing_dates_within_extent.append(cursor.isoformat())
-                cursor += timedelta(days=1)
+                        source.missing_dates_within_extent.append(day)
             source.missing_dates_truncated = source.missing_day_count > MAX_MISSING_DATES
             source.bins = [CoverageBin(month=month, count=months.get(month, 0),
                                       observed_days=len(days.get(month, set())), expected_days=count,
@@ -203,7 +209,17 @@ def artifact_source(identity: str) -> CoverageSource:
         excluded = int((~valid).sum())
         records = [(str(row.date_jst), calendar_value(row.date_jst, "date"))
                    for row in frame[valid].itertuples(index=False)]
-        return aggregate_source(identity, records, binding=binding, excluded=excluded)
+        from ingestion.regional_publication import current_publication, daily_rows
+        publication = current_publication()
+        windows = [(min(when for _, when in records if when), max(when for _, when in records if when))] if any(when for _, when in records) else []
+        if publication:
+            records.extend((r['date_jst'], r['date_jst']) for r in daily_rows(publication))
+            binding['regional_publication_id'] = publication['publication_id']
+            windows.append(('2020-01-01', '2023-12-31'))
+        source = aggregate_source(identity, records, binding=binding, excluded=excluded, expected_windows=windows)
+        if publication:
+            source.scope = 'Published current SST and Miyagi MUR regional context, 2020–2023. Products remain separate; gaps are counted only within their coverage windows.'
+        return source
     else:
         raise ValueError("Unknown artifact source")
     if frame.sample_id.isna().any():

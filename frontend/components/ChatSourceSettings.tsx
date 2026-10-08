@@ -9,14 +9,14 @@ import { sourceLabels, scopeErrors, type SourceFamily } from "@/lib/chat-setting
 import { evidenceScopeSchema, type EvidenceScope } from "@/lib/generated/chat-scope";
 
 export const filterLabels: Record<string, string> = {
-  time_from: "From", time_to: "To", bay: "Bay", station: "Station", sample_id: "Sample ID",
+  dataset_id: "SST dataset", time_from: "From", time_to: "To", bay: "Bay", station: "Station", sample_id: "Sample ID",
   provider: "Provider", provider_project_id: "Project ID", provider_run_id: "Run ID",
   assignment_method: "Assignment method", taxon: "Taxon", sample_kind: "Sample kind", is_control: "Control status",
   lat_min: "Minimum latitude", lat_max: "Maximum latitude", lon_min: "Minimum longitude", lon_max: "Maximum longitude",
 };
 const filterSchemas = {
   ctd: evidenceScopeSchema.$defs.SampleFilters, metagenome: evidenceScopeSchema.$defs.SampleFilters,
-  remote_sensing: evidenceScopeSchema.$defs.Coordinates, edna_metabarcoding: evidenceScopeSchema.$defs.EdnaFilters,
+  remote_sensing: evidenceScopeSchema.$defs.SatelliteFilters, edna_metabarcoding: evidenceScopeSchema.$defs.EdnaFilters,
 };
 type Field = {type?: string; enum?: readonly string[]; minimum?: number; maximum?: number; maxLength?: number; anyOf?: readonly Field[]};
 type PublishedOption = { analysis_id: string; status: string; analysis_kind: string; label: string; time_from?: string; time_to?: string; protocol_ids: string[]; protocol_labels?: Record<string, string>; workflows: {kind: ResearchIntent["kind"]; question: string}[] };
@@ -109,7 +109,7 @@ export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChan
                 <small>{ui("Analysis links apply to this chat and are not saved as defaults.")}</small>
               </label>
               {analysisError ? <p role="status">{analysisError}</p> : null}
-              {selectedAnalysis && ["detection_frequency", "provisional_demo"].includes(selectedAnalysis.analysis_kind) ? <>
+              {selectedAnalysis && ["detection_frequency", "provisional_demo", "regional_frequency"].includes(selectedAnalysis.analysis_kind) ? <>
                 <label className="settings-field">Research workflow<select className="field" value={researchIntent?.kind || ""} onChange={event => { const workflow = selectedAnalysis.workflows.find(value => value.kind === event.target.value); onResearchChange?.(workflow ? {kind: workflow.kind, protocol_id: researchIntent?.protocol_id} : undefined, workflow?.question); }}><option value="">Recognize a supported question</option>{selectedAnalysis.workflows.map(workflow => <option key={workflow.kind} value={workflow.kind}>{workflow.question}</option>)}</select></label>
                 {researchIntent && selectedAnalysis.protocol_ids.length > 1 ? <label className="settings-field">Assay protocol<select className="field" value={researchIntent.protocol_id || ""} onChange={event => onResearchChange?.({...researchIntent, protocol_id: event.target.value || undefined})}><option value="">Select a comparable protocol</option>{selectedAnalysis.protocol_ids.map(id => <option key={id} value={id}>{selectedAnalysis.protocol_labels?.[id] || id.slice(0, 12)}</option>)}</select></label> : null}
                 <small>Published cohorts and product panels are fixed. Conflicting source filters require clarification; check SST explicitly for temperature workflows.</small>

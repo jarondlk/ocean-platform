@@ -110,3 +110,7 @@ No tracked script was proven safe to delete. The clearly unused deployment
 artifacts were the five stale local renders; the historical probe/QA tools and
 single-image build helper are retained with explicit limits. There is no new
 automatic acquisition, research approval, retention or ingestion schedule.
+
+## Regional operational publication
+
+`publish_regional_research.py` preflights or publishes the existing sealed Miyagi evidence after explicit user acceptance. It starts no acquisition and changes no canonical classifications or scientific registries. See [historical regional publication](../docs/HISTORICAL_REGIONAL_PUBLICATION.md).

@@ -126,6 +126,7 @@ export type ClassificationReviewPreview = {
 };
 
 export type SourceDocument = {
+  metadata?: Record<string, unknown>;
   doc_id: string;
   title: string;
   source_type: string;
@@ -442,6 +443,7 @@ export type SstPoint = {
 };
 
 export type SstDailyPoint = {
+  dataset_id?: string;
   date_jst: string;
   mean_sst?: number | null;
   min_sst?: number | null;
@@ -449,6 +451,7 @@ export type SstDailyPoint = {
 };
 
 export type SstDataResponse = {
+  datasets?: {dataset_id: string; label: string; days: number; notes: string[]; final_series_gaps: {day: string; reason: string}[]}[];
   observations: number;
   days: number;
   stats: Record<string, unknown>;
