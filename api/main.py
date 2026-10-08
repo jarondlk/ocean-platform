@@ -49,6 +49,7 @@ from api.chat_records import (
     fail_chat_interaction,
     json_safe,
     record_chat_context,
+    record_chat_options,
 )
 from api.feedback_routes import router as feedback_router
 from api.edna_service import (
@@ -5264,6 +5265,7 @@ def chat_capabilities():
     from retrieval.source_scope import FAMILIES, SourceSelections
     schema = SourceSelections.model_json_schema()
     return {"scope_version": 1, "sources": list(FAMILIES), "source_schema": schema,
+            "auto_settings": {"enabled": config.AUTO_SETTINGS_ENABLED, "plan_version": 1},
             "provider": config.MODEL_PROVIDER,
             "generation_fields": ["temperature", "top_p", "sampling_top_k", "seed", "num_predict"] + ([] if config.MODEL_PROVIDER == "vertex" else ["repeat_penalty", "num_ctx"]),
             "max_output_tokens": config.CHAT_MAX_OUTPUT_TOKENS if config.MODEL_PROVIDER == "vertex" else 8192}
@@ -5286,33 +5288,10 @@ def chat_filter_options(request: ChatFilterOptionsRequest):
 
 @app.get("/chat/analysis-options")
 def chat_analysis_options():
-    from ingestion.edna_analysis_bundle import _registered_records, load_analysis, analysis_status
+    from orchestration.statistics_catalog import analysis_choices, CAPABILITIES
     from ingestion.provenance_snapshot import SnapshotError
-    from orchestration.research_intents import QUESTIONS
-    from preprocessing.edna_analysis import protocol
-    from ingestion.immutable_bundle import digest
     try:
-        records = _registered_records()
-        if len(records) > 100:
-            raise ValueError('Analysis options catalog limit exceeded')
-        options = []
-        for record in records:
-            bundle = load_analysis(record['analysis_id'])
-            recipe = bundle['recipe']
-            research = bundle['manifest'].get('schema_version') in {2, 3}
-            from ingestion.regional_publication import analysis_publication
-            accepted = analysis_publication(bundle)
-            options.append({'analysis_id': record['analysis_id'], 'status': analysis_status(bundle),
-                'analysis_kind': 'regional_frequency' if accepted else 'provisional_demo' if bundle['manifest'].get('schema_version') == 3 else 'detection_frequency' if research else 'edna_descriptive',
-                'label': (accepted['label'] + ' · ' + recipe['assignment_method']) if accepted else ('PROVISIONAL DEMO · ' + recipe['region_id'] + ' · ' + recipe['assignment_method']) if bundle['manifest'].get('schema_version') == 3 else recipe.get('region_id') or recipe.get('cohort', {}).get('provider_project_id') or 'Selected cohort',
-                'time_from': recipe.get('time_from') or recipe.get('cohort', {}).get('time_from'),
-                'time_to': recipe.get('time_to') or recipe.get('cohort', {}).get('time_to'),
-                'assignment_methods': [recipe['assignment_method']] if research else recipe['assignment_methods'],
-                'protocol_ids': sorted({r['protocol_id'] for r in bundle['tables']['membership']}) if research else [],
-                'protocol_labels': {digest(protocol(assay)): ' · '.join(str(protocol(assay)[key] or 'unspecified') for key in ('target_gene', 'primer_set', 'sequencing_method', 'library_layout')) + ' · ' + digest(protocol(assay))[:8] for assay in bundle['inputs']['canonical']['edna_assay']} if research else {},
-                'sst_available': bool(recipe.get('sst_panel_id')) if research else False,
-                'workflows': [{'kind':kind, 'question':aliases[0]} for kind,aliases in QUESTIONS.items()] if research else []})
-        return {'options': options}
+        return {'options': analysis_choices(), 'capabilities': CAPABILITIES, 'catalog_version': 1}
     except (ValueError, OSError, KeyError, SnapshotError) as exc:
         raise HTTPException(503, 'Published analysis choices are unavailable') from exc
 
@@ -5490,7 +5469,7 @@ def _chat_scope_abstention(request, user, model, interaction_id, started_at, opt
         retrieval_diagnostics=diagnostics, options=options, outcome="abstained", abstention_reason=reason, model_invoked=False)
 
 
-def _research_chat_response(request, bundle, *, user, model, interaction_id, started_at, options):
+def _research_chat_response(request, bundle, *, user, model, interaction_id, started_at, options, planned=False):
     from ingestion.edna_analysis_bundle import analysis_status
     from orchestration.research_intents import render_research
     if not options['evidence_scope']['sources']['edna_metabarcoding']['enabled']:
@@ -5499,7 +5478,11 @@ def _research_chat_response(request, bundle, *, user, model, interaction_id, sta
         return _chat_scope_abstention(request, user, model, interaction_id, started_at, options, 'aggregate_scope_required', 'Select a published detection-frequency analysis for this research workflow.')
     if analysis_status(bundle) != 'current':
         return _chat_scope_abstention(request, user, model, interaction_id, started_at, options, 'aggregate_unavailable', 'This analysis is historical or its current inputs cannot be verified. Historical results remain in Data; no current scientific answer was generated.')
-    result = render_research(bundle, options['evidence_scope'], request.query, request.research_intent)
+    if planned:
+        from orchestration.published_results import planned_research
+        result = planned_research(request, bundle)
+    else:
+        result = render_research(bundle, options['evidence_scope'], request.query, request.research_intent)
     if result.reason:
         return _chat_scope_abstention(request, user, model, interaction_id, started_at, options, result.reason, result.answer)
     options['context']['research_intent'] = result.diagnostics['research_intent']
@@ -5523,12 +5506,71 @@ def _research_chat_response(request, bundle, *, user, model, interaction_id, sta
         retrieval_diagnostics=diagnostics, answer_audit=audit, options=options, model_invoked=False)
 
 
+def _sst_coverage_chat_response(request, user, model, interaction_id, started_at, options):
+    from orchestration.published_results import sst_coverage
+    from ingestion.provenance_snapshot import SnapshotError
+    try:
+        answer, document = sst_coverage(request.evidence_scope.canonical())
+    except (ValueError, OSError, KeyError, SnapshotError) as exc:
+        logger.warning('Planned SST coverage unavailable: %s', type(exc).__name__)
+        return _chat_scope_abstention(request, user, model, interaction_id, started_at, options,
+                                     'aggregate_unavailable', 'Exact SST coverage is unavailable for this publication and scope. No missing dates or counts were inferred.')
+    sources = [_source_document(document)]
+    diagnostics = {'backend': 'immutable_regional_ledger', 'expected_source_types': ['remote_sensing'],
+                   'retrieved_source_types': ['remote_sensing'], 'supplied_source_types': ['remote_sensing'],
+                   'missing_source_types': [], 'coverage_status': 'complete', 'top_k_applied': False,
+                   'publication_id': document['metadata']['publication_id']}
+    audit = audit_answer(query=request.query, answer=answer, primary_sources=[document], linked_sources=[],
+                         analysis_context=[], reliability_context=[], retrieval_diagnostics=diagnostics,
+                         exact_aggregate=True)
+    record_chat_context(interaction_id=interaction_id, user=user,
+                        evidence_snapshot={'sources': sources, 'analysis_context': [], 'linked_sources': [],
+                                           'retrieval_diagnostics': diagnostics, 'planning': options['planning']},
+                        prompt='Deterministic verified regional coverage ledger; no answer model was run.')
+    complete_chat_interaction(interaction_id=interaction_id, user=user, answer=answer,
+                              answer_audit_snapshot=json_safe(audit), latency_ms=_chat_latency_ms(started_at))
+    return ChatResponse(interaction_id=interaction_id, query=request.query, answer=answer, sources=sources,
+                        model=model, n_sources=1, options=options, model_invoked=False, answer_audit=audit,
+                        retrieval_diagnostics=diagnostics,
+                        prompt_diagnostics={'answer_mode': 'deterministic_sst_coverage', 'model_invoked': False})
+
+
 @app.post("/chat", response_model=ChatResponse)
 def chat(
     request: ChatRequest,
     user: CurrentUser = Depends(get_current_user),
 ) -> ChatResponse:
-    requested_options = request.model_dump(mode="json", exclude_none=True)
+    if request.settings_mode == 'manual':
+        return _execute_chat(request, user)
+    from orchestration.settings_planner import plan_settings, PlanningError, PLAN_VERSION
+    started_at = time.perf_counter()
+    model = _allowed_model(request.model, default=config.CHAT_MODEL,
+                           allowed=config.ALLOWED_CHAT_MODELS, label='chat model')
+    requested = request.model_dump(mode='json', exclude_none=True)
+    options = {'requested': {k: v for k, v in requested.items() if k != 'query'},
+               'evidence_scope': request.evidence_scope.canonical(),
+               'planning': {'status': 'pending', 'planner_invoked': False, 'prompt_version': PLAN_VERSION}}
+    interaction_id = create_chat_interaction(user=user, query=request.query, model=model, request_options=options)
+    try:
+        effective, planning = plan_settings(request)
+        return _execute_chat(effective, user, planning=planning, interaction_id=interaction_id,
+                             started_at=started_at, original_options=requested)
+    except PlanningError as exc:
+        options['planning'].update(status=exc.status, planner_invoked=exc.invoked,
+                                   message=str(exc), planner_model=config.CHAT_PLANNER_MODEL,
+                                   latency_ms=_chat_latency_ms(started_at))
+        record_chat_options(interaction_id=interaction_id, user=user, request_options=options)
+        return _chat_scope_abstention(request, user, model, interaction_id, started_at, options,
+                                     'aggregate_unavailable' if exc.status == 'unavailable' else 'aggregate_scope_required', str(exc))
+    except Exception:
+        _mark_chat_failed_safely(interaction_id=interaction_id, user=user,
+                                error_code='auto_settings_execution_failed', started_at=started_at)
+        raise
+
+
+def _execute_chat(request: ChatRequest, user: CurrentUser, *, planning=None,
+                  interaction_id=None, started_at=None, original_options=None) -> ChatResponse:
+    requested_options = original_options or request.model_dump(mode="json", exclude_none=True)
     research_bundle = None
     selection_id = ((request.evidence_scope.sources.edna_metabarcoding.analysis_id if request.evidence_scope.sources.edna_metabarcoding.enabled else None) if request.evidence_scope else request.analysis_id)
     if selection_id:
@@ -5545,7 +5587,7 @@ def chat(
     request, analysis_members, analysis_methods = (request, None, None) if research_mode else _resolve_analysis_request(request)
     active_analysis_id = (request.evidence_scope.sources.edna_metabarcoding.analysis_id
         if request.evidence_scope and request.evidence_scope.sources.edna_metabarcoding.enabled else request.analysis_id)
-    started_at = time.perf_counter()
+    started_at = started_at if started_at is not None else time.perf_counter()
     model = _allowed_model(
         request.model,
         default=config.CHAT_MODEL,
@@ -5591,19 +5633,28 @@ def chat(
             "run_answer_audit": request.run_answer_audit,
         },
     }
-    interaction_id = create_chat_interaction(
-        user=user,
-        query=request.query,
-        model=model,
-        request_options=response_options,
-    )
+    if planning is None:
+        interaction_id = create_chat_interaction(user=user, query=request.query, model=model, request_options=response_options)
+    else:
+        response_options['planning'] = planning
+        record_chat_options(interaction_id=interaction_id, user=user, request_options=response_options)
 
     try:
         from orchestration.edna_aggregation import plan_aggregation
         if request.evidence_scope and not enabled_sources(request.evidence_scope.canonical()):
             return _chat_scope_abstention(request, user, model, interaction_id, started_at, response_options, "no_sources_selected", abstention_message("no_sources_selected"))
+        published_result = None
+        if planning and planning['route'] == 'sst_coverage':
+            return _sst_coverage_chat_response(request, user, model, interaction_id, started_at, response_options)
         if research_mode:
-            return _research_chat_response(request, research_bundle, user=user, model=model, interaction_id=interaction_id, started_at=started_at, options=response_options)
+            if planning and planning['route'] == 'published_synthesis':
+                from orchestration.published_results import planned_research
+                published_result = planned_research(request, research_bundle)
+                if published_result.reason:
+                    return _chat_scope_abstention(request, user, model, interaction_id, started_at, response_options,
+                                                 published_result.reason, published_result.answer)
+            else:
+                return _research_chat_response(request, research_bundle, user=user, model=model, interaction_id=interaction_id, started_at=started_at, options=response_options, planned=planning is not None)
         scope = request.evidence_scope.canonical() if request.evidence_scope else None
         if scope and not scope["sources"]["edna_metabarcoding"]["enabled"] and request.aggregation is not None:
             return _chat_scope_abstention(request, user, model, interaction_id, started_at, response_options, "source_disabled", "ANEMONE eDNA is unchecked. Enable it to request an exact catalogue summary.")
@@ -5614,35 +5665,44 @@ def chat(
         if aggregate_plan is not None:
             return _aggregate_chat_response(request, aggregate_plan, user=user, model=model,
                 interaction_id=interaction_id, started_at=started_at, options=response_options)
-        bundle = retrieve_with_expansion(
-            request.query,
-            k=request.k,
-            sample_ids=None if analysis_members is None else sorted(analysis_members),
-            assignment_methods=None if analysis_methods is None else sorted(analysis_methods),
-            source_type=request.source_type,
-            station=request.station,
-            **({"evidence_scope": request.evidence_scope.canonical()} if request.evidence_scope else {}),
-            sample_id=request.sample_id,
-            bay=request.bay,
-            time_from=request.time_from,
-            time_to=request.time_to,
-            provider=request.provider,
-            provider_project_id=request.provider_project_id,
-            provider_run_id=request.provider_run_id,
-            assignment_method=request.assignment_method,
-            taxon=request.taxon,
-            sample_kind=request.sample_kind,
-            is_control=request.is_control,
-            lat_min=request.lat_min,
-            lat_max=request.lat_max,
-            lon_min=request.lon_min,
-            lon_max=request.lon_max,
-            vector_weight=request.vector_weight,
-            fts_weight=request.fts_weight,
-            rrf_k=request.rrf_k,
-            expand_evidence=request.expand_evidence,
-            max_linked_sources=request.max_linked_sources,
-        )
+        published_packets = []
+        if published_result:
+            from orchestration.published_results import result_packets
+            published_packets = result_packets(published_result, scope)
+            bundle = {'primary': [], 'linked': [], 'diagnostics': {
+                **published_result.diagnostics, 'model_invoked': True,
+                'result_rows_verified': True, 'answer_mode': 'published_synthesis',
+            }}
+        else:
+            bundle = retrieve_with_expansion(
+                request.query,
+                k=request.k,
+                sample_ids=None if analysis_members is None else sorted(analysis_members),
+                assignment_methods=None if analysis_methods is None else sorted(analysis_methods),
+                source_type=request.source_type,
+                station=request.station,
+                **({"evidence_scope": request.evidence_scope.canonical()} if request.evidence_scope else {}),
+                sample_id=request.sample_id,
+                bay=request.bay,
+                time_from=request.time_from,
+                time_to=request.time_to,
+                provider=request.provider,
+                provider_project_id=request.provider_project_id,
+                provider_run_id=request.provider_run_id,
+                assignment_method=request.assignment_method,
+                taxon=request.taxon,
+                sample_kind=request.sample_kind,
+                is_control=request.is_control,
+                lat_min=request.lat_min,
+                lat_max=request.lat_max,
+                lon_min=request.lon_min,
+                lon_max=request.lon_max,
+                vector_weight=request.vector_weight,
+                fts_weight=request.fts_weight,
+                rrf_k=request.rrf_k,
+                expand_evidence=request.expand_evidence,
+                max_linked_sources=request.max_linked_sources,
+            )
         rows = bundle.get("primary") or []
         if analysis_members is not None:
             rows = [r for r in rows if (request.evidence_scope and r.get('source_type') != 'edna_metabarcoding') or (r.get('sample_id') in analysis_members and r.get('assignment_method') in analysis_methods)]
@@ -5657,6 +5717,8 @@ def chat(
             linked_results=linked_rows,
             inject_analysis=request.inject_analysis,
             inject_reliability=request.inject_reliability,
+            **({'settings_plan': planning,
+                'published_documents': published_packets} if planning else {}),
         )
         edna_filters = (scope['sources']['edna_metabarcoding']['filters'] if scope and scope['sources']['edna_metabarcoding']['enabled'] else {} if scope else request.model_dump())
         if edna_filters.get('taxon') and not (scope and scope['sources']['edna_metabarcoding'].get('analysis_id')) and not request.analysis_id:
@@ -5683,7 +5745,16 @@ def chat(
         from orchestration.comparison_guard import comparison_guard
         final_scope = scope or response_options['evidence_scope']
         retrieval_diagnostics = reconcile_coverage(retrieval_diagnostics, rows, linked_rows, context, scope=final_scope)
-        guarded_comparison = comparison_guard(request.query, final_scope, retrieval_diagnostics)
+        if planning:
+            required = planning['required_sources']
+            supplied = retrieval_diagnostics['supplied_source_types']
+            retrieval_diagnostics['expected_source_types'] = required
+            retrieval_diagnostics['missing_source_types'] = [f for f in required if f not in supplied]
+            retrieval_diagnostics['source_coverage_ratio'] = (len(required) - len(retrieval_diagnostics['missing_source_types'])) / len(required) if required else None
+        requirement = ({'kind': planning['comparison_kind'], 'sources': planning['required_sources']}
+                       if planning and planning['comparison_kind'] != 'none' else None)
+        guarded_comparison = comparison_guard(request.query, final_scope, retrieval_diagnostics,
+                                             **({'requirement': requirement} if requirement else {}))
         cited_prompt = prepare_citations(
             prompt, rows, linked_rows,
             context.get("analysis", []), context.get("reliability", []),

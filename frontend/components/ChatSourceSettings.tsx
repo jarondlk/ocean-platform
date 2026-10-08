@@ -20,9 +20,10 @@ const filterSchemas = {
 };
 type Field = {type?: string; enum?: readonly string[]; minimum?: number; maximum?: number; maxLength?: number; anyOf?: readonly Field[]};
 type PublishedOption = { analysis_id: string; status: string; analysis_kind: string; label: string; time_from?: string; time_to?: string; protocol_ids: string[]; protocol_labels?: Record<string, string>; workflows: {kind: ResearchIntent["kind"]; question: string}[] };
-export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChange, disabled, researchIntent, onResearchChange }: {
+export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChange, disabled, researchIntent, onResearchChange, autoEnabled = false, autoAvailable = false, onAutoChange }: {
   disabled?: boolean; scope: EvidenceScope; onChange: (value: EvidenceScope) => void; analysisId: string; onAnalysisChange: (value: string) => void;
   researchIntent?: ResearchIntent; onResearchChange?: (intent: ResearchIntent | undefined, question?: string) => void;
+  autoEnabled?: boolean; autoAvailable?: boolean; onAutoChange?: (enabled: boolean) => void;
 }) {
   const {ui} = useAppPreferences();
   const [catalog, setCatalog] = useState<ChatFilterOptions | null>(null);
@@ -62,10 +63,14 @@ export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChan
     onChange({...scope, sources: {...scope.sources, [family]: {...scope.sources[family], filters}}});
   }
   return <fieldset className="settings-section" disabled={disabled}><legend>{ui("Evidence sources")}</legend>
-    <div className="settings-pair">
+    <div className={`settings-pair${onAutoChange ? ' auto-settings-toolbar' : ''}`}>
       <button type="button" className="button secondary-button" onClick={() => onChange({...scope, sources: Object.fromEntries(Object.entries(scope.sources).map(([key, source]) => [key, {...source, enabled: true}])) as typeof scope.sources})}>{ui("Select all")}</button>
       <button type="button" className="button secondary-button" onClick={() => onChange({...scope, sources: Object.fromEntries(Object.entries(scope.sources).map(([key, source]) => [key, {...source, enabled: false}])) as typeof scope.sources})}>{ui("Clear selection")}</button>
+      {onAutoChange ? <button type="button" className={`button secondary-button auto-settings-toggle${autoEnabled ? ' active' : ''}`}
+        aria-pressed={autoEnabled} disabled={!autoAvailable && !autoEnabled}
+        onClick={() => onAutoChange(!autoEnabled)}>{ui("AUTO")}</button> : null}
     </div>
+    {autoEnabled ? <p className="empty-state" role="status">{ui("AUTO selects sources and filters when you ask. Editing settings switches to manual.")}</p> : null}
     <p className="empty-state">{ui("Select the sources to use. Filters apply only to their own source.")}</p>
     {invalid ? <p className="empty-state" role="status">{ui("Fix invalid filters to load choices.")}</p> : null}
     {choicesFailed ? <button className="button secondary-button" type="button" onClick={() => setRetry(value => value + 1)}>{ui("Retry loading choices")}</button> : null}

@@ -44,8 +44,8 @@ def comparison_requirement(query):
     return None
 
 
-def comparison_guard(query, scope, diagnostics):
-    requirement = comparison_requirement(query)
+def comparison_guard(query, scope, diagnostics, *, requirement=None):
+    requirement = requirement or comparison_requirement(query)
     if requirement is None:
         return None
     required = requirement['sources']

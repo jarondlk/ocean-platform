@@ -678,6 +678,8 @@ def build_prompt_with_context(
     inject_analysis: bool = True,
     inject_reliability: bool = True,
     evidence_scope: Optional[dict] = None,
+    settings_plan: Optional[dict] = None,
+    published_documents: Optional[List[dict]] = None,
 ) -> tuple[str, Dict[str, List[dict]]]:
     """
     Build the prompt and return the structured supplementary context used.
@@ -704,6 +706,12 @@ def build_prompt_with_context(
         "analysis": analysis_context_documents(query) if inject_analysis and not edna_only else [],
         "reliability": reliability_context_documents(query) if inject_reliability and not edna_only else [],
     }
+    if settings_plan is not None:
+        for role, folder in (('analysis', config.ANALYSIS_DIR), ('reliability', config.RELIABILITY_DIR)):
+            selected_ids = set(settings_plan.get(role + '_document_ids', []))
+            context[role] = [row for row in _read_context_documents(folder / (role + '_documents.jsonl'))
+                             if (row.get('id') or row.get('doc_id')) in selected_ids]
+    context['analysis'].extend(published_documents or [])
     scoped = {**scope, **({'source_type': explicit_source} if explicit_source else {})}
     omitted = []
     context['linked'] = linked_results or []
@@ -718,7 +726,7 @@ def build_prompt_with_context(
     selection = source_scope['sources']['edna_metabarcoding'] if source_scope else {}
     analysis_scope = ({**selection.get('filters', {}), 'analysis_id': selection.get('analysis_id')}
                       if source_scope else scope)
-    if inject_analysis and analysis_scope.get('analysis_id') and (not source_scope or selection['enabled']):
+    if inject_analysis and not published_documents and analysis_scope.get('analysis_id') and (not source_scope or selection['enabled']):
         from ingestion.edna_analysis_bundle import context_documents
         for row in context_documents(analysis_scope):
             if source_scope is None or context_matches_source_scope(row, source_scope):

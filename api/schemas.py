@@ -410,6 +410,7 @@ class EdnaAggregationRequest(BaseModel):
 
 
 class ChatRequest(RetrieveRequest):
+    settings_mode: Literal['manual', 'auto'] = 'manual'
     aggregation: Optional[EdnaAggregationRequest] = None
     research_intent: Optional[ResearchIntent] = None
     model: Optional[str] = Field(default=None, max_length=255)
@@ -423,6 +424,12 @@ class ChatRequest(RetrieveRequest):
     num_predict: Optional[int] = Field(default=None, ge=1, le=8192)
     sampling_top_k: Optional[int] = Field(default=None, ge=1, le=200)
     seed: Optional[int] = Field(default=None, ge=0)
+
+    @model_validator(mode='after')
+    def auto_scope(self):
+        if self.settings_mode == 'auto' and self.evidence_scope is None:
+            raise ValueError('AUTO requires the versioned evidence_scope')
+        return self
 
 
 class SourceDocument(BaseModel):
