@@ -53,7 +53,7 @@ def table_rows(bundle, table, method=None, result_id=None):
 
 def research_filter_rows(bundle, rows, filters):
     if any(value is not None for value in filters.values()):
-        if bundle['manifest'].get('schema_version') != 2:
+        if bundle['manifest'].get('schema_version') not in {2, 3}:
             raise HTTPException(400, 'Research filters require a detection-frequency analysis')
         rows = [r for r in rows if all(value is None or r.get(key) == value for key,value in filters.items())]
     return rows
@@ -92,9 +92,9 @@ def choices(analysis_id: str):
     from ingestion.immutable_bundle import digest
     from preprocessing.edna_analysis import protocol, taxon_key
     bundle = _load(analysis_id)
-    if bundle['manifest'].get('schema_version') != 2:
+    if bundle['manifest'].get('schema_version') not in {2, 3}:
         raise HTTPException(400, 'Research choices require a detection-frequency analysis')
-    definition = bundle['inputs']['sampling_registry']['definition']
+    definition = bundle['inputs']['provisional_sampling'] if bundle['manifest'].get('schema_version') == 3 else bundle['inputs']['sampling_registry']['definition']
     taxa, protocols = {}, {}
     for row in bundle['inputs']['canonical']['edna_detection']:
         lineage = taxon_key(row, 'species')
@@ -136,11 +136,11 @@ def export(analysis_id: str, table: str = 'diversity', assignment_method: str | 
     rows = table_rows(bundle, table, assignment_method, result_id)
     rows = research_filter_rows(bundle, rows, filters)
     fixed = ['analysis_id', 'table', 'recipe_sha256', 'input_sha256', 'rank', 'control_policy', 'min_read_count', 'recipe_methods', 'cohort', 'result_id']
-    research = bundle['manifest'].get('schema_version') == 2
+    research = bundle['manifest'].get('schema_version') in {2, 3}
     metadata = {key:bundle['recipe'][key] for key in ('analysis_kind','analysis_unit','threshold_level','calendar','sst_panel_id','sst_max_time_hours','sst_min_month_day_fraction') if key in bundle['recipe']} if research else {}
     if research:
         from ingestion.immutable_bundle import digest
-        metadata['sampling_registry_id'] = digest(bundle['inputs']['sampling_registry'])
+        metadata['sampling_registry_id'] = digest(bundle['inputs']['provisional_sampling'] if bundle['manifest'].get('schema_version') == 3 else bundle['inputs']['sampling_registry'])
         fixed += list(metadata)
     columns = fixed + sorted({k for r in rows for k in r if k not in fixed})
     stream = io.StringIO()

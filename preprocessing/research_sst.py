@@ -31,6 +31,19 @@ MAX_GRID_VALUES = 2_000_000
 MAX_OBSERVATIONS = 200_000
 
 
+class RegionalContextDelivery(ResearchModel):
+    """Explicit reviewed delivery semantics for the retained subsampled archive."""
+
+    source_plan_sha256: Hash
+    evidence_role: Literal["regional_context"] = "regional_context"
+    spatial_operation: Literal["grid_point_subsampling"] = "grid_point_subsampling"
+    expected_product_version: Literal["04.1"] = "04.1"
+    expected_grid_step_degrees: Literal[0.05] = 0.05
+    sea_ice_variable: Literal["sea_ice_fraction"] = "sea_ice_fraction"
+    max_sea_ice_fraction: float = Field(strict=True, ge=0, le=1)
+    missing_ice_policy: Literal["exclude", "use_open_sea_mask_with_warning"]
+
+
 class SSTProductDefinition(ResearchModel):
     product_id: Literal[
         "himawari_geophysical_sst", "mur_l4_foundation_sst", "jcope_model_sst"
@@ -64,6 +77,10 @@ class SSTProductDefinition(ResearchModel):
     min_valid_fraction: float = Field(strict=True, ge=0.01, le=1)
     min_ocean_pixels: int = Field(strict=True, ge=1, le=100000)
     decision: EvidenceDecision
+    # Omitting the opt-in field preserves existing registry definitions/hashes.
+    regional_context: RegionalContextDelivery | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
 
     @model_validator(mode="after")
     def product_semantics(self):
@@ -89,6 +106,17 @@ class SSTProductDefinition(ResearchModel):
         }[self.product_id]
         if self.temporal_statistic not in allowed:
             raise ValueError("Product temporal statistic mismatch")
+        if self.regional_context and (
+            self.product_id != "mur_l4_foundation_sst"
+            or self.version != "04.1"
+            or self.temperature_variable != "analysed_sst"
+            or self.ocean_mask_variable != "mask"
+            or self.ocean_mask_values != (1,)
+            or self.uncertainty_variable != "analysis_error"
+        ):
+            raise ValueError(
+                "Regional context requires the explicit final MUR contract"
+            )
         return self
 
 
@@ -164,6 +192,33 @@ def normalize_granule(
             )
         latitudes, dy = _axis(ds, lat)
         longitudes, dx = _axis(ds, lon)
+        context = product.regional_context
+        if not context and any(
+            area.geometry_type == "reviewed_regional_context_rectangle"
+            for area in areas
+        ):
+            raise ValueError(
+                "Regional rectangles require a reviewed regional context delivery"
+            )
+        if context and (
+            ds.attrs.get("product_version") != context.expected_product_version
+            or ds.attrs.get("title") != "Daily MUR SST, Final product"
+            or not np.allclose(
+                np.abs(np.diff(latitudes)),
+                context.expected_grid_step_degrees,
+                atol=2e-5,
+                rtol=0,
+            )
+            or not np.allclose(
+                np.abs(np.diff(longitudes)),
+                context.expected_grid_step_degrees,
+                atol=2e-5,
+                rtol=0,
+            )
+        ):
+            raise ValueError(
+                "Actual SST generation/grid disagrees with regional context review"
+            )
         if (
             latitudes.min() < -90
             or latitudes.max() > 90
@@ -228,6 +283,15 @@ def normalize_granule(
                 & (uncertainty >= 0)
                 & (uncertainty <= product.max_uncertainty_celsius)
             )
+        ice = None
+        if context:
+            ice = grid(context.sea_ice_variable).astype(float)
+            ice_ok = (
+                np.isfinite(ice) & (ice >= 0) & (ice <= context.max_sea_ice_fraction)
+            )
+            if context.missing_ice_policy == "use_open_sea_mask_with_warning":
+                ice_ok |= np.isnan(ice)
+            quality &= ice_ok
         valid = ocean & quality & np.isfinite(values) & (values >= -3) & (values <= 45)
         rows = []
         footprint = (
@@ -252,7 +316,7 @@ def normalize_granule(
             status = (
                 "valid"
                 if in_footprint
-                and n_ocean >= product.min_ocean_pixels
+                and (n_valid if context else n_ocean) >= product.min_ocean_pixels
                 and fraction >= product.min_valid_fraction
                 else "no_valid_footprint"
                 if not in_footprint
@@ -263,9 +327,9 @@ def normalize_granule(
                 np.cos(np.deg2rad(latitudes[y]))[:, None], (len(y), len(x))
             )
             mask = valid[indexes]
-            mean = (
+            supported_mean = (
                 float(np.average(values[indexes][mask], weights=weights[mask]))
-                if status == "valid"
+                if n_valid and in_footprint
                 else None
             )
             row = {
@@ -281,7 +345,7 @@ def normalize_granule(
                 "measurement_type": product.measurement_type,
                 "temporal_statistic": product.temporal_statistic,
                 "status": status,
-                "sst_celsius": mean,
+                "sst_celsius": supported_mean if status == "valid" else None,
                 "valid_fraction": fraction,
                 "valid_ocean_pixels": n_valid,
                 "ocean_pixels": n_ocean,
@@ -290,6 +354,27 @@ def normalize_granule(
                 "weighting": "cosine_latitude_area_weighted_valid_ocean_pixels",
                 "temperature_basis": "granule_time",
             }
+            if context:
+                missing_ice = int((mask & np.isnan(ice[indexes])).sum())
+                row.update(
+                    evidence_role="regional_context",
+                    spatial_operation="grid_point_subsampling",
+                    grid_step_degrees=context.expected_grid_step_degrees,
+                    source_plan_sha256=context.source_plan_sha256,
+                    processing_generation="final",
+                    native_sample_area_evidence=False,
+                    weighting="cosine_latitude_grid_point_approximation",
+                    retained_points_with_missing_ice_fraction=missing_ice,
+                    sparse_summary_celsius=supported_mean
+                    if status != "valid"
+                    else None,
+                    warnings=(
+                        ["missing_ice_fraction_open_sea_mask_used"]
+                        if missing_ice
+                        else []
+                    )
+                    + (["insufficient_regional_support"] if status != "valid" else []),
+                )
             row["observation_id"] = digest(row)
             rows.append(row)
     return rows

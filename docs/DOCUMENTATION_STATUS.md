@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-10-07 (v0.7.3 published/deployed; exact-image acceptance, preservation and cleanup passed).
+Last reviewed: 2026-10-08 (v0.7.3 remains deployed; historical provisional QC/matching work is in draft PR #119).
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -11,12 +11,27 @@ approved.
 
 ## Current operating authority
 
+- [Miyagi provisional demo](MIYAGI_PROVISIONAL_DEMO_2026-10-08.md) — latest user
+  direction: stop NOAA acquisition, use retained regional context for Miyagi
+  2020–2023, and record explicit user approval separately from formal scientific
+  registries. Processing and calculation passed; live rollout remains pending.
+  This supersedes waiting for native patches or a separate researcher account
+  as prerequisites for this explicitly labelled provisional first demo.
+
 - [v0.7.3 operations](RELEASE_0.7.3_OPERATIONS.md) and
   [release notes](RELEASE_NOTES_0.7.3.md) — current exact-source/images, accepted
   rollout, preservation, cleanup, rollback and explicit scientific limits.
 - [Historical SST integration](HISTORICAL_SST_CONTEXT_INTEGRATION_2026-10-07.md)
-  — completed context acquisition, final-only staging and unresolved scientific/
+  — completed context acquisition, final-only staging, follow-on local diagnostic
+  processor and concrete reviewer inputs; unresolved scientific/
   publication gates. Historical evidence is not available in Chat.
+- [Historical analysis policy](HISTORICAL_SST_ANALYSIS_POLICY_2026-10-07.md)
+  — user-selected scope, controls, filters, latest-assay/calendar/metric choices,
+  plus accepted provisional QC/weighting and comparable-cohort defaults. Local
+  matching/sensitivity previews do not apply registries or scientific publication.
+- [Historical integration validation](HISTORICAL_SST_INTEGRATION_VALIDATION_2026-10-08.md)
+  — local backend/frontend and retained-data checks, plus the Next.js dependency
+  audit correction in draft PR #119; release/publication acceptance remains pending.
 - [Overview GCP rollout](OVERVIEW_GCP_ROLLOUT_2026-10-07.md) — preceding patch
   evidence; the source timeline is included in v0.7.3.
 

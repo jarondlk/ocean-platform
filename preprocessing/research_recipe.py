@@ -52,19 +52,28 @@ class ReviewedArea(ResearchModel):
     area_id: Name
     region_id: Name
     label: Name
-    # Initial registry supports explicit rectangular footprints, never sampling pins.
-    geometry_type: Literal["reviewed_cell_footprint"] = "reviewed_cell_footprint"
+    # A regional context rectangle never asserts a provider cell/station footprint.
+    geometry_type: Literal[
+        "reviewed_cell_footprint", "reviewed_regional_context_rectangle"
+    ] = "reviewed_cell_footprint"
     west: float = Field(strict=True, ge=-180, le=180)
     east: float = Field(strict=True, ge=-180, le=180)
     south: float = Field(strict=True, ge=-90, le=90)
     north: float = Field(strict=True, ge=-90, le=90)
-    coordinate_uncertainty_km: float = Field(strict=True, ge=0, le=100)
+    coordinate_uncertainty_km: float | None = Field(strict=True, ge=0, le=100)
     decision: EvidenceDecision
 
     @model_validator(mode="after")
     def ordered(self):
         if self.west >= self.east or self.south >= self.north:
             raise ValueError("Area requires a nonempty ordered footprint")
+        if (
+            self.geometry_type == "reviewed_cell_footprint"
+            and self.coordinate_uncertainty_km is None
+        ):
+            raise ValueError(
+                "Cell footprints require established coordinate uncertainty"
+            )
         return self
 
 

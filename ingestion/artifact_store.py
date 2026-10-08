@@ -28,6 +28,7 @@ NAMESPACES = {
     "normalized",
     "retrieval",
     "analysis",
+    "provisional-demos",
     "recipes",
     "classification-reviews",
     "evaluation",

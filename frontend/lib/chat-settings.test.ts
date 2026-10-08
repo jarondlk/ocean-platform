@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { decodeSettings, defaultScope, defaultSettings, encodeSettings, scopeErrors, settingsErrors, settingsStorageKey } from "./chat-settings.ts";
+import { decodeSettings, defaultScope, defaultSettings, encodeSettings, scopeForAnalysis, scopeErrors, settingsErrors, settingsStorageKey } from "./chat-settings.ts";
 import { appliedFilterRows } from "./chat-presentation.ts";
 
 test("source scope supports all sixteen combinations, including empty", () => {
@@ -48,4 +48,19 @@ test("generation controls validate bounds and output limits", () => {
   assert(settingsErrors({...defaultSettings, vectorWeight: 0, ftsWeight: 0}).length > 0);
   assert(settingsErrors({...defaultSettings, seed: "-1"}).length > 0);
   assert.deepEqual(settingsErrors({...defaultSettings, seed: "0", numPredict: "2048"}, 2048), []);
+});
+
+test("clearing a selected analysis after editing source filters removes its request binding", () => {
+  const scope = defaultScope();
+  scope.sources.edna_metabarcoding.filters = {provider_project_id: "2023KibanS", is_control: false, lat_min: 0};
+  // Source controls can return the submitted scope with a previously pinned ID.
+  const filtered = scopeForAnalysis(scope, "a".repeat(64));
+  assert.equal(filtered.sources.edna_metabarcoding.analysis_id, "a".repeat(64));
+  assert.equal(scope.sources.edna_metabarcoding.analysis_id, undefined);
+  const cleared = scopeForAnalysis(filtered, "");
+  assert.equal(cleared.sources.edna_metabarcoding.analysis_id, undefined);
+  assert.deepEqual(cleared.sources.edna_metabarcoding.filters, scope.sources.edna_metabarcoding.filters);
+  assert.equal(scopeForAnalysis(filtered, "b".repeat(64)).sources.edna_metabarcoding.analysis_id, "b".repeat(64));
+  filtered.sources.edna_metabarcoding.enabled = false;
+  assert.equal(scopeForAnalysis(filtered, "a".repeat(64)).sources.edna_metabarcoding.analysis_id, undefined);
 });
