@@ -159,6 +159,12 @@ integration and other repository CI checks are run separately in GitHub.
 
 ### Concrete reviewer inputs before serving
 
+The subsequent [analysis policy](HISTORICAL_SST_ANALYSIS_POLICY_2026-10-07.md)
+records the user's answers to all 20 questions and the control/filter clarification.
+The user has now accepted the provisional QC, weighting and comparable-cohort
+defaults. The policy records those decisions and remaining implementation work. Confirmed controls
+stay separate; other records are provisional; two filters count as one collection.
+
 #### User decisions recorded after the diagnostic implementation
 
 The user selected the following handling on 2026-10-07:
@@ -188,8 +194,8 @@ where the chosen analysis requires it. Software normalization/publication and
 the product/QC/area/time definitions below are still required before historical
 Chat acceptance. The download's completeness is separate from those steps.
 
-Retain evidence references and resolve the remaining method decisions below;
-do not treat the chosen display label as approval of unspecified definitions.
+Retain evidence references when implementing and applying the selected definitions;
+do not treat the chosen display label as provider endorsement.
 
 | Decision | Required recorded input |
 | --- | --- |
@@ -197,8 +203,8 @@ do not treat the chosen display label as approval of unspecified definitions.
 | Comparable areas/cohort (#102) | Worldmesh meaning, geographic footprints including Miyagi, and comparable season/area sampling across 2020–2023. |
 | SST scope (#103) | Whether coarse regional context is sufficient for a particular analysis, and which comparisons require native patches. |
 | Product/generation (#103) | MUR daily foundation analysis semantics and final-only policy; explicit handling of 33 interim dates and two additional exclusions. |
-| QC/weighting (#103) | Mask/ice rules, analysis-error threshold, valid-ocean fraction/minimum points, spatial weighting and coastal support limitations. |
-| Temporal matching (#103) | Calendar/timezone convention, allowable sample-time difference, and unmatched-date behavior. |
+| QC/weighting (#103) | Accepted provisional defaults: open-sea mask, uncertainty ≤1 K (0.5 K sensitivity), ice ≤0.15 where available with missing-ice warnings, 80%/five-point support, cosine-latitude grid-point weighting. Bind exact product/area definitions and coastal support limitations. |
+| Temporal matching (#103) | Accepted provisional Japan calendar/midday assumption and 24-hour matching; 48-hour retry only above 20% temporal misses. Local preview implementation passed; record exact registry/recipe versions for serving. |
 
 Apply the resulting reviews through the existing researcher/admin registry
 workflow against fresh publication bindings. A download choice or software
@@ -214,9 +220,9 @@ from eDNA detection frequency or SST association.
    identities and representative assays; resolve empty target tables, worldmesh
    meaning, reviewed area geometry and comparable sampling cohorts. Occurrence
    rows are not independent samples or validated non-detections.
-2. **#103:** review exact product generations, masks/uncertainty, valid-pixel rules,
-   spatial weighting and sample-time/calendar tolerance. Explicitly review any
-   use of subsampled context and its support limitations. Acquire/qualify native
+2. **#103:** apply the user-accepted provisional product/QC/weighting/calendar
+   choices to exact versioned definitions and verify full-period coverage,
+   sensitivities and subsampled-context support limitations. Acquire/qualify native
    patches where the approved scientific scope requires them.
 3. Bind actual researcher approval and admin application to current source
    publications and exact registry definitions. Normalize/link only reviewed

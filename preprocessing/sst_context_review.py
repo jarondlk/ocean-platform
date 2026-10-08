@@ -5,9 +5,11 @@ import hashlib
 import json
 from pathlib import Path
 import tempfile
+from typing import Literal
 
 import numpy as np
 import xarray as xr
+from pydantic import Field
 
 from ingestion.immutable_bundle import canonical_bytes, digest, read_bundle
 from ingestion.sst_context_integration import (
@@ -18,9 +20,76 @@ from ingestion.sst_context_integration import (
 )
 from ingestion.sst_nasa_context import context_child
 from ingestion.sst_nasa_subset import validate_nasa_pilot
+from preprocessing.research_recipe import ResearchModel
 
 ALGORITHM = "historical-regional-context-diagnostics-v1"
 STATUS = "unapproved_context_diagnostics"
+
+
+class ContextQualityProposal(ResearchModel):
+    """Explicit exploratory rules; this contract cannot assert scientific approval."""
+
+    schema_version: Literal[1] = 1
+    status: Literal["proposed"] = "proposed"
+    scientific_approval: Literal[False] = False
+    max_analysis_error_k: float = Field(strict=True, gt=0, le=5)
+    max_sea_ice_fraction: float = Field(strict=True, ge=0, le=1)
+    min_valid_ocean_fraction: float = Field(strict=True, gt=0, le=1)
+    min_valid_ocean_points: int = Field(strict=True, ge=1, le=100000)
+    weighting: Literal["cosine_latitude_grid_point_approximation", "equal_grid_points"]
+    missing_ice_policy: Literal["exclude", "use_open_sea_mask_with_warning"] = "exclude"
+
+
+def _quality_preview(temperature, uncertainty, ice, ocean, latitudes, proposal):
+    ice_ok = np.isfinite(ice) & (ice >= 0) & (ice <= proposal.max_sea_ice_fraction)
+    if proposal.missing_ice_policy == "use_open_sea_mask_with_warning":
+        # An explicit open-sea mask is separate evidence. Do not fill missing ice
+        # fractions with zero or accept nonfinite infinities as missing values.
+        ice_ok |= np.isnan(ice)
+    valid = (
+        ocean
+        & np.isfinite(temperature)
+        & (temperature >= -3)
+        & (temperature <= 45)
+        & np.isfinite(uncertainty)
+        & (uncertainty >= 0)
+        & (uncertainty <= proposal.max_analysis_error_k)
+        & ice_ok
+    )
+    count = int(valid.sum())
+    total = int(ocean.sum())
+    fraction = count / total if total else None
+    warnings = []
+    if total == 0:
+        warnings.append("no_open_ocean_grid_support")
+    elif fraction < proposal.min_valid_ocean_fraction:
+        warnings.append("below_proposed_valid_ocean_fraction")
+    if count < proposal.min_valid_ocean_points:
+        warnings.append("below_proposed_valid_ocean_point_count")
+    support_ok = not warnings
+    missing_ice_retained = int((valid & np.isnan(ice)).sum())
+    if missing_ice_retained:
+        warnings.append("missing_ice_fraction_open_sea_mask_used")
+    weights = np.ones(temperature.shape)
+    if proposal.weighting == "cosine_latitude_grid_point_approximation":
+        weights = np.broadcast_to(
+            np.cos(np.deg2rad(latitudes))[:, None], temperature.shape
+        )
+    return {
+        "status": "proposed_rules_preview",
+        "valid_ocean_points": count,
+        "valid_fraction_of_open_ocean": fraction,
+        "meets_proposed_support": support_ok,
+        "retained_points_with_missing_ice_fraction": missing_ice_retained,
+        "warnings": warnings,
+        # Sparse support remains visible with warnings, rather than being suppressed.
+        "sst_celsius": float(np.average(temperature[valid], weights=weights[valid]))
+        if count
+        else None,
+        "temperature_summary_basis": proposal.weighting,
+        "native_sample_area_evidence": False,
+        "scientific_approval": False,
+    }
 
 
 def load_context_review(plan, report, staging):
@@ -188,12 +257,20 @@ def _bounds(bounds, footprint):
     return dict(bounds)
 
 
-def build_context_diagnostics(plan, report, staging, *, bounds=None):
-    """Describe final grid points with no uncertainty/ice/coverage acceptance rule.
+def build_context_diagnostics(
+    plan, report, staging, *, bounds=None, proposed_quality=None
+):
+    """Describe final grid points and optionally evaluate separate proposed rules.
 
     Equal weights describe retained grid points, not an area-weighted mean or a
     sample-time SST estimate. Even a user-specified rectangle is unreviewed.
+    Proposed QC previews preserve the original diagnostics and assert no approval.
     """
+    proposal = (
+        ContextQualityProposal.model_validate(proposed_quality)
+        if proposed_quality is not None
+        else None
+    )
     integration, inventory, verified = load_context_review(plan, report, staging)
     rectangle = _bounds(bounds, integration["context_footprint"])
     daily = []
@@ -268,6 +345,15 @@ def build_context_diagnostics(plan, report, staging, *, bounds=None):
                         ),
                     }
                 )
+                if proposal is not None:
+                    daily[-1]["proposed_quality_preview"] = _quality_preview(
+                        temperature,
+                        uncertainty,
+                        ice,
+                        ocean,
+                        lat[y],
+                        proposal,
+                    )
     year, month = map(int, inventory["batch"]["month"].split("-"))
     present = {r["day"] for r in daily}
     gaps = {r["day"]: r["reason"] for r in integration["unsupported_final_dates"]}
@@ -305,4 +391,7 @@ def build_context_diagnostics(plan, report, staging, *, bounds=None):
         "database_access": False,
         "cloud_writes": False,
     }
+    if proposal is not None:
+        definition = proposal.model_dump(mode="json")
+        result["proposed_quality"] = {**definition, "proposal_id": digest(definition)}
     return {**result, "diagnostics_id": digest(result)}

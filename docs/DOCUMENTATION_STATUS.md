@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-10-07 (v0.7.3 published/deployed; exact-image acceptance, preservation and cleanup passed).
+Last reviewed: 2026-10-08 (v0.7.3 remains deployed; historical provisional QC/matching work is in draft PR #119).
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -18,6 +18,10 @@ approved.
   — completed context acquisition, final-only staging, follow-on local diagnostic
   processor and concrete reviewer inputs; unresolved scientific/
   publication gates. Historical evidence is not available in Chat.
+- [Historical analysis policy](HISTORICAL_SST_ANALYSIS_POLICY_2026-10-07.md)
+  — user-selected scope, controls, filters, latest-assay/calendar/metric choices,
+  plus accepted provisional QC/weighting and comparable-cohort defaults. Local
+  matching/sensitivity previews do not apply registries or scientific publication.
 - [Overview GCP rollout](OVERVIEW_GCP_ROLLOUT_2026-10-07.md) — preceding patch
   evidence; the source timeline is included in v0.7.3.
 

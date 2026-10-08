@@ -20,11 +20,22 @@ def main():
     parser.add_argument(
         "--bounds", type=Path, help="Optional unreviewed rectangle JSON"
     )
+    parser.add_argument(
+        "--proposed-quality",
+        type=Path,
+        help="Optional explicit draft QC/weighting JSON; never publication",
+    )
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
     # Do not overwrite inputs or allow an output path through a symlink.
     output = args.output.absolute()
-    inputs = [args.context_plan, args.reconciliation, args.staging_receipt, args.bounds]
+    inputs = [
+        args.context_plan,
+        args.reconciliation,
+        args.staging_receipt,
+        args.bounds,
+        args.proposed_quality,
+    ]
     if any(p.is_symlink() for p in (output, *output.parents)) or any(
         p and output.resolve() == p.resolve() for p in inputs
     ):
@@ -41,6 +52,9 @@ def main():
         report.get("result", report),
         staging,
         bounds=_read_json(args.bounds, 4096) if args.bounds else None,
+        proposed_quality=_read_json(args.proposed_quality, 4096)
+        if args.proposed_quality
+        else None,
     )
     atomic_json(output, result)
     print(
