@@ -1052,7 +1052,10 @@ def _sst_daily_df(*, publication=...) -> pd.DataFrame:
     if publication is ...:
         publication = current_publication()
     if publication:
-        legacy = pd.concat([legacy, pd.DataFrame(daily_rows(publication))], ignore_index=True)
+        regional = pd.DataFrame(daily_rows(publication))
+        # Explore profiles scalar table values; retain the warning list as JSON text.
+        regional['warnings'] = regional['warnings'].map(lambda value: json.dumps(value, ensure_ascii=False))
+        legacy = pd.concat([legacy, regional], ignore_index=True)
     # Existing parquet stores Python dates; regional receipts use ISO strings.
     # One calendar-date type keeps combined Data and Explore sorting consistent.
     legacy['date_jst'] = pd.to_datetime(legacy['date_jst'], errors='raise').dt.strftime('%Y-%m-%d')
