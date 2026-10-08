@@ -1,5 +1,9 @@
 # Historical SST integration validation — 2026-10-08
 
+Subsequent status: v0.7.4 provisional Miyagi publication and production Chat
+acceptance passed on 2026-10-08 JST. The following preparation account retains
+its dated evidence; see [current operations](RELEASE_0.7.4_OPERATIONS.md).
+
 Draft PR #119 extends verified local context diagnostics with the user-accepted
 provisional QC, weighting, calendar, matching and relative-temperature rules.
 Production remains v0.7.3; historical scientific evidence is not published.

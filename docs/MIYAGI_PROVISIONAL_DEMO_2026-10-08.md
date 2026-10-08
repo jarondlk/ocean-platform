@@ -1,7 +1,8 @@
 # Miyagi historical SST / ANEMONE provisional demo
 
-Status: calculated and locally verified; live publication/rollout and Chat
-acceptance are pending. Production remains v0.7.3.
+Status: published as user-approved provisional analyses and deployed in v0.7.4
+on 2026-10-08 JST. Normal candidate/production Chat and CSV acceptance passed.
+See [exact operations](RELEASE_0.7.4_OPERATIONS.md).
 
 The user chose yesterday's retained NASA regional context, Miyagi first in
 2020–2023, and explicitly said **“can skip and approve all”** when asked about
@@ -103,9 +104,18 @@ production migration or role/IAM changes. Retain source inputs, manifests and
 actual image/source receipts before recording live acceptance. Compatible app
 rollback leaves provisional artifacts retained but invisible to older releases.
 
-Validation so far: 1,257 backend tests passed, 39 optional PostgreSQL tests
-skipped, 81.04% coverage; active Python lint passed. All 71 frontend tests,
-typecheck and production build passed. The package version is prepared as 0.7.4;
-GitHub CI and exact-image verification remain required.
-Real retained-data processing and both provisional calculations passed. These
-results do not yet claim deployed Chat acceptance or completion of #89.
+Validation: 1,257 backend tests passed, 39 optional PostgreSQL tests skipped,
+81.04% coverage; lint passed. All 72 frontend tests/typecheck and final build
+passed, as did all eight GitHub checks, exact image/runtime/full scans and private
+backup/restore. Normal candidate/production frequency and temperature workflows
+had zero invalid citations. Disabled SST/conflicting filters/unsupported taxon
+and spatial requests abstained. The stale analysis-selection regression was
+fixed and tested through real browser retrieval. A 377-row read-ranking CSV was
+verified. Original history/accounts/roles/corpus/artifacts remained intact.
+
+Published analysis IDs (select either PROVISIONAL DEMO method in Chat):
+
+- QCauto: `2eb754de7d095a43c7bb6cea14fbb88a1a9d8dc42a90032e8a46d6d4a7683083`.
+- QCauto 95%-3NN: `9312a7e12211be66f58f17a1e57f2ce0f581da427d9074cada8787657af6d56b`.
+
+The first demo does not close the full scientific objectives in #89/#102/#103.

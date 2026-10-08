@@ -1,5 +1,9 @@
 # Historical SST/ANEMONE analysis policy
 
+Subsequent status: v0.7.4 provisional Miyagi publication and production Chat
+acceptance passed on 2026-10-08 JST. The following preparation account retains
+its dated evidence; see [current operations](RELEASE_0.7.4_OPERATIONS.md).
+
 User choices recorded 2026-10-07. Reviewer display label: **ANEMONE**. These
 choices were supplied by the user; provider endorsement is not asserted. The
 user accepted the provisional QC/comparison defaults in this conversation.

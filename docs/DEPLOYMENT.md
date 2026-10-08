@@ -11,15 +11,15 @@ to the canonical domain.
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
-Current release, verified 2026-10-07 JST: **v0.7.3** serves 100% on
-`ocean-platform-v073-patch1007`, exact runtime/tag source `f65efdf`.
-[Operations](RELEASE_0.7.3_OPERATIONS.md) records immutable images, CI, private
-backup/isolated restore, normal admin Chat/Overview, preservation and cleanup.
-Schema, scientific publications, roles/IAM, canonical auth, mounts and resource
-limits are preserved. Five manual job images were aligned without execution;
-the superseded SST job remains unchanged. The preceding Overview revision and
-all prior tags remain compatible application rollback. Historical SST remains
-scientifically unpublished pending #102/#103 acceptance and controlled publication.
+Current release, verified 2026-10-08 JST: **v0.7.4** serves 100% on
+`ocean-platform-v074-patch1008`, runtime/tag source `f73d5fd`.
+[Operations](RELEASE_0.7.4_OPERATIONS.md) records exact images/CI, private
+backup/restore, user-approved provisional analysis IDs, normal Chat/CSV,
+preservation, cleanup and immediate compatible v0.7.3 rollback.
+Schema/roles/IAM/canonical corpus/auth/mounts/limits are preserved. Five manual
+job image pins were aligned without execution; both SST acquisition jobs remain
+unchanged and stopped. The provisional Miyagi demo is usable through published
+analysis selection; formal full-scope scientific acceptance remains in #89/#102/#103.
 
 Previous versioned release record, verified during the 2026-10-06 JST rollout:
 
@@ -46,7 +46,8 @@ Previous versioned release record, verified during the 2026-10-06 JST rollout:
   production as routine application rollback.
 
 The deployed standalone frontend independently reports source-map-js 1.2.2;
-#110 is resolved. Full OS scan findings are unchanged and retained in #104.
+#110 is resolved. Full OS scans retain the reviewed liblzma security-package upgrade and other
+findings in #104; see the current operations record.
 Fresh service/jobs/SQL/storage/IAM and Console budget checks passed before
 rollout. SQL disk is now 15 GiB with a 20 GiB growth limit; the automatic growth
 is recorded in [v0.7.2 operations](RELEASE_0.7.2_OPERATIONS.md).
@@ -77,7 +78,7 @@ The completed initial migration sequence and historical cost-control rationale
 are retained in
 [`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Do not use it
 as the current release order. Use the completed
-[v0.7.3 operations record](RELEASE_0.7.3_OPERATIONS.md) for the current
+[v0.7.4 operations record](RELEASE_0.7.4_OPERATIONS.md) for the current
 deployment and verify the project budget and Cloud Run spend cap before paid
 execution.
 

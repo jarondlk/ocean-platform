@@ -33,7 +33,7 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.7.3`. The active data plane now uses the
+  and OCEAN Platform release `v0.7.4`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
 - The accessible 2026-09-17 ANEMONE MiFish catalogue is stored as the
@@ -52,6 +52,18 @@ workflow that can later become automated.
 - The README screenshot set was refreshed from the authenticated OCEAN
   Platform Cloud Run deployment on 2026-08-25.
 
+## v0.7.4 provisional Miyagi demo (2026-10-08)
+
+The user-approved provisional Miyagi 2020–2023 demo is published/deployed from
+exact source `f73d5fd`. Frequency, seasonal/yearly series, separate read rankings
+and relative SST comparisons passed normal production Chat and CSV checks.
+[Operations](RELEASE_0.7.4_OPERATIONS.md) records exact images/data IDs,
+backup/restore, preservation, cleanup and compatible v0.7.3 rollback.
+No new provider downloads; NOAA acquisition is stopped and the follow-up paused.
+Full formal sample/area evidence, latest-assay selection, scope expansion and
+remaining spatial demonstrations stay open in #89/#102/#103. Read sums are not
+abundance; regional temperature association does not establish causation.
+
 ## v0.7.3 software release (2026-10-07)
 
 Overview coverage and bounded historical SST acquisition/review-staging software
@@ -60,7 +72,8 @@ are published/deployed at exact source `f65efdf`. See
 [operations](RELEASE_0.7.3_OPERATIONS.md) for accepted images, normal admin
 Chat/Overview, preservation, cleanup and rollback. Private context is acquired;
 native patches, #102/#103 reviews, controlled publication and #89's six real
-demonstrations remain pending. Historical evidence is not yet available in Chat.
+demonstrations remain pending. That was the status at the v0.7.3 rollout; the explicitly labelled v0.7.4
+provisional Miyagi publication above supersedes it for the first demo.
 
 ## Previous versioned patch and outstanding work (2026-10-06)
 

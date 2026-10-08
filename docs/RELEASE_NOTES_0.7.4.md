@@ -1,6 +1,8 @@
 # v0.7.4 — provisional Miyagi historical SST / ANEMONE demo
 
-Prepared release; deployment acceptance is pending.
+Published/deployed2026-10-08 JST. Normal candidate/production Chat, verified CSV,
+backup/restore and independent preservation acceptance passed.
+See [operations](RELEASE_0.7.4_OPERATIONS.md).
 
 This patch adds an explicitly user-approved provisional demo using retained
 2020–2023 MUR regional context and available Miyagi ANEMONE records. Chat can
@@ -34,7 +36,7 @@ remain open for the remaining scientific objectives and expansion beyond Miyagi.
 Private demo preparation uses a separate artifact namespace, which older app
 versions do not enumerate. No production migration, classification change,
 account/role/IAM change or additional provider acquisition is included. The
-patch also includes the draft PR #119 Next.js 15.5.27 audit correction and the
+patch also includes the merged PR #119 Next.js 15.5.27 audit correction and the
 bounded retained-context processing/normalization tooling.
 
 Candidate browser QA also found and fixed a stale analysis binding: after editing
@@ -42,5 +44,5 @@ a source filter, choosing “No analysis selected” now removes the previous
 analysis from the request while retaining the explicit source filters.
 
 See [the demo evidence and limits](MIYAGI_PROVISIONAL_DEMO_2026-10-08.md).
-Record exact CI, source/image, publication and normal-sign-in Chat acceptance
-before changing this document's prepared status to published/deployed.
+All eight GitHub checks and final Cloud Build steps passed; exact source `f73d5fd`
+is pinned by the release tag and images. Existing live-role/mobile deferrals remain.

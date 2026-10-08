@@ -7,6 +7,12 @@ batch work remains manual. An operator CLI without an application caller is
 not unused code. The tables below cover every tracked entrypoint in `scripts/`,
 the GCP shell/build helpers and standalone QA modules.
 
+Current acquisition direction: NASA context is complete; both superseded NOAA
+jobs are stopped and preserved, and the follow-up is paused. Use retained bytes
+for the published v0.7.4 Miyagi demo. Acquisition commands below are retained
+operator tooling, not authorization to restart downloads. See
+[accepted operations](../docs/RELEASE_0.7.4_OPERATIONS.md).
+
 ## Maintained application and development commands
 
 | Entrypoint | Caller / supported purpose | Effects / default |
