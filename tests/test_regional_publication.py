@@ -1,6 +1,6 @@
 """Historical SST enters normal surfaces without altering scientific identities."""
 from copy import deepcopy
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 
 import pandas as pd
 import pytest
@@ -130,9 +130,14 @@ def test_overview_counts_only_published_windows_not_intervening_years(published,
     assert not any(b.month.startswith(('2024','2025')) for b in observed.bins)
 
 
-def test_normal_data_catalog_and_sst_include_history_without_mixing_product_statistics(published, monkeypatch):
+@pytest.mark.parametrize('legacy_date', ['2026-01-01', date(2026, 1, 1), pd.Timestamp('2026-01-01')])
+def test_normal_data_catalog_and_sst_include_history_without_mixing_product_statistics(published, monkeypatch, tmp_path, legacy_date):
     import api.main as api
-    monkeypatch.setattr(api, '_read_explore_dataset', lambda key: pd.DataFrame({'date_jst':['2026-01-01'], 'mean_sst':[9.], 'min_sst':[8.], 'max_sst':[10.]}))
+    path = tmp_path/'production-format.parquet'
+    pd.DataFrame({'date_jst':[legacy_date], 'mean_sst':[9.], 'min_sst':[8.], 'max_sst':[10.]}).to_parquet(path)
+    monkeypatch.setattr(api, '_read_explore_dataset', lambda key: pd.read_parquet(path))
+    combined = api._sst_daily_df().sort_values('date_jst')
+    assert combined.iloc[-1]['date_jst'] == '2026-01-01'
     monkeypatch.setattr(api, '_sst_points_df', lambda: pd.DataFrame({'time_jst':['2026-01-01T12:00:00+09:00'], 'sst':[9.]}))
     all_data = api.data_sst(limit=100)
     assert all_data.days == 1462
