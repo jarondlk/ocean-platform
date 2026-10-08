@@ -78,6 +78,13 @@ export function settingsErrors(settings: ChatSettings, maxTokens = 8192): string
   }
   return errors;
 }
+// Analysis selection is transient UI state, never an inherited source filter.
+export function scopeForAnalysis(scope: EvidenceScope, analysisId: string): EvidenceScope {
+  const edna = {...scope.sources.edna_metabarcoding};
+  delete edna.analysis_id;
+  if (edna.enabled && analysisId.trim()) edna.analysis_id = analysisId.trim();
+  return {...scope, sources: {...scope.sources, edna_metabarcoding: edna}};
+}
 export function settingsStorageKey(accountId: string): string { return `ocean-chat-settings:v1:${accountId}`; }
 export function decodeSettings(raw: string | null): {settings: ChatSettings; scope: EvidenceScope} {
   if (raw === null) return {settings: {...defaultSettings}, scope: defaultScope()};

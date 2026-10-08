@@ -1,6 +1,6 @@
 # Script and deployment entrypoint inventory
 
-Reviewed 2026-10-07 against repository callers, CLI implementations, tests,
+Reviewed 2026-10-08 against repository callers, CLI implementations, tests,
 templates and operating guidance. No script executes automatically merely
 because it is present. Cloud Run serving uses `JOB_EXECUTION_MODE=external`;
 batch work remains manual. An operator CLI without an application caller is
@@ -64,6 +64,9 @@ and underlying module tests; lack of a UI caller is intentional.
 | `prepare_research_sst.py` | v0.7.0 acquisition plan; acquisition tests | Offline plan by default; execute downloads/stages granules. Product approval remains separate. |
 | `run_research_sst_panel.py` | v0.7.0 implementation and container import gate | Preflight/build panel from applied sampling/product reviews; execute publishes immutable panel. |
 | `run_research_sst_collection.py` | #103 bounded multi-panel research input | Explicit child/area selection; current applied review preflight; execute publishes immutable collection with verified child raw provenance. |
+| `prepare_historical_sst_period.py` | Retained #103 context across a fixed period | Default preflight; explicit bounded GCS reads verify monthly sealed bytes, generation, QC and gaps. Local processing only; file lock and exact checkpoints, no provider downloads or scientific publication. |
+| `run_research_context_panel.py` | Formal regional-context review bridge | Default preflight; execution requires actually applied sampling/product reviews before immutable panel publication. Does not bypass researcher/admin role gates. |
+| `run_provisional_research_demo.py` | Explicitly user-approved provisional regional demo | Default preflight; execution requires current full-source verification and the hash-bound user decision. Publishes only to the separate provisional namespace; no canonical classifications, physical IDs, review/role changes or provider acquisition. |
 | `run_research_analysis.py` | Research bundle implementation and image import gate | Preflight default; execute creates approved-registry-bound research bundle. |
 | `evaluate_edna_pilot.py` | Saved-record evaluator and ANEMONE runbook | Reads evidence/human review; no model generation; not a substitute for six real research demos. |
 | `render_gcp_templates.py` | GCP runbook; renderer tests | Offline YAML rendering; use a private temporary output directory. Bootstrap templates are not fresh production definitions. |

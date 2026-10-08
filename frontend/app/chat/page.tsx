@@ -20,7 +20,7 @@ import { ResearchResultCards } from "@/components/ResearchResultCards";
 import { SourceCoverage } from "@/components/SourceCoverage";
 import type { ResearchIntent } from "@/types";
 import { useChatSettings } from "@/lib/use-chat-settings";
-import { sourceLabels, scopeErrors, settingsErrors, type SourceFamily, type ChatSettings } from "@/lib/chat-settings";
+import { sourceLabels, scopeErrors, settingsErrors, scopeForAnalysis, type SourceFamily, type ChatSettings } from "@/lib/chat-settings";
 
 const quickQuestions = [
   {
@@ -53,10 +53,7 @@ export default function ChatPage() {
   const {settings, setSettings, scope, setScope, ready, blocked, storageNotice, reset} = useChatSettings(analysisId);
   const [models, setModels] = useState<ModelsResponse | null>(null);
   const [capabilities, setCapabilities] = useState<ChatCapabilities | null>(null);
-  const submittedScope = {...scope, sources: {...scope.sources, edna_metabarcoding: {
-    ...scope.sources.edna_metabarcoding,
-    ...(analysisId.trim() && scope.sources.edna_metabarcoding.enabled ? {analysis_id: analysisId.trim()} : {}),
-  }}};
+  const submittedScope = scopeForAnalysis(scope, analysisId);
   const validationErrors = [...scopeErrors(submittedScope), ...settingsErrors(settings, capabilities?.max_output_tokens || 8192)];
   function validationLabel(message: string) {
     const [path, detail] = message.split(": ");
@@ -438,7 +435,7 @@ export default function ChatPage() {
               </button>
             </div>
 
-            <ChatSourceSettings disabled={!ready} scope={submittedScope} onChange={setScope} analysisId={analysisId} onAnalysisChange={setAnalysisId} researchIntent={researchIntent} onResearchChange={(intent, question) => { setResearchIntent(intent); if (question) setQuery(question); }} />
+            <ChatSourceSettings disabled={!ready} scope={submittedScope} onChange={next => setScope(scopeForAnalysis(next, ""))} analysisId={analysisId} onAnalysisChange={setAnalysisId} researchIntent={researchIntent} onResearchChange={(intent, question) => { setResearchIntent(intent); if (question) setQuery(question); }} />
             <details className="chat-advanced"><summary>{ui("Advanced settings")}</summary>
             <fieldset className="settings-section">
               <legend>{ui("Retrieval")}</legend>

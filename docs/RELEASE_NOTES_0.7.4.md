@@ -37,6 +37,10 @@ account/role/IAM change or additional provider acquisition is included. The
 patch also includes the draft PR #119 Next.js 15.5.27 audit correction and the
 bounded retained-context processing/normalization tooling.
 
+Candidate browser QA also found and fixed a stale analysis binding: after editing
+a source filter, choosing “No analysis selected” now removes the previous
+analysis from the request while retaining the explicit source filters.
+
 See [the demo evidence and limits](MIYAGI_PROVISIONAL_DEMO_2026-10-08.md).
 Record exact CI, source/image, publication and normal-sign-in Chat acceptance
 before changing this document's prepared status to published/deployed.
