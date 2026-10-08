@@ -56,6 +56,23 @@ def regional_search(query, scope, k):
                    'text': f"Miyagi historical MUR SST coverage under these filters: {len(days)} supported final 04.1 days, {days[0]} through {days[-1]}. Mean of supported regional daily SST: {sum(values)/len(values):.6g}°C; minimum daily regional mean {min(values):.6g}°C; maximum daily regional mean {max(values):.6g}°C. Final-series gaps: " + ', '.join(g['day'] + ' (' + g['reason'] + ')' for g in gaps) + '. ' + ' '.join(NOTES),
                    'score': 1.0, 'rank_sources': {'regional_coverage': 1}}
         selected = [summary, *selected][:k]
+    elif scope['sources']['remote_sensing']['enabled']:
+        filters = scope['sources']['remote_sensing']['filters']
+        gaps = [g for g in publication['period']['final_series_gaps']
+                if matches_time(g['day'], filters.get('time_from'), filters.get('time_to'))]
+        if gaps:
+            gap_document = {'doc_id': 'mur_gaps_' + digest([publication['publication_id'], filters]),
+                            'source_type': 'remote_sensing', 'time': gaps[0]['day'] + 'T09:00:00+00:00',
+                            'title': 'Published historical SST final-series gaps',
+                            'metadata': {'dataset_id': DATASET, 'publication_id': publication['publication_id'],
+                                         'coverage_summary': True, 'days': 0, 'final_series_gaps': gaps,
+                                         'observed_start': gaps[0]['day'], 'observed_end': gaps[-1]['day']},
+                            'text': 'No final MUR 04.1 regional SST observation is published for these requested dates: '
+                                    + ', '.join(g['day'] + ' (' + g['reason'] + ')' for g in gaps)
+                                    + '. These are retained coverage-gap receipts, not SST measurements. Interim 04.1nrt evidence is excluded; no final value is substituted.',
+                            'score': 1.0, 'rank_sources': {'regional_gap_receipt': 1}}
+            if document_matches(gap_document, scope):
+                selected = [gap_document]
     return selected, publication['publication_id']
 
 
