@@ -3702,13 +3702,23 @@ def stats() -> CorpusStats:
         source_type = str(doc.get("source_type") or "unknown")
         counts[source_type] = counts.get(source_type, 0) + 1
 
+    try:
+        sst_days = _sst_daily_df(publication=regional)["date_jst"].astype(str).str[:10].nunique()
+    except HTTPException as exc:
+        if exc.status_code != 404:
+            raise
+        # Recovery inventory remains available before local SST is materialized.
+        # Count only the verified regional dates when that publication exists.
+        from ingestion.regional_publication import daily_rows
+        sst_days = len({row['date_jst'] for row in daily_rows(regional)}) if regional else 0
+
     return CorpusStats(
         documents=counts,
         edna_publication=publication,
         edna_retrieval_documents=edna_count,
         samples=_parquet_rows(config.SERVING_DIR / "sample_registry.parquet"),
         ctd_casts=_parquet_rows(config.NORMALIZED_DIR / "ctd_summary.parquet"),
-        sst_days=_sst_daily_df()["date_jst"].astype(str).str[:10].nunique(),
+        sst_days=sst_days,
         analysis_docs=_count_jsonl(config.ANALYSIS_DIR / "analysis_documents.jsonl"),
         reliability_docs=_count_jsonl(config.RELIABILITY_DIR / "reliability_documents.jsonl"),
         provenance_records=_count_jsonl(config.PROVENANCE_DIR / "provenance.jsonl"),
