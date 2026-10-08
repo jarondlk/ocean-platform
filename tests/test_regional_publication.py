@@ -139,6 +139,13 @@ def test_normal_data_catalog_and_sst_include_history_without_mixing_product_stat
     combined = api._sst_daily_df().sort_values('date_jst')
     assert combined.iloc[-1]['date_jst'] == '2026-01-01'
     monkeypatch.setattr(api, '_sst_points_df', lambda: pd.DataFrame({'time_jst':['2026-01-01T12:00:00+09:00'], 'sst':[9.]}))
+    summary = api.explore_summary(dataset='sst_daily', search=None)
+    assert summary.total_rows == 1462
+    assert next(p for p in summary.profiles if p.name == 'warnings').unique == 1
+    table = api.explore_table(dataset='sst_daily', limit=2, offset=0, search=None)
+    assert table.total == 1462 and len(table.rows) == 2
+    series = api.explore_timeseries(dataset='sst_daily', limit=2, search=None)
+    assert len(series.points) == 2 and all(p.source == DATASET for p in series.points)
     all_data = api.data_sst(limit=100)
     assert all_data.days == 1462
     assert all_data.stats['mean_sst'] is None
