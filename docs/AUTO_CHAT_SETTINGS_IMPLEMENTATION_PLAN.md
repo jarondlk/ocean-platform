@@ -60,19 +60,22 @@ outside the filesystem/network sandbox.
 The new branch starts from updated `main`; `gcp-dev` is retained. Nine obsolete
 fully merged branches were deleted locally and remotely after a verified backup.
 The backup is `.git/branch-archive/before-auto-setting-20261008.bundle`.
-Automatic approval review rejected the bulk deletion of unmerged shared branches,
-so the following existing branches remain for explicit cleanup approval:
+Automatic approval review initially rejected deletion of unmerged shared branches.
+Following explicit user approval on 2026-10-09, the following six remaining local
+branches and their five remote counterparts were deleted after checking that all
+tips matched the verified backup:
 
 - `codex/issue-103-historical-sst`
 - `codex/overview-gcp-patch`
 - `codex/overview-temporal-coverage` (local only)
 - `codex/v0.7.3-operations-docs`
 - `codex/v0.7.3-release`
-- `codex/v075-docs-issue-audit` (fully merged; checked out in another clean worktree)
+- `codex/v075-docs-issue-audit` (fully merged; its other clean worktree was detached)
 
-Removing the last local branch also requires detaching that worktree. No other
-checkout was changed. The bundle preserves the branch histories, including
-commits not reachable from `main`, for recovery before any further cleanup.
+The detached worktree retains its existing commit and files. Only `main`,
+`gcp-dev` and `auto-setting` remain as branches locally and on origin. The bundle
+preserves the deleted branch histories, including commits not reachable from
+`main`, for recovery.
 
 ## Product behavior
 
