@@ -1,9 +1,10 @@
 # Next release — unreleased changes
 
-The Overview coverage feature and historical SST preparation are included in
-[v0.7.3 release notes](RELEASE_NOTES_0.7.3.md). No additional unreleased change is
-recorded here. Historical scientific publication remains pending #102/#103 and
-is not implied by the software version.
+The retained-context processor, user-approved provisional Miyagi demo and analysis
+selection fix are published in [v0.7.4](RELEASE_NOTES_0.7.4.md). No additional
+unreleased change is recorded here. [Current operations](RELEASE_0.7.4_OPERATIONS.md)
+record deployed acceptance. Full formal scientific work and remaining spatial
+demonstrations stay open in #89/#102/#103; the first demo does not complete them.
 
-The earlier untagged Overview deployment is retained in
-[its dated rollout record](OVERVIEW_GCP_ROLLOUT_2026-10-07.md).
+Prior Overview rollout evidence remains in
+[its dated record](OVERVIEW_GCP_ROLLOUT_2026-10-07.md).

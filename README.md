@@ -181,13 +181,14 @@ Implemented in the current prototype:
   default-deny API authorization, request limits, security headers, production
   rate limits, a private-service Compose topology, and hardened CI checks.
 
-Deployed scientific workflows with real-data acceptance still pending:
+Deployed formal scientific workflows with full-scope acceptance still pending:
 
 - Authenticated classification and research registry review, effect preview,
   controlled application and publication are deployed through schema
   `20261005_0016`. Normal role enforcement passed isolated live candidate QA.
   Real environmental classification, physical sample identity/areas, historical
-  SST product review and the six real demonstrations remain unapproved; see
+  SST product review and the full six demonstrations remain open. The v0.7.4
+  user-approved provisional first demo is available separately; see
   [the scientific review packet](docs/V0.7.0_SCIENTIFIC_REVIEW.md).
 
 Still intentionally future work:
