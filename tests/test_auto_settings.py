@@ -117,7 +117,7 @@ def test_exact_calendar_dates_cannot_be_replaced_with_other_days(planning):
 
 
 def test_pinned_dataset_analysis_and_protocol_cannot_be_changed(planning):
-    catalog, output, _ = planning
+    catalog, output, calls = planning
     chosen = scope('edna_metabarcoding', 'remote_sensing')
     chosen['sources']['edna_metabarcoding']['analysis_id'] = 'a' * 64
     chosen['sources']['remote_sensing']['filters']['dataset_id'] = 'mur-miyagi-2020-2023'
@@ -131,6 +131,10 @@ def test_pinned_dataset_analysis_and_protocol_cannot_be_changed(planning):
     effective, _ = planner.plan_settings(request)
     assert effective.research_intent.kind == 'temperature_comparison'
     assert effective.research_intent.protocol_id == 'b' * 64
+    planner_input = json.loads(calls[0]['prompt'].split('INPUT:\n', 1)[1])
+    assert planner_input['selection_context']['verified_user_protocol_choice']['protocol_id'] == 'b' * 64
+    assert planner_input['catalogue']['analyses'][0]['protocol_ids'] == ['b' * 64]
+    assert catalog['analyses'][0]['protocol_ids'] == ['b' * 64]
     output['value']['research_intent']['protocol_id'] = 'c' * 64
     with pytest.raises(planner.PlanningError, match='retain.*protocol'):
         planner.plan_settings(request)
@@ -416,3 +420,26 @@ def test_provider_schema_is_small_but_does_not_relax_filter_validation():
     invalid['evidence_scope']['sources']['ctd']['filters'] = {'lat_min': 200}
     with pytest.raises(ValidationError):
         SettingsProposal.model_validate(invalid)
+
+
+def test_confirmed_user_pins_are_restored_without_new_question_quotes(planning):
+    catalog, output, _ = planning
+    identity, protocol_id = 'a' * 64, 'b' * 64
+    catalog['analyses'] = [{'analysis_id': identity, 'status': 'current', 'analysis_kind': 'regional_frequency',
+                            'protocol_ids': [protocol_id], 'sst_available': True}]
+    pinned = scope('edna_metabarcoding', 'remote_sensing')
+    pinned['sources']['edna_metabarcoding']['analysis_id'] = identity
+    pinned['sources']['remote_sensing']['filters']['dataset_id'] = 'mur-miyagi-2020-2023'
+    output['value'] = proposal(evidence_scope=scope('edna_metabarcoding'), route='published_exact',
+                               research_intent={'kind': 'fish_frequency'}, required_sources=['edna_metabarcoding'],
+                               constraints=[{'family': 'remote_sensing', 'field': 'dataset_id', 'quote': 'Selected dataset'},
+                                            {'family': 'edna_metabarcoding', 'field': 'protocol_id', 'quote': 'Selected protocol'}])
+    effective, metadata = planner.plan_settings(ChatRequest(query='Show the top 10 fish by detection frequency.',
+        settings_mode='auto', evidence_scope=pinned, research_intent={'kind':'temperature_comparison', 'protocol_id':protocol_id}))
+    assert effective.evidence_scope.canonical() == pinned
+    assert effective.research_intent.kind == 'fish_frequency'
+    assert effective.research_intent.protocol_id == protocol_id
+    assert metadata['constraints'] == []
+    assert metadata['retained_user_pins'] == {'edna_metabarcoding.analysis_id':identity,
+        'edna_metabarcoding.protocol_id':protocol_id, 'remote_sensing.dataset_id':'mur-miyagi-2020-2023'}
+    assert metadata['evidence_scope'] == effective.evidence_scope.canonical()
