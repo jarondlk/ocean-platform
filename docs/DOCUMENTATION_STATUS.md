@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-10-08 (v0.7.5 published/deployed; PRs #121–#124 merged; normal historical SST/Chat/provenance acceptance passed).
+Last reviewed: 2026-10-08 (v0.7.5 published/deployed; PRs #121–#125 merged; normal historical SST/Chat/provenance acceptance passed).
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -17,8 +17,8 @@ approved.
   direction: stop NOAA acquisition, use retained regional context for Miyagi
   2020–2023, and record explicit user approval separately from formal scientific
   registries. Processing, private provisional publication and normal production Chat passed.
-  This supersedes waiting for native patches or a separate researcher account
-  as prerequisites for this explicitly labelled provisional first demo.
+  The v0.7.5 operational publication supersedes its demo-only presentation for
+  ordinary system use; retain this record for the original scientific contract.
 
 - [v0.7.4 operations](RELEASE_0.7.4_OPERATIONS.md) and
   [release notes](RELEASE_NOTES_0.7.4.md) — preceding exact-source/images, accepted
@@ -27,7 +27,7 @@ approved.
   — completed context acquisition, final-only staging, follow-on local diagnostic
   processor and concrete reviewer inputs; unresolved scientific/
   publication gates. This dated staging packet is superseded for the user-approved Miyagi demo
-  by the v0.7.4 provisional publication; formal full-scope gates remain.
+  by the v0.7.4 provisional publication and v0.7.5 ordinary integration; formal full-scope gates remain.
 - [Historical analysis policy](HISTORICAL_SST_ANALYSIS_POLICY_2026-10-07.md)
   — user-selected scope, controls, filters, latest-assay/calendar/metric choices,
   plus accepted provisional QC/weighting and comparable-cohort defaults. Local

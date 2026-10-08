@@ -2,40 +2,53 @@
 
 > **Last updated**: 2026-10-08 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: v0.7.4 published/deployed at
+> **Current status**: v0.7.5 published/deployed at
 > [oceaninfobio.com](https://oceaninfobio.com/chat), Ready revision
-> `ocean-platform-v074-patch1008`, 100% traffic, runtime/tag source `f73d5fd`.
-> [Operations](docs/RELEASE_0.7.4_OPERATIONS.md) records exact images/source,
-> provisional publication IDs, backup/restore, normal Chat/CSV and preservation.
-> Schema remains `20261005_0016`; later docs do not change runtime images/tags.
+> `ocean-platform-v075-patch1008`, 100% traffic, runtime/tag source `7a100dd`.
+> [Operations](docs/RELEASE_0.7.5_OPERATIONS.md) records exact images/source,
+> immutable operational publication, verified-backup reuse, normal Chat/CSV/provenance
+> and preservation. Schema remains `20261005_0016`; later documentation does not
+> replace the accepted runtime images or release tag.
 
-## v0.7.4 completed; remaining work
+## v0.7.5 completed; remaining work
 
-PR #119 merged; all eight CI and final build checks passed. The user-approved
-provisional Miyagi 2020–2023 demo now answers top-fish detection frequency,
-seasonal/yearly changes, separate read rankings and high/low regional SST.
-Select a PROVISIONAL DEMO analysis and one protocol; enable eDNA/SST. Two methods
-each contain 104 singleton occurrence proxies/104 SST matches ; 14 repeats remain
-excluded. Processing used existing bytes only: 1,455 final regional days/six gaps.
-Canonical identities/classifications/formal reviews/roles/publications are unchanged.
-No independent researcher approval/provider endorsement is claimed. Species-specific
-sardine and spatial redistribution remain unsupported; read sums are not abundance.
-See [demo limits](docs/MIYAGI_PROVISIONAL_DEMO_2026-10-08.md).
+PRs #121–#124 implement and correct ordinary historical SST integration; #125
+records accepted production operations. All eight checks passed on each source.
+Overview, Data SST, Explore, source filters and ordinary Chat include 1,455 final
+Miyagi MUR days from 2020–2023 alongside 79 current SST days. Products/statistics
+remain separate; six historical final gaps stay empty, interim evidence excluded.
+Historical citations trace the retained immutable publication independently of
+its current pointer and preserve the answer's product/date scope.
 
-Normal candidate/production Chat, citations, source selection and verified CSV
-passed. Clearing analysis after filter edits was fixed and checked. Independent
-history/accounts/corpus/publication/artifact preservation passed. Temporary
-callback/jobs/QA revisions/tags removed. Five manual job pins aligned without
-execution; both SST acquisition jobs remain unchanged/stopped and follow-up paused.
-No new provider acquisition. Auth/IAM/budgets/resources remain unchanged.
+For exact fish frequencies, seasonal/yearly series and relative high/low SST
+comparisons, choose a published Miyagi analysis, matching workflow and one assay
+protocol in Chat. Enable ANEMONE eDNA and SST for temperature comparisons.
+Both original assignment methods retain 104 singleton occurrence proxies and
+104 SST matches; 14 unresolved repeats stay excluded. Sequencing read sums are
+not abundance; temperature associations do not establish weather causation.
+User operational acceptance is recorded separately from formal researcher/provider
+endorsement. Canonical identities/classifications/reviews/roles/publications
+and original analysis/result IDs remain unchanged. See the
+[publication contract](docs/HISTORICAL_REGIONAL_PUBLICATION.md).
 
-#89/#102/#103 remain open for full formal environmental/physical/area evidence,
-latest-assay selection, scope expansion/native evidence if needed and remaining
-spatial demonstrations. #104 OS maintenance, user-deferred mobile #107 and
-sign-out investigation #108 remain. Immediate compatible rollback is
-`ocean-platform-v073-patch1007`; retain schema 0016/newer history/private artifacts.
-Do not replay stale rendered definitions, restore production for app rollback,
-restart acquisition or treat the provisional proxy cohort as confirmed samples.
+Normal final candidate/production Chat, source controls, citations, historical
+provenance and independent CSV response/result bindings passed. All 12
+method/protocol workflows and four CSV exports were verified against retained
+original results. Accounts/roles/original terminal history/corpus/scientific
+artifact preservation passed. Temporary callbacks, release job, QA revisions
+and tags were removed. Five manual job pins aligned without execution.
+Both SST acquisition jobs remain unchanged/stopped and the follow-up paused;
+no new provider download or database migration ran.
+
+Open issues: #89 research/spatial demonstrations; #102 environmental/physical
+identity, representative assays and area evidence; #103 wider historical/native
+coverage and reviewed panels; #104 OS advisories; #107 user-deferred mobile QA;
+#108 unresolved sign-out observation. No issue is closed solely by software release.
+Immediate compatible rollback is `ocean-platform-v074-patch1008`; retain schema
+0016/newer history/private artifacts. Do not replay stale definitions, restore
+production for routine application rollback, restart acquisition, or interpret
+occurrence proxies as confirmed physical samples. Historical Himawari remains
+an optional comparator requiring a qualified consistent product/QC/time path.
 
 ## Historical release accounts
 

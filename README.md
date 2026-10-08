@@ -806,11 +806,17 @@ observations to add together. Source occurrences are not proven to represent
 | `ctd_profile` | 10,955 | Depth-resolved measurements |
 | `ctd_summary` | 162 | Per-cast statistics |
 | `metagenome_sample` | 82 | Sequencing + top taxa |
-| `sst_point_observation` | 1,848 | Hourly satellite SST |
-| `sst_daily_summary` | 79 | Daily regional SST |
+| `sst_point_observation` | 1,848 | Original hourly JCOPE-T-derived point records |
+| `sst_daily_summary` | 79 | Original current daily regional SST |
 | `retrieval_document` | 7,319 | Text + embeddings + tsvector |
 | `cross_source_link` | 496 | CTD/meta ↔ SST links |
 | `provenance_record` | 0 | (tracked via JSONL) |
+
+The table records the canonical PostgreSQL corpus. v0.7.5 additionally serves
+1,455 immutable historical MUR daily records through the separate regional
+publication: 1,534 SST days and 8,774 evidence documents across normal product
+surfaces. It does not insert those historical rows or embeddings into the
+canonical tables above. See [current operations](docs/RELEASE_0.7.5_OPERATIONS.md).
 
 The eDNA extension adds `external_source_snapshot`, `external_source_file`,
 `edna_sample`, `edna_assay`, `edna_detection`, and `edna_internal_standard`.
