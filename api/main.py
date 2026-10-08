@@ -3874,6 +3874,15 @@ def provenance_manifest(
 
 @app.get("/provenance/trace/{doc_id}", response_model=ProvenanceTraceResponse)
 def provenance_trace(doc_id: str) -> ProvenanceTraceResponse:
+    if doc_id.startswith("regional_publication_"):
+        from ingestion.regional_publication import publication_trace
+        identity = doc_id.removeprefix("regional_publication_")
+        if not re.fullmatch(r"[a-f0-9]{64}", identity):
+            raise HTTPException(400, "Invalid regional publication citation")
+        try:
+            return ProvenanceTraceResponse(**publication_trace(identity))
+        except (SnapshotError, ValueError, OSError, KeyError) as exc:
+            raise HTTPException(503, "Regional publication evidence unavailable or invalid") from exc
     if doc_id.startswith("aggregate_edna_"):
         from ingestion.edna_aggregate import aggregate_trace, AggregateUnavailable
         from sqlalchemy.exc import SQLAlchemyError

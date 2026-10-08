@@ -104,6 +104,19 @@ export function resolveContextWorkspace(contextId: string | null | undefined): C
   return null;
 }
 
+// Frozen citation metadata binds historical lineage to its retained publication.
+// The trace covers the publication; answer scope stays on the citation.
+export function evidenceProvenanceId(source: SourceDocument): string | null {
+  const docId = safeEvidenceIdentifier(source.doc_id);
+  const publicationId = source.metadata?.publication_id;
+  if (docId?.startsWith("mur_") && source.source_type === "remote_sensing"
+      && source.metadata?.dataset_id === "mur-miyagi-2020-2023"
+      && typeof publicationId === "string" && /^[a-f0-9]{64}$/.test(publicationId)) {
+    return `regional_publication_${publicationId}`;
+  }
+  return docId;
+}
+
 export function evidenceDeepLinks(target: CitationTarget): EvidenceDeepLink[] {
   if (!target.valid || target.kind === "invalid") return [];
 
@@ -115,7 +128,7 @@ export function evidenceDeepLinks(target: CitationTarget): EvidenceDeepLink[] {
       {
         kind: "provenance",
         label: "Provenance",
-        href: buildHref("/provenance", { view: "trace", doc_id: docId }),
+        href: buildHref("/provenance", { view: "trace", doc_id: evidenceProvenanceId(target.source) }),
       },
     ];
     const sampleId = safeEvidenceIdentifier(target.source.sample_id);
