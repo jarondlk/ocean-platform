@@ -466,6 +466,17 @@ def test_fresh_mur_coverage_resolves_dataset_and_quote_without_preselected_sourc
             planner.plan_settings(ChatRequest(query=query + suffix, settings_mode='auto', evidence_scope=scope()))
 
 
+def test_unknown_sst_dataset_cannot_pass_with_a_valid_question_quote(planning):
+    catalog, output, _ = planning
+    catalog['sst_datasets'] = [{'dataset_id': 'mur-miyagi-2020-2023'}]
+    chosen = scope('remote_sensing')
+    chosen['sources']['remote_sensing']['filters']['dataset_id'] = 'mur-unpublished'
+    output['value'] = proposal(evidence_scope=chosen, route='sst_coverage', required_sources=['remote_sensing'],
+        constraints=[{'family': 'remote_sensing', 'field': 'dataset_id', 'quote': 'MUR'}])
+    with pytest.raises(planner.PlanningError, match='not currently published'):
+        planner.plan_settings(ChatRequest(query='Show MUR coverage', settings_mode='auto', evidence_scope=scope()))
+
+
 @pytest.mark.parametrize('change', ['publication_id', 'recipe_scope', 'status'])
 def test_exact_workflow_does_not_default_across_different_or_stale_publications(planning, change):
     from orchestration.auto_published_settings import exact_catalogue_plan

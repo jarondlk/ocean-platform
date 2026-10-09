@@ -206,6 +206,10 @@ def _validate_constraints(proposal, request, catalog):
             quote = proofs.get((family, field))
             if not quote:
                 raise PlanningError('Automatic filters must refer to explicit question constraints.', invoked=True)
+            if family == 'remote_sensing' and field == 'dataset_id':
+                if value not in {d['dataset_id'] for d in catalog['sst_datasets']}:
+                    raise PlanningError('The automatic SST dataset is not currently published.', invoked=True)
+                continue  # Publication catalogue, rather than raw-data facets, owns dataset identities.
             if field == 'bay' and not any(name in quote.casefold() for name in BAY_NAMES[value]) and quote != value:
                 raise PlanningError('The requested bay could not be resolved.', invoked=True)
             if field in ('time_from', 'time_to') and value[:4] not in quote:
