@@ -27,7 +27,8 @@ not receive the deterministic-answer scientific-claim verification label.
 Latest `main` already supplies `SatelliteFilters.dataset_id`, the MUR dataset
 selector, and operationally accepted schema-v3 Miyagi analyses. These are reused;
 this branch does not publish data or confer researcher/provider endorsement.
-The repository's existing deployment branch is `gcp-dev`.
+The deployment branch was `gcp-dev` when this plan was prepared; v0.7.6
+consolidates it as `gcp`.
 
 Remaining work includes mixed raw/published `hybrid` routing, a reviewed geographic
 resolver, richer catalogue/protocol phrase matching, and live planner evaluation
@@ -58,16 +59,17 @@ they include work beyond this initial implementation.
 
 Deployment preparation exposed and corrected oversized production catalogues,
 provider schema complexity, omitted confirmed pins, literal calendar ranges and
-fresh published defaults. Latest application source is `49950fb` (planner v6).
-The final cloud build passed lint, generated-scope freshness, 1,337 backend tests
+fresh published defaults. Latest application source is `784cd5c` (planner v6, with release security hardening).
+The v0.7.6 final cloud build passed lint, generated-scope freshness, 1,360 backend tests
 (49 optional skips), container/database gates and reviewed scans. All 79 frontend
 tests and TypeScript passed, including mounted selection controls. Eight real
 answer paths, three rejected constraints and manual all-off abstention passed
 on the immutable image before promotion. Production serves
-`ocean-platform-auto-settings1009e`; backup, post-promotion preservation and auth
+`ocean-platform-v076-patch1009`; backup, post-promotion preservation and auth
 checks passed. Previous AUTO and v0.7.5 revisions remain for rollback. See the
 [fresh-selection correction record](AUTO_CHAT_SETTINGS_FRESH_SELECTION_FIX_2026-10-09.md)
 and [initial rollout record](AUTO_CHAT_SETTINGS_DEPLOYMENT_2026-10-09.md).
+Current deployment authority is [v0.7.6 operations](RELEASE_0.7.6_OPERATIONS.md).
 
 Offline validation: the full backend run passed 1,298 tests with 39 optional
 PostgreSQL integration tests skipped, at 80.5% coverage. A final focused run after
@@ -78,7 +80,7 @@ checked. Providers were mocked; PostgreSQL integration and live planner quality
 were not evaluated here. Full backend tests required localhost fixture servers
 outside the filesystem/network sandbox.
 
-The new branch starts from updated `main`; `gcp-dev` is retained. Nine obsolete
+Initially the new branch started from updated `main`; `gcp-dev` was retained. Nine obsolete
 fully merged branches were deleted locally and remotely after a verified backup.
 The backup is `.git/branch-archive/before-auto-setting-20261008.bundle`.
 Automatic approval review initially rejected deletion of unmerged shared branches.
@@ -93,8 +95,10 @@ tips matched the verified backup:
 - `codex/v0.7.3-release`
 - `codex/v075-docs-issue-audit` (fully merged; its other clean worktree was detached)
 
-The detached worktree retains its existing commit and files. Only `main`,
-`gcp-dev` and `auto-setting` remain as branches locally and on origin. The bundle
+The detached worktree retains its existing commit and files. At that initial
+AUTO cleanup, only `main`, `gcp-dev` and `auto-setting` remained locally and on
+origin. The later v0.7.6 release merges AUTO and retains only `main` and `gcp`;
+its branch backup and cleanup are recorded in release operations. The bundle
 preserves the deleted branch histories, including commits not reachable from
 `main`, for recovery.
 

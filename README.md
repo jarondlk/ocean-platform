@@ -1,21 +1,25 @@
 # OCEAN Platform
 
-**Current release: [v0.7.5](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.5)**
-is deployed at [oceaninfobio.com](https://oceaninfobio.com/chat), Ready revision
-`ocean-platform-v075-patch1008` at 100% traffic, exact runtime/tag source `7a100dd`.
-The retained **Miyagi 2020–2023 MUR dataset** is integrated into Overview,
-Data SST, Explore, source filters and ordinary Chat retrieval: 1,455 historical
-final days plus 79 current SST days, with products and statistics kept separate.
-For exact fish frequencies, seasonal/yearly series, separate read rankings and
-relative high/low SST comparisons, select a published Miyagi analysis, workflow
-and assay protocol; enable ANEMONE eDNA and SST for temperature comparisons.
-[Publication contract](docs/HISTORICAL_REGIONAL_PUBLICATION.md) and
-[operations](docs/RELEASE_0.7.5_OPERATIONS.md) record explicit user acceptance,
-original analysis IDs, normal Chat/citation/CSV checks, preservation and compatible
-v0.7.4 rollback. Six historical final gaps and unresolved repeats stay visible.
-No new provider downloads ran. Occurrence proxies and coarse regional SST do not
-establish abundance, weather causation, confirmed physical units or spatial
-redistribution. #89/#102/#103 remain open; #104/#107/#108 retain their follow-ups.
+**Current release: [v0.7.6](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.6)**
+is deployed at [oceaninfobio.com](https://oceaninfobio.com/chat).
+Chat now offers opt-in **AUTO** beside Select all/Clear: a separate planner
+selects validated sources, published analysis, workflow and assay settings before
+the answer. Your explicit choices stay pinned. With no requested assay, AUTO
+uses the first eligible published protocol and displays the selection; requesting
+MiSeq paired selects MiSeq. Exact published statistics and MUR coverage retain
+deterministic answers; interpretation uses verified result packets with the main
+model. [Release notes](docs/RELEASE_NOTES_0.7.6.md) and
+[operations](docs/RELEASE_0.7.6_OPERATIONS.md) record validation and rollback.
+
+The retained **Miyagi 2020–2023 MUR dataset** remains integrated into Overview,
+Data, Explore and Chat: 1,455 historical final days plus 79 current SST days.
+Products, protocols and assignment methods remain separate. Six final gaps and
+unresolved repeats stay visible. AUTO does not establish abundance, weather
+causation, physical sample identity or spatial redistribution. Scientific work
+in #89/#102/#103, OS maintenance in #104 and mobile/sign-out follow-ups in
+#107/#108 remain open. Cloud SQL now requires encrypted transport; runtime data,
+roles, schema and acquisition status are preserved. Final branches are `main`
+and `gcp`.
 
 **Ocean Coastal Ecosystem Archive Nexus (OCEAN)** — a provenance-aware
 research platform for marine environmental monitoring, centered on Miyagi
@@ -29,7 +33,7 @@ and can be audited against the evidence that was actually supplied.
 ---
 
 The preceding [v0.7.2 release](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.2)
-is retained as immutable prior evidence. Its safeguards remain in v0.7.5. Chat retrieves evidence
+is retained as immutable prior evidence. Its safeguards remain in v0.7.6. Chat retrieves evidence
 independently for each selected source and reports final supplied coverage.
 When ANEMONE/SST overlap is unverified, Chat abstains before generation rather
 than treating missing retrieval evidence as proof of no overlap. The v0.7.0
@@ -110,15 +114,14 @@ service.
 
 Current managed milestone:
 
-- [v0.7.5](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.5) serves
-  100% on `ocean-platform-v075-patch1008`, runtime/tag source `7a100dd`.
-  [Operations](docs/RELEASE_0.7.5_OPERATIONS.md) records exact images, reused verified
-  backup, immutable operational publication, normal Chat/CSV/provenance and preservation.
-  Schema 0016, canonical corpus/classifications/roles remain unchanged.
-  Two assignment methods each retain 104 singleton proxies and 104 regional SST
-  matches; 14 unresolved repeats and six final SST gaps remain explicit.
-  v0.7.4 is the immediate compatible rollback. Full scientific objectives remain
-  open; historical regional SST now participates in ordinary retrieval.
+- [v0.7.6](https://github.com/jarondlk/ocean-platform/releases/tag/v0.7.6) serves
+  100% on `ocean-platform-v076-patch1009`, application source `784cd5c`.
+  [Operations](docs/RELEASE_0.7.6_OPERATIONS.md) records exact images, restore-tested
+  backup, AUTO acceptance, health and preservation. Schema 0016, canonical corpus,
+  classifications and roles remain unchanged. Two assignment methods each retain
+  104 singleton proxies and 104 regional SST matches; 14 unresolved repeats and
+  six final SST gaps remain explicit. The preceding AUTO revision is retained for
+  immediate compatible rollback. Full scientific objectives remain open.
 - Exact catalogue questions have hash-verified aggregate citations, downloads
   and provenance traces. The agreed English routing/claim-support matrix for
   [issue #70](https://github.com/jarondlk/ocean-platform/issues/70) passed and the
@@ -139,7 +142,7 @@ Current managed milestone:
   URL remains available as an operational fallback but redirects authentication
   to the canonical domain.
 - GitHub records the successful deployment against the `production`
-  environment while `gcp-dev` remains the development branch and `main` the
+  environment while `gcp` remains the deployment branch and `main` the
   stable integration branch.
 
 Implemented in the current prototype:
@@ -211,7 +214,7 @@ Documentation map:
 
 - `README.md` is the current public project guide and screenshot source.
 - `handoff.md` is the operator/developer handoff for resuming work.
-- `docs/RELEASE_0.7.5_OPERATIONS.md` records the current deployment and
+- `docs/RELEASE_0.7.6_OPERATIONS.md` records the current deployment and
   acceptance results; earlier release plans are historical.
 - `docs/DOCUMENTATION_STATUS.md` identifies superseded plans and separates them
   from retained historical evidence.
@@ -812,11 +815,11 @@ observations to add together. Source occurrences are not proven to represent
 | `cross_source_link` | 496 | CTD/meta ↔ SST links |
 | `provenance_record` | 0 | (tracked via JSONL) |
 
-The table records the canonical PostgreSQL corpus. v0.7.5 additionally serves
+The table records the canonical PostgreSQL corpus. Since v0.7.5, the platform additionally serves
 1,455 immutable historical MUR daily records through the separate regional
 publication: 1,534 SST days and 8,774 evidence documents across normal product
 surfaces. It does not insert those historical rows or embeddings into the
-canonical tables above. See [current operations](docs/RELEASE_0.7.5_OPERATIONS.md).
+canonical tables above. See [current operations](docs/RELEASE_0.7.6_OPERATIONS.md).
 
 The eDNA extension adds `external_source_snapshot`, `external_source_file`,
 `edna_sample`, `edna_assay`, `edna_detection`, and `edna_internal_standard`.
@@ -1013,7 +1016,7 @@ npm run build
 Use [the current testing guide](docs/TESTING.md) for local/CI commands and
 [the pre-deployment audit](docs/PRE_DEPLOYMENT_AUDIT_2026-10-06.md) for fresh
 results. Release-specific counts and live checks remain dated evidence in the
-[v0.7.5 operations record](docs/RELEASE_0.7.5_OPERATIONS.md). Bounded QA does not
+[v0.7.6 operations record](docs/RELEASE_0.7.6_OPERATIONS.md). Bounded QA does not
 establish scientific correctness for arbitrary questions or approve real cohorts.
 
 | Test area | Files |

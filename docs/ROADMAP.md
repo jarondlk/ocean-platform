@@ -33,7 +33,7 @@ workflow that can later become automated.
   CORS, or local-persistence configuration.
 - The GCP prototype is live on Cloud Run with Cloud SQL, Cloud Storage,
   Secret Manager, Cloud Run Jobs, Vertex AI, immutable Provenance snapshots,
-  and OCEAN Platform release `v0.7.5`. The active data plane now uses the
+  and OCEAN Platform release `v0.7.6`. The active data plane now uses the
   `ocean-*` service, job, identity, database, secret, registry, and bucket
   naming contract; private legacy rollback resources are retained temporarily.
 - The accessible 2026-09-17 ANEMONE MiFish catalogue is stored as the
@@ -51,6 +51,19 @@ workflow that can later become automated.
   Feedback, Pipeline, Database, System, and Debug sections.
 - The README screenshot set was refreshed from the authenticated OCEAN
   Platform Cloud Run deployment on 2026-08-25.
+
+## v0.7.6 AUTO settings/security patch (2026-10-09)
+
+Opt-in AUTO planning, validated effective controls/history, published result
+synthesis and fresh Miyagi analysis/workflow/protocol defaults are implemented.
+Explicit protocol requirements/pins remain authoritative; different cohorts are
+not silently merged. The patch addresses regex backtracking and immutable-bundle
+path-flow alerts, requires encrypted SQL transport and refreshes current docs.
+[Operations](RELEASE_0.7.6_OPERATIONS.md) and the
+[health/security audit](GCP_HEALTH_SECURITY_2026-10-09.md) record bounded acceptance.
+Remaining AUTO work includes hybrid routing, reviewed geography and broader
+English/Japanese/unsupported-qualifier evaluation. #104 retains unfixed OS
+advisories; #89/#102/#103/#107/#108 remain open.
 
 ## v0.7.5 ordinary historical evidence integration (2026-10-08)
 
