@@ -313,16 +313,11 @@ def test_frequency_then_high_low_sst_retains_pinned_analysis_and_protocol(tmp_pa
         assert intent['protocol_id'] == protocol_id
 
 
-@pytest.mark.parametrize('ambiguity', ['analysis', 'protocol'])
-def test_unpinned_ambiguous_publication_or_protocol_requires_selection(ambiguity, planning):
+def test_unpinned_distinct_publications_still_require_selection(planning):
     catalog, output, _ = planning
     first = {'analysis_id': 'a' * 64, 'status': 'current', 'analysis_kind': 'detection_frequency',
              'protocol_ids': ['b' * 64], 'workflows': [{'kind': 'fish_frequency'}]}
-    catalog['analyses'] = [first]
-    if ambiguity == 'analysis':
-        catalog['analyses'].append({**first, 'analysis_id': 'c' * 64})
-    else:
-        first['protocol_ids'].append('c' * 64)
+    catalog['analyses'] = [first, {**first, 'analysis_id': 'c' * 64}]
     chosen = scope('edna_metabarcoding')
     chosen['sources']['edna_metabarcoding']['analysis_id'] = first['analysis_id']
     output['value'] = proposal(evidence_scope=chosen, route='published_exact',
@@ -331,6 +326,175 @@ def test_unpinned_ambiguous_publication_or_protocol_requires_selection(ambiguity
     with pytest.raises(planner.PlanningError, match='Select|select'):
         planner.plan_settings(ChatRequest(query='Show the top 10 fish.', settings_mode='auto',
                                          evidence_scope=scope('edna_metabarcoding')))
+
+
+def operational_choices():
+    from orchestration.research_intents import QUESTIONS
+    first = {'analysis_id': 'a' * 64, 'publication_id': 'd' * 64,
+             'status': 'current', 'analysis_kind': 'regional_frequency', 'label': 'Miyagi QCauto',
+             'time_from': '2020-01-01', 'time_to': '2023-12-31',
+             'recipe_scope': {'region_id': 'miyagi-regional-demo', 'rank': 'species',
+                              'time_from': '2020-01-01', 'time_to': '2023-12-31'},
+             'assignment_methods': ['qcauto_target'], 'sst_available': True,
+             'protocol_ids': ['b' * 64, 'c' * 64],
+             'protocols': {'b' * 64: {'sequencing_method': 'NextSeq', 'library_layout': 'single', 'target_gene': '12S rRNA'},
+                           'c' * 64: {'sequencing_method': 'MiSeq', 'library_layout': 'paired', 'target_gene': '12S rRNA'}},
+             'protocol_labels': {'b' * 64: '12S · NextSeq single', 'c' * 64: '12S · MiSeq paired'},
+             'workflows': [{'kind': kind} for kind in QUESTIONS]}
+    second = {**deepcopy(first), 'analysis_id': 'e' * 64, 'label': 'Miyagi 95% 3NN',
+              'assignment_methods': ['qcauto_95pct_3nn_target']}
+    return [first, second]
+
+
+@pytest.mark.parametrize('model_status', ['ready', 'clarification'])
+@pytest.mark.parametrize('kind', ['fish_frequency', 'temperature_comparison'])
+def test_fresh_auto_resolves_all_published_dropdowns_even_when_model_omits_them(planning, kind, model_status):
+    from orchestration.research_intents import QUESTIONS
+    catalog, output, calls = planning
+    catalog['analyses'] = operational_choices()
+    original = scope()
+    output['value'] = proposal() if model_status == 'ready' else proposal(
+        status='clarification', clarification='Please select an analysis and assay protocol.')
+    request = ChatRequest(query=QUESTIONS[kind][0], settings_mode='auto', evidence_scope=original)
+    effective, metadata = planner.plan_settings(request)
+    assert effective.evidence_scope.sources.edna_metabarcoding.analysis_id == 'e' * 64
+    assert effective.research_intent.kind == kind
+    assert effective.research_intent.protocol_id == 'b' * 64
+    assert effective.evidence_scope.sources.remote_sensing.enabled is (kind == 'temperature_comparison')
+    assert effective.evidence_scope.sources.edna_metabarcoding.enabled
+    assert metadata['route'] == 'published_exact'
+    assert metadata['catalogue_selection']['analysis_defaulted']
+    assert metadata['catalogue_selection']['protocol_defaulted']
+    assert 'first published assay protocol' in metadata['explanation']
+    assert request.evidence_scope.canonical() == original
+    prompt = json.loads(calls[0]['prompt'].split('INPUT:\n')[1])
+    assert prompt['selection_context']['verified_catalogue_selection']['protocol_id'] == 'b' * 64
+    assert [a['analysis_id'] for a in prompt['catalogue']['analyses']] == ['e' * 64]
+
+
+@pytest.mark.parametrize(('qualifier', 'expected'), [
+    ('', 'b' * 64), ('using MiSeq paired protocol', 'c' * 64),
+    ('using NextSeq single-end', 'b' * 64), ('using protocol ' + 'c' * 64, 'c' * 64)])
+def test_protocol_defaults_follow_catalogue_order_and_explicit_requests(planning, qualifier, expected):
+    catalog, output, _ = planning
+    catalog['analyses'] = operational_choices()
+    chosen = scope('edna_metabarcoding')
+    chosen['sources']['edna_metabarcoding']['analysis_id'] = 'e' * 64
+    # The model selected the wrong instrument or omitted the protocol.
+    output['value'] = proposal(evidence_scope=chosen, route='published_exact',
+        required_sources=['edna_metabarcoding'], research_intent={'kind': 'fish_frequency'})
+    effective, _ = planner.plan_settings(ChatRequest(query='Show published fish frequency ' + qualifier,
+        settings_mode='auto', evidence_scope=scope()))
+    assert effective.research_intent.protocol_id == expected
+
+
+@pytest.mark.parametrize('qualifier', ['using NovaSeq', 'using MiSeq single-end', 'using MiSeq and NextSeq',
+                                     'using protocol ' + 'f' * 64])
+def test_unavailable_or_conflicting_protocol_request_never_defaults(planning, qualifier):
+    catalog, output, _ = planning
+    catalog['analyses'] = operational_choices()
+    chosen = scope('edna_metabarcoding')
+    chosen['sources']['edna_metabarcoding']['analysis_id'] = 'e' * 64
+    output['value'] = proposal(evidence_scope=chosen, route='published_exact',
+        required_sources=['edna_metabarcoding'], research_intent={'kind': 'fish_frequency'})
+    with pytest.raises(planner.PlanningError, match='No published assay protocol'):
+        planner.plan_settings(ChatRequest(query='Show published fish frequency ' + qualifier,
+            settings_mode='auto', evidence_scope=scope()))
+
+
+def test_requested_protocol_cannot_silently_conflict_with_a_manual_pin(planning):
+    catalog, output, _ = planning
+    catalog['analyses'] = operational_choices()
+    chosen = scope('edna_metabarcoding')
+    chosen['sources']['edna_metabarcoding']['analysis_id'] = 'e' * 64
+    output['value'] = proposal(evidence_scope=chosen, route='published_exact',
+        required_sources=['edna_metabarcoding'], research_intent={'kind': 'fish_frequency', 'protocol_id': 'b' * 64})
+    with pytest.raises(planner.PlanningError, match='No published assay protocol'):
+        planner.plan_settings(ChatRequest(query='Show published fish frequency using MiSeq paired protocol',
+            settings_mode='auto', evidence_scope=chosen,
+            research_intent={'kind': 'fish_frequency', 'protocol_id': 'b' * 64}))
+
+
+def test_requested_assignment_method_takes_priority_over_publication_default(planning):
+    catalog, output, _ = planning
+    catalog['analyses'] = operational_choices()
+    chosen = scope('edna_metabarcoding')
+    chosen['sources']['edna_metabarcoding']['analysis_id'] = 'e' * 64
+    output['value'] = proposal(evidence_scope=chosen, route='published_exact',
+        required_sources=['edna_metabarcoding'], research_intent={'kind': 'fish_frequency'})
+    effective, _ = planner.plan_settings(ChatRequest(query='Show fish frequencies using qcauto_target',
+        settings_mode='auto', evidence_scope=scope()))
+    assert effective.evidence_scope.sources.edna_metabarcoding.analysis_id == 'a' * 64
+    with pytest.raises(planner.PlanningError, match='conflicts.*method'):
+        planner.plan_settings(ChatRequest(query='Show fish frequencies using qcauto_target',
+            settings_mode='auto', evidence_scope=chosen))
+
+
+def test_published_sst_workflow_selects_its_verified_dataset_without_a_user_pin(planning):
+    catalog, output, _ = planning
+    catalog['analyses'] = operational_choices()
+    catalog['sst_datasets'] = [{'dataset_id': 'mur-miyagi-2020-2023', 'publication_id': 'd' * 64}]
+    output['value'] = proposal()
+    effective, metadata = planner.plan_settings(ChatRequest(
+        query='Compare fish detection frequency in high and low SST conditions and show a representative series',
+        settings_mode='auto', evidence_scope=scope()))
+    assert effective.evidence_scope.sources.remote_sensing.filters.dataset_id == 'mur-miyagi-2020-2023'
+    assert metadata['retained_user_pins'] == {}
+    catalog['sst_datasets'][0]['publication_id'] = 'f' * 64
+    effective, _ = planner.plan_settings(ChatRequest(
+        query='Compare fish detection frequency in high and low SST conditions and show a representative series',
+        settings_mode='auto', evidence_scope=scope()))
+    assert effective.evidence_scope.sources.remote_sensing.filters.dataset_id is None
+
+
+@pytest.mark.parametrize('change', ['publication_id', 'recipe_scope', 'status'])
+def test_exact_workflow_does_not_default_across_different_or_stale_publications(planning, change):
+    from orchestration.auto_published_settings import exact_catalogue_plan
+    catalog, _, _ = planning
+    choices = operational_choices()
+    if change == 'publication_id':
+        choices[1][change] = 'f' * 64
+    elif change == 'recipe_scope':
+        choices[1][change]['region_id'] = 'another-region'
+    else:
+        for a in choices:
+            a['status'] = 'historical'
+    catalog['analyses'] = choices
+    request = ChatRequest(query='Show the top 10 fish by detection frequency, with yearly and seasonal changes',
+                          settings_mode='auto', evidence_scope=scope())
+    assert exact_catalogue_plan(request, catalog) is None
+
+
+@pytest.mark.parametrize('suffix', [' excluding sardines', ' in Onagawa', ' with top 5 instead', ' during 2024'])
+def test_extra_qualifiers_cannot_be_overridden_by_exact_catalogue_mapping(planning, suffix):
+    catalog, output, _ = planning
+    catalog['analyses'] = operational_choices()
+    output['value'] = proposal(status='clarification', clarification='The publication does not match that qualifier.')
+    with pytest.raises(planner.PlanningError, match='does not match'):
+        planner.plan_settings(ChatRequest(query='Show the top 10 fish by detection frequency, with yearly and seasonal changes' + suffix,
+            settings_mode='auto', evidence_scope=scope()))
+
+
+def test_fresh_auto_api_answers_known_workflows_from_real_verified_bundles(tmp_path, monkeypatch, planning):
+    from tests.test_research_chat import research_chat_fixture
+    from orchestration.statistics_catalog import analysis_choices
+    from orchestration.research_intents import QUESTIONS
+    bundle, _ = research_chat_fixture(tmp_path, monkeypatch)
+    catalog, output, _ = planning
+    catalog['analyses'] = analysis_choices()
+    output['value'] = proposal(status='clarification', clarification='Choose a protocol.')
+    monkeypatch.setattr(api_main, 'get_model_runtime', lambda *a, **kw: pytest.fail('Exact results must not invoke the answer model'))
+    monkeypatch.setattr(api_main, 'retrieve_with_expansion', lambda *a, **kw: pytest.fail('Published rows must not be replaced by retrieval'))
+    client = TestClient(api_main.app)
+    for kind in ('fish_frequency', 'temperature_comparison'):
+        result = client.post('/chat', json={'query': QUESTIONS[kind][0], 'settings_mode': 'auto', 'evidence_scope': scope()})
+        assert result.status_code == 200, result.text
+        data = result.json()
+        assert data['outcome'] == 'answered' and not data['model_invoked']
+        assert data['options']['evidence_scope']['sources']['edna_metabarcoding']['analysis_id'] == bundle['manifest']['id']
+        assert data['options']['planning']['research_intent']['kind'] == kind
+        assert data['options']['planning']['research_intent']['protocol_id'] == catalog['analyses'][0]['protocol_ids'][0]
+        assert data['answer_audit']['invalid_citation_count'] == 0
 
 
 def test_publication_disappearing_after_planning_abstains_before_answer_generation(planning, monkeypatch):

@@ -38,6 +38,7 @@ def analysis_choices():
                      if digest(protocol(a)) in protocol_ids} if research else {}
         option = {
             'analysis_id': record['analysis_id'], 'status': analysis_status(bundle),
+            'publication_id': accepted['publication_id'] if accepted else None,
             'analysis_kind': 'regional_frequency' if accepted else 'provisional_demo' if bundle['manifest'].get('schema_version') == 3 else 'detection_frequency' if research else 'edna_descriptive',
             'label': (accepted['label'] + ' · ' + recipe['assignment_method']) if accepted else ('PROVISIONAL DEMO · ' + recipe['region_id'] + ' · ' + recipe['assignment_method']) if bundle['manifest'].get('schema_version') == 3 else recipe.get('region_id') or recipe.get('cohort', {}).get('provider_project_id') or 'Selected cohort',
             'time_from': recipe.get('time_from') or recipe.get('cohort', {}).get('time_from'),

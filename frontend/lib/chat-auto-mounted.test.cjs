@@ -41,7 +41,7 @@ fs.writeFileSync(path.join(temp, 'api.cjs'), `
 exports.ApiError = class ApiError extends Error {};
 exports.getModels = async () => ({models: [{name: 'mock'}], default_model: 'mock', provider: 'ollama'});
 exports.getChatCapabilities = async () => ({scope_version: 1, max_output_tokens: 8192, generation_fields: [], auto_settings: {enabled: true, plan_version: 1}});
-exports.request = async () => ({options: []});
+exports.request = async () => ({options: global.autoAnalysisOptions || []});
 exports.getChatFilterOptions = async () => ({sources: Object.fromEntries(['ctd', 'metagenome', 'remote_sensing', 'edna_metabarcoding'].map(f => [f, {available: true, fields: {}}]))});
 exports.askQuestion = (...args) => global.autoChatRequest(...args);
 `);
@@ -74,8 +74,8 @@ function answer() {
     options: {planning: {status: 'applied', explanation: 'Use CTD salinity.'}, evidence_scope: chosen,
       retrieval: {k: 8}, context: {inject_analysis: false}}, outcome: 'answered'};
 }
-async function submit(renderer) {
-  await act(async () => renderer.root.findByType('textarea').props.onChange({target: {value: 'CTD salinity'}}));
+async function submit(renderer, query = 'CTD salinity') {
+  await act(async () => renderer.root.findByType('textarea').props.onChange({target: {value: query}}));
   await act(async () => renderer.root.findByType('form').props.onSubmit({preventDefault() {}}));
 }
 
@@ -125,4 +125,43 @@ test('a late AUTO response cannot appear or change settings after switching acco
     assert.equal(settings.scope.sources.ctd.filters.station, undefined);
     assert.equal(JSON.parse(values.get(settingsStorageKey('B'))).settings.autoSettings, false);
   } finally {await act(async () => renderer?.unmount()); delete global.autoChatRequest;}
+});
+
+test('fresh AUTO renders selected published analysis, workflow and default protocol without manual pins', async () => {
+  const {empty, values} = storage();
+  const analysis = 'a'.repeat(64), protocol = 'b'.repeat(64);
+  global.autoAnalysisOptions = [{analysis_id: analysis, status: 'current', analysis_kind: 'regional_frequency',
+    label: 'MUR v4.1 · Miyagi · 2020–2023', protocol_ids: [protocol, 'c'.repeat(64)],
+    protocol_labels: {[protocol]: '12S · First protocol'},
+    workflows: [{kind: 'fish_frequency', question: 'Show the top 10 fish'},
+      {kind: 'temperature_comparison', question: 'Compare high and low SST'}]}];
+  const requests = [];
+  global.autoChatRequest = async request => {
+    requests.push(request);
+    const kind = requests.length === 1 ? 'fish_frequency' : 'temperature_comparison';
+    const chosen = structuredClone(empty);
+    chosen.sources.edna_metabarcoding = {enabled: true, filters: {}, analysis_id: analysis};
+    chosen.sources.remote_sensing.enabled = kind === 'temperature_comparison';
+    return {...answer(), options: {evidence_scope: chosen,
+      planning: {status: 'applied', explanation: 'Using the first protocol by default.',
+        research_intent: {kind, protocol_id: protocol}}}};
+  };
+  let renderer;
+  try {
+    await act(async () => {renderer = create(tree('A'));});
+    for (const [query, kind] of [['Show the top 10 fish by detection frequency, with yearly and seasonal changes', 'fish_frequency'],
+      ['Compare fish detection frequency in high and low SST conditions and show a representative series', 'temperature_comparison']]) {
+      await submit(renderer, query);
+      const controls = renderer.root.findByType(ChatSourceSettings).props;
+      assert.equal(controls.analysisId, analysis);
+      assert.deepEqual(controls.researchIntent, {kind, protocol_id: protocol});
+      assert.equal(renderer.root.findByProps({id: 'chat-analysis-id'}).props.value, analysis);
+      assert.equal(renderer.root.findAllByType('select').find(s => s.props.value === kind).props.value, kind);
+      assert.equal(renderer.root.findAllByType('select').find(s => s.props.value === protocol).props.value, protocol);
+      assert(controls.autoEnabled);
+    }
+    assert(requests.every(r => r.research_intent === undefined));
+    assert(requests.every(r => JSON.stringify(r.evidence_scope) === JSON.stringify(empty)));
+    assert.deepEqual(JSON.parse(values.get(settingsStorageKey('A'))).scope, empty);
+  } finally {await act(async () => renderer?.unmount()); delete global.autoChatRequest; delete global.autoAnalysisOptions;}
 });

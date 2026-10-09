@@ -8,10 +8,13 @@ import time
 import config
 from model_runtime import get_model_runtime
 from orchestration.settings_plan import SettingsProposal, planner_response_schema
+from orchestration.auto_published_settings import (
+    choice_metadata, compatible_analyses, default_analysis, exact_catalogue_plan, protocol_choice, published_dataset, selection_explanation,
+)
 from orchestration.statistics_catalog import statistics_catalog
 from retrieval.source_scope import FAMILIES, enabled_sources
 
-PLAN_VERSION = 'auto-settings-v5'
+PLAN_VERSION = 'auto-settings-v6'
 MAX_PLAN_CHARS = 20000
 MAX_CATALOG_CHARS = 36000
 BAY_NAMES = {'O': ('onagawa', '女川'), 'I': ('ishinomaki', '石巻'), 'M': ('mutsu', '陸奥')}
@@ -155,7 +158,8 @@ def compact_statistics_catalog(catalog):
         analysis['protocols'] = protocols
         analysis['protocol_labels'] = labels
     result['protocol_identity_note'] = ('Protocol IDs retain the full published primer/PCR identity. '
-                                        'Summaries omit sequence payloads; ambiguous protocols require a manual selection.')
+                                        'Summaries omit sequence payloads. Without a pinned or requested protocol, '
+                                        'use the first protocol_ids entry; never pool protocols.')
     return result
 
 
@@ -165,6 +169,8 @@ def _validate_constraints(proposal, request, catalog):
     pins = original['sources']
     pinned_analysis = pins['edna_metabarcoding'].get('analysis_id')
     selected_analysis = scope['sources']['edna_metabarcoding'].get('analysis_id')
+    linked_analysis = next((a for a in catalog['analyses'] if a['analysis_id'] == selected_analysis and a['status'] == 'current'), None)
+    linked_dataset = published_dataset(linked_analysis, catalog) if linked_analysis and proposal.route.startswith('published_') else None
     pinned_dataset = pins['remote_sensing']['filters'].get('dataset_id')
     if pinned_analysis and selected_analysis != pinned_analysis:
         raise PlanningError('The plan conflicts with the selected published analysis. Review the selection.', invoked=True)
@@ -195,6 +201,8 @@ def _validate_constraints(proposal, request, catalog):
         for field, value in selection['filters'].items():
             if field == 'dataset_id' and value == pinned_dataset:
                 continue
+            if family == 'remote_sensing' and field == 'dataset_id' and value == linked_dataset:
+                continue  # Verified dataset bound to this operational publication.
             quote = proofs.get((family, field))
             if not quote:
                 raise PlanningError('Automatic filters must refer to explicit question constraints.', invoked=True)
@@ -243,25 +251,16 @@ def _validate_constraints(proposal, request, catalog):
         if len(options) != 1 or not proposal.research_intent:
             raise PlanningError('Select a current compatible published analysis and workflow.', invoked=True)
         option = options[0]
+        if pinned_analysis and option.get('workflows') and not compatible_analyses(request, catalog, proposal.research_intent.kind):
+            raise PlanningError('The selected analysis conflicts with the requested assignment method or workflow.', status='clarification_required', invoked=True)
         if not pinned_analysis:
-            compatible = [a for a in catalog['analyses'] if a['status'] == 'current'
-                          and a['analysis_kind'] != 'provisional_demo'
-                          and any(w['kind'] == proposal.research_intent.kind for w in a.get('workflows', []))]
             filters = scope['sources']['edna_metabarcoding']['filters']
-            for field in ('assignment_method', 'time_from', 'time_to'):
-                if field in filters:
-                    compatible = ([a for a in compatible if filters[field] in a.get('assignment_methods', [])]
-                                  if field == 'assignment_method' else
-                                  [a for a in compatible if a.get(field) == filters[field]])
-            named_region = [a for a in compatible if a.get('recipe_scope', {}).get('region_id', '').casefold()
-                            and a['recipe_scope']['region_id'].casefold() in request.query.casefold()]
-            compatible = named_region or compatible
-            if len(compatible) != 1 or compatible[0]['analysis_id'] != selected_analysis:
+            preferred = default_analysis(compatible_analyses(request, catalog, proposal.research_intent.kind, filters))
+            if not preferred or preferred['analysis_id'] != selected_analysis:
                 raise PlanningError('Several publication scopes may match. Select the analysis to retain its cohort and method.', invoked=True)
-        if not (request.research_intent and request.research_intent.protocol_id) and len(option['protocol_ids']) > 1:
-            named_protocols = [key for key in option['protocol_ids'] if key in request.query]
-            if named_protocols != [proposal.research_intent.protocol_id]:
-                raise PlanningError('This publication has multiple assay protocols. Select one protocol explicitly.', invoked=True)
+        expected_protocol, _ = protocol_choice(option, request)
+        if expected_protocol != proposal.research_intent.protocol_id:
+            raise PlanningError('The protocol does not match the selected or requested assay. Select a compatible protocol.', invoked=True)
         top = re.search(r'\btop\s+(\d+)\b', request.query, re.I)
         if top and proposal.research_intent.kind == 'fish_frequency' and int(top[1]) != 10:
             raise PlanningError('This published workflow has a fixed top-ten panel. Select its supported scope.', invoked=True)
@@ -304,6 +303,9 @@ def plan_settings(request):
         'research_intent': request.research_intent.model_dump() if request.research_intent else None,
         'explicit_calendar_range': explicit_calendar_range(request.query),
     }
+    exact = exact_catalogue_plan(request, catalog, selection_context['explicit_calendar_range'])
+    if exact:
+        selection_context['verified_catalogue_selection'] = exact[1]
     pinned = next((a for a in catalog['analyses'] if a['analysis_id'] == selection_context['analysis_id']
                    and a['status'] == 'current'), None)
     input_catalog = deepcopy(catalog)
@@ -311,6 +313,21 @@ def plan_settings(request):
         # Other publications cannot replace this pin. Keep their full catalogue
         # for backend validation, but avoid presenting impossible alternatives.
         input_catalog['analyses'] = [deepcopy(pinned)]
+    elif exact:
+        input_catalog['analyses'] = [deepcopy(a) for a in catalog['analyses'] if a['analysis_id'] == exact[1]['analysis_id']]
+    else:
+        current = [a for a in catalog['analyses'] if a['status'] == 'current'
+                   and a.get('publication_id') and a.get('workflows')]
+        preferred = default_analysis(current)
+        methods = {method for a in current for method in a.get('assignment_methods', [])}
+        method_requested = any(re.search(r'(?<!\w)' + re.escape(method) + r'(?!\w)', request.query, re.I)
+                               for method in methods)
+        if preferred and not method_requested:
+            selection_context['verified_default_publication'] = {
+                'analysis_id': preferred['analysis_id'], 'label': preferred['label'],
+                'default_protocol_id': protocol_choice(preferred, request)[0]}
+            input_catalog['analyses'] = [a for a in input_catalog['analyses']
+                                        if a not in current or a['analysis_id'] == preferred['analysis_id']]
     if pinned and request.research_intent and request.research_intent.protocol_id in pinned['protocol_ids']:
         protocol_id = request.research_intent.protocol_id
         selection_context['verified_user_protocol_choice'] = {
@@ -329,6 +346,10 @@ Retain pinned analysis_id, dataset_id and protocol_id. These are confirmed user 
 verified_user_protocol_choice is already checked against the current publication. Use it exactly; do not ask the user to confirm it again or prefer another instrument/protocol.
 Change workflow when the question requests another workflow. Keep the pinned protocol across fish frequency, SST comparison and interpretation questions.
 Use only published IDs. Ambiguity requires clarification only for choices not already resolved by valid user pins.
+verified_catalogue_selection resolves a complete known workflow question. Apply its analysis_id, workflow and protocol_id; do not request confirmation or use raw RAG instead.
+verified_default_publication resolves method variants of one current operational publication. Use it if a published workflow fits the question; it does not force a published route for raw-data questions or waive unsupported qualifiers.
+If a protocol is not pinned or requested, select the FIRST protocol_ids entry for the chosen analysis. Never ask for a protocol just because several are available. Explicit instrument/layout/protocol requests take priority.
+For current method variants of the same operational publication and identical recipe scope, prefer qcauto_95pct_3nn_target unless another method is requested. Different publication/cohort/period scopes still require clarification.
 Published analysis/protocol pins already fix the cohort. Do not add unquoted filters from the recipe or manufacture a conflict with that cohort.
 Retain enabled SST when dataset_id is pinned, even for a fish-frequency workflow. Backend pin retention is authoritative.
 constraints only proves newly requested source filters. Never add constraint entries for analysis_id, protocol_id or retained dataset_id.
@@ -362,11 +383,40 @@ Put every unsupported/unresolved constraint in unresolved_constraints. Never set
         proposal = SettingsProposal.model_validate_json(raw)
     except (ValueError, TypeError) as exc:
         raise PlanningError('The planner returned invalid settings. Retry or switch to manual.', invoked=True) from exc
+    if exact:
+        # A complete catalogue question is authoritative even if the LLM omits
+        # the dropdowns, chooses raw retrieval or asks to confirm known defaults.
+        proposal = exact[0]
     if proposal.status == 'clarification':
         raise PlanningError(proposal.clarification, status='clarification_required', invoked=True)
     try:
         proposal, retained_pins = retain_user_pins(proposal, request)
         proposal, calendar = retain_explicit_dates(proposal, request)
+        defaults = exact[1] if exact else None
+        if proposal.route.startswith('published_') and proposal.research_intent:
+            candidate_scope = proposal.evidence_scope.canonical()
+            options_for_kind = compatible_analyses(request, catalog, proposal.research_intent.kind,
+                                                  candidate_scope['sources']['edna_metabarcoding']['filters'])
+            option = default_analysis(options_for_kind)
+            # Minimal/legacy catalogues without workflow descriptions retain
+            # their selected publication, subject to the normal validation.
+            if not option and request.evidence_scope.sources.edna_metabarcoding.analysis_id:
+                option = next((a for a in catalog['analyses'] if a['analysis_id'] == request.evidence_scope.sources.edna_metabarcoding.analysis_id and a['status'] == 'current'), None)
+            if option:
+                protocol, defaulted = protocol_choice(option, request)
+                if not protocol:
+                    raise PlanningError('No published assay protocol matches the requested instrument, layout or selected protocol.', status='clarification_required', invoked=True)
+                candidate_scope['sources']['edna_metabarcoding']['analysis_id'] = option['analysis_id']
+                dataset = published_dataset(option, catalog)
+                if dataset and candidate_scope['sources']['remote_sensing']['enabled']:
+                    filters = candidate_scope['sources']['remote_sensing']['filters']
+                    if filters.get('dataset_id') not in (None, dataset):
+                        raise PlanningError('The selected SST dataset conflicts with the published analysis.', status='clarification_required', invoked=True)
+                    filters['dataset_id'] = dataset
+                proposal = proposal.model_copy(update={'evidence_scope': type(proposal.evidence_scope).model_validate(candidate_scope),
+                    'research_intent': proposal.research_intent.model_copy(update={'protocol_id': protocol})})
+                defaults = choice_metadata(option, proposal.research_intent.kind, protocol, request, defaulted)
+                proposal = proposal.model_copy(update={'explanation': selection_explanation(defaults)})
         scope = _validate_constraints(proposal, request, catalog)
     except PlanningError:
         raise
@@ -382,6 +432,7 @@ Put every unsupported/unresolved constraint in unresolved_constraints. Never set
     metadata = {**proposal.model_dump(mode='json', exclude_none=True), 'status': 'applied',
                 'retained_user_pins': {family + '.' + field: value for (family, field), value in retained_pins.items()},
                 'resolved_calendar_range': calendar,
+                'catalogue_selection': defaults,
                 'planner_invoked': True, 'planner_model': config.CHAT_PLANNER_MODEL,
                 'prompt_version': PLAN_VERSION, 'latency_ms': int((time.perf_counter() - start) * 1000)}
     return effective, metadata
