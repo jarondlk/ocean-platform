@@ -35,12 +35,15 @@ on English/Japanese questions and unsupported qualifiers. The backend checks
 schema, allowlisted choices, pins, quoted filter constraints, explicit dates,
 required sources, publication status and fixed-panel scope. It cannot prove that
 the model recognized every natural-language qualifier. Unpinned ambiguous
-publications/protocols require an explicit choice. No real model or cloud calls
+publications/cohorts require an explicit choice. The user subsequently authorized
+the first eligible published assay as the default when no protocol is requested;
+explicit assay requirements and pins still take priority. Same-publication Miyagi
+method variants have a bounded verified 3NN default. No real model or cloud calls
 were made during offline tests. Subsequent cloud builds and bounded live Vertex
 preflights are recorded in [the deployment record](AUTO_CHAT_SETTINGS_DEPLOYMENT_2026-10-09.md).
-Final immutable-image acceptance passed the three Miyagi questions, published
-interpretation and CTD RAG. Broader planner evaluation remains outstanding. AUTO
-is not enabled by default for a user.
+Final immutable-image acceptance passed fresh and pinned Miyagi workflows,
+published interpretation, CTD RAG and rejected incompatible qualifiers. Broader
+planner evaluation remains outstanding. AUTO is not enabled by default for a user.
 
 Server configuration: `AUTO_SETTINGS_ENABLED` (default `true`),
 `CHAT_PLANNER_MODEL` (defaults to `CHAT_MODEL`),
@@ -54,14 +57,17 @@ they include work beyond this initial implementation.
 ### Validation and branch housekeeping
 
 Deployment preparation exposed and corrected oversized production catalogues,
-provider schema complexity, omitted confirmed pins, and omitted literal calendar
-ranges. The latest application commit is `6083225`; lint, generated-scope
-freshness and 99 focused planner/runtime/source-scope tests pass. The final cloud
-build passed 1,313 backend tests (49 optional skips), container/database gates
-and reviewed scans. All five live answer paths passed on the exact image before
-traffic promotion. Production serves `ocean-platform-auto-settings1009c`; backup,
-post-promotion preservation, authentication checks and cleanup passed. The prior
-v0.7.5 revision remains for rollback; see the deployment record for receipts.
+provider schema complexity, omitted confirmed pins, literal calendar ranges and
+fresh published defaults. Latest application source is `49950fb` (planner v6).
+The final cloud build passed lint, generated-scope freshness, 1,337 backend tests
+(49 optional skips), container/database gates and reviewed scans. All 79 frontend
+tests and TypeScript passed, including mounted selection controls. Eight real
+answer paths, three rejected constraints and manual all-off abstention passed
+on the immutable image before promotion. Production serves
+`ocean-platform-auto-settings1009e`; backup, post-promotion preservation and auth
+checks passed. Previous AUTO and v0.7.5 revisions remain for rollback. See the
+[fresh-selection correction record](AUTO_CHAT_SETTINGS_FRESH_SELECTION_FIX_2026-10-09.md)
+and [initial rollout record](AUTO_CHAT_SETTINGS_DEPLOYMENT_2026-10-09.md).
 
 Offline validation: the full backend run passed 1,298 tests with 39 optional
 PostgreSQL integration tests skipped, at 80.5% coverage. A final focused run after
@@ -511,8 +517,10 @@ Selections: **SST + ANEMONE eDNA**, a **published Miyagi analysis**, the
   workflow itself requires only eDNA; do not invent temperature results for it.
 - Resolve “MiSeq paired” using recorded instrument/method and library-layout
   metadata plus the complete protocol identity. Protocol IDs include target gene,
-  primer set, sequencing method and library layout. Multiple matching protocols
-  require a choice; missing instrument metadata cannot be inferred from layout.
+  primer set, sequencing method and library layout. Use the first eligible
+  matching protocol when several remain, as subsequently requested by the user;
+  missing instrument metadata cannot be inferred from layout. With no assay
+  request or pin, use the first published protocol and disclose the default.
 - Use the existing deterministic result path: top ten under the publication's
   fixed ranking rule, eligible reviewed physical-sample denominators, and yearly
   and seasonal rows for the selected protocol. Preserve ties/support flags and
@@ -597,7 +605,8 @@ Minimum acceptance scenarios:
 | Requested taxon/period differs from a fixed published panel | Preserve the qualifier; no panel substitution or recalculation of rates. |
 | Packet rows omitted under the prompt budget | Audit only supplied rows and disclose incomplete scope/coverage. |
 | Japanese or paraphrased supported questions | Same validated constraints/context as their English equivalents, subject to supported exact-workflow contracts. |
-| Ambiguous dataset, year, area or assay protocol | Focused clarification; main model remains uninvoked. |
+| Ambiguous dataset, year or area; unavailable/conflicting assay | Focused clarification; main model remains uninvoked. |
+| No requested assay, or several eligible matching assays | First eligible published protocol; disclose selection and keep protocols separate. |
 | No evidence for requested dates/taxon | Preserve filters; report absence of usable evidence under that scope. |
 | Planner timeout, invalid JSON or malicious settings request | Bounded visible planning failure; no unvalidated evidence or generation call. |
 | Manual Clear selection | Existing all-off abstention; planner remains uninvoked. |

@@ -1,9 +1,15 @@
 # AUTO settings deployment record — 2026-10-09 JST
 
-Status: **deployed and verified** at <https://oceaninfobio.com>.
+Latest production update: [fresh-selection correction and final validation](AUTO_CHAT_SETTINGS_FRESH_SELECTION_FIX_2026-10-09.md).
+Revision `ocean-platform-auto-settings1009e` now serves production; the record below
+is the historical initial v5 rollout. Its pinned-selection acceptance did not
+validate fresh published defaults, which the subsequent v6 correction covers.
+
+Initial v5 rollout status: **deployed and verified** at <https://oceaninfobio.com>.
 Project `data-infra-infobio`, region `asia-northeast1`, service `ocean-platform`.
-Revision `ocean-platform-auto-settings1009c` has 100% production traffic and tag
-`auto-settings-production`. The prior `ocean-platform-v075-patch1008` revision and
+At that rollout, revision `ocean-platform-auto-settings1009c` had 100% production
+traffic and tag `auto-settings-production`. It is now retained as
+`auto-settings-previous`. The prior `ocean-platform-v075-patch1008` revision and
 `v075-production` tag remain available for application rollback.
 
 The user authorized deployment with usable CLI authentication, including backups
