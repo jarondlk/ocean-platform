@@ -154,8 +154,8 @@ broken local files/heading links; **54 referenced repository issue/PR IDs**, all
 resolve. Historical Dependabot alert IDs 283/300 are explicitly labelled and both
 fixed. Dated release, acquisition and scientific IDs retain their original meaning.
 
-Final branches are `main` and `gcp`, aligned at the final release commit locally
-and on origin. AUTO was merged through #127. `gcp-dev` had no unique commits and its
+At release publication, `main` and `gcp` were aligned at the final release commit
+locally and on origin. AUTO was merged through #127. `gcp-dev` had no unique commits and its
 branch protection was transferred to `gcp`. The obsolete branch alone was
 then allowed to be deleted; `main` rules and `gcp` force-push/deletion protections
 remain unchanged. Merged `auto-setting` and `gcp-dev` were deleted after
@@ -164,6 +164,5 @@ including both deleted branch tips:
 `.git/branch-archive/before-v076-final-cleanup-20261009.bundle`.
 A private durable copy is retained as `before-branch-cleanup.bundle` in the
 release backup prefix above.
-The separate uncommitted Himawari script and `scripts/README.md` edit are preserved
-outside this release. Scientific scope issues #89/#102/#103, OS #104, mobile #107
+Scientific scope issues #89/#102/#103, OS #104, mobile #107
 and sign-out #108 remain open.

@@ -1,6 +1,6 @@
 # Script and deployment entrypoint inventory
 
-Reviewed 2026-10-08 against repository callers, CLI implementations, tests,
+Reviewed 2026-10-09 against repository callers, CLI implementations, tests,
 templates and operating guidance. No script executes automatically merely
 because it is present. Cloud Run serving uses `JOB_EXECUTION_MODE=external`;
 batch work remains manual. An operator CLI without an application caller is
@@ -9,9 +9,9 @@ the GCP shell/build helpers and standalone QA modules.
 
 Current acquisition direction: NASA context is complete; both superseded NOAA
 jobs are stopped and preserved, and the follow-up is paused. Use retained bytes
-for the v0.7.5 Miyagi integration into normal system use. Acquisition commands below are retained
-operator tooling, not authorization to restart downloads. See
-[accepted operations](../docs/RELEASE_0.7.5_OPERATIONS.md).
+for the retained Miyagi integration into normal system use. Acquisition commands
+below are retained operator tooling, not authorization to restart downloads. See
+[accepted operations](../docs/RELEASE_0.7.6_OPERATIONS.md).
 
 ## Maintained application and development commands
 

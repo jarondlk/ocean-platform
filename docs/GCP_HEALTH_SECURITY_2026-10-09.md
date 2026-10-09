@@ -109,6 +109,5 @@ analyses are current with three separate protocols each. The verified regional
 publication remains `d34da58bbb39bb3675d0d0654d56ab13de46b078605df0fe52cb8f8ade698952`.
 No artifact/identifier is rewritten or deleted to hide unavailability.
 
-The separate uncommitted Himawari downloader is preserved outside the released
-archive. Broader scientific, browser/mobile and language evaluation remain bounded
+Broader scientific, browser/mobile and language evaluation remain bounded
 follow-ups; no acquisition is restarted by this maintenance work.

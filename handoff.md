@@ -29,9 +29,8 @@ unsuppressed scans. Stable OS fixes remain pending in #104; no alert is dismisse
 or scan suppressed to obtain a passing result. See the
 [health/security audit](docs/GCP_HEALTH_SECURITY_2026-10-09.md).
 
-The standalone Himawari download script and its README changes remain separate
-uncommitted user work and are preserved outside the release. No new scientific
-acquisition, migration, formal publication/review or role change is included.
+No new scientific acquisition, migration, formal publication/review or role
+change is included.
 Broader free-form English/Japanese and live browser/mobile evaluation remain
 bounded follow-ups. Original records, publications and scientific IDs remain
 unchanged; unavailable legacy descriptive analyses remain explicitly unavailable.

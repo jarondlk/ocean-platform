@@ -26,8 +26,8 @@ protections remain. Unfixed Debian advisories remain visible in #104.
 
 The API/frontend version is 0.7.6. Current operating docs and historical advisory
 ID labels are refreshed. The release includes no new acquisition, database
-migration, scientific publication/review, role changes or standalone Himawari
-download script. Final branches are `main` and `gcp`.
+migration, scientific publication/review or role changes. Final branches are
+`main` and `gcp`.
 
 [Operations and validation](RELEASE_0.7.6_OPERATIONS.md) ·
 [GCP health/security audit](GCP_HEALTH_SECURITY_2026-10-09.md) ·
