@@ -1,5 +1,6 @@
 """Interpret one question, validate its proposal, then apply bounded presets."""
 from copy import deepcopy
+from datetime import date
 import json
 import re
 import time
@@ -10,7 +11,7 @@ from orchestration.settings_plan import SettingsProposal, planner_response_schem
 from orchestration.statistics_catalog import statistics_catalog
 from retrieval.source_scope import FAMILIES, enabled_sources
 
-PLAN_VERSION = 'auto-settings-v4'
+PLAN_VERSION = 'auto-settings-v5'
 MAX_PLAN_CHARS = 20000
 MAX_CATALOG_CHARS = 36000
 BAY_NAMES = {'O': ('onagawa', '女川'), 'I': ('ishinomaki', '石巻'), 'M': ('mutsu', '陸奥')}
@@ -21,6 +22,57 @@ class PlanningError(ValueError):
         super().__init__(message)
         self.status = status
         self.invoked = invoked
+
+
+def explicit_calendar_range(question):
+    """Resolve only unambiguous literal calendar ranges, never relative dates."""
+    if re.search(r'\b(?:except|excluding|outside|before|after|since|until|not)\b', question, re.I):
+        return None
+    token = r'((?:19|20)\d{2}(?:-\d{2}-\d{2})?)'
+    patterns = [rf'\bfrom\s+{token}\s+(?:to|through)\s+{token}\b(?!-)',
+                rf'\bbetween\s+{token}\s+and\s+{token}\b(?!-)',
+                r'(?<![\w-])((?:19|20)\d{2})\s*[-–—]\s*((?:19|20)\d{2})\b(?!-)',
+                rf'\b(?:in|during)\s+{token}\b(?!-)']
+    years = re.findall(r'(?<!\w)(?:19|20)\d{2}(?!\w)', question)
+    for pattern in patterns:
+        matches = list(re.finditer(pattern, question, re.I))
+        if len(matches) != 1:
+            continue
+        match = matches[0]
+        values = match.groups()
+        if sorted(years) != sorted(value[:4] for value in values):
+            continue
+        first, last = values[0], values[-1]
+        start = first + '-01-01' if len(first) == 4 else first
+        end = last + '-12-31' if len(last) == 4 else last
+        try:
+            if date.fromisoformat(start) > date.fromisoformat(end):
+                continue
+        except ValueError:
+            continue
+        return {'time_from': start, 'time_to': end, 'quote': match.group()}
+    return None
+
+
+def retain_explicit_dates(proposal, request):
+    calendar = explicit_calendar_range(request.query)
+    if not calendar:
+        return proposal, None
+    scope = proposal.evidence_scope.canonical()
+    constraints = list(proposal.constraints)
+    from orchestration.settings_plan import QuestionConstraint
+    for family, source in scope['sources'].items():
+        if not source['enabled']:
+            continue
+        for field in ('time_from', 'time_to'):
+            existing = source['filters'].get(field)
+            if existing and existing[:10] != calendar[field]:
+                raise PlanningError('The plan changed an explicit calendar date or year range.', invoked=True)
+            source['filters'][field] = calendar[field]
+            constraints = [c for c in constraints if (c.family, c.field) != (family, field)]
+            constraints.append(QuestionConstraint(family=family, field=field, quote=calendar['quote']))
+    return proposal.model_copy(update={'evidence_scope': type(proposal.evidence_scope).model_validate(scope),
+                                       'constraints': constraints}), calendar
 
 
 def retain_user_pins(proposal, request):
@@ -250,6 +302,7 @@ def plan_settings(request):
         'analysis_id': request.evidence_scope.sources.edna_metabarcoding.analysis_id,
         'dataset_id': request.evidence_scope.sources.remote_sensing.filters.dataset_id,
         'research_intent': request.research_intent.model_dump() if request.research_intent else None,
+        'explicit_calendar_range': explicit_calendar_range(request.query),
     }
     pinned = next((a for a in catalog['analyses'] if a['analysis_id'] == selection_context['analysis_id']
                    and a['status'] == 'current'), None)
@@ -280,6 +333,7 @@ Published analysis/protocol pins already fix the cohort. Do not add unquoted fil
 Retain enabled SST when dataset_id is pinned, even for a fish-frequency workflow. Backend pin retention is authoritative.
 constraints only proves newly requested source filters. Never add constraint entries for analysis_id, protocol_id or retained dataset_id.
 For a published question with no new source filters, use empty filters (apart from the retained SST dataset) and constraints=[]. Workflow choices are not source filters.
+An explicit_calendar_range is an absolute range parsed from the question. Apply it to enabled sources even if a pinned dataset already covers those years. Never drop explicit dates because a cohort is pinned.
 Describe capabilities separately from available results. Keep provisional/operational limitations; never invent researcher approval.
 Every applied filter needs a constraint quote copied exactly from the question, except retained dataset pins. Dates must be explicit.
 Never infer geographic coordinates from a place name. CTD/metagenome support bay O/I/M; eDNA/SST do not.
@@ -312,6 +366,7 @@ Put every unsupported/unresolved constraint in unresolved_constraints. Never set
         raise PlanningError(proposal.clarification, status='clarification_required', invoked=True)
     try:
         proposal, retained_pins = retain_user_pins(proposal, request)
+        proposal, calendar = retain_explicit_dates(proposal, request)
         scope = _validate_constraints(proposal, request, catalog)
     except PlanningError:
         raise
@@ -326,6 +381,7 @@ Put every unsupported/unresolved constraint in unresolved_constraints. Never set
     effective = type(request).model_validate(options)
     metadata = {**proposal.model_dump(mode='json', exclude_none=True), 'status': 'applied',
                 'retained_user_pins': {family + '.' + field: value for (family, field), value in retained_pins.items()},
+                'resolved_calendar_range': calendar,
                 'planner_invoked': True, 'planner_model': config.CHAT_PLANNER_MODEL,
                 'prompt_version': PLAN_VERSION, 'latency_ms': int((time.perf_counter() - start) * 1000)}
     return effective, metadata

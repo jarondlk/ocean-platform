@@ -101,7 +101,7 @@ def test_explicit_year_and_comparison_cannot_be_dropped(planning):
     with pytest.raises(planner.PlanningError):
         planner.plan_settings(request)
     with pytest.raises(planner.PlanningError, match='time range'):
-        planner.plan_settings(request.model_copy(update={'query': 'Show CTD salinity in 2024'}))
+        planner.plan_settings(request.model_copy(update={'query': 'Show CTD salinity since 2024'}))
 
 
 def test_exact_calendar_dates_cannot_be_replaced_with_other_days(planning):
@@ -443,3 +443,35 @@ def test_confirmed_user_pins_are_restored_without_new_question_quotes(planning):
     assert metadata['retained_user_pins'] == {'edna_metabarcoding.analysis_id':identity,
         'edna_metabarcoding.protocol_id':protocol_id, 'remote_sensing.dataset_id':'mur-miyagi-2020-2023'}
     assert metadata['evidence_scope'] == effective.evidence_scope.canonical()
+
+
+@pytest.mark.parametrize('query,start,end', [
+    ('MUR coverage from 2020 to 2023', '2020-01-01', '2023-12-31'),
+    ('Miyagi 2020–2023 coverage', '2020-01-01', '2023-12-31'),
+    ('Miyagi 2020-2023 coverage', '2020-01-01', '2023-12-31'),
+    ('CTD salinity during 2024', '2024-01-01', '2024-12-31'),
+    ('CTD between 2024-02-01 and 2024-02-29', '2024-02-01', '2024-02-29'),
+    ('CTD during 2024-02-29', '2024-02-29', '2024-02-29'),
+])
+def test_literal_calendar_ranges_preserve_inclusive_dates(query, start, end):
+    result = planner.explicit_calendar_range(query)
+    assert result['time_from'] == start and result['time_to'] == end and result['quote'] in query
+
+
+@pytest.mark.parametrize('query', [
+    'CTD since 2024', 'CTD during last year', 'Compare 2020 with 2023',
+    'CTD during 2024 and SST during 2025', 'MUR from 2020 to 2023 except 2021',
+    'MUR outside the period from 2020 to 2023', 'CTD during 2024-02-30',
+    'MUR from 2023 to 2020', 'CTD during 2024-05-invalid',
+])
+def test_ambiguous_relative_excluded_and_invalid_calendar_ranges_are_not_filled(query):
+    assert planner.explicit_calendar_range(query) is None
+
+
+def test_absolute_range_is_applied_when_planner_omits_it(planning):
+    effective, metadata = planner.plan_settings(ChatRequest(query='Show CTD salinity in Onagawa during 2024.',
+        settings_mode='auto', evidence_scope=scope()))
+    assert effective.evidence_scope.canonical()['sources']['ctd']['filters'] == {
+        'time_from':'2024-01-01', 'time_to':'2024-12-31'}
+    assert metadata['resolved_calendar_range'] == {'time_from':'2024-01-01', 'time_to':'2024-12-31', 'quote':'during 2024'}
+    assert all(c['quote'] in 'Show CTD salinity in Onagawa during 2024.' for c in metadata['constraints'])
