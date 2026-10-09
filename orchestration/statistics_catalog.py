@@ -16,6 +16,7 @@ CAPABILITIES = [
      'examples': list(QUESTIONS[kind]), 'routes': ['published_exact', 'published_synthesis']}
     for kind, description in DESCRIPTIONS.items()
 ] + [{'id': 'sst_coverage', 'description': 'Exact final MUR Miyagi calendar coverage, missing dates and resolution limitations from the verified regional publication. Interim files do not fill final gaps.',
+      'examples': ['What final MUR SST coverage is available for Miyagi from 2020 to 2023? List missing dates and explain the spatial resolution and limitations.'],
       'required_sources': ['remote_sensing'], 'routes': ['sst_coverage']}]
 
 

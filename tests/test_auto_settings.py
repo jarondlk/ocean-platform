@@ -447,6 +447,25 @@ def test_published_sst_workflow_selects_its_verified_dataset_without_a_user_pin(
     assert effective.evidence_scope.sources.remote_sensing.filters.dataset_id is None
 
 
+def test_fresh_mur_coverage_resolves_dataset_and_quote_without_preselected_sources(planning):
+    from orchestration.statistics_catalog import CAPABILITIES
+    catalog, output, _ = planning
+    catalog['capabilities'] = CAPABILITIES
+    catalog['sst_datasets'] = [{'dataset_id': 'mur-miyagi-2020-2023', 'publication_id': 'd' * 64}]
+    query = next(c for c in CAPABILITIES if c['id'] == 'sst_coverage')['examples'][0]
+    output['value'] = proposal(status='clarification', clarification='Which SST dataset?')
+    effective, metadata = planner.plan_settings(ChatRequest(query=query, settings_mode='auto', evidence_scope=scope()))
+    assert metadata['route'] == 'sst_coverage'
+    assert effective.evidence_scope.sources.remote_sensing.filters.dataset_id == 'mur-miyagi-2020-2023'
+    assert effective.evidence_scope.sources.remote_sensing.filters.time_from == '2020-01-01'
+    assert effective.evidence_scope.sources.remote_sensing.filters.time_to == '2023-12-31'
+    assert effective.research_intent is None
+    assert [f for f,s in effective.evidence_scope.canonical()['sources'].items() if s['enabled']] == ['remote_sensing']
+    for suffix in (' in Onagawa', ' excluding December', ' using interim files'):
+        with pytest.raises(planner.PlanningError, match='Which SST dataset'):
+            planner.plan_settings(ChatRequest(query=query + suffix, settings_mode='auto', evidence_scope=scope()))
+
+
 @pytest.mark.parametrize('change', ['publication_id', 'recipe_scope', 'status'])
 def test_exact_workflow_does_not_default_across_different_or_stale_publications(planning, change):
     from orchestration.auto_published_settings import exact_catalogue_plan

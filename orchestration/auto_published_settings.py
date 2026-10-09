@@ -1,7 +1,7 @@
 """Resolve verified published choices without making the model invent defaults."""
 import re
 
-from orchestration.research_intents import SST_INTENTS, parse_intent
+from orchestration.research_intents import SST_INTENTS, normalized, parse_intent
 from orchestration.settings_plan import SettingsProposal
 
 
@@ -81,6 +81,21 @@ def protocol_choice(option, request):
 
 def exact_catalogue_plan(request, catalog, calendar=None):
     """Only complete, supported question aliases; added qualifiers stay with LLM validation."""
+    coverage = next((c for c in catalog.get('capabilities', []) if c['id'] == 'sst_coverage'), {})
+    if normalized(request.query) in {normalized(q) for q in coverage.get('examples', [])}:
+        from ingestion.regional_publication import DATASET
+        datasets = [d for d in catalog['sst_datasets'] if d['dataset_id'] == DATASET]
+        if len(datasets) != 1:
+            return None
+        dataset = datasets[0]
+        sources = {f: {'enabled': False, 'filters': {}} for f in request.evidence_scope.canonical()['sources']}
+        sources['remote_sensing'] = {'enabled': True, 'filters': {'dataset_id': DATASET}}
+        plan = SettingsProposal(status='ready', route='sst_coverage',
+            explanation='Selected the verified final MUR Miyagi calendar and its coverage limitations.',
+            evidence_scope={'version': 1, 'sources': sources}, required_sources=['remote_sensing'],
+            constraints=[{'family': 'remote_sensing', 'field': 'dataset_id', 'quote': re.search(r'\bMUR\b', request.query, re.I)[0]}])
+        return plan, {'analysis_id': None, 'workflow': 'sst_coverage', 'protocol_id': None,
+                      'dataset_id': DATASET, 'dataset_label': dataset.get('label', DATASET)}
     kinds = {parse_intent(request.query, a.get('recipe_scope')) for a in catalog['analyses']
              if a['status'] == 'current'} - {None}
     if len(kinds) != 1:
