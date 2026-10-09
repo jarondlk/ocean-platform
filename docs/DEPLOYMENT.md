@@ -11,15 +11,15 @@ to the canonical domain.
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
-Current release, verified 2026-10-08 JST: **v0.7.5** serves 100% on
-`ocean-platform-v075-patch1008`, runtime/tag source `7a100dd`.
-[Operations](RELEASE_0.7.5_OPERATIONS.md) records exact images/CI, reuse of the fresh
-restore-tested private v0.7.4 backup, immutable user-accepted regional publication,
-normal Chat/CSV/provenance, preservation, cleanup and compatible v0.7.4 rollback.
-Schema/roles/IAM/canonical corpus/auth/mounts/limits are preserved. Five manual
-job image pins were aligned without execution; both SST acquisition jobs remain
-unchanged and stopped. Retained Miyagi SST is integrated into ordinary product
-surfaces; full-scope scientific acceptance remains in #89/#102/#103.
+Current release, verified 2026-10-09 JST: **v0.7.6** adds opt-in AUTO planning,
+fresh published workflow/protocol defaults and security hardening.
+[Operations](RELEASE_0.7.6_OPERATIONS.md) records exact source/images, source and
+runtime checks, restore-tested private backup, preservation and rollback.
+Cloud SQL requires `ENCRYPTED_ONLY`; the serving sidecar and manual jobs use
+managed encrypted connectors. Schema/roles/IAM/canonical corpus/auth/mounts and
+min0/max1/concurrency20 limits are preserved. Five manual job pins are aligned
+without executing their commands; acquisition stays paused. Current branches
+are `main` and `gcp`. Broader scientific acceptance remains in #89/#102/#103.
 
 Previous versioned release record, verified during the 2026-10-06 JST rollout:
 
@@ -78,7 +78,7 @@ The completed initial migration sequence and historical cost-control rationale
 are retained in
 [`deploy/gcp/MIGRATION_PLAN.md`](../deploy/gcp/MIGRATION_PLAN.md). Do not use it
 as the current release order. Use the completed
-[v0.7.5 operations record](RELEASE_0.7.5_OPERATIONS.md) for the current
+[v0.7.6 operations record](RELEASE_0.7.6_OPERATIONS.md) for the current
 deployment and verify the project budget and Cloud Run spend cap before paid
 execution.
 

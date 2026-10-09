@@ -33,6 +33,33 @@ The `INTERNAL_AUTH_SECRET` is shared only by Next.js and FastAPI.
 `AUTH_SECRET` is used only by Auth.js. They must be generated independently and
 must never be identical.
 
+## AUTO and immutable artifact boundaries
+
+Planner output is untrusted. AUTO accepts only its bounded typed proposal and
+current catalogue identities, preserves user pins and quoted/date constraints,
+and validates required sources and publication scope before retrieval or
+answer generation. Provider errors and unsupported/conflicting choices stop the
+flow. An unspecified assay uses a disclosed first eligible protocol; it never
+pools assay results. Model output cannot supply SQL or arbitrary artifact paths.
+
+Question matching avoids overlapping optional whitespace repetitions. Local
+immutable bundles use the bounded artifact reader's realpath containment and
+symlink checks, require regular files, cap manifest/aggregate bytes, verify
+content hashes and consume the same verified bytes. Traversal, symlink, FIFO,
+directory, unsupported protocol and resource-limit cases are regression-tested.
+
+As of 2026-10-09, managed Cloud SQL enforces `ENCRYPTED_ONLY`. Cloud Run and manual
+jobs use managed Cloud SQL connectors; connectors encrypt traffic and validate
+identities regardless of the SQL mode. No authorized public networks or
+user-managed runtime keys were found. See Google's
+[SSL configuration guidance](https://cloud.google.com/sql/docs/postgres/configure-ssl-instance)
+and the [dated health/security audit](GCP_HEALTH_SECURITY_2026-10-09.md).
+
+Unfixed Debian findings remain unsuppressed and tracked in #104. CodeQL, dependency
+alerts and fresh full image scans supplement the authorization tests; none is a
+general security guarantee. Historical scan/disposition sections below retain
+their original dates.
+
 ## Roles and Permissions
 
 | Capability | Viewer | Researcher | Admin |

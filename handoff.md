@@ -1,14 +1,45 @@
 # Handoff Document - OCEAN Platform
 
-> **Last updated**: 2026-10-08 JST
+> **Last updated**: 2026-10-09 JST
 > **Repository**: `jarondlk/ocean-platform`
-> **Current status**: v0.7.5 published/deployed at
-> [oceaninfobio.com](https://oceaninfobio.com/chat), Ready revision
-> `ocean-platform-v075-patch1008`, 100% traffic, runtime/tag source `7a100dd`.
-> [Operations](docs/RELEASE_0.7.5_OPERATIONS.md) records exact images/source,
-> immutable operational publication, verified-backup reuse, normal Chat/CSV/provenance
-> and preservation. Schema remains `20261005_0016`; later documentation does not
-> replace the accepted runtime images or release tag.
+> **Current status**: v0.7.6 published/deployed at
+> [oceaninfobio.com](https://oceaninfobio.com/chat).
+> [Release operations](docs/RELEASE_0.7.6_OPERATIONS.md) records exact images,
+> accepted source, GitHub checks, backup/restore, health and rollback.
+> Schema remains `20261005_0016`, 34 tables. Branches: `main` and `gcp`.
+
+## v0.7.6 AUTO settings and security maintenance
+
+AUTO is opt-in per account. It proposes settings through a separate bounded
+planner call, validates them before retrieval/generation and shows effective
+settings without replacing saved manual preferences. Complete supported Miyagi
+questions resolve the publication/workflow automatically. An unspecified assay
+defaults to the first eligible protocol (currently NextSeq 500 paired); explicit
+MiSeq paired and user pins take priority. A same-publication 3NN method default
+never resolves genuinely different cohorts/publications. Exact/coverage routes
+skip the main model; published interpretation supplies verified result packets.
+See [the implementation record](docs/AUTO_CHAT_SETTINGS_IMPLEMENTATION_PLAN.md)
+and [fresh-selection correction](docs/AUTO_CHAT_SETTINGS_FRESH_SELECTION_FIX_2026-10-09.md).
+
+The patch removes ambiguous whitespace backtracking and routes immutable bundle
+reads through bounded filesystem containment, symlink and regular-file checks.
+Cloud SQL now enforces `ENCRYPTED_ONLY`; current managed connectors remain
+compatible. Fresh images retain non-root/tooling/privilege protections and full
+unsuppressed scans. Stable OS fixes remain pending in #104; no alert is dismissed
+or scan suppressed to obtain a passing result. See the
+[health/security audit](docs/GCP_HEALTH_SECURITY_2026-10-09.md).
+
+The standalone Himawari download script and its README changes remain separate
+uncommitted user work and are preserved outside the release. No new scientific
+acquisition, migration, formal publication/review or role change is included.
+Broader free-form English/Japanese and live browser/mobile evaluation remain
+bounded follow-ups. Original records, publications and scientific IDs remain
+unchanged; unavailable legacy descriptive analyses remain explicitly unavailable.
+
+## Historical v0.7.5 release account
+
+The next section is dated v0.7.5 evidence. Its revision, source and rollback refer
+to that rollout; current release operations above take precedence.
 
 ## v0.7.5 completed; remaining work
 

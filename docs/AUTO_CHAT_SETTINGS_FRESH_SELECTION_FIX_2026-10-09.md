@@ -1,5 +1,9 @@
 # AUTO fresh-selection correction — 2026-10-09 JST
 
+This is a historical accepted AUTO rollout record. The later
+[v0.7.6 operations](RELEASE_0.7.6_OPERATIONS.md) supersede its production-traffic
+and immediate-rollback statements; recorded source, receipts and tests remain.
+
 Status: **deployed and verified** at <https://oceaninfobio.com>.
 Revision `ocean-platform-auto-settings1009e` serves 100% of production traffic.
 

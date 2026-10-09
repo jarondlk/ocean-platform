@@ -1,5 +1,9 @@
 # AUTO settings deployment record — 2026-10-09 JST
 
+This is a historical accepted AUTO rollout record. The later
+[v0.7.6 operations](RELEASE_0.7.6_OPERATIONS.md) supersede its production-traffic
+and immediate-rollback statements; recorded source, receipts and tests remain.
+
 Latest production update: [fresh-selection correction and final validation](AUTO_CHAT_SETTINGS_FRESH_SELECTION_FIX_2026-10-09.md).
 Revision `ocean-platform-auto-settings1009e` now serves production; the record below
 is the historical initial v5 rollout. Its pinned-selection acceptance did not

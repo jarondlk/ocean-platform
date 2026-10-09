@@ -1,6 +1,6 @@
 # Documentation status
 
-Last reviewed: 2026-10-08 (v0.7.5 published/deployed; PRs #121–#125 merged; normal historical SST/Chat/provenance acceptance passed).
+Last reviewed: 2026-10-09 (v0.7.6 AUTO/security patch; current guidance and references audited).
 
 This register separates current operating guidance from completed plans and
 point-in-time evidence. Here, **superseded** means obsolete as a current work
@@ -11,7 +11,18 @@ approved.
 
 ## Current operating authority
 
-- [Historical regional publication](HISTORICAL_REGIONAL_PUBLICATION.md) and [v0.7.5 release](RELEASE_NOTES_0.7.5.md) — user-requested integration of existing Miyagi evidence into normal product surfaces. Deployment and normal product acceptance passed; see [v0.7.5 operations](RELEASE_0.7.5_OPERATIONS.md).
+- [v0.7.6 release](RELEASE_NOTES_0.7.6.md) and
+  [operations](RELEASE_0.7.6_OPERATIONS.md) — current AUTO planning, published
+  defaults, source/security checks, verified rollout and compatible rollback.
+- [GCP health/security audit](GCP_HEALTH_SECURITY_2026-10-09.md) — fresh resource,
+  TLS, keyless/IAM, backup, dependency/CodeQL and published-ID evidence.
+- [AUTO implementation](AUTO_CHAT_SETTINGS_IMPLEMENTATION_PLAN.md),
+  [initial deployment](AUTO_CHAT_SETTINGS_DEPLOYMENT_2026-10-09.md) and
+  [fresh-selection correction](AUTO_CHAT_SETTINGS_FRESH_SELECTION_FIX_2026-10-09.md)
+  — design and earlier accepted rollout records. Their recorded revisions remain
+  historical; the v0.7.6 operations record is current deployment authority.
+
+- [Historical regional publication](HISTORICAL_REGIONAL_PUBLICATION.md) and [v0.7.5 release](RELEASE_NOTES_0.7.5.md) — user-requested integration of existing Miyagi evidence into normal product surfaces. Deployment and normal product acceptance passed at that rollout; see [v0.7.5 operations](RELEASE_0.7.5_OPERATIONS.md). v0.7.6 retains this data contract.
 
 - [Miyagi provisional demo](MIYAGI_PROVISIONAL_DEMO_2026-10-08.md) — dated user
   direction: stop NOAA acquisition, use retained regional context for Miyagi
