@@ -77,3 +77,20 @@ def test_pending_generation_does_not_block_admin_recovery_inventory(tmp_path, mo
     corpus_stats = stats()
     assert corpus_stats.edna_publication == 'pending'
     assert corpus_stats.edna_retrieval_documents is None
+
+
+@pytest.mark.parametrize('status', [404, 503])
+def test_recovery_stats_tolerates_missing_sst_but_preserves_other_errors(tmp_path, monkeypatch, status):
+    from fastapi import HTTPException
+    import api.main as api
+    monkeypatch.setattr(config, 'SERVING_DIR', tmp_path)
+    monkeypatch.setattr('ingestion.regional_publication.current_publication', lambda: None)
+    def unavailable(**kwargs):
+        raise HTTPException(status_code=status, detail='SST artifact unavailable')
+    monkeypatch.setattr(api, '_sst_daily_df', unavailable)
+    if status == 404:
+        assert api.stats().sst_days == 0
+    else:
+        with pytest.raises(HTTPException) as error:
+            api.stats()
+        assert error.value.status_code == status

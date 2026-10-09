@@ -241,6 +241,7 @@ export async function getDocuments(params: {
 
 export async function askQuestion(input: {
   query: string;
+  settings_mode?: 'manual' | 'auto';
   evidence_scope?: EvidenceScope;
   analysis_id?: string;
   research_intent?: import("@/types").ResearchIntent;
@@ -645,7 +646,7 @@ export async function compareEvaluationRuns(runIds: string[]): Promise<Evaluatio
   });
 }
 
-export type ChatCapabilities = {scope_version: number; generation_fields: string[]; max_output_tokens: number | null; provider: string};
+export type ChatCapabilities = {scope_version: number; generation_fields: string[]; max_output_tokens: number | null; provider: string; auto_settings?: {enabled: boolean; plan_version: number}};
 export function getChatCapabilities(): Promise<ChatCapabilities> { return request<ChatCapabilities>("/chat/capabilities"); }
 export function getChatFilterOptions(body: ChatFilterOptionsRequest, signal?: AbortSignal): Promise<ChatFilterOptions> {
   return request<ChatFilterOptions>("/chat/filter-options", {method: "POST", body: JSON.stringify(body), signal});

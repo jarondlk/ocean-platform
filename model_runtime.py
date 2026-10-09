@@ -66,6 +66,10 @@ class ModelRuntime(Protocol):
     ) -> List[float]:
         """Embed one text value."""
 
+    def structured_chat(self, *, model: str, prompt: str, schema: dict,
+                        max_output_tokens: int, timeout: int) -> str:
+        """Generate one bounded JSON response, with no application retries."""
+
     def embed_batch(
         self,
         texts: List[str],
@@ -137,6 +141,20 @@ class OllamaRuntime:
         if embeddings and isinstance(embeddings[0], list):
             return embeddings[0]
         raise ValueError(f"No embedding returned for model {model}")
+
+    def structured_chat(self, *, model: str, prompt: str, schema: dict,
+                        max_output_tokens: int, timeout: int) -> str:
+        response = requests.post(self._url("/api/chat"), json={
+            "model": model, "messages": [{"role": "user", "content": prompt}],
+            "stream": False, "format": schema,
+            "options": {"temperature": 0, "num_predict": max_output_tokens, "num_ctx": 16384},
+        }, timeout=timeout)
+        response.raise_for_status()
+        payload = response.json()
+        content = payload.get("message", {}).get("content")
+        if payload.get("done_reason") == "length" or not isinstance(content, str) or not content.strip():
+            raise ValueError("Planner output is incomplete")
+        return content
 
     def embed_batch(
         self,
@@ -333,6 +351,26 @@ class VertexRuntime:
             timeout=timeout,
         )
         return embeddings[0]
+
+    def structured_chat(self, *, model: str, prompt: str, schema: dict,
+                        max_output_tokens: int, timeout: int) -> str:
+        # Use an independent client so the answer runtime's 120s timeout and
+        # transient retry loop cannot multiply the planner's bounded call.
+        planner = VertexRuntime(self.project, self.location, self.embedding_dim,
+                                max_attempts=1, request_timeout_seconds=timeout,
+                                client=self.client)
+        response = planner._client().models.generate_content(
+            model=model, contents=prompt, config={
+                "response_mime_type": "application/json", "response_json_schema": schema,
+                "temperature": 0, "max_output_tokens": max_output_tokens,
+                "thinking_config": {"thinking_budget": 0, "include_thoughts": False},
+            })
+        if _finish_reason(response) not in {None, "STOP"}:
+            raise ValueError("Planner output is incomplete")
+        content = getattr(response, "text", None)
+        if not isinstance(content, str) or not content.strip():
+            raise ValueError("Planner output is empty")
+        return content
 
     def embed_batch(
         self,

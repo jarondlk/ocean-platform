@@ -99,6 +99,17 @@ def create_chat_interaction(
         return interaction.id
 
 
+def record_chat_options(*, interaction_id, user, request_options) -> None:
+    """Freeze validated effective settings after planning, before evidence/model calls."""
+    if interaction_id is None:
+        return
+    with get_session() as session:
+        interaction = session.get(ChatInteraction, interaction_id)
+        if interaction is None or interaction.user_id != user.id or interaction.status != 'running':
+            raise RuntimeError('Chat interaction is not available for settings')
+        interaction.request_options = json_safe(request_options)
+
+
 def record_chat_context(
     *,
     interaction_id: Optional[uuid.UUID],

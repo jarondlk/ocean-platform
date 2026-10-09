@@ -94,6 +94,32 @@ def test_ollama_runtime_lists_models(monkeypatch):
     ]
 
 
+def test_structured_ollama_has_schema_and_independent_limits(monkeypatch):
+    calls = []
+    def post(url, **kwargs):
+        calls.append((url, kwargs))
+        return _Response({'message': {'content': '{"status":"ready"}'}, 'done_reason': 'stop'})
+    monkeypatch.setattr(model_runtime.requests, 'post', post)
+    schema = {'type': 'object', 'properties': {'status': {'type': 'string'}}}
+    raw = model_runtime.OllamaRuntime('http://localhost:11434').structured_chat(
+        model='planner', prompt='plan', schema=schema, max_output_tokens=1234, timeout=17)
+    assert raw == '{"status":"ready"}'
+    assert calls[0][1]['json']['format'] == schema
+    assert calls[0][1]['timeout'] == 17
+    assert calls[0][1]['json']['options']['num_predict'] == 1234
+
+
+def test_structured_vertex_uses_json_schema_without_answer_retry_loop():
+    client = _VertexClient()
+    runtime = model_runtime.VertexRuntime(project='project', location='global', embedding_dim=2, client=client)
+    schema = {'type': 'object'}
+    runtime.structured_chat(model='planner', prompt='plan', schema=schema, max_output_tokens=900, timeout=15)
+    call = client.models.calls[0][1]
+    assert call['config']['response_json_schema'] == schema
+    assert call['config']['response_mime_type'] == 'application/json'
+    assert call['config']['max_output_tokens'] == 900
+
+
 def test_runtime_factory_rejects_unimplemented_provider(monkeypatch):
     monkeypatch.setattr(config, "MODEL_PROVIDER", "not-implemented")
 

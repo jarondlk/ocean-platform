@@ -1205,6 +1205,23 @@ td span {
   min-width: 0;
 }
 
+.auto-settings-toolbar {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+}
+
+.auto-settings-toggle.active {
+  color: var(--accent);
+  border-color: currentColor;
+  font-weight: 700;
+}
+
+.auto-plan-summary {
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
 .range-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 84px;

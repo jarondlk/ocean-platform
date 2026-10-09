@@ -226,16 +226,27 @@ def result_rows(bundle, kind, protocol_id):
 
 def render_research(bundle, scope, query, intent=None):
     recipe = bundle["recipe"]
-    provisional = bundle["manifest"].get("schema_version") == 3
-    from ingestion.regional_publication import analysis_publication
-    accepted = analysis_publication(bundle) if provisional else None
     recognized = parse_intent(query, recipe)
     if not recognized or (intent and recognized != intent.kind):
         return abstain(
             "aggregate_scope_required",
             "Choose one of the six published research workflows. This question contains an unsupported or conflicting qualifier, so no statistics were inferred.",
         )
-    kind = intent.kind if intent else recognized
+    selected = intent or ResearchIntent(kind=recognized)
+    return select_research(bundle, scope, query, selected)
+
+
+def select_research(bundle, scope, query, intent: ResearchIntent):
+    """Select exact rows for a validated typed request; no question rewriting.
+
+    Manual natural-language entry remains guarded by render_research. AUTO
+    validates its original question constraints and catalogue choices first.
+    """
+    recipe = bundle['recipe']
+    provisional = bundle['manifest'].get('schema_version') == 3
+    from ingestion.regional_publication import analysis_publication
+    accepted = analysis_publication(bundle) if provisional else None
+    kind = intent.kind
     if kind in {"monthly_spatial", "spatial_temperature"} and "sardine" in normalized(
         query
     ):
@@ -382,6 +393,10 @@ def render_research(bundle, scope, query, intent=None):
                 "result_rows": featured,
                 "plot_areas": plot_areas,
                 "analysis_recipe": recipe,
+                "limitations": bundle["manifest"].get("limitations", []),
+                "publication_status": {"operationally_accepted": bool(accepted),
+                                       "provisional": provisional,
+                                       "scientific_approval": False if provisional else None},
                 "plot_taxa": [
                     {"taxon_key": key, "species": value}
                     for key, value in sorted(plot_taxa.items())
@@ -489,6 +504,8 @@ def render_research(bundle, scope, query, intent=None):
         )
         if cuts:
             explanation += f" Low SST ≤{_value(cuts['low_max'])}°C; high SST ≥{_value(cuts['high_min'])}°C ({_escape(recipe['temperature_partition']['kind'])}). The comparison retains the fixed Q1 top-ten fish list. Representative selection uses equally weighted supported area-season contrasts."
+    for document in documents:
+        document['interpretation_limits'] = explanation
     answer = title + "\n\n" + explanation + "\n\n" + "\n\n".join(sections)
     if (
         len(canonical_bytes({"answer": answer, "documents": documents}))

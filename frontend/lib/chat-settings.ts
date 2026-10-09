@@ -11,12 +11,14 @@ export function defaultScope(): EvidenceScope {
   }};
 }
 export type ChatSettings = {
+  autoSettings: boolean;
   model: string; k: number; vectorWeight: number; ftsWeight: number; rrfK: number;
   expandEvidence: boolean; maxLinkedSources: number; injectAnalysis: boolean;
   injectReliability: boolean; runAnswerAudit: boolean; temperature: number; topP: number;
   repeatPenalty: number; numCtx: number; numPredict: string; samplingTopK: string; seed: string;
 };
 export const defaultSettings: ChatSettings = {
+  autoSettings: false,
   model: "", k: 8, vectorWeight: 0.6, ftsWeight: 0.4, rrfK: 60, expandEvidence: true,
   maxLinkedSources: 5, injectAnalysis: true, injectReliability: true, runAnswerAudit: true,
   temperature: 0, topP: 0.9, repeatPenalty: 1.1, numCtx: 8192, numPredict: "", samplingTopK: "", seed: "",
@@ -70,6 +72,7 @@ export function settingsErrors(settings: ChatSettings, maxTokens = 8192): string
     const value = settings[key as keyof ChatSettings];
     return typeof value !== "number" || !Number.isFinite(value) || value < min || value > max || integer && !Number.isInteger(value) ? [`${key}: out of range`] : [];
   });
+  if (typeof settings.autoSettings !== 'boolean') errors.push('AUTO: invalid mode');
   if (typeof settings.model !== "string" || settings.model.length > 255) errors.push("model: invalid text");
   if (settings.vectorWeight + settings.ftsWeight <= 0) errors.push("Choose a positive retrieval weight");
   for (const [key, max] of [["numPredict", maxTokens], ["samplingTopK", 200], ["seed", Number.MAX_SAFE_INTEGER]] as const) {

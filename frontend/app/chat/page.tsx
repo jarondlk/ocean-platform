@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { RotateCcw, Send } from "lucide-react";
 import { CsvExportButton } from "@/components/CsvExportButton";
 import { ChatFeedback } from "@/components/ChatFeedback";
@@ -20,6 +20,8 @@ import { ResearchResultCards } from "@/components/ResearchResultCards";
 import { SourceCoverage } from "@/components/SourceCoverage";
 import type { ResearchIntent } from "@/types";
 import { useChatSettings } from "@/lib/use-chat-settings";
+import { useChatIdentity } from "@/components/ChatIdentityProvider";
+import { effectiveChatSettings, readAutoPlan } from "@/lib/auto-settings";
 import { sourceLabels, scopeErrors, settingsErrors, scopeForAnalysis, type SourceFamily, type ChatSettings } from "@/lib/chat-settings";
 
 const quickQuestions = [
@@ -51,6 +53,10 @@ export default function ChatPage() {
   const [analysisId, setAnalysisId] = useState("");
   const [researchIntent, setResearchIntent] = useState<ResearchIntent | undefined>();
   const {settings, setSettings, scope, setScope, ready, blocked, storageNotice, reset} = useChatSettings(analysisId);
+  const accountId = useChatIdentity();
+  const currentAccount = useRef(accountId);
+  currentAccount.current = accountId;
+  const requestSequence = useRef(0);
   const [models, setModels] = useState<ModelsResponse | null>(null);
   const [capabilities, setCapabilities] = useState<ChatCapabilities | null>(null);
   const submittedScope = scopeForAnalysis(scope, analysisId);
@@ -65,13 +71,27 @@ export default function ChatPage() {
     return `${label}: ${ui(detail)}`;
   }
   const hasSources = Object.values(scope.sources).some(source => source.enabled);
-  const canAsk = ready && !blocked && !!capabilities && !!models && hasSources && !validationErrors.length;
+  const autoAvailable = capabilities?.auto_settings?.enabled === true && capabilities.auto_settings.plan_version === 1;
+  const canAsk = ready && !blocked && !!capabilities && !!models && (settings.autoSettings ? autoAvailable : hasSources) && !validationErrors.length;
   const supports = (field: string) => capabilities?.generation_fields.includes(field) || false;
-  const [response, setResponse] = useState<ChatResponse | null>(null);
+  const [responseState, setResponseState] = useState<{account: string | null; value: ChatResponse} | null>(null);
+  const response = responseState?.account === accountId ? responseState.value : null;
+  function setResponse(value: ChatResponse | null) { setResponseState(value ? {account: accountId, value} : null); }
+  const autoPlan = readAutoPlan(response?.options);
+  const displayedScope = settings.autoSettings && autoPlan?.scope ? autoPlan.scope : submittedScope;
+  const displayedAnalysisId = settings.autoSettings && autoPlan?.scope ? autoPlan.scope.sources.edna_metabarcoding.analysis_id || '' : analysisId;
+  const displayedResearchIntent = settings.autoSettings && autoPlan?.scope ? autoPlan.researchIntent : researchIntent;
+  const displayedSettings = settings.autoSettings ? effectiveChatSettings(settings, response?.options) : settings;
   const [selectedCitation, setSelectedCitation] = useState<CitationTarget | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const providerLabel = models?.provider === "vertex" ? "Vertex AI" : models?.provider || "Model runtime";
+
+  useEffect(() => {
+    requestSequence.current += 1;
+    setResponseState(null); setAnalysisId(''); setResearchIntent(undefined);
+    setLoading(false); setError(''); setModels(null); setCapabilities(null);
+  }, [accountId]);
 
   useEffect(() => {
     if (!ready) return;
@@ -136,7 +156,25 @@ export default function ChatPage() {
   const closeEvidenceNavigator = useCallback(() => setSelectedCitation(null), []);
 
   function updateSetting<K extends keyof ChatSettings>(key: K, value: ChatSettings[K]) {
+    materializeManual();
     setSettings((current) => ({ ...current, [key]: value }));
+  }
+
+  function materializeManual() {
+    if (settings.autoSettings && autoPlan?.scope) {
+      setScope(scopeForAnalysis(autoPlan.scope, ''));
+      setAnalysisId(displayedAnalysisId); setResearchIntent(displayedResearchIntent);
+    }
+    setSettings(current => ({...(current.autoSettings ? effectiveChatSettings(current, response?.options) : current), autoSettings: false}));
+  }
+
+  function editSources(next: typeof scope) {
+    if (settings.autoSettings && autoPlan?.scope) {
+      setAnalysisId(next.sources.edna_metabarcoding.analysis_id || '');
+      setResearchIntent(displayedResearchIntent);
+    }
+    setScope(scopeForAnalysis(next, ''));
+    setSettings(current => ({...(current.autoSettings ? effectiveChatSettings(current, response?.options) : current), autoSettings: false}));
   }
 
   function resetControls() {
@@ -153,9 +191,12 @@ export default function ChatPage() {
     setError("");
     setResponse(null);
     setSelectedCitation(null);
+    const submittedAccount = accountId;
+    const sequence = ++requestSequence.current;
     try {
       const result = await askQuestion({
         query: trimmedQuery,
+        settings_mode: settings.autoSettings ? 'auto' : 'manual',
         evidence_scope: submittedScope,
         research_intent: researchIntent,
         k: settings.k,
@@ -176,13 +217,14 @@ export default function ChatPage() {
         sampling_top_k: optionalInteger(settings.samplingTopK),
         seed: optionalInteger(settings.seed),
       });
-      setResponse(result);
+      if (currentAccount.current === submittedAccount && requestSequence.current === sequence) setResponse(result);
     } catch (err) {
+      if (currentAccount.current !== submittedAccount || requestSequence.current !== sequence) return;
       setError(err instanceof ApiError
         ? `${err.message}${err.code ? ` (${err.code})` : ""}${err.interaction_id ? ` Reference: ${err.interaction_id}` : ""}`
         : err instanceof Error ? err.message : "Request failed");
     } finally {
-      setLoading(false);
+      if (currentAccount.current === submittedAccount && requestSequence.current === sequence) setLoading(false);
     }
   }
 
@@ -213,7 +255,7 @@ export default function ChatPage() {
                 placeholder={ui("Enter question")}
               />
               {ready ? <p className="empty-state" role="status">
-                {ui("Selected sources")}: {Object.entries(scope.sources).filter(([, selection]) => selection.enabled).map(([family]) => ui(sourceLabels[family as SourceFamily])).join(", ") || ui("None")}. {ui("Selection makes evidence eligible; it does not guarantee matching results.")}
+                {ui("Selected sources")}: {Object.entries(displayedScope.sources).filter(([, selection]) => selection.enabled).map(([family]) => ui(sourceLabels[family as SourceFamily])).join(", ") || ui("None")}. {ui("Selection makes evidence eligible; it does not guarantee matching results.")}
               </p> : null}
               <div className="quick-question-grid" aria-label={ui("Quick questions")}>
                 {quickQuestions.map((item) => (
@@ -235,12 +277,13 @@ export default function ChatPage() {
                 </span>
                 <button className="button" disabled={loading || !canAsk || !query.trim()}>
                   <Send size={16} aria-hidden="true" />
-                  {loading ? ui("Asking") : ui("Ask")}
+                  {loading ? ui(settings.autoSettings ? "Selecting analysis settings…" : "Asking") : ui("Ask")}
                 </button>
               </div>
               {!ready ? <p role="status">{ui("Loading saved settings…")}</p> : null}
               {blocked ? <p className="error-text" role="alert">{ui(blocked)}</p> : null}
-              {ready && !hasSources ? <p role="status">{ui("Select at least one evidence source to ask a question.")}</p> : null}
+              {ready && !hasSources && !settings.autoSettings ? <p role="status">{ui("Select at least one evidence source to ask a question.")}</p> : null}
+              {ready && settings.autoSettings && capabilities && !autoAvailable ? <p role="status">{ui("AUTO is unavailable on this server. Turn AUTO off to use manual settings.")}</p> : null}
               {validationErrors.length ? <p className="error-text" role="alert">{validationErrors.map(validationLabel).join("; ")}</p> : null}
               {storageNotice ? <p role="status">{ui(storageNotice)}</p> : null}
               {error ? <p className="error-text">{error}</p> : null}
@@ -248,6 +291,11 @@ export default function ChatPage() {
 
             <article className="card">
               <h3 className="section-title">{ui("Response")}</h3>
+              {autoPlan ? <div className="auto-plan-summary" role="status">
+                <strong>{autoPlan.status === 'applied' ? ui("AUTO applied") : ui("AUTO")}</strong>
+                <p>{autoPlan.explanation}</p>
+                {autoPlan.scope ? <p>{ui("Selected sources")}: {Object.entries(autoPlan.scope.sources).filter(([, item]) => item.enabled).map(([family]) => ui(sourceLabels[family as SourceFamily])).join(', ')}</p> : null}
+              </div> : null}
               {response ? (
                 <div className="summary-strip chat-diagnostics">
                   <SummaryCell label={ui("Outcome")} value={titleCase(response.outcome || "answered")} />
@@ -430,14 +478,19 @@ export default function ChatPage() {
           <aside className="chat-settings" aria-label={ui("Chat settings")}>
             <div className="settings-header">
               <h3 className="section-title">{ui("Settings")}</h3>
-              <button className="button secondary-button icon-button" disabled={!ready} onClick={resetControls} title={ui("Reset all chat controls to defaults.")} type="button">
+              <button className="button secondary-button icon-button" disabled={!ready || loading} onClick={resetControls} title={ui("Reset all chat controls to defaults.")} type="button">
                 <RotateCcw size={15} aria-hidden="true" />
               </button>
             </div>
 
-            <ChatSourceSettings disabled={!ready} scope={submittedScope} onChange={next => setScope(scopeForAnalysis(next, ""))} analysisId={analysisId} onAnalysisChange={setAnalysisId} researchIntent={researchIntent} onResearchChange={(intent, question) => { setResearchIntent(intent); if (question) setQuery(question); }} />
+            <ChatSourceSettings disabled={!ready || loading} scope={displayedScope} onChange={editSources}
+              analysisId={displayedAnalysisId} onAnalysisChange={value => {materializeManual(); setAnalysisId(value);}}
+              researchIntent={displayedResearchIntent} onResearchChange={(intent, question) => {materializeManual(); setResearchIntent(intent); if (question) setQuery(question);}}
+              autoEnabled={settings.autoSettings} autoAvailable={autoAvailable}
+              onAutoChange={enabled => setSettings(current => ({...current, autoSettings: enabled}))} />
+            {settings.autoSettings && autoPlan?.scope ? <p className="empty-state">{ui("Settings shown apply to the last submitted question; AUTO will recompute them when you ask.")}</p> : null}
             <details className="chat-advanced"><summary>{ui("Advanced settings")}</summary>
-            <fieldset className="settings-section">
+            <fieldset className="settings-section" disabled={!ready || loading}>
               <legend>{ui("Retrieval")}</legend>
               <NumericControl
                 id="chat-top-k"
@@ -446,7 +499,7 @@ export default function ChatPage() {
                 min={1}
                 max={25}
                 step={1}
-                value={settings.k}
+                value={displayedSettings.k}
                 onChange={(value) => updateSetting("k", value)}
               />
               <NumericControl
@@ -456,7 +509,7 @@ export default function ChatPage() {
                 min={0}
                 max={1}
                 step={0.05}
-                value={settings.vectorWeight}
+                value={displayedSettings.vectorWeight}
                 onChange={(value) => updateSetting("vectorWeight", value)}
               />
               <NumericControl
@@ -466,7 +519,7 @@ export default function ChatPage() {
                 min={0}
                 max={1}
                 step={0.05}
-                value={settings.ftsWeight}
+                value={displayedSettings.ftsWeight}
                 onChange={(value) => updateSetting("ftsWeight", value)}
               />
               <NumericControl
@@ -476,11 +529,11 @@ export default function ChatPage() {
                 min={1}
                 max={200}
                 step={1}
-                value={settings.rrfK}
+                value={displayedSettings.rrfK}
                 onChange={(value) => updateSetting("rrfK", value)}
               />
               <CheckboxControl
-                checked={settings.expandEvidence}
+                checked={displayedSettings.expandEvidence}
                 label="Expand cross-source evidence"
                 help="Follow anchor-event links from primary retrieval into corroborating CTD, metagenome, or satellite SST records."
                 onChange={(value) => updateSetting("expandEvidence", value)}
@@ -492,34 +545,34 @@ export default function ChatPage() {
                 min={0}
                 max={25}
                 step={1}
-                value={settings.maxLinkedSources}
+                value={displayedSettings.maxLinkedSources}
                 onChange={(value) => updateSetting("maxLinkedSources", value)}
               />
             </fieldset>
 
-            <fieldset className="settings-section">
+            <fieldset className="settings-section" disabled={!ready || loading}>
               <legend>{ui("Prompt Context")}</legend>
               <CheckboxControl
-                checked={settings.injectAnalysis}
+                checked={displayedSettings.injectAnalysis}
                 label="Inject analysis"
                 help="Add precomputed ecological analysis documents when the query triggers them."
                 onChange={(value) => updateSetting("injectAnalysis", value)}
               />
               <CheckboxControl
-                checked={settings.injectReliability}
+                checked={displayedSettings.injectReliability}
                 label="Inject reliability"
                 help="Add cross-source validation and corroboration documents when the query triggers them."
                 onChange={(value) => updateSetting("injectReliability", value)}
               />
               <CheckboxControl
-                checked={settings.runAnswerAudit}
+                checked={displayedSettings.runAnswerAudit}
                 label="Run citation checks"
                 help="Audit answer citations against retrieved evidence, linked evidence, analysis context, and reliability context."
                 onChange={(value) => updateSetting("runAnswerAudit", value)}
               />
             </fieldset>
 
-            <fieldset className="settings-section">
+            <fieldset className="settings-section" disabled={!ready || loading}>
               <legend>{ui("Generation")}</legend>
               <label className="settings-field" htmlFor="chat-model" title="Chat model used for answer generation. The field remains editable for provider-supported model names.">
                 <span>{ui("Model")}</span>
@@ -527,7 +580,7 @@ export default function ChatPage() {
                   id="chat-model"
                   className="field"
                   list="chat-model-options"
-                  value={settings.model}
+                  value={displayedSettings.model}
                   onChange={(event) => updateSetting("model", event.target.value)}
                 />
                 <datalist id="chat-model-options">
@@ -546,7 +599,7 @@ export default function ChatPage() {
                 min={0}
                 max={2}
                 step={0.05}
-                value={settings.temperature}
+                value={displayedSettings.temperature}
                 onChange={(value) => updateSetting("temperature", value)}
               />
               <NumericControl
@@ -556,7 +609,7 @@ export default function ChatPage() {
                 min={0}
                 max={1}
                 step={0.05}
-                value={settings.topP}
+                value={displayedSettings.topP}
                 onChange={(value) => updateSetting("topP", value)}
               />
 {supports("repeat_penalty") ? (
@@ -567,7 +620,7 @@ export default function ChatPage() {
                 min={0.5}
                 max={2}
                 step={0.05}
-                value={settings.repeatPenalty}
+                value={displayedSettings.repeatPenalty}
                 onChange={(value) => updateSetting("repeatPenalty", value)}
               />
               ) : null}
@@ -577,7 +630,7 @@ export default function ChatPage() {
                 <select
                   id="chat-num-ctx"
                   className="field"
-                  value={settings.numCtx}
+                  value={displayedSettings.numCtx}
                   onChange={(event) => updateSetting("numCtx", Number(event.target.value))}
                 >
                   {[2048, 4096, 8192, 16384, 32768].map((value) => (
@@ -597,7 +650,7 @@ export default function ChatPage() {
                     : "Maximum generated tokens. Leave blank for the configured runtime default."}
                   max={models?.max_output_tokens ?? 8192}
                   min={1}
-                  value={settings.numPredict}
+                  value={displayedSettings.numPredict}
                   onChange={(value) => updateSetting("numPredict", value)}
                 />
                 <OptionalIntegerControl
@@ -606,7 +659,7 @@ export default function ChatPage() {
                   help="Sampling top-k when supported. Leave blank for the configured runtime default."
                   max={200}
                   min={1}
-                  value={settings.samplingTopK}
+                  value={displayedSettings.samplingTopK}
                   onChange={(value) => updateSetting("samplingTopK", value)}
                 />
               </div>
@@ -615,7 +668,7 @@ export default function ChatPage() {
                 label="Seed"
                 help="Optional deterministic seed when supported by the configured runtime."
                 min={0}
-                value={settings.seed}
+                value={displayedSettings.seed}
                 onChange={(value) => updateSetting("seed", value)}
               />
             </fieldset>

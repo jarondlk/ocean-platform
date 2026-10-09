@@ -456,6 +456,10 @@ MODEL_PROVIDER = os.environ.get("MODEL_PROVIDER", "ollama").strip().lower()
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 EMBEDDING_MODEL = os.environ.get("EMBEDDING_MODEL", "nomic-embed-text")
 CHAT_MODEL      = os.environ.get("CHAT_MODEL", "qwen2.5:14b-instruct")
+AUTO_SETTINGS_ENABLED = os.environ.get("AUTO_SETTINGS_ENABLED", "true").strip().lower() == "true"
+CHAT_PLANNER_MODEL = os.environ.get("CHAT_PLANNER_MODEL", CHAT_MODEL).strip()
+CHAT_PLANNER_TIMEOUT_SECONDS = _environment_int("CHAT_PLANNER_TIMEOUT_SECONDS", 30, minimum=1)
+CHAT_PLANNER_MAX_OUTPUT_TOKENS = _environment_int("CHAT_PLANNER_MAX_OUTPUT_TOKENS", 1600, minimum=1)
 GOOGLE_CLOUD_PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT", "").strip()
 GOOGLE_CLOUD_LOCATION = os.environ.get("GOOGLE_CLOUD_LOCATION", "global").strip()
 CHAT_MAX_OUTPUT_TOKENS = int(os.environ.get("CHAT_MAX_OUTPUT_TOKENS", "1600"))
@@ -534,6 +538,10 @@ def validate_runtime_configuration() -> None:
         raise RuntimeConfigurationError("GOOGLE_CLOUD_LOCATION must not be empty")
     if CHAT_MAX_OUTPUT_TOKENS < 1:
         raise RuntimeConfigurationError("CHAT_MAX_OUTPUT_TOKENS must be positive")
+    if AUTO_SETTINGS_ENABLED and (not CHAT_PLANNER_MODEL or len(CHAT_PLANNER_MODEL) > 255):
+        raise RuntimeConfigurationError("AUTO requires a valid CHAT_PLANNER_MODEL")
+    if CHAT_PLANNER_TIMEOUT_SECONDS > 120 or CHAT_PLANNER_MAX_OUTPUT_TOKENS > 4096:
+        raise RuntimeConfigurationError("Planner timeout/output limits exceed supported bounds")
     if MODEL_MAX_ATTEMPTS not in {1, 2, 3}:
         raise RuntimeConfigurationError("MODEL_MAX_ATTEMPTS must be between 1 and 3")
     if MODEL_RETRY_INITIAL_SECONDS < 0:

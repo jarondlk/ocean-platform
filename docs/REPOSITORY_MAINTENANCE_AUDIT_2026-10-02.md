@@ -105,7 +105,7 @@ GitPython is absent from the serving runtime/dev/analysis sets.
 | PyJWT | 52 | All against four removed root requirement files; patched current locks |
 | urllib3 | 12 | All against the removed root files; current locks use the reported patched floor 2.8.0 |
 | GitPython, deleted root archive path | 3 | Old 3.1.57 record; path removed and archived replacement already above the older 3.1.60 fixes |
-| GitPython, current archive input/lock | 2 (#283/#300) | Real current 3.1.61 pin; update to 3.1.62 |
+| GitPython, current archive input/lock | 2 (Dependabot alert IDs 283/300) | Real current 3.1.61 pin; update to 3.1.62 |
 
 The two current findings share
 [GHSA-59cr-6r3x-644w](https://github.com/advisories/GHSA-59cr-6r3x-644w):
