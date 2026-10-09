@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 import hashlib
 import json
 import os
+import stat
 import tempfile
 
 from ingestion.immutable_bundle import canonical_bytes, digest, validate_id
@@ -62,6 +63,8 @@ class BoundedLocalStore(LocalSnapshotStore):
         if not fullpath.startswith(root_prefix):
             raise ValueError("Artifact path escapes store root")
         try:
+            if not stat.S_ISREG(os.stat(fullpath, follow_symlinks=False).st_mode):
+                raise ValueError("Artifact is not a regular file")
             with open(fullpath, "rb") as handle:
                 data = handle.read(max_bytes + 1)
                 generation = os.fstat(handle.fileno()).st_mtime_ns

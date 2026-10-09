@@ -669,3 +669,21 @@ def test_absolute_range_is_applied_when_planner_omits_it(planning):
         'time_from':'2024-01-01', 'time_to':'2024-12-31'}
     assert metadata['resolved_calendar_range'] == {'time_from':'2024-01-01', 'time_to':'2024-12-31', 'quote':'during 2024'}
     assert all(c['quote'] in 'Show CTD salinity in Onagawa during 2024.' for c in metadata['constraints'])
+
+
+@pytest.mark.parametrize('separator', ['', ' ', '-', ' - ', ' ' * 10000])
+def test_assignment_matching_with_long_whitespace_preserves_requested_3nn(separator):
+    from orchestration.auto_published_settings import compatible_analyses
+    from types import SimpleNamespace
+    request = SimpleNamespace(query='Use 3' + separator + 'NN fish frequencies',
+                              evidence_scope=ChatRequest(query='fish', evidence_scope=scope()).evidence_scope)
+    choices = compatible_analyses(request, {'analyses': operational_choices()}, 'fish_frequency')
+    assert [a['analysis_id'] for a in choices] == ['e' * 64]
+
+
+@pytest.mark.parametrize('separator', [' ', ': ', '= ', ' ' * 10000, ' ' * 10000 + ': '])
+def test_long_protocol_whitespace_never_hides_an_unavailable_explicit_id(separator):
+    from orchestration.auto_published_settings import protocol_choice
+    from types import SimpleNamespace
+    request = SimpleNamespace(query='Use protocol' + separator + 'f' * 64, research_intent=None)
+    assert protocol_choice(operational_choices()[1], request) == (None, False)

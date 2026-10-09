@@ -60,17 +60,24 @@ def seal_bundle(staging: Path, root: Path, identity: str, metadata: dict):
 def read_bundle(root: Path, identity: str, *, expected_digest=None, required_files=None,
                 max_bytes=128 * 1024 * 1024):
     """Verify and return the same bytes consumers will use (no second file read)."""
-    directory = root / validate_id(identity)
-    if directory.is_symlink() or not directory.is_dir():
-        raise ValueError("Unknown bundle")
-    manifest_path = directory / "manifest.json"
-    if manifest_path.is_symlink() or root.is_symlink():
+    # Reuse the bounded local reader's realpath containment and symlink guards.
+    # Keep every untrusted bundle component behind that filesystem boundary.
+    from ingestion.artifact_store import BoundedLocalStore
+    from ingestion.provenance_snapshot import SnapshotNotFound
+
+    validate_id(identity)
+    if root.is_symlink():
         raise ValueError("Invalid manifest path")
-    if manifest_path.stat().st_size > min(max_bytes, 1024*1024):
-        raise ValueError('Bundle manifest limit exceeded')
-    manifest_bytes = manifest_path.read_bytes()
-    if len(manifest_bytes) > 1024 * 1024:
-        raise ValueError("Bundle manifest limit exceeded")
+    store = BoundedLocalStore(root)
+    try:
+        manifest_bytes = store.read(identity + "/manifest.json",
+                                    max_bytes=min(max_bytes, 1024 * 1024)).data
+    except SnapshotNotFound as exc:
+        raise ValueError("Unknown bundle") from exc
+    except ValueError as exc:
+        if str(exc) == "Artifact byte limit exceeded":
+            raise ValueError("Bundle manifest limit exceeded") from exc
+        raise ValueError("Invalid manifest path") from exc
     manifest = json.loads(manifest_bytes)
     if manifest.get("id") != identity or not isinstance(manifest.get("files"), dict):
         raise ValueError("Invalid bundle manifest")
@@ -81,13 +88,14 @@ def read_bundle(root: Path, identity: str, *, expected_digest=None, required_fil
     contents = {'manifest.json': manifest_bytes}
     total = len(manifest_bytes)
     for name, expected in manifest["files"].items():
-        if Path(name).name != name or name in {".", "..", "manifest.json"}:
+        if not name or Path(name).name != name or "\\" in name or name in {".", "..", "manifest.json"}:
             raise ValueError("Invalid bundle path")
-        path = directory / name
-        if path.is_symlink() or not path.is_file():
-            raise ValueError("Bundle integrity check failed")
-        with path.open('rb') as handle:
-            data = handle.read(max_bytes - total + 1)
+        try:
+            data = store.read(identity + "/" + name, max_bytes=max_bytes - total).data
+        except (SnapshotNotFound, ValueError) as exc:
+            if str(exc) == "Artifact byte limit exceeded":
+                raise ValueError("Bundle byte resource limit exceeded") from exc
+            raise ValueError("Bundle integrity check failed") from exc
         total += len(data)
         if total > max_bytes:
             raise ValueError('Bundle byte resource limit exceeded')

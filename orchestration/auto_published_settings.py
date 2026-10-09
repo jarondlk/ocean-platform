@@ -31,7 +31,7 @@ def compatible_analyses(request, catalog, kind, filters=None, calendar=None):
                and any(w['kind'] == kind for w in a.get('workflows', []))]
     methods = {method for a in choices for method in a.get('assignment_methods', [])}
     named = [method for method in methods if re.search(r'(?<!\w)' + re.escape(method) + r'(?!\w)', request.query, re.I)]
-    if not named and re.search(r'\b3\s*[- ]?\s*nn\b', request.query, re.I):
+    if not named and re.search(r'\b3\s*(?:-\s*)?nn\b', request.query, re.I):
         named = ['qcauto_95pct_3nn_target']
     if named:
         choices = [a for a in choices if a.get('assignment_methods') == named]
@@ -58,7 +58,7 @@ def protocol_choice(option, request):
     ids = option['protocol_ids']
     pin = request.research_intent.protocol_id if request.research_intent else None
     named = [identity for identity in ids if identity in request.query]
-    requested_id = re.search(r'\bprotocol(?:_id)?\s*[:=]?\s*([a-f0-9]{64})\b', request.query, re.I)
+    requested_id = re.search(r'\bprotocol(?:_id)?\s*(?:[:=]\s*)?([a-f0-9]{64})\b', request.query, re.I)
     if len(named) > 1 or requested_id and requested_id[1].lower() not in ids:
         return None, False
     # Match requested instrument/layout/gene before defaulting. A requested
