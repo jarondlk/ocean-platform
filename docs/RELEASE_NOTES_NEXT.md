@@ -8,5 +8,4 @@ Remaining AUTO work: mixed raw/published hybrid routing, reviewed geographic
 resolution, broader English/Japanese questions and unsupported qualifiers.
 Scientific follow-ups #89/#102/#103 retain identity/area, coverage and spatial
 work; #104 tracks supported OS fixes; #107/#108 retain mobile/sign-out follow-ups.
-No new acquisition is scheduled. The standalone Himawari downloader remains
-separate uncommitted work, outside the released source.
+No new acquisition is scheduled.
