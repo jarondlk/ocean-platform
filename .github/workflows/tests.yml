@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, master, gcp-dev]
+    branches: [main, master, gcp]
   pull_request:
     branches: [main, master]
 
