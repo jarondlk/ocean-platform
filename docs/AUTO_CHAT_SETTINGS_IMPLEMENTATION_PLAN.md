@@ -1,7 +1,7 @@
 # AUTO chat settings implementation plan
 
-Status: implemented on `auto-setting`; deployment validation is in progress and
-deferred pending GCP CLI reauthentication. AUTO remains opt-in per account.
+Status: implemented on `auto-setting`, deployed and verified on 2026-10-09 JST.
+AUTO remains opt-in per account.
 Prepared: 2026-10-08 JST.
 Original plan reviewed at `794221d`; implementation rebased on latest `main` at `aa53bd7`.
 
@@ -38,7 +38,9 @@ the model recognized every natural-language qualifier. Unpinned ambiguous
 publications/protocols require an explicit choice. No real model or cloud calls
 were made during offline tests. Subsequent cloud builds and bounded live Vertex
 preflights are recorded in [the deployment record](AUTO_CHAT_SETTINGS_DEPLOYMENT_2026-10-09.md).
-They do not establish complete live acceptance. AUTO is not enabled by default for a user.
+Final immutable-image acceptance passed the three Miyagi questions, published
+interpretation and CTD RAG. Broader planner evaluation remains outstanding. AUTO
+is not enabled by default for a user.
 
 Server configuration: `AUTO_SETTINGS_ENABLED` (default `true`),
 `CHAT_PLANNER_MODEL` (defaults to `CHAT_MODEL`),
@@ -54,10 +56,12 @@ they include work beyond this initial implementation.
 Deployment preparation exposed and corrected oversized production catalogues,
 provider schema complexity, omitted confirmed pins, and omitted literal calendar
 ranges. The latest application commit is `6083225`; lint, generated-scope
-freshness and 99 focused planner/runtime/source-scope tests pass. A full cloud
-build and five-path live acceptance remain required on that commit before traffic
-promotion. Production retains its existing v0.7.5 release; see the deployment
-record for completed backup and candidate checks.
+freshness and 99 focused planner/runtime/source-scope tests pass. The final cloud
+build passed 1,313 backend tests (49 optional skips), container/database gates
+and reviewed scans. All five live answer paths passed on the exact image before
+traffic promotion. Production serves `ocean-platform-auto-settings1009c`; backup,
+post-promotion preservation, authentication checks and cleanup passed. The prior
+v0.7.5 revision remains for rollback; see the deployment record for receipts.
 
 Offline validation: the full backend run passed 1,298 tests with 39 optional
 PostgreSQL integration tests skipped, at 80.5% coverage. A final focused run after
@@ -613,6 +617,6 @@ synthesis and added latency/cost against manual settings and current heuristics.
 Set release thresholds from that evaluation before making AUTO the default.
 
 This document records both the target design and current implementation scope.
-Zero-traffic Cloud Run candidates and isolated validation resources have been
-created. Production traffic has not been promoted, and no scientific publication
-has been performed as part of this branch.
+Production traffic now serves the accepted AUTO release. Temporary candidates
+and operator jobs were cleaned up after validation. No scientific publication or
+production database migration/restore was performed as part of this branch.
