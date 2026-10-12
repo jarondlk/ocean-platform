@@ -3,6 +3,7 @@ import re
 
 from orchestration.research_intents import SST_INTENTS, normalized, parse_intent
 from orchestration.settings_plan import SettingsProposal
+from orchestration.research_question import conference_question, publication_question_error
 
 
 def default_analysis(options):
@@ -35,10 +36,13 @@ def compatible_analyses(request, catalog, kind, filters=None, calendar=None):
         named = ['qcauto_95pct_3nn_target']
     if named:
         choices = [a for a in choices if a.get('assignment_methods') == named]
+    if conference_question(request.query):
+        choices = [a for a in choices if not publication_question_error(request.query, kind, a.get('recipe_scope', {}))]
     if pin:
         return [a for a in choices if a['analysis_id'] == pin]
     filters = dict(filters or {})
-    if calendar:
+    spec = conference_question(request.query)
+    if calendar and not (spec and spec['kind'] == 'monthly_spatial'):
         filters.update({key: calendar[key] for key in ('time_from', 'time_to')})
     for field in ('assignment_method', 'time_from', 'time_to'):
         if field in filters:
@@ -58,14 +62,14 @@ def protocol_choice(option, request):
     ids = option['protocol_ids']
     pin = request.research_intent.protocol_id if request.research_intent else None
     named = [identity for identity in ids if identity in request.query]
-    requested_id = re.search(r'\bprotocol(?:_id)?\s*(?:[:=]\s*)?([a-f0-9]{64})\b', request.query, re.I)
+    requested_id = re.search(r'(?:\bprotocol(?:_id)?|プロトコル(?:ID)?)\s*(?:[:=：]\s*)?([a-f0-9]{64})(?![a-f0-9])', request.query, re.I)
     if len(named) > 1 or requested_id and requested_id[1].lower() not in ids:
         return None, False
     # Match requested instrument/layout/gene before defaulting. A requested
     # unavailable or conflicting instrument must never become the first protocol.
     fields = {
         'sequencing_method': [name for name in ('MiSeq', 'NextSeq', 'NovaSeq', 'Nanopore', 'PacBio')
-                              if re.search(r'\b' + name + r'\b', request.query, re.I)],
+                              if re.search(r'(?<![a-z0-9_])' + name + r'(?![a-z0-9_])', request.query, re.I)],
         'library_layout': (["paired"] if re.search(r'\bpaired(?:[- ]end)?\b', request.query, re.I) else [])
                           + (["single"] if re.search(r'\bsingle[- ]end\b', request.query, re.I) else []),
         'target_gene': [gene for gene in ('12S', '16S', '18S', 'COI') if re.search(r'\b' + gene + r'\b', request.query, re.I)],
@@ -90,6 +94,13 @@ def exact_catalogue_plan(request, catalog, calendar=None):
         dataset = datasets[0]
         sources = {f: {'enabled': False, 'filters': {}} for f in request.evidence_scope.canonical()['sources']}
         sources['remote_sensing'] = {'enabled': True, 'filters': {'dataset_id': DATASET}}
+        for family, original in request.evidence_scope.canonical()['sources'].items():
+            if original['enabled'] and original['filters']:
+                sources[family]['enabled'] = True
+                for field, value in original['filters'].items():
+                    if field in sources[family]['filters'] and sources[family]['filters'][field] != value:
+                        return None
+                    sources[family]['filters'][field] = value
         plan = SettingsProposal(status='ready', route='sst_coverage',
             explanation='Selected the verified final MUR Miyagi calendar and its coverage limitations.',
             evidence_scope={'version': 1, 'sources': sources}, required_sources=['remote_sensing'],
@@ -118,6 +129,15 @@ def exact_catalogue_plan(request, catalog, calendar=None):
     dataset = published_dataset(option, catalog) if sources['remote_sensing']['enabled'] else None
     if dataset:
         sources['remote_sensing']['filters']['dataset_id'] = dataset
+    # Exact selection must never drop an active explicit source filter. Conflicts
+    # are rejected by the common validator and publication execution checks.
+    for family, original in request.evidence_scope.canonical()['sources'].items():
+        if original['enabled'] and original['filters']:
+            sources[family]['enabled'] = True
+            for field, value in original['filters'].items():
+                if field in sources[family]['filters'] and sources[family]['filters'][field] != value:
+                    return None
+                sources[family]['filters'][field] = value
     plan = SettingsProposal(status='ready', route='published_exact',
         explanation='Use the verified published workflow and its comparable assay protocol.',
         evidence_scope={'version': 1, 'sources': sources}, required_sources=required,

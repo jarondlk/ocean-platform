@@ -170,9 +170,11 @@ export type ContextDocument = {
   plot_areas?: {area_id: string; label: string; west: number; east: number; south: number; north: number; coordinate_uncertainty_km: number | null}[];
   plot_taxa?: {taxon_key: string; species: string}[];
   analysis_recipe?: Record<string, unknown> | null;
+  protocol_definition?: Record<string, unknown> | null;
   covered_source_types?: string[];
   total_rows?: number;
   rows_truncated?: boolean;
+  display_language?: "en" | "ja";
 };
 
 export type CitationAuditRecord = {

@@ -13,8 +13,9 @@ from orchestration.auto_published_settings import (
 )
 from orchestration.statistics_catalog import statistics_catalog
 from retrieval.source_scope import FAMILIES, enabled_sources
+from orchestration.research_question import calendar_years, conference_question, japanese, publication_question_error
 
-PLAN_VERSION = 'auto-settings-v6'
+PLAN_VERSION = 'auto-settings-v7'
 MAX_PLAN_CHARS = 20000
 MAX_CATALOG_CHARS = 36000
 BAY_NAMES = {'O': ('onagawa', '女川'), 'I': ('ishinomaki', '石巻'), 'M': ('mutsu', '陸奥')}
@@ -29,14 +30,16 @@ class PlanningError(ValueError):
 
 def explicit_calendar_range(question):
     """Resolve only unambiguous literal calendar ranges, never relative dates."""
-    if re.search(r'\b(?:except|excluding|outside|before|after|since|until|not)\b', question, re.I):
+    if re.search(r'\b(?:except|excluding|outside|before|after|since|until|not)\b|除外|以外|以前|以降|除く', question, re.I):
         return None
     token = r'((?:19|20)\d{2}(?:-\d{2}-\d{2})?)'
     patterns = [rf'\bfrom\s+{token}\s+(?:to|through)\s+{token}\b(?!-)',
                 rf'\bbetween\s+{token}\s+and\s+{token}\b(?!-)',
                 r'(?<![\w-])((?:19|20)\d{2})\s*[-–—]\s*((?:19|20)\d{2})\b(?!-)',
-                rf'\b(?:in|during)\s+{token}\b(?!-)']
-    years = re.findall(r'(?<!\w)(?:19|20)\d{2}(?!\w)', question)
+                rf'\b(?:in|during)\s+{token}\b(?!-)',
+                r'(?<!\d)((?:19|20)\d{2})年\s*から\s*((?:19|20)\d{2})年',
+                r'(?<!\d)((?:19|20)\d{2})年(?!\s*から)']
+    years = calendar_years(question)
     for pattern in patterns:
         matches = list(re.finditer(pattern, question, re.I))
         if len(matches) != 1:
@@ -60,6 +63,9 @@ def explicit_calendar_range(question):
 def retain_explicit_dates(proposal, request):
     calendar = explicit_calendar_range(request.query)
     if not calendar:
+        return proposal, None
+    if proposal.research_intent and proposal.research_intent.kind == 'monthly_spatial':
+        # This literal year selects the recipe's spatial table, not a new cohort.
         return proposal, None
     scope = proposal.evidence_scope.canonical()
     constraints = list(proposal.constraints)
@@ -120,6 +126,15 @@ def context_choices():
 
 
 def planner_catalog():
+    if not config.AUTO_CATALOG_CACHE_ENABLED:
+        return _uncached_planner_catalog()
+    from orchestration.catalogue_cache import CACHE, catalogue_revision
+    catalog, state = CACHE.get(_uncached_planner_catalog, catalogue_revision)
+    catalog['_cache'] = state
+    return catalog
+
+
+def _uncached_planner_catalog():
     from orchestration.unified import _pg_available
     from retrieval.filter_options import filter_options
     empty = {'version': 1, 'sources': {f: {'enabled': True, 'filters': {}} for f in FAMILIES}}
@@ -163,7 +178,7 @@ def compact_statistics_catalog(catalog):
     return result
 
 
-def _validate_constraints(proposal, request, catalog):
+def _validate_constraints(proposal, request, catalog, *, retained_filters=False):
     scope = proposal.evidence_scope.canonical()
     original = request.evidence_scope.canonical()
     pins = original['sources']
@@ -199,6 +214,8 @@ def _validate_constraints(proposal, request, catalog):
         if not selection['enabled'] and (selection['filters'] or selection.get('analysis_id')):
             raise PlanningError('Disabled sources must not carry hidden constraints.', invoked=True)
         for field, value in selection['filters'].items():
+            if retained_filters and pins[family]['enabled'] and pins[family]['filters'].get(field) == value:
+                continue  # Explicit existing request setting, never an LLM-derived value.
             if field == 'dataset_id' and value == pinned_dataset:
                 continue
             if family == 'remote_sensing' and field == 'dataset_id' and value == linked_dataset:
@@ -240,8 +257,9 @@ def _validate_constraints(proposal, request, catalog):
     if explicit_comparison and (proposal.comparison_kind == 'none' or
                                explicit_comparison['kind'] == 'overlap' and proposal.comparison_kind != 'overlap'):
         raise PlanningError('The plan must preserve the requested comparison or overlap check.', invoked=True)
-    years = re.findall(r'(?<![\w-])(?:19|20)\d{2}(?!\w)', request.query)
-    if years and not any(s['filters'].get('time_from') and s['filters'].get('time_to') or s['filters'].get('sample_id')
+    years = calendar_years(request.query)
+    spatial_year = proposal.research_intent and proposal.research_intent.kind == 'monthly_spatial'
+    if years and not spatial_year and not any(s['filters'].get('time_from') and s['filters'].get('time_to') or s['filters'].get('sample_id')
                          for s in scope['sources'].values() if s['enabled']):
         raise PlanningError('The plan omitted the explicit time range. Specify the dates or revise the plan.', invoked=True)
     for role in ('analysis', 'reliability'):
@@ -255,6 +273,17 @@ def _validate_constraints(proposal, request, catalog):
         if len(options) != 1 or not proposal.research_intent:
             raise PlanningError('Select a current compatible published analysis and workflow.', invoked=True)
         option = options[0]
+        question_error = publication_question_error(request.query, proposal.research_intent.kind, option.get('recipe_scope', {}))
+        if question_error:
+            raise PlanningError(question_error, status='clarification_required', invoked=True)
+        if proposal.research_intent.kind in {'monthly_spatial', 'spatial_temperature'}:
+            from orchestration.research_intents import parse_intent
+            if parse_intent(request.query, option.get('recipe_scope')) != proposal.research_intent.kind:
+                raise PlanningError('The requested spatial taxon or qualifiers are not a supported published question.', status='clarification_required', invoked=True)
+        if japanese(request.query) and proposal.route == 'published_exact':
+            from orchestration.research_intents import parse_intent
+            if parse_intent(request.query, option.get('recipe_scope')) != proposal.research_intent.kind:
+                raise PlanningError('この質問には未対応の条件があります。公表済みの質問と解析条件を選択してください。', status='clarification_required', invoked=True)
         if pinned_analysis and option.get('workflows') and not compatible_analyses(request, catalog, proposal.research_intent.kind):
             raise PlanningError('The selected analysis conflicts with the requested assignment method or workflow.', status='clarification_required', invoked=True)
         if not pinned_analysis:
@@ -308,6 +337,9 @@ def plan_settings(request):
         'explicit_calendar_range': explicit_calendar_range(request.query),
     }
     exact = exact_catalogue_plan(request, catalog, selection_context['explicit_calendar_range'])
+    bypass = bool(exact) and config.AUTO_EXACT_WORKFLOWS_ENABLED
+    if conference_question(request.query) and not exact:
+        raise PlanningError('質問の地域・年・アッセイに一致する公表済み解析がありません。条件を確認してください。', status='clarification_required')
     if exact:
         selection_context['verified_catalogue_selection'] = exact[1]
     pinned = next((a for a in catalog['analyses'] if a['analysis_id'] == selection_context['analysis_id']
@@ -374,23 +406,24 @@ Put every unsupported/unresolved constraint in unresolved_constraints. Never set
         'question': request.query, 'selection_context': selection_context,
         'catalogue': input_catalog, 'response_schema': SettingsProposal.model_json_schema(),
     }, ensure_ascii=False, default=str)
-    try:
-        raw = get_model_runtime().structured_chat(
-            model=config.CHAT_PLANNER_MODEL, prompt=prompt, schema=planner_response_schema(),
-            max_output_tokens=config.CHAT_PLANNER_MAX_OUTPUT_TOKENS,
-            timeout=config.CHAT_PLANNER_TIMEOUT_SECONDS)
-    except Exception as exc:
-        raise PlanningError('The settings planner could not complete the request. Retry or switch to manual.', status='unavailable', invoked=True) from exc
-    try:
-        if len(raw) > MAX_PLAN_CHARS:
-            raise ValueError('Plan size limit')
-        proposal = SettingsProposal.model_validate_json(raw)
-    except (ValueError, TypeError) as exc:
-        raise PlanningError('The planner returned invalid settings. Retry or switch to manual.', invoked=True) from exc
-    if exact:
-        # A complete catalogue question is authoritative even if the LLM omits
-        # the dropdowns, chooses raw retrieval or asks to confirm known defaults.
+    if bypass:
         proposal = exact[0]
+    else:
+        try:
+            raw = get_model_runtime().structured_chat(
+                model=config.CHAT_PLANNER_MODEL, prompt=prompt, schema=planner_response_schema(),
+                max_output_tokens=config.CHAT_PLANNER_MAX_OUTPUT_TOKENS,
+                timeout=config.CHAT_PLANNER_TIMEOUT_SECONDS)
+        except Exception as exc:
+            raise PlanningError('The settings planner could not complete the request. Retry or switch to manual.', status='unavailable', invoked=True) from exc
+        try:
+            if len(raw) > MAX_PLAN_CHARS:
+                raise ValueError('Plan size limit')
+            proposal = SettingsProposal.model_validate_json(raw)
+        except (ValueError, TypeError) as exc:
+            raise PlanningError('The planner returned invalid settings. Retry or switch to manual.', invoked=True) from exc
+        if exact:
+            proposal = exact[0]
     if proposal.status == 'clarification':
         raise PlanningError(proposal.clarification, status='clarification_required', invoked=True)
     try:
@@ -421,11 +454,12 @@ Put every unsupported/unresolved constraint in unresolved_constraints. Never set
                     'research_intent': proposal.research_intent.model_copy(update={'protocol_id': protocol})})
                 defaults = choice_metadata(option, proposal.research_intent.kind, protocol, request, defaulted)
                 proposal = proposal.model_copy(update={'explanation': selection_explanation(defaults)})
-        scope = _validate_constraints(proposal, request, catalog)
-    except PlanningError:
+        scope = _validate_constraints(proposal, request, catalog, retained_filters=bool(exact))
+    except PlanningError as exc:
+        exc.invoked = not bypass
         raise
     except Exception as exc:
-        raise PlanningError('Automatic settings could not be verified. Retry or use manual settings.', status='unavailable', invoked=True) from exc
+        raise PlanningError('Automatic settings could not be verified. Retry or use manual settings.', status='unavailable', invoked=not bypass) from exc
     options = deepcopy(request.model_dump())
     options.update(evidence_scope=scope, k=8, vector_weight=0.6, fts_weight=0.4, rrf_k=60,
                    expand_evidence=proposal.preset != 'measurement', max_linked_sources=5,
@@ -437,6 +471,9 @@ Put every unsupported/unresolved constraint in unresolved_constraints. Never set
                 'retained_user_pins': {family + '.' + field: value for (family, field), value in retained_pins.items()},
                 'resolved_calendar_range': calendar,
                 'catalogue_selection': defaults,
-                'planner_invoked': True, 'planner_model': config.CHAT_PLANNER_MODEL,
+                'planner_invoked': not bypass, 'planner_model': config.CHAT_PLANNER_MODEL if not bypass else None,
+                'deterministic_match': bypass,
+                'catalogue_revision': catalog.get('_cache', {}).get('revision'),
+                'catalogue_cache': catalog.get('_cache', {}).get('state', 'disabled'),
                 'prompt_version': PLAN_VERSION, 'latency_ms': int((time.perf_counter() - start) * 1000)}
     return effective, metadata

@@ -367,9 +367,9 @@ def test_fresh_auto_resolves_all_published_dropdowns_even_when_model_omits_them(
     assert metadata['catalogue_selection']['protocol_defaulted']
     assert 'first published assay protocol' in metadata['explanation']
     assert request.evidence_scope.canonical() == original
-    prompt = json.loads(calls[0]['prompt'].split('INPUT:\n')[1])
-    assert prompt['selection_context']['verified_catalogue_selection']['protocol_id'] == 'b' * 64
-    assert [a['analysis_id'] for a in prompt['catalogue']['analyses']] == ['e' * 64]
+    assert calls == []
+    assert metadata['deterministic_match'] and not metadata['planner_invoked']
+    assert metadata['planner_model'] is None
 
 
 @pytest.mark.parametrize(('qualifier', 'expected'), [

@@ -479,9 +479,11 @@ class ContextDocument(BaseModel):
     plot_areas: List[Dict[str, Any]] = Field(default_factory=list, max_length=1000)
     plot_taxa: List[Dict[str, str]] = Field(default_factory=list, max_length=500)
     analysis_recipe: Optional[Dict[str, Any]] = None
+    protocol_definition: Optional[Dict[str, Any]] = None
     covered_source_types: List[str] = Field(default_factory=list, max_length=4)
     total_rows: int = Field(0, ge=0)
     rows_truncated: bool = False
+    display_language: Literal['en', 'ja'] = 'en'
 
 
 class CitationAuditRecord(BaseModel):

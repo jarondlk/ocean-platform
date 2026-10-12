@@ -675,10 +675,12 @@ def _context_document(doc: Dict[str, Any], context_type: str) -> ContextDocument
         result_rows=doc.get("result_rows", []),
         plot_areas=doc.get("plot_areas", []),
         plot_taxa=doc.get("plot_taxa", []),
+        protocol_definition=doc.get("protocol_definition"),
         analysis_recipe=doc.get("analysis_recipe"),
         covered_source_types=doc.get("covered_source_types", []),
         total_rows=doc.get("total_rows", 0),
         rows_truncated=doc.get("rows_truncated", False),
+        display_language=doc.get("display_language", "en"),
         source_family=doc.get("source_family"),
     )
 

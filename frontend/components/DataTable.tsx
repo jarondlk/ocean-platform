@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 
 type DataTableProps = {
   columns: string[];
+  columnLabels?: Record<string, string>;
   rows: Record<string, unknown>[];
   emptyText?: string;
   rowKeyColumn?: string;
@@ -16,6 +17,7 @@ type DataTableProps = {
 
 export function DataTable({
   columns,
+  columnLabels,
   rows,
   emptyText = "No rows.",
   rowKeyColumn = "sample_id",
@@ -35,7 +37,7 @@ export function DataTable({
         <thead>
           <tr>
             {columns.map((column) => (
-              <th key={column}>{column}</th>
+              <th key={column}>{columnLabels?.[column] || column}</th>
             ))}
           </tr>
         </thead>

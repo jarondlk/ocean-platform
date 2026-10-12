@@ -11,6 +11,7 @@ from typing import Literal
 
 from ingestion.immutable_bundle import canonical_bytes
 from preprocessing.research_recipe import Hash, ResearchModel
+from orchestration.research_question import conference_question, japanese, publication_question_error
 
 
 class ResearchIntent(ResearchModel):
@@ -30,11 +31,13 @@ QUESTIONS = {
         "Show the top 10 fish by detection frequency, with yearly and seasonal changes",
         "Which fish are detected most frequently by year and season",
         "Show top fish detection frequencies",
+        "検出頻度が高い魚の上位10種と、年別・季節別の変化を示してください。",
     ),
     "temperature_comparison": (
         "Compare fish detection frequency in high and low SST conditions and show a representative series",
         "Which fish have contrasting detection frequencies in high and low SST",
         "Show fish temperature comparisons",
+        "高いSSTと低いSSTの条件で魚の検出頻度を比較し、代表的な時系列を示してください。",
     ),
     "monthly_spatial": (
         "Show the best-covered month and sardine detections by area",
@@ -72,13 +75,24 @@ TABLES_BY_INTENT = {
 }
 MAX_CARD_ROWS = 500
 MAX_RESPONSE_BYTES = 2 * 1024 * 1024
+TABLE_JA = {'ranking':'検出頻度順位', 'series':'年別・季節別系列', 'read_ranking':'リード数順位（個体数ではありません）',
+            'temperature_contrasts':'SST条件別の検出頻度', 'temperature_bins':'SST条件の区分',
+            'temperature_series':'SST背景値と検出頻度の系列', 'relative_sst_thresholds':'相対的SST境界値',
+            'month_coverage':'月別の採水範囲', 'spatial':'区域別結果'}
+FIELD_JA = {'species':'学名（種）', 'taxon_key':'学名', 'position':'順位', 'area_id':'区域',
+            'year':'年', 'season':'季節', 'month':'月', 'period':'期間', 'detected':'検出単位数',
+            'eligible':'適格単位数（分母）', 'frequency':'検出頻度', 'low_support':'少数サンプル',
+            'partial_period':'部分期間', 'sampling_status':'採水・検出状態'}
 
 
 def normalized(query):
-    return re.sub(r"\s+", " ", query.casefold().strip()).rstrip(".?!")
+    return re.sub(r"\s+", " ", query.casefold().strip()).rstrip(".?!。？！")
 
 
 def parse_intent(query, recipe=None):
+    spec = conference_question(query)
+    if spec:
+        return spec['kind'] if not recipe or not publication_question_error(query, spec['kind'], recipe) else None
     query = normalized(query)
     if recipe:
         suffix = normalized(
@@ -230,7 +244,8 @@ def render_research(bundle, scope, query, intent=None):
     if not recognized or (intent and recognized != intent.kind):
         return abstain(
             "aggregate_scope_required",
-            "Choose one of the six published research workflows. This question contains an unsupported or conflicting qualifier, so no statistics were inferred.",
+            "この質問には未対応または解析と矛盾する条件があります。公表済みのワークフローと条件を選択してください。"
+            if japanese(query) else "Choose one of the six published research workflows. This question contains an unsupported or conflicting qualifier, so no statistics were inferred.",
         )
     selected = intent or ResearchIntent(kind=recognized)
     return select_research(bundle, scope, query, selected)
@@ -247,9 +262,10 @@ def select_research(bundle, scope, query, intent: ResearchIntent):
     from ingestion.regional_publication import analysis_publication
     accepted = analysis_publication(bundle) if provisional else None
     kind = intent.kind
-    if kind in {"monthly_spatial", "spatial_temperature"} and "sardine" in normalized(
-        query
-    ):
+    error = publication_question_error(query, kind, recipe)
+    if error:
+        return abstain('aggregate_scope_required', '質問の地域・年・順位が公表済み解析と一致しません。条件を確認してください。' if japanese(query) else error)
+    if kind in {"monthly_spatial", "spatial_temperature"}:
         from ingestion.immutable_bundle import digest
         from preprocessing.edna_analysis import taxon_key
 
@@ -257,17 +273,24 @@ def select_research(bundle, scope, query, intent: ResearchIntent):
             r
             for r in bundle["inputs"]["canonical"]["edna_detection"]
             if r.get("species") == "Sardinops melanostictus"
+            and taxon_key(r, "species") is not None
             and digest(taxon_key(r, "species")) == recipe["spatial_taxon_key"]
         ]
         if not matches:
             return abstain(
                 "aggregate_scope_required",
+                "この解析には種として同定されたマイワシ（Sardinops melanostictus）の根拠がありません。Sardinops 属の未同定種をマイワシに置き換えることはできません。検出地域も生物学的な不在も結論できません。"
+                if japanese(query) else
                 "This cohort has no species-resolved Sardinops melanostictus evidence. Unidentified Sardinops records cannot establish Japanese-sardine detections or absence. A genus-level analysis needs a separately labelled recipe; no taxon was substituted."
                 if provisional
                 else "This analysis does not establish Sardinops melanostictus as its spatial taxon. Select the reviewed sardine analysis; no taxon was substituted.",
             )
     failure = check_scope(bundle, scope, kind)
     if failure:
+        if japanese(query):
+            failure.answer = ('必要なソースが無効です。選択した設定を保持しました。必要なソースを有効にしてください。'
+                              if failure.reason == 'source_disabled' else
+                              '公表済み解析と選択したフィルター・根拠が一致しません。設定を保持しました。一致する解析を選択するか、矛盾する条件を明示的に変更してください。')
         return failure
     if provisional and kind in {"distribution_change", "follow_through"}:
         return abstain(
@@ -317,7 +340,7 @@ def select_research(bundle, scope, query, intent: ResearchIntent):
         if kind in SST_INTENTS
         else ["edna_metabarcoding"]
     )
-    from preprocessing.edna_analysis import taxon_key
+    from preprocessing.edna_analysis import taxon_key, protocol as assay_protocol
     from ingestion.immutable_bundle import digest
 
     requested_keys = {
@@ -334,6 +357,8 @@ def select_research(bundle, scope, query, intent: ResearchIntent):
             key = digest(lineage)
             if key in requested_keys:
                 taxa[key] = detection["species"]
+    protocol_definition = next((assay_protocol(a) for a in bundle['inputs']['canonical']['edna_assay']
+                                if digest(assay_protocol(a)) == protocol), {})
     for table, rows in rows_by_table.items():
         # Exact published fields; source lineage arrays remain in the full bundle.
         hidden = {
@@ -381,7 +406,8 @@ def select_research(bundle, scope, query, intent: ResearchIntent):
         documents.append(
             {
                 "id": doc_id,
-                "title": ("Miyagi regional analysis: " if accepted else "Provisional demo: " if provisional else "") + table.replace("_", " ").capitalize(),
+                "title": ("宮城県の運用公表解析：" if accepted else "暫定デモ：" if provisional else "公表済み解析：") + TABLE_JA.get(table, table)
+                if japanese(query) else ("Miyagi regional analysis: " if accepted else "Provisional demo: " if provisional else "") + table.replace("_", " ").capitalize(),
                 "analysis_id": identity,
                 "table": table,
                 "analysis_type": "regional_frequency" if accepted else "provisional_demo"
@@ -393,6 +419,7 @@ def select_research(bundle, scope, query, intent: ResearchIntent):
                 "result_rows": featured,
                 "plot_areas": plot_areas,
                 "analysis_recipe": recipe,
+                "protocol_definition": protocol_definition,
                 "limitations": bundle["manifest"].get("limitations", []),
                 "publication_status": {"operationally_accepted": bool(accepted),
                                        "provisional": provisional,
@@ -443,31 +470,47 @@ def select_research(bundle, scope, query, intent: ResearchIntent):
                 "valid_days",
                 "missing_days",
                 "supported",
+                "supported_strata",
+                "low_support",
+                "partial_period",
                 "sampling_status",
             )
             if any(key in r for r in featured)
         ]
         if featured and columns:
             summary = [
-                "| " + " | ".join(columns) + " |",
+                "| " + " | ".join(FIELD_JA.get(c, c) if japanese(query) else c for c in columns) + " |",
                 "| " + " | ".join("---" for _ in columns) + " |",
             ]
             summary += [
                 "| "
                 + " | ".join(
-                    _value(
+                    (f"{100 * row[key]:.2f}%" if key == 'frequency' and isinstance(row.get(key), (int, float)) else
+                     '算出不可・利用不可' if japanese(query) and row.get(key) is None else _value(
                         taxa.get(row.get(key), row.get(key))
                         if key == "taxon_key"
                         else row.get(key)
-                    )
+                    ))
                     for key in columns
                 )
                 + " |"
                 for row in featured[:10]
             ]
+            access_note = ""
+            if len(featured) > 10:
+                access_note = (
+                    "\n\n全行は下の結果表で確認できます。分類群・期間の選択とページ送りを使用してください。"
+                    if japanese(query) else
+                    "\n\nEvery row is available in the result cards below. Use the taxon/period selectors and pagination."
+                )
+            if table == 'series':
+                periods = list(dict.fromkeys(str(row['period']) for row in featured))
+                access_note += ("\n\n収録期間：" if japanese(query) else "\n\nIncluded periods: ") + ', '.join(periods)
             sections.append(
-                f"{table.replace('_', ' ').capitalize()} ({len(rows)} published rows; first {min(10, len(rows))} shown):\n\n"
+                (f"{TABLE_JA.get(table, table)}（公表済み {len(rows)} 行、プレビュー {min(10, len(featured))} 行）:\n\n"
+                 if japanese(query) else f"{table.replace('_', ' ').capitalize()} ({len(rows)} published rows; first {min(10, len(featured))} previewed):\n\n")
                 + "\n".join(summary)
+                + access_note
                 + f"\n\n[{doc_id}]"
             )
         elif not featured:
@@ -482,6 +525,7 @@ def select_research(bundle, scope, query, intent: ResearchIntent):
         if kind in SST_INTENTS:
             explanation += " SST uses final MUR 04.1 only: 0.05-degree subsampled regional foundation analysis with cosine-latitude grid-point weighting, not native coastal/sample-point temperatures. Low/high thresholds use each region/season's supported daily SST over the displayed study years, not a long-term climatology. Sampling-time links use 24 hours, extended to 48 hours only if over 20% are unmatched; matched and all-eDNA denominators differ. Missing or interim dates remain explicit final-series gaps; nearby-date links retain their actual timestamps. These comparisons show association, not weather causing abundance changes."
             explanation += f" Final-series gaps: {', '.join(g['day'] for g in bundle['inputs']['period_preview']['final_series_gaps']) or 'none'}."
+            explanation += " The aggregate high-minus-low difference uses all matched units. The standardized difference equally weights supported area-season strata, and selects the representative series. These two descriptive quantities can have opposite signs; disclose the supported-stratum count and do not infer a general temperature response."
     elif kind in SST_INTENTS:
         product = bundle["inputs"]["sst_panel"]["definition"]["product_registry"][
             "definition"
@@ -506,6 +550,22 @@ def select_research(bundle, scope, query, intent: ResearchIntent):
             explanation += f" Low SST ≤{_value(cuts['low_max'])}°C; high SST ≥{_value(cuts['high_min'])}°C ({_escape(recipe['temperature_partition']['kind'])}). The comparison retains the fixed Q1 top-ten fish list. Representative selection uses equally weighted supported area-season contrasts."
     for document in documents:
         document['interpretation_limits'] = explanation
+        document['display_language'] = 'ja' if japanese(query) else 'en'
+    if japanese(query):
+        title = f"公表済み解析：{_escape(recipe['region_id'])}、{recipe['time_from']}〜{recipe['time_to']}（{recipe['calendar']}）。分類手法・アッセイは混合しません。"
+        explanation = ("検出頻度 = 検出された単位数 / 適格な単位数。単位は独立性が確定していない単一出現記録の代理単位です。" if provisional else "検出頻度 = 検出された物理サンプル数 / 適格な物理サンプル数。")
+        explanation += " 頻度は百分率で表示します。分母0は選択したプロトコルの適格単位がなく、頻度は算出できません。0/nは選択手法での記録上の非検出であり、生物学的な不在ではありません。既知コントロール、未解決の重複、空・不正な表は除外されます。少数サンプル・部分季節の注意表示を保持します。学名と分類階級を保持し、未検証の和名は補いません。リード数は魚の個体数ではありません。"
+        explanation += " JSTの季節はDJF（12〜2月）、MAM（3〜5月）、JJA（6〜8月）、SON（9〜11月）です。12月は翌年のDJFに含め、研究期間の端の部分季節も示します。頻度は個体数・占有率・因果関係を示しません。"
+        explanation += f" アッセイID：{protocol}。分類手法：{recipe['assignment_method']}。"
+        if provisional:
+            explanation += " 暫定的な運用公表であり、独立した科学的承認や提供者の推薦を意味しません。地域矩形から沿岸内の分布を推定できません。"
+        if kind in SST_INTENTS:
+            explanation += " SSTの原文の解像度・照合条件・欠測・非因果的な解釈の制限を以下に保持します。\n\n" + documents[0]['interpretation_limits']
+    protocol_label = ' · '.join(str(protocol_definition.get(key) or 'unspecified') for key in
+                              ('target_gene', 'sequencing_method', 'library_layout'))
+    explanation += ('\n\nアッセイプロトコル：' if japanese(query) else '\n\nAssay protocol: ') + _escape(protocol_label)
+    explanation += ('。プライマー・PCR条件と完全なプロトコル定義は、結果表の「機器・プライマー・PCR条件」で確認できます。'
+                    if japanese(query) else '. The result cards retain the complete primer/PCR identity under “Instrument, primer and PCR definition”.')
     answer = title + "\n\n" + explanation + "\n\n" + "\n\n".join(sections)
     if (
         len(canonical_bytes({"answer": answer, "documents": documents}))
