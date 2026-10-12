@@ -11,7 +11,9 @@ to the canonical domain.
 See [`deploy/gcp/README.md`](../deploy/gcp/README.md) for templates and current
 operations.
 
-Current release, verified 2026-10-09 JST: **v0.7.6** adds opt-in AUTO planning,
+Current conference patch, verified 2026-10-12 JST: [deployment and rollback](CONFERENCE_2026-10-12_DEPLOYMENT.md) record source `3738391`, revision `ocean-platform-conference1012`, exact images and preserved configuration. It adds bounded Japanese routing, deterministic exact selection and complete localized result controls. Application metadata remains 0.7.6; use explicit MiSeq and the rehearsed manual path for the conference. No production schema/scientific/model migration or paid model generation occurred.
+
+Base release, verified 2026-10-09 JST: **v0.7.6** adds opt-in AUTO planning,
 fresh published workflow/protocol defaults and security hardening.
 [Operations](RELEASE_0.7.6_OPERATIONS.md) records exact source/images, source and
 runtime checks, restore-tested private backup, preservation and rollback.
