@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef } from "react";
+import { useId, useRef, useState } from "react";
 
 export type ResearchArea = {area_id: string; label: string; west: number; east: number; south: number; north: number; coordinate_uncertainty_km: number | null};
 type Row = Record<string, unknown>;
@@ -56,10 +56,12 @@ export function ResearchAreaPlot({ rows, areas, onSelect, exportMetadata }: {row
   </figure>;
 }
 
-function Series({ rows, field, label, onSelect, exportMetadata }: {rows: Row[]; field: string; label: string; exportMetadata?: ExportMetadata; onSelect: (id: string) => void}) {
+function Series({ rows, field, label, onSelect, exportMetadata, language = "en" }: {rows: Row[]; field: string; label: string; exportMetadata?: ExportMetadata; onSelect: (id: string) => void; language?: "en" | "ja"}) {
   const svg = useRef<SVGSVGElement>(null);
+  const ja = language === "ja";
+  const pointLabel = (row: Row) => `${row.period || row.year}: ${label} ${row[field]}; ${ja ? "検出単位数" : "detected"} ${row.detected}, ${ja ? "適格単位数（分母）" : "eligible"} ${row.eligible}, SST ${ja ? "照合済み" : "matched"} ${row.sst_matched ?? (ja ? "利用不可" : "unavailable")}; ${ja ? "少数サンプル" : "low support"} ${row.low_support ?? "unavailable"}; ${ja ? "部分期間" : "partial period"} ${row.partial_period ?? "unavailable"}`;
   const values = rows.map(r => r[field]).filter((v): v is number => typeof v === "number" && Number.isFinite(v));
-  if (!values.length) return <p>{label}: no observed values in this page.</p>;
+  if (!values.length) return <p>{label}: {ja ? "この系列には利用可能な値がありません。" : "no observed values in this group."}</p>;
   const min = field === "frequency" ? 0 : Math.min(...values)-1, max = field === "frequency" ? 1 : Math.max(...values)+1;
   const x = (index: number) => 50+index/Math.max(1,rows.length-1)*640, y = (value: number) => 175-(value-min)/(max-min)*140;
   const segments: string[][] = [[]];
@@ -68,9 +70,9 @@ function Series({ rows, field, label, onSelect, exportMetadata }: {rows: Row[]; 
     <path d="M50,30 V175 H690" fill="none" stroke="#94a3b8" />
     <text x="3" y="38">{max.toFixed(1)}</text><text x="3" y="175">{min.toFixed(1)}</text>
     {segments.map((points,index) => points.length > 1 ? <polyline key={index} points={points.join(" ")} fill="none" stroke={field === "frequency" ? "#2563eb" : "#0f766e"} strokeWidth="2" /> : null)}
-    {rows.map((row,index) => typeof row[field] === "number" && Number.isFinite(row[field]) ? <circle key={String(row.result_id)} cx={x(index)} cy={y(row[field] as number)} r="4" fill={field === "frequency" ? "#2563eb" : "#0f766e"} stroke={row.low_support ? "#b45309" : undefined} strokeWidth={row.low_support ? 2 : undefined} tabIndex={0} role="button" aria-label={`${row.period || row.year}: ${label} ${row[field]}; detected ${row.detected}, eligible ${row.eligible}, SST matched ${row.sst_matched ?? "unavailable"}; low support ${row.low_support ?? "unavailable"}; partial period ${row.partial_period ?? "unavailable"}`} onClick={() => onSelect(String(row.result_id))} onKeyDown={event => { if (["Enter"," "].includes(event.key)) { event.preventDefault(); onSelect(String(row.result_id)); } }}><title>{String(row.period || row.year)} · {label} {String(row[field])} · {String(row.detected)}/{String(row.eligible)} · SST matched {String(row.sst_matched ?? "unavailable")} · low support {String(row.low_support ?? "unavailable")} · partial period {String(row.partial_period ?? "unavailable")}</title></circle> : null)}
+    {rows.map((row,index) => typeof row[field] === "number" && Number.isFinite(row[field]) ? <circle key={String(row.result_id)} cx={x(index)} cy={y(row[field] as number)} r="4" fill={field === "frequency" ? "#2563eb" : "#0f766e"} stroke={row.low_support ? "#b45309" : undefined} strokeWidth={row.low_support ? 2 : undefined} tabIndex={0} role="button" aria-label={pointLabel(row)} onClick={() => onSelect(String(row.result_id))} onKeyDown={event => { if (["Enter"," "].includes(event.key)) { event.preventDefault(); onSelect(String(row.result_id)); } }}><title>{pointLabel(row)}</title></circle> : null)}
     <text x="50" y="205">{String(rows[0].period || rows[0].year)}</text><text x="610" y="205">{String(rows[rows.length-1].period || rows[rows.length-1].year)}</text>
-  </svg><button className="button secondary-button" type="button" onClick={() => exportFigure(svg.current, `${label} · loaded published rows; gaps unavailable, orange low support`, rows, exportMetadata)}>Export {label} SVG</button></div>;
+  </svg><button className="button secondary-button" type="button" onClick={() => exportFigure(svg.current, `${label} · loaded published rows; gaps unavailable, orange low support`, rows, exportMetadata)}>{ja ? `${label}をSVGで保存` : `Export ${label} SVG`}</button></div>;
 }
 
 export function periodOrder(row: Row): string {
@@ -78,11 +80,18 @@ export function periodOrder(row: Row): string {
   return value.replace(/-(DJF|MAM|JJA|SON)$/, (_, season: string) => ({DJF: "-01", MAM: "-03", JJA: "-06", SON: "-09"}[season] || ""));
 }
 
-export function ResearchSeriesPlot({ rows, taxa, onSelect, exportMetadata }: {rows: Row[]; exportMetadata?: ExportMetadata; taxa: {taxon_key: string; species: string}[]; onSelect: (id: string) => void}) {
+export function ResearchSeriesPlot({ rows, taxa, onSelect, exportMetadata, language = "en" }: {rows: Row[]; exportMetadata?: ExportMetadata; taxa: {taxon_key: string; species: string}[]; onSelect: (id: string) => void; language?: "en" | "ja"}) {
+  const [selectedGroup, setSelectedGroup] = useState("");
+  const ja = language === "ja";
   const groups = new Map<string,Row[]>();
   rows.forEach(row => { const key = [row.protocol_id,row.taxon_key,row.area_id,row.season,row.period_kind].join("/"); groups.set(key,[...(groups.get(key)||[]),row]); });
-  return <section aria-label="Published frequency and SST series"><p>Charts show the loaded page, with separate protocol, species, area and period groups. Missing values break lines; orange outlines flag low sample support; point details include partial-period flags. Temperatures have a separate axis and matched denominator.</p>
-    {groups.size > 6 ? <p role="status">Showing the first six series groups. Select a species, protocol or area to inspect another group.</p> : null}
-    {[...groups.entries()].slice(0,6).map(([key,group]) => { const ordered = [...group].sort((a,b) => periodOrder(a).localeCompare(periodOrder(b))); const first = ordered[0]; return <figure key={key}><figcaption>{taxa.find(t => t.taxon_key === first.taxon_key)?.species || String(first.taxon_key)} · {String(first.area_id || "Regional")} · {String(first.season || first.period_kind)}</figcaption><Series rows={ordered} field="frequency" label="Detection frequency (0–1)" onSelect={onSelect} exportMetadata={exportMetadata} />{ordered.some(r => "sample_time_sst_mean_celsius" in r) ? <Series rows={ordered} field="sample_time_sst_mean_celsius" label="Sample-time SST context (°C)" onSelect={onSelect} exportMetadata={exportMetadata} /> : null}</figure>; })}
+  const entries = [...groups.entries()];
+  const selectedExists = groups.has(selectedGroup);
+  const displayed = selectedExists ? entries.filter(([key]) => key === selectedGroup) : entries.slice(0,6);
+  const periodLabel: Record<string,string> = {year:"年別",season:"季節別",month:"月別"};
+  const groupLabel = (row: Row) => `${taxa.find(t => t.taxon_key === row.taxon_key)?.species || row.taxon_key} · ${row.area_id || (ja ? "地域" : "Regional")} · ${row.season || (ja ? periodLabel[String(row.period_kind)] || row.period_kind : row.period_kind)}`;
+  return <section aria-label={ja ? "公表済み検出頻度とSST系列" : "Published frequency and SST series"}><p>{ja ? "プロトコル・種・区域・期間を区別し、読み込んだ結果を表示します。欠測値で線を区切ります。橙色は少数サンプルの注意表示です。点の詳細には部分期間の表示を保持します。SSTには別の軸と照合済み分母を使用します。" : "Charts show loaded results, with separate protocol, species, area and period groups. Missing values break lines; orange outlines flag low sample support; point details include partial-period flags. Temperatures have a separate axis and matched denominator."}</p>
+    {groups.size > 6 ? <><p role="status">{selectedExists ? (ja ? "選択した系列を表示しています。" : "Showing the selected series group.") : (ja ? "最初の6系列を表示しています。選択欄からすべての系列を確認できます。" : "Showing the first six series groups. Every group is available in the selector.")}</p><label className="control-label">{ja ? "表示する系列" : "Series group"}<select className="field" value={selectedExists ? selectedGroup : ""} onChange={event => setSelectedGroup(event.target.value)}><option value="">{ja ? "最初の6系列" : "First six groups"}</option>{entries.map(([key,group]) => <option key={key} value={key}>{groupLabel(group[0])}</option>)}</select></label></> : null}
+    {displayed.map(([key,group]) => { const ordered = [...group].sort((a,b) => periodOrder(a).localeCompare(periodOrder(b))); const first = ordered[0]; return <figure key={key}><figcaption>{groupLabel(first)}</figcaption><Series rows={ordered} field="frequency" label={ja ? "検出頻度（0〜1）" : "Detection frequency (0–1)"} onSelect={onSelect} exportMetadata={exportMetadata} language={language} />{ordered.some(r => "sample_time_sst_mean_celsius" in r) ? <Series rows={ordered} field="sample_time_sst_mean_celsius" label={ja ? "採水時のSST背景値（°C）" : "Sample-time SST context (°C)"} onSelect={onSelect} exportMetadata={exportMetadata} language={language} /> : null}</figure>; })}
   </section>;
 }

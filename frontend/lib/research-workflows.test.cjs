@@ -102,6 +102,52 @@ test('chat chart selection opens the exact row on its table page without privile
   } finally {await act(() => renderer?.unmount());}
 });
 
+test('conference Japanese selectors expose all ten taxa and every temporal group beyond six charts', async () => {
+  let renderer, selected;
+  const taxa = Array.from({length:10}, (_,i) => ({taxon_key:`t${i}`,species:`Latin taxon ${i}`}));
+  const rows = taxa.flatMap(t => ['year','season'].map(kind => ({protocol_id:'p',taxon_key:t.taxon_key,
+    period_kind:kind,period:kind === 'year' ? '2023' : '2023-MAM',result_id:`${t.taxon_key}-${kind}`,
+    detected:1,eligible:3,frequency:1/3,low_support:true,partial_period:false})));
+  try {
+    await act(() => {renderer = create(React.createElement(ResearchResultCards,{documents:[{
+      doc_id:'conference',title:'年別・季節別系列',display_language:'ja',analysis_type:'regional_frequency',
+      table:'series',result_rows:rows,total_rows:rows.length,plot_taxa:taxa}]}));});
+    const group = renderer.root.findAllByType('select').find(s => s.children.some(c => c.props?.value?.includes('/t9/')));
+    assert.equal(group.children.length,21);
+    await act(() => group.props.onChange({target:{value:group.children.at(-1).props.value}}));
+    assert.equal(renderer.root.findAllByType('svg').length,1);
+    await act(() => renderer.root.findByType('circle').props.onClick());
+    assert(renderer.root.findByType('pre').children.join('').includes('t9-season'));
+    const taxon = renderer.root.findAllByType('select').find(s => s.children.some(c => c.props?.value === 't9'));
+    assert.equal(taxon.children.length,11);
+    await act(() => taxon.props.onChange({target:{value:'t9'}}));
+    const period = renderer.root.findAllByType('select').find(s => s.children.some(c => c.props?.value === 'season'));
+    await act(() => period.props.onChange({target:{value:'season'}}));
+    const cells = renderer.root.findAllByType('td').map(c => c.children.join(''));
+    assert(cells.includes('Latin taxon 9') && cells.includes('33.33%'));
+    assert.equal(renderer.root.findAllByType('tr').length,2);
+    await act(() => renderer.root.findByType('circle').props.onClick());
+    assert(renderer.root.findByType('pre').children.join('').includes('t9-season'));
+    assert(renderer.root.findAllByType('th').some(c => c.children.join('') === '適格単位数（分母）'));
+    assert.equal(renderer.root.findAllByType('a').length,0);
+  } finally {await act(() => renderer?.unmount());}
+});
+
+test('SST contrasts disclose aggregate and supported-stratum differences with their support count', async () => {
+  let renderer;
+  try {
+    await act(() => {renderer = create(React.createElement(ResearchResultCards,{documents:[{
+      doc_id:'sst',title:'SST contrasts',analysis_type:'regional_frequency',table:'temperature_contrasts',
+      result_rows:[{result_id:'contrast',supported_strata:1,difference_percentage_points:-14.685,
+        standardized_difference_percentage_points:60,representative:true}]}]}));});
+    const headings = renderer.root.findAllByType('th').map(c => c.children.join(''));
+    assert(headings.includes('Supported area-season strata'));
+    assert(headings.includes('Aggregate high − low (percentage points)'));
+    assert(headings.includes('Mean supported-stratum difference (percentage points)'));
+    assert(renderer.root.findAllByType('p').some(p => p.children.join('').includes('opposite signs')));
+  } finally {await act(() => renderer?.unmount());}
+});
+
 test('researcher decisions and administrator application are distinct UI actions', async () => {
   for (const [role,state] of [['researcher','draft'],['admin','approved'],['admin','draft'],['viewer','approved']]) {
     let renderer;

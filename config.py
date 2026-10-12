@@ -457,6 +457,8 @@ OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 EMBEDDING_MODEL = os.environ.get("EMBEDDING_MODEL", "nomic-embed-text")
 CHAT_MODEL      = os.environ.get("CHAT_MODEL", "qwen2.5:14b-instruct")
 AUTO_SETTINGS_ENABLED = os.environ.get("AUTO_SETTINGS_ENABLED", "true").strip().lower() == "true"
+AUTO_EXACT_WORKFLOWS_ENABLED = os.environ.get("AUTO_EXACT_WORKFLOWS_ENABLED", "true").strip().lower() == "true"
+AUTO_CATALOG_CACHE_ENABLED = os.environ.get("AUTO_CATALOG_CACHE_ENABLED", "false").strip().lower() == "true"
 CHAT_PLANNER_MODEL = os.environ.get("CHAT_PLANNER_MODEL", CHAT_MODEL).strip()
 CHAT_PLANNER_TIMEOUT_SECONDS = _environment_int("CHAT_PLANNER_TIMEOUT_SECONDS", 30, minimum=1)
 CHAT_PLANNER_MAX_OUTPUT_TOKENS = _environment_int("CHAT_PLANNER_MAX_OUTPUT_TOKENS", 1600, minimum=1)

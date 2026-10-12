@@ -52,7 +52,7 @@ def analysis_choices():
             'limitations': bundle['manifest'].get('limitations', []),
             'recipe_scope': {key: recipe[key] for key in
                              ('region_id', 'time_from', 'time_to', 'rank', 'spatial_taxon_key',
-                              'sst_panel_id', 'endpoint_from', 'endpoint_to') if key in recipe},
+                              'sst_panel_id', 'endpoint_from', 'endpoint_to', 'spatial_year') if key in recipe},
         }
         options.append(option)
     return options

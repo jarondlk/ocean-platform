@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "deadline_jst": "2026-10-13T17:00:00+09:00",
+  "application_baseline": "784cd5c129b587e046bbcf68abf7d8e92d9a6db9",
+  "analysis_id": "9312a7e12211be66f58f17a1e57f2ce0f581da427d9074cada8787657af6d56b",
+  "protocol_id": "91e3ce341d150bdab5bc156775bd9257fa6a2833e3b53194841fc558c1dddfa6",
+  "assignment_method": "qcauto_95pct_3nn_target",
+  "canonical_source_sha256": "334a1f0ebb84085e5f0f1163a90a085a7e721d0c0202ee2ae69014efd8924458",
+  "artifact_registration": {
+    "namespace": "provisional-demos",
+    "receipt_sha256": "03eab6d6c49309b1e65d13c46a418bb5f9746e69b527e574bef95baebd5efed1",
+    "manifest_sha256": "70b012876240a879ae1488006062cb464b99dd0e7489abc75d7eea2d3bd50ad0",
+    "recipe_sha256": "c52d53a89bae7d36732eb293660730df6e221d492f9cfd4ba97f6408692c5fe2",
+    "verified_date_jst": "2026-10-11",
+    "verification_scope": "sealed_registered_artifact_not_live_chat_acceptance"
+  },
+  "expected_protocol_units": {"4c26b544": 9, "4f79dc79": 56, "91e3ce34": 39},
+  "expected_miseq_year_units": {"2020": 0, "2021": 3, "2022": 26, "2023": 10},
+  "publication_id": "d34da58bbb39bb3675d0d0654d56ab13de46b078605df0fe52cb8f8ade698952",
+  "species_spatial_status": "unsupported_retained_species_evidence",
+  "organizer_examples": {
+    "otsuchi_five_taxa": {
+      "status": "original_unrecovered_use_labelled_miyagi_sample_replacement",
+      "required_species": 3, "required_genera": 2,
+      "replacement": "five_illustrated_assignment_labels_from_one_complete_assay",
+      "selection": "earliest_eligible_MiSeq_sample_then_highest_source_reads_within_rank",
+      "complete_assignment_counts": {"species": 28, "genus": 12, "family": 5, "order": 1},
+      "original_reproduction_claim": false
+    },
+    "sst_frequency": {
+      "status": "original_unverified_use_verified_october_9_MiSeq_receipt",
+      "receipt_origin": "v0.7.6_isolated_QA_2026-10-09_case_8",
+      "workflow": "temperature_comparison",
+      "representative_species": "Ernogrammus hexagrammus",
+      "exact_rows_and_graph_replayed": true,
+      "original_reproduction_claim": false
+    }
+  },
+  "review": {
+    "status": "agent_factual_and_interpretation_review_complete",
+    "basis": "user_delegated_judgment_2026-10-11",
+    "decision": "descriptive_recorded_demo_accepted_with_stated_limits",
+    "independent_scientific_approval": false
+  },
+  "fresh_model_validation": false,
+  "independent_scientific_approval": false
+}
