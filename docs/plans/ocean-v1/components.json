@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "release": "1.0.0",
+  "implementation_authorized": false,
+  "components": [
+    {
+      "id": "C01",
+      "title": "Scientific scope validation",
+      "file": "components/C01-scientific-scope.md",
+      "dependencies": []
+    },
+    {
+      "id": "C02",
+      "title": "Derived scientific evidence",
+      "file": "components/C02-derived-scientific-evidence.md",
+      "dependencies": [
+        "C01"
+      ]
+    },
+    {
+      "id": "C03",
+      "title": "Retention integrity",
+      "file": "components/C03-retention-integrity.md",
+      "dependencies": []
+    },
+    {
+      "id": "C04",
+      "title": "Authentication responsiveness",
+      "file": "components/C04-authentication-responsiveness.md",
+      "dependencies": []
+    },
+    {
+      "id": "C05",
+      "title": "Retrieval correctness",
+      "file": "components/C05-retrieval-correctness.md",
+      "dependencies": []
+    },
+    {
+      "id": "C06",
+      "title": "Model runtime contract",
+      "file": "components/C06-model-runtime.md",
+      "dependencies": []
+    },
+    {
+      "id": "C07",
+      "title": "Export safety",
+      "file": "components/C07-export-safety.md",
+      "dependencies": []
+    },
+    {
+      "id": "C08",
+      "title": "Catalogue contracts and fixtures",
+      "file": "components/C08-catalogue-contracts.md",
+      "dependencies": [
+        "C01"
+      ]
+    },
+    {
+      "id": "C09",
+      "title": "Immutable catalogue snapshots",
+      "file": "components/C09-catalogue-snapshots.md",
+      "dependencies": [
+        "C03",
+        "C08"
+      ]
+    },
+    {
+      "id": "C10",
+      "title": "CTD and metagenome adapters",
+      "file": "components/C10-ctd-metagenome-adapters.md",
+      "dependencies": [
+        "C02",
+        "C09"
+      ]
+    },
+    {
+      "id": "C11",
+      "title": "SST adapter",
+      "file": "components/C11-sst-adapter.md",
+      "dependencies": [
+        "C02",
+        "C09"
+      ]
+    },
+    {
+      "id": "C12",
+      "title": "eDNA adapter",
+      "file": "components/C12-edna-adapter.md",
+      "dependencies": [
+        "C01",
+        "C09"
+      ]
+    },
+    {
+      "id": "C13",
+      "title": "Analyses statistics metadata relationships",
+      "file": "components/C13-scientific-catalogue-sections.md",
+      "dependencies": [
+        "C01",
+        "C02",
+        "C10",
+        "C11",
+        "C12"
+      ]
+    },
+    {
+      "id": "C14",
+      "title": "Catalogue service and tools",
+      "file": "components/C14-catalogue-service-tools.md",
+      "dependencies": [
+        "C04",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C12",
+        "C13"
+      ]
+    },
+    {
+      "id": "C15",
+      "title": "New application shell",
+      "file": "components/C15-application-shell.md",
+      "dependencies": [
+        "C08"
+      ]
+    },
+    {
+      "id": "C16",
+      "title": "Complete catalogue browser",
+      "file": "components/C16-catalogue-browser.md",
+      "dependencies": [
+        "C14",
+        "C15"
+      ]
+    },
+    {
+      "id": "C17",
+      "title": "Investigation persistence",
+      "file": "components/C17-investigation-persistence.md",
+      "dependencies": [
+        "C03",
+        "C04",
+        "C08",
+        "C09"
+      ]
+    },
+    {
+      "id": "C18",
+      "title": "Chat and Workspace interface",
+      "file": "components/C18-chat-workspace.md",
+      "dependencies": [
+        "C15",
+        "C16",
+        "C17"
+      ]
+    },
+    {
+      "id": "C19",
+      "title": "Agent exploration controller",
+      "file": "components/C19-agent-controller.md",
+      "dependencies": [
+        "C01",
+        "C06",
+        "C14",
+        "C17"
+      ]
+    },
+    {
+      "id": "C20",
+      "title": "Durable research execution",
+      "file": "components/C20-durable-execution.md",
+      "dependencies": [
+        "C04",
+        "C17",
+        "C19"
+      ]
+    },
+    {
+      "id": "C21",
+      "title": "Evidence and answer synthesis",
+      "file": "components/C21-evidence-synthesis.md",
+      "dependencies": [
+        "C05",
+        "C06",
+        "C07",
+        "C13",
+        "C19",
+        "C20"
+      ]
+    },
+    {
+      "id": "C22",
+      "title": "Experiment proposals and frozen exports",
+      "file": "components/C22-experiment-proposals.md",
+      "dependencies": [
+        "C01",
+        "C07",
+        "C09",
+        "C17",
+        "C21"
+      ]
+    },
+    {
+      "id": "C23",
+      "title": "Isolated Python execution",
+      "file": "components/C23-python-sandbox.md",
+      "dependencies": [
+        "C22"
+      ]
+    },
+    {
+      "id": "C24",
+      "title": "Dedicated GCP worker configuration",
+      "file": "components/C24-gcp-worker-configuration.md",
+      "dependencies": [
+        "C20",
+        "C23"
+      ]
+    },
+    {
+      "id": "C25",
+      "title": "Experimental Workspace interface",
+      "file": "components/C25-experimental-workspace.md",
+      "dependencies": [
+        "C18",
+        "C22",
+        "C23",
+        "C24"
+      ]
+    },
+    {
+      "id": "C26",
+      "title": "System acceptance and evaluation",
+      "file": "components/C26-system-acceptance.md",
+      "dependencies": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15",
+        "C16",
+        "C17",
+        "C18",
+        "C19",
+        "C20",
+        "C21",
+        "C22",
+        "C23",
+        "C24",
+        "C25"
+      ]
+    },
+    {
+      "id": "C27",
+      "title": "Release preparation and rollback",
+      "file": "components/C27-release-readiness.md",
+      "dependencies": [
+        "C26"
+      ]
+    }
+  ]
+}
