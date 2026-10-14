@@ -189,3 +189,30 @@ requires an exact explicitly inspected private container identity in CI.
 All 59 C05 baseline tests pass; independent read-only review reproduces its
 known targets and verifies P00. C05 is ready to start after explicit selection;
 no C05 application work, production index rebuild or deployment occurred.
+
+### C05 selection — 2026-10-15 JST
+
+The user explicitly started C05 and authorized subagents or other services when
+needed. Local embedding-identity and metagenome-mapping repairs, synthetic
+regressions and verified disposable PostgreSQL acceptance are authorized.
+Completed P00/C01–C04 and older unrelated work are preserved. No production
+reindex, real scientific regeneration, paid/provider calls, deployment or
+automatic repository delivery is selected by this component request.
+
+### C05 local acceptance — 2026-10-15 JST
+
+Both PostgreSQL vector entry points bind the actual query provider/model/dimension.
+Unidentified or incompatible vectors cannot rank; scoped independent FTS remains
+available. Canonical Kraken/MetaEuk fields and a strict named legacy adapter preserve
+method labels. Source, mapping, content and complete generation witnesses give
+replacements fresh IDs; old rows/vectors remain traceable and inactive.
+142 required tests, 12 C05 PostgreSQL cases (10 fixed-code and two exact baseline
+bug probes), 39 existing PostgreSQL regressions, two idempotent corpus upserts
+and the full backend (1,806 passed, 63 gated skips, 81.77% coverage) pass.
+Independent review has no blockers. All owned servers are stopped; 30 unrelated
+files, seven scientific artifacts and prior component sources/receipts are preserved
+except the intended C05 API/loader/lineage/orchestration consumers documented in
+its receipt. A read-only inventory records 82 legacy documents requiring a later
+rebuild. C05 is Complete locally and uncommitted; no hosted C05 CI, provider call,
+real-data regeneration, live reindex or deployment is claimed. C06–C27 remain
+unselected. See [C05 handoff](handoffs/C05.md) and [runbook](C05_REBUILD_RUNBOOK.md).

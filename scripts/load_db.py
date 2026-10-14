@@ -42,6 +42,13 @@ from sqlalchemy import text
 
 import config
 from db.connection import drop_corpus_tables, get_engine, get_session, init_db
+from preprocessing.metagenome_contract import (
+    KRAKEN_TOP_COLUMN,
+    KRAKEN_UPPER_COLUMN,
+    METAEUK_TOP_COLUMN,
+    adapt_legacy_metagenome_context,
+    metagenome_replacement_scope,
+)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -216,7 +223,7 @@ def metagenome_samples_dataframe() -> pd.DataFrame:
     if not path.exists():
         return pd.DataFrame()
 
-    df = pd.read_parquet(path)
+    df = adapt_legacy_metagenome_context(pd.read_parquet(path))
 
     # Map columns to DB model
     records = []
@@ -242,9 +249,9 @@ def metagenome_samples_dataframe() -> pd.DataFrame:
             "has_kraken": bool(has_kr),
             "has_metaeuk": bool(has_me),
             "has_ctd": bool(row.get("has_ctd", False)),
-            "top_kraken_genera_json": row.get("top_genus_10_json_x"),
-            "top_metaeuk_genera_json": row.get("top_genus_10_json_y"),
-            "top_upper_groups_json": row.get("top_upper_group_10_json"),
+            "top_kraken_genera_json": row.get(KRAKEN_TOP_COLUMN),
+            "top_metaeuk_genera_json": row.get(METAEUK_TOP_COLUMN),
+            "top_upper_groups_json": row.get(KRAKEN_UPPER_COLUMN),
         })
 
     return pd.DataFrame(records)
@@ -981,6 +988,23 @@ def _upsert_anemone_bundle(
     return results, inactive
 
 
+def _inactivate_superseded_metagenome_documents(connection: Any, incoming: pd.DataFrame) -> int:
+    """Retain older documents and embeddings, retiring only represented samples."""
+    replacements = metagenome_replacement_scope(incoming)
+    if not replacements:
+        return 0
+    result = connection.execute(text("""
+        UPDATE retrieval_document
+        SET active = FALSE
+        WHERE active IS TRUE
+          AND source_type = 'metagenome'
+          AND sample_id = ANY(:sample_ids)
+          AND NOT (doc_id = ANY(:replacement_doc_ids))
+    """), {"sample_ids": sorted(replacements),
+            "replacement_doc_ids": sorted(replacements.values())})
+    return int(result.rowcount or 0)
+
+
 def upsert_corpus(
     *,
     anemone_normalization_id: str | None = None,
@@ -1002,12 +1026,16 @@ def upsert_corpus(
             )
         )
         for table_name, frame, key_columns in _incoming_table_frames():
+            if table_name == "retrieval_document":
+                metagenome_replacement_scope(frame)
             result = _upsert_dataframe(
                 connection,
                 table_name=table_name,
                 incoming=frame,
                 key_columns=key_columns,
             )
+            if table_name == "retrieval_document":
+                result["superseded_inactivated"] = _inactivate_superseded_metagenome_documents(connection, frame)
             table_results[table_name] = result
             logger.info(
                 "  Upserted %s: incoming=%d inserted=%d updated=%d unchanged=%d",

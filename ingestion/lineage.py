@@ -18,6 +18,13 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple
 import pandas as pd
 
 from preprocessing.anemone_classification import validate_sample_review_lineage
+from preprocessing.metagenome_contract import (
+    KRAKEN_TOP_COLUMN,
+    KRAKEN_UPPER_COLUMN,
+    METAEUK_TOP_COLUMN,
+    adapt_legacy_metagenome_context,
+    metagenome_replacement_scope,
+)
 from sqlalchemy import create_engine, text
 
 import config
@@ -849,6 +856,12 @@ def build_document_traces(limit_documents: Optional[int] = 500) -> List[Document
             source_keys.append(f"sample_id:{sample_id}")
         if event_id:
             source_keys.append(f"event_id:{event_id}")
+        if source_type == "metagenome":
+            source_keys.extend(
+                f"{key}:{metadata_value[key]}"
+                for key in ("source_version", "field_mapping_version", "generation_hash")
+                if metadata_value.get(key)
+            )
         if source_type == "remote_sensing" and time_value:
             source_keys.append(f"date_jst:{time_value[:10]}")
         if source_type == "edna_metabarcoding":
@@ -1156,7 +1169,7 @@ def _incoming_dataframe_for_table(table_name: str) -> Tuple[pd.DataFrame, Option
     if not path.exists():
         return pd.DataFrame(), spec["id"], list(spec.get("key_columns", []))
     if table_name == "metagenome_sample":
-        source = pd.read_parquet(path)
+        source = adapt_legacy_metagenome_context(pd.read_parquet(path))
         records = []
         for _, row in source.iterrows():
             sid = row.get("sample_id")
@@ -1180,9 +1193,9 @@ def _incoming_dataframe_for_table(table_name: str) -> Tuple[pd.DataFrame, Option
                     "has_kraken": has_kraken,
                     "has_metaeuk": has_metaeuk,
                     "has_ctd": bool(row.get("has_ctd", False)),
-                    "top_kraken_genera_json": row.get("top_genus_10_json_x"),
-                    "top_metaeuk_genera_json": row.get("top_genus_10_json_y"),
-                    "top_upper_groups_json": row.get("top_upper_group_10_json"),
+                    "top_kraken_genera_json": row.get(KRAKEN_TOP_COLUMN),
+                    "top_metaeuk_genera_json": row.get(METAEUK_TOP_COLUMN),
+                    "top_upper_groups_json": row.get(KRAKEN_UPPER_COLUMN),
                 }
             )
         return pd.DataFrame(records), spec["id"], list(spec.get("key_columns", []))
@@ -1327,7 +1340,8 @@ def build_upsert_dry_run_plan(
         incoming_keys = {_key_tuple(row, key_columns) for row in incoming_rows if key_columns}
         compare_columns = list(key_columns)
         if table_name == "retrieval_document":
-            compare_columns.extend(["title", "text", "embedding IS NOT NULL AS embedded"])
+            compare_columns.extend(["title", "text", "source_type", "sample_id", "active",
+                                    "embedding IS NOT NULL AS embedded"])
         elif table_name.startswith("edna_"):
             compare_columns.extend(
                 ["scientific_content_sha256", "source_row_hash", "active"]
@@ -1397,6 +1411,15 @@ def build_upsert_dry_run_plan(
             and table_name.startswith("edna_")
             else 0 if available else None
         )
+        if available and table_name == "retrieval_document":
+            replacements = metagenome_replacement_scope(incoming_df)
+            planned_inactivations = sum(
+                row.get("source_type") == "metagenome"
+                and row.get("active") is True
+                and row.get("sample_id") in replacements
+                and row.get("doc_id") != replacements[row["sample_id"]]
+                for row in existing_rows
+            )
         candidate_updates = (
             len(changed)
             if table_name == "retrieval_document" and available
@@ -1501,7 +1524,7 @@ def build_upsert_dry_run_plan(
         "table_plans": table_plans,
         "warnings": [
             "This plan is read-only and does not mutate PostgreSQL.",
-            "Mutating upserts retain rows reported as stale_existing; use an explicit reset only for full replacement.",
+            "Mutating upserts retain rows reported as stale_existing; validated metagenome replacements inactivate older documents only for represented samples.",
             "Retrieval-document estimates use content hashes so unchanged embeddings are retained; other table estimates conservatively classify matched keys as update candidates.",
             "ANEMONE inactivation estimates are limited to the selected provider sample or provider project/run scope.",
         ],

@@ -1,0 +1,78 @@
+{
+  "unrelated": {
+    "matching": 30,
+    "mismatches": {}
+  },
+  "scientific_artifacts": {
+    "matching": 7,
+    "mismatches": {}
+  },
+  "P00": {
+    "matching": 36,
+    "mismatches": {}
+  },
+  "prior_boundaries": {
+    "matching": 14,
+    "mismatches": {}
+  },
+  "historical_evidence": {
+    "matching": 109,
+    "mismatches": {}
+  },
+  "serving_inventory": {
+    "matching": 2,
+    "mismatches": {}
+  },
+  "baseline_shared_sources": {
+    "api/main.py": {
+      "baseline_sha256": "25501284aba4cc3f96e4d5fc01ee61a3639e458b42ea0f8f8eb574ff91f379e1",
+      "current_sha256": "95c51de43350ce19e171a251fdd6af091ed59673b9ce4baef970462fd1d57d93",
+      "changed_for_C05": true
+    },
+    "config.py": {
+      "baseline_sha256": "a8a61340d9a595cb32e279596ae728dbec525acc99c3e2cac669c0f518b1c55e",
+      "current_sha256": "a8a61340d9a595cb32e279596ae728dbec525acc99c3e2cac669c0f518b1c55e",
+      "changed_for_C05": false
+    },
+    "db/vector_store.py": {
+      "baseline_sha256": "e7a8e7c5c942156347b1b879216565c8e6c5a3820722a6ead12a4099b4a3b343",
+      "current_sha256": "50f511b91765512a6e688a37415f06db8fad566f40fa955b9c35264ad1ef8e4c",
+      "changed_for_C05": true
+    },
+    "ingestion/lineage.py": {
+      "baseline_sha256": "293df70ba3bc723190d7e5b770c3617eb3ec5e73df978c6cc4f2f67f07da5eac",
+      "current_sha256": "9f3d53525d293efe83621b30146a9c1d705c621d15a6f51a7ad7a5acc6e282fa",
+      "changed_for_C05": true
+    },
+    "model_runtime.py": {
+      "baseline_sha256": "c7762486e5c2f3f8038a3556dd9a942fdd3469395c5194fd25b66fb864a61f13",
+      "current_sha256": "c7762486e5c2f3f8038a3556dd9a942fdd3469395c5194fd25b66fb864a61f13",
+      "changed_for_C05": false
+    },
+    "orchestration/unified.py": {
+      "baseline_sha256": "c35856c03045ef48bd5d352334c7f62aa24163378b0416ab9d8e5ed0d25d00e7",
+      "current_sha256": "c9201413873109153f9098d1041e23c3349229ec95a27aac3e194ed517be01d6",
+      "changed_for_C05": true
+    },
+    "preprocessing/metagenome.py": {
+      "baseline_sha256": "f36e8b7a2a07820400b8e608eeb9d7551e3cd612cd941065016573797ef8b485",
+      "current_sha256": "7c40578ded2f284c1df915e531e0b91807b0f6d4a1d2a589e0212e20154430a0",
+      "changed_for_C05": true
+    },
+    "retrieval/document_builder.py": {
+      "baseline_sha256": "0a2c99ffa978d9db0f56395f5a4993ab783cd29e4d88651c4312120d89b7255a",
+      "current_sha256": "64288b44c0d042a5fefbe1bea87235dd5c5583d0f5a2dbf999fcbb468d696a0f",
+      "changed_for_C05": true
+    },
+    "retrieval/hybrid_retriever.py": {
+      "baseline_sha256": "14299796afa8fa2c2bfbd99341c33357bcfb6120d1fc958c0ac59f08034ec42f",
+      "current_sha256": "8d03c315ce9ade6251f40cf201f88b00d4ec5966762eb980c553523ee8f28d1a",
+      "changed_for_C05": true
+    },
+    "scripts/load_db.py": {
+      "baseline_sha256": "1cfc70b5a58360ebc61dafe68c640b78124d2e8b8e4ac48a5dc8014941770c06",
+      "current_sha256": "6e4137afc8cf73249ed7c8354eedf60f303520c0e17bb96dd2f653996e7e6ea4",
+      "changed_for_C05": true
+    }
+  }
+}

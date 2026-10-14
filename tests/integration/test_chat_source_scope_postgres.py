@@ -11,6 +11,7 @@ from sqlalchemy.orm import Session
 import config
 from alembic.config import Config
 from alembic.script import ScriptDirectory
+from db.embedding_identity import EmbeddingIdentity, IdentifiedEmbedding
 from db.models import CorpusBase
 from db.app_models import AppUser, ChatInteraction
 from retrieval import hybrid_retriever
@@ -40,7 +41,7 @@ def test_sixteen_subsets_and_independent_filters_match_both_rankers(monkeypatch)
     local.bm25.fit([d['text'] for d in docs])
     monkeypatch.setattr(config, 'EDNA_ARTIFACT_URI', '')
     embedding = [1.0] * config.EMBEDDING_DIM
-    monkeypatch.setattr(hybrid_retriever, 'embed_text', lambda q: embedding)
+    monkeypatch.setattr(hybrid_retriever, 'embed_query', lambda q: IdentifiedEmbedding(embedding, EmbeddingIdentity(config.MODEL_PROVIDER, config.EMBEDDING_MODEL, len(embedding))))
     with engine.connect() as connection:
         transaction = connection.begin()
         try:

@@ -1,6 +1,6 @@
 # C05 — Retrieval correctness
 
-**Status:** Not started. **Prerequisites:** P00. **Contract:** embedding identity and source-field mapping.
+**Status:** Complete locally (2026-10-15 JST). **Prerequisites:** P00. **Contract:** embedding identity and source-field mapping.
 
 ## Revised delivery boundary
 
@@ -18,7 +18,7 @@ Included: provider/model/dimension predicates on vector searches, FTS fallback, 
 
 ## Existing entry points
 
-Verified sources are [hybrid retrieval](../../../../retrieval/hybrid_retriever.py), [vector search](../../../../db/vector_store.py) and [document generation](../../../../retrieval/document_builder.py). The current metagenome builder reads an unsuffixed Kraken field while merged inputs contain `_x`/`_y` variants. Inspect the producer before selecting canonical named fields. Existing tests include `tests/test_vector_store.py`, `tests/test_source_aware_retrieval.py` and `tests/test_hybrid_retrieval_contract.py`.
+Verified sources are [hybrid retrieval](../../../../retrieval/hybrid_retriever.py), [vector search](../../../../db/vector_store.py) and [document generation](../../../../retrieval/document_builder.py). The initial metagenome builder read an unsuffixed Kraken field while merged inputs contained `_x`/`_y` variants. Inspect the producer before selecting canonical named fields. Existing tests include `tests/test_vector_store.py`, `tests/test_source_aware_retrieval.py` and `tests/test_hybrid_retrieval_contract.py`.
 
 ## Interface decisions
 
@@ -30,7 +30,7 @@ Filter candidates by stored provider, model and dimension matching the active qu
 2. **Document fidelity:** establish named metagenome columns and update production/consumption together. Acceptance: representative merged rows include correct Kraken and MetaEuk taxa once, without exchanging method labels or losing one source.
 3. **Rebuild readiness:** validate document hashes and synthetic rebuilding locally; identify affected legacy documents and supply explicit later reindex steps. Acceptance: a repeat build is deterministic and current identity filters cannot reactivate stale incompatible vectors. Do not actually reindex a live store.
 
-Implementation validation: `python -m pytest tests/test_vector_store.py tests/test_source_aware_retrieval.py tests/test_hybrid_retrieval_contract.py tests/test_pr3_review_fixes.py`. Add proposed `tests/test_metagenome_document_contract.py` for producer-to-document cases and run it once created. Real PostgreSQL vector behavior requires the existing disposable integration harness; report skipped integration rather than treating SQL inspection as equivalent.
+Implementation validation: `python -m pytest tests/test_vector_store.py tests/test_source_aware_retrieval.py tests/test_hybrid_retrieval_contract.py tests/test_pr3_review_fixes.py tests/test_metagenome_document_contract.py`. The new contract suite covers producer-to-document fidelity and replacement identity. Real PostgreSQL vector behavior requires the existing disposable integration harness; report skipped integration rather than treating SQL inspection as equivalent.
 
 ## Compatibility, rollback and handoff
 
@@ -41,3 +41,14 @@ Preserve retrieval response shape and historical documents. Keep old objects tra
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c05). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+## Local acceptance — 2026-10-15 JST
+
+142 required cases pass. Actual disposable PostgreSQL/pgvector validates 10 fixed-code
+cases plus two exact historical bug probes; all 39 existing PostgreSQL regressions
+and two idempotent corpus upserts pass. The full backend has 1,806 passes,
+63 explicit integration-gated skips and 81.77% coverage. Independent review, Ruff,
+source/preservation checks and deterministic synthetic export hashes pass.
+See [handoff](../handoffs/C05.md), [receipt](../evidence/C05/verification.json) and
+[deferred rebuild runbook](../C05_REBUILD_RUNBOOK.md). Real/live rebuild and provider
+calls remain deferred; C05 is uncommitted and no hosted C05 acceptance is claimed.

@@ -54,6 +54,8 @@ def scoped_retrieve(query, *, scope, k, backend, search, options):
         finally:
             diagnostic['elapsed_ms'] = round((perf_counter() - started) * 1000, 3)
             diagnostic['failed_branches'] = branches.get('failed_branches', [])
+            if 'vector' in branches:
+                diagnostic['vector'] = deepcopy(branches['vector'])
         if family == 'remote_sensing':
             from retrieval.regional_sst import supplement_sst
             from ingestion.provenance_snapshot import SnapshotError

@@ -185,6 +185,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
 
       - name: Set up Python 3.12
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
@@ -267,6 +268,37 @@ jobs:
           C03_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
         run: >-
           python -m pytest tests/integration/test_retention_concurrency_postgres.py
+          -q -s --tb=short
+
+      - name: Create isolated C05 retrieval test database
+        run: |
+          python - <<'PY'
+          from sqlalchemy import create_engine, text
+          # The URL and database are owned by this job, never inherited from the app.
+          engine = create_engine(
+              "postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform",
+              isolation_level="AUTOCOMMIT",
+          )
+          with engine.connect() as connection:
+              connection.execute(text("CREATE DATABASE ocean_c05_retrieval_test"))
+          engine.dispose()
+          engine = create_engine(
+              "postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c05_retrieval_test"
+          )
+          with engine.begin() as connection:
+              connection.execute(text("CREATE EXTENSION vector"))
+          engine.dispose()
+          PY
+
+      - name: Verify C05 vector identity and metagenome replacement history
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_POSTGRES_INTEGRATION: "1"
+          C05_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c05_retrieval_test
+          C05_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
+        run: >-
+          python -m pytest tests/integration/test_retrieval_identity_postgres.py
           -q -s --tb=short
 
       - name: Verify database backup and isolated restore

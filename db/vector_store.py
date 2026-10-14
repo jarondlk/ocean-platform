@@ -12,6 +12,12 @@ from sqlalchemy import or_, text
 import config
 from model_runtime import RETRIEVAL_DOCUMENT, RETRIEVAL_QUERY, get_model_runtime
 from .connection import get_session
+from .embedding_identity import (
+    EMBEDDING_IDENTITY_PREDICATE,
+    EmbeddingIdentity,
+    IdentifiedEmbedding,
+    embedding_parameters,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -52,6 +58,24 @@ def embed_batch(
         model=model,
         task_type=task_type,
     )
+
+
+def embed_query(text_input: str, model: Optional[str] = None) -> IdentifiedEmbedding:
+    """Bind a query to the runtime and model that actually generated its vector."""
+    selected_model = model or config.EMBEDDING_MODEL
+    expected_dimension = config.EMBEDDING_DIM
+    runtime = get_model_runtime()
+    # Capture identity before provider execution; callback vectors never inherit
+    # this configuration implicitly.
+    provider = runtime.provider
+    values = runtime.embed(text_input, model=selected_model, task_type=RETRIEVAL_QUERY)
+    embedding = IdentifiedEmbedding(values, EmbeddingIdentity(provider, selected_model, len(values)))
+    if len(embedding) != expected_dimension:
+        raise ValueError(
+            f"Query embedding dimension {len(embedding)} does not match "
+            f"configured dimension {expected_dimension}"
+        )
+    return embedding
 
 
 def _embedding_refresh_query(
@@ -166,13 +190,11 @@ def search_similar(
     """
     Search for documents similar to *query* using pgvector cosine distance.
     """
-    query_emb = embed_text(query)
+    query_emb = embed_query(query)
 
     with get_session() as session:
-        emb_str = "[" + ",".join(str(x) for x in query_emb) + "]"
-
         where_clause = ""
-        params: Dict[str, Any] = {"emb": emb_str, "k": k}
+        params: Dict[str, Any] = {**embedding_parameters(query_emb), "k": k}
         if source_type:
             where_clause = "AND source_type = :source_type"
             params["source_type"] = source_type
@@ -182,7 +204,8 @@ def search_similar(
                    lat, lon, bay, station, title, text,
                    embedding <=> :emb AS distance
             FROM retrieval_document
-            WHERE active IS TRUE AND embedding IS NOT NULL {where_clause}
+            WHERE active IS TRUE AND embedding IS NOT NULL
+              AND {EMBEDDING_IDENTITY_PREDICATE} {where_clause}
             ORDER BY embedding <=> :emb
             LIMIT :k
         """)

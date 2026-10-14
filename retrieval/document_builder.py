@@ -15,7 +15,18 @@ from typing import Any, Dict, List, Optional
 import numpy as np
 import pandas as pd
 
+from preprocessing.metagenome_contract import (
+    KRAKEN_TOP_COLUMN,
+    KRAKEN_UPPER_COLUMN,
+    METAEUK_TOP_COLUMN,
+    adapt_legacy_metagenome_context,
+    metagenome_document_generation_hash,
+    metagenome_document_id,
+    stable_metagenome_hash,
+)
+
 logger = logging.getLogger(__name__)
+METAGENOME_DOCUMENT_VERSION = "metagenome-document-v2"
 
 
 @dataclass
@@ -161,7 +172,8 @@ def build_metagenome_docs(
     """
     docs: List[RetrievalDocument] = []
 
-    for _, row in sample_context.iterrows():
+    canonical_context = adapt_legacy_metagenome_context(sample_context)
+    for _, row in canonical_context.iterrows():
         sid = row.get("sample_id", "")
         if pd.isna(sid) or not sid:
             continue
@@ -191,7 +203,7 @@ def build_metagenome_docs(
             lines[-1] += "."
 
         # Top Kraken genera
-        kraken_json = row.get("top_genus_10_json")
+        kraken_json = row.get(KRAKEN_TOP_COLUMN)
         if pd.notna(kraken_json) and isinstance(kraken_json, str) and kraken_json.strip():
             try:
                 taxa = json.loads(kraken_json)
@@ -205,26 +217,22 @@ def build_metagenome_docs(
             except (json.JSONDecodeError, KeyError):
                 pass
 
-        # Top MetaEuk genera
-        # Try common column names from the merge
-        for col_candidate in ["top_genus_10_json_y", "top_genus_10_json"]:
-            if col_candidate in row.index and col_candidate != "top_genus_10_json":
-                metaeuk_json = row.get(col_candidate)
-                if pd.notna(metaeuk_json) and isinstance(metaeuk_json, str):
-                    try:
-                        taxa = json.loads(metaeuk_json)
-                        if taxa:
-                            top_list = [
-                                f"{t['genus']} ({t['abundance_value']:.2f}%)"
-                                for t in taxa[:5]
-                            ]
-                            lines.append("Top MetaEuk genera: " + ", ".join(top_list) + ".")
-                    except (json.JSONDecodeError, KeyError):
-                        pass
-                break
+        # Top MetaEuk genera: the field adapter has already established method identity.
+        metaeuk_json = row.get(METAEUK_TOP_COLUMN)
+        if pd.notna(metaeuk_json) and isinstance(metaeuk_json, str):
+            try:
+                taxa = json.loads(metaeuk_json)
+                if taxa:
+                    top_list = [
+                        f"{t['genus']} ({t['abundance_value']:.2f}%)"
+                        for t in taxa[:5]
+                    ]
+                    lines.append("Top MetaEuk genera: " + ", ".join(top_list) + ".")
+            except (json.JSONDecodeError, KeyError):
+                pass
 
         # Top upper groups
-        upper_col = row.get("top_upper_group_10_json")
+        upper_col = row.get(KRAKEN_UPPER_COLUMN)
         if pd.notna(upper_col) and isinstance(upper_col, str):
             try:
                 groups = json.loads(upper_col)
@@ -248,8 +256,11 @@ def build_metagenome_docs(
         elif year_month:
             time_str = f"{year_month}-01"
 
-        docs.append(RetrievalDocument(
-            doc_id=f"meta_{sid}",
+        content_hash = stable_metagenome_hash({"title": title, "text": text})
+        source_version = row["metagenome_source_version"]
+        field_mapping_version = row["metagenome_mapping_version"]
+        document = RetrievalDocument(
+            doc_id="",
             source_type="metagenome",
             sample_id=sid,
             event_id=f"sample_{sid}",
@@ -260,7 +271,21 @@ def build_metagenome_docs(
             station=station,
             title=title,
             text=text,
-        ))
+            metadata={
+                "document_version": METAGENOME_DOCUMENT_VERSION,
+                "field_mapping_version": field_mapping_version,
+                "source_version": source_version,
+                "content_hash": content_hash,
+                "legacy_doc_id": f"meta_{sid}",
+                "method_coverage": {"kraken": bool(has_kraken), "metaeuk": bool(has_metaeuk)},
+                "source_fields": {"kraken": KRAKEN_TOP_COLUMN, "metaeuk": METAEUK_TOP_COLUMN,
+                                  "kraken_upper_groups": KRAKEN_UPPER_COLUMN},
+            },
+        )
+        generation_hash = metagenome_document_generation_hash(document.__dict__, document.metadata)
+        document.doc_id = metagenome_document_id(str(sid), generation_hash)
+        document.metadata["generation_hash"] = generation_hash
+        docs.append(document)
 
     logger.info("Built %d metagenome retrieval documents", len(docs))
     return docs

@@ -4076,17 +4076,24 @@ def data_ctd_profile(sample_id: str) -> CtdProfileResponse:
 
 @app.get("/data/taxa/{sample_id}", response_model=TaxaSampleResponse)
 def data_taxa(sample_id: str) -> TaxaSampleResponse:
+    from preprocessing.metagenome_contract import (
+        KRAKEN_TOP_COLUMN,
+        KRAKEN_UPPER_COLUMN,
+        METAEUK_TOP_COLUMN,
+        adapt_legacy_metagenome_context,
+    )
     context = _sample_context_df()
     rows = context[context["sample_id"].astype("string") == sample_id]
     if rows.empty:
         raise HTTPException(status_code=404, detail=f"Unknown taxa sample: {sample_id}")
-    row = rows.iloc[0]
+    canonical_rows = adapt_legacy_metagenome_context(rows)
+    row = canonical_rows.iloc[0]
     return TaxaSampleResponse(
         sample_id=sample_id,
-        context=_records(rows.head(1))[0],
-        kraken_top=_parse_taxa_json(row.get("top_genus_10_json_x"), label_keys=["genus", "taxon", "name"]),
-        metaeuk_top=_parse_taxa_json(row.get("top_genus_10_json_y"), label_keys=["genus", "taxon", "name"]),
-        upper_groups=_parse_taxa_json(row.get("top_upper_group_10_json"), label_keys=["upper_group", "group", "name"]),
+        context=_records(canonical_rows.head(1))[0],
+        kraken_top=_parse_taxa_json(row.get(KRAKEN_TOP_COLUMN), label_keys=["genus", "taxon", "name"]),
+        metaeuk_top=_parse_taxa_json(row.get(METAEUK_TOP_COLUMN), label_keys=["genus", "taxon", "name"]),
+        upper_groups=_parse_taxa_json(row.get(KRAKEN_UPPER_COLUMN), label_keys=["upper_group", "group", "name"]),
     )
 
 

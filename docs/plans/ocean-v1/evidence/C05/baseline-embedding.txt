@@ -1,0 +1,802 @@
+FFFFFFFFFFFF                                                             [100%]
+=================================== FAILURES ===================================
+___ test_search_similar_excludes_incompatible_embedding_identity[different0] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1106da480>
+different = {'embedding_provider': 'other-provider'}
+
+    @pytest.mark.parametrize("different", [
+        {"embedding_provider": "other-provider"},
+        {"embedding_model": "other-model"},
+        {"embedding_dim": 3},
+        {"embedding_provider": None},
+        {"embedding_model": None},
+        {"embedding_dim": None},
+    ])
+    def test_search_similar_excludes_incompatible_embedding_identity(monkeypatch, different):
+        """SQL-aware fake exercises candidate exclusion, including equal dimensions."""
+        import config
+
+        captured = {}
+        identity = {"embedding_provider": "actual-provider", "embedding_model": "active-model", "embedding_dim": 2}
+
+        def row(doc_id, **changes):
+            return SimpleNamespace(doc_id=doc_id, source_type="ctd", sample_id="allowed", event_id=None,
+                time=None, lat=None, lon=None, bay="O", station=None, title=doc_id,
+                text="temperature", distance=0.2, active=True, embedding=[0.25, 0.75], **{**identity, **changes})
+
+        candidates = [row("wrong", **different), row("compatible"), row("inactive")]
+        # Keep fixtures explicit; inactive documents are excluded by the existing filter.
+        candidates[-1].active = False
+
+        class Session:
+            def execute(self, statement, params):
+                sql = str(statement)
+                captured.update(sql=sql, params=params)
+                selected = [r for r in candidates if r.active and r.source_type == params["source_type"]]
+                for column in identity:
+                    if f"{column} = :{column}" in sql:
+                        selected = [r for r in selected if getattr(r, column) == params[column]]
+                return SimpleNamespace(fetchall=lambda: selected)
+
+        @contextmanager
+        def session():
+            yield Session()
+
+        class Runtime:
+            provider = "actual-provider"
+
+            def embed(self, _query, **kwargs):
+                assert kwargs["model"] == "active-model"
+                return [0.25, 0.75]
+
+        monkeypatch.setattr(vector_store, "get_session", session)
+        monkeypatch.setattr(vector_store, "get_model_runtime", lambda: Runtime())
+        monkeypatch.setattr(config, "EMBEDDING_MODEL", "active-model")
+        monkeypatch.setattr(config, "EMBEDDING_DIM", 2)
+        # The runtime, rather than a possibly outdated provider config, owns identity.
+        monkeypatch.setattr(config, "MODEL_PROVIDER", "configured-provider")
+        results = vector_store.search_similar("temperature", source_type="ctd")
+>       assert [r["doc_id"] for r in results] == ["compatible"]
+E       AssertionError: assert ['wrong', 'compatible'] == ['compatible']
+E
+E         At index 0 diff: 'wrong' != 'compatible'
+E         Left contains one more item: 'compatible'
+E         Use -v to get more diff
+
+tests/test_vector_store.py:162: AssertionError
+___ test_search_similar_excludes_incompatible_embedding_identity[different1] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11c9a5e50>
+different = {'embedding_model': 'other-model'}
+
+    @pytest.mark.parametrize("different", [
+        {"embedding_provider": "other-provider"},
+        {"embedding_model": "other-model"},
+        {"embedding_dim": 3},
+        {"embedding_provider": None},
+        {"embedding_model": None},
+        {"embedding_dim": None},
+    ])
+    def test_search_similar_excludes_incompatible_embedding_identity(monkeypatch, different):
+        """SQL-aware fake exercises candidate exclusion, including equal dimensions."""
+        import config
+
+        captured = {}
+        identity = {"embedding_provider": "actual-provider", "embedding_model": "active-model", "embedding_dim": 2}
+
+        def row(doc_id, **changes):
+            return SimpleNamespace(doc_id=doc_id, source_type="ctd", sample_id="allowed", event_id=None,
+                time=None, lat=None, lon=None, bay="O", station=None, title=doc_id,
+                text="temperature", distance=0.2, active=True, embedding=[0.25, 0.75], **{**identity, **changes})
+
+        candidates = [row("wrong", **different), row("compatible"), row("inactive")]
+        # Keep fixtures explicit; inactive documents are excluded by the existing filter.
+        candidates[-1].active = False
+
+        class Session:
+            def execute(self, statement, params):
+                sql = str(statement)
+                captured.update(sql=sql, params=params)
+                selected = [r for r in candidates if r.active and r.source_type == params["source_type"]]
+                for column in identity:
+                    if f"{column} = :{column}" in sql:
+                        selected = [r for r in selected if getattr(r, column) == params[column]]
+                return SimpleNamespace(fetchall=lambda: selected)
+
+        @contextmanager
+        def session():
+            yield Session()
+
+        class Runtime:
+            provider = "actual-provider"
+
+            def embed(self, _query, **kwargs):
+                assert kwargs["model"] == "active-model"
+                return [0.25, 0.75]
+
+        monkeypatch.setattr(vector_store, "get_session", session)
+        monkeypatch.setattr(vector_store, "get_model_runtime", lambda: Runtime())
+        monkeypatch.setattr(config, "EMBEDDING_MODEL", "active-model")
+        monkeypatch.setattr(config, "EMBEDDING_DIM", 2)
+        # The runtime, rather than a possibly outdated provider config, owns identity.
+        monkeypatch.setattr(config, "MODEL_PROVIDER", "configured-provider")
+        results = vector_store.search_similar("temperature", source_type="ctd")
+>       assert [r["doc_id"] for r in results] == ["compatible"]
+E       AssertionError: assert ['wrong', 'compatible'] == ['compatible']
+E
+E         At index 0 diff: 'wrong' != 'compatible'
+E         Left contains one more item: 'compatible'
+E         Use -v to get more diff
+
+tests/test_vector_store.py:162: AssertionError
+___ test_search_similar_excludes_incompatible_embedding_identity[different2] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11c9a6390>
+different = {'embedding_dim': 3}
+
+    @pytest.mark.parametrize("different", [
+        {"embedding_provider": "other-provider"},
+        {"embedding_model": "other-model"},
+        {"embedding_dim": 3},
+        {"embedding_provider": None},
+        {"embedding_model": None},
+        {"embedding_dim": None},
+    ])
+    def test_search_similar_excludes_incompatible_embedding_identity(monkeypatch, different):
+        """SQL-aware fake exercises candidate exclusion, including equal dimensions."""
+        import config
+
+        captured = {}
+        identity = {"embedding_provider": "actual-provider", "embedding_model": "active-model", "embedding_dim": 2}
+
+        def row(doc_id, **changes):
+            return SimpleNamespace(doc_id=doc_id, source_type="ctd", sample_id="allowed", event_id=None,
+                time=None, lat=None, lon=None, bay="O", station=None, title=doc_id,
+                text="temperature", distance=0.2, active=True, embedding=[0.25, 0.75], **{**identity, **changes})
+
+        candidates = [row("wrong", **different), row("compatible"), row("inactive")]
+        # Keep fixtures explicit; inactive documents are excluded by the existing filter.
+        candidates[-1].active = False
+
+        class Session:
+            def execute(self, statement, params):
+                sql = str(statement)
+                captured.update(sql=sql, params=params)
+                selected = [r for r in candidates if r.active and r.source_type == params["source_type"]]
+                for column in identity:
+                    if f"{column} = :{column}" in sql:
+                        selected = [r for r in selected if getattr(r, column) == params[column]]
+                return SimpleNamespace(fetchall=lambda: selected)
+
+        @contextmanager
+        def session():
+            yield Session()
+
+        class Runtime:
+            provider = "actual-provider"
+
+            def embed(self, _query, **kwargs):
+                assert kwargs["model"] == "active-model"
+                return [0.25, 0.75]
+
+        monkeypatch.setattr(vector_store, "get_session", session)
+        monkeypatch.setattr(vector_store, "get_model_runtime", lambda: Runtime())
+        monkeypatch.setattr(config, "EMBEDDING_MODEL", "active-model")
+        monkeypatch.setattr(config, "EMBEDDING_DIM", 2)
+        # The runtime, rather than a possibly outdated provider config, owns identity.
+        monkeypatch.setattr(config, "MODEL_PROVIDER", "configured-provider")
+        results = vector_store.search_similar("temperature", source_type="ctd")
+>       assert [r["doc_id"] for r in results] == ["compatible"]
+E       AssertionError: assert ['wrong', 'compatible'] == ['compatible']
+E
+E         At index 0 diff: 'wrong' != 'compatible'
+E         Left contains one more item: 'compatible'
+E         Use -v to get more diff
+
+tests/test_vector_store.py:162: AssertionError
+___ test_search_similar_excludes_incompatible_embedding_identity[different3] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11c9a4f50>
+different = {'embedding_provider': None}
+
+    @pytest.mark.parametrize("different", [
+        {"embedding_provider": "other-provider"},
+        {"embedding_model": "other-model"},
+        {"embedding_dim": 3},
+        {"embedding_provider": None},
+        {"embedding_model": None},
+        {"embedding_dim": None},
+    ])
+    def test_search_similar_excludes_incompatible_embedding_identity(monkeypatch, different):
+        """SQL-aware fake exercises candidate exclusion, including equal dimensions."""
+        import config
+
+        captured = {}
+        identity = {"embedding_provider": "actual-provider", "embedding_model": "active-model", "embedding_dim": 2}
+
+        def row(doc_id, **changes):
+            return SimpleNamespace(doc_id=doc_id, source_type="ctd", sample_id="allowed", event_id=None,
+                time=None, lat=None, lon=None, bay="O", station=None, title=doc_id,
+                text="temperature", distance=0.2, active=True, embedding=[0.25, 0.75], **{**identity, **changes})
+
+        candidates = [row("wrong", **different), row("compatible"), row("inactive")]
+        # Keep fixtures explicit; inactive documents are excluded by the existing filter.
+        candidates[-1].active = False
+
+        class Session:
+            def execute(self, statement, params):
+                sql = str(statement)
+                captured.update(sql=sql, params=params)
+                selected = [r for r in candidates if r.active and r.source_type == params["source_type"]]
+                for column in identity:
+                    if f"{column} = :{column}" in sql:
+                        selected = [r for r in selected if getattr(r, column) == params[column]]
+                return SimpleNamespace(fetchall=lambda: selected)
+
+        @contextmanager
+        def session():
+            yield Session()
+
+        class Runtime:
+            provider = "actual-provider"
+
+            def embed(self, _query, **kwargs):
+                assert kwargs["model"] == "active-model"
+                return [0.25, 0.75]
+
+        monkeypatch.setattr(vector_store, "get_session", session)
+        monkeypatch.setattr(vector_store, "get_model_runtime", lambda: Runtime())
+        monkeypatch.setattr(config, "EMBEDDING_MODEL", "active-model")
+        monkeypatch.setattr(config, "EMBEDDING_DIM", 2)
+        # The runtime, rather than a possibly outdated provider config, owns identity.
+        monkeypatch.setattr(config, "MODEL_PROVIDER", "configured-provider")
+        results = vector_store.search_similar("temperature", source_type="ctd")
+>       assert [r["doc_id"] for r in results] == ["compatible"]
+E       AssertionError: assert ['wrong', 'compatible'] == ['compatible']
+E
+E         At index 0 diff: 'wrong' != 'compatible'
+E         Left contains one more item: 'compatible'
+E         Use -v to get more diff
+
+tests/test_vector_store.py:162: AssertionError
+___ test_search_similar_excludes_incompatible_embedding_identity[different4] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11c9a69f0>
+different = {'embedding_model': None}
+
+    @pytest.mark.parametrize("different", [
+        {"embedding_provider": "other-provider"},
+        {"embedding_model": "other-model"},
+        {"embedding_dim": 3},
+        {"embedding_provider": None},
+        {"embedding_model": None},
+        {"embedding_dim": None},
+    ])
+    def test_search_similar_excludes_incompatible_embedding_identity(monkeypatch, different):
+        """SQL-aware fake exercises candidate exclusion, including equal dimensions."""
+        import config
+
+        captured = {}
+        identity = {"embedding_provider": "actual-provider", "embedding_model": "active-model", "embedding_dim": 2}
+
+        def row(doc_id, **changes):
+            return SimpleNamespace(doc_id=doc_id, source_type="ctd", sample_id="allowed", event_id=None,
+                time=None, lat=None, lon=None, bay="O", station=None, title=doc_id,
+                text="temperature", distance=0.2, active=True, embedding=[0.25, 0.75], **{**identity, **changes})
+
+        candidates = [row("wrong", **different), row("compatible"), row("inactive")]
+        # Keep fixtures explicit; inactive documents are excluded by the existing filter.
+        candidates[-1].active = False
+
+        class Session:
+            def execute(self, statement, params):
+                sql = str(statement)
+                captured.update(sql=sql, params=params)
+                selected = [r for r in candidates if r.active and r.source_type == params["source_type"]]
+                for column in identity:
+                    if f"{column} = :{column}" in sql:
+                        selected = [r for r in selected if getattr(r, column) == params[column]]
+                return SimpleNamespace(fetchall=lambda: selected)
+
+        @contextmanager
+        def session():
+            yield Session()
+
+        class Runtime:
+            provider = "actual-provider"
+
+            def embed(self, _query, **kwargs):
+                assert kwargs["model"] == "active-model"
+                return [0.25, 0.75]
+
+        monkeypatch.setattr(vector_store, "get_session", session)
+        monkeypatch.setattr(vector_store, "get_model_runtime", lambda: Runtime())
+        monkeypatch.setattr(config, "EMBEDDING_MODEL", "active-model")
+        monkeypatch.setattr(config, "EMBEDDING_DIM", 2)
+        # The runtime, rather than a possibly outdated provider config, owns identity.
+        monkeypatch.setattr(config, "MODEL_PROVIDER", "configured-provider")
+        results = vector_store.search_similar("temperature", source_type="ctd")
+>       assert [r["doc_id"] for r in results] == ["compatible"]
+E       AssertionError: assert ['wrong', 'compatible'] == ['compatible']
+E
+E         At index 0 diff: 'wrong' != 'compatible'
+E         Left contains one more item: 'compatible'
+E         Use -v to get more diff
+
+tests/test_vector_store.py:162: AssertionError
+___ test_search_similar_excludes_incompatible_embedding_identity[different5] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11c9a7c20>
+different = {'embedding_dim': None}
+
+    @pytest.mark.parametrize("different", [
+        {"embedding_provider": "other-provider"},
+        {"embedding_model": "other-model"},
+        {"embedding_dim": 3},
+        {"embedding_provider": None},
+        {"embedding_model": None},
+        {"embedding_dim": None},
+    ])
+    def test_search_similar_excludes_incompatible_embedding_identity(monkeypatch, different):
+        """SQL-aware fake exercises candidate exclusion, including equal dimensions."""
+        import config
+
+        captured = {}
+        identity = {"embedding_provider": "actual-provider", "embedding_model": "active-model", "embedding_dim": 2}
+
+        def row(doc_id, **changes):
+            return SimpleNamespace(doc_id=doc_id, source_type="ctd", sample_id="allowed", event_id=None,
+                time=None, lat=None, lon=None, bay="O", station=None, title=doc_id,
+                text="temperature", distance=0.2, active=True, embedding=[0.25, 0.75], **{**identity, **changes})
+
+        candidates = [row("wrong", **different), row("compatible"), row("inactive")]
+        # Keep fixtures explicit; inactive documents are excluded by the existing filter.
+        candidates[-1].active = False
+
+        class Session:
+            def execute(self, statement, params):
+                sql = str(statement)
+                captured.update(sql=sql, params=params)
+                selected = [r for r in candidates if r.active and r.source_type == params["source_type"]]
+                for column in identity:
+                    if f"{column} = :{column}" in sql:
+                        selected = [r for r in selected if getattr(r, column) == params[column]]
+                return SimpleNamespace(fetchall=lambda: selected)
+
+        @contextmanager
+        def session():
+            yield Session()
+
+        class Runtime:
+            provider = "actual-provider"
+
+            def embed(self, _query, **kwargs):
+                assert kwargs["model"] == "active-model"
+                return [0.25, 0.75]
+
+        monkeypatch.setattr(vector_store, "get_session", session)
+        monkeypatch.setattr(vector_store, "get_model_runtime", lambda: Runtime())
+        monkeypatch.setattr(config, "EMBEDDING_MODEL", "active-model")
+        monkeypatch.setattr(config, "EMBEDDING_DIM", 2)
+        # The runtime, rather than a possibly outdated provider config, owns identity.
+        monkeypatch.setattr(config, "MODEL_PROVIDER", "configured-provider")
+        results = vector_store.search_similar("temperature", source_type="ctd")
+>       assert [r["doc_id"] for r in results] == ["compatible"]
+E       AssertionError: assert ['wrong', 'compatible'] == ['compatible']
+E
+E         At index 0 diff: 'wrong' != 'compatible'
+E         Left contains one more item: 'compatible'
+E         Use -v to get more diff
+
+tests/test_vector_store.py:162: AssertionError
+_ test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts[different0] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11ca50560>
+different = {'embedding_provider': 'other-provider'}
+
+    @pytest.mark.parametrize("different", [
+        {"embedding_provider": "other-provider"},
+        {"embedding_model": "other-model"},
+        {"embedding_dim": 3},
+        {"embedding_provider": None},
+        {"embedding_model": None},
+        {"embedding_dim": None},
+    ])
+    def test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts(monkeypatch, different):
+        from db import vector_store
+
+        captured = []
+        identity = {"embedding_provider": "actual-provider", "embedding_model": "active-model", "embedding_dim": 2}
+        incompatible = _row("wrong")
+        outside = _row("outside")
+        for candidate in (incompatible, outside):
+            candidate.__dict__.update(identity)
+            candidate.active = True
+            candidate.embedding = [0.25, 0.75]
+        incompatible.__dict__.update(different)
+        incompatible.sample_id = "allowed"
+
+        class Session:
+            def execute(self, statement, params):
+                sql = str(statement)
+                captured.append((sql, dict(params)))
+                candidates = [r for r in (incompatible, outside)
+                    if r.active and r.source_type == params["source_type"]
+                    and r.sample_id in params["allowed_sample_id"]]
+                if "embedding <=>" in sql:
+                    for column in identity:
+                        if f"{column} = :{column}" in sql:
+                            candidates = [r for r in candidates if getattr(r, column) == params[column]]
+                return _Result(candidates)
+
+        @contextmanager
+        def session():
+            yield Session()
+
+        class Runtime:
+            provider = "actual-provider"
+
+            def embed(self, _query, **kwargs):
+                assert kwargs["model"] == "active-model"
+                return [0.25, 0.75]
+
+        monkeypatch.setattr(postgres_retriever, "get_session", session)
+        monkeypatch.setattr(vector_store, "get_model_runtime", lambda: Runtime())
+        monkeypatch.setattr(config, "EDNA_ARTIFACT_URI", "")
+        monkeypatch.setattr(config, "EMBEDDING_MODEL", "active-model")
+        monkeypatch.setattr(config, "EMBEDDING_DIM", 2)
+        monkeypatch.setattr(config, "MODEL_PROVIDER", "configured-provider")
+        diagnostics = {}
+        results = postgres_retriever.hybrid_search("query", source_type="ctd", sample_ids=["allowed"], branch_diagnostics=diagnostics)
+>       assert [(r.doc_id, r.rank_sources) for r in results] == [("wrong", {"fts": 1})]
+E       AssertionError: assert [('wrong', {'...1, 'fts': 1})] == [('wrong', {'fts': 1})]
+E
+E         At index 0 diff: ('wrong', {'vector': 1, 'fts': 1}) != ('wrong', {'fts': 1})
+E         Use -v to get more diff
+
+tests/test_hybrid_retrieval_contract.py:234: AssertionError
+_ test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts[different1] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11ca53d70>
+different = {'embedding_model': 'other-model'}
+
+    @pytest.mark.parametrize("different", [
+        {"embedding_provider": "other-provider"},
+        {"embedding_model": "other-model"},
+        {"embedding_dim": 3},
+        {"embedding_provider": None},
+        {"embedding_model": None},
+        {"embedding_dim": None},
+    ])
+    def test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts(monkeypatch, different):
+        from db import vector_store
+
+        captured = []
+        identity = {"embedding_provider": "actual-provider", "embedding_model": "active-model", "embedding_dim": 2}
+        incompatible = _row("wrong")
+        outside = _row("outside")
+        for candidate in (incompatible, outside):
+            candidate.__dict__.update(identity)
+            candidate.active = True
+            candidate.embedding = [0.25, 0.75]
+        incompatible.__dict__.update(different)
+        incompatible.sample_id = "allowed"
+
+        class Session:
+            def execute(self, statement, params):
+                sql = str(statement)
+                captured.append((sql, dict(params)))
+                candidates = [r for r in (incompatible, outside)
+                    if r.active and r.source_type == params["source_type"]
+                    and r.sample_id in params["allowed_sample_id"]]
+                if "embedding <=>" in sql:
+                    for column in identity:
+                        if f"{column} = :{column}" in sql:
+                            candidates = [r for r in candidates if getattr(r, column) == params[column]]
+                return _Result(candidates)
+
+        @contextmanager
+        def session():
+            yield Session()
+
+        class Runtime:
+            provider = "actual-provider"
+
+            def embed(self, _query, **kwargs):
+                assert kwargs["model"] == "active-model"
+                return [0.25, 0.75]
+
+        monkeypatch.setattr(postgres_retriever, "get_session", session)
+        monkeypatch.setattr(vector_store, "get_model_runtime", lambda: Runtime())
+        monkeypatch.setattr(config, "EDNA_ARTIFACT_URI", "")
+        monkeypatch.setattr(config, "EMBEDDING_MODEL", "active-model")
+        monkeypatch.setattr(config, "EMBEDDING_DIM", 2)
+        monkeypatch.setattr(config, "MODEL_PROVIDER", "configured-provider")
+        diagnostics = {}
+        results = postgres_retriever.hybrid_search("query", source_type="ctd", sample_ids=["allowed"], branch_diagnostics=diagnostics)
+>       assert [(r.doc_id, r.rank_sources) for r in results] == [("wrong", {"fts": 1})]
+E       AssertionError: assert [('wrong', {'...1, 'fts': 1})] == [('wrong', {'fts': 1})]
+E
+E         At index 0 diff: ('wrong', {'vector': 1, 'fts': 1}) != ('wrong', {'fts': 1})
+E         Use -v to get more diff
+
+tests/test_hybrid_retrieval_contract.py:234: AssertionError
+_ test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts[different2] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11ca51cd0>
+different = {'embedding_dim': 3}
+
+    @pytest.mark.parametrize("different", [
+        {"embedding_provider": "other-provider"},
+        {"embedding_model": "other-model"},
+        {"embedding_dim": 3},
+        {"embedding_provider": None},
+        {"embedding_model": None},
+        {"embedding_dim": None},
+    ])
+    def test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts(monkeypatch, different):
+        from db import vector_store
+
+        captured = []
+        identity = {"embedding_provider": "actual-provider", "embedding_model": "active-model", "embedding_dim": 2}
+        incompatible = _row("wrong")
+        outside = _row("outside")
+        for candidate in (incompatible, outside):
+            candidate.__dict__.update(identity)
+            candidate.active = True
+            candidate.embedding = [0.25, 0.75]
+        incompatible.__dict__.update(different)
+        incompatible.sample_id = "allowed"
+
+        class Session:
+            def execute(self, statement, params):
+                sql = str(statement)
+                captured.append((sql, dict(params)))
+                candidates = [r for r in (incompatible, outside)
+                    if r.active and r.source_type == params["source_type"]
+                    and r.sample_id in params["allowed_sample_id"]]
+                if "embedding <=>" in sql:
+                    for column in identity:
+                        if f"{column} = :{column}" in sql:
+                            candidates = [r for r in candidates if getattr(r, column) == params[column]]
+                return _Result(candidates)
+
+        @contextmanager
+        def session():
+            yield Session()
+
+        class Runtime:
+            provider = "actual-provider"
+
+            def embed(self, _query, **kwargs):
+                assert kwargs["model"] == "active-model"
+                return [0.25, 0.75]
+
+        monkeypatch.setattr(postgres_retriever, "get_session", session)
+        monkeypatch.setattr(vector_store, "get_model_runtime", lambda: Runtime())
+        monkeypatch.setattr(config, "EDNA_ARTIFACT_URI", "")
+        monkeypatch.setattr(config, "EMBEDDING_MODEL", "active-model")
+        monkeypatch.setattr(config, "EMBEDDING_DIM", 2)
+        monkeypatch.setattr(config, "MODEL_PROVIDER", "configured-provider")
+        diagnostics = {}
+        results = postgres_retriever.hybrid_search("query", source_type="ctd", sample_ids=["allowed"], branch_diagnostics=diagnostics)
+>       assert [(r.doc_id, r.rank_sources) for r in results] == [("wrong", {"fts": 1})]
+E       AssertionError: assert [('wrong', {'...1, 'fts': 1})] == [('wrong', {'fts': 1})]
+E
+E         At index 0 diff: ('wrong', {'vector': 1, 'fts': 1}) != ('wrong', {'fts': 1})
+E         Use -v to get more diff
+
+tests/test_hybrid_retrieval_contract.py:234: AssertionError
+_ test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts[different3] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11ca53830>
+different = {'embedding_provider': None}
+
+    @pytest.mark.parametrize("different", [
+        {"embedding_provider": "other-provider"},
+        {"embedding_model": "other-model"},
+        {"embedding_dim": 3},
+        {"embedding_provider": None},
+        {"embedding_model": None},
+        {"embedding_dim": None},
+    ])
+    def test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts(monkeypatch, different):
+        from db import vector_store
+
+        captured = []
+        identity = {"embedding_provider": "actual-provider", "embedding_model": "active-model", "embedding_dim": 2}
+        incompatible = _row("wrong")
+        outside = _row("outside")
+        for candidate in (incompatible, outside):
+            candidate.__dict__.update(identity)
+            candidate.active = True
+            candidate.embedding = [0.25, 0.75]
+        incompatible.__dict__.update(different)
+        incompatible.sample_id = "allowed"
+
+        class Session:
+            def execute(self, statement, params):
+                sql = str(statement)
+                captured.append((sql, dict(params)))
+                candidates = [r for r in (incompatible, outside)
+                    if r.active and r.source_type == params["source_type"]
+                    and r.sample_id in params["allowed_sample_id"]]
+                if "embedding <=>" in sql:
+                    for column in identity:
+                        if f"{column} = :{column}" in sql:
+                            candidates = [r for r in candidates if getattr(r, column) == params[column]]
+                return _Result(candidates)
+
+        @contextmanager
+        def session():
+            yield Session()
+
+        class Runtime:
+            provider = "actual-provider"
+
+            def embed(self, _query, **kwargs):
+                assert kwargs["model"] == "active-model"
+                return [0.25, 0.75]
+
+        monkeypatch.setattr(postgres_retriever, "get_session", session)
+        monkeypatch.setattr(vector_store, "get_model_runtime", lambda: Runtime())
+        monkeypatch.setattr(config, "EDNA_ARTIFACT_URI", "")
+        monkeypatch.setattr(config, "EMBEDDING_MODEL", "active-model")
+        monkeypatch.setattr(config, "EMBEDDING_DIM", 2)
+        monkeypatch.setattr(config, "MODEL_PROVIDER", "configured-provider")
+        diagnostics = {}
+        results = postgres_retriever.hybrid_search("query", source_type="ctd", sample_ids=["allowed"], branch_diagnostics=diagnostics)
+>       assert [(r.doc_id, r.rank_sources) for r in results] == [("wrong", {"fts": 1})]
+E       AssertionError: assert [('wrong', {'...1, 'fts': 1})] == [('wrong', {'fts': 1})]
+E
+E         At index 0 diff: ('wrong', {'vector': 1, 'fts': 1}) != ('wrong', {'fts': 1})
+E         Use -v to get more diff
+
+tests/test_hybrid_retrieval_contract.py:234: AssertionError
+_ test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts[different4] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11ca52ed0>
+different = {'embedding_model': None}
+
+    @pytest.mark.parametrize("different", [
+        {"embedding_provider": "other-provider"},
+        {"embedding_model": "other-model"},
+        {"embedding_dim": 3},
+        {"embedding_provider": None},
+        {"embedding_model": None},
+        {"embedding_dim": None},
+    ])
+    def test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts(monkeypatch, different):
+        from db import vector_store
+
+        captured = []
+        identity = {"embedding_provider": "actual-provider", "embedding_model": "active-model", "embedding_dim": 2}
+        incompatible = _row("wrong")
+        outside = _row("outside")
+        for candidate in (incompatible, outside):
+            candidate.__dict__.update(identity)
+            candidate.active = True
+            candidate.embedding = [0.25, 0.75]
+        incompatible.__dict__.update(different)
+        incompatible.sample_id = "allowed"
+
+        class Session:
+            def execute(self, statement, params):
+                sql = str(statement)
+                captured.append((sql, dict(params)))
+                candidates = [r for r in (incompatible, outside)
+                    if r.active and r.source_type == params["source_type"]
+                    and r.sample_id in params["allowed_sample_id"]]
+                if "embedding <=>" in sql:
+                    for column in identity:
+                        if f"{column} = :{column}" in sql:
+                            candidates = [r for r in candidates if getattr(r, column) == params[column]]
+                return _Result(candidates)
+
+        @contextmanager
+        def session():
+            yield Session()
+
+        class Runtime:
+            provider = "actual-provider"
+
+            def embed(self, _query, **kwargs):
+                assert kwargs["model"] == "active-model"
+                return [0.25, 0.75]
+
+        monkeypatch.setattr(postgres_retriever, "get_session", session)
+        monkeypatch.setattr(vector_store, "get_model_runtime", lambda: Runtime())
+        monkeypatch.setattr(config, "EDNA_ARTIFACT_URI", "")
+        monkeypatch.setattr(config, "EMBEDDING_MODEL", "active-model")
+        monkeypatch.setattr(config, "EMBEDDING_DIM", 2)
+        monkeypatch.setattr(config, "MODEL_PROVIDER", "configured-provider")
+        diagnostics = {}
+        results = postgres_retriever.hybrid_search("query", source_type="ctd", sample_ids=["allowed"], branch_diagnostics=diagnostics)
+>       assert [(r.doc_id, r.rank_sources) for r in results] == [("wrong", {"fts": 1})]
+E       AssertionError: assert [('wrong', {'...1, 'fts': 1})] == [('wrong', {'fts': 1})]
+E
+E         At index 0 diff: ('wrong', {'vector': 1, 'fts': 1}) != ('wrong', {'fts': 1})
+E         Use -v to get more diff
+
+tests/test_hybrid_retrieval_contract.py:234: AssertionError
+_ test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts[different5] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11ca53e30>
+different = {'embedding_dim': None}
+
+    @pytest.mark.parametrize("different", [
+        {"embedding_provider": "other-provider"},
+        {"embedding_model": "other-model"},
+        {"embedding_dim": 3},
+        {"embedding_provider": None},
+        {"embedding_model": None},
+        {"embedding_dim": None},
+    ])
+    def test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts(monkeypatch, different):
+        from db import vector_store
+
+        captured = []
+        identity = {"embedding_provider": "actual-provider", "embedding_model": "active-model", "embedding_dim": 2}
+        incompatible = _row("wrong")
+        outside = _row("outside")
+        for candidate in (incompatible, outside):
+            candidate.__dict__.update(identity)
+            candidate.active = True
+            candidate.embedding = [0.25, 0.75]
+        incompatible.__dict__.update(different)
+        incompatible.sample_id = "allowed"
+
+        class Session:
+            def execute(self, statement, params):
+                sql = str(statement)
+                captured.append((sql, dict(params)))
+                candidates = [r for r in (incompatible, outside)
+                    if r.active and r.source_type == params["source_type"]
+                    and r.sample_id in params["allowed_sample_id"]]
+                if "embedding <=>" in sql:
+                    for column in identity:
+                        if f"{column} = :{column}" in sql:
+                            candidates = [r for r in candidates if getattr(r, column) == params[column]]
+                return _Result(candidates)
+
+        @contextmanager
+        def session():
+            yield Session()
+
+        class Runtime:
+            provider = "actual-provider"
+
+            def embed(self, _query, **kwargs):
+                assert kwargs["model"] == "active-model"
+                return [0.25, 0.75]
+
+        monkeypatch.setattr(postgres_retriever, "get_session", session)
+        monkeypatch.setattr(vector_store, "get_model_runtime", lambda: Runtime())
+        monkeypatch.setattr(config, "EDNA_ARTIFACT_URI", "")
+        monkeypatch.setattr(config, "EMBEDDING_MODEL", "active-model")
+        monkeypatch.setattr(config, "EMBEDDING_DIM", 2)
+        monkeypatch.setattr(config, "MODEL_PROVIDER", "configured-provider")
+        diagnostics = {}
+        results = postgres_retriever.hybrid_search("query", source_type="ctd", sample_ids=["allowed"], branch_diagnostics=diagnostics)
+>       assert [(r.doc_id, r.rank_sources) for r in results] == [("wrong", {"fts": 1})]
+E       AssertionError: assert [('wrong', {'...1, 'fts': 1})] == [('wrong', {'fts': 1})]
+E
+E         At index 0 diff: ('wrong', {'vector': 1, 'fts': 1}) != ('wrong', {'fts': 1})
+E         Use -v to get more diff
+
+tests/test_hybrid_retrieval_contract.py:234: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_vector_store.py::test_search_similar_excludes_incompatible_embedding_identity[different0]
+FAILED tests/test_vector_store.py::test_search_similar_excludes_incompatible_embedding_identity[different1]
+FAILED tests/test_vector_store.py::test_search_similar_excludes_incompatible_embedding_identity[different2]
+FAILED tests/test_vector_store.py::test_search_similar_excludes_incompatible_embedding_identity[different3]
+FAILED tests/test_vector_store.py::test_search_similar_excludes_incompatible_embedding_identity[different4]
+FAILED tests/test_vector_store.py::test_search_similar_excludes_incompatible_embedding_identity[different5]
+FAILED tests/test_hybrid_retrieval_contract.py::test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts[different0]
+FAILED tests/test_hybrid_retrieval_contract.py::test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts[different1]
+FAILED tests/test_hybrid_retrieval_contract.py::test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts[different2]
+FAILED tests/test_hybrid_retrieval_contract.py::test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts[different3]
+FAILED tests/test_hybrid_retrieval_contract.py::test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts[different4]
+FAILED tests/test_hybrid_retrieval_contract.py::test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts[different5]
+12 failed, 10 deselected in 0.36s

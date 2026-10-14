@@ -27,6 +27,12 @@ from .common import (
     normalize_genus_key,
     read_tsv_no_header,
 )
+from .metagenome_contract import (
+    KRAKEN_TOP_COLUMN,
+    KRAKEN_UPPER_COLUMN,
+    METAEUK_TOP_COLUMN,
+    adapt_legacy_metagenome_context,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -308,7 +314,7 @@ def top_n_taxa_as_json(
     for sample_id, g in df.groupby("sample_id", dropna=False):
         g2 = (
             g.dropna(subset=[group_col, value_col])
-            .sort_values(value_col, ascending=False)
+            .sort_values([value_col, group_col], ascending=[False, True], kind="stable")
             .head(n)
         )
 
@@ -335,7 +341,7 @@ def top_n_taxa_as_json(
             }
         )
 
-    return pd.DataFrame(out_rows)
+    return pd.DataFrame(out_rows, columns=["sample_id", f"top_{group_col}_{n}_json"])
 
 
 # =====================================================================
@@ -423,9 +429,13 @@ def build_sample_multisource_context(
     """
     ctx = (
         sample_registry.merge(ctd_summary, on="sample_id", how="left", suffixes=("", "_ctd"))
-        .merge(kraken_top_genera, on="sample_id", how="left")
-        .merge(metaeuk_top_genera, on="sample_id", how="left")
-        .merge(kraken_top_upper_groups, on="sample_id", how="left")
+        .merge(kraken_top_genera.rename(columns={"top_genus_10_json": KRAKEN_TOP_COLUMN}),
+               on="sample_id", how="left", validate="one_to_one")
+        .merge(metaeuk_top_genera.rename(columns={"top_genus_10_json": METAEUK_TOP_COLUMN}),
+               on="sample_id", how="left", validate="one_to_one")
+        .merge(kraken_top_upper_groups.rename(columns={"top_upper_group_10_json": KRAKEN_UPPER_COLUMN}),
+               on="sample_id", how="left", validate="one_to_one")
     )
+    ctx = adapt_legacy_metagenome_context(ctx)
     logger.info("Multisource context: %d rows × %d cols", *ctx.shape)
     return ctx

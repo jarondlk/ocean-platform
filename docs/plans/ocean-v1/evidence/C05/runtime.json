@@ -1,0 +1,15 @@
+{
+  "python": "3.12.7",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "branch": "overhaul",
+  "base_head": "58ee4b4fc3770fdc3c334aca592b6b5d0b39a0d8",
+  "packages": {
+    "sqlalchemy": "2.0.52",
+    "pgvector": "0.5.0",
+    "pytest": "9.1.1",
+    "fastapi": "0.141.1",
+    "pandas": "2.3.3",
+    "alembic": "1.20.0",
+    "ruff": "0.16.9"
+  }
+}

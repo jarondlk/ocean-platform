@@ -1,0 +1,512 @@
+FFFFFFFFFFFFFFFFF.F.FF                                                   [100%]
+=================================== FAILURES ===================================
+____ test_producer_names_method_fields_and_document_keeps_both_labels_once _____
+
+    def test_producer_names_method_fields_and_document_keeps_both_labels_once():
+        produced = _producer()
+>       assert {KRAKEN, METAEUK, UPPER}.issubset(produced.columns)
+E       AssertionError: assert False
+E        +  where False = <built-in method issubset of set object at 0x11125b220>(Index(['sample_id', 'has_kraken', 'has_metaeuk', 'has_ctd',\n       'top_genus_10_json_x', 'top_genus_10_json_y',\n       'top_upper_group_10_json'],\n      dtype='object'))
+E        +    where <built-in method issubset of set object at 0x11125b220> = {'top_kraken_genera_json', 'top_kraken_upper_groups_json', 'top_metaeuk_genera_json'}.issubset
+E        +    and   Index(['sample_id', 'has_kraken', 'has_metaeuk', 'has_ctd',\n       'top_genus_10_json_x', 'top_genus_10_json_y',\n       'top_upper_group_10_json'],\n      dtype='object') =       sample_id  ...  top_upper_group_10_json\n0  2024-04-O-s1  ...                       []\n\n[1 rows x 7 columns].columns
+
+tests/test_metagenome_document_contract.py:55: AssertionError
+__ test_legacy_merged_adapter_uses_verified_left_kraken_right_metaeuk_mapping __
+
+    def test_legacy_merged_adapter_uses_verified_left_kraken_right_metaeuk_mapping():
+>       adapted = _adapter(_legacy())
+                  ^^^^^^^^^^^^^^^^^^^
+
+tests/test_metagenome_document_contract.py:67:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_metagenome_document_contract.py:39: in _adapter
+    contract = importlib.import_module("preprocessing.metagenome_contract")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'preprocessing.metagenome_contract'
+import_ = <function _gcd_import at 0x104f840e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'preprocessing.metagenome_contract'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_ test_unsuffixed_legacy_requires_explicit_single_method_coverage[kraken-top_kraken_genera_json] _
+
+method = 'kraken', column = 'top_kraken_genera_json'
+
+    @pytest.mark.parametrize("method,column", [("kraken", KRAKEN), ("metaeuk", METAEUK)])
+    def test_unsuffixed_legacy_requires_explicit_single_method_coverage(method, column):
+        frame = pd.DataFrame([{"sample_id": SAMPLE, "has_kraken": method == "kraken",
+                               "has_metaeuk": method == "metaeuk", "top_genus_10_json": _taxa("SingleMethod")}])
+>       adapted = _adapter(frame)
+                  ^^^^^^^^^^^^^^^
+
+tests/test_metagenome_document_contract.py:79:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_metagenome_document_contract.py:39: in _adapter
+    contract = importlib.import_module("preprocessing.metagenome_contract")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'preprocessing.metagenome_contract'
+import_ = <function _gcd_import at 0x104f840e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'preprocessing.metagenome_contract'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_ test_unsuffixed_legacy_requires_explicit_single_method_coverage[metaeuk-top_metaeuk_genera_json] _
+
+method = 'metaeuk', column = 'top_metaeuk_genera_json'
+
+    @pytest.mark.parametrize("method,column", [("kraken", KRAKEN), ("metaeuk", METAEUK)])
+    def test_unsuffixed_legacy_requires_explicit_single_method_coverage(method, column):
+        frame = pd.DataFrame([{"sample_id": SAMPLE, "has_kraken": method == "kraken",
+                               "has_metaeuk": method == "metaeuk", "top_genus_10_json": _taxa("SingleMethod")}])
+>       adapted = _adapter(frame)
+                  ^^^^^^^^^^^^^^^
+
+tests/test_metagenome_document_contract.py:79:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_metagenome_document_contract.py:39: in _adapter
+    contract = importlib.import_module("preprocessing.metagenome_contract")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'preprocessing.metagenome_contract'
+import_ = <function _gcd_import at 0x104f840e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'preprocessing.metagenome_contract'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_____________ test_ambiguous_unsuffixed_layout_is_rejected[flags0] _____________
+
+flags = {'has_kraken': True, 'has_metaeuk': True}
+
+    @pytest.mark.parametrize("flags", [{"has_kraken": True, "has_metaeuk": True},
+                                        {"has_kraken": False, "has_metaeuk": False}, {}])
+    def test_ambiguous_unsuffixed_layout_is_rejected(flags):
+        frame = pd.DataFrame([{"sample_id": SAMPLE, "top_genus_10_json": _taxa("UnknownMethod"), **flags}])
+        with pytest.raises(ValueError, match="ambiguous.*unsuffixed"):
+>           _adapter(frame)
+
+tests/test_metagenome_document_contract.py:94:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_metagenome_document_contract.py:39: in _adapter
+    contract = importlib.import_module("preprocessing.metagenome_contract")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'preprocessing.metagenome_contract'
+import_ = <function _gcd_import at 0x104f840e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'preprocessing.metagenome_contract'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_____________ test_ambiguous_unsuffixed_layout_is_rejected[flags1] _____________
+
+flags = {'has_kraken': False, 'has_metaeuk': False}
+
+    @pytest.mark.parametrize("flags", [{"has_kraken": True, "has_metaeuk": True},
+                                        {"has_kraken": False, "has_metaeuk": False}, {}])
+    def test_ambiguous_unsuffixed_layout_is_rejected(flags):
+        frame = pd.DataFrame([{"sample_id": SAMPLE, "top_genus_10_json": _taxa("UnknownMethod"), **flags}])
+        with pytest.raises(ValueError, match="ambiguous.*unsuffixed"):
+>           _adapter(frame)
+
+tests/test_metagenome_document_contract.py:94:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_metagenome_document_contract.py:39: in _adapter
+    contract = importlib.import_module("preprocessing.metagenome_contract")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'preprocessing.metagenome_contract'
+import_ = <function _gcd_import at 0x104f840e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'preprocessing.metagenome_contract'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_____________ test_ambiguous_unsuffixed_layout_is_rejected[flags2] _____________
+
+flags = {}
+
+    @pytest.mark.parametrize("flags", [{"has_kraken": True, "has_metaeuk": True},
+                                        {"has_kraken": False, "has_metaeuk": False}, {}])
+    def test_ambiguous_unsuffixed_layout_is_rejected(flags):
+        frame = pd.DataFrame([{"sample_id": SAMPLE, "top_genus_10_json": _taxa("UnknownMethod"), **flags}])
+        with pytest.raises(ValueError, match="ambiguous.*unsuffixed"):
+>           _adapter(frame)
+
+tests/test_metagenome_document_contract.py:94:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_metagenome_document_contract.py:39: in _adapter
+    contract = importlib.import_module("preprocessing.metagenome_contract")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'preprocessing.metagenome_contract'
+import_ = <function _gcd_import at 0x104f840e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'preprocessing.metagenome_contract'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+______ test_incomplete_legacy_merge_pair_is_rejected[top_genus_10_json_x] ______
+
+missing = 'top_genus_10_json_x'
+
+    @pytest.mark.parametrize("missing", ["top_genus_10_json_x", "top_genus_10_json_y"])
+    def test_incomplete_legacy_merge_pair_is_rejected(missing):
+        with pytest.raises(ValueError, match="incomplete.*legacy"):
+>           _adapter(_legacy().drop(columns=missing))
+
+tests/test_metagenome_document_contract.py:100:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_metagenome_document_contract.py:39: in _adapter
+    contract = importlib.import_module("preprocessing.metagenome_contract")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'preprocessing.metagenome_contract'
+import_ = <function _gcd_import at 0x104f840e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'preprocessing.metagenome_contract'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+______ test_incomplete_legacy_merge_pair_is_rejected[top_genus_10_json_y] ______
+
+missing = 'top_genus_10_json_y'
+
+    @pytest.mark.parametrize("missing", ["top_genus_10_json_x", "top_genus_10_json_y"])
+    def test_incomplete_legacy_merge_pair_is_rejected(missing):
+        with pytest.raises(ValueError, match="incomplete.*legacy"):
+>           _adapter(_legacy().drop(columns=missing))
+
+tests/test_metagenome_document_contract.py:100:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_metagenome_document_contract.py:39: in _adapter
+    contract = importlib.import_module("preprocessing.metagenome_contract")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'preprocessing.metagenome_contract'
+import_ = <function _gcd_import at 0x104f840e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'preprocessing.metagenome_contract'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_____________ test_mixed_canonical_and_legacy_fields_are_rejected ______________
+
+    def test_mixed_canonical_and_legacy_fields_are_rejected():
+        frame = _context().assign(top_genus_10_json_x=_taxa("WrongKraken"),
+                                  top_genus_10_json_y=_taxa("WrongMetaEuk"))
+        with pytest.raises(ValueError, match="mixed.*canonical.*legacy"):
+>           _adapter(frame)
+
+tests/test_metagenome_document_contract.py:107:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_metagenome_document_contract.py:39: in _adapter
+    contract = importlib.import_module("preprocessing.metagenome_contract")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'preprocessing.metagenome_contract'
+import_ = <function _gcd_import at 0x104f840e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'preprocessing.metagenome_contract'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+__ test_missing_taxa_summary_does_not_exchange_methods_or_fabricate_coverage ___
+
+    def test_missing_taxa_summary_does_not_exchange_methods_or_fabricate_coverage():
+        frame = _context(has_metaeuk=pd.NA).drop(columns=[KRAKEN, METAEUK])
+>       adapted = _adapter(frame)
+                  ^^^^^^^^^^^^^^^
+
+tests/test_metagenome_document_contract.py:112:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_metagenome_document_contract.py:39: in _adapter
+    contract = importlib.import_module("preprocessing.metagenome_contract")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'preprocessing.metagenome_contract'
+import_ = <function _gcd_import at 0x104f840e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'preprocessing.metagenome_contract'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_____ test_top_taxa_ties_and_empty_single_source_builds_are_deterministic ______
+
+    def test_top_taxa_ties_and_empty_single_source_builds_are_deterministic():
+        abundance = pd.DataFrame([{"sample_id": SAMPLE, "genus": "Zeta", "abundance_value": 5.0},
+                                  {"sample_id": SAMPLE, "genus": "Alpha", "abundance_value": 5.0}])
+        first = top_n_taxa_as_json(abundance, "genus", "abundance_value")
+        second = top_n_taxa_as_json(abundance.iloc[::-1], "genus", "abundance_value")
+>       assert first.equals(second)
+E       assert False
+E        +  where False = equals(      sample_id                                  top_genus_10_json\n0  2024-04-O-s1  [{"genus": "Alpha", "abundance_value": 5.0}, {...)
+E        +    where equals =       sample_id                                  top_genus_10_json\n0  2024-04-O-s1  [{"genus": "Zeta", "abundance_value": 5.0}, {"....equals
+
+tests/test_metagenome_document_contract.py:125: AssertionError
+__ test_repeat_and_legacy_normalization_keep_source_content_generation_hashes __
+
+    def test_repeat_and_legacy_normalization_keep_source_content_generation_hashes():
+        first = build_metagenome_docs(_context())[0]
+        second = build_metagenome_docs(_context())[0]
+        legacy = build_metagenome_docs(_legacy())[0]
+        assert first == second
+        for key in ["source_version", "content_hash", "generation_hash"]:
+>           assert first.metadata[key] == legacy.metadata[key]
+                   ^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'source_version'
+
+tests/test_metagenome_document_contract.py:142: KeyError
+_________ test_changed_rendered_source_gets_new_content_and_generation _________
+
+    def test_changed_rendered_source_gets_new_content_and_generation():
+        first = build_metagenome_docs(_context())[0]
+        changed = build_metagenome_docs(_context(**{KRAKEN: _taxa("NewKrakenGenus")}))[0]
+>       assert first.doc_id != changed.doc_id
+E       AssertionError: assert 'meta_2024-04-O-s1' != 'meta_2024-04-O-s1'
+E        +  where 'meta_2024-04-O-s1' = RetrievalDocument(doc_id='meta_2024-04-O-s1', source_type='metagenome', sample_id='2024-04-O-s1', event_id='sample_202...d=None, assay_id=None, assignment_method=None, sample_kind=None, is_control=None, source_snapshot_id=None, metadata={}).doc_id
+E        +  and   'meta_2024-04-O-s1' = RetrievalDocument(doc_id='meta_2024-04-O-s1', source_type='metagenome', sample_id='2024-04-O-s1', event_id='sample_202...d=None, assay_id=None, assignment_method=None, sample_kind=None, is_control=None, source_snapshot_id=None, metadata={}).doc_id
+
+tests/test_metagenome_document_contract.py:151: AssertionError
+___ test_changed_unrendered_source_gets_new_generation_even_if_text_matches ____
+
+    def test_changed_unrendered_source_gets_new_generation_even_if_text_matches():
+        first = build_metagenome_docs(_context(sum_bases_gt1kb=100))[0]
+        changed = build_metagenome_docs(_context(sum_bases_gt1kb=101))[0]
+        assert first.text == changed.text
+>       assert first.metadata["content_hash"] == changed.metadata["content_hash"]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'content_hash'
+
+tests/test_metagenome_document_contract.py:160: KeyError
+_____________ test_mapping_version_is_bound_to_document_generation _____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x111300a10>
+
+    def test_mapping_version_is_bound_to_document_generation(monkeypatch):
+        import retrieval.document_builder as builder
+        first = build_metagenome_docs(_context())[0]
+>       monkeypatch.setattr(builder, "METAGENOME_DOCUMENT_VERSION", "metagenome-document-test-v3")
+E       AttributeError: <module 'retrieval.document_builder' from '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/retrieval/document_builder.py'> has no attribute 'METAGENOME_DOCUMENT_VERSION'
+
+tests/test_metagenome_document_contract.py:169: AttributeError
+___ test_loader_and_lineage_database_rows_keep_method_assignment[canonical] ____
+
+tmp_path = PosixPath('/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/pytest-284/test_loader_and_lineage_databa0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x111303ce0>
+layout = 'canonical'
+
+    @pytest.mark.parametrize("layout", ["canonical", "legacy"])
+    def test_loader_and_lineage_database_rows_keep_method_assignment(tmp_path, monkeypatch, layout):
+        loader = importlib.import_module("scripts.load_db")
+        lineage = importlib.import_module("ingestion.lineage")
+        frame = _context() if layout == "canonical" else _legacy()
+        frame.to_parquet(tmp_path / "sample_multisource_context.parquet", index=False)
+        monkeypatch.setattr(loader.config, "SERVING_DIR", tmp_path)
+        loaded = loader.metagenome_samples_dataframe()
+        traced, _, _ = lineage._incoming_dataframe_for_table("metagenome_sample")
+        for rows in [loaded, traced]:
+>           assert json.loads(rows.iloc[0][KRAKEN])[0]["genus"] == "KrakenOnlyGenus"
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_metagenome_document_contract.py:187:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s = None, cls = None, object_hook = None, parse_float = None, parse_int = None
+parse_constant = None, object_pairs_hook = None, kw = {}
+
+    def loads(s, *, cls=None, object_hook=None, parse_float=None,
+            parse_int=None, parse_constant=None, object_pairs_hook=None, **kw):
+        """Deserialize ``s`` (a ``str``, ``bytes`` or ``bytearray`` instance
+        containing a JSON document) to a Python object.
+
+        ``object_hook`` is an optional function that will be called with the
+        result of any object literal decode (a ``dict``). The return value of
+        ``object_hook`` will be used instead of the ``dict``. This feature
+        can be used to implement custom decoders (e.g. JSON-RPC class hinting).
+
+        ``object_pairs_hook`` is an optional function that will be called with the
+        result of any object literal decoded with an ordered list of pairs.  The
+        return value of ``object_pairs_hook`` will be used instead of the ``dict``.
+        This feature can be used to implement custom decoders.  If ``object_hook``
+        is also defined, the ``object_pairs_hook`` takes priority.
+
+        ``parse_float``, if specified, will be called with the string
+        of every JSON float to be decoded. By default this is equivalent to
+        float(num_str). This can be used to use another datatype or parser
+        for JSON floats (e.g. decimal.Decimal).
+
+        ``parse_int``, if specified, will be called with the string
+        of every JSON int to be decoded. By default this is equivalent to
+        int(num_str). This can be used to use another datatype or parser
+        for JSON integers (e.g. float).
+
+        ``parse_constant``, if specified, will be called with one of the
+        following strings: -Infinity, Infinity, NaN.
+        This can be used to raise an exception if invalid JSON numbers
+        are encountered.
+
+        To use a custom ``JSONDecoder`` subclass, specify it with the ``cls``
+        kwarg; otherwise ``JSONDecoder`` is used.
+        """
+        if isinstance(s, str):
+            if s.startswith('\ufeff'):
+                raise JSONDecodeError("Unexpected UTF-8 BOM (decode using utf-8-sig)",
+                                      s, 0)
+        else:
+            if not isinstance(s, (bytes, bytearray)):
+>               raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                                f'not {s.__class__.__name__}')
+E               TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/__init__.py:339: TypeError
+----------------------------- Captured stderr call -----------------------------
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+____________ test_api_taxa_response_keeps_method_labels[canonical] _____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11d0e5dc0>
+layout = 'canonical'
+
+    @pytest.mark.parametrize("layout", ["canonical", "legacy"])
+    def test_api_taxa_response_keeps_method_labels(monkeypatch, layout):
+        main = importlib.import_module("api.main")
+        monkeypatch.setattr(main, "_sample_context_df", lambda: _context() if layout == "canonical" else _legacy())
+        response = main.data_taxa(SAMPLE)
+>       assert response.kraken_top[0].label == "KrakenOnlyGenus"
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+tests/test_metagenome_document_contract.py:197: IndexError
+_________ test_lineage_trace_retains_generated_hashes_and_source_keys __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11f83aa20>
+
+    def test_lineage_trace_retains_generated_hashes_and_source_keys(monkeypatch):
+        lineage = importlib.import_module("ingestion.lineage")
+        document = build_metagenome_docs(_context())[0]
+        monkeypatch.setattr(lineage, "_read_retrieval_documents", lambda: documents_to_dataframe([document]))
+        trace = lineage.build_document_traces()[0]
+>       assert trace.content_hash == document.metadata["content_hash"]
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'content_hash'
+
+tests/test_metagenome_document_contract.py:206: KeyError
+________ test_generated_document_identity_fits_existing_database_length ________
+
+    def test_generated_document_identity_fits_existing_database_length():
+        document = build_metagenome_docs(_context(sample_id="s" * 64))[0]
+        assert len(document.doc_id) <= 128
+>       assert len(document.metadata["generation_hash"]) == 64
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'generation_hash'
+
+tests/test_metagenome_document_contract.py:215: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_metagenome_document_contract.py::test_producer_names_method_fields_and_document_keeps_both_labels_once
+FAILED tests/test_metagenome_document_contract.py::test_legacy_merged_adapter_uses_verified_left_kraken_right_metaeuk_mapping
+FAILED tests/test_metagenome_document_contract.py::test_unsuffixed_legacy_requires_explicit_single_method_coverage[kraken-top_kraken_genera_json]
+FAILED tests/test_metagenome_document_contract.py::test_unsuffixed_legacy_requires_explicit_single_method_coverage[metaeuk-top_metaeuk_genera_json]
+FAILED tests/test_metagenome_document_contract.py::test_ambiguous_unsuffixed_layout_is_rejected[flags0]
+FAILED tests/test_metagenome_document_contract.py::test_ambiguous_unsuffixed_layout_is_rejected[flags1]
+FAILED tests/test_metagenome_document_contract.py::test_ambiguous_unsuffixed_layout_is_rejected[flags2]
+FAILED tests/test_metagenome_document_contract.py::test_incomplete_legacy_merge_pair_is_rejected[top_genus_10_json_x]
+FAILED tests/test_metagenome_document_contract.py::test_incomplete_legacy_merge_pair_is_rejected[top_genus_10_json_y]
+FAILED tests/test_metagenome_document_contract.py::test_mixed_canonical_and_legacy_fields_are_rejected
+FAILED tests/test_metagenome_document_contract.py::test_missing_taxa_summary_does_not_exchange_methods_or_fabricate_coverage
+FAILED tests/test_metagenome_document_contract.py::test_top_taxa_ties_and_empty_single_source_builds_are_deterministic
+FAILED tests/test_metagenome_document_contract.py::test_repeat_and_legacy_normalization_keep_source_content_generation_hashes
+FAILED tests/test_metagenome_document_contract.py::test_changed_rendered_source_gets_new_content_and_generation
+FAILED tests/test_metagenome_document_contract.py::test_changed_unrendered_source_gets_new_generation_even_if_text_matches
+FAILED tests/test_metagenome_document_contract.py::test_mapping_version_is_bound_to_document_generation
+FAILED tests/test_metagenome_document_contract.py::test_loader_and_lineage_database_rows_keep_method_assignment[canonical]
+FAILED tests/test_metagenome_document_contract.py::test_api_taxa_response_keeps_method_labels[canonical]
+FAILED tests/test_metagenome_document_contract.py::test_lineage_trace_retains_generated_hashes_and_source_keys
+FAILED tests/test_metagenome_document_contract.py::test_generated_document_identity_fits_existing_database_length
+20 failed, 2 passed in 0.83s

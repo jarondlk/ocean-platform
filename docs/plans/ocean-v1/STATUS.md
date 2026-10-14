@@ -1,18 +1,21 @@
 # Implementation status
 
-Updated: 2026-10-15 JST. **P00 and C01–C04 are Complete locally.**
+Updated: 2026-10-15 JST. **P00 and C01–C05 are Complete locally.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
 C02 was explicitly selected on 2026-10-14 JST and passed its software/synthetic
 checks. C03 passed its local transaction-ordering and actual disposable PostgreSQL
 acceptance. C04 now passes concurrent responsiveness, worker-lifetime, security
-and cancellation acceptance. C05–C27 remain Not started.
-P00 and C01–C04 local work is authorized.
+and cancellation acceptance. C05 passes embedding isolation, metagenome fidelity
+and deterministic replacement-history acceptance; C06–C27 remain Not started.
+P00 and C01–C05 local work is authorized.
 See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
-[C03](handoffs/C03.md) and [C04](handoffs/C04.md) handoffs for current evidence.
+[C03](handoffs/C03.md), [C04](handoffs/C04.md) and [C05](handoffs/C05.md) handoffs for current evidence.
 
-Recommended next implementation: **C05 — Retrieval correctness**, after explicit user selection.
+Latest completed implementation: **C05 — Retrieval correctness**, explicitly selected.
+C05 is uncommitted on base `58ee4b4`; its source hashes and evidence are recorded
+in [the acceptance receipt](evidence/C05/verification.json).
 P00 passed its local UX/user-review gate; C01 passed its offline scope-validation
 checks. C02 passed its synthetic scientific-processing and eligibility checks.
 Real-data regeneration and review remain outstanding. C03 fixes atomic hold/deletion
@@ -29,7 +32,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C02 — Derived scientific evidence](components/C02-derived-scientific-evidence.md) | Complete | F02/F04/F05 fixed; frozen input receipts, review gate, retained history and supersession | Required suites and composite C01/consumer regressions pass; Ruff/diff pass; [receipt](evidence/C02/verification.json) | [C02](handoffs/C02.md) |
 | [C03 — Retention integrity](components/C03-retention-integrity.md) | Complete | Atomic predicate DELETE/hold UPDATE; committed count/audit parity; preserved held/dependent evidence; isolated server stopped | 35 required; 93 with auth/security; 12 actual PostgreSQL cases pass; full suite 1,684 passed, 51 expected gated skips; [receipt](evidence/C03/verification.json) | [C03](handoffs/C03.md) |
 | [C04 — Authentication responsiveness](components/C04-authentication-responsiveness.md) | Complete | Complete auth/limiter operations offloaded; worker-owned resources; security and both cancellation styles; independent review passes | 87 required; full suite 1,705 passed, 51 expected PostgreSQL skips, 81.46% coverage; Ruff/preservation pass; [receipt](evidence/C04/verification.json) | [C04](handoffs/C04.md) |
-| [C05 — Retrieval correctness](components/C05-retrieval-correctness.md) | Not started | None | Not run | Not created |
+| [C05 — Retrieval correctness](components/C05-retrieval-correctness.md) | Complete | Explicit query embedding identity; named Kraken/MetaEuk mapping; deterministic immutable replacements and preserved history; deferred rebuild runbook | 142 required; 12 actual C05 PostgreSQL cases; 39 existing PostgreSQL regressions; full suite 1,806 passed/63 gated skips, 81.77% coverage; [receipt](evidence/C05/verification.json) | [C05](handoffs/C05.md) |
 | [C06 — Model runtime contract](components/C06-model-runtime.md) | Not started | None | Not run | Not created |
 | [C07 — Export safety](components/C07-export-safety.md) | Not started | None | Not run | Not created |
 | [C08 — Catalogue contracts and fixtures](components/C08-catalogue-contracts.md) | Not started | None | Not run | Not created |
@@ -78,3 +81,10 @@ Older unrelated audit/benchmark work remains outside this delivery.
 P00 has passed only G8, the local UX direction gate. No code revision has passed
 the full v1 acceptance map. See [SETUP_RECEIPT.md](SETUP_RECEIPT.md)
 for document validation only, and [ACCEPTANCE_MAP.md](ACCEPTANCE_MAP.md) for future checks.
+
+C05 local acceptance includes independent source/acceptance review and two
+idempotent upserts into a fresh owned PostgreSQL database. Both disposable servers
+are stopped and all C05 fixture schemas removed. The read-only serving inventory
+identifies 82 affected legacy documents; [rebuild instructions](C05_REBUILD_RUNBOOK.md)
+are deferred. Real files, live stores and providers were not regenerated/called.
+No hosted C05 CI result or C05 delivery is claimed. C06 is unselected.

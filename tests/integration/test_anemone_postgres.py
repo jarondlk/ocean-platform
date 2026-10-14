@@ -17,6 +17,7 @@ from sqlalchemy import create_engine, inspect, text
 import config
 import api.edna_service as edna_service
 import retrieval.hybrid_retriever as hybrid_retriever
+from db.embedding_identity import EmbeddingIdentity, IdentifiedEmbedding
 from db.models import CorpusBase
 from retrieval.edna_document_builder import build_edna_documents
 from retrieval.edna_materializer import (
@@ -281,7 +282,7 @@ def test_anemone_migration_and_transactional_merge_are_idempotent(monkeypatch):
             assert edna_service.edna_detections({"taxon": "missing"}, limit=10, offset=0)["total"] == 0
 
             monkeypatch.setattr(hybrid_retriever, "get_session", lambda: nullcontext(connection))
-            monkeypatch.setattr(hybrid_retriever, "embed_text", lambda _query: [0.1] * config.EMBEDDING_DIM)
+            monkeypatch.setattr(hybrid_retriever, "embed_query", lambda _query: IdentifiedEmbedding([0.1] * config.EMBEDDING_DIM, EmbeddingIdentity(config.MODEL_PROVIDER, config.EMBEDDING_MODEL, config.EMBEDDING_DIM)))
             results = hybrid_retriever.hybrid_search("MiFish", provider="anemone", is_control=False)
             assert [row.doc_id for row in results] == [documents[0].doc_id]
             assert hybrid_retriever.hybrid_search("MiFish", taxon="missing") == []
@@ -477,26 +478,31 @@ def test_hybrid_retrieval_transactions_recover_each_branch(monkeypatch):
                 """
                 INSERT INTO retrieval_document (
                     doc_id, source_type, sample_id, title, text, text_tsv,
-                    embedding, active
+                    embedding, embedding_provider, embedding_model, embedding_dim, active
                 ) VALUES (
                     :doc_id, 'ctd', :sample_id, 'Isolation fixture',
                     'isolationtoken', to_tsvector('english', 'isolationtoken'),
-                    CAST(:embedding AS vector), TRUE
+                    CAST(:embedding AS vector), :embedding_provider, :embedding_model, :embedding_dim, TRUE
                 )
                 ON CONFLICT (doc_id) DO UPDATE SET
                     text = EXCLUDED.text,
                     text_tsv = EXCLUDED.text_tsv,
                     embedding = EXCLUDED.embedding,
+                    embedding_provider = EXCLUDED.embedding_provider,
+                    embedding_model = EXCLUDED.embedding_model,
+                    embedding_dim = EXCLUDED.embedding_dim,
                     active = TRUE
                 """
             ),
-            {"doc_id": doc_id, "sample_id": sample_id, "embedding": embedding},
+            {"doc_id": doc_id, "sample_id": sample_id, "embedding": embedding,
+             "embedding_provider": config.MODEL_PROVIDER, "embedding_model": config.EMBEDDING_MODEL,
+             "embedding_dim": config.EMBEDDING_DIM},
         )
     monkeypatch.setattr(config, "EDNA_ARTIFACT_URI", "")
     try:
-        # A dimension error aborts the vector transaction. FTS must execute in
-        # a fresh transaction and still return the matching document.
-        monkeypatch.setattr(hybrid_retriever, "embed_text", lambda _query: [0.1])
+        # An explicitly incompatible query dimension has no vector candidates.
+        # Scoped FTS must still return the matching document.
+        monkeypatch.setattr(hybrid_retriever, "embed_query", lambda _query: IdentifiedEmbedding([0.1], EmbeddingIdentity(config.MODEL_PROVIDER, config.EMBEDDING_MODEL, 1)))
         fts_recovery = hybrid_retriever.hybrid_search(
             "isolationtoken", sample_id=sample_id
         )
@@ -507,8 +513,9 @@ def test_hybrid_retrieval_transactions_recover_each_branch(monkeypatch):
         # branch has already committed independently and remains usable.
         monkeypatch.setattr(
             hybrid_retriever,
-            "embed_text",
-            lambda _query: [0.1] * config.EMBEDDING_DIM,
+            "embed_query",
+            lambda _query: IdentifiedEmbedding([0.1] * config.EMBEDDING_DIM,
+                EmbeddingIdentity(config.MODEL_PROVIDER, config.EMBEDDING_MODEL, config.EMBEDDING_DIM)),
         )
         vector_recovery = hybrid_retriever.hybrid_search(
             "\x00", sample_id=sample_id
@@ -595,7 +602,7 @@ def test_edna_materialization_retains_scopes_and_filters_nonfeatured_taxa(monkey
             assert f"{100:064x}" not in rare.metadata["featured_detection_ids"]
             _merge_documents(connection, _document_frame(documents))
             monkeypatch.setattr(hybrid_retriever, "get_session", lambda: nullcontext(connection))
-            monkeypatch.setattr(hybrid_retriever, "embed_text", lambda _query: [0.1] * config.EMBEDDING_DIM)
+            monkeypatch.setattr(hybrid_retriever, "embed_query", lambda _query: IdentifiedEmbedding([0.1] * config.EMBEDDING_DIM, EmbeddingIdentity(config.MODEL_PROVIDER, config.EMBEDDING_MODEL, config.EMBEDDING_DIM)))
             results = hybrid_retriever.hybrid_search("MiFish", taxon="raretaxon", provider_project_id="project-first")
             assert [row.doc_id for row in results] == [rare.doc_id]
             assert hybrid_retriever.hybrid_search("MiFish", taxon="RareTaxon", assignment_method="qcauto_95pct_3nn_target") == []

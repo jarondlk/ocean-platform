@@ -7,6 +7,7 @@ import numpy as np
 import pytest
 
 import config
+from db.embedding_identity import EmbeddingIdentity, IdentifiedEmbedding
 import orchestration.unified as unified
 import retrieval.hybrid_retriever as postgres_retriever
 from retrieval.contract import RetrievalBackendError
@@ -69,7 +70,8 @@ def _sessions(monkeypatch, vector, fts):
         yield _Session(branch, outcome)
 
     monkeypatch.setattr(postgres_retriever, "get_session", session)
-    monkeypatch.setattr(postgres_retriever, "embed_text", lambda _query: [0.1, 0.2])
+    monkeypatch.setattr(postgres_retriever, "embed_query", lambda _query: IdentifiedEmbedding(
+        [0.1, 0.2], EmbeddingIdentity("provider", "model", 2)))
     monkeypatch.setattr(config, "EDNA_ARTIFACT_URI", "")
     return opened
 
@@ -175,3 +177,157 @@ def test_local_vector_failure_recovers_with_fts_and_vector_only_fails_closed():
     assert local.search("absent-term") == []
     with pytest.raises(RetrievalBackendError, match="vector"):
         local.search("query", vector_weight=1, fts_weight=0)
+
+
+@pytest.mark.parametrize("different", [
+    {"embedding_provider": "other-provider"},
+    {"embedding_model": "other-model"},
+    {"embedding_dim": 3},
+    {"embedding_provider": None},
+    {"embedding_model": None},
+    {"embedding_dim": None},
+])
+def test_hybrid_excludes_incompatible_embedding_identity_and_keeps_scoped_fts(monkeypatch, different):
+    from db import vector_store
+
+    captured = []
+    identity = {"embedding_provider": "actual-provider", "embedding_model": "active-model", "embedding_dim": 2}
+    incompatible = _row("wrong")
+    outside = _row("outside")
+    for candidate in (incompatible, outside):
+        candidate.__dict__.update(identity)
+        candidate.active = True
+        candidate.embedding = [0.25, 0.75]
+    incompatible.__dict__.update(different)
+    incompatible.sample_id = "allowed"
+
+    class Session:
+        def execute(self, statement, params):
+            sql = str(statement)
+            captured.append((sql, dict(params)))
+            candidates = [r for r in (incompatible, outside)
+                if r.active and r.source_type == params["source_type"]
+                and r.sample_id in params["allowed_sample_id"]]
+            if "embedding <=>" in sql:
+                for column in identity:
+                    if f"{column} = :{column}" in sql:
+                        candidates = [r for r in candidates if getattr(r, column) == params[column]]
+            return _Result(candidates)
+
+    @contextmanager
+    def session():
+        yield Session()
+
+    class Runtime:
+        provider = "actual-provider"
+
+        def embed(self, _query, **kwargs):
+            assert kwargs["model"] == "active-model"
+            return [0.25, 0.75]
+
+    monkeypatch.setattr(postgres_retriever, "get_session", session)
+    monkeypatch.setattr(vector_store, "get_model_runtime", lambda: Runtime())
+    monkeypatch.setattr(config, "EDNA_ARTIFACT_URI", "")
+    monkeypatch.setattr(config, "EMBEDDING_MODEL", "active-model")
+    monkeypatch.setattr(config, "EMBEDDING_DIM", 2)
+    monkeypatch.setattr(config, "MODEL_PROVIDER", "configured-provider")
+    diagnostics = {}
+    results = postgres_retriever.hybrid_search("query", source_type="ctd", sample_ids=["allowed"], branch_diagnostics=diagnostics)
+    assert [(r.doc_id, r.rank_sources) for r in results] == [("wrong", {"fts": 1})]
+    assert diagnostics["failed_branches"] == []
+    assert diagnostics["vector"] == {
+        "status": "no_compatible_candidates",
+        "identity": {"provider": "actual-provider", "model": "active-model", "dimension": 2},
+        "compatible_result_count": 0,
+    }
+    vector_sql, vector_params = captured[0]
+    fts_sql, _ = captured[1]
+    for column, value in identity.items():
+        assert f"{column} = :{column}" in vector_sql
+        assert vector_params[column] == value
+        assert f"{column} = :{column}" not in fts_sql
+    assert "sample_id = ANY(:allowed_sample_id)" in vector_sql
+    assert "sample_id = ANY(:allowed_sample_id)" in fts_sql
+
+
+def test_bare_callback_has_no_vector_authority_and_preserves_scoped_fts(monkeypatch):
+    queries = []
+    row = _row("authorized")
+    row.sample_id = "allowed"
+
+    class Session:
+        def execute(self, statement, params):
+            sql = str(statement)
+            assert "embedding <=>" not in sql
+            assert "sample_id = ANY(:allowed_sample_id)" in sql
+            assert params["allowed_sample_id"] == ["allowed"]
+            assert params["source_type"] == "ctd"
+            assert not any(key.startswith("embedding_") for key in params)
+            queries.append(sql)
+            return _Result([row])
+
+    @contextmanager
+    def session():
+        yield Session()
+
+    monkeypatch.setattr(postgres_retriever, "get_session", session)
+    monkeypatch.setattr(postgres_retriever, "embed_query", lambda _query: pytest.fail("supplied callback must own identity"))
+    monkeypatch.setattr(config, "EDNA_ARTIFACT_URI", "")
+    diagnostics = {}
+    results = postgres_retriever.hybrid_search("query", query_embedding=lambda: [0.1, 0.2],
+        source_type="ctd", sample_ids=["allowed"], branch_diagnostics=diagnostics)
+    assert len(queries) == 1
+    assert [(r.doc_id, r.rank_sources) for r in results] == [("authorized", {"fts": 1})]
+    assert diagnostics["failed_branches"] == ["vector"]
+    assert diagnostics["vector"] == {"status": "unavailable", "identity": None, "compatible_result_count": None}
+    with pytest.raises(RetrievalBackendError, match="vector"):
+        postgres_retriever.hybrid_search("query", query_embedding=lambda: [0.1, 0.2],
+            vector_weight=1, fts_weight=0)
+    assert len(queries) == 1
+
+
+def test_explicit_callback_binds_its_actual_identity_including_equal_dimension_model(monkeypatch):
+    captured = {}
+    provider = "provider'; DROP TABLE retrieval_document; --"
+    model = "callback-model"
+    embedding = IdentifiedEmbedding([0.25, 0.75], EmbeddingIdentity(provider, model, 2))
+
+    class Session:
+        def execute(self, statement, params):
+            captured.update(sql=str(statement), params=params)
+            return _Result([_row("compatible")])
+
+    @contextmanager
+    def session():
+        yield Session()
+
+    monkeypatch.setattr(postgres_retriever, "get_session", session)
+    monkeypatch.setattr(config, "EDNA_ARTIFACT_URI", "")
+    monkeypatch.setattr(config, "MODEL_PROVIDER", "different-configured-provider")
+    monkeypatch.setattr(config, "EMBEDDING_MODEL", "different-configured-model")
+    diagnostics = {}
+    results = postgres_retriever.hybrid_search("query", query_embedding=lambda: embedding,
+        vector_weight=1, fts_weight=0, branch_diagnostics=diagnostics)
+    assert results[0].rank_sources == {"vector": 1}
+    assert provider not in captured["sql"]
+    assert captured["params"]["embedding_provider"] == provider
+    assert captured["params"]["embedding_model"] == model
+    assert captured["params"]["embedding_dim"] == 2
+    assert diagnostics["vector"] == {
+        "status": "retrieved", "identity": {"provider": provider, "model": model, "dimension": 2},
+        "compatible_result_count": 1,
+    }
+
+
+def test_fts_only_never_computes_query_embedding(monkeypatch):
+    @contextmanager
+    def session():
+        yield _Session("fts", [_row("a")])
+
+    monkeypatch.setattr(postgres_retriever, "get_session", session)
+    monkeypatch.setattr(config, "EDNA_ARTIFACT_URI", "")
+    diagnostics = {}
+    results = postgres_retriever.hybrid_search("query", vector_weight=0, fts_weight=1,
+        query_embedding=lambda: pytest.fail("FTS needs no embedding"), branch_diagnostics=diagnostics)
+    assert results[0].rank_sources == {"fts": 1}
+    assert diagnostics["vector"] == {"status": "disabled", "identity": None, "compatible_result_count": None}

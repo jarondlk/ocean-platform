@@ -17,7 +17,8 @@ from sqlalchemy import text
 import config
 
 from db.connection import get_session
-from db.vector_store import embed_text
+from db.embedding_identity import EMBEDDING_IDENTITY_PREDICATE, embedding_parameters
+from db.vector_store import embed_query
 from ingestion.provenance_snapshot import SnapshotError
 from retrieval.contract import RetrievalBackendError, normalized_weights, validate_rrf_k
 from schema.time_range import sql_time_conditions
@@ -91,6 +92,13 @@ def hybrid_search(
     rrf_k = validate_rrf_k(rrf_k)
     if branch_diagnostics is not None:
         branch_diagnostics['failed_branches'] = []
+    vector_diagnostic = {
+        "status": "not_attempted" if vector_weight > 0 else "disabled",
+        "identity": None,
+        "compatible_result_count": None,
+    }
+    if branch_diagnostics is not None:
+        branch_diagnostics["vector"] = vector_diagnostic
     # Build filter clause
     filters = ["active IS TRUE"]
     params: Dict[str, Any] = {"k": k * 2}  # over-fetch for fusion
@@ -206,15 +214,14 @@ def hybrid_search(
     # the fallback branch in PostgreSQL's aborted-transaction state.
     if vector_weight > 0:
         try:
-            query_emb = query_embedding() if query_embedding is not None else embed_text(query)
-            emb_str = "[" + ",".join(str(x) for x in query_emb) + "]"
-            params["emb"] = emb_str
-
-            vector_where = where
-            if vector_where:
-                vector_where += " AND embedding IS NOT NULL"
-            else:
-                vector_where = "WHERE embedding IS NOT NULL"
+            query_emb = query_embedding() if query_embedding is not None else embed_query(query)
+            vector_params = {**params, **embedding_parameters(query_emb)}
+            vector_diagnostic["identity"] = {
+                "provider": vector_params["embedding_provider"],
+                "model": vector_params["embedding_model"],
+                "dimension": vector_params["embedding_dim"],
+            }
+            vector_where = where + " AND embedding IS NOT NULL AND " + EMBEDDING_IDENTITY_PREDICATE
 
             sql = text(f"""
                 SELECT doc_id, source_type, sample_id, event_id, time,
@@ -228,7 +235,11 @@ def hybrid_search(
                 LIMIT :k
             """)
             with get_session() as session:
-                rows = session.execute(sql, params).fetchall()
+                rows = session.execute(sql, vector_params).fetchall()
+            vector_diagnostic.update(
+                status="retrieved" if rows else "no_compatible_candidates",
+                compatible_result_count=len(rows),
+            )
             for rank, r in enumerate(rows):
                 vector_results[r.doc_id] = rank + 1
                 doc_map[r.doc_id] = {
@@ -253,6 +264,7 @@ def hybrid_search(
                     "metadata": json.loads(getattr(r, "metadata_json", "{}") or "{}"),
                 }
         except Exception as e:
+            vector_diagnostic.update(status="unavailable", compatible_result_count=None)
             failed_branches.append("vector")
             logger.warning("Vector search failed: %s", e)
 

@@ -477,8 +477,8 @@ def retrieve_with_expansion(
             raise embedding_error
         if cached_embedding is None:
             try:
-                from db.vector_store import embed_text
-                cached_embedding = embed_text(query)
+                from db.vector_store import embed_query
+                cached_embedding = embed_query(query)
             except Exception as exc:
                 embedding_error = exc
                 raise

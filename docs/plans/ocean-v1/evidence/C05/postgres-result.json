@@ -1,0 +1,32 @@
+{
+  "cluster_root": "/private/tmp/ocean-c05-readiness-gv_wel5z",
+  "data_directory": "/private/tmp/ocean-c05-readiness-gv_wel5z/data",
+  "host": "127.0.0.1",
+  "port": 50377,
+  "role": "ocean_c05",
+  "database": "ocean_c05_readiness_798b42ff9756",
+  "existing_database_urls_used": false,
+  "identity": {
+    "database": "ocean_c05_readiness_798b42ff9756",
+    "role": "ocean_c05",
+    "host": "127.0.0.1",
+    "port": 50377,
+    "version": "PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit",
+    "isolation": "read committed",
+    "data_directory": "/private/tmp/ocean-c05-readiness-gv_wel5z/data"
+  },
+  "test_command": [
+    "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/integration/test_retrieval_identity_postgres.py",
+    "-q",
+    "-s",
+    "--tb=short"
+  ],
+  "test_exit_code": 0,
+  "pgvector_version": "0.8.7",
+  "test_schemas_remaining": 0,
+  "stop_exit_code": 0,
+  "server_stopped": true
+}

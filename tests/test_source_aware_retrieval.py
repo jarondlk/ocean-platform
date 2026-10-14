@@ -171,12 +171,17 @@ def test_four_families_survive_large_escaped_prompt_fields():
 
 def test_shared_query_embedding_is_computed_once_and_failure_is_reused(monkeypatch):
     from db import vector_store
+    from db.embedding_identity import EmbeddingIdentity, IdentifiedEmbedding
     calls = []
     monkeypatch.setattr(unified, '_pg_available', lambda: False)
     monkeypatch.setattr(unified, 'publication_status', lambda: 'ready')
-    monkeypatch.setattr(vector_store, 'embed_text', lambda query: calls.append(query) or [0.1, 0.2])
+    identity = EmbeddingIdentity('actual-provider', 'actual-model', 2)
+    embedding = IdentifiedEmbedding([0.1, 0.2], identity)
+    monkeypatch.setattr(vector_store, 'embed_text', lambda _query: pytest.fail('shared query must preserve explicit embedding identity'))
+    monkeypatch.setattr(vector_store, 'embed_query', lambda query: calls.append(query) or embedding)
     def retrieve(query, **kwargs):
-        assert kwargs['query_embedding']() == [0.1, 0.2]
+        assert kwargs['query_embedding']() is embedding
+        assert kwargs['query_embedding']().identity == identity
         return [document(enabled_sources(kwargs['evidence_scope'])[0])]
     monkeypatch.setattr(unified, 'retrieve', retrieve)
     unified.retrieve_with_expansion('shared embedding', evidence_scope=scope(*FAMILIES), expand_evidence=False)
@@ -184,7 +189,7 @@ def test_shared_query_embedding_is_computed_once_and_failure_is_reused(monkeypat
     def failed(query):
         calls.append(query)
         raise ValueError('embedding failed')
-    monkeypatch.setattr(vector_store, 'embed_text', failed)
+    monkeypatch.setattr(vector_store, 'embed_query', failed)
     def fallback(query, **kwargs):
         with pytest.raises(ValueError):
             kwargs['query_embedding']()
@@ -254,3 +259,26 @@ def test_standalone_overlap_uses_the_same_no_model_guard(monkeypatch):
     data = unified.ask('Where do ANEMONE and SST observations overlap?')
     assert data['abstention_reason'] == 'overlap_unverified'
     assert data['model_invoked'] is False
+
+
+def test_vector_identity_limitations_are_preserved_per_source_without_global_counts(monkeypatch):
+    from copy import deepcopy
+
+    identity = {'provider': 'actual-provider', 'model': 'actual-model', 'dimension': 2}
+    branch = {'status': 'no_compatible_candidates', 'identity': identity, 'compatible_result_count': 0}
+    monkeypatch.setattr(unified, '_pg_available', lambda: True)
+    monkeypatch.setattr(unified, 'publication_status', lambda: 'ready')
+
+    def retrieve(query, **kwargs):
+        kwargs['branch_diagnostics'].update(failed_branches=[], vector=deepcopy(branch))
+        return [document(enabled_sources(kwargs['evidence_scope'])[0])]
+
+    monkeypatch.setattr(unified, 'retrieve', retrieve)
+    result = unified.retrieve_with_expansion('temperature', evidence_scope=scope('ctd', 'metagenome'), expand_evidence=False)
+    for family in ('ctd', 'metagenome'):
+        diagnostic = result['diagnostics']['per_source'][family]
+        assert diagnostic['state'] == 'retrieved'
+        assert diagnostic['failed_branches'] == []
+        assert diagnostic['vector'] == branch
+    assert result['diagnostics']['candidate_count_is_corpus_count'] is False
+    assert 'vector' not in result['diagnostics']['per_source']['remote_sensing']

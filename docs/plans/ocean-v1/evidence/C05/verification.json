@@ -1,0 +1,456 @@
+{
+  "component": "C05",
+  "state": "Complete for local retrieval correctness and rebuild readiness acceptance",
+  "date": "2026-10-15 JST",
+  "branch": "overhaul",
+  "base_head": "58ee4b4fc3770fdc3c334aca592b6b5d0b39a0d8",
+  "code_revision": "Uncommitted C05 source/test/workflow files identified by SHA256 below; no C05 hosted CI or delivery claimed",
+  "contract": "Actual query provider/model/dimension isolation, scoped independent FTS, canonical method mapping, immutable deterministic metagenome replacement and retained history",
+  "files": {
+    ".github/workflows/tests.yml": "940f98833739630ee7127ef7f78f6bce54c657fdc3bd5d7d28f4aff7e053845d",
+    "api/main.py": "95c51de43350ce19e171a251fdd6af091ed59673b9ce4baef970462fd1d57d93",
+    "db/embedding_identity.py": "a04f66f2198bc46484b7b961a503b9dbbeb269abe5ba5ba451268c43238f23ba",
+    "db/vector_store.py": "50f511b91765512a6e688a37415f06db8fad566f40fa955b9c35264ad1ef8e4c",
+    "ingestion/lineage.py": "9f3d53525d293efe83621b30146a9c1d705c621d15a6f51a7ad7a5acc6e282fa",
+    "orchestration/unified.py": "c9201413873109153f9098d1041e23c3349229ec95a27aac3e194ed517be01d6",
+    "preprocessing/metagenome.py": "7c40578ded2f284c1df915e531e0b91807b0f6d4a1d2a589e0212e20154430a0",
+    "preprocessing/metagenome_contract.py": "88edad03f0e5e520f45bced3ae74b0f689c8d2d71682f48589b5ad1c4bb5efe2",
+    "retrieval/document_builder.py": "64288b44c0d042a5fefbe1bea87235dd5c5583d0f5a2dbf999fcbb468d696a0f",
+    "retrieval/hybrid_retriever.py": "8d03c315ce9ade6251f40cf201f88b00d4ec5966762eb980c553523ee8f28d1a",
+    "retrieval/source_aware.py": "f6742f235cf20f9fd64ec38d033246628201508dececc3018c4b3cabddd0fece",
+    "scripts/load_db.py": "6e4137afc8cf73249ed7c8354eedf60f303520c0e17bb96dd2f653996e7e6ea4",
+    "tests/integration/test_anemone_postgres.py": "417276b3c0afa4efbebca455228e2b9109b367f799261b24d714d05d8cef563c",
+    "tests/integration/test_chat_source_scope_postgres.py": "863291623c973a5b48cac6b50cba3af0db2d3fa4b62f427a777a9606d3c9e1a0",
+    "tests/integration/test_retrieval_identity_postgres.py": "8530a5646d22c4033c29b4bb55a9d8d79d2a6639a1b316c9ecb46aa582701bcf",
+    "tests/test_hybrid_retrieval_contract.py": "4e824551d0d8b7e83dae9a765bf47294e1908883547857ced88c33a9fb1bdec3",
+    "tests/test_metagenome_document_contract.py": "7b7717d3156f76b325bbf3b43b6df4917d5cfa13c27ffeb709692fcf7adbcac0",
+    "tests/test_source_aware_retrieval.py": "14063303a29d0610d8faa7a6a3c73e620e8d6eb4911da01b5b4e5bd8fc11404c",
+    "tests/test_vector_store.py": "b73867bd709e99324b53dea74071ac913ef234423bd601cc3b30822a26cd6b20"
+  },
+  "source_sha256": "a219369e0175a4cdafd4992b0f3901eb33db17767b4e6e8f33df9917bcc4ab72",
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "documentation_files": {
+    "docs/plans/ocean-v1/C05_REBUILD_RUNBOOK.md": "08f5c22275be9bca659c7f9e4abc48a9d6db6b30035aa419478fc3b3bcb2384c",
+    "docs/plans/ocean-v1/COMPONENTS.md": "de4e9f25e529e4d9f8021e395698fa344df708c8ccffa3d686496940a288d34e",
+    "docs/plans/ocean-v1/DECISIONS.md": "d8724ed677511a00406a0bedf5e8e0a0a7ebcd8474269c2c3c42224ae91bf93b",
+    "docs/plans/ocean-v1/HUB_PROMPT.md": "b34ac7bb247af2732781ee52fb19addde71f1f78d237f6bac93447a2a2da00cf",
+    "docs/plans/ocean-v1/MASTER_PLAN.md": "f8deeb2f749450e690a6f102385fa91af0f59d3cc7584cedaa6522aaaf0164c4",
+    "docs/plans/ocean-v1/README.md": "e64764260f64f722266f073f3e2de2bcecd52bb2284d7f2e187f7062ca522fff",
+    "docs/plans/ocean-v1/STATUS.md": "b99c58f25226158a51f79d99132b3e6f88d4354c973b73783e8f7e0bc99795f4",
+    "docs/plans/ocean-v1/components.json": "bfee99f80b4e1b9d0216429d520435809b8e1a14c703ef9cb3583d0af51b65e0",
+    "docs/plans/ocean-v1/components/C05-retrieval-correctness.md": "4ea63be1a63bcaaaba6b85ff34ef3d0da4e0a2af3b5ae4c79407bdf0527c92ab",
+    "docs/plans/ocean-v1/handoffs/C05.md": "b4d55aaec0b31281fdbbebe9fcd02f2301f9820f59d799865122890e18cfc86c",
+    "docs/plans/ocean-v1/handoffs/README.md": "b32e02cefc1802a90c45ce8fd8d3fd17d2080d253b47dcf2425072895d84d23e"
+  },
+  "evidence_files": {
+    "backend-result.json": "772ce3ce4fb5ff18bb270fa2cfa5f50e2fe353ac9940d260161bb03cb2c77ee5",
+    "backend-tests.txt": "4ff107ff01cc45d81a35edcebed74e639237924802742becfe0da1e155269b48",
+    "baseline-embedding.txt": "704fcc07cebb464833753bb45c5bc5436f9d5d1449fd73822cf851085a924446",
+    "baseline-metagenome.txt": "e222db22322f761551cb40742d013608baa21375fd583f6635032f85f62d31f3",
+    "embedding-tests.txt": "62c299f03f1f4386c8bceea7f47b24b24355556381b50b45b45c7e32b8bf7daa",
+    "pip-check.txt": "8cf9abedfe3308838095c11b57a9a8ddf6dac0037cf30060cadb4c5a1912913f",
+    "planning-validation.json": "105d6c389d5cc49e0edefffbce17264112027574c0ffd28c156f494eed7d3b13",
+    "postgres-lifecycle.txt": "ebd7aa942d28d5b07d24d841b31a5704392eb78fb3ba8bf4bf7e4f8b9a39668f",
+    "postgres-regressions-lifecycle.txt": "4f17922e9ebf893b945c244a9f171a78d41d52b1c59c4b0a3b1a978bbeb909ca",
+    "postgres-regressions-result.json": "7036fc19aa901e553a047663633f747d768fdc69641221a6da57c718263e9c80",
+    "postgres-regressions-tests.txt": "bf686b97b435cc4c4c3ff08431c81c848bf0fdb8190bf2a6e9b108c7fb67a644",
+    "postgres-result.json": "7b451ce8bfd69244b7d9b36ca8eb954d338be267e30039225ebca932b4e37e85",
+    "postgres-tests.txt": "698e0bc9354909db5058b634a143980d4bd5d20f6aea74a9afa053decafcabb6",
+    "postgres-upsert-1.txt": "70ace747083d7dc74732af44cac6509cdfea395467075cb004da943ffa07ba5d",
+    "postgres-upsert-2.txt": "83aec259c78ae547249c2a5a9d1629e7dd0668036598628775dabc3c84d73c6d",
+    "preservation.json": "312b435d353610db28272540f75bc76ffe53473bd1cc9d8ee146e17674109b35",
+    "required-tests.txt": "8c0d7deec8460ff61076bdeb177e632ddef788645e1596da18b1b54a7b1ce5ae",
+    "review.json": "197b77c13e429a28474a1cc85d85427704d8e4d9a632c6d95e2106dd346a2695",
+    "ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "runtime.json": "b22812739f4c717fbd02a426c1940432d316aab4e49cbafa23ba2cd1a0a8f485",
+    "scope-contract.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "start-snapshot.json": "b37e2ae6f0a5c5e556c29f610aa6430babd3f3909c8e73b18f5165a77b3c7f26",
+    "synthetic-context.json": "aa6ff453c2fc35e68e54c2a5b645e03467d7ffa8824afbbae0ed84b00770b2c5",
+    "synthetic-documents-changed.jsonl": "72d6309875448ceba4f42be7373cf8a7f2eacd0fcf85351de5a087a0e6b0dd37",
+    "synthetic-documents-repeat.jsonl": "9a996d4ef78a928374e0b553bd971c348e3036be2c38f21e35c413002ccaafe6",
+    "synthetic-documents.jsonl": "9a996d4ef78a928374e0b553bd971c348e3036be2c38f21e35c413002ccaafe6",
+    "synthetic-rebuild.json": "8aa883efc3afdfb33afe3e6dce963dbb876098a6e383ff72a5d5c6b5f3665f4d",
+    "synthetic-rebuild.txt": "d9300157fb46a836e843351760ee4f87a904dc603e6d25cf473c429bb751d723",
+    "verify_backend.py": "366ae37bbbc8bb5f721ab48bb88145dc36ca67385ef0446f12bd7dd6499d77b0",
+    "verify_postgres.py": "c7d25daadebdc4ec74ad7fa7f99750cc5134a3f2b1755a29e6772f3d71f327aa",
+    "verify_postgres_regressions.py": "42f80004743cae3efc1f8723c6bf789e5f25d44879ad7786591d752393f8f4fc",
+    "verify_synthetic_rebuild.py": "e85e1284b0bf2ab22463e390e513ee4ab55f30e70fa9eaa0f4680d63fe8f5d89"
+  },
+  "working_tree": {
+    "source_and_test_files": 19,
+    "documentation_files": 11,
+    "older_unrelated_files_preserved": 30,
+    "delivery_paths": [
+      ".github/workflows/tests.yml",
+      "api/main.py",
+      "db/embedding_identity.py",
+      "db/vector_store.py",
+      "docs/plans/ocean-v1/C05_REBUILD_RUNBOOK.md",
+      "docs/plans/ocean-v1/COMPONENTS.md",
+      "docs/plans/ocean-v1/DECISIONS.md",
+      "docs/plans/ocean-v1/HUB_PROMPT.md",
+      "docs/plans/ocean-v1/MASTER_PLAN.md",
+      "docs/plans/ocean-v1/README.md",
+      "docs/plans/ocean-v1/STATUS.md",
+      "docs/plans/ocean-v1/components.json",
+      "docs/plans/ocean-v1/components/C05-retrieval-correctness.md",
+      "docs/plans/ocean-v1/evidence/C05/backend-result.json",
+      "docs/plans/ocean-v1/evidence/C05/backend-tests.txt",
+      "docs/plans/ocean-v1/evidence/C05/baseline-embedding.txt",
+      "docs/plans/ocean-v1/evidence/C05/baseline-metagenome.txt",
+      "docs/plans/ocean-v1/evidence/C05/embedding-tests.txt",
+      "docs/plans/ocean-v1/evidence/C05/pip-check.txt",
+      "docs/plans/ocean-v1/evidence/C05/planning-validation.json",
+      "docs/plans/ocean-v1/evidence/C05/postgres-lifecycle.txt",
+      "docs/plans/ocean-v1/evidence/C05/postgres-regressions-lifecycle.txt",
+      "docs/plans/ocean-v1/evidence/C05/postgres-regressions-result.json",
+      "docs/plans/ocean-v1/evidence/C05/postgres-regressions-tests.txt",
+      "docs/plans/ocean-v1/evidence/C05/postgres-result.json",
+      "docs/plans/ocean-v1/evidence/C05/postgres-tests.txt",
+      "docs/plans/ocean-v1/evidence/C05/postgres-upsert-1.txt",
+      "docs/plans/ocean-v1/evidence/C05/postgres-upsert-2.txt",
+      "docs/plans/ocean-v1/evidence/C05/preservation.json",
+      "docs/plans/ocean-v1/evidence/C05/required-tests.txt",
+      "docs/plans/ocean-v1/evidence/C05/review.json",
+      "docs/plans/ocean-v1/evidence/C05/ruff.txt",
+      "docs/plans/ocean-v1/evidence/C05/runtime.json",
+      "docs/plans/ocean-v1/evidence/C05/scope-contract.txt",
+      "docs/plans/ocean-v1/evidence/C05/start-snapshot.json",
+      "docs/plans/ocean-v1/evidence/C05/synthetic-context.json",
+      "docs/plans/ocean-v1/evidence/C05/synthetic-documents-changed.jsonl",
+      "docs/plans/ocean-v1/evidence/C05/synthetic-documents-repeat.jsonl",
+      "docs/plans/ocean-v1/evidence/C05/synthetic-documents.jsonl",
+      "docs/plans/ocean-v1/evidence/C05/synthetic-rebuild.json",
+      "docs/plans/ocean-v1/evidence/C05/synthetic-rebuild.txt",
+      "docs/plans/ocean-v1/evidence/C05/verify_backend.py",
+      "docs/plans/ocean-v1/evidence/C05/verify_postgres.py",
+      "docs/plans/ocean-v1/evidence/C05/verify_postgres_regressions.py",
+      "docs/plans/ocean-v1/evidence/C05/verify_synthetic_rebuild.py",
+      "docs/plans/ocean-v1/handoffs/C05.md",
+      "docs/plans/ocean-v1/handoffs/README.md",
+      "ingestion/lineage.py",
+      "orchestration/unified.py",
+      "preprocessing/metagenome.py",
+      "preprocessing/metagenome_contract.py",
+      "retrieval/document_builder.py",
+      "retrieval/hybrid_retriever.py",
+      "retrieval/source_aware.py",
+      "scripts/load_db.py",
+      "tests/integration/test_anemone_postgres.py",
+      "tests/integration/test_chat_source_scope_postgres.py",
+      "tests/integration/test_retrieval_identity_postgres.py",
+      "tests/test_hybrid_retrieval_contract.py",
+      "tests/test_metagenome_document_contract.py",
+      "tests/test_source_aware_retrieval.py",
+      "tests/test_vector_store.py",
+      "docs/plans/ocean-v1/evidence/C05/verification.json"
+    ],
+    "exclude": [
+      "README.md",
+      "docs/LLM_MODEL_BENCHMARK_2026-10-09.md",
+      "docs/REPOSITORY_AUDIT_2026-10-09.md",
+      "docs/REPOSITORY_AUDIT_2026-10-12.md",
+      "docs/audits/",
+      "docs/benchmarks/",
+      "evaluation/model_benchmark/",
+      "tests/test_model_benchmark.py"
+    ]
+  },
+  "baseline": {
+    "revision": "58ee4b4fc3770fdc3c334aca592b6b5d0b39a0d8",
+    "embedding": "12 failed, 10 deselected before identity predicates",
+    "metagenome": "20 failed, 2 passed before mapping/version repair",
+    "exact_postgres_baseline": "Two passing historical red probes mean unchanged baseline source selects wrong-model equal-dimensional vector; these are distinct from ten fixed-code acceptance cases"
+  },
+  "verification": {
+    "required_command": ".venv/bin/python -m pytest tests/test_vector_store.py tests/test_source_aware_retrieval.py tests/test_hybrid_retrieval_contract.py tests/test_pr3_review_fixes.py tests/test_metagenome_document_contract.py -q --tb=short",
+    "required_result": "142 passed, 1 warning in 0.82s",
+    "new_unit_cases": 83,
+    "full_backend": {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/",
+        "-q",
+        "--tb=short",
+        "--cov=api",
+        "--cov=config",
+        "--cov=db",
+        "--cov=preprocessing",
+        "--cov=ingestion",
+        "--cov=orchestration",
+        "--cov=schema",
+        "--cov=evaluation",
+        "--cov-report=term-missing",
+        "--cov-fail-under=70"
+      ],
+      "safe_environment": {
+        "AUTH_MODE": "disabled",
+        "DEPLOYMENT_ENV": "test",
+        "ENABLE_MOCK_LOGIN": "false",
+        "PERSIST_LOCAL_CHAT": "false",
+        "RUN_POSTGRES_INTEGRATION": "0",
+        "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c05_regressions_unused",
+        "MODEL_PROVIDER": "ollama",
+        "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+      },
+      "exit_code": 0
+    },
+    "full_result": "1806 passed, 63 skipped, 2596 warnings in 83.86s (0:01:23)",
+    "coverage_percent": 81.77,
+    "coverage_required": 70,
+    "full_suite_scope": "Includes nine older unrelated benchmark tests outside C05 delivery",
+    "skip_reason": "39 existing PostgreSQL cases plus 12 C03 and 12 C05 opt-in cases in broad run; no integration opt-in. C05 and existing39 separately pass actual PostgreSQL. Unchanged C03 was not rerun; its prior accepted receipts remain intact.",
+    "postgres": {
+      "cluster_root": "/private/tmp/ocean-c05-readiness-gv_wel5z",
+      "data_directory": "/private/tmp/ocean-c05-readiness-gv_wel5z/data",
+      "host": "127.0.0.1",
+      "port": 50377,
+      "role": "ocean_c05",
+      "database": "ocean_c05_readiness_798b42ff9756",
+      "existing_database_urls_used": false,
+      "identity": {
+        "database": "ocean_c05_readiness_798b42ff9756",
+        "role": "ocean_c05",
+        "host": "127.0.0.1",
+        "port": 50377,
+        "version": "PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit",
+        "isolation": "read committed",
+        "data_directory": "/private/tmp/ocean-c05-readiness-gv_wel5z/data"
+      },
+      "test_command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/integration/test_retrieval_identity_postgres.py",
+        "-q",
+        "-s",
+        "--tb=short"
+      ],
+      "test_exit_code": 0,
+      "pgvector_version": "0.8.7",
+      "test_schemas_remaining": 0,
+      "stop_exit_code": 0,
+      "server_stopped": true
+    },
+    "postgres_result": "12 passed, zero skips: 10 fixed-code cases and two historical baseline bug probes",
+    "postgres_regressions": {
+      "cluster_root": "/private/tmp/ocean-c05-regressions-dn8xwdk9",
+      "data_directory": "/private/tmp/ocean-c05-regressions-dn8xwdk9/data",
+      "host": "127.0.0.1",
+      "port": 52272,
+      "role": "ocean_c05",
+      "database": "ocean_c05_regressions_09ce0d90d40f",
+      "existing_database_urls_used": false,
+      "identity": {
+        "database": "ocean_c05_regressions_09ce0d90d40f",
+        "role": "ocean_c05",
+        "host": "127.0.0.1",
+        "port": 52272,
+        "version": "PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit",
+        "isolation": "read committed",
+        "data_directory": "/private/tmp/ocean-c05-regressions-dn8xwdk9/data"
+      },
+      "migrations_exit_code": 0,
+      "test_command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/integration/test_app_metadata_postgres.py",
+        "tests/integration/test_classification_application_postgres.py",
+        "tests/integration/test_classification_preview_postgres.py",
+        "tests/integration/test_operational_postgres.py",
+        "tests/integration/test_anemone_postgres.py",
+        "tests/integration/test_anemone_catalogue_postgres.py",
+        "tests/integration/test_edna_aggregate_postgres.py",
+        "tests/integration/test_edna_analysis_postgres.py",
+        "tests/integration/test_chat_source_scope_postgres.py",
+        "tests/integration/test_chat_filter_options_postgres.py",
+        "tests/integration/test_research_registry_postgres.py",
+        "-q",
+        "-s",
+        "--tb=short"
+      ],
+      "test_exit_code": 0,
+      "upsert_command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/load_db.py",
+        "--upsert",
+        "--json"
+      ],
+      "upsert_exit_codes": [
+        0,
+        0
+      ],
+      "pgvector_version": "0.8.7",
+      "test_schemas_remaining": 0,
+      "stop_exit_code": 0,
+      "server_stopped": true
+    },
+    "postgres_regressions_result": "39 passed, zero skips; disposable application migrations pass",
+    "upsert_results": "14,231 rows inserted on first disposable upsert; repeat has 0 inserts/updates and 14,231 unchanged. No real artifact regeneration or embedding.",
+    "synthetic_rebuild": "Repeat and legacy-normalized document objects and serialized hashes match; changed source requires a fresh identity. No DB or provider calls.",
+    "local_affected_inventory": {
+      "metagenome_documents": 82,
+      "with_kraken_label": 0,
+      "with_metaeuk_label": 82,
+      "total_documents": 323,
+      "real_serving_files_unchanged": true,
+      "production_inventory": false
+    },
+    "ruff": "All checks passed!",
+    "git_diff_check": "pass",
+    "scope_contract": "current",
+    "pip_check": "WARNING: The directory '/Users/jaronchai/Library/Caches/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.\nNo broken requirements found.",
+    "planning_validation": {
+      "workflow_yaml": "pass",
+      "dedicated_C05_database": "pass",
+      "historical_git_baseline_available": "fetch-depth:0",
+      "component_count": 28,
+      "authorized_components": [
+        "P00",
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05"
+      ],
+      "planning_links": "pass",
+      "missing_links": []
+    },
+    "preservation": {
+      "unrelated": {
+        "matching": 30,
+        "mismatches": {}
+      },
+      "scientific_artifacts": {
+        "matching": 7,
+        "mismatches": {}
+      },
+      "P00": {
+        "matching": 36,
+        "mismatches": {}
+      },
+      "prior_boundaries": {
+        "matching": 14,
+        "mismatches": {}
+      },
+      "historical_evidence": {
+        "matching": 109,
+        "mismatches": {}
+      },
+      "serving_inventory": {
+        "matching": 2,
+        "mismatches": {}
+      },
+      "baseline_shared_sources": {
+        "api/main.py": {
+          "baseline_sha256": "25501284aba4cc3f96e4d5fc01ee61a3639e458b42ea0f8f8eb574ff91f379e1",
+          "current_sha256": "95c51de43350ce19e171a251fdd6af091ed59673b9ce4baef970462fd1d57d93",
+          "changed_for_C05": true
+        },
+        "config.py": {
+          "baseline_sha256": "a8a61340d9a595cb32e279596ae728dbec525acc99c3e2cac669c0f518b1c55e",
+          "current_sha256": "a8a61340d9a595cb32e279596ae728dbec525acc99c3e2cac669c0f518b1c55e",
+          "changed_for_C05": false
+        },
+        "db/vector_store.py": {
+          "baseline_sha256": "e7a8e7c5c942156347b1b879216565c8e6c5a3820722a6ead12a4099b4a3b343",
+          "current_sha256": "50f511b91765512a6e688a37415f06db8fad566f40fa955b9c35264ad1ef8e4c",
+          "changed_for_C05": true
+        },
+        "ingestion/lineage.py": {
+          "baseline_sha256": "293df70ba3bc723190d7e5b770c3617eb3ec5e73df978c6cc4f2f67f07da5eac",
+          "current_sha256": "9f3d53525d293efe83621b30146a9c1d705c621d15a6f51a7ad7a5acc6e282fa",
+          "changed_for_C05": true
+        },
+        "model_runtime.py": {
+          "baseline_sha256": "c7762486e5c2f3f8038a3556dd9a942fdd3469395c5194fd25b66fb864a61f13",
+          "current_sha256": "c7762486e5c2f3f8038a3556dd9a942fdd3469395c5194fd25b66fb864a61f13",
+          "changed_for_C05": false
+        },
+        "orchestration/unified.py": {
+          "baseline_sha256": "c35856c03045ef48bd5d352334c7f62aa24163378b0416ab9d8e5ed0d25d00e7",
+          "current_sha256": "c9201413873109153f9098d1041e23c3349229ec95a27aac3e194ed517be01d6",
+          "changed_for_C05": true
+        },
+        "preprocessing/metagenome.py": {
+          "baseline_sha256": "f36e8b7a2a07820400b8e608eeb9d7551e3cd612cd941065016573797ef8b485",
+          "current_sha256": "7c40578ded2f284c1df915e531e0b91807b0f6d4a1d2a589e0212e20154430a0",
+          "changed_for_C05": true
+        },
+        "retrieval/document_builder.py": {
+          "baseline_sha256": "0a2c99ffa978d9db0f56395f5a4993ab783cd29e4d88651c4312120d89b7255a",
+          "current_sha256": "64288b44c0d042a5fefbe1bea87235dd5c5583d0f5a2dbf999fcbb468d696a0f",
+          "changed_for_C05": true
+        },
+        "retrieval/hybrid_retriever.py": {
+          "baseline_sha256": "14299796afa8fa2c2bfbd99341c33357bcfb6120d1fc958c0ac59f08034ec42f",
+          "current_sha256": "8d03c315ce9ade6251f40cf201f88b00d4ec5966762eb980c553523ee8f28d1a",
+          "changed_for_C05": true
+        },
+        "scripts/load_db.py": {
+          "baseline_sha256": "1cfc70b5a58360ebc61dafe68c640b78124d2e8b8e4ac48a5dc8014941770c06",
+          "current_sha256": "6e4137afc8cf73249ed7c8354eedf60f303520c0e17bb96dd2f653996e7e6ea4",
+          "changed_for_C05": true
+        }
+      }
+    },
+    "review": {
+      "reviewer": "c05_review subagent",
+      "outcome": "No remaining source/acceptance blockers",
+      "scope": "Read-only final query identity, mapping, immutable replacement, PostgreSQL result/history acceptance, harness and CI wiring",
+      "resolved_findings": [
+        "Complete generation witness binds all generated metadata/scientific fields",
+        "Reserved v2 identity cannot bypass validation by stripping version or changing family",
+        "Contradictory method coverage is rejected",
+        "PostgreSQL CI fetches exact historical baseline via fetch-depth:0"
+      ],
+      "actual_acceptance": "12 C05 actual PostgreSQL cases pass, zero schemas remain, owned server stopped",
+      "other_agents": [
+        "c05_embedding (embedding identity implementation/tests)",
+        "c05_metagenome (mapping/document/history implementation/tests)"
+      ]
+    }
+  },
+  "acceptance_cases": [
+    "Both actual PostgreSQL entry points exclude better-ranked equal-dimensional provider/model mismatch, declared dimension mismatch and missing identity",
+    "Active/source/scoped sample restrictions remain enforced on vector and FTS candidates",
+    "Empty compatible set and unidentifiable callback preserve scoped FTS without vector SQL for the latter",
+    "Physical-width vector SQL error occurs and independent FTS transaction succeeds",
+    "Canonical producer and named legacy adapter retain Kraken/MetaEuk labels without swapping or omission",
+    "Invalid/ambiguous/contradictory field evidence fails visibly",
+    "Repeated and equivalent legacy-normalized builds give identical hashes/IDs; changed source/full witness gives fresh generation",
+    "Actual replacement retains old text/metadata/vectors inactive, inserts fresh unembedded generation and preserves unrelated rows",
+    "Actual repeat preserves newly embedded generation; changed source inactivates prior v2 but retains its vector",
+    "Actual rollback and immutable evidence/version/family tampering cannot rewrite old stored evidence"
+  ],
+  "runtime": {
+    "python": "3.12.7",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "branch": "overhaul",
+    "base_head": "58ee4b4fc3770fdc3c334aca592b6b5d0b39a0d8",
+    "packages": {
+      "sqlalchemy": "2.0.52",
+      "pgvector": "0.5.0",
+      "pytest": "9.1.1",
+      "fastapi": "0.141.1",
+      "pandas": "2.3.3",
+      "alembic": "1.20.0",
+      "ruff": "0.16.9"
+    }
+  },
+  "evidence_log_normalization": "Only new C05 terminal line endings/trailing whitespace/trailing blank lines normalized; prior receipts/logs unchanged",
+  "original_log_sha256_before_normalization": {
+    "baseline-metagenome.txt": "b7cffd24e62145fd4b838186e0db69fdddcc04ac42e88c81d90d35bd627ac598",
+    "baseline-embedding.txt": "d079ed93b4b509272072cc8a5b46a5ee6ef5119dcedcdb102c7b775548211982"
+  },
+  "remaining_gates": [
+    "C05 uncommitted; hosted CI wiring is prepared but no hosted C05 result claimed",
+    "82 local legacy metagenome documents remain in preserved caches pending the separately selected real rebuild described in C05_REBUILD_RUNBOOK.md",
+    "No paid/real provider invocation, production index mutation, schema migration, scientific eligibility or release/deployment acceptance",
+    "Physical database vector-width drift requires a separate schema plan; C05 reports vector unavailability and scoped FTS fallback",
+    "C06-C27 remain Not started/unselected"
+  ]
+}

@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C04 are Complete locally. C05–C27 are not started.**
+**P00 and C01–C05 are Complete locally; C06–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -20,14 +20,17 @@ validation is Complete; read [its handoff](handoffs/C01.md). C02 derived-evidenc
 software and synthetic acceptance are Complete; read [its handoff](handoffs/C02.md).
 C03 retention integrity is Complete with actual disposable PostgreSQL acceptance;
 read [its handoff](handoffs/C03.md). C04 authentication responsiveness is Complete locally;
-read [its handoff](handoffs/C04.md). Later components require separate selection.
+read [its handoff](handoffs/C04.md). C05 retrieval correctness is Complete locally
+with actual PostgreSQL acceptance; read [its handoff](handoffs/C05.md) and
+[deferred rebuild procedure](C05_REBUILD_RUNBOOK.md). Later components require separate selection.
 
 The user subsequently authorized audited repository delivery. See the
 [C01/C02 delivery audit](DELIVERY_AUDIT_2026-10-14.md) and its final source receipt;
 the original component receipts remain historical after the audit corrections.
 C03/C04 delivery and hosted acceptance now pass;
 [C05 readiness audit](C05_READINESS_AUDIT_2026-10-15.md) records the current source
-and confirms readiness without starting C05.
+and records readiness before C05 was selected. Current C05 acceptance is
+recorded separately in [its receipt](evidence/C05/verification.json).
 
 The new site is fully isolated from the legacy production site. Read
 [SITE_SEPARATION.md](SITE_SEPARATION.md) and [UI_UX_BRIEF.md](UI_UX_BRIEF.md).
@@ -117,6 +120,6 @@ not a requirement to reset future work to this commit.
 Existing unrelated README, audit and benchmark modifications are preserved.
 P00 progress is recorded in [STATUS.md](STATUS.md) and [its handoff](handoffs/P00.md).
 C01 and C02 are complete with offline evidence; C03 is complete with local unit
-and actual disposable PostgreSQL evidence. C04 is Complete locally; C05–C27 remain Not started.
+and actual disposable PostgreSQL evidence. C04 and C05 are Complete locally; C06–C27 remain Not started.
 The 2026-10-13 revision adds P00 before the original 27 numbered components; the
 setup receipt retains its historical counts and records this amendment.
