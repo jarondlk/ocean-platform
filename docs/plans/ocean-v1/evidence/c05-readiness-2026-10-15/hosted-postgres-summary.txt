@@ -1,0 +1,6 @@
+2026-10-14T15:28:37.2207807Z 39 passed, 4 warnings in 23.38s
+2026-10-14T15:29:08.7363149Z C03 disposable PostgreSQL identity: database=ocean_c03_retention_test address=172.18.0.2 port=5432 version=16.15 (Debian 16.15-1.pgdg12+2) isolation=read committed
+2026-10-14T15:29:10.2909205Z 12 passed in 2.29s
+2026-10-14T15:29:10.5559951Z ##[group]Run python scripts/database_backup.py create --output-dir "${RUNNER_TEMP}/database-backup" --label ci --restore-test
+2026-10-14T15:29:10.5560665Z [36;1mpython scripts/database_backup.py create --output-dir "${RUNNER_TEMP}/database-backup" --label ci --restore-test[0m
+2026-10-14T15:29:12.4652020Z   "restore_test": {

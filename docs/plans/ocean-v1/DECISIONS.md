@@ -177,3 +177,15 @@ remote-push approval gate. Deliver C03/C04 and their reviewed evidence to
 origin/overhaul (jarondlk/ocean-platform), preserve the 30 unrelated files, and
 verify hosted CI. The user also requested a C05 readiness verdict; that does
 not select C05 implementation, production indexing or deployment.
+
+### C03/C04 hosted delivery and C05 readiness — 2026-10-15 JST
+
+C03 (9a2d225), C04 (6587069), and the narrowly scoped CI fixture identity repair
+(276540f) are committed/pushed to overhaul. Hosted CI for 276540f passes: 1,714
+backend tests, 82.28% coverage, both frontends, 39 existing PostgreSQL cases and
+12 C03 cases plus isolated backup/restore. Initial CI exposed the job-owned Docker
+server address mismatch; the repair retains local URL/database isolation and
+requires an exact explicitly inspected private container identity in CI.
+All 59 C05 baseline tests pass; independent read-only review reproduces its
+known targets and verifies P00. C05 is ready to start after explicit selection;
+no C05 application work, production index rebuild or deployment occurred.

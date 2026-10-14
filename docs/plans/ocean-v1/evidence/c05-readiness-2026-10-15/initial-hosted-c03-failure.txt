@@ -1,0 +1,152 @@
+2026-10-14T15:21:48.5823810Z ##[group]Run python -m pytest tests/integration/test_retention_concurrency_postgres.py -q -s --tb=short
+2026-10-14T15:21:48.5824803Z [36;1mpython -m pytest tests/integration/test_retention_concurrency_postgres.py -q -s --tb=short[0m
+2026-10-14T15:21:48.5902099Z shell: /usr/bin/bash -e {0}
+2026-10-14T15:21:48.5902430Z env:
+2026-10-14T15:21:48.5902769Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-14T15:21:48.5903501Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-14T15:21:48.5904058Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-14T15:21:48.5904562Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-14T15:21:48.5905046Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-14T15:21:48.5905536Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-14T15:21:48.5905945Z   AUTH_MODE: disabled
+2026-10-14T15:21:48.5906237Z   DEPLOYMENT_ENV: test
+2026-10-14T15:21:48.5906597Z   RUN_POSTGRES_INTEGRATION: 1
+2026-10-14T15:21:48.5907434Z   C03_TEST_DATABASE_URL: ***127.0.0.1:5432/ocean_c03_retention_test
+2026-10-14T15:21:48.5907905Z ##[endgroup]
+2026-10-14T15:21:50.0240115Z EEEEEEEEEEEE
+2026-10-14T15:21:50.0240822Z ==================================== ERRORS ====================================
+2026-10-14T15:21:50.0241690Z _ ERROR at setup of test_baseline_stale_orm_selection_reproduces_committed_hold_loss _
+2026-10-14T15:21:50.0242444Z tests/integration/test_retention_concurrency_postgres.py:67: in disposable_database
+2026-10-14T15:21:50.0243056Z     assert identity[1] and ipaddress.ip_address(identity[1]).is_loopback
+2026-10-14T15:21:50.0244288Z E   AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0244678Z E    +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0245207Z E    +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.0245814Z E    +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.0246655Z _ ERROR at setup of test_hold_committed_after_count_before_delete_preserves_evidence_and_feedback _
+2026-10-14T15:21:50.0247127Z tests/integration/test_retention_concurrency_postgres.py:67: in disposable_database
+2026-10-14T15:21:50.0247539Z     assert identity[1] and ipaddress.ip_address(identity[1]).is_loopback
+2026-10-14T15:21:50.0247854Z E   AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0248136Z E    +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0248494Z E    +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.0248894Z E    +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.0249302Z _ ERROR at setup of test_hold_update_locks_first_delete_waits_and_rechecks_committed_hold _
+2026-10-14T15:21:50.0249772Z tests/integration/test_retention_concurrency_postgres.py:67: in disposable_database
+2026-10-14T15:21:50.0250194Z     assert identity[1] and ipaddress.ip_address(identity[1]).is_loopback
+2026-10-14T15:21:50.0250503Z E   AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0250768Z E    +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0251113Z E    +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.0251509Z E    +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.0251930Z _ ERROR at setup of test_delete_locks_first_hold_waits_then_reports_not_found_without_success_audit _
+2026-10-14T15:21:50.0252383Z tests/integration/test_retention_concurrency_postgres.py:67: in disposable_database
+2026-10-14T15:21:50.0252763Z     assert identity[1] and ipaddress.ip_address(identity[1]).is_loopback
+2026-10-14T15:21:50.0253066Z E   AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0253768Z E    +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0254114Z E    +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.0254511Z E    +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.0254946Z _ ERROR at setup of test_concurrent_cleanup_workers_count_actual_deleted_parents_and_audit_once _
+2026-10-14T15:21:50.0255406Z tests/integration/test_retention_concurrency_postgres.py:67: in disposable_database
+2026-10-14T15:21:50.0255801Z     assert identity[1] and ipaddress.ip_address(identity[1]).is_loopback
+2026-10-14T15:21:50.0256119Z E   AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0256386Z E    +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0256758Z E    +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.0257153Z E    +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.0257600Z _ ERROR at setup of test_failed_cleanup_rolls_back_parent_feedback_evidence_and_success_audit[audit_insert] _
+2026-10-14T15:21:50.0258078Z tests/integration/test_retention_concurrency_postgres.py:67: in disposable_database
+2026-10-14T15:21:50.0258466Z     assert identity[1] and ipaddress.ip_address(identity[1]).is_loopback
+2026-10-14T15:21:50.0258763Z E   AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0259020Z E    +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0259347Z E    +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.0259729Z E    +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.0260149Z _ ERROR at setup of test_failed_cleanup_rolls_back_parent_feedback_evidence_and_success_audit[commit] _
+2026-10-14T15:21:50.0260605Z tests/integration/test_retention_concurrency_postgres.py:67: in disposable_database
+2026-10-14T15:21:50.0260991Z     assert identity[1] and ipaddress.ip_address(identity[1]).is_loopback
+2026-10-14T15:21:50.0261413Z E   AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0261673Z E    +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0261999Z E    +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.0262384Z E    +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.0262757Z _ ERROR at setup of test_failed_hold_rolls_back_update_and_does_not_report_success _
+2026-10-14T15:21:50.0263163Z tests/integration/test_retention_concurrency_postgres.py:67: in disposable_database
+2026-10-14T15:21:50.0263740Z     assert identity[1] and ipaddress.ip_address(identity[1]).is_loopback
+2026-10-14T15:21:50.0264039Z E   AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0264286Z E    +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0264619Z E    +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.0265000Z E    +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.0265410Z _ ERROR at setup of test_dry_run_observation_full_cutoff_status_predicate_and_repeat_cleanup _
+2026-10-14T15:21:50.0265843Z tests/integration/test_retention_concurrency_postgres.py:67: in disposable_database
+2026-10-14T15:21:50.0266221Z     assert identity[1] and ipaddress.ip_address(identity[1]).is_loopback
+2026-10-14T15:21:50.0266511Z E   AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0266769Z E    +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0267091Z E    +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.0267457Z E    +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.0267991Z _ ERROR at setup of test_full_delete_predicate_rechecks_eligibility_changed_after_count[status] _
+2026-10-14T15:21:50.0268457Z tests/integration/test_retention_concurrency_postgres.py:67: in disposable_database
+2026-10-14T15:21:50.0268844Z     assert identity[1] and ipaddress.ip_address(identity[1]).is_loopback
+2026-10-14T15:21:50.0269132Z E   AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0269385Z E    +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0269711Z E    +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.0270094Z E    +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.0270518Z _ ERROR at setup of test_full_delete_predicate_rechecks_eligibility_changed_after_count[created_at] _
+2026-10-14T15:21:50.0270979Z tests/integration/test_retention_concurrency_postgres.py:67: in disposable_database
+2026-10-14T15:21:50.0271367Z     assert identity[1] and ipaddress.ip_address(identity[1]).is_loopback
+2026-10-14T15:21:50.0271669Z E   AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0271953Z E    +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0272291Z E    +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.0272669Z E    +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.0273057Z _ ERROR at setup of test_cleanup_cannot_reach_unrelated_user_fixtures_in_another_schema _
+2026-10-14T15:21:50.0273602Z tests/integration/test_retention_concurrency_postgres.py:67: in disposable_database
+2026-10-14T15:21:50.0273994Z     assert identity[1] and ipaddress.ip_address(identity[1]).is_loopback
+2026-10-14T15:21:50.0274297Z E   AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0274553Z E    +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0274900Z E    +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.0275284Z E    +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.0275718Z =========================== short test summary info ============================
+2026-10-14T15:21:50.0276373Z ERROR tests/integration/test_retention_concurrency_postgres.py::test_baseline_stale_orm_selection_reproduces_committed_hold_loss - AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0276957Z  +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0277299Z  +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.0277686Z  +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.0278355Z ERROR tests/integration/test_retention_concurrency_postgres.py::test_hold_committed_after_count_before_delete_preserves_evidence_and_feedback - AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0278971Z  +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0279308Z  +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.0279689Z  +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.0280310Z ERROR tests/integration/test_retention_concurrency_postgres.py::test_hold_update_locks_first_delete_waits_and_rechecks_committed_hold - AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0280882Z  +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0281203Z  +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.0281572Z  +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.0282214Z ERROR tests/integration/test_retention_concurrency_postgres.py::test_delete_locks_first_hold_waits_then_reports_not_found_without_success_audit - AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.0282903Z  +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.0283435Z  +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.1325675Z  +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.1326750Z ERROR tests/integration/test_retention_concurrency_postgres.py::test_concurrent_cleanup_workers_count_actual_deleted_parents_and_audit_once - AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.1327409Z  +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.1327772Z  +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.1328177Z  +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.1328939Z ERROR tests/integration/test_retention_concurrency_postgres.py::test_failed_cleanup_rolls_back_parent_feedback_evidence_and_success_audit[audit_insert] - AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.1329596Z  +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.1329938Z  +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.1330331Z  +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.1331009Z ERROR tests/integration/test_retention_concurrency_postgres.py::test_failed_cleanup_rolls_back_parent_feedback_evidence_and_success_audit[commit] - AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.1331620Z  +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.1331957Z  +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.1332327Z  +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.1332951Z ERROR tests/integration/test_retention_concurrency_postgres.py::test_failed_hold_rolls_back_update_and_does_not_report_success - AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.1334629Z  +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.1335094Z  +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.1335661Z  +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.1336628Z ERROR tests/integration/test_retention_concurrency_postgres.py::test_dry_run_observation_full_cutoff_status_predicate_and_repeat_cleanup - AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.1337519Z  +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.1338015Z  +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.1338578Z  +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.1339525Z ERROR tests/integration/test_retention_concurrency_postgres.py::test_full_delete_predicate_rechecks_eligibility_changed_after_count[status] - AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.1340142Z  +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.1340488Z  +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.1340867Z  +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.1341521Z ERROR tests/integration/test_retention_concurrency_postgres.py::test_full_delete_predicate_rechecks_eligibility_changed_after_count[created_at] - AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.1342128Z  +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.1342502Z  +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.1342895Z  +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.1343818Z ERROR tests/integration/test_retention_concurrency_postgres.py::test_cleanup_cannot_reach_unrelated_user_fixtures_in_another_schema - AssertionError: assert ('172.18.0.2' and False)
+2026-10-14T15:21:50.1344430Z  +  where False = IPv4Address('172.18.0.2').is_loopback
+2026-10-14T15:21:50.1344772Z  +    where IPv4Address('172.18.0.2') = <function ip_address at 0x7fe548ddad40>('172.18.0.2')
+2026-10-14T15:21:50.1345154Z  +      where <function ip_address at 0x7fe548ddad40> = ipaddress.ip_address
+2026-10-14T15:21:50.1345449Z 12 errors in 0.96s
+2026-10-14T15:21:50.3586168Z ##[error]Process completed with exit code 1.

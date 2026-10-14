@@ -1,0 +1,33 @@
+{
+  "command": [
+    "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_vector_store.py",
+    "tests/test_source_aware_retrieval.py",
+    "tests/test_hybrid_retrieval_contract.py",
+    "tests/test_pr3_review_fixes.py",
+    "-q",
+    "--tb=short"
+  ],
+  "safe_environment": {
+    "AUTH_MODE": "disabled",
+    "DEPLOYMENT_ENV": "test",
+    "ENABLE_MOCK_LOGIN": "false",
+    "PERSIST_LOCAL_CHAT": "false",
+    "RUN_POSTGRES_INTEGRATION": "0",
+    "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c05_readiness_unused"
+  },
+  "exit_code": 0,
+  "base_head": "65870694d4b0aaa5ef453e4ba734eb4b9fed54ca",
+  "source_files": {
+    "retrieval/hybrid_retriever.py": "14299796afa8fa2c2bfbd99341c33357bcfb6120d1fc958c0ac59f08034ec42f",
+    "db/vector_store.py": "e7a8e7c5c942156347b1b879216565c8e6c5a3820722a6ead12a4099b4a3b343",
+    "retrieval/document_builder.py": "0a2c99ffa978d9db0f56395f5a4993ab783cd29e4d88651c4312120d89b7255a",
+    "tests/test_vector_store.py": "c1099877a7d16f37094eb0ee8d232706a3de0b38bc3e25197b3254971bb8da66",
+    "tests/test_source_aware_retrieval.py": "a6133cc23deb40870a9b57acea1fa3b44461df2343695ba20524f43e4be93b46",
+    "tests/test_hybrid_retrieval_contract.py": "72de6ecf83f6ed8075caf3c4452a2c5065c42745d3f52ead22b8bd244f5b7019",
+    "tests/test_pr3_review_fixes.py": "6dba5f1d2c6b93b1b3be90c100e5212d4cde1ff0cf921b479c4de7d41b548531",
+    "docs/plans/ocean-v1/components/C05-retrieval-correctness.md": "24a9d4551299c8b404c7ac283bf6518e2b7d29025452f337b7284c252cf5b53e"
+  }
+}

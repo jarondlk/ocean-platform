@@ -55,3 +55,13 @@ Avoid destructive migrations. Preserve existing holds, retention configuration a
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c03). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+## Hosted CI follow-up
+
+C03 is delivered as 9a2d225. CI follow-up 276540f permits the exact inspected
+job-owned Docker bridge address only in GitHub Actions; the client URL remains
+loopback and the dedicated database/Read Committed/schema identity checks remain.
+All 18 offline guard cases pass, and PostgreSQL 16.15 hosted acceptance passes
+all 12 actual cases. Current workflow/fixture hashes and delivery results
+supersede those two historical receipt entries; see
+[the delivery audit](../C05_READINESS_AUDIT_2026-10-15.md).

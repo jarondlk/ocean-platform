@@ -25,6 +25,9 @@ read [its handoff](handoffs/C04.md). Later components require separate selection
 The user subsequently authorized audited repository delivery. See the
 [C01/C02 delivery audit](DELIVERY_AUDIT_2026-10-14.md) and its final source receipt;
 the original component receipts remain historical after the audit corrections.
+C03/C04 delivery and hosted acceptance now pass;
+[C05 readiness audit](C05_READINESS_AUDIT_2026-10-15.md) records the current source
+and confirms readiness without starting C05.
 
 The new site is fully isolated from the legacy production site. Read
 [SITE_SEPARATION.md](SITE_SEPARATION.md) and [UI_UX_BRIEF.md](UI_UX_BRIEF.md).

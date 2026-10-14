@@ -1,0 +1,45 @@
+{
+  "scope": "Synthetic input and mocked empty SQL sessions only; no provider or database calls",
+  "vector_sql": [
+    {
+      "sql": "\n            SELECT doc_id, source_type, sample_id, event_id, time,\n                   lat, lon, bay, station, title, text,\n                   embedding <=> :emb AS distance\n            FROM retrieval_document\n            WHERE active IS TRUE AND embedding IS NOT NULL AND source_type = :source_type\n            ORDER BY embedding <=> :emb\n            LIMIT :k\n        ",
+      "parameters": {
+        "emb": "[1.0,0.0]",
+        "k": 5,
+        "source_type": "metagenome"
+      },
+      "identity_predicates_present": {
+        "embedding_provider": false,
+        "embedding_model": false,
+        "embedding_dim": false
+      }
+    },
+    {
+      "sql": "\n                SELECT doc_id, source_type, sample_id, event_id, time,\n                       bay, station, title, text, lat, lon, metadata_json, provider,\n                       provider_project_id, provider_run_id, assay_id,\n                       assignment_method, sample_kind, is_control,\n                       source_snapshot_id\n                FROM retrieval_document\n                WHERE active IS TRUE AND source_type = :source_type AND embedding IS NOT NULL\n                ORDER BY embedding <=> :emb, doc_id ASC\n                LIMIT :k\n            ",
+      "parameters": {
+        "k": 20,
+        "source_type": "metagenome",
+        "emb": "[1.0,0.0]"
+      },
+      "identity_predicates_present": {
+        "embedding_provider": false,
+        "embedding_model": false,
+        "embedding_dim": false
+      }
+    }
+  ],
+  "producer_columns": [
+    "sample_id",
+    "has_kraken",
+    "has_metaeuk",
+    "top_genus_10_json_x",
+    "top_genus_10_json_y"
+  ],
+  "document": {
+    "id": "meta_2024-04-O-s1",
+    "text": "Metagenome sample 2024-04-O-s1 from Onagawa Bay, station s1 (2024-04). Top MetaEuk genera: SyntheticMetaEukOnly (5.00%).",
+    "metadata": {}
+  },
+  "kraken_taxon_present": false,
+  "metaeuk_taxon_present": true
+}

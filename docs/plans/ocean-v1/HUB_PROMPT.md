@@ -20,8 +20,9 @@ receipt. C02 derived-evidence software and synthetic acceptance are Complete;
 read handoffs/C02.md. C03 retention integrity is also Complete with actual
 disposable PostgreSQL acceptance; read handoffs/C03.md. C04 authentication responsiveness is Complete locally;
 read handoffs/C04.md. C03 is checkpointed locally as 9a2d225; remote
-delivery is explicitly approved by the user on 2026-10-15 JST; hosted acceptance
-is being verified.
+delivery is explicitly approved by the user on 2026-10-15 JST and completed.
+Hosted CI for source 276540f passes; read C05_READINESS_AUDIT_2026-10-15.md
+and its source/evidence receipt. C05 is ready but remains unselected.
 Proceed component
 by component with explicit user selection. The current plan revision does not itself authorize
 UI/backend implementation, tests, cloud provisioning, data transfer or deployment.

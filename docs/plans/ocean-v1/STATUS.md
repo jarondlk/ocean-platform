@@ -69,8 +69,11 @@ remain historical; that C01/C02 audit does not imply later implementation or dep
 
 C03 and the readiness audit are checkpointed as `9a2d225`. The user explicitly
 approved pending C03/C04 commits and pushes to origin/overhaul on 2026-10-15 JST,
-resolving the prior automatic-review rejection. Delivery and hosted CI verification
-are underway. Older unrelated audit/benchmark work remains outside this delivery.
+resolving the prior automatic-review rejection. C03/C04 are delivered, and hosted CI passes for source `276540f` (1,714 backend
+tests, 82.28% coverage, both frontends and 51 actual PostgreSQL cases). The C03
+fixture now verifies the exact job-owned Docker address in CI; local safety
+checks remain intact. See [C05 readiness/delivery audit](C05_READINESS_AUDIT_2026-10-15.md).
+Older unrelated audit/benchmark work remains outside this delivery.
 
 P00 has passed only G8, the local UX direction gate. No code revision has passed
 the full v1 acceptance map. See [SETUP_RECEIPT.md](SETUP_RECEIPT.md)

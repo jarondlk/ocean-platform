@@ -1,0 +1,411 @@
+{
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "approval": "User explicitly approved all pending commit/push actions on 2026-10-15 JST; origin is jarondlk/ocean-platform, branch overhaul",
+  "audit": "C03/C04 delivery and C05 readiness",
+  "branch": "overhaul",
+  "commits": {
+    "C03": "9a2d225513a4d6c4a87ced00535457e7cb1c3bb0",
+    "C04": "65870694d4b0aaa5ef453e4ba734eb4b9fed54ca",
+    "CI_identity_fix": "276540f8a57bf9c7f7fb0be9735465a3d2c6c251"
+  },
+  "date": "2026-10-15 JST",
+  "evidence_files": {
+    "baseline-result.json": "da76038eca4a065dbcba1ad6079fd709329e6d5036dd5464f2c3adcc5b793ed0",
+    "baseline-tests.txt": "da75b7782eb1d9c582d4d0662fb7c5134acdfd3058619a168153e25fa274a592",
+    "hosted-backend-summary.txt": "d9f270de641222e81e0934c2dcb8ada93fa586747099c67c164f4db10f1cb600",
+    "hosted-ci.json": "e5878e837c21eb0c38247818884162cdf65dfa30df3c2638c9d0e08abd4a9bac",
+    "hosted-postgres-summary.txt": "25bd836045e0e59e60a742a635c51f699b29dfcb6d2691fd0a492f9d6c9273b4",
+    "initial-hosted-c03-failure.txt": "bf707952bb4db6403f8c54a7ce974d63d1287767eae801a0e6de7514cfd7305c",
+    "postgres-lifecycle.txt": "0a7b1e283b2fdd3b3533f28ed1139113ba52abf1b21fc7a4a8cb8efdd42bacc7",
+    "postgres-result.json": "57e80417e6f30c9fe528aa3be5c3ccc206dbf7417a5e27a43cf4887b3bbd8316",
+    "postgres-tests.txt": "1b89f429b7cb067991ce547117c29cd453ed695bc79420a1dac39e8ce2e17f9a",
+    "readiness-probes.json": "8be3da1c0cb301c5e33c642a981bf436bbaec618ec73093b082dca90c95157aa",
+    "readiness_probes.py": "bb274a8531045a456a9ff3dbe6dac1c2cf827085b4e6c0bb49dd87382dfe8c1c",
+    "verify_c03_postgres.py": "bf95b50252d1ef26b233ee5844a419d0bbfda04a06066a002209766b11341ddd"
+  },
+  "files": {
+    ".github/workflows/tests.yml": "63ca44918b78eec08a4d22c6862e2117815f2b8d06a07e441cd87a1bf84d1a52",
+    "api/auth.py": "ace7c43baa9a665ada111c30e99d674d743c5e148d14995bf3d9bb3da8ea566a",
+    "api/main.py": "25501284aba4cc3f96e4d5fc01ee61a3639e458b42ea0f8f8eb574ff91f379e1",
+    "api/retention_routes.py": "ae031d5f220abf565a93e869f150b2d727f7d7e5698ba58a9b5f7c79175f0fec",
+    "db/retention.py": "063fb25caf1ad5ba45bf112d66d150090e359f7e98491245309b9d984057e9f1",
+    "db/vector_store.py": "e7a8e7c5c942156347b1b879216565c8e6c5a3820722a6ead12a4099b4a3b343",
+    "docs/plans/ocean-v1/components/C05-retrieval-correctness.md": "24a9d4551299c8b404c7ac283bf6518e2b7d29025452f337b7284c252cf5b53e",
+    "ingestion/lineage.py": "293df70ba3bc723190d7e5b770c3617eb3ec5e73df978c6cc4f2f67f07da5eac",
+    "preprocessing/metagenome.py": "f36e8b7a2a07820400b8e608eeb9d7551e3cd612cd941065016573797ef8b485",
+    "retrieval/document_builder.py": "0a2c99ffa978d9db0f56395f5a4993ab783cd29e4d88651c4312120d89b7255a",
+    "retrieval/hybrid_retriever.py": "14299796afa8fa2c2bfbd99341c33357bcfb6120d1fc958c0ac59f08034ec42f",
+    "scripts/load_db.py": "1cfc70b5a58360ebc61dafe68c640b78124d2e8b8e4ac48a5dc8014941770c06",
+    "tests/integration/test_retention_concurrency_postgres.py": "f6126b40c801695393dc7b8b4e24fb2d313e2a52329bc7257c6de2fd5245671b",
+    "tests/test_api_security.py": "487a4a8af1451281d5be6d377fb8d14370f0b887c8b267aff019a0abd27f0aa4",
+    "tests/test_auth.py": "2686e0356352d34d71fe43ed52dd060f44c707602c097c71f47de302cdc34196",
+    "tests/test_hybrid_retrieval_contract.py": "72de6ecf83f6ed8075caf3c4452a2c5065c42745d3f52ead22b8bd244f5b7019",
+    "tests/test_pr3_review_fixes.py": "6dba5f1d2c6b93b1b3be90c100e5212d4cde1ff0cf921b479c4de7d41b548531",
+    "tests/test_rate_limit.py": "da9f7bbec04f8608701f60ff6e3bffd28259b674dc100e5c61394c6e73dbd9de",
+    "tests/test_retention.py": "3f0bcdef3b65ddf3fc9ba9fd66dcbecaf429a6f91b7bcfaa1922f8191f6ee6f2",
+    "tests/test_retention_cleanup_script.py": "598d89bad59c67fbb3e330d8c6678d47af07adc2b7805a7fde0a91ca174c692e",
+    "tests/test_retention_postgres_guard.py": "694ece3fb5226fc291955db0c98f00bc4aad59023991d17448f05dbef948ba76",
+    "tests/test_source_aware_retrieval.py": "a6133cc23deb40870a9b57acea1fa3b44461df2343695ba20524f43e4be93b46",
+    "tests/test_vector_store.py": "c1099877a7d16f37094eb0ee8d232706a3de0b38bc3e25197b3254971bb8da66"
+  },
+  "formal_prerequisite": {
+    "P00_source_files_matching": 36,
+    "accepted_aggregate": "1b666844066d31d82f915502291b506f45e6e8989612c3b4071af12c08a0bb21"
+  },
+  "historical_C03_receipt_drift": {
+    ".github/workflows/tests.yml": {
+      "current": "63ca44918b78eec08a4d22c6862e2117815f2b8d06a07e441cd87a1bf84d1a52",
+      "historical": "f31b27de90f1454d78701b6d83e54ce3ca33cbf87f8c491336c6d8da2545dca7"
+    },
+    "tests/integration/test_retention_concurrency_postgres.py": {
+      "current": "f6126b40c801695393dc7b8b4e24fb2d313e2a52329bc7257c6de2fd5245671b",
+      "historical": "efddcb3146d19beab5543ab8e8335bc98cb598cbbea515d54e4de220ed972cb3"
+    }
+  },
+  "limits": [
+    "Receipt follow-up is documentation/evidence only; application/tests/workflow hashes match tested and pushed source",
+    "C05 has not been implemented; baseline passing does not repair F06/F08",
+    "No production index migration/model calls/deployment/main merge",
+    "30 unrelated older files remain outside the delivered commits"
+  ],
+  "readiness": "Ready to begin C05 locally; implementation remains Not started and unselected",
+  "report": {
+    "path": "docs/plans/ocean-v1/C05_READINESS_AUDIT_2026-10-15.md",
+    "sha256": "9824df5d3554444aa4d4396679981e431b96f4514a3af418eebda4da572d2579"
+  },
+  "source_sha256": "f0722020710fb5041c8a5f91576525b444ca779df227ed1f39145b956ce55e0a",
+  "verification": {
+    "C04_application_test_hashes": "all four accepted hashes match",
+    "C05_baseline": "59 passed, 1 existing warning in 0.84s",
+    "C05_baseline_command": [
+      "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+      "-m",
+      "pytest",
+      "tests/test_vector_store.py",
+      "tests/test_source_aware_retrieval.py",
+      "tests/test_hybrid_retrieval_contract.py",
+      "tests/test_pr3_review_fixes.py",
+      "-q",
+      "--tb=short"
+    ],
+    "ci_guard_units": "18 passed in 0.41s; loopback defaults preserved; CI requires exact inspected RFC1918 peer pin",
+    "hosted": {
+      "jobs": [
+        {
+          "conclusion": "success",
+          "name": "PostgreSQL migration and metadata integration",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job"
+            },
+            {
+              "conclusion": "success",
+              "name": "Initialize containers"
+            },
+            {
+              "conclusion": "success",
+              "name": "Checkout repository"
+            },
+            {
+              "conclusion": "success",
+              "name": "Set up Python 3.12"
+            },
+            {
+              "conclusion": "success",
+              "name": "Install test dependencies"
+            },
+            {
+              "conclusion": "success",
+              "name": "Apply application migrations"
+            },
+            {
+              "conclusion": "success",
+              "name": "Verify invite acceptance and metadata persistence"
+            },
+            {
+              "conclusion": "success",
+              "name": "Verify transactional corpus upsert is idempotent"
+            },
+            {
+              "conclusion": "success",
+              "name": "Create isolated C03 retention test database"
+            },
+            {
+              "conclusion": "success",
+              "name": "Identify the job-owned PostgreSQL container address"
+            },
+            {
+              "conclusion": "success",
+              "name": "Verify C03 retention transaction ordering in isolated schemas"
+            },
+            {
+              "conclusion": "success",
+              "name": "Verify database backup and isolated restore"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Set up Python 3.12"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Checkout repository"
+            },
+            {
+              "conclusion": "success",
+              "name": "Stop containers"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job"
+            }
+          ]
+        },
+        {
+          "conclusion": "success",
+          "name": "OCEAN v1 prototype tests and build",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job"
+            },
+            {
+              "conclusion": "success",
+              "name": "Checkout repository"
+            },
+            {
+              "conclusion": "success",
+              "name": "Set up Node.js 22"
+            },
+            {
+              "conclusion": "success",
+              "name": "Install prototype dependencies"
+            },
+            {
+              "conclusion": "success",
+              "name": "Audit production prototype dependencies"
+            },
+            {
+              "conclusion": "success",
+              "name": "Test prototype"
+            },
+            {
+              "conclusion": "success",
+              "name": "Typecheck prototype"
+            },
+            {
+              "conclusion": "success",
+              "name": "Build prototype"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Set up Node.js 22"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Checkout repository"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job"
+            }
+          ]
+        },
+        {
+          "conclusion": "success",
+          "name": "Frontend typecheck and build",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job"
+            },
+            {
+              "conclusion": "success",
+              "name": "Checkout repository"
+            },
+            {
+              "conclusion": "success",
+              "name": "Set up Node.js 22"
+            },
+            {
+              "conclusion": "success",
+              "name": "Install frontend dependencies"
+            },
+            {
+              "conclusion": "success",
+              "name": "Audit production frontend dependencies"
+            },
+            {
+              "conclusion": "success",
+              "name": "Test frontend"
+            },
+            {
+              "conclusion": "success",
+              "name": "Typecheck frontend"
+            },
+            {
+              "conclusion": "success",
+              "name": "Build frontend"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Set up Node.js 22"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Checkout repository"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job"
+            }
+          ]
+        },
+        {
+          "conclusion": "success",
+          "name": "Backend tests and security boundary",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job"
+            },
+            {
+              "conclusion": "success",
+              "name": "Checkout repository"
+            },
+            {
+              "conclusion": "success",
+              "name": "Set up Python 3.12"
+            },
+            {
+              "conclusion": "success",
+              "name": "Install dependencies"
+            },
+            {
+              "conclusion": "success",
+              "name": "Lint active Python code"
+            },
+            {
+              "conclusion": "success",
+              "name": "Check generated chat scope contract"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run tests with coverage"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Set up Python 3.12"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Checkout repository"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job"
+            }
+          ]
+        },
+        {
+          "conclusion": "skipped",
+          "name": "Dependency review",
+          "status": "completed"
+        }
+      ],
+      "run": {
+        "conclusion": "success",
+        "event": "push",
+        "head_sha": "276540f8a57bf9c7f7fb0be9735465a3d2c6c251",
+        "id": 38589445905,
+        "status": "completed",
+        "url": "https://github.com/jarondlk/ocean-platform/actions/runs/38589445905"
+      },
+      "source_commit": "276540f8a57bf9c7f7fb0be9735465a3d2c6c251"
+    },
+    "hosted_backend": "1714 passed, 51 skipped, 2596 existing warnings in 138.46s; 82.28% coverage (minimum 70%)",
+    "hosted_postgres": "39 existing cases plus all 12 C03 cases passed on PostgreSQL16.15; idempotent loading and backup/isolated restore passed",
+    "independent_review": "No readiness blocker; actual producer/suffix consumers, missing vector identity predicates, available PostgreSQL/pgvector harness and narrow CI identity repair reviewed read-only",
+    "known_targets": {
+      "document": {
+        "id": "meta_2024-04-O-s1",
+        "metadata": {},
+        "text": "Metagenome sample 2024-04-O-s1 from Onagawa Bay, station s1 (2024-04). Top MetaEuk genera: SyntheticMetaEukOnly (5.00%)."
+      },
+      "kraken_taxon_present": false,
+      "metaeuk_taxon_present": true,
+      "producer_columns": [
+        "sample_id",
+        "has_kraken",
+        "has_metaeuk",
+        "top_genus_10_json_x",
+        "top_genus_10_json_y"
+      ],
+      "scope": "Synthetic input and mocked empty SQL sessions only; no provider or database calls",
+      "vector_sql": [
+        {
+          "identity_predicates_present": {
+            "embedding_dim": false,
+            "embedding_model": false,
+            "embedding_provider": false
+          },
+          "parameters": {
+            "emb": "[1.0,0.0]",
+            "k": 5,
+            "source_type": "metagenome"
+          },
+          "sql": "\n            SELECT doc_id, source_type, sample_id, event_id, time,\n                   lat, lon, bay, station, title, text,\n                   embedding <=> :emb AS distance\n            FROM retrieval_document\n            WHERE active IS TRUE AND embedding IS NOT NULL AND source_type = :source_type\n            ORDER BY embedding <=> :emb\n            LIMIT :k\n        "
+        },
+        {
+          "identity_predicates_present": {
+            "embedding_dim": false,
+            "embedding_model": false,
+            "embedding_provider": false
+          },
+          "parameters": {
+            "emb": "[1.0,0.0]",
+            "k": 20,
+            "source_type": "metagenome"
+          },
+          "sql": "\n                SELECT doc_id, source_type, sample_id, event_id, time,\n                       bay, station, title, text, lat, lon, metadata_json, provider,\n                       provider_project_id, provider_run_id, assay_id,\n                       assignment_method, sample_kind, is_control,\n                       source_snapshot_id\n                FROM retrieval_document\n                WHERE active IS TRUE AND source_type = :source_type AND embedding IS NOT NULL\n                ORDER BY embedding <=> :emb, doc_id ASC\n                LIMIT :k\n            "
+        }
+      ]
+    },
+    "local_actual_postgres": {
+      "cluster_root": "/private/tmp/ocean-c03-readiness-7pc29283",
+      "data_directory": "/private/tmp/ocean-c03-readiness-7pc29283/data",
+      "database": "ocean_c03_readiness_0a2d473b4886",
+      "existing_database_urls_used": false,
+      "host": "127.0.0.1",
+      "identity": {
+        "data_directory": "/private/tmp/ocean-c03-readiness-7pc29283/data",
+        "database": "ocean_c03_readiness_0a2d473b4886",
+        "host": "127.0.0.1",
+        "isolation": "read committed",
+        "port": 54355,
+        "role": "ocean_c03",
+        "version": "PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit"
+      },
+      "port": 54355,
+      "role": "ocean_c03",
+      "server_stopped": true,
+      "stop_exit_code": 0,
+      "test_command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/integration/test_retention_concurrency_postgres.py",
+        "-q",
+        "-s",
+        "--tb=short"
+      ],
+      "test_exit_code": 0,
+      "test_schemas_remaining": 0
+    },
+    "older_unrelated_files_preserved": 30
+  }
+}

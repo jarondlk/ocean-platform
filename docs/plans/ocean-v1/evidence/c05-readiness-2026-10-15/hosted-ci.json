@@ -1,0 +1,238 @@
+{
+  "source_commit": "276540f8a57bf9c7f7fb0be9735465a3d2c6c251",
+  "run": {
+    "id": 38589445905,
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/38589445905",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "push",
+    "head_sha": "276540f8a57bf9c7f7fb0be9735465a3d2c6c251"
+  },
+  "jobs": [
+    {
+      "name": "PostgreSQL migration and metadata integration",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Checkout repository",
+          "conclusion": "success"
+        },
+        {
+          "name": "Set up Python 3.12",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install test dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Apply application migrations",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify invite acceptance and metadata persistence",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify transactional corpus upsert is idempotent",
+          "conclusion": "success"
+        },
+        {
+          "name": "Create isolated C03 retention test database",
+          "conclusion": "success"
+        },
+        {
+          "name": "Identify the job-owned PostgreSQL container address",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify C03 retention transaction ordering in isolated schemas",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify database backup and isolated restore",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Set up Python 3.12",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Checkout repository",
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "OCEAN v1 prototype tests and build",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Checkout repository",
+          "conclusion": "success"
+        },
+        {
+          "name": "Set up Node.js 22",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install prototype dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Audit production prototype dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test prototype",
+          "conclusion": "success"
+        },
+        {
+          "name": "Typecheck prototype",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build prototype",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Set up Node.js 22",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Checkout repository",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "Frontend typecheck and build",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Checkout repository",
+          "conclusion": "success"
+        },
+        {
+          "name": "Set up Node.js 22",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install frontend dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Audit production frontend dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test frontend",
+          "conclusion": "success"
+        },
+        {
+          "name": "Typecheck frontend",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build frontend",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Set up Node.js 22",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Checkout repository",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "Backend tests and security boundary",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Checkout repository",
+          "conclusion": "success"
+        },
+        {
+          "name": "Set up Python 3.12",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Lint active Python code",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check generated chat scope contract",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run tests with coverage",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Set up Python 3.12",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Checkout repository",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "Dependency review",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ]
+}
