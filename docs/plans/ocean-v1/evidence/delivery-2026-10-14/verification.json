@@ -1,0 +1,418 @@
+{
+  "P00_source_files_unchanged": 36,
+  "accepted_P00_source_sha256": "1b666844066d31d82f915502291b506f45e6e8989612c3b4071af12c08a0bb21",
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "audit": "C01/C02 repository delivery",
+  "base_head": "c7ea5f4c4243d1c1a0657a0a01c075f5f738219d",
+  "clean_candidate": "Git baseline exported plus only selected C01/C02/audit/workflow files; source hashes reverified after test execution; excludes earlier benchmark/audit work.",
+  "clean_candidate_workflow_followup": "23 Python source files unchanged after clean test run; final workflow extends push triggers to codex review branches and is separately structure-validated before required hosted CI.",
+  "component_receipt_drift": {
+    "C01": {
+      "changed_since_component_receipt": {
+        "api/main.py": {
+          "current_sha256": "25501284aba4cc3f96e4d5fc01ee61a3639e458b42ea0f8f8eb574ff91f379e1",
+          "historical_sha256": "be6f1540fdab041f82fdf138d66956b19d3a87c30f89fa4adc11a9aed7459c89"
+        },
+        "orchestration/publication_scope.py": {
+          "current_sha256": "af31d203fb2e766a2e43049c1e0ea2d9235e3f43604efdd993e95796fc3e273e",
+          "historical_sha256": "59b7db818cbdac051b6d96d1bb7ab53dc807679dc1f89c3c21676c4b889a210c"
+        },
+        "tests/test_publication_scope_contract.py": {
+          "current_sha256": "de97584b85d177667ec6afe0522bf4e560c4c0af7745934ca95e07d087b8fb1e",
+          "historical_sha256": "7b48257093f7383948b1112e64dcd3b0a687d2b9ce63f58373bdaa30f7aad713"
+        }
+      },
+      "historical_source_sha256": "aed7c2df8e8283f83f9683ad51f79f36fb491a393845a3004ebf97be70031c1d"
+    },
+    "C02": {
+      "changed_since_component_receipt": {
+        "api/main.py": {
+          "current_sha256": "25501284aba4cc3f96e4d5fc01ee61a3639e458b42ea0f8f8eb574ff91f379e1",
+          "historical_sha256": "a00a9c99de53c4db39dc4249ccf726283f3893a1507e47ee4728263f7da4ad06"
+        },
+        "tests/test_derived_artifact_eligibility.py": {
+          "current_sha256": "d37eb145cb224b708dd8c1bf6e0ed3d4ff1ad17eb75341004def6a6b0dde810e",
+          "historical_sha256": "47076f2b0e532d869549525e76e6a9fece935c0047fe2fdf0146394b60814bc3"
+        }
+      },
+      "historical_source_sha256": "bd221b149b14ad3aaf77de1d2a606929229e925656df8a4d14ee083f5f5c5ca6"
+    }
+  },
+  "date": "2026-10-14 JST",
+  "delivery_branch": "codex/c01-c02-audit-20261014",
+  "evidence_files": {
+    "audit-regressions.txt": "9b6861b01df245811c96b856ff7cfc61bbd8926eb6f7255e2dc87ddd59a9a4c0",
+    "backend-tests.txt": "6422ca7e6d9773d1a27ca2a27016d79851b2787c1eb6c874a1a8064af6158a39",
+    "legacy-build.txt": "458d1f492f927f39b985ad45d3fb3593e582f8635c5a4ca8905fc267edb33dc4",
+    "legacy-npm-audit.json": "645689b41348050e14347254fe71d3e8d1a22fe0400e02cccfc98b95165fb48b",
+    "legacy-tests.txt": "719dbf14a127e82f2b13873aa83ea4ff84333b29666876d4303bbf79904f6ced",
+    "legacy-typecheck.txt": "fc392d1461c4eecb6eb76771999435411443ed0e553641e1fe580403e5e87d52",
+    "pip-check.txt": "8cf9abedfe3308838095c11b57a9a8ddf6dac0037cf30060cadb4c5a1912913f",
+    "ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "scope-contract.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "v1-build.txt": "409ac799efd92fb1483ce37d9399c4349024aff34c998bc9d2d52c1802a73da8",
+    "v1-npm-audit.json": "1edfafa47b19e0370e6d56a342e61d4a7e05f3fc950dbbb9a217fdcb10dee904",
+    "v1-tests.txt": "17c9d71bcc272d1863b1ceba2eaf9649a4f688091174727c8c87c77aa34bd706",
+    "v1-typecheck.txt": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936"
+  },
+  "evidence_log_normalization": "Only terminal carriage returns, trailing whitespace and trailing blank lines normalized for repository diff checks; original hashes retained for changed logs.",
+  "files": {
+    ".github/workflows/tests.yml": "988757dfebbafd7b363a592011c3176c8024ca5c13f63ff1e673cc6697d9a809",
+    "api/main.py": "25501284aba4cc3f96e4d5fc01ee61a3639e458b42ea0f8f8eb574ff91f379e1",
+    "docs/plans/ocean-v1/evidence/C02/verify_synthetic.py": "513b67b539b3102195e2627a7b02f707c6836561f49ebe3a2459cae09e2b3cc5",
+    "orchestration/auto_published_settings.py": "c8269e5d1471929a240bce8ddd1d3f8bf674450fd79bd88bc489af0e60eb911f",
+    "orchestration/publication_scope.py": "af31d203fb2e766a2e43049c1e0ea2d9235e3f43604efdd993e95796fc3e273e",
+    "orchestration/research_intents.py": "eb265c1247148b4c4494199eb0d7941288db836d496326c5701747b8128ce15f",
+    "orchestration/research_question.py": "a93e3f2b5f3fddb637b9176aedb0abffb08e49d0700238c5679e20ef561bbb81",
+    "orchestration/settings_planner.py": "12f8231dd51166c631b12388d4e9a33ed8c5e043fabd273509bcc5a4d63dbe3a",
+    "orchestration/statistics_catalog.py": "004a3055a4d8daaf49463a81207b5aa9d3ca6482066cfc6ede0efb757520a22c",
+    "orchestration/unified.py": "c35856c03045ef48bd5d352334c7f62aa24163378b0416ab9d8e5ed0d25d00e7",
+    "preprocessing/derived_artifacts.py": "deba53d403e8ce3c44f1a6482fb1f5cd5b2b81650401cbdd0bfb2aa8d31d5bd4",
+    "preprocessing/pre_analysis.py": "426a19a3c1f7d9dcc4241c7a187352554ab0711cfc438a20f0633804db6bbed8",
+    "preprocessing/reliability_ensurance.py": "46b5cf6c4b3b320467bc121a1572e41e4a00e2327bc0afc6fa7a63471e726c5d",
+    "preprocessing/remote_sensing.py": "e611e7f176677fbece054cb7ff70d57ba378e1135f86a2cfcf1346b781c852cd",
+    "tests/conftest.py": "989457a38d9ffefac466e5a0173ca620a4cef42ebacb1d483454ec469e026e19",
+    "tests/test_api_explore.py": "cced0b92ee64ddcad9d48a61daf939e41cd056ab0c55ad0f01623c993407d12e",
+    "tests/test_api_retrieve.py": "29faaee46884c24578035fbb17a0470eb792c4c5897e417c4959a87981bfd769",
+    "tests/test_auto_settings.py": "6395109f9cf1736e5294e3464e8c6f5720a800802bddc798ab444c915eeaa86b",
+    "tests/test_conference_demo.py": "60035ab60e1becfde6c195cd7e2dbefb32d730cc4e9b137bc6b6508dc1e7bec9",
+    "tests/test_derived_artifact_eligibility.py": "d37eb145cb224b708dd8c1bf6e0ed3d4ff1ad17eb75341004def6a6b0dde810e",
+    "tests/test_pre_analysis.py": "b2573e4d095aa07135eefcb6278879c16d0e6e154289cec4d7ae6108801789fc",
+    "tests/test_publication_scope_contract.py": "de97584b85d177667ec6afe0522bf4e560c4c0af7745934ca95e07d087b8fb1e",
+    "tests/test_reliability.py": "346e54fd746a02d614aa5e8a7ac90d7cf99fe3d6cb1d5ee2fb99888ddfd847ca",
+    "tests/test_remote_sensing.py": "0eaf7f291f3a29de55fbf529b6b4cec988133e645d428a4c412a3bb7f5f444c9"
+  },
+  "merge_gate": "Hosted backend, legacy frontend, v1 frontend and disposable PostgreSQL CI must pass on the exact pushed branch head before Git merge into overhaul.",
+  "original_log_sha256_before_whitespace_normalization": {
+    "legacy-build.txt": "6b7898d7061142578b600d36902da4ed369964961b0903bf560282fa9e2c2f6b",
+    "legacy-typecheck.txt": "0dfc7aeaa0fd983206afdbe50edc28855ed96b862749b8a2ab21f85666af4fa6",
+    "v1-build.txt": "24b5b4556598b5a276bcf160d338b1a6ee8d278ee6d087ce052affe972f224f4"
+  },
+  "postgres_integration_skips": [
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_anemone_catalogue_postgres.test_copy_staging_preserves_values_types_and_transaction_lifetime"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_anemone_catalogue_postgres.test_copy_staging_multiple_batches_and_failure_roll_back"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_anemone_catalogue_postgres.test_bulk_merge_mixed_changes_and_non_primary_conflict"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_anemone_catalogue_postgres.test_atomic_import_rerun_stale_generation_and_failed_derivation"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_anemone_catalogue_postgres.test_late_unit_corruption_rolls_back_and_empty_tables_remain_queryable"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_anemone_catalogue_postgres.test_matching_review_preserves_anchor_and_changed_evidence_does_not"
+    },
+    {
+      "reason": "requires the disposable PostgreSQL integration service",
+      "test": "tests.integration.test_anemone_postgres.test_anemone_migration_and_transactional_merge_are_idempotent"
+    },
+    {
+      "reason": "requires the disposable PostgreSQL integration service",
+      "test": "tests.integration.test_anemone_postgres.test_reviewed_classification_import_replay_and_explicit_reversion"
+    },
+    {
+      "reason": "requires the disposable PostgreSQL integration service",
+      "test": "tests.integration.test_anemone_postgres.test_hybrid_retrieval_transactions_recover_each_branch"
+    },
+    {
+      "reason": "requires the disposable PostgreSQL integration service",
+      "test": "tests.integration.test_anemone_postgres.test_anemone_migration_downgrade_preserves_prior_schema_and_reupgrades"
+    },
+    {
+      "reason": "requires the disposable PostgreSQL integration service",
+      "test": "tests.integration.test_anemone_postgres.test_edna_materialization_retains_scopes_and_filters_nonfeatured_taxa"
+    },
+    {
+      "reason": "requires the disposable PostgreSQL integration service",
+      "test": "tests.integration.test_app_metadata_postgres.test_migrations_and_invite_acceptance_persist_app_metadata"
+    },
+    {
+      "reason": "requires the disposable PostgreSQL integration service",
+      "test": "tests.integration.test_app_metadata_postgres.test_mock_identity_is_database_backed_for_audited_mutations"
+    },
+    {
+      "reason": "requires the disposable PostgreSQL integration service",
+      "test": "tests.integration.test_app_metadata_postgres.test_classification_review_events_are_database_append_only"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_chat_filter_options_postgres.test_available_choices_match_local_corpus_and_restrict_pinned_members"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_chat_source_scope_postgres.test_sixteen_subsets_and_independent_filters_match_both_rankers"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_chat_source_scope_postgres.test_migrated_history_retains_new_abstention_reasons"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_chat_source_scope_postgres.test_chat_lifecycle_independent_readback_retains_scope_effective_settings_and_evidence"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_chat_source_scope_postgres.test_coverage_reason_migration_preserves_legacy_rows_and_blocks_destructive_downgrade"
+    },
+    {
+      "reason": "requires the disposable PostgreSQL integration service",
+      "test": "tests.integration.test_classification_application_postgres.test_application_receipts_are_append_only_and_running_review_is_unique"
+    },
+    {
+      "reason": "requires the disposable PostgreSQL integration service",
+      "test": "tests.integration.test_classification_preview_postgres.test_preview_uses_repeatable_read_and_keeps_canonical_state"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_edna_aggregate_postgres.test_exact_counts_filters_groups_empty_cohort_and_repeatability"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_edna_aggregate_postgres.test_historical_evidence_survives_correction_and_unpublished_changes_fail_closed"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_edna_aggregate_postgres.test_available_empty_tables_are_not_missing"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_edna_aggregate_postgres.test_assay_filter_does_not_match_sibling_detections"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_edna_aggregate_postgres.test_unavailable_publication_or_budget_never_retains_evidence[pending]"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_edna_aggregate_postgres.test_unavailable_publication_or_budget_never_retains_evidence[mismatch]"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_edna_aggregate_postgres.test_unavailable_publication_or_budget_never_retains_evidence[race]"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_edna_aggregate_postgres.test_unavailable_publication_or_budget_never_retains_evidence[rows]"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_edna_aggregate_postgres.test_unavailable_publication_or_budget_never_retains_evidence[bytes]"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_edna_aggregate_postgres.test_unavailable_publication_or_budget_never_retains_evidence[badfilter]"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_edna_aggregate_postgres.test_corrupt_historical_evidence_fails_integrity_check"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_edna_aggregate_postgres.test_repeatable_read_during_concurrent_publication"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_edna_aggregate_postgres.test_corpus_rebuild_keeps_aggregate_history_and_downgrade_refuses_to_erase_it"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_edna_analysis_postgres.test_snapshot_queries_and_serialized_publication"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_edna_analysis_postgres.test_pr5_import_rollback_and_replay_are_edna_only"
+    },
+    {
+      "reason": "Set RUN_POSTGRES_INTEGRATION=1 for PostgreSQL integration checks.",
+      "test": "tests.integration.test_operational_postgres.test_rate_limit_counter_is_shared_between_limiter_instances"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_research_registry_postgres.test_consistent_snapshot_batch_publication_and_stale_sources"
+    },
+    {
+      "reason": "requires disposable PostgreSQL",
+      "test": "tests.integration.test_research_registry_postgres.test_additive_migration_immutable_events_and_guarded_downgrade"
+    }
+  ],
+  "real_artifacts_unchanged": {
+    "data/analysis/analysis_documents.jsonl": "c8822a1083df7bf502e90df87d6cc79ed3ae7963075134d18ce0ef6eb9030998",
+    "data/analysis/taxa_env_correlations.parquet": "aaa33c7f32b0a7abae10944bcde4c26db679ce4a7ca95851f366f766fa6da622",
+    "data/reliability/corroboration.parquet": "3b731b0b81b85b38623d1aa512638b1f7af77bcbbddef353c491d76354d8dbe1",
+    "data/reliability/diversity_prediction.parquet": "714300cd6ac6543a7ec7dea4427641df943945b7e7577be3b5353e32532e5327",
+    "data/reliability/gap_interpolation.parquet": "89712a561cf1301e21d5774d93bccbe3dd4429ffc874ee7f08841aa50a61d432",
+    "data/reliability/reliability_documents.jsonl": "4edc4d3254d87a3cdfdd37b755c1b341bf9109f7c5b2a7e535fdf834d4e6ad22",
+    "data/reliability/sst_ctd_validation.parquet": "e1bcfd1f2f504d6964132a7fd65fda0b2cb87b96f2f4c0c9f2e92e383375a36f"
+  },
+  "remaining_work": "C03\u2013C27 unselected; real derived artifact regeneration/eligibility review and scientific/production release gates remain.",
+  "scope_limits": "Local source review, clean regression snapshot, readonly bundled artifacts and current npm advisory queries. No real data regeneration, production access, publication, paid model call or deployment. Python dependency consistency is not a Python advisory scan.",
+  "selected_delivery_paths": [
+    ".github/workflows/tests.yml",
+    "api/main.py",
+    "docs/plans/ocean-v1/ACCEPTANCE_MAP.md",
+    "docs/plans/ocean-v1/COMPONENTS.md",
+    "docs/plans/ocean-v1/DECISIONS.md",
+    "docs/plans/ocean-v1/DELIVERY_AUDIT_2026-10-14.md",
+    "docs/plans/ocean-v1/HUB_PROMPT.md",
+    "docs/plans/ocean-v1/MASTER_PLAN.md",
+    "docs/plans/ocean-v1/README.md",
+    "docs/plans/ocean-v1/STATUS.md",
+    "docs/plans/ocean-v1/components.json",
+    "docs/plans/ocean-v1/components/C01-scientific-scope.md",
+    "docs/plans/ocean-v1/components/C02-derived-scientific-evidence.md",
+    "docs/plans/ocean-v1/evidence/C01/offline-tests.txt",
+    "docs/plans/ocean-v1/evidence/C01/verification.json",
+    "docs/plans/ocean-v1/evidence/C02/final-gates.txt",
+    "docs/plans/ocean-v1/evidence/C02/offline-tests.txt",
+    "docs/plans/ocean-v1/evidence/C02/required-tests.txt",
+    "docs/plans/ocean-v1/evidence/C02/ruff.txt",
+    "docs/plans/ocean-v1/evidence/C02/synthetic-regeneration.json",
+    "docs/plans/ocean-v1/evidence/C02/synthetic-regeneration.zip",
+    "docs/plans/ocean-v1/evidence/C02/synthetic-verification.txt",
+    "docs/plans/ocean-v1/evidence/C02/verification.json",
+    "docs/plans/ocean-v1/evidence/C02/verify_synthetic.py",
+    "docs/plans/ocean-v1/evidence/delivery-2026-10-14/audit-regressions.txt",
+    "docs/plans/ocean-v1/evidence/delivery-2026-10-14/backend-tests.txt",
+    "docs/plans/ocean-v1/evidence/delivery-2026-10-14/legacy-build.txt",
+    "docs/plans/ocean-v1/evidence/delivery-2026-10-14/legacy-npm-audit.json",
+    "docs/plans/ocean-v1/evidence/delivery-2026-10-14/legacy-tests.txt",
+    "docs/plans/ocean-v1/evidence/delivery-2026-10-14/legacy-typecheck.txt",
+    "docs/plans/ocean-v1/evidence/delivery-2026-10-14/pip-check.txt",
+    "docs/plans/ocean-v1/evidence/delivery-2026-10-14/ruff.txt",
+    "docs/plans/ocean-v1/evidence/delivery-2026-10-14/scope-contract.txt",
+    "docs/plans/ocean-v1/evidence/delivery-2026-10-14/v1-build.txt",
+    "docs/plans/ocean-v1/evidence/delivery-2026-10-14/v1-npm-audit.json",
+    "docs/plans/ocean-v1/evidence/delivery-2026-10-14/v1-tests.txt",
+    "docs/plans/ocean-v1/evidence/delivery-2026-10-14/v1-typecheck.txt",
+    "docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json",
+    "docs/plans/ocean-v1/handoffs/C01.md",
+    "docs/plans/ocean-v1/handoffs/C02.md",
+    "docs/plans/ocean-v1/handoffs/README.md",
+    "orchestration/auto_published_settings.py",
+    "orchestration/publication_scope.py",
+    "orchestration/research_intents.py",
+    "orchestration/research_question.py",
+    "orchestration/settings_planner.py",
+    "orchestration/statistics_catalog.py",
+    "orchestration/unified.py",
+    "preprocessing/derived_artifacts.py",
+    "preprocessing/pre_analysis.py",
+    "preprocessing/reliability_ensurance.py",
+    "preprocessing/remote_sensing.py",
+    "tests/conftest.py",
+    "tests/test_api_explore.py",
+    "tests/test_api_retrieve.py",
+    "tests/test_auto_settings.py",
+    "tests/test_conference_demo.py",
+    "tests/test_derived_artifact_eligibility.py",
+    "tests/test_pre_analysis.py",
+    "tests/test_publication_scope_contract.py",
+    "tests/test_reliability.py",
+    "tests/test_remote_sensing.py"
+  ],
+  "source_sha256": "227b42ea16112374b61b0650287092599f950133c87466860e8062f643901f37",
+  "target_branch": "overhaul",
+  "tested_clean_snapshot_files": {
+    ".github/workflows/tests.yml": "8b04a4a6e517a5d79ea3327048cfcecdf338f3f24b0e97a2eee79d712088b10a",
+    "api/main.py": "25501284aba4cc3f96e4d5fc01ee61a3639e458b42ea0f8f8eb574ff91f379e1",
+    "docs/plans/ocean-v1/evidence/C02/verify_synthetic.py": "513b67b539b3102195e2627a7b02f707c6836561f49ebe3a2459cae09e2b3cc5",
+    "orchestration/auto_published_settings.py": "c8269e5d1471929a240bce8ddd1d3f8bf674450fd79bd88bc489af0e60eb911f",
+    "orchestration/publication_scope.py": "af31d203fb2e766a2e43049c1e0ea2d9235e3f43604efdd993e95796fc3e273e",
+    "orchestration/research_intents.py": "eb265c1247148b4c4494199eb0d7941288db836d496326c5701747b8128ce15f",
+    "orchestration/research_question.py": "a93e3f2b5f3fddb637b9176aedb0abffb08e49d0700238c5679e20ef561bbb81",
+    "orchestration/settings_planner.py": "12f8231dd51166c631b12388d4e9a33ed8c5e043fabd273509bcc5a4d63dbe3a",
+    "orchestration/statistics_catalog.py": "004a3055a4d8daaf49463a81207b5aa9d3ca6482066cfc6ede0efb757520a22c",
+    "orchestration/unified.py": "c35856c03045ef48bd5d352334c7f62aa24163378b0416ab9d8e5ed0d25d00e7",
+    "preprocessing/derived_artifacts.py": "deba53d403e8ce3c44f1a6482fb1f5cd5b2b81650401cbdd0bfb2aa8d31d5bd4",
+    "preprocessing/pre_analysis.py": "426a19a3c1f7d9dcc4241c7a187352554ab0711cfc438a20f0633804db6bbed8",
+    "preprocessing/reliability_ensurance.py": "46b5cf6c4b3b320467bc121a1572e41e4a00e2327bc0afc6fa7a63471e726c5d",
+    "preprocessing/remote_sensing.py": "e611e7f176677fbece054cb7ff70d57ba378e1135f86a2cfcf1346b781c852cd",
+    "tests/conftest.py": "989457a38d9ffefac466e5a0173ca620a4cef42ebacb1d483454ec469e026e19",
+    "tests/test_api_explore.py": "cced0b92ee64ddcad9d48a61daf939e41cd056ab0c55ad0f01623c993407d12e",
+    "tests/test_api_retrieve.py": "29faaee46884c24578035fbb17a0470eb792c4c5897e417c4959a87981bfd769",
+    "tests/test_auto_settings.py": "6395109f9cf1736e5294e3464e8c6f5720a800802bddc798ab444c915eeaa86b",
+    "tests/test_conference_demo.py": "60035ab60e1becfde6c195cd7e2dbefb32d730cc4e9b137bc6b6508dc1e7bec9",
+    "tests/test_derived_artifact_eligibility.py": "d37eb145cb224b708dd8c1bf6e0ed3d4ff1ad17eb75341004def6a6b0dde810e",
+    "tests/test_pre_analysis.py": "b2573e4d095aa07135eefcb6278879c16d0e6e154289cec4d7ae6108801789fc",
+    "tests/test_publication_scope_contract.py": "de97584b85d177667ec6afe0522bf4e560c4c0af7745934ca95e07d087b8fb1e",
+    "tests/test_reliability.py": "346e54fd746a02d614aa5e8a7ac90d7cf99fe3d6cb1d5ee2fb99888ddfd847ca",
+    "tests/test_remote_sensing.py": "0eaf7f291f3a29de55fbf529b6b4cec988133e645d428a4c412a3bb7f5f444c9"
+  },
+  "unrelated_files_preserved": {
+    "README.md": "e4d1cff681128d4b7d40add69f93310298469a9921083bdeeaee043a46ad53e5",
+    "docs/LLM_MODEL_BENCHMARK_2026-10-09.md": "8fba86572f4f077a9152a8853d9a0dc4a8162f39082bcd062ef8fb24067b4c6d",
+    "docs/REPOSITORY_AUDIT_2026-10-09.md": "50c2785cfa90311dd896c419ed72a859c8f27f9eae9f832f6aa7b4ee9d2d3f94",
+    "docs/REPOSITORY_AUDIT_2026-10-12.md": "af8e13265506066aae527490d3a447acc4ab579dad81cba5086843c94b8c5877",
+    "docs/audits/repository-2026-10-09/coverage-summary.json": "fa6657aefd2f1c870579607c6d304440103636f24e55048d60f16fd147179af3",
+    "docs/audits/repository-2026-10-09/csv-probe.json": "6ffd7fb4e39b17af506b3426df702461275bc266ed56e3a59b0d62e460e464b3",
+    "docs/audits/repository-2026-10-09/manifest.json": "0b496b58ce78f93be2f395799212bda7b149b77310c7e355da68e3d5d680a022",
+    "docs/audits/repository-2026-10-09/npm-audit.json": "645689b41348050e14347254fe71d3e8d1a22fe0400e02cccfc98b95165fb48b",
+    "docs/audits/repository-2026-10-09/postgres-probes.json": "b1723c95026b0ee034066d596b2220670d1f3ce1d8ae2bdadc41d19925667923",
+    "docs/audits/repository-2026-10-09/postgres_probes.py": "570f4c6ee32db199cab34a4c6059d615807236c6502fc7cb40d342386659d07d",
+    "docs/audits/repository-2026-10-09/probes.json": "522d9dc57684f5c30eda70f23b3518a1f70044018fbcfc19365c0b9debd95329",
+    "docs/audits/repository-2026-10-09/probes.py": "8d836b64c31060a958ee5932bc331eafb431c740a8c2211b2d2799779b2f567e",
+    "docs/audits/repository-2026-10-12/backend-tests.xml": "220705495080a91d0b2e74f4a1e958d2e54d23352c4fc044a276bef7154bd287",
+    "docs/audits/repository-2026-10-12/csv-probe.json": "26af79c3c9fe3d00a95a5f638b9846fca623c1b7baefbf45c11e54034890a8bb",
+    "docs/audits/repository-2026-10-12/manifest.json": "1c3a287546b34fe9b48596d1e0d409185a2a3f42c75ed0b73449a40e6f3abfd9",
+    "docs/audits/repository-2026-10-12/npm-audit.json": "645689b41348050e14347254fe71d3e8d1a22fe0400e02cccfc98b95165fb48b",
+    "docs/audits/repository-2026-10-12/previous-finding-probes.json": "c5df1a4e5b5c3ba66484b17555b6c08b38459d9910fe33602154e95c6a730054",
+    "docs/audits/repository-2026-10-12/prior-finding-source-comparison.json": "eb241e7fec17cbe008d9ff430c390be084737355b6cb4d53777d66f47a9694f1",
+    "docs/audits/repository-2026-10-12/release-branch-receipt.json": "99638b24cc0e3d246803da198d1128e6720c2e5befc49e23c32daff044909b12",
+    "docs/audits/repository-2026-10-12/scope-probes.json": "b35583595940dd7059744108bb962603a2b58521b0143804826b17da2a9781d8",
+    "docs/audits/repository-2026-10-12/scope_probes.py": "98856bd564f6fcc12c67cdda840123a08155490d7c665147550e2a14bbd7a54b",
+    "docs/benchmarks/llm-2026-10-09/attempts.csv": "bf632d7dddd7e2800a0fd74848a8e827c5620af140b382dadca06f7be2bdc58a",
+    "docs/benchmarks/llm-2026-10-09/metadata.json": "c2a90f20ff813d4e3c1171dfa8cec76d927ba8c45da51ec1e2cf92dd4e1889dd",
+    "docs/benchmarks/llm-2026-10-09/monthly-scenarios.csv": "c46dba092fe56aa6b3cc523f2629d48f88de26a91e8384bdf8e51767502c41ec",
+    "docs/benchmarks/llm-2026-10-09/summary.csv": "7efb18f68c802297d7647b76e9b6173818b576a30b6916db7b8cf942480144ee",
+    "evaluation/model_benchmark/capture.py": "c30a9e369267fedaf8c6fe2a409417ee9328fc511b7654601e91ddac1a2dd9c7",
+    "evaluation/model_benchmark/export.py": "eee59897355081daba05b9201386d0c22de565faece5b863c58ab70dee83d0d0",
+    "evaluation/model_benchmark/runner.py": "5168498cae71db0bed6d8d30ddd90197dfd9483c3fd903b2c8182f0780c7f174",
+    "evaluation/model_benchmark/scoring.py": "eb2617d2a97a80256efa8d811e04acca3c59fa848d67e8d46065e1896fa3cb40",
+    "tests/test_model_benchmark.py": "1ee0cf9438219fb50f27b1a1b3bfd4bacf90355f0f0d12de89969e3b6e866ff3"
+  },
+  "user_authorization": "Audit repository; create branch if appropriate; commit and push; merge into overhaul when ready.",
+  "verification": {
+    "audit_regressions": "253 passed, 65 warnings in 3.83s",
+    "backend_result": "1642 passed, 39 skipped, 2596 warnings in 95.06s (0:01:35)",
+    "both_frontends_typecheck_build": "pass",
+    "coverage_minimum": 70,
+    "coverage_percent": 82.17,
+    "git_diff_check": "pass",
+    "legacy_tests": 81,
+    "npm_production_advisories": {
+      "legacy": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "total": 0
+      },
+      "v1": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "total": 0
+      }
+    },
+    "pip_check": "No broken requirements",
+    "ruff": "pass",
+    "scope_contract": "current",
+    "source_secret_pattern_scan": "no matches in selected source/evidence or synthetic ZIP; not a general security certification",
+    "v1_tests": 27,
+    "workflow_structure": "overhaul push/PR and codex/** push triggers, plus frontend-v1 job, verified"
+  }
+}

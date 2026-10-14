@@ -123,7 +123,12 @@ def test_analysis_state_includes_reliability_and_cooccurrence():
     assert payload["ctd_trends"]["rows"]
     assert payload["correlations"]["summary"]["total"] > 0
     assert len(payload["cooccurrence"]["top_pairs"]) == 5
-    assert payload["reliability"]["sst_ctd"]["summary"]["paired"] > 0
+    summary = payload["reliability"]["sst_ctd"]["summary"]
+    assert summary["paired"] + summary["unavailable"] > 0
+    eligibility = payload["catalog"]["sst_ctd_validation"]["derived_eligibility"]
+    if eligibility["status"] == "legacy_unversioned":
+        assert eligibility["eligible"] is False
+        assert summary["paired"] == 0 and summary["unavailable"] > 0
 
 
 def test_database_query_route_is_removed():

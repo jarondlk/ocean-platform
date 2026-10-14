@@ -1,6 +1,6 @@
 # C02 — Derived scientific evidence
 
-**Status:** Not started. **Prerequisites:** C01. **Contract:** versioned derived-method eligibility.
+**Status:** Complete for local software and synthetic acceptance. **Prerequisites:** C01. **Contract:** versioned derived-method eligibility.
 
 ## Revised delivery boundary
 
@@ -31,7 +31,12 @@ Retain explicit per-check pass/fail/unavailable status, scientific applicability
 3. **F05 — spatial support:** validate coordinates against the SST product's reviewed spatial support before comparison. Acceptance: same-day CTD at 40.9°N does not receive corroboration from the 38–39°N regional series; unknown support is unavailable.
 4. **Invalidation and regeneration:** add machine-readable version/eligibility handling and a local synthetic regeneration receipt. Acceptance: affected old artifacts cannot be selected as current validated evidence; retained history remains traceable. List real artifacts requiring later review without changing or republishing them.
 
-Implementation validation: `python -m pytest tests/test_reliability.py tests/test_pre_analysis.py tests/test_statistical_analysis.py`. Extend those suites for each finding and propose `tests/test_derived_artifact_eligibility.py` for invalidation. Run the latter only after creating it. No fresh validation is claimed by this plan.
+Implementation validation: `python -m pytest tests/test_reliability.py tests/test_pre_analysis.py tests/test_statistical_analysis.py`.
+The invalidation suite `tests/test_derived_artifact_eligibility.py` now exists and
+passes. Exact commands, source hashes, synthetic regeneration and compatibility
+results are recorded in [the handoff](../handoffs/C02.md) and
+[verification receipt](../evidence/C02/verification.json). This is local software
+acceptance, not scientific approval or permission to regenerate real artifacts.
 
 ## Compatibility, rollback and handoff
 

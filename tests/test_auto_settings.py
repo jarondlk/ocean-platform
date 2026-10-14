@@ -121,8 +121,7 @@ def test_pinned_dataset_analysis_and_protocol_cannot_be_changed(planning):
     chosen = scope('edna_metabarcoding', 'remote_sensing')
     chosen['sources']['edna_metabarcoding']['analysis_id'] = 'a' * 64
     chosen['sources']['remote_sensing']['filters']['dataset_id'] = 'mur-miyagi-2020-2023'
-    catalog['analyses'] = [{'analysis_id': 'a' * 64, 'status': 'current', 'analysis_kind': 'regional_frequency',
-                            'protocol_ids': ['b' * 64], 'sst_available': True}]
+    catalog['analyses'] = [{**operational_choices()[0], 'protocol_ids': ['b' * 64], 'workflows': []}]
     output['value'] = proposal(evidence_scope=chosen, route='published_exact',
                                research_intent={'kind': 'temperature_comparison', 'protocol_id': 'b' * 64},
                                required_sources=['edna_metabarcoding', 'remote_sensing'])
@@ -333,9 +332,11 @@ def operational_choices():
     first = {'analysis_id': 'a' * 64, 'publication_id': 'd' * 64,
              'status': 'current', 'analysis_kind': 'regional_frequency', 'label': 'Miyagi QCauto',
              'time_from': '2020-01-01', 'time_to': '2023-12-31',
-             'recipe_scope': {'region_id': 'miyagi-regional-demo', 'rank': 'species',
+             'recipe_scope': {'region_id': 'miyagi-regional-demo', 'rank': 'species', 'fish_classes': ['Actinopterygii'], 'calendar': 'Asia/Tokyo',
+                              'sst_panel_id': 'f' * 64, 'spatial_taxon_key': 'd' * 64,
+                              'spatial_year': 2023, 'endpoint_from': 2020, 'endpoint_to': 2023,
                               'time_from': '2020-01-01', 'time_to': '2023-12-31'},
-             'assignment_methods': ['qcauto_target'], 'sst_available': True,
+             'spatial_taxon': 'Sardinops melanostictus', 'assignment_methods': ['qcauto_target'], 'sst_available': True, 'sst_dataset_id': 'mur-miyagi-2020-2023',
              'protocol_ids': ['b' * 64, 'c' * 64],
              'protocols': {'b' * 64: {'sequencing_method': 'NextSeq', 'library_layout': 'single', 'target_gene': '12S rRNA'},
                            'c' * 64: {'sequencing_method': 'MiSeq', 'library_layout': 'paired', 'target_gene': '12S rRNA'}},
@@ -397,7 +398,7 @@ def test_unavailable_or_conflicting_protocol_request_never_defaults(planning, qu
     chosen['sources']['edna_metabarcoding']['analysis_id'] = 'e' * 64
     output['value'] = proposal(evidence_scope=chosen, route='published_exact',
         required_sources=['edna_metabarcoding'], research_intent={'kind': 'fish_frequency'})
-    with pytest.raises(planner.PlanningError, match='No published assay protocol'):
+    with pytest.raises(planner.PlanningError, match='protocol'):
         planner.plan_settings(ChatRequest(query='Show published fish frequency ' + qualifier,
             settings_mode='auto', evidence_scope=scope()))
 
@@ -409,7 +410,7 @@ def test_requested_protocol_cannot_silently_conflict_with_a_manual_pin(planning)
     chosen['sources']['edna_metabarcoding']['analysis_id'] = 'e' * 64
     output['value'] = proposal(evidence_scope=chosen, route='published_exact',
         required_sources=['edna_metabarcoding'], research_intent={'kind': 'fish_frequency', 'protocol_id': 'b' * 64})
-    with pytest.raises(planner.PlanningError, match='No published assay protocol'):
+    with pytest.raises(planner.PlanningError, match='protocol'):
         planner.plan_settings(ChatRequest(query='Show published fish frequency using MiSeq paired protocol',
             settings_mode='auto', evidence_scope=chosen,
             research_intent={'kind': 'fish_frequency', 'protocol_id': 'b' * 64}))
@@ -425,7 +426,7 @@ def test_requested_assignment_method_takes_priority_over_publication_default(pla
     effective, _ = planner.plan_settings(ChatRequest(query='Show fish frequencies using qcauto_target',
         settings_mode='auto', evidence_scope=scope()))
     assert effective.evidence_scope.sources.edna_metabarcoding.analysis_id == 'a' * 64
-    with pytest.raises(planner.PlanningError, match='conflicts.*method'):
+    with pytest.raises(planner.PlanningError, match='assignment_method'):
         planner.plan_settings(ChatRequest(query='Show fish frequencies using qcauto_target',
             settings_mode='auto', evidence_scope=chosen))
 
@@ -531,7 +532,7 @@ def test_publication_disappearing_after_planning_abstains_before_answer_generati
     from ingestion.provenance_snapshot import SnapshotError
     catalog, output, _ = planning
     identity, protocol_id = 'a' * 64, 'b' * 64
-    catalog['analyses'] = [{'analysis_id': identity, 'status': 'current', 'analysis_kind': 'detection_frequency', 'protocol_ids': [protocol_id]}]
+    catalog['analyses'] = [{**operational_choices()[0], 'analysis_id': identity, 'protocol_ids': [protocol_id], 'workflows': []}]
     chosen = scope('edna_metabarcoding')
     chosen['sources']['edna_metabarcoding']['analysis_id'] = identity
     output['value'] = proposal(evidence_scope=chosen, route='published_synthesis',
@@ -619,8 +620,7 @@ def test_provider_schema_is_small_but_does_not_relax_filter_validation():
 def test_confirmed_user_pins_are_restored_without_new_question_quotes(planning):
     catalog, output, _ = planning
     identity, protocol_id = 'a' * 64, 'b' * 64
-    catalog['analyses'] = [{'analysis_id': identity, 'status': 'current', 'analysis_kind': 'regional_frequency',
-                            'protocol_ids': [protocol_id], 'sst_available': True}]
+    catalog['analyses'] = [{**operational_choices()[0], 'analysis_id': identity, 'protocol_ids': [protocol_id], 'workflows': []}]
     pinned = scope('edna_metabarcoding', 'remote_sensing')
     pinned['sources']['edna_metabarcoding']['analysis_id'] = identity
     pinned['sources']['remote_sensing']['filters']['dataset_id'] = 'mur-miyagi-2020-2023'

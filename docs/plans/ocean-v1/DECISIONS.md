@@ -2,7 +2,8 @@
 
 Recorded 2026-10-12 JST from the originating planning conversation. This file
 records choices, not proof of implementation. P00 is selected for local
-implementation; C01–C27 remain Not started.
+implementation and accepted; C01 local scope validation is Complete. C02–C27
+remain Not started.
 Later explicit user instructions override this baseline; record changes here
 and identify affected components instead of silently drifting.
 
@@ -42,7 +43,7 @@ and identify affected components instead of silently drifting.
 | D32 | Experimental outputs remain experimental; no automatic scientific publication or authority upgrades. | Accepted design |
 | D33 | Contigs, unpublished inputs, external acquisition, R, GPUs and collaborative workspaces are excluded from v1. | Accepted boundary |
 | D34 | Repository plan folder plus a dedicated Planning Hub chat; individual component prompts and resumable handoffs. | User selected |
-| D35 | P00 local prototype implementation is explicitly selected. C01–C27 still require separate component selection. | User selected, 2026-10-13 |
+| D35 | P00 is accepted and C01 scope validation was selected/completed locally. C02–C27 require separate component selection. | Revised by user, 2026-10-14 |
 | D36 | A second GCP site with fully isolated infrastructure: database, storage, credentials, queues and deployment targets. Copy approved data explicitly when needed; no live connection to legacy data. | User selected, 2026-10-13 |
 | D37 | Build and refine a synthetic local UI/UX prototype first (P00), then implement backend/integration components individually. | User selected, 2026-10-13 |
 | D38 | Prioritize understandable, forgiving UX: plain language, progressive disclosure, recoverable actions and repeated user review before backend integration. | User selected, 2026-10-13 |
@@ -92,3 +93,35 @@ settings and demo-jobs database listing are omitted. Other admin workflows and
 previously saved local state remain available. P00 is Complete after the final
 checks; C01–C27 remain unselected and Not started. Planned backend job execution
 is not removed from C20/C24. C01 is the recommended next component.
+
+### C01 selection — 2026-10-14 JST
+
+The user explicitly selected C01. Local shared scientific-scope validation and
+offline regression checks on overhaul are authorized. P00 prerequisite hashes
+match the checkout. C02–C27, live providers, data transfers, cloud resources,
+deployment and automatic repository delivery remain outside this selection.
+
+### C01 completion — 2026-10-14 JST
+
+Shared scope validation and offline acceptance are complete: 319 tests, Ruff and
+diff checks pass. The typed versioned decision is used by published planning and
+independently by immutable-result execution. Unsupported wording requires
+clarification; original settings and exact result rows are retained. Detailed
+evidence and limits are in [C01 handoff](handoffs/C01.md). C02–C27 remain unselected.
+
+### C02 selection — 2026-10-14 JST
+
+The user selected C02. Local F02/F04/F05 repairs, synthetic regeneration and
+version/eligibility handling are authorized. Existing numerical thresholds remain;
+producer success is not scientific approval. C03–C27 remain unselected.
+
+### C02 local acceptance — 2026-10-14 JST
+
+F02/F04/F05 software and synthetic acceptance are complete. Receipts bind frozen
+inputs, output hashes and method versions; regenerated candidates require the
+existing explicit EvidenceDecision review. Algorithmic tiers, regional SST
+context and in-sample predictions do not establish independent scientific approval.
+History and supersession are retained; affected legacy artifacts stay ineligible.
+Required suites (92 tests), composite consumer/C01 regressions (485 tests), Ruff
+and diff checks pass. See [C02 handoff](handoffs/C02.md) for exact receipts and
+real-data review still outstanding. C03–C27 remain unselected.

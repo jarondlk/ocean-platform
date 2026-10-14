@@ -1024,12 +1024,17 @@ def _read_explore_dataset(dataset: str) -> pd.DataFrame:
     return _derive_sample_fields(pd.read_parquet(path))
 
 
-@lru_cache(maxsize=8)
 def _read_parquet_artifact(path_text: str) -> pd.DataFrame:
     path = Path(path_text)
     if not path.exists():
         raise HTTPException(status_code=404, detail=f"Data artifact is missing: {path}")
-    return pd.read_parquet(path)
+    # Parse and label the same frozen bytes. A path-only cache can return old
+    # rows alongside the new generation's eligibility receipt after replacement.
+    import hashlib
+    raw = path.read_bytes()
+    frame = pd.read_parquet(io.BytesIO(raw))
+    frame.attrs["artifact_sha256"] = hashlib.sha256(raw).hexdigest()
+    return frame
 
 
 def _ctd_profiles_df() -> pd.DataFrame:
@@ -4832,6 +4837,12 @@ def analysis_state(
     div_pred = _analysis_df("diversity_prediction")
     corroboration = _analysis_df("corroboration")
 
+    def ordered(frame, columns, **kwargs):
+        # Unavailable computations retain an empty artifact and its receipt;
+        # they may have no result columns and still need an inspectable state.
+        existing = [column for column in columns if column in frame.columns]
+        return frame.sort_values(existing, **kwargs) if existing else frame
+
     trend_variables = sorted(
         column.removesuffix("_mean")
         for column in trends.columns
@@ -4841,6 +4852,14 @@ def analysis_state(
         name: _artifact_info(path)
         for name, path in _analysis_artifacts().items()
     }
+    from preprocessing.derived_artifacts import FILE_METHODS, file_eligibility, current_method_inputs
+    artifact_frames = {"taxa_env_correlations": correlations, "sst_ctd_validation": sst_ctd,
+                       "gap_interpolation": gap, "diversity_prediction": div_pred, "corroboration": corroboration}
+    for name, path in _analysis_artifacts().items():
+        if path.name in FILE_METHODS:
+            catalog[name]["derived_eligibility"] = file_eligibility(path,
+                expected_inputs=current_method_inputs(FILE_METHODS[path.name]),
+                output_sha256=artifact_frames[name].attrs.get("artifact_sha256")).as_dict()
     catalog["trend_variables"] = trend_variables
     catalog["diversity_sources"] = sorted(diversity["source"].dropna().astype("string").unique().tolist()) if "source" in diversity else []
     catalog["correlation_variables"] = sorted(correlations["env_variable"].dropna().astype("string").unique().tolist()) if "env_variable" in correlations else []
@@ -4855,8 +4874,10 @@ def analysis_state(
         ),
     }
     correlations_payload = {
-        "rows": _records_limited(correlations.sort_values(["significant", "p_value"], ascending=[False, True]), table_limit),
-        "significant": _records_limited(correlations[correlations["significant"]].sort_values("p_value"), table_limit) if "significant" in correlations else [],
+        "rows": _records_limited(ordered(correlations, ["significant", "p_value"],
+                                          ascending=[False if column == "significant" else True
+                                                     for column in ("significant", "p_value") if column in correlations]), table_limit),
+        "significant": _records_limited(ordered(correlations.loc[correlations["significant"].eq(True)], ["p_value"]), table_limit) if "significant" in correlations else [],
         "summary": {
             "total": len(correlations),
             "significant": int(correlations["significant"].sum()) if "significant" in correlations else 0,
@@ -4865,7 +4886,7 @@ def analysis_state(
         },
     }
     diversity_payload = {
-        "rows": _records_limited(diversity.sort_values(["source", "year_month", "sample_id"]), table_limit),
+        "rows": _records_limited(ordered(diversity, ["source", "year_month", "sample_id"]), table_limit),
         "by_source": _mean_by_group(diversity, "source", ["shannon_h", "simpson_1d", "richness", "evenness"]),
         "by_bay": _mean_by_group(diversity, "bay", ["shannon_h", "simpson_1d", "richness", "evenness"]),
     }
@@ -4877,18 +4898,21 @@ def analysis_state(
         ],
         "top_pairs": _cooccurrence_pairs(cooccurrence, cooccurrence_pairs),
     }
+    compared = sst_ctd[sst_ctd["check_status"].isin(["pass", "fail"])] if "check_status" in sst_ctd else sst_ctd.iloc[:0]
     reliability_payload = {
         "sst_ctd": {
-            "rows": _records_limited(sst_ctd.sort_values("ctd_date"), table_limit),
+            "rows": _records_limited(ordered(sst_ctd, ["ctd_date"]), table_limit),
             "summary": {
-                "paired": len(sst_ctd),
-                "agree": int(sst_ctd["agrees"].sum()) if "agrees" in sst_ctd else 0,
-                "mean_abs_delta_t": _json_safe_value(sst_ctd["abs_delta_t"].mean()) if "abs_delta_t" in sst_ctd else None,
-                "mean_score": _json_safe_value(sst_ctd["reliability_score"].mean()) if "reliability_score" in sst_ctd else None,
+                "paired": len(compared),
+                "unavailable": len(sst_ctd) - len(compared),
+                "agree": int(compared["check_status"].eq("pass").sum()) if "check_status" in compared else 0,
+                "agreement_rate": _json_safe_value(compared["check_status"].eq("pass").mean()) if len(compared) else None,
+                "mean_abs_delta_t": _json_safe_value(compared["abs_delta_t"].mean()) if "abs_delta_t" in compared else None,
+                "mean_score": _json_safe_value(compared["reliability_score"].mean()) if "reliability_score" in compared else None,
             },
         },
         "gap": {
-            "rows": _records_limited(gap.sort_values("date"), table_limit),
+            "rows": _records_limited(ordered(gap, ["date"]), table_limit),
             "summary": {
                 "days": len(gap),
                 "in_ctd_gap": int(gap["in_ctd_gap"].sum()) if "in_ctd_gap" in gap else 0,
@@ -4896,7 +4920,7 @@ def analysis_state(
             },
         },
         "diversity_prediction": {
-            "rows": _records_limited(div_pred.sort_values("sample_id"), table_limit),
+            "rows": _records_limited(ordered(div_pred, ["sample_id"]), table_limit),
             "summary": {
                 "samples": len(div_pred),
                 "anomalies": int(div_pred["is_anomaly"].sum()) if "is_anomaly" in div_pred else 0,
@@ -4904,7 +4928,7 @@ def analysis_state(
             },
         },
         "corroboration": {
-            "rows": _records_limited(corroboration.sort_values(["reliability_tier", "sample_id"]), table_limit),
+            "rows": _records_limited(ordered(corroboration, ["reliability_tier", "sample_id"]), table_limit),
             "tier_counts": {str(key): int(value) for key, value in corroboration["reliability_tier"].value_counts().items()} if "reliability_tier" in corroboration else {},
             "mean_score": _json_safe_value(corroboration["reliability_score"].mean()) if "reliability_score" in corroboration else None,
         },
@@ -5190,12 +5214,18 @@ def explore_sample(sample_id: str) -> SampleDetailResponse:
         for row in _read_jsonl(config.SERVING_DIR / "retrieval_documents.jsonl")
         if str(row.get("sample_id") or "") == sample_id
     ]
-    reliability = sample_rows("corroboration") + sample_rows("sst_ctd_validation")
+    from preprocessing.derived_artifacts import file_eligibility, current_method_inputs
+    def historical_reliability(dataset):
+        path = _analysis_artifacts()[dataset]
+        frame = _derive_sample_fields(_read_parquet_artifact(str(path)))
+        rows = _records(frame[frame["sample_id"].astype("string") == sample_id]) if "sample_id" in frame else []
+        method = "corroboration" if dataset == "corroboration" else "sst_ctd_validation" if dataset == "sst_ctd_validation" else "diversity_prediction"
+        decision = file_eligibility(path, expected_inputs=current_method_inputs(method),
+                                    output_sha256=frame.attrs["artifact_sha256"]).as_dict()
+        return [{**row, "derived_eligibility": decision} for row in rows]
+    reliability = historical_reliability("corroboration") + historical_reliability("sst_ctd_validation")
     if (config.RELIABILITY_DIR / "diversity_prediction.parquet").exists():
-        prediction_df = _derive_sample_fields(
-            pd.read_parquet(config.RELIABILITY_DIR / "diversity_prediction.parquet")
-        )
-        reliability.extend(_records(prediction_df[prediction_df["sample_id"].astype("string") == sample_id]))
+        reliability.extend(historical_reliability("diversity_prediction"))
 
     return SampleDetailResponse(
         sample_id=sample_id,
@@ -5467,9 +5497,11 @@ def _aggregate_chat_response(request, plan, *, user, model, interaction_id, star
         answer_audit=audit, options=options, outcome=outcome, abstention_reason=reason, model_invoked=False)
 
 
-def _chat_scope_abstention(request, user, model, interaction_id, started_at, options, reason, answer):
+def _chat_scope_abstention(request, user, model, interaction_id, started_at, options, reason, answer, *, scope_compatibility=None):
     diagnostics = {"failure": reason, "no_sources_selected": reason == "no_sources_selected",
                    "evidence_scope": options["evidence_scope"], "model_invoked": False}
+    if scope_compatibility is not None:
+        diagnostics["scope_compatibility"] = scope_compatibility
     record_chat_context(interaction_id=interaction_id, user=user,
         evidence_snapshot={"sources": [], "linked_sources": [], "analysis_context": [], "reliability_context": [],
                            "retrieval_diagnostics": diagnostics}, prompt=answer)
@@ -5496,7 +5528,8 @@ def _research_chat_response(request, bundle, *, user, model, interaction_id, sta
     else:
         result = render_research(bundle, options['evidence_scope'], request.query, request.research_intent)
     if result.reason:
-        return _chat_scope_abstention(request, user, model, interaction_id, started_at, options, result.reason, result.answer)
+        return _chat_scope_abstention(request, user, model, interaction_id, started_at, options, result.reason, result.answer,
+                                      scope_compatibility=result.diagnostics.get("scope_compatibility"))
     options['context']['research_intent'] = result.diagnostics['research_intent']
     contexts = [_context_document(row, 'analysis') for row in result.documents]
     audit = audit_answer(query=request.query, answer=result.answer, primary_sources=[], linked_sources=[],
@@ -5571,9 +5604,12 @@ def chat(
         options['planning'].update(status=exc.status, planner_invoked=exc.invoked,
                                    message=str(exc), planner_model=config.CHAT_PLANNER_MODEL,
                                    latency_ms=_chat_latency_ms(started_at))
+        if exc.scope_compatibility is not None:
+            options['planning']['scope_compatibility'] = exc.scope_compatibility
         record_chat_options(interaction_id=interaction_id, user=user, request_options=options)
         return _chat_scope_abstention(request, user, model, interaction_id, started_at, options,
-                                     'aggregate_unavailable' if exc.status == 'unavailable' else 'aggregate_scope_required', str(exc))
+                                     'aggregate_unavailable' if exc.status == 'unavailable' else 'aggregate_scope_required', str(exc),
+                                     scope_compatibility=exc.scope_compatibility)
     except Exception:
         _mark_chat_failed_safely(interaction_id=interaction_id, user=user,
                                 error_code='auto_settings_execution_failed', started_at=started_at)
@@ -5664,7 +5700,8 @@ def _execute_chat(request: ChatRequest, user: CurrentUser, *, planning=None,
                 published_result = planned_research(request, research_bundle)
                 if published_result.reason:
                     return _chat_scope_abstention(request, user, model, interaction_id, started_at, response_options,
-                                                 published_result.reason, published_result.answer)
+                                                 published_result.reason, published_result.answer,
+                                                 scope_compatibility=published_result.diagnostics.get("scope_compatibility"))
             else:
                 return _research_chat_response(request, research_bundle, user=user, model=model, interaction_id=interaction_id, started_at=started_at, options=response_options, planned=planning is not None)
         scope = request.evidence_scope.canonical() if request.evidence_scope else None

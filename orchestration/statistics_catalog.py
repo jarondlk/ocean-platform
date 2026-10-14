@@ -1,6 +1,7 @@
 """Versioned descriptions joined to current publication availability."""
 from ingestion.immutable_bundle import digest
 from orchestration.research_intents import QUESTIONS, SST_INTENTS, TABLES_BY_INTENT
+from orchestration.publication_scope import registered_filter_values, fixed_spatial_taxon
 
 DESCRIPTIONS = {
     'fish_frequency': 'Top ten fish by detection frequency; yearly and seasonal series. Frequency means detected/eligible samples, not sequencing reads or abundance.',
@@ -52,8 +53,15 @@ def analysis_choices():
             'limitations': bundle['manifest'].get('limitations', []),
             'recipe_scope': {key: recipe[key] for key in
                              ('region_id', 'time_from', 'time_to', 'rank', 'spatial_taxon_key',
-                              'sst_panel_id', 'endpoint_from', 'endpoint_to', 'spatial_year') if key in recipe},
+                              'sst_panel_id', 'endpoint_from', 'endpoint_to', 'spatial_year', 'assignment_method',
+                              'fish_classes', 'taxonomy_policy_reference', 'calendar', 'control_policy',
+                              'analysis_unit', 'min_read_count', 'threshold_level', 'temperature_partition') if key in recipe},
         }
+        if research:
+            option['cohort_filters'] = registered_filter_values(recipe, bundle['inputs']['canonical']['edna_sample'],
+                                                               provisional=bundle['manifest'].get('schema_version') == 3)
+            option['spatial_taxon'] = fixed_spatial_taxon(recipe, bundle['inputs']['canonical']['edna_detection'])
+            option['sst_dataset_id'] = 'mur-miyagi-2020-2023' if bundle['manifest'].get('schema_version') == 3 else None
         options.append(option)
     return options
 

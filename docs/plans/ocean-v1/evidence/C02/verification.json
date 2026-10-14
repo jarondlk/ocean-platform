@@ -1,0 +1,71 @@
+{
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "base_head": "c7ea5f4c4243d1c1a0657a0a01c075f5f738219d",
+  "branch": "overhaul",
+  "component": "C02",
+  "date": "2026-10-14 JST",
+  "evidence_files": {
+    "final-gates.txt": "c499a7e777f5774030d7a82d383c90b61158011d55ec84f4dd098474c44b322a",
+    "offline-tests.txt": "2761967cf6cb464789fcf7e42091f90f477cc5194632248dfeefa445f1340466",
+    "required-tests.txt": "9e4ef98e9c3dceff654b05cfc1d483f3781d152525188f34a80d1296dc0ad5f3",
+    "ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "synthetic-regeneration.json": "2028685d2e5e91f567f45c588093af4e7401d5aa540e27e69fd2f3d3f6661167",
+    "synthetic-regeneration.zip": "9ed92b4301cf4dea9b4246ce4473fc42eea80dc668a88b2d66a8912ddedd8c18",
+    "synthetic-verification.txt": "1adee5064e811287a87b7886f229dbbce9b5030aa5033ed8d6aacc3d0aaec259"
+  },
+  "evidence_scope": "Offline software/synthetic acceptance only. No scientific approval, production regeneration, publication, database/provider/model call, cloud change or deployment. P00 UI unchanged.",
+  "files": {
+    "api/main.py": "a00a9c99de53c4db39dc4249ccf726283f3893a1507e47ee4728263f7da4ad06",
+    "docs/plans/ocean-v1/evidence/C02/verify_synthetic.py": "513b67b539b3102195e2627a7b02f707c6836561f49ebe3a2459cae09e2b3cc5",
+    "orchestration/unified.py": "c35856c03045ef48bd5d352334c7f62aa24163378b0416ab9d8e5ed0d25d00e7",
+    "preprocessing/derived_artifacts.py": "deba53d403e8ce3c44f1a6482fb1f5cd5b2b81650401cbdd0bfb2aa8d31d5bd4",
+    "preprocessing/pre_analysis.py": "426a19a3c1f7d9dcc4241c7a187352554ab0711cfc438a20f0633804db6bbed8",
+    "preprocessing/reliability_ensurance.py": "46b5cf6c4b3b320467bc121a1572e41e4a00e2327bc0afc6fa7a63471e726c5d",
+    "preprocessing/remote_sensing.py": "e611e7f176677fbece054cb7ff70d57ba378e1135f86a2cfcf1346b781c852cd",
+    "tests/conftest.py": "989457a38d9ffefac466e5a0173ca620a4cef42ebacb1d483454ec469e026e19",
+    "tests/test_derived_artifact_eligibility.py": "47076f2b0e532d869549525e76e6a9fece935c0047fe2fdf0146394b60814bc3",
+    "tests/test_pre_analysis.py": "b2573e4d095aa07135eefcb6278879c16d0e6e154289cec4d7ae6108801789fc",
+    "tests/test_reliability.py": "346e54fd746a02d614aa5e8a7ac90d7cf99fe3d6cb1d5ee2fb99888ddfd847ca",
+    "tests/test_remote_sensing.py": "0eaf7f291f3a29de55fbf529b6b4cec988133e645d428a4c412a3bb7f5f444c9"
+  },
+  "method_versions": {
+    "corroboration": "reliability-checks-v2",
+    "diversity_prediction": "reliability-checks-v2",
+    "gap_interpolation": "unvalidated legacy method; ineligible",
+    "sst_ctd_validation": "sst-ctd-spatial-v2",
+    "taxa_env_correlation": "taxa-env-full-abundance-v2"
+  },
+  "prerequisite": {
+    "C01_receipt_source_sha256": "aed7c2df8e8283f83f9683ad51f79f36fb491a393845a3004ebf97be70031c1d",
+    "current_additive_changes": {
+      "api/main.py": {
+        "C01_baseline": "be6f1540fdab041f82fdf138d66956b19d3a87c30f89fa4adc11a9aed7459c89",
+        "C02_current": "a00a9c99de53c4db39dc4249ccf726283f3893a1507e47ee4728263f7da4ad06"
+      }
+    },
+    "regressions": "All 319 C01 regression cases pass in the composite run",
+    "start_of_component": "All 10 accepted C01 source hashes matched",
+    "unchanged_C01_files": 9
+  },
+  "real_artifact_inventory": "synthetic-regeneration.json: real_artifact_inventory; seven affected local files inventoried by name/size/hash only",
+  "real_artifacts_unchanged": true,
+  "remaining_gates": "Real artifacts require later authorized regeneration and established eligibility review; gap spatial-method work, C13 catalogue integration, assembled v1 and release acceptance remain. C03\u2013C27 not started.",
+  "source_sha256": "bd221b149b14ad3aaf77de1d2a606929229e925656df8a4d14ee083f5f5c5ca6",
+  "state": "Complete for local software and synthetic acceptance",
+  "synthetic_regeneration": "Actual pre_analysis.run_all and reliability_ensurance.run_all on disposable complete normalized fixtures; five hash-bound output files; no automatic eligibility review; baseline findings reproduced against base_head",
+  "verification": {
+    "artifact_eligibility_cases": 23,
+    "composite_command": ".venv/bin/python -m pytest tests/test_derived_artifact_eligibility.py tests/test_pre_analysis.py tests/test_reliability.py tests/test_remote_sensing.py tests/test_statistical_analysis.py tests/test_prompt_builder.py tests/test_answer_audit.py tests/test_publication_scope_contract.py tests/test_auto_settings.py tests/test_research_chat.py tests/test_chat_source_scope.py tests/test_conference_demo.py tests/test_provisional_research_demo.py tests/test_regional_publication.py tests/test_research_readiness.py tests/test_conference_review.py -q --tb=short",
+    "composite_result": "485 passed, 188 warnings in 11.57s",
+    "dependency_warnings": "Existing FastAPI/httpx, NumPy/netCDF4, xarray/pandas deprecations; no new failing check",
+    "exit_code": 0,
+    "failures": 0,
+    "git_diff_check": "pass",
+    "planning_document_links": "pass",
+    "required_command": ".venv/bin/python -m pytest tests/test_reliability.py tests/test_pre_analysis.py tests/test_statistical_analysis.py -q --tb=short",
+    "required_result": "92 passed in 1.34s",
+    "ruff": "All changed C02 Python files plus evidence harness pass",
+    "skips": 0
+  },
+  "working_tree": "C01/C02 implementation uncommitted; unrelated audit/benchmark work preserved"
+}

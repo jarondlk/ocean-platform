@@ -1,7 +1,9 @@
 # Component handoffs
 
-[P00.md](P00.md) records the explicitly selected local prototype work. Create
-C01.md through C27.md only when work on that component is explicitly selected. Do not manufacture completion
+[P00.md](P00.md) records the accepted local prototype. [C01.md](C01.md) records
+completed offline scientific scope validation. [C02.md](C02.md) records completed
+derived-evidence software and synthetic checks. Create remaining component
+handoffs only when work on that component is explicitly selected. Do not manufacture completion
 receipts during setup.
 
 Copy [TEMPLATE.md](TEMPLATE.md). Maintain a current-state section and append

@@ -19,7 +19,7 @@ from tests.test_auto_settings import proposal
 def miyagi_choices():
     choices = operational_choices()
     for a in choices:
-        a['recipe_scope'] = dict(region_id='miyagi-regional-demo', time_from='2020-01-01', time_to='2023-12-31', spatial_year=2023)
+        a['recipe_scope'].update(region_id='miyagi-regional-demo', time_from='2020-01-01', time_to='2023-12-31', spatial_year=2023)
         a['time_from'], a['time_to'] = '2020-01-01', '2023-12-31'
         a['workflows'].append({'kind':'monthly_spatial'})
     return choices
@@ -61,13 +61,15 @@ def test_spatial_year_does_not_narrow_full_publication(planning):  # noqa: F811
     assert metadata['resolved_calendar_range'] is None and not calls
 
 
-def test_exact_path_retains_conflicting_explicit_filters(planning):  # noqa: F811
+def test_exact_path_rejects_conflicting_explicit_filters_without_dropping_them(planning):  # noqa: F811
     catalog, _, calls = planning
     catalog['analyses'] = miyagi_choices()
     original = scope('edna_metabarcoding')
     original['sources']['edna_metabarcoding']['filters'] = {'provider_run_id':'unrelated'}
-    effective, _ = planner.plan_settings(ChatRequest(query=QUESTIONS['fish_frequency'][0], evidence_scope=original))
-    assert effective.evidence_scope.sources.edna_metabarcoding.filters.provider_run_id == 'unrelated'
+    request = ChatRequest(query=QUESTIONS['fish_frequency'][0], evidence_scope=original)
+    with pytest.raises(planner.PlanningError, match='provider_run_id'):
+        planner.plan_settings(request)
+    assert request.evidence_scope.canonical() == original
     assert not calls
 
 
@@ -88,7 +90,7 @@ def test_language_independent_sardine_guard(tmp_path, monkeypatch):
             row['species'] = 'unidentified Sardinops'
     protocol = changed['tables']['membership'][0]['protocol_id']
     selected = scope('edna_metabarcoding')
-    for query in (QUESTIONS['monthly_spatial'][0], 'マイワシの地域を示してください'):
+    for query in (QUESTIONS['monthly_spatial'][0], '採水地点が最も多かった月とマイワシの検出地域を示してください'):
         result = select_research(changed, selected, query, ResearchIntent(kind='monthly_spatial',protocol_id=protocol))
         assert result.reason == 'aggregate_scope_required' and not result.documents
         assert 'Sardinops melanostictus' in result.answer

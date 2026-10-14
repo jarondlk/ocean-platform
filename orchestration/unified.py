@@ -587,7 +587,7 @@ def _query_matches_context(query: str, keywords: set[str]) -> bool:
     return bool(query_terms.intersection(keywords) or any(" " in keyword and keyword in query_lower for keyword in keywords))
 
 
-def _read_context_documents(path) -> List[dict]:
+def _read_context_documents(path, *, include_ineligible=False) -> List[dict]:
     if not path.exists():
         return []
     documents: List[dict] = []
@@ -595,7 +595,23 @@ def _read_context_documents(path) -> List[dict]:
         for line in f:
             if line.strip():
                 documents.append(json.loads(line))
-    return documents
+    from preprocessing.derived_artifacts import document_eligibility, document_method, current_method_inputs
+    role = "reliability" if path.name == "reliability_documents.jsonl" else "analysis"
+    expected = {}
+    eligible = []
+    for row in documents:
+        method = document_method(row, role)
+        if method not in expected:
+            expected[method] = current_method_inputs(method) if method else None
+        decision = document_eligibility(row, role=role, expected_inputs=expected[method])
+        if "derived_history" in path.resolve().parts:
+            from preprocessing.derived_artifacts import DerivedEligibility
+            decision = DerivedEligibility(False, "superseded", "Retained history is not current validated evidence.")
+        if decision.eligible:
+            eligible.append(row)
+        elif include_ineligible:
+            eligible.append({**row, "derived_eligibility": decision.as_dict()})
+    return eligible
 
 
 def analysis_context_documents(query: str) -> List[dict]:
@@ -715,9 +731,15 @@ def build_prompt_with_context(
     scoped = {**scope, **({'source_type': explicit_source} if explicit_source else {})}
     omitted = []
     context['linked'] = linked_results or []
+    from preprocessing.derived_artifacts import document_eligibility, document_method, current_method_inputs
     for role in ('analysis', 'reliability', 'linked'):
         eligible = []
         for row in context[role]:
+            method = document_method(row, role)
+            decision = document_eligibility(row, role=role, expected_inputs=current_method_inputs(method) if method else None)
+            if not decision.eligible:
+                omitted.append({"doc_id": row.get("id") or row.get("doc_id"), "role": role, "reason": decision.status})
+                continue
             if (context_matches_source_scope(row, source_scope) if source_scope is not None else context_matches_scope(row, scoped)):
                 eligible.append(row)
             else:
@@ -733,6 +755,15 @@ def build_prompt_with_context(
                 context['analysis'].append(row)
             else:
                 omitted.append({'doc_id': row.get('id'), 'role': 'analysis', 'reason': 'scope_unverified_or_mismatch'})
+    eligible_results = []
+    for row in results:
+        method = document_method(row, "primary")
+        decision = document_eligibility(row, role="primary", expected_inputs=current_method_inputs(method) if method else None)
+        if decision.eligible:
+            eligible_results.append(row)
+        else:
+            omitted.append({"doc_id": row.get("doc_id") or row.get("id"), "role": "primary", "reason": decision.status})
+    results = eligible_results
     manifest = {}
     if source_scope is not None:
         eligible = []

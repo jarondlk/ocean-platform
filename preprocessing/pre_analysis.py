@@ -8,15 +8,81 @@ from __future__ import annotations
 
 import json
 import logging
+import hashlib
+from io import BytesIO
+from pathlib import Path
 from typing import Any, Dict, List
+from uuid import uuid4
 
 import numpy as np
 import pandas as pd
 from scipy import stats as sp_stats
 
 import config
+from preprocessing.derived_artifacts import stamp_document, retain_artifact_history, write_artifact_manifest
 
 logger = logging.getLogger(__name__)
+
+CORRELATION_METHOD_VERSION = "taxa-env-full-abundance-v2"
+CORRELATION_COLUMNS = [
+    "genus", "method", "env_variable", "spearman_rho", "p_value",
+    "n_samples", "n_missing_abundance", "n_missing_environment",
+    "n_observed_zero", "significant",
+]
+
+
+def _input_snapshot(path: Path) -> tuple[bytes, str]:
+    """Hash the exact immutable bytes later parsed, never reopen a mutable path."""
+    payload = path.read_bytes()
+    return payload, hashlib.sha256(payload).hexdigest()
+
+
+def _complete_abundance_matrices(frame: pd.DataFrame) -> dict[str, pd.DataFrame]:
+    """Read explicit normalized cells, preserving zero, missingness and methods.
+
+    Normalization melts a full genus-by-sample matrix, including missing cells.
+    A missing row is therefore an incomplete input, not a documented zero. A
+    legacy wide table retains its file-owned Kraken method identity.
+    """
+    if frame.empty or "genus" not in frame:
+        raise ValueError("abundance_schema_unavailable")
+    if frame["genus"].isna().any() or (frame["genus"].astype(str).str.strip() == "").any():
+        raise ValueError("abundance_genus_unavailable")
+    if "sample_id" in frame or "abundance_value" in frame:
+        if not {"sample_id", "abundance_value", "method"}.issubset(frame.columns):
+            raise ValueError("abundance_schema_unavailable")
+        if frame[["sample_id", "method"]].isna().any().any():
+            raise ValueError("abundance_identity_unavailable")
+        if (frame[["sample_id", "method"]].astype(str).apply(lambda c: c.str.strip()) == "").any().any():
+            raise ValueError("abundance_identity_unavailable")
+        if frame.duplicated(["method", "genus", "sample_id"]).any():
+            raise ValueError("abundance_duplicate_cells")
+        matrices = {}
+        for method, group in frame.groupby("method", sort=True):
+            if len(group) != group["genus"].nunique() * group["sample_id"].nunique():
+                raise ValueError("abundance_incomplete_matrix")
+            numeric = pd.to_numeric(group["abundance_value"], errors="coerce")
+            if (group["abundance_value"].notna() & numeric.isna()).any():
+                raise ValueError("abundance_invalid_values")
+            measured = numeric.dropna()
+            if (~np.isfinite(measured)).any() or (measured < 0).any():
+                raise ValueError("abundance_invalid_values")
+            matrices[str(method)] = group.assign(abundance_value=numeric).pivot(
+                index="sample_id", columns="genus", values="abundance_value",
+            )
+        return matrices
+    if frame["genus"].duplicated().any() or frame.columns.duplicated().any():
+        raise ValueError("abundance_duplicate_cells")
+    wide = frame.set_index("genus")
+    if wide.shape[1] == 0:
+        raise ValueError("abundance_schema_unavailable")
+    numeric = wide.apply(pd.to_numeric, errors="coerce")
+    if (wide.notna() & numeric.isna()).any().any():
+        raise ValueError("abundance_invalid_values")
+    measured = numeric.to_numpy(dtype=float)
+    if np.isinf(measured).any() or (measured < 0).any():
+        raise ValueError("abundance_invalid_values")
+    return {"kraken": numeric.T}
 
 
 # ─────────────────────────────────────────────
@@ -68,84 +134,106 @@ def compute_ctd_monthly_trends() -> pd.DataFrame:
 # ─────────────────────────────────────────────
 def compute_taxa_env_correlations(top_n_genera: int = 20) -> pd.DataFrame:
     """
-    Spearman rank correlations between top genera and CTD variables
-    for samples with both metagenome + CTD data.
+    Spearman correlations from complete normalized abundance and paired CTD.
+
+    Explicit measured zeros are retained, NaN measurements are excluded pairwise,
+    and incomplete tables make the operation unavailable. Presentation top-ten
+    summaries never supply scientific abundance. Declared methods stay separate.
     """
-    ctx = pd.read_parquet(config.SERVING_DIR / "sample_multisource_context.parquet")
-    paired = ctx[(ctx["has_ctd"]) & (ctx["has_kraken"])].copy()
+    context_path = config.SERVING_DIR / "sample_multisource_context.parquet"
+    abundance_path = config.NORMALIZED_DIR / "kraken_genus_abundance.parquet"
+    operation = {
+        "name": "taxa_env_correlation", "method_version": CORRELATION_METHOD_VERSION,
+        "status": "unavailable", "reason": None, "inputs": {},
+        "input_paths": [str(context_path.resolve()), str(abundance_path.resolve())],
+        "unavailable_pairs": [],
+        "parameters": {
+            "top_n_genera": top_n_genera, "min_samples": 5,
+            "min_environment_measurements": 6, "significance_threshold": 0.05,
+            "missingness_policy": "explicit_zero_only; missing_measurements_excluded_pairwise; absent_cells_unavailable",
+            "input_binding_policy": "hash and parquet parsing use the same frozen bytes",
+        },
+    }
 
-    if paired.empty:
-        logger.warning("No paired CTD+metagenome samples for correlation")
-        return pd.DataFrame()
+    def unavailable(reason):
+        logger.warning("Taxa-env correlations unavailable: %s", reason)
+        operation["reason"] = reason
+        result = pd.DataFrame(columns=CORRELATION_COLUMNS)
+        result.attrs["operation"] = operation
+        return result
 
-    # Parse genus abundances
+    input_failures = []
+    snapshots = {}
+    for path, role in ((context_path, "paired_context"), (abundance_path, "normalized_abundance")):
+        try:
+            if not path.is_file():
+                input_failures.append(role + "_missing")
+            else:
+                payload, checksum = _input_snapshot(path)
+                snapshots[role] = payload
+                operation["inputs"][str(path.resolve())] = checksum
+        except OSError:
+            input_failures.append(role + "_read_unavailable")
+    if input_failures:
+        return unavailable(";".join(input_failures))
+    try:
+        ctx = pd.read_parquet(BytesIO(snapshots["paired_context"]))
+        matrices = _complete_abundance_matrices(pd.read_parquet(BytesIO(snapshots["normalized_abundance"])))
+    except (ValueError, OSError) as error:
+        return unavailable(str(error) if isinstance(error, ValueError) else "input_read_unavailable")
+    if not {"sample_id", "has_ctd", "has_kraken"}.issubset(ctx.columns):
+        return unavailable("paired_context_schema_unavailable")
+    if not ctx[["has_ctd", "has_kraken"]].isin([True, False]).all().all():
+        return unavailable("paired_context_availability_unavailable")
+    paired = ctx[ctx["has_ctd"] & ctx["has_kraken"]].copy()
+    if paired["sample_id"].isna().any() or paired["sample_id"].duplicated().any():
+        return unavailable("paired_context_identity_unavailable")
+    if len(paired) < 5:
+        return unavailable("insufficient_paired_samples")
+    paired = paired.set_index("sample_id")
+    if any(not paired.index.isin(matrix.index).all() for matrix in matrices.values()):
+        return unavailable("abundance_paired_samples_missing")
     env_vars = ["mean_temperature", "mean_salinity", "mean_do_percent", "mean_chl_a", "mean_turbidity"]
-    env_vars = [v for v in env_vars if v in paired.columns and paired[v].notna().sum() > 5]
-
-    # Collect all genera from Kraken
-    all_genera: Dict[str, List[float]] = {}
-
-    for _, row in paired.iterrows():
-        kr_json = row.get("top_genus_10_json_x")
-        if pd.isna(kr_json) or not isinstance(kr_json, str):
-            continue
-        try:
-            taxa = json.loads(kr_json)
-            for t in taxa:
-                genus = t["genus"]
-                if genus not in all_genera:
-                    all_genera[genus] = []
-        except Exception:
-            continue
-
-    # Build genus-sample matrix
-    genus_names = sorted(all_genera.keys())
-    genus_matrix = []
-    valid_rows = []
-
-    for idx, row in paired.iterrows():
-        kr_json = row.get("top_genus_10_json_x")
-        if pd.isna(kr_json) or not isinstance(kr_json, str):
-            continue
-        try:
-            taxa = json.loads(kr_json)
-            abundances = {t["genus"]: t["abundance_value"] for t in taxa}
-            genus_matrix.append([abundances.get(g, 0.0) for g in genus_names])
-            valid_rows.append(idx)
-        except Exception:
-            continue
-
-    if len(genus_matrix) < 5:
-        logger.warning("Too few paired samples (%d) for correlation", len(genus_matrix))
-        return pd.DataFrame()
-
-    genus_df = pd.DataFrame(genus_matrix, columns=genus_names, index=valid_rows)
-
-    # Find top genera by mean abundance
-    top_genera = genus_df.mean().nlargest(top_n_genera).index.tolist()
-
-    # Compute Spearman correlations
+    environment = paired[[v for v in env_vars if v in paired]].apply(pd.to_numeric, errors="coerce")
+    environment = environment.replace([np.inf, -np.inf], np.nan)
+    env_vars = [v for v in environment if environment[v].notna().sum() > 5]
+    if not env_vars:
+        return unavailable("insufficient_environment_measurements")
     results = []
-    for genus in top_genera:
-        g_values = genus_df.loc[valid_rows, genus]
-        for env_var in env_vars:
-            e_values = paired.loc[valid_rows, env_var]
-            mask = g_values.notna() & e_values.notna()
-            if mask.sum() < 5:
-                continue
-            rho, pval = sp_stats.spearmanr(g_values[mask], e_values[mask])
-            results.append({
-                "genus": genus,
-                "env_variable": env_var,
-                "spearman_rho": round(rho, 4),
-                "p_value": round(pval, 6),
-                "n_samples": int(mask.sum()),
-                "significant": pval < 0.05,
-            })
-
-    corr_df = pd.DataFrame(results)
-    logger.info("Taxa-env correlations: %d pairs (%d genera × %d env vars)",
-                len(corr_df), len(top_genera), len(env_vars))
+    for method, matrix in matrices.items():
+        cohort = matrix.loc[paired.index]
+        top_genera = cohort.mean().nlargest(top_n_genera).index.tolist()
+        for genus in top_genera:
+            g_values = cohort[genus]
+            for env_var in env_vars:
+                e_values = environment[env_var]
+                mask = g_values.notna() & e_values.notna()
+                pair = {"genus": genus, "method": method, "env_variable": env_var,
+                        "n_samples": int(mask.sum())}
+                if mask.sum() < 5:
+                    operation["unavailable_pairs"].append({**pair, "reason": "insufficient_paired_measurements"})
+                    continue
+                if g_values[mask].nunique() < 2 or e_values[mask].nunique() < 2:
+                    operation["unavailable_pairs"].append({**pair, "reason": "constant_series"})
+                    continue  # A constant series cannot establish a rank correlation.
+                rho, pval = sp_stats.spearmanr(g_values[mask], e_values[mask])
+                if not np.isfinite(rho) or not np.isfinite(pval):
+                    operation["unavailable_pairs"].append({**pair, "reason": "nonfinite_statistic"})
+                    continue
+                results.append({
+                    "genus": genus, "method": method, "env_variable": env_var,
+                    "spearman_rho": round(rho, 4), "p_value": round(pval, 6),
+                    "n_samples": int(mask.sum()), "n_missing_abundance": int(g_values.isna().sum()),
+                    "n_missing_environment": int(e_values.isna().sum()),
+                    "n_observed_zero": int((g_values[mask] == 0).sum()), "significant": bool(pval < 0.05),
+                })
+    operation.update(n_paired_samples=len(paired), methods=sorted(matrices))
+    if not results:
+        return unavailable("no_estimable_correlations")
+    operation.update(status="computed", reason=None)
+    corr_df = pd.DataFrame(results, columns=CORRELATION_COLUMNS)
+    corr_df.attrs["operation"] = operation
+    logger.info("Taxa-env correlations: %d pairs from full normalized abundance", len(corr_df))
     return corr_df
 
 
@@ -379,8 +467,9 @@ def build_analysis_documents(
             for _, r in sig.sort_values("p_value").iterrows():
                 direction = "positive" if r["spearman_rho"] > 0 else "negative"
                 env_label = r["env_variable"].replace("mean_", "")
+                method_label = f" ({r['method']})" if "method" in r else ""
                 text += (
-                    f"  {r['genus']} × {env_label}: ρ={r['spearman_rho']:.3f} "
+                    f"  {r['genus']}{method_label} × {env_label}: ρ={r['spearman_rho']:.3f} "
                     f"(p={r['p_value']:.4f}, n={r['n_samples']}, {direction})\n"
                 )
             docs.append({
@@ -439,6 +528,8 @@ def build_analysis_documents(
             "analysis_type": "bay_comparison",
         })
 
+    docs = [stamp_document(doc, "taxa_env_correlation", correlations.attrs.get("operation", {}))
+            if doc.get("analysis_type") == "taxa_env_correlation" else doc for doc in docs]
     logger.info("Built %d analysis documents", len(docs))
     return docs
 
@@ -450,6 +541,7 @@ def run_all() -> Dict[str, Any]:
     """Run all pre-analyses and save outputs."""
     config.ANALYSIS_DIR.mkdir(parents=True, exist_ok=True)
 
+    retain_artifact_history(config.ANALYSIS_DIR, ["taxa_env_correlations.parquet", "analysis_documents.jsonl", "derived_artifacts.json"])
     results = {}
 
     logger.info("Computing CTD monthly trends...")
@@ -459,6 +551,7 @@ def run_all() -> Dict[str, Any]:
 
     logger.info("Computing taxa–environment correlations...")
     correlations = compute_taxa_env_correlations()
+    correlations.attrs["operation"]["parameters"]["regeneration_id"] = uuid4().hex
     correlations.to_parquet(config.ANALYSIS_DIR / "taxa_env_correlations.parquet", index=False)
     results["correlations"] = correlations
 
@@ -484,6 +577,8 @@ def run_all() -> Dict[str, Any]:
         for d in analysis_docs:
             f.write(json.dumps(d, ensure_ascii=False, default=str) + "\n")
     results["documents"] = analysis_docs
+    write_artifact_manifest(config.ANALYSIS_DIR, {"taxa_env_correlations.parquet":
+        ("taxa_env_correlation", correlations.attrs.get("operation", {}))})
 
     logger.info("Pre-analysis complete: %d outputs", len(results))
     return results

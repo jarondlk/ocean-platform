@@ -1,0 +1,284 @@
+{
+  "archive_sha256": "9ed92b4301cf4dea9b4246ce4473fc42eea80dc668a88b2d66a8912ddedd8c18",
+  "baseline_revision": "c7ea5f4c4243d1c1a0657a0a01c075f5f738219d",
+  "component": "C02",
+  "document_counts": {
+    "analysis": 4,
+    "reliability": 4
+  },
+  "finding_probes": {
+    "F02": {
+      "corrected_failed": 2,
+      "corrected_passed_independent": 0,
+      "corrected_tier": "standalone",
+      "legacy_n_checks": 3,
+      "legacy_tier": "verified"
+    },
+    "F04": {
+      "corrected_constant_genus_correlations": 0,
+      "corrected_measured_zero_count": 1,
+      "legacy_constant_genus_rho": -0.869,
+      "legacy_p_value": 0.000242,
+      "legacy_significant": true
+    },
+    "F05": {
+      "corrected_40_9N_applicability": "not_applicable",
+      "corrected_40_9N_status": "unavailable",
+      "legacy_40_9N_agrees": true
+    }
+  },
+  "history": [
+    "analysis/derived_history/905490fb874ff3fe678d9075a1ccdbbfcfe24f0b2a155d067f315c8b111a03ce/history.json",
+    "reliability/derived_history/0f81fb21aa6d8231579c632d58285cb38b597f4568ba59395350a474d92831e6/history.json"
+  ],
+  "real_artifact_inventory": {
+    "data/analysis/analysis_documents.jsonl": {
+      "action": "Later authorized regeneration and eligibility review required.",
+      "bytes": 5899,
+      "current_eligibility": "legacy_unversioned",
+      "sha256": "c8822a1083df7bf502e90df87d6cc79ed3ae7963075134d18ce0ef6eb9030998"
+    },
+    "data/analysis/taxa_env_correlations.parquet": {
+      "action": "Later authorized regeneration and eligibility review required.",
+      "bytes": 6143,
+      "current_eligibility": "legacy_unversioned",
+      "sha256": "aaa33c7f32b0a7abae10944bcde4c26db679ce4a7ca95851f366f766fa6da622"
+    },
+    "data/reliability/corroboration.parquet": {
+      "action": "Later authorized regeneration and eligibility review required.",
+      "bytes": 9369,
+      "current_eligibility": "legacy_unversioned",
+      "sha256": "3b731b0b81b85b38623d1aa512638b1f7af77bcbbddef353c491d76354d8dbe1"
+    },
+    "data/reliability/diversity_prediction.parquet": {
+      "action": "Later authorized regeneration and eligibility review required.",
+      "bytes": 9380,
+      "current_eligibility": "legacy_unversioned",
+      "sha256": "714300cd6ac6543a7ec7dea4427641df943945b7e7577be3b5353e32532e5327"
+    },
+    "data/reliability/gap_interpolation.parquet": {
+      "action": "Later authorized regeneration and eligibility review required.",
+      "bytes": 6762,
+      "current_eligibility": "legacy_unversioned",
+      "sha256": "89712a561cf1301e21d5774d93bccbe3dd4429ffc874ee7f08841aa50a61d432"
+    },
+    "data/reliability/reliability_documents.jsonl": {
+      "action": "Later authorized regeneration and eligibility review required.",
+      "bytes": 2646,
+      "current_eligibility": "legacy_unversioned",
+      "sha256": "4edc4d3254d87a3cdfdd37b755c1b341bf9109f7c5b2a7e535fdf834d4e6ad22"
+    },
+    "data/reliability/sst_ctd_validation.parquet": {
+      "action": "Later authorized regeneration and eligibility review required.",
+      "bytes": 6639,
+      "current_eligibility": "legacy_unversioned",
+      "sha256": "e1bcfd1f2f504d6964132a7fd65fda0b2cb87b96f2f4c0c9f2e92e383375a36f"
+    }
+  },
+  "real_artifacts_unchanged": true,
+  "regenerated_artifacts": {
+    "analysis/taxa_env_correlations.parquet": {
+      "eligibility": "review_required",
+      "eligibility_check": {
+        "eligible": false,
+        "generation_sha256": "1a6bbd9993ae0ef3d176f80a5d556ea29e0b7304682a7a097929b3d9cb72c710",
+        "method_version": "taxa-env-full-abundance-v2",
+        "reason": "Regeneration and algorithmic checks do not establish scientific eligibility.",
+        "scientific_approval": false,
+        "status": "review_required"
+      },
+      "eligibility_reason": "Regenerated output requires an explicit eligibility review.",
+      "generation_sha256": "1a6bbd9993ae0ef3d176f80a5d556ea29e0b7304682a7a097929b3d9cb72c710",
+      "input_archive_paths": {
+        "normalized/kraken_genus_abundance.parquet": "624423b7a02a681f0d195d25835de37f980a1bd48c0ce10a8774dfba42bd23b5",
+        "serving/sample_multisource_context.parquet": "6b9b47aa851cfc70053c7c8cb4dc272dfed9f10a6dcb4907577a69197cdba7ac"
+      },
+      "inputs": {
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/normalized/kraken_genus_abundance.parquet": "624423b7a02a681f0d195d25835de37f980a1bd48c0ce10a8774dfba42bd23b5",
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/serving/sample_multisource_context.parquet": "6b9b47aa851cfc70053c7c8cb4dc272dfed9f10a6dcb4907577a69197cdba7ac"
+      },
+      "method_id": "taxa_env_correlation",
+      "method_version": "taxa-env-full-abundance-v2",
+      "operation_reason": null,
+      "operation_status": "computed",
+      "output_sha256": "d37c0cc01fd3a5aa394cb70676a2eed983cdf4f64326134b673261da194c93a6",
+      "parameters": {
+        "input_binding_policy": "hash and parquet parsing use the same frozen bytes",
+        "min_environment_measurements": 6,
+        "min_samples": 5,
+        "missingness_policy": "explicit_zero_only; missing_measurements_excluded_pairwise; absent_cells_unavailable",
+        "regeneration_id": "c6d05f4c32bc48d3871b0b71d25a8b85",
+        "significance_threshold": 0.05,
+        "top_n_genera": 20
+      },
+      "review": null,
+      "schema_version": 1,
+      "scientific_approval": false,
+      "superseded_by": null
+    },
+    "reliability/corroboration.parquet": {
+      "eligibility": "review_required",
+      "eligibility_check": {
+        "eligible": false,
+        "generation_sha256": "2707ac7ecdab2ac4f6dfdc291f705490a33cd35dbc26d9604f597fb3390fc93f",
+        "method_version": "reliability-checks-v2",
+        "reason": "Regeneration and algorithmic checks do not establish scientific eligibility.",
+        "scientific_approval": false,
+        "status": "review_required"
+      },
+      "eligibility_reason": "Regenerated output requires an explicit eligibility review.",
+      "generation_sha256": "2707ac7ecdab2ac4f6dfdc291f705490a33cd35dbc26d9604f597fb3390fc93f",
+      "input_archive_paths": {
+        "analysis/derived_artifacts.json": "131213cad7c5b88691cf56fa59385a2b78d0fd1dce5c17af86bbee47fc61abdd",
+        "analysis/diversity_indices.parquet": "33e0124bd476bc80200e8f4e92b0ae51e4fbdf3e649998ca056d2116c7967959",
+        "analysis/taxa_env_correlations.parquet": "d37c0cc01fd3a5aa394cb70676a2eed983cdf4f64326134b673261da194c93a6",
+        "normalized/ctd_summary.parquet": "6a5266fec797e459daae4bfe3b5cad305d02d496586c0b77cb37fbdb3397c3a9",
+        "normalized/kraken_genus_abundance.parquet": "624423b7a02a681f0d195d25835de37f980a1bd48c0ce10a8774dfba42bd23b5",
+        "normalized/sst_daily_summary.parquet": "6a838e3f2c08e16037d4ce15b128a8440f5b520d4434ccb10e25f5475ba708d4",
+        "reliability/diversity_prediction.parquet": "239082b79dae6152d8c77e8339518f2c5cba997abb68aa3c8853e18c84bfd452",
+        "reliability/sst_ctd_validation.parquet": "174f756134ab237dc896882733e78632a1303a1be2a1ec08fa8c5400e9190a5e",
+        "serving/sample_multisource_context.parquet": "6b9b47aa851cfc70053c7c8cb4dc272dfed9f10a6dcb4907577a69197cdba7ac"
+      },
+      "inputs": {
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/analysis/derived_artifacts.json": "131213cad7c5b88691cf56fa59385a2b78d0fd1dce5c17af86bbee47fc61abdd",
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/analysis/diversity_indices.parquet": "33e0124bd476bc80200e8f4e92b0ae51e4fbdf3e649998ca056d2116c7967959",
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/analysis/taxa_env_correlations.parquet": "d37c0cc01fd3a5aa394cb70676a2eed983cdf4f64326134b673261da194c93a6",
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/normalized/ctd_summary.parquet": "6a5266fec797e459daae4bfe3b5cad305d02d496586c0b77cb37fbdb3397c3a9",
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/normalized/kraken_genus_abundance.parquet": "624423b7a02a681f0d195d25835de37f980a1bd48c0ce10a8774dfba42bd23b5",
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/normalized/sst_daily_summary.parquet": "6a838e3f2c08e16037d4ce15b128a8440f5b520d4434ccb10e25f5475ba708d4",
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/reliability/diversity_prediction.parquet": "239082b79dae6152d8c77e8339518f2c5cba997abb68aa3c8853e18c84bfd452",
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/reliability/sst_ctd_validation.parquet": "174f756134ab237dc896882733e78632a1303a1be2a1ec08fa8c5400e9190a5e",
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/serving/sample_multisource_context.parquet": "6b9b47aa851cfc70053c7c8cb4dc272dfed9f10a6dcb4907577a69197cdba7ac"
+      },
+      "method_id": "corroboration",
+      "method_version": "reliability-checks-v2",
+      "operation_reason": "Algorithmic checks computed; independent scientific approval is not established.",
+      "operation_status": "computed",
+      "output_sha256": "f3424faa6e649866f2ab0ea1ff9056ae595a236f9413b196dad5958874bb8f5d",
+      "parameters": {
+        "agreement_threshold_celsius": 2.0,
+        "check_input_hashes": {
+          "diversity_prediction": "6c705c47c8c941aab1f8348d8437884855825e8ebf01082b9911457309f2b5a1",
+          "sst_validation": "2d2e9393dc8295edd4d72796de074862ca2523d853a4753cfd6e384ad61018eb"
+        },
+        "diversity_anomaly_sigma": 2.0,
+        "regeneration_id": "b14976d5fae14ec3b904ba1031ece2cc",
+        "tier_rule": "distinct_independent_passes; verified_requires_two_and_no_failures"
+      },
+      "review": null,
+      "schema_version": 1,
+      "scientific_approval": false,
+      "superseded_by": null
+    },
+    "reliability/diversity_prediction.parquet": {
+      "eligibility": "review_required",
+      "eligibility_check": {
+        "eligible": false,
+        "generation_sha256": "277101c1ac41f4dcb4f70c68825cfc733930574bbd05e811f2fb0471f7a2c678",
+        "method_version": "reliability-checks-v2",
+        "reason": "Regeneration and algorithmic checks do not establish scientific eligibility.",
+        "scientific_approval": false,
+        "status": "review_required"
+      },
+      "eligibility_reason": "Regenerated output requires an explicit eligibility review.",
+      "generation_sha256": "277101c1ac41f4dcb4f70c68825cfc733930574bbd05e811f2fb0471f7a2c678",
+      "input_archive_paths": {
+        "analysis/derived_artifacts.json": "131213cad7c5b88691cf56fa59385a2b78d0fd1dce5c17af86bbee47fc61abdd",
+        "analysis/diversity_indices.parquet": "33e0124bd476bc80200e8f4e92b0ae51e4fbdf3e649998ca056d2116c7967959",
+        "analysis/taxa_env_correlations.parquet": "d37c0cc01fd3a5aa394cb70676a2eed983cdf4f64326134b673261da194c93a6",
+        "normalized/kraken_genus_abundance.parquet": "624423b7a02a681f0d195d25835de37f980a1bd48c0ce10a8774dfba42bd23b5",
+        "serving/sample_multisource_context.parquet": "6b9b47aa851cfc70053c7c8cb4dc272dfed9f10a6dcb4907577a69197cdba7ac"
+      },
+      "inputs": {
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/analysis/derived_artifacts.json": "131213cad7c5b88691cf56fa59385a2b78d0fd1dce5c17af86bbee47fc61abdd",
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/analysis/diversity_indices.parquet": "33e0124bd476bc80200e8f4e92b0ae51e4fbdf3e649998ca056d2116c7967959",
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/analysis/taxa_env_correlations.parquet": "d37c0cc01fd3a5aa394cb70676a2eed983cdf4f64326134b673261da194c93a6",
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/normalized/kraken_genus_abundance.parquet": "624423b7a02a681f0d195d25835de37f980a1bd48c0ce10a8774dfba42bd23b5",
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/serving/sample_multisource_context.parquet": "6b9b47aa851cfc70053c7c8cb4dc272dfed9f10a6dcb4907577a69197cdba7ac"
+      },
+      "method_id": "diversity_prediction",
+      "method_version": "reliability-checks-v2",
+      "operation_reason": "Algorithmic checks computed; independent scientific approval is not established.",
+      "operation_status": "computed",
+      "output_sha256": "239082b79dae6152d8c77e8339518f2c5cba997abb68aa3c8853e18c84bfd452",
+      "parameters": {
+        "applicability": "in_sample_model_consistency; not_independent_validation",
+        "correlation_generation_sha256": "1a6bbd9993ae0ef3d176f80a5d556ea29e0b7304682a7a097929b3d9cb72c710",
+        "correlation_status": "computed_candidate",
+        "diversity_anomaly_sigma": 2.0,
+        "regeneration_id": "b14976d5fae14ec3b904ba1031ece2cc"
+      },
+      "review": null,
+      "schema_version": 1,
+      "scientific_approval": false,
+      "superseded_by": null
+    },
+    "reliability/gap_interpolation.parquet": {
+      "eligibility": "review_required",
+      "eligibility_check": {
+        "eligible": false,
+        "generation_sha256": "8e1604ab1f8a28f28cf3f51e660628cc09d385e93bfeea9b8829abbfb6e8a63a",
+        "method_version": "legacy-date-only-gap-v1",
+        "reason": "This method version is ineligible; regenerate and review it.",
+        "scientific_approval": false,
+        "status": "legacy_method"
+      },
+      "eligibility_reason": "Regenerated output requires an explicit eligibility review.",
+      "generation_sha256": "8e1604ab1f8a28f28cf3f51e660628cc09d385e93bfeea9b8829abbfb6e8a63a",
+      "input_archive_paths": {
+        "normalized/ctd_summary.parquet": "6a5266fec797e459daae4bfe3b5cad305d02d496586c0b77cb37fbdb3397c3a9",
+        "normalized/sst_daily_summary.parquet": "6a838e3f2c08e16037d4ce15b128a8440f5b520d4434ccb10e25f5475ba708d4"
+      },
+      "inputs": {
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/normalized/ctd_summary.parquet": "6a5266fec797e459daae4bfe3b5cad305d02d496586c0b77cb37fbdb3397c3a9",
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/normalized/sst_daily_summary.parquet": "6a838e3f2c08e16037d4ce15b128a8440f5b520d4434ccb10e25f5475ba708d4"
+      },
+      "method_id": "gap_interpolation",
+      "method_version": "legacy-date-only-gap-v1",
+      "operation_reason": "Legacy gap interpolation has no reviewed spatial calibration and is not validated evidence.",
+      "operation_status": "unavailable",
+      "output_sha256": "95ac6a162a4446626f01140c0e1bb701ce0cdf8a5b5dfe385b17e7ea8b03fab4",
+      "parameters": {},
+      "review": null,
+      "schema_version": 1,
+      "scientific_approval": false,
+      "superseded_by": null
+    },
+    "reliability/sst_ctd_validation.parquet": {
+      "eligibility": "review_required",
+      "eligibility_check": {
+        "eligible": false,
+        "generation_sha256": "25966a8b6f4c41a87b3445ab595bf83036b82e6393ca2d11325bf3f333ea5ede",
+        "method_version": "sst-ctd-spatial-v2",
+        "reason": "Regeneration and algorithmic checks do not establish scientific eligibility.",
+        "scientific_approval": false,
+        "status": "review_required"
+      },
+      "eligibility_reason": "Regenerated output requires an explicit eligibility review.",
+      "generation_sha256": "25966a8b6f4c41a87b3445ab595bf83036b82e6393ca2d11325bf3f333ea5ede",
+      "input_archive_paths": {
+        "normalized/ctd_summary.parquet": "6a5266fec797e459daae4bfe3b5cad305d02d496586c0b77cb37fbdb3397c3a9",
+        "normalized/sst_daily_summary.parquet": "6a838e3f2c08e16037d4ce15b128a8440f5b520d4434ccb10e25f5475ba708d4"
+      },
+      "inputs": {
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/normalized/ctd_summary.parquet": "6a5266fec797e459daae4bfe3b5cad305d02d496586c0b77cb37fbdb3397c3a9",
+        "/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c02-on8mc_es/normalized/sst_daily_summary.parquet": "6a838e3f2c08e16037d4ce15b128a8440f5b520d4434ccb10e25f5475ba708d4"
+      },
+      "method_id": "sst_ctd_validation",
+      "method_version": "sst-ctd-spatial-v2",
+      "operation_reason": "Algorithmic checks computed; independent scientific approval is not established.",
+      "operation_status": "computed",
+      "output_sha256": "174f756134ab237dc896882733e78632a1303a1be2a1ec08fa8c5400e9190a5e",
+      "parameters": {
+        "agreement_threshold_celsius": 2.0,
+        "regeneration_id": "b14976d5fae14ec3b904ba1031ece2cc",
+        "spatial_rule": "retained_reviewed_support_contains_cast; regional_context_is_not_point_validation"
+      },
+      "review": null,
+      "schema_version": 1,
+      "scientific_approval": false,
+      "superseded_by": null
+    }
+  },
+  "scope": "Synthetic local fixtures only; no scientific approval or publication."
+}
