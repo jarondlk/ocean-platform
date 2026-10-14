@@ -5,7 +5,7 @@ import uuid
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select
+from sqlalchemy import update
 
 from api.auth import CurrentUser, get_current_user
 from api.schemas import RetentionHoldRequest, RetentionHoldResponse
@@ -26,13 +26,18 @@ def set_interaction_legal_hold(
     user: CurrentUser = Depends(get_current_user),
 ) -> RetentionHoldResponse:
     with get_session() as session:
-        interaction = session.scalar(
-            select(ChatInteraction).where(ChatInteraction.id == interaction_id)
-        )
+        # Coordinate directly with cleanup's conditional DELETE. A deletion that
+        # commits first returns no row, so it cannot receive a success audit.
+        interaction = session.execute(
+            update(ChatInteraction)
+            .where(ChatInteraction.id == interaction_id)
+            .values(legal_hold=request.legal_hold)
+            .returning(ChatInteraction.id, ChatInteraction.legal_hold)
+            .execution_options(synchronize_session=False)
+        ).one_or_none()
         if interaction is None:
             raise HTTPException(status_code=404, detail="Chat interaction not found")
 
-        interaction.legal_hold = request.legal_hold
         session.add(
             AuditEvent(
                 actor_user_id=user.id if user.auth_provider != "disabled" else None,

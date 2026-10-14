@@ -1,0 +1,22 @@
+[
+  {
+    "blocking_operation_on_event_loop_thread": true,
+    "heartbeat_actual_ms": 154.02,
+    "operation": "authentication",
+    "synthetic_delay_ms": 150,
+    "heartbeat_requested_ms": 10,
+    "response_status": 200,
+    "downstream_calls": 1,
+    "scope": "Synthetic smoke measurement; no production latency or throughput claim"
+  },
+  {
+    "blocking_operation_on_event_loop_thread": true,
+    "heartbeat_actual_ms": 152.89,
+    "operation": "limiter",
+    "synthetic_delay_ms": 150,
+    "heartbeat_requested_ms": 10,
+    "response_status": 200,
+    "downstream_calls": 1,
+    "scope": "Synthetic smoke measurement; no production latency or throughput claim"
+  }
+]

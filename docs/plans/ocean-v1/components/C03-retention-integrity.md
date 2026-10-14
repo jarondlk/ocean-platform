@@ -1,6 +1,6 @@
 # C03 — Retention integrity
 
-**Status:** Not started. **Prerequisites:** P00. **Contract:** transactional hold/deletion ordering.
+**Status:** Complete for local implementation and disposable PostgreSQL acceptance. **Prerequisites:** P00. **Contract:** transactional hold/deletion ordering.
 
 ## Revised delivery boundary
 
@@ -30,7 +30,21 @@ Keep current endpoint and cleanup report shapes. Recheck the complete eligibilit
 2. **Atomic behavior:** repair cleanup and hold coordination, dependent evidence handling and audit records. Acceptance: hold-before-deletion survives, deletion-before-hold returns not found, repeated cleanup is safe, and failed transactions leave no misleading success audit.
 3. **Database parity:** verify dry-run, cutoff/status protections and concurrent cleanup workers. Acceptance: actual PostgreSQL behavior matches the contract and counts reflect rows truly removed. Keep unrelated users' fixtures isolated.
 
-Implementation validation: `python -m pytest tests/test_retention.py tests/test_retention_cleanup_script.py`. Add proposed `tests/integration/test_retention_concurrency_postgres.py`; run using `RUN_POSTGRES_INTEGRATION=1 python -m pytest tests/integration/test_retention_concurrency_postgres.py` only with a verified disposable local test database configured. A skipped integration test does not establish race safety. Never reuse a production database URL or run retained audit deletion probes blindly.
+Implementation validation: `python -m pytest tests/test_retention.py tests/test_retention_cleanup_script.py`.
+Run `tests/integration/test_retention_concurrency_postgres.py` with
+`RUN_POSTGRES_INTEGRATION=1` and an explicit `C03_TEST_DATABASE_URL` only after
+verifying a disposable local test database. A skipped integration test does not
+establish race safety. Never reuse a production database URL or run retained audit
+deletion probes blindly.
+
+The integration suite now exists and requires an explicit `C03_TEST_DATABASE_URL`
+pointing to a verified loopback `ocean_c03_*` database. It never falls back to
+`DATABASE_URL`. All 12 cases passed on a fresh PostgreSQL 18.3 cluster, with
+observed lock waits and isolated schemas. The required unit/CLI suites pass 35
+cases. Exact sources, commands, baseline failures, database identity and teardown
+are in [the handoff](../handoffs/C03.md) and
+[verification receipt](../evidence/C03/verification.json). PostgreSQL 16 CI wiring
+is included for later delivery and is not claimed as a fresh hosted run.
 
 ## Compatibility, rollback and handoff
 

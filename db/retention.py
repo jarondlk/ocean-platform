@@ -5,9 +5,9 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
-from sqlalchemy import func, select
+from sqlalchemy import delete, func, select
 
-from db.app_models import AuditEvent, ChatInteraction
+from db.app_models import AuditEvent, ChatFeedback, ChatInteraction
 from db.connection import get_session
 
 
@@ -53,28 +53,44 @@ def cleanup_chat_interactions(
                 dry_run=dry_run,
             )
 
-        interactions = list(
-            session.scalars(select(ChatInteraction).where(*conditions)).all()
+        # The count is an observation, not a reservation. A committed hold or
+        # status/cutoff change must still protect the row when deletion starts.
+        # DELETE coordinates with the hold UPDATE on the same row, and PostgreSQL
+        # rechecks this full predicate after waiting for a concurrent row writer.
+        deleted_ids = list(
+            session.scalars(
+                delete(ChatInteraction)
+                .where(*conditions)
+                .returning(ChatInteraction.id)
+                .execution_options(synchronize_session=False)
+            ).all()
         )
-        for interaction in interactions:
-            session.delete(interaction)
-        session.flush()
-        session.add(
-            AuditEvent(
-                action="retention.chat_interactions_deleted",
-                target_type="chat_interaction",
-                target_id="batch",
-                metadata_json={
-                    "cutoff": cutoff.isoformat(),
-                    "retention_days": retention_days,
-                    "deleted_count": len(interactions),
-                },
+        if deleted_ids:
+            # PostgreSQL's FK CASCADE removes dependent feedback. Explicitly
+            # remove only feedback for actually deleted parents as well, keeping
+            # SQLite fixtures with foreign-key enforcement disabled compatible.
+            # Both deletions and the audit commit or roll back together.
+            session.execute(
+                delete(ChatFeedback)
+                .where(ChatFeedback.interaction_id.in_(deleted_ids))
+                .execution_options(synchronize_session=False)
             )
-        )
+            session.add(
+                AuditEvent(
+                    action="retention.chat_interactions_deleted",
+                    target_type="chat_interaction",
+                    target_id="batch",
+                    metadata_json={
+                        "cutoff": cutoff.isoformat(),
+                        "retention_days": retention_days,
+                        "deleted_count": len(deleted_ids),
+                    },
+                )
+            )
         return RetentionCleanupReport(
             cutoff=cutoff,
             retention_days=retention_days,
             eligible_count=eligible_count,
-            deleted_count=len(interactions),
+            deleted_count=len(deleted_ids),
             dry_run=False,
         )

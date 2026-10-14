@@ -235,6 +235,30 @@ jobs:
           python scripts/load_db.py --upsert --json
           python scripts/load_db.py --upsert --json
 
+      - name: Create isolated C03 retention test database
+        run: |
+          python - <<'PY'
+          from sqlalchemy import create_engine, text
+          # This job owns the ephemeral service above; never inherit DATABASE_URL.
+          engine = create_engine(
+              "postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform",
+              isolation_level="AUTOCOMMIT",
+          )
+          with engine.connect() as connection:
+              connection.execute(text("CREATE DATABASE ocean_c03_retention_test"))
+          engine.dispose()
+          PY
+
+      - name: Verify C03 retention transaction ordering in isolated schemas
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_POSTGRES_INTEGRATION: "1"
+          C03_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c03_retention_test
+        run: >-
+          python -m pytest tests/integration/test_retention_concurrency_postgres.py
+          -q -s --tb=short
+
       - name: Verify database backup and isolated restore
         env:
           DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform

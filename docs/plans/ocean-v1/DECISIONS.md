@@ -125,3 +125,26 @@ History and supersession are retained; affected legacy artifacts stay ineligible
 Required suites (92 tests), composite consumer/C01 regressions (485 tests), Ruff
 and diff checks pass. See [C02 handoff](handoffs/C02.md) for exact receipts and
 real-data review still outstanding. C03–C27 remain unselected.
+
+### C03 selection — 2026-10-14 JST
+
+The user selected C03 and permitted subagents where useful. Local transactional
+retention/hold repairs, deterministic synthetic races and a fresh disposable
+PostgreSQL cluster are authorized. Keep endpoint/report shapes and retention
+duration; audit only committed actual changes. Existing production databases,
+cloud deletion, destructive migrations and future research stores remain outside
+scope. C04–C27 remain unselected; no automatic repository delivery is requested.
+
+### C03 acceptance — 2026-10-14 JST
+
+The retention cleanup DELETE rechecks the complete cutoff/status/unheld predicate
+and returns actual removed parent IDs. Hold UPDATE uses the same row's transaction
+ordering and returns not found after a committed deletion. Dependent feedback,
+parent evidence and success audits commit or roll back together. Report and
+endpoint shapes, retention durations and CLI confirmation remain unchanged.
+35 required unit/CLI tests, 93 with auth/security, 12 actual PostgreSQL 18.3 cases
+and the broader 1,684-test suite pass. The broader run has 51 expected PostgreSQL
+gates; C03's separate required PostgreSQL run has zero skips. All fixture schemas
+were removed and the owned server was stopped. See [C03 handoff](handoffs/C03.md).
+C03 remains uncommitted; C04–C27 remain unselected. No production cleanup,
+destructive migration, cloud deletion or automatic repository delivery occurred.

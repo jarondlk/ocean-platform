@@ -1,0 +1,111 @@
+{
+  "acceptance_cases": [
+    "committed hold after observation protects parent JSON evidence and feedback",
+    "hold UPDATE locks first: DELETE wait observed via pg_stat_activity/pg_blocking_pids and predicate rechecks after hold commit",
+    "DELETE locks first: hold waits then 404 without hold success audit",
+    "two cleanup workers count only actual parents removed and audit once",
+    "audit insertion and simulated commit failures roll back parent, feedback, evidence and success audit",
+    "failed hold update/commit cannot report success",
+    "dry-run observation and repeated cleanup remain safe",
+    "full cutoff/status/legal_hold predicates protect changed rows and exact cutoff",
+    "global cleanup in one UUID schema cannot reach unrelated user fixtures in another schema"
+  ],
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "base_head": "516b08675460b7de7b02ecafeec0e2f359d38747",
+  "baseline": {
+    "db_retention_source_sha256": "066ce0cbc0326a7d7720616533ba8ed2dcb76688f007cdc766c72f943a4fd18d",
+    "exact_postgres_probe": "1 passed means the red probe observed held parent and feedback removed after a successful committed hold; exact pinned Git baseline loaded, not a failed fixed-code acceptance test",
+    "new_unit_red_probe": "8 failed, 19 deselected in unchanged baseline module; expected hold/status/cutoff stale-deletion and zero-delete audit defects reproduced",
+    "required_suites": "2 passed in 0.40s before implementation",
+    "revision": "516b08675460b7de7b02ecafeec0e2f359d38747"
+  },
+  "branch": "overhaul",
+  "checkpoint_log_normalization": "Removed two terminal trailing-whitespace-only lines for Git whitespace validation; diagnostic content and original SHA256 retained.",
+  "component": "C03",
+  "contract": "transactional hold/deletion ordering with actual counts and committed audit consistency",
+  "date": "2026-10-14 JST",
+  "evidence_files": {
+    "auth-security-regressions.txt": "4ccbc8ad8a3a4e6acc0a9688a2446f31166a352045076ac2bd7ea285b9f51706",
+    "backend-tests.txt": "f179df3f5278d26a18e39a25ba9495b41a12a15cfd47158b57d293f3040d03df",
+    "baseline-postgres.txt": "4d3fe29653bfd403f1705629cba942dd27753b73efd10f03087dc452a04275ac",
+    "baseline-unit.txt": "0bc88d3c79fd87367d5cfe3ad9f2228d1b4d9c49b05ea0ad50a8a487e76abd62",
+    "c03_exact_postgres_baseline.py": "0ff36152448466ce3fb3ff1a776fffc203510bbb05f27011be482091cbdc2ae9",
+    "c03_legacy_retention_probe.py": "508f9854010701abed3103c3a9938c4fa3f7f083e2cbf3a2555b08145c5736cc",
+    "postgres-tests.txt": "1e96c8a1e904bda89604642ea36e68a150307bb5018e813f2c4712beef3b053d",
+    "required-tests.txt": "239ef21ebe4c1ab243fcbf3aec0b3339e9c0c739225c8da9e201d2db24f29e4b",
+    "ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  "files": {
+    ".github/workflows/tests.yml": "f31b27de90f1454d78701b6d83e54ce3ca33cbf87f8c491336c6d8da2545dca7",
+    "api/retention_routes.py": "ae031d5f220abf565a93e869f150b2d727f7d7e5698ba58a9b5f7c79175f0fec",
+    "db/retention.py": "063fb25caf1ad5ba45bf112d66d150090e359f7e98491245309b9d984057e9f1",
+    "tests/integration/test_retention_concurrency_postgres.py": "efddcb3146d19beab5543ab8e8335bc98cb598cbbea515d54e4de220ed972cb3",
+    "tests/test_retention.py": "3f0bcdef3b65ddf3fc9ba9fd66dcbecaf429a6f91b7bcfaa1922f8191f6ee6f2",
+    "tests/test_retention_cleanup_script.py": "598d89bad59c67fbb3e330d8c6678d47af07adc2b7805a7fde0a91ca174c692e"
+  },
+  "original_log_sha256_before_checkpoint_normalization": {
+    "baseline-unit.txt": "c18a593c258c9c667b6663ade9b5323afc3c3ee246aec080077ed8ea3c38c8fa"
+  },
+  "postgres_identity": {
+    "cluster_root": "/private/tmp/ocean-c03-postgres-61hle76z",
+    "created_by": "C03 fresh disposable local cluster",
+    "data_directory": "/private/tmp/ocean-c03-postgres-61hle76z/data",
+    "database": "ocean_c03_aa233d6a2922",
+    "existing_database_urls_used": false,
+    "host": "127.0.0.1",
+    "port": 64484,
+    "role": "ocean_c03",
+    "transaction_isolation": "read committed",
+    "version": "PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit"
+  },
+  "postgres_lifecycle": {
+    "cluster_stopped_by": "C03 owner after tests",
+    "persistent_application_database_used": false,
+    "server_stopped": true,
+    "stop_mode": "fast",
+    "test_schemas_remaining": 0
+  },
+  "prerequisite": {
+    "C01_C02_delivered_source": "All 23 Python paths still match; only shared CI workflow extends C03 isolated acceptance",
+    "P00": "Complete; all 36 accepted source hashes match",
+    "P00_source_sha256": "1b666844066d31d82f915502291b506f45e6e8989612c3b4071af12c08a0bb21"
+  },
+  "primary_references": [
+    "https://www.postgresql.org/docs/16/transaction-iso.html",
+    "https://docs.sqlalchemy.org/en/20/orm/queryguide/dml.html"
+  ],
+  "remaining_components": "C04\u2013C27 not started; next component requires user selection.",
+  "scientific_artifacts_unchanged": [
+    "data/analysis/analysis_documents.jsonl",
+    "data/analysis/taxa_env_correlations.parquet",
+    "data/reliability/corroboration.parquet",
+    "data/reliability/diversity_prediction.parquet",
+    "data/reliability/gap_interpolation.parquet",
+    "data/reliability/reliability_documents.jsonl",
+    "data/reliability/sst_ctd_validation.parquet"
+  ],
+  "scope_limits": "Fresh disposable local PostgreSQL 18.3 and synthetic SQLite/schema fixtures only. No production database URL, real cleanup, cloud artifact deletion, schema migration, retention-duration change, provider/model access, deployment or automatic repository delivery. PostgreSQL16 CI wiring is not claimed as freshly executed. Later snapshot/research receipt and assembled G2 acceptance remain future work.",
+  "source_sha256": "e34461b1adc0f837e052e8c070f6d263c1885c97ff2642f86225002593e049b3",
+  "state": "Complete for local implementation and disposable PostgreSQL acceptance",
+  "unrelated_files_preserved_count": 30,
+  "verification": {
+    "auth_security_regressions": "93 passed, 1 warning in 1.60s",
+    "broad_skip_reason": "39 previously gated PostgreSQL cases plus these 12 explicitly opt-in C03 cases; separate C03 actual PostgreSQL run passes all 12 without skips",
+    "coverage_minimum": 70,
+    "coverage_percent": 81.37,
+    "full_backend_command": "AUTH_MODE=disabled DEPLOYMENT_ENV=test ENABLE_MOCK_LOGIN=false PERSIST_LOCAL_CHAT=false RUN_POSTGRES_INTEGRATION=0 DATABASE_URL=<unused loopback placeholder> .venv/bin/python -m pytest tests/ -q --tb=short --cov=api --cov=config --cov=db --cov=preprocessing --cov=ingestion --cov=orchestration --cov=schema --cov=evaluation --cov-report=term-missing --cov-fail-under=70",
+    "full_backend_result": "1684 passed, 51 skipped, 2596 warnings in 85.51s (0:01:25)",
+    "full_working_tree_scope": "Includes 9 preexisting uncommitted benchmark tests outside C03 delivery",
+    "git_diff_check": "pass",
+    "planning_document_links": "pass",
+    "postgres_cases": 12,
+    "postgres_command": "RUN_POSTGRES_INTEGRATION=1 C03_TEST_DATABASE_URL=<new verified disposable loopback URL> AUTH_MODE=disabled DEPLOYMENT_ENV=test PERSIST_LOCAL_CHAT=false .venv/bin/python -m pytest tests/integration/test_retention_concurrency_postgres.py -q -s --tb=short",
+    "postgres_result": "12 passed in 1.06s",
+    "postgres_skips": 0,
+    "required_command": ".venv/bin/python -m pytest tests/test_retention.py tests/test_retention_cleanup_script.py -q --tb=short",
+    "required_result": "35 passed, 1 warning in 1.33s",
+    "ruff": "all active Python paths and archived baseline harnesses pass",
+    "workflow_structure": "dedicated job-owned ocean_c03_retention_test database; explicit C03 URL; no inherited application DATABASE_URL"
+  },
+  "working_tree": "C03 uncommitted; prior unrelated README/audit/benchmark work preserved"
+}

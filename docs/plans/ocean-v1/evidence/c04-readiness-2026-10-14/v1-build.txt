@@ -1,0 +1,35 @@
+
+> ocean-v1-local-preview@1.0.0-preview.0 build
+> NEXT_TELEMETRY_DISABLED=1 next build
+
+   ▲ Next.js 15.5.27
+   - Experiments (use with caution):
+     · cpus: 2
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 623ms
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/7) ...
+   Generating static pages (1/7)
+   Generating static pages (3/7)
+   Generating static pages (5/7)
+ ✓ Generating static pages (7/7)
+   Finalizing page optimization ...
+   Collecting build traces ...
+   Exporting (0/2) ...
+ ✓ Exporting (2/2)
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                      127 B         153 kB
+├ ○ /_not-found                            991 B         104 kB
+├ ○ /about                                 127 B         153 kB
+├ ○ /admin                                 127 B         153 kB
+└ ○ /feedback                              126 B         153 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/255-9acdc15b78d766e6.js       46.6 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.91 kB
+
+
+○  (Static)  prerendered as static content

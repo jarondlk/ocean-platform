@@ -1,0 +1,28 @@
+{
+  "C01-C02-delivery": {
+    "evidence_files": 13,
+    "evidence_mismatches": [],
+    "receipt": "docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json",
+    "source_files": 24,
+    "source_mismatches": {
+      ".github/workflows/tests.yml": {
+        "actual": "f31b27de90f1454d78701b6d83e54ce3ca33cbf87f8c491336c6d8da2545dca7",
+        "expected": "988757dfebbafd7b363a592011c3176c8024ca5c13f63ff1e673cc6697d9a809"
+      }
+    }
+  },
+  "C03": {
+    "evidence_files": 9,
+    "evidence_mismatches": [],
+    "receipt": "docs/plans/ocean-v1/evidence/C03/verification.json",
+    "source_files": 6,
+    "source_mismatches": {}
+  },
+  "P00": {
+    "evidence_files": 0,
+    "evidence_mismatches": [],
+    "receipt": "docs/plans/ocean-v1/mockups/p00/source-revision.json",
+    "source_files": 36,
+    "source_mismatches": {}
+  }
+}

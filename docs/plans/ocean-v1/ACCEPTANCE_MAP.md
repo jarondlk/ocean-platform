@@ -10,6 +10,11 @@ Real affected artifacts remain unchanged and require later regeneration/review.
 These checks do not complete the assembled G1 gate. C26 verifies their assembled behavior and C27 records release
 readiness. Use the exact dependencies in [COMPONENTS.md](COMPONENTS.md).
 
+C03 local retention/hold ordering is complete, including 12 actual disposable
+PostgreSQL cases; see [its handoff](handoffs/C03.md). This establishes the existing
+chat-record foundation only. Later snapshot/receipt protection and assembled G2
+acceptance remain C09/C17/C21/C26 work; production cleanup was not run.
+
 ## Required behavior
 
 | ID | Requirement and observable acceptance | Implementation owners | Integration gate |

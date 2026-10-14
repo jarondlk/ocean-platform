@@ -1,0 +1,231 @@
+{
+  "audit": "C04 readiness",
+  "branch": "overhaul",
+  "date": "2026-10-14 JST",
+  "evidence_files": {
+    "authentication-probes.json": "494c3b1905192b0e37d4a0ea67e37067cbaa868cf964a4983dc9a9c6d2ee0101",
+    "backend-result.json": "56fcb8a6453272a7ae5b7660a54d30eec1e4ca061cac96fc5c2422e3653ed1b3",
+    "backend-tests.txt": "6c625821221749ed79b8798a38284c84f23e3e20cc47a4eb96e5c7b50a168bd3",
+    "diff-check.txt": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "initial-checkout.json": "52f5e9a52983435f03f3ce823bcc8c42fcc576b63097bac76534e4becd5c37e1",
+    "pip-check.txt": "8cf9abedfe3308838095c11b57a9a8ddf6dac0037cf30060cadb4c5a1912913f",
+    "postgres-lifecycle.txt": "d7242ff02090ff529b3901d9734fd815313bf78cba7ae64b6125ea05152c868c",
+    "postgres-result.json": "b85e5f358aa4bc3d9f5ec655e5c1a501ead7bf83742c17f58b9078710a6a620e",
+    "postgres-tests.txt": "92939b595646e11829682e0e1fe2221cdea6016c5791b215834db844945846d6",
+    "preservation-verification.json": "c296c30d414116af8a010176dc4d7504e832fbe4883e403fb88bbeaa0ed4ce66",
+    "receipt-verification.json": "f0371c8c8122143ee1a2b6b9be58f29c0ca8799a929295aebcc935b39cd4d1a1",
+    "remote-verification.json": "2e7886e9d1a03c187442018a97d507acee4919c40771498c8235adb946e579cf",
+    "required-regressions.txt": "db02a10d5321e746fcccbe509f738803f87770b9e89115e21af71713c7c56a5c",
+    "ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "sandbox-backend-result.json": "67d9485f328bff427adb785430eb715d253e704be6ef3c0dd93690032b874407",
+    "sandbox-backend-tests.txt": "fad9d2f61bdf09dab6d1de0449f32b65bfe605fd21f575c3883a036ccf60f421",
+    "scope-contract.txt": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "v1-build.txt": "b987bed1edbcf3053b0dfc55a6d7532370aec03e17cab70351bc5f79cfb281e6",
+    "verify_auth_boundary.py": "e3759c0d4b6fd6d0524158a4f891506280e6f721b45daf9fa0d3c9af383936cc",
+    "verify_backend.py": "a4bc761e262a6eb42d55f9d5c8beca0a2674ea72bb274165d7b5c2b25b069fda",
+    "verify_postgres.py": "bf95b50252d1ef26b233ee5844a419d0bbfda04a06066a002209766b11341ddd"
+  },
+  "formal_dependencies": [
+    "P00"
+  ],
+  "implementation_started": false,
+  "limits": [
+    "C03 uncommitted; no current C03 hosted PostgreSQL16 CI",
+    "51 full-suite integration skips are expected; only C03 12 cases separately executed on actual PostgreSQL18.3",
+    "Historical C01/C02 hosted CI; no new merge-head Actions result claimed",
+    "Synthetic C04 observations do not establish production responsiveness",
+    "Real scientific regeneration/review, full v1 acceptance, cloud and release gates remain outstanding"
+  ],
+  "local_head": "516b08675460b7de7b02ecafeec0e2f359d38747",
+  "remote_head": "516b08675460b7de7b02ecafeec0e2f359d38747",
+  "report": {
+    "path": "docs/plans/ocean-v1/C04_READINESS_AUDIT_2026-10-14.md",
+    "sha256": "bfbc60a55145437164c1560a82b122bfe9874d0e9982107fbbe2825c85384ee9"
+  },
+  "runtime": {
+    "node": "v22.14.0",
+    "python": "3.12.7"
+  },
+  "source_files": {
+    ".github/workflows/tests.yml": "f31b27de90f1454d78701b6d83e54ce3ca33cbf87f8c491336c6d8da2545dca7",
+    "api/auth.py": "e1143c503525cabf8bb0bb802859428f67ae5296a541a4876e16a024b71b6f03",
+    "api/main.py": "25501284aba4cc3f96e4d5fc01ee61a3639e458b42ea0f8f8eb574ff91f379e1",
+    "api/rate_limit.py": "9a0f589ed41b69c3632a0b1b645ecd818b4410d89db3901f86ebb077f20de2fa",
+    "api/retention_routes.py": "ae031d5f220abf565a93e869f150b2d727f7d7e5698ba58a9b5f7c79175f0fec",
+    "db/connection.py": "54648b1119b9bfecfb74832ca67d0344d2d2d5a99b900f6e0edea2ed0d4c5197",
+    "db/retention.py": "063fb25caf1ad5ba45bf112d66d150090e359f7e98491245309b9d984057e9f1",
+    "docs/plans/ocean-v1/evidence/C02/verify_synthetic.py": "513b67b539b3102195e2627a7b02f707c6836561f49ebe3a2459cae09e2b3cc5",
+    "frontend-v1/.gitignore": "2c902c5eb5bceb2eac4bb61a521d3afe2af276fe6f5b57becf1acda4d8508500",
+    "frontend-v1/README.md": "9e19dd90cd8c9a30bf98b88d22e76b521a34340b66347d97ba5e5e06e378d84a",
+    "frontend-v1/app/about/page.tsx": "cf9dfa95cab70543adca3b1713757da933069b0a6eed5860f4a6611dc12d6413",
+    "frontend-v1/app/admin/page.tsx": "59d61754a40f4223d5177fe61f8bac01882f3847047e46731be5d454c63339f1",
+    "frontend-v1/app/feedback/page.tsx": "1259b2cd86928ad51061d462dbef6d6584720908dcfb18ee68929afd6ffd3ceb",
+    "frontend-v1/app/globals.css": "47fc09d276ac9e9b5c1a5cc8e97335f0803e6285b612dc8c350e13c3fd8ee2b5",
+    "frontend-v1/app/layout.tsx": "86f13bc7e1055507cd56e9e022ee86c2957e2e427774657e5c5555fd5a9d6ac9",
+    "frontend-v1/app/page.tsx": "da00cc65a5163107e908b7198ac915d6d24e7f4c763643d427bdf77f3d2a0382",
+    "frontend-v1/next-env.d.ts": "85ae5aee75f011967cf2d25cbc342f62d69314e9d925f7f4aa3456fc2cffcca6",
+    "frontend-v1/next.config.mjs": "7505a8f04bd81aae600796c6294cba926f7ea9dda279fc955a9004afe34b43c9",
+    "frontend-v1/package-lock.json": "b2d90430d2ec3bedfd766d8693eb011dade7513a81083e5c9db105c3a3e83540",
+    "frontend-v1/package.json": "f5491bbe9fc19bb25155fab8cb280f1c01f18bc1b63fa47543efbf8cd53835c0",
+    "frontend-v1/scripts/preview.mjs": "6b55746d23ed0d1645b89a163c27bd441f43a44cb15d389137ff2f7cb3dfbc69",
+    "frontend-v1/src/about-view.tsx": "74fe41ba1bf31520dc01e436046f5fd2b0b7426c7e01eaef1a5f4266b8fe0f2b",
+    "frontend-v1/src/adapter.ts": "0c482e5a5062c12afd1d1fd4993652cc9307bc4e84cd3ba362a80b6e5c9c41bb",
+    "frontend-v1/src/admin-model.ts": "0b897127f7aa97f8dee1a4a908402ae93ab7beea44a4515a66963ebe1df8098f",
+    "frontend-v1/src/admin-view.tsx": "7b1b5da92e66b3f937a6615c281059e5c1afd05a1080d52942c1b4d46e8e1bff",
+    "frontend-v1/src/admin.css": "f2e6474aa1d0847ac99bbe07a073b97aec48d8eb9487106ee8eea62c4d4da3a3",
+    "frontend-v1/src/catalogue-overview.css": "e7c7db8e86d331d00de694a0563dec0fcadf5ca6dfa338ae8e52eb74da230f69",
+    "frontend-v1/src/catalogue-overview.tsx": "d8c9df29850bf7a3c652e10be6f3508afd7c1dabce84f1bee3a5930a2a2aba96",
+    "frontend-v1/src/catalogue-view.tsx": "60642da929330899b97d3d45aca51bfdfb0371ffceb17ab4712757429c8de8e1",
+    "frontend-v1/src/exports.ts": "2332c54d9714afce2e7ed676e32cc312fbe881b9fe3ba75f2918bcc71657d917",
+    "frontend-v1/src/feedback-model.ts": "7000b5e1620eb2e474bd2856c69e49d58a18f3cab2a29be2bb15a634a96a9bbe",
+    "frontend-v1/src/feedback-view.tsx": "eecc19f4b3ed0b70c0a282969d3f620793f5e446f01133660c2f343c4ba340ff",
+    "frontend-v1/src/fixtures.ts": "ed124b18ff4c0175c2abd5f6bf11c724cbe2890c2df746a14058ae9a66abb8fa",
+    "frontend-v1/src/i18n.ts": "3f14468ff49c647e1b14d71e45e946a312218682abb5c6e489071fafc7a9c5fd",
+    "frontend-v1/src/model.ts": "22f6c8572649db7d3999a19e552ebddd6247dacea70eb4df2159cc00f2536fc5",
+    "frontend-v1/src/research-app.tsx": "af470bb2814a09bd26dc3132206fde717d73aa06620c6d30a9e5170c0629396f",
+    "frontend-v1/src/state.ts": "0cdae9675ef37275b0ca6e963c6bdee18e7a3a4fd24cdb60ca4d86ea9fa101bc",
+    "frontend-v1/src/support-views.css": "2a1a146de5d821d0aa2a04579be7b7a9de8da91528879fb37c4dca9441d25bfe",
+    "frontend-v1/src/ui.tsx": "2c8e5400f1b6baf8102e2539f4edea8705a026b5fd7694310cf9878fb8af0751",
+    "frontend-v1/src/workspace-view.tsx": "edb24d0490da6b645db605cd234792dadf7664a70c08accaa0fdf2ef1adff5ec",
+    "frontend-v1/tests/admin-model.test.ts": "98710e12bd8f9416c2e78aa889ecad0051a0a81ced47eefb6baff75caae95e8a",
+    "frontend-v1/tests/feedback-exports.test.ts": "b0dd9cb461277101153c1b3e8d9ff569a3288cc57906450316442ca0b8c78ad1",
+    "frontend-v1/tests/journeys.test.ts": "70c4352c2acc88b7faa2e3383411f7a80c4140b76d013e0d0dc775f0b16fccd6",
+    "frontend-v1/tsconfig.json": "5c14605dfa560eecdf32b50ea5aedbd1b1814ee9073c90d3dfc6c564244153e8",
+    "orchestration/auto_published_settings.py": "c8269e5d1471929a240bce8ddd1d3f8bf674450fd79bd88bc489af0e60eb911f",
+    "orchestration/publication_scope.py": "af31d203fb2e766a2e43049c1e0ea2d9235e3f43604efdd993e95796fc3e273e",
+    "orchestration/research_intents.py": "eb265c1247148b4c4494199eb0d7941288db836d496326c5701747b8128ce15f",
+    "orchestration/research_question.py": "a93e3f2b5f3fddb637b9176aedb0abffb08e49d0700238c5679e20ef561bbb81",
+    "orchestration/settings_planner.py": "12f8231dd51166c631b12388d4e9a33ed8c5e043fabd273509bcc5a4d63dbe3a",
+    "orchestration/statistics_catalog.py": "004a3055a4d8daaf49463a81207b5aa9d3ca6482066cfc6ede0efb757520a22c",
+    "orchestration/unified.py": "c35856c03045ef48bd5d352334c7f62aa24163378b0416ab9d8e5ed0d25d00e7",
+    "preprocessing/derived_artifacts.py": "deba53d403e8ce3c44f1a6482fb1f5cd5b2b81650401cbdd0bfb2aa8d31d5bd4",
+    "preprocessing/pre_analysis.py": "426a19a3c1f7d9dcc4241c7a187352554ab0711cfc438a20f0633804db6bbed8",
+    "preprocessing/reliability_ensurance.py": "46b5cf6c4b3b320467bc121a1572e41e4a00e2327bc0afc6fa7a63471e726c5d",
+    "preprocessing/remote_sensing.py": "e611e7f176677fbece054cb7ff70d57ba378e1135f86a2cfcf1346b781c852cd",
+    "tests/conftest.py": "989457a38d9ffefac466e5a0173ca620a4cef42ebacb1d483454ec469e026e19",
+    "tests/integration/test_retention_concurrency_postgres.py": "efddcb3146d19beab5543ab8e8335bc98cb598cbbea515d54e4de220ed972cb3",
+    "tests/test_api_explore.py": "cced0b92ee64ddcad9d48a61daf939e41cd056ab0c55ad0f01623c993407d12e",
+    "tests/test_api_retrieve.py": "29faaee46884c24578035fbb17a0470eb792c4c5897e417c4959a87981bfd769",
+    "tests/test_api_security.py": "6cd934e1ccbc128e2358e44467506af797de7ba94f20612d879d173251c713c3",
+    "tests/test_auth.py": "42a694ea61308b181e626b137b9fad96a29f0eabe516a935b22b4e100c03c445",
+    "tests/test_auto_settings.py": "6395109f9cf1736e5294e3464e8c6f5720a800802bddc798ab444c915eeaa86b",
+    "tests/test_conference_demo.py": "60035ab60e1becfde6c195cd7e2dbefb32d730cc4e9b137bc6b6508dc1e7bec9",
+    "tests/test_derived_artifact_eligibility.py": "d37eb145cb224b708dd8c1bf6e0ed3d4ff1ad17eb75341004def6a6b0dde810e",
+    "tests/test_pre_analysis.py": "b2573e4d095aa07135eefcb6278879c16d0e6e154289cec4d7ae6108801789fc",
+    "tests/test_publication_scope_contract.py": "de97584b85d177667ec6afe0522bf4e560c4c0af7745934ca95e07d087b8fb1e",
+    "tests/test_rate_limit.py": "f90d488b141f57a09d363de5d7978049a902e0a2a6143c9d8c0ae989465eda08",
+    "tests/test_reliability.py": "346e54fd746a02d614aa5e8a7ac90d7cf99fe3d6cb1d5ee2fb99888ddfd847ca",
+    "tests/test_remote_sensing.py": "0eaf7f291f3a29de55fbf529b6b4cec988133e645d428a4c412a3bb7f5f444c9",
+    "tests/test_retention.py": "3f0bcdef3b65ddf3fc9ba9fd66dcbecaf429a6f91b7bcfaa1922f8191f6ee6f2",
+    "tests/test_retention_cleanup_script.py": "598d89bad59c67fbb3e330d8c6678d47af07adc2b7805a7fde0a91ca174c692e"
+  },
+  "verdict": "Ready to begin C04 locally; C03 delivery remains uncommitted and without hosted acceptance",
+  "verification": {
+    "C04_smoke_probes": [
+      {
+        "blocking_operation_on_event_loop_thread": true,
+        "downstream_calls": 1,
+        "heartbeat_actual_ms": 154.02,
+        "heartbeat_requested_ms": 10,
+        "operation": "authentication",
+        "response_status": 200,
+        "scope": "Synthetic smoke measurement; no production latency or throughput claim",
+        "synthetic_delay_ms": 150
+      },
+      {
+        "blocking_operation_on_event_loop_thread": true,
+        "downstream_calls": 1,
+        "heartbeat_actual_ms": 152.89,
+        "heartbeat_requested_ms": 10,
+        "operation": "limiter",
+        "response_status": 200,
+        "scope": "Synthetic smoke measurement; no production latency or throughput claim",
+        "synthetic_delay_ms": 150
+      }
+    ],
+    "backend": "1684 passed, 51 skipped, 2596 warnings in 85.00s; 81.37% coverage",
+    "diff_check": "pass",
+    "frontend_v1": {
+      "build": "npm run build: exit 0; static routes generated",
+      "tests": "npm test: 27 passed; zero failures/skips",
+      "typecheck": "npm run typecheck: exit 0"
+    },
+    "pip_check": "No broken requirements found",
+    "postgres": "12 passed in 0.98s; zero skips; identity verified; zero schemas remaining; server stopped",
+    "postgres_result": {
+      "cluster_root": "/private/tmp/ocean-c03-readiness-zdip4_of",
+      "data_directory": "/private/tmp/ocean-c03-readiness-zdip4_of/data",
+      "database": "ocean_c03_readiness_fc441b152fb0",
+      "existing_database_urls_used": false,
+      "host": "127.0.0.1",
+      "identity": {
+        "data_directory": "/private/tmp/ocean-c03-readiness-zdip4_of/data",
+        "database": "ocean_c03_readiness_fc441b152fb0",
+        "host": "127.0.0.1",
+        "isolation": "read committed",
+        "port": 61843,
+        "role": "ocean_c03",
+        "version": "PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit"
+      },
+      "port": 61843,
+      "role": "ocean_c03",
+      "server_stopped": true,
+      "stop_exit_code": 0,
+      "test_command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/integration/test_retention_concurrency_postgres.py",
+        "-q",
+        "-s",
+        "--tb=short"
+      ],
+      "test_exit_code": 0,
+      "test_schemas_remaining": 0
+    },
+    "preservation": {
+      "C04_dependencies": [
+        "P00"
+      ],
+      "P00_accepted_screenshot": "matches",
+      "missing_planning_links": [],
+      "preexisting_file_changes": [],
+      "preexisting_repository_files_checked": 857,
+      "prior_C03_server_stopped": true,
+      "real_artifact_changes": [],
+      "real_artifacts_checked": 7
+    },
+    "receipt_reconciliation": {
+      "C01-C02-delivery": {
+        "evidence_files": 13,
+        "evidence_mismatches": [],
+        "receipt": "docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json",
+        "source_files": 24,
+        "source_mismatches": {
+          ".github/workflows/tests.yml": {
+            "actual": "f31b27de90f1454d78701b6d83e54ce3ca33cbf87f8c491336c6d8da2545dca7",
+            "expected": "988757dfebbafd7b363a592011c3176c8024ca5c13f63ff1e673cc6697d9a809"
+          }
+        }
+      },
+      "C03": {
+        "evidence_files": 9,
+        "evidence_mismatches": [],
+        "receipt": "docs/plans/ocean-v1/evidence/C03/verification.json",
+        "source_files": 6,
+        "source_mismatches": {}
+      },
+      "P00": {
+        "evidence_files": 0,
+        "evidence_mismatches": [],
+        "receipt": "docs/plans/ocean-v1/mockups/p00/source-revision.json",
+        "source_files": 36,
+        "source_mismatches": {}
+      }
+    },
+    "required_command": "python -m pytest tests/test_retention.py tests/test_retention_cleanup_script.py tests/test_auth.py tests/test_api_security.py tests/test_rate_limit.py -q --tb=short",
+    "required_regressions": "101 passed, 1 warning in 3.40s",
+    "ruff": "active Python paths and audit scripts pass",
+    "scope_contract": "pass"
+  }
+}

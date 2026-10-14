@@ -1,0 +1,37 @@
+{
+  "remote_overhaul_sha": "516b08675460b7de7b02ecafeec0e2f359d38747",
+  "remote_confirmed_by": "GitHub fetch_commit(overhaul)",
+  "c01_c02_premerge_run_url": "https://github.com/jarondlk/ocean-platform/actions/runs/38545350664",
+  "c01_c02_premerge_source_sha": "3f05bd4232e1716d1ddcd3f7fbce4f9bbf5a5760",
+  "jobs": [
+    {
+      "name": "Frontend typecheck and build",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Backend tests and security boundary",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "OCEAN v1 prototype tests and build",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "PostgreSQL migration and metadata integration",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Dependency review",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "commit_statuses": {
+    "statuses": []
+  },
+  "scope": "Prior C01/C02 review-branch CI; no hosted CI for uncommitted C03; combined status API has no legacy statuses and does not establish merge-head Actions results."
+}
