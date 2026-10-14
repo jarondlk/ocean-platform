@@ -3,7 +3,7 @@
 Date: 2026-10-14 JST
 Base: overhaul at c7ea5f4c4243d1c1a0657a0a01c075f5f738219d
 Delivery branch: codex/c01-c02-audit-20261014
-Disposition: local checks pass; PR CI must pass before merge into overhaul.
+Disposition: local checks pass; branch CI must pass before merge into overhaul.
 
 The user requested repository verification, then a new branch, commit/push and
 merge into overhaul. This delivery contains C01/C02, their evidence/handoffs,
@@ -40,7 +40,7 @@ artifact Explore test distinguishes unavailable legacy rows from actual paired
 checks. No production eligibility decision is manufactured.
 
 The previous CI workflow omitted overhaul and the v1 prototype. It now runs on
-overhaul pushes and PRs and adds v1 tests, typecheck, static build and production
+overhaul pushes/PRs and codex review-branch pushes, and adds v1 tests, typecheck, static build and production
 dependency advisory checks. Existing backend, legacy frontend and disposable
 PostgreSQL jobs remain. No deployment workflow was introduced.
 
@@ -65,7 +65,9 @@ PostgreSQL jobs remain. No deployment workflow was introduced.
 
 The authoritative backend run used a clean Git-baseline export plus exactly the
 selected delivery files, excluding the older uncommitted benchmark code/tests.
-Its 24 Python/workflow hashes match the final workspace. Tests use synthetic
+Its 23 Python source hashes match the final workspace. The subsequent review-branch
+CI trigger adjustment is separately structure-validated and must pass hosted CI.
+Tests use synthetic
 fixtures and read-only bundled artifact checks. The PostgreSQL service remains
 disabled locally; the CI integration job must validate those 39 cases before
 merge. Initial sandbox-only failures were caused by denied loopback fixture-server
@@ -92,5 +94,6 @@ acceptance and release/isolation checks remain future gates.
 Keep old acceptance receipts, generation tombstones and consumer eligibility
 guards during rollback. Do not reauthorize historical outputs by copying them
 back into current paths. Merge only this selected branch into overhaul; preserve
-main, production and the unrelated local files. The PR and hosted checks provide
-the subsequent merge record.
+main, production and the unrelated local files. The GitHub connector lacks PR
+creation permission, so the authorized merge uses Git after hosted branch CI
+passes. Git history and hosted checks provide the subsequent merge record.

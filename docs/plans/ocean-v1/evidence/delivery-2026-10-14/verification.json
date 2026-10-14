@@ -5,6 +5,7 @@
   "audit": "C01/C02 repository delivery",
   "base_head": "c7ea5f4c4243d1c1a0657a0a01c075f5f738219d",
   "clean_candidate": "Git baseline exported plus only selected C01/C02/audit/workflow files; source hashes reverified after test execution; excludes earlier benchmark/audit work.",
+  "clean_candidate_workflow_followup": "23 Python source files unchanged after clean test run; final workflow extends push triggers to codex review branches and is separately structure-validated before required hosted CI.",
   "component_receipt_drift": {
     "C01": {
       "changed_since_component_receipt": {
@@ -56,7 +57,7 @@
   },
   "evidence_log_normalization": "Only terminal carriage returns, trailing whitespace and trailing blank lines normalized for repository diff checks; original hashes retained for changed logs.",
   "files": {
-    ".github/workflows/tests.yml": "8b04a4a6e517a5d79ea3327048cfcecdf338f3f24b0e97a2eee79d712088b10a",
+    ".github/workflows/tests.yml": "988757dfebbafd7b363a592011c3176c8024ca5c13f63ff1e673cc6697d9a809",
     "api/main.py": "25501284aba4cc3f96e4d5fc01ee61a3639e458b42ea0f8f8eb574ff91f379e1",
     "docs/plans/ocean-v1/evidence/C02/verify_synthetic.py": "513b67b539b3102195e2627a7b02f707c6836561f49ebe3a2459cae09e2b3cc5",
     "orchestration/auto_published_settings.py": "c8269e5d1471929a240bce8ddd1d3f8bf674450fd79bd88bc489af0e60eb911f",
@@ -81,7 +82,7 @@
     "tests/test_reliability.py": "346e54fd746a02d614aa5e8a7ac90d7cf99fe3d6cb1d5ee2fb99888ddfd847ca",
     "tests/test_remote_sensing.py": "0eaf7f291f3a29de55fbf529b6b4cec988133e645d428a4c412a3bb7f5f444c9"
   },
-  "merge_gate": "Hosted backend, legacy frontend, v1 frontend and disposable PostgreSQL CI must pass for this PR head before merge.",
+  "merge_gate": "Hosted backend, legacy frontend, v1 frontend and disposable PostgreSQL CI must pass on the exact pushed branch head before Git merge into overhaul.",
   "original_log_sha256_before_whitespace_normalization": {
     "legacy-build.txt": "6b7898d7061142578b600d36902da4ed369964961b0903bf560282fa9e2c2f6b",
     "legacy-typecheck.txt": "0dfc7aeaa0fd983206afdbe50edc28855ed96b862749b8a2ab21f85666af4fa6",
@@ -320,8 +321,34 @@
     "tests/test_reliability.py",
     "tests/test_remote_sensing.py"
   ],
-  "source_sha256": "072f021ce7d77216533a8b5152d1e02c80813f7ac58223543bfca9790afb18de",
+  "source_sha256": "227b42ea16112374b61b0650287092599f950133c87466860e8062f643901f37",
   "target_branch": "overhaul",
+  "tested_clean_snapshot_files": {
+    ".github/workflows/tests.yml": "8b04a4a6e517a5d79ea3327048cfcecdf338f3f24b0e97a2eee79d712088b10a",
+    "api/main.py": "25501284aba4cc3f96e4d5fc01ee61a3639e458b42ea0f8f8eb574ff91f379e1",
+    "docs/plans/ocean-v1/evidence/C02/verify_synthetic.py": "513b67b539b3102195e2627a7b02f707c6836561f49ebe3a2459cae09e2b3cc5",
+    "orchestration/auto_published_settings.py": "c8269e5d1471929a240bce8ddd1d3f8bf674450fd79bd88bc489af0e60eb911f",
+    "orchestration/publication_scope.py": "af31d203fb2e766a2e43049c1e0ea2d9235e3f43604efdd993e95796fc3e273e",
+    "orchestration/research_intents.py": "eb265c1247148b4c4494199eb0d7941288db836d496326c5701747b8128ce15f",
+    "orchestration/research_question.py": "a93e3f2b5f3fddb637b9176aedb0abffb08e49d0700238c5679e20ef561bbb81",
+    "orchestration/settings_planner.py": "12f8231dd51166c631b12388d4e9a33ed8c5e043fabd273509bcc5a4d63dbe3a",
+    "orchestration/statistics_catalog.py": "004a3055a4d8daaf49463a81207b5aa9d3ca6482066cfc6ede0efb757520a22c",
+    "orchestration/unified.py": "c35856c03045ef48bd5d352334c7f62aa24163378b0416ab9d8e5ed0d25d00e7",
+    "preprocessing/derived_artifacts.py": "deba53d403e8ce3c44f1a6482fb1f5cd5b2b81650401cbdd0bfb2aa8d31d5bd4",
+    "preprocessing/pre_analysis.py": "426a19a3c1f7d9dcc4241c7a187352554ab0711cfc438a20f0633804db6bbed8",
+    "preprocessing/reliability_ensurance.py": "46b5cf6c4b3b320467bc121a1572e41e4a00e2327bc0afc6fa7a63471e726c5d",
+    "preprocessing/remote_sensing.py": "e611e7f176677fbece054cb7ff70d57ba378e1135f86a2cfcf1346b781c852cd",
+    "tests/conftest.py": "989457a38d9ffefac466e5a0173ca620a4cef42ebacb1d483454ec469e026e19",
+    "tests/test_api_explore.py": "cced0b92ee64ddcad9d48a61daf939e41cd056ab0c55ad0f01623c993407d12e",
+    "tests/test_api_retrieve.py": "29faaee46884c24578035fbb17a0470eb792c4c5897e417c4959a87981bfd769",
+    "tests/test_auto_settings.py": "6395109f9cf1736e5294e3464e8c6f5720a800802bddc798ab444c915eeaa86b",
+    "tests/test_conference_demo.py": "60035ab60e1becfde6c195cd7e2dbefb32d730cc4e9b137bc6b6508dc1e7bec9",
+    "tests/test_derived_artifact_eligibility.py": "d37eb145cb224b708dd8c1bf6e0ed3d4ff1ad17eb75341004def6a6b0dde810e",
+    "tests/test_pre_analysis.py": "b2573e4d095aa07135eefcb6278879c16d0e6e154289cec4d7ae6108801789fc",
+    "tests/test_publication_scope_contract.py": "de97584b85d177667ec6afe0522bf4e560c4c0af7745934ca95e07d087b8fb1e",
+    "tests/test_reliability.py": "346e54fd746a02d614aa5e8a7ac90d7cf99fe3d6cb1d5ee2fb99888ddfd847ca",
+    "tests/test_remote_sensing.py": "0eaf7f291f3a29de55fbf529b6b4cec988133e645d428a4c412a3bb7f5f444c9"
+  },
   "unrelated_files_preserved": {
     "README.md": "e4d1cff681128d4b7d40add69f93310298469a9921083bdeeaee043a46ad53e5",
     "docs/LLM_MODEL_BENCHMARK_2026-10-09.md": "8fba86572f4f077a9152a8853d9a0dc4a8162f39082bcd062ef8fb24067b4c6d",
@@ -386,6 +413,6 @@
     "scope_contract": "current",
     "source_secret_pattern_scan": "no matches in selected source/evidence or synthetic ZIP; not a general security certification",
     "v1_tests": 27,
-    "workflow_structure": "overhaul push/PR triggers and frontend-v1 job present"
+    "workflow_structure": "overhaul push/PR and codex/** push triggers, plus frontend-v1 job, verified"
   }
 }
