@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, master, gcp]
+    branches: [main, master, gcp, overhaul]
   pull_request:
-    branches: [main, master]
+    branches: [main, master, overhaul]
 
 permissions:
   contents: read
@@ -120,6 +120,44 @@ jobs:
           ENABLE_MOCK_LOGIN: "false"
           AUTH_SECRET: ci-only-auth-secret-that-is-long-enough
           INTERNAL_AUTH_SECRET: ci-only-internal-secret-that-is-long-enough
+        run: npm run build
+
+  frontend-v1:
+    name: OCEAN v1 prototype tests and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend-v1/package-lock.json
+
+      - name: Install prototype dependencies
+        working-directory: frontend-v1
+        run: npm ci
+
+      - name: Audit production prototype dependencies
+        working-directory: frontend-v1
+        run: npm audit --omit=dev --audit-level=moderate
+
+      - name: Test prototype
+        working-directory: frontend-v1
+        run: npm test
+
+      - name: Typecheck prototype
+        working-directory: frontend-v1
+        run: npm run typecheck
+
+      - name: Build prototype
+        working-directory: frontend-v1
         run: npm run build
 
   postgres-integration:

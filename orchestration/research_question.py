@@ -36,28 +36,10 @@ def conference_question(query):
 
 
 def publication_question_error(query, kind, recipe):
-    if re.search(r'\b(?:except|excluding|omit)\b|除外|以外|除く', query, re.I):
-        return 'This immutable workflow cannot apply an additional exclusion.'
-    if recipe.get('region_id') == 'miyagi-regional-demo' and re.search(
-        r'\b(?:Onagawa|Otsuchi|Iwate|Mutsu|Ishinomaki)\b|女川|大槌|岩手|陸奥|石巻', query, re.I
-    ):
-        return 'The requested place is narrower than or outside the published Miyagi region.'
-    spec = conference_question(query)
-    if spec:
-        if spec['kind'] != kind or recipe.get('region_id') not in MIYAGI_REGIONS:
-            return "The requested workflow or Miyagi region differs from the published cohort."
-        if kind == 'fish_frequency' and (
-            str(recipe.get('time_from')) != spec['first'] + '-01-01'
-            or str(recipe.get('time_to')) != spec['last'] + '-12-31'
-        ):
-            return "The requested calendar range differs from the published cohort."
-        if kind == 'monthly_spatial' and recipe.get('spatial_year') != int(spec['year']):
-            return "The requested spatial year differs from the published workflow."
-    top = re.search(r"\btop\s+(\d+)\b|上位\s*(\d+)\s*種", query, re.I)
-    if kind == 'fish_frequency' and top and int(next(v for v in top.groups() if v)) != 10:
-        return "This published workflow has a fixed top-ten panel."
-    if kind == 'monthly_spatial' and calendar_years(query):
-        years = calendar_years(query)
-        if len(years) != 1 or str(recipe.get('spatial_year')) != years[0]:
-            return 'The requested spatial year differs from the published workflow.'
-    return None
+    """Compatibility wrapper for callers that only need the question decision."""
+    from orchestration.publication_scope import publication_compatibility
+    result = publication_compatibility(query, kind, {
+        'recipe_scope': recipe,
+        'assignment_methods': [recipe['assignment_method']] if recipe.get('assignment_method') else [],
+    }, question_only=True)
+    return None if result.outcome == 'compatible' else result.reason

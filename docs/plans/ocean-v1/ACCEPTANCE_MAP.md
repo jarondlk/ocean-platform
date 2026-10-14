@@ -3,7 +3,11 @@
 Real-service checks below are **planned and not run**. P00 local prototype
 checks are recorded in [its handoff](handoffs/P00.md); the user accepted the local
 UX direction on 2026-10-14 JST, satisfying P00/G8 only. Document validation in the setup receipt does not satisfy application acceptance. Component specifications define
-local checkpoints; C26 verifies their assembled behavior and C27 records release
+local checkpoints. C01 shared scope/offline checks are complete; see
+[its handoff](handoffs/C01.md). C02 F02/F04/F05 and derived-eligibility software
+checks are complete on synthetic inputs; see [its handoff](handoffs/C02.md).
+Real affected artifacts remain unchanged and require later regeneration/review.
+These checks do not complete the assembled G1 gate. C26 verifies their assembled behavior and C27 records release
 readiness. Use the exact dependencies in [COMPONENTS.md](COMPONENTS.md).
 
 ## Required behavior

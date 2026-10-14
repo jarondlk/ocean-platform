@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 is accepted and Complete. C01–C27 are not started.**
+**P00, C01 and C02 are Complete locally. C03–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -15,8 +15,15 @@ component prompts and resumable progress. Start here in a fresh chat.
 
 **Completed:** P00 — Local UI and UX prototype, accepted on 2026-10-14 JST.
 The Pipeline & jobs page is omitted as requested. Read [its handoff](handoffs/P00.md)
-for the accepted direction and verified source receipt. C01 is the recommended
-first backend component; later components require separate selection.
+for the accepted direction and verified source receipt. C01 scientific scope
+validation is Complete; read [its handoff](handoffs/C01.md). C02 derived-evidence
+software and synthetic acceptance are Complete; read [its handoff](handoffs/C02.md).
+C03 is recommended
+next; later components require separate selection.
+
+The user subsequently authorized audited repository delivery. See the
+[C01/C02 delivery audit](DELIVERY_AUDIT_2026-10-14.md) and its final source receipt;
+the original component receipts remain historical after the audit corrections.
 
 The new site is fully isolated from the legacy production site. Read
 [SITE_SEPARATION.md](SITE_SEPARATION.md) and [UI_UX_BRIEF.md](UI_UX_BRIEF.md).
@@ -105,6 +112,6 @@ a73ea7fa48b88fe91995fda0cc25e481e63a9355. This is a discovery baseline,
 not a requirement to reset future work to this commit.
 Existing unrelated README, audit and benchmark modifications are preserved.
 P00 progress is recorded in [STATUS.md](STATUS.md) and [its handoff](handoffs/P00.md).
-Every C01–C27 remains Not started.
+C01 and C02 are complete with offline evidence; C03–C27 remain Not started.
 The 2026-10-13 revision adds P00 before the original 27 numbered components; the
 setup receipt retains its historical counts and records this amendment.

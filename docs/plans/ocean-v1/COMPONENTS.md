@@ -43,8 +43,11 @@ exact dependency graph. There are 28 specifications including P00.
 P00 is the first implementation and is now accepted and Complete; see STATUS. It uses provisional typed synthetic
 fixtures and has no backend prerequisites. Review and refine the local interface
 with the user before completing its UX gate. Afterwards, C01 is the recommended
-first backend component; one C01–C27 component at a time remains the default.
-Planning any component can proceed before prerequisite implementation.
+first backend component and is now complete; one C01–C27 component at a time remains the default.
+Planning any component can proceed before prerequisite implementation. C01 and
+C02 are now Complete locally; C03 is the next recommendation after user selection.
+See STATUS and the delivery audit for current verification rather than historical
+component receipts alone.
 
 - P00: runnable local UI, human-centered journeys and iterative user review.
 - C01–C07: scientific, integrity, runtime and export foundations for v1.

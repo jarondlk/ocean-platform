@@ -1,0 +1,46 @@
+{
+  "component": "C01",
+  "state": "Complete",
+  "date": "2026-10-14 JST",
+  "branch": "overhaul",
+  "base_head": "c7ea5f4c4243d1c1a0657a0a01c075f5f738219d",
+  "working_tree": "C01 implementation uncommitted",
+  "contract_version": "publication-scope-v1",
+  "planner_version": "auto-settings-v8",
+  "source_sha256": "aed7c2df8e8283f83f9683ad51f79f36fb491a393845a3004ebf97be70031c1d",
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "files": {
+    "api/main.py": "be6f1540fdab041f82fdf138d66956b19d3a87c30f89fa4adc11a9aed7459c89",
+    "orchestration/auto_published_settings.py": "c8269e5d1471929a240bce8ddd1d3f8bf674450fd79bd88bc489af0e60eb911f",
+    "orchestration/publication_scope.py": "59b7db818cbdac051b6d96d1bb7ab53dc807679dc1f89c3c21676c4b889a210c",
+    "orchestration/research_intents.py": "eb265c1247148b4c4494199eb0d7941288db836d496326c5701747b8128ce15f",
+    "orchestration/research_question.py": "a93e3f2b5f3fddb637b9176aedb0abffb08e49d0700238c5679e20ef561bbb81",
+    "orchestration/settings_planner.py": "12f8231dd51166c631b12388d4e9a33ed8c5e043fabd273509bcc5a4d63dbe3a",
+    "orchestration/statistics_catalog.py": "004a3055a4d8daaf49463a81207b5aa9d3ca6482066cfc6ede0efb757520a22c",
+    "tests/test_auto_settings.py": "6395109f9cf1736e5294e3464e8c6f5720a800802bddc798ab444c915eeaa86b",
+    "tests/test_conference_demo.py": "60035ab60e1becfde6c195cd7e2dbefb32d730cc4e9b137bc6b6508dc1e7bec9",
+    "tests/test_publication_scope_contract.py": "7b48257093f7383948b1112e64dcd3b0a687d2b9ce63f58373bdaa30f7aad713"
+  },
+  "prerequisite": {
+    "P00": "Complete; 36-file accepted source receipt verified",
+    "source_sha256": "1b666844066d31d82f915502291b506f45e6e8989612c3b4071af12c08a0bb21"
+  },
+  "baseline": {
+    "revision": "c7ea5f4c4243d1c1a0657a0a01c075f5f738219d",
+    "required_suites": "128 passed in 5.97s",
+    "F10": "all 3 accepted with a stubbed ready synthesis proposal; 3 new rejection tests failed before implementation"
+  },
+  "verification": {
+    "command": ".venv/bin/python -m pytest tests/test_publication_scope_contract.py tests/test_auto_settings.py tests/test_research_chat.py tests/test_chat_source_scope.py tests/test_conference_demo.py tests/test_provisional_research_demo.py tests/test_regional_publication.py tests/test_research_readiness.py tests/test_conference_review.py -q --tb=short",
+    "exit_code": 0,
+    "result": "319 passed, 167 warnings in 10.49s",
+    "failures": 0,
+    "skips": 0,
+    "ruff": "all changed Python files pass",
+    "git_diff_check": "pass",
+    "test_log_sha256": "363d2ca70cdf7a77d144fab2c894f3863f7c094c13b92354f5b0f9bc0287984e",
+    "test_log": "offline-tests.txt"
+  },
+  "evidence_scope": "Offline shared publication-scope validation and synthetic endpoint/bundle regressions only; no provider/database/cloud access, data transfer, scientific publication or deployment",
+  "remaining_gates": "C02–C27 unselected and Not started; scientific artifact repair, full v1 integration, cloud isolation and release acceptance remain future work"
+}

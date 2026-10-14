@@ -1,3 +1,5 @@
+import json
+
 from fastapi.testclient import TestClient
 
 import api.main as api_main
@@ -124,8 +126,13 @@ def test_chat_response_includes_context_ledger(tmp_path, monkeypatch):
         '{"id":"analysis_trends","analysis_type":"trend","title":"Trends","text":"Temperature trend context."}\n',
         encoding="utf-8",
     )
+    from tests.conftest import _reviewed_synthetic_context
+    reliability_document = _reviewed_synthetic_context([
+        {"id": "reliability_sst_ctd", "analysis_type": "cross_source_validation", "title": "SST CTD",
+         "text": "SST validates CTD context."}
+    ], monkeypatch)[0]
     (reliability_dir / "reliability_documents.jsonl").write_text(
-        '{"id":"reliability_sst_ctd","analysis_type":"cross_source_validation","title":"SST CTD","text":"SST validates CTD context."}\n',
+        json.dumps(reliability_document) + "\n",
         encoding="utf-8",
     )
 

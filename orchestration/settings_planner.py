@@ -13,19 +13,20 @@ from orchestration.auto_published_settings import (
 )
 from orchestration.statistics_catalog import statistics_catalog
 from retrieval.source_scope import FAMILIES, enabled_sources
-from orchestration.research_question import calendar_years, conference_question, japanese, publication_question_error
+from orchestration.research_question import calendar_years, conference_question
 
-PLAN_VERSION = 'auto-settings-v7'
+PLAN_VERSION = 'auto-settings-v8'
 MAX_PLAN_CHARS = 20000
 MAX_CATALOG_CHARS = 36000
 BAY_NAMES = {'O': ('onagawa', '女川'), 'I': ('ishinomaki', '石巻'), 'M': ('mutsu', '陸奥')}
 
 
 class PlanningError(ValueError):
-    def __init__(self, message, *, status='invalid', invoked=False):
+    def __init__(self, message, *, status='invalid', invoked=False, scope_compatibility=None):
         super().__init__(message)
         self.status = status
         self.invoked = invoked
+        self.scope_compatibility = scope_compatibility
 
 
 def explicit_calendar_range(question):
@@ -64,8 +65,9 @@ def retain_explicit_dates(proposal, request):
     calendar = explicit_calendar_range(request.query)
     if not calendar:
         return proposal, None
-    if proposal.research_intent and proposal.research_intent.kind == 'monthly_spatial':
-        # This literal year selects the recipe's spatial table, not a new cohort.
+    if proposal.research_intent and proposal.research_intent.kind in {'monthly_spatial', 'spatial_temperature', 'distribution_change', 'follow_through'}:
+        # Spatial and endpoint years select fixed result tables, not a new cohort.
+        # Their date role is checked by the shared publication contract.
         return proposal, None
     scope = proposal.evidence_scope.canonical()
     constraints = list(proposal.constraints)
@@ -258,8 +260,8 @@ def _validate_constraints(proposal, request, catalog, *, retained_filters=False)
                                explicit_comparison['kind'] == 'overlap' and proposal.comparison_kind != 'overlap'):
         raise PlanningError('The plan must preserve the requested comparison or overlap check.', invoked=True)
     years = calendar_years(request.query)
-    spatial_year = proposal.research_intent and proposal.research_intent.kind == 'monthly_spatial'
-    if years and not spatial_year and not any(s['filters'].get('time_from') and s['filters'].get('time_to') or s['filters'].get('sample_id')
+    spatial_year = proposal.research_intent and proposal.research_intent.kind in {'monthly_spatial', 'spatial_temperature'}
+    if years and not spatial_year and not proposal.route.startswith('published_') and not any(s['filters'].get('time_from') and s['filters'].get('time_to') or s['filters'].get('sample_id')
                          for s in scope['sources'].values() if s['enabled']):
         raise PlanningError('The plan omitted the explicit time range. Specify the dates or revise the plan.', invoked=True)
     for role in ('analysis', 'reliability'):
@@ -268,24 +270,18 @@ def _validate_constraints(proposal, request, catalog, *, retained_filters=False)
             raise PlanningError('The plan selected an unknown context document.', invoked=True)
     if proposal.comparison_kind != 'none' and len(proposal.required_sources) < 2:
         raise PlanningError('A cross-source comparison needs both source requirements.', invoked=True)
+    compatibility = None
     if proposal.route.startswith('published_'):
         options = [a for a in catalog['analyses'] if a['analysis_id'] == selected_analysis and a['status'] == 'current']
         if len(options) != 1 or not proposal.research_intent:
             raise PlanningError('Select a current compatible published analysis and workflow.', invoked=True)
         option = options[0]
-        question_error = publication_question_error(request.query, proposal.research_intent.kind, option.get('recipe_scope', {}))
-        if question_error:
-            raise PlanningError(question_error, status='clarification_required', invoked=True)
-        if proposal.research_intent.kind in {'monthly_spatial', 'spatial_temperature'}:
-            from orchestration.research_intents import parse_intent
-            if parse_intent(request.query, option.get('recipe_scope')) != proposal.research_intent.kind:
-                raise PlanningError('The requested spatial taxon or qualifiers are not a supported published question.', status='clarification_required', invoked=True)
-        if japanese(request.query) and proposal.route == 'published_exact':
-            from orchestration.research_intents import parse_intent
-            if parse_intent(request.query, option.get('recipe_scope')) != proposal.research_intent.kind:
-                raise PlanningError('この質問には未対応の条件があります。公表済みの質問と解析条件を選択してください。', status='clarification_required', invoked=True)
-        if pinned_analysis and option.get('workflows') and not compatible_analyses(request, catalog, proposal.research_intent.kind):
-            raise PlanningError('The selected analysis conflicts with the requested assignment method or workflow.', status='clarification_required', invoked=True)
+        from orchestration.publication_scope import publication_compatibility
+        compatibility = publication_compatibility(request.query, proposal.research_intent.kind, option,
+            protocol_id=proposal.research_intent.protocol_id, scope=scope)
+        if compatibility.outcome != 'compatible':
+            raise PlanningError(compatibility.reason, status='clarification_required', invoked=True,
+                                scope_compatibility=compatibility.as_dict())
         if not pinned_analysis:
             filters = scope['sources']['edna_metabarcoding']['filters']
             preferred = default_analysis(compatible_analyses(request, catalog, proposal.research_intent.kind, filters))
@@ -294,9 +290,6 @@ def _validate_constraints(proposal, request, catalog, *, retained_filters=False)
         expected_protocol, _ = protocol_choice(option, request)
         if expected_protocol != proposal.research_intent.protocol_id:
             raise PlanningError('The protocol does not match the selected or requested assay. Select a compatible protocol.', invoked=True)
-        top = re.search(r'\btop\s+(\d+)\b', request.query, re.I)
-        if top and proposal.research_intent.kind == 'fish_frequency' and int(top[1]) != 10:
-            raise PlanningError('This published workflow has a fixed top-ten panel. Select its supported scope.', invoked=True)
         if option['analysis_kind'] == 'provisional_demo' and not pinned_analysis:
             raise PlanningError('An unpublished provisional demo cannot be selected automatically.', invoked=True)
         if proposal.research_intent.protocol_id not in option['protocol_ids']:
@@ -317,7 +310,7 @@ def _validate_constraints(proposal, request, catalog, *, retained_filters=False)
         dataset = scope['sources']['remote_sensing']['filters'].get('dataset_id')
         if dataset not in datasets or selected != ['remote_sensing']:
             raise PlanningError('Select the available SST dataset alone to request exact coverage.', invoked=True)
-    return scope
+    return scope, compatibility
 
 
 def plan_settings(request):
@@ -454,7 +447,7 @@ Put every unsupported/unresolved constraint in unresolved_constraints. Never set
                     'research_intent': proposal.research_intent.model_copy(update={'protocol_id': protocol})})
                 defaults = choice_metadata(option, proposal.research_intent.kind, protocol, request, defaulted)
                 proposal = proposal.model_copy(update={'explanation': selection_explanation(defaults)})
-        scope = _validate_constraints(proposal, request, catalog, retained_filters=bool(exact))
+        scope, compatibility = _validate_constraints(proposal, request, catalog, retained_filters=bool(exact))
     except PlanningError as exc:
         exc.invoked = not bypass
         raise
@@ -470,6 +463,7 @@ Put every unsupported/unresolved constraint in unresolved_constraints. Never set
     metadata = {**proposal.model_dump(mode='json', exclude_none=True), 'status': 'applied',
                 'retained_user_pins': {family + '.' + field: value for (family, field), value in retained_pins.items()},
                 'resolved_calendar_range': calendar,
+                'scope_compatibility': compatibility.as_dict() if compatibility else None,
                 'catalogue_selection': defaults,
                 'planner_invoked': not bypass, 'planner_model': config.CHAT_PLANNER_MODEL if not bypass else None,
                 'deterministic_match': bypass,

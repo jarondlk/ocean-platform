@@ -12,6 +12,7 @@ from typing import Literal
 from ingestion.immutable_bundle import canonical_bytes
 from preprocessing.research_recipe import Hash, ResearchModel
 from orchestration.research_question import conference_question, japanese, publication_question_error
+from orchestration.publication_scope import publication_compatibility, scope_option_from_bundle
 
 
 class ResearchIntent(ResearchModel):
@@ -140,38 +141,7 @@ def check_scope(bundle, scope, kind):
             "source_disabled",
             "SST is unchecked. Enable remote sensing to request this temperature workflow. Source selections were retained.",
         )
-    samples = bundle["inputs"]["canonical"]["edna_sample"]
-    permitted = {
-        "assignment_method": recipe["assignment_method"],
-        "sample_kind": "environmental",
-        "is_control": False,
-        "time_from": recipe["time_from"],
-        "time_to": recipe["time_to"],
-    }
-    if bundle["manifest"].get("schema_version") == 3:
-        permitted.pop("sample_kind")
-        permitted.pop("is_control")
-    for key in ("provider", "provider_project_id", "provider_run_id"):
-        values = {sample.get(key) for sample in samples}
-        if len(values) == 1:
-            permitted[key] = next(iter(values))
-    edna = selections["edna_metabarcoding"]["filters"]
-    for key, value in edna.items():
-        if value is not None and (key not in permitted or value != permitted[key]):
-            return abstain(
-                "aggregate_scope_required",
-                f"The {key} filter differs from the published cohort. Select a matching analysis or explicitly clear the conflicting filter; no cohort was broadened.",
-            )
     if kind in SST_INTENTS:
-        for key, value in selections["remote_sensing"]["filters"].items():
-            if value is not None and (
-                (key == "dataset_id" and (bundle["manifest"].get("schema_version") != 3 or value != "mur-miyagi-2020-2023"))
-                or (key != "dataset_id" and (key not in {"time_from", "time_to"} or value != recipe[key]))
-            ):
-                return abstain(
-                    "aggregate_scope_required",
-                    f"The SST {key} filter differs from the immutable panel. Select a matching panel or explicitly clear the filter.",
-                )
         if not recipe.get("sst_panel_id"):
             return abstain(
                 "aggregate_unavailable",
@@ -262,29 +232,16 @@ def select_research(bundle, scope, query, intent: ResearchIntent):
     from ingestion.regional_publication import analysis_publication
     accepted = analysis_publication(bundle) if provisional else None
     kind = intent.kind
-    error = publication_question_error(query, kind, recipe)
-    if error:
-        return abstain('aggregate_scope_required', '質問の地域・年・順位が公表済み解析と一致しません。条件を確認してください。' if japanese(query) else error)
-    if kind in {"monthly_spatial", "spatial_temperature"}:
-        from ingestion.immutable_bundle import digest
-        from preprocessing.edna_analysis import taxon_key
-
-        matches = [
-            r
-            for r in bundle["inputs"]["canonical"]["edna_detection"]
-            if r.get("species") == "Sardinops melanostictus"
-            and taxon_key(r, "species") is not None
-            and digest(taxon_key(r, "species")) == recipe["spatial_taxon_key"]
-        ]
-        if not matches:
-            return abstain(
-                "aggregate_scope_required",
-                "この解析には種として同定されたマイワシ（Sardinops melanostictus）の根拠がありません。Sardinops 属の未同定種をマイワシに置き換えることはできません。検出地域も生物学的な不在も結論できません。"
-                if japanese(query) else
-                "This cohort has no species-resolved Sardinops melanostictus evidence. Unidentified Sardinops records cannot establish Japanese-sardine detections or absence. A genus-level analysis needs a separately labelled recipe; no taxon was substituted."
-                if provisional
-                else "This analysis does not establish Sardinops melanostictus as its spatial taxon. Select the reviewed sardine analysis; no taxon was substituted.",
-            )
+    compatibility = publication_compatibility(query, kind, scope_option_from_bundle(bundle),
+                                               protocol_id=intent.protocol_id, scope=scope)
+    if compatibility.outcome != 'compatible':
+        failure = abstain('aggregate_scope_required',
+                          'この条件は選択した公表済み解析では確認できません。設定を保持しました。条件を確認するか、一致する解析を選択してください。'
+                          if japanese(query) else compatibility.reason)
+        if kind in {'monthly_spatial', 'spatial_temperature'} and any(e.field == 'spatial_taxon' and e.outcome != 'compatible' for e in compatibility.evidence):
+            failure.answer = ('この解析には種として同定されたマイワシ（Sardinops melanostictus）の根拠がありません。未同定種を置き換えることはできません。' if japanese(query) else 'This analysis does not establish species-resolved Sardinops melanostictus evidence. No taxon was substituted.')
+        failure.diagnostics['scope_compatibility'] = compatibility.as_dict()
+        return failure
     failure = check_scope(bundle, scope, kind)
     if failure:
         if japanese(query):
@@ -577,6 +534,7 @@ def select_research(bundle, scope, query, intent: ResearchIntent):
         )
     diagnostics = {
         "research": True,
+        "scope_compatibility": compatibility.as_dict(),
         "backend": "immutable_research_bundle",
         "model_invoked": False,
         "top_k_applied": False,

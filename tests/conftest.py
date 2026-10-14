@@ -76,7 +76,7 @@ def sample_metagenome() -> pd.DataFrame:
 
 
 @pytest.fixture
-def sample_analysis_docs(tmp_data_dir: Path) -> Path:
+def sample_analysis_docs(tmp_data_dir: Path, monkeypatch) -> Path:
     """Create a temporary analysis_documents.jsonl file."""
     docs = [
         {"id": "analysis_trends", "analysis_type": "trend",
@@ -86,6 +86,7 @@ def sample_analysis_docs(tmp_data_dir: Path) -> Path:
          "title": "Taxa-environment correlations",
          "text": "Gyrodinium × temperature: ρ=−0.60, p=0.0001."},
     ]
+    docs = _reviewed_synthetic_context(docs, monkeypatch)
     path = tmp_data_dir / "analysis_documents.jsonl"
     with open(path, "w") as f:
         for d in docs:
@@ -94,7 +95,7 @@ def sample_analysis_docs(tmp_data_dir: Path) -> Path:
 
 
 @pytest.fixture
-def sample_reliability_docs(tmp_data_dir: Path) -> Path:
+def sample_reliability_docs(tmp_data_dir: Path, monkeypatch) -> Path:
     """Create a temporary reliability_documents.jsonl file."""
     docs = [
         {"id": "reliability_sst_ctd_validation", "analysis_type": "cross_source_validation",
@@ -104,8 +105,27 @@ def sample_reliability_docs(tmp_data_dir: Path) -> Path:
          "title": "Cross-source corroboration summary",
          "text": "207 observations: 37 verified, 20 supported, 150 standalone."},
     ]
+    docs = _reviewed_synthetic_context(docs, monkeypatch)
     path = tmp_data_dir / "reliability_documents.jsonl"
     with open(path, "w") as f:
         for d in docs:
             f.write(json.dumps(d) + "\n")
     return path
+
+
+def _reviewed_synthetic_context(documents, monkeypatch):
+    from preprocessing.derived_artifacts import CURRENT_METHODS, document_method, stamp_document, review_document
+    fixture_inputs = {"fixture://synthetic-context-input": "a" * 64}
+    monkeypatch.setattr("preprocessing.derived_artifacts.current_method_inputs", lambda method: fixture_inputs)
+    result = []
+    for document in documents:
+        method = document_method(document)
+        if method is None:
+            result.append(document)
+            continue
+        candidate = stamp_document(document, method, {"status": "computed", "method_version": CURRENT_METHODS[method],
+                                                     "inputs": fixture_inputs, "parameters": {"synthetic_fixture": True}})
+        decision = {"reviewer": "Synthetic fixture reviewer", "rationale": "Offline prompt-assembly fixture only; no scientific approval.",
+                    "references": ["fixture://context-tests"], "evidence_sha256": candidate["derived_artifact"]["generation_sha256"]}
+        result.append(review_document(candidate, decision))
+    return result

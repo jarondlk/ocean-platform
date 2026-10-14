@@ -10,13 +10,19 @@ ACCEPTANCE_MAP.md, components.json, PROMPTS.md and the handoff convention, all
 under docs/plans/ocean-v1. Inspect the actual checkout and selected component's
 prerequisite evidence. Never assume this chat is the only source of state.
 
+The user also authorized C01/C02 audit and repository delivery on 2026-10-14 JST.
+Read DELIVERY_AUDIT_2026-10-14.md and its final verification receipt for current
+source hashes; original component receipts remain historical after audit fixes.
+
 P00, the synthetic local UI/UX prototype, is accepted and Complete as of
-2026-10-14 JST. C01 is the recommended next backend component. Proceed component
+2026-10-14 JST. C01 scope validation is also Complete with a verified offline
+receipt. C02 derived-evidence software and synthetic acceptance are Complete;
+read handoffs/C02.md. C03 is the recommended next component. Proceed component
 by component with explicit user selection. The current plan revision does not itself authorize
 UI/backend implementation, tests, cloud provisioning, data transfer or deployment.
-P00 local application work and appropriate checks are authorized. Later
-component implementation remains unselected; planning/recovery inspection outside
-P00 is read-only unless documentation edits are requested.
+P00, C01 and C02 local application work and appropriate checks were authorized and
+are complete. C03–C27 implementation remains unselected; planning/recovery inspection outside
+the selected component is read-only unless documentation edits are requested.
 Do not create other chats or begin components merely because this hub exists.
 
 Preserve the fully isolated second-site architecture. Use explicit approved-data

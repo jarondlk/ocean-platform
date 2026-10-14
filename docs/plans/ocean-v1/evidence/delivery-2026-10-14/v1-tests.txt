@@ -1,0 +1,149 @@
+
+> ocean-v1-local-preview@1.0.0-preview.0 test
+> node --test --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tests/*.test.ts
+
+TAP version 13
+# Subtest: unrelated demo checks preserve unsaved settings while a committed save updates the draft
+ok 1 - unrelated demo checks preserve unsaved settings while a committed save updates the draft
+  ---
+  duration_ms: 2.883375
+  ...
+# Subtest: versioned local restore preserves admin workflows across reopening and refuses non-admin access
+ok 2 - versioned local restore preserves admin workflows across reopening and refuses non-admin access
+  ---
+  duration_ms: 0.920417
+  ...
+# Subtest: restore rejects unknown versions, corrupt records, invalid authority and sequence collisions
+ok 3 - restore rejects unknown versions, corrupt records, invalid authority and sequence collisions
+  ---
+  duration_ms: 0.471125
+  ...
+# Subtest: non-admin role cannot mutate or export admin preview records
+ok 4 - non-admin role cannot mutate or export admin preview records
+  ---
+  duration_ms: 0.2505
+  ...
+# Subtest: role and account type remain independent and the demo administrator cannot be locked out
+ok 5 - role and account type remain independent and the demo administrator cannot be locked out
+  ---
+  duration_ms: 0.147083
+  ...
+# Subtest: demo invitations require synthetic addresses, reject duplicates and can be revoked without sending
+ok 6 - demo invitations require synthetic addresses, reject duplicates and can be revoked without sending
+  ---
+  duration_ms: 0.262333
+  ...
+# Subtest: pause and capacity constrain local jobs, while running work can finish after a pause
+ok 7 - pause and capacity constrain local jobs, while running work can finish after a pause
+  ---
+  duration_ms: 0.32275
+  ...
+# Subtest: cancelling a simulation retains its snapshot and log, and terminal states cannot be advanced
+ok 8 - cancelling a simulation retains its snapshot and log, and terminal states cannot be advanced
+  ---
+  duration_ms: 0.11325
+  ...
+# Subtest: retention settings cannot remove retained fixture evidence or silently raise execution limits
+ok 9 - retention settings cannot remove retained fixture evidence or silently raise execution limits
+  ---
+  duration_ms: 0.749084
+  ...
+# Subtest: database inventory counts all local records and feedback triage records an audit without altering evidence
+ok 10 - database inventory counts all local records and feedback triage records an audit without altering evidence
+  ---
+  duration_ms: 0.39875
+  ...
+# Subtest: CSV exports identify synthetic scope, preserve all rows and escape spreadsheet formulas and quotes
+ok 11 - CSV exports identify synthetic scope, preserve all rows and escape spreadsheet formulas and quotes
+  ---
+  duration_ms: 0.171875
+  ...
+# Subtest: answer feedback updates one run, preserves another run, and requires negative detail
+ok 12 - answer feedback updates one run, preserves another run, and requires negative detail
+  ---
+  duration_ms: 0.400708
+  ...
+# Subtest: safe exports preserve negative numeric values, protect formulas, and retain units and complete rows
+ok 13 - safe exports preserve negative numeric values, protect formulas, and retain units and complete rows
+  ---
+  duration_ms: 0.200417
+  ...
+# Subtest: investigation and evidence exports retain frozen scope, identity and synthetic authority labels
+ok 14 - investigation and evidence exports retain frozen scope, identity and synthetic authority labels
+  ---
+  duration_ms: 0.490125
+  ...
+# Subtest: dedicated support/admin routes restore and first-round local state migrates without losing drafts
+ok 15 - dedicated support/admin routes restore and first-round local state migrates without losing drafts
+  ---
+  duration_ms: 0.677459
+  ...
+# Subtest: catalogue totals and membership remain complete across pages and languages
+ok 16 - catalogue totals and membership remain complete across pages and languages
+  ---
+  duration_ms: 8.881084
+  ...
+# Subtest: unknown, unavailable, revoked and zero inventory outcomes are distinct
+ok 17 - unknown, unavailable, revoked and zero inventory outcomes are distinct
+  ---
+  duration_ms: 0.075959
+  ...
+# Subtest: browsing has no context side effect, adding context does not restrict scope
+ok 18 - browsing has no context side effect, adding context does not restrict scope
+  ---
+  duration_ms: 0.192417
+  ...
+# Subtest: each run freezes context and snapshot, so later context changes affect only future runs
+ok 19 - each run freezes context and snapshot, so later context changes affect only future runs
+  ---
+  duration_ms: 0.428875
+  ...
+# Subtest: drafts and transcripts stay separate, including while opening an evidence deep link
+ok 20 - drafts and transcripts stay separate, including while opening an evidence deep link
+  ---
+  duration_ms: 0.709375
+  ...
+# Subtest: completed and partial runs produce one retained answer, even after repeated ticks
+ok 21 - completed and partial runs produce one retained answer, even after repeated ticks
+  ---
+  duration_ms: 0.322541
+  ...
+# Subtest: cancellation terminates the simulation and a continuation keeps the original scope and a new draft
+ok 22 - cancellation terminates the simulation and a continuation keeps the original scope and a new draft
+  ---
+  duration_ms: 0.198083
+  ...
+# Subtest: clarification and interruption retain the question and never fabricate a result
+ok 23 - clarification and interruption retain the question and never fabricate a result
+  ---
+  duration_ms: 0.151833
+  ...
+# Subtest: refresh creates an independent branch, flags withdrawn context and preserves old evidence
+ok 24 - refresh creates an independent branch, flags withdrawn context and preserves old evidence
+  ---
+  duration_ms: 0.366292
+  ...
+# Subtest: approval binds the reviewed proposal version and code edits invalidate it
+ok 25 - approval binds the reviewed proposal version and code edits invalidate it
+  ---
+  duration_ms: 1.107791
+  ...
+# Subtest: empty scope cannot produce fabricated matching datasets
+ok 26 - empty scope cannot produce fabricated matching datasets
+  ---
+  duration_ms: 0.184166
+  ...
+# Subtest: malformed or stale local state fails safely and navigation preserves catalogue state
+ok 27 - malformed or stale local state fails safely and navigation preserves catalogue state
+  ---
+  duration_ms: 0.306375
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 179.549833

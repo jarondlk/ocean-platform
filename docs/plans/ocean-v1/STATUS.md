@@ -1,12 +1,17 @@
 # Implementation status
 
-Updated: 2026-10-14 JST. **P00 is Complete; the user accepted the local UX direction.**
+Updated: 2026-10-14 JST. **P00, C01 and C02 are Complete locally.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
-P00 is selected; C01–C27 remain Not started. Only P00 local prototype work is
-authorized. See [the P00 handoff](handoffs/P00.md) for current evidence.
+P00 is accepted; C01 local validation was explicitly selected and completed on
+2026-10-14 JST.
+C02 was explicitly selected on 2026-10-14 JST and passed its software/synthetic
+checks. C03–C27 remain Not started. P00, C01 and C02 local work is authorized.
+See [P00](handoffs/P00.md), [C01](handoffs/C01.md) and [C02](handoffs/C02.md) handoffs for current evidence.
 
-Recommended next implementation: **C01 — Scientific scope validation**.
-P00 passed its local UX/user-review gate; C01 remains unselected and Not started. Later implementation requires the listed prerequisite evidence;
+Recommended next implementation: **C03 — Retention integrity**, after user selection.
+P00 passed its local UX/user-review gate; C01 passed its offline scope-validation
+checks. C02 passed its synthetic scientific-processing and eligibility checks.
+Real-data regeneration and review remain outstanding. Later implementation requires prerequisite evidence;
 any component can be planned now. Work stays on overhaul, with main and legacy
 production unchanged. See [site separation](SITE_SEPARATION.md) and
 [UI/UX brief](UI_UX_BRIEF.md).
@@ -14,8 +19,8 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | Component | State | Checkpoint | Validation | Handoff |
 |---|---|---|---|---|
 | [P00 — Local UI and UX prototype](components/P00-local-ui-prototype.md) | Complete | Accepted 2026-10-14; Pipeline & jobs omitted as requested | Typecheck, 27 tests and static build pass; scoped UX review plus final admin/keyboard checks; source and screenshots recorded | [P00](handoffs/P00.md) |
-| [C01 — Scientific scope validation](components/C01-scientific-scope.md) | Not started | None | Not run | Not created |
-| [C02 — Derived scientific evidence](components/C02-derived-scientific-evidence.md) | Not started | None | Not run | Not created |
+| [C01 — Scientific scope validation](components/C01-scientific-scope.md) | Complete | Shared scope contract; exact/synthesis/executor parity and saved receipts | 319 tests pass; Ruff and diff checks pass; [verified source receipt](evidence/C01/verification.json) | [C01](handoffs/C01.md) |
+| [C02 — Derived scientific evidence](components/C02-derived-scientific-evidence.md) | Complete | F02/F04/F05 fixed; frozen input receipts, review gate, retained history and supersession | Required suites and composite C01/consumer regressions pass; Ruff/diff pass; [receipt](evidence/C02/verification.json) | [C02](handoffs/C02.md) |
 | [C03 — Retention integrity](components/C03-retention-integrity.md) | Not started | None | Not run | Not created |
 | [C04 — Authentication responsiveness](components/C04-authentication-responsiveness.md) | Not started | None | Not run | Not created |
 | [C05 — Retrieval correctness](components/C05-retrieval-correctness.md) | Not started | None | Not run | Not created |
@@ -50,6 +55,11 @@ latest checkpoint, evidence and exact next action here and in the component's
 handoff. Add the handoff link only after that file exists. Keep the specification's
 status line aligned. Required checks that are unavailable remain visible gates;
 synthetic success does not imply scientific, cloud or release acceptance.
+
+The user authorized verification and branch delivery on 2026-10-14 JST.
+[The delivery audit](DELIVERY_AUDIT_2026-10-14.md) records two additional fixes,
+the clean candidate suite and current source hashes. Component acceptance receipts
+remain historical; no C03–C27 implementation or deployment is implied.
 
 P00 has passed only G8, the local UX direction gate. No code revision has passed
 the full v1 acceptance map. See [SETUP_RECEIPT.md](SETUP_RECEIPT.md)

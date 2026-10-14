@@ -1,6 +1,6 @@
 # C01 — Scientific scope validation
 
-**Status:** Not started. **Prerequisites:** P00. **Contract:** shared scientific scope v1.
+**Status:** Complete (local checks passed 2026-10-14 JST). **Prerequisites:** P00. **Contract:** shared scientific scope v1.
 
 ## Revised delivery boundary
 
@@ -41,3 +41,11 @@ Keep endpoint and saved-history compatibility. Reverting a validator must not re
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c01). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+## Completion receipt
+
+All three checkpoints are complete. The required suites, shared-contract matrix
+and publication regressions pass 319 tests at the [recorded source hashes](../evidence/C01/verification.json).
+See [C01 handoff](../handoffs/C01.md) for the typed contract, compatible question
+boundary, original red regressions, history/row compatibility and remaining
+v1 scientific/integration/release gates. No deployment or provider call occurred.

@@ -1,0 +1,29 @@
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+{
+  "finding_probes": {
+    "F02": {
+      "legacy_tier": "verified",
+      "legacy_n_checks": 3,
+      "corrected_tier": "standalone",
+      "corrected_passed_independent": 0,
+      "corrected_failed": 2
+    },
+    "F04": {
+      "legacy_constant_genus_rho": -0.869,
+      "legacy_p_value": 0.000242,
+      "legacy_significant": true,
+      "corrected_constant_genus_correlations": 0,
+      "corrected_measured_zero_count": 1
+    },
+    "F05": {
+      "legacy_40_9N_agrees": true,
+      "corrected_40_9N_status": "unavailable",
+      "corrected_40_9N_applicability": "not_applicable"
+    }
+  },
+  "artifact_count": 5,
+  "real_artifacts_unchanged": true
+}
