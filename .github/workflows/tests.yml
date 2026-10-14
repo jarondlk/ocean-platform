@@ -249,12 +249,22 @@ jobs:
           engine.dispose()
           PY
 
+      - name: Identify the job-owned PostgreSQL container address
+        id: c03-postgres-identity
+        env:
+          POSTGRES_TEST_CONTAINER_ID: ${{ job.services.postgres.id }}
+        run: |
+          container_address="$(docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$POSTGRES_TEST_CONTAINER_ID")"
+          python -c 'import ipaddress, sys; ipaddress.IPv4Address(sys.argv[1])' "$container_address"
+          printf 'address=%s\n' "$container_address" >> "$GITHUB_OUTPUT"
+
       - name: Verify C03 retention transaction ordering in isolated schemas
         env:
           AUTH_MODE: disabled
           DEPLOYMENT_ENV: test
           RUN_POSTGRES_INTEGRATION: "1"
           C03_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c03_retention_test
+          C03_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
         run: >-
           python -m pytest tests/integration/test_retention_concurrency_postgres.py
           -q -s --tb=short

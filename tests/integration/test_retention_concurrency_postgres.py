@@ -2,7 +2,9 @@
 
 These tests deliberately never read DATABASE_URL. Opt in with
 RUN_POSTGRES_INTEGRATION=1 and a verified loopback C03_TEST_DATABASE_URL whose
-database name starts with ocean_c03_. No schema is created before identity checks.
+database name starts with ocean_c03_. CI may pin the job-owned Docker bridge
+address explicitly; ordinary local runs still require a loopback server address.
+No schema is created before identity checks.
 SQL events coordinate transaction order; observed PostgreSQL lock waits establish
 the competing operation has actually reached its lock before a barrier is lifted.
 """
@@ -43,6 +45,31 @@ TABLES = [
 ]
 
 
+def allowed_disposable_server_address(address: str | None) -> bool:
+    """Accept loopback, or the exact job-owned CI container's private IPv4."""
+    try:
+        observed = ipaddress.ip_address(address or "")
+    except ValueError:
+        return False
+    if observed.is_loopback:
+        return True
+    expected = os.environ.get("C03_TEST_SERVER_ADDRESS")
+    if os.environ.get("GITHUB_ACTIONS") != "true" or not expected:
+        return False
+    try:
+        pinned = ipaddress.ip_address(expected)
+    except ValueError:
+        return False
+    # The workflow inspects its own service container. Never accept arbitrary
+    # private peers, public/link-local addresses or a non-loopback client URL.
+    private_networks = (
+        ipaddress.ip_network("10.0.0.0/8"),
+        ipaddress.ip_network("172.16.0.0/12"),
+        ipaddress.ip_network("192.168.0.0/16"),
+    )
+    return observed == pinned and any(observed in network for network in private_networks)
+
+
 @pytest.fixture(scope="module")
 def disposable_database():
     raw_url = os.environ.get("C03_TEST_DATABASE_URL")
@@ -64,7 +91,9 @@ def disposable_database():
                 "current_setting('transaction_isolation')"
             )).one()
             assert identity[0] == url.database
-            assert identity[1] and ipaddress.ip_address(identity[1]).is_loopback
+            assert allowed_disposable_server_address(identity[1]), (
+                "Server must be loopback or match the explicitly pinned job-owned CI container"
+            )
             assert identity[4] == "read committed"
         print(
             "C03 disposable PostgreSQL identity: "
