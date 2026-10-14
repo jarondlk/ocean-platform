@@ -1,70 +1,73 @@
 # Component map
 
-All components are **Not started**. This map describes future work; it does not
-start that work. Choose one component and one action from [PROMPTS.md](PROMPTS.md).
-Each specification contains smaller checkpoints so an interrupted component can
-resume without repeating completed work. [STATUS.md](STATUS.md) records actual
-progress; [components.json](components.json) contains the exact dependency graph.
+P00 is **In progress**; C01–C27 are **Not started**. The sequence is now P00 local UI/UX review,
+then the original C01–C27 backend/integration components. IDs C01–C27 are retained.
+This map does not authorize implementation. Read [SITE_SEPARATION.md](SITE_SEPARATION.md)
+and [UI_UX_BRIEF.md](UI_UX_BRIEF.md), then select one action in [PROMPTS.md](PROMPTS.md).
+[STATUS.md](STATUS.md) records progress; [components.json](components.json) is the
+exact dependency graph. There are 28 specifications including P00.
 
 | ID | Component | Required predecessors |
 |---|---|---|
-| C01 | [Scientific scope validation](components/C01-scientific-scope.md) | None |
+| P00 | [Local UI and UX prototype](components/P00-local-ui-prototype.md) | None |
+| C01 | [Scientific scope validation](components/C01-scientific-scope.md) | P00 |
 | C02 | [Derived scientific evidence](components/C02-derived-scientific-evidence.md) | C01 |
-| C03 | [Retention integrity](components/C03-retention-integrity.md) | None |
-| C04 | [Authentication responsiveness](components/C04-authentication-responsiveness.md) | None |
-| C05 | [Retrieval correctness](components/C05-retrieval-correctness.md) | None |
-| C06 | [Model runtime contract](components/C06-model-runtime.md) | None |
-| C07 | [Export safety](components/C07-export-safety.md) | None |
-| C08 | [Catalogue contracts and fixtures](components/C08-catalogue-contracts.md) | C01 |
+| C03 | [Retention integrity](components/C03-retention-integrity.md) | P00 |
+| C04 | [Authentication responsiveness](components/C04-authentication-responsiveness.md) | P00 |
+| C05 | [Retrieval correctness](components/C05-retrieval-correctness.md) | P00 |
+| C06 | [Model runtime contract](components/C06-model-runtime.md) | P00 |
+| C07 | [Export safety](components/C07-export-safety.md) | P00 |
+| C08 | [Catalogue contracts and fixtures](components/C08-catalogue-contracts.md) | P00, C01 |
 | C09 | [Immutable catalogue snapshots](components/C09-catalogue-snapshots.md) | C03, C08 |
 | C10 | [CTD and metagenome adapters](components/C10-ctd-metagenome-adapters.md) | C02, C09 |
 | C11 | [SST adapter](components/C11-sst-adapter.md) | C02, C09 |
 | C12 | [eDNA adapter](components/C12-edna-adapter.md) | C01, C09 |
 | C13 | [Analyses statistics metadata relationships](components/C13-scientific-catalogue-sections.md) | C01, C02, C10, C11, C12 |
 | C14 | [Catalogue service and tools](components/C14-catalogue-service-tools.md) | C04, C08, C09, C10, C11, C12, C13 |
-| C15 | [New application shell](components/C15-application-shell.md) | C08 |
-| C16 | [Complete catalogue browser](components/C16-catalogue-browser.md) | C14, C15 |
+| C15 | [New application shell](components/C15-application-shell.md) | P00, C08 |
+| C16 | [Complete catalogue browser](components/C16-catalogue-browser.md) | P00, C14, C15 |
 | C17 | [Investigation persistence](components/C17-investigation-persistence.md) | C03, C04, C08, C09 |
-| C18 | [Chat and Workspace interface](components/C18-chat-workspace.md) | C15, C16, C17 |
+| C18 | [Chat and Workspace interface](components/C18-chat-workspace.md) | P00, C15, C16, C17 |
 | C19 | [Agent exploration controller](components/C19-agent-controller.md) | C01, C06, C14, C17 |
 | C20 | [Durable research execution](components/C20-durable-execution.md) | C04, C17, C19 |
 | C21 | [Evidence and answer synthesis](components/C21-evidence-synthesis.md) | C05, C06, C07, C13, C19, C20 |
 | C22 | [Experiment proposals and frozen exports](components/C22-experiment-proposals.md) | C01, C07, C09, C17, C21 |
 | C23 | [Isolated Python execution](components/C23-python-sandbox.md) | C22 |
-| C24 | [Dedicated GCP worker configuration](components/C24-gcp-worker-configuration.md) | C20, C23 |
-| C25 | [Experimental Workspace interface](components/C25-experimental-workspace.md) | C18, C22, C23, C24 |
-| C26 | [System acceptance and evaluation](components/C26-system-acceptance.md) | All C01–C25 |
+| C24 | [Isolated GCP site and worker configuration](components/C24-gcp-worker-configuration.md) | C20, C23 |
+| C25 | [Experimental Workspace interface](components/C25-experimental-workspace.md) | P00, C18, C22, C23, C24 |
+| C26 | [System acceptance and evaluation](components/C26-system-acceptance.md) | P00 and all C01–C25 |
 | C27 | [Release preparation and rollback](components/C27-release-readiness.md) | C26 |
 
-## How to schedule
+## Delivery order
 
-C01 is the recommended first implementation when explicitly selected. C03–C07
-also have no component prerequisites, but that is eligibility, not permission to
-start them. Numerical order is a valid complete sequence; the dependency column
-permits other orders. Finish and verify prerequisites before dependent implementation.
-Planning a component is allowed before its prerequisites are implemented.
+P00 is the first implementation and is now accepted and Complete; see STATUS. It uses provisional typed synthetic
+fixtures and has no backend prerequisites. Review and refine the local interface
+with the user before completing its UX gate. Afterwards, C01 is the recommended
+first backend component; one C01–C27 component at a time remains the default.
+Planning any component can proceed before prerequisite implementation.
 
-The delivery groups below explain the design; they do not add dependency edges:
+- P00: runnable local UI, human-centered journeys and iterative user review.
+- C01–C07: scientific, integrity, runtime and export foundations for v1.
+- C08–C14: catalogue contracts, independent snapshots and four-source services.
+- C15–C18: integrate and harden the P00 frontend with catalogue/investigation APIs.
+- C19–C21: controller, durable execution and retained evidence; connect live UI actions.
+- C22–C25: approved experiments, isolation, separate-site configuration and UI integration.
+- C26–C27: integrated acceptance, isolation evidence and independent release/rollback preparation.
 
-- C01–C07: repair existing scientific, integrity, runtime and export risks.
-- C08–C14: define and expose the complete four-source catalogue.
-- C15–C18: build the application shell, complete browser and investigation UI.
-- C19–C21: browse, persist operations and synthesize retained evidence.
-- C22–C25: propose and approve experiments, isolate execution and expose results.
-- C26–C27: verify the system and prepare release/rollback.
-
-C18 initially uses persisted investigation contracts and fixtures. C20 supplies
-live run events, C21 supplies evidence, and C25 integrates experiment interactions.
-Their integration must be verified at C26; a shell preview alone is not product
-acceptance. C24 prepares infrastructure configuration; cloud application of it
-is a later explicit operation. C27 prepares a release, without deploying it.
+P00 does not complete C15/C16/C18/C25. Those components reuse its frontend-v1
+implementation, reconcile provisional contracts and prove real behavior. C20 owns
+live run transport; C21 owns evidence integration. C24 configures the whole isolated
+v1 site and worker offline. C27 prepares only that site's release; neither provisions
+or deploys. Legacy production remains in place throughout.
 
 ## Exact dependency graph
 
-An arrow points from a prerequisite to its dependent. All C01–C25 feed C26.
+Arrows point from prerequisite to dependent. P00 gates the entry components and
+is an explicit design handoff for catalogue contracts and UI integration.
 
 ```mermaid
 flowchart TD
+  P00["P00: Local UI and UX prototype"]
   C01["C01: Scientific scope validation"]
   C02["C02: Derived scientific evidence"]
   C03["C03: Retention integrity"]
@@ -88,32 +91,38 @@ flowchart TD
   C21["C21: Evidence and answer synthesis"]
   C22["C22: Experiment proposals and frozen exports"]
   C23["C23: Isolated Python execution"]
-  C24["C24: Dedicated GCP worker configuration"]
+  C24["C24: Isolated GCP site and worker configuration"]
   C25["C25: Experimental Workspace interface"]
   C26["C26: System acceptance and evaluation"]
   C27["C27: Release preparation and rollback"]
+  P00 --> C01
   C01 --> C02
-  C01 --> C08
+  P00 --> C03
+  P00 --> C04
+  P00 --> C05
+  P00 --> C06
+  P00 --> C07
+  P00 & C01 --> C08
   C03 & C08 --> C09
   C02 & C09 --> C10
   C02 & C09 --> C11
   C01 & C09 --> C12
   C01 & C02 & C10 & C11 & C12 --> C13
   C04 & C08 & C09 & C10 & C11 & C12 & C13 --> C14
-  C08 --> C15
-  C14 & C15 --> C16
+  P00 & C08 --> C15
+  P00 & C14 & C15 --> C16
   C03 & C04 & C08 & C09 --> C17
-  C15 & C16 & C17 --> C18
+  P00 & C15 & C16 & C17 --> C18
   C01 & C06 & C14 & C17 --> C19
   C04 & C17 & C19 --> C20
   C05 & C06 & C07 & C13 & C19 & C20 --> C21
   C01 & C07 & C09 & C17 & C21 --> C22
   C22 --> C23
   C20 & C23 --> C24
-  C18 & C22 & C23 & C24 --> C25
-  C01 & C02 & C03 & C04 & C05 & C06 & C07 & C08 & C09 & C10 & C11 & C12 & C13 & C14 & C15 & C16 & C17 & C18 & C19 & C20 & C21 & C22 & C23 & C24 & C25 --> C26
+  P00 & C18 & C22 & C23 & C24 --> C25
+  P00 & C01 & C02 & C03 & C04 & C05 & C06 & C07 & C08 & C09 & C10 & C11 & C12 & C13 & C14 & C15 & C16 & C17 & C18 & C19 & C20 & C21 & C22 & C23 & C24 & C25 --> C26
   C26 --> C27
 ```
 
-A completed specification is not a completed component. Acceptance evidence,
-compatibility checks and a usable handoff are required for implementation completion.
+A finished specification or prototype is not a completed integration component.
+Required acceptance, compatible behavior and a usable handoff remain necessary.

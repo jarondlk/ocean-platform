@@ -1,6 +1,14 @@
 # C07 — Export safety
 
-**Status:** Not started. **Prerequisites:** None. **Contract:** typed spreadsheet-safe CSV serialization.
+**Status:** Not started. **Prerequisites:** P00. **Contract:** typed spreadsheet-safe CSV serialization.
+
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
 
 ## Objective and boundaries
 
@@ -30,11 +38,6 @@ No data migration is required. Document apostrophe escaping as a CSV display/exp
 
 ## Exact prompts
 
-**Planning-only**
-> Review C07 without implementing. Read docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C07-export-safety.md and relevant handoffs; C07 has no prerequisites. Inspect current serializers and checkout, then report refinements only. Do not edit application code or begin implementation without an explicit implementation request.
-
-**Implementation**
-> Implement only C07. Read the planning README, MASTER_PLAN, DECISIONS, STATUS, this C07 specification and relevant handoffs under docs/plans/ocean-v1; no prerequisites apply. Verify the checkout and preserve unrelated work. Complete checkpoints, update STATUS.md and handoffs/C07.md after each, and run required tests before completion. Do not start another component, modify canonical data, publish, make cloud writes, provision, deploy or run paid model evaluation.
-
-**Resume**
-> Resume C07 only after reading docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C07-export-safety.md and handoffs/C07.md; no prerequisites apply. Reconcile current checkout and test evidence, then continue the next unfinished checkpoint. Preserve unrelated work, test changes and update status/handoff. Do not start another component, modify canonical data, publish, make cloud writes, provision, deploy or run paid model evaluation.
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c07). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

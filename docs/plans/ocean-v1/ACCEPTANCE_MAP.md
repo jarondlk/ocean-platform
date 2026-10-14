@@ -1,7 +1,8 @@
 # Requirements and acceptance ownership
 
-All checks below are **planned and not run**. Document validation in the setup
-receipt does not satisfy application acceptance. Component specifications define
+Real-service checks below are **planned and not run**. P00 local prototype
+checks are recorded in [its handoff](handoffs/P00.md); the user accepted the local
+UX direction on 2026-10-14 JST, satisfying P00/G8 only. Document validation in the setup receipt does not satisfy application acceptance. Component specifications define
 local checkpoints; C26 verifies their assembled behavior and C27 records release
 readiness. Use the exact dependencies in [COMPONENTS.md](COMPONENTS.md).
 
@@ -35,23 +36,28 @@ readiness. Use the exact dependencies in [COMPONENTS.md](COMPONENTS.md).
 | R24 | Real Linux/gVisor containment denies network, credentials, host files/sockets and package installation; whole-process-tree termination and resource/output limits are enforced. Mocks cannot prove this. | C23, C24 | G5 |
 | R25 | Reproducible experiments retain image/code/input identities, declared seeds, logs and validated outputs. Enforce 1 active/user and 2 globally; experimental labels persist in every surface/export. | C22–C25 | G5, G6 |
 | R26 | Light/dark, English/Japanese, keyboard and screen-reader operation, long labels, narrow layouts and useful error/empty/partial states work across all new surfaces. | C15, C16, C18, C25 | G6 |
-| R27 | Legacy endpoints, specialist deep links, exact workflows, provider options, history, feedback and citations retain behavior. Flags support rollback without deleting investigations/evidence. | C05, C06, C15, C17, C21, C27 | G7 |
+| R27 | Legacy endpoints/history/links remain on the unchanged legacy site. Reused code retains appropriate regressions; independent v1 flags/rollback preserve its investigations/evidence without shared sessions or automatic history import. | C05, C06, C15, C17, C21, C27 | G7, G9 |
 | R28 | Compare actual controller and legacy Chat with matched scope/permission/snapshot. Report numerical parity, factual errors, completion, latency, tool use, tokens and cost separately from citation validity. | C26 | G1, G3, G4 |
-| R29 | Release preparation has migration rehearsal, capability flags, documented restore/rollback triggers and explicit outstanding gates. Preparation does not provision or deploy. | C24, C27 | G7 |
+| R29 | Independent v1 release preparation has isolated-site/worker configuration, migration rehearsal, flags, rollback triggers and outstanding gates. Preparation neither provisions/deploys nor changes the main domain. | C24, C27 | G7, G9 |
 | R30 | Every component can resume from a file-based handoff with revision, completed checkpoints, validation and exact next action; no automatic advancement or fabricated completion. | All components; planning package | G0 |
+| R31 | P00 provides working synthetic local journeys, clear preview labels, recoverable actions and recorded user feedback/accepted UX direction before backend implementation. Prototype evidence cannot complete later integration components. | P00; C15, C16, C18, C20, C21, C25 integrate | G8, G6 |
+| R32 | V1 has independent serving, project/resource targets, database, storage, credentials, sessions and queues; no legacy runtime access, fallback or main-domain cutover. | C09, C17, C20, C24, C26, C27 | G9 |
+| R33 | Approved data enters through explicit one-way copies with authorization/eligibility checks, source/hash manifests, quarantine validation and origin provenance. Withdrawal handling is documented; no silent sync or account/history/credential copy. | C09–C13, C24, C26, C27 | G1, G2, G9 |
 
 ## Gate definitions and evidence
 
 | Gate | Required evidence | Owner and limits |
 |---|---|---|
-| G0 — Planning continuity | 27 specifications, acyclic dependencies, independent prompts, status ledger, handoff convention, retained mockup and valid document links. | This setup; validates documents only. |
+| G0 — Planning continuity | 28 specifications (P00 plus C01–C27), acyclic dependencies, 84 independent prompts, status ledger, handoff convention, retained mockup and valid document links. | This setup; validates documents only. |
 | G1 — Scientific correctness | Deterministic fixtures and independent expected results for scope, authority, matching, units, counts and numerical parity; zero critical scope/authority violations. | Components + C26. Any production artifact repair/rebuild is a separate authorized operation. |
 | G2 — Access and integrity | Cross-owner/role checks, revocation, retention races, export safety and approval tamper cases against actual paths. | Components + C26; local/disposable integration environment. |
 | G3 — Complete catalogue | Complete traversal and count reconciliation over all permitted canonical objects; 100,000-object fixture; later-page/rank-26 discovery; UI/agent parity and snapshot stability. | C08/C14/C16/C19 + C26. Record timing/memory; choose measured performance thresholds before claiming performance acceptance. |
 | G4 — Durable agent | Fake-provider failure/truncation and deterministic controller cases; transactional crash/retry/cancel/expiry tests; browser reload/resume through live application transport. | C19–C21 + C26. Local fake queue proves application invariants; actual Cloud Tasks integration remains a distinct deployment gate. |
 | G5 — Experiment execution | Hash-bound approval, concurrency races, real Linux/gVisor containment evidence, resource limits, safe artifact validation and repeatable numerical fixtures. | C22–C25 + C26. If compatible runtime is unavailable, retain the blocker; do not substitute host Python or mocked containment. |
 | G6 — Usable interface | Automated interactions and recorded manual keyboard, responsive, theme and bilingual checks across catalog, Chat/Workspace and approvals; runtime controls actually reach durable APIs. | C15/C16/C18/C25 + C26. The saved concept image is not UI acceptance. |
-| G7 — Compatibility and release | Legacy regression evidence, additive migration rehearsal against a disposable database, feature-flag rollback and preserved retained data; explicit live-environment checklist. | C26/C27. Release checklist must identify unrun cloud/live/provider checks. Actual deployment and production mutations need later authorization. |
+| G7 — Compatibility and release | Reused-code regressions, v1 migration rehearsal against a disposable database, independent v1 rollback and retained data; legacy site unchanged. | C26/C27. Unrun live checks remain explicit; no deployment or main-domain cutover implied. |
+| G8 — Local UX direction | Runnable frontend-v1 with synthetic journeys, honest preview states, responsive/keyboard/bilingual checks and recorded user feedback/acceptance of direction. | P00 only. A local prototype does not prove real backend, scientific, scale or deployment behavior. |
+| G9 — Independent site | Isolation matrix for project/resource/config/session/CI targets; no legacy fallback; synthetic approved-data transfer/provenance and withdrawal cases; separate live IAM/network checks. | C09/C17/C20/C24/C26/C27. Local isolation checks cannot establish live isolation. Real resources/transfers need later authorization. |
 
 For each result retain command/scenario, fixture version, code revision, runtime,
 expected versus observed behavior and failures/skips. A local mock, real sandbox,
@@ -85,5 +91,8 @@ ready to deploy**; that is not a v1 production acceptance claim.
 | D31 | C03, C04, C09, C14, C17, C20, C21, C22 |
 | D32, D33 | C08, C13, C22, C23, C25, C26 |
 | D34, D35 | README, COMPONENTS, STATUS, PROMPTS, handoffs, HUB_PROMPT, SETUP_RECEIPT |
+| D36 | SITE_SEPARATION, C09–C13, C17, C20, C24, C26, C27 |
+| D37 | P00, UI_UX_BRIEF, component dependencies, C08, C15, C16, C18, C25 |
+| D38 | P00, UI_UX_BRIEF, C15, C16, C18, C21, C25, C26 |
 
 No decision in this table is evidence that its implementation exists.

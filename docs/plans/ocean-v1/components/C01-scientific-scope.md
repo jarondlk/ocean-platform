@@ -1,6 +1,14 @@
 # C01 — Scientific scope validation
 
-**Status:** Not started. **Prerequisites:** None. **Contract:** shared scientific scope v1.
+**Status:** Not started. **Prerequisites:** P00. **Contract:** shared scientific scope v1.
+
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
 
 ## Objective and boundaries
 
@@ -30,11 +38,6 @@ Keep endpoint and saved-history compatibility. Reverting a validator must not re
 
 ## Exact prompts
 
-**Planning-only**
-> Review C01 without implementing. From the repository root read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C01-scientific-scope.md and relevant handoffs; C01 has no prerequisites. Inspect the current checkout and reconcile any drift. Report refinements only. Do not edit application code, run mutations or begin implementation without my explicit implementation request.
-
-**Implementation**
-> Implement only C01. Read docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C01-scientific-scope.md and relevant handoffs; there are no prerequisites. Verify the checkout, preserve unrelated work and follow the checkpoints. Update STATUS.md and handoffs/C01.md after each checkpoint. Run and record required tests before completion. Do not start another component, publish scientific outputs, make cloud writes, provision, deploy or run paid model evaluation.
-
-**Resume**
-> Resume C01 only. Read the planning README, MASTER_PLAN, DECISIONS, STATUS, this specification and docs/plans/ocean-v1/handoffs/C01.md; C01 has no prerequisites. Reconcile checkpoint claims with the current checkout and test evidence. Continue the first unfinished checkpoint, preserve unrelated work, and update status/handoff as work completes. Retest changes before completion. Do not start another component, publish, provision, deploy, make cloud writes or run paid model evaluation.
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c01). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

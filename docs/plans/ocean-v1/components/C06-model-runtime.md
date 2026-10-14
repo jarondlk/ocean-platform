@@ -1,6 +1,14 @@
 # C06 — Model runtime contract
 
-**Status:** Not started. **Prerequisites:** None. **Contract:** provider-independent generation result v1.
+**Status:** Not started. **Prerequisites:** P00. **Contract:** provider-independent generation result v1.
+
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
 
 ## Objective and boundaries
 
@@ -30,11 +38,6 @@ Keep model selection/configuration and existing string-call signatures. New cont
 
 ## Exact prompts
 
-**Planning-only**
-> Review C06 without implementing. Read docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C06-model-runtime.md and relevant handoffs; no prerequisites apply. Inspect current runtime consumers and the checkout, then report refinements only. Do not edit code, call live providers or begin implementation without an explicit implementation request.
-
-**Implementation**
-> Implement only C06. Read the planning README, MASTER_PLAN, DECISIONS, STATUS, this C06 specification and relevant handoffs under docs/plans/ocean-v1; no prerequisites apply. Verify the checkout and preserve unrelated work. Follow checkpoints, update STATUS.md and handoffs/C06.md after each, and run required mocked-provider tests before completion. Do not start another component, publish, make cloud writes, provision, deploy, call paid models or run paid model evaluation.
-
-**Resume**
-> Resume C06 only. Read docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C06-model-runtime.md and handoffs/C06.md; there are no prerequisites. Reconcile checkpoint claims with code and test evidence, then continue the next step. Preserve unrelated work, retest changes and update status/handoff. Do not start another component, publish, make cloud writes, provision, deploy, call paid models or run paid model evaluation.
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c06). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

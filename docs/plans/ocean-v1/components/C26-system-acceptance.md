@@ -1,6 +1,14 @@
 # C26 — System acceptance and evaluation
 
-**Status:** Not started. **Prerequisites:** every component C01–C25.
+**Status:** Not started. **Prerequisites:** P00, C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25.
+
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
 
 ## Objective and boundaries
 
@@ -13,6 +21,20 @@ Include integrated synthetic fixtures, regression checks, local failure/permissi
 Inspect [benchmark implementation](../../../../evaluation/benchmark.py), [evaluation tests](../../../../tests/test_evaluation.py), [research Chat tests](../../../../tests/test_research_chat.py), [CI checks](../../../../.github/workflows/tests.yml) and [frontend scripts](../../../../frontend/package.json). Existing metrics and checks provide a baseline; they do not already exercise catalogue-guided research.
 
 Compare legacy Chat and the new controller using identical question, permissions, scope, snapshot and provider configuration. Keep reference numerical answers independent of generated prose. Separate inventory accounting, numerical correctness, unsupported claims and task completion from citation validity. For future authorized live evaluation, retain provider/model versions, timings, tool calls, tokens and cost with the same input manifest; do not infer live quality from mocked responses.
+
+## Prototype, integration and independent-site evidence
+
+Retain P00's user-reviewed journeys, then repeat them through real v1 services.
+Prototype screenshots and simulated success cannot satisfy integrated acceptance.
+Use the actual frontend-v1 checks in addition to relevant legacy regressions.
+
+Add the full isolation matrix from SITE_SEPARATION: explicit v1 resource targets,
+independent database/storage/queues/credentials/sessions, no legacy runtime access
+or fallback, and rollback with no legacy change. Verify synthetic approved-data
+transfer manifests, rejected imports, provenance retention and the withdrawal
+procedure. Actual IAM/network isolation and real transfers remain separate gates.
+Legacy/new comparison uses isolated implementations with identical synthetic or
+separately authorized copied inputs, never unsolicited production traffic.
 
 ## Resumable checkpoints
 
@@ -39,10 +61,8 @@ Require deterministic numerical parity, complete inventory accounting and zero c
 
 Do not change default routing to make tests pass. Retain reproducible failure fixtures and the exact tested code/snapshot versions. Update [status](../STATUS.md) and `handoffs/C26.md` after each checkpoint with commands, results, blockers and gate ownership.
 
-## Copy-and-paste prompts
+## Exact prompts
 
-**Planning only:** “Review only C26 using docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C26-system-acceptance.md, all prerequisite handoffs C01–C25 and the checkout. Refine acceptance planning only; preserve unrelated work.”
-
-**Implementation:** “Implement only C26 acceptance fixtures and reporting. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C26-system-acceptance.md and all prerequisite handoffs C01–C25; reconcile the checkout. Run authorized local checks, update STATUS.md and handoffs/C26.md per checkpoint, and preserve unrelated work. No automatic advance, production access/mutation, provisioning, deployment or paid/live evaluations.”
-
-**Resume:** “Resume only C26 from docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C26-system-acceptance.md, handoffs/C26.md and all prerequisite handoffs C01–C25. Reconcile code/evidence, continue the unfinished checkpoint and update status/handoff. Preserve unrelated work; no automatic advance, production access/mutation, provisioning, deployment or paid/live evaluations.”
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c26). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

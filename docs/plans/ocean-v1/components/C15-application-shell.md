@@ -1,10 +1,18 @@
 # C15 — New application shell
 
-Status: **Not started**. Prerequisites: **C08**.
+**Status:** Not started. **Prerequisites:** P00, C08.
+
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
 
 ## Objective and boundaries
 
-Establish the major UI redesign around Research, Context Catalog and Tools. Provide consistent navigation and responsive layout foundations for the later catalogue and investigation experiences while retaining existing specialist workflows.
+Integrate and harden the P00 frontend-v1 shell around Research, Context Catalog and Tools. Reuse the user-reviewed navigation and layout, reconcile C08 contracts and add v1 runtime/permission boundaries. The legacy frontend and site remain intact.
 
 Include application navigation, permission-aware route groups, reusable split panels, tabs/drawers, typography, themes, localization and empty/loading/error shells. Exclude functional catalogue browsing, investigation persistence, agent execution, experiments and redesigning the internals of every specialist page.
 
@@ -12,34 +20,35 @@ Verified entry points: [application shell](../../../../frontend/components/AppSh
 
 ## Interfaces and decisions
 
-Primary destinations are Research, Context Catalog and Tools. Tools groups existing Data, Explore, Provenance and Evaluation access; Settings and Administration remain permission-controlled. Preserve existing deep links and legacy `/chat` during the transition. New destinations may initially show clear empty states until their owning components are available.
+Primary destinations are Research, Context Catalog and Tools. Tools groups relevant v1 Data, Explore, Provenance and Evaluation workflows; Settings and Administration remain permission-controlled. Legacy deep links remain on the legacy site. Do not share its session cookies or proxy requests to its APIs. New v1 destinations show clear unavailable states until their owning components are integrated.
 
 Retain OCEAN branding, restrained ocean-blue accents, light/dark themes and English/Japanese support. Define shared headers, scope/snapshot labels, status treatments and accessible panel controls. Desktop investigation layouts support navigation, conversation and Workspace; the catalogue layout supports tree, listing and inspector. Layout primitives accept content supplied by later components without duplicating domain state.
 
 At narrow widths, panels become tabs or drawers without hiding essential actions. Keyboard controls and visible focus are required for navigation, resizing and dismissal. Route changes must not accidentally reveal hidden destinations or erase future persisted investigation state. Store purely presentational preferences separately from scientific scope.
 
+## Prototype-to-service integration
+
+Read the P00 handoff and reuse frontend-v1; do not restart the UI from the static
+mockup. Keep the accepted UX and iterate on any contract-driven change. P00's
+synthetic interactions do not satisfy this component's real-service acceptance.
+Use the actual frontend-v1 scripts established in P00 and record runtime/browser
+checks against the appropriate v1 services. Existing frontend paths above are
+reference implementations, not the target for the new site.
+
 ## Resumable checkpoints
 
-1. **Map navigation and visual primitives.** Add route grouping, design tokens and reusable layout components. Acceptance: all existing permitted destinations remain reachable; restricted links remain absent; legacy deep links still work.
+1. **Reconcile and reuse P00.** Retain accepted route grouping, design tokens and layouts; bind them to C08 contracts and v1 permission/capability state. Acceptance: permitted v1 destinations remain reachable, restricted links remain absent, and no legacy session or API is needed.
 2. **Implement responsive shell.** Build desktop splits and narrow-screen transitions. Acceptance: keyboard operation works, panes remain readable, and Japanese text does not overflow essential controls in either theme.
-3. **Verify migration behavior.** Acceptance: feature flag restores the existing navigation; loading/error/empty states are explicit; shared components accept catalogue and research fixtures without embedding fake scientific behavior.
+3. **Verify independent runtime behavior.** Acceptance: v1 capability flags expose honest loading/error/unavailable states; fixture mode cannot silently serve production; rollback affects only the v1 shell and preserves v1 data.
 
 ## Validation, compatibility and handoff
 
-Existing commands: `npm --prefix frontend run typecheck`, `npm --prefix frontend test`, and `npm --prefix frontend run build`. New shell interaction tests and manual viewport/accessibility checks are planned during implementation; document viewports, themes and locales tested. Existing automated tests do not by themselves prove keyboard or screen-reader behavior.
+Planned commands, after P00 establishes these scripts: `npm --prefix frontend-v1 run typecheck`, `npm --prefix frontend-v1 test`, and `npm --prefix frontend-v1 run build`. New shell interaction tests and manual viewport/accessibility checks are planned during implementation; document viewports, themes and locales tested. Existing automated tests do not by themselves prove keyboard or screen-reader behavior.
 
-Use a feature flag for navigation rollout and preserve legacy routes. Rollback switches the shell without modifying application data. Record component interfaces, navigation mapping, visual references and verification evidence in `handoffs/C15.md`; update `STATUS.md` after each checkpoint.
+Use independent v1 capability flags. Rollback switches a compatible v1 shell without modifying application data or legacy routing. Record component interfaces, navigation mapping, visual references and verification evidence in `handoffs/C15.md`; update `STATUS.md` after each checkpoint.
 
-## Copy-and-paste prompts
+## Exact prompts
 
-**Planning-only**
-
-> Review C15 only. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, this specification, mockups and C08 handoff. Reconcile with the actual checkout. Refine the plan; do not implement application changes.
-
-**Implementation**
-
-> Implement explicitly requested component C15 only. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, this specification, mockups and C08 handoff; verify prerequisites in the actual checkout. Complete its checkpoints and checks, preserving unrelated changes. Update STATUS.md and handoffs/C15.md throughout. Do not start another component, make cloud writes or paid calls, or publish production data.
-
-**Resume**
-
-> Resume C15 only. Read the planning README, MASTER_PLAN, DECISIONS, STATUS, this specification, prerequisite handoff and handoffs/C15.md. Reconcile progress with the actual checkout and evidence. Continue the first unfinished checkpoint; update STATUS.md and handoffs/C15.md. Do not repeat completed work, start another component, make cloud writes or paid calls, or publish production data.
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c15). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

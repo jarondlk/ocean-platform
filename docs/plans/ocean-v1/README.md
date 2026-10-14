@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**Planning package; application implementation is not authorized or started.**
+**P00 is accepted and Complete. C01–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -13,12 +13,18 @@ component prompts and resumable progress. Start here in a fresh chat.
    [PROMPTS.md](PROMPTS.md). Planning is the default until the user explicitly
    selects implementation.
 
-**Recommended first later implementation:** C01 — Scientific scope validation.
-It addresses incompatible geography/taxon selection before broader agent access.
-Do not begin it merely because this folder or hub chat exists.
+**Completed:** P00 — Local UI and UX prototype, accepted on 2026-10-14 JST.
+The Pipeline & jobs page is omitted as requested. Read [its handoff](handoffs/P00.md)
+for the accepted direction and verified source receipt. C01 is the recommended
+first backend component; later components require separate selection.
 
-Use one component at a time, numerically by default. Dependencies, not the
-number alone, determine readiness. Each component has smaller checkpoints:
+The new site is fully isolated from the legacy production site. Read
+[SITE_SEPARATION.md](SITE_SEPARATION.md) and [UI_UX_BRIEF.md](UI_UX_BRIEF.md).
+All work continues on overhaul; main and the legacy deployment remain unchanged.
+
+Use P00 first, then one C01–C27 component at a time, numerically by default.
+Dependencies, not the number alone, determine readiness. Each component has
+smaller checkpoints:
 finishing one checkpoint and recording a useful handoff is valid partial
 progress. New chats do not increase account usage limits; the purpose here is
 recoverable, bounded work when a session is interrupted.
@@ -29,6 +35,8 @@ recoverable, bounded work when a session is interrupted.
 |---|---|
 | [Master plan](MASTER_PLAN.md) | Full product, scientific, architecture and UI design |
 | [Decisions](DECISIONS.md) | User selections, accepted defaults and exclusions |
+| [Site separation](SITE_SEPARATION.md) | Independent infrastructure, approved-data copies and legacy preservation |
+| [UI/UX brief](UI_UX_BRIEF.md) | Local prototype journeys, human-centered interactions and review loop |
 | [Components](COMPONENTS.md) | Component map and exact dependency graph |
 | [Status](STATUS.md) | Actual work state, checks and next eligible work |
 | [Prompts](PROMPTS.md) | Independent planning, implementation and resume prompts |
@@ -36,7 +44,7 @@ recoverable, bounded work when a session is interrupted.
 | [Scalability review](SCALABILITY_REVIEW.md) | Data, analysis and user growth assessment; proposed capacity refinements |
 | [Handoffs](handoffs/README.md) | Checkpoints, evidence and resumption |
 | [UI concept](mockups/README.md) | Retained image and interaction interpretation |
-| [Hub instructions](HUB_PROMPT.md) | Instruction used for the separate planning chat |
+| [Hub instructions](HUB_PROMPT.md) | Current planning/recovery instructions for the hub |
 | [Setup receipt](SETUP_RECEIPT.md) | Planning-only preparation evidence and baseline |
 
 The JSON [component manifest](components.json) is an index for IDs, filenames,
@@ -59,6 +67,9 @@ Update the manifest, index, prompts and status together if a component changes.
   are implied. C24/C27 prepare configuration/runbooks only.
 - Do not commit, merge or create a PR merely as a consequence of this planning
   setup. Follow the user's later instructions for repository delivery.
+- P00 proves the local UX direction only; it cannot complete C15/C16/C18/C25 or
+  satisfy scientific, backend, isolation or deployment gates. Reuse its frontend
+  through staged real-service integration.
 - A missing prerequisite blocks dependent implementation, not planning.
   Report the exact missing evidence; do not silently implement that prerequisite.
 
@@ -82,8 +93,9 @@ them during planning. Python commands assume the repository environment is
 active: `source .venv/bin/activate` from the repository root. The current shell
 has `python3` but no global `python`. If `.venv` is absent or stale, follow the
 repository's documented locked dependency setup before testing; do not invent
-successful results or silently substitute another environment. Frontend commands
-use the scripts in `frontend/package.json`. Record the actual interpreter,
+successful results or silently substitute another environment. V1 frontend commands use the actual scripts created in frontend-v1 during P00.
+The existing frontend/package.json remains a legacy reference and regression
+boundary; its checks do not validate the new frontend. Record the actual interpreter,
 dependency state and any unavailable integration environment in the handoff.
 
 ## Baseline and scope
@@ -92,4 +104,7 @@ Design began on 2026-10-12 JST; planning package prepared on 2026-10-13 JST from
 a73ea7fa48b88fe91995fda0cc25e481e63a9355. This is a discovery baseline,
 not a requirement to reset future work to this commit.
 Existing unrelated README, audit and benchmark modifications are preserved.
-Application status remains [Not started](STATUS.md) for every C01–C27.
+P00 progress is recorded in [STATUS.md](STATUS.md) and [its handoff](handoffs/P00.md).
+Every C01–C27 remains Not started.
+The 2026-10-13 revision adds P00 before the original 27 numbered components; the
+setup receipt retains its historical counts and records this amendment.

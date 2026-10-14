@@ -1,6 +1,14 @@
 # C05 — Retrieval correctness
 
-**Status:** Not started. **Prerequisites:** None. **Contract:** embedding identity and source-field mapping.
+**Status:** Not started. **Prerequisites:** P00. **Contract:** embedding identity and source-field mapping.
+
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
 
 ## Objective and boundaries
 
@@ -30,11 +38,6 @@ Preserve retrieval response shape and historical documents. Keep old objects tra
 
 ## Exact prompts
 
-**Planning-only**
-> Review C05 only, without implementation. Read docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C05-retrieval-correctness.md and relevant handoffs; no prerequisites apply. Inspect the checkout and actual producers/consumers. Report refinements without code edits, reindexing or beginning implementation without an explicit implementation request.
-
-**Implementation**
-> Implement only C05. Read the planning README, MASTER_PLAN, DECISIONS, STATUS, this C05 specification and relevant handoffs under docs/plans/ocean-v1; no prerequisites apply. Verify the checkout, preserve unrelated work and complete checkpoints. Update STATUS.md and handoffs/C05.md after each; run required tests before completion. Use synthetic local rebuilds only. Do not start another component, reindex production, publish, make cloud writes, provision, deploy or run paid model evaluation.
-
-**Resume**
-> Resume C05 only after reading docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C05-retrieval-correctness.md and handoffs/C05.md; there are no prerequisites. Reconcile checkout/test evidence and continue the next unfinished checkpoint. Preserve unrelated work, test changes and update status/handoff. Keep live rebuilds pending. Do not start another component, publish, provision, deploy, make cloud writes or run paid model evaluation.
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c05). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

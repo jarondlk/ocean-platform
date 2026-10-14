@@ -2,6 +2,14 @@
 
 **Status:** Not started. **Prerequisites:** C04, C17, C19.
 
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
+
 ## Objective and boundaries
 
 Make investigations survive browser reloads, process interruption and repeated queue delivery without losing observations or duplicating completed steps. This component implements application-side durability and dispatch contracts, not cloud provisioning or experimental workers.
@@ -23,6 +31,14 @@ same documented contract and enable it when both capabilities are present.
 Production controls remain unavailable until a real transport is configured.
 C26 verifies reload, reconnect and all six actions through the assembled Chat UI.
 
+## Independent service and frontend targets
+
+The controller, task queue, outbox, secrets and run state use v1 resources only.
+Connect the concrete transport to frontend-v1 using P00's reviewed interaction
+states and C18's integration contract. Do not proxy to legacy /chat or use its
+credentials as a fallback. Keep fixture execution visibly local; unconfigured
+v1 execution reports unavailable. Ownership/session checks use v1 identities.
+
 ## Resumable checkpoints
 
 1. Add additive run/event/outbox persistence and owner-scoped APIs using C17 models; document transaction and transition invariants.
@@ -39,10 +55,8 @@ Acceptance requires identical snapshot/context after redelivery, no duplicate co
 
 Keep migrations additive and preserve legacy `/chat` and history. Disabling dispatch stops new work without deleting runs; checkpoint state enables later resumption. Write `handoffs/C20.md` and [status](../STATUS.md) after each checkpoint with migration IDs, transition behavior, tests and recovery limitations.
 
-## Copy-and-paste prompts
+## Exact prompts
 
-**Planning only:** “Review only C20 using docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C20-durable-execution.md, prerequisite handoffs C04/C17/C19 and the current checkout. Refine documentation only; preserve unrelated work and report open decisions.”
-
-**Implementation:** “Implement only C20. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C20-durable-execution.md and prerequisite handoffs C04/C17/C19; reconcile the checkout before editing. Complete checkpoints and local verification, updating STATUS.md and handoffs/C20.md throughout. Preserve unrelated work. Do not advance components, provision cloud resources, deploy or run paid/live evaluations.”
-
-**Resume:** “Resume only C20 from docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C20-durable-execution.md, handoffs/C20.md and prerequisite handoffs C04/C17/C19. Reconcile actual code and test evidence; continue the next unfinished checkpoint and update status/handoff. Preserve unrelated work; no automatic advance, provisioning, deployment or paid/live evaluations.”
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c20). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

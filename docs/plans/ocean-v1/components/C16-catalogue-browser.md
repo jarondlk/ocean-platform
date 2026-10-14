@@ -1,6 +1,14 @@
 # C16 — Complete catalogue browser
 
-Status: **Not started**. Prerequisites: **C14, C15**.
+**Status:** Not started. **Prerequisites:** P00, C14, C15.
+
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
 
 ## Objective and boundaries
 
@@ -18,6 +26,15 @@ Use C14 responses directly for membership, totals and completeness; do not indep
 
 Lazy tree loading and pagination are permitted, but every authorized descendant must remain reachable. Browser Back/Forward and reload restore selected snapshot, node, filters and inspector section. The standalone view defaults to latest eligible data; embedded use receives the investigation snapshot. Browsing never attaches data, pins constraints or refreshes an investigation. Emit an explicit selection event for C18 to handle.
 
+## Prototype-to-service integration
+
+Read the P00 handoff and reuse frontend-v1; do not restart the UI from the static
+mockup. Keep the accepted UX and iterate on any contract-driven change. P00's
+synthetic interactions do not satisfy this component's real-service acceptance.
+Use the actual frontend-v1 scripts established in P00 and record runtime/browser
+checks against the appropriate v1 services. Existing frontend paths above are
+reference implementations, not the target for the new site.
+
 ## Resumable checkpoints
 
 1. **Build canonical navigation.** Wire roots, child listings, breadcrumbs and inspector to C14. Acceptance: every node in a fixture can be opened directly and through its parent; cross-links retain identity; totals match tool responses.
@@ -26,20 +43,12 @@ Lazy tree loading and pagination are permitted, but every authorized descendant 
 
 ## Validation, compatibility and handoff
 
-Existing commands: `npm --prefix frontend run typecheck`, `npm --prefix frontend test`, and `npm --prefix frontend run build`. Planned new browser interaction tests cover navigation, paging, server totals, snapshot URLs and errors. Perform manual keyboard, screen-reader and mobile checks; record evidence rather than claiming automation proves them.
+Planned commands, after P00 establishes these scripts: `npm --prefix frontend-v1 run typecheck`, `npm --prefix frontend-v1 test`, and `npm --prefix frontend-v1 run build`. Planned new browser interaction tests cover navigation, paging, server totals, snapshot URLs and errors. Perform manual keyboard, screen-reader and mobile checks; record evidence rather than claiming automation proves them.
 
-Keep specialist pages and legacy links accessible. Rollback disables the new browser route without affecting snapshots or saved evidence. Save reachability results, UI/tool parity, accessibility observations and selection-event contract in `handoffs/C16.md`; update `STATUS.md` per checkpoint.
+Keep relevant v1 specialist workflows accessible; legacy links remain on the existing site. Rollback disables the v1 browser route without affecting snapshots or saved evidence. Save reachability results, UI/tool parity, accessibility observations and selection-event contract in `handoffs/C16.md`; update `STATUS.md` per checkpoint.
 
-## Copy-and-paste prompts
+## Exact prompts
 
-**Planning-only**
-
-> Review C16 only. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, this specification, mockups and C14/C15 handoffs. Reconcile with the actual checkout. Refine the plan; do not implement application changes.
-
-**Implementation**
-
-> Implement explicitly requested component C16 only. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, this specification and C14/C15 handoffs; verify prerequisites in the actual checkout. Complete its checkpoints and checks, preserving unrelated changes. Update STATUS.md and handoffs/C16.md throughout. Do not start another component, make cloud writes or paid calls, or publish production data.
-
-**Resume**
-
-> Resume C16 only. Read the planning README, MASTER_PLAN, DECISIONS, STATUS, this specification, prerequisite handoffs and handoffs/C16.md. Reconcile progress with the actual checkout and evidence. Continue the first unfinished checkpoint; update STATUS.md and handoffs/C16.md. Do not repeat completed work, start another component, make cloud writes or paid calls, or publish production data.
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c16). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

@@ -1,12 +1,20 @@
-# C24 — Dedicated GCP worker configuration
+# C24 — Isolated GCP site and worker configuration
 
 **Status:** Not started. **Prerequisites:** C20, C23.
 
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
+
 ## Objective and boundaries
 
-Prepare reviewable infrastructure configuration for a dedicated Linux/gVisor experimental worker and its connection to durable research dispatch. Completion means configuration and local validation are ready for an operator; it does not mean any cloud resource exists or has passed live acceptance.
+Prepare reviewable infrastructure configuration for the fully isolated second v1 site, including frontend/API/controller, data stores, identity, queues and a dedicated Linux/gVisor experimental worker. Completion means configuration and local validation are ready for an operator; it does not mean any cloud resource exists or has passed live acceptance.
 
-Include infrastructure code/templates, identity and storage access design, private dispatch, runtime configuration, failure recovery, observability and an operator runbook. Exclude provisioning, IAM changes, paid image/cloud builds, secret creation, remote installation, live dispatch and deployment. Existing project resources, budgets and historical approvals do not authorize these activities.
+Include independent v1 infrastructure code/templates, database/bucket boundaries, identity/OAuth/session separation, queues, serving/worker targets, private dispatch, runtime configuration, failure recovery, observability and an operator runbook. Exclude provisioning, IAM changes, paid image/cloud builds, secret creation, remote installation, live dispatch and deployment. Existing project resources, budgets and historical approvals do not authorize these activities.
 
 ## Verified entry points and contracts
 
@@ -16,9 +24,23 @@ Keep the C20 Cloud Run controller/Cloud Tasks boundary separate from the dedicat
 
 Configure enforcement of two CPUs, 4 GiB, ten minutes, 256 MiB inputs and 50 MiB outputs per sandbox, with one active job per user and two globally through C22 reservations. Host capacity must account for supervisor overhead and two simultaneous sandboxes; document the capacity requirement without claiming an unverified price or provisioning a machine. Specify private authenticated dispatch, lease recovery, health reporting, bounded logs and shutdown/drain behavior.
 
+## Whole-site isolation configuration
+
+Prepare templates in a distinct deploy/gcp-v1 area, with explicit v1 project,
+service, storage, database, OAuth/cookie, secret and queue targets. Never inherit
+legacy environment files or insert legacy resource identifiers as defaults.
+Document separate capacity, budget, backup/retention, deployment and rollback
+inputs. A missing v1 target fails closed. No v1 runtime identity receives legacy
+resource access; a later approved transfer uses a separate temporary identity.
+
+Offline acceptance must reject legacy targets and accidental shared sessions or
+mutable stores, and identify inherited IAM review and real network checks still
+pending. No templates are applied here. The older deployment references are
+patterns to inspect, not infrastructure to update or replay.
+
 ## Resumable checkpoints
 
-1. Describe resource boundaries, supervisor/sandbox identities, storage paths, authenticated dispatch and required capacity using C20/C23 contracts. Record required operator inputs rather than inserting secrets.
+1. Describe the separate v1 site/project, database, buckets, identities/sessions, queues, frontend/API/controller and worker boundaries using SITE_SEPARATION and C20/C23 contracts. Record capacity/budget/operator inputs rather than secrets or legacy defaults.
 2. Add infrastructure templates and local render/schema validation with synthetic project values. Ensure render and test paths cannot apply resources or invoke live APIs.
 3. Prepare operator preflight, rollout, drain, failure-recovery and rollback instructions. Clearly separate dry checks from pending cloud/network/containment acceptance and required authorization.
 
@@ -32,10 +54,8 @@ Acceptance for this component is validated code/configuration plus an explicit l
 
 Keep current ingestion/publication jobs untouched. Document worker drain and dispatch-disable rollback without deleting approved inputs or results. Update [status](../STATUS.md) and `handoffs/C24.md` after each checkpoint with generated configuration, validation, operator inputs and pending live gates.
 
-## Copy-and-paste prompts
+## Exact prompts
 
-**Planning only:** “Review only C24 using docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C24-gcp-worker-configuration.md, prerequisite handoffs C20/C23 and the checkout. Refine documentation only; preserve unrelated work.”
-
-**Implementation:** “Implement only C24 infrastructure code and offline validation. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C24-gcp-worker-configuration.md and prerequisite handoffs C20/C23; reconcile the checkout. Follow checkpoints, update STATUS.md and handoffs/C24.md, and preserve unrelated work. No automatic advance, provisioning, IAM/secret changes, paid builds, live experiments or deployment.”
-
-**Resume:** “Resume only C24 from docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C24-gcp-worker-configuration.md, handoffs/C24.md and prerequisite handoffs C20/C23. Reconcile checkout and evidence, continue the unfinished offline checkpoint and update status/handoff. Preserve unrelated work; no automatic advance, cloud changes, paid builds, live experiments or deployment.”
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c24). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

@@ -2,6 +2,14 @@
 
 **Status:** Not started. **Prerequisites:** C01. **Contract:** versioned derived-method eligibility.
 
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
+
 ## Objective and boundaries
 
 Repair the three distinct scientific-processing findings before derived outputs enter the new catalogue. Correct execution does not establish scientific approval. Existing affected artifacts must remain identifiable and ineligible for scientific corroboration until regeneration and the established eligibility process succeed.
@@ -31,11 +39,6 @@ Preserve old receipt interpretation and distinguish legacy method versions. Roll
 
 ## Exact prompts
 
-**Planning-only**
-> Review C02 without implementation. Read docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C02-derived-scientific-evidence.md and handoffs/C01.md plus any C02 handoff. Inspect the checkout and prerequisite evidence. Report planning changes only; do not edit application code, regenerate real data or begin implementation without an explicit implementation request.
-
-**Implementation**
-> Implement only C02. Read docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, this C02 specification and C01/C02 handoffs. Verify C01 and the checkout; preserve unrelated work. Complete bounded checkpoints, updating STATUS.md and handoffs/C02.md after each. Run required tests before completion. Only synthetic local regeneration is allowed. Do not fabricate scientific approval, start another component, publish, make cloud writes, provision, deploy or run paid model evaluation.
-
-**Resume**
-> Resume C02 only after reading the planning README, MASTER_PLAN, DECISIONS, STATUS, components/C02-derived-scientific-evidence.md and handoffs/C01.md and C02.md under docs/plans/ocean-v1. Reconcile the checkout and tests with the handoff, then finish the next checkpoint. Preserve unrelated work; update status/handoff and test before completion. Keep real-data regeneration pending. Do not publish, fabricate approval, start another component, make cloud writes, provision, deploy or run paid model evaluation.
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c02). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

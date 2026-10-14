@@ -2,6 +2,14 @@
 
 **Status:** Not started. **Prerequisites:** C01, C06, C14, C17.
 
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
+
 ## Objective and boundaries
 
 Give the agent a complete inventory and validated operations before selecting detailed evidence. The observable result is a snapshot-bound investigation that can answer a whole-dataset count or locate an item outside legacy top-25 retrieval, and explain any unfinished coverage.
@@ -32,10 +40,8 @@ Acceptance covers rank-26 and later-page discovery, exact counts independent of 
 
 Gate the controller independently of legacy `/chat`. Disabling it preserves investigations and observations. Update [status](../STATUS.md) and `handoffs/C19.md` after each checkpoint with code location, contracts, executed checks and the next unfinished step.
 
-## Copy-and-paste prompts
+## Exact prompts
 
-**Planning only:** “Review C19 using docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C19-agent-controller.md, prerequisite handoffs C01/C06/C14/C17 and the current checkout. Refine this component's plan only; do not implement. Preserve unrelated work and record unresolved decisions.”
-
-**Implementation:** “Implement only C19. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C19-agent-controller.md and prerequisite handoffs C01/C06/C14/C17; reconcile them with the current checkout. Follow checkpoints, run required local checks, update STATUS.md and handoffs/C19.md after each checkpoint, and preserve unrelated work. Do not advance components, provision, deploy or run paid/live evaluations.”
-
-**Resume:** “Resume only C19 using docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C19-agent-controller.md, handoffs/C19.md and prerequisite handoffs C01/C06/C14/C17. Reconcile the checkout and evidence, continue the first unfinished checkpoint, and update status/handoff. Preserve unrelated work; no automatic advance, provisioning, deployment or paid/live evaluations.”
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c19). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

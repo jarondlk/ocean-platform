@@ -1,13 +1,21 @@
 {
   "schema_version": 1,
   "release": "1.0.0",
-  "implementation_authorized": false,
+  "implementation_authorized": true,
   "components": [
+    {
+      "id": "P00",
+      "title": "Local UI and UX prototype",
+      "file": "components/P00-local-ui-prototype.md",
+      "dependencies": []
+    },
     {
       "id": "C01",
       "title": "Scientific scope validation",
       "file": "components/C01-scientific-scope.md",
-      "dependencies": []
+      "dependencies": [
+        "P00"
+      ]
     },
     {
       "id": "C02",
@@ -21,37 +29,48 @@
       "id": "C03",
       "title": "Retention integrity",
       "file": "components/C03-retention-integrity.md",
-      "dependencies": []
+      "dependencies": [
+        "P00"
+      ]
     },
     {
       "id": "C04",
       "title": "Authentication responsiveness",
       "file": "components/C04-authentication-responsiveness.md",
-      "dependencies": []
+      "dependencies": [
+        "P00"
+      ]
     },
     {
       "id": "C05",
       "title": "Retrieval correctness",
       "file": "components/C05-retrieval-correctness.md",
-      "dependencies": []
+      "dependencies": [
+        "P00"
+      ]
     },
     {
       "id": "C06",
       "title": "Model runtime contract",
       "file": "components/C06-model-runtime.md",
-      "dependencies": []
+      "dependencies": [
+        "P00"
+      ]
     },
     {
       "id": "C07",
       "title": "Export safety",
       "file": "components/C07-export-safety.md",
-      "dependencies": []
+      "dependencies": [
+        "P00"
+      ]
     },
     {
       "id": "C08",
       "title": "Catalogue contracts and fixtures",
       "file": "components/C08-catalogue-contracts.md",
       "dependencies": [
+        "P00",
         "C01"
       ]
     },
@@ -122,6 +141,7 @@
       "title": "New application shell",
       "file": "components/C15-application-shell.md",
       "dependencies": [
+        "P00",
         "C08"
       ]
     },
@@ -130,6 +150,7 @@
       "title": "Complete catalogue browser",
       "file": "components/C16-catalogue-browser.md",
       "dependencies": [
+        "P00",
         "C14",
         "C15"
       ]
@@ -150,6 +171,7 @@
       "title": "Chat and Workspace interface",
       "file": "components/C18-chat-workspace.md",
       "dependencies": [
+        "P00",
         "C15",
         "C16",
         "C17"
@@ -211,7 +233,7 @@
     },
     {
       "id": "C24",
-      "title": "Dedicated GCP worker configuration",
+      "title": "Isolated GCP site and worker configuration",
       "file": "components/C24-gcp-worker-configuration.md",
       "dependencies": [
         "C20",
@@ -223,6 +245,7 @@
       "title": "Experimental Workspace interface",
       "file": "components/C25-experimental-workspace.md",
       "dependencies": [
+        "P00",
         "C18",
         "C22",
         "C23",
@@ -234,6 +257,7 @@
       "title": "System acceptance and evaluation",
       "file": "components/C26-system-acceptance.md",
       "dependencies": [
+        "P00",
         "C01",
         "C02",
         "C03",
@@ -269,5 +293,8 @@
         "C26"
       ]
     }
+  ],
+  "authorized_components": [
+    "P00"
   ]
 }

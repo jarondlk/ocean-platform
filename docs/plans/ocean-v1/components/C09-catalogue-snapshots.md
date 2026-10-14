@@ -2,6 +2,14 @@
 
 **Status:** Not started. **Prerequisites:** C03, C08. **Contract:** sealed catalogue snapshot v1.
 
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
+
 ## Objective and boundaries
 
 Make an investigation's data, scientific classifications and operation versions reproducible after publications change. Supply immutable snapshot/export infrastructure for later adapters without holding a database transaction open during model reasoning.
@@ -18,6 +26,17 @@ A sealed manifest binds dataset/object hashes, publication generations, classifi
 
 Capture database exports in a bounded consistent transaction, record source generations and verify relevant heads before sealing; retry or fail on rollover rather than mix generations. Write immutable bytes, verify hashes, then conditionally advance a latest pointer. Readers use a manifest ID and verify artifacts; they never silently substitute current files for missing historical objects. Reference tracking and C03 hold semantics protect retained snapshots. Current access revocation overrides historical availability; immutable bytes do not grant access. Retain old snapshots on refresh, and expose removed/replaced identities for C17's branch behavior.
 
+## Independent data-copy contract
+
+Snapshots and export/import state belong to v1's independent stores. Add a frozen
+transfer manifest and import validation/quarantine boundary for explicitly
+approved copies: origin ID, source generation, hashes, schema/method versions,
+scientific qualifications, access conditions and authorization reference. Verify
+count/hash/eligibility reconciliation with synthetic local transfers, including
+rejected/tampered imports and retained origin provenance. Never silently read
+legacy storage if an input is absent. Real export/import is separately authorized.
+Document the source-withdrawal handling dependency before real transfers.
+
 ## Resumable checkpoints and acceptance
 
 1. **Manifest and local storage:** add snapshot schema, content-addressed layout and seal/read operations on a temporary local store. Acceptance: identical inputs yield stable identities, corrupted or incomplete bundles fail verification, and unsafe paths remain rejected.
@@ -33,11 +52,6 @@ Use additive schema/storage changes and versioned namespaces. Do not overwrite o
 
 ## Exact prompts
 
-**Planning-only**
-> Review C09 without implementing. Read docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C09-catalogue-snapshots.md and handoffs/C03.md and C08.md plus any C09 handoff. Inspect checkout and prerequisite evidence. Report refinements only; do not edit application code, seal real data or begin implementation without an explicit implementation request.
-
-**Implementation**
-> Implement only C09. Read the planning README, MASTER_PLAN, DECISIONS, STATUS, this C09 specification and C03/C08/C09 handoffs under docs/plans/ocean-v1. Verify prerequisites and checkout; preserve unrelated work. Complete checkpoints, updating STATUS.md and handoffs/C09.md after each. Run required local tests before completion. Do not seal real data, start another component, publish, make cloud writes, provision, deploy or run paid model evaluation.
-
-**Resume**
-> Resume C09 only. Read docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C09-catalogue-snapshots.md and handoffs/C03.md, C08.md and C09.md. Reconcile prerequisites, checkout and test evidence, then continue the next unfinished checkpoint. Preserve unrelated work and update status/handoff after tested checkpoints. Do not seal real data, start another component, publish, make cloud writes, provision, deploy or run paid model evaluation.
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c09). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

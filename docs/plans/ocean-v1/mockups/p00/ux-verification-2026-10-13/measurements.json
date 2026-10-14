@@ -1,0 +1,197 @@
+{
+  "method": "Read-only rendered DOM measurements; text contrast and bounding-box targets. Excludes SVG/disabled text; manual keyboard/semantic review supplements this.",
+  "checks": [
+    {
+      "view": "about-desktop-light",
+      "contrastFailures": [],
+      "controls": 16,
+      "height": 900,
+      "scrollWidth": 1440,
+      "texts": 45,
+      "theme": "light",
+      "undersized": [],
+      "width": 1440
+    },
+    {
+      "view": "about-desktop-dark",
+      "contrastFailures": [],
+      "controls": 16,
+      "height": 900,
+      "scrollWidth": 1440,
+      "texts": 45,
+      "theme": "dark",
+      "undersized": [],
+      "width": 1440
+    },
+    {
+      "view": "admin-desktop-light",
+      "contrastFailures": [],
+      "controls": 37,
+      "height": 900,
+      "scrollWidth": 1440,
+      "texts": 54,
+      "theme": "light",
+      "undersized": [],
+      "width": 1440
+    },
+    {
+      "view": "admin-desktop-dark",
+      "contrastFailures": [],
+      "controls": 37,
+      "height": 900,
+      "scrollWidth": 1440,
+      "texts": 54,
+      "theme": "dark",
+      "undersized": [],
+      "width": 1440
+    },
+    {
+      "view": "feedback-desktop-light",
+      "contrastFailures": [],
+      "controls": 19,
+      "height": 900,
+      "scrollWidth": 1440,
+      "texts": 36,
+      "theme": "light",
+      "undersized": [],
+      "width": 1440
+    },
+    {
+      "view": "feedback-desktop-dark",
+      "contrastFailures": [],
+      "controls": 19,
+      "height": 900,
+      "scrollWidth": 1440,
+      "texts": 36,
+      "theme": "dark",
+      "undersized": [],
+      "width": 1440
+    },
+    {
+      "view": "research-home-desktop-light",
+      "contrastFailures": [],
+      "controls": 24,
+      "height": 900,
+      "scrollWidth": 1440,
+      "texts": 40,
+      "theme": "light",
+      "undersized": [],
+      "width": 1440
+    },
+    {
+      "view": "research-workspace-desktop-light",
+      "contrastFailures": [],
+      "controls": 39,
+      "height": 900,
+      "scrollWidth": 1440,
+      "texts": 86,
+      "theme": "light",
+      "undersized": [],
+      "width": 1440
+    },
+    {
+      "view": "research-workspace-desktop-light-final",
+      "contrastFailures": [],
+      "controls": 39,
+      "height": 900,
+      "scrollWidth": 1440,
+      "texts": 86,
+      "theme": "light",
+      "undersized": [],
+      "width": 1440
+    },
+    {
+      "view": "research-workspace-desktop-dark",
+      "contrastFailures": [],
+      "controls": 39,
+      "height": 900,
+      "scrollWidth": 1440,
+      "texts": 86,
+      "theme": "dark",
+      "undersized": [],
+      "width": 1440
+    },
+    {
+      "view": "catalogue-desktop-light",
+      "contrastFailures": [],
+      "controls": 50,
+      "height": 900,
+      "scrollWidth": 1440,
+      "texts": 118,
+      "theme": "light",
+      "undersized": [],
+      "width": 1440
+    },
+    {
+      "view": "catalogue-desktop-dark",
+      "contrastFailures": [],
+      "controls": 50,
+      "height": 900,
+      "scrollWidth": 1440,
+      "texts": 118,
+      "theme": "dark",
+      "undersized": [],
+      "width": 1440
+    },
+    {
+      "view": "research-home-320-light-final",
+      "contrastFailures": [],
+      "controls": 18,
+      "height": 800,
+      "scrollWidth": 320,
+      "texts": 27,
+      "theme": "light",
+      "undersized": [],
+      "width": 320
+    },
+    {
+      "view": "catalogue-320-japanese-light",
+      "contrastFailures": [],
+      "controls": 42,
+      "height": 800,
+      "scrollWidth": 320,
+      "texts": 101,
+      "theme": "light",
+      "undersized": [],
+      "width": 320
+    },
+    {
+      "view": "catalogue-320-japanese-dark-final",
+      "contrastFailures": [],
+      "controls": 42,
+      "height": 800,
+      "scrollWidth": 320,
+      "texts": 101,
+      "theme": "dark",
+      "undersized": [],
+      "width": 320
+    },
+    {
+      "view": "feedback-320-japanese-dark-final",
+      "contrastFailures": [],
+      "controls": 13,
+      "height": 800,
+      "scrollWidth": 320,
+      "texts": 26,
+      "theme": "dark",
+      "undersized": [],
+      "width": 320
+    },
+    {
+      "view": "preview-controls-dialog-final",
+      "contrastFailures": [],
+      "controls": 8,
+      "height": 900,
+      "scrollWidth": 1440,
+      "texts": 10,
+      "theme": "light",
+      "undersized": [],
+      "width": 1440
+    }
+  ],
+  "offscreenFocus": {
+    "rootScroll": 0,
+    "navigationTop": 0,
+    "verifiedAfterMapFocus": true
+  }
+}

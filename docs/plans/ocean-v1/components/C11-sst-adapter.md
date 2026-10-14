@@ -1,6 +1,14 @@
 # C11 — SST adapter
 
-Status: **Not started**. Prerequisites: **C02, C09**.
+**Status:** Not started. **Prerequisites:** C02, C09.
+
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
 
 ## Objective and boundaries
 
@@ -30,16 +38,8 @@ Existing regression command: `python -m pytest tests/test_sst_nasa_context.py te
 
 Preserve existing SST workflows and published artifacts. Rollback removes catalogue exposure through its flag without deleting snapshots. Save operation definitions, calendars, parity evidence and unresolved availability in `handoffs/C11.md`; update `STATUS.md` after each checkpoint.
 
-## Copy-and-paste prompts
+## Exact prompts
 
-**Planning-only**
-
-> Review C11 only. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, this component specification and C02/C09 handoffs. Reconcile them with the actual checkout. Refine the plan; do not implement application changes.
-
-**Implementation**
-
-> Implement explicitly requested component C11 only. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, this specification and C02/C09 handoffs; verify prerequisites in the actual checkout. Follow checkpoints and checks, preserving unrelated changes. Update STATUS.md and handoffs/C11.md throughout. Do not start another component, make cloud writes or paid calls, or publish production data.
-
-**Resume**
-
-> Resume C11 only. Read the planning README, MASTER_PLAN, DECISIONS, STATUS, this specification, prerequisite handoffs and handoffs/C11.md. Reconcile recorded progress with the actual checkout and test evidence. Continue the first unfinished checkpoint; update STATUS.md and handoffs/C11.md. Do not repeat completed work, start another component, make cloud writes or paid calls, or publish production data.
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c11). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

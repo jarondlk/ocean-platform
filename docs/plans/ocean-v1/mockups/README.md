@@ -25,3 +25,11 @@ Original preview:
 
 A byte-identical copy is retained here so fresh chats and other checkouts need
 not access the original local preview path.
+
+## UI-first revision
+
+P00 now builds a working local prototype before backend implementation. Use this
+image as a starting reference and [UI_UX_BRIEF.md](../UI_UX_BRIEF.md) for journeys
+and iterative user feedback. Layout, labels and panel behavior can be refined;
+preserve the underlying scope/evidence semantics. The new frontend lives in
+frontend-v1 and will serve the independently isolated v1 site.

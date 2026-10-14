@@ -1,6 +1,14 @@
 # C08 — Catalogue contracts and fixtures
 
-**Status:** Not started. **Prerequisites:** C01. **Contract:** Context Catalog v1.
+**Status:** Not started. **Prerequisites:** P00, C01. **Contract:** Context Catalog v1.
+
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
 
 ## Objective and boundaries
 
@@ -18,6 +26,16 @@ Freeze roots Data, Analyses, Statistics, Metadata and Relationships. Data contai
 
 Define typed node/listing/query-result envelopes carrying schema version, snapshot, identity/kind, scope, availability, authority, provenance and supported operations. Listings expose filters, stable ordering, total matches or explicit unknown, returned count and cursor. Unknown is not zero. A cursor binds snapshot, scope and ordering. Permission changes invalidate access rather than preserve hidden membership. Summaries count distinct qualifying canonical descendants; cross-links do not inflate counts. Every count declares its entity and denominator. Separate preview truncation, source completeness and query completion. Keep ingestion, query readiness, publication, approval and embedding readiness independent.
 
+## P00 contract reconciliation
+
+Read P00's accepted UX handoff and provisional fixture adapter. Preserve useful
+interaction states and labels while defining validated backend contracts; record
+any mismatch requiring a UI change. Prototype models are design input, not an
+existing scientific contract. Give frontend-v1 one versioned adapter boundary so
+real data replaces fixtures without rebuilding the experience. Include approved
+cross-site transfer identity/provenance fields from SITE_SEPARATION.md; a source
+origin reference must not become a live dependency on the legacy site.
+
 ## Resumable checkpoints and acceptance
 
 1. **Core schema:** define node, listing, scope and operation contracts using existing Python validation conventions and typed frontend representations. Acceptance: all five roots and source-specific distinctions fit without path-based identity or ambiguous counts.
@@ -32,11 +50,6 @@ Add new versioned types; preserve old source aliases, API shapes and identifiers
 
 ## Exact prompts
 
-**Planning-only**
-> Review C08 without implementing. Read docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C08-catalogue-contracts.md and handoffs/C01.md plus any C08 handoff. Inspect current checkout and prerequisite evidence. Report refinements only; do not edit application code or begin implementation without an explicit implementation request.
-
-**Implementation**
-> Implement only C08 after reading the planning README, MASTER_PLAN, DECISIONS, STATUS, this C08 specification and C01/C08 handoffs under docs/plans/ocean-v1. Verify C01 and the checkout; preserve unrelated work. Follow checkpoints and update STATUS.md and handoffs/C08.md after each. Run required tests before completion. Do not start another component, publish, make cloud writes, provision, deploy or run paid model evaluation.
-
-**Resume**
-> Resume C08 only. Read docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C08-catalogue-contracts.md and handoffs/C01.md and C08.md. Reconcile prerequisites, checkout and test evidence before continuing the next checkpoint. Preserve unrelated work, retest changes and update status/handoff. Do not start another component, publish, make cloud writes, provision, deploy or run paid model evaluation.
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c08). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

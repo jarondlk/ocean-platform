@@ -21,7 +21,11 @@ patterns, Cloud Run or pagination does not establish capacity.
 | More concurrent researchers | Horizontal growth is plausible, but capacity is unverified | Coordinate database pools, model quotas, request admission, queue limits and process memory; benchmark the assembled system. |
 | More concurrent experiments | Deliberately constrained in v1 | D29 permits one active experiment per user and two globally. More machines alone cannot remove that policy limit. |
 
-The recommended changes preserve D01–D35, the 27-component dependency graph,
+This review originally assessed the 27-component plan. The later 2026-10-13
+amendment adds P00 and D36–D38 for UI-first delivery and an isolated second site;
+read [SITE_SEPARATION.md](SITE_SEPARATION.md) and [UI_UX_BRIEF.md](UI_UX_BRIEF.md).
+Its data/analysis/user-scale findings still apply to v1. Legacy serving limits are
+historical references, not the new site configuration. The recommendations retain
 scientific qualifications and the current implementation boundary. They are
 review recommendations, not newly accepted capacity promises or permission to
 start components. Resolve the essential refinements within their owning
@@ -264,5 +268,6 @@ Before C08 implementation, agree the pilot workload and extension contracts.
 Before C14/C20 implementation, choose scan/admission/pool budgets from those
 targets. Before C26 acceptance, freeze the measurement protocol and thresholds.
 Production capacity remains unverified until the intended environment is tested.
-All C01–C27 remain Not started; this review neither satisfies their gates nor
-changes the accepted limits. Planning may proceed with the documented conditions.
+P00 was later explicitly selected for local prototype implementation; C01–C27
+remain Not started. This review neither satisfies their gates nor changes the
+accepted limits. Planning may proceed with the documented conditions.

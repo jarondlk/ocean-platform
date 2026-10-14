@@ -2,6 +2,14 @@
 
 **Status:** Not started. **Prerequisites:** C22.
 
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
+
 ## Objective and boundaries
 
 Execute an approved, immutable Python analysis envelope with reproducible inputs and bounded outputs, while keeping generated code outside the serving application and production data boundary.
@@ -34,10 +42,8 @@ Acceptance includes no network/metadata/host-file access, whole-process-tree ter
 
 Keep execution independently disabled by default. Rollback stops dispatch and retains approved inputs/results. Update [status](../STATUS.md) and `handoffs/C23.md` after each checkpoint, distinguishing simulated tests from actual containment evidence and naming any missing host prerequisite.
 
-## Copy-and-paste prompts
+## Exact prompts
 
-**Planning only:** “Review only C23 using docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C23-python-sandbox.md, prerequisite handoff C22 and the checkout. Refine docs only; preserve unrelated work.”
-
-**Implementation:** “Implement only C23. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C23-python-sandbox.md and prerequisite handoff C22; reconcile the checkout. Follow checkpoints and local synthetic verification; update STATUS.md and handoffs/C23.md throughout. Preserve unrelated work. Do not advance components, install host services, provision, deploy, run real experiments or paid/live evaluations.”
-
-**Resume:** “Resume only C23 using docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C23-python-sandbox.md, handoffs/C23.md and prerequisite handoff C22. Reconcile checkout/evidence, continue the next checkpoint and update status/handoff. Preserve unrelated work; no automatic advance, host service installation, provisioning, deployment, real experiments or paid/live evaluations.”
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c23). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

@@ -1,6 +1,14 @@
 # C04 — Authentication responsiveness
 
-**Status:** Not started. **Prerequisites:** None. **Contract:** nonblocking authorization boundary.
+**Status:** Not started. **Prerequisites:** P00. **Contract:** nonblocking authorization boundary.
+
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
 
 ## Objective and boundaries
 
@@ -30,11 +38,6 @@ Keep public APIs, identity objects and provider configuration compatible. No mig
 
 ## Exact prompts
 
-**Planning-only**
-> Review C04 without implementing. Read docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C04-authentication-responsiveness.md and relevant handoffs; no prerequisites apply. Inspect current middleware and checkout, then report planning refinements only. Do not edit application code or begin implementation without an explicit implementation request.
-
-**Implementation**
-> Implement only C04 after reading the planning README, MASTER_PLAN, DECISIONS, STATUS, this C04 specification and relevant handoffs under docs/plans/ocean-v1. There are no prerequisites. Verify the checkout and preserve unrelated work. Complete the checkpoints, updating STATUS.md and handoffs/C04.md after each. Run required tests before completion. Do not change role policy, start another component, publish, make cloud writes, provision, deploy or run paid model evaluation.
-
-**Resume**
-> Resume C04 only. Read docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C04-authentication-responsiveness.md and handoffs/C04.md; C04 has no prerequisites. Reconcile checkpoint evidence with the checkout, then continue the next unfinished step. Preserve unrelated work, record tests and update status/handoff at checkpoints. Do not start another component, change role policy, publish, make cloud writes, provision, deploy or run paid model evaluation.
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c04). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

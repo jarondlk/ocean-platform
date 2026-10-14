@@ -1,31 +1,25 @@
-# Planning Hub initial instruction
+# Planning Hub instructions
 
-Open a separate local chat in the existing provenance-eco-rag project, titled
-**OCEAN v1.0.0 — Planning Hub**. Use the current project checkout, not a new
-worktree. This hub is coordination/planning only.
+Work in the existing checkout on overhaul. The legacy production site and main
+remain unchanged. The initial setup receipt is historical; the current plan has
+28 specifications (P00 plus C01–C27) and 84 prompts.
 
-Copy the following instruction:
+For a fresh planning/recovery session, read README.md, MASTER_PLAN.md,
+DECISIONS.md, SITE_SEPARATION.md, UI_UX_BRIEF.md, COMPONENTS.md, STATUS.md,
+ACCEPTANCE_MAP.md, components.json, PROMPTS.md and the handoff convention, all
+under docs/plans/ocean-v1. Inspect the actual checkout and selected component's
+prerequisite evidence. Never assume this chat is the only source of state.
 
-> This is the OCEAN v1.0.0 Planning Hub. The user has authorized creation of the
-> planning space only and has explicitly deferred application implementation.
-> Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, COMPONENTS.md,
-> STATUS.md, ACCEPTANCE_MAP.md and the setup receipt. Inspect the prompt index
-> and handoff convention. Confirm that the 27 component specifications exist,
-> summarize their dependency order and identify the first eligible component.
-> Do not start any implementation component, edit files, execute
-> application tests, create other chats, invoke subagents, make paid provider
-> calls, provision cloud resources, publish data or deploy. Do not mark an
-> implementation component started or complete. Treat this initial turn as
-> read-only verification and report readiness or specific missing documentation.
-> For later user requests, use the corresponding component prompt, prerequisite
-> handoffs and actual checkout. Never assume this hub's conversation is the
-> only source of state. Wait for the user to explicitly select a component and
-> whether to plan, implement or resume it.
+P00, the synthetic local UI/UX prototype, is accepted and Complete as of
+2026-10-14 JST. C01 is the recommended next backend component. Proceed component
+by component with explicit user selection. The current plan revision does not itself authorize
+UI/backend implementation, tests, cloud provisioning, data transfer or deployment.
+P00 local application work and appropriate checks are authorized. Later
+component implementation remains unselected; planning/recovery inspection outside
+P00 is read-only unless documentation edits are requested.
+Do not create other chats or begin components merely because this hub exists.
 
-Hub creation and ID are recorded in SETUP_RECEIPT.md once creation succeeds.
-The hub's read-only confirmation is not application acceptance.
-
-The dispatched instruction also clarifies that all plan document names are
-relative to `docs/plans/ocean-v1/`, includes `components.json`, and allows the
-setup receipt to briefly show hub creation/confirmation pending while the
-originating chat records the new chat ID. This is coordination state only.
+Preserve the fully isolated second-site architecture. Use explicit approved-data
+copies only under later authorization, never a live legacy-service fallback.
+P00 completion is not completion of the later UI/backend integration components.
+Use the corresponding canonical planning/implementation/resume prompt in PROMPTS.md.

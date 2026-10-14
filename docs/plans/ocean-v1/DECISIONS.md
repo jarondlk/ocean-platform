@@ -1,13 +1,14 @@
 # Accepted decisions
 
 Recorded 2026-10-12 JST from the originating planning conversation. This file
-records choices, not proof of implementation. All C01–C27 start Not started.
+records choices, not proof of implementation. P00 is selected for local
+implementation; C01–C27 remain Not started.
 Later explicit user instructions override this baseline; record changes here
 and identify affected components instead of silently drifting.
 
 | ID | Decision | Origin |
 |---|---|---|
-| D01 | Catalogue-guided Research becomes default after acceptance; legacy Chat remains available for rollback. | User selected |
+| D01 | Catalogue-guided Research is the v1 site default after acceptance. The existing production site retains its legacy architecture and traffic; no main-domain cutover is implied. | Revised by user, 2026-10-13 |
 | D02 | Include CTD, SST, metagenome and eDNA; expose only scientifically supported operations. | User selected |
 | D03 | Include an experimental analysis workspace in v1. | User selected |
 | D04 | Approve each concrete experiment plan; bind code, cohort and method to approval. | User selected |
@@ -16,7 +17,7 @@ and identify affected components instead of silently drifting.
 | D07 | Experiments exclude unpublished staging data. | User selected |
 | D08 | Dedicated GCP Linux/gVisor worker; no dependency on Cloud Run sandbox preview. | User selected |
 | D09 | Ordinary exploration may take up to three minutes, with progress/cancellation. | User selected |
-| D10 | Research is the unified home; retain specialist pages and direct links. | User selected |
+| D10 | Research is the unified home on the separate v1 site; retain relevant specialist workflows there and leave legacy-site links intact. | Revised by user, 2026-10-13 |
 | D11 | A named investigation contains multiple conversations and accumulated artifacts. | User selected |
 | D12 | Manual browsing does not change agent scope; use explicit attachment/pinning. | User selected |
 | D13 | Investigations are private to their owner in v1. | User selected |
@@ -36,17 +37,33 @@ and identify affected components instead of silently drifting.
 | D27 | Cloud Run controller + Cloud Tasks/outbox/leases; dedicated experiment worker. | Accepted design |
 | D28 | 12 tool actions, one action repair, 100 default/500 maximum record rows; 180 active seconds. | Initial configurable defaults |
 | D29 | Python: 2 CPUs, 4 GiB, 10 min, 256 MiB inputs, 50 MiB outputs; 1 active/user, 2 globally. | Initial configurable defaults |
-| D30 | Preserve existing providers, roles, legacy endpoints, history and deep links. | Accepted design |
+| D30 | Preserve provider/role semantics and reused-code regressions; the legacy site keeps its endpoints/history/deep links. V1 does not share sessions or automatically import accounts/history. | Revised by user, 2026-10-13 |
 | D31 | Existing access rules also apply to catalogue counts, metadata and retained artifacts. | Accepted design |
 | D32 | Experimental outputs remain experimental; no automatic scientific publication or authority upgrades. | Accepted design |
 | D33 | Contigs, unpublished inputs, external acquisition, R, GPUs and collaborative workspaces are excluded from v1. | Accepted boundary |
 | D34 | Repository plan folder plus a dedicated Planning Hub chat; individual component prompts and resumable handoffs. | User selected |
-| D35 | Preparation only now: create documentation/hub, no application implementation. | Latest user authorization |
+| D35 | P00 local prototype implementation is explicitly selected. C01–C27 still require separate component selection. | User selected, 2026-10-13 |
+| D36 | A second GCP site with fully isolated infrastructure: database, storage, credentials, queues and deployment targets. Copy approved data explicitly when needed; no live connection to legacy data. | User selected, 2026-10-13 |
+| D37 | Build and refine a synthetic local UI/UX prototype first (P00), then implement backend/integration components individually. | User selected, 2026-10-13 |
+| D38 | Prioritize understandable, forgiving UX: plain language, progressive disclosure, recoverable actions and repeated user review before backend integration. | User selected, 2026-10-13 |
 
 ## Changes
 
-None. Record future changes with date, explicit user instruction, superseded
-decision IDs, affected components and required acceptance changes.
+2026-10-13 JST: the user requested a separate GCP site while keeping the legacy
+production architecture in place, then explicitly selected full infrastructure
+isolation with approved data copied when needed. The user also requested local
+UI/UX iteration before backend implementation. D01/D10/D30 are narrowed to the
+separate-site model; D35 retains the planning boundary; D36–D38 add isolation and
+UI-first delivery. P00 is added before C01–C27 without renumbering them. Changes
+affect all component deployment boundaries, C08/C09, C15–C18, C20/C21 and C24–C27;
+acceptance adds local UX review and independent-site isolation/data transfer.
+The overhaul branch is the work branch. No implementation, cloud creation or data
+copy is started by this amendment. No implementation schedule is retained.
+
+2026-10-13 JST, P00 selection: the user explicitly started the local prototype
+and requested legacy OCEAN principles, research-first interaction, human-centered
+UX, less copy and sky/baby-blue accents. This authorizes P00 only; user acceptance
+of the working direction is still pending. See handoffs/P00.md.
 
 ## Adjustable defaults
 
@@ -55,3 +72,23 @@ meaningful thresholds. A future component may propose a documented change after
 measurements; do not silently increase resource access or scientific scope.
 Routine internal details that do not change these decisions may be resolved
 within a component and recorded in its handoff.
+
+### P00 user review follow-up — 2026-10-13 JST
+
+The initial preview was received positively. Requested local refinements are
+wordmark-only branding, account type plus access role, legacy-informed admin
+workflows, dedicated About/contact placeholders, catalogue overview/relationship
+map, feedback and contextual exports. “Contracts” was clarified as “contacts.”
+These are P00 interaction decisions; they do not authorize real authentication,
+service integration, backend components, provisioning or deployment. The refined
+preview is Ready for review; acceptance of the direction remains pending.
+
+### P00 acceptance — 2026-10-14 JST
+
+The user accepted the preview ("ok looks great"), requested omission of the admin
+Pipeline & jobs page for now, and authorized committing and pushing the overhaul
+work before backend implementation. The page, overview entry points, queue
+settings and demo-jobs database listing are omitted. Other admin workflows and
+previously saved local state remain available. P00 is Complete after the final
+checks; C01–C27 remain unselected and Not started. Planned backend job execution
+is not removed from C20/C24. C01 is the recommended next component.

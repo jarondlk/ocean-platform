@@ -86,3 +86,15 @@ No application source, configuration, migrations or tests were implemented or
 executed for this preparation. No cloud resources, deployments, live provider
 evaluations, scientific publication or production data changes occurred.
 Creating the package or hub does not authorize C01 or any later component.
+
+## Plan amendment — 2026-10-13 JST
+
+After the original 27-component setup and planning-package commit eabacf8 on
+overhaul, the user selected a fully isolated second GCP site and local UI/UX
+iteration before backend implementation. The legacy production architecture
+remains in place. This amendment adds P00, SITE_SEPARATION.md and UI_UX_BRIEF.md,
+updates dependencies/prompts/acceptance, and retains C01–C27 IDs and Not started
+states. Current inventory: 28 specifications and 84 independent prompts. Earlier
+counts/checks above describe the initial setup and are not current application
+acceptance. No UI/backend code, application tests, resources or data copies were
+created during this amendment. The removed implementation schedule remains absent.

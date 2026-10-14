@@ -1,6 +1,14 @@
 # C14 — Catalogue service and agent tools
 
-Status: **Not started**. Prerequisites: **C04, C08, C09, C10, C11, C12, C13**.
+**Status:** Not started. **Prerequisites:** C04, C08, C09, C10, C11, C12, C13.
+
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
 
 ## Objective and boundaries
 
@@ -30,16 +38,8 @@ Existing regression command: `python -m pytest tests/test_catalogue_cache.py tes
 
 Keep legacy `/chat` and source APIs compatible; protect new routes with the catalogue flag. Rollback disables exposure without destroying snapshots. Record endpoint/tool contracts, operation support, scale evidence and permission coverage in `handoffs/C14.md`; update `STATUS.md` per checkpoint.
 
-## Copy-and-paste prompts
+## Exact prompts
 
-**Planning-only**
-
-> Review C14 only. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, this specification and C04/C08/C09/C10/C11/C12/C13 handoffs. Reconcile with the actual checkout. Refine the plan; do not implement application changes.
-
-**Implementation**
-
-> Implement explicitly requested component C14 only. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, this specification and all listed prerequisite handoffs; verify prerequisites in the actual checkout. Complete its checkpoints and checks, preserving unrelated changes. Update STATUS.md and handoffs/C14.md throughout. Do not start another component, make cloud writes or paid calls, or publish production data.
-
-**Resume**
-
-> Resume C14 only. Read the planning README, MASTER_PLAN, DECISIONS, STATUS, this specification, prerequisite handoffs and handoffs/C14.md. Reconcile progress with the actual checkout and evidence. Continue the first unfinished checkpoint; update STATUS.md and handoffs/C14.md. Do not repeat completed work, start another component, make cloud writes or paid calls, or publish production data.
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c14). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

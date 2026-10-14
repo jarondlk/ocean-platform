@@ -1,14 +1,19 @@
 # OCEAN v1.0.0 — Context Catalog and Research Workspace
 
-Planning baseline: 2026-10-12 JST. Accepted design; implementation has not started.
-This document preserves the architecture agreed in the originating conversation.
+Planning baseline: 2026-10-12 JST. Accepted design; P00 implementation selected
+on 2026-10-13 JST. C01–C27 have not started.
+Revised 2026-10-13 JST for a separate v1 site and local UI/UX-first delivery.
+This document preserves the scientific architecture and records that amendment.
 Use [DECISIONS.md](DECISIONS.md) for locked choices, [STATUS.md](STATUS.md) for
 actual progress, and [README.md](README.md) to select one component.
 
 ## 1. Product direction
 
-Transform OCEAN into a scientific research environment with three connected
-capabilities:
+Build a separate OCEAN v1 scientific research environment while the existing
+production site retains its legacy architecture. Use fully isolated infrastructure
+and explicit approved-data copies as defined in [SITE_SEPARATION.md](SITE_SEPARATION.md).
+Start with the local P00 prototype and [UI/UX brief](UI_UX_BRIEF.md), then connect
+backend capabilities component by component. The three connected capabilities are:
 
 - **Context Catalog:** an authoritative, navigable inventory of accessible data,
   analyses, statistics, metadata and relationships.
@@ -17,7 +22,8 @@ capabilities:
 - **Workspace:** a persistent private investigation containing multiple chats,
   selected context, results and approved experiments.
 
-Catalogue exploration becomes the default after acceptance. Exact queries
+Catalogue exploration becomes the default on the new v1 site after acceptance.
+The legacy site retains its routing and traffic. Exact queries
 operate over complete matching datasets. Top-k retrieval remains a tool for
 targeted documentary evidence, not the gate for structured-data discovery.
 A document at retrieval rank 26 must remain discoverable through catalogue
@@ -63,7 +69,9 @@ data or a functioning prototype.
         ├── Matching rules
         └── Qualified overlaps
 
-These are virtual views over canonical objects, not duplicated storage.
+Within v1, these are virtual views over its canonical objects, not duplicate
+records for each directory. The explicitly transferred copy from the legacy
+system is separate storage with retained origin provenance.
 Identifiers survive display-name/path changes. Location, time, taxon and method
 facets reach the same objects without double-counting them.
 
@@ -115,8 +123,8 @@ Build immutable snapshots binding content hashes, publication generations,
 classification and relationship versions, and operation versions. Export
 canonical eDNA rows and classifications alongside existing immutable artifacts.
 Use shared scientific filters and PyArrow/Pandas frozen-data adapters, verified
-against current exact services. Preserve current SQL services and legacy
-endpoints. Queryability must not require a ready embedding index.
+against current exact services. Reuse current SQL semantics and preserve appropriate local regressions. The
+legacy deployment and its endpoints stay independent; v1 reads only its own stores. Queryability must not require a ready embedding index.
 
 Standalone browsing defaults to the latest eligible snapshot. Investigation
 browsing uses its pinned snapshot. Explicit refresh creates an updated branch
@@ -195,9 +203,16 @@ analyses. Existing scientific review/publication remains a separate process.
 
 ## 5. UI and public interfaces
 
-Primary navigation: Research, Context Catalog, Tools. Tools preserves Data,
-Explore, Provenance and Evaluation access. Settings and Administration remain
-permission-controlled. Existing deep links continue working.
+Primary navigation on v1: Research, Context Catalog, Tools. Tools preserves
+relevant Data, Explore, Provenance and Evaluation workflows in v1. Settings and
+Administration remain permission-controlled. Legacy deep links keep working on
+the existing site; no shared session or automatic redirect is assumed.
+
+P00 first explores these journeys in frontend-v1 with typed synthetic fixtures.
+Use plain-language actions, progressive disclosure, preserved drafts, undo for
+reversible choices and clear recovery. Review working interactions with the user
+and iterate before backend integration; the static mockup does not freeze layout.
+C15/C16/C18/C25 reuse and integrate this frontend with real v1 contracts later.
 
 Research opens private named investigations. Within one investigation show a
 conversation list, Chat and a resizable Workspace. Workspace tabs are Context,
@@ -235,15 +250,27 @@ catalogue/evidence access must remain within current Chat permissions;
 row-level browsing/export and experiments retain researcher-level restrictions.
 Do not leak hidden names, counts or structure.
 
-Preserve /chat, saved interactions, feedback and citation links. Continuing a
-legacy interaction creates a linked investigation without rewriting history.
+The legacy site retains /chat, saved interactions, feedback and citation links.
+V1 investigations are independent. Legacy-history continuation/import is deferred
+until an explicitly approved transfer design exists; do not bridge to production.
 
 ## 6. Delivery and acceptance
 
-Sequence: correctness repairs; four-source catalogue and snapshots; research
-UI/controller; approved experiments; integrated evaluation and rollout
-preparation. Develop behind catalogue, research and experiment flags. Rollback
-must preserve investigations and retained evidence.
+Sequence: P00 local synthetic UI and user feedback; accepted UX direction; C01–C07
+correctness foundations; four-source catalogue/snapshots; staged integration of
+the existing prototype with research/controller services; approved experiments;
+integrated evaluation and separate-site rollout preparation. P00 is a prerequisite
+for implementation, not for planning the later components.
+
+Develop with independent v1 catalogue, research and experiment flags. Rollback
+affects v1 only and preserves its investigations/evidence. The legacy deployment,
+main-domain traffic, database and storage remain untouched. C24 prepares isolated
+site/worker configuration; actual provisioning and launch require later authorization.
+
+P00 acceptance requires locally working journeys and recorded user review, not a
+claim of backend capability. C26 separately verifies real-service integration,
+full infrastructure separation and synthetic approved-data transfer contracts.
+Required live isolation and real data-transfer gates remain explicit.
 
 Catalogue/UI gates: every permitted directory and leaf reachable; 100,000-object
 fixture with targets beyond legacy rank 25 and first pages; identical agent/UI

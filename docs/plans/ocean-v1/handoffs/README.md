@@ -1,7 +1,7 @@
 # Component handoffs
 
-No implementation handoffs exist yet. Create C01.md through C27.md only when
-work on that component is explicitly selected. Do not manufacture completion
+[P00.md](P00.md) records the explicitly selected local prototype work. Create
+C01.md through C27.md only when work on that component is explicitly selected. Do not manufacture completion
 receipts during setup.
 
 Copy [TEMPLATE.md](TEMPLATE.md). Maintain a current-state section and append
@@ -25,3 +25,8 @@ the handoff with Git and the actual files before continuing.
 
 Marking Complete requires the component's acceptance checks, not simply a
 plausible implementation or a successful narrow test.
+
+P00 records the local URL/commands, prototype screenshots, reviewed journeys, user
+feedback, accepted direction and provisional fixture contracts. It cannot stand
+in for backend/integration evidence. All later handoffs record v1 isolation and
+identify any separately authorized copied data; no live legacy access is implied.

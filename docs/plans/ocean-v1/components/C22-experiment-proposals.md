@@ -2,6 +2,14 @@
 
 **Status:** Not started. **Prerequisites:** C01, C07, C09, C17, C21.
 
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
+
 ## Objective and boundaries
 
 Prepare a concrete, reviewable analysis before any generated Python executes. Researchers and admins may approve their own proposed experiments using data already eligible for their access. Approval permits execution; it does not validate scientific conclusions.
@@ -32,10 +40,8 @@ Acceptance covers mismatched code/input hashes, tampered artifacts, changed scop
 
 Use additive private records; preserve current published recipes and registries. Disabling experiments prevents new dispatch without deleting proposals, approvals or frozen artifacts. Update [status](../STATUS.md) and `handoffs/C22.md` after each checkpoint with hash contract, eligibility rules, reservation behavior and checks.
 
-## Copy-and-paste prompts
+## Exact prompts
 
-**Planning only:** “Review only C22 using docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C22-experiment-proposals.md, prerequisite handoffs C01/C07/C09/C17/C21 and the current checkout. Refine documentation only; preserve unrelated work.”
-
-**Implementation:** “Implement only C22. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C22-experiment-proposals.md and prerequisite handoffs C01/C07/C09/C17/C21; reconcile the checkout. Follow checkpoints, verify locally with synthetic inputs/fake execution, and update STATUS.md and handoffs/C22.md throughout. Preserve unrelated work; no automatic advance, real experiments, cloud provisioning, deployment or paid/live evaluations.”
-
-**Resume:** “Resume only C22 using docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, components/C22-experiment-proposals.md, handoffs/C22.md and prerequisite handoffs C01/C07/C09/C17/C21. Reconcile code/evidence and continue the next unfinished checkpoint; update status/handoff. Preserve unrelated work; no automatic advance, real experiments, provisioning, deployment or paid/live evaluations.”
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c22). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

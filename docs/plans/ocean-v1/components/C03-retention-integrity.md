@@ -1,6 +1,14 @@
 # C03 — Retention integrity
 
-**Status:** Not started. **Prerequisites:** None. **Contract:** transactional hold/deletion ordering.
+**Status:** Not started. **Prerequisites:** P00. **Contract:** transactional hold/deletion ordering.
+
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
 
 ## Objective and boundaries
 
@@ -30,11 +38,6 @@ Avoid destructive migrations. Preserve existing holds, retention configuration a
 
 ## Exact prompts
 
-**Planning-only**
-> Review C03 without implementing. Read docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C03-retention-integrity.md and relevant handoffs; C03 has no prerequisites. Inspect the checkout and describe refinements only. Do not edit application code, delete retained records or begin implementation without an explicit implementation request.
-
-**Implementation**
-> Implement only C03. Read the planning README, MASTER_PLAN, DECISIONS, STATUS, this C03 specification and relevant handoffs under docs/plans/ocean-v1; no prerequisites apply. Verify the checkout and disposable test targets; preserve unrelated work. Follow checkpoints and update STATUS.md and handoffs/C03.md after each. Run required checks before completion. Do not perform real cleanup, start another component, publish, make cloud writes, provision, deploy or run paid model evaluation.
-
-**Resume**
-> Resume C03 only. Read docs/plans/ocean-v1/{README.md,MASTER_PLAN.md,DECISIONS.md,STATUS.md}, components/C03-retention-integrity.md and handoffs/C03.md; no prerequisites apply. Reconcile current code and actual test evidence, then continue the next checkpoint. Preserve unrelated work, confirm disposable database targets and checkpoint status/handoff. Do not mark skipped race checks complete, perform real cleanup, start another component, publish, provision, deploy, make cloud writes or run paid model evaluation.
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c03). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

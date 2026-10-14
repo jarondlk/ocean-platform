@@ -1,15 +1,19 @@
 # Implementation status
 
-Updated: 2026-10-13 JST. **Implementation is not authorized or started.**
-The planning documents and mockup are preparation artifacts only.
-No implementation handoffs or application acceptance results have been created.
+Updated: 2026-10-14 JST. **P00 is Complete; the user accepted the local UX direction.**
+The latest plan adds local UI/UX work first and a fully isolated second GCP site.
+P00 is selected; C01–C27 remain Not started. Only P00 local prototype work is
+authorized. See [the P00 handoff](handoffs/P00.md) for current evidence.
 
-Recommended first later implementation: **C01**. Independently eligible without
-component prerequisites: C01, C03, C04, C05, C06, C07. All other implementation
-components wait for their listed predecessors. Any component may be planned now.
+Recommended next implementation: **C01 — Scientific scope validation**.
+P00 passed its local UX/user-review gate; C01 remains unselected and Not started. Later implementation requires the listed prerequisite evidence;
+any component can be planned now. Work stays on overhaul, with main and legacy
+production unchanged. See [site separation](SITE_SEPARATION.md) and
+[UI/UX brief](UI_UX_BRIEF.md).
 
 | Component | State | Checkpoint | Validation | Handoff |
 |---|---|---|---|---|
+| [P00 — Local UI and UX prototype](components/P00-local-ui-prototype.md) | Complete | Accepted 2026-10-14; Pipeline & jobs omitted as requested | Typecheck, 27 tests and static build pass; scoped UX review plus final admin/keyboard checks; source and screenshots recorded | [P00](handoffs/P00.md) |
 | [C01 — Scientific scope validation](components/C01-scientific-scope.md) | Not started | None | Not run | Not created |
 | [C02 — Derived scientific evidence](components/C02-derived-scientific-evidence.md) | Not started | None | Not run | Not created |
 | [C03 — Retention integrity](components/C03-retention-integrity.md) | Not started | None | Not run | Not created |
@@ -33,7 +37,7 @@ components wait for their listed predecessors. Any component may be planned now.
 | [C21 — Evidence and answer synthesis](components/C21-evidence-synthesis.md) | Not started | None | Not run | Not created |
 | [C22 — Experiment proposals and frozen exports](components/C22-experiment-proposals.md) | Not started | None | Not run | Not created |
 | [C23 — Isolated Python execution](components/C23-python-sandbox.md) | Not started | None | Not run | Not created |
-| [C24 — Dedicated GCP worker configuration](components/C24-gcp-worker-configuration.md) | Not started | None | Not run | Not created |
+| [C24 — Isolated GCP site and worker configuration](components/C24-gcp-worker-configuration.md) | Not started | None | Not run | Not created |
 | [C25 — Experimental Workspace interface](components/C25-experimental-workspace.md) | Not started | None | Not run | Not created |
 | [C26 — System acceptance and evaluation](components/C26-system-acceptance.md) | Not started | None | Not run | Not created |
 | [C27 — Release preparation and rollback](components/C27-release-readiness.md) | Not started | None | Not run | Not created |
@@ -47,5 +51,6 @@ handoff. Add the handoff link only after that file exists. Keep the specificatio
 status line aligned. Required checks that are unavailable remain visible gates;
 synthetic success does not imply scientific, cloud or release acceptance.
 
-No code revision has passed the v1 acceptance map. See [SETUP_RECEIPT.md](SETUP_RECEIPT.md)
+P00 has passed only G8, the local UX direction gate. No code revision has passed
+the full v1 acceptance map. See [SETUP_RECEIPT.md](SETUP_RECEIPT.md)
 for document validation only, and [ACCEPTANCE_MAP.md](ACCEPTANCE_MAP.md) for future checks.

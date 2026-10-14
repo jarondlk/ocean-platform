@@ -1,6 +1,14 @@
 # C18 — Chat and Workspace interface
 
-Status: **Not started**. Prerequisites: **C15, C16, C17**.
+**Status:** Not started. **Prerequisites:** P00, C15, C16, C17.
+
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
 
 ## Objective and boundaries
 
@@ -25,6 +33,15 @@ Fixtures must never answer real user requests in a production route. This
 contract allows either component to be developed first; C26 verifies the assembled
 interaction, and C21 supplies final answers and retained-evidence navigation.
 
+## Prototype-to-service integration
+
+Read the P00 handoff and reuse frontend-v1; do not restart the UI from the static
+mockup. Keep the accepted UX and iterate on any contract-driven change. P00's
+synthetic interactions do not satisfy this component's real-service acceptance.
+Use the actual frontend-v1 scripts established in P00 and record runtime/browser
+checks against the appropriate v1 services. Existing frontend paths above are
+reference implementations, not the target for the new site.
+
 ## Resumable checkpoints
 
 1. **Implement investigation navigation.** Connect lists, naming, conversations and restoration to C17. Acceptance: reload and Back/Forward restore the selected conversation; private investigations never leak across account changes.
@@ -33,20 +50,12 @@ interaction, and C21 supplies final answers and retained-evidence navigation.
 
 ## Validation, compatibility and handoff
 
-Existing commands: `npm --prefix frontend run typecheck`, `npm --prefix frontend test`, and `npm --prefix frontend run build`. Planned new interaction tests cover explicit attachment, restrictions, multi-chat updates, refresh branches, account changes and navigation restoration. Use deterministic fixtures for unavailable later services; document manual keyboard and narrow-screen checks.
+Planned commands, after P00 establishes these scripts: `npm --prefix frontend-v1 run typecheck`, `npm --prefix frontend-v1 test`, and `npm --prefix frontend-v1 run build`. Planned new interaction tests cover explicit attachment, restrictions, multi-chat updates, refresh branches, account changes and navigation restoration. Use deterministic fixtures for unavailable later services; document manual keyboard and narrow-screen checks.
 
-Keep legacy `/chat` accessible behind the rollout choice. Rollback changes navigation without deleting investigations. Record UI/API contracts, completed versus deferred integrations and verification evidence in `handoffs/C18.md`; update `STATUS.md` per checkpoint.
+Legacy `/chat` remains on the existing site. V1 rollback changes only v1 navigation without deleting investigations or changing legacy traffic. Record UI/API contracts, completed versus deferred integrations and verification evidence in `handoffs/C18.md`; update `STATUS.md` per checkpoint.
 
-## Copy-and-paste prompts
+## Exact prompts
 
-**Planning-only**
-
-> Review C18 only. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, this specification, mockups and C15/C16/C17 handoffs. Reconcile with the actual checkout. Refine the plan; do not implement application changes.
-
-**Implementation**
-
-> Implement explicitly requested component C18 only. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, this specification and C15/C16/C17 handoffs; verify prerequisites in the actual checkout. Complete its checkpoints and checks, preserving unrelated changes. Update STATUS.md and handoffs/C18.md throughout. Do not start another component, make cloud writes or paid calls, or publish production data.
-
-**Resume**
-
-> Resume C18 only. Read the planning README, MASTER_PLAN, DECISIONS, STATUS, this specification, prerequisite handoffs and handoffs/C18.md. Reconcile progress with the actual checkout and evidence. Continue the first unfinished checkpoint; update STATUS.md and handoffs/C18.md. Do not repeat completed work, start another component, make cloud writes or paid calls, or publish production data.
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c18). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.

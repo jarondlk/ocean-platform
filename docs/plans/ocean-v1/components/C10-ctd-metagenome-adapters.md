@@ -1,6 +1,14 @@
 # C10 — CTD and metagenome adapters
 
-Status: **Not started**. Prerequisites: **C02, C09**.
+**Status:** Not started. **Prerequisites:** C02, C09.
+
+## Revised delivery boundary
+
+Work on overhaul for the separate v1 system described in
+[SITE_SEPARATION.md](../SITE_SEPARATION.md). The legacy site and its resources
+remain unchanged. Existing entry points are reuse/regression references, not
+permission to connect to production. P00 precedes backend implementation; its
+prototype is not acceptance evidence for this component.
 
 ## Objective and boundaries
 
@@ -30,16 +38,8 @@ Existing regression command: `python -m pytest tests/test_ctd.py tests/test_meta
 
 Keep legacy normalized artifacts and routes readable. Rollback disables these catalogue registrations while retaining sealed snapshots and receipts. Record supported operations, fixture identities, parity results and limitations in `handoffs/C10.md`; update `STATUS.md` at each checkpoint.
 
-## Copy-and-paste prompts
+## Exact prompts
 
-**Planning-only**
-
-> Review C10 only. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, this component specification and C02/C09 handoffs. Reconcile them with the actual checkout. Refine the plan and identify gaps; do not implement application changes.
-
-**Implementation**
-
-> Implement explicitly requested component C10 only. Read docs/plans/ocean-v1/README.md, MASTER_PLAN.md, DECISIONS.md, STATUS.md, this specification and C02/C09 handoffs; verify prerequisites in the actual checkout. Follow its checkpoints and checks. Preserve unrelated changes. Update STATUS.md and handoffs/C10.md throughout. Do not start another component, make cloud writes or paid calls, or publish production data.
-
-**Resume**
-
-> Resume C10 only. Read the planning README, MASTER_PLAN, DECISIONS, STATUS, this specification, prerequisite handoffs and handoffs/C10.md. Reconcile checkpoint claims with the actual checkout and evidence. Continue the first unfinished checkpoint and update STATUS.md and handoffs/C10.md. Do not repeat completed work, start another component, make cloud writes or paid calls, or publish production data.
+Use the independent planning, implementation or resume prompt in
+[PROMPTS.md](../PROMPTS.md#c10). Read the current site-separation
+plan, UX brief and listed prerequisite handoffs as well as this specification.
