@@ -2,8 +2,7 @@
 
 Recorded 2026-10-12 JST from the originating planning conversation. This file
 records choices, not proof of implementation. P00 is selected for local
-implementation and accepted; C01 local scope validation is Complete. C02–C27
-remain Not started.
+implementation and accepted; C01–C03 local acceptance is Complete. C04 authentication responsiveness is also Complete locally; C05–C27 remain Not started.
 Later explicit user instructions override this baseline; record changes here
 and identify affected components instead of silently drifting.
 
@@ -148,3 +147,33 @@ gates; C03's separate required PostgreSQL run has zero skips. All fixture schema
 were removed and the owned server was stopped. See [C03 handoff](handoffs/C03.md).
 C03 remains uncommitted; C04–C27 remain unselected. No production cleanup,
 destructive migration, cloud deletion or automatic repository delivery occurred.
+
+### C03 checkpoint and C04 selection — 2026-10-15 JST
+
+The user requested checkpointing the completed work, immediately starting C04
+and using subagents when useful. C03 and the readiness audit are saved in local
+overhaul commit `9a2d225`; 30 older unrelated files remain outside the checkpoint.
+Automatic approval review rejected remote push because the checkpoint instruction
+was considered local authorization; explicit push/CI approval is pending. C04
+local implementation, deterministic concurrency/security tests and subagents are
+authorized. C05–C27, production access, providers and deployment remain unselected.
+
+### C04 completion — 2026-10-15 JST
+
+Complete synchronous authentication/session and limiter/connection operations
+now run through Starlette thread offload. Pending AnyIO cancellation is checked
+after worker cleanup before identity assignment or handler dispatch. Roles,
+providers, invitations, quotas and shared limiter SQL are unchanged.
+87 required tests, 1,705 full backend tests (51 expected PostgreSQL-gated skips),
+81.46% coverage, Ruff and preservation checks pass; independent review has no
+blocking findings. C04 remains uncommitted on top of the C03 checkpoint. Remote
+C03 push approval remains pending; no deployment occurred. See handoffs/C04.md.
+C05–C27 remain unselected.
+
+### C03/C04 delivery approval — 2026-10-15 JST
+
+The user explicitly approved all pending commits and pushes, resolving the
+remote-push approval gate. Deliver C03/C04 and their reviewed evidence to
+origin/overhaul (jarondlk/ocean-platform), preserve the 30 unrelated files, and
+verify hosted CI. The user also requested a C05 readiness verdict; that does
+not select C05 implementation, production indexing or deployment.

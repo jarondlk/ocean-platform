@@ -1,0 +1,166 @@
+{
+  "acceptance_cases": [
+    "Delayed authentication permits heartbeat and liveness before release",
+    "Delayed limiting permits heartbeat, liveness and an independent authenticated request before release",
+    "Real SQLite session creation, query, materialization, commit/rollback and closure remain on one worker",
+    "Invitation success materializes frozen CurrentUser and commits before handler",
+    "Concurrent viewer/researcher attribution stays separate",
+    "Invalid token, suspended user, revoked invitation and unverified email deny before handler or state assignment",
+    "Lookup and context-exit commit failure roll back and return 503",
+    "Real limiter fake connection lifecycle and result consumption remain on one worker",
+    "Quota and storage entry/execute/exit errors return original 429/Retry-After/security headers",
+    "Native asyncio and AnyIO cancellation close worker resources without handler/state leakage",
+    "OPTIONS and GET/HEAD liveness bypass both unavailable stores"
+  ],
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "base_head": "9a2d225513a4d6c4a87ced00535457e7cb1c3bb0",
+  "baseline": {
+    "authentication": "1 failed, 55 deselected in 0.62s against unchanged baseline; same-thread entry detected before blocking",
+    "command_auth": ".venv/bin/python -m pytest tests/test_auth.py -k c04_delayed_authentication -q --tb=short",
+    "command_limiter": ".venv/bin/python -m pytest tests/test_rate_limit.py::test_delayed_production_limiter_allows_heartbeat_and_other_requests -q --tb=short",
+    "limiter": "1 failed in 0.58s against unchanged baseline; real limiter fake execute detects event-loop thread",
+    "revision": "9a2d225513a4d6c4a87ced00535457e7cb1c3bb0",
+    "source_receipt": "baseline-source.json"
+  },
+  "branch": "overhaul",
+  "component": "C04",
+  "contract": "nonblocking complete-operation authorization boundary; worker-owned sessions/connections; immutable decisions; security and cancellation parity",
+  "date": "2026-10-15 JST",
+  "documentation_files": {
+    "docs/plans/ocean-v1/ACCEPTANCE_MAP.md": "6d9d9fe8c103e19ea2993498ad1dc3705e062c8fba57063e56c22e7d516c5773",
+    "docs/plans/ocean-v1/COMPONENTS.md": "ca7f31ceef73bb35a834d59ef47e199a9478b2942ca5a77f8ed38d82014941d3",
+    "docs/plans/ocean-v1/DECISIONS.md": "05f313591ac41873a8e1f2a9dbd1e88f25811fdbf16d3abb4771a732f912624a",
+    "docs/plans/ocean-v1/HUB_PROMPT.md": "103e9dbaffdd571cf2c6ee46538f9fa470aeb9a644ab8e41492d1162b7061c91",
+    "docs/plans/ocean-v1/MASTER_PLAN.md": "030830ee2b3c9711f5815a1aad1f4e8c3995f25c067a5db52a6bbe837de8cb5d",
+    "docs/plans/ocean-v1/README.md": "e8613041f0564eb47c0087dcd8c4416f37212cca038c040956252fbcd49c3cbd",
+    "docs/plans/ocean-v1/STATUS.md": "9c0ee6670cec859393f9a32931a2881061ffaf0a3cf2caa0df17f93c30e675c9",
+    "docs/plans/ocean-v1/components.json": "b51e45a1274984b6a2c35e11facebefce4adcbcecff20c0d079d2c4670b2b826",
+    "docs/plans/ocean-v1/components/C04-authentication-responsiveness.md": "129d35ee4beae5a48490f3f118a62e1db417076b57e5c4399da19b16c753af45",
+    "docs/plans/ocean-v1/handoffs/C04.md": "cd88b18c8f40be416e21f02c4144c0a63560b67bf114310d6ec662cd20d99f52",
+    "docs/plans/ocean-v1/handoffs/README.md": "fc90526ea436bd41949ce8a96b79e66dbce49503dd24a6e297d4e5d4574ffa5a"
+  },
+  "evidence_files": {
+    "backend-result.json": "b2b84a3d551041f99cf94776af8dbd09c28162b54c8b3c732ef5ab02b877e624",
+    "backend-tests.txt": "85e33407a2e1b8aa6ddc494d2a35ed4de8bb9b70cf1fe9f584d36ad1f1723c66",
+    "baseline-auth.txt": "43daff2431552825185b9a9a4a95f27354555aa7dd131e509cde75a8d832dbb8",
+    "baseline-limiter.txt": "5818e901fb68a712b2d85fbfe33bba0eaf54a4a3523a5e481aab37b1db080bc3",
+    "baseline-source.json": "32d674066643cdbce8cc00ea70abae74730197566b5dc0a300d74d338298c334",
+    "checkpoint.json": "e0d9cddb48e30229c806e04a86048fc3c03e490f746e2a7aeb57c1633e95dfd7",
+    "preservation.json": "ec23661793d263b21e3862111d3624bb2b132b812e79b5a9ddb48f12957e4514",
+    "required-tests.txt": "b8029e05b35da614901afad02f2bef62bd25dc98a1bfa6615d13e131cd909087",
+    "review.json": "ed22062ff3b1739639f3fdaa6214ba835c0096a6c3dc6868f25c8ac76241da51",
+    "ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "runtime.json": "5f70b22646f6fafb775962f7ea100bff2d69364d455318a3762383ff7e7c94ac",
+    "verify_backend.py": "76c0cc7ed793a18a504a3dbba7da20478846d43af654884baf4f568cd672aa3d"
+  },
+  "evidence_log_normalization": "Only terminal carriage returns/trailing whitespace and trailing blank lines normalized; original hashes retained where changed",
+  "files": {
+    "api/auth.py": "ace7c43baa9a665ada111c30e99d674d743c5e148d14995bf3d9bb3da8ea566a",
+    "tests/test_api_security.py": "487a4a8af1451281d5be6d377fb8d14370f0b887c8b267aff019a0abd27f0aa4",
+    "tests/test_auth.py": "2686e0356352d34d71fe43ed52dd060f44c707602c097c71f47de302cdc34196",
+    "tests/test_rate_limit.py": "da9f7bbec04f8608701f60ff6e3bffd28259b674dc100e5c61394c6e73dbd9de"
+  },
+  "original_log_sha256_before_normalization": {
+    "baseline-auth.txt": "242d1ef58d30f7fe889531091153203b8d0ca2be5461278ce7f6f8ee92ff1482"
+  },
+  "remaining_gates": [
+    "C03 checkpoint push and hosted CI pending explicit approval after automatic review rejected push; no remote retry attempted",
+    "C04 uncommitted and no hosted C04 CI",
+    "Operational PostgreSQL integration remains visibly gated; no new actual PostgreSQL limiter acceptance claimed",
+    "Local synthetic responsiveness is not production throughput/capacity or full v1/G2 acceptance",
+    "C05-C27 remain unselected; no deployment/provider/cloud/data-transfer action"
+  ],
+  "runtime": {
+    "base_checkpoint": "9a2d225513a4d6c4a87ced00535457e7cb1c3bb0",
+    "branch": "overhaul",
+    "packages": {
+      "anyio": "4.15.1",
+      "fastapi": "0.141.1",
+      "httpx": "0.28.1",
+      "pytest": "9.1.1",
+      "sqlalchemy": "2.0.52",
+      "starlette": "1.7.0"
+    },
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.7"
+  },
+  "source_sha256": "290d6cafee120ed62fcae480de6c465136c3b44461c4bb76431cc236b38607e1",
+  "state": "Complete for local concurrency and authorization acceptance",
+  "unchanged_boundaries": {
+    "api/rate_limit.py": "9a0f589ed41b69c3632a0b1b645ecd818b4410d89db3901f86ebb077f20de2fa",
+    "db/connection.py": "54648b1119b9bfecfb74832ca67d0344d2d2d5a99b900f6e0edea2ed0d4c5197"
+  },
+  "verification": {
+    "broad_run_scope": "Includes 9 older unrelated uncommitted benchmark tests outside C04 delivery",
+    "coverage_percent": 81.46,
+    "coverage_required": 70,
+    "full_backend": {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/",
+        "-q",
+        "--tb=short",
+        "--cov=api",
+        "--cov=config",
+        "--cov=db",
+        "--cov=preprocessing",
+        "--cov=ingestion",
+        "--cov=orchestration",
+        "--cov=schema",
+        "--cov=evaluation",
+        "--cov-report=term-missing",
+        "--cov-fail-under=70"
+      ],
+      "exit_code": 0,
+      "safe_environment": {
+        "AUTH_MODE": "disabled",
+        "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c04_regressions_unused",
+        "DEPLOYMENT_ENV": "test",
+        "ENABLE_MOCK_LOGIN": "false",
+        "PERSIST_LOCAL_CHAT": "false",
+        "RUN_POSTGRES_INTEGRATION": "0"
+      }
+    },
+    "full_result": "1705 passed, 51 skipped, 2596 warnings in 85.33s",
+    "git_diff_check": "pass",
+    "new_cases": 21,
+    "pip_check": "No broken requirements found",
+    "preservation": {
+      "C03_files_matching": 6,
+      "P00_files_matching": 36,
+      "db_connection_source_unchanged": true,
+      "planning_links": "pass",
+      "rate_limit_source_unchanged": true,
+      "scientific_artifacts_matching": 7,
+      "unrelated_files": 30,
+      "unrelated_mismatches": []
+    },
+    "required_command": ".venv/bin/python -m pytest tests/test_auth.py tests/test_api_security.py tests/test_rate_limit.py -q --tb=short",
+    "required_result": "87 passed, 1 existing warning in 1.03s",
+    "review": {
+      "implementation": "Complete synchronous auth and limiter lifetimes stay on workers; frozen identities and retry decisions return to the loop; explicit checkpoints honor pending AnyIO cancellation before state/handler dispatch",
+      "independent_probes": "Actual authorization_middleware passed native asyncio and AnyIO cancellation with worker closure, no handler and no identity assignment",
+      "outcome": "No blocking correctness, security or cancellation findings",
+      "resolved_feedback": "Limiter cancellation-test cleanup now releases worker, cancels/gathers retained native task, and awaits closure under bounded shield even on test failures",
+      "reviewer": "c04_boundary_review subagent",
+      "scope": "Read-only actual middleware and final new tests; independent synthetic cancellation probes",
+      "test_coverage": [
+        "Heartbeat, liveness and independent requests progress before auth/limiter worker release",
+        "Actual disposable SQLite transactions materialize identity, commit or roll back and close on one worker",
+        "Simultaneous viewer and researcher retain independent identities and permissions",
+        "Invalid tokens, suspended users, revoked invitations and unverified emails cannot reach handler",
+        "Query and context-exit commit errors roll back and produce 503",
+        "Limiter quota and enter/execute/exit failures retain 429, Retry-After and security headers",
+        "Both cancellation styles close worker resources without handler/state leakage",
+        "OPTIONS and GET/HEAD liveness avoid unavailable identity and quota stores"
+      ]
+    },
+    "ruff": "all active Python paths and C04 evidence scripts pass",
+    "scope_contract": "current",
+    "shared_limiter_postgres": "Not rerun: shared limiter SQL/storage code unchanged; specification requires actual disposable PostgreSQL integration only if that code changes",
+    "skip_reason": "39 preexisting PostgreSQL cases plus 12 opt-in C03 cases; no live database URL or RUN_POSTGRES_INTEGRATION opt-in used"
+  },
+  "working_tree": "C04 uncommitted on top of C03 checkpoint; 30 older unrelated files preserved"
+}

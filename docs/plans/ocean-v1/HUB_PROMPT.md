@@ -18,12 +18,16 @@ P00, the synthetic local UI/UX prototype, is accepted and Complete as of
 2026-10-14 JST. C01 scope validation is also Complete with a verified offline
 receipt. C02 derived-evidence software and synthetic acceptance are Complete;
 read handoffs/C02.md. C03 retention integrity is also Complete with actual
-disposable PostgreSQL acceptance; read handoffs/C03.md. C04 is recommended next.
+disposable PostgreSQL acceptance; read handoffs/C03.md. C04 authentication responsiveness is Complete locally;
+read handoffs/C04.md. C03 is checkpointed locally as 9a2d225; remote
+delivery is explicitly approved by the user on 2026-10-15 JST; hosted acceptance
+is being verified.
 Proceed component
 by component with explicit user selection. The current plan revision does not itself authorize
 UI/backend implementation, tests, cloud provisioning, data transfer or deployment.
-P00 and C01–C03 local application work and appropriate checks were authorized and
-are complete. C04–C27 implementation remains unselected; planning/recovery inspection outside
+P00 and C01–C03 local application work and appropriate checks are complete.
+C04 local implementation and subagents are authorized; local acceptance is complete. C05–C27 remain
+unselected; planning/recovery inspection outside
 the selected component is read-only unless documentation edits are requested.
 Do not create other chats or begin components merely because this hub exists.
 

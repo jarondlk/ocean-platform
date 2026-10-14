@@ -1,6 +1,6 @@
 # C04 — Authentication responsiveness
 
-**Status:** Not started. **Prerequisites:** P00. **Contract:** nonblocking authorization boundary.
+**Status:** Complete for local concurrency and authorization acceptance. **Prerequisites:** P00. **Contract:** nonblocking authorization boundary.
 
 ## Revised delivery boundary
 
@@ -18,7 +18,7 @@ Included: moving complete session-owning work off the event loop, existing rate-
 
 ## Existing entry points
 
-Verified sources: [authentication middleware](../../../../api/auth.py), [rate limiting](../../../../api/rate_limit.py) and [database sessions](../../../../db/connection.py). Existing suites include `tests/test_auth.py`, `tests/test_api_security.py` and `tests/test_rate_limit.py`. `authorization_middleware` currently calls `authenticate_request` and the production limiter synchronously before awaiting the downstream application.
+Verified sources: [authentication middleware](../../../../api/auth.py), [rate limiting](../../../../api/rate_limit.py) and [database sessions](../../../../db/connection.py). Existing suites include `tests/test_auth.py`, `tests/test_api_security.py` and `tests/test_rate_limit.py`. At the pinned baseline, `authorization_middleware` called `authenticate_request` and the production limiter synchronously. The repaired middleware offloads each complete synchronous operation through Starlette and returns immutable decisions to the event loop.
 
 ## Interface decisions
 
@@ -31,6 +31,21 @@ Use the application's supported thread-offload mechanism for each complete synch
 3. **Security parity:** verify parallel users, rejected tokens, revoked users, limiter failures, cancellation and errors. Acceptance: prior status codes and attribution survive; every opened session closes and unauthorized requests never reach protected handlers.
 
 Implementation command: `python -m pytest tests/test_auth.py tests/test_api_security.py tests/test_rate_limit.py`. Extend these suites with event-driven concurrency tests. Run PostgreSQL limiter integration only against an already configured disposable test database when the shared limiter code changes; record gated skips. No throughput claim or production responsiveness measurement is implied by these local tests.
+
+## Completed local acceptance
+
+Both new baseline regressions fail at the old event-loop boundary. The repaired
+three required suites pass 87 cases, including 21 new concurrency/lifecycle/
+security cases. The full backend suite passes 1,705 tests, with 51 expected
+PostgreSQL-gated skips and 81.46% coverage. Independent review and Ruff pass.
+Authentication uses the existing real session context in disposable SQLite
+fixtures; limiter tests exercise the real limiter with an isolated fake transaction.
+Both native asyncio and AnyIO cancellation close worker resources without
+handler/state leakage. Explicit checkpoints after offload honor shielded pending
+cancellation. Shared limiter SQL/storage and database-session code are unchanged,
+so no new actual PostgreSQL limiter acceptance is claimed or required for this
+repair. Exact hashes, commands and baseline logs are in
+[the handoff](../handoffs/C04.md) and [receipt](../evidence/C04/verification.json).
 
 ## Compatibility, rollback and handoff
 

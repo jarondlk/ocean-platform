@@ -15,6 +15,12 @@ PostgreSQL cases; see [its handoff](handoffs/C03.md). This establishes the exist
 chat-record foundation only. Later snapshot/receipt protection and assembled G2
 acceptance remain C09/C17/C21/C26 work; production cleanup was not run.
 
+C04 local authentication responsiveness is complete: deterministic event-driven
+concurrency, worker-owned resource lifetimes, permission/attribution parity and
+both cancellation styles pass. See [its handoff](handoffs/C04.md). This does not
+complete assembled G2 or establish production throughput; shared limiter SQL
+remains unchanged and PostgreSQL operational integration is still gated.
+
 ## Required behavior
 
 | ID | Requirement and observable acceptance | Implementation owners | Integration gate |

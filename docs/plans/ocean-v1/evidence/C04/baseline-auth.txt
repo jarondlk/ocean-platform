@@ -1,0 +1,102 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_c04_delayed_authentication_allows_heartbeat_and_public_liveness _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11ede34d0>
+
+    def test_c04_delayed_authentication_allows_heartbeat_and_public_liveness(monkeypatch):
+        release = threading.Event()
+        handlers = []
+        user = CurrentUser(
+            id=uuid.uuid4(), email="viewer@synthetic.invalid", display_name=None,
+            role="viewer", account_type="research", status="active",
+            permissions=ROLE_PERMISSIONS["viewer"], auth_provider="oidc",
+        )
+        monkeypatch.setenv("DEPLOYMENT_ENV", "test")
+
+        async def scenario():
+            loop = asyncio.get_running_loop()
+            loop_thread = threading.get_ident()
+            started = asyncio.Event()
+            heartbeat = asyncio.Event()
+
+            def delayed_authentication(_request):
+                # The old path fails this guard instead of deadlocking the test's
+                # event loop. The fixed path remains blocked until sibling work runs.
+                assert threading.get_ident() != loop_thread, "Authentication blocks the event loop"
+                loop.call_soon_threadsafe(started.set)
+                assert release.wait(5), "Authentication barrier was never released"
+                return user
+
+            async def protected(request):
+                handlers.append(api_auth.get_current_user(request).id)
+                return JSONResponse({"ok": True})
+
+            async def live(_request):
+                return JSONResponse({"status": "live"})
+
+            monkeypatch.setattr(api_auth, "authenticate_request", delayed_authentication)
+            request = _c04_request()
+            pending = asyncio.create_task(api_auth.authorization_middleware(request, protected))
+            try:
+                await _c04_wait_for_worker(started, pending)
+                loop.call_soon(heartbeat.set)
+                response = await api_auth.authorization_middleware(
+                    _c04_request(path="/health/live"), live
+                )
+                await asyncio.wait_for(heartbeat.wait(), 5)
+                assert response.status_code == 200
+                assert not pending.done()
+                assert handlers == []
+                assert not hasattr(request.state, "current_user")
+                release.set()
+                response = await pending
+                assert response.status_code == 200
+                assert handlers == [user.id]
+            finally:
+                release.set()
+                await asyncio.gather(pending, return_exceptions=True)
+
+>       asyncio.run(scenario())
+
+tests/test_auth.py:995:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py:194: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+tests/test_auth.py:977: in scenario
+    await _c04_wait_for_worker(started, pending)
+tests/test_auth.py:934: in _c04_wait_for_worker
+    await request
+api/auth.py:519: in authorization_middleware
+    user = authenticate_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_request = <starlette.requests.Request object at 0x11ede0da0>
+
+    def delayed_authentication(_request):
+        # The old path fails this guard instead of deadlocking the test's
+        # event loop. The fixed path remains blocked until sibling work runs.
+>       assert threading.get_ident() != loop_thread, "Authentication blocks the event loop"
+E       AssertionError: Authentication blocks the event loop
+E       assert 8561655680 != 8561655680
+E        +  where 8561655680 = <built-in function get_ident>()
+E        +    where <built-in function get_ident> = threading.get_ident
+
+tests/test_auth.py:961: AssertionError
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_auth.py::test_c04_delayed_authentication_allows_heartbeat_and_public_liveness
+1 failed, 55 deselected, 1 warning in 0.62s

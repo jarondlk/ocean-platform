@@ -16,11 +16,13 @@ from datetime import datetime, timezone
 from typing import Any, Callable, Dict, FrozenSet, Mapping, Optional
 
 import jwt
+from anyio.lowlevel import checkpoint
 from fastapi import HTTPException, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
+from starlette.concurrency import run_in_threadpool
 
 import config
 from api.rate_limit import policy_for_request, rate_limiter
@@ -516,7 +518,12 @@ async def authorization_middleware(
         return response
 
     try:
-        user = authenticate_request(request)
+        # Keep token resolution and the complete session lifetime in one worker.
+        # Only the frozen identity crosses back to the event loop.
+        user = await run_in_threadpool(authenticate_request, request)
+        # AnyIO shields a running worker; honor pending cancellation once its
+        # session closes, before continuing authorization or handler dispatch.
+        await checkpoint()
         permission = route_permission(request.method, request.url.path)
         if permission is None:
             raise AuthenticationFailure(403, "Access to this route is denied")
@@ -528,10 +535,13 @@ async def authorization_middleware(
         if config.production_like_environment():
             policy = policy_for_request(request.method, request.url.path)
             if policy is not None:
-                retry_after = rate_limiter.retry_after(
+                # The limiter opens, consumes and closes its own connection.
+                retry_after = await run_in_threadpool(
+                    rate_limiter.retry_after,
                     subject=str(user.id),
                     policy=policy,
                 )
+                await checkpoint()
                 if retry_after is not None:
                     return JSONResponse(
                         status_code=429,

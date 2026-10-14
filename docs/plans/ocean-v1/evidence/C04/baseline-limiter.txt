@@ -1,0 +1,58 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_delayed_production_limiter_allows_heartbeat_and_other_requests ______
+  + Exception Group Traceback (most recent call last):
+  |   File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/tests/test_rate_limit.py", line 321, in test_delayed_production_limiter_allows_heartbeat_and_other_requests
+  |     anyio.run(scenario)
+  |   File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/anyio/_core/_eventloop.py", line 83, in run
+  |     return async_backend.run(func, args, {}, backend_options)
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 2548, in run
+  |     return runner.run(wrapper())
+  |            ^^^^^^^^^^^^^^^^^^^^^
+  |   File "/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 118, in run
+  |     return self._loop.run_until_complete(task)
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+  |     return future.result()
+  |            ^^^^^^^^^^^^^^^
+  |   File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 2531, in wrapper
+  |     return await func(*args)
+  |            ^^^^^^^^^^^^^^^^^
+  |   File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/tests/test_rate_limit.py", line 284, in scenario
+  |     async with anyio.create_task_group() as tasks:
+  |                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/anyio/_core/_tasks.py", line 327, in _run_coro
+    |     retval = await self._coro
+    |              ^^^^^^^^^^^^^^^^
+    |   File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/tests/test_rate_limit.py", line 273, in slow_request_task
+    |     response = await api_auth.authorization_middleware(slow_request, handler)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/api/auth.py", line 531, in authorization_middleware
+    |     retry_after = rate_limiter.retry_after(
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/api/rate_limit.py", line 168, in retry_after
+    |     row = connection.execute(
+    |           ^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/tests/test_rate_limit.py", line 212, in execute
+    |     assert threading.get_ident() != self.loop_thread, (
+    | AssertionError: Production rate limiting blocked the event-loop thread
+    | assert 8561655680 != 8561655680
+    |  +  where 8561655680 = <built-in function get_ident>()
+    |  +    where <built-in function get_ident> = threading.get_ident
+    |  +  and   8561655680 = <tests.test_rate_limit._GatedRateLimitStore object at 0x11eca9a60>.loop_thread
+    +------------------------------------
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_rate_limit.py::test_delayed_production_limiter_allows_heartbeat_and_other_requests
+1 failed, 1 warning in 0.58s

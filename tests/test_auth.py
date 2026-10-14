@@ -1,13 +1,19 @@
 from __future__ import annotations
 
+import asyncio
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
+import threading
 import uuid
 
+import anyio
 import jwt
 import pytest
+from fastapi import Request
+from fastapi.responses import JSONResponse
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
@@ -25,6 +31,7 @@ from api.auth import (
 )
 from api.main import app
 from db.app_models import AppBase, AppUser, AuditEvent, UserInvitation
+import db.connection as db_connection
 from db.models import CorpusBase
 
 
@@ -900,3 +907,468 @@ def test_every_registered_api_route_has_an_explicit_policy():
             if route_permission(method, path) is None:
                 missing.append((method, path))
     assert missing == []
+
+
+def _c04_request(*, path="/me", token="synthetic-token"):
+    return Request(
+        {
+            "type": "http",
+            "method": "GET",
+            "path": path,
+            "headers": [(b"authorization", f"Bearer {token}".encode())],
+            "scheme": "http",
+            "server": ("test.invalid", 80),
+            "client": ("127.0.0.1", 12345),
+            "query_string": b"",
+        }
+    )
+
+
+async def _c04_wait_for_worker(started, *requests):
+    """Fail promptly on the old synchronous boundary without hanging a barrier."""
+    waiting = asyncio.create_task(started.wait())
+    try:
+        completed, _ = await asyncio.wait(
+            [waiting, *requests], timeout=5, return_when=asyncio.FIRST_COMPLETED
+        )
+        for request in requests:
+            if request in completed:
+                await request
+                pytest.fail("Authentication completed before its barrier was released")
+        assert waiting in completed, "Authentication worker never reached its barrier"
+    finally:
+        waiting.cancel()
+        await asyncio.gather(waiting, return_exceptions=True)
+
+
+def test_c04_delayed_authentication_allows_heartbeat_and_public_liveness(monkeypatch):
+    release = threading.Event()
+    handlers = []
+    user = CurrentUser(
+        id=uuid.uuid4(), email="viewer@synthetic.invalid", display_name=None,
+        role="viewer", account_type="research", status="active",
+        permissions=ROLE_PERMISSIONS["viewer"], auth_provider="oidc",
+    )
+    monkeypatch.setenv("DEPLOYMENT_ENV", "test")
+
+    async def scenario():
+        loop = asyncio.get_running_loop()
+        loop_thread = threading.get_ident()
+        started = asyncio.Event()
+        heartbeat = asyncio.Event()
+
+        def delayed_authentication(_request):
+            # The old path fails this guard instead of deadlocking the test's
+            # event loop. The fixed path remains blocked until sibling work runs.
+            assert threading.get_ident() != loop_thread, "Authentication blocks the event loop"
+            loop.call_soon_threadsafe(started.set)
+            assert release.wait(5), "Authentication barrier was never released"
+            return user
+
+        async def protected(request):
+            handlers.append(api_auth.get_current_user(request).id)
+            return JSONResponse({"ok": True})
+
+        async def live(_request):
+            return JSONResponse({"status": "live"})
+
+        monkeypatch.setattr(api_auth, "authenticate_request", delayed_authentication)
+        request = _c04_request()
+        pending = asyncio.create_task(api_auth.authorization_middleware(request, protected))
+        try:
+            await _c04_wait_for_worker(started, pending)
+            loop.call_soon(heartbeat.set)
+            response = await api_auth.authorization_middleware(
+                _c04_request(path="/health/live"), live
+            )
+            await asyncio.wait_for(heartbeat.wait(), 5)
+            assert response.status_code == 200
+            assert not pending.done()
+            assert handlers == []
+            assert not hasattr(request.state, "current_user")
+            release.set()
+            response = await pending
+            assert response.status_code == 200
+            assert handlers == [user.id]
+        finally:
+            release.set()
+            await asyncio.gather(pending, return_exceptions=True)
+
+    asyncio.run(scenario())
+
+
+class _C04AuthStore:
+    """Synthetic store controls; no session or ORM object reaches a handler."""
+
+    def __init__(self, engine):
+        self.engine = engine
+        self.traces = []
+        self.lock = threading.Lock()
+        self.release = threading.Event()
+        self.block_lookup = False
+        self.failure = None
+        self.expected_waiters = 1
+        self.waiters = 0
+        self.closed = 0
+
+    def bind_loop(self, *, block_lookup=False, expected_waiters=1):
+        self.loop = asyncio.get_running_loop()
+        self.loop_thread = threading.get_ident()
+        self.started = asyncio.Event()
+        self.all_closed = asyncio.Event()
+        self.block_lookup = block_lookup
+        self.expected_waiters = expected_waiters
+
+    def wait_for_release(self):
+        assert threading.get_ident() != self.loop_thread, "Authentication lookup blocks the event loop"
+        with self.lock:
+            self.waiters += 1
+            if self.waiters == self.expected_waiters:
+                self.loop.call_soon_threadsafe(self.started.set)
+        assert self.release.wait(5), "Authentication lookup barrier was never released"
+
+    def assert_closed_on_workers(self):
+        assert self.traces
+        for trace in self.traces:
+            assert trace["owner"] != self.loop_thread
+            assert trace["operations"][0] == "create"
+            assert trace["operations"][-1] == "close"
+            assert len(set(trace["threads"])) == 1
+        assert self.closed == len(self.traces)
+
+
+@pytest.fixture
+def c04_auth_store(monkeypatch, tmp_path):
+    """Real transactions use a disposable SQLite file and checked sessions."""
+    engine = create_engine(f"sqlite+pysqlite:///{tmp_path / 'c04-auth.sqlite'}")
+    AppBase.metadata.create_all(engine)
+    with Session(engine) as session:
+        now = datetime.now(timezone.utc)
+        for subject, role, status in (
+            ("viewer", "viewer", "active"),
+            ("researcher", "researcher", "active"),
+            ("suspended", "viewer", "suspended"),
+        ):
+            session.add(
+                AppUser(
+                    id=uuid.uuid5(uuid.NAMESPACE_URL, f"c04-synthetic:{subject}"),
+                    auth_provider="oidc", auth_subject=subject,
+                    email=f"{subject}@synthetic.invalid", role=role,
+                    account_type="research", status=status, last_login_at=now,
+                )
+            )
+        for subject, status in (("invited", "pending"), ("revoked", "revoked")):
+            session.add(
+                UserInvitation(
+                    email=f"{subject}@synthetic.invalid", role="viewer",
+                    account_type="research", status=status,
+                    expires_at=now + timedelta(days=1),
+                )
+            )
+        session.commit()
+
+    store = _C04AuthStore(engine)
+
+    class CheckedSession(Session):
+        def __init__(self):
+            super().__init__(bind=engine, expire_on_commit=False)
+            self.trace = {"owner": threading.get_ident(), "operations": [], "threads": []}
+            with store.lock:
+                store.traces.append(self.trace)
+            self.record("create")
+            self.waited = False
+
+        def record(self, operation):
+            thread = threading.get_ident()
+            assert thread == self.trace["owner"], f"Session crossed threads during {operation}"
+            self.trace["operations"].append(operation)
+            self.trace["threads"].append(thread)
+
+        def scalar(self, *args, **kwargs):
+            self.record("query")
+            if store.block_lookup and not self.waited:
+                self.waited = True
+                store.wait_for_release()
+            if store.failure == "query":
+                raise SQLAlchemyError("Synthetic identity lookup failure")
+            return super().scalar(*args, **kwargs)
+
+        def flush(self, *args, **kwargs):
+            self.record("flush")
+            return super().flush(*args, **kwargs)
+
+        def commit(self):
+            self.record("commit")
+            if store.failure == "commit":
+                raise SQLAlchemyError("Synthetic identity commit failure")
+            return super().commit()
+
+        def rollback(self):
+            self.record("rollback")
+            return super().rollback()
+
+        def close(self):
+            self.record("close")
+            try:
+                return super().close()
+            finally:
+                with store.lock:
+                    store.closed += 1
+                    if store.closed >= store.expected_waiters:
+                        store.loop.call_soon_threadsafe(store.all_closed.set)
+
+    resolve = api_auth.resolve_identity
+
+    def checked_resolve(session, claims):
+        session.trace["subject"] = claims["sub"]
+        session.record("resolve")
+        current = resolve(session, claims)
+        session.record("materialize")
+        assert isinstance(current, CurrentUser)
+        return current
+
+    monkeypatch.setenv("DEPLOYMENT_ENV", "test")
+    monkeypatch.setenv("AUTH_MODE", "required")
+    monkeypatch.setenv("AUTH_ALLOWED_PROVIDERS", "oidc")
+    monkeypatch.setenv("PERSIST_LOCAL_CHAT", "false")
+    monkeypatch.setenv("ENABLE_MOCK_LOGIN", "false")
+    monkeypatch.setenv("INTERNAL_AUTH_SECRET", TOKEN_SECRET)
+    monkeypatch.setenv("INTERNAL_AUTH_ISSUER", "ocean-platform-frontend")
+    monkeypatch.setenv("INTERNAL_AUTH_AUDIENCE", "ocean-platform-api")
+    # Exercise the actual transaction context manager, including context exit
+    # commit errors, rather than replacing it with a fake lifecycle.
+    monkeypatch.setattr(db_connection, "get_session_factory", lambda: CheckedSession)
+    monkeypatch.setattr(api_auth, "get_session", db_connection.get_session)
+    monkeypatch.setattr(api_auth, "resolve_identity", checked_resolve)
+    try:
+        yield store
+    finally:
+        store.release.set()
+        engine.dispose()
+
+
+def _c04_identity_token(subject, *, verified=True):
+    now = datetime.now(timezone.utc)
+    return jwt.encode(
+        {
+            "sub": subject, "provider": "oidc",
+            "email": f"{subject}@synthetic.invalid", "email_verified": verified,
+            "iss": "ocean-platform-frontend", "aud": "ocean-platform-api",
+            "iat": now, "exp": now + timedelta(seconds=60),
+        },
+        TOKEN_SECRET,
+        algorithm="HS256",
+    )
+
+
+def _c04_assert_security_headers(response):
+    assert response.headers["Cache-Control"] == "no-store"
+    assert response.headers["X-Content-Type-Options"] == "nosniff"
+    if response.status_code == 401:
+        assert response.headers["WWW-Authenticate"] == "Bearer"
+    else:
+        assert "WWW-Authenticate" not in response.headers
+
+
+def test_c04_complete_identity_session_lifetime_runs_on_one_worker(c04_auth_store):
+    store = c04_auth_store
+
+    async def scenario():
+        store.bind_loop()
+        request = _c04_request(token=_c04_identity_token("invited"))
+
+        async def protected(request):
+            store.assert_closed_on_workers()
+            assert isinstance(api_auth.get_current_user(request), CurrentUser)
+            assert threading.get_ident() == store.loop_thread
+            return JSONResponse({"ok": True})
+
+        response = await api_auth.authorization_middleware(request, protected)
+        assert response.status_code == 200
+        _c04_assert_security_headers(response)
+        operations = store.traces[0]["operations"]
+        assert {"create", "resolve", "query", "flush", "materialize", "commit", "close"} <= set(operations)
+        assert operations.index("materialize") < operations.index("commit") < operations.index("close")
+
+    asyncio.run(scenario())
+    with Session(store.engine) as session:
+        invited = session.query(AppUser).filter_by(auth_subject="invited").one()
+        invitation = session.query(UserInvitation).filter_by(email=invited.email).one()
+        assert invitation.status == "accepted"
+
+
+def test_c04_parallel_authentication_preserves_each_users_identity(c04_auth_store):
+    store = c04_auth_store
+    observed = []
+
+    async def scenario():
+        store.bind_loop(block_lookup=True, expected_waiters=2)
+        requests = [
+            _c04_request(token=_c04_identity_token(subject))
+            for subject in ("viewer", "researcher")
+        ]
+
+        async def protected(request):
+            current = api_auth.get_current_user(request)
+            trace = next(trace for trace in store.traces if trace["subject"] == current.role)
+            assert trace["operations"][-1] == "close"
+            observed.append((current.id, current.email, current.role, current.permissions))
+            return JSONResponse({"ok": True})
+
+        pending = [
+            asyncio.create_task(api_auth.authorization_middleware(request, protected))
+            for request in requests
+        ]
+        try:
+            await _c04_wait_for_worker(store.started, *pending)
+            assert observed == []
+            assert all(not hasattr(request.state, "current_user") for request in requests)
+            store.release.set()
+            responses = await asyncio.gather(*pending)
+            assert all(response.status_code == 200 for response in responses)
+            assert requests[0].state.current_user is not requests[1].state.current_user
+        finally:
+            store.release.set()
+            await asyncio.gather(*pending, return_exceptions=True)
+        store.assert_closed_on_workers()
+
+    asyncio.run(scenario())
+    assert set(observed) == {
+        (
+            uuid.uuid5(uuid.NAMESPACE_URL, f"c04-synthetic:{subject}"),
+            f"{subject}@synthetic.invalid", subject, ROLE_PERMISSIONS[subject],
+        )
+        for subject in ("viewer", "researcher")
+    }
+
+
+@pytest.mark.parametrize(
+    ("subject", "verified", "status_code"),
+    [("bad-token", True, 401), ("suspended", True, 403), ("revoked", True, 403), ("viewer", False, 403)],
+)
+def test_c04_rejected_identity_never_sets_state_or_reaches_handler(
+    c04_auth_store, subject, verified, status_code,
+):
+    store = c04_auth_store
+    handlers = []
+
+    async def scenario():
+        store.bind_loop()
+        token = "invalid.jwt.token" if subject == "bad-token" else _c04_identity_token(subject, verified=verified)
+        request = _c04_request(token=token)
+
+        async def protected(_request):
+            handlers.append("unauthorized")
+            return JSONResponse({"ok": True})
+
+        response = await api_auth.authorization_middleware(request, protected)
+        assert response.status_code == status_code
+        _c04_assert_security_headers(response)
+        assert handlers == []
+        assert not hasattr(request.state, "current_user")
+        if subject == "bad-token":
+            assert store.traces == []
+        else:
+            store.assert_closed_on_workers()
+            assert "rollback" in store.traces[0]["operations"]
+            assert "commit" not in store.traces[0]["operations"]
+
+    asyncio.run(scenario())
+
+
+@pytest.mark.parametrize("failure", ["query", "commit"])
+def test_c04_authentication_database_errors_roll_back_and_fail_closed(c04_auth_store, failure):
+    store = c04_auth_store
+    store.failure = failure
+    handlers = []
+
+    async def scenario():
+        store.bind_loop()
+        request = _c04_request(token=_c04_identity_token("invited"))
+
+        async def protected(_request):
+            handlers.append("uncommitted")
+            return JSONResponse({"ok": True})
+
+        response = await api_auth.authorization_middleware(request, protected)
+        assert response.status_code == 503
+        assert b"Authentication database is unavailable" in response.body
+        _c04_assert_security_headers(response)
+        assert handlers == []
+        assert not hasattr(request.state, "current_user")
+        store.assert_closed_on_workers()
+        assert "rollback" in store.traces[0]["operations"]
+        if failure == "commit":
+            assert "materialize" in store.traces[0]["operations"]
+            assert "commit" in store.traces[0]["operations"]
+
+    asyncio.run(scenario())
+    with Session(store.engine) as session:
+        assert session.query(AppUser).filter_by(auth_subject="invited").count() == 0
+        assert session.query(UserInvitation).filter_by(email="invited@synthetic.invalid").one().status == "pending"
+
+
+@pytest.mark.parametrize("cancellation", ["asyncio", "anyio"])
+def test_c04_cancelled_authentication_closes_session_without_handler_or_state(
+    c04_auth_store, cancellation,
+):
+    store = c04_auth_store
+    handlers = []
+
+    async def scenario():
+        store.bind_loop(block_lookup=True)
+        request = _c04_request(token=_c04_identity_token("viewer"))
+
+        async def protected(request):
+            handlers.append(api_auth.get_current_user(request).email)
+            return JSONResponse({"ok": True})
+
+        if cancellation == "asyncio":
+            pending = asyncio.create_task(api_auth.authorization_middleware(request, protected))
+            try:
+                await _c04_wait_for_worker(store.started, pending)
+                pending.cancel()
+                with pytest.raises(asyncio.CancelledError):
+                    await pending
+            finally:
+                store.release.set()
+                await asyncio.gather(pending, return_exceptions=True)
+                await asyncio.wait_for(store.all_closed.wait(), 5)
+        else:
+            scopes = []
+            finished = anyio.Event()
+
+            async def scoped_request():
+                with anyio.CancelScope() as scope:
+                    scopes.append(scope)
+                    await api_auth.authorization_middleware(request, protected)
+                finished.set()
+
+            async with anyio.create_task_group() as group:
+                group.start_soon(scoped_request)
+                try:
+                    await asyncio.wait_for(store.started.wait(), 5)
+                    scopes[0].cancel()
+                finally:
+                    # Release before task-group cleanup: AnyIO shields worker
+                    # completion, so scope cancellation alone cannot stop it.
+                    store.release.set()
+                with anyio.fail_after(5):
+                    await finished.wait()
+                    await store.all_closed.wait()
+
+        store.assert_closed_on_workers()
+        assert handlers == []
+        assert not hasattr(request.state, "current_user")
+
+        # A later request uses a fresh state and session after the cancelled one.
+        store.block_lookup = False
+        later = _c04_request(token=_c04_identity_token("researcher"))
+        response = await api_auth.authorization_middleware(later, protected)
+        assert response.status_code == 200
+        assert handlers == ["researcher@synthetic.invalid"]
+        assert later.state.current_user.role == "researcher"
+        assert not hasattr(request.state, "current_user")
+        store.assert_closed_on_workers()
+
+    anyio.run(scenario)

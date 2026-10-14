@@ -1,0 +1,14 @@
+{
+  "python": "3.12.7",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "packages": {
+    "fastapi": "0.141.1",
+    "starlette": "1.7.0",
+    "anyio": "4.15.1",
+    "sqlalchemy": "2.0.52",
+    "pytest": "9.1.1",
+    "httpx": "0.28.1"
+  },
+  "branch": "overhaul",
+  "base_checkpoint": "9a2d225513a4d6c4a87ced00535457e7cb1c3bb0"
+}

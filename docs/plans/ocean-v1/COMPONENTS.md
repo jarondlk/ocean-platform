@@ -1,6 +1,6 @@
 # Component map
 
-P00 is **In progress**; C01–C27 are **Not started**. The sequence is now P00 local UI/UX review,
+P00 and C01–C04 are **Complete locally**; C05–C27 are **Not started**. The sequence is now P00 local UI/UX review,
 then the original C01–C27 backend/integration components. IDs C01–C27 are retained.
 This map does not authorize implementation. Read [SITE_SEPARATION.md](SITE_SEPARATION.md)
 and [UI_UX_BRIEF.md](UI_UX_BRIEF.md), then select one action in [PROMPTS.md](PROMPTS.md).
@@ -46,7 +46,7 @@ with the user before completing its UX gate. Afterwards, C01 is the recommended
 first backend component and is now complete; one C01–C27 component at a time remains the default.
 Planning any component can proceed before prerequisite implementation. C01 and
 C02 are now Complete locally; C03 retention integrity is also Complete with
-disposable PostgreSQL acceptance. C04 is recommended after user selection.
+disposable PostgreSQL acceptance. C04 authentication responsiveness is Complete locally; C05 is recommended after selection.
 See STATUS and the delivery audit for current verification rather than historical
 component receipts alone.
 

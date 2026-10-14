@@ -1,0 +1,18 @@
+{
+  "reviewer": "c04_boundary_review subagent",
+  "scope": "Read-only actual middleware and final new tests; independent synthetic cancellation probes",
+  "outcome": "No blocking correctness, security or cancellation findings",
+  "implementation": "Complete synchronous auth and limiter lifetimes stay on workers; frozen identities and retry decisions return to the loop; explicit checkpoints honor pending AnyIO cancellation before state/handler dispatch",
+  "resolved_feedback": "Limiter cancellation-test cleanup now releases worker, cancels/gathers retained native task, and awaits closure under bounded shield even on test failures",
+  "independent_probes": "Actual authorization_middleware passed native asyncio and AnyIO cancellation with worker closure, no handler and no identity assignment",
+  "test_coverage": [
+    "Heartbeat, liveness and independent requests progress before auth/limiter worker release",
+    "Actual disposable SQLite transactions materialize identity, commit or roll back and close on one worker",
+    "Simultaneous viewer and researcher retain independent identities and permissions",
+    "Invalid tokens, suspended users, revoked invitations and unverified emails cannot reach handler",
+    "Query and context-exit commit errors roll back and produce 503",
+    "Limiter quota and enter/execute/exit failures retain 429, Retry-After and security headers",
+    "Both cancellation styles close worker resources without handler/state leakage",
+    "OPTIONS and GET/HEAD liveness avoid unavailable identity and quota stores"
+  ]
+}

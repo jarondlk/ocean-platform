@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C03 are Complete locally. C04–C27 are not started.**
+**P00 and C01–C04 are Complete locally. C05–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -19,8 +19,8 @@ for the accepted direction and verified source receipt. C01 scientific scope
 validation is Complete; read [its handoff](handoffs/C01.md). C02 derived-evidence
 software and synthetic acceptance are Complete; read [its handoff](handoffs/C02.md).
 C03 retention integrity is Complete with actual disposable PostgreSQL acceptance;
-read [its handoff](handoffs/C03.md). C04 is recommended next; later components
-require separate selection.
+read [its handoff](handoffs/C03.md). C04 authentication responsiveness is Complete locally;
+read [its handoff](handoffs/C04.md). Later components require separate selection.
 
 The user subsequently authorized audited repository delivery. See the
 [C01/C02 delivery audit](DELIVERY_AUDIT_2026-10-14.md) and its final source receipt;
@@ -114,6 +114,6 @@ not a requirement to reset future work to this commit.
 Existing unrelated README, audit and benchmark modifications are preserved.
 P00 progress is recorded in [STATUS.md](STATUS.md) and [its handoff](handoffs/P00.md).
 C01 and C02 are complete with offline evidence; C03 is complete with local unit
-and actual disposable PostgreSQL evidence. C04–C27 remain Not started.
+and actual disposable PostgreSQL evidence. C04 is Complete locally; C05–C27 remain Not started.
 The 2026-10-13 revision adds P00 before the original 27 numbered components; the
 setup receipt retains its historical counts and records this amendment.
