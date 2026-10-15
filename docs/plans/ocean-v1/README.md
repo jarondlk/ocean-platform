@@ -160,3 +160,9 @@ C02/C09 accepted sources reconcile, and C10 exact-source hosted CI is green.
 See [the readiness audit](C11_READINESS_AUDIT_2026-10-15.md). C11 was subsequently
 selected and is Complete locally; read [its handoff](handoffs/C11.md) and
 [SST contract](C11_SST_ADAPTER_CONTRACT.md). Source `41cd876` is committed/pushed with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38744193298); [delivery receipt](evidence/C11/delivery.json).
+
+C12 readiness is verified at `1d3b7b6`: 116 baseline, 677 prerequisite and 83
+additional eDNA semantic tests pass; seven generated contracts are current.
+C01/C09 accepted sources reconcile. See [the readiness audit](C12_READINESS_AUDIT_2026-10-15.md)
+for raw-method representation, cohort/denominator and retrieval-independence work.
+C12 remains Not started and unselected.

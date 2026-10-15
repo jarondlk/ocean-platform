@@ -1,0 +1,147 @@
+{
+  "checks": [
+    {
+      "name": "baseline",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_edna_service.py",
+        "tests/test_edna_aggregation.py",
+        "tests/test_edna_taxonomy.py",
+        "tests/test_api_edna.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "116 passed, 1 warning in 3.02s"
+    },
+    {
+      "name": "prerequisites",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_publication_scope_contract.py",
+        "tests/test_auto_settings.py",
+        "tests/test_research_chat.py",
+        "tests/test_chat_source_scope.py",
+        "tests/test_conference_demo.py",
+        "tests/test_provisional_research_demo.py",
+        "tests/test_regional_publication.py",
+        "tests/test_research_readiness.py",
+        "tests/test_conference_review.py",
+        "tests/test_catalogue_snapshots.py",
+        "tests/test_catalogue_snapshot_capture.py",
+        "tests/test_catalogue_snapshot_transfer.py",
+        "tests/test_catalogue_snapshot_fixtures.py",
+        "tests/test_context_catalogue_contract.py",
+        "tests/test_context_catalogue_fixtures.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "677 passed, 167 warnings in 21.05s"
+    },
+    {
+      "name": "edna-semantics",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_anemone_classification.py",
+        "tests/test_classification_application.py",
+        "tests/test_edna_analysis.py",
+        "tests/test_anemone_catalogue.py",
+        "tests/test_anemone_nontarget.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "83 passed, 1 warning in 17.18s"
+    },
+    {
+      "name": "scope",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_chat_scope.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "No output; exit recorded above"
+    },
+    {
+      "name": "schema",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_context_catalogue.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "Context catalogue schema is current"
+    },
+    {
+      "name": "browser-types",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_types.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "Catalogue browser contract is current."
+    },
+    {
+      "name": "examples",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_examples.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C08 shared examples are current"
+    },
+    {
+      "name": "snapshots",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_snapshot.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C09 snapshot schema and synthetic byte examples are current"
+    },
+    {
+      "name": "neighbor-adapters",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_adapter.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C10 frozen adapter schema and logical examples are current"
+    },
+    {
+      "name": "neighbor-sst",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_sst_catalogue.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C11 frozen SST schema and logical examples are current"
+    }
+  ],
+  "safe_environment": {
+    "AUTH_MODE": "disabled",
+    "DEPLOYMENT_ENV": "test",
+    "ENABLE_MOCK_LOGIN": "false",
+    "PERSIST_LOCAL_CHAT": "false",
+    "RUN_POSTGRES_INTEGRATION": "0",
+    "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c12_readiness_unused",
+    "MODEL_PROVIDER": "ollama",
+    "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+  },
+  "persistent_service_startups": 0,
+  "temporary_loopback_fixture_servers": "Semantic fixtures start and close local HTTP servers",
+  "C12_implementation_started": false
+}

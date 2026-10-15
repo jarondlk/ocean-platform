@@ -40,6 +40,13 @@ Keep current eDNA endpoints and classifications compatible. Rollback disables th
 
 ## Exact prompts
 
+Readiness was verified on 2026-10-15 JST at `1d3b7b6`: 116 baseline, 677
+prerequisite and 83 additional eDNA semantic tests pass; seven generated checks
+are current. C01/C09 accepted sources reconcile. Read the
+[readiness audit](../C12_READINESS_AUDIT_2026-10-15.md) for raw/eligible cohort,
+four raw versus two scientific methods, denominator and retrieval-independence
+constraints. This is readiness evidence only; C12 remains Not started/unselected.
+
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c12). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.

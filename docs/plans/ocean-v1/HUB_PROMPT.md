@@ -58,3 +58,9 @@ passes 966 cases; full backend passes 2,829/84 gated PostgreSQL skips with 83.29
 coverage. C11 is committed/pushed as 41cd876 with passing exact-source hosted CI:
 2,820 backend tests/84.04% coverage, 84 actual PostgreSQL cases and both frontend
 gates. Read evidence/C11/delivery.json. C12 remains unselected.
+
+C12 readiness is verified on 2026-10-15 JST against 1d3b7b6: 116 baseline,
+677 prerequisite and 83 eDNA semantic tests pass; seven generated contracts are
+current. Read C12_READINESS_AUDIT_2026-10-15.md and its receipt, including the
+raw-inventory method and retrieval-independence constraints. C12 remains
+Not started and requires explicit implementation selection.
