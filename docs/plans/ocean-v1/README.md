@@ -159,4 +159,4 @@ additional SST semantic/calendar tests pass; six generated contracts are current
 C02/C09 accepted sources reconcile, and C10 exact-source hosted CI is green.
 See [the readiness audit](C11_READINESS_AUDIT_2026-10-15.md). C11 was subsequently
 selected and is Complete locally; read [its handoff](handoffs/C11.md) and
-[SST contract](C11_SST_ADAPTER_CONTRACT.md). Exact-source hosted delivery is pending.
+[SST contract](C11_SST_ADAPTER_CONTRACT.md). Source `41cd876` is committed/pushed with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38744193298); [delivery receipt](evidence/C11/delivery.json).

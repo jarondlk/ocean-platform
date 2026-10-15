@@ -13,7 +13,7 @@ P00 and C01–C11 local work is authorized.
 See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md), [C08](handoffs/C08.md), [C09](handoffs/C09.md) and [C10](handoffs/C10.md) handoffs for current evidence.
 
-Latest completed implementation: **C11 — SST adapter**. Local acceptance is complete: 966 required tests; full backend 2,829 passed/84 gated PostgreSQL skips, 83.29% coverage. Read [the handoff](handoffs/C11.md), [contract](C11_SST_ADAPTER_CONTRACT.md) and [receipt](evidence/C11/verification.json). Exact-source hosted delivery is pending.
+Latest completed implementation: **C11 — SST adapter**. Local acceptance is complete: 966 required tests; full backend 2,829 passed/84 gated PostgreSQL skips, 83.29% coverage. Read [the handoff](handoffs/C11.md), [contract](C11_SST_ADAPTER_CONTRACT.md) and [receipt](evidence/C11/verification.json). Source `41cd876` is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38744193298) passes: 2,820 backend tests/84.04% coverage, 84 actual PostgreSQL cases and both frontend gates. [Delivery receipt](evidence/C11/delivery.json).
 
 C10 — CTD and metagenome adapters: Committed/pushed as `c3d5b8b`; [hosted CI passes](https://github.com/jarondlk/ocean-platform/actions/runs/38731722030). [Delivery receipt](evidence/C10/delivery.json) records 2,570 backend tests/83.68% coverage, 84 actual PostgreSQL cases and both frontend gates. Read [C10 handoff](handoffs/C10.md), [contract](C10_ADAPTER_CONTRACT.md) and [receipt](evidence/C10/verification.json).
 

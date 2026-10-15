@@ -430,3 +430,13 @@ cannot self-approve. Local acceptance passes 966 required tests and 2,829 backen
 tests/83.29% coverage; 84 PostgreSQL cases remain the separate hosted gate.
 No actual source mappings/copies, publication, provider calls, UI/API, C12 or GCP
 deployment is selected. Read handoffs/C11.md and C11_SST_ADAPTER_CONTRACT.md.
+
+### C11 delivery — 2026-10-15 JST
+
+Implementation 41cd876 is committed/pushed with exact-source hosted CI passing:
+2,820 backend tests/84.04% coverage, 84 actual PostgreSQL cases, 132 legacy and
+162 v1 frontend tests, both typechecks/builds and production dependency audits,
+idempotent upsert and isolated backup/restore. Ten accepted C11 source/test/
+generated files, original local receipts and all prior preservation sets are
+unchanged. See evidence/C11/delivery.json. C12, actual source copies/publication,
+provider services and GCP deployment remain unselected.
