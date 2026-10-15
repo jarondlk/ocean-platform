@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C10 are Complete locally; C11–C27 are not started.**
+**P00 and C01–C11 are Complete locally; C12–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -128,7 +128,7 @@ not a requirement to reset future work to this commit.
 Existing unrelated README, audit and benchmark modifications are preserved.
 P00 progress is recorded in [STATUS.md](STATUS.md) and [its handoff](handoffs/P00.md).
 C01 and C02 are complete with offline evidence; C03 is complete with local unit
-and actual disposable PostgreSQL evidence. C04 and C05 are Complete locally; C06 is Complete locally; C07 is Complete locally; C08 is Complete locally; C09 is Complete locally; C10 is Complete locally; C11–C27 remain Not started.
+and actual disposable PostgreSQL evidence. C04 and C05 are Complete locally; C06 is Complete locally; C07 is Complete locally; C08 is Complete locally; C09 is Complete locally; C10 is Complete locally; C11 is Complete locally; C12–C27 remain Not started.
 The 2026-10-13 revision adds P00 before the original 27 numbered components; the
 setup receipt retains its historical counts and records this amendment.
 
@@ -148,14 +148,15 @@ and [delivery receipt](evidence/C09/delivery.json). C10 remains unselected.
 
 C10 readiness is verified at `ae02e89`: 36 baseline and 534 prerequisite tests
 pass; C02/C09 accepted sources reconcile and generated contracts are current.
-See [the readiness audit](C10_READINESS_AUDIT_2026-10-15.md). C10 was subsequently selected and is Complete locally; read [its handoff](handoffs/C10.md) and [adapter contract](C10_ADAPTER_CONTRACT.md). C11 remains unselected.
+See [the readiness audit](C10_READINESS_AUDIT_2026-10-15.md). C10 was subsequently selected and is Complete locally; read [its handoff](handoffs/C10.md) and [adapter contract](C10_ADAPTER_CONTRACT.md). C11 was subsequently selected; see [its handoff](handoffs/C11.md).
 
 C10 is complete and delivered as `c3d5b8b` with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38731722030).
 Read [its handoff](handoffs/C10.md), [adapter contract](C10_ADAPTER_CONTRACT.md)
-and [delivery receipt](evidence/C10/delivery.json). C11 remains unselected.
+and [delivery receipt](evidence/C10/delivery.json). C11 was subsequently selected; see [its handoff](handoffs/C11.md).
 
 C11 readiness is verified at `7570345`: 55 baseline, 482 prerequisite and 69
 additional SST semantic/calendar tests pass; six generated contracts are current.
 C02/C09 accepted sources reconcile, and C10 exact-source hosted CI is green.
-See [the readiness audit](C11_READINESS_AUDIT_2026-10-15.md). C11 remains
-Not started and unselected.
+See [the readiness audit](C11_READINESS_AUDIT_2026-10-15.md). C11 was subsequently
+selected and is Complete locally; read [its handoff](handoffs/C11.md) and
+[SST contract](C11_SST_ADAPTER_CONTRACT.md). Exact-source hosted delivery is pending.

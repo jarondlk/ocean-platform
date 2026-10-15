@@ -408,3 +408,25 @@ upsert and isolated backup/restore. All ten accepted C10 files, fourteen C09 fil
 twelve C08 files and historical/unrelated/scientific/serving evidence are preserved.
 The local receipt remains unchanged; see evidence/C10/delivery.json. No C11, real
 copy/publication, provider service or GCP deployment is selected.
+
+### C11 selection — 2026-10-15 JST
+
+The user selected C11 implementation after readiness checkpoint b73b29b and
+authorized subagents as useful. Work covers source-owned frozen SST products,
+observations, exact scoped operations, sampling-aware coverage and local synthetic
+reproducibility. Prior commit/push approval persists. Separate product generations,
+actual spatial support and UTC/JST/date precision must remain explicit. C12,
+real acquisition/copying/publication, UI/API integration and cloud remain unselected.
+
+### C11 accepted local boundaries — 2026-10-15 JST
+
+C11 passes source-owned SST metadata and primitive Parquet registration, canonical
+product/collection/dataset inventory, exact complete-scope queries and explicit
+daily coverage contracts. Product generations, actual resolution/support, units,
+quality flags/fractions/pixel counts, UTC/JST/date precision and independent copy
+origins are preserved. Grid points and regional means remain distinct. Current
+trusted whole-dataset callbacks supply access and scientific eligibility; metadata
+cannot self-approve. Local acceptance passes 966 required tests and 2,829 backend
+tests/83.29% coverage; 84 PostgreSQL cases remain the separate hosted gate.
+No actual source mappings/copies, publication, provider calls, UI/API, C12 or GCP
+deployment is selected. Read handoffs/C11.md and C11_SST_ADAPTER_CONTRACT.md.

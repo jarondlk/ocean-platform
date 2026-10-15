@@ -1,0 +1,735 @@
+{
+  "datasets": [
+    {
+      "case": "final_regional",
+      "metadata": {
+        "aggregation_method": "Cosine-latitude weighted mean of retained grid-point subsampling",
+        "calendar": "UTC",
+        "collection_id": "synthetic:sst:mur-final:collection",
+        "dataset_id": "synthetic:sst:mur-final",
+        "descriptor": {
+          "family": "remote_sensing",
+          "measurement": "sea_surface_temperature",
+          "product_id": "mur",
+          "product_version": "04.1",
+          "spatial_resolution": 0.05,
+          "spatial_resolution_unit": "degree",
+          "spatial_role": "regional_summary",
+          "temporal_resolution": "daily foundation analysis",
+          "unit": "degC"
+        },
+        "family": "remote_sensing",
+        "measurement_type": "satellite_in_situ_analysis",
+        "methods": [
+          "Final and interim products remain separate",
+          "No inferred grid observations or timestamps"
+        ],
+        "observation_entity": "regional_daily_summary",
+        "observation_precision": "day",
+        "processing_generation": "final",
+        "product_node_id": "c11:product:synthetic-sst:950a31a30b674e7684d0e5fc",
+        "purpose": {
+          "en": "Frozen SST semantics acceptance",
+          "ja": "固定SST意味論の検証"
+        },
+        "qualification": "Synthetic local acceptance only; not scientific publication or approval",
+        "quality_policy": "Producer valid status is eligible; invalid and explicitly excluded statuses are retained separately",
+        "related_ids": [],
+        "sampling": {
+          "calendar": "UTC",
+          "end": "2024-03-04",
+          "frequency": "daily",
+          "start": "2024-02-27"
+        },
+        "schema_version": "catalogue-sst-dataset-v1",
+        "source_id": "synthetic-sst",
+        "spatial_resolution_basis": "Explicit 0.05-degree grid-point subsampling, not a native-grid reconstruction",
+        "support": {
+          "east": 142.0,
+          "north": 39.0,
+          "south": 38.0,
+          "west": 141.0
+        },
+        "table": {
+          "availability": {
+            "reason": null,
+            "status": "available"
+          },
+          "completeness": "complete",
+          "name": "observations",
+          "object_id": "synthetic:sst:mur-final:table:observations",
+          "row_count": 6
+        },
+        "temporal_statistic": "daily_foundation_analysis",
+        "title": {
+          "en": "Synthetic MUR SST",
+          "ja": "合成MUR海面水温"
+        },
+        "uncertainty_policy": "Reported uncertainty has the same temperature interval unit as value; null means unknown"
+      },
+      "table_rows": {
+        "observations": [
+          {
+            "exclusion_reason": null,
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000000",
+            "ocean_pixels": 100,
+            "quality_flag": "accepted",
+            "source_sha256": "bb4313f7e708a6f39e3d0dfaba97277720a65c2bbb87a14baba5ef79c8857f59",
+            "status": "valid",
+            "time": "2024-02-27",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 0.0
+          },
+          {
+            "exclusion_reason": null,
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000001",
+            "ocean_pixels": null,
+            "quality_flag": null,
+            "source_sha256": "9928df90e3473fbc6fc56d94287805165037d06f86abf27e8491de59e064eab5",
+            "status": "valid",
+            "time": "2024-02-28",
+            "uncertainty": null,
+            "valid_fraction": null,
+            "valid_ocean_pixels": null,
+            "value": null
+          },
+          {
+            "exclusion_reason": "invalid quality",
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000002",
+            "ocean_pixels": 100,
+            "quality_flag": "invalid-quality",
+            "source_sha256": "122d2518bcae2259443f02b3b20ad93d65512fd7a6defb21b71bb6f776e0ee46",
+            "status": "invalid",
+            "time": "2024-03-01",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.5,
+            "valid_ocean_pixels": 50,
+            "value": 100.0
+          },
+          {
+            "exclusion_reason": "source excluded",
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000003",
+            "ocean_pixels": 100,
+            "quality_flag": "source-excluded",
+            "source_sha256": "020503a4d607fd3b75a6d0f65ee714e4d1ef0784049602b2c8b144a1d74100a8",
+            "status": "excluded",
+            "time": "2024-03-02",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 999.0
+          },
+          {
+            "exclusion_reason": null,
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000004",
+            "ocean_pixels": 100,
+            "quality_flag": "accepted",
+            "source_sha256": "c79840273ef610c79d060b3a21f0f81ead6ce45bac9f12ebd19f955fca82ef03",
+            "status": "valid",
+            "time": "2024-03-03",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 4.0
+          },
+          {
+            "exclusion_reason": null,
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000005",
+            "ocean_pixels": 100,
+            "quality_flag": "accepted",
+            "source_sha256": "6e05f34dbb44ef9ef4bec631d64311a01d144dac3c07f5c23989d38d47afec78",
+            "status": "valid",
+            "time": "2024-03-04",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 5.0
+          }
+        ]
+      }
+    },
+    {
+      "case": "interim_regional",
+      "metadata": {
+        "aggregation_method": "Cosine-latitude weighted mean of retained grid-point subsampling",
+        "calendar": "UTC",
+        "collection_id": "synthetic:sst:mur-interim:collection",
+        "dataset_id": "synthetic:sst:mur-interim",
+        "descriptor": {
+          "family": "remote_sensing",
+          "measurement": "sea_surface_temperature",
+          "product_id": "mur",
+          "product_version": "04.1nrt",
+          "spatial_resolution": 0.05,
+          "spatial_resolution_unit": "degree",
+          "spatial_role": "regional_summary",
+          "temporal_resolution": "daily foundation analysis",
+          "unit": "degC"
+        },
+        "family": "remote_sensing",
+        "measurement_type": "satellite_in_situ_analysis",
+        "methods": [
+          "Final and interim products remain separate",
+          "No inferred grid observations or timestamps"
+        ],
+        "observation_entity": "regional_daily_summary",
+        "observation_precision": "day",
+        "processing_generation": "interim",
+        "product_node_id": "c11:product:synthetic-sst:0a9c90361b3eb05025b709f2",
+        "purpose": {
+          "en": "Frozen SST semantics acceptance",
+          "ja": "固定SST意味論の検証"
+        },
+        "qualification": "Synthetic local acceptance only; not scientific publication or approval",
+        "quality_policy": "Producer valid status is eligible; invalid and explicitly excluded statuses are retained separately",
+        "related_ids": [],
+        "sampling": {
+          "calendar": "UTC",
+          "end": "2024-03-04",
+          "frequency": "daily",
+          "start": "2024-02-27"
+        },
+        "schema_version": "catalogue-sst-dataset-v1",
+        "source_id": "synthetic-sst",
+        "spatial_resolution_basis": "Explicit 0.05-degree grid-point subsampling, not a native-grid reconstruction",
+        "support": {
+          "east": 142.0,
+          "north": 39.0,
+          "south": 38.0,
+          "west": 141.0
+        },
+        "table": {
+          "availability": {
+            "reason": null,
+            "status": "available"
+          },
+          "completeness": "complete",
+          "name": "observations",
+          "object_id": "synthetic:sst:mur-interim:table:observations",
+          "row_count": 6
+        },
+        "temporal_statistic": "daily_foundation_analysis",
+        "title": {
+          "en": "Synthetic MUR SST",
+          "ja": "合成MUR海面水温"
+        },
+        "uncertainty_policy": "Reported uncertainty has the same temperature interval unit as value; null means unknown"
+      },
+      "table_rows": {
+        "observations": [
+          {
+            "exclusion_reason": null,
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000000",
+            "ocean_pixels": 100,
+            "quality_flag": "accepted",
+            "source_sha256": "3a95a75771598afa4f40ea1e4322c42633da1769a6bb5f360c478f413e8ca73a",
+            "status": "valid",
+            "time": "2024-02-27",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 0.0
+          },
+          {
+            "exclusion_reason": null,
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000001",
+            "ocean_pixels": null,
+            "quality_flag": null,
+            "source_sha256": "6cbb45ea517921718498507f90b5828db1dfdde81c941972f5c41724476256e4",
+            "status": "valid",
+            "time": "2024-02-28",
+            "uncertainty": null,
+            "valid_fraction": null,
+            "valid_ocean_pixels": null,
+            "value": null
+          },
+          {
+            "exclusion_reason": "invalid quality",
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000002",
+            "ocean_pixels": 100,
+            "quality_flag": "invalid-quality",
+            "source_sha256": "8f6f777134802caa8e1edbfe12aa59ab1864b220555326b32b19a50e88ea6a4d",
+            "status": "invalid",
+            "time": "2024-03-01",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.5,
+            "valid_ocean_pixels": 50,
+            "value": 100.0
+          },
+          {
+            "exclusion_reason": "source excluded",
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000003",
+            "ocean_pixels": 100,
+            "quality_flag": "source-excluded",
+            "source_sha256": "131937961da105d085f9da94f980fa8819dc0381d5647e2c92fc4824353377e0",
+            "status": "excluded",
+            "time": "2024-03-02",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 999.0
+          },
+          {
+            "exclusion_reason": null,
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000004",
+            "ocean_pixels": 100,
+            "quality_flag": "accepted",
+            "source_sha256": "5cae6876b841c9ce5063152b23376b367579abf88f24ab2792c15fc8afc977ac",
+            "status": "valid",
+            "time": "2024-03-03",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 4.0
+          },
+          {
+            "exclusion_reason": null,
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000005",
+            "ocean_pixels": 100,
+            "quality_flag": "accepted",
+            "source_sha256": "320ede2e9c58fb1fe153b2e919103c36dd1efdb29deb1dad64b6ea171846fefa",
+            "status": "valid",
+            "time": "2024-03-04",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 5.0
+          }
+        ]
+      }
+    },
+    {
+      "case": "final_grid",
+      "metadata": {
+        "aggregation_method": "One retained grid-point observation; no spatial aggregation",
+        "calendar": "UTC",
+        "collection_id": "synthetic:sst:mur-grid:collection",
+        "dataset_id": "synthetic:sst:mur-grid",
+        "descriptor": {
+          "family": "remote_sensing",
+          "measurement": "sea_surface_temperature",
+          "product_id": "mur",
+          "product_version": "04.1",
+          "spatial_resolution": 0.05,
+          "spatial_resolution_unit": "degree",
+          "spatial_role": "coarse_context",
+          "temporal_resolution": "daily foundation analysis",
+          "unit": "degC"
+        },
+        "family": "remote_sensing",
+        "measurement_type": "satellite_in_situ_analysis",
+        "methods": [
+          "Final and interim products remain separate",
+          "No inferred grid observations or timestamps"
+        ],
+        "observation_entity": "grid_observation",
+        "observation_precision": "day",
+        "processing_generation": "final",
+        "product_node_id": "c11:product:synthetic-sst:950a31a30b674e7684d0e5fc",
+        "purpose": {
+          "en": "Frozen SST semantics acceptance",
+          "ja": "固定SST意味論の検証"
+        },
+        "qualification": "Synthetic local acceptance only; not scientific publication or approval",
+        "quality_policy": "Producer valid status is eligible; invalid and explicitly excluded statuses are retained separately",
+        "related_ids": [],
+        "sampling": {
+          "calendar": "UTC",
+          "end": "2024-03-04",
+          "frequency": "daily",
+          "start": "2024-02-27"
+        },
+        "schema_version": "catalogue-sst-dataset-v1",
+        "source_id": "synthetic-sst",
+        "spatial_resolution_basis": "Explicit 0.05-degree grid-point subsampling, not a native-grid reconstruction",
+        "support": {
+          "east": 142.0,
+          "north": 39.0,
+          "south": 38.0,
+          "west": 141.0
+        },
+        "table": {
+          "availability": {
+            "reason": null,
+            "status": "available"
+          },
+          "completeness": "complete",
+          "name": "observations",
+          "object_id": "synthetic:sst:mur-grid:table:observations",
+          "row_count": 6
+        },
+        "temporal_statistic": "daily_foundation_analysis",
+        "title": {
+          "en": "Synthetic MUR SST",
+          "ja": "合成MUR海面水温"
+        },
+        "uncertainty_policy": "Reported uncertainty has the same temperature interval unit as value; null means unknown"
+      },
+      "table_rows": {
+        "observations": [
+          {
+            "exclusion_reason": null,
+            "lat": 38.25,
+            "lon": 141.25,
+            "observation_id": "observation-000000",
+            "ocean_pixels": 100,
+            "quality_flag": "accepted",
+            "source_sha256": "85ce5a0a97f8a3a193bc2171038c827319720c924006c278177ec1d82c409b00",
+            "status": "valid",
+            "time": "2024-02-27",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 0.0
+          },
+          {
+            "exclusion_reason": null,
+            "lat": 38.75,
+            "lon": 141.75,
+            "observation_id": "observation-000001",
+            "ocean_pixels": null,
+            "quality_flag": null,
+            "source_sha256": "550df7f038f6bf507612760e0795a26e2bc9081476f29299faa82e5b7f7dd84e",
+            "status": "valid",
+            "time": "2024-02-28",
+            "uncertainty": null,
+            "valid_fraction": null,
+            "valid_ocean_pixels": null,
+            "value": null
+          },
+          {
+            "exclusion_reason": "invalid quality",
+            "lat": 38.25,
+            "lon": 141.25,
+            "observation_id": "observation-000002",
+            "ocean_pixels": 100,
+            "quality_flag": "invalid-quality",
+            "source_sha256": "1fe77a0e3aeeafb79692f8ffcbad7b3d7dc1d921ee0c7962c74e432daf6272c9",
+            "status": "invalid",
+            "time": "2024-03-01",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.5,
+            "valid_ocean_pixels": 50,
+            "value": 100.0
+          },
+          {
+            "exclusion_reason": "source excluded",
+            "lat": 38.75,
+            "lon": 141.75,
+            "observation_id": "observation-000003",
+            "ocean_pixels": 100,
+            "quality_flag": "source-excluded",
+            "source_sha256": "5a4aa0ad1731e5b7ab62e7cb86cd2049c5ff7bdbdbe5caefd91d0b7d3c0a4fb4",
+            "status": "excluded",
+            "time": "2024-03-02",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 999.0
+          },
+          {
+            "exclusion_reason": null,
+            "lat": 38.25,
+            "lon": 141.25,
+            "observation_id": "observation-000004",
+            "ocean_pixels": 100,
+            "quality_flag": "accepted",
+            "source_sha256": "202e7791e9ffb19f3ba4a587a9715fda71e6f8df04649ee98b561ce692e6e797",
+            "status": "valid",
+            "time": "2024-03-03",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 4.0
+          },
+          {
+            "exclusion_reason": null,
+            "lat": 38.75,
+            "lon": 141.75,
+            "observation_id": "observation-000005",
+            "ocean_pixels": 100,
+            "quality_flag": "accepted",
+            "source_sha256": "ecf9ab23d7589a6b6d56b1078cd45949e495afc8a10e9c0cebd787816aa3b393",
+            "status": "valid",
+            "time": "2024-03-04",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 5.0
+          }
+        ]
+      }
+    },
+    {
+      "case": "unknown_sampling",
+      "metadata": {
+        "aggregation_method": "Cosine-latitude weighted mean of retained grid-point subsampling",
+        "calendar": "UTC",
+        "collection_id": "synthetic:sst:unknown-calendar:collection",
+        "dataset_id": "synthetic:sst:unknown-calendar",
+        "descriptor": {
+          "family": "remote_sensing",
+          "measurement": "sea_surface_temperature",
+          "product_id": "mur",
+          "product_version": "04.1",
+          "spatial_resolution": 0.05,
+          "spatial_resolution_unit": "degree",
+          "spatial_role": "regional_summary",
+          "temporal_resolution": "daily foundation analysis",
+          "unit": "degC"
+        },
+        "family": "remote_sensing",
+        "measurement_type": "satellite_in_situ_analysis",
+        "methods": [
+          "Final and interim products remain separate",
+          "No inferred grid observations or timestamps"
+        ],
+        "observation_entity": "regional_daily_summary",
+        "observation_precision": "day",
+        "processing_generation": "final",
+        "product_node_id": "c11:product:synthetic-sst:950a31a30b674e7684d0e5fc",
+        "purpose": {
+          "en": "Frozen SST semantics acceptance",
+          "ja": "固定SST意味論の検証"
+        },
+        "qualification": "Synthetic local acceptance only; not scientific publication or approval",
+        "quality_policy": "Producer valid status is eligible; invalid and explicitly excluded statuses are retained separately",
+        "related_ids": [],
+        "sampling": null,
+        "schema_version": "catalogue-sst-dataset-v1",
+        "source_id": "synthetic-sst",
+        "spatial_resolution_basis": "Explicit 0.05-degree grid-point subsampling, not a native-grid reconstruction",
+        "support": {
+          "east": 142.0,
+          "north": 39.0,
+          "south": 38.0,
+          "west": 141.0
+        },
+        "table": {
+          "availability": {
+            "reason": null,
+            "status": "available"
+          },
+          "completeness": "complete",
+          "name": "observations",
+          "object_id": "synthetic:sst:unknown-calendar:table:observations",
+          "row_count": 6
+        },
+        "temporal_statistic": "daily_foundation_analysis",
+        "title": {
+          "en": "Synthetic MUR SST",
+          "ja": "合成MUR海面水温"
+        },
+        "uncertainty_policy": "Reported uncertainty has the same temperature interval unit as value; null means unknown"
+      },
+      "table_rows": {
+        "observations": [
+          {
+            "exclusion_reason": null,
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000000",
+            "ocean_pixels": 100,
+            "quality_flag": "accepted",
+            "source_sha256": "1a67fa4726c995efeb7bae4d5e996ec2a1574503049be205e4dec999ec4710d2",
+            "status": "valid",
+            "time": "2024-02-27",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 0.0
+          },
+          {
+            "exclusion_reason": null,
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000001",
+            "ocean_pixels": null,
+            "quality_flag": null,
+            "source_sha256": "f92f85cc102ebf8fd1a3fbc35e08d4cb7d426877cb15e424801c49c78ba3659e",
+            "status": "valid",
+            "time": "2024-02-28",
+            "uncertainty": null,
+            "valid_fraction": null,
+            "valid_ocean_pixels": null,
+            "value": null
+          },
+          {
+            "exclusion_reason": "invalid quality",
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000002",
+            "ocean_pixels": 100,
+            "quality_flag": "invalid-quality",
+            "source_sha256": "a61795c744c738dfc5483693bb0b904508786064350295cb0aaddb73a4e155f4",
+            "status": "invalid",
+            "time": "2024-03-01",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.5,
+            "valid_ocean_pixels": 50,
+            "value": 100.0
+          },
+          {
+            "exclusion_reason": "source excluded",
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000003",
+            "ocean_pixels": 100,
+            "quality_flag": "source-excluded",
+            "source_sha256": "eef5b3f4d163e5929ef9ba237ace0bb98ccb3dec796afe4129b143fc905072f4",
+            "status": "excluded",
+            "time": "2024-03-02",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 999.0
+          },
+          {
+            "exclusion_reason": null,
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000004",
+            "ocean_pixels": 100,
+            "quality_flag": "accepted",
+            "source_sha256": "c184c070e11623cd96d1586dc047a808c274573b95f723f948aaf604f35334e8",
+            "status": "valid",
+            "time": "2024-03-03",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 4.0
+          },
+          {
+            "exclusion_reason": null,
+            "lat": null,
+            "lon": null,
+            "observation_id": "observation-000005",
+            "ocean_pixels": 100,
+            "quality_flag": "accepted",
+            "source_sha256": "175e17565528a5cd28cefac96e335d6bafb6d5a577087bcb23f0f39daf75884b",
+            "status": "valid",
+            "time": "2024-03-04",
+            "uncertainty": 0.25,
+            "valid_fraction": 0.9,
+            "valid_ocean_pixels": 90,
+            "value": 5.0
+          }
+        ]
+      }
+    },
+    {
+      "case": "unavailable",
+      "metadata": {
+        "aggregation_method": "Cosine-latitude weighted mean of retained grid-point subsampling",
+        "calendar": "UTC",
+        "collection_id": "synthetic:sst:unavailable:collection",
+        "dataset_id": "synthetic:sst:unavailable",
+        "descriptor": {
+          "family": "remote_sensing",
+          "measurement": "sea_surface_temperature",
+          "product_id": "mur",
+          "product_version": "04.1",
+          "spatial_resolution": 0.05,
+          "spatial_resolution_unit": "degree",
+          "spatial_role": "regional_summary",
+          "temporal_resolution": "daily foundation analysis",
+          "unit": "degC"
+        },
+        "family": "remote_sensing",
+        "measurement_type": "satellite_in_situ_analysis",
+        "methods": [
+          "Final and interim products remain separate",
+          "No inferred grid observations or timestamps"
+        ],
+        "observation_entity": "regional_daily_summary",
+        "observation_precision": "day",
+        "processing_generation": "final",
+        "product_node_id": "c11:product:synthetic-sst:950a31a30b674e7684d0e5fc",
+        "purpose": {
+          "en": "Frozen SST semantics acceptance",
+          "ja": "固定SST意味論の検証"
+        },
+        "qualification": "Synthetic local acceptance only; not scientific publication or approval",
+        "quality_policy": "Producer valid status is eligible; invalid and explicitly excluded statuses are retained separately",
+        "related_ids": [],
+        "sampling": {
+          "calendar": "UTC",
+          "end": "2024-02-27",
+          "frequency": "daily",
+          "start": "2024-02-27"
+        },
+        "schema_version": "catalogue-sst-dataset-v1",
+        "source_id": "synthetic-sst",
+        "spatial_resolution_basis": "Explicit 0.05-degree grid-point subsampling, not a native-grid reconstruction",
+        "support": {
+          "east": 142.0,
+          "north": 39.0,
+          "south": 38.0,
+          "west": 141.0
+        },
+        "table": {
+          "availability": {
+            "reason": "No eligible frozen product export",
+            "status": "unavailable"
+          },
+          "completeness": "unavailable",
+          "name": "observations",
+          "object_id": null,
+          "row_count": null
+        },
+        "temporal_statistic": "daily_foundation_analysis",
+        "title": {
+          "en": "Synthetic MUR SST",
+          "ja": "合成MUR海面水温"
+        },
+        "uncertainty_policy": "Reported uncertainty has the same temperature interval unit as value; null means unknown"
+      },
+      "table_rows": {}
+    }
+  ],
+  "example_version": "c11-logical-inputs-v1",
+  "expected": {
+    "eligible_mean": 3.0,
+    "eligible_nonnull_observations": 3,
+    "eligible_sum": 9.0,
+    "excluded_observations": 1,
+    "expected_daily_dates": 7,
+    "invalid_observations": 1,
+    "measured_zero_observations": 1,
+    "missing_eligible_dates": [
+      "2024-02-28",
+      "2024-02-29",
+      "2024-03-01",
+      "2024-03-02"
+    ],
+    "missing_value_observations": 1,
+    "raw_rows_per_retained_dataset": 6
+  },
+  "qualification": "Synthetic source-owned observations; explicit Parquet/C09 sealing required"
+}

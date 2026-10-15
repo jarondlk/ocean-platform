@@ -1,6 +1,6 @@
 # C11 — SST adapter
 
-**Status:** Not started. **Prerequisites:** C02, C09.
+**Status:** Complete for local frozen SST adapter acceptance (2026-10-15 JST). **Prerequisites:** C02, C09.
 
 ## Revised delivery boundary
 
@@ -34,7 +34,7 @@ Report zero matches, unknown coverage, unavailable product data and expected mis
 
 ## Validation, compatibility and handoff
 
-Existing regression command: `python -m pytest tests/test_sst_nasa_context.py tests/test_research_sst.py tests/test_regional_publication.py tests/test_overview_coverage.py`. Planned new adapter checks cover product isolation, zero/unknown distinctions, full-scope aggregation and snapshot rollover. No implementation validation is claimed here.
+Accepted regression command: `python -m pytest tests/test_sst_nasa_context.py tests/test_research_sst.py tests/test_regional_publication.py tests/test_overview_coverage.py`. The 966 required checks pass, including 250 new product/input/adapter cases. Full backend: 2,829 passed, 84 gated PostgreSQL skips, 83.29% coverage. Product isolation, zero/unknown distinctions, complete-scope aggregation and snapshot rollover are verified. See [the handoff](../handoffs/C11.md), [contract](../C11_SST_ADAPTER_CONTRACT.md) and [receipt](../evidence/C11/verification.json). Exact-source hosted delivery remains pending.
 
 Preserve existing SST workflows and published artifacts. Rollback removes catalogue exposure through its flag without deleting snapshots. Save operation definitions, calendars, parity evidence and unresolved availability in `handoffs/C11.md`; update `STATUS.md` after each checkpoint.
 
@@ -45,7 +45,8 @@ prerequisite and 69 additional SST semantic/calendar tests pass; six generated
 checks are current. C02/C09 accepted sources reconcile. Read the
 [readiness audit](../C11_READINESS_AUDIT_2026-10-15.md) for product, spatial support,
 UTC/JST calendar and sampling constraints. This is readiness evidence only;
-implementation remains Not started and unselected.
+the user subsequently selected implementation. Current progress is in
+[the C11 handoff](../handoffs/C11.md).
 
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c11). Read the current site-separation

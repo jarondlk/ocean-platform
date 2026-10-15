@@ -1,0 +1,435 @@
+{
+  "component": "C11",
+  "state": "Complete for local frozen SST adapter acceptance",
+  "date": "2026-10-15 JST",
+  "branch": "overhaul",
+  "base_head": "b73b29befb53394027f37424b363f8327442bbcf",
+  "code_revision": "Uncommitted accepted source; exact hashes below. Separate delivery receipt records commit and hosted CI.",
+  "contracts": {
+    "metadata": "catalogue-sst-dataset-v1",
+    "table": "catalogue-sst-parquet-v1",
+    "operations": "c11-v1"
+  },
+  "files": {
+    "ingestion/sst_catalogue_inputs.py": "970597ebc78101565d8f7415983ec488f46a0c34e7f32f27a31e4a5a495f6c1f",
+    "orchestration/frozen_sst_catalogue.py": "ccaa675acda1d11a7dec5aab71b476800c494b99979b8cba74c56a4286603a65",
+    "schema/sst_catalogue.py": "a97aebb40a717734a2100a625a07f81ba48be4fe689094f1d176937e9cc7a947",
+    "schema/sst_catalogue.v1.schema.json": "94bfa0e57935286cc3df46760b26269359a18b1635a0289c1a0254e3849d0e84",
+    "schema/sst_catalogue_examples.json": "802614cf599152af9183c70237f0e13dd649196d8d225100b257ad4ae400a6ef",
+    "schema/sst_catalogue_fixtures.py": "c60e23e46b5fec8e87966ac4817eae24c356755d9eeb8f7b59b044ea6f7dc594",
+    "scripts/export_sst_catalogue.py": "5e2a0eec3a58f8cc251c554b7ef4e9867329bc9a943f965ac9f1b0ee4668602e",
+    "tests/test_frozen_sst_catalogue.py": "21160a742d7e8b208cd8849531aa02d9c554e8bcfc178cff3858b40ff3131413",
+    "tests/test_sst_catalogue_contract.py": "8d4cbcb884aeee10822352d211ef77e2b415d49b3cec36510edbe7e62446bd11",
+    "tests/test_sst_catalogue_inputs.py": "19540c43403edf823fd71381d54a9a0de4fa94d15df2d65d193c5c1ece1ee42c"
+  },
+  "source_sha256": "e0b75757b76f72db8967f652e598b392a813c51c072d4a01e24ae249671db509",
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "verification": {
+    "required_passed": 966,
+    "new_cases": 250,
+    "new_case_breakdown": {
+      "contracts": 59,
+      "inputs": 118,
+      "independent_adapter": 73
+    },
+    "existing_baseline": 55,
+    "C02_C08_C09_prerequisites": 482,
+    "existing_SST_semantic_calendar": 69,
+    "C10_adjacent_regressions": 110,
+    "full_backend": {
+      "passed": 2829,
+      "skipped": 84,
+      "coverage_percent": 83.29,
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/",
+        "-q",
+        "--tb=short",
+        "--cov=api",
+        "--cov=config",
+        "--cov=db",
+        "--cov=preprocessing",
+        "--cov=ingestion",
+        "--cov=orchestration",
+        "--cov=schema",
+        "--cov=evaluation",
+        "--cov-report=term-missing",
+        "--cov-fail-under=70"
+      ],
+      "safe_environment": {
+        "AUTH_MODE": "disabled",
+        "DEPLOYMENT_ENV": "test",
+        "ENABLE_MOCK_LOGIN": "false",
+        "PERSIST_LOCAL_CHAT": "false",
+        "RUN_POSTGRES_INTEGRATION": "0",
+        "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c11_regressions_unused",
+        "MODEL_PROVIDER": "ollama",
+        "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+      },
+      "exit_code": 0
+    },
+    "ruff": "pass",
+    "generated_contract_checks": 7,
+    "review": "Three delegated agents; independent source/reference acceptance report retained",
+    "frontend_and_postgres": "No frontend/SQL/C09 workflow changed; exact-source hosted CI is required separately; 84 gated PostgreSQL cases run in its integration job"
+  },
+  "checks": {
+    "required": {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_sst_catalogue_contract.py",
+        "tests/test_sst_catalogue_inputs.py",
+        "tests/test_frozen_sst_catalogue.py",
+        "tests/test_sst_nasa_context.py",
+        "tests/test_research_sst.py",
+        "tests/test_regional_publication.py",
+        "tests/test_overview_coverage.py",
+        "tests/test_reliability.py",
+        "tests/test_pre_analysis.py",
+        "tests/test_statistical_analysis.py",
+        "tests/test_derived_artifact_eligibility.py",
+        "tests/test_remote_sensing.py",
+        "tests/test_catalogue_snapshots.py",
+        "tests/test_catalogue_snapshot_capture.py",
+        "tests/test_catalogue_snapshot_transfer.py",
+        "tests/test_catalogue_snapshot_fixtures.py",
+        "tests/test_context_catalogue_contract.py",
+        "tests/test_context_catalogue_fixtures.py",
+        "tests/test_historical_sst_acquisition.py",
+        "tests/test_sst_context_review.py",
+        "tests/test_regional_context_normalization.py",
+        "tests/test_research_sst_panel.py",
+        "tests/test_research_sst_collection.py",
+        "tests/test_catalogue_adapter_contract.py",
+        "tests/test_catalogue_adapter_inputs.py",
+        "tests/test_frozen_catalogue_adapters.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "966 passed, 2156 warnings in 51.06s",
+      "safe_environment": {
+        "AUTH_MODE": "disabled",
+        "DEPLOYMENT_ENV": "test",
+        "ENABLE_MOCK_LOGIN": "false",
+        "PERSIST_LOCAL_CHAT": "false",
+        "RUN_POSTGRES_INTEGRATION": "0",
+        "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c11_acceptance_unused",
+        "MODEL_PROVIDER": "ollama",
+        "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+      }
+    },
+    "generation": [
+      {
+        "name": "ruff",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "-m",
+          "ruff",
+          "check",
+          "api",
+          "config.py",
+          "db",
+          "evaluation",
+          "ingestion",
+          "orchestration",
+          "preprocessing",
+          "retrieval",
+          "schema",
+          "scripts",
+          "tests",
+          "docs/plans/ocean-v1/evidence/C11/verify_acceptance.py",
+          "docs/plans/ocean-v1/evidence/C11/verify_backend.py"
+        ],
+        "exit_code": 0,
+        "output": "All checks passed!"
+      },
+      {
+        "name": "export_chat_scope.py",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_chat_scope.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "output": ""
+      },
+      {
+        "name": "export_context_catalogue.py",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_context_catalogue.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "output": "Context catalogue schema is current"
+      },
+      {
+        "name": "export_catalogue_types.py",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_types.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "output": "Catalogue browser contract is current."
+      },
+      {
+        "name": "export_catalogue_examples.py",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_examples.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "output": "C08 shared examples are current"
+      },
+      {
+        "name": "export_catalogue_snapshot.py",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_snapshot.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "output": "C09 snapshot schema and synthetic byte examples are current"
+      },
+      {
+        "name": "export_catalogue_adapter.py",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_adapter.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "output": "C10 frozen adapter schema and logical examples are current"
+      },
+      {
+        "name": "export_sst_catalogue.py",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_sst_catalogue.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "output": "C11 frozen SST schema and logical examples are current"
+      }
+    ]
+  },
+  "preservation": {
+    "unrelated_files": {
+      "count": 30,
+      "all_match": true
+    },
+    "scientific_artifacts": {
+      "count": 7,
+      "all_match": true
+    },
+    "serving_files": {
+      "count": 2,
+      "all_match": true
+    },
+    "P00_current_files": {
+      "count": 36,
+      "all_match": true
+    },
+    "C08_accepted_files": {
+      "count": 12,
+      "all_match": true
+    },
+    "C09_accepted_files": {
+      "count": 14,
+      "all_match": true
+    },
+    "C10_accepted_files": {
+      "count": 10,
+      "all_match": true
+    },
+    "SST_reference_files": {
+      "count": 12,
+      "all_match": true
+    },
+    "prior_evidence_files": {
+      "count": 324,
+      "all_match": true
+    },
+    "C02_reconciled_files": {
+      "count": 12,
+      "all_match": true
+    }
+  },
+  "C02_current_source": {
+    "api/main.py": {
+      "current_sha256": "42e0f2a45fb93efb8cd6a7037cd1278e97c43ba0268af71ed2b520a6d6191a5e",
+      "original_sha256": "a00a9c99de53c4db39dc4249ccf726283f3893a1507e47ee4728263f7da4ad06",
+      "original_match": false,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C07/verification.json",
+      "accepted_receipt_sha256": "99b78a6cefac34b9dc98fc67d9b6fc8a572355ca04fb84644a6ba14341fadc69"
+    },
+    "docs/plans/ocean-v1/evidence/C02/verify_synthetic.py": {
+      "current_sha256": "513b67b539b3102195e2627a7b02f707c6836561f49ebe3a2459cae09e2b3cc5",
+      "original_sha256": "513b67b539b3102195e2627a7b02f707c6836561f49ebe3a2459cae09e2b3cc5",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "orchestration/unified.py": {
+      "current_sha256": "c9201413873109153f9098d1041e23c3349229ec95a27aac3e194ed517be01d6",
+      "original_sha256": "c35856c03045ef48bd5d352334c7f62aa24163378b0416ab9d8e5ed0d25d00e7",
+      "original_match": false,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C05/verification.json",
+      "accepted_receipt_sha256": "6575878bcdc75d794c7b52f6794ca018e8c7725eda48eb274da2895b851744ee"
+    },
+    "preprocessing/derived_artifacts.py": {
+      "current_sha256": "deba53d403e8ce3c44f1a6482fb1f5cd5b2b81650401cbdd0bfb2aa8d31d5bd4",
+      "original_sha256": "deba53d403e8ce3c44f1a6482fb1f5cd5b2b81650401cbdd0bfb2aa8d31d5bd4",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "preprocessing/pre_analysis.py": {
+      "current_sha256": "426a19a3c1f7d9dcc4241c7a187352554ab0711cfc438a20f0633804db6bbed8",
+      "original_sha256": "426a19a3c1f7d9dcc4241c7a187352554ab0711cfc438a20f0633804db6bbed8",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "preprocessing/reliability_ensurance.py": {
+      "current_sha256": "46b5cf6c4b3b320467bc121a1572e41e4a00e2327bc0afc6fa7a63471e726c5d",
+      "original_sha256": "46b5cf6c4b3b320467bc121a1572e41e4a00e2327bc0afc6fa7a63471e726c5d",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "preprocessing/remote_sensing.py": {
+      "current_sha256": "e611e7f176677fbece054cb7ff70d57ba378e1135f86a2cfcf1346b781c852cd",
+      "original_sha256": "e611e7f176677fbece054cb7ff70d57ba378e1135f86a2cfcf1346b781c852cd",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "tests/conftest.py": {
+      "current_sha256": "989457a38d9ffefac466e5a0173ca620a4cef42ebacb1d483454ec469e026e19",
+      "original_sha256": "989457a38d9ffefac466e5a0173ca620a4cef42ebacb1d483454ec469e026e19",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "tests/test_derived_artifact_eligibility.py": {
+      "current_sha256": "d37eb145cb224b708dd8c1bf6e0ed3d4ff1ad17eb75341004def6a6b0dde810e",
+      "original_sha256": "47076f2b0e532d869549525e76e6a9fece935c0047fe2fdf0146394b60814bc3",
+      "original_match": false,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json",
+      "accepted_receipt_sha256": "88dfc7825558695d23a7a586386da80ca23ceb9dbdd0a3c003628c4e08dd1bb6"
+    },
+    "tests/test_pre_analysis.py": {
+      "current_sha256": "b2573e4d095aa07135eefcb6278879c16d0e6e154289cec4d7ae6108801789fc",
+      "original_sha256": "b2573e4d095aa07135eefcb6278879c16d0e6e154289cec4d7ae6108801789fc",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "tests/test_reliability.py": {
+      "current_sha256": "346e54fd746a02d614aa5e8a7ac90d7cf99fe3d6cb1d5ee2fb99888ddfd847ca",
+      "original_sha256": "346e54fd746a02d614aa5e8a7ac90d7cf99fe3d6cb1d5ee2fb99888ddfd847ca",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "tests/test_remote_sensing.py": {
+      "current_sha256": "0eaf7f291f3a29de55fbf529b6b4cec988133e645d428a4c412a3bb7f5f444c9",
+      "original_sha256": "0eaf7f291f3a29de55fbf529b6b4cec988133e645d428a4c412a3bb7f5f444c9",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    }
+  },
+  "fixture_reference": {
+    "retained_observations": 1205,
+    "usable_measurements": 1202,
+    "valid_missing_measurements": 1,
+    "invalid": 1,
+    "excluded": 1,
+    "measured_zero": 1,
+    "expected_daily_dates": 1206,
+    "missing_usable_dates": 4,
+    "legacy_reference_days": 1461,
+    "legacy_retained_days": 1460,
+    "legacy_exact_gap": "2021-02-20"
+  },
+  "scope_limits": [
+    "Explicit local synthetic immutable inputs and current whole-dataset eligibility only",
+    "No real publication, acquisition, artifact regeneration or serving rebuild",
+    "No real approved-data copying or origin read-through; only temporary synthetic transfer parity",
+    "No API/UI integration, providers or cloud deployment",
+    "Grid daily availability never infers complete spatial grid coverage",
+    "Plain-value Parquet; snapshot-wide 2m rows/512MiB decoded bounds are not process-memory or throughput guarantees",
+    "Nine older unrelated local benchmark tests excluded from delivery; hosted backend expected nine lower"
+  ],
+  "runtime": {
+    "python": "3.12.7",
+    "packages": {
+      "pandas": "2.3.3",
+      "pyarrow": "23.0.1",
+      "pydantic": "2.13.5",
+      "sqlalchemy": "2.0.52",
+      "pytest": "9.1.1",
+      "ruff": "0.16.9"
+    }
+  },
+  "evidence_log_normalization": "Only new logs: trailing whitespace/extra blank EOF lines removed. No historical receipt/log rewritten.",
+  "original_log_sha256_before_normalization": {},
+  "documentation_files": {
+    "docs/plans/ocean-v1/DECISIONS.md": "c2737c0ef2e0fb94ff30dd4b2103e434424e6ed78eeee888943682fda8d8956d",
+    "docs/plans/ocean-v1/HUB_PROMPT.md": "b85fcd208d7e633f53618d419baf30370f7cd3f9e22867f6386e23f0f61a8856",
+    "docs/plans/ocean-v1/README.md": "83625c2f0f1ccba1928a2be1356d36258963fb2ee96e8ec17fa93f13c9a2c255",
+    "docs/plans/ocean-v1/STATUS.md": "7f6d800860801d00fc69802c41464e3a8c9d6b5f8aec1e53c59e162ded8465e1",
+    "docs/plans/ocean-v1/components.json": "18ba663dcb3d96b57bb6fb3b2e8ed1d0d6abb2e7d21490e2a9f79fdced680908",
+    "docs/plans/ocean-v1/components/C11-sst-adapter.md": "1c7988a5c48c0a0b94abbd58235226cb7cfbdc527db6738b3b3ab202d1eab44b",
+    "docs/plans/ocean-v1/handoffs/README.md": "4626896e520ed6a38aa51d6a8eb095e1d559ace22c4d9b441a0d8cfdfe6e0bfc",
+    "docs/plans/ocean-v1/C11_SST_ADAPTER_CONTRACT.md": "1f3107296229adccce64924a1cc32a0811348e613a8b1cea14b07d5d340edd8e",
+    "docs/plans/ocean-v1/handoffs/C11.md": "3db9a5ff303b6c6952538ab7460b96a5a4694c0497c7c1acb5aa08091583913f"
+  },
+  "evidence_files": {
+    "docs/plans/ocean-v1/evidence/C11/accepted-source.json": "ed44c754b569c89b77a9e7a6f2b57443f9abfb62ca9d9748ebc6efd78140dbf0",
+    "docs/plans/ocean-v1/evidence/C11/backend-result.json": "861703f892deb6a68ff12c1b28b11b609778b8e6efc1443b8862ec348670d420",
+    "docs/plans/ocean-v1/evidence/C11/backend-tests.txt": "3017a6e0db326797f2c57d26e38e2ad468ed19d654f8370e25daf8664bc10dbc",
+    "docs/plans/ocean-v1/evidence/C11/generation-checks.txt": "f96219a6f37d0160e3d840e6ecd361feca10544aee00b6aa1309c5ce19067b6d",
+    "docs/plans/ocean-v1/evidence/C11/generation-result.json": "5ac128470569cab2b2ed271a104497b47f8be99a3a5da60493c73cb8fa5c00df",
+    "docs/plans/ocean-v1/evidence/C11/independent-review.md": "b7abc3a47fffac4b8f9a49489be6643ec2680dc907e3eb660555efc2880b26be",
+    "docs/plans/ocean-v1/evidence/C11/planning-validation.json": "9220396dd1fbd1473b60f101b68b2b1751bdbcdff2df4af2b7afdfffca012baa",
+    "docs/plans/ocean-v1/evidence/C11/preservation.json": "6f979a210a1b6c0af5fc7c3077fa808cc2309a72c748d791ef559dd3adf1fbc1",
+    "docs/plans/ocean-v1/evidence/C11/required-result.json": "f9503ce6556cd389ea5baf9da91f7ad572df0574f27476e31bbd8ca7d01c4f7e",
+    "docs/plans/ocean-v1/evidence/C11/required-tests.txt": "f6a8a2e6bd58fbd675a4efa604ad4e9a32d8d4cf298acbed034d0e436f1ad8c2",
+    "docs/plans/ocean-v1/evidence/C11/runtime.json": "5f76f887aae8fef7246425dfd01eddaa8f0de9a4b1bde43f31c5cef42eb5b7e0",
+    "docs/plans/ocean-v1/evidence/C11/start-snapshot.json": "34f4d99973b49926ccc97dc27f4a5a6cdccc305c923c07dd1b66836b1ff462b6",
+    "docs/plans/ocean-v1/evidence/C11/verify_acceptance.py": "5a56cbe5e325125fd97c1f44b1301ba494f4d6ee61ff82589cb1da360303eae9",
+    "docs/plans/ocean-v1/evidence/C11/verify_backend.py": "20251cff2e80e0357c4d3a1bbb03d6b09e0f3da17265aa90aadc421a0d422a21"
+  },
+  "planning_validation": {
+    "component_count": 28,
+    "acyclic_dependencies": true,
+    "authorized_components": [
+      "P00",
+      "C01",
+      "C02",
+      "C03",
+      "C04",
+      "C05",
+      "C06",
+      "C07",
+      "C08",
+      "C09",
+      "C10",
+      "C11"
+    ],
+    "local_document_links_checked": 202,
+    "missing_links": [],
+    "C11_state": "Complete locally",
+    "C12_started": false
+  }
+}

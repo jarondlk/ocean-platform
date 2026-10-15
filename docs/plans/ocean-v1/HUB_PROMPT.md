@@ -31,7 +31,7 @@ C05 source hashes, regression results and deferred rebuild instructions are reco
 C05 is committed/pushed as fd8f520 with passing hosted CI; read
 C06_READINESS_AUDIT_2026-10-15.md and its receipt. C06 is ready for explicit
 selection, with 99 baseline tests passing and F07 reproduced offline. C06 is Complete locally and delivered as 27d76c9 with passing hosted CI;
-read handoffs/C06.md and evidence/C06/delivery.json. C07 is Complete and delivered as 1195796 with passing hosted CI; read handoffs/C07.md and evidence/C07/delivery.json. C08 is Complete and delivered as 6d20a75 with passing hosted CI; read handoffs/C08.md, evidence/C08/delivery.json and C08_CATALOGUE_CONTRACT.md. C09 is Complete for local snapshot/capture acceptance; C10–C27 remain
+read handoffs/C06.md and evidence/C06/delivery.json. C07 is Complete and delivered as 1195796 with passing hosted CI; read handoffs/C07.md and evidence/C07/delivery.json. C08 is Complete and delivered as 6d20a75 with passing hosted CI; read handoffs/C08.md, evidence/C08/delivery.json and C08_CATALOGUE_CONTRACT.md. C09 is Complete for local snapshot/capture acceptance; C10/C11 are Complete locally; C12–C27 remain
 unselected; planning/recovery inspection outside
 the selected component is read-only unless documentation edits are requested.
 Do not create other chats or begin components merely because this hub exists.
@@ -47,9 +47,12 @@ The user subsequently selected C09; it is Complete locally. Read handoffs/C09.md
 
 C10 readiness is verified on 2026-10-15 JST against ae02e89: 36 baseline and
 534 prerequisite tests pass; read C10_READINESS_AUDIT_2026-10-15.md and its receipt.
-The user subsequently selected C10; it is Complete locally. Read handoffs/C10.md and C10_ADAPTER_CONTRACT.md. C11 remains unselected.
+The user subsequently selected C10; it is Complete locally. Read handoffs/C10.md and C10_ADAPTER_CONTRACT.md. C11 was subsequently selected; see handoffs/C11.md.
 
 C11 readiness is verified on 2026-10-15 JST against 7570345: 55 baseline,
 482 prerequisite and 69 SST semantic/calendar tests pass; six generated
 contracts are current. Read C11_READINESS_AUDIT_2026-10-15.md and its receipt.
-C11 remains Not started and requires explicit implementation selection.
+C11 was subsequently selected and is Complete locally. Read handoffs/C11.md,
+C11_SST_ADAPTER_CONTRACT.md and evidence/C11/verification.json. Required acceptance
+passes 966 cases; full backend passes 2,829/84 gated PostgreSQL skips with 83.29%
+coverage. Exact-source hosted delivery is pending. C12 remains unselected.
