@@ -1,0 +1,237 @@
+
+> ocean-v1-local-preview@1.0.0-preview.0 test
+> node --test --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tests/*.test.ts
+
+✔ unrelated demo checks preserve unsaved settings while a committed save updates the draft (0.915125ms)
+✔ versioned local restore preserves admin workflows across reopening and refuses non-admin access (0.672542ms)
+✔ restore rejects unknown versions, corrupt records, invalid authority and sequence collisions (0.37375ms)
+✔ non-admin role cannot mutate or export admin preview records (0.239834ms)
+✔ role and account type remain independent and the demo administrator cannot be locked out (0.1085ms)
+✔ demo invitations require synthetic addresses, reject duplicates and can be revoked without sending (0.178625ms)
+✔ pause and capacity constrain local jobs, while running work can finish after a pause (0.253333ms)
+✔ cancelling a simulation retains its snapshot and log, and terminal states cannot be advanced (0.127084ms)
+✔ retention settings cannot remove retained fixture evidence or silently raise execution limits (0.144583ms)
+✔ database inventory counts all local records and feedback triage records an audit without altering evidence (0.190667ms)
+✔ CSV exports identify synthetic scope, preserve all rows and escape spreadsheet formulas and quotes (0.129667ms)
+✔ admin CSV shares typed safety and JSON serialization without mutating structured records (0.083958ms)
+✔ shared node 0: root:analyses (3.853792ms)
+✔ shared node 1: root:data (2.049584ms)
+✔ shared node 2: root:metadata (2.030875ms)
+✔ shared node 3: root:relationships (1.66875ms)
+✔ shared node 4: root:statistics (1.427667ms)
+✔ shared node 5: synthetic:analysis (1.411166ms)
+✔ shared node 6: synthetic:candidate-link (1.037583ms)
+✔ shared node 7: synthetic:coverage (0.68125ms)
+✔ shared node 8: synthetic:dataset:000000 (1.50225ms)
+✔ shared node 9: synthetic:dataset:000001 (1.454916ms)
+✔ shared node 10: synthetic:dataset:000002 (1.619625ms)
+✔ shared node 11: synthetic:dataset:000003 (1.502833ms)
+✔ shared node 12: synthetic:dataset:000004 (1.503125ms)
+✔ shared node 13: synthetic:dataset:000005 (1.51825ms)
+✔ shared node 14: synthetic:dataset:000006 (1.142958ms)
+✔ shared node 15: synthetic:dataset:000007 (0.723542ms)
+✔ shared node 16: synthetic:method (0.6875ms)
+✔ shared node 17: synthetic:source:ctd (0.674125ms)
+✔ shared node 18: synthetic:source:edna_metabarcoding (0.926167ms)
+✔ shared node 19: synthetic:source:metagenome (0.70025ms)
+✔ shared node 20: synthetic:source:remote_sensing (0.650875ms)
+✔ shared node 21: synthetic:unavailable (0.677ms)
+✔ shared node 22: synthetic:workflow (0.695ms)
+✔ shared node 23: synthetic:dataset:000000 (1.555834ms)
+✔ shared node 24: synthetic:dataset:000003 (1.50475ms)
+✔ shared listing 0: known/available (10.944792ms)
+✔ shared listing 1: known/available (7.846959ms)
+✔ shared listing 2: known/available (2.341042ms)
+✔ shared listing 3: unknown/available (2.987375ms)
+✔ shared listing 4: unknown/unavailable (0.647292ms)
+✔ shared listing 5: known/available (0.544666ms)
+✔ shared operation: catalogue.dataset_inventory (1.068709ms)
+✔ shared result: synthetic:receipt:e36fd84235be0f2cfb63b7d472b59911fa00ad296c938daa17497617ca39fdc1 (2.538667ms)
+✖ shared result: synthetic:coverage-receipt (3.102959ms)
+✔ reject shared invalid case: UTC calendar overflow: 9999-12-31T23:59:59-23:59 (0.518792ms)
+✔ reject shared invalid case: UTC calendar overflow: 0001-01-01T00:00:00+23:59 (0.335667ms)
+✔ reject shared invalid case: Exclusive end UTC calendar overflow (1.142375ms)
+✔ reject shared invalid case: Unsupported version (0.488125ms)
+✔ reject shared invalid case: Paths cannot be canonical identity (0.154041ms)
+✔ reject shared invalid case: Missing English title (0.934625ms)
+✔ reject shared invalid case: Self-parent (1.508041ms)
+✔ reject shared invalid case: Missing dataset sections (1.375042ms)
+✔ reject shared invalid case: Aliases adapted before wire validation (0.935584ms)
+✔ reject shared invalid case: Source descriptor mismatch (0.203667ms)
+✔ reject shared invalid case: Published flag without publication lifecycle (0.733666ms)
+✔ reject shared invalid case: Invalid calendar date (0.145916ms)
+✔ reject shared invalid case: Non-text scientific filter (0.17725ms)
+✔ reject shared invalid case: Malformed scientific filter object (0.127375ms)
+✔ reject shared invalid case: String boolean scope flag (0.144875ms)
+✔ reject shared invalid case: Unknown control classification must not be invented (0.529917ms)
+✔ reject shared invalid case: Control conflicts with known environmental sample (0.512792ms)
+✔ reject shared invalid case: Origin provenance cannot create live dependency (0.144166ms)
+✔ reject shared invalid case: Page returned count mismatch (4.8975ms)
+✔ reject shared invalid case: Boolean count (2.568375ms)
+✔ reject shared invalid case: Negative population (1.689666ms)
+✔ reject shared invalid case: Fractional population (3.853833ms)
+✔ reject shared invalid case: Unsafe cross-language population (4.040917ms)
+✔ reject shared invalid case: Page exceeds whole-scope total (4.466834ms)
+✔ reject shared invalid case: Unknown total cannot contain numeric value (3.106792ms)
+✔ reject shared invalid case: Complete listing cannot silently drop later pages (2.768583ms)
+✔ reject shared invalid case: Cursor access context mismatch (3.516541ms)
+✔ reject shared invalid case: Snapshot context mismatch (2.736958ms)
+✔ reject shared invalid case: Mixed-snapshot item (3.20775ms)
+✔ reject shared invalid case: Page limit exceeds contract maximum (1.368542ms)
+✔ reject shared invalid case: Duplicate canonical item (2.452042ms)
+✔ reject shared invalid case: Unavailable is not known zero (0.701167ms)
+✔ reject shared invalid case: Operation inputs must be distinct (0.9495ms)
+✔ reject shared invalid case: Unknown executable fields forbidden (0.709042ms)
+✔ reject shared invalid case: Result/receipt snapshot mismatch (2.829334ms)
+✔ reject shared invalid case: Receipt preview length mismatch (2.335416ms)
+✔ reject shared invalid case: Preview truncation cannot hide remaining complete result (2.161958ms)
+✔ reject shared invalid case: Table column mismatch (1.629458ms)
+✔ the complete exported contract validates through one boundary (7.2495ms)
+✔ optional factory defaults normalize without mutating external input (1.433ms)
+✔ legacy aliases and P00 labels use the exported Python registry (0.242708ms)
+✔ P00 projection preserves canonical identities and source labels (10.055334ms)
+✔ new kinds project explicitly without changing the prototype type (9.983875ms)
+✔ unknown and unavailable never become an empty known catalogue (4.895583ms)
+✔ a missing or malformed backend produces unavailable without fixture fallback (1.610959ms)
+✔ permission revision or principal changes invalidate even empty cached membership (7.245833ms)
+✔ revoked nodes, parents and related links are not retained in projections (3.93675ms)
+✔ snapshot selection and provenance origins cannot silently select another backend (4.298083ms)
+✔ readiness, authority and completion remain independent fields (1.277916ms)
+✔ wire input rejects non-JSON values and cannot modify object prototypes (0.678292ms)
+✔ v1 shared CSV fixture: ordinary (0.665041ms)
+✔ v1 shared CSV fixture: japanese (0.073791ms)
+✔ v1 shared CSV fixture: quoted (0.047875ms)
+✔ v1 shared CSV fixture: comma (0.047583ms)
+✔ v1 shared CSV fixture: multiline (0.051708ms)
+✔ v1 shared CSV fixture: carriage-return (0.037ms)
+✔ v1 shared CSV fixture: empty (0.034667ms)
+✔ v1 shared CSV fixture: equals (0.041958ms)
+✔ v1 shared CSV fixture: plus (0.07025ms)
+✔ v1 shared CSV fixture: minus-string (0.086834ms)
+✔ v1 shared CSV fixture: at (0.0475ms)
+✔ v1 shared CSV fixture: space-formula (0.032916ms)
+✔ v1 shared CSV fixture: tab-text (0.026584ms)
+✔ v1 shared CSV fixture: cr-text (0.020708ms)
+✔ v1 shared CSV fixture: lf-text (0.023ms)
+✔ v1 shared CSV fixture: tab-formula (0.020291ms)
+✔ v1 shared CSV fixture: crlf-text (0.019792ms)
+✔ v1 shared CSV fixture: space-tab-text (0.018083ms)
+✔ v1 shared CSV fixture: nonleading-formula (0.033583ms)
+✔ v1 shared CSV fixture: multiline-later-formula (0.027667ms)
+✔ v1 shared CSV fixture: existing-apostrophe (0.021667ms)
+✔ v1 shared CSV fixture: literal-leading-quote (0.021291ms)
+✔ v1 shared CSV fixture: negative-number (0.019791ms)
+✔ v1 shared CSV fixture: negative-scientific (0.018625ms)
+✔ v1 shared CSV fixture: positive-number (0.022625ms)
+✔ v1 shared CSV fixture: zero (0.017416ms)
+✔ v1 shared CSV fixture: null (0.015458ms)
+✔ v1 shared CSV fixture: true (0.014041ms)
+✔ v1 shared CSV fixture: false (0.015167ms)
+✔ v1 shared CSV fixture: object (0.035333ms)
+✔ v1 shared CSV fixture: array (0.020792ms)
+✔ v1 shared CSV fixture: empty-object (0.016208ms)
+✔ v1 shared CSV fixture: empty-array (0.0215ms)
+✔ v1 shared CSV fixture: undefined (0.015209ms)
+✔ v1 shared CSV fixture: vertical-tab-formula (0.023125ms)
+✔ v1 shared CSV fixture: form-feed-formula (0.018708ms)
+✔ v1 shared CSV fixture: file-separator-formula (0.017375ms)
+✔ v1 shared CSV fixture: next-line-formula (0.016792ms)
+✔ v1 shared CSV fixture: nbsp-formula (0.016167ms)
+✔ v1 shared CSV fixture: ogham-formula (0.017709ms)
+✔ v1 shared CSV fixture: em-space-formula (0.471291ms)
+✔ v1 shared CSV fixture: line-separator-formula (0.032167ms)
+✔ v1 shared CSV fixture: paragraph-separator-formula (0.021333ms)
+✔ v1 shared CSV fixture: narrow-nbsp-formula (0.038084ms)
+✔ v1 shared CSV fixture: medium-math-space-formula (0.03ms)
+✔ v1 shared CSV fixture: ideographic-space-formula (0.023625ms)
+✔ v1 shared CSV fixture: bom-formula (0.016ms)
+✔ answer feedback updates one run, preserves another run, and requires negative detail (0.184333ms)
+✔ safe exports preserve negative numeric values, protect formulas, and retain units and complete rows (0.112125ms)
+✔ CSV protects leading tabs and Python/ECMAScript whitespace without changing row data (0.022833ms)
+✔ investigation and evidence exports retain frozen scope, identity and synthetic authority labels (0.474542ms)
+✔ dedicated support/admin routes restore and first-round local state migrates without losing drafts (0.659125ms)
+✔ catalogue totals and membership remain complete across pages and languages (5.488167ms)
+✔ unknown, unavailable, revoked and zero inventory outcomes are distinct (0.065875ms)
+✔ browsing has no context side effect, adding context does not restrict scope (0.169916ms)
+✔ each run freezes context and snapshot, so later context changes affect only future runs (0.352417ms)
+✔ drafts and transcripts stay separate, including while opening an evidence deep link (0.467291ms)
+✔ completed and partial runs produce one retained answer, even after repeated ticks (0.218041ms)
+✔ cancellation terminates the simulation and a continuation keeps the original scope and a new draft (0.089625ms)
+✔ clarification and interruption retain the question and never fabricate a result (0.138375ms)
+✔ refresh creates an independent branch, flags withdrawn context and preserves old evidence (0.19675ms)
+✔ approval binds the reviewed proposal version and code edits invalidate it (0.494375ms)
+✔ empty scope cannot produce fabricated matching datasets (0.142042ms)
+✔ malformed or stale local state fails safely and navigation preserves catalogue state (0.337583ms)
+ℹ tests 160
+ℹ suites 0
+ℹ pass 159
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 265.729542
+
+✖ failing tests:
+
+test at tests/catalogue-contract.test.ts:61:3
+✖ shared result: synthetic:coverage-receipt (3.102959ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+
+    {
+      columns: [
+        {
+          key: 'expected_days',
+          title: {
+  ...
+          },
+  +       unit: null
+        },
+        {
+          key: 'observed_days',
+          title: {
+            en: 'observed_days',
+            ja: 'observed_days'
+          },
+  +       unit: null
+        },
+        {
+          key: 'missing_days',
+          title: {
+            en: 'missing_days',
+            ja: 'missing_days'
+          },
+  +       unit: null
+        },
+        {
+          key: 'missing_dates',
+          title: {
+            en: 'missing_dates',
+            ja: 'missing_dates'
+          },
+  +       unit: null
+        }
+      ],
+      receipt: {
+        authority: 'descriptive',
+        availability: {
+  ...
+            object_id: 'synthetic:dataset:000002',
+  +         source_generation: null
+          }
+        ],
+        operation_id: 'catalogue.coverage',
+        operation_version: 'v1',
+        parameters: {
+
+      at TestContext.<anonymous> (file:///Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1/tests/catalogue-contract.test.ts:62:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { columns: [ [Object], [Object], [Object], [Object] ], receipt: { authority: 'descriptive', availability: [Object], content_sha256: '55c713ffa6b4a694c20c539f6ff2d53cd1ea866bf1ed3dcdb43701e0f0dcc9e3', inputs: [Array], operation_id: 'catalogue.coverage', operation_version: 'v1', parameters: [Object], preview_truncated: false, provenance: [Object], query_completion: 'complete', receipt_id: 'synthetic:coverage-receipt', returned_count: 1, schema_version: 'context-catalogue-v1', scope: [Object], scope_compatibility: null, snapshot_id: 'synthetic-snapshot-1', source_completeness: 'partial', total_rows: [Object] }, rows: [ [Object] ], schema_version: 'context-catalogue-v1', scope: { sources: [Object], version: 1 }, snapshot_id: 'synthetic-snapshot-1' },
+    expected: { schema_version: 'context-catalogue-v1', snapshot_id: 'synthetic-snapshot-1', scope: { version: 1, sources: [Object] }, columns: [ [Object], [Object], [Object], [Object] ], rows: [ [Object] ], receipt: { schema_version: 'context-catalogue-v1', snapshot_id: 'synthetic-snapshot-1', scope: [Object], receipt_id: 'synthetic:coverage-receipt', operation_id: 'catalogue.coverage', operation_version: 'v1', inputs: [Array], parameters: [Object], authority: 'descriptive', availability: [Object], provenance: [Object], total_rows: [Object], returned_count: 1, preview_truncated: false, source_completeness: 'partial', query_completion: 'complete', content_sha256: '55c713ffa6b4a694c20c539f6ff2d53cd1ea866bf1ed3dcdb43701e0f0dcc9e3', scope_compatibility: null } },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

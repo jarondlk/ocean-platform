@@ -1,0 +1,169 @@
+{
+  "component": "C08",
+  "state": "Complete for local catalogue contract and fixture acceptance",
+  "date": "2026-10-15 JST",
+  "branch": "overhaul",
+  "base_head": "ae8c20e2847288231cf57039852ef87f2b820135",
+  "code_revision": "Uncommitted local checkpoint; exact accepted source hashes below. Delivery approval persists.",
+  "contract": "context-catalogue-v1",
+  "files": {
+    "frontend-v1/src/catalogue-contract.generated.ts": "59f8bd5727d02f83704fa44175cace4ddda018e8e40af00e4ca7081fa90a16ca",
+    "frontend-v1/src/catalogue-contract.ts": "c9a2d2b8d1f35280cabaa7c399f7af7baaa084cad0e52ddd3304682997ba14d5",
+    "frontend-v1/tests/catalogue-contract.test.ts": "b16592062e880ae7565f73d15b87f5e47ff66a02658d1190c2051740c8874c9b",
+    "schema/context_catalogue.py": "c757fa2f91c3e44c5832290faaf9fa01d7501c33348747fc281fd92e7dd13dd0",
+    "schema/context_catalogue.v1.schema.json": "385d3cb7e8a7e5f5c36fc8f177c0b9c540d3e249496b7b6d869ec7d36785b972",
+    "schema/context_catalogue_examples.json": "258cd0d3c7622d703a29c9840b05e0d418cbd6fee614c1fc9eb4bef12d3d6ed3",
+    "schema/context_catalogue_fixtures.py": "8081971ce01e727dec02fb301fa60941443d3a1943dba357247198761c8b8fdc",
+    "scripts/export_catalogue_examples.py": "7fd86bf2c8b0e796c1436e207c71c912ab279cf859ae22c6fa1ee1182bf59235",
+    "scripts/export_catalogue_types.py": "417fb30b8209cc2422421495e76c50801715ca034d4682d4844d89d71ff2c682",
+    "scripts/export_context_catalogue.py": "107be75e5e6fcaa74c1285dababff4b9673861214c7255cc48ca06abc82820d7",
+    "tests/test_context_catalogue_contract.py": "0af0720cf12be022a4c72d7a8248de13775c074f4ceb06bd2124b1787e717853",
+    "tests/test_context_catalogue_fixtures.py": "36c4e96202f60ba38a606730e7e6b851c5f06b7e39b6ad366779722086412d69"
+  },
+  "source_sha256": "6934486ee263d812b6bb28796c6e8f36f1ec42953eb7ef5e4dc294a6be1f3d7c",
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "documentation_files": {
+    "docs/plans/ocean-v1/README.md": "8c6bed4bc314f9ec577dc1814ab97a05b158818a0e7409a61268f433bf19ce08",
+    "docs/plans/ocean-v1/STATUS.md": "2d70bcbe0ead03ad3be98d5fab80d9016fb7d2d97a50bf745fc83bf2ed8b35b7",
+    "docs/plans/ocean-v1/MASTER_PLAN.md": "33e7932786ad313a88310e6f8368ad6a2c721e7a216197dd67d0e712d8d7fa4f",
+    "docs/plans/ocean-v1/COMPONENTS.md": "9c4513e80576a949f7fd127dbb00a7502959e3c7e8ff000c3745274716f69e97",
+    "docs/plans/ocean-v1/HUB_PROMPT.md": "7a91cb3346d289ca9e13376738be0ac37cc48fb394d626e7431078a8d9d0ca0b",
+    "docs/plans/ocean-v1/DECISIONS.md": "c5759af2d534d029cc5748ad98c2264756ce04496d489b76b435f63d410cfc64",
+    "docs/plans/ocean-v1/components.json": "517d128e136eaaee1c79815bcf2f9892a7567fa4255eca7e0385e536aad33ece",
+    "docs/plans/ocean-v1/components/C08-catalogue-contracts.md": "6187bd0b8da5f45434e0663e303f0df21113c0f2e13db363364ee709dded6ab3",
+    "docs/plans/ocean-v1/handoffs/C08.md": "cbd8de9e32c3d09e89e3b56e565073ff010d40d108893c53f7ada849c6eb0671",
+    "docs/plans/ocean-v1/handoffs/README.md": "945a6e5565601d8ea70765d79fa5e32a6c1dde472f115ec3405250981d20737c",
+    "docs/plans/ocean-v1/C08_CATALOGUE_CONTRACT.md": "33bbb65eddadad8beebbcb92bd920fbab353b0408808228c69c432b75183c88a"
+  },
+  "evidence_files": {
+    "backend-result.json": "999a29016ec2234eff5c6415268dfdd7c2769e048a3e9a085303056eda6abde1",
+    "backend-tests-first-full.txt": "968c93e68b0c92bc56176736e0ae1b1780a2aa4717b0b5a65556c9fd5c70c025",
+    "backend-tests.txt": "2f907ebe2f96d26bfe42804308b13e8091b1a36afb06535c1c72f1c7c5e1e90e",
+    "baseline.txt": "524e8c71b730a73cf56684e8b564439e9f1b19fdfbcffcd223a799a6ad7a67fa",
+    "fixture-tests-initial.txt": "4657e8aba407eee07d849da6d743281432fb0b31292bb07f45c265e3d6092532",
+    "frontend-contract-initial.txt": "db92a9d69de345a7fb039a2c7f47dfeb3fdd13b2ab0e5dab6027a41a09584f90",
+    "frontend-result.json": "ffa3f943d1b8233b44f9d372146377611eb6798fdcb6f18a3ba8949ec30df631",
+    "frontend-v1-build.txt": "547315b2d83be195d1ac0179f9dceea6062a116da97c0ac4254e9fd4cc138651",
+    "frontend-v1-tests-first-full.txt": "097fc520de7fc94821fd68d2e3393f4d509f7c995b468954fc8ae21f4d0782a6",
+    "frontend-v1-tests.txt": "6621e9ca00442962c7397e57d39f4426384d3ed3f14085b91975b9cfaabddb0e",
+    "frontend-v1-typecheck-initial.txt": "0e7c5851050d60c4887bff8286d149d68b34620c6249a3386eebf1814d861ad3",
+    "frontend-v1-typecheck.txt": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936",
+    "generation-checks.txt": "df51a9f41ba85d1eac82f9e6bef36ae49b7fc067e37224de21d3e6222220e93d",
+    "planning-validation.json": "5f51d62d0b6e3345e6d32c2c8808439fdd949ce28c4cc3e3d786429eed33486b",
+    "preservation.json": "fe9556a39e95b77008092d3e2e7e36766e4be41fe6ed7d4f5f84219092eab632",
+    "required-initial.txt": "d8cc1af5b1cbfa5a7f4ebc25ed8f2dbfb120516da4d4652d02d7ee374d0451c2",
+    "required-tests.txt": "496d689cea2d5639f11b4a4b9a6555f5f966fea6674d15348d69a564186d793a",
+    "review-parity-initial-summary.json": "60bf4d9932d28d325428a155ac331b35ea20dff5268da3c6f0daf2a87a00e94d",
+    "review-parity-run.txt": "67e0c33886ab46c285a2a0986bf2eece964aab5113dc6b1e6dd0abaea1bc5f78",
+    "review-parity-seeds.json": "1a12aa8fb4583084fcd17f198a449c424abad46d7ba6d2e99ede820c337aae96",
+    "review-parity-summary.json": "d2687dd4d4b6d1ad565fc344784500a844ad6ac9ad78ea3e75065d6a0c358dc4",
+    "review.json": "e35e85ad02c9ed158308f583196e43ef81402b0138722303bad9c62c0a24e04d",
+    "review_parity.mjs": "48565f037339495417d8c56c9c65aaf560c7a93d67bb28eb3d647127fec747e1",
+    "review_parity.py": "14dd5063357cc946a68ac60dba7b2f8b2fe53d44325ada3f679313795337de17",
+    "ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "runtime.json": "9f9a705fe651faaf460c469a06ae011d3aa1086520fd4eda781c5847b159fd3b",
+    "scope-contract.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "start-snapshot.json": "2d80db6363d2f8cb7ec3b75ff488e9ac6f20330b155adf1b582eb64fdd4b5a88",
+    "verify_backend.py": "7744ab1abead4f361ea2e1e1cd634acbdad47ad712fc4ddb3b548f24301dae1d",
+    "verify_frontend.py": "398f71553787048439623eaab6b331629d38dc08ac9c239d38ecf0028fe24d45"
+  },
+  "verification": {
+    "baseline_passed": 81,
+    "required_passed": 274,
+    "new_backend_cases": 193,
+    "frontend_v1_tests": 162,
+    "frontend_contract_tests": 86,
+    "frontend_typecheck": "pass",
+    "frontend_build": "pass",
+    "fixture_datasets": 100000,
+    "fixture_dataset_pages": 200,
+    "shared_valid_cases": 34,
+    "shared_invalid_cases": 40,
+    "cross_runtime_probe": {
+      "cases": 10398,
+      "python_accepts": 653,
+      "typescript_accepts": 653,
+      "acceptance_differences": [],
+      "normalization_differences": []
+    },
+    "full_backend": {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/",
+        "-q",
+        "--tb=short",
+        "--cov=api",
+        "--cov=config",
+        "--cov=db",
+        "--cov=preprocessing",
+        "--cov=ingestion",
+        "--cov=orchestration",
+        "--cov=schema",
+        "--cov=evaluation",
+        "--cov-report=term-missing",
+        "--cov-fail-under=70"
+      ],
+      "safe_environment": {
+        "AUTH_MODE": "disabled",
+        "DEPLOYMENT_ENV": "test",
+        "ENABLE_MOCK_LOGIN": "false",
+        "PERSIST_LOCAL_CHAT": "false",
+        "RUN_POSTGRES_INTEGRATION": "0",
+        "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c08_regressions_unused",
+        "MODEL_PROVIDER": "ollama",
+        "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+      },
+      "exit_code": 0
+    },
+    "full_result": "2314 passed, 63 skipped, 2596 warnings in 114.83s (0:01:54)",
+    "coverage_percent": 82.28,
+    "coverage_minimum": 70,
+    "local_scope": "Includes nine older unrelated benchmark cases excluded from delivery.",
+    "skip_reason": "63 existing PostgreSQL opt-in cases; no SQL/schema/migration changes. Hosted delivery will rerun dedicated integration.",
+    "ruff": "pass",
+    "generated_contracts": "pass",
+    "scope_export": "pass",
+    "diff_check": "pass",
+    "links": "pass"
+  },
+  "preservation": {
+    "P00_current_files": {
+      "matching": 36,
+      "mismatches": []
+    },
+    "C01_scope_files": {
+      "matching": 4,
+      "mismatches": []
+    },
+    "C07_accepted_files": {
+      "matching": 16,
+      "mismatches": []
+    },
+    "unrelated_files": {
+      "matching": 30,
+      "mismatches": []
+    },
+    "scientific_artifacts": {
+      "matching": 7,
+      "mismatches": []
+    },
+    "serving_files": {
+      "matching": 2,
+      "mismatches": []
+    },
+    "historical_evidence": {
+      "matching": 228,
+      "mismatches": []
+    },
+    "existing_runtime_source_files_changed": 0,
+    "dependencies_and_deployments": "unchanged"
+  },
+  "review": "Reported independent findings resolved; reviewer stopped at usage limit, root final signoff and reproducible parity probe.",
+  "remaining_boundaries": [
+    "Authorized commit/push and hosted CI delivery pending separate receipt.",
+    "C09-C27 remain unselected.",
+    "No real catalogue service performance, storage/API/UI activation, scientific regeneration, providers, production access, transfers or cloud deployment."
+  ]
+}

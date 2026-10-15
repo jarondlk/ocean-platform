@@ -1,6 +1,6 @@
 # C08 — Catalogue contracts and fixtures
 
-**Status:** Not started. **Prerequisites:** P00, C01. **Contract:** Context Catalog v1.
+**Status:** Complete locally (2026-10-15 JST). **Prerequisites:** P00, C01. **Contract:** Context Catalog v1.
 
 ## Revised delivery boundary
 
@@ -53,3 +53,15 @@ Add new versioned types; preserve old source aliases, API shapes and identifiers
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c08). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+## Local acceptance — 2026-10-15 JST
+
+Python-owned v1 models, generated JSON Schema/TS types, shared wire examples and
+an opt-in validated frontend boundary are complete. 274 required tests pass;
+162 v1 tests, typecheck/build, 100,000-dataset exhaustive fixture traversal and
+10,398 cross-runtime mutation cases pass. Full backend: 2,314 passed,
+63 gated PostgreSQL skips, 82.28% coverage. No existing runtime or UI
+source changes. See [contract guide](../C08_CATALOGUE_CONTRACT.md),
+[handoff](../handoffs/C08.md) and [receipt](../evidence/C08/verification.json).
+Reference fixture traversal is not real service performance or live authorization
+acceptance. C09 and real storage/endpoints/UI/cloud work remain unselected.

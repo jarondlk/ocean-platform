@@ -1,0 +1,188 @@
+{
+  "cases": 8964,
+  "python_accepts": 656,
+  "typescript_accepts": 658,
+  "acceptance_differences": [
+    {
+      "model": "ListingRequest",
+      "id": "time:9999-12-31T23:59:59-23:59",
+      "python": {
+        "ok": false,
+        "error": "OverflowError"
+      },
+      "typescript": {
+        "ok": true,
+        "value": {
+          "access_binding": "c2e3761f4449e28b5b48a3edd8f7c32bf4a9a80689fa0336f038f4056e47c412",
+          "access_revision": "permissions-1",
+          "cursor": null,
+          "filters": {
+            "authorities": [],
+            "kinds": [],
+            "roots": [],
+            "search": null,
+            "source_families": []
+          },
+          "limit": 2,
+          "ordering": [
+            {
+              "direction": "asc",
+              "field": "id"
+            }
+          ],
+          "parent_id": null,
+          "schema_version": "context-catalogue-v1",
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {
+                  "bay": null,
+                  "sample_id": null,
+                  "station": null,
+                  "time_from": "9999-12-31T23:59:59-23:59",
+                  "time_to": null
+                }
+              },
+              "edna_metabarcoding": {
+                "analysis_id": null,
+                "enabled": true,
+                "filters": {
+                  "assignment_method": null,
+                  "is_control": null,
+                  "lat_max": null,
+                  "lat_min": null,
+                  "lon_max": null,
+                  "lon_min": null,
+                  "provider": null,
+                  "provider_project_id": null,
+                  "provider_run_id": null,
+                  "sample_id": null,
+                  "sample_kind": null,
+                  "taxon": null,
+                  "time_from": null,
+                  "time_to": null
+                }
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {
+                  "bay": null,
+                  "sample_id": null,
+                  "station": null,
+                  "time_from": null,
+                  "time_to": null
+                }
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {
+                  "dataset_id": null,
+                  "lat_max": null,
+                  "lat_min": null,
+                  "lon_max": null,
+                  "lon_min": null,
+                  "time_from": null,
+                  "time_to": null
+                }
+              }
+            },
+            "version": 1
+          },
+          "snapshot_id": "synthetic-snapshot-1"
+        }
+      }
+    },
+    {
+      "model": "ListingRequest",
+      "id": "time:0001-01-01T00:00:00+23:59",
+      "python": {
+        "ok": false,
+        "error": "OverflowError"
+      },
+      "typescript": {
+        "ok": true,
+        "value": {
+          "access_binding": "c2e3761f4449e28b5b48a3edd8f7c32bf4a9a80689fa0336f038f4056e47c412",
+          "access_revision": "permissions-1",
+          "cursor": null,
+          "filters": {
+            "authorities": [],
+            "kinds": [],
+            "roots": [],
+            "search": null,
+            "source_families": []
+          },
+          "limit": 2,
+          "ordering": [
+            {
+              "direction": "asc",
+              "field": "id"
+            }
+          ],
+          "parent_id": null,
+          "schema_version": "context-catalogue-v1",
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {
+                  "bay": null,
+                  "sample_id": null,
+                  "station": null,
+                  "time_from": "0001-01-01T00:00:00+23:59",
+                  "time_to": null
+                }
+              },
+              "edna_metabarcoding": {
+                "analysis_id": null,
+                "enabled": true,
+                "filters": {
+                  "assignment_method": null,
+                  "is_control": null,
+                  "lat_max": null,
+                  "lat_min": null,
+                  "lon_max": null,
+                  "lon_min": null,
+                  "provider": null,
+                  "provider_project_id": null,
+                  "provider_run_id": null,
+                  "sample_id": null,
+                  "sample_kind": null,
+                  "taxon": null,
+                  "time_from": null,
+                  "time_to": null
+                }
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {
+                  "bay": null,
+                  "sample_id": null,
+                  "station": null,
+                  "time_from": null,
+                  "time_to": null
+                }
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {
+                  "dataset_id": null,
+                  "lat_max": null,
+                  "lat_min": null,
+                  "lon_max": null,
+                  "lon_min": null,
+                  "time_from": null,
+                  "time_to": null
+                }
+              }
+            },
+            "version": 1
+          },
+          "snapshot_id": "synthetic-snapshot-1"
+        }
+      }
+    }
+  ],
+  "normalization_differences": []
+}

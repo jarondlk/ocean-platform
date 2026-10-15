@@ -2,7 +2,7 @@
 
 Recorded 2026-10-12 JST from the originating planning conversation. This file
 records choices, not proof of implementation. P00 is selected for local
-implementation and accepted; C01–C07 local acceptance is Complete. C08–C27 remain Not started.
+implementation and accepted; C01–C07 local acceptance is Complete. C08 local acceptance is Complete; C09–C27 remain Not started.
 Later explicit user instructions override this baseline; record changes here
 and identify affected components instead of silently drifting.
 
@@ -310,3 +310,26 @@ on push as configured. [Delivery evidence](evidence/C07/delivery.json) is saved
 separately from the frozen local receipt. Source, scientific/serving artifacts,
 canonical bundle bytes, historical receipts and all 30 unrelated files remain
 preserved. C08 remains unselected; no provider call, regeneration or deployment.
+
+### C08 selection — 2026-10-15 JST
+
+The user selected C08 after readiness verification. Implement versioned shared
+catalogue contracts, a frontend-v1 adapter boundary and synthetic catalogue
+fixtures/checks; preserve accepted P00 interactions and C01 scientific scope.
+No C09, storage, endpoints, UI integration, cloud/provider or real transfers.
+Existing subagent and commit/push authorization persists. Preserve all unrelated
+work and historical receipts.
+
+### C08 local acceptance — 2026-10-15 JST
+
+`context-catalogue-v1` freezes canonical identities, five roots, source-qualified
+scopes, independent lifecycle/completeness, exact whole-scope counts and bound
+cursors. Python owns generated JSON Schema and TS types; one opt-in boundary
+retains full validated semantics beside P00 projection. Existing UI/runtime
+source is unchanged. 274 required tests, 162 v1 tests/typecheck/build, full backend
+2,314 passed/63 gated skips (82.28%), 100,000-dataset traversal and
+10,398 cross-runtime cases pass. Reviewer-reported privacy/schema/date issues are
+fixed; final root signoff records reviewer usage interruption honestly. Cursors
+are reference context tokens, not signed authorization; fixture scale does not
+prove service performance. All prior artifacts/receipts and unrelated work are
+preserved. Existing delivery approval persists; no C09, transfer or deployment.

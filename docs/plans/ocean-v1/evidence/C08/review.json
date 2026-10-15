@@ -1,0 +1,25 @@
+{
+  "scope": "C08 contracts, frontend adapter and synthetic inventory",
+  "independent_reviewer": "c08_review subagent",
+  "findings_resolved": [
+    "Cross-links to denied targets projected out without input mutation",
+    "JSON Schema standard bounds regenerated",
+    "Scientific scope padding/time rules aligned across languages",
+    "UTC calendar overflows reject as validation errors in both runtimes",
+    "Generic exact integer values cannot silently round in browser JSON"
+  ],
+  "independent_review_status": "Read-only findings received; reviewer hit usage limit before final signoff. Root completed fixes and final validation.",
+  "final_signoff": "root; no known remaining acceptance blockers",
+  "cross_runtime_probe": {
+    "cases": 10398,
+    "python_accepts": 653,
+    "typescript_accepts": 653,
+    "acceptance_differences": [],
+    "normalization_differences": []
+  },
+  "limits": [
+    "Reference cursor is unsigned, not production authorization",
+    "Fixture page generator freezes one fixture access view, not per-request live revocation or service performance",
+    "C09/C14 and real UI/cloud integration remain unselected"
+  ]
+}

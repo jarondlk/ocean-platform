@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C07 are Complete locally; C08–C27 are not started.**
+**P00 and C01–C08 are Complete locally; C09–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -38,7 +38,7 @@ read [its handoff](handoffs/C06.md). C06 is committed/pushed as `27d76c9`
 with passing hosted CI; [delivery receipt](evidence/C06/delivery.json).
 C07 export safety is complete and committed/pushed as `1195796` with
 [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38670737411); read [its handoff](handoffs/C07.md) and
-[delivery receipt](evidence/C07/delivery.json). C08 remains unselected.
+[delivery receipt](evidence/C07/delivery.json). C08 is Complete locally; read its handoff and contract guide. C09 remains unselected.
 
 The new site is fully isolated from the legacy production site. Read
 [SITE_SEPARATION.md](SITE_SEPARATION.md) and [UI_UX_BRIEF.md](UI_UX_BRIEF.md).
@@ -128,6 +128,10 @@ not a requirement to reset future work to this commit.
 Existing unrelated README, audit and benchmark modifications are preserved.
 P00 progress is recorded in [STATUS.md](STATUS.md) and [its handoff](handoffs/P00.md).
 C01 and C02 are complete with offline evidence; C03 is complete with local unit
-and actual disposable PostgreSQL evidence. C04 and C05 are Complete locally; C06 is Complete locally; C07 is Complete locally; C08–C27 remain Not started.
+and actual disposable PostgreSQL evidence. C04 and C05 are Complete locally; C06 is Complete locally; C07 is Complete locally; C08 is Complete locally; C09–C27 remain Not started.
 The 2026-10-13 revision adds P00 before the original 27 numbered components; the
 setup receipt retains its historical counts and records this amendment.
+
+C08 catalogue contracts and synthetic fixtures are complete locally. Read
+[its handoff](handoffs/C08.md) and [contract guide](C08_CATALOGUE_CONTRACT.md)
+before C09 or later integration.
