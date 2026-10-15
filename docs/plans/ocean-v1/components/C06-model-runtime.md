@@ -1,6 +1,6 @@
 # C06 — Model runtime contract
 
-**Status:** Complete locally (2026-10-15 JST). **Prerequisites:** P00. **Contract:** provider-independent generation result v1.
+**Status:** Complete locally and delivered (2026-10-15 JST). **Prerequisites:** P00. **Contract:** provider-independent generation result v1.
 
 ## Revised delivery boundary
 
@@ -61,3 +61,7 @@ regressions pass 39 cases and two idempotent corpus upserts; its server is stopp
 Independent review, Ruff, scope contract and preservation pass. Provider calls
 remain mocked; no live provider/model quality or deployment is claimed. See
 [handoff](../handoffs/C06.md) and [local source receipt](../evidence/C06/verification.json).
+
+Hosted acceptance now passes for implementation commit 27d76c9: 1,928 backend tests,
+82.64% coverage, both frontends and 63 PostgreSQL cases plus backup/restore.
+See [delivery receipt](../evidence/C06/delivery.json). C07 remains unselected.

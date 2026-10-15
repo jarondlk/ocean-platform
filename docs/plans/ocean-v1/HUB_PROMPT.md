@@ -30,7 +30,8 @@ P00 and C01–C05 local application work and appropriate checks are complete.
 C05 source hashes, regression results and deferred rebuild instructions are recorded;
 C05 is committed/pushed as fd8f520 with passing hosted CI; read
 C06_READINESS_AUDIT_2026-10-15.md and its receipt. C06 is ready for explicit
-selection, with 99 baseline tests passing and F07 reproduced offline. C06 is Complete locally; read handoffs/C06.md. C07–C27 remain
+selection, with 99 baseline tests passing and F07 reproduced offline. C06 is Complete locally and delivered as 27d76c9 with passing hosted CI;
+read handoffs/C06.md and evidence/C06/delivery.json. C07–C27 remain
 unselected; planning/recovery inspection outside
 the selected component is read-only unless documentation edits are requested.
 Do not create other chats or begin components merely because this hub exists.

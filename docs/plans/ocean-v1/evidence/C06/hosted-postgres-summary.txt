@@ -1,0 +1,6 @@
+2026-10-15T01:48:37.9073565Z 39 passed, 4 warnings in 17.97s
+2026-10-15T01:49:00.7302100Z C03 disposable PostgreSQL identity: database=ocean_c03_retention_test address=172.18.0.2 port=5432 version=16.15 (Debian 16.15-1.pgdg12+2) isolation=read committed
+2026-10-15T01:49:01.4898099Z 12 passed in 1.34s
+2026-10-15T01:49:03.1965265Z C05 disposable pgvector identity: database=ocean_c05_retrieval_test address=172.18.0.2 port=5432 PostgreSQL=16.15 (Debian 16.15-1.pgdg12+2) isolation=read committed pgvector=0.8.7
+2026-10-15T01:49:03.9081724Z 12 passed, 1 warning in 1.43s
+2026-10-15T01:49:05.6701236Z   "restore_test": {

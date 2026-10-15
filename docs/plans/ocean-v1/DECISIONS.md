@@ -258,3 +258,14 @@ pass. Independent review has no blockers. The owned server is stopped;30 unrelat
 files, 7 scientific artifacts and36 P00 files are preserved. Existing delivery
 authorization applies to C06 checkpoint/push and CI verification. No live provider,
 real scientific regeneration, production migration, deployment or C07 selection.
+
+### C06 hosted delivery — 2026-10-15 JST
+
+C06 is committed/pushed as 27d76c9 under the continuing delivery authorization.
+Hosted run 38667543787 passes: 1,928 backend tests, 82.64% coverage, both frontends,
+39 existing PostgreSQL cases plus 12 C03 and 12 C05, idempotent corpus upsert and
+backup/isolated restore. The local 1,937 count includes 9 unrelated benchmark tests
+excluded from delivery. All 16 C06 source/test hashes match the accepted source;
+30 unrelated files and real artifacts remain intact. Final delivery evidence is
+saved separately from the frozen local receipt. C06 is Complete locally and
+delivered; C07–C27 remain unselected. No real provider call or deployment occurred.

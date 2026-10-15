@@ -34,7 +34,8 @@ recorded separately in [its receipt](evidence/C05/verification.json).
 C05 is now committed/pushed as `fd8f520` with passing hosted CI;
 [the C06 readiness audit](C06_READINESS_AUDIT_2026-10-15.md) verifies its prerequisite
 and 99-test baseline. C06 was explicitly selected after the readiness checkpoint and is Complete locally;
-read [its handoff](handoffs/C06.md).
+read [its handoff](handoffs/C06.md). C06 is committed/pushed as `27d76c9`
+with passing hosted CI; [delivery receipt](evidence/C06/delivery.json).
 
 The new site is fully isolated from the legacy production site. Read
 [SITE_SEPARATION.md](SITE_SEPARATION.md) and [UI_UX_BRIEF.md](UI_UX_BRIEF.md).

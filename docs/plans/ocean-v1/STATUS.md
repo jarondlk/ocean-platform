@@ -99,6 +99,7 @@ C06 ordinary/structured adapters and strict string wrappers now reject limits,
 refusal, malformed/missing/unknown termination. Results preserve measured monotonic
 duration and optional actual usage; incomplete parseable JSON cannot execute plans.
 Independent review passes. Existing model/provider configuration, retry budgets,
-embedding methods and real data remain unchanged. C06 delivery uses the existing
-commit/push authorization; hosted C06 acceptance is pending at this local checkpoint.
+embedding methods and real data remain unchanged. C06 is committed/pushed as `27d76c9`; hosted CI passes: 1,928 backend tests,
+82.64% coverage, both frontends, 63 actual PostgreSQL cases and backup/restore.
+See [delivery receipt](evidence/C06/delivery.json). The local receipt remains historical.
 C07 remains Not started/unselected.
