@@ -134,3 +134,8 @@ Hosted delivery passes as `6d20a75`: 2,305 backend tests/83.09%
 coverage, both frontends (132 legacy/162 v1), 63 actual PostgreSQL cases, idempotent
 upsert and isolated backup/restore. The local receipt remains historical;
 [delivery evidence](evidence/C08/delivery.json) is separate. C09 is unselected.
+
+C09 readiness is verified: C03/C08 source receipts match, 51 baseline tests and
+246 prerequisite regressions pass, and generated contracts are current. See
+[C09 readiness audit](C09_READINESS_AUDIT_2026-10-15.md). C09 remains Not started
+and requires explicit implementation selection.

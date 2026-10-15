@@ -1,0 +1,89 @@
+{
+  "checks": [
+    {
+      "name": "baseline",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_artifact_store.py",
+        "tests/test_provenance_snapshot.py",
+        "tests/test_immutable_bundle_security.py",
+        "tests/test_catalogue_cache.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "51 passed in 2.96s"
+    },
+    {
+      "name": "prerequisites",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_retention.py",
+        "tests/test_retention_cleanup_script.py",
+        "tests/test_retention_postgres_guard.py",
+        "tests/test_context_catalogue_contract.py",
+        "tests/test_context_catalogue_fixtures.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "246 passed, 1 warning in 11.35s"
+    },
+    {
+      "name": "schema",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_context_catalogue.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "Context catalogue schema is current"
+    },
+    {
+      "name": "browser-types",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_types.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "Catalogue browser contract is current."
+    },
+    {
+      "name": "examples",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_examples.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C08 shared examples are current"
+    },
+    {
+      "name": "scope",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_chat_scope.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "No output; command succeeded"
+    }
+  ],
+  "safe_environment": {
+    "AUTH_MODE": "disabled",
+    "DEPLOYMENT_ENV": "test",
+    "ENABLE_MOCK_LOGIN": "false",
+    "PERSIST_LOCAL_CHAT": "false",
+    "RUN_POSTGRES_INTEGRATION": "0",
+    "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c09_readiness_unused",
+    "MODEL_PROVIDER": "ollama",
+    "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+  },
+  "service_startups": 0,
+  "C09_implementation_started": false
+}

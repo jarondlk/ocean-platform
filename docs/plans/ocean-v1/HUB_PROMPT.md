@@ -40,3 +40,7 @@ Preserve the fully isolated second-site architecture. Use explicit approved-data
 copies only under later authorization, never a live legacy-service fallback.
 P00 completion is not completion of the later UI/backend integration components.
 Use the corresponding canonical planning/implementation/resume prompt in PROMPTS.md.
+
+C09 readiness was verified on 2026-10-15 JST against 3cbf9f0: 51 baseline and
+246 prerequisite tests pass; read C09_READINESS_AUDIT_2026-10-15.md and its receipt.
+This does not select C09 implementation; its state remains Not started.

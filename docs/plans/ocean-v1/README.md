@@ -137,3 +137,8 @@ C08 catalogue contracts and synthetic fixtures are complete, committed/pushed as
 [delivery receipt](evidence/C08/delivery.json). Read
 [its handoff](handoffs/C08.md) and [contract guide](C08_CATALOGUE_CONTRACT.md)
 before C09 or later integration.
+
+C09 readiness is verified: C03/C08 source receipts match, 51 baseline tests and
+246 prerequisite regressions pass, and generated contracts are current. See
+[C09 readiness audit](C09_READINESS_AUDIT_2026-10-15.md). C09 remains Not started
+and requires explicit implementation selection.
