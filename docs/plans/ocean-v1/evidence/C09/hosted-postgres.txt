@@ -1,0 +1,16 @@
+Source commit: 9214bbe7aac1087b97a6ade8c7e90521a4c98c3f
+Run: https://github.com/jarondlk/ocean-platform/actions/runs/38703483565
+Job: 116317051570; completed success
+Relevant output extracted from the job log:
+2026-10-15T08:08:11.9263768Z Cache restored successfully
+2026-10-15T08:09:01.0857177Z 39 passed, 4 warnings in 19.54s
+2026-10-15T08:09:13.7042747Z   "inserted_rows": 14231,
+2026-10-15T08:09:13.7043107Z   "updated_rows": 0,
+2026-10-15T08:09:40.4561936Z   "inserted_rows": 0,
+2026-10-15T08:09:40.4562146Z   "updated_rows": 0,
+2026-10-15T08:09:43.6120856Z 12 passed in 1.92s
+2026-10-15T08:09:46.9949074Z 12 passed, 1 warning in 2.11s
+2026-10-15T08:09:50.3319996Z 21 passed in 2.02s
+2026-10-15T08:09:52.1017684Z   "restore_test": {
+2026-10-15T08:09:52.1018471Z     "archive_path": "/home/runner/work/_temp/database-backup/20261015T080950Z-ci-ocean_platform.dump",
+2026-10-15T08:09:52.1019487Z     "ok": true,

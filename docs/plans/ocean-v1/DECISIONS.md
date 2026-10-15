@@ -370,3 +370,12 @@ CAS or database release requires pointer reconciliation before retry. Transfers
 never promote latest and chained origins are rejected pending typed multi-hop
 lineage. No authenticated endpoints, real data, production stores, provider/cloud
 operations or C10 are selected. See C09_SNAPSHOT_CONTRACT.md and handoffs/C09.md.
+
+### C09 delivery — 2026-10-15 JST
+
+Implementation 9214bbe is committed/pushed with exact-source hosted CI passing:
+2,460 backend tests/83.39% coverage, 84 actual PostgreSQL cases, 162 v1/132 legacy
+frontend tests, both typechecks/builds, zero-vulnerability production audits,
+idempotent upsert and isolated backup/restore. Fourteen accepted source files,
+the local receipt and all preserved historical/unrelated/scientific/serving
+files remain unchanged. See evidence/C09/delivery.json. No C10 is selected.
