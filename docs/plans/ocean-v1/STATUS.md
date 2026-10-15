@@ -11,9 +11,9 @@ and cancellation acceptance. C05 passes embedding isolation, metagenome fidelity
 and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11–C27 remain Not started.
 P00 and C01–C10 local work is authorized.
 See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
-[C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md), [C08](handoffs/C08.md) and [C09](handoffs/C09.md) handoffs for current evidence.
+[C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md), [C08](handoffs/C08.md), [C09](handoffs/C09.md) and [C10](handoffs/C10.md) handoffs for current evidence.
 
-Latest completed implementation: **C10 — CTD and metagenome adapters**. Local acceptance passes; source checkpoint/hosted delivery are pending. Read [C10 handoff](handoffs/C10.md), [contract](C10_ADAPTER_CONTRACT.md) and [receipt](evidence/C10/verification.json).
+Latest completed implementation: **C10 — CTD and metagenome adapters**. Committed/pushed as `c3d5b8b`; [hosted CI passes](https://github.com/jarondlk/ocean-platform/actions/runs/38731722030). [Delivery receipt](evidence/C10/delivery.json) records 2,570 backend tests/83.68% coverage, 84 actual PostgreSQL cases and both frontend gates. Read [C10 handoff](handoffs/C10.md), [contract](C10_ADAPTER_CONTRACT.md) and [receipt](evidence/C10/verification.json).
 
 C09 — Immutable catalogue snapshots: Committed/pushed as `9214bbe`; [hosted CI passes](https://github.com/jarondlk/ocean-platform/actions/runs/38703483565). [Delivery receipt](evidence/C09/delivery.json) records 2,460 backend tests/83.39% coverage, 84 actual PostgreSQL cases and both frontend gates. Read [the snapshot contract](C09_SNAPSHOT_CONTRACT.md) and [local receipt](evidence/C09/verification.json).
 C08 is committed/pushed as `6d20a75` with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38695834706);

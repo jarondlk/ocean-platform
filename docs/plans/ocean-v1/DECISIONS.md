@@ -398,3 +398,13 @@ still owns role/session and finer service authorization. Plain value encodings
 and explicit decode bounds reject unsupported inputs without truncation. Real
 source mappings/copies, scientific approval, APIs/UI, C11 and deployment remain
 unselected. See handoffs/C10.md and C10_ADAPTER_CONTRACT.md.
+
+### C10 delivery — 2026-10-15 JST
+
+Implementation c3d5b8b is committed/pushed with exact-source CI passing: 2,570
+backend tests/83.68% coverage, 84 actual PostgreSQL cases, 132 legacy/162 v1
+frontend tests, both typechecks/builds and production dependency audits, idempotent
+upsert and isolated backup/restore. All ten accepted C10 files, fourteen C09 files,
+twelve C08 files and historical/unrelated/scientific/serving evidence are preserved.
+The local receipt remains unchanged; see evidence/C10/delivery.json. No C11, real
+copy/publication, provider service or GCP deployment is selected.

@@ -1,0 +1,15 @@
+Source commit: c3d5b8b188bfea325fbc3ccb3c0ac420a428ee9d
+Run: https://github.com/jarondlk/ocean-platform/actions/runs/38731722030
+Job: 116410863302; completed success
+Relevant output extracted from the job log:
+2026-10-15T12:03:59.8850472Z 39 passed, 4 warnings in 18.56s
+2026-10-15T12:04:07.3618610Z   "inserted_rows": 14231,
+2026-10-15T12:04:07.3619055Z   "updated_rows": 0,
+2026-10-15T12:04:22.2750331Z   "inserted_rows": 0,
+2026-10-15T12:04:22.2750547Z   "updated_rows": 0,
+2026-10-15T12:04:24.7734104Z 12 passed in 1.50s
+2026-10-15T12:04:27.4024068Z 12 passed, 1 warning in 1.64s
+2026-10-15T12:04:29.9726046Z 21 passed in 1.56s
+2026-10-15T12:04:31.7570580Z   "restore_test": {
+2026-10-15T12:04:31.7571569Z     "archive_path": "/home/runner/work/_temp/database-backup/20261015T120430Z-ci-ocean_platform.dump",
+2026-10-15T12:04:31.7571999Z     "ok": true,
