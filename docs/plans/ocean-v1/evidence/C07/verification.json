@@ -1,0 +1,207 @@
+{
+  "component": "C07",
+  "state": "Complete for local export safety acceptance",
+  "date": "2026-10-15 JST",
+  "branch": "overhaul",
+  "base_head": "824724b051b1039e811d25448d6b592755825ad2",
+  "code_revision": "Uncommitted local C07 source checkpoint; exact file hashes bind this acceptance. Delivery authorization persists.",
+  "contract": "Typed spreadsheet-safe CSV string/header presentation, shared across browser/server consumers; no canonical record or immutable bundle mutation",
+  "files": {
+    "api/admin_feedback_routes.py": "5a7c08643c5f222d62658ebd339592fc9490bd984d257d65a0b5ab5b852f902d",
+    "api/csv_serialization.py": "41d1b37f44007f1e64902e6f489c561982597416c9ba321334befc6c7c8cee93",
+    "api/edna_analysis_routes.py": "4f7771c77e1342fa1692e0527d44273fd07275157064ab8dc579a2a60a4f2fd7",
+    "api/main.py": "42e0f2a45fb93efb8cd6a7037cd1278e97c43ba0268af71ed2b520a6d6191a5e",
+    "frontend-v1/src/admin-model.ts": "43bb4d7722796bce62a30ed63ee76e28a7a75c7bfb4e96df410cf646b588dd3c",
+    "frontend-v1/src/exports.ts": "c6d44e5cfa921d3bb9328c8553ec67a8bd61673f9fd95848a50ea18e9006be7c",
+    "frontend-v1/tests/admin-model.test.ts": "bd5adfdbf34fbca630b5a3469e3163c90eba7b1db75dd79a9ba92f2e9accd55d",
+    "frontend-v1/tests/feedback-exports.test.ts": "e360a12d0db16ec1fa109aef78012a67938d2b387fb526efd4f9ce76c4029998",
+    "frontend/lib/csv.test.ts": "167e13232368f22e98d2acd74bbcc8ad4050ebd575b6e593ef1dfa23cd0ecc14",
+    "frontend/lib/csv.ts": "b59d045cbcff901a27ccf86444a3d10835259a09a76712e5f7af63e2916bf8c7",
+    "frontend/package.json": "eb18e2248cf6a7c929d110a66ec91b21238ccec13ded2ea122eac196eea6000c",
+    "schema/csv_serialization_cases.json": "4ea561dbe6577abd3c5e3dc74fd826d369f8919b57344c68db50346dd4dd98aa",
+    "tests/test_admin_feedback.py": "b7d9283f8e621a715c6492bdf3c6b7d00afa3d6649dd95a5a2df57a70e66ce96",
+    "tests/test_api_edna.py": "637606d2e80c76dc43e62f7b1da98f6d982e7260de10c9ea9f1d49b7cc338ab1",
+    "tests/test_api_edna_analysis.py": "633abb0a743321720c3581c44b04d63d126af084a1b4aa1deee5858e7de2214c",
+    "tests/test_csv_serialization.py": "239f7bc94c7a91e417c92869eb87f5e657ca0a3337d87aa04632f469e99f6e90"
+  },
+  "source_sha256": "17e9f36fa8b78f585ab6c8c1fc706ffb6d08433e90a17b443b469c66c13b3a2c",
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "documentation_files": {
+    "docs/plans/ocean-v1/COMPONENTS.md": "412d8163fe7e0c2115c29b1872ae53dc7a4a5fb659aa57655a0592bb3d5ea6d0",
+    "docs/plans/ocean-v1/DECISIONS.md": "cf72d33a255d919a9f19a892c00e4cca03edad9c95d3c0e3b53f6919368fe787",
+    "docs/plans/ocean-v1/HUB_PROMPT.md": "e902d98922d7395f359ed6f8be3a6265841030bd35b2899fe70c3adf34c9a95c",
+    "docs/plans/ocean-v1/MASTER_PLAN.md": "9df24ac456b80f01fe1606a843993a6f7c8143b7103dbc504fedeae38773995b",
+    "docs/plans/ocean-v1/README.md": "e47c35cd4886e9fa24f9640dc20f0ad69154f63f7505dab2707682ba24d4412a",
+    "docs/plans/ocean-v1/STATUS.md": "a48a0b609bcec20cea95eb26d87ac0a398f0f605967ea70c7d8166eb85cce467",
+    "docs/plans/ocean-v1/components.json": "b0117236c75396bc001b7ef9f5cca020dafc1406d43c90f24e27963b21af2679",
+    "docs/plans/ocean-v1/components/C07-export-safety.md": "a970b56b8df8565f5fa0ba592af7ae7faa3fc4ae9b775edd8ea4cdc5d2fa7eeb",
+    "docs/plans/ocean-v1/handoffs/C07.md": "7ec7e85dbed26f62507382e452c0d6ecc74654504e7cbb6577d584bfc4514402",
+    "docs/plans/ocean-v1/handoffs/README.md": "b742e738ed93b0ab0743847e9d2b06c633bf1fc2a9354e5e28aa66832cbda8ba"
+  },
+  "evidence_files": {
+    "backend-result.json": "be9ba1e750f921ba8e415ba6e1f603cb054e70baa135aaa70da6f4b2ed5650d0",
+    "backend-tests.txt": "eace4321855d55004c833c4f40eb6df86f2b351ad7d25cb09bdf061fd96ac410",
+    "baseline-browser.txt": "260bb3b03afa8946d1f88271c1b6ba595493a9a2d53f82521070f7597c2bb0c1",
+    "baseline-server-reproduced.txt": "766cb727427cfe042f6c9b1b3db036009bcdf3bf20c62697e57ccd75d78b2a2d",
+    "baseline-server.txt": "c0d30632088aba153ca94e0f1ec33e2649c1a10dd15904e21404bcbb5fe1f51c",
+    "browser-focused-tests.txt": "4fe556a18551f242b306b73b05f2f9643825c9db3c4162ab9667af2e25da7e67",
+    "frontend-build.txt": "13eada57418cb9d9828d66be8ed55a298746860173df4fb79dd8cbd34a1e425c",
+    "frontend-csv-tests.txt": "e348160a0b49fb8e8e6ac2828a5998379c84999d1a61dd6ae39696cca8466b23",
+    "frontend-dependency-refresh.txt": "0abeb302b8d58d096b4b126d5a9551c6d02be733e166e57380a43a5ad029ed9f",
+    "frontend-refreshed-build.txt": "d6486e268bbf8de2ce374eecd224ed01f18d0a61445e17368f32f9736d85d788",
+    "frontend-refreshed-result.json": "1749817de71d3088ddc1146b94e3a3f4aeff10a35bee0f9ebef534afbe6b9f33",
+    "frontend-refreshed-tests.txt": "dfb372c9f3be7353febf101092684860253fb24c67f105ecac7768682acd0646",
+    "frontend-refreshed-typecheck.txt": "fc392d1461c4eecb6eb76771999435411443ed0e553641e1fe580403e5e87d52",
+    "frontend-tests.txt": "769da46fb8a4ca5ca85a3ece30bb4eaf24b530f431eb93e3667076bf682c7372",
+    "frontend-typecheck.txt": "fc392d1461c4eecb6eb76771999435411443ed0e553641e1fe580403e5e87d52",
+    "frontend-v1-build.txt": "5dc701ff9f8774afc711c8752f68032cbee63048ecccebe9f72e913d36728f39",
+    "frontend-v1-tests.txt": "a6bc598db2f4d27a325865d5193304c5a2a25416abf4b0b4ac46f3336fe823df",
+    "frontend-v1-typecheck-initial.txt": "cce731ca86109c3a902c481154993753a660a3cd47e83533bbe81e486d00d291",
+    "frontend-v1-typecheck.txt": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936",
+    "log-normalization.json": "ced25cb4452e3127b8a1c8ec1a4e5824714a08b5df1d026eabee93afe25de368",
+    "planning-validation.json": "48098034ccd2443d8fbb92e20c62edd791df4f6dd1d16dd069c2200cd3ad0837",
+    "preservation.json": "da2e06c915a7d2ca232dc2d9c2f95cc49537ad1e34f3979c5367182a2c4d854d",
+    "reproduce_server_baseline.py": "317cfa5ab3794b6294503660db84f2ad63f7c9d8a8365166af14ac3abfe07d93",
+    "review.json": "13e640153a1dbf542a507525a606ce58563d757436c088dbedde979b6bb99ce6",
+    "ruff-server.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "runtime.json": "35b23e3fd48362cb47ed842ec18fff58c27244fad0bb863ef18cc2c466e961d4",
+    "scope-contract.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "server-tests.txt": "c5aaad758db3adab5c5b9ffde633e7d60e4f20ea7111019519d4aa58e222e6a3",
+    "start-snapshot.json": "2a9b9ceb847601d466e8913386b4aa945b8d070a2bd81dd3f7ab81394192b9d2",
+    "verify_backend.py": "0662e29531dd7dc19c5c3f362c4aff479b4a1d1b9b151df7bcab0dc788b00f30",
+    "verify_frontend.py": "da04cecdc61f8cf71e3726db9bc6cc0d0e57321d0cc60fc90f025ff95bccb02f"
+  },
+  "verification": {
+    "required_command": ".venv/bin/python -m pytest tests/test_api_edna_analysis.py tests/test_admin_feedback.py tests/test_api_edna.py tests/test_csv_serialization.py -q --tb=short",
+    "required_result": "196 passed, 1 warning in 3.69s",
+    "shared_fixture_cases": 47,
+    "new_backend_cases": 184,
+    "full_backend": {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/",
+        "-q",
+        "--tb=short",
+        "--cov=api",
+        "--cov=config",
+        "--cov=db",
+        "--cov=preprocessing",
+        "--cov=ingestion",
+        "--cov=orchestration",
+        "--cov=schema",
+        "--cov=evaluation",
+        "--cov-report=term-missing",
+        "--cov-fail-under=70"
+      ],
+      "safe_environment": {
+        "AUTH_MODE": "disabled",
+        "DEPLOYMENT_ENV": "test",
+        "ENABLE_MOCK_LOGIN": "false",
+        "PERSIST_LOCAL_CHAT": "false",
+        "RUN_POSTGRES_INTEGRATION": "0",
+        "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c07_regressions_unused",
+        "MODEL_PROVIDER": "ollama",
+        "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+      },
+      "exit_code": 0
+    },
+    "full_result": "2121 passed, 63 skipped, 2596 warnings in 101.48s (0:01:41)",
+    "coverage_percent": 81.85,
+    "coverage_minimum": 70,
+    "full_scope": "Includes nine older unrelated model benchmark tests excluded from delivery.",
+    "skip_reason": "39 existing PostgreSQL + 12 C03 + 12 C05 opt-in cases; SQL/schema/storage unchanged, prior hosted acceptance preserved; C07 hosted CI will rerun all 63.",
+    "legacy_frontend": {
+      "csv_cases": 51,
+      "total_tests": 132,
+      "typecheck": "pass",
+      "build": "pass",
+      "locked_next": "15.5.27",
+      "authoritative_logs": "frontend-refreshed-*; fresh npm ci restored previously stale local Next .26 to unchanged .27 lock"
+    },
+    "v1_frontend": {
+      "tests": 76,
+      "typecheck": "pass",
+      "build": "pass"
+    },
+    "independent_review": {
+      "blocking_findings": 0,
+      "additional_parity_cases": 835,
+      "mismatches": 0,
+      "input_mutations": 0
+    },
+    "ruff": "pass",
+    "generated_scope_contract": "pass",
+    "git_diff_check": "pass",
+    "planning_links": "pass"
+  },
+  "preservation": {
+    "unrelated_files": {
+      "matching": 30,
+      "mismatches": []
+    },
+    "scientific_artifacts": {
+      "matching": 7,
+      "mismatches": []
+    },
+    "P00": {
+      "matching": 32,
+      "intended_C07_csv_changes": {
+        "frontend-v1/src/admin-model.ts": {
+          "accepted_sha256": "0b897127f7aa97f8dee1a4a908402ae93ab7beea44a4515a66963ebe1df8098f",
+          "current_sha256": "43bb4d7722796bce62a30ed63ee76e28a7a75c7bfb4e96df410cf646b588dd3c"
+        },
+        "frontend-v1/src/exports.ts": {
+          "accepted_sha256": "2332c54d9714afce2e7ed676e32cc312fbe881b9fe3ba75f2918bcc71657d917",
+          "current_sha256": "c6d44e5cfa921d3bb9328c8553ec67a8bd61673f9fd95848a50ea18e9006be7c"
+        },
+        "frontend-v1/tests/admin-model.test.ts": {
+          "accepted_sha256": "98710e12bd8f9416c2e78aa889ecad0051a0a81ced47eefb6baff75caae95e8a",
+          "current_sha256": "bd5adfdbf34fbca630b5a3469e3163c90eba7b1db75dd79a9ba92f2e9accd55d"
+        },
+        "frontend-v1/tests/feedback-exports.test.ts": {
+          "accepted_sha256": "b0dd9cb461277101153c1b3e8d9ff569a3288cc57906450316442ca0b8c78ad1",
+          "current_sha256": "e360a12d0db16ec1fa109aef78012a67938d2b387fb526efd4f9ce76c4029998"
+        }
+      },
+      "historical_receipt_preserved": true
+    },
+    "C06": {
+      "matching": 15,
+      "intentional_shared_CSV_change": {
+        "api/main.py": {
+          "accepted_sha256": "ad848bf8f25c58e00f2a424229c17ed12ba42f3b18ad6df373025331e6df501c",
+          "current_sha256": "42e0f2a45fb93efb8cd6a7037cd1278e97c43ba0268af71ed2b520a6d6191a5e"
+        }
+      },
+      "all_non_CSV_main_functions_ast_unchanged": true
+    },
+    "boundaries": {
+      "matching": 13,
+      "dependency_locks_and_workflow_unchanged": true
+    },
+    "serving_files": {
+      "matching": 2,
+      "mismatches": []
+    },
+    "historical_evidence": {
+      "matching": 189,
+      "mismatches": []
+    }
+  },
+  "compatibility_notes": [
+    "CSV apostrophe may be visible in generic readers; original strings/records remain unchanged.",
+    "Feedback reason arrays now present compact JSON instead of semicolon lists.",
+    "Native JSON numeric/key formatting outside shared fixture is not a new canonical scientific format.",
+    "Local Node 24.19.0; hosted workflow retains Node 22.",
+    "Initial server red log includes one faulty scientific-normalization assumption; corrected exact-source baseline has 10 failing/13 passing.",
+    "Initial v1 test typing error corrected before final typecheck/build."
+  ],
+  "remaining_boundaries": [
+    "Authorized commit/push and hosted CI acceptance remain to be recorded separately.",
+    "C08 is not selected or started.",
+    "No production/deployment/provider calls, real scientific regeneration or data migration."
+  ]
+}

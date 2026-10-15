@@ -1,9 +1,8 @@
 import type { Investigation, Locale, Receipt, Table } from "./model.ts";
+import { escapeCsvCell } from "../../frontend/lib/csv.ts";
 
 export function safeCell(value: unknown): string {
-  const raw = String(value ?? "");
-  const protectedValue = typeof value === "number" ? raw : /^[\s]*[=+@-]/.test(raw) ? `'${raw}` : raw;
-  return `"${protectedValue.replaceAll('"', '""')}"`;
+  return escapeCsvCell(value, true);
 }
 export function tableCsv(table: Table, locale: Locale): string {
   return "\ufeff" + [table.columns.map((column) => safeCell(`${column.title[locale]}${column.unit ? ` (${column.unit})` : ""}`)).join(","), ...table.rows.map((row) => table.columns.map((column) => safeCell(row[column.key])).join(","))].join("\r\n");

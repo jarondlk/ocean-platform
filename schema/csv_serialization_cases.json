@@ -1,0 +1,349 @@
+{
+  "version": 1,
+  "policy": "Prefix dangerous strings and headers before RFC-style CSV quoting; preserve typed numeric signs and original source values.",
+  "whitespace_codepoints": "0009-000D,001C-001F,0020,0085,00A0,1680,2000-200A,2028,2029,202F,205F,3000,FEFF",
+  "json_policy": "Objects/arrays serialize compact JSON with Unicode preserved and insertion order for ordinary object keys. Booleans lowercase. CSV escaping does not mutate structured source.",
+  "cases": [
+    {
+      "id": "ordinary",
+      "kind": "string",
+      "value": "ordinary text",
+      "expected_text": "ordinary text",
+      "expected_cell": "ordinary text"
+    },
+    {
+      "id": "japanese",
+      "kind": "string",
+      "value": "水温と塩分",
+      "expected_text": "水温と塩分",
+      "expected_cell": "水温と塩分"
+    },
+    {
+      "id": "quoted",
+      "kind": "string",
+      "value": "a \"quoted\" field",
+      "expected_text": "a \"quoted\" field",
+      "expected_cell": "\"a \"\"quoted\"\" field\""
+    },
+    {
+      "id": "comma",
+      "kind": "string",
+      "value": "a,b",
+      "expected_text": "a,b",
+      "expected_cell": "\"a,b\""
+    },
+    {
+      "id": "multiline",
+      "kind": "string",
+      "value": "line1\nline2",
+      "expected_text": "line1\nline2",
+      "expected_cell": "\"line1\nline2\""
+    },
+    {
+      "id": "carriage-return",
+      "kind": "string",
+      "value": "line1\rline2",
+      "expected_text": "line1\rline2",
+      "expected_cell": "\"line1\rline2\""
+    },
+    {
+      "id": "empty",
+      "kind": "string",
+      "value": "",
+      "expected_text": "",
+      "expected_cell": ""
+    },
+    {
+      "id": "equals",
+      "kind": "string",
+      "value": "=1+1",
+      "expected_text": "'=1+1",
+      "expected_cell": "'=1+1"
+    },
+    {
+      "id": "plus",
+      "kind": "string",
+      "value": "+SUM(A1,A2)",
+      "expected_text": "'+SUM(A1,A2)",
+      "expected_cell": "\"'+SUM(A1,A2)\""
+    },
+    {
+      "id": "minus-string",
+      "kind": "string",
+      "value": "-1",
+      "expected_text": "'-1",
+      "expected_cell": "'-1"
+    },
+    {
+      "id": "at",
+      "kind": "string",
+      "value": "@SUM(1,2)",
+      "expected_text": "'@SUM(1,2)",
+      "expected_cell": "\"'@SUM(1,2)\""
+    },
+    {
+      "id": "space-formula",
+      "kind": "string",
+      "value": "  =1+1",
+      "expected_text": "'  =1+1",
+      "expected_cell": "'  =1+1"
+    },
+    {
+      "id": "tab-text",
+      "kind": "string",
+      "value": "\tordinary",
+      "expected_text": "'\tordinary",
+      "expected_cell": "'\tordinary"
+    },
+    {
+      "id": "cr-text",
+      "kind": "string",
+      "value": "\rordinary",
+      "expected_text": "'\rordinary",
+      "expected_cell": "\"'\rordinary\""
+    },
+    {
+      "id": "lf-text",
+      "kind": "string",
+      "value": "\nordinary",
+      "expected_text": "'\nordinary",
+      "expected_cell": "\"'\nordinary\""
+    },
+    {
+      "id": "tab-formula",
+      "kind": "string",
+      "value": "\t=1+1",
+      "expected_text": "'\t=1+1",
+      "expected_cell": "'\t=1+1"
+    },
+    {
+      "id": "crlf-text",
+      "kind": "string",
+      "value": "\r\nordinary",
+      "expected_text": "'\r\nordinary",
+      "expected_cell": "\"'\r\nordinary\""
+    },
+    {
+      "id": "space-tab-text",
+      "kind": "string",
+      "value": " \tordinary",
+      "expected_text": " \tordinary",
+      "expected_cell": " \tordinary"
+    },
+    {
+      "id": "nonleading-formula",
+      "kind": "string",
+      "value": "ordinary =1+1",
+      "expected_text": "ordinary =1+1",
+      "expected_cell": "ordinary =1+1"
+    },
+    {
+      "id": "multiline-later-formula",
+      "kind": "string",
+      "value": "ordinary\n=1+1",
+      "expected_text": "ordinary\n=1+1",
+      "expected_cell": "\"ordinary\n=1+1\""
+    },
+    {
+      "id": "existing-apostrophe",
+      "kind": "string",
+      "value": "'=1+1",
+      "expected_text": "'=1+1",
+      "expected_cell": "'=1+1"
+    },
+    {
+      "id": "literal-leading-quote",
+      "kind": "string",
+      "value": "\"=1+1\"",
+      "expected_text": "\"=1+1\"",
+      "expected_cell": "\"\"\"=1+1\"\"\""
+    },
+    {
+      "id": "negative-number",
+      "kind": "number",
+      "value": -1,
+      "expected_text": "-1",
+      "expected_cell": "-1"
+    },
+    {
+      "id": "negative-scientific",
+      "kind": "number",
+      "value": -2.5,
+      "expected_text": "-2.5",
+      "expected_cell": "-2.5"
+    },
+    {
+      "id": "positive-number",
+      "kind": "number",
+      "value": 42,
+      "expected_text": "42",
+      "expected_cell": "42"
+    },
+    {
+      "id": "zero",
+      "kind": "number",
+      "value": 0,
+      "expected_text": "0",
+      "expected_cell": "0"
+    },
+    {
+      "id": "null",
+      "kind": "null",
+      "value": null,
+      "expected_text": "",
+      "expected_cell": ""
+    },
+    {
+      "id": "true",
+      "kind": "boolean",
+      "value": true,
+      "expected_text": "true",
+      "expected_cell": "true"
+    },
+    {
+      "id": "false",
+      "kind": "boolean",
+      "value": false,
+      "expected_text": "false",
+      "expected_cell": "false"
+    },
+    {
+      "id": "object",
+      "kind": "json",
+      "value": {
+        "label": "日本語",
+        "values": [
+          -2.5,
+          1
+        ],
+        "active": true
+      },
+      "expected_text": "{\"label\":\"日本語\",\"values\":[-2.5,1],\"active\":true}",
+      "expected_cell": "\"{\"\"label\"\":\"\"日本語\"\",\"\"values\"\":[-2.5,1],\"\"active\"\":true}\""
+    },
+    {
+      "id": "array",
+      "kind": "json",
+      "value": [
+        "=1",
+        "日本語",
+        -2.5,
+        null
+      ],
+      "expected_text": "[\"=1\",\"日本語\",-2.5,null]",
+      "expected_cell": "\"[\"\"=1\"\",\"\"日本語\"\",-2.5,null]\""
+    },
+    {
+      "id": "empty-object",
+      "kind": "json",
+      "value": {},
+      "expected_text": "{}",
+      "expected_cell": "{}"
+    },
+    {
+      "id": "empty-array",
+      "kind": "json",
+      "value": [],
+      "expected_text": "[]",
+      "expected_cell": "[]"
+    },
+    {
+      "id": "undefined",
+      "kind": "undefined",
+      "value": null,
+      "expected_text": "",
+      "expected_cell": ""
+    },
+    {
+      "id": "vertical-tab-formula",
+      "kind": "string",
+      "value": "\u000b=1+1",
+      "expected_text": "'\u000b=1+1",
+      "expected_cell": "'\u000b=1+1"
+    },
+    {
+      "id": "form-feed-formula",
+      "kind": "string",
+      "value": "\f=1+1",
+      "expected_text": "'\f=1+1",
+      "expected_cell": "'\f=1+1"
+    },
+    {
+      "id": "file-separator-formula",
+      "kind": "string",
+      "value": "\u001c=1+1",
+      "expected_text": "'\u001c=1+1",
+      "expected_cell": "'\u001c=1+1"
+    },
+    {
+      "id": "next-line-formula",
+      "kind": "string",
+      "value": "=1+1",
+      "expected_text": "'=1+1",
+      "expected_cell": "'=1+1"
+    },
+    {
+      "id": "nbsp-formula",
+      "kind": "string",
+      "value": " =1+1",
+      "expected_text": "' =1+1",
+      "expected_cell": "' =1+1"
+    },
+    {
+      "id": "ogham-formula",
+      "kind": "string",
+      "value": " =1+1",
+      "expected_text": "' =1+1",
+      "expected_cell": "' =1+1"
+    },
+    {
+      "id": "em-space-formula",
+      "kind": "string",
+      "value": " =1+1",
+      "expected_text": "' =1+1",
+      "expected_cell": "' =1+1"
+    },
+    {
+      "id": "line-separator-formula",
+      "kind": "string",
+      "value": " =1+1",
+      "expected_text": "' =1+1",
+      "expected_cell": "' =1+1"
+    },
+    {
+      "id": "paragraph-separator-formula",
+      "kind": "string",
+      "value": " =1+1",
+      "expected_text": "' =1+1",
+      "expected_cell": "' =1+1"
+    },
+    {
+      "id": "narrow-nbsp-formula",
+      "kind": "string",
+      "value": " =1+1",
+      "expected_text": "' =1+1",
+      "expected_cell": "' =1+1"
+    },
+    {
+      "id": "medium-math-space-formula",
+      "kind": "string",
+      "value": " =1+1",
+      "expected_text": "' =1+1",
+      "expected_cell": "' =1+1"
+    },
+    {
+      "id": "ideographic-space-formula",
+      "kind": "string",
+      "value": "　=1+1",
+      "expected_text": "'　=1+1",
+      "expected_cell": "'　=1+1"
+    },
+    {
+      "id": "bom-formula",
+      "kind": "string",
+      "value": "﻿=1+1",
+      "expected_text": "'﻿=1+1",
+      "expected_cell": "'﻿=1+1"
+    }
+  ]
+}

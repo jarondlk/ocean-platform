@@ -1,6 +1,6 @@
 # C07 — Export safety
 
-**Status:** Not started. **Prerequisites:** P00. **Contract:** typed spreadsheet-safe CSV serialization.
+**Status:** Complete locally (2026-10-15 JST). **Prerequisites:** P00. **Contract:** typed spreadsheet-safe CSV serialization.
 
 ## Revised delivery boundary
 
@@ -41,3 +41,17 @@ No data migration is required. Document apostrophe escaping as a CSV display/exp
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c07). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+## Local acceptance — 2026-10-15 JST
+
+The shared fixture has 47 cases and an explicit Python/ECMAScript whitespace union.
+One TypeScript policy now serves legacy tables, v1 tables and v1 administration;
+one Python module serves all three API exports, including dynamic headers.
+196 focused server tests, 132 legacy and 76 v1 frontend tests, both typechecks/builds
+and the full 2,121-test backend (63 opt-in PostgreSQL skips, 81.85% coverage) pass.
+Independent review finds no blockers and 835 extra cross-runtime values agree.
+A stale local legacy Next installation was refreshed to the unchanged 15.5.27 lock
+and its checks repeated. Intended presentation changes include lowercase booleans
+and compact JSON feedback reason arrays; native JSON/number spelling outside the
+fixture is not a new canonical scientific format. See [handoff](../handoffs/C07.md)
+and [receipt](../evidence/C07/verification.json). No data migration/regeneration.

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import csv
 import io
 import json
 import logging
@@ -30,6 +29,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 import config
+from api.csv_serialization import rows_to_csv
 from retrieval.source_scope import EvidenceScope, EdnaFilters, enabled_sources, legacy_scope
 from api.overview_routes import router as overview_router
 from api.edna_analysis_routes import router as edna_analysis_router
@@ -4608,17 +4608,8 @@ def data_edna_export(
         "source_url",
         "source_sha256",
     ]
-    buffer = io.StringIO()
-    writer = csv.DictWriter(buffer, fieldnames=columns, extrasaction="ignore")
-    writer.writeheader()
-    writer.writerows({
-        key: "'" + value
-        if isinstance(value, str) and value.lstrip().startswith(("=", "+", "-", "@", "\t", "\r"))
-        else value
-        for key, value in row.items()
-    } for row in rows)
     return StreamingResponse(
-        iter([buffer.getvalue()]),
+        iter([rows_to_csv(rows, columns)]),
         media_type="text/csv; charset=utf-8",
         headers={
             "Content-Disposition": 'attachment; filename="anemone-edna-evidence.csv"',

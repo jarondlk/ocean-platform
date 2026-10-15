@@ -1,0 +1,52 @@
+
+> ocean-platform-frontend@0.7.6 build
+> next build
+
+   ▲ Next.js 15.5.27
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 2.8s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/24) ...
+   Generating static pages (6/24)
+   Generating static pages (12/24)
+   Generating static pages (18/24)
+ ✓ Generating static pages (24/24)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                    6.45 kB         121 kB
+├ ƒ /_not-found                            993 B         104 kB
+├ ƒ /admin                               1.32 kB         120 kB
+├ ƒ /admin/database                        164 B         122 kB
+├ ƒ /admin/debug                           159 B         118 kB
+├ ƒ /admin/feedback                      10.9 kB         125 kB
+├ ƒ /admin/pipeline                        162 B         124 kB
+├ ƒ /admin/system                          165 B         122 kB
+├ ƒ /admin/users                         4.44 kB         119 kB
+├ ƒ /analysis                              138 B         103 kB
+├ ƒ /api/auth/[...nextauth]                138 B         103 kB
+├ ƒ /api/backend/[...path]                 138 B         103 kB
+├ ƒ /chat                                22.8 kB         147 kB
+├ ƒ /data                                  23 kB         147 kB
+├ ƒ /database                              164 B         122 kB
+├ ƒ /debug                                 160 B         118 kB
+├ ƒ /evaluation                          9.27 kB         128 kB
+├ ƒ /evidence                              138 B         103 kB
+├ ƒ /explore                             9.58 kB         128 kB
+├ ƒ /login                                 138 B         103 kB
+├ ○ /manifest.webmanifest                  138 B         103 kB
+├ ƒ /pipeline                              162 B         124 kB
+├ ƒ /provenance                          9.61 kB         124 kB
+├ ƒ /settings                               2 kB         116 kB
+└ ƒ /system                                165 B         122 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/255-ce8c7c75002f810b.js       46.5 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.92 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand

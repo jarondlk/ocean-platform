@@ -1,13 +1,12 @@
 """Read-only verified analysis artifacts; generation is a manual batch operation."""
-import csv
 import io
-import json
 import zipfile
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import Response
 import config
+from api.csv_serialization import rows_to_csv
 from ingestion.provenance_snapshot import SnapshotError, SnapshotNotFound
 
 from ingestion.edna_analysis_bundle import analysis_catalog, analysis_root, analysis_status, load_analysis
@@ -150,22 +149,13 @@ def export(analysis_id: str, table: str = 'diversity', assignment_method: str | 
         metadata['operational_approval_basis'] = accepted['approval_basis']
         fixed.extend(['operational_publication_id', 'operational_approval_basis'])
     columns = fixed + sorted({k for r in rows for k in r if k not in fixed})
-    stream = io.StringIO()
-    writer = csv.DictWriter(stream, fieldnames=columns)
-    writer.writeheader()
-    def safe(value):
-        if isinstance(value, (dict, list)):
-            value = json.dumps(value, sort_keys=True, ensure_ascii=False)
-        if isinstance(value, str) and (value.lstrip().startswith(('=', '+', '-', '@')) or value.startswith(('\t', '\r', '\n'))):
-            return "'" + value
-        return value
-    for row in rows[:25000]:
-        writer.writerow({k:safe(v) for k,v in dict(row, **metadata, analysis_id=analysis_id, table=table,
+    content = rows_to_csv((dict(row, **metadata, analysis_id=analysis_id, table=table,
             recipe_sha256=bundle['manifest']['recipe_sha256'], input_sha256=bundle['manifest']['input_sha256'],
             rank=bundle['recipe']['rank'], control_policy=bundle['recipe']['control_policy'],
             min_read_count=bundle['recipe']['min_read_count'], recipe_methods=bundle['recipe'].get('assignment_methods', [bundle['recipe'].get('assignment_method')]),
-            cohort=bundle['recipe'].get('cohort', {k:bundle['recipe'][k] for k in ('region_id','region_version','identity_version','time_from','time_to','calendar') if k in bundle['recipe']})).items()})
-    return Response(stream.getvalue(), media_type='text/csv', headers={
+            cohort=bundle['recipe'].get('cohort', {k:bundle['recipe'][k] for k in ('region_id','region_version','identity_version','time_from','time_to','calendar') if k in bundle['recipe']}))
+        for row in rows[:25000]), columns)
+    return Response(content, media_type='text/csv', headers={
         'Content-Disposition': f'attachment; filename="edna-{analysis_id}-{table}.csv"',
         'X-Export-Truncated': str(len(rows) > 25000).lower(), 'X-Analysis-Id': analysis_id,
     })

@@ -4,7 +4,7 @@
 completed offline scientific scope validation. [C02.md](C02.md) records completed
 derived-evidence software and synthetic checks. [C03.md](C03.md) records completed
 transaction-ordering and disposable PostgreSQL retention acceptance. [C04.md](C04.md)
-records completed local authentication responsiveness acceptance. [C05.md](C05.md) records completed local retrieval correctness and actual PostgreSQL acceptance. [C06.md](C06.md) records completed local model-runtime contract acceptance. Create remaining component
+records completed local authentication responsiveness acceptance. [C05.md](C05.md) records completed local retrieval correctness and actual PostgreSQL acceptance. [C06.md](C06.md) records completed local model-runtime contract acceptance. [C07.md](C07.md) records completed local export safety acceptance. Create remaining component
 handoffs only when work on that component is explicitly selected. Do not manufacture completion
 receipts during setup.
 

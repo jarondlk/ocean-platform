@@ -1,0 +1,8 @@
+
+> ocean-v1-local-preview@1.0.0-preview.0 typecheck
+> NEXT_TELEMETRY_DISABLED=1 next typegen && tsc --noEmit
+
+Generating route types...
+✓ Route types generated successfully
+tests/feedback-exports.test.ts(16,139): error TS2322: Type 'string | number | null' is not assignable to type 'Cell'.
+  Type 'null' is not assignable to type 'Cell'.

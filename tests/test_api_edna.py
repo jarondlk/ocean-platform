@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+import copy
+import csv
+import io
+
+import pytest
 from fastapi.testclient import TestClient
 
 import api.main as api_main
@@ -180,3 +185,34 @@ def test_summary_accepts_namespace_and_target_filters_and_rejects_invalid(monkey
     assert response.status_code == 200
     assert response.json()["filters"]["target_status"] == "nontarget"
     assert client.get('/data/edna/summary?target_status=invalid').status_code == 400
+
+
+@pytest.mark.parametrize("text", [" =1+1", "\ufeff@SUM(A1)", "\tordinary", "\rordinary", "\nordinary", "-1"])
+def test_edna_csv_boundary_preserves_typed_values_and_source(monkeypatch, text):
+    original = {
+        "provider_sample_id": text,
+        "lat": -2.5,
+        "is_control": False,
+        "source_row_number": 42,
+        "source_snapshot_id": "snapshot-synthetic",
+        "source_file_id": "file-synthetic",
+        "source_sha256": "a" * 64,
+    }
+    snapshot = copy.deepcopy(original)
+    # One extra row signals truncation; the retained source objects are immutable inputs.
+    rows = [original] * 25_001
+    monkeypatch.setattr(api_main, "edna_detections", lambda *_args, **_kwargs: {"rows": rows})
+    response = client.get("/data/edna/export")
+    assert response.status_code == 200
+    assert response.headers["x-export-truncated"] == "true"
+    assert response.headers["content-disposition"] == 'attachment; filename="anemone-edna-evidence.csv"'
+    exported = list(csv.DictReader(io.StringIO(response.text, newline="")))
+    assert len(exported) == 25_000
+    assert exported[0]["provider_sample_id"] == "'" + text
+    assert exported[0]["lat"] == "-2.5"
+    assert exported[0]["is_control"] == "false"
+    assert exported[0]["source_row_number"] == "42"
+    assert exported[0]["source_snapshot_id"] == "snapshot-synthetic"
+    assert exported[0]["source_file_id"] == "file-synthetic"
+    assert exported[0]["source_sha256"] == "a" * 64
+    assert original == snapshot

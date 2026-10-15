@@ -148,3 +148,11 @@ test("CSV exports identify synthetic scope, preserve all rows and escape spreads
   assert.match(csv, /'=HYPERLINK/); assert.match(csv, /'  @SUM/);
   assert.match(csv, /with ""quotes""/); assert.match(csv, /"3"/);
 });
+test("admin CSV shares typed safety and JSON serialization without mutating structured records", () => {
+  const rows = [{ "\tordinary": -2.5, formula: "-2.5", control: "\tplain", json: { sample: "日本", value: -2.5 }, array: ["=1", null], empty: null, boolean: true }];
+  const before = structuredClone(rows);
+  const csv = adminCsv(Object.keys(rows[0]), rows, true);
+  assert.equal(csv, '"Local P00 preview","Synthetic / local-only"\r\n"\'\tordinary","formula","control","json","array","empty","boolean"\r\n"-2.5","\'-2.5","\'\tplain","{""sample"":""日本"",""value"":-2.5}","[""=1"",null]","","true"');
+  assert.deepEqual(rows, before);
+  assert.equal(csv.startsWith("\ufeff"), false);
+});

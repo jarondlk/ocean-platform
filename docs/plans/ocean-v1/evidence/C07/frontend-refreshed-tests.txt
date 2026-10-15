@@ -1,0 +1,166 @@
+
+> ocean-platform-frontend@0.7.6 test
+> node --test --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON lib/citation-navigation.test.ts lib/edna-navigation.test.ts lib/edna-analysis-navigation.test.ts lib/chat-presentation.test.ts lib/classification-preview.test.ts lib/edna-exclusions.test.ts lib/chat-contract.test.cjs lib/chat-settings.test.ts lib/auto-settings.test.ts lib/chat-auto-mounted.test.cjs lib/chat-filter-options.test.ts lib/chat-settings-lifecycle.test.cjs lib/research-workflows.test.cjs lib/source-coverage.test.ts lib/source-coverage-mounted.test.cjs lib/temporal-coverage.test.ts lib/temporal-coverage-mounted.test.cjs lib/csv.test.ts
+
+✔ old settings default to manual; AUTO preference persists without generated results (1.972042ms)
+✔ only validated applied scope is displayed and failures retain the explanation (0.51225ms)
+✔ effective retrieval/context can be copied into manual settings without changing generation (0.30725ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ AUTO displays applied settings; toggling off restores manual, editing copies the result (38.531458ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ a late AUTO response cannot appear or change settings after switching accounts (33.556041ms)
+✔ fresh AUTO renders selected published analysis, workflow and default protocol without manual pins (27.726584ms)
+✔ citation contract: plain (4.039125ms)
+✔ citation contract: bold (0.406916ms)
+✔ citation contract: italic (0.219084ms)
+✔ citation contract: group (0.158292ms)
+✔ citation contract: link (0.228833ms)
+✔ citation contract: inline code (0.1315ms)
+✔ citation contract: code block (0.186792ms)
+✔ citation contract: unclosed block (0.118708ms)
+✔ citation contract: table (0.376875ms)
+✔ citation contract: mixed (0.346791ms)
+✔ citation contract: ordinary bracket prose (0.111625ms)
+✔ citation contract: code cannot span paragraphs (0.284875ms)
+✔ citation contract: code cannot span table cells (0.341167ms)
+✔ citation contract: extra table cells are not rendered (0.177541ms)
+✔ citation contract: code can span paragraph lines (0.097958ms)
+✔ citation contract: blockquote citation group (0.152291ms)
+✔ citation contract: links cannot cross paragraphs (0.3465ms)
+✔ structured errors retain diagnostics, and validation never echoes request input (9.10225ms)
+✔ saved selections stay explicit when another filter or corpus change removes them (1.308ms)
+✔ choices respect the source contract and preserve an explicit false control filter (0.180625ms)
+✔ appliedFilterRows includes only explicit scientific scope (0.630625ms)
+✔ abstentionReasonLabel presents stable direct labels (0.081916ms)
+✔ resolved aggregate filters display inferred and explicit scope (0.0775ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ account transitions never render or save the previous account scope; missing identity blocks submission (8.026458ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ corrupt account settings block writes, reset is explicit and notices do not leak between accounts (1.985458ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ analysis-linked scope changes stay transient; reset also resets the retained defaults (1.105083ms)
+✔ an aborted filter search cannot replace current choices, even if the transport resolves late (567.767042ms)
+✔ source scope supports all sixteen combinations, including empty (2.549333ms)
+✔ per-source validation rejects invalid dates, ranges, types, conflicts and unsupported filters (4.111875ms)
+✔ false controls and zero coordinates survive storage and the applied ledger (0.298833ms)
+✔ saved source corruption requires reset rather than unfiltered defaults (0.162959ms)
+✔ account keys are distinct and only settings persist, excluding pinned analyses and chat content (0.200166ms)
+✔ generation controls validate bounds and output limits (0.102041ms)
+✔ clearing a selected analysis after editing source filters removes its request binding (0.07975ms)
+✔ resolves source, context, invalid, and uncited evidence targets (0.675083ms)
+✔ returns an empty target index without a response (0.059834ms)
+✔ parses single and grouped bracket citation tokens (0.421875ms)
+✔ builds deterministic raw-source evidence links (0.842667ms)
+✔ maps exact analysis and reliability context documents (0.092041ms)
+✔ builds source-specific SST and metagenome destinations (8.824709ms)
+✔ routes eDNA evidence to the exact eDNA data view (0.142666ms)
+✔ only publishes full-page links for known context artifacts (0.072042ms)
+✔ rejects unsafe or malformed deep-link values (0.126667ms)
+✔ aggregate citations link to retained evidence and reject mismatched identities (0.139625ms)
+✔ historical SST coverage citations preserve product and complete extent (0.150083ms)
+✔ classification preview rows preserve scenario and scientific values (0.636625ms)
+✔ classification preview deltas omit unchanged tables (4.880292ms)
+✔ shared CSV fixture: ordinary (0.664375ms)
+✔ shared CSV fixture: japanese (0.11875ms)
+✔ shared CSV fixture: quoted (0.056834ms)
+✔ shared CSV fixture: comma (0.049292ms)
+✔ shared CSV fixture: multiline (0.056042ms)
+✔ shared CSV fixture: carriage-return (0.043834ms)
+✔ shared CSV fixture: empty (0.038666ms)
+✔ shared CSV fixture: equals (0.035709ms)
+✔ shared CSV fixture: plus (0.04ms)
+✔ shared CSV fixture: minus-string (0.085375ms)
+✔ shared CSV fixture: at (0.040417ms)
+✔ shared CSV fixture: space-formula (0.029167ms)
+✔ shared CSV fixture: tab-text (0.023791ms)
+✔ shared CSV fixture: cr-text (0.020084ms)
+✔ shared CSV fixture: lf-text (0.019666ms)
+✔ shared CSV fixture: tab-formula (0.022541ms)
+✔ shared CSV fixture: crlf-text (0.021833ms)
+✔ shared CSV fixture: space-tab-text (0.016875ms)
+✔ shared CSV fixture: nonleading-formula (0.017667ms)
+✔ shared CSV fixture: multiline-later-formula (0.028875ms)
+✔ shared CSV fixture: existing-apostrophe (0.027125ms)
+✔ shared CSV fixture: literal-leading-quote (0.022417ms)
+✔ shared CSV fixture: negative-number (0.020416ms)
+✔ shared CSV fixture: negative-scientific (0.019416ms)
+✔ shared CSV fixture: positive-number (0.019458ms)
+✔ shared CSV fixture: zero (0.022ms)
+✔ shared CSV fixture: null (0.017667ms)
+✔ shared CSV fixture: true (0.017041ms)
+✔ shared CSV fixture: false (0.017ms)
+✔ shared CSV fixture: object (0.038167ms)
+✔ shared CSV fixture: array (0.020542ms)
+✔ shared CSV fixture: empty-object (0.017667ms)
+✔ shared CSV fixture: empty-array (0.015792ms)
+✔ shared CSV fixture: undefined (0.023ms)
+✔ shared CSV fixture: vertical-tab-formula (0.022208ms)
+✔ shared CSV fixture: form-feed-formula (0.018916ms)
+✔ shared CSV fixture: file-separator-formula (0.017166ms)
+✔ shared CSV fixture: next-line-formula (0.017125ms)
+✔ shared CSV fixture: nbsp-formula (0.022875ms)
+✔ shared CSV fixture: ogham-formula (0.019625ms)
+✔ shared CSV fixture: em-space-formula (0.017584ms)
+✔ shared CSV fixture: line-separator-formula (0.017791ms)
+✔ shared CSV fixture: paragraph-separator-formula (0.01875ms)
+✔ shared CSV fixture: narrow-nbsp-formula (0.025083ms)
+✔ shared CSV fixture: medium-math-space-formula (0.025458ms)
+✔ shared CSV fixture: ideographic-space-formula (0.016917ms)
+✔ shared CSV fixture: bom-formula (0.024583ms)
+✔ CSV protects formula text and headers while preserving signed numeric measurements (0.354833ms)
+✔ CSV protects leading control strings and the complete shared whitespace set (0.127584ms)
+✔ CSV preserves column order, minimal quoting, empty cells and compact JSON (0.049ms)
+✔ CSV filename behavior remains stable (0.066792ms)
+✔ analysis navigation round-trips exact run/table/result/method/page (1.9235ms)
+✔ eDNA analysis citations link to the exact analysis and provenance (0.477667ms)
+✔ exclusion reason labels retain exact reason codes (0.316583ms)
+✔ eDNA URLs preserve exact evidence, false controls, zero coordinates and pagination (7.694125ms)
+✔ eDNA invalid destinations never fall back to another method or sample (0.324709ms)
+✔ an unfiltered eDNA URL has no hidden method or control choice (0.065792ms)
+✔ catalogue namespace and nontarget filters survive URL navigation (0.647083ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ regional demo rectangles show unknown coordinate uncertainty without inventing zero precision (6.230167ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ reviewed maps distinguish sampled zero, unsampled null and unloaded cells; keyboard selects exact row (1.102791ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ series retain chronological seasons and break across missing values; axes and matched denominators are separate (7.00075ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ chat chart selection opens the exact row on its table page without privileged Data links (7.794833ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ conference Japanese selectors expose all ten taxa and every temporal group beyond six charts (8.022833ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ SST contrasts disclose aggregate and supported-stratum differences with their support count (0.685417ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ researcher decisions and administrator application are distinct UI actions (5.093166ms)
+✔ analysis/workflow/protocol selections preserve disabled sources and existing filters (3.047916ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ mounted coverage announces unverified overlap and retains both source counts (7.302542ms)
+✔ legacy history renders no invented warning and a later partial response announces the failure (2.156875ms)
+✔ final supplied counts distinguish empty, failed and disabled sources (0.407333ms)
+✔ retrieval workbench counts are not described as supplied prompt evidence (0.072459ms)
+✔ old and malformed histories do not manufacture complete coverage (0.306666ms)
+✔ unverified overlap is visible even when both sources were retrieved (0.082583ms)
+✔ degraded branch stays visible with a positive supplied count (0.058709ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ mounted selection preserves unavailable sources, then computes populated-month intersection (17.018792ms)
+✔ refresh loads replacement coverage and failed refresh clears stale claims (6.053625ms)
+✔ shared months use occupied bins rather than broad envelopes (0.789916ms)
+✔ an unavailable or missing selected source cannot become zero overlap (0.083041ms)
+✔ disjoint and empty sources have known zero overlap (0.087334ms)
+✔ single-month geometry and coarse date labels remain valid (0.08ms)
+ℹ tests 132
+ℹ suites 0
+ℹ pass 132
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 774.534541

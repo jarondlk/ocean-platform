@@ -2,7 +2,7 @@
 
 Recorded 2026-10-12 JST from the originating planning conversation. This file
 records choices, not proof of implementation. P00 is selected for local
-implementation and accepted; C01–C03 local acceptance is Complete. C04 authentication responsiveness is also Complete locally; C05–C27 remain Not started.
+implementation and accepted; C01–C07 local acceptance is Complete. C08–C27 remain Not started.
 Later explicit user instructions override this baseline; record changes here
 and identify affected components instead of silently drifting.
 
@@ -269,3 +269,32 @@ excluded from delivery. All 16 C06 source/test hashes match the accepted source;
 30 unrelated files and real artifacts remain intact. Final delivery evidence is
 saved separately from the frozen local receipt. C06 is Complete locally and
 delivered; C07–C27 remain unselected. No real provider call or deployment occurred.
+
+### C07 selection — 2026-10-15 JST
+
+The user selected C07 and approved subagents/services. Formal P00 acceptance
+matches all 36 source files before changes; delivered C06 matches all 16 accepted
+source/test files and its hosted CI passes. Local browser/server CSV safety,
+shared fixtures, existing consumer checks and existing commit/push authorization
+apply. The intended v1 exports/admin helper and focused tests may change under
+C07; preserve the historical P00 receipt and all other prototype behavior.
+Use presentation escaping only; preserve numeric signs, canonical/JSON values,
+metadata, truncation, permissions, immutable bundle bytes and real data artifacts.
+No provider, production access, deployment, real regeneration or C08 selection.
+
+### C07 local acceptance — 2026-10-15 JST
+
+The shared 47-case contract and explicit whitespace union now protect original
+string values/headers before CSV quoting. Typed numeric signs remain numeric;
+objects/arrays use compact JSON, booleans lowercase and null/undefined empty.
+All browser/server consumers share one policy per language. Export filenames,
+line endings/BOM, columns/provenance, truncation indicators, access/audit and
+source/immutable bundle values remain intact. Compact JSON reason arrays replace
+the administrator CSV's semicolon list presentation. No scientific values change.
+196 focused backend tests, 132 legacy frontend/76 v1 tests, both typechecks/builds
+and full backend 2,121 passed/63 gated skips (81.85%) pass. Independent review and
+835-value cross-runtime probe have no blockers/mismatches. Local legacy dependencies
+were restored to the unchanged Next 15.5.27 lock and checks repeated. Four intended
+P00 CSV consumer/test files are superseded under C07; preserve the historical
+receipt and all other P00/unrelated/scientific work. Existing commit/push approval
+continues; no C08 selection or deployment.

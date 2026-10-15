@@ -1,0 +1,22 @@
+{
+  "python": "3.12.7",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "branch": "overhaul",
+  "base_head": "824724b051b1039e811d25448d6b592755825ad2",
+  "node": "v24.19.0",
+  "CI_node": "22",
+  "packages": {
+    "pytest": "9.1.1",
+    "fastapi": "0.141.1",
+    "sqlalchemy": "2.0.52",
+    "ruff": "0.16.9"
+  },
+  "locked_next": {
+    "frontend": "15.5.27",
+    "frontend-v1": "15.5.27"
+  },
+  "installed_next_after_refresh": {
+    "frontend": "15.5.27",
+    "frontend-v1": "15.5.27"
+  }
+}

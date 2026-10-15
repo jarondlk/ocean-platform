@@ -1,11 +1,15 @@
+import copy
+import csv
 import io
 import json
 import zipfile
 from unittest.mock import patch
 
+import pytest
 from fastapi.testclient import TestClient
 
 import config
+import api.edna_analysis_routes as analysis_routes
 from api.main import app, _context_document
 from api.auth import route_permission
 from ingestion.edna_analysis_bundle import publish_analysis, provenance_descriptors, analysis_trace
@@ -82,3 +86,72 @@ def test_csv_formula_escaping_and_integrity_errors(tmp_path, monkeypatch):
     assert client.get(run+'/tables/diversity?assignment_method=bad').status_code == 400
     (tmp_path/'edna'/result['analysis_id']/'inputs.json').write_text('{}')
     assert client.get(run).status_code == 409
+
+
+@pytest.mark.parametrize("truncated", [False, True])
+def test_analysis_csv_dynamic_headers_metadata_and_structured_source_are_preserved(monkeypatch, truncated):
+    dangerous_header = " \ufeff=column"
+    row = {
+        "result_id": "r" * 64,
+        dangerous_header: "\tplain text",
+        "abundance": -2.5,
+        "label": "-1",
+        "passed": True,
+        "details": {"label": "=nested", "values": [1, -2, None]},
+        "multiline": "\nordinary",
+    }
+    bundle = {
+        "tables": {"diversity": [row] * (25_001 if truncated else 1)},
+        "recipe": {"rank": "genus", "control_policy": "exclude", "min_read_count": 1,
+                   "assignment_methods": ["qcauto_target"], "cohort": {"label": "synthetic"}},
+        "manifest": {"schema_version": 1, "recipe_sha256": "a" * 64, "input_sha256": "b" * 64},
+    }
+    snapshot = copy.deepcopy(bundle)
+    monkeypatch.setattr(analysis_routes, "_load", lambda _identity: bundle)
+    publication = {"publication_id": "synthetic-publication", "approval_basis": "synthetic-only"}
+    monkeypatch.setattr("ingestion.regional_publication.analysis_publication", lambda _bundle: publication)
+    run = "/data/edna/analysis/runs/" + "c" * 64
+    response = client.get(run + "/export?table=diversity")
+    assert response.status_code == 200
+    assert response.headers["x-export-truncated"] == str(truncated).lower()
+    assert response.headers["x-analysis-id"] == "c" * 64
+    assert response.headers["content-disposition"] == f'attachment; filename="edna-{"c" * 64}-diversity.csv"'
+    reader = csv.DictReader(io.StringIO(response.text, newline=""))
+    exported_rows = list(reader)
+    assert len(exported_rows) == (25_000 if truncated else 1)
+    exported = exported_rows[0]
+    assert reader.fieldnames[:10] == ["analysis_id", "table", "recipe_sha256", "input_sha256", "rank", "control_policy", "min_read_count", "recipe_methods", "cohort", "result_id"]
+    assert "'" + dangerous_header in exported
+    assert dangerous_header not in exported
+    assert exported["'" + dangerous_header] == "'\tplain text"
+    assert exported["abundance"] == "-2.5"
+    assert exported["label"] == "'-1"
+    assert exported["passed"] == "true"
+    assert exported["multiline"] == "'\nordinary"
+    assert exported["details"] == '{"label":"=nested","values":[1,-2,null]}'
+    assert exported["recipe_methods"] == '["qcauto_target"]'
+    assert exported["recipe_sha256"] == "a" * 64
+    assert exported["input_sha256"] == "b" * 64
+    assert exported["operational_publication_id"] == "synthetic-publication"
+    assert exported["operational_approval_basis"] == "synthetic-only"
+    assert bundle == snapshot
+    structured = client.get(run + "/tables/diversity").json()["rows"][0]
+    assert structured == row
+
+
+def test_csv_export_does_not_regenerate_or_escape_immutable_bundle(tmp_path, monkeypatch):
+    recipe, source = fixture()
+    source["edna_detection"][0]["genus"] = "=untrusted_formula"
+    monkeypatch.setattr(config, "ANALYSIS_DIR", tmp_path)
+    result = build_analysis(recipe, source)
+    publish_analysis(result)
+    directory = tmp_path / "edna" / result["analysis_id"]
+    originals = {path.name: path.read_bytes() for path in directory.iterdir() if path.is_file()}
+    run = "/data/edna/analysis/runs/" + result["analysis_id"]
+    response = client.get(run + "/export?table=composition")
+    assert "'=untrusted_formula" in response.text
+    zipped = client.get(run + "/export?format=bundle")
+    with zipfile.ZipFile(io.BytesIO(zipped.content)) as archive:
+        assert {name: archive.read(name) for name in archive.namelist()} == originals
+        assert b"=untrusted_formula" in archive.read("inputs.json")
+    assert {path.name: path.read_bytes() for path in directory.iterdir() if path.is_file()} == originals

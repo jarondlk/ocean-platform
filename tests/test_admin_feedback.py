@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import io
+import json
 import uuid
 from contextlib import contextmanager
 from datetime import datetime, timezone
@@ -283,3 +284,80 @@ def test_non_admin_cannot_review_or_export_feedback(monkeypatch):
         route_permission("GET", "/admin/feedback/export")
         == "feedback:export"
     )
+
+
+def test_feedback_csv_uses_typed_shared_boundary_without_mutating_records(monkeypatch):
+    factory = _database()
+    admin, _researcher, feedback_ids = _seed_feedback(factory)
+    _install_database(monkeypatch, factory)
+    monkeypatch.setattr(api_auth, "authenticate_request", lambda _request: admin)
+    comment = " \ufeff=1+1"
+    query = "\tordinary question"
+    answer = "\ranswer, with\nlines"
+    reasons = ["=untrusted", "日本語,\nreason"]
+    with factory() as session:
+        feedback = session.get(ChatFeedback, feedback_ids[1])
+        interaction = session.get(ChatInteraction, feedback.interaction_id)
+        feedback.comment, feedback.reason_codes = comment, reasons
+        interaction.query, interaction.answer = query, answer
+        session.commit()
+    response = TestClient(app).get("/admin/feedback/export", params={"rating": -1, "search": "ordinary question"})
+    assert response.status_code == 200
+    assert response.content.startswith(b"\xef\xbb\xbf")
+    assert response.headers["x-export-truncated"] == "false"
+    exported = list(csv.DictReader(io.StringIO(response.content.decode("utf-8-sig"), newline="")))
+    assert len(exported) == 1
+    assert exported[0]["rating"] == "-1"
+    assert exported[0]["latency_ms"] == "125"
+    assert exported[0]["comment"] == "'" + comment
+    assert exported[0]["query"] == "'" + query
+    assert exported[0]["answer"] == "'" + answer
+    assert exported[0]["reason_codes"] == json.dumps(reasons, ensure_ascii=False, separators=(",", ":"))
+    with factory() as session:
+        feedback = session.get(ChatFeedback, feedback_ids[1])
+        interaction = session.get(ChatInteraction, feedback.interaction_id)
+        assert feedback.rating == -1 and feedback.comment == comment
+        assert feedback.reason_codes == reasons
+        assert interaction.query == query and interaction.answer == answer
+        event = session.scalar(select(AuditEvent).where(AuditEvent.action == "admin.feedback_exported"))
+        assert event.metadata_json["row_count"] == 1
+        assert event.metadata_json["truncated"] is False
+
+
+def test_feedback_csv_retains_truncation_count_and_audit_at_limit(monkeypatch):
+    factory = _database()
+    admin, _researcher, feedback_ids = _seed_feedback(factory)
+    with factory() as session:
+        feedback = session.get(ChatFeedback, feedback_ids[1])
+        interaction = session.get(ChatInteraction, feedback.interaction_id)
+        user = session.get(AppUser, feedback.user_id)
+    monkeypatch.setattr(api_auth, "authenticate_request", lambda _request: admin)
+    captured = []
+
+    class ExportSession:
+        def execute(self, statement):
+            # The query must ask for the sentinel row rather than silently cap at 10k.
+            assert statement.compile().params["param_1"] == 10_001
+            return self
+
+        def all(self):
+            return [(feedback, interaction, user)] * 10_001
+
+        def add(self, event):
+            captured.append(event)
+
+    @contextmanager
+    def export_session():
+        yield ExportSession()
+
+    monkeypatch.setattr(admin_feedback_routes, "get_session", export_session)
+    response = TestClient(app).get("/admin/feedback/export")
+    assert response.status_code == 200
+    assert response.headers["x-export-truncated"] == "true"
+    exported = list(csv.DictReader(io.StringIO(response.content.decode("utf-8-sig"), newline="")))
+    assert len(exported) == 10_000
+    assert exported[0]["rating"] == "-1"
+    assert len(captured) == 1
+    assert captured[0].action == "admin.feedback_exported"
+    assert captured[0].actor_user_id == admin.id
+    assert captured[0].metadata_json == {"filters": {}, "row_count": 10_000, "truncated": True}

@@ -1,9 +1,6 @@
 """Administrator review and export endpoints for chat feedback."""
 from __future__ import annotations
 
-import csv
-import io
-import json
 import uuid
 from collections import Counter
 from datetime import date, datetime, time, timedelta, timezone
@@ -21,6 +18,7 @@ from api.auth import (
     get_current_user,
 )
 from api.feedback_routes import REASON_CODES
+from api.csv_serialization import rows_to_csv
 from api.schemas import (
     AdminFeedbackDetail,
     AdminFeedbackListItem,
@@ -248,22 +246,6 @@ def _filter_metadata(
     }
 
 
-def _csv_safe(value: Any) -> str:
-    if value is None:
-        return ""
-    if isinstance(value, (list, tuple)):
-        text_value = "; ".join(str(item) for item in value)
-    elif isinstance(value, dict):
-        text_value = json.dumps(value, ensure_ascii=False, sort_keys=True)
-    elif isinstance(value, (datetime, date)):
-        text_value = value.isoformat()
-    else:
-        text_value = str(value)
-    if text_value.startswith(("=", "+", "-", "@")):
-        return f"'{text_value}"
-    return text_value
-
-
 def _validated_conditions(
     *,
     rating: Optional[int],
@@ -376,43 +358,39 @@ def export_admin_feedback(
         truncated = len(rows) > export_limit
         rows = rows[:export_limit]
 
-        output = io.StringIO(newline="")
-        writer = csv.writer(output)
-        writer.writerow(
-            [
-                "feedback_id",
-                "interaction_id",
-                "rating",
-                "reason_codes",
-                "comment",
-                "feedback_created_at",
-                "user_email",
-                "user_role",
-                "user_account_type",
-                "query",
-                "answer",
-                "model",
-                "latency_ms",
-            ]
-        )
-        for feedback, interaction, user in rows:
-            writer.writerow(
-                [
-                    _csv_safe(feedback.id),
-                    _csv_safe(interaction.id),
-                    _csv_safe(feedback.rating),
-                    _csv_safe(feedback.reason_codes or []),
-                    _csv_safe(feedback.comment),
-                    _csv_safe(feedback.created_at),
-                    _csv_safe(user.email),
-                    _csv_safe(user.role),
-                    _csv_safe(user.account_type),
-                    _csv_safe(interaction.query),
-                    _csv_safe(interaction.answer),
-                    _csv_safe(interaction.model),
-                    _csv_safe(interaction.latency_ms),
-                ]
-            )
+        columns = [
+            "feedback_id",
+            "interaction_id",
+            "rating",
+            "reason_codes",
+            "comment",
+            "feedback_created_at",
+            "user_email",
+            "user_role",
+            "user_account_type",
+            "query",
+            "answer",
+            "model",
+            "latency_ms",
+        ]
+        output = rows_to_csv((
+            dict(zip(columns, [
+                feedback.id,
+                interaction.id,
+                feedback.rating,
+                feedback.reason_codes or [],
+                feedback.comment,
+                feedback.created_at,
+                user.email,
+                user.role,
+                user.account_type,
+                interaction.query,
+                interaction.answer,
+                interaction.model,
+                interaction.latency_ms,
+            ]))
+            for feedback, interaction, user in rows
+        ), columns)
 
         session.add(
             AuditEvent(
@@ -440,7 +418,7 @@ def export_admin_feedback(
 
         filename = f"chat-feedback-{date.today().isoformat()}.csv"
         return Response(
-            content="\ufeff" + output.getvalue(),
+            content="\ufeff" + output,
             media_type="text/csv; charset=utf-8",
             headers={
                 "Content-Disposition": (

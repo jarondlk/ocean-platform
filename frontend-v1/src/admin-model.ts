@@ -1,5 +1,6 @@
 import { catalogue } from "./fixtures.ts";
 import type { FeedbackEntry } from "./feedback-model.ts";
+import { safeCell } from "./exports.ts";
 
 export type AdminRole = "viewer" | "researcher" | "admin";
 export type AccountType = "research" | "commercial" | "internal";
@@ -195,10 +196,5 @@ export function databaseInventory(state: AdminState, feedback: FeedbackEntry[]):
 
 export function adminCsv(columns: string[], rows: Record<string, unknown>[], canAdmin: boolean): string {
   if (!canAdmin) throw new AdminError("access");
-  const cell = (value: unknown) => {
-    const raw = String(value ?? "");
-    const safe = typeof value === "number" ? raw : /^[\s]*[=+@-]/.test(raw) ? `'${raw}` : raw;
-    return `"${safe.replaceAll('"', '""')}"`;
-  };
-  return [["Local P00 preview", "Synthetic / local-only"].map(cell).join(","), columns.map(cell).join(","), ...rows.map((row) => columns.map((column) => cell(row[column])).join(","))].join("\r\n");
+  return [["Local P00 preview", "Synthetic / local-only"].map(safeCell).join(","), columns.map(safeCell).join(","), ...rows.map((row) => columns.map((column) => safeCell(row[column])).join(","))].join("\r\n");
 }
