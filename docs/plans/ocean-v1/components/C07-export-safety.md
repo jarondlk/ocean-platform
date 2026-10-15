@@ -1,6 +1,6 @@
 # C07 — Export safety
 
-**Status:** Complete locally (2026-10-15 JST). **Prerequisites:** P00. **Contract:** typed spreadsheet-safe CSV serialization.
+**Status:** Complete; delivered as `1195796` with passing hosted CI (2026-10-15 JST). **Prerequisites:** P00. **Contract:** typed spreadsheet-safe CSV serialization.
 
 ## Revised delivery boundary
 
@@ -55,3 +55,8 @@ and its checks repeated. Intended presentation changes include lowercase boolean
 and compact JSON feedback reason arrays; native JSON/number spelling outside the
 fixture is not a new canonical scientific format. See [handoff](../handoffs/C07.md)
 and [receipt](../evidence/C07/verification.json). No data migration/regeneration.
+
+Hosted acceptance: 2,112 backend tests, 82.67% coverage, 132 legacy/76 v1
+frontend tests, both typechecks/builds and production dependency audits, 63 actual
+PostgreSQL cases plus idempotent upsert and isolated backup/restore. See
+[delivery receipt](../evidence/C07/delivery.json) and [CI](https://github.com/jarondlk/ocean-platform/actions/runs/38670737411).

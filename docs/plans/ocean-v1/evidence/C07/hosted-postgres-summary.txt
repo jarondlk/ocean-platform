@@ -1,0 +1,13 @@
+2026-10-15T02:24:37.1134050Z 39 passed, 4 warnings in 17.49s
+2026-10-15T02:24:44.6583165Z 02:24:44  INFO     load_db  Transactional database upsert complete!
+2026-10-15T02:24:44.6594883Z   "inserted_rows": 14231,
+2026-10-15T02:24:44.6595008Z   "updated_rows": 0,
+2026-10-15T02:24:59.1269545Z 02:24:59  INFO     load_db  Transactional database upsert complete!
+2026-10-15T02:24:59.1300397Z   "inserted_rows": 0,
+2026-10-15T02:24:59.1300590Z   "updated_rows": 0,
+2026-10-15T02:25:00.8598615Z C03 disposable PostgreSQL identity: database=ocean_c03_retention_test address=172.18.0.2 port=5432 version=16.15 (Debian 16.15-1.pgdg12+2) isolation=read committed
+2026-10-15T02:25:01.6186009Z 12 passed in 1.38s
+2026-10-15T02:25:03.3650865Z C05 disposable pgvector identity: database=ocean_c05_retrieval_test address=172.18.0.2 port=5432 PostgreSQL=16.15 (Debian 16.15-1.pgdg12+2) isolation=read committed pgvector=0.8.7
+2026-10-15T02:25:04.0344732Z 12 passed, 1 warning in 1.40s
+2026-10-15T02:25:05.7791748Z   "restore_test": {
+2026-10-15T02:25:05.7792221Z     "ok": true,

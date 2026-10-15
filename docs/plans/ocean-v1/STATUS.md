@@ -14,7 +14,8 @@ See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md) and [C06](handoffs/C06.md) handoffs for current evidence.
 
 Latest completed implementation: **C07 — Export safety**, explicitly selected after readiness verification.
-C07 local source identity is bound by [its receipt](evidence/C07/verification.json).
+C07 is committed/pushed as `1195796` with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38670737411);
+[local source receipt](evidence/C07/verification.json), [delivery receipt](evidence/C07/delivery.json).
 C06 local acceptance and source hashes are recorded in [its receipt](evidence/C06/verification.json).
 C05 is committed/pushed as `fd8f520`; its original local source receipt is preserved.
 [The delivery and C06 readiness audit](C06_READINESS_AUDIT_2026-10-15.md) records
@@ -110,4 +111,7 @@ P00 CSV consumer/test files documented in the C07 receipt; the historical P00
 receipt and remaining 32 files stay intact. All 30 older unrelated files, 7 real
 scientific artifacts and 2 serving files are preserved. Original structured
 records and immutable publication bundle bytes remain unchanged. Delivery and
-hosted CI are pending at this local checkpoint; C08 remains unselected.
+hosted CI pass as `1195796`: 2,112 backend tests/82.67% coverage,
+132 legacy/76 v1 tests, both frontend builds/typechecks and production dependency
+audits, 63 PostgreSQL cases, idempotent upsert and isolated backup/restore.
+The nine older unrelated local tests are excluded from delivery. C08 remains unselected.

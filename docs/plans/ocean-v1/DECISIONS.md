@@ -298,3 +298,15 @@ were restored to the unchanged Next 15.5.27 lock and checks repeated. Four inten
 P00 CSV consumer/test files are superseded under C07; preserve the historical
 receipt and all other P00/unrelated/scientific work. Existing commit/push approval
 continues; no C08 selection or deployment.
+
+### C07 hosted delivery — 2026-10-15 JST
+
+C07 is committed/pushed as `119579646919da83a2a53159a599a66c488ff607`. [Hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38670737411) passes
+2,112 backend tests (82.67% coverage), 132 legacy/76 v1 tests, both
+frontend typechecks/builds and production dependency audits, 63 actual PostgreSQL
+cases, idempotent upsert and isolated backup/restore. The nine older unrelated
+local benchmark tests are excluded from delivery; dependency review is skipped
+on push as configured. [Delivery evidence](evidence/C07/delivery.json) is saved
+separately from the frozen local receipt. Source, scientific/serving artifacts,
+canonical bundle bytes, historical receipts and all 30 unrelated files remain
+preserved. C08 remains unselected; no provider call, regeneration or deployment.
