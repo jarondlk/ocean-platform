@@ -1,0 +1,10 @@
+2026-10-14T16:57:27.9589502Z Cache restored successfully
+2026-10-14T16:57:27.9663255Z Cache restored from key: setup-python-Linux-x64-24.04-Ubuntu-python-3.12.15-pip-0678f5ee12b9d192f99f574742b01e3084dffe499bfe6bfc7f8e5a38fe435056
+2026-10-14T16:57:30.0522016Z Collecting pgvector==0.5.0 (from -r requirements/dev.txt (line 1003))
+2026-10-14T16:58:04.0358640Z 39 passed, 4 warnings in 16.33s
+2026-10-14T16:58:27.5748372Z C03 disposable PostgreSQL identity: database=ocean_c03_retention_test address=172.18.0.2 port=5432 version=16.15 (Debian 16.15-1.pgdg12+2) isolation=read committed
+2026-10-14T16:58:28.4078865Z 12 passed in 1.41s
+2026-10-14T16:58:30.3769179Z C05 disposable pgvector identity: database=ocean_c05_retrieval_test address=172.18.0.2 port=5432 PostgreSQL=16.15 (Debian 16.15-1.pgdg12+2) isolation=read committed pgvector=0.8.7
+2026-10-14T16:58:31.2044486Z 12 passed, 1 warning in 1.56s
+2026-10-14T16:58:33.2822879Z   "restore_test": {
+2026-10-14T16:58:33.2823491Z     "restored_table_counts": {

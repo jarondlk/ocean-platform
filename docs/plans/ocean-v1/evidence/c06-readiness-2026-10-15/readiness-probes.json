@@ -1,0 +1,157 @@
+{
+  "mode": "read-only synthetic mocked-provider and stubbed API baseline probes",
+  "provider_calls": false,
+  "database_calls": false,
+  "application_source_changes": false,
+  "cases": [
+    {
+      "provider": "ollama",
+      "method": "chat",
+      "finish_reason": "stop",
+      "calls": 1,
+      "returned": "Synthetic partial answer",
+      "error": null
+    },
+    {
+      "provider": "ollama",
+      "method": "chat",
+      "finish_reason": "length",
+      "calls": 1,
+      "returned": "Synthetic partial answer",
+      "error": null
+    },
+    {
+      "provider": "ollama",
+      "method": "chat",
+      "finish_reason": null,
+      "calls": 1,
+      "returned": "Synthetic partial answer",
+      "error": null
+    },
+    {
+      "provider": "ollama",
+      "method": "chat",
+      "finish_reason": "unknown-synthetic-reason",
+      "calls": 1,
+      "returned": "Synthetic partial answer",
+      "error": null
+    },
+    {
+      "provider": "vertex",
+      "method": "chat",
+      "finish_reason": "STOP",
+      "calls": 1,
+      "returned": "Synthetic partial answer",
+      "error": null
+    },
+    {
+      "provider": "vertex",
+      "method": "chat",
+      "finish_reason": "MAX_TOKENS",
+      "calls": 1,
+      "returned": null,
+      "error": "ModelOutputLimitError"
+    },
+    {
+      "provider": "vertex",
+      "method": "chat",
+      "finish_reason": null,
+      "calls": 1,
+      "returned": "Synthetic partial answer",
+      "error": null
+    },
+    {
+      "provider": "vertex",
+      "method": "chat",
+      "finish_reason": "unknown-synthetic-reason",
+      "calls": 1,
+      "returned": null,
+      "error": "ValueError"
+    },
+    {
+      "provider": "ollama",
+      "method": "structured_chat",
+      "finish_reason": "stop",
+      "calls": 1,
+      "returned": "{\"status\":\"ready\"}",
+      "error": null
+    },
+    {
+      "provider": "ollama",
+      "method": "structured_chat",
+      "finish_reason": "length",
+      "calls": 1,
+      "returned": null,
+      "error": "ValueError"
+    },
+    {
+      "provider": "ollama",
+      "method": "structured_chat",
+      "finish_reason": null,
+      "calls": 1,
+      "returned": "{\"status\":\"ready\"}",
+      "error": null
+    },
+    {
+      "provider": "ollama",
+      "method": "structured_chat",
+      "finish_reason": "unknown-synthetic-reason",
+      "calls": 1,
+      "returned": "{\"status\":\"ready\"}",
+      "error": null
+    },
+    {
+      "provider": "vertex",
+      "method": "structured_chat",
+      "finish_reason": "STOP",
+      "calls": 1,
+      "returned": "{\"status\":\"ready\"}",
+      "error": null
+    },
+    {
+      "provider": "vertex",
+      "method": "structured_chat",
+      "finish_reason": "MAX_TOKENS",
+      "calls": 1,
+      "returned": null,
+      "error": "ValueError"
+    },
+    {
+      "provider": "vertex",
+      "method": "structured_chat",
+      "finish_reason": null,
+      "calls": 1,
+      "returned": "{\"status\":\"ready\"}",
+      "error": null
+    },
+    {
+      "provider": "vertex",
+      "method": "structured_chat",
+      "finish_reason": "unknown-synthetic-reason",
+      "calls": 1,
+      "returned": null,
+      "error": "ValueError"
+    }
+  ],
+  "F07_reproduced": true,
+  "api_length_stop": {
+    "outcome": "answered",
+    "answer": "Synthetic CTD answer cut mid-sentence",
+    "completed_receipt_outcome": "answered",
+    "stubbed_persistence_boundaries": [
+      "context"
+    ]
+  },
+  "contract_gaps": [
+    "ordinary Ollama length stop accepted as completed text and API answer",
+    "missing termination metadata accepted by both adapters and both methods",
+    "unknown Ollama finish accepted by both methods",
+    "common result, measured generation duration and optional usage absent"
+  ],
+  "existing_safety": [
+    "Ollama structured length rejects",
+    "Vertex ordinary MAX_TOKENS raises ModelOutputLimitError",
+    "Vertex structured MAX_TOKENS rejects",
+    "Vertex unknown finish rejects"
+  ]
+}

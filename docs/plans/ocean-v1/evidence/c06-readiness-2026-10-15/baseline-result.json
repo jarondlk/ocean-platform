@@ -1,0 +1,16 @@
+{
+  "command": ".venv/bin/python -m pytest tests/test_model_runtime.py tests/test_query_orchestrator.py tests/test_auto_settings.py -q --tb=short",
+  "result": "99 passed, 47 warnings in 2.15s",
+  "exit_code": 0,
+  "environment": {
+    "AUTH_MODE": "disabled",
+    "DEPLOYMENT_ENV": "test",
+    "ENABLE_MOCK_LOGIN": "false",
+    "PERSIST_LOCAL_CHAT": "false",
+    "RUN_POSTGRES_INTEGRATION": "0",
+    "MODEL_PROVIDER": "ollama",
+    "OLLAMA_BASE_URL": "http://127.0.0.1:1",
+    "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c06_readiness_unused"
+  },
+  "scope": "Existing tests only; all provider requests mocked; no C06 application changes"
+}

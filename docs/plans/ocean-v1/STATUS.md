@@ -14,8 +14,9 @@ See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md) and [C05](handoffs/C05.md) handoffs for current evidence.
 
 Latest completed implementation: **C05 — Retrieval correctness**, explicitly selected.
-C05 is uncommitted on base `58ee4b4`; its source hashes and evidence are recorded
-in [the acceptance receipt](evidence/C05/verification.json).
+C05 is committed/pushed as `fd8f520`; its original local source receipt is preserved.
+[The delivery and C06 readiness audit](C06_READINESS_AUDIT_2026-10-15.md) records
+passing hosted CI and confirms that C06 can start after explicit selection.
 P00 passed its local UX/user-review gate; C01 passed its offline scope-validation
 checks. C02 passed its synthetic scientific-processing and eligibility checks.
 Real-data regeneration and review remain outstanding. C03 fixes atomic hold/deletion
@@ -33,7 +34,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C03 — Retention integrity](components/C03-retention-integrity.md) | Complete | Atomic predicate DELETE/hold UPDATE; committed count/audit parity; preserved held/dependent evidence; isolated server stopped | 35 required; 93 with auth/security; 12 actual PostgreSQL cases pass; full suite 1,684 passed, 51 expected gated skips; [receipt](evidence/C03/verification.json) | [C03](handoffs/C03.md) |
 | [C04 — Authentication responsiveness](components/C04-authentication-responsiveness.md) | Complete | Complete auth/limiter operations offloaded; worker-owned resources; security and both cancellation styles; independent review passes | 87 required; full suite 1,705 passed, 51 expected PostgreSQL skips, 81.46% coverage; Ruff/preservation pass; [receipt](evidence/C04/verification.json) | [C04](handoffs/C04.md) |
 | [C05 — Retrieval correctness](components/C05-retrieval-correctness.md) | Complete | Explicit query embedding identity; named Kraken/MetaEuk mapping; deterministic immutable replacements and preserved history; deferred rebuild runbook | 142 required; 12 actual C05 PostgreSQL cases; 39 existing PostgreSQL regressions; full suite 1,806 passed/63 gated skips, 81.77% coverage; [receipt](evidence/C05/verification.json) | [C05](handoffs/C05.md) |
-| [C06 — Model runtime contract](components/C06-model-runtime.md) | Not started | None | Not run | Not created |
+| [C06 — Model runtime contract](components/C06-model-runtime.md) | Not started | Ready for explicit selection; P00 hashes match | Readiness baseline 99 pass; target F07 reproduced with mocked payloads/API; [audit](C06_READINESS_AUDIT_2026-10-15.md). Implementation acceptance not run | Not created |
 | [C07 — Export safety](components/C07-export-safety.md) | Not started | None | Not run | Not created |
 | [C08 — Catalogue contracts and fixtures](components/C08-catalogue-contracts.md) | Not started | None | Not run | Not created |
 | [C09 — Immutable catalogue snapshots](components/C09-catalogue-snapshots.md) | Not started | None | Not run | Not created |
@@ -87,4 +88,8 @@ idempotent upserts into a fresh owned PostgreSQL database. Both disposable serve
 are stopped and all C05 fixture schemas removed. The read-only serving inventory
 identifies 82 affected legacy documents; [rebuild instructions](C05_REBUILD_RUNBOOK.md)
 are deferred. Real files, live stores and providers were not regenerated/called.
-No hosted C05 CI result or C05 delivery is claimed. C06 is unselected.
+C05 hosted CI passes for `fd8f520`: 1,797 backend tests, 82.60% coverage,
+both frontends, 63 actual PostgreSQL cases and backup/restore. The 63 broad-suite
+PostgreSQL skips are covered by separate hosted integration steps. C06 remains
+Not started/unselected; its 99-test baseline and offline F07 probes establish
+readiness, not implementation acceptance.

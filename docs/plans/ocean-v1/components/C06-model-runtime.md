@@ -41,3 +41,12 @@ Keep model selection/configuration and existing string-call signatures. New cont
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c06). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+## Readiness audit — 2026-10-15 JST
+
+Ready for explicit implementation selection, still Not started. P00 is Complete
+and all 36 accepted source hashes match. C05 delivery/hosted CI passes. The three
+listed baseline suites pass 99 cases. Synthetic adapter and actual stubbed API
+probes reproduce F07 and identify missing/unknown termination handling and metadata
+as the intended first checkpoint. No C06 application source changes or provider
+calls occurred. See [readiness audit](../C06_READINESS_AUDIT_2026-10-15.md).

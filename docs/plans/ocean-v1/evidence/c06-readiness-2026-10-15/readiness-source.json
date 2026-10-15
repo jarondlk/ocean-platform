@@ -1,0 +1,36 @@
+{
+  "source_commit": "fd8f5203cba4d57ade85018d639a54696616635a",
+  "source_files": {
+    "model_runtime.py": "c7762486e5c2f3f8038a3556dd9a942fdd3469395c5194fd25b66fb864a61f13",
+    "config.py": "a8a61340d9a595cb32e279596ae728dbec525acc99c3e2cac669c0f518b1c55e",
+    "api/main.py": "95c51de43350ce19e171a251fdd6af091ed59673b9ce4baef970462fd1d57d93",
+    "orchestration/settings_planner.py": "12f8231dd51166c631b12388d4e9a33ed8c5e043fabd273509bcc5a4d63dbe3a",
+    "orchestration/query_orchestrator.py": "aeea4c82f21fe98a4f68a213ea543ab93008dc23fa91e9edf0a92fc704858385",
+    "tests/test_model_runtime.py": "3df6f656e53ba0a5052610bd93ea86795cce5b58b79ae0b593c4ee54ad580099",
+    "tests/test_query_orchestrator.py": "8d7b93b68227f940844a173f45c73d4e00f2bec03a1344cbc326061836c2c012",
+    "tests/test_auto_settings.py": "6395109f9cf1736e5294e3464e8c6f5720a800802bddc798ab444c915eeaa86b",
+    "db/embedding_identity.py": "a04f66f2198bc46484b7b961a503b9dbbeb269abe5ba5ba451268c43238f23ba",
+    "db/vector_store.py": "50f511b91765512a6e688a37415f06db8fad566f40fa955b9c35264ad1ef8e4c",
+    "orchestration/unified.py": "c9201413873109153f9098d1041e23c3349229ec95a27aac3e194ed517be01d6"
+  },
+  "C05_matching": 19,
+  "P00_matching": 36,
+  "unrelated_files_matching": 30,
+  "scientific_artifacts_matching": 7,
+  "C06_dependencies": [
+    "P00"
+  ],
+  "C06_authorized": false,
+  "application_changes_after_C05": false,
+  "runtime": {
+    "python": "3.12.7",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "packages": {
+      "pytest": "9.1.1",
+      "requests": "2.34.2",
+      "google-genai": "2.25.0",
+      "sqlalchemy": "2.0.52",
+      "ruff": "0.16.9"
+    }
+  }
+}

@@ -28,7 +28,9 @@ by component with explicit user selection. The current plan revision does not it
 UI/backend implementation, tests, cloud provisioning, data transfer or deployment.
 P00 and C01–C05 local application work and appropriate checks are complete.
 C05 source hashes, regression results and deferred rebuild instructions are recorded;
-C05 remains uncommitted and no hosted C05 CI is claimed. C06–C27 remain
+C05 is committed/pushed as fd8f520 with passing hosted CI; read
+C06_READINESS_AUDIT_2026-10-15.md and its receipt. C06 is ready for explicit
+selection, with 99 baseline tests passing and F07 reproduced offline. C06–C27 remain
 unselected; planning/recovery inspection outside
 the selected component is read-only unless documentation edits are requested.
 Do not create other chats or begin components merely because this hub exists.

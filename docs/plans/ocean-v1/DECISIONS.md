@@ -216,3 +216,17 @@ its receipt. A read-only inventory records 82 legacy documents requiring a later
 rebuild. C05 is Complete locally and uncommitted; no hosted C05 CI, provider call,
 real-data regeneration, live reindex or deployment is claimed. C06–C27 remain
 unselected. See [C05 handoff](handoffs/C05.md) and [runbook](C05_REBUILD_RUNBOOK.md).
+
+### C05 delivery and C06 readiness approval — 2026-10-15 JST
+
+The user explicitly requested commit/push and delivery checks on overhaul before
+later C06 work. C05's 63 reviewed files are committed/pushed as fd8f520; 30 older
+unrelated files remain preserved and excluded. Hosted run 38602439380 passes:
+1,797 backend tests, 82.60% coverage, both frontends, 39 existing PostgreSQL cases,
+12 C03 and 12 C05 plus corpus idempotence and backup/isolated restore.
+C06 is ready for selection: formal P00 prerequisite and all 36 hashes match,
+99 baseline tests pass, and 16 mocked payload probes plus the stubbed actual API
+reproduce F07 without provider/DB calls or application changes. C06 remains
+Not started/unselected. The real C05 rebuild, scientific/provider acceptance,
+production access, main/legacy deployment and C06–C27 implementation remain
+outside this delivery. [Audit](C06_READINESS_AUDIT_2026-10-15.md).

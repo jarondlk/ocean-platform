@@ -51,4 +51,6 @@ and two idempotent corpus upserts pass. The full backend has 1,806 passes,
 source/preservation checks and deterministic synthetic export hashes pass.
 See [handoff](../handoffs/C05.md), [receipt](../evidence/C05/verification.json) and
 [deferred rebuild runbook](../C05_REBUILD_RUNBOOK.md). Real/live rebuild and provider
-calls remain deferred; C05 is uncommitted and no hosted C05 acceptance is claimed.
+calls remain deferred. The user subsequently requested delivery: C05 is
+committed/pushed as `fd8f520` and hosted CI passes. See the
+[C06 readiness/delivery audit](../C06_READINESS_AUDIT_2026-10-15.md).

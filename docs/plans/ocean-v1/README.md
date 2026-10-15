@@ -31,6 +31,9 @@ C03/C04 delivery and hosted acceptance now pass;
 [C05 readiness audit](C05_READINESS_AUDIT_2026-10-15.md) records the current source
 and records readiness before C05 was selected. Current C05 acceptance is
 recorded separately in [its receipt](evidence/C05/verification.json).
+C05 is now committed/pushed as `fd8f520` with passing hosted CI;
+[the C06 readiness audit](C06_READINESS_AUDIT_2026-10-15.md) verifies its prerequisite
+and 99-test baseline. C06 remains Not started until selected.
 
 The new site is fully isolated from the legacy production site. Read
 [SITE_SEPARATION.md](SITE_SEPARATION.md) and [UI_UX_BRIEF.md](UI_UX_BRIEF.md).
