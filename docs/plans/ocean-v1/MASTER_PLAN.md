@@ -4,7 +4,7 @@ Planning baseline: 2026-10-12 JST. Accepted design; P00 implementation selected
 on 2026-10-13 JST; P00 accepted and C01 local validation completed on
 2026-10-14 JST. C02 software and synthetic acceptance are also complete;
 C03 retention integrity is complete with local unit and disposable PostgreSQL
-acceptance. C04 authentication responsiveness is also Complete locally; C05 is Complete locally; C06 is Complete locally; C07 is Complete locally; C08 is Complete locally; C09 is Complete locally; C10–C27 have not started.
+acceptance. C04 authentication responsiveness is also Complete locally; C05 is Complete locally; C06 is Complete locally; C07 is Complete locally; C08 is Complete locally; C09 is Complete locally; C10 is Complete locally; C11–C27 have not started.
 Read STATUS for current evidence.
 Revised 2026-10-13 JST for a separate v1 site and local UI/UX-first delivery.
 This document preserves the scientific architecture and records that amendment.

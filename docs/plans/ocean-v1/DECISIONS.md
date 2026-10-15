@@ -2,7 +2,7 @@
 
 Recorded 2026-10-12 JST from the originating planning conversation. This file
 records choices, not proof of implementation. P00 is selected for local
-implementation and accepted; C01–C07 local acceptance is Complete. C08 local acceptance is Complete; C09 is Complete locally; C10–C27 remain Not started.
+implementation and accepted; C01–C07 local acceptance is Complete. C08 local acceptance is Complete; C09 is Complete locally; C10 is Complete locally; C11–C27 remain Not started.
 Later explicit user instructions override this baseline; record changes here
 and identify affected components instead of silently drifting.
 
@@ -379,3 +379,22 @@ frontend tests, both typechecks/builds, zero-vulnerability production audits,
 idempotent upsert and isolated backup/restore. Fourteen accepted source files,
 the local receipt and all preserved historical/unrelated/scientific/serving
 files remain unchanged. See evidence/C09/delivery.json. No C10 is selected.
+
+### C10 selection — 2026-10-15 JST
+
+The user selected C10 after readiness checkpoint 8eae8eb. Work is limited to
+frozen CTD/metagenome inputs, canonical catalogue registration, complete-scope
+operations and local synthetic reproducibility acceptance. Existing delivery
+approval persists. C11, real copies/publication, UI/API and cloud remain unselected.
+
+### C10 accepted local boundaries — 2026-10-15 JST
+
+C10 passes fixed-generation frozen exports, source-owned primitive Parquet
+validation and canonical C08 inventory/section/operation integration. Exact scoped
+counts/aggregates use complete retained populations; ranked omission, null cells
+and explicit zero remain distinct. Coarse/mixed collection precision and declared
+depth sign/units are retained. Current callbacks cover complete datasets; C14
+still owns role/session and finer service authorization. Plain value encodings
+and explicit decode bounds reject unsupported inputs without truncation. Real
+source mappings/copies, scientific approval, APIs/UI, C11 and deployment remain
+unselected. See handoffs/C10.md and C10_ADAPTER_CONTRACT.md.

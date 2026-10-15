@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-10-15 JST. **P00 and C01–C09 are Complete locally.**
+Updated: 2026-10-15 JST. **P00 and C01–C10 are Complete locally.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -8,12 +8,14 @@ C02 was explicitly selected on 2026-10-14 JST and passed its software/synthetic
 checks. C03 passed its local transaction-ordering and actual disposable PostgreSQL
 acceptance. C04 now passes concurrent responsiveness, worker-lifetime, security
 and cancellation acceptance. C05 passes embedding isolation, metagenome fidelity
-and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10–C27 remain Not started.
-P00 and C01–C09 local work is authorized.
+and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11–C27 remain Not started.
+P00 and C01–C10 local work is authorized.
 See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md), [C08](handoffs/C08.md) and [C09](handoffs/C09.md) handoffs for current evidence.
 
-Latest completed implementation: **C09 — Immutable catalogue snapshots**. Committed/pushed as `9214bbe`; [hosted CI passes](https://github.com/jarondlk/ocean-platform/actions/runs/38703483565). [Delivery receipt](evidence/C09/delivery.json) records 2,460 backend tests/83.39% coverage, 84 actual PostgreSQL cases and both frontend gates. Read [the snapshot contract](C09_SNAPSHOT_CONTRACT.md) and [local receipt](evidence/C09/verification.json).
+Latest completed implementation: **C10 — CTD and metagenome adapters**. Local acceptance passes; source checkpoint/hosted delivery are pending. Read [C10 handoff](handoffs/C10.md), [contract](C10_ADAPTER_CONTRACT.md) and [receipt](evidence/C10/verification.json).
+
+C09 — Immutable catalogue snapshots: Committed/pushed as `9214bbe`; [hosted CI passes](https://github.com/jarondlk/ocean-platform/actions/runs/38703483565). [Delivery receipt](evidence/C09/delivery.json) records 2,460 backend tests/83.39% coverage, 84 actual PostgreSQL cases and both frontend gates. Read [the snapshot contract](C09_SNAPSHOT_CONTRACT.md) and [local receipt](evidence/C09/verification.json).
 C08 is committed/pushed as `6d20a75` with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38695834706);
 [local receipt](evidence/C08/verification.json), [delivery receipt](evidence/C08/delivery.json).
 C07 is committed/pushed as `1195796` with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38670737411);
@@ -43,7 +45,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C07 — Export safety](components/C07-export-safety.md) | Complete | One shared policy per language; safe strings/headers, typed numeric signs; existing CSV dialects and source data preserved | 196 required server tests; 47 shared cases; 132 legacy/76 v1 frontend tests and both builds/typechecks; full backend 2,121 passed/63 gated skips, 81.85% coverage; [receipt](evidence/C07/verification.json) | [C07](handoffs/C07.md) |
 | [C08 — Catalogue contracts and fixtures](components/C08-catalogue-contracts.md) | Complete | Versioned Python/TS envelopes, additive prototype boundary, source-qualified fixtures and exhaustive canonical inventory | 274 required tests; 162 v1 tests/typecheck/build; 100,000 datasets; 10,398 parity cases; full backend 2,314 passed/63 gated skips, 82.28% coverage; [receipt](evidence/C08/verification.json) | [C08](handoffs/C08.md) |
 | [C09 — Immutable catalogue snapshots](components/C09-catalogue-snapshots.md) | Complete | Content-addressed exports, bounded consistent capture, references/holds/revocation and synthetic quarantine | 206 required; 21 actual PostgreSQL; backend 2,469 passed/84 gated skips, 82.60% coverage; [receipt](evidence/C09/verification.json) | [C09](handoffs/C09.md) |
-| [C10 — CTD and metagenome adapters](components/C10-ctd-metagenome-adapters.md) | Not started | Ready for explicit selection; [readiness audit](C10_READINESS_AUDIT_2026-10-15.md) | 36 baseline and 534 prerequisite tests pass; generated contracts current; implementation acceptance pending | Not created |
+| [C10 — CTD and metagenome adapters](components/C10-ctd-metagenome-adapters.md) | Complete | Source-qualified frozen Parquet inputs; exact scoped operations and reproducible C08/C09 integration | 680 required; backend 2,579 passed/84 gated skips, 82.90% coverage; [receipt](evidence/C10/verification.json) | [C10](handoffs/C10.md) |
 | [C11 — SST adapter](components/C11-sst-adapter.md) | Not started | None | Not run | Not created |
 | [C12 — eDNA adapter](components/C12-edna-adapter.md) | Not started | None | Not run | Not created |
 | [C13 — Analyses statistics metadata relationships](components/C13-scientific-catalogue-sections.md) | Not started | None | Not run | Not created |

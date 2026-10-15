@@ -1,0 +1,42 @@
+........................................................................ [ 10%]
+........................................................................ [ 21%]
+........................................................................ [ 31%]
+........................................................................ [ 42%]
+........................................................................ [ 52%]
+........................................................................ [ 63%]
+........................................................................ [ 74%]
+........................................................................ [ 84%]
+........................................................................ [ 95%]
+................................                                         [100%]
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_remote_sensing.py::test_sst_extractors_read_point_and_daily_region
+  <frozen importlib._bootstrap>:488: RuntimeWarning: numpy.ndarray size changed, may indicate binary incompatibility. Expected 16 from C header, got 96 from PyObject
+
+tests/test_remote_sensing.py: 10 warnings
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/xarray/backends/netCDF4_.py:96: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
+  As an alternative, you can create a new view using np.reshape (with copy=False if needed).
+    data[key] = value
+
+tests/test_remote_sensing.py::test_sst_extractors_read_point_and_daily_region
+tests/test_remote_sensing.py::test_sst_extractors_read_point_and_daily_region
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/preprocessing/remote_sensing.py:96: DeprecationWarning: The 'generic' unit for NumPy timedelta is deprecated, and will raise an error in the future. This includes implicit conversion of bare integers (e.g. `+ 1`). Please use a specific unit instead.
+    "time_jst": t_utc + pd.Timedelta(hours=9),
+
+tests/test_remote_sensing.py::test_sst_extractors_read_point_and_daily_region
+tests/test_remote_sensing.py::test_sst_extractors_read_point_and_daily_region
+tests/test_remote_sensing.py::test_daily_summary_retains_exact_unreviewed_requested_bounds_and_sources
+tests/test_remote_sensing.py::test_daily_summary_retains_exact_unreviewed_requested_bounds_and_sources
+tests/test_remote_sensing.py::test_daily_source_hashes_are_bound_to_their_actual_jst_day
+tests/test_remote_sensing.py::test_daily_source_hashes_are_bound_to_their_actual_jst_day
+tests/test_remote_sensing.py::test_matching_reviewed_region_preserves_geometry_decision_and_regional_semantics
+tests/test_remote_sensing.py::test_default_bounds_never_establish_reviewed_spatial_applicability
+tests/test_remote_sensing.py::test_daily_values_and_receipts_use_same_bytes_when_source_path_is_replaced
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/preprocessing/remote_sensing.py:264: DeprecationWarning: The 'generic' unit for NumPy timedelta is deprecated, and will raise an error in the future. This includes implicit conversion of bare integers (e.g. `+ 1`). Please use a specific unit instead.
+    "time_jst": t_utc + pd.Timedelta(hours=9),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+680 passed, 23 warnings in 17.03s

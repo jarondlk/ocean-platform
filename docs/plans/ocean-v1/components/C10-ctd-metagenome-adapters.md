@@ -1,6 +1,6 @@
 # C10 — CTD and metagenome adapters
 
-**Status:** Not started. **Prerequisites:** C02, C09.
+**Status:** Complete for local frozen-adapter acceptance (2026-10-15 JST). **Prerequisites:** C02, C09.
 
 ## Revised delivery boundary
 
@@ -53,3 +53,15 @@ PostgreSQL cases. [Audit](../C10_READINESS_AUDIT_2026-10-15.md) and
 [receipt](../evidence/c10-readiness-2026-10-15/verification.json) identify frozen
 inputs, units/denominators, temporal precision and complete-scope acceptance work.
 C10 remains Not started; no adapters, real transfers or services are selected.
+
+## Accepted local implementation — 2026-10-15 JST
+
+All three checkpoints pass: versioned source metadata/Parquet exports, C08
+canonical inventory and six sections, complete-scope operations, current access
+and reproducible old/imported snapshots. Required suites pass 680 cases, including
+110 new adapter cases; full backend passes 2,579/84 expected PostgreSQL skips at
+82.90% coverage. Six generated-contract checks and Ruff pass. No existing C08/C09
+source/workflow, normalized producer, UI or real scientific/serving artifact changed.
+[Handoff](../handoffs/C10.md), [contract](../C10_ADAPTER_CONTRACT.md) and
+[local receipt](../evidence/C10/verification.json) record exact sources, semantic
+bounds and later real-data/service/deployment gates. C11 remains unselected.

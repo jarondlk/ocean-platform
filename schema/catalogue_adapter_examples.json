@@ -1,0 +1,720 @@
+{
+  "datasets": [
+    {
+      "metadata": {
+        "collection_date_precision": "day",
+        "collection_id": "synthetic:ctd:campaign-a:collection",
+        "dataset_id": "synthetic:ctd:campaign-a",
+        "depth_convention": "positive_down",
+        "descriptor": {
+          "depth_unit": "m",
+          "family": "ctd",
+          "measurement": "temperature",
+          "observation_entity": "cast",
+          "sampling_contract": "Observed campaign casts only; no expected sampling schedule",
+          "unit": "degC"
+        },
+        "family": "ctd",
+        "methods": [
+          "Distinct source-owned casts and depth observations; no inferred expected casts"
+        ],
+        "purpose": {
+          "en": "Frozen cast and depth acceptance",
+          "ja": "観測と深度の検証"
+        },
+        "qualification": "Synthetic local acceptance only; not scientific publication",
+        "related_ids": [],
+        "schema_version": "catalogue-dataset-v1",
+        "source_id": "synthetic-ctd",
+        "tables": [
+          {
+            "abundance_denominator": null,
+            "availability": {
+              "reason": null,
+              "status": "available"
+            },
+            "columns": [
+              {
+                "description": "Synthetic source-owned cast_id",
+                "dtype": "string",
+                "name": "cast_id",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned sample_id",
+                "dtype": "string",
+                "name": "sample_id",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned collection_date",
+                "dtype": "string",
+                "name": "collection_date",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned bay",
+                "dtype": "string",
+                "name": "bay",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned station",
+                "dtype": "string",
+                "name": "station",
+                "nullable": true,
+                "unit": null
+              }
+            ],
+            "completeness": "complete",
+            "denominator": "All retained matching casts records in this source dataset",
+            "entity": "casts",
+            "method": null,
+            "name": "casts",
+            "object_id": "synthetic:ctd:campaign-a:table:casts",
+            "row_count": 2,
+            "taxonomic_rank": null
+          },
+          {
+            "abundance_denominator": null,
+            "availability": {
+              "reason": null,
+              "status": "available"
+            },
+            "columns": [
+              {
+                "description": "Synthetic source-owned observation_id",
+                "dtype": "string",
+                "name": "observation_id",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned cast_id",
+                "dtype": "string",
+                "name": "cast_id",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned depth",
+                "dtype": "number",
+                "name": "depth",
+                "nullable": true,
+                "unit": "m"
+              },
+              {
+                "description": "Synthetic source-owned temperature",
+                "dtype": "number",
+                "name": "temperature",
+                "nullable": true,
+                "unit": "degC"
+              },
+              {
+                "description": "Synthetic source-owned salinity",
+                "dtype": "number",
+                "name": "salinity",
+                "nullable": true,
+                "unit": "PSU"
+              }
+            ],
+            "completeness": "complete",
+            "denominator": "All retained matching depth_observations records in this source dataset",
+            "entity": "depth_observations",
+            "method": null,
+            "name": "depth_observations",
+            "object_id": "synthetic:ctd:campaign-a:table:depth_observations",
+            "row_count": 4,
+            "taxonomic_rank": null
+          }
+        ],
+        "title": {
+          "en": "Synthetic CTD campaign",
+          "ja": "合成CTD観測"
+        }
+      },
+      "table_rows": {
+        "casts": [
+          {
+            "bay": "O",
+            "cast_id": "cast-000000",
+            "collection_date": "2024-01-01",
+            "sample_id": "shared-label",
+            "station": "station-1"
+          },
+          {
+            "bay": "O",
+            "cast_id": "cast-000001",
+            "collection_date": "2024-01-02",
+            "sample_id": "sample-000001",
+            "station": "station-2"
+          }
+        ],
+        "depth_observations": [
+          {
+            "cast_id": "cast-000000",
+            "depth": 0.0,
+            "observation_id": "obs-000000-0",
+            "salinity": 30.0,
+            "temperature": -1.5
+          },
+          {
+            "cast_id": "cast-000000",
+            "depth": 10.0,
+            "observation_id": "obs-000000-1",
+            "salinity": 31.0,
+            "temperature": 1.0
+          },
+          {
+            "cast_id": "cast-000001",
+            "depth": 0.0,
+            "observation_id": "obs-000001-0",
+            "salinity": 30.0,
+            "temperature": 1.0
+          },
+          {
+            "cast_id": "cast-000001",
+            "depth": 10.0,
+            "observation_id": "obs-000001-1",
+            "salinity": 31.0,
+            "temperature": 2.0
+          }
+        ]
+      }
+    },
+    {
+      "metadata": {
+        "collection_date_precision": "month",
+        "collection_id": "synthetic:metagenome:collection-a:collection",
+        "dataset_id": "synthetic:metagenome:collection-a",
+        "depth_convention": null,
+        "descriptor": {
+          "abundance_denominator": "See each retained method table",
+          "abundance_unit": "fraction",
+          "family": "metagenome",
+          "measurement": "normalized_abundance",
+          "method": "Kraken and MetaEuk, kept separate",
+          "omitted_taxa": "retained_elsewhere",
+          "taxonomic_rank": "genus"
+        },
+        "family": "metagenome",
+        "methods": [
+          "Kraken and MetaEuk use separate normalized tables",
+          "Ranked omission is unknown, explicit normalized zero is measured zero"
+        ],
+        "purpose": {
+          "en": "Complete method-owned normalized abundance",
+          "ja": "手法別の全正規化データ"
+        },
+        "qualification": "Synthetic local acceptance only; collection months are not sequencing dates",
+        "related_ids": [],
+        "schema_version": "catalogue-dataset-v1",
+        "source_id": "synthetic-metagenome",
+        "tables": [
+          {
+            "abundance_denominator": null,
+            "availability": {
+              "reason": null,
+              "status": "available"
+            },
+            "columns": [
+              {
+                "description": "Synthetic source-owned library_id",
+                "dtype": "string",
+                "name": "library_id",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned sample_id",
+                "dtype": "string",
+                "name": "sample_id",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned collection_date",
+                "dtype": "string",
+                "name": "collection_date",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned bay",
+                "dtype": "string",
+                "name": "bay",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned station",
+                "dtype": "string",
+                "name": "station",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned has_kraken",
+                "dtype": "boolean",
+                "name": "has_kraken",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned has_metaeuk",
+                "dtype": "boolean",
+                "name": "has_metaeuk",
+                "nullable": false,
+                "unit": null
+              }
+            ],
+            "completeness": "complete",
+            "denominator": "All retained matching collections records in this source dataset",
+            "entity": "libraries",
+            "method": null,
+            "name": "collections",
+            "object_id": "synthetic:metagenome:collection-a:table:collections",
+            "row_count": 2,
+            "taxonomic_rank": null
+          },
+          {
+            "abundance_denominator": null,
+            "availability": {
+              "reason": null,
+              "status": "available"
+            },
+            "columns": [
+              {
+                "description": "Synthetic source-owned run_id",
+                "dtype": "string",
+                "name": "run_id",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned library_id",
+                "dtype": "string",
+                "name": "library_id",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned run_date",
+                "dtype": "string",
+                "name": "run_date",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned sequencing_method",
+                "dtype": "string",
+                "name": "sequencing_method",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned reads",
+                "dtype": "integer",
+                "name": "reads",
+                "nullable": true,
+                "unit": "reads"
+              },
+              {
+                "description": "Synthetic source-owned bases",
+                "dtype": "integer",
+                "name": "bases",
+                "nullable": true,
+                "unit": "bases"
+              }
+            ],
+            "completeness": "complete",
+            "denominator": "All retained matching run_qc records in this source dataset",
+            "entity": "sequencing_runs",
+            "method": null,
+            "name": "run_qc",
+            "object_id": "synthetic:metagenome:collection-a:table:run_qc",
+            "row_count": 2,
+            "taxonomic_rank": null
+          },
+          {
+            "abundance_denominator": "kraken_abundance method-classified reads per library",
+            "availability": {
+              "reason": null,
+              "status": "available"
+            },
+            "columns": [
+              {
+                "description": "Synthetic source-owned measurement_id",
+                "dtype": "string",
+                "name": "measurement_id",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned library_id",
+                "dtype": "string",
+                "name": "library_id",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned taxon",
+                "dtype": "string",
+                "name": "taxon",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned method",
+                "dtype": "string",
+                "name": "method",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned taxonomic_rank",
+                "dtype": "string",
+                "name": "taxonomic_rank",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned abundance",
+                "dtype": "number",
+                "name": "abundance",
+                "nullable": true,
+                "unit": "fraction"
+              }
+            ],
+            "completeness": "complete",
+            "denominator": "All retained matching kraken_abundance records in this source dataset",
+            "entity": "library_taxon_cells",
+            "method": "Kraken",
+            "name": "kraken_abundance",
+            "object_id": "synthetic:metagenome:collection-a:table:kraken_abundance",
+            "row_count": 8,
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance_denominator": "metaeuk_abundance method-classified reads per library",
+            "availability": {
+              "reason": null,
+              "status": "available"
+            },
+            "columns": [
+              {
+                "description": "Synthetic source-owned measurement_id",
+                "dtype": "string",
+                "name": "measurement_id",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned library_id",
+                "dtype": "string",
+                "name": "library_id",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned taxon",
+                "dtype": "string",
+                "name": "taxon",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned method",
+                "dtype": "string",
+                "name": "method",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned taxonomic_rank",
+                "dtype": "string",
+                "name": "taxonomic_rank",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned abundance",
+                "dtype": "number",
+                "name": "abundance",
+                "nullable": true,
+                "unit": "fraction"
+              }
+            ],
+            "completeness": "complete",
+            "denominator": "All retained matching metaeuk_abundance records in this source dataset",
+            "entity": "library_taxon_cells",
+            "method": "MetaEuk",
+            "name": "metaeuk_abundance",
+            "object_id": "synthetic:metagenome:collection-a:table:metaeuk_abundance",
+            "row_count": 8,
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance_denominator": null,
+            "availability": {
+              "reason": null,
+              "status": "available"
+            },
+            "columns": [
+              {
+                "description": "Synthetic source-owned summary_id",
+                "dtype": "string",
+                "name": "summary_id",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned library_id",
+                "dtype": "string",
+                "name": "library_id",
+                "nullable": false,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned taxon",
+                "dtype": "string",
+                "name": "taxon",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned method",
+                "dtype": "string",
+                "name": "method",
+                "nullable": true,
+                "unit": null
+              },
+              {
+                "description": "Synthetic source-owned abundance",
+                "dtype": "number",
+                "name": "abundance",
+                "nullable": true,
+                "unit": "fraction"
+              }
+            ],
+            "completeness": "partial",
+            "denominator": "All retained matching ranked_taxa records in this source dataset",
+            "entity": "ranked_taxa",
+            "method": null,
+            "name": "ranked_taxa",
+            "object_id": "synthetic:metagenome:collection-a:table:ranked_taxa",
+            "row_count": 2,
+            "taxonomic_rank": null
+          }
+        ],
+        "title": {
+          "en": "Synthetic metagenome collection",
+          "ja": "合成メタゲノム"
+        }
+      },
+      "table_rows": {
+        "collections": [
+          {
+            "bay": "O",
+            "collection_date": "2024-01",
+            "has_kraken": true,
+            "has_metaeuk": true,
+            "library_id": "library-000000",
+            "sample_id": "shared-label",
+            "station": "station-1"
+          },
+          {
+            "bay": "O",
+            "collection_date": "2024-02",
+            "has_kraken": true,
+            "has_metaeuk": true,
+            "library_id": "library-000001",
+            "sample_id": "meta-000001",
+            "station": "station-1"
+          }
+        ],
+        "kraken_abundance": [
+          {
+            "abundance": 0.05,
+            "library_id": "library-000000",
+            "measurement_id": "Kraken-000000-0",
+            "method": "Kraken",
+            "taxon": "BeyondTopTen",
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance": 0.0,
+            "library_id": "library-000000",
+            "measurement_id": "Kraken-000000-1",
+            "method": "Kraken",
+            "taxon": "MeasuredZero",
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance": null,
+            "library_id": "library-000000",
+            "measurement_id": "Kraken-000000-2",
+            "method": "Kraken",
+            "taxon": "MissingCell",
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance": 0.3333333333333333,
+            "library_id": "library-000000",
+            "measurement_id": "Kraken-000000-3",
+            "method": "Kraken",
+            "taxon": "Trend",
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance": 0.05,
+            "library_id": "library-000001",
+            "measurement_id": "Kraken-000001-0",
+            "method": "Kraken",
+            "taxon": "BeyondTopTen",
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance": 0.0,
+            "library_id": "library-000001",
+            "measurement_id": "Kraken-000001-1",
+            "method": "Kraken",
+            "taxon": "MeasuredZero",
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance": null,
+            "library_id": "library-000001",
+            "measurement_id": "Kraken-000001-2",
+            "method": "Kraken",
+            "taxon": "MissingCell",
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance": 0.6666666666666666,
+            "library_id": "library-000001",
+            "measurement_id": "Kraken-000001-3",
+            "method": "Kraken",
+            "taxon": "Trend",
+            "taxonomic_rank": "genus"
+          }
+        ],
+        "metaeuk_abundance": [
+          {
+            "abundance": 0.15,
+            "library_id": "library-000000",
+            "measurement_id": "MetaEuk-000000-0",
+            "method": "MetaEuk",
+            "taxon": "BeyondTopTen",
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance": 0.0,
+            "library_id": "library-000000",
+            "measurement_id": "MetaEuk-000000-1",
+            "method": "MetaEuk",
+            "taxon": "MeasuredZero",
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance": null,
+            "library_id": "library-000000",
+            "measurement_id": "MetaEuk-000000-2",
+            "method": "MetaEuk",
+            "taxon": "MissingCell",
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance": 0.3333333333333333,
+            "library_id": "library-000000",
+            "measurement_id": "MetaEuk-000000-3",
+            "method": "MetaEuk",
+            "taxon": "Trend",
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance": 0.15,
+            "library_id": "library-000001",
+            "measurement_id": "MetaEuk-000001-0",
+            "method": "MetaEuk",
+            "taxon": "BeyondTopTen",
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance": 0.0,
+            "library_id": "library-000001",
+            "measurement_id": "MetaEuk-000001-1",
+            "method": "MetaEuk",
+            "taxon": "MeasuredZero",
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance": null,
+            "library_id": "library-000001",
+            "measurement_id": "MetaEuk-000001-2",
+            "method": "MetaEuk",
+            "taxon": "MissingCell",
+            "taxonomic_rank": "genus"
+          },
+          {
+            "abundance": 0.6666666666666666,
+            "library_id": "library-000001",
+            "measurement_id": "MetaEuk-000001-3",
+            "method": "MetaEuk",
+            "taxon": "Trend",
+            "taxonomic_rank": "genus"
+          }
+        ],
+        "ranked_taxa": [
+          {
+            "abundance": 0.3333333333333333,
+            "library_id": "library-000000",
+            "method": "Kraken",
+            "summary_id": "summary-000000",
+            "taxon": "Trend"
+          },
+          {
+            "abundance": 0.6666666666666666,
+            "library_id": "library-000001",
+            "method": "Kraken",
+            "summary_id": "summary-000001",
+            "taxon": "Trend"
+          }
+        ],
+        "run_qc": [
+          {
+            "bases": 100000,
+            "library_id": "library-000000",
+            "reads": 1000,
+            "run_date": "2025-07-01",
+            "run_id": "run-000000",
+            "sequencing_method": "synthetic-long-read"
+          },
+          {
+            "bases": 100001,
+            "library_id": "library-000001",
+            "reads": 1001,
+            "run_date": "2025-07-01",
+            "run_id": "run-000001",
+            "sequencing_method": "synthetic-long-read"
+          }
+        ]
+      }
+    }
+  ],
+  "example_version": "c10-logical-inputs-v1",
+  "expected": {
+    "beyond_top_ten_kraken_mean": 0.05,
+    "beyond_top_ten_metaeuk_mean": 0.15,
+    "ctd_casts": 2,
+    "ctd_depth_observations": 4,
+    "ctd_temperature_mean": 0.625,
+    "kraken_normalized_cells": 8,
+    "metagenome_libraries": 2
+  },
+  "qualification": "Synthetic source-owned records; convert to explicit Parquet exports, then seal with C09"
+}
