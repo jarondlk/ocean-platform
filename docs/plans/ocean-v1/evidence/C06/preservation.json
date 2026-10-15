@@ -1,0 +1,32 @@
+{
+  "unrelated_files": {
+    "matching": 30,
+    "mismatches": []
+  },
+  "scientific_artifacts": {
+    "matching": 7,
+    "mismatches": []
+  },
+  "P00": {
+    "matching": 36,
+    "mismatches": []
+  },
+  "real_serving_files": {
+    "matching": 2,
+    "mismatches": []
+  },
+  "historical_evidence": {
+    "matching": 156,
+    "mismatches": []
+  },
+  "prior_boundaries": {
+    "matching": 17,
+    "mismatches": []
+  },
+  "embedding_methods_ast_unchanged": [
+    "OllamaRuntime.embed",
+    "OllamaRuntime.embed_batch",
+    "VertexRuntime.embed",
+    "VertexRuntime.embed_batch"
+  ]
+}

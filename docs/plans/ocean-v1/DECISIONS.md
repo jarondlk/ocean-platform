@@ -230,3 +230,31 @@ reproduce F07 without provider/DB calls or application changes. C06 remains
 Not started/unselected. The real C05 rebuild, scientific/provider acceptance,
 production access, main/legacy deployment and C06–C27 implementation remain
 outside this delivery. [Audit](C06_READINESS_AUDIT_2026-10-15.md).
+
+### C06 selection after readiness checkpoint — 2026-10-15 JST
+
+The user requested finishing the pending checkpoint and C06 verification, then
+starting C06, with subagents when useful. Checkpoint 44c85b9 records delivered
+C05/hosted CI and verified C06 readiness. The earlier automatic review failure
+was a usage-limit review failure, not an unsafe-action finding; the normal
+review path now permits the requested checkpoint. C06 local runtime contract,
+strict completion enforcement, compatibility metadata and mocked-provider
+consumer acceptance are selected. Existing commit/push authorization persists.
+Keep current model/provider configuration, embeddings, controller retry policy,
+real artifacts, unrelated work and main/legacy deployment unchanged. No live
+provider call, real scientific regeneration, deployment or C07–C27 work is selected.
+
+### C06 local acceptance — 2026-10-15 JST
+
+Immutable generation-result v1 and optional provider usage now normalize both
+ordinary/structured adapters. Strict compatibility wrappers reject every incomplete
+status, including nonempty Ollama length stops and parseable incomplete JSON.
+API completion/failure and planner metadata retain request-local timing/usage
+without partial answered receipts or raw provider exception details. Model/provider
+configuration, embedding methods and existing retry budgets remain unchanged.
+230 required/consumer tests, full backend 1,937 passed/63 explicit PostgreSQL skips
+(81.81% coverage), 39 actual PostgreSQL regressions and two idempotent corpus upserts
+pass. Independent review has no blockers. The owned server is stopped;30 unrelated
+files, 7 scientific artifacts and36 P00 files are preserved. Existing delivery
+authorization applies to C06 checkpoint/push and CI verification. No live provider,
+real scientific regeneration, production migration, deployment or C07 selection.

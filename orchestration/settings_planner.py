@@ -6,7 +6,7 @@ import re
 import time
 
 import config
-from model_runtime import get_model_runtime
+from model_runtime import GenerationError, get_model_runtime
 from orchestration.settings_plan import SettingsProposal, planner_response_schema
 from orchestration.auto_published_settings import (
     choice_metadata, compatible_analyses, default_analysis, exact_catalogue_plan, protocol_choice, published_dataset, selection_explanation,
@@ -22,11 +22,13 @@ BAY_NAMES = {'O': ('onagawa', '女川'), 'I': ('ishinomaki', '石巻'), 'M': ('m
 
 
 class PlanningError(ValueError):
-    def __init__(self, message, *, status='invalid', invoked=False, scope_compatibility=None):
+    def __init__(self, message, *, status='invalid', invoked=False, scope_compatibility=None,
+                 generation_result=None):
         super().__init__(message)
         self.status = status
         self.invoked = invoked
         self.scope_compatibility = scope_compatibility
+        self.generation_result = generation_result
 
 
 def explicit_calendar_range(question):
@@ -399,26 +401,35 @@ Put every unsupported/unresolved constraint in unresolved_constraints. Never set
         'question': request.query, 'selection_context': selection_context,
         'catalogue': input_catalog, 'response_schema': SettingsProposal.model_json_schema(),
     }, ensure_ascii=False, default=str)
+    generation_diagnostics = None
     if bypass:
         proposal = exact[0]
     else:
         try:
-            raw = get_model_runtime().structured_chat(
+            generation = get_model_runtime().structured_chat_result(
                 model=config.CHAT_PLANNER_MODEL, prompt=prompt, schema=planner_response_schema(),
                 max_output_tokens=config.CHAT_PLANNER_MAX_OUTPUT_TOKENS,
                 timeout=config.CHAT_PLANNER_TIMEOUT_SECONDS)
+            generation_diagnostics = generation.diagnostics()
+            raw = generation.require_completed()
         except Exception as exc:
-            raise PlanningError('The settings planner could not complete the request. Retry or switch to manual.', status='unavailable', invoked=True) from exc
+            if isinstance(exc, GenerationError):
+                generation_diagnostics = exc.result.diagnostics()
+            raise PlanningError('The settings planner could not complete the request. Retry or switch to manual.',
+                                status='unavailable', invoked=True,
+                                generation_result=generation_diagnostics) from exc
         try:
             if len(raw) > MAX_PLAN_CHARS:
                 raise ValueError('Plan size limit')
             proposal = SettingsProposal.model_validate_json(raw)
         except (ValueError, TypeError) as exc:
-            raise PlanningError('The planner returned invalid settings. Retry or switch to manual.', invoked=True) from exc
+            raise PlanningError('The planner returned invalid settings. Retry or switch to manual.',
+                                invoked=True, generation_result=generation_diagnostics) from exc
         if exact:
             proposal = exact[0]
     if proposal.status == 'clarification':
-        raise PlanningError(proposal.clarification, status='clarification_required', invoked=True)
+        raise PlanningError(proposal.clarification, status='clarification_required', invoked=True,
+                            generation_result=generation_diagnostics)
     try:
         proposal, retained_pins = retain_user_pins(proposal, request)
         proposal, calendar = retain_explicit_dates(proposal, request)
@@ -450,9 +461,12 @@ Put every unsupported/unresolved constraint in unresolved_constraints. Never set
         scope, compatibility = _validate_constraints(proposal, request, catalog, retained_filters=bool(exact))
     except PlanningError as exc:
         exc.invoked = not bypass
+        exc.generation_result = generation_diagnostics
         raise
     except Exception as exc:
-        raise PlanningError('Automatic settings could not be verified. Retry or use manual settings.', status='unavailable', invoked=not bypass) from exc
+        raise PlanningError('Automatic settings could not be verified. Retry or use manual settings.',
+                            status='unavailable', invoked=not bypass,
+                            generation_result=generation_diagnostics) from exc
     options = deepcopy(request.model_dump())
     options.update(evidence_scope=scope, k=8, vector_weight=0.6, fts_weight=0.4, rrf_k=60,
                    expand_evidence=proposal.preset != 'measurement', max_linked_sources=5,
@@ -461,6 +475,7 @@ Put every unsupported/unresolved constraint in unresolved_constraints. Never set
                    research_intent=proposal.research_intent.model_dump() if proposal.research_intent else None)
     effective = type(request).model_validate(options)
     metadata = {**proposal.model_dump(mode='json', exclude_none=True), 'status': 'applied',
+                **({'generation_result': generation_diagnostics} if generation_diagnostics is not None else {}),
                 'retained_user_pins': {family + '.' + field: value for (family, field), value in retained_pins.items()},
                 'resolved_calendar_range': calendar,
                 'scope_compatibility': compatibility.as_dict() if compatibility else None,

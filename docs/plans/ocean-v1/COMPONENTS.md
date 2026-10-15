@@ -1,6 +1,6 @@
 # Component map
 
-P00 and C01–C05 are **Complete locally**; C06–C27 are **Not started**. The sequence is now P00 local UI/UX review,
+P00 and C01–C06 are **Complete locally**; C07–C27 are **Not started**. The sequence is now P00 local UI/UX review,
 then the original C01–C27 backend/integration components. IDs C01–C27 are retained.
 This map does not authorize implementation. Read [SITE_SEPARATION.md](SITE_SEPARATION.md)
 and [UI_UX_BRIEF.md](UI_UX_BRIEF.md), then select one action in [PROMPTS.md](PROMPTS.md).

@@ -1,0 +1,16 @@
+{
+  "reviewer": "c06_contract_review",
+  "outcome": "No remaining blocking runtime/consumer findings",
+  "scope": "Both adapters and methods, wrappers, metadata privacy, existing retry budgets, API SQLite persistence/planner abstention, actual SDK compatibility and request isolation",
+  "resolved_findings": [
+    "Unsafe labels reject credential URLs/free-form text",
+    "Contradictory unknown/malformed Vertex block feedback overrides candidate STOP to unknown"
+  ],
+  "independent_probes": [
+    "Installed SDK GenerateContentResponse STOP/usage validation",
+    "Same-runtime completed-to-limited-to-completed sequences retain immutable prior results and reset unavailable usage to None",
+    "Incomplete result never releases partial text"
+  ],
+  "provider_calls": false,
+  "database_calls": false
+}

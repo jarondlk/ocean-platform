@@ -4,6 +4,7 @@ from fastapi.testclient import TestClient
 
 import api.main as api_main
 import config
+from tests.runtime_fixtures import CompletedGenerationRuntime
 import model_runtime
 from api.main import app
 from retrieval.contract import RetrievalBackendError
@@ -104,7 +105,7 @@ def test_chat_reports_total_backend_failure_without_running_the_model(monkeypatc
     def fail_retrieval(*_args, **_kwargs):
         raise RetrievalBackendError("all enabled branches failed")
 
-    class ForbiddenRuntime:
+    class ForbiddenRuntime(CompletedGenerationRuntime):
         def chat(self, *_args, **_kwargs):
             raise AssertionError("model must not run after retrieval failure")
 
@@ -183,6 +184,8 @@ def test_chat_response_includes_context_ledger(tmp_path, monkeypatch):
 
         def json(self):
             return {
+                "done": True,
+                "done_reason": "stop",
                 "message": {
                     "content": (
                         "answer with citations [S1, S2] [S3; S4]"
@@ -262,7 +265,8 @@ def test_chat_can_disable_answer_audit(monkeypatch):
             return None
 
         def json(self):
-            return {"message": {"content": "answer with citations [ctd:2024-01-O-s1]"}}
+            return {"done": True, "done_reason": "stop",
+                    "message": {"content": "answer with citations [ctd:2024-01-O-s1]"}}
 
     monkeypatch.setattr(api_main, "retrieve_with_expansion", fake_retrieve_with_expansion)
     monkeypatch.setattr(
@@ -299,7 +303,7 @@ def test_chat_abstains_before_model_when_no_evidence(monkeypatch):
         },
     )
 
-    class ForbiddenRuntime:
+    class ForbiddenRuntime(CompletedGenerationRuntime):
         def chat(self, *args, **kwargs):
             raise AssertionError("model must not be called without evidence")
 
@@ -344,7 +348,7 @@ def test_chat_reports_empty_analysis_cohort_without_model(monkeypatch):
         },
     )
 
-    class ForbiddenRuntime:
+    class ForbiddenRuntime(CompletedGenerationRuntime):
         def chat(self, *args, **kwargs):
             raise AssertionError("model must not be called for an empty cohort")
 
@@ -378,7 +382,7 @@ def test_chat_reports_pending_edna_publication_without_model(monkeypatch):
         },
     )
 
-    class ForbiddenRuntime:
+    class ForbiddenRuntime(CompletedGenerationRuntime):
         def chat(self, *args, **kwargs):
             raise AssertionError("model must not be called while publication is pending")
 

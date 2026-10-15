@@ -161,7 +161,7 @@ from ingestion.lineage import (
     build_upsert_dry_run_plan,
 )
 from ingestion.provenance_snapshot import SnapshotError
-from model_runtime import ModelOutputLimitError, get_model_runtime
+from model_runtime import GenerationError, ModelOutputLimitError, get_model_runtime
 from orchestration.citations import InvalidCitationAlias, prepare_citations
 
 
@@ -5613,6 +5613,8 @@ def chat(
                                    latency_ms=_chat_latency_ms(started_at))
         if exc.scope_compatibility is not None:
             options['planning']['scope_compatibility'] = exc.scope_compatibility
+        if exc.generation_result is not None:
+            options['planning']['generation_result'] = exc.generation_result
         record_chat_options(interaction_id=interaction_id, user=user, request_options=options)
         return _chat_scope_abstention(request, user, model, interaction_id, started_at, options,
                                      'aggregate_unavailable' if exc.status == 'unavailable' else 'aggregate_scope_required', str(exc),
@@ -5895,13 +5897,17 @@ def _execute_chat(request: ChatRequest, user: CurrentUser, *, planning=None,
                 model_invoked=False,
             )
 
+        generation_diagnostics = None
         try:
-            answer = get_model_runtime().chat(
+            generation = get_model_runtime().chat_result(
                 model=model,
                 prompt=prompt,
                 options=ollama_options,
                 timeout=120,
             )
+            generation_diagnostics = generation.diagnostics()
+            answer = generation.require_completed()
+            response_options['generation_result'] = generation_diagnostics
             answer = cited_prompt.resolve(answer)
             if retrieval_diagnostics.get('coverage_status') == 'partial':
                 from orchestration.comparison_guard import LABELS
@@ -5913,14 +5919,15 @@ def _execute_chat(request: ChatRequest, user: CurrentUser, *, planning=None,
         except Exception as exc:
             error_code = "llm_request_failed"
             message = "The language model could not complete the request"
-            generation_diagnostics = None
+            if isinstance(exc, GenerationError):
+                generation_diagnostics = exc.result.diagnostics()
             if isinstance(exc, ModelOutputLimitError):
                 error_code = "llm_output_limit"
                 message = (
                     "The answer reached the output limit before it could finish. "
                     "Please request a shorter summary or fewer details."
                 )
-                generation_diagnostics = exc.diagnostics
+                generation_diagnostics = {**(generation_diagnostics or {}), **exc.diagnostics}
             elif isinstance(exc, InvalidCitationAlias):
                 error_code = "llm_invalid_citation"
                 message = "The answer contained an unrecognized citation. Please try again."
@@ -5931,7 +5938,7 @@ def _execute_chat(request: ChatRequest, user: CurrentUser, *, planning=None,
                 started_at=started_at,
                 generation_diagnostics=generation_diagnostics,
             )
-            logger.exception("Language model request failed")
+            logger.warning("Language model request failed (%s)", error_code)
             detail = {
                 "code": error_code,
                 "message": message,
@@ -5963,6 +5970,7 @@ def _execute_chat(request: ChatRequest, user: CurrentUser, *, planning=None,
             latency_ms=_chat_latency_ms(started_at),
             outcome="answered",
             abstention_reason=None,
+            generation_diagnostics=generation_diagnostics,
         )
 
         return ChatResponse(

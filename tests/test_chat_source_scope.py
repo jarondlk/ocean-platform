@@ -7,6 +7,7 @@ from fastapi.testclient import TestClient
 from pydantic import ValidationError
 
 import api.main as api_main
+from tests.runtime_fixtures import CompletedGenerationRuntime
 import orchestration.unified as unified
 from api.schemas import ChatRequest
 from orchestration.evidence_scope import context_matches_source_scope
@@ -137,7 +138,7 @@ def test_final_prompt_and_history_exclude_unchecked_and_unscoped_context(monkeyp
     monkeypatch.setattr(unified, 'analysis_context_documents', lambda q: [{'id': 'derived', 'text': 'UNSCOPED_CONTEXT'}])
     monkeypatch.setattr(unified, 'reliability_context_documents', lambda q: [])
     captured = {}
-    class Runtime:
+    class Runtime(CompletedGenerationRuntime):
         def chat(self, **kw):
             captured['prompt'] = kw['prompt']
             return 'Temperature from CTD [ctd]'
@@ -211,7 +212,7 @@ def test_explicit_taxon_supplements_abbreviated_prose_with_exact_cited_counts(mo
         'doc_id': 'assay', 'source_type': 'edna_metabarcoding', 'assignment_method': 'qcauto_target',
         'metadata': {'taxon_terms': ['RareTaxon']}, 'text': 'Ten common featured taxa; requested rare taxon omitted.', 'title': 'Assay'}], 'linked': [], 'diagnostics': {}})
     captured = {}
-    class Runtime:
+    class Runtime(CompletedGenerationRuntime):
         def chat(self, **kw):
             captured['prompt'] = kw['prompt']
             return 'One occurrence and 122 reads [aggregate_edna_'+'a'*64+']'

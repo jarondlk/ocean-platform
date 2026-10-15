@@ -1,0 +1,27 @@
+{
+  "base_head": "44c85b9528440d77ae3cd5569ea09f8f42954895",
+  "files": {
+    "model_runtime.py": "473d847299f55f4f67c178582f7b6411bea9eeb5af2e4837388bc45e4583f4bf",
+    "api/main.py": "ad848bf8f25c58e00f2a424229c17ed12ba42f3b18ad6df373025331e6df501c",
+    "api/chat_records.py": "47f24ac8de7db0b623a9825a18bc705b524f923838b96bcbabec7438b1030dbf",
+    "orchestration/settings_planner.py": "0a7f6fbacfc73cb9b30330f2b9d0187f72f139fa016bff6e1ec6e5b746a634b8",
+    "tests/runtime_fixtures.py": "7a06f37cdadf3d19bd81b3d099eaa9707b9915f898b7b9eb279b938926538726",
+    "tests/test_generation_contract.py": "7a4e3dc99145de50c33db8987ab1fac4cb41d62091c5f269dbd7747c61cb23a1",
+    "tests/test_model_runtime.py": "f4e4a2cba94aacfe007efa0ab6ae558ea079c91bf495c158b6ffa2c651c57c46",
+    "tests/test_auto_settings.py": "6c95011f8f16c5badf71a54dd1a4d73f32f1191bbf0c6bdc422cdd50cf73c6fa",
+    "tests/test_source_aware_retrieval.py": "ebcd3bbe53c6c649ff7a592370d4d6dee3d2007def10f498b50af99b510ea42f",
+    "tests/test_chat_source_scope.py": "ac89588c2a251f32343ed410696fea7ae25dc8e235888f03d1ec20cafed1cfe1",
+    "tests/test_api_retrieve.py": "72edb1e4b9cf5cc600b54dc062419423467b57a1f593eff81cd68c9492736cd1",
+    "tests/test_chat_feedback.py": "0d9c0eab88f83f5e6d00582389060f0579ebc077ff4f4e778c53cc062d088b5a",
+    "tests/test_chat_issue59.py": "012054faf85c524b3510ce55b15c1061c4c109d42c8743a42c456d23f900bba3",
+    "tests/test_citations.py": "669509d94ab5487b378a2eaf150b55e6307879ab6ad13e8f312c4b67cf1b2aba",
+    "tests/test_v061_acceptance.py": "8a6d4418ed5b177f2ae788a28cc6eee426be5c65d8a99196bd079310218f6a08",
+    "tests/integration/test_chat_source_scope_postgres.py": "06ecceec42d7511a743ac945a5259230c39da07770ee8e0cfa07b6ce4887974d"
+  },
+  "embedding_methods_ast_unchanged": [
+    "OllamaRuntime.embed",
+    "OllamaRuntime.embed_batch",
+    "VertexRuntime.embed",
+    "VertexRuntime.embed_batch"
+  ]
+}

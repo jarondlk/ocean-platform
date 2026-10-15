@@ -1,0 +1,20 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+____ test_actual_chat_generation_factory_uses_the_meter_and_enforces_budget ____
+tests/test_v061_acceptance.py:94: in test_actual_chat_generation_factory_uses_the_meter_and_enforces_budget
+    api.get_model_runtime().chat(model='fixture', prompt='fixture')
+model_runtime.py:505: in chat
+    return self.chat_result(model=model, prompt=prompt, options=options, timeout=timeout).require_completed()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+model_runtime.py:90: in require_completed
+    raise GenerationError(self)
+E   model_runtime.GenerationError: Model generation did not complete: failed
+=============================== warnings summary ===============================
+tests/test_v061_acceptance.py::test_actual_chat_generation_factory_uses_the_meter_and_enforces_budget
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_v061_acceptance.py::test_actual_chat_generation_factory_uses_the_meter_and_enforces_budget
+1 failed, 3 passed, 1 warning in 0.65s

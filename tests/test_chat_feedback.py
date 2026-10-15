@@ -13,6 +13,7 @@ import api.chat_records as chat_records
 import api.feedback_routes as feedback_routes
 import api.main as api_main
 import model_runtime
+from tests.runtime_fixtures import CompletedGenerationRuntime
 from api.auth import CurrentUser, ROLE_PERMISSIONS, resolve_identity
 from db.app_models import (
     AppBase,
@@ -113,6 +114,8 @@ class _OllamaResponse:
 
     def json(self):
         return {
+            "done": True,
+            "done_reason": "stop",
             "message": {
                 "content": "The temperature was 12 C [ctd:2024-01-O-s1]."
             }
@@ -218,7 +221,7 @@ def test_chat_persists_abstention_and_does_not_call_model(monkeypatch):
         },
     )
 
-    class ForbiddenRuntime:
+    class ForbiddenRuntime(CompletedGenerationRuntime):
         def chat(self, *args, **kwargs):
             raise AssertionError("model must not be called")
 
@@ -361,7 +364,6 @@ def test_feedback_is_hidden_from_other_users(monkeypatch):
 
 def test_chat_restores_citations_before_response_audit_and_persistence(monkeypatch):
     import hashlib
-    from types import SimpleNamespace
 
     factory = _database()
     user = _add_user(factory, 'citations@example.org')
@@ -375,7 +377,7 @@ def test_chat_restores_citations_before_response_audit_and_persistence(monkeypat
         assert '[S1] (ctd' in kwargs['prompt']
         return 'The temperature was 12 C [S1].'
 
-    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: SimpleNamespace(chat=chat))
+    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: CompletedGenerationRuntime(chat=chat))
     response = TestClient(api_main.app).post('/chat', json={
         'query': 'What was the surface temperature?', 'inject_analysis': False,
         'inject_reliability': False,
@@ -393,7 +395,6 @@ def test_chat_restores_citations_before_response_audit_and_persistence(monkeypat
 
 
 def test_output_limit_has_specific_error_and_no_partial_answer(monkeypatch):
-    from types import SimpleNamespace
 
     factory = _database()
     user = _add_user(factory, 'limit@example.org')
@@ -404,7 +405,7 @@ def test_output_limit_has_specific_error_and_no_partial_answer(monkeypatch):
     def chat(**kwargs):
         raise model_runtime.ModelOutputLimitError(max_output_tokens=1600, output_tokens=1596)
 
-    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: SimpleNamespace(chat=chat))
+    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: CompletedGenerationRuntime(chat=chat))
     response = TestClient(api_main.app).post('/chat', json={'query': 'fetch me some edna metabarcoding samples'})
     assert response.status_code == 502
     detail = response.json()['detail']
@@ -421,14 +422,13 @@ def test_output_limit_has_specific_error_and_no_partial_answer(monkeypatch):
 
 
 def test_unknown_alias_is_rejected_even_when_answer_audit_disabled(monkeypatch):
-    from types import SimpleNamespace
 
     factory = _database()
     user = _add_user(factory, 'unknown-label@example.org')
     _install_database(monkeypatch, factory)
     _stub_chat_dependencies(monkeypatch)
     monkeypatch.setattr(api_auth, 'authenticate_request', lambda _: user)
-    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: SimpleNamespace(chat=lambda **_: 'Claim [S999].'))
+    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: CompletedGenerationRuntime(chat=lambda **_: 'Claim [S999].'))
     response = TestClient(api_main.app).post('/chat', json={'query': 'temperature', 'run_answer_audit': False})
     assert response.status_code == 502
     detail = response.json()['detail']
@@ -439,14 +439,13 @@ def test_unknown_alias_is_rejected_even_when_answer_audit_disabled(monkeypatch):
 
 
 def test_invented_multiword_citation_cannot_be_persisted_as_answered(monkeypatch):
-    from types import SimpleNamespace
 
     factory = _database()
     user = _add_user(factory, 'scope-label@example.org')
     _install_database(monkeypatch, factory)
     _stub_chat_dependencies(monkeypatch)
     monkeypatch.setattr(api_auth, 'authenticate_request', lambda _: user)
-    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: SimpleNamespace(
+    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: CompletedGenerationRuntime(
         chat=lambda **_: 'Temperature 12 C [S1]. CTD selected [Scope Settings].'))
     response = TestClient(api_main.app).post('/chat', json={'query': 'temperature', 'run_answer_audit': False})
     assert response.status_code == 502
@@ -459,7 +458,6 @@ def test_invented_multiword_citation_cannot_be_persisted_as_answered(monkeypatch
 
 
 def test_issue59_unfiltered_eight_document_request_keeps_canonical_edna_citations(monkeypatch):
-    from types import SimpleNamespace
     factory = _database()
     user = _add_user(factory, 'edna-citations@example.org')
     _install_database(monkeypatch, factory)
@@ -484,7 +482,7 @@ def test_issue59_unfiltered_eight_document_request_keeps_canonical_edna_citation
         return 'One MiFish sample has two assignment methods, with unknown classification [' + '; '.join(aliases) + '].'
 
     monkeypatch.setattr(api_main, 'retrieve_with_expansion', retrieve)
-    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: SimpleNamespace(chat=chat))
+    monkeypatch.setattr(api_main, 'get_model_runtime', lambda: CompletedGenerationRuntime(chat=chat))
     response = TestClient(api_main.app).post('/chat', json={'query': 'fetch me some edna metabarcoding samples'})
     assert response.status_code == 200
     payload = response.json()

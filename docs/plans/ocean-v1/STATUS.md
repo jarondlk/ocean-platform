@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-10-15 JST. **P00 and C01–C05 are Complete locally.**
+Updated: 2026-10-15 JST. **P00 and C01–C06 are Complete locally.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -8,12 +8,13 @@ C02 was explicitly selected on 2026-10-14 JST and passed its software/synthetic
 checks. C03 passed its local transaction-ordering and actual disposable PostgreSQL
 acceptance. C04 now passes concurrent responsiveness, worker-lifetime, security
 and cancellation acceptance. C05 passes embedding isolation, metagenome fidelity
-and deterministic replacement-history acceptance; C06–C27 remain Not started.
-P00 and C01–C05 local work is authorized.
+and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance; C07–C27 remain Not started.
+P00 and C01–C06 local work is authorized.
 See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
-[C03](handoffs/C03.md), [C04](handoffs/C04.md) and [C05](handoffs/C05.md) handoffs for current evidence.
+[C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md) and [C06](handoffs/C06.md) handoffs for current evidence.
 
-Latest completed implementation: **C05 — Retrieval correctness**, explicitly selected.
+Latest completed implementation: **C06 — Model runtime contract**, explicitly selected after checkpoint/readiness.
+C06 local acceptance and source hashes are recorded in [its receipt](evidence/C06/verification.json).
 C05 is committed/pushed as `fd8f520`; its original local source receipt is preserved.
 [The delivery and C06 readiness audit](C06_READINESS_AUDIT_2026-10-15.md) records
 passing hosted CI and confirms that C06 can start after explicit selection.
@@ -34,7 +35,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C03 — Retention integrity](components/C03-retention-integrity.md) | Complete | Atomic predicate DELETE/hold UPDATE; committed count/audit parity; preserved held/dependent evidence; isolated server stopped | 35 required; 93 with auth/security; 12 actual PostgreSQL cases pass; full suite 1,684 passed, 51 expected gated skips; [receipt](evidence/C03/verification.json) | [C03](handoffs/C03.md) |
 | [C04 — Authentication responsiveness](components/C04-authentication-responsiveness.md) | Complete | Complete auth/limiter operations offloaded; worker-owned resources; security and both cancellation styles; independent review passes | 87 required; full suite 1,705 passed, 51 expected PostgreSQL skips, 81.46% coverage; Ruff/preservation pass; [receipt](evidence/C04/verification.json) | [C04](handoffs/C04.md) |
 | [C05 — Retrieval correctness](components/C05-retrieval-correctness.md) | Complete | Explicit query embedding identity; named Kraken/MetaEuk mapping; deterministic immutable replacements and preserved history; deferred rebuild runbook | 142 required; 12 actual C05 PostgreSQL cases; 39 existing PostgreSQL regressions; full suite 1,806 passed/63 gated skips, 81.77% coverage; [receipt](evidence/C05/verification.json) | [C05](handoffs/C05.md) |
-| [C06 — Model runtime contract](components/C06-model-runtime.md) | Not started | Ready for explicit selection; P00 hashes match | Readiness baseline 99 pass; target F07 reproduced with mocked payloads/API; [audit](C06_READINESS_AUDIT_2026-10-15.md). Implementation acceptance not run | Not created |
+| [C06 — Model runtime contract](components/C06-model-runtime.md) | Complete | Typed immutable generation result; strict ordinary/structured completion; API/planner usage/timing and safe failure receipts | 230 required; 24 actual-adapter/API/SQLite/planner cases; full suite 1,937 passed/63 gated skips, 81.81% coverage; 39 actual PostgreSQL regressions; [receipt](evidence/C06/verification.json) | [C06](handoffs/C06.md) |
 | [C07 — Export safety](components/C07-export-safety.md) | Not started | None | Not run | Not created |
 | [C08 — Catalogue contracts and fixtures](components/C08-catalogue-contracts.md) | Not started | None | Not run | Not created |
 | [C09 — Immutable catalogue snapshots](components/C09-catalogue-snapshots.md) | Not started | None | Not run | Not created |
@@ -90,6 +91,14 @@ identifies 82 affected legacy documents; [rebuild instructions](C05_REBUILD_RUNB
 are deferred. Real files, live stores and providers were not regenerated/called.
 C05 hosted CI passes for `fd8f520`: 1,797 backend tests, 82.60% coverage,
 both frontends, 63 actual PostgreSQL cases and backup/restore. The 63 broad-suite
-PostgreSQL skips are covered by separate hosted integration steps. C06 remains
-Not started/unselected; its 99-test baseline and offline F07 probes establish
-readiness, not implementation acceptance.
+PostgreSQL skips are covered by separate hosted integration steps. C06 was then explicitly selected after checkpoint `44c85b9`; its 99-test baseline
+and offline F07 probes establish readiness. Current implementation acceptance
+is recorded in [its handoff](handoffs/C06.md).
+
+C06 ordinary/structured adapters and strict string wrappers now reject limits,
+refusal, malformed/missing/unknown termination. Results preserve measured monotonic
+duration and optional actual usage; incomplete parseable JSON cannot execute plans.
+Independent review passes. Existing model/provider configuration, retry budgets,
+embedding methods and real data remain unchanged. C06 delivery uses the existing
+commit/push authorization; hosted C06 acceptance is pending at this local checkpoint.
+C07 remains Not started/unselected.

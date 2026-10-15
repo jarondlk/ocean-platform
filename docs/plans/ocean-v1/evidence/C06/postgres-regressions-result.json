@@ -1,0 +1,53 @@
+{
+  "cluster_root": "/private/tmp/ocean-c06-regressions-5hu0arov",
+  "data_directory": "/private/tmp/ocean-c06-regressions-5hu0arov/data",
+  "host": "127.0.0.1",
+  "port": 62309,
+  "role": "ocean_c06",
+  "database": "ocean_c06_regressions_ad3df577a2b3",
+  "existing_database_urls_used": false,
+  "identity": {
+    "database": "ocean_c06_regressions_ad3df577a2b3",
+    "role": "ocean_c06",
+    "host": "127.0.0.1",
+    "port": 62309,
+    "version": "PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit",
+    "isolation": "read committed",
+    "data_directory": "/private/tmp/ocean-c06-regressions-5hu0arov/data"
+  },
+  "migrations_exit_code": 0,
+  "test_command": [
+    "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/integration/test_app_metadata_postgres.py",
+    "tests/integration/test_classification_application_postgres.py",
+    "tests/integration/test_classification_preview_postgres.py",
+    "tests/integration/test_operational_postgres.py",
+    "tests/integration/test_anemone_postgres.py",
+    "tests/integration/test_anemone_catalogue_postgres.py",
+    "tests/integration/test_edna_aggregate_postgres.py",
+    "tests/integration/test_edna_analysis_postgres.py",
+    "tests/integration/test_chat_source_scope_postgres.py",
+    "tests/integration/test_chat_filter_options_postgres.py",
+    "tests/integration/test_research_registry_postgres.py",
+    "-q",
+    "-s",
+    "--tb=short"
+  ],
+  "test_exit_code": 0,
+  "upsert_command": [
+    "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+    "scripts/load_db.py",
+    "--upsert",
+    "--json"
+  ],
+  "upsert_exit_codes": [
+    0,
+    0
+  ],
+  "pgvector_version": "0.8.7",
+  "test_schemas_remaining": 0,
+  "stop_exit_code": 0,
+  "server_stopped": true
+}

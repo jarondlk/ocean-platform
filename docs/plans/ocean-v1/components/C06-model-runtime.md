@@ -1,6 +1,6 @@
 # C06 — Model runtime contract
 
-**Status:** Not started. **Prerequisites:** P00. **Contract:** provider-independent generation result v1.
+**Status:** Complete locally (2026-10-15 JST). **Prerequisites:** P00. **Contract:** provider-independent generation result v1.
 
 ## Revised delivery boundary
 
@@ -50,3 +50,14 @@ listed baseline suites pass 99 cases. Synthetic adapter and actual stubbed API
 probes reproduce F07 and identify missing/unknown termination handling and metadata
 as the intended first checkpoint. No C06 application source changes or provider
 calls occurred. See [readiness audit](../C06_READINESS_AUDIT_2026-10-15.md).
+
+## Local acceptance — 2026-10-15 JST
+
+Generation-result v1, strict ordinary/structured wrappers and metadata-aware
+API/planner integration pass 230 required/consumer cases, including 119 runtime
+and 24 actual-adapter/API/SQLite/planner cases. Full backend:1,937 passed,
+63 PostgreSQL-gated skips and 81.81% coverage. Separate actual disposable PostgreSQL
+regressions pass 39 cases and two idempotent corpus upserts; its server is stopped.
+Independent review, Ruff, scope contract and preservation pass. Provider calls
+remain mocked; no live provider/model quality or deployment is claimed. See
+[handoff](../handoffs/C06.md) and [local source receipt](../evidence/C06/verification.json).

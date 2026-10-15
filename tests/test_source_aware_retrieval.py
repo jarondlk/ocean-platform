@@ -5,6 +5,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 import api.main as api
+from tests.runtime_fixtures import CompletedGenerationRuntime
 import orchestration.unified as unified
 from retrieval.contract import RetrievalBackendError
 from retrieval.source_scope import FAMILIES, enabled_sources
@@ -144,7 +145,7 @@ def test_multi_source_summary_reaches_model_and_preserves_final_coverage(monkeyp
     monkeypatch.setattr(api, 'retrieve_with_expansion', lambda *a, **kw: {'primary': rows, 'linked': [], 'diagnostics': {}})
     calls = []
 
-    class Runtime:
+    class Runtime(CompletedGenerationRuntime):
         def chat(self, **kwargs):
             calls.append(kwargs['prompt'])
             return 'Scoped source evidence [remote_sensing-0] [edna_metabarcoding-0].'

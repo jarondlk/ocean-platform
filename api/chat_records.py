@@ -143,6 +143,7 @@ def complete_chat_interaction(
     latency_ms: int,
     outcome: str = "answered",
     abstention_reason: Optional[str] = None,
+    generation_diagnostics: Optional[Dict[str, Any]] = None,
 ) -> None:
     if interaction_id is None:
         return
@@ -160,6 +161,11 @@ def complete_chat_interaction(
         interaction.abstention_reason = abstention_reason
         interaction.latency_ms = max(0, latency_ms)
         interaction.error_code = None
+        if generation_diagnostics is not None:
+            interaction.request_options = {
+                **(interaction.request_options or {}),
+                "generation_result": json_safe(generation_diagnostics),
+            }
         interaction.completed_at = datetime.now(timezone.utc)
 
 

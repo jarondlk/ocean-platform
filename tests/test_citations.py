@@ -2,6 +2,7 @@
 import copy
 
 import pytest
+from tests.runtime_fixtures import CompletedGenerationRuntime
 
 from orchestration.citations import InvalidCitationAlias, prepare_citations
 from orchestration.unified import _build_prompt_from_context
@@ -122,7 +123,6 @@ def test_evaluation_resolves_labels_before_scoring(monkeypatch, ablation):
 
 
 def test_cli_generation_propagates_failure_instead_of_marking_it_answered(monkeypatch):
-    from types import SimpleNamespace
     import orchestration.unified as unified
     from model_runtime import ModelOutputLimitError
 
@@ -131,7 +131,7 @@ def test_cli_generation_propagates_failure_instead_of_marking_it_answered(monkey
     def fail(**kwargs):
         raise ModelOutputLimitError(max_output_tokens=32)
 
-    monkeypatch.setattr(unified, 'get_model_runtime', lambda: SimpleNamespace(chat=fail))
+    monkeypatch.setattr(unified, 'get_model_runtime', lambda: CompletedGenerationRuntime(chat=fail))
     with pytest.raises(ModelOutputLimitError):
         unified.ask('temperature')
 

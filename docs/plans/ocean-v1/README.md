@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C05 are Complete locally; C06–C27 are not started.**
+**P00 and C01–C06 are Complete locally; C07–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -33,7 +33,8 @@ and records readiness before C05 was selected. Current C05 acceptance is
 recorded separately in [its receipt](evidence/C05/verification.json).
 C05 is now committed/pushed as `fd8f520` with passing hosted CI;
 [the C06 readiness audit](C06_READINESS_AUDIT_2026-10-15.md) verifies its prerequisite
-and 99-test baseline. C06 remains Not started until selected.
+and 99-test baseline. C06 was explicitly selected after the readiness checkpoint and is Complete locally;
+read [its handoff](handoffs/C06.md).
 
 The new site is fully isolated from the legacy production site. Read
 [SITE_SEPARATION.md](SITE_SEPARATION.md) and [UI_UX_BRIEF.md](UI_UX_BRIEF.md).
@@ -123,6 +124,6 @@ not a requirement to reset future work to this commit.
 Existing unrelated README, audit and benchmark modifications are preserved.
 P00 progress is recorded in [STATUS.md](STATUS.md) and [its handoff](handoffs/P00.md).
 C01 and C02 are complete with offline evidence; C03 is complete with local unit
-and actual disposable PostgreSQL evidence. C04 and C05 are Complete locally; C06–C27 remain Not started.
+and actual disposable PostgreSQL evidence. C04 and C05 are Complete locally; C06 is Complete locally; C07–C27 remain Not started.
 The 2026-10-13 revision adds P00 before the original 27 numbered components; the
 setup receipt retains its historical counts and records this amendment.

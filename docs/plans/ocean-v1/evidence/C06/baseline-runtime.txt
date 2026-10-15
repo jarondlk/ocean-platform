@@ -1,0 +1,833 @@
+............FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 69%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF                                         [100%]
+=================================== FAILURES ===================================
+_ test_generation_result_normalizes_all_termination_outcomes[ollama-stop-completed-chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[ollama-stop-completed-structured_chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[vertex-STOP-completed-chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[vertex-STOP-completed-structured_chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[ollama-length-output_limited-chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[ollama-length-output_limited-structured_chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[vertex-MAX_TOKENS-output_limited-chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[vertex-MAX_TOKENS-output_limited-structured_chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[ollama-refused-refused-chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[ollama-refused-refused-structured_chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[vertex-SAFETY-refused-chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[vertex-SAFETY-refused-structured_chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[ollama-error-failed-chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[ollama-error-failed-structured_chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[vertex-MALFORMED_FUNCTION_CALL-failed-chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[vertex-MALFORMED_FUNCTION_CALL-failed-structured_chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[ollama-None-unknown-chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[ollama-None-unknown-structured_chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[vertex-None-unknown-chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[vertex-None-unknown-structured_chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[ollama-new_reason-unknown-chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[ollama-new_reason-unknown-structured_chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[vertex-OTHER-unknown-chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_generation_result_normalizes_all_termination_outcomes[vertex-OTHER-unknown-structured_chat] _
+tests/test_model_runtime.py:387: in test_generation_result_normalizes_all_termination_outcomes
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[None-None-chat-ollama] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[None-None-chat-vertex] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[None-None-structured_chat-ollama] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[None-None-structured_chat-vertex] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts1-None-chat-ollama] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts1-None-chat-vertex] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts1-None-structured_chat-ollama] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts1-None-structured_chat-vertex] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts2-expected2-chat-ollama] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts2-expected2-chat-vertex] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts2-expected2-structured_chat-ollama] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts2-expected2-structured_chat-vertex] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts3-expected3-chat-ollama] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts3-expected3-chat-vertex] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts3-expected3-structured_chat-ollama] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts3-expected3-structured_chat-vertex] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts4-None-chat-ollama] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts4-None-chat-vertex] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts4-None-structured_chat-ollama] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts4-None-structured_chat-vertex] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts5-expected5-chat-ollama] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts5-expected5-chat-vertex] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts5-expected5-structured_chat-ollama] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts5-expected5-structured_chat-vertex] _
+tests/test_model_runtime.py:428: in test_generation_usage_preserves_only_reported_nonnegative_integer_counts
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_elapsed_time_is_monotonic_measured_and_metadata_is_frozen[chat-ollama] _
+tests/test_model_runtime.py:450: in test_generation_elapsed_time_is_monotonic_measured_and_metadata_is_frozen
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_generation_elapsed_time_is_monotonic_measured_and_metadata_is_frozen[chat-vertex] _
+tests/test_model_runtime.py:450: in test_generation_elapsed_time_is_monotonic_measured_and_metadata_is_frozen
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_generation_elapsed_time_is_monotonic_measured_and_metadata_is_frozen[structured_chat-ollama] _
+tests/test_model_runtime.py:450: in test_generation_elapsed_time_is_monotonic_measured_and_metadata_is_frozen
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_generation_elapsed_time_is_monotonic_measured_and_metadata_is_frozen[structured_chat-vertex] _
+tests/test_model_runtime.py:450: in test_generation_elapsed_time_is_monotonic_measured_and_metadata_is_frozen
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_transport_errors_become_safe_failed_results_without_raw_error_chains[chat-ollama] _
+tests/test_model_runtime.py:465: in test_transport_errors_become_safe_failed_results_without_raw_error_chains
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_transport_errors_become_safe_failed_results_without_raw_error_chains[chat-vertex] _
+tests/test_model_runtime.py:465: in test_transport_errors_become_safe_failed_results_without_raw_error_chains
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_transport_errors_become_safe_failed_results_without_raw_error_chains[structured_chat-ollama] _
+tests/test_model_runtime.py:465: in test_transport_errors_become_safe_failed_results_without_raw_error_chains
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_transport_errors_become_safe_failed_results_without_raw_error_chains[structured_chat-vertex] _
+tests/test_model_runtime.py:465: in test_transport_errors_become_safe_failed_results_without_raw_error_chains
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[None-chat-ollama] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[None-chat-vertex] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[None-structured_chat-ollama] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[None-structured_chat-vertex] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[-chat-ollama] __
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[-chat-vertex] __
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[-structured_chat-ollama] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[-structured_chat-vertex] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[  -chat-ollama] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[  -chat-vertex] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[  -structured_chat-ollama] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[  -structured_chat-vertex] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[42-chat-ollama] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[42-chat-vertex] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[42-structured_chat-ollama] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[42-structured_chat-vertex] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[content4-chat-ollama] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[content4-chat-vertex] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[content4-structured_chat-ollama] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+_ test_explicit_stop_cannot_complete_malformed_or_empty_content[content4-structured_chat-vertex] _
+tests/test_model_runtime.py:485: in test_explicit_stop_cannot_complete_malformed_or_empty_content
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+____________ test_ollama_incomplete_done_flag_overrides_stop[chat] _____________
+tests/test_model_runtime.py:496: in test_ollama_incomplete_done_flag_overrides_stop
+    assert _generate(runtime, method).status != "completed"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_______ test_ollama_incomplete_done_flag_overrides_stop[structured_chat] _______
+tests/test_model_runtime.py:496: in test_ollama_incomplete_done_flag_overrides_stop
+    assert _generate(runtime, method).status != "completed"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+________ test_vertex_blocked_prompt_without_candidates_is_refused[chat] ________
+tests/test_model_runtime.py:506: in test_vertex_blocked_prompt_without_candidates_is_refused
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+__ test_vertex_blocked_prompt_without_candidates_is_refused[structured_chat] ___
+tests/test_model_runtime.py:506: in test_vertex_blocked_prompt_without_candidates_is_refused
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+_ test_malformed_finish_metadata_never_completes_or_enters_diagnostics[17-ollama] _
+tests/test_model_runtime.py:517: in test_malformed_finish_metadata_never_completes_or_enters_diagnostics
+    result = _generate(runtime, "chat")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_malformed_finish_metadata_never_completes_or_enters_diagnostics[17-vertex] _
+tests/test_model_runtime.py:517: in test_malformed_finish_metadata_never_completes_or_enters_diagnostics
+    result = _generate(runtime, "chat")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_malformed_finish_metadata_never_completes_or_enters_diagnostics[reason1-ollama] _
+tests/test_model_runtime.py:517: in test_malformed_finish_metadata_never_completes_or_enters_diagnostics
+    result = _generate(runtime, "chat")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_malformed_finish_metadata_never_completes_or_enters_diagnostics[reason1-vertex] _
+tests/test_model_runtime.py:517: in test_malformed_finish_metadata_never_completes_or_enters_diagnostics
+    result = _generate(runtime, "chat")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_malformed_finish_metadata_never_completes_or_enters_diagnostics[private full prompt; api_key=secret-ollama] _
+tests/test_model_runtime.py:517: in test_malformed_finish_metadata_never_completes_or_enters_diagnostics
+    result = _generate(runtime, "chat")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_malformed_finish_metadata_never_completes_or_enters_diagnostics[private full prompt; api_key=secret-vertex] _
+tests/test_model_runtime.py:517: in test_malformed_finish_metadata_never_completes_or_enters_diagnostics
+    result = _generate(runtime, "chat")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+_ test_malformed_finish_metadata_never_completes_or_enters_diagnostics[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-ollama] _
+tests/test_model_runtime.py:517: in test_malformed_finish_metadata_never_completes_or_enters_diagnostics
+    result = _generate(runtime, "chat")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+_ test_malformed_finish_metadata_never_completes_or_enters_diagnostics[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-vertex] _
+tests/test_model_runtime.py:517: in test_malformed_finish_metadata_never_completes_or_enters_diagnostics
+    result = _generate(runtime, "chat")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+____________ test_malformed_provider_payload_is_failed[chat-ollama] ____________
+tests/test_model_runtime.py:530: in test_malformed_provider_payload_is_failed
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'chat_result'
+____________ test_malformed_provider_payload_is_failed[chat-vertex] ____________
+tests/test_model_runtime.py:530: in test_malformed_provider_payload_is_failed
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'chat_result'
+______ test_malformed_provider_payload_is_failed[structured_chat-ollama] _______
+tests/test_model_runtime.py:530: in test_malformed_provider_payload_is_failed
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'OllamaRuntime' object has no attribute 'structured_chat_result'
+______ test_malformed_provider_payload_is_failed[structured_chat-vertex] _______
+tests/test_model_runtime.py:530: in test_malformed_provider_payload_is_failed
+    result = _generate(runtime, method)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_model_runtime.py:371: in _generate
+    return getattr(runtime, method + ("_result" if result else ""))(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'VertexRuntime' object has no attribute 'structured_chat_result'
+=========================== short test summary info ============================
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[ollama-stop-completed-chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[ollama-stop-completed-structured_chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[vertex-STOP-completed-chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[vertex-STOP-completed-structured_chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[ollama-length-output_limited-chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[ollama-length-output_limited-structured_chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[vertex-MAX_TOKENS-output_limited-chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[vertex-MAX_TOKENS-output_limited-structured_chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[ollama-refused-refused-chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[ollama-refused-refused-structured_chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[vertex-SAFETY-refused-chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[vertex-SAFETY-refused-structured_chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[ollama-error-failed-chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[ollama-error-failed-structured_chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[vertex-MALFORMED_FUNCTION_CALL-failed-chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[vertex-MALFORMED_FUNCTION_CALL-failed-structured_chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[ollama-None-unknown-chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[ollama-None-unknown-structured_chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[vertex-None-unknown-chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[vertex-None-unknown-structured_chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[ollama-new_reason-unknown-chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[ollama-new_reason-unknown-structured_chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[vertex-OTHER-unknown-chat]
+FAILED tests/test_model_runtime.py::test_generation_result_normalizes_all_termination_outcomes[vertex-OTHER-unknown-structured_chat]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[None-None-chat-ollama]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[None-None-chat-vertex]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[None-None-structured_chat-ollama]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[None-None-structured_chat-vertex]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts1-None-chat-ollama]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts1-None-chat-vertex]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts1-None-structured_chat-ollama]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts1-None-structured_chat-vertex]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts2-expected2-chat-ollama]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts2-expected2-chat-vertex]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts2-expected2-structured_chat-ollama]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts2-expected2-structured_chat-vertex]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts3-expected3-chat-ollama]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts3-expected3-chat-vertex]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts3-expected3-structured_chat-ollama]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts3-expected3-structured_chat-vertex]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts4-None-chat-ollama]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts4-None-chat-vertex]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts4-None-structured_chat-ollama]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts4-None-structured_chat-vertex]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts5-expected5-chat-ollama]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts5-expected5-chat-vertex]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts5-expected5-structured_chat-ollama]
+FAILED tests/test_model_runtime.py::test_generation_usage_preserves_only_reported_nonnegative_integer_counts[counts5-expected5-structured_chat-vertex]
+FAILED tests/test_model_runtime.py::test_generation_elapsed_time_is_monotonic_measured_and_metadata_is_frozen[chat-ollama]
+FAILED tests/test_model_runtime.py::test_generation_elapsed_time_is_monotonic_measured_and_metadata_is_frozen[chat-vertex]
+FAILED tests/test_model_runtime.py::test_generation_elapsed_time_is_monotonic_measured_and_metadata_is_frozen[structured_chat-ollama]
+FAILED tests/test_model_runtime.py::test_generation_elapsed_time_is_monotonic_measured_and_metadata_is_frozen[structured_chat-vertex]
+FAILED tests/test_model_runtime.py::test_transport_errors_become_safe_failed_results_without_raw_error_chains[chat-ollama]
+FAILED tests/test_model_runtime.py::test_transport_errors_become_safe_failed_results_without_raw_error_chains[chat-vertex]
+FAILED tests/test_model_runtime.py::test_transport_errors_become_safe_failed_results_without_raw_error_chains[structured_chat-ollama]
+FAILED tests/test_model_runtime.py::test_transport_errors_become_safe_failed_results_without_raw_error_chains[structured_chat-vertex]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[None-chat-ollama]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[None-chat-vertex]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[None-structured_chat-ollama]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[None-structured_chat-vertex]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[-chat-ollama]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[-chat-vertex]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[-structured_chat-ollama]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[-structured_chat-vertex]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[  -chat-ollama]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[  -chat-vertex]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[  -structured_chat-ollama]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[  -structured_chat-vertex]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[42-chat-ollama]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[42-chat-vertex]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[42-structured_chat-ollama]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[42-structured_chat-vertex]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[content4-chat-ollama]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[content4-chat-vertex]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[content4-structured_chat-ollama]
+FAILED tests/test_model_runtime.py::test_explicit_stop_cannot_complete_malformed_or_empty_content[content4-structured_chat-vertex]
+FAILED tests/test_model_runtime.py::test_ollama_incomplete_done_flag_overrides_stop[chat]
+FAILED tests/test_model_runtime.py::test_ollama_incomplete_done_flag_overrides_stop[structured_chat]
+FAILED tests/test_model_runtime.py::test_vertex_blocked_prompt_without_candidates_is_refused[chat]
+FAILED tests/test_model_runtime.py::test_vertex_blocked_prompt_without_candidates_is_refused[structured_chat]
+FAILED tests/test_model_runtime.py::test_malformed_finish_metadata_never_completes_or_enters_diagnostics[17-ollama]
+FAILED tests/test_model_runtime.py::test_malformed_finish_metadata_never_completes_or_enters_diagnostics[17-vertex]
+FAILED tests/test_model_runtime.py::test_malformed_finish_metadata_never_completes_or_enters_diagnostics[reason1-ollama]
+FAILED tests/test_model_runtime.py::test_malformed_finish_metadata_never_completes_or_enters_diagnostics[reason1-vertex]
+FAILED tests/test_model_runtime.py::test_malformed_finish_metadata_never_completes_or_enters_diagnostics[private full prompt; api_key=secret-ollama]
+FAILED tests/test_model_runtime.py::test_malformed_finish_metadata_never_completes_or_enters_diagnostics[private full prompt; api_key=secret-vertex]
+FAILED tests/test_model_runtime.py::test_malformed_finish_metadata_never_completes_or_enters_diagnostics[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-ollama]
+FAILED tests/test_model_runtime.py::test_malformed_finish_metadata_never_completes_or_enters_diagnostics[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-vertex]
+FAILED tests/test_model_runtime.py::test_malformed_provider_payload_is_failed[chat-ollama]
+FAILED tests/test_model_runtime.py::test_malformed_provider_payload_is_failed[chat-vertex]
+FAILED tests/test_model_runtime.py::test_malformed_provider_payload_is_failed[structured_chat-ollama]
+FAILED tests/test_model_runtime.py::test_malformed_provider_payload_is_failed[structured_chat-vertex]
+92 failed, 12 passed in 1.44s

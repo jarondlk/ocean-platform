@@ -8,6 +8,7 @@ from pydantic import ValidationError
 
 import api.main as api_main
 import config
+from tests.runtime_fixtures import CompletedGenerationRuntime
 import orchestration.settings_planner as planner
 from api.schemas import ChatRequest
 from orchestration.settings_plan import SettingsProposal
@@ -34,7 +35,7 @@ def planning(monkeypatch):
     catalog = catalogue()
     calls = []
     output = {'value': proposal()}
-    class Runtime:
+    class Runtime(CompletedGenerationRuntime):
         def structured_chat(self, **kwargs):
             calls.append(kwargs)
             return output['raw'] if 'raw' in output else json.dumps(output['value'])
@@ -146,7 +147,7 @@ def test_api_runs_planner_before_retrieval_and_keeps_original_effective_history(
     _, _, calls = planning
     order = []
     history = []
-    class Runtime:
+    class Runtime(CompletedGenerationRuntime):
         def chat(self, **kwargs):
             order.append('answer')
             return 'Salinity is reported in the CTD evidence [ctd-test].'
@@ -174,7 +175,7 @@ def test_api_failures_do_not_retrieve_or_run_answer_model(case, planning, monkey
     elif case == 'invalid':
         output['raw'] = '{not JSON}'
     else:
-        class Runtime:
+        class Runtime(CompletedGenerationRuntime):
             def structured_chat(self, **kwargs):
                 raise TimeoutError('provider diagnostic must stay private')
         monkeypatch.setattr(planner, 'get_model_runtime', Runtime)
@@ -228,7 +229,7 @@ def test_semantic_published_results_reuse_exact_rows_without_rewriting_question(
                               research_intent={'kind': 'fish_frequency', 'protocol_id': protocol_id},
                               required_sources=['edna_metabarcoding'])
     captured = {}
-    class Runtime:
+    class Runtime(CompletedGenerationRuntime):
         def chat(self, **kwargs):
             captured.update(kwargs)
             return 'The published frequencies describe detections, not abundance [S1].'

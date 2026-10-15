@@ -1,10 +1,10 @@
 """Acceptance regressions for the eight issue #59 findings."""
 import json
 from pathlib import Path
-from types import SimpleNamespace
 
 import pandas as pd
 import pytest
+from tests.runtime_fixtures import CompletedGenerationRuntime
 from fastapi.testclient import TestClient
 from pydantic import ValidationError
 
@@ -99,7 +99,7 @@ def test_empty_ctd_scope_abstains_before_model(monkeypatch):
     monkeypatch.setattr('orchestration.unified.reliability_context_documents', lambda q: [])
     def forbidden(**kwargs):
         raise AssertionError('Empty scope must not invoke model')
-    monkeypatch.setattr(api, 'get_model_runtime', lambda: SimpleNamespace(chat=forbidden))
+    monkeypatch.setattr(api, 'get_model_runtime', lambda: CompletedGenerationRuntime(chat=forbidden))
     response = TestClient(api.app).post('/chat', json={'query': 'CTD seasonal trend', 'source_type': 'ctd', 'time_from': '2099-01-01', 'time_to': '2099-12-31'})
     assert response.status_code == 200
     assert response.json()['outcome'] == 'abstained'
@@ -161,7 +161,7 @@ def test_api_history_and_audit_share_the_bounded_evidence(monkeypatch):
     monkeypatch.setattr(auth, 'authenticate_request', lambda _: user)
     rows = [{**ROW, 'doc_id': f'ctd_{i}', 'text': 'x' * 10000} for i in range(8)]
     monkeypatch.setattr(api, 'retrieve_with_expansion', lambda *a, **k: {'primary': rows, 'linked': [], 'diagnostics': {}})
-    monkeypatch.setattr(api, 'get_model_runtime', lambda: SimpleNamespace(chat=lambda **k: 'Measured value [S1].'))
+    monkeypatch.setattr(api, 'get_model_runtime', lambda: CompletedGenerationRuntime(chat=lambda **k: 'Measured value [S1].'))
     response = TestClient(api.app).post('/chat', json={'query': 'temperature', 'inject_analysis': False, 'inject_reliability': False})
     assert response.status_code == 200
     payload = response.json()

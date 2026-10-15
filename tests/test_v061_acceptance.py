@@ -68,7 +68,7 @@ def test_actual_chat_generation_factory_uses_the_meter_and_enforces_budget(monke
     import config
     from api.auth import CurrentUser, ROLE_PERMISSIONS
     from evaluation.qa.run_v061_acceptance import install_generation_meter
-    from model_runtime import VertexRuntime
+    from model_runtime import GenerationError, VertexRuntime
     monkeypatch.setattr(config, 'MODEL_PROVIDER', 'vertex')
     monkeypatch.setenv('PERSIST_LOCAL_CHAT', 'false')
     monkeypatch.setattr(api, 'get_model_runtime', api.get_model_runtime)
@@ -77,7 +77,8 @@ def test_actual_chat_generation_factory_uses_the_meter_and_enforces_budget(monke
     calls = []
     def generate(**kwargs):
         calls.append(kwargs)
-        return SimpleNamespace(text='Temperature is 12 C [S1].', usage_metadata=None, candidates=[])
+        return SimpleNamespace(text='Temperature is 12 C [S1].', usage_metadata=None,
+                               candidates=[SimpleNamespace(finish_reason='STOP')])
     runtime = VertexRuntime(project='fixture', location='global', embedding_dim=768,
         client=SimpleNamespace(models=SimpleNamespace(generate_content=generate)))
     meter = install_generation_meter(runtime, 1)
@@ -89,6 +90,8 @@ def test_actual_chat_generation_factory_uses_the_meter_and_enforces_budget(monke
         inject_analysis=False, inject_reliability=False), user=user)
     assert result.model_invoked and result.outcome == 'answered'
     assert len(calls) == len(meter.generations) == 1
-    with pytest.raises(GenerationBudgetExceeded):
+    with pytest.raises(GenerationError) as blocked:
         api.get_model_runtime().chat(model='fixture', prompt='fixture')
-    assert len(calls) == 1
+    assert blocked.value.result.status == 'failed'
+    assert blocked.value.result.content == ''
+    assert len(calls) == len(meter.generations) == 1

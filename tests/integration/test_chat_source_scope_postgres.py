@@ -9,6 +9,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session
 
 import config
+from tests.runtime_fixtures import CompletedGenerationRuntime
 from alembic.config import Config
 from alembic.script import ScriptDirectory
 from db.embedding_identity import EmbeddingIdentity, IdentifiedEmbedding
@@ -139,7 +140,7 @@ def test_chat_lifecycle_independent_readback_retains_scope_effective_settings_an
             monkeypatch.setattr(config, 'MODEL_PROVIDER', 'vertex')
             document = {'doc_id': 'ctd-history-qa', 'source_type': 'ctd', 'title': 'CTD fixture', 'text': 'Surface temperature is 12 C.'}
             monkeypatch.setattr(api, 'retrieve_with_expansion', lambda *a, **k: {'primary': [document], 'linked': [], 'diagnostics': {}})
-            class Runtime:
+            class Runtime(CompletedGenerationRuntime):
                 def chat(self, **kwargs):
                     return 'Surface temperature is 12 C [ctd-history-qa].'
             monkeypatch.setattr(api, 'get_model_runtime', lambda: Runtime())

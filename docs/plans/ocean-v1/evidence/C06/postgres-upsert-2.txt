@@ -1,0 +1,97 @@
+10:43:45  INFO     load_db  ============================================================
+10:43:45  INFO     load_db  Loading data into PostgreSQL
+10:43:45  INFO     load_db  ============================================================
+10:43:45  INFO     db.connection  Corpus database initialized
+10:43:46  INFO     load_db    Upserted anchor_event: incoming=286 inserted=0 updated=0 unchanged=286
+10:44:01  INFO     load_db    Upserted ctd_profile: incoming=10955 inserted=0 updated=0 unchanged=10955
+10:44:01  INFO     load_db    Upserted ctd_summary: incoming=162 inserted=0 updated=0 unchanged=162
+10:44:01  INFO     load_db    Upserted metagenome_sample: incoming=82 inserted=0 updated=0 unchanged=82
+10:44:02  INFO     load_db    Upserted sst_point_observation: incoming=1848 inserted=0 updated=0 unchanged=1848
+10:44:02  INFO     load_db    Upserted sst_daily_summary: incoming=79 inserted=0 updated=0 unchanged=79
+10:44:02  INFO     load_db    Upserted retrieval_document: incoming=323 inserted=0 updated=0 unchanged=323
+10:44:02  INFO     load_db    Upserted cross_source_link: incoming=496 inserted=0 updated=0 unchanged=496
+10:44:02  INFO     load_db  ============================================================
+10:44:02  INFO     load_db  Transactional database upsert complete!
+{
+  "mode": "upsert",
+  "stale_rows_deleted": false,
+  "tables": {
+    "anchor_event": {
+      "incoming": 286,
+      "matched": 286,
+      "updated": 0,
+      "inserted": 0,
+      "unchanged": 286,
+      "hashes_refreshed": 0
+    },
+    "ctd_profile": {
+      "incoming": 10955,
+      "matched": 10955,
+      "updated": 0,
+      "inserted": 0,
+      "unchanged": 10955,
+      "hashes_refreshed": 0
+    },
+    "ctd_summary": {
+      "incoming": 162,
+      "matched": 162,
+      "updated": 0,
+      "inserted": 0,
+      "unchanged": 162,
+      "hashes_refreshed": 0
+    },
+    "metagenome_sample": {
+      "incoming": 82,
+      "matched": 82,
+      "updated": 0,
+      "inserted": 0,
+      "unchanged": 82,
+      "hashes_refreshed": 0
+    },
+    "sst_point_observation": {
+      "incoming": 1848,
+      "matched": 1848,
+      "updated": 0,
+      "inserted": 0,
+      "unchanged": 1848,
+      "hashes_refreshed": 0
+    },
+    "sst_daily_summary": {
+      "incoming": 79,
+      "matched": 79,
+      "updated": 0,
+      "inserted": 0,
+      "unchanged": 79,
+      "hashes_refreshed": 0
+    },
+    "retrieval_document": {
+      "incoming": 323,
+      "matched": 323,
+      "updated": 0,
+      "inserted": 0,
+      "unchanged": 323,
+      "hashes_refreshed": 0,
+      "superseded_inactivated": 0
+    },
+    "cross_source_link": {
+      "incoming": 496,
+      "matched": 496,
+      "updated": 0,
+      "inserted": 0,
+      "unchanged": 496,
+      "hashes_refreshed": 0
+    }
+  },
+  "incoming_rows": 14231,
+  "inserted_rows": 0,
+  "updated_rows": 0,
+  "unchanged_rows": 14231,
+  "anemone": {
+    "included": false,
+    "normalization_id": null,
+    "scientific_corrections": 0,
+    "provenance_refreshes": 0,
+    "inactivated": {},
+    "noncurrent_override": false
+  }
+}

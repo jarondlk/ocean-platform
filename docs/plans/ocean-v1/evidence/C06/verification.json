@@ -1,0 +1,289 @@
+{
+  "component": "C06",
+  "state": "Complete for local generation result/completion and consumer acceptance",
+  "date": "2026-10-15 JST",
+  "branch": "overhaul",
+  "base_head": "44c85b9528440d77ae3cd5569ea09f8f42954895",
+  "code_revision": "C06 uncommitted local checkpoint; source/test hashes below bind accepted implementation. Delivery authorization persists.",
+  "contract": "Generation-result v1: strict provider-independent termination with immutable request-local timing/optional usage and safe legacy wrappers",
+  "files": {
+    "model_runtime.py": "473d847299f55f4f67c178582f7b6411bea9eeb5af2e4837388bc45e4583f4bf",
+    "api/main.py": "ad848bf8f25c58e00f2a424229c17ed12ba42f3b18ad6df373025331e6df501c",
+    "api/chat_records.py": "47f24ac8de7db0b623a9825a18bc705b524f923838b96bcbabec7438b1030dbf",
+    "orchestration/settings_planner.py": "0a7f6fbacfc73cb9b30330f2b9d0187f72f139fa016bff6e1ec6e5b746a634b8",
+    "tests/runtime_fixtures.py": "7a06f37cdadf3d19bd81b3d099eaa9707b9915f898b7b9eb279b938926538726",
+    "tests/test_generation_contract.py": "7a4e3dc99145de50c33db8987ab1fac4cb41d62091c5f269dbd7747c61cb23a1",
+    "tests/test_model_runtime.py": "f4e4a2cba94aacfe007efa0ab6ae558ea079c91bf495c158b6ffa2c651c57c46",
+    "tests/test_auto_settings.py": "6c95011f8f16c5badf71a54dd1a4d73f32f1191bbf0c6bdc422cdd50cf73c6fa",
+    "tests/test_source_aware_retrieval.py": "ebcd3bbe53c6c649ff7a592370d4d6dee3d2007def10f498b50af99b510ea42f",
+    "tests/test_chat_source_scope.py": "ac89588c2a251f32343ed410696fea7ae25dc8e235888f03d1ec20cafed1cfe1",
+    "tests/test_api_retrieve.py": "72edb1e4b9cf5cc600b54dc062419423467b57a1f593eff81cd68c9492736cd1",
+    "tests/test_chat_feedback.py": "0d9c0eab88f83f5e6d00582389060f0579ebc077ff4f4e778c53cc062d088b5a",
+    "tests/test_chat_issue59.py": "012054faf85c524b3510ce55b15c1061c4c109d42c8743a42c456d23f900bba3",
+    "tests/test_citations.py": "669509d94ab5487b378a2eaf150b55e6307879ab6ad13e8f312c4b67cf1b2aba",
+    "tests/test_v061_acceptance.py": "8a6d4418ed5b177f2ae788a28cc6eee426be5c65d8a99196bd079310218f6a08",
+    "tests/integration/test_chat_source_scope_postgres.py": "06ecceec42d7511a743ac945a5259230c39da07770ee8e0cfa07b6ce4887974d"
+  },
+  "source_sha256": "234edbd8d0eee475d5424ec9c2f91655da46cea7f236762e7da78f28fda94cbe",
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "documentation_files": {
+    "docs/plans/ocean-v1/COMPONENTS.md": "aae87755db8cb56b0d7fc424024007c372ca155f347405ab7fc02469098cd696",
+    "docs/plans/ocean-v1/DECISIONS.md": "64e8e141cb9b9fffa5410336809fb1f142382662f6fd3e9de82aae4f248705c1",
+    "docs/plans/ocean-v1/HUB_PROMPT.md": "6a4dc563816671f2794d24971b0a714e3827a6dafe41bf99d8ea5b501c9f87e4",
+    "docs/plans/ocean-v1/MASTER_PLAN.md": "e30511bcca2d6c3388e6a5b524d2caa986709ce5c03880929db2844159644820",
+    "docs/plans/ocean-v1/README.md": "467380deacc554fddaab69692b66d5c49eca683eac988e66ef000d19dfe36d64",
+    "docs/plans/ocean-v1/STATUS.md": "9c1e371729d9c6a6be0f7c7bb39622f3ae2477f0ef9d8769af00327cd4a79fc5",
+    "docs/plans/ocean-v1/components.json": "c2cfa5f77a518d050e539588448786898a7b0c4ac3bfccf74aec1253eb5c9936",
+    "docs/plans/ocean-v1/components/C06-model-runtime.md": "14b06784b02fa29cff3f9717fc9b8784b349cc7b4949749e498da85e772480ae",
+    "docs/plans/ocean-v1/handoffs/C06.md": "db610e1988d3c3a87c421afdf855c686f68bbb5288dd99c6a28ca0247987ed7b",
+    "docs/plans/ocean-v1/handoffs/README.md": "e986c84e7c68d0e0eab2e4a74e5813e0454a4c6fe760417628752f5a762a8e9e"
+  },
+  "evidence_files": {
+    "consumer-followup-final.txt": "80da666af496083667355052e77b10c4a28a899184764b960b3b41b4daeb300d",
+    "verify_backend.py": "b9fbe4b15595ec164a02325dec5080d89704bee40761729487cf6be829ee1d4d",
+    "generation-contract-tests.txt": "c9b21ac8483a425d7592a443ab35196e5a996ae3977ce4b60984f2e14e3a2f00",
+    "runtime.json": "d46023bdf7b93c9182852f6259ac120f5be08c57d5aa38aba145f7eb4ae2a21f",
+    "postgres-regressions-result.json": "fad7c0c69249ef51ea64451011408542c0cf8b0c1163f809ba238c07ce00bcd5",
+    "ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "postgres-regressions-lifecycle.txt": "297c309106d6f09ae015df50d7b7c24d9943ded12bc6e99e26a235aa48b557fe",
+    "runtime-tests.txt": "c932c59743370e3587547140a604ce21586ba28bbabc5f8663d262c0ee7b73a2",
+    "start-snapshot.json": "18e6c050a9752026e2a413b2086d6eeefd4a0be19dcaf8821c00072bf58f6e9b",
+    "preservation.json": "cf400fb0e871c4a9e8c2ffc63e477dac0473d800f3ae445a16139ad5a2407aaf",
+    "consumer-tests.txt": "6827fd9331aeb9d8c2fb9040a86bd84eb78a2f26b77129106e7c625caa78b7da",
+    "planning-validation.json": "ce9471619fe770a4806b5b600697813d2e6bfc61e741b309e30ba9cac25abbbe",
+    "ruff-evidence.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "backend-result.json": "5a3a65a74a0b2d540c2a06b6911128662ff7c87425bc1b8abd46ffb8f4fa4801",
+    "required-tests.txt": "c8f3360ca3655d6029408f509d31fcdf21ceee43a966e9e0e2cdecc4712211b0",
+    "postgres-upsert-2.txt": "1ef31f49eb164ada5be65885cc40c2c72d85b0a92245071d27f949f6e639ea31",
+    "postgres-upsert-1.txt": "8a93019b3518d1a5769d9c14a71c0fa2f4d9340025254bf9be682753cd89d879",
+    "verify_postgres_regressions.py": "305084ee039702b4b876e7b34f442ec07edfa51fed64b688cbf96d03b4fc5bf3",
+    "consumer-followup.txt": "d149a8af28a38a2395f6b960cc1a99ec95ed458f2e59a58a644bd5a8ce09c12d",
+    "source-checkpoint.json": "4ab51c114c9444f6a0262607304cd24739f1eb7d0496caff6a40c0e7a168c205",
+    "baseline-runtime.txt": "3054e01f1dcd884eafd6eece4145db7777cc5e9f99a1bbb1c50cfab84d602c35",
+    "review.json": "6909f5c2f36c590b7c8ac9be4f9530215510570bb49ef03852f5306d29280cde",
+    "generation-contract-followup.txt": "149f7ffbba3435e2a517963f66d6ff5f5a33f0fd9356fefe48b01e8adc7b436a",
+    "postgres-regressions-tests.txt": "db6e9f0233489d84091e70cd3626442a69202e67965b01653f0c6dbfd28fee2d",
+    "scope-contract.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "backend-tests.txt": "2ddfc8dc41d27b400c7baf047fe325f3e8aff9e59c7ce92a0fc2ff6d4795c2fe"
+  },
+  "verification": {
+    "required_command": ".venv/bin/python -m pytest tests/test_model_runtime.py tests/test_query_orchestrator.py tests/test_auto_settings.py tests/test_generation_contract.py -q --tb=short",
+    "required_result": "230 passed, 47 warnings in 2.53s",
+    "runtime_result": "119 passed",
+    "consumer_contract_cases": 24,
+    "new_cases": 131,
+    "full_backend": {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/",
+        "-q",
+        "--tb=short",
+        "--cov=api",
+        "--cov=config",
+        "--cov=db",
+        "--cov=preprocessing",
+        "--cov=ingestion",
+        "--cov=orchestration",
+        "--cov=schema",
+        "--cov=evaluation",
+        "--cov-report=term-missing",
+        "--cov-fail-under=70"
+      ],
+      "safe_environment": {
+        "AUTH_MODE": "disabled",
+        "DEPLOYMENT_ENV": "test",
+        "ENABLE_MOCK_LOGIN": "false",
+        "PERSIST_LOCAL_CHAT": "false",
+        "RUN_POSTGRES_INTEGRATION": "0",
+        "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c06_regressions_unused",
+        "MODEL_PROVIDER": "ollama",
+        "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+      },
+      "exit_code": 0
+    },
+    "full_result": "1937 passed, 63 skipped, 2596 warnings in 88.56s (0:01:28)",
+    "coverage_percent": 81.81,
+    "coverage_minimum": 70,
+    "skip_reason": "39 existing PostgreSQL +12 C03+12 C05 opt-in cases; existing39 separately pass actual PostgreSQL. Prior C03/C05 SQL remains unchanged with accepted local/hosted receipts.",
+    "full_scope": "Includes9 older unrelated model benchmark tests excluded from delivery.",
+    "postgres": {
+      "cluster_root": "/private/tmp/ocean-c06-regressions-5hu0arov",
+      "data_directory": "/private/tmp/ocean-c06-regressions-5hu0arov/data",
+      "host": "127.0.0.1",
+      "port": 62309,
+      "role": "ocean_c06",
+      "database": "ocean_c06_regressions_ad3df577a2b3",
+      "existing_database_urls_used": false,
+      "identity": {
+        "database": "ocean_c06_regressions_ad3df577a2b3",
+        "role": "ocean_c06",
+        "host": "127.0.0.1",
+        "port": 62309,
+        "version": "PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit",
+        "isolation": "read committed",
+        "data_directory": "/private/tmp/ocean-c06-regressions-5hu0arov/data"
+      },
+      "migrations_exit_code": 0,
+      "test_command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/integration/test_app_metadata_postgres.py",
+        "tests/integration/test_classification_application_postgres.py",
+        "tests/integration/test_classification_preview_postgres.py",
+        "tests/integration/test_operational_postgres.py",
+        "tests/integration/test_anemone_postgres.py",
+        "tests/integration/test_anemone_catalogue_postgres.py",
+        "tests/integration/test_edna_aggregate_postgres.py",
+        "tests/integration/test_edna_analysis_postgres.py",
+        "tests/integration/test_chat_source_scope_postgres.py",
+        "tests/integration/test_chat_filter_options_postgres.py",
+        "tests/integration/test_research_registry_postgres.py",
+        "-q",
+        "-s",
+        "--tb=short"
+      ],
+      "test_exit_code": 0,
+      "upsert_command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/load_db.py",
+        "--upsert",
+        "--json"
+      ],
+      "upsert_exit_codes": [
+        0,
+        0
+      ],
+      "pgvector_version": "0.8.7",
+      "test_schemas_remaining": 0,
+      "stop_exit_code": 0,
+      "server_stopped": true
+    },
+    "postgres_result": "39 passed; migrations and two idempotent corpus upserts pass;0 fixture schemas and owned server stopped",
+    "ruff": "All checks passed!",
+    "scope_contract": "current",
+    "git_diff_check": "pass",
+    "preservation": {
+      "unrelated_files": {
+        "matching": 30,
+        "mismatches": []
+      },
+      "scientific_artifacts": {
+        "matching": 7,
+        "mismatches": []
+      },
+      "P00": {
+        "matching": 36,
+        "mismatches": []
+      },
+      "real_serving_files": {
+        "matching": 2,
+        "mismatches": []
+      },
+      "historical_evidence": {
+        "matching": 156,
+        "mismatches": []
+      },
+      "prior_boundaries": {
+        "matching": 17,
+        "mismatches": []
+      },
+      "embedding_methods_ast_unchanged": [
+        "OllamaRuntime.embed",
+        "OllamaRuntime.embed_batch",
+        "VertexRuntime.embed",
+        "VertexRuntime.embed_batch"
+      ]
+    },
+    "review": {
+      "reviewer": "c06_contract_review",
+      "outcome": "No remaining blocking runtime/consumer findings",
+      "scope": "Both adapters and methods, wrappers, metadata privacy, existing retry budgets, API SQLite persistence/planner abstention, actual SDK compatibility and request isolation",
+      "resolved_findings": [
+        "Unsafe labels reject credential URLs/free-form text",
+        "Contradictory unknown/malformed Vertex block feedback overrides candidate STOP to unknown"
+      ],
+      "independent_probes": [
+        "Installed SDK GenerateContentResponse STOP/usage validation",
+        "Same-runtime completed-to-limited-to-completed sequences retain immutable prior results and reset unavailable usage to None",
+        "Incomplete result never releases partial text"
+      ],
+      "provider_calls": false,
+      "database_calls": false
+    }
+  },
+  "result_schema": {
+    "fields": [
+      "content",
+      "provider",
+      "model",
+      "status",
+      "finish_reason",
+      "elapsed_seconds",
+      "usage",
+      "max_output_tokens"
+    ],
+    "statuses": [
+      "completed",
+      "output_limited",
+      "refused",
+      "failed",
+      "unknown"
+    ],
+    "optional_usage": [
+      "input_tokens",
+      "output_tokens",
+      "total_tokens"
+    ],
+    "timing": "monotonic elapsed seconds including existing retries/backoff",
+    "content_release": "require_completed only; diagnostics/repr exclude content",
+    "methods": [
+      "chat_result",
+      "structured_chat_result"
+    ],
+    "legacy_wrappers": [
+      "chat",
+      "structured_chat"
+    ],
+    "errors": [
+      "GenerationError with immutable result",
+      "ModelOutputLimitError subtype preserving existing compatibility fields"
+    ]
+  },
+  "consumer_semantics": [
+    "API requires completed before citations/audit/answered history and atomically saves safe successful metadata",
+    "Incomplete ordinary response fails without partial answer/outcome/audit; limit retains existing dedicated code",
+    "Generation completion cannot override citation acceptance; failed interaction may retain completed generation usage",
+    "Planner requires completed before JSON validation; valid JSON cannot override incomplete status",
+    "Deterministic planner bypass omits model metadata; no artificial zero usage/completed generation",
+    "Planning failure keeps existing abstention lifecycle with planning.generation_result; no model answered receipt"
+  ],
+  "baseline": {
+    "readiness": "99 passed; exact prior runtime/API defect reproduced offline",
+    "runtime_red": "92 failed,12 passed before implementation",
+    "intermediate_consumer_logs": "One saw partial file implementation; one had obsolete raw metering exception assertion. Targeted final followup4 pass and unified required/full regressions pass."
+  },
+  "runtime": {
+    "python": "3.12.7",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "branch": "overhaul",
+    "base_head": "44c85b9528440d77ae3cd5569ea09f8f42954895",
+    "packages": {
+      "pytest": "9.1.1",
+      "requests": "2.34.2",
+      "google-genai": "2.25.0",
+      "sqlalchemy": "2.0.52",
+      "fastapi": "0.141.1",
+      "ruff": "0.16.9"
+    }
+  },
+  "original_log_sha256_before_normalization": {},
+  "remaining_boundaries": [
+    "Authorized C06 checkpoint/push and hosted CI pending after this frozen local receipt",
+    "No live provider/model quality, real scientific, production migration/deployment or cloud isolation acceptance",
+    "Real C05 cache rebuild remains deferred",
+    "C07-C27 remain Not started/unselected"
+  ]
+}
