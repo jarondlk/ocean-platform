@@ -14,7 +14,8 @@ See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md) and [C08](handoffs/C08.md) handoffs for current evidence.
 
 Latest completed implementation: **C08 — Catalogue contracts and fixtures**, explicitly selected after readiness verification.
-C08 local acceptance is bound by [its receipt](evidence/C08/verification.json); delivery is pending.
+C08 is committed/pushed as `6d20a75` with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38695834706);
+[local receipt](evidence/C08/verification.json), [delivery receipt](evidence/C08/delivery.json).
 C07 is committed/pushed as `1195796` with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38670737411);
 [local source receipt](evidence/C07/verification.json), [delivery receipt](evidence/C07/delivery.json).
 C06 local acceptance and source hashes are recorded in [its receipt](evidence/C06/verification.json).
@@ -129,4 +130,7 @@ The 100,000-dataset fixture traverses all 200 pages, and 10,398 cross-runtime
 cases have zero acceptance/normalization mismatches. All current P00/C01/C07
 source hashes, scientific/serving files and unrelated work remain unchanged.
 [Contract guide](C08_CATALOGUE_CONTRACT.md), [receipt](evidence/C08/verification.json).
-Authorized checkpoint/push and hosted delivery remain pending; C09 is unselected.
+Hosted delivery passes as `6d20a75`: 2,305 backend tests/83.09%
+coverage, both frontends (132 legacy/162 v1), 63 actual PostgreSQL cases, idempotent
+upsert and isolated backup/restore. The local receipt remains historical;
+[delivery evidence](evidence/C08/delivery.json) is separate. C09 is unselected.

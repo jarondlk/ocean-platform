@@ -132,6 +132,8 @@ and actual disposable PostgreSQL evidence. C04 and C05 are Complete locally; C06
 The 2026-10-13 revision adds P00 before the original 27 numbered components; the
 setup receipt retains its historical counts and records this amendment.
 
-C08 catalogue contracts and synthetic fixtures are complete locally. Read
+C08 catalogue contracts and synthetic fixtures are complete, committed/pushed as
+`6d20a75` with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38695834706);
+[delivery receipt](evidence/C08/delivery.json). Read
 [its handoff](handoffs/C08.md) and [contract guide](C08_CATALOGUE_CONTRACT.md)
 before C09 or later integration.

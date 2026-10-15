@@ -333,3 +333,16 @@ fixed; final root signoff records reviewer usage interruption honestly. Cursors
 are reference context tokens, not signed authorization; fixture scale does not
 prove service performance. All prior artifacts/receipts and unrelated work are
 preserved. Existing delivery approval persists; no C09, transfer or deployment.
+
+### C08 hosted delivery — 2026-10-15 JST
+
+C08 is committed/pushed as `6d20a75ef74770346a80c815c234b50348ae650a`. [Hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38695834706) passes
+2,305 backend tests (83.09% coverage), 132 legacy/162 v1 tests, both
+frontend typechecks/builds and production dependency audits, all 63 actual
+PostgreSQL cases, idempotent upsert and isolated backup/restore. Nine older
+unrelated local benchmark tests are excluded from delivery; dependency review
+is skipped on push as configured. [Delivery evidence](evidence/C08/delivery.json)
+is separate from the frozen local receipt. All 12 accepted C08 hashes and
+current P00/C01/C07 sources, historical evidence, scientific/serving artifacts
+and 30 unrelated files remain preserved. C09 remains unselected; no provider,
+transfer, production mutation or deployment occurred.

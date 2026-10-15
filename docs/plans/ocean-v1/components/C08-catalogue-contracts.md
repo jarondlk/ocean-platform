@@ -1,6 +1,6 @@
 # C08 — Catalogue contracts and fixtures
 
-**Status:** Complete locally (2026-10-15 JST). **Prerequisites:** P00, C01. **Contract:** Context Catalog v1.
+**Status:** Complete; delivered as `6d20a75` with passing hosted CI (2026-10-15 JST). **Prerequisites:** P00, C01. **Contract:** Context Catalog v1.
 
 ## Revised delivery boundary
 
@@ -65,3 +65,8 @@ source changes. See [contract guide](../C08_CATALOGUE_CONTRACT.md),
 [handoff](../handoffs/C08.md) and [receipt](../evidence/C08/verification.json).
 Reference fixture traversal is not real service performance or live authorization
 acceptance. C09 and real storage/endpoints/UI/cloud work remain unselected.
+
+Hosted acceptance: 2,305 backend tests/83.09% coverage, 132 legacy/162 v1
+frontend tests plus both typechecks/builds/production dependency audits, all 63
+PostgreSQL cases, idempotent upsert and isolated backup/restore. See
+[delivery receipt](../evidence/C08/delivery.json) and [CI](https://github.com/jarondlk/ocean-platform/actions/runs/38695834706).
