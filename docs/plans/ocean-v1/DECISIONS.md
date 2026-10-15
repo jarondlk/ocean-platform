@@ -2,7 +2,7 @@
 
 Recorded 2026-10-12 JST from the originating planning conversation. This file
 records choices, not proof of implementation. P00 is selected for local
-implementation and accepted; C01–C07 local acceptance is Complete. C08 local acceptance is Complete; C09–C27 remain Not started.
+implementation and accepted; C01–C07 local acceptance is Complete. C08 local acceptance is Complete; C09 is Complete locally; C10–C27 remain Not started.
 Later explicit user instructions override this baseline; record changes here
 and identify affected components instead of silently drifting.
 
@@ -346,3 +346,27 @@ is separate from the frozen local receipt. All 12 accepted C08 hashes and
 current P00/C01/C07 sources, historical evidence, scientific/serving artifacts
 and 30 unrelated files remain preserved. C09 remains unselected; no provider,
 transfer, production mutation or deployment occurred.
+
+### C09 selection — 2026-10-15 JST
+
+The user selected C09 after the verified readiness checkpoint and permits
+subagents/services when necessary. Implement the sealed snapshot contract,
+explicit local store, capture coordination, references/holds/current revocation
+and synthetic transfer quarantine. Use only injected source exporters, synthetic
+files and a newly verified disposable PostgreSQL database; preserve legacy
+runtime and real data. Existing commit/push authorization persists. C10 and all
+real transfers, publication/cloud/provider/deployment operations remain unselected.
+
+### C09 accepted local boundaries — 2026-10-15 JST
+
+C09 passes sealed byte identity, references/holds/current revocation, bounded
+repeatable-read exports and final generation locks, retained old manifests,
+computed export changes and synthetic approved-copy quarantine. All enabled
+families are captured in full; scientific filters are rejected before DB access
+and belong to C10–C13 adapters. Local control state serializes latest/reference/
+hold/retirement decisions; cleanup retires logically and reports zero physical
+deletions. PostgreSQL and files have separate commit boundaries; uncertain local
+CAS or database release requires pointer reconciliation before retry. Transfers
+never promote latest and chained origins are rejected pending typed multi-hop
+lineage. No authenticated endpoints, real data, production stores, provider/cloud
+operations or C10 are selected. See C09_SNAPSHOT_CONTRACT.md and handoffs/C09.md.

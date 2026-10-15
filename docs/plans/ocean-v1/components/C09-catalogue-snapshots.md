@@ -1,6 +1,6 @@
 # C09 — Immutable catalogue snapshots
 
-**Status:** Not started. **Prerequisites:** C03, C08. **Contract:** sealed catalogue snapshot v1.
+**Status:** Complete for local snapshot/capture acceptance (2026-10-15 JST). **Prerequisites:** C03, C08. **Contract:** sealed catalogue snapshot v1.
 
 ## Revised delivery boundary
 
@@ -55,3 +55,14 @@ Use additive schema/storage changes and versioned namespaces. Do not overwrite o
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c09). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+## Accepted local checkpoint — 2026-10-15 JST
+
+All four checkpoints pass: 206 focused tests; 21 actual disposable PostgreSQL
+cases; full backend 2,469 passed/84 gated skips with 82.60% coverage. The new
+PostgreSQL suite is executed separately, including head rollover, bounded locks,
+read-only exports and interrupted publication. [Handoff](../handoffs/C09.md),
+[contract guide](../C09_SNAPSHOT_CONTRACT.md) and [local receipt](../evidence/C09/verification.json)
+record exact sources and limitations. Cleanup performs logical retirement with
+physical_deleted_count=0; physical GC is deferred. No real sealing, transfer,
+cloud or C10 implementation is selected. Hosted delivery is recorded separately.

@@ -1,0 +1,31 @@
+{
+  "cluster_root": "/private/tmp/ocean-c09-postgres-kwku_39x",
+  "data_directory": "/private/tmp/ocean-c09-postgres-kwku_39x/data",
+  "host": "127.0.0.1",
+  "port": 64024,
+  "role": "ocean_c09",
+  "database": "ocean_c09_f111bfc918fa",
+  "existing_database_urls_used": false,
+  "identity": {
+    "database": "ocean_c09_f111bfc918fa",
+    "role": "ocean_c09",
+    "host": "127.0.0.1",
+    "port": 64024,
+    "version": "PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit",
+    "isolation": "read committed",
+    "data_directory": "/private/tmp/ocean-c09-postgres-kwku_39x/data"
+  },
+  "test_command": [
+    "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/integration/test_catalogue_snapshot_capture_postgres.py",
+    "-q",
+    "-s",
+    "--tb=short"
+  ],
+  "test_exit_code": 0,
+  "test_schemas_remaining": 0,
+  "stop_exit_code": 0,
+  "server_stopped": true
+}

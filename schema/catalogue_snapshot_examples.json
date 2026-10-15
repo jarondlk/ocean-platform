@@ -1,0 +1,740 @@
+{
+  "contents_base64": {
+    "synthetic:ctd:casts": "W3siY2FzdF9pZCI6InN5bnRoZXRpYy1jYXN0LTEiLCJkYXRlIjoiMjAyNC0wMS0wMSIsInN0YXRpb24iOiJzeW50aGV0aWMtc3RhdGlvbiJ9XQ==",
+    "synthetic:ctd:depth_observations": "W3siY2FzdF9pZCI6InN5bnRoZXRpYy1jYXN0LTEiLCJkZXB0aF9tIjowLCJ0ZW1wZXJhdHVyZV9kZWdDIjotMS41fSx7ImNhc3RfaWQiOiJzeW50aGV0aWMtY2FzdC0xIiwiZGVwdGhfbSI6MTAsInRlbXBlcmF0dXJlX2RlZ0MiOjIuMH1d",
+    "synthetic:edna_metabarcoding:canonical_rows": "W3siYXNzYXlfaWQiOiJzeW50aGV0aWMtYXNzYXktMSIsImFzc2lnbm1lbnRfbWV0aG9kIjoicWNhdXRvX3RhcmdldCIsImlzX2NvbnRyb2wiOmZhbHNlLCJvY2N1cnJlbmNlX2lkIjoic3ludGhldGljLW9jY3VycmVuY2UtMSIsInNhbXBsZV9raW5kIjoiZW52aXJvbm1lbnRhbCJ9LHsiYXNzYXlfaWQiOiJzeW50aGV0aWMtYXNzYXktMSIsImFzc2lnbm1lbnRfbWV0aG9kIjoicWNhdXRvX3RhcmdldCIsImlzX2NvbnRyb2wiOnRydWUsIm9jY3VycmVuY2VfaWQiOiJzeW50aGV0aWMtY29udHJvbC0xIiwic2FtcGxlX2tpbmQiOiJuZWdhdGl2ZV9jb250cm9sIn1d",
+    "synthetic:edna_metabarcoding:classifications": "W3siY2xhc3NpZmljYXRpb25fZ2VuZXJhdGlvbiI6ImNsYXNzaWZpY2F0aW9uLTEiLCJvY2N1cnJlbmNlX2lkIjoic3ludGhldGljLW9jY3VycmVuY2UtMSIsInJldmlld19zdGF0ZSI6InN5bnRoZXRpYy1yZXZpZXdlZCIsInNhbXBsZV9raW5kIjoiZW52aXJvbm1lbnRhbCJ9LHsiY2xhc3NpZmljYXRpb25fZ2VuZXJhdGlvbiI6ImNsYXNzaWZpY2F0aW9uLTEiLCJvY2N1cnJlbmNlX2lkIjoic3ludGhldGljLWNvbnRyb2wtMSIsInJldmlld19zdGF0ZSI6InN5bnRoZXRpYy1yZXZpZXdlZCIsInNhbXBsZV9raW5kIjoibmVnYXRpdmVfY29udHJvbCJ9XQ==",
+    "synthetic:metagenome:kraken_measurements": "W3siZGVub21pbmF0b3IiOiJjbGFzc2lmaWVkIHJlYWRzIiwibGlicmFyeV9pZCI6InN5bnRoZXRpYy1saWJyYXJ5LTEiLCJtZXRob2QiOiJLcmFrZW4iLCJyZWxhdGl2ZV9hYnVuZGFuY2UiOjAuMjUsInRheG9uIjoic3ludGhldGljLXRheG9uIn1d",
+    "synthetic:metagenome:metaeuk_measurements": "W3siZGVub21pbmF0b3IiOiJjbGFzc2lmaWVkIHJlYWRzIiwibGlicmFyeV9pZCI6InN5bnRoZXRpYy1saWJyYXJ5LTEiLCJtZXRob2QiOiJNZXRhRXVrIiwicmVsYXRpdmVfYWJ1bmRhbmNlIjowLjUsInRheG9uIjoic3ludGhldGljLXRheG9uIn1d",
+    "synthetic:remote_sensing:coverage": "W3siZXhwZWN0ZWRfZGF5cyI6MywibWlzc2luZ19kYXRlcyI6WyIyMDI0LTAxLTAyIl0sIm9ic2VydmVkX2RheXMiOjIsInJlc29sdXRpb25fZGVncmVlcyI6MC4wMSwic3BhdGlhbF9yb2xlIjoicmVnaW9uYWxfc3VtbWFyeSJ9XQ==",
+    "synthetic:remote_sensing:observations": "W3siZGF0ZSI6IjIwMjQtMDEtMDEiLCJwcm9kdWN0X2lkIjoic3ludGhldGljLXJlZ2lvbmFsLWdyaWQiLCJzc3RfZGVnQyI6OC4wfSx7ImRhdGUiOiIyMDI0LTAxLTAzIiwicHJvZHVjdF9pZCI6InN5bnRoZXRpYy1yZWdpb25hbC1ncmlkIiwic3N0X2RlZ0MiOjkuMH1d"
+  },
+  "example_version": "catalogue-snapshot-examples-v1",
+  "qualification": "Synthetic frozen examples; no real source access or publication",
+  "snapshot": {
+    "objects": [
+      {
+        "dataset_id": "synthetic:ctd:dataset",
+        "object_id": "synthetic:ctd:casts",
+        "operation_id": "ctd:casts",
+        "operation_version": "v1",
+        "provenance": {
+          "content_sha256": "eb766486f12c28ca12bc40645e3cf10959681f8fc26849a62f4a28d44e0593a9",
+          "origin": null,
+          "references": [
+            "Synthetic local acceptance fixture only"
+          ],
+          "source_generation": "generation-1"
+        },
+        "role": "casts",
+        "schema_version": "synthetic-rows-v1",
+        "sha256": "eb766486f12c28ca12bc40645e3cf10959681f8fc26849a62f4a28d44e0593a9",
+        "size_bytes": 82,
+        "source_family": "ctd",
+        "source_id": "ctd"
+      },
+      {
+        "dataset_id": "synthetic:ctd:dataset",
+        "object_id": "synthetic:ctd:depth_observations",
+        "operation_id": "ctd:depth_observations",
+        "operation_version": "v1",
+        "provenance": {
+          "content_sha256": "9d3f292777931af8aeb55ba999f6f2e08374599b4596f87f53c00e7e91e6a32a",
+          "origin": null,
+          "references": [
+            "Synthetic local acceptance fixture only"
+          ],
+          "source_generation": "generation-1"
+        },
+        "role": "depth_observations",
+        "schema_version": "synthetic-rows-v1",
+        "sha256": "9d3f292777931af8aeb55ba999f6f2e08374599b4596f87f53c00e7e91e6a32a",
+        "size_bytes": 135,
+        "source_family": "ctd",
+        "source_id": "ctd"
+      },
+      {
+        "dataset_id": "synthetic:edna_metabarcoding:dataset",
+        "object_id": "synthetic:edna_metabarcoding:canonical_rows",
+        "operation_id": "edna_metabarcoding:canonical_rows",
+        "operation_version": "v1",
+        "provenance": {
+          "content_sha256": "6fdbcd2014022ad4d3ea790173c8b623b4687e84c4447da27c55db0e09c0e8d8",
+          "origin": null,
+          "references": [
+            "Synthetic local acceptance fixture only"
+          ],
+          "source_generation": "generation-1"
+        },
+        "role": "canonical_rows",
+        "schema_version": "synthetic-rows-v1",
+        "sha256": "6fdbcd2014022ad4d3ea790173c8b623b4687e84c4447da27c55db0e09c0e8d8",
+        "size_bytes": 318,
+        "source_family": "edna_metabarcoding",
+        "source_id": "edna_metabarcoding"
+      },
+      {
+        "dataset_id": "synthetic:edna_metabarcoding:dataset",
+        "object_id": "synthetic:edna_metabarcoding:classifications",
+        "operation_id": "edna_metabarcoding:classifications",
+        "operation_version": "v1",
+        "provenance": {
+          "content_sha256": "3638a3bd578b3bcf775463b3ccbf02f84a5f4632613d09aa1c684f527526b854",
+          "origin": null,
+          "references": [
+            "Synthetic local acceptance fixture only"
+          ],
+          "source_generation": "generation-1"
+        },
+        "role": "classifications",
+        "schema_version": "synthetic-rows-v1",
+        "sha256": "3638a3bd578b3bcf775463b3ccbf02f84a5f4632613d09aa1c684f527526b854",
+        "size_bytes": 313,
+        "source_family": "edna_metabarcoding",
+        "source_id": "edna_metabarcoding"
+      },
+      {
+        "dataset_id": "synthetic:metagenome:dataset",
+        "object_id": "synthetic:metagenome:kraken_measurements",
+        "operation_id": "metagenome:kraken_measurements",
+        "operation_version": "v1",
+        "provenance": {
+          "content_sha256": "138cc328bf4548173e81a8d8dc9ef15be8f46bb24d474c76b4e278a14f350a36",
+          "origin": null,
+          "references": [
+            "Synthetic local acceptance fixture only"
+          ],
+          "source_generation": "generation-1"
+        },
+        "role": "kraken_measurements",
+        "schema_version": "synthetic-rows-v1",
+        "sha256": "138cc328bf4548173e81a8d8dc9ef15be8f46bb24d474c76b4e278a14f350a36",
+        "size_bytes": 141,
+        "source_family": "metagenome",
+        "source_id": "metagenome"
+      },
+      {
+        "dataset_id": "synthetic:metagenome:dataset",
+        "object_id": "synthetic:metagenome:metaeuk_measurements",
+        "operation_id": "metagenome:metaeuk_measurements",
+        "operation_version": "v1",
+        "provenance": {
+          "content_sha256": "750a830e5cc8b714832714d25904ea0a60f5889bc37581375c24430955b49f67",
+          "origin": null,
+          "references": [
+            "Synthetic local acceptance fixture only"
+          ],
+          "source_generation": "generation-1"
+        },
+        "role": "metaeuk_measurements",
+        "schema_version": "synthetic-rows-v1",
+        "sha256": "750a830e5cc8b714832714d25904ea0a60f5889bc37581375c24430955b49f67",
+        "size_bytes": 141,
+        "source_family": "metagenome",
+        "source_id": "metagenome"
+      },
+      {
+        "dataset_id": "synthetic:remote_sensing:dataset",
+        "object_id": "synthetic:remote_sensing:coverage",
+        "operation_id": "remote_sensing:coverage",
+        "operation_version": "v1",
+        "provenance": {
+          "content_sha256": "d52bd85b7a8e9eee1f94ae24c15b0a4e1520301ab903ee1c3011a4e635f09d2e",
+          "origin": null,
+          "references": [
+            "Synthetic local acceptance fixture only"
+          ],
+          "source_generation": "generation-1"
+        },
+        "role": "coverage",
+        "schema_version": "synthetic-rows-v1",
+        "sha256": "d52bd85b7a8e9eee1f94ae24c15b0a4e1520301ab903ee1c3011a4e635f09d2e",
+        "size_bytes": 130,
+        "source_family": "remote_sensing",
+        "source_id": "remote_sensing"
+      },
+      {
+        "dataset_id": "synthetic:remote_sensing:dataset",
+        "object_id": "synthetic:remote_sensing:observations",
+        "operation_id": "remote_sensing:observations",
+        "operation_version": "v1",
+        "provenance": {
+          "content_sha256": "acb4ef3830646620ef86d2666f5fb860d50510a15a8a760d7f0500ab28ecd051",
+          "origin": null,
+          "references": [
+            "Synthetic local acceptance fixture only"
+          ],
+          "source_generation": "generation-1"
+        },
+        "role": "observations",
+        "schema_version": "synthetic-rows-v1",
+        "sha256": "acb4ef3830646620ef86d2666f5fb860d50510a15a8a760d7f0500ab28ecd051",
+        "size_bytes": 153,
+        "source_family": "remote_sensing",
+        "source_id": "remote_sensing"
+      }
+    ],
+    "operation_versions": {
+      "ctd:casts": "v1",
+      "ctd:depth_observations": "v1",
+      "edna_metabarcoding:canonical_rows": "v1",
+      "edna_metabarcoding:classifications": "v1",
+      "metagenome:kraken_measurements": "v1",
+      "metagenome:metaeuk_measurements": "v1",
+      "remote_sensing:coverage": "v1",
+      "remote_sensing:observations": "v1"
+    },
+    "schema_version": "catalogue-snapshot-v1",
+    "scope": {
+      "sources": {
+        "ctd": {
+          "enabled": true,
+          "filters": {
+            "bay": null,
+            "sample_id": null,
+            "station": null,
+            "time_from": null,
+            "time_to": null
+          }
+        },
+        "edna_metabarcoding": {
+          "analysis_id": null,
+          "enabled": true,
+          "filters": {
+            "assignment_method": null,
+            "is_control": null,
+            "lat_max": null,
+            "lat_min": null,
+            "lon_max": null,
+            "lon_min": null,
+            "provider": null,
+            "provider_project_id": null,
+            "provider_run_id": null,
+            "sample_id": null,
+            "sample_kind": null,
+            "taxon": null,
+            "time_from": null,
+            "time_to": null
+          }
+        },
+        "metagenome": {
+          "enabled": true,
+          "filters": {
+            "bay": null,
+            "sample_id": null,
+            "station": null,
+            "time_from": null,
+            "time_to": null
+          }
+        },
+        "remote_sensing": {
+          "enabled": true,
+          "filters": {
+            "dataset_id": null,
+            "lat_max": null,
+            "lat_min": null,
+            "lon_max": null,
+            "lon_min": null,
+            "time_from": null,
+            "time_to": null
+          }
+        }
+      },
+      "version": 1
+    },
+    "source_captures": [
+      {
+        "capture_method": "synthetic-frozen-example-v1",
+        "classification_generation": "classification-1",
+        "operation_generation": "operation-1",
+        "publication_generation": "publication-1",
+        "qualifiers": [
+          "Synthetic local fixture; no scientific publication approval"
+        ],
+        "relationship_generation": "relationship-1",
+        "source_family": "ctd",
+        "source_generation": "generation-1",
+        "source_id": "ctd"
+      },
+      {
+        "capture_method": "synthetic-frozen-example-v1",
+        "classification_generation": "classification-1",
+        "operation_generation": "operation-1",
+        "publication_generation": "publication-1",
+        "qualifiers": [
+          "Synthetic local fixture; no scientific publication approval"
+        ],
+        "relationship_generation": "relationship-1",
+        "source_family": "edna_metabarcoding",
+        "source_generation": "generation-1",
+        "source_id": "edna_metabarcoding"
+      },
+      {
+        "capture_method": "synthetic-frozen-example-v1",
+        "classification_generation": "classification-1",
+        "operation_generation": "operation-1",
+        "publication_generation": "publication-1",
+        "qualifiers": [
+          "Synthetic local fixture; no scientific publication approval"
+        ],
+        "relationship_generation": "relationship-1",
+        "source_family": "metagenome",
+        "source_generation": "generation-1",
+        "source_id": "metagenome"
+      },
+      {
+        "capture_method": "synthetic-frozen-example-v1",
+        "classification_generation": "classification-1",
+        "operation_generation": "operation-1",
+        "publication_generation": "publication-1",
+        "qualifiers": [
+          "Synthetic local fixture; no scientific publication approval"
+        ],
+        "relationship_generation": "relationship-1",
+        "source_family": "remote_sensing",
+        "source_generation": "generation-1",
+        "source_id": "remote_sensing"
+      }
+    ]
+  },
+  "snapshot_id": "837b4fa9411d89ebc51d1ba7165ccf6b4c7142a17dfdf428a4ae0eeee7a60303",
+  "transfer": {
+    "authorization_ref": "synthetic-authorization-only",
+    "destination_id": "synthetic:v1-destination",
+    "objects": [
+      {
+        "encoding": "json-rows-v1",
+        "object_id": "synthetic:ctd:casts",
+        "origin": {
+          "access_conditions": "Local tests only",
+          "content_sha256": "eb766486f12c28ca12bc40645e3cf10959681f8fc26849a62f4a28d44e0593a9",
+          "live_dependency": false,
+          "operation_version": "v1",
+          "origin_object_id": "synthetic:ctd:casts",
+          "origin_system": "synthetic-independent-source",
+          "schema_version": "synthetic-rows-v1",
+          "scientific_qualification": "Synthetic fixture only",
+          "source_generation": "generation-1",
+          "source_snapshot_id": "837b4fa9411d89ebc51d1ba7165ccf6b4c7142a17dfdf428a4ae0eeee7a60303",
+          "transfer_authorization_ref": "synthetic-authorization-only"
+        },
+        "row_count": 1
+      },
+      {
+        "encoding": "json-rows-v1",
+        "object_id": "synthetic:ctd:depth_observations",
+        "origin": {
+          "access_conditions": "Local tests only",
+          "content_sha256": "9d3f292777931af8aeb55ba999f6f2e08374599b4596f87f53c00e7e91e6a32a",
+          "live_dependency": false,
+          "operation_version": "v1",
+          "origin_object_id": "synthetic:ctd:depth_observations",
+          "origin_system": "synthetic-independent-source",
+          "schema_version": "synthetic-rows-v1",
+          "scientific_qualification": "Synthetic fixture only",
+          "source_generation": "generation-1",
+          "source_snapshot_id": "837b4fa9411d89ebc51d1ba7165ccf6b4c7142a17dfdf428a4ae0eeee7a60303",
+          "transfer_authorization_ref": "synthetic-authorization-only"
+        },
+        "row_count": 2
+      },
+      {
+        "encoding": "json-rows-v1",
+        "object_id": "synthetic:edna_metabarcoding:canonical_rows",
+        "origin": {
+          "access_conditions": "Local tests only",
+          "content_sha256": "6fdbcd2014022ad4d3ea790173c8b623b4687e84c4447da27c55db0e09c0e8d8",
+          "live_dependency": false,
+          "operation_version": "v1",
+          "origin_object_id": "synthetic:edna_metabarcoding:canonical_rows",
+          "origin_system": "synthetic-independent-source",
+          "schema_version": "synthetic-rows-v1",
+          "scientific_qualification": "Synthetic fixture only",
+          "source_generation": "generation-1",
+          "source_snapshot_id": "837b4fa9411d89ebc51d1ba7165ccf6b4c7142a17dfdf428a4ae0eeee7a60303",
+          "transfer_authorization_ref": "synthetic-authorization-only"
+        },
+        "row_count": 2
+      },
+      {
+        "encoding": "json-rows-v1",
+        "object_id": "synthetic:edna_metabarcoding:classifications",
+        "origin": {
+          "access_conditions": "Local tests only",
+          "content_sha256": "3638a3bd578b3bcf775463b3ccbf02f84a5f4632613d09aa1c684f527526b854",
+          "live_dependency": false,
+          "operation_version": "v1",
+          "origin_object_id": "synthetic:edna_metabarcoding:classifications",
+          "origin_system": "synthetic-independent-source",
+          "schema_version": "synthetic-rows-v1",
+          "scientific_qualification": "Synthetic fixture only",
+          "source_generation": "generation-1",
+          "source_snapshot_id": "837b4fa9411d89ebc51d1ba7165ccf6b4c7142a17dfdf428a4ae0eeee7a60303",
+          "transfer_authorization_ref": "synthetic-authorization-only"
+        },
+        "row_count": 2
+      },
+      {
+        "encoding": "json-rows-v1",
+        "object_id": "synthetic:metagenome:kraken_measurements",
+        "origin": {
+          "access_conditions": "Local tests only",
+          "content_sha256": "138cc328bf4548173e81a8d8dc9ef15be8f46bb24d474c76b4e278a14f350a36",
+          "live_dependency": false,
+          "operation_version": "v1",
+          "origin_object_id": "synthetic:metagenome:kraken_measurements",
+          "origin_system": "synthetic-independent-source",
+          "schema_version": "synthetic-rows-v1",
+          "scientific_qualification": "Synthetic fixture only",
+          "source_generation": "generation-1",
+          "source_snapshot_id": "837b4fa9411d89ebc51d1ba7165ccf6b4c7142a17dfdf428a4ae0eeee7a60303",
+          "transfer_authorization_ref": "synthetic-authorization-only"
+        },
+        "row_count": 1
+      },
+      {
+        "encoding": "json-rows-v1",
+        "object_id": "synthetic:metagenome:metaeuk_measurements",
+        "origin": {
+          "access_conditions": "Local tests only",
+          "content_sha256": "750a830e5cc8b714832714d25904ea0a60f5889bc37581375c24430955b49f67",
+          "live_dependency": false,
+          "operation_version": "v1",
+          "origin_object_id": "synthetic:metagenome:metaeuk_measurements",
+          "origin_system": "synthetic-independent-source",
+          "schema_version": "synthetic-rows-v1",
+          "scientific_qualification": "Synthetic fixture only",
+          "source_generation": "generation-1",
+          "source_snapshot_id": "837b4fa9411d89ebc51d1ba7165ccf6b4c7142a17dfdf428a4ae0eeee7a60303",
+          "transfer_authorization_ref": "synthetic-authorization-only"
+        },
+        "row_count": 1
+      },
+      {
+        "encoding": "json-rows-v1",
+        "object_id": "synthetic:remote_sensing:coverage",
+        "origin": {
+          "access_conditions": "Local tests only",
+          "content_sha256": "d52bd85b7a8e9eee1f94ae24c15b0a4e1520301ab903ee1c3011a4e635f09d2e",
+          "live_dependency": false,
+          "operation_version": "v1",
+          "origin_object_id": "synthetic:remote_sensing:coverage",
+          "origin_system": "synthetic-independent-source",
+          "schema_version": "synthetic-rows-v1",
+          "scientific_qualification": "Synthetic fixture only",
+          "source_generation": "generation-1",
+          "source_snapshot_id": "837b4fa9411d89ebc51d1ba7165ccf6b4c7142a17dfdf428a4ae0eeee7a60303",
+          "transfer_authorization_ref": "synthetic-authorization-only"
+        },
+        "row_count": 1
+      },
+      {
+        "encoding": "json-rows-v1",
+        "object_id": "synthetic:remote_sensing:observations",
+        "origin": {
+          "access_conditions": "Local tests only",
+          "content_sha256": "acb4ef3830646620ef86d2666f5fb860d50510a15a8a760d7f0500ab28ecd051",
+          "live_dependency": false,
+          "operation_version": "v1",
+          "origin_object_id": "synthetic:remote_sensing:observations",
+          "origin_system": "synthetic-independent-source",
+          "schema_version": "synthetic-rows-v1",
+          "scientific_qualification": "Synthetic fixture only",
+          "source_generation": "generation-1",
+          "source_snapshot_id": "837b4fa9411d89ebc51d1ba7165ccf6b4c7142a17dfdf428a4ae0eeee7a60303",
+          "transfer_authorization_ref": "synthetic-authorization-only"
+        },
+        "row_count": 2
+      }
+    ],
+    "schema_version": "catalogue-transfer-v1",
+    "snapshot": {
+      "objects": [
+        {
+          "dataset_id": "synthetic:ctd:dataset",
+          "object_id": "synthetic:ctd:casts",
+          "operation_id": "ctd:casts",
+          "operation_version": "v1",
+          "provenance": {
+            "content_sha256": "eb766486f12c28ca12bc40645e3cf10959681f8fc26849a62f4a28d44e0593a9",
+            "origin": null,
+            "references": [
+              "Synthetic local acceptance fixture only"
+            ],
+            "source_generation": "generation-1"
+          },
+          "role": "casts",
+          "schema_version": "synthetic-rows-v1",
+          "sha256": "eb766486f12c28ca12bc40645e3cf10959681f8fc26849a62f4a28d44e0593a9",
+          "size_bytes": 82,
+          "source_family": "ctd",
+          "source_id": "ctd"
+        },
+        {
+          "dataset_id": "synthetic:ctd:dataset",
+          "object_id": "synthetic:ctd:depth_observations",
+          "operation_id": "ctd:depth_observations",
+          "operation_version": "v1",
+          "provenance": {
+            "content_sha256": "9d3f292777931af8aeb55ba999f6f2e08374599b4596f87f53c00e7e91e6a32a",
+            "origin": null,
+            "references": [
+              "Synthetic local acceptance fixture only"
+            ],
+            "source_generation": "generation-1"
+          },
+          "role": "depth_observations",
+          "schema_version": "synthetic-rows-v1",
+          "sha256": "9d3f292777931af8aeb55ba999f6f2e08374599b4596f87f53c00e7e91e6a32a",
+          "size_bytes": 135,
+          "source_family": "ctd",
+          "source_id": "ctd"
+        },
+        {
+          "dataset_id": "synthetic:edna_metabarcoding:dataset",
+          "object_id": "synthetic:edna_metabarcoding:canonical_rows",
+          "operation_id": "edna_metabarcoding:canonical_rows",
+          "operation_version": "v1",
+          "provenance": {
+            "content_sha256": "6fdbcd2014022ad4d3ea790173c8b623b4687e84c4447da27c55db0e09c0e8d8",
+            "origin": null,
+            "references": [
+              "Synthetic local acceptance fixture only"
+            ],
+            "source_generation": "generation-1"
+          },
+          "role": "canonical_rows",
+          "schema_version": "synthetic-rows-v1",
+          "sha256": "6fdbcd2014022ad4d3ea790173c8b623b4687e84c4447da27c55db0e09c0e8d8",
+          "size_bytes": 318,
+          "source_family": "edna_metabarcoding",
+          "source_id": "edna_metabarcoding"
+        },
+        {
+          "dataset_id": "synthetic:edna_metabarcoding:dataset",
+          "object_id": "synthetic:edna_metabarcoding:classifications",
+          "operation_id": "edna_metabarcoding:classifications",
+          "operation_version": "v1",
+          "provenance": {
+            "content_sha256": "3638a3bd578b3bcf775463b3ccbf02f84a5f4632613d09aa1c684f527526b854",
+            "origin": null,
+            "references": [
+              "Synthetic local acceptance fixture only"
+            ],
+            "source_generation": "generation-1"
+          },
+          "role": "classifications",
+          "schema_version": "synthetic-rows-v1",
+          "sha256": "3638a3bd578b3bcf775463b3ccbf02f84a5f4632613d09aa1c684f527526b854",
+          "size_bytes": 313,
+          "source_family": "edna_metabarcoding",
+          "source_id": "edna_metabarcoding"
+        },
+        {
+          "dataset_id": "synthetic:metagenome:dataset",
+          "object_id": "synthetic:metagenome:kraken_measurements",
+          "operation_id": "metagenome:kraken_measurements",
+          "operation_version": "v1",
+          "provenance": {
+            "content_sha256": "138cc328bf4548173e81a8d8dc9ef15be8f46bb24d474c76b4e278a14f350a36",
+            "origin": null,
+            "references": [
+              "Synthetic local acceptance fixture only"
+            ],
+            "source_generation": "generation-1"
+          },
+          "role": "kraken_measurements",
+          "schema_version": "synthetic-rows-v1",
+          "sha256": "138cc328bf4548173e81a8d8dc9ef15be8f46bb24d474c76b4e278a14f350a36",
+          "size_bytes": 141,
+          "source_family": "metagenome",
+          "source_id": "metagenome"
+        },
+        {
+          "dataset_id": "synthetic:metagenome:dataset",
+          "object_id": "synthetic:metagenome:metaeuk_measurements",
+          "operation_id": "metagenome:metaeuk_measurements",
+          "operation_version": "v1",
+          "provenance": {
+            "content_sha256": "750a830e5cc8b714832714d25904ea0a60f5889bc37581375c24430955b49f67",
+            "origin": null,
+            "references": [
+              "Synthetic local acceptance fixture only"
+            ],
+            "source_generation": "generation-1"
+          },
+          "role": "metaeuk_measurements",
+          "schema_version": "synthetic-rows-v1",
+          "sha256": "750a830e5cc8b714832714d25904ea0a60f5889bc37581375c24430955b49f67",
+          "size_bytes": 141,
+          "source_family": "metagenome",
+          "source_id": "metagenome"
+        },
+        {
+          "dataset_id": "synthetic:remote_sensing:dataset",
+          "object_id": "synthetic:remote_sensing:coverage",
+          "operation_id": "remote_sensing:coverage",
+          "operation_version": "v1",
+          "provenance": {
+            "content_sha256": "d52bd85b7a8e9eee1f94ae24c15b0a4e1520301ab903ee1c3011a4e635f09d2e",
+            "origin": null,
+            "references": [
+              "Synthetic local acceptance fixture only"
+            ],
+            "source_generation": "generation-1"
+          },
+          "role": "coverage",
+          "schema_version": "synthetic-rows-v1",
+          "sha256": "d52bd85b7a8e9eee1f94ae24c15b0a4e1520301ab903ee1c3011a4e635f09d2e",
+          "size_bytes": 130,
+          "source_family": "remote_sensing",
+          "source_id": "remote_sensing"
+        },
+        {
+          "dataset_id": "synthetic:remote_sensing:dataset",
+          "object_id": "synthetic:remote_sensing:observations",
+          "operation_id": "remote_sensing:observations",
+          "operation_version": "v1",
+          "provenance": {
+            "content_sha256": "acb4ef3830646620ef86d2666f5fb860d50510a15a8a760d7f0500ab28ecd051",
+            "origin": null,
+            "references": [
+              "Synthetic local acceptance fixture only"
+            ],
+            "source_generation": "generation-1"
+          },
+          "role": "observations",
+          "schema_version": "synthetic-rows-v1",
+          "sha256": "acb4ef3830646620ef86d2666f5fb860d50510a15a8a760d7f0500ab28ecd051",
+          "size_bytes": 153,
+          "source_family": "remote_sensing",
+          "source_id": "remote_sensing"
+        }
+      ],
+      "operation_versions": {
+        "ctd:casts": "v1",
+        "ctd:depth_observations": "v1",
+        "edna_metabarcoding:canonical_rows": "v1",
+        "edna_metabarcoding:classifications": "v1",
+        "metagenome:kraken_measurements": "v1",
+        "metagenome:metaeuk_measurements": "v1",
+        "remote_sensing:coverage": "v1",
+        "remote_sensing:observations": "v1"
+      },
+      "schema_version": "catalogue-snapshot-v1",
+      "scope": {
+        "sources": {
+          "ctd": {
+            "enabled": true,
+            "filters": {
+              "bay": null,
+              "sample_id": null,
+              "station": null,
+              "time_from": null,
+              "time_to": null
+            }
+          },
+          "edna_metabarcoding": {
+            "analysis_id": null,
+            "enabled": true,
+            "filters": {
+              "assignment_method": null,
+              "is_control": null,
+              "lat_max": null,
+              "lat_min": null,
+              "lon_max": null,
+              "lon_min": null,
+              "provider": null,
+              "provider_project_id": null,
+              "provider_run_id": null,
+              "sample_id": null,
+              "sample_kind": null,
+              "taxon": null,
+              "time_from": null,
+              "time_to": null
+            }
+          },
+          "metagenome": {
+            "enabled": true,
+            "filters": {
+              "bay": null,
+              "sample_id": null,
+              "station": null,
+              "time_from": null,
+              "time_to": null
+            }
+          },
+          "remote_sensing": {
+            "enabled": true,
+            "filters": {
+              "dataset_id": null,
+              "lat_max": null,
+              "lat_min": null,
+              "lon_max": null,
+              "lon_min": null,
+              "time_from": null,
+              "time_to": null
+            }
+          }
+        },
+        "version": 1
+      },
+      "source_captures": [
+        {
+          "capture_method": "synthetic-frozen-example-v1",
+          "classification_generation": "classification-1",
+          "operation_generation": "operation-1",
+          "publication_generation": "publication-1",
+          "qualifiers": [
+            "Synthetic local fixture; no scientific publication approval"
+          ],
+          "relationship_generation": "relationship-1",
+          "source_family": "ctd",
+          "source_generation": "generation-1",
+          "source_id": "ctd"
+        },
+        {
+          "capture_method": "synthetic-frozen-example-v1",
+          "classification_generation": "classification-1",
+          "operation_generation": "operation-1",
+          "publication_generation": "publication-1",
+          "qualifiers": [
+            "Synthetic local fixture; no scientific publication approval"
+          ],
+          "relationship_generation": "relationship-1",
+          "source_family": "edna_metabarcoding",
+          "source_generation": "generation-1",
+          "source_id": "edna_metabarcoding"
+        },
+        {
+          "capture_method": "synthetic-frozen-example-v1",
+          "classification_generation": "classification-1",
+          "operation_generation": "operation-1",
+          "publication_generation": "publication-1",
+          "qualifiers": [
+            "Synthetic local fixture; no scientific publication approval"
+          ],
+          "relationship_generation": "relationship-1",
+          "source_family": "metagenome",
+          "source_generation": "generation-1",
+          "source_id": "metagenome"
+        },
+        {
+          "capture_method": "synthetic-frozen-example-v1",
+          "classification_generation": "classification-1",
+          "operation_generation": "operation-1",
+          "publication_generation": "publication-1",
+          "qualifiers": [
+            "Synthetic local fixture; no scientific publication approval"
+          ],
+          "relationship_generation": "relationship-1",
+          "source_family": "remote_sensing",
+          "source_generation": "generation-1",
+          "source_id": "remote_sensing"
+        }
+      ]
+    },
+    "source_snapshot_id": "837b4fa9411d89ebc51d1ba7165ccf6b4c7142a17dfdf428a4ae0eeee7a60303"
+  },
+  "transfer_id": "fd7e10643f245199335ec6f4c460b4238baa7b5ee63fb6137ead41858d693d1c"
+}

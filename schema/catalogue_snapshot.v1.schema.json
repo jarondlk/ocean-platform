@@ -1,0 +1,1008 @@
+{
+  "$defs": {
+    "EdnaFilters": {
+      "additionalProperties": false,
+      "properties": {
+        "assignment_method": {
+          "anyOf": [
+            {
+              "enum": [
+                "qcauto_target",
+                "qcauto_95pct_3nn_target"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Assignment Method"
+        },
+        "is_control": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Is Control"
+        },
+        "lat_max": {
+          "anyOf": [
+            {
+              "maximum": 90,
+              "minimum": -90,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lat Max"
+        },
+        "lat_min": {
+          "anyOf": [
+            {
+              "maximum": 90,
+              "minimum": -90,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lat Min"
+        },
+        "lon_max": {
+          "anyOf": [
+            {
+              "maximum": 180,
+              "minimum": -180,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lon Max"
+        },
+        "lon_min": {
+          "anyOf": [
+            {
+              "maximum": 180,
+              "minimum": -180,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lon Min"
+        },
+        "provider": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider"
+        },
+        "provider_project_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Project Id"
+        },
+        "provider_run_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Run Id"
+        },
+        "sample_id": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sample Id"
+        },
+        "sample_kind": {
+          "anyOf": [
+            {
+              "enum": [
+                "environmental",
+                "negative_control",
+                "positive_control",
+                "mock_community",
+                "unknown"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sample Kind"
+        },
+        "taxon": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Taxon"
+        },
+        "time_from": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time From"
+        },
+        "time_to": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time To"
+        }
+      },
+      "title": "EdnaFilters",
+      "type": "object"
+    },
+    "EdnaSelection": {
+      "additionalProperties": false,
+      "properties": {
+        "analysis_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Analysis Id"
+        },
+        "enabled": {
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "filters": {
+          "$ref": "#/$defs/EdnaFilters"
+        }
+      },
+      "required": [
+        "enabled",
+        "filters"
+      ],
+      "title": "EdnaSelection",
+      "type": "object"
+    },
+    "EvidenceScope": {
+      "additionalProperties": false,
+      "properties": {
+        "sources": {
+          "$ref": "#/$defs/SourceSelections"
+        },
+        "version": {
+          "const": 1,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "version",
+        "sources"
+      ],
+      "title": "EvidenceScope",
+      "type": "object"
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "content_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Content Sha256"
+        },
+        "origin": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TransferOrigin"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "references": {
+          "items": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "References",
+          "type": "array"
+        },
+        "source_generation": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Generation"
+        }
+      },
+      "title": "Provenance",
+      "type": "object"
+    },
+    "SampleFilters": {
+      "additionalProperties": false,
+      "properties": {
+        "bay": {
+          "anyOf": [
+            {
+              "enum": [
+                "O",
+                "I",
+                "M"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bay"
+        },
+        "sample_id": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sample Id"
+        },
+        "station": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Station"
+        },
+        "time_from": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time From"
+        },
+        "time_to": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time To"
+        }
+      },
+      "title": "SampleFilters",
+      "type": "object"
+    },
+    "SampleSelection": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "filters": {
+          "$ref": "#/$defs/SampleFilters"
+        }
+      },
+      "required": [
+        "enabled",
+        "filters"
+      ],
+      "title": "SampleSelection",
+      "type": "object"
+    },
+    "SatelliteFilters": {
+      "additionalProperties": false,
+      "properties": {
+        "dataset_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dataset Id"
+        },
+        "lat_max": {
+          "anyOf": [
+            {
+              "maximum": 90,
+              "minimum": -90,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lat Max"
+        },
+        "lat_min": {
+          "anyOf": [
+            {
+              "maximum": 90,
+              "minimum": -90,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lat Min"
+        },
+        "lon_max": {
+          "anyOf": [
+            {
+              "maximum": 180,
+              "minimum": -180,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lon Max"
+        },
+        "lon_min": {
+          "anyOf": [
+            {
+              "maximum": 180,
+              "minimum": -180,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lon Min"
+        },
+        "time_from": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time From"
+        },
+        "time_to": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time To"
+        }
+      },
+      "title": "SatelliteFilters",
+      "type": "object"
+    },
+    "SatelliteSelection": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "filters": {
+          "$ref": "#/$defs/SatelliteFilters"
+        }
+      },
+      "required": [
+        "enabled",
+        "filters"
+      ],
+      "title": "SatelliteSelection",
+      "type": "object"
+    },
+    "SnapshotManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "objects": {
+          "items": {
+            "$ref": "#/$defs/SnapshotObject"
+          },
+          "maxItems": 4000,
+          "minItems": 1,
+          "title": "Objects",
+          "type": "array"
+        },
+        "operation_versions": {
+          "minProperties": 1,
+          "patternProperties": {
+            "^[A-Za-z0-9][A-Za-z0-9._:-]*$": {
+              "maxLength": 4000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            }
+          },
+          "propertyNames": {
+            "maxLength": 256,
+            "minLength": 1
+          },
+          "title": "Operation Versions",
+          "type": "object"
+        },
+        "schema_version": {
+          "const": "catalogue-snapshot-v1",
+          "default": "catalogue-snapshot-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/EvidenceScope"
+        },
+        "source_captures": {
+          "items": {
+            "$ref": "#/$defs/SourceCapture"
+          },
+          "maxItems": 4000,
+          "minItems": 1,
+          "title": "Source Captures",
+          "type": "array"
+        }
+      },
+      "required": [
+        "scope",
+        "source_captures",
+        "objects",
+        "operation_versions"
+      ],
+      "title": "SnapshotManifest",
+      "type": "object"
+    },
+    "SnapshotObject": {
+      "additionalProperties": false,
+      "properties": {
+        "dataset_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Dataset Id",
+          "type": "string"
+        },
+        "object_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Object Id",
+          "type": "string"
+        },
+        "operation_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "operation_version": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Operation Version",
+          "type": "string"
+        },
+        "provenance": {
+          "$ref": "#/$defs/Provenance"
+        },
+        "role": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Role",
+          "type": "string"
+        },
+        "schema_version": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 536870912,
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        },
+        "source_family": {
+          "enum": [
+            "ctd",
+            "metagenome",
+            "remote_sensing",
+            "edna_metabarcoding"
+          ],
+          "title": "Source Family",
+          "type": "string"
+        },
+        "source_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Source Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "object_id",
+        "dataset_id",
+        "source_id",
+        "source_family",
+        "role",
+        "sha256",
+        "size_bytes",
+        "schema_version",
+        "operation_id",
+        "operation_version",
+        "provenance"
+      ],
+      "title": "SnapshotObject",
+      "type": "object"
+    },
+    "SourceCapture": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_method": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Capture Method",
+          "type": "string"
+        },
+        "classification_generation": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Classification Generation",
+          "type": "string"
+        },
+        "operation_generation": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Operation Generation",
+          "type": "string"
+        },
+        "publication_generation": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Publication Generation",
+          "type": "string"
+        },
+        "qualifiers": {
+          "items": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "Qualifiers",
+          "type": "array"
+        },
+        "relationship_generation": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Relationship Generation",
+          "type": "string"
+        },
+        "source_family": {
+          "enum": [
+            "ctd",
+            "metagenome",
+            "remote_sensing",
+            "edna_metabarcoding"
+          ],
+          "title": "Source Family",
+          "type": "string"
+        },
+        "source_generation": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Source Generation",
+          "type": "string"
+        },
+        "source_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Source Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "source_family",
+        "source_generation",
+        "publication_generation",
+        "classification_generation",
+        "relationship_generation",
+        "operation_generation",
+        "capture_method",
+        "qualifiers"
+      ],
+      "title": "SourceCapture",
+      "type": "object"
+    },
+    "SourceSelections": {
+      "additionalProperties": false,
+      "properties": {
+        "ctd": {
+          "$ref": "#/$defs/SampleSelection"
+        },
+        "edna_metabarcoding": {
+          "$ref": "#/$defs/EdnaSelection"
+        },
+        "metagenome": {
+          "$ref": "#/$defs/SampleSelection"
+        },
+        "remote_sensing": {
+          "$ref": "#/$defs/SatelliteSelection"
+        }
+      },
+      "required": [
+        "ctd",
+        "metagenome",
+        "remote_sensing",
+        "edna_metabarcoding"
+      ],
+      "title": "SourceSelections",
+      "type": "object"
+    },
+    "TransferManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "authorization_ref": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Authorization Ref",
+          "type": "string"
+        },
+        "destination_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Destination Id",
+          "type": "string"
+        },
+        "objects": {
+          "items": {
+            "$ref": "#/$defs/TransferObject"
+          },
+          "maxItems": 4000,
+          "minItems": 1,
+          "title": "Objects",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "catalogue-transfer-v1",
+          "default": "catalogue-transfer-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/SnapshotManifest"
+        },
+        "source_snapshot_id": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Source Snapshot Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "destination_id",
+        "authorization_ref",
+        "source_snapshot_id",
+        "snapshot",
+        "objects"
+      ],
+      "title": "TransferManifest",
+      "type": "object"
+    },
+    "TransferObject": {
+      "additionalProperties": false,
+      "properties": {
+        "encoding": {
+          "enum": [
+            "json-rows-v1",
+            "opaque-bytes-v1"
+          ],
+          "title": "Encoding",
+          "type": "string"
+        },
+        "object_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Object Id",
+          "type": "string"
+        },
+        "origin": {
+          "$ref": "#/$defs/TransferOrigin"
+        },
+        "row_count": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Row Count"
+        }
+      },
+      "required": [
+        "object_id",
+        "encoding",
+        "row_count",
+        "origin"
+      ],
+      "title": "TransferObject",
+      "type": "object"
+    },
+    "TransferOrigin": {
+      "additionalProperties": false,
+      "description": "Descriptive copied-data provenance; never a live access authorization.",
+      "properties": {
+        "access_conditions": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Access Conditions",
+          "type": "string"
+        },
+        "content_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "live_dependency": {
+          "const": false,
+          "default": false,
+          "title": "Live Dependency",
+          "type": "boolean"
+        },
+        "operation_version": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Operation Version",
+          "type": "string"
+        },
+        "origin_object_id": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Origin Object Id",
+          "type": "string"
+        },
+        "origin_system": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Origin System",
+          "type": "string"
+        },
+        "schema_version": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scientific_qualification": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Scientific Qualification",
+          "type": "string"
+        },
+        "source_generation": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Source Generation",
+          "type": "string"
+        },
+        "source_snapshot_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Source Snapshot Id",
+          "type": "string"
+        },
+        "transfer_authorization_ref": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Transfer Authorization Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "origin_system",
+        "origin_object_id",
+        "source_snapshot_id",
+        "source_generation",
+        "schema_version",
+        "operation_version",
+        "content_sha256",
+        "scientific_qualification",
+        "access_conditions",
+        "transfer_authorization_ref"
+      ],
+      "title": "TransferOrigin",
+      "type": "object"
+    }
+  },
+  "$id": "urn:ocean:catalogue-snapshot:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "snapshot": {
+      "$ref": "#/$defs/SnapshotManifest"
+    },
+    "transfer": {
+      "$ref": "#/$defs/TransferManifest"
+    }
+  },
+  "required": [
+    "snapshot",
+    "transfer"
+  ],
+  "title": "SnapshotContract",
+  "type": "object",
+  "x-runtime-validation-required": "Cross-object source/operation/origin bindings, exact bytes/counts, canonical IDs, strict scope semantics, and current access need Python validation."
+}

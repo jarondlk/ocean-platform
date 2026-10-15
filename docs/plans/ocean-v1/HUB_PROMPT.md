@@ -31,7 +31,7 @@ C05 source hashes, regression results and deferred rebuild instructions are reco
 C05 is committed/pushed as fd8f520 with passing hosted CI; read
 C06_READINESS_AUDIT_2026-10-15.md and its receipt. C06 is ready for explicit
 selection, with 99 baseline tests passing and F07 reproduced offline. C06 is Complete locally and delivered as 27d76c9 with passing hosted CI;
-read handoffs/C06.md and evidence/C06/delivery.json. C07 is Complete and delivered as 1195796 with passing hosted CI; read handoffs/C07.md and evidence/C07/delivery.json. C08 is Complete and delivered as 6d20a75 with passing hosted CI; read handoffs/C08.md, evidence/C08/delivery.json and C08_CATALOGUE_CONTRACT.md. C09–C27 remain
+read handoffs/C06.md and evidence/C06/delivery.json. C07 is Complete and delivered as 1195796 with passing hosted CI; read handoffs/C07.md and evidence/C07/delivery.json. C08 is Complete and delivered as 6d20a75 with passing hosted CI; read handoffs/C08.md, evidence/C08/delivery.json and C08_CATALOGUE_CONTRACT.md. C09 is Complete for local snapshot/capture acceptance; C10–C27 remain
 unselected; planning/recovery inspection outside
 the selected component is read-only unless documentation edits are requested.
 Do not create other chats or begin components merely because this hub exists.
@@ -43,4 +43,4 @@ Use the corresponding canonical planning/implementation/resume prompt in PROMPTS
 
 C09 readiness was verified on 2026-10-15 JST against 3cbf9f0: 51 baseline and
 246 prerequisite tests pass; read C09_READINESS_AUDIT_2026-10-15.md and its receipt.
-This does not select C09 implementation; its state remains Not started.
+The user subsequently selected C09; it is Complete locally. Read handoffs/C09.md and C09_SNAPSHOT_CONTRACT.md. C10 remains unselected.

@@ -59,6 +59,13 @@ jobs:
       - name: Check generated chat scope contract
         run: python scripts/export_chat_scope.py --check
 
+      - name: Check frozen catalogue contracts and examples
+        run: |
+          python scripts/export_context_catalogue.py --check
+          python scripts/export_catalogue_examples.py --check
+          python scripts/export_catalogue_types.py --check
+          python scripts/export_catalogue_snapshot.py --check
+
       - name: Run tests with coverage
         env:
           AUTH_MODE: disabled
@@ -299,6 +306,31 @@ jobs:
           C05_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
         run: >-
           python -m pytest tests/integration/test_retrieval_identity_postgres.py
+          -q -s --tb=short
+
+      - name: Create isolated C09 snapshot test database
+        run: |
+          python - <<'PY'
+          from sqlalchemy import create_engine, text
+          # This job owns the service and test database; never inherit app config.
+          engine = create_engine(
+              "postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform",
+              isolation_level="AUTOCOMMIT",
+          )
+          with engine.connect() as connection:
+              connection.execute(text("CREATE DATABASE ocean_c09_snapshot_test"))
+          engine.dispose()
+          PY
+
+      - name: Verify C09 snapshot capture and publication boundaries
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_POSTGRES_INTEGRATION: "1"
+          C09_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c09_snapshot_test
+          C09_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
+        run: >-
+          python -m pytest tests/integration/test_catalogue_snapshot_capture_postgres.py
           -q -s --tb=short
 
       - name: Verify database backup and isolated restore
