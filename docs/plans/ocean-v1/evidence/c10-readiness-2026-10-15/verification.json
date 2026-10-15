@@ -1,0 +1,1085 @@
+{
+  "audit": "C10 readiness only",
+  "date": "2026-10-15 JST",
+  "branch": "overhaul",
+  "base_head": "ae02e89d1d6f6b38c07d4a5a95c47976affda45b",
+  "verdict": "Ready for explicit local implementation selection; no prerequisite blocker found",
+  "C10_implementation_started": false,
+  "formal_prerequisites": [
+    "C02",
+    "C09"
+  ],
+  "C02_current_source": {
+    "api/main.py": {
+      "current_sha256": "42e0f2a45fb93efb8cd6a7037cd1278e97c43ba0268af71ed2b520a6d6191a5e",
+      "original_sha256": "a00a9c99de53c4db39dc4249ccf726283f3893a1507e47ee4728263f7da4ad06",
+      "original_match": false,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C07/verification.json",
+      "accepted_receipt_sha256": "99b78a6cefac34b9dc98fc67d9b6fc8a572355ca04fb84644a6ba14341fadc69"
+    },
+    "docs/plans/ocean-v1/evidence/C02/verify_synthetic.py": {
+      "current_sha256": "513b67b539b3102195e2627a7b02f707c6836561f49ebe3a2459cae09e2b3cc5",
+      "original_sha256": "513b67b539b3102195e2627a7b02f707c6836561f49ebe3a2459cae09e2b3cc5",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "orchestration/unified.py": {
+      "current_sha256": "c9201413873109153f9098d1041e23c3349229ec95a27aac3e194ed517be01d6",
+      "original_sha256": "c35856c03045ef48bd5d352334c7f62aa24163378b0416ab9d8e5ed0d25d00e7",
+      "original_match": false,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C05/verification.json",
+      "accepted_receipt_sha256": "6575878bcdc75d794c7b52f6794ca018e8c7725eda48eb274da2895b851744ee"
+    },
+    "preprocessing/derived_artifacts.py": {
+      "current_sha256": "deba53d403e8ce3c44f1a6482fb1f5cd5b2b81650401cbdd0bfb2aa8d31d5bd4",
+      "original_sha256": "deba53d403e8ce3c44f1a6482fb1f5cd5b2b81650401cbdd0bfb2aa8d31d5bd4",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "preprocessing/pre_analysis.py": {
+      "current_sha256": "426a19a3c1f7d9dcc4241c7a187352554ab0711cfc438a20f0633804db6bbed8",
+      "original_sha256": "426a19a3c1f7d9dcc4241c7a187352554ab0711cfc438a20f0633804db6bbed8",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "preprocessing/reliability_ensurance.py": {
+      "current_sha256": "46b5cf6c4b3b320467bc121a1572e41e4a00e2327bc0afc6fa7a63471e726c5d",
+      "original_sha256": "46b5cf6c4b3b320467bc121a1572e41e4a00e2327bc0afc6fa7a63471e726c5d",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "preprocessing/remote_sensing.py": {
+      "current_sha256": "e611e7f176677fbece054cb7ff70d57ba378e1135f86a2cfcf1346b781c852cd",
+      "original_sha256": "e611e7f176677fbece054cb7ff70d57ba378e1135f86a2cfcf1346b781c852cd",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "tests/conftest.py": {
+      "current_sha256": "989457a38d9ffefac466e5a0173ca620a4cef42ebacb1d483454ec469e026e19",
+      "original_sha256": "989457a38d9ffefac466e5a0173ca620a4cef42ebacb1d483454ec469e026e19",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "tests/test_derived_artifact_eligibility.py": {
+      "current_sha256": "d37eb145cb224b708dd8c1bf6e0ed3d4ff1ad17eb75341004def6a6b0dde810e",
+      "original_sha256": "47076f2b0e532d869549525e76e6a9fece935c0047fe2fdf0146394b60814bc3",
+      "original_match": false,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json",
+      "accepted_receipt_sha256": "88dfc7825558695d23a7a586386da80ca23ceb9dbdd0a3c003628c4e08dd1bb6"
+    },
+    "tests/test_pre_analysis.py": {
+      "current_sha256": "b2573e4d095aa07135eefcb6278879c16d0e6e154289cec4d7ae6108801789fc",
+      "original_sha256": "b2573e4d095aa07135eefcb6278879c16d0e6e154289cec4d7ae6108801789fc",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "tests/test_reliability.py": {
+      "current_sha256": "346e54fd746a02d614aa5e8a7ac90d7cf99fe3d6cb1d5ee2fb99888ddfd847ca",
+      "original_sha256": "346e54fd746a02d614aa5e8a7ac90d7cf99fe3d6cb1d5ee2fb99888ddfd847ca",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "tests/test_remote_sensing.py": {
+      "current_sha256": "0eaf7f291f3a29de55fbf529b6b4cec988133e645d428a4c412a3bb7f5f444c9",
+      "original_sha256": "0eaf7f291f3a29de55fbf529b6b4cec988133e645d428a4c412a3bb7f5f444c9",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    }
+  },
+  "C05_metagenome_accepted_files": {
+    "preprocessing/metagenome.py": "7c40578ded2f284c1df915e531e0b91807b0f6d4a1d2a589e0212e20154430a0",
+    "preprocessing/metagenome_contract.py": "88edad03f0e5e520f45bced3ae74b0f689c8d2d71682f48589b5ad1c4bb5efe2",
+    "tests/test_metagenome_document_contract.py": "7b7717d3156f76b325bbf3b43b6df4917d5cfa13c27ffeb709692fcf7adbcac0"
+  },
+  "C08_accepted_files": {
+    "frontend-v1/src/catalogue-contract.generated.ts": "59f8bd5727d02f83704fa44175cace4ddda018e8e40af00e4ca7081fa90a16ca",
+    "frontend-v1/src/catalogue-contract.ts": "c9a2d2b8d1f35280cabaa7c399f7af7baaa084cad0e52ddd3304682997ba14d5",
+    "frontend-v1/tests/catalogue-contract.test.ts": "b16592062e880ae7565f73d15b87f5e47ff66a02658d1190c2051740c8874c9b",
+    "schema/context_catalogue.py": "c757fa2f91c3e44c5832290faaf9fa01d7501c33348747fc281fd92e7dd13dd0",
+    "schema/context_catalogue.v1.schema.json": "385d3cb7e8a7e5f5c36fc8f177c0b9c540d3e249496b7b6d869ec7d36785b972",
+    "schema/context_catalogue_examples.json": "258cd0d3c7622d703a29c9840b05e0d418cbd6fee614c1fc9eb4bef12d3d6ed3",
+    "schema/context_catalogue_fixtures.py": "8081971ce01e727dec02fb301fa60941443d3a1943dba357247198761c8b8fdc",
+    "scripts/export_catalogue_examples.py": "7fd86bf2c8b0e796c1436e207c71c912ab279cf859ae22c6fa1ee1182bf59235",
+    "scripts/export_catalogue_types.py": "417fb30b8209cc2422421495e76c50801715ca034d4682d4844d89d71ff2c682",
+    "scripts/export_context_catalogue.py": "107be75e5e6fcaa74c1285dababff4b9673861214c7255cc48ca06abc82820d7",
+    "tests/test_context_catalogue_contract.py": "0af0720cf12be022a4c72d7a8248de13775c074f4ceb06bd2124b1787e717853",
+    "tests/test_context_catalogue_fixtures.py": "36c4e96202f60ba38a606730e7e6b851c5f06b7e39b6ad366779722086412d69"
+  },
+  "C09_accepted_files": {
+    ".github/workflows/tests.yml": "f1d30649d2c099512c4fe3b44a1893d7d8f73cd012ed35f9d82c408f865e23aa",
+    "ingestion/catalogue_snapshot.py": "450669acc6bc09a31532e101f9af38a2dee22d57053dd1b0b1e5f23ca892cec4",
+    "ingestion/catalogue_snapshot_capture.py": "bbe8cd9e69de0ab0838f320139a6e152856b533f0aff10fc0077faf493be3dd5",
+    "ingestion/catalogue_snapshot_fixtures.py": "ad35c851b0d23e9f1da91b32cfb60e582d0fe9d82274e103fd4124938879934b",
+    "ingestion/catalogue_snapshot_transfer.py": "0ce74b1cdca6d2a6c465157d542caae44698d0adea2c055ef7b1ac1e0173fc82",
+    "schema/catalogue_snapshot.py": "0035a2946293b9213f5d32fe4ad8f9263db84b8cb55a540442391dcbfc3b3900",
+    "schema/catalogue_snapshot.v1.schema.json": "afabe0cb60c416f5160994cd9d3b5e53806985efc48bb568220128d7b4e0fb38",
+    "schema/catalogue_snapshot_examples.json": "64377255af58b261d597b096ead77fe7370d3eb1ebfb052c791aa8d5e55cc04f",
+    "scripts/export_catalogue_snapshot.py": "dafda2b885202dd0e88c7e237ecf4f577339513e034e73158b627f71c2cd28fe",
+    "tests/integration/test_catalogue_snapshot_capture_postgres.py": "b97f450ed0ac9637b44ef6a0e322b9f84f9192a09185b590e1b4f5b062ebd658",
+    "tests/test_catalogue_snapshot_capture.py": "e3fb4d5b01c2ab2187f498442e3ace2d3e986625eb54886ba988002cf75eef2b",
+    "tests/test_catalogue_snapshot_fixtures.py": "d8b21e9530c61b074e320b6bfef6f9d74a6d3bccacc48bfefaeb258120e98574",
+    "tests/test_catalogue_snapshot_transfer.py": "1036530c19ecc88518395e9dd8a6457bb473dbffd94cb8ade0211f66336bcdb0",
+    "tests/test_catalogue_snapshots.py": "5975a037a81fda6358796a9b5716104809c9bee0a7b76581b7b5659c1d1faf36"
+  },
+  "C09_local_receipt_sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+  "C09_delivery_receipt_sha256": "a6298eeeae50a15a2df2370ba0d95a69b8e4e549670ba191d5f7c0699f37f97c",
+  "C09_implementation_commit": "9214bbe7aac1087b97a6ade8c7e90521a4c98c3f",
+  "C09_to_audited_HEAD_documentation_only_files": [
+    "docs/plans/ocean-v1/DECISIONS.md",
+    "docs/plans/ocean-v1/README.md",
+    "docs/plans/ocean-v1/STATUS.md",
+    "docs/plans/ocean-v1/evidence/C09/delivery.json",
+    "docs/plans/ocean-v1/evidence/C09/hosted-backend.txt",
+    "docs/plans/ocean-v1/evidence/C09/hosted-ci.json",
+    "docs/plans/ocean-v1/evidence/C09/hosted-frontend-v1.txt",
+    "docs/plans/ocean-v1/evidence/C09/hosted-frontend.txt",
+    "docs/plans/ocean-v1/evidence/C09/hosted-postgres.txt",
+    "docs/plans/ocean-v1/handoffs/C09.md"
+  ],
+  "C09_hosted_ci": {
+    "source_commit": "9214bbe7aac1087b97a6ade8c7e90521a4c98c3f",
+    "run": {
+      "id": 38703483565,
+      "html_url": "https://github.com/jarondlk/ocean-platform/actions/runs/38703483565",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "push",
+      "head_sha": "9214bbe7aac1087b97a6ade8c7e90521a4c98c3f",
+      "run_attempt": 1
+    },
+    "jobs": [
+      {
+        "id": 116317051295,
+        "name": "Backend tests and security boundary",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-15T08:07:54Z",
+            "completed_at": "2026-10-15T08:07:54Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-15T08:07:54Z",
+            "completed_at": "2026-10-15T08:07:56Z"
+          },
+          {
+            "name": "Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-15T08:07:56Z",
+            "completed_at": "2026-10-15T08:07:58Z"
+          },
+          {
+            "name": "Install dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-15T08:07:58Z",
+            "completed_at": "2026-10-15T08:08:25Z"
+          },
+          {
+            "name": "Lint active Python code",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-15T08:08:25Z",
+            "completed_at": "2026-10-15T08:08:25Z"
+          },
+          {
+            "name": "Check generated chat scope contract",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-15T08:08:25Z",
+            "completed_at": "2026-10-15T08:08:26Z"
+          },
+          {
+            "name": "Check frozen catalogue contracts and examples",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-15T08:08:26Z",
+            "completed_at": "2026-10-15T08:08:29Z"
+          },
+          {
+            "name": "Run tests with coverage",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-15T08:08:29Z",
+            "completed_at": "2026-10-15T08:12:10Z"
+          },
+          {
+            "name": "Post Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-15T08:12:10Z",
+            "completed_at": "2026-10-15T08:12:10Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-15T08:12:10Z",
+            "completed_at": "2026-10-15T08:12:11Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-15T08:12:11Z",
+            "completed_at": "2026-10-15T08:12:11Z"
+          }
+        ]
+      },
+      {
+        "id": 116317051360,
+        "name": "OCEAN v1 prototype tests and build",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-15T08:07:54Z",
+            "completed_at": "2026-10-15T08:07:55Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-15T08:07:55Z",
+            "completed_at": "2026-10-15T08:07:57Z"
+          },
+          {
+            "name": "Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-15T08:07:57Z",
+            "completed_at": "2026-10-15T08:08:00Z"
+          },
+          {
+            "name": "Install prototype dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-15T08:08:00Z",
+            "completed_at": "2026-10-15T08:08:05Z"
+          },
+          {
+            "name": "Audit production prototype dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-15T08:08:05Z",
+            "completed_at": "2026-10-15T08:08:06Z"
+          },
+          {
+            "name": "Test prototype",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-15T08:08:06Z",
+            "completed_at": "2026-10-15T08:08:07Z"
+          },
+          {
+            "name": "Typecheck prototype",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-15T08:08:07Z",
+            "completed_at": "2026-10-15T08:08:11Z"
+          },
+          {
+            "name": "Build prototype",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-15T08:08:11Z",
+            "completed_at": "2026-10-15T08:08:27Z"
+          },
+          {
+            "name": "Post Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-15T08:08:27Z",
+            "completed_at": "2026-10-15T08:08:27Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-15T08:08:27Z",
+            "completed_at": "2026-10-15T08:08:27Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-15T08:08:27Z",
+            "completed_at": "2026-10-15T08:08:27Z"
+          }
+        ]
+      },
+      {
+        "id": 116317051559,
+        "name": "Frontend typecheck and build",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-15T08:07:55Z",
+            "completed_at": "2026-10-15T08:07:55Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-15T08:07:55Z",
+            "completed_at": "2026-10-15T08:07:58Z"
+          },
+          {
+            "name": "Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-15T08:07:58Z",
+            "completed_at": "2026-10-15T08:08:02Z"
+          },
+          {
+            "name": "Install frontend dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-15T08:08:02Z",
+            "completed_at": "2026-10-15T08:08:10Z"
+          },
+          {
+            "name": "Audit production frontend dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-15T08:08:10Z",
+            "completed_at": "2026-10-15T08:08:10Z"
+          },
+          {
+            "name": "Test frontend",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-15T08:08:10Z",
+            "completed_at": "2026-10-15T08:08:13Z"
+          },
+          {
+            "name": "Typecheck frontend",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-15T08:08:13Z",
+            "completed_at": "2026-10-15T08:08:20Z"
+          },
+          {
+            "name": "Build frontend",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-15T08:08:20Z",
+            "completed_at": "2026-10-15T08:09:01Z"
+          },
+          {
+            "name": "Post Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-15T08:09:01Z",
+            "completed_at": "2026-10-15T08:09:01Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-15T08:09:01Z",
+            "completed_at": "2026-10-15T08:09:01Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-15T08:09:01Z",
+            "completed_at": "2026-10-15T08:09:01Z"
+          }
+        ]
+      },
+      {
+        "id": 116317051570,
+        "name": "PostgreSQL migration and metadata integration",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-15T08:07:54Z",
+            "completed_at": "2026-10-15T08:07:54Z"
+          },
+          {
+            "name": "Initialize containers",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-15T08:07:54Z",
+            "completed_at": "2026-10-15T08:08:07Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-15T08:08:07Z",
+            "completed_at": "2026-10-15T08:08:10Z"
+          },
+          {
+            "name": "Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-15T08:08:10Z",
+            "completed_at": "2026-10-15T08:08:11Z"
+          },
+          {
+            "name": "Install test dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-15T08:08:11Z",
+            "completed_at": "2026-10-15T08:08:39Z"
+          },
+          {
+            "name": "Apply application migrations",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-15T08:08:39Z",
+            "completed_at": "2026-10-15T08:08:40Z"
+          },
+          {
+            "name": "Verify invite acceptance and metadata persistence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-15T08:08:40Z",
+            "completed_at": "2026-10-15T08:09:01Z"
+          },
+          {
+            "name": "Verify transactional corpus upsert is idempotent",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-15T08:09:01Z",
+            "completed_at": "2026-10-15T08:09:40Z"
+          },
+          {
+            "name": "Create isolated C03 retention test database",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-15T08:09:40Z",
+            "completed_at": "2026-10-15T08:09:40Z"
+          },
+          {
+            "name": "Identify the job-owned PostgreSQL container address",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-15T08:09:40Z",
+            "completed_at": "2026-10-15T08:09:40Z"
+          },
+          {
+            "name": "Verify C03 retention transaction ordering in isolated schemas",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-15T08:09:40Z",
+            "completed_at": "2026-10-15T08:09:43Z"
+          },
+          {
+            "name": "Create isolated C05 retrieval test database",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-10-15T08:09:43Z",
+            "completed_at": "2026-10-15T08:09:44Z"
+          },
+          {
+            "name": "Verify C05 vector identity and metagenome replacement history",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-15T08:09:44Z",
+            "completed_at": "2026-10-15T08:09:47Z"
+          },
+          {
+            "name": "Create isolated C09 snapshot test database",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-15T08:09:47Z",
+            "completed_at": "2026-10-15T08:09:47Z"
+          },
+          {
+            "name": "Verify C09 snapshot capture and publication boundaries",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-15T08:09:47Z",
+            "completed_at": "2026-10-15T08:09:50Z"
+          },
+          {
+            "name": "Verify database backup and isolated restore",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-15T08:09:50Z",
+            "completed_at": "2026-10-15T08:09:52Z"
+          },
+          {
+            "name": "Post Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 30,
+            "started_at": "2026-10-15T08:09:52Z",
+            "completed_at": "2026-10-15T08:09:52Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 31,
+            "started_at": "2026-10-15T08:09:52Z",
+            "completed_at": "2026-10-15T08:09:52Z"
+          },
+          {
+            "name": "Stop containers",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 32,
+            "started_at": "2026-10-15T08:09:52Z",
+            "completed_at": "2026-10-15T08:09:52Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33,
+            "started_at": "2026-10-15T08:09:52Z",
+            "completed_at": "2026-10-15T08:09:52Z"
+          }
+        ]
+      },
+      {
+        "id": 116317052679,
+        "name": "Dependency review",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      }
+    ]
+  },
+  "C10_entrypoints": {
+    "preprocessing/ctd.py": "57a7f96a2ee34d70e97c9597cb23a85ff9e5b1a506d3a9dd17a7e568d328bb49",
+    "preprocessing/metagenome.py": "7c40578ded2f284c1df915e531e0b91807b0f6d4a1d2a589e0212e20154430a0",
+    "preprocessing/metagenome_contract.py": "88edad03f0e5e520f45bced3ae74b0f689c8d2d71682f48589b5ad1c4bb5efe2",
+    "preprocessing/pre_analysis.py": "426a19a3c1f7d9dcc4241c7a187352554ab0711cfc438a20f0633804db6bbed8",
+    "preprocessing/derived_artifacts.py": "deba53d403e8ce3c44f1a6482fb1f5cd5b2b81650401cbdd0bfb2aa8d31d5bd4",
+    "api/overview_coverage.py": "3d16822ca03d5613de269832c02bd5a9bbccd8fb30a9eae809c2cb854b9be252",
+    "db/models.py": "e113fe7e6a2ed27d8f931c0282c398003f0dd8b335c0f1ac8e6276558fd7d086",
+    "retrieval/source_scope.py": "6cf36f91b47ff21f33f1865cb5e4a4baf6d60ae0265cfb1c16035642f7d1a54f",
+    "schema/context_catalogue.py": "c757fa2f91c3e44c5832290faaf9fa01d7501c33348747fc281fd92e7dd13dd0",
+    "tests/test_ctd.py": "33eb74b418528f1c8a35cf571f9a7305f3bc092a0f09493b299003b11c257c1f",
+    "tests/test_metagenome_loaders.py": "8e9f526080a63be090109e774a8ee5922cefe5eaba41102c2df5216680ffaf00",
+    "tests/test_overview_coverage.py": "290d06a0b675831f28d6cd7e8c047e7583d2cee4c8d82efc89eb9b210dd3a437"
+  },
+  "verification": {
+    "checks": [
+      {
+        "name": "baseline",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "-m",
+          "pytest",
+          "tests/test_ctd.py",
+          "tests/test_metagenome_loaders.py",
+          "tests/test_overview_coverage.py",
+          "-q",
+          "--tb=short"
+        ],
+        "exit_code": 0,
+        "summary": "36 passed, 1 warning in 0.84s"
+      },
+      {
+        "name": "prerequisites",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "-m",
+          "pytest",
+          "tests/test_reliability.py",
+          "tests/test_pre_analysis.py",
+          "tests/test_statistical_analysis.py",
+          "tests/test_derived_artifact_eligibility.py",
+          "tests/test_remote_sensing.py",
+          "tests/test_catalogue_snapshots.py",
+          "tests/test_catalogue_snapshot_capture.py",
+          "tests/test_catalogue_snapshot_transfer.py",
+          "tests/test_catalogue_snapshot_fixtures.py",
+          "tests/test_context_catalogue_contract.py",
+          "tests/test_context_catalogue_fixtures.py",
+          "tests/test_metagenome_document_contract.py",
+          "-q",
+          "--tb=short"
+        ],
+        "exit_code": 0,
+        "summary": "534 passed, 23 warnings in 13.42s"
+      },
+      {
+        "name": "schema",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_context_catalogue.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "Context catalogue schema is current"
+      },
+      {
+        "name": "browser-types",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_types.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "Catalogue browser contract is current."
+      },
+      {
+        "name": "examples",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_examples.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "C08 shared examples are current"
+      },
+      {
+        "name": "snapshots",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_snapshot.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "C09 snapshot schema and synthetic byte examples are current"
+      },
+      {
+        "name": "scope",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_chat_scope.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "No output; exit recorded above"
+      }
+    ],
+    "safe_environment": {
+      "AUTH_MODE": "disabled",
+      "DEPLOYMENT_ENV": "test",
+      "ENABLE_MOCK_LOGIN": "false",
+      "PERSIST_LOCAL_CHAT": "false",
+      "RUN_POSTGRES_INTEGRATION": "0",
+      "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c10_readiness_unused",
+      "MODEL_PROVIDER": "ollama",
+      "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+    },
+    "service_startups": 0,
+    "C10_implementation_started": false
+  },
+  "preservation": {
+    "C10_entrypoints": {
+      "count": 12,
+      "unchanged": true
+    },
+    "C08_accepted_files": {
+      "count": 12,
+      "unchanged": true
+    },
+    "unrelated_files": {
+      "count": 30,
+      "unchanged": true
+    },
+    "scientific_artifacts": {
+      "count": 7,
+      "unchanged": true
+    },
+    "serving_files": {
+      "count": 2,
+      "unchanged": true
+    },
+    "P00_current_files": {
+      "count": 36,
+      "unchanged": true
+    },
+    "historical_evidence": {
+      "count": 273,
+      "unchanged": true,
+      "files": {
+        "docs/plans/ocean-v1/evidence/C01/offline-tests.txt": "363d2ca70cdf7a77d144fab2c894f3863f7c094c13b92354f5b0f9bc0287984e",
+        "docs/plans/ocean-v1/evidence/C01/verification.json": "c50ec89fc9c696573cb568c7b90221a3891113e7e711ff258fe50b921194f109",
+        "docs/plans/ocean-v1/evidence/C02/final-gates.txt": "c499a7e777f5774030d7a82d383c90b61158011d55ec84f4dd098474c44b322a",
+        "docs/plans/ocean-v1/evidence/C02/offline-tests.txt": "2761967cf6cb464789fcf7e42091f90f477cc5194632248dfeefa445f1340466",
+        "docs/plans/ocean-v1/evidence/C02/required-tests.txt": "9e4ef98e9c3dceff654b05cfc1d483f3781d152525188f34a80d1296dc0ad5f3",
+        "docs/plans/ocean-v1/evidence/C02/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+        "docs/plans/ocean-v1/evidence/C02/synthetic-regeneration.json": "2028685d2e5e91f567f45c588093af4e7401d5aa540e27e69fd2f3d3f6661167",
+        "docs/plans/ocean-v1/evidence/C02/synthetic-regeneration.zip": "9ed92b4301cf4dea9b4246ce4473fc42eea80dc668a88b2d66a8912ddedd8c18",
+        "docs/plans/ocean-v1/evidence/C02/synthetic-verification.txt": "1adee5064e811287a87b7886f229dbbce9b5030aa5033ed8d6aacc3d0aaec259",
+        "docs/plans/ocean-v1/evidence/C02/verification.json": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e",
+        "docs/plans/ocean-v1/evidence/C02/verify_synthetic.py": "513b67b539b3102195e2627a7b02f707c6836561f49ebe3a2459cae09e2b3cc5",
+        "docs/plans/ocean-v1/evidence/C03/auth-security-regressions.txt": "4ccbc8ad8a3a4e6acc0a9688a2446f31166a352045076ac2bd7ea285b9f51706",
+        "docs/plans/ocean-v1/evidence/C03/backend-tests.txt": "f179df3f5278d26a18e39a25ba9495b41a12a15cfd47158b57d293f3040d03df",
+        "docs/plans/ocean-v1/evidence/C03/baseline-postgres.txt": "4d3fe29653bfd403f1705629cba942dd27753b73efd10f03087dc452a04275ac",
+        "docs/plans/ocean-v1/evidence/C03/baseline-unit.txt": "0bc88d3c79fd87367d5cfe3ad9f2228d1b4d9c49b05ea0ad50a8a487e76abd62",
+        "docs/plans/ocean-v1/evidence/C03/c03_exact_postgres_baseline.py": "0ff36152448466ce3fb3ff1a776fffc203510bbb05f27011be482091cbdc2ae9",
+        "docs/plans/ocean-v1/evidence/C03/c03_legacy_retention_probe.py": "508f9854010701abed3103c3a9938c4fa3f7f083e2cbf3a2555b08145c5736cc",
+        "docs/plans/ocean-v1/evidence/C03/postgres-tests.txt": "1e96c8a1e904bda89604642ea36e68a150307bb5018e813f2c4712beef3b053d",
+        "docs/plans/ocean-v1/evidence/C03/required-tests.txt": "239ef21ebe4c1ab243fcbf3aec0b3339e9c0c739225c8da9e201d2db24f29e4b",
+        "docs/plans/ocean-v1/evidence/C03/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+        "docs/plans/ocean-v1/evidence/C03/verification.json": "4fe79931c252a672964b9549af855c1868757ec55f698cdb49fa069e67066510",
+        "docs/plans/ocean-v1/evidence/C04/backend-result.json": "b2b84a3d551041f99cf94776af8dbd09c28162b54c8b3c732ef5ab02b877e624",
+        "docs/plans/ocean-v1/evidence/C04/backend-tests.txt": "85e33407a2e1b8aa6ddc494d2a35ed4de8bb9b70cf1fe9f584d36ad1f1723c66",
+        "docs/plans/ocean-v1/evidence/C04/baseline-auth.txt": "43daff2431552825185b9a9a4a95f27354555aa7dd131e509cde75a8d832dbb8",
+        "docs/plans/ocean-v1/evidence/C04/baseline-limiter.txt": "5818e901fb68a712b2d85fbfe33bba0eaf54a4a3523a5e481aab37b1db080bc3",
+        "docs/plans/ocean-v1/evidence/C04/baseline-source.json": "32d674066643cdbce8cc00ea70abae74730197566b5dc0a300d74d338298c334",
+        "docs/plans/ocean-v1/evidence/C04/checkpoint.json": "e0d9cddb48e30229c806e04a86048fc3c03e490f746e2a7aeb57c1633e95dfd7",
+        "docs/plans/ocean-v1/evidence/C04/preservation.json": "ec23661793d263b21e3862111d3624bb2b132b812e79b5a9ddb48f12957e4514",
+        "docs/plans/ocean-v1/evidence/C04/required-tests.txt": "b8029e05b35da614901afad02f2bef62bd25dc98a1bfa6615d13e131cd909087",
+        "docs/plans/ocean-v1/evidence/C04/review.json": "ed22062ff3b1739639f3fdaa6214ba835c0096a6c3dc6868f25c8ac76241da51",
+        "docs/plans/ocean-v1/evidence/C04/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+        "docs/plans/ocean-v1/evidence/C04/runtime.json": "5f70b22646f6fafb775962f7ea100bff2d69364d455318a3762383ff7e7c94ac",
+        "docs/plans/ocean-v1/evidence/C04/verification.json": "a03f39b682573b2d7d7e8cb9db6a6c0bda7c7aa9f494bd514d60c7490d1deaaf",
+        "docs/plans/ocean-v1/evidence/C04/verify_backend.py": "76c0cc7ed793a18a504a3dbba7da20478846d43af654884baf4f568cd672aa3d",
+        "docs/plans/ocean-v1/evidence/C05/backend-result.json": "772ce3ce4fb5ff18bb270fa2cfa5f50e2fe353ac9940d260161bb03cb2c77ee5",
+        "docs/plans/ocean-v1/evidence/C05/backend-tests.txt": "4ff107ff01cc45d81a35edcebed74e639237924802742becfe0da1e155269b48",
+        "docs/plans/ocean-v1/evidence/C05/baseline-embedding.txt": "704fcc07cebb464833753bb45c5bc5436f9d5d1449fd73822cf851085a924446",
+        "docs/plans/ocean-v1/evidence/C05/baseline-metagenome.txt": "e222db22322f761551cb40742d013608baa21375fd583f6635032f85f62d31f3",
+        "docs/plans/ocean-v1/evidence/C05/embedding-tests.txt": "62c299f03f1f4386c8bceea7f47b24b24355556381b50b45b45c7e32b8bf7daa",
+        "docs/plans/ocean-v1/evidence/C05/pip-check.txt": "8cf9abedfe3308838095c11b57a9a8ddf6dac0037cf30060cadb4c5a1912913f",
+        "docs/plans/ocean-v1/evidence/C05/planning-validation.json": "105d6c389d5cc49e0edefffbce17264112027574c0ffd28c156f494eed7d3b13",
+        "docs/plans/ocean-v1/evidence/C05/postgres-lifecycle.txt": "ebd7aa942d28d5b07d24d841b31a5704392eb78fb3ba8bf4bf7e4f8b9a39668f",
+        "docs/plans/ocean-v1/evidence/C05/postgres-regressions-lifecycle.txt": "4f17922e9ebf893b945c244a9f171a78d41d52b1c59c4b0a3b1a978bbeb909ca",
+        "docs/plans/ocean-v1/evidence/C05/postgres-regressions-result.json": "7036fc19aa901e553a047663633f747d768fdc69641221a6da57c718263e9c80",
+        "docs/plans/ocean-v1/evidence/C05/postgres-regressions-tests.txt": "bf686b97b435cc4c4c3ff08431c81c848bf0fdb8190bf2a6e9b108c7fb67a644",
+        "docs/plans/ocean-v1/evidence/C05/postgres-result.json": "7b451ce8bfd69244b7d9b36ca8eb954d338be267e30039225ebca932b4e37e85",
+        "docs/plans/ocean-v1/evidence/C05/postgres-tests.txt": "698e0bc9354909db5058b634a143980d4bd5d20f6aea74a9afa053decafcabb6",
+        "docs/plans/ocean-v1/evidence/C05/postgres-upsert-1.txt": "70ace747083d7dc74732af44cac6509cdfea395467075cb004da943ffa07ba5d",
+        "docs/plans/ocean-v1/evidence/C05/postgres-upsert-2.txt": "83aec259c78ae547249c2a5a9d1629e7dd0668036598628775dabc3c84d73c6d",
+        "docs/plans/ocean-v1/evidence/C05/preservation.json": "312b435d353610db28272540f75bc76ffe53473bd1cc9d8ee146e17674109b35",
+        "docs/plans/ocean-v1/evidence/C05/required-tests.txt": "8c0d7deec8460ff61076bdeb177e632ddef788645e1596da18b1b54a7b1ce5ae",
+        "docs/plans/ocean-v1/evidence/C05/review.json": "197b77c13e429a28474a1cc85d85427704d8e4d9a632c6d95e2106dd346a2695",
+        "docs/plans/ocean-v1/evidence/C05/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+        "docs/plans/ocean-v1/evidence/C05/runtime.json": "b22812739f4c717fbd02a426c1940432d316aab4e49cbafa23ba2cd1a0a8f485",
+        "docs/plans/ocean-v1/evidence/C05/scope-contract.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "docs/plans/ocean-v1/evidence/C05/start-snapshot.json": "b37e2ae6f0a5c5e556c29f610aa6430babd3f3909c8e73b18f5165a77b3c7f26",
+        "docs/plans/ocean-v1/evidence/C05/synthetic-context.json": "aa6ff453c2fc35e68e54c2a5b645e03467d7ffa8824afbbae0ed84b00770b2c5",
+        "docs/plans/ocean-v1/evidence/C05/synthetic-documents-changed.jsonl": "72d6309875448ceba4f42be7373cf8a7f2eacd0fcf85351de5a087a0e6b0dd37",
+        "docs/plans/ocean-v1/evidence/C05/synthetic-documents-repeat.jsonl": "9a996d4ef78a928374e0b553bd971c348e3036be2c38f21e35c413002ccaafe6",
+        "docs/plans/ocean-v1/evidence/C05/synthetic-documents.jsonl": "9a996d4ef78a928374e0b553bd971c348e3036be2c38f21e35c413002ccaafe6",
+        "docs/plans/ocean-v1/evidence/C05/synthetic-rebuild.json": "8aa883efc3afdfb33afe3e6dce963dbb876098a6e383ff72a5d5c6b5f3665f4d",
+        "docs/plans/ocean-v1/evidence/C05/synthetic-rebuild.txt": "d9300157fb46a836e843351760ee4f87a904dc603e6d25cf473c429bb751d723",
+        "docs/plans/ocean-v1/evidence/C05/verification.json": "6575878bcdc75d794c7b52f6794ca018e8c7725eda48eb274da2895b851744ee",
+        "docs/plans/ocean-v1/evidence/C05/verify_backend.py": "366ae37bbbc8bb5f721ab48bb88145dc36ca67385ef0446f12bd7dd6499d77b0",
+        "docs/plans/ocean-v1/evidence/C05/verify_postgres.py": "c7d25daadebdc4ec74ad7fa7f99750cc5134a3f2b1755a29e6772f3d71f327aa",
+        "docs/plans/ocean-v1/evidence/C05/verify_postgres_regressions.py": "42f80004743cae3efc1f8723c6bf789e5f25d44879ad7786591d752393f8f4fc",
+        "docs/plans/ocean-v1/evidence/C05/verify_synthetic_rebuild.py": "e85e1284b0bf2ab22463e390e513ee4ab55f30e70fa9eaa0f4680d63fe8f5d89",
+        "docs/plans/ocean-v1/evidence/C06/backend-result.json": "5a3a65a74a0b2d540c2a06b6911128662ff7c87425bc1b8abd46ffb8f4fa4801",
+        "docs/plans/ocean-v1/evidence/C06/backend-tests.txt": "2ddfc8dc41d27b400c7baf047fe325f3e8aff9e59c7ce92a0fc2ff6d4795c2fe",
+        "docs/plans/ocean-v1/evidence/C06/baseline-runtime.txt": "3054e01f1dcd884eafd6eece4145db7777cc5e9f99a1bbb1c50cfab84d602c35",
+        "docs/plans/ocean-v1/evidence/C06/consumer-followup-final.txt": "80da666af496083667355052e77b10c4a28a899184764b960b3b41b4daeb300d",
+        "docs/plans/ocean-v1/evidence/C06/consumer-followup.txt": "d149a8af28a38a2395f6b960cc1a99ec95ed458f2e59a58a644bd5a8ce09c12d",
+        "docs/plans/ocean-v1/evidence/C06/consumer-tests.txt": "6827fd9331aeb9d8c2fb9040a86bd84eb78a2f26b77129106e7c625caa78b7da",
+        "docs/plans/ocean-v1/evidence/C06/delivery.json": "4f425667c2567663797e8bf82afa36520ea8e197a3fe65558898cedb44992cc7",
+        "docs/plans/ocean-v1/evidence/C06/generation-contract-followup.txt": "149f7ffbba3435e2a517963f66d6ff5f5a33f0fd9356fefe48b01e8adc7b436a",
+        "docs/plans/ocean-v1/evidence/C06/generation-contract-tests.txt": "c9b21ac8483a425d7592a443ab35196e5a996ae3977ce4b60984f2e14e3a2f00",
+        "docs/plans/ocean-v1/evidence/C06/hosted-backend-summary.txt": "5c36a31036014093f869447d23c8f1079145749f8f8a77716cad675097960ff5",
+        "docs/plans/ocean-v1/evidence/C06/hosted-ci.json": "885a38bf84d343abaa4aba84aed7cb7570b7f0d5ae3f3f48a145c026f73001a4",
+        "docs/plans/ocean-v1/evidence/C06/hosted-legacy-summary.txt": "b7dd58fc1f2aed4af4dfb7f2d5693885435d5e8531696e2ebe2911233c56ffa6",
+        "docs/plans/ocean-v1/evidence/C06/hosted-postgres-summary.txt": "717edcf8e6a7f3876ecc4df189f000dd51d6c6c60f1f53fff468f8e128c81edc",
+        "docs/plans/ocean-v1/evidence/C06/hosted-v1-summary.txt": "31fd381d38405b6a66c3740545cfc891b1937438bcce22fde524585b045941ab",
+        "docs/plans/ocean-v1/evidence/C06/planning-validation.json": "ce9471619fe770a4806b5b600697813d2e6bfc61e741b309e30ba9cac25abbbe",
+        "docs/plans/ocean-v1/evidence/C06/postgres-regressions-lifecycle.txt": "297c309106d6f09ae015df50d7b7c24d9943ded12bc6e99e26a235aa48b557fe",
+        "docs/plans/ocean-v1/evidence/C06/postgres-regressions-result.json": "fad7c0c69249ef51ea64451011408542c0cf8b0c1163f809ba238c07ce00bcd5",
+        "docs/plans/ocean-v1/evidence/C06/postgres-regressions-tests.txt": "db6e9f0233489d84091e70cd3626442a69202e67965b01653f0c6dbfd28fee2d",
+        "docs/plans/ocean-v1/evidence/C06/postgres-upsert-1.txt": "8a93019b3518d1a5769d9c14a71c0fa2f4d9340025254bf9be682753cd89d879",
+        "docs/plans/ocean-v1/evidence/C06/postgres-upsert-2.txt": "1ef31f49eb164ada5be65885cc40c2c72d85b0a92245071d27f949f6e639ea31",
+        "docs/plans/ocean-v1/evidence/C06/preservation.json": "cf400fb0e871c4a9e8c2ffc63e477dac0473d800f3ae445a16139ad5a2407aaf",
+        "docs/plans/ocean-v1/evidence/C06/required-tests.txt": "c8f3360ca3655d6029408f509d31fcdf21ceee43a966e9e0e2cdecc4712211b0",
+        "docs/plans/ocean-v1/evidence/C06/review.json": "6909f5c2f36c590b7c8ac9be4f9530215510570bb49ef03852f5306d29280cde",
+        "docs/plans/ocean-v1/evidence/C06/ruff-evidence.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+        "docs/plans/ocean-v1/evidence/C06/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+        "docs/plans/ocean-v1/evidence/C06/runtime-tests.txt": "c932c59743370e3587547140a604ce21586ba28bbabc5f8663d262c0ee7b73a2",
+        "docs/plans/ocean-v1/evidence/C06/runtime.json": "d46023bdf7b93c9182852f6259ac120f5be08c57d5aa38aba145f7eb4ae2a21f",
+        "docs/plans/ocean-v1/evidence/C06/scope-contract.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "docs/plans/ocean-v1/evidence/C06/source-checkpoint.json": "4ab51c114c9444f6a0262607304cd24739f1eb7d0496caff6a40c0e7a168c205",
+        "docs/plans/ocean-v1/evidence/C06/start-snapshot.json": "18e6c050a9752026e2a413b2086d6eeefd4a0be19dcaf8821c00072bf58f6e9b",
+        "docs/plans/ocean-v1/evidence/C06/verification.json": "02f25ec13e6076feb5f95a5ce25c1258dd738af8716e9896d8311a7b1ff2e489",
+        "docs/plans/ocean-v1/evidence/C06/verify_backend.py": "b9fbe4b15595ec164a02325dec5080d89704bee40761729487cf6be829ee1d4d",
+        "docs/plans/ocean-v1/evidence/C06/verify_postgres_regressions.py": "305084ee039702b4b876e7b34f442ec07edfa51fed64b688cbf96d03b4fc5bf3",
+        "docs/plans/ocean-v1/evidence/C07/backend-result.json": "be9ba1e750f921ba8e415ba6e1f603cb054e70baa135aaa70da6f4b2ed5650d0",
+        "docs/plans/ocean-v1/evidence/C07/backend-tests.txt": "eace4321855d55004c833c4f40eb6df86f2b351ad7d25cb09bdf061fd96ac410",
+        "docs/plans/ocean-v1/evidence/C07/baseline-browser.txt": "260bb3b03afa8946d1f88271c1b6ba595493a9a2d53f82521070f7597c2bb0c1",
+        "docs/plans/ocean-v1/evidence/C07/baseline-server-reproduced.txt": "766cb727427cfe042f6c9b1b3db036009bcdf3bf20c62697e57ccd75d78b2a2d",
+        "docs/plans/ocean-v1/evidence/C07/baseline-server.txt": "c0d30632088aba153ca94e0f1ec33e2649c1a10dd15904e21404bcbb5fe1f51c",
+        "docs/plans/ocean-v1/evidence/C07/browser-focused-tests.txt": "4fe556a18551f242b306b73b05f2f9643825c9db3c4162ab9667af2e25da7e67",
+        "docs/plans/ocean-v1/evidence/C07/delivery.json": "528dc48e587cd588ae3946e2d2f623a3b58f353b34a731229d911abd572e0c14",
+        "docs/plans/ocean-v1/evidence/C07/frontend-build.txt": "13eada57418cb9d9828d66be8ed55a298746860173df4fb79dd8cbd34a1e425c",
+        "docs/plans/ocean-v1/evidence/C07/frontend-csv-tests.txt": "e348160a0b49fb8e8e6ac2828a5998379c84999d1a61dd6ae39696cca8466b23",
+        "docs/plans/ocean-v1/evidence/C07/frontend-dependency-refresh.txt": "0abeb302b8d58d096b4b126d5a9551c6d02be733e166e57380a43a5ad029ed9f",
+        "docs/plans/ocean-v1/evidence/C07/frontend-refreshed-build.txt": "d6486e268bbf8de2ce374eecd224ed01f18d0a61445e17368f32f9736d85d788",
+        "docs/plans/ocean-v1/evidence/C07/frontend-refreshed-result.json": "1749817de71d3088ddc1146b94e3a3f4aeff10a35bee0f9ebef534afbe6b9f33",
+        "docs/plans/ocean-v1/evidence/C07/frontend-refreshed-tests.txt": "dfb372c9f3be7353febf101092684860253fb24c67f105ecac7768682acd0646",
+        "docs/plans/ocean-v1/evidence/C07/frontend-refreshed-typecheck.txt": "fc392d1461c4eecb6eb76771999435411443ed0e553641e1fe580403e5e87d52",
+        "docs/plans/ocean-v1/evidence/C07/frontend-tests.txt": "769da46fb8a4ca5ca85a3ece30bb4eaf24b530f431eb93e3667076bf682c7372",
+        "docs/plans/ocean-v1/evidence/C07/frontend-typecheck.txt": "fc392d1461c4eecb6eb76771999435411443ed0e553641e1fe580403e5e87d52",
+        "docs/plans/ocean-v1/evidence/C07/frontend-v1-build.txt": "5dc701ff9f8774afc711c8752f68032cbee63048ecccebe9f72e913d36728f39",
+        "docs/plans/ocean-v1/evidence/C07/frontend-v1-tests.txt": "a6bc598db2f4d27a325865d5193304c5a2a25416abf4b0b4ac46f3336fe823df",
+        "docs/plans/ocean-v1/evidence/C07/frontend-v1-typecheck-initial.txt": "cce731ca86109c3a902c481154993753a660a3cd47e83533bbe81e486d00d291",
+        "docs/plans/ocean-v1/evidence/C07/frontend-v1-typecheck.txt": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936",
+        "docs/plans/ocean-v1/evidence/C07/hosted-backend-summary.txt": "2e2cae950c1bd5f53b7fff5a3c1167b05e0a6d030dc5003a55c8410f26ea3f6d",
+        "docs/plans/ocean-v1/evidence/C07/hosted-ci.json": "1b8f87ccbda954ad3665e172454f3f0fe5ded7a3b267ce05c81bced99802f74f",
+        "docs/plans/ocean-v1/evidence/C07/hosted-legacy-summary.txt": "ce8267704f1508a740251e78c3f62358827fed47fdc42d231db61e7cdde9fbbc",
+        "docs/plans/ocean-v1/evidence/C07/hosted-postgres-summary.txt": "02bd0078c771fe9649f76796d2aa702afcdbd504998df5c501aaff5199c53584",
+        "docs/plans/ocean-v1/evidence/C07/hosted-v1-summary.txt": "ee5f413e108ed468ee1904d27f0b9adb796a68313ef038995f360f112c28a13c",
+        "docs/plans/ocean-v1/evidence/C07/log-normalization.json": "ced25cb4452e3127b8a1c8ec1a4e5824714a08b5df1d026eabee93afe25de368",
+        "docs/plans/ocean-v1/evidence/C07/planning-validation.json": "48098034ccd2443d8fbb92e20c62edd791df4f6dd1d16dd069c2200cd3ad0837",
+        "docs/plans/ocean-v1/evidence/C07/preservation.json": "da2e06c915a7d2ca232dc2d9c2f95cc49537ad1e34f3979c5367182a2c4d854d",
+        "docs/plans/ocean-v1/evidence/C07/reproduce_server_baseline.py": "317cfa5ab3794b6294503660db84f2ad63f7c9d8a8365166af14ac3abfe07d93",
+        "docs/plans/ocean-v1/evidence/C07/review.json": "13e640153a1dbf542a507525a606ce58563d757436c088dbedde979b6bb99ce6",
+        "docs/plans/ocean-v1/evidence/C07/ruff-server.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+        "docs/plans/ocean-v1/evidence/C07/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+        "docs/plans/ocean-v1/evidence/C07/runtime.json": "35b23e3fd48362cb47ed842ec18fff58c27244fad0bb863ef18cc2c466e961d4",
+        "docs/plans/ocean-v1/evidence/C07/scope-contract.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "docs/plans/ocean-v1/evidence/C07/server-tests.txt": "c5aaad758db3adab5c5b9ffde633e7d60e4f20ea7111019519d4aa58e222e6a3",
+        "docs/plans/ocean-v1/evidence/C07/start-snapshot.json": "2a9b9ceb847601d466e8913386b4aa945b8d070a2bd81dd3f7ab81394192b9d2",
+        "docs/plans/ocean-v1/evidence/C07/verification.json": "99b78a6cefac34b9dc98fc67d9b6fc8a572355ca04fb84644a6ba14341fadc69",
+        "docs/plans/ocean-v1/evidence/C07/verify_backend.py": "0662e29531dd7dc19c5c3f362c4aff479b4a1d1b9b151df7bcab0dc788b00f30",
+        "docs/plans/ocean-v1/evidence/C07/verify_frontend.py": "da04cecdc61f8cf71e3726db9bc6cc0d0e57321d0cc60fc90f025ff95bccb02f",
+        "docs/plans/ocean-v1/evidence/C08/backend-result.json": "999a29016ec2234eff5c6415268dfdd7c2769e048a3e9a085303056eda6abde1",
+        "docs/plans/ocean-v1/evidence/C08/backend-tests-first-full.txt": "968c93e68b0c92bc56176736e0ae1b1780a2aa4717b0b5a65556c9fd5c70c025",
+        "docs/plans/ocean-v1/evidence/C08/backend-tests.txt": "2f907ebe2f96d26bfe42804308b13e8091b1a36afb06535c1c72f1c7c5e1e90e",
+        "docs/plans/ocean-v1/evidence/C08/baseline.txt": "524e8c71b730a73cf56684e8b564439e9f1b19fdfbcffcd223a799a6ad7a67fa",
+        "docs/plans/ocean-v1/evidence/C08/delivery.json": "13c0e2a9c4e0553c048f5da4d75ab84d24ee71be611eaa14fe0022e873f3c53d",
+        "docs/plans/ocean-v1/evidence/C08/fixture-tests-initial.txt": "4657e8aba407eee07d849da6d743281432fb0b31292bb07f45c265e3d6092532",
+        "docs/plans/ocean-v1/evidence/C08/frontend-contract-initial.txt": "db92a9d69de345a7fb039a2c7f47dfeb3fdd13b2ab0e5dab6027a41a09584f90",
+        "docs/plans/ocean-v1/evidence/C08/frontend-result.json": "ffa3f943d1b8233b44f9d372146377611eb6798fdcb6f18a3ba8949ec30df631",
+        "docs/plans/ocean-v1/evidence/C08/frontend-v1-build.txt": "547315b2d83be195d1ac0179f9dceea6062a116da97c0ac4254e9fd4cc138651",
+        "docs/plans/ocean-v1/evidence/C08/frontend-v1-tests-first-full.txt": "097fc520de7fc94821fd68d2e3393f4d509f7c995b468954fc8ae21f4d0782a6",
+        "docs/plans/ocean-v1/evidence/C08/frontend-v1-tests.txt": "6621e9ca00442962c7397e57d39f4426384d3ed3f14085b91975b9cfaabddb0e",
+        "docs/plans/ocean-v1/evidence/C08/frontend-v1-typecheck-initial.txt": "0e7c5851050d60c4887bff8286d149d68b34620c6249a3386eebf1814d861ad3",
+        "docs/plans/ocean-v1/evidence/C08/frontend-v1-typecheck.txt": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936",
+        "docs/plans/ocean-v1/evidence/C08/generation-checks.txt": "df51a9f41ba85d1eac82f9e6bef36ae49b7fc067e37224de21d3e6222220e93d",
+        "docs/plans/ocean-v1/evidence/C08/hosted-backend-summary.txt": "b47e23c28bcd969622b405cfe45b2856d78f131b103cf3a87dff8ad2dce2856c",
+        "docs/plans/ocean-v1/evidence/C08/hosted-ci.json": "cb2360b8993510697f8fc928db7be23c559b0fba21ccf43d342fd39db0f5451d",
+        "docs/plans/ocean-v1/evidence/C08/hosted-legacy-summary.txt": "1eff78258e9df8b7cd3fb10340e3219c3d9003ea580652fdb0abf80dd5c2a498",
+        "docs/plans/ocean-v1/evidence/C08/hosted-postgres-summary.txt": "ef6c47770d3bbb6577b613b25b48cf6046195d9c91af774569eca1daf87773b6",
+        "docs/plans/ocean-v1/evidence/C08/hosted-v1-summary.txt": "057df59d194edbd4e0ffb377f5ef25af94f7f11ab1a11a6c60f7b74df575d2e2",
+        "docs/plans/ocean-v1/evidence/C08/planning-validation.json": "5f51d62d0b6e3345e6d32c2c8808439fdd949ce28c4cc3e3d786429eed33486b",
+        "docs/plans/ocean-v1/evidence/C08/preservation.json": "fe9556a39e95b77008092d3e2e7e36766e4be41fe6ed7d4f5f84219092eab632",
+        "docs/plans/ocean-v1/evidence/C08/required-initial.txt": "d8cc1af5b1cbfa5a7f4ebc25ed8f2dbfb120516da4d4652d02d7ee374d0451c2",
+        "docs/plans/ocean-v1/evidence/C08/required-tests.txt": "496d689cea2d5639f11b4a4b9a6555f5f966fea6674d15348d69a564186d793a",
+        "docs/plans/ocean-v1/evidence/C08/review-parity-initial-summary.json": "60bf4d9932d28d325428a155ac331b35ea20dff5268da3c6f0daf2a87a00e94d",
+        "docs/plans/ocean-v1/evidence/C08/review-parity-run.txt": "67e0c33886ab46c285a2a0986bf2eece964aab5113dc6b1e6dd0abaea1bc5f78",
+        "docs/plans/ocean-v1/evidence/C08/review-parity-seeds.json": "1a12aa8fb4583084fcd17f198a449c424abad46d7ba6d2e99ede820c337aae96",
+        "docs/plans/ocean-v1/evidence/C08/review-parity-summary.json": "d2687dd4d4b6d1ad565fc344784500a844ad6ac9ad78ea3e75065d6a0c358dc4",
+        "docs/plans/ocean-v1/evidence/C08/review.json": "e35e85ad02c9ed158308f583196e43ef81402b0138722303bad9c62c0a24e04d",
+        "docs/plans/ocean-v1/evidence/C08/review_parity.mjs": "48565f037339495417d8c56c9c65aaf560c7a93d67bb28eb3d647127fec747e1",
+        "docs/plans/ocean-v1/evidence/C08/review_parity.py": "14dd5063357cc946a68ac60dba7b2f8b2fe53d44325ada3f679313795337de17",
+        "docs/plans/ocean-v1/evidence/C08/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+        "docs/plans/ocean-v1/evidence/C08/runtime.json": "9f9a705fe651faaf460c469a06ae011d3aa1086520fd4eda781c5847b159fd3b",
+        "docs/plans/ocean-v1/evidence/C08/scope-contract.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "docs/plans/ocean-v1/evidence/C08/start-snapshot.json": "2d80db6363d2f8cb7ec3b75ff488e9ac6f20330b155adf1b582eb64fdd4b5a88",
+        "docs/plans/ocean-v1/evidence/C08/verification.json": "acfee7a36ecc76cf66d5ad9edeec9711c8d12a95400702e940c1ea263090df14",
+        "docs/plans/ocean-v1/evidence/C08/verify_backend.py": "7744ab1abead4f361ea2e1e1cd634acbdad47ad712fc4ddb3b548f24301dae1d",
+        "docs/plans/ocean-v1/evidence/C08/verify_frontend.py": "398f71553787048439623eaab6b331629d38dc08ac9c239d38ecf0028fe24d45",
+        "docs/plans/ocean-v1/evidence/C09/backend-result.json": "9d32046f74c68061520da3bf1e6b50c6fc07072d25170c76ade9c1c08ceb6c0b",
+        "docs/plans/ocean-v1/evidence/C09/backend-tests.txt": "c1730c8a8e7e903bba6342c397bc55df278ece42322a734172e33d3045977d0f",
+        "docs/plans/ocean-v1/evidence/C09/baseline.txt": "a6ab6ae8d5110057b55da60366f672f3cac0cffdca1d067b1571457375d517b5",
+        "docs/plans/ocean-v1/evidence/C09/delivery.json": "a6298eeeae50a15a2df2370ba0d95a69b8e4e549670ba191d5f7c0699f37f97c",
+        "docs/plans/ocean-v1/evidence/C09/generation-checks.txt": "8c1a89cf2294e979d228e5622c793ae8af50623b7a6075d4ddd214fc7a684865",
+        "docs/plans/ocean-v1/evidence/C09/hosted-backend.txt": "a0e2a15472f6f0d5c051bb10fe2b80b423575d251ad8a864ecfee090b1e96876",
+        "docs/plans/ocean-v1/evidence/C09/hosted-ci.json": "7802b8dda3b5add64bf425c739f26f1f067ce71e0243fe478fa6b88d1d48a3e1",
+        "docs/plans/ocean-v1/evidence/C09/hosted-frontend-v1.txt": "c4d65dfa401656df924517493255a33f29632cbe00192110c503c23865922d93",
+        "docs/plans/ocean-v1/evidence/C09/hosted-frontend.txt": "2474a78685c0efcef9d91721f8bab4c463c243878f1ebea68152afb3229d8822",
+        "docs/plans/ocean-v1/evidence/C09/hosted-postgres.txt": "79e2dffe0f921f9be1e78b61b764da7810f898a92da13f593022137e8b8c70b7",
+        "docs/plans/ocean-v1/evidence/C09/independent-review.md": "6d64912d41cc9053126dd7cd76518bc0795a2e96e07a83e182033722381792be",
+        "docs/plans/ocean-v1/evidence/C09/lint.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+        "docs/plans/ocean-v1/evidence/C09/planning-validation.json": "5d0af5260fda4830505ab67b33585ab23cd46a689b954efd3d7c42acb5445cc8",
+        "docs/plans/ocean-v1/evidence/C09/postgres-lifecycle.txt": "92f4bbece4dd8c89f4785c9b7df0219ba2bb612d639533e26d5045a5d2ab922a",
+        "docs/plans/ocean-v1/evidence/C09/postgres-result.json": "53ced038bf61f0173b0a239e104d7b347721fe47d64768250b0897123c91129b",
+        "docs/plans/ocean-v1/evidence/C09/postgres-tests.txt": "e57105252dd2c4734d94dc2526289ef59df7183d997c7880df6d093631f8eb04",
+        "docs/plans/ocean-v1/evidence/C09/preservation.json": "155dc575b6538d7b85fbf1d4824a807a3dec4d58ec765494029c321b94be700d",
+        "docs/plans/ocean-v1/evidence/C09/required-tests.txt": "cd77bd9a339bb8fc3954833401018b1b46ba7947377e757ac1459dfe853bcdaa",
+        "docs/plans/ocean-v1/evidence/C09/start-snapshot.json": "fd96219cb364f2df2e857b5ce511d5f15233d8e93162d0841a8aa6c2afcdae88",
+        "docs/plans/ocean-v1/evidence/C09/transfer-tests-initial.txt": "1e1c33dfe50067bb9a15b8a2a4160d4343c5c348f8c040d8514be83f16f53231",
+        "docs/plans/ocean-v1/evidence/C09/transfer-tests.txt": "c6d73ac177fd94cecf44f0471a375a0a1081ffac3b441aeefaffa3a1a36edc9a",
+        "docs/plans/ocean-v1/evidence/C09/verification.json": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+        "docs/plans/ocean-v1/evidence/C09/verify_backend.py": "c81e4352bca40084cd1142b98732f5c41c013629aa53521bdefc3b0eb5a53158",
+        "docs/plans/ocean-v1/evidence/C09/verify_postgres.py": "b0b373416357ab1f45e7f742f5f28676c84b371386f3cb5592766d29a44bbad5",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/authentication-probes.json": "494c3b1905192b0e37d4a0ea67e37067cbaa868cf964a4983dc9a9c6d2ee0101",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/backend-result.json": "56fcb8a6453272a7ae5b7660a54d30eec1e4ca061cac96fc5c2422e3653ed1b3",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/backend-tests.txt": "6c625821221749ed79b8798a38284c84f23e3e20cc47a4eb96e5c7b50a168bd3",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/diff-check.txt": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/initial-checkout.json": "52f5e9a52983435f03f3ce823bcc8c42fcc576b63097bac76534e4becd5c37e1",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/pip-check.txt": "8cf9abedfe3308838095c11b57a9a8ddf6dac0037cf30060cadb4c5a1912913f",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/postgres-lifecycle.txt": "d7242ff02090ff529b3901d9734fd815313bf78cba7ae64b6125ea05152c868c",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/postgres-result.json": "b85e5f358aa4bc3d9f5ec655e5c1a501ead7bf83742c17f58b9078710a6a620e",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/postgres-tests.txt": "92939b595646e11829682e0e1fe2221cdea6016c5791b215834db844945846d6",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/preservation-verification.json": "c296c30d414116af8a010176dc4d7504e832fbe4883e403fb88bbeaa0ed4ce66",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/receipt-verification.json": "f0371c8c8122143ee1a2b6b9be58f29c0ca8799a929295aebcc935b39cd4d1a1",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/remote-verification.json": "2e7886e9d1a03c187442018a97d507acee4919c40771498c8235adb946e579cf",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/required-regressions.txt": "db02a10d5321e746fcccbe509f738803f87770b9e89115e21af71713c7c56a5c",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/sandbox-backend-result.json": "67d9485f328bff427adb785430eb715d253e704be6ef3c0dd93690032b874407",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/sandbox-backend-tests.txt": "fad9d2f61bdf09dab6d1de0449f32b65bfe605fd21f575c3883a036ccf60f421",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/scope-contract.txt": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/v1-build.txt": "b987bed1edbcf3053b0dfc55a6d7532370aec03e17cab70351bc5f79cfb281e6",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/verification.json": "f3d3c6921fc52c600b6cba2a18f48f9162564c0dc99aa7e9b97f05612a2b4345",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/verify_auth_boundary.py": "e3759c0d4b6fd6d0524158a4f891506280e6f721b45daf9fa0d3c9af383936cc",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/verify_backend.py": "a4bc761e262a6eb42d55f9d5c8beca0a2674ea72bb274165d7b5c2b25b069fda",
+        "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/verify_postgres.py": "bf95b50252d1ef26b233ee5844a419d0bbfda04a06066a002209766b11341ddd",
+        "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/baseline-result.json": "da76038eca4a065dbcba1ad6079fd709329e6d5036dd5464f2c3adcc5b793ed0",
+        "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/baseline-tests.txt": "da75b7782eb1d9c582d4d0662fb7c5134acdfd3058619a168153e25fa274a592",
+        "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/hosted-backend-summary.txt": "d9f270de641222e81e0934c2dcb8ada93fa586747099c67c164f4db10f1cb600",
+        "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/hosted-ci.json": "e5878e837c21eb0c38247818884162cdf65dfa30df3c2638c9d0e08abd4a9bac",
+        "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/hosted-postgres-summary.txt": "25bd836045e0e59e60a742a635c51f699b29dfcb6d2691fd0a492f9d6c9273b4",
+        "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/initial-hosted-c03-failure.txt": "bf707952bb4db6403f8c54a7ce974d63d1287767eae801a0e6de7514cfd7305c",
+        "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/postgres-lifecycle.txt": "0a7b1e283b2fdd3b3533f28ed1139113ba52abf1b21fc7a4a8cb8efdd42bacc7",
+        "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/postgres-result.json": "57e80417e6f30c9fe528aa3be5c3ccc206dbf7417a5e27a43cf4887b3bbd8316",
+        "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/postgres-tests.txt": "1b89f429b7cb067991ce547117c29cd453ed695bc79420a1dac39e8ce2e17f9a",
+        "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/readiness-probes.json": "8be3da1c0cb301c5e33c642a981bf436bbaec618ec73093b082dca90c95157aa",
+        "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/readiness_probes.py": "bb274a8531045a456a9ff3dbe6dac1c2cf827085b4e6c0bb49dd87382dfe8c1c",
+        "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/verification.json": "408d9b9d502eaa37028f8059ceb5fde58c2b9a004b758de28010c5dd0a039ff5",
+        "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/verify_c03_postgres.py": "bf95b50252d1ef26b233ee5844a419d0bbfda04a06066a002209766b11341ddd",
+        "docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/baseline-result.json": "d10de6ab3f9ee54bb50e65d09c6178118d2ec2b612c362334d681d263abd5df2",
+        "docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/baseline-tests.txt": "241418e7ea9c47c45d95c9485fe54fd95db46fb21e0023a781c0cc2898caa261",
+        "docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/fetch_ci.py": "cfe73d19d353779ad16f13f59a23736b28e61328c9fb837cec7e886940816ec2",
+        "docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/hosted-backend-summary.txt": "58fe9de203e148a51f417fa6e602eab6c169b808089a0b49d1e7cc7f47097f48",
+        "docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/hosted-ci.json": "9e5a88ab502ad4356c9b849f8bf2c480e892375a34960cecbfc81eab07dbfdac",
+        "docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/hosted-legacy-summary.txt": "3094f4bba386c56edf7ccc5addbc7c0334305cb03996526b3e888f3c15e1cfea",
+        "docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/hosted-postgres-summary.txt": "1077b7ba875f041d59b2e7a63d8644d1b3a2a79dce5a959f2cbb039d36f6a2e5",
+        "docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/hosted-v1-summary.txt": "fcad0c4fc5ecd283ebf49096856d7bf9ee8ed7d0e56935c731758b3968d1bf8e",
+        "docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/readiness-probes.json": "3d43b20d06ad763f2567b721bc4d242dedb1429a06702a329e14e1cfaff64047",
+        "docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/readiness-probes.txt": "6d2fa1ac6f1daf960d0429c7be97dabe27b781112baf05c899a877cc16f78b6a",
+        "docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/readiness-source.json": "1cb85cde8fb820623f5bc6c8585d5a94186e61315cb601a6ae5c0bb96b153485",
+        "docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/readiness_probes.py": "4a3f9d8a3dec183a99ecb4abe64108e01350d114c8895efe09ff91997426e8f3",
+        "docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+        "docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/verification.json": "195f233a0b0702d33282199dc146a19e7ea28127238bfc007028e55038ed4f2c",
+        "docs/plans/ocean-v1/evidence/c09-readiness-2026-10-15/baseline.txt": "a6ab6ae8d5110057b55da60366f672f3cac0cffdca1d067b1571457375d517b5",
+        "docs/plans/ocean-v1/evidence/c09-readiness-2026-10-15/browser-types.txt": "edfc61324e991e3bda912ff0153de8de843149d6e96921f6df836436437bb215",
+        "docs/plans/ocean-v1/evidence/c09-readiness-2026-10-15/examples.txt": "962c470ee8e7b1a3fa7cc260238248b74b659e73c4479518cfd90a2fb0468724",
+        "docs/plans/ocean-v1/evidence/c09-readiness-2026-10-15/prerequisites.txt": "02d221ef48cec575de7d9cc3cc98a879877ca48328d47e07ee4393280f45775a",
+        "docs/plans/ocean-v1/evidence/c09-readiness-2026-10-15/results.json": "be25a6c382f033a92150c64a69ff24062366950345ce9edbe19d2938da85e5bc",
+        "docs/plans/ocean-v1/evidence/c09-readiness-2026-10-15/schema.txt": "17f7777b79b05d9f620343086f7948c8a0ec79cbe76e74f59d7490234a67d15b",
+        "docs/plans/ocean-v1/evidence/c09-readiness-2026-10-15/scope.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "docs/plans/ocean-v1/evidence/c09-readiness-2026-10-15/start-snapshot.json": "a5528145eb87508577966e5c787a5080d40924179ae8a27061a8f60d86ed30ed",
+        "docs/plans/ocean-v1/evidence/c09-readiness-2026-10-15/verification.json": "60cc0abfd8a540d643375e0a1db1d7769055d87f1b9b4534bfca68e1b2f46c25",
+        "docs/plans/ocean-v1/evidence/c09-readiness-2026-10-15/verify_readiness.py": "d999a92ab9cda0d977bc9615f9883cd8ebaf81deaebabb3d9197a7088153e2c6",
+        "docs/plans/ocean-v1/evidence/delivery-2026-10-14/audit-regressions.txt": "9b6861b01df245811c96b856ff7cfc61bbd8926eb6f7255e2dc87ddd59a9a4c0",
+        "docs/plans/ocean-v1/evidence/delivery-2026-10-14/backend-tests.txt": "6422ca7e6d9773d1a27ca2a27016d79851b2787c1eb6c874a1a8064af6158a39",
+        "docs/plans/ocean-v1/evidence/delivery-2026-10-14/legacy-build.txt": "458d1f492f927f39b985ad45d3fb3593e582f8635c5a4ca8905fc267edb33dc4",
+        "docs/plans/ocean-v1/evidence/delivery-2026-10-14/legacy-npm-audit.json": "645689b41348050e14347254fe71d3e8d1a22fe0400e02cccfc98b95165fb48b",
+        "docs/plans/ocean-v1/evidence/delivery-2026-10-14/legacy-tests.txt": "719dbf14a127e82f2b13873aa83ea4ff84333b29666876d4303bbf79904f6ced",
+        "docs/plans/ocean-v1/evidence/delivery-2026-10-14/legacy-typecheck.txt": "fc392d1461c4eecb6eb76771999435411443ed0e553641e1fe580403e5e87d52",
+        "docs/plans/ocean-v1/evidence/delivery-2026-10-14/pip-check.txt": "8cf9abedfe3308838095c11b57a9a8ddf6dac0037cf30060cadb4c5a1912913f",
+        "docs/plans/ocean-v1/evidence/delivery-2026-10-14/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+        "docs/plans/ocean-v1/evidence/delivery-2026-10-14/scope-contract.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "docs/plans/ocean-v1/evidence/delivery-2026-10-14/v1-build.txt": "409ac799efd92fb1483ce37d9399c4349024aff34c998bc9d2d52c1802a73da8",
+        "docs/plans/ocean-v1/evidence/delivery-2026-10-14/v1-npm-audit.json": "1edfafa47b19e0370e6d56a342e61d4a7e05f3fc950dbbb9a217fdcb10dee904",
+        "docs/plans/ocean-v1/evidence/delivery-2026-10-14/v1-tests.txt": "17c9d71bcc272d1863b1ceba2eaf9649a4f688091174727c8c87c77aa34bd706",
+        "docs/plans/ocean-v1/evidence/delivery-2026-10-14/v1-typecheck.txt": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936",
+        "docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json": "88dfc7825558695d23a7a586386da80ca23ceb9dbdd0a3c003628c4e08dd1bb6"
+      }
+    }
+  },
+  "documentation_files": {
+    "docs/plans/ocean-v1/C10_READINESS_AUDIT_2026-10-15.md": "23611a2c329d4b18462ef9a9febb5ad01f20926e8fccc3d872b7c903047a5aca",
+    "docs/plans/ocean-v1/STATUS.md": "9d54fa33abc50da54ef14d747c9c538e24e2577e01b6b3a4ae01095c06836ff7",
+    "docs/plans/ocean-v1/README.md": "a0a21dc60939f086b78c672eb3d8711068b717d5ec554c278c2a874187c1d644",
+    "docs/plans/ocean-v1/HUB_PROMPT.md": "775026f2054ba02b3803e7c32f52f1fb54e54304ef91ddc94a9bca1b1b4b51d0",
+    "docs/plans/ocean-v1/components/C10-ctd-metagenome-adapters.md": "02e0ad34c250c59bce537fbda7f99689b37c443b3a1c45751bb987b25a78bab7"
+  },
+  "documentation_links": {
+    "result": "pass",
+    "missing": []
+  },
+  "evidence_files": {
+    "baseline.txt": "ebf0bd22552a9ae24495b7d1c4127a24501009360720862360bf40dae64c6e9c",
+    "browser-types.txt": "edfc61324e991e3bda912ff0153de8de843149d6e96921f6df836436437bb215",
+    "examples.txt": "962c470ee8e7b1a3fa7cc260238248b74b659e73c4479518cfd90a2fb0468724",
+    "hosted-ci.json": "7802b8dda3b5add64bf425c739f26f1f067ce71e0243fe478fa6b88d1d48a3e1",
+    "lint.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "prerequisites.txt": "72612ebac3442b654cfb592ba61a1b1834ab8979e759cc35cdf3384bc34df3fa",
+    "preservation.json": "670b573e6f73d9e73f6074f14d92430ada3892b842dec60435d5465abc0882c8",
+    "results.json": "052678c35dc21f3720cc39dadace7c6b8ca3e0ba3e4c4211ec540275c21d5310",
+    "schema.txt": "17f7777b79b05d9f620343086f7948c8a0ec79cbe76e74f59d7490234a67d15b",
+    "scope.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "snapshots.txt": "9b07d6aff6dbefa9ef198cfe8da820676814ff35b8f418400856ff03bb3cc1b9",
+    "start-snapshot.json": "fc5902ab4435e01896d3aa7172d58118e15e297637c96f33408920f9fe2dfb8d",
+    "verify_readiness.py": "4be40c2e8a4178c13f9be4c4223198971b1963f4acd16bdb2068e795081895ec"
+  },
+  "scope_limits": [
+    "No C10 application implementation or handoff; state and selection remain Not started",
+    "No new service startup, DB connection, model/provider calls, real data transfer or regeneration",
+    "Exact future adapter operations, full-input semantics and more-than-500 parity remain implementation acceptance",
+    "No C11, UI/API integration or cloud/deployment selection",
+    "Accepted C09 exact-source hosted CI substitutes for rerunning unchanged full frontend/PostgreSQL suites locally"
+  ],
+  "runtime": {
+    "python": "3.12.7"
+  }
+}

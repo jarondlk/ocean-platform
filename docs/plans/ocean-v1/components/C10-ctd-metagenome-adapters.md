@@ -34,7 +34,7 @@ Record pages have bounded previews; count and summary operations process the ent
 
 ## Validation, compatibility and handoff
 
-Existing regression command: `python -m pytest tests/test_ctd.py tests/test_metagenome_loaders.py tests/test_overview_coverage.py`. New checks, to be created during implementation, cover frozen adapters, counting entities, unavailable tables and page-independent aggregates. No checks have been run for this planning document.
+Existing regression command: `python -m pytest tests/test_ctd.py tests/test_metagenome_loaders.py tests/test_overview_coverage.py`. New checks, to be created during implementation, cover frozen adapters, counting entities, unavailable tables and page-independent aggregates. The readiness baseline and prerequisite checks are recorded below; C10 implementation acceptance remains pending.
 
 Keep legacy normalized artifacts and routes readable. Rollback disables these catalogue registrations while retaining sealed snapshots and receipts. Record supported operations, fixture identities, parity results and limitations in `handoffs/C10.md`; update `STATUS.md` at each checkpoint.
 
@@ -43,3 +43,13 @@ Keep legacy normalized artifacts and routes readable. Rollback disables these ca
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c10). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+## Readiness checkpoint — 2026-10-15 JST
+
+Ready for explicit selection at `ae02e89`: C02/C09 source evidence reconciles,
+36 baseline and 534 prerequisite regressions pass, and all five generated
+contracts are current. C09 exact-source hosted CI passes, including 21 snapshot
+PostgreSQL cases. [Audit](../C10_READINESS_AUDIT_2026-10-15.md) and
+[receipt](../evidence/c10-readiness-2026-10-15/verification.json) identify frozen
+inputs, units/denominators, temporal precision and complete-scope acceptance work.
+C10 remains Not started; no adapters, real transfers or services are selected.

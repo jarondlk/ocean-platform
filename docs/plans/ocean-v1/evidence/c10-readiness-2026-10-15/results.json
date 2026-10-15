@@ -1,0 +1,105 @@
+{
+  "checks": [
+    {
+      "name": "baseline",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_ctd.py",
+        "tests/test_metagenome_loaders.py",
+        "tests/test_overview_coverage.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "36 passed, 1 warning in 0.84s"
+    },
+    {
+      "name": "prerequisites",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_reliability.py",
+        "tests/test_pre_analysis.py",
+        "tests/test_statistical_analysis.py",
+        "tests/test_derived_artifact_eligibility.py",
+        "tests/test_remote_sensing.py",
+        "tests/test_catalogue_snapshots.py",
+        "tests/test_catalogue_snapshot_capture.py",
+        "tests/test_catalogue_snapshot_transfer.py",
+        "tests/test_catalogue_snapshot_fixtures.py",
+        "tests/test_context_catalogue_contract.py",
+        "tests/test_context_catalogue_fixtures.py",
+        "tests/test_metagenome_document_contract.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "534 passed, 23 warnings in 13.42s"
+    },
+    {
+      "name": "schema",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_context_catalogue.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "Context catalogue schema is current"
+    },
+    {
+      "name": "browser-types",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_types.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "Catalogue browser contract is current."
+    },
+    {
+      "name": "examples",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_examples.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C08 shared examples are current"
+    },
+    {
+      "name": "snapshots",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_snapshot.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C09 snapshot schema and synthetic byte examples are current"
+    },
+    {
+      "name": "scope",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_chat_scope.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "No output; exit recorded above"
+    }
+  ],
+  "safe_environment": {
+    "AUTH_MODE": "disabled",
+    "DEPLOYMENT_ENV": "test",
+    "ENABLE_MOCK_LOGIN": "false",
+    "PERSIST_LOCAL_CHAT": "false",
+    "RUN_POSTGRES_INTEGRATION": "0",
+    "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c10_readiness_unused",
+    "MODEL_PROVIDER": "ollama",
+    "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+  },
+  "service_startups": 0,
+  "C10_implementation_started": false
+}

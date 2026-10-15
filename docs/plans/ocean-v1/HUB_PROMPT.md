@@ -44,3 +44,7 @@ Use the corresponding canonical planning/implementation/resume prompt in PROMPTS
 C09 readiness was verified on 2026-10-15 JST against 3cbf9f0: 51 baseline and
 246 prerequisite tests pass; read C09_READINESS_AUDIT_2026-10-15.md and its receipt.
 The user subsequently selected C09; it is Complete locally. Read handoffs/C09.md and C09_SNAPSHOT_CONTRACT.md. C10 remains unselected.
+
+C10 readiness is verified on 2026-10-15 JST against ae02e89: 36 baseline and
+534 prerequisite tests pass; read C10_READINESS_AUDIT_2026-10-15.md and its receipt.
+This verifies readiness only. C10 remains Not started and unselected.

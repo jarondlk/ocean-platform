@@ -1,0 +1,614 @@
+{
+  "audit": "C10 readiness only",
+  "date": "2026-10-15 JST",
+  "branch": "overhaul",
+  "base_head": "ae02e89d1d6f6b38c07d4a5a95c47976affda45b",
+  "C09_implementation_commit": "9214bbe7aac1087b97a6ade8c7e90521a4c98c3f",
+  "C09_accepted_files": {
+    ".github/workflows/tests.yml": "f1d30649d2c099512c4fe3b44a1893d7d8f73cd012ed35f9d82c408f865e23aa",
+    "ingestion/catalogue_snapshot.py": "450669acc6bc09a31532e101f9af38a2dee22d57053dd1b0b1e5f23ca892cec4",
+    "ingestion/catalogue_snapshot_capture.py": "bbe8cd9e69de0ab0838f320139a6e152856b533f0aff10fc0077faf493be3dd5",
+    "ingestion/catalogue_snapshot_fixtures.py": "ad35c851b0d23e9f1da91b32cfb60e582d0fe9d82274e103fd4124938879934b",
+    "ingestion/catalogue_snapshot_transfer.py": "0ce74b1cdca6d2a6c465157d542caae44698d0adea2c055ef7b1ac1e0173fc82",
+    "schema/catalogue_snapshot.py": "0035a2946293b9213f5d32fe4ad8f9263db84b8cb55a540442391dcbfc3b3900",
+    "schema/catalogue_snapshot.v1.schema.json": "afabe0cb60c416f5160994cd9d3b5e53806985efc48bb568220128d7b4e0fb38",
+    "schema/catalogue_snapshot_examples.json": "64377255af58b261d597b096ead77fe7370d3eb1ebfb052c791aa8d5e55cc04f",
+    "scripts/export_catalogue_snapshot.py": "dafda2b885202dd0e88c7e237ecf4f577339513e034e73158b627f71c2cd28fe",
+    "tests/integration/test_catalogue_snapshot_capture_postgres.py": "b97f450ed0ac9637b44ef6a0e322b9f84f9192a09185b590e1b4f5b062ebd658",
+    "tests/test_catalogue_snapshot_capture.py": "e3fb4d5b01c2ab2187f498442e3ace2d3e986625eb54886ba988002cf75eef2b",
+    "tests/test_catalogue_snapshot_fixtures.py": "d8b21e9530c61b074e320b6bfef6f9d74a6d3bccacc48bfefaeb258120e98574",
+    "tests/test_catalogue_snapshot_transfer.py": "1036530c19ecc88518395e9dd8a6457bb473dbffd94cb8ade0211f66336bcdb0",
+    "tests/test_catalogue_snapshots.py": "5975a037a81fda6358796a9b5716104809c9bee0a7b76581b7b5659c1d1faf36"
+  },
+  "C09_local_receipt_sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+  "C09_delivery_receipt_sha256": "a6298eeeae50a15a2df2370ba0d95a69b8e4e549670ba191d5f7c0699f37f97c",
+  "C09_hosted_ci": {
+    "source_commit": "9214bbe7aac1087b97a6ade8c7e90521a4c98c3f",
+    "run": {
+      "id": 38703483565,
+      "html_url": "https://github.com/jarondlk/ocean-platform/actions/runs/38703483565",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "push",
+      "head_sha": "9214bbe7aac1087b97a6ade8c7e90521a4c98c3f",
+      "run_attempt": 1
+    },
+    "jobs": [
+      {
+        "id": 116317051295,
+        "name": "Backend tests and security boundary",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-15T08:07:54Z",
+            "completed_at": "2026-10-15T08:07:54Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-15T08:07:54Z",
+            "completed_at": "2026-10-15T08:07:56Z"
+          },
+          {
+            "name": "Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-15T08:07:56Z",
+            "completed_at": "2026-10-15T08:07:58Z"
+          },
+          {
+            "name": "Install dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-15T08:07:58Z",
+            "completed_at": "2026-10-15T08:08:25Z"
+          },
+          {
+            "name": "Lint active Python code",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-15T08:08:25Z",
+            "completed_at": "2026-10-15T08:08:25Z"
+          },
+          {
+            "name": "Check generated chat scope contract",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-15T08:08:25Z",
+            "completed_at": "2026-10-15T08:08:26Z"
+          },
+          {
+            "name": "Check frozen catalogue contracts and examples",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-15T08:08:26Z",
+            "completed_at": "2026-10-15T08:08:29Z"
+          },
+          {
+            "name": "Run tests with coverage",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-15T08:08:29Z",
+            "completed_at": "2026-10-15T08:12:10Z"
+          },
+          {
+            "name": "Post Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-15T08:12:10Z",
+            "completed_at": "2026-10-15T08:12:10Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-15T08:12:10Z",
+            "completed_at": "2026-10-15T08:12:11Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-15T08:12:11Z",
+            "completed_at": "2026-10-15T08:12:11Z"
+          }
+        ]
+      },
+      {
+        "id": 116317051360,
+        "name": "OCEAN v1 prototype tests and build",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-15T08:07:54Z",
+            "completed_at": "2026-10-15T08:07:55Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-15T08:07:55Z",
+            "completed_at": "2026-10-15T08:07:57Z"
+          },
+          {
+            "name": "Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-15T08:07:57Z",
+            "completed_at": "2026-10-15T08:08:00Z"
+          },
+          {
+            "name": "Install prototype dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-15T08:08:00Z",
+            "completed_at": "2026-10-15T08:08:05Z"
+          },
+          {
+            "name": "Audit production prototype dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-15T08:08:05Z",
+            "completed_at": "2026-10-15T08:08:06Z"
+          },
+          {
+            "name": "Test prototype",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-15T08:08:06Z",
+            "completed_at": "2026-10-15T08:08:07Z"
+          },
+          {
+            "name": "Typecheck prototype",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-15T08:08:07Z",
+            "completed_at": "2026-10-15T08:08:11Z"
+          },
+          {
+            "name": "Build prototype",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-15T08:08:11Z",
+            "completed_at": "2026-10-15T08:08:27Z"
+          },
+          {
+            "name": "Post Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-15T08:08:27Z",
+            "completed_at": "2026-10-15T08:08:27Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-15T08:08:27Z",
+            "completed_at": "2026-10-15T08:08:27Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-15T08:08:27Z",
+            "completed_at": "2026-10-15T08:08:27Z"
+          }
+        ]
+      },
+      {
+        "id": 116317051559,
+        "name": "Frontend typecheck and build",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-15T08:07:55Z",
+            "completed_at": "2026-10-15T08:07:55Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-15T08:07:55Z",
+            "completed_at": "2026-10-15T08:07:58Z"
+          },
+          {
+            "name": "Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-15T08:07:58Z",
+            "completed_at": "2026-10-15T08:08:02Z"
+          },
+          {
+            "name": "Install frontend dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-15T08:08:02Z",
+            "completed_at": "2026-10-15T08:08:10Z"
+          },
+          {
+            "name": "Audit production frontend dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-15T08:08:10Z",
+            "completed_at": "2026-10-15T08:08:10Z"
+          },
+          {
+            "name": "Test frontend",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-15T08:08:10Z",
+            "completed_at": "2026-10-15T08:08:13Z"
+          },
+          {
+            "name": "Typecheck frontend",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-15T08:08:13Z",
+            "completed_at": "2026-10-15T08:08:20Z"
+          },
+          {
+            "name": "Build frontend",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-15T08:08:20Z",
+            "completed_at": "2026-10-15T08:09:01Z"
+          },
+          {
+            "name": "Post Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-15T08:09:01Z",
+            "completed_at": "2026-10-15T08:09:01Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-15T08:09:01Z",
+            "completed_at": "2026-10-15T08:09:01Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-15T08:09:01Z",
+            "completed_at": "2026-10-15T08:09:01Z"
+          }
+        ]
+      },
+      {
+        "id": 116317051570,
+        "name": "PostgreSQL migration and metadata integration",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-15T08:07:54Z",
+            "completed_at": "2026-10-15T08:07:54Z"
+          },
+          {
+            "name": "Initialize containers",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-15T08:07:54Z",
+            "completed_at": "2026-10-15T08:08:07Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-15T08:08:07Z",
+            "completed_at": "2026-10-15T08:08:10Z"
+          },
+          {
+            "name": "Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-15T08:08:10Z",
+            "completed_at": "2026-10-15T08:08:11Z"
+          },
+          {
+            "name": "Install test dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-15T08:08:11Z",
+            "completed_at": "2026-10-15T08:08:39Z"
+          },
+          {
+            "name": "Apply application migrations",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-15T08:08:39Z",
+            "completed_at": "2026-10-15T08:08:40Z"
+          },
+          {
+            "name": "Verify invite acceptance and metadata persistence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-15T08:08:40Z",
+            "completed_at": "2026-10-15T08:09:01Z"
+          },
+          {
+            "name": "Verify transactional corpus upsert is idempotent",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-15T08:09:01Z",
+            "completed_at": "2026-10-15T08:09:40Z"
+          },
+          {
+            "name": "Create isolated C03 retention test database",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-15T08:09:40Z",
+            "completed_at": "2026-10-15T08:09:40Z"
+          },
+          {
+            "name": "Identify the job-owned PostgreSQL container address",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-15T08:09:40Z",
+            "completed_at": "2026-10-15T08:09:40Z"
+          },
+          {
+            "name": "Verify C03 retention transaction ordering in isolated schemas",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-15T08:09:40Z",
+            "completed_at": "2026-10-15T08:09:43Z"
+          },
+          {
+            "name": "Create isolated C05 retrieval test database",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-10-15T08:09:43Z",
+            "completed_at": "2026-10-15T08:09:44Z"
+          },
+          {
+            "name": "Verify C05 vector identity and metagenome replacement history",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-15T08:09:44Z",
+            "completed_at": "2026-10-15T08:09:47Z"
+          },
+          {
+            "name": "Create isolated C09 snapshot test database",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-15T08:09:47Z",
+            "completed_at": "2026-10-15T08:09:47Z"
+          },
+          {
+            "name": "Verify C09 snapshot capture and publication boundaries",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-15T08:09:47Z",
+            "completed_at": "2026-10-15T08:09:50Z"
+          },
+          {
+            "name": "Verify database backup and isolated restore",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-15T08:09:50Z",
+            "completed_at": "2026-10-15T08:09:52Z"
+          },
+          {
+            "name": "Post Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 30,
+            "started_at": "2026-10-15T08:09:52Z",
+            "completed_at": "2026-10-15T08:09:52Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 31,
+            "started_at": "2026-10-15T08:09:52Z",
+            "completed_at": "2026-10-15T08:09:52Z"
+          },
+          {
+            "name": "Stop containers",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 32,
+            "started_at": "2026-10-15T08:09:52Z",
+            "completed_at": "2026-10-15T08:09:52Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33,
+            "started_at": "2026-10-15T08:09:52Z",
+            "completed_at": "2026-10-15T08:09:52Z"
+          }
+        ]
+      },
+      {
+        "id": 116317052679,
+        "name": "Dependency review",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      }
+    ]
+  },
+  "C10_entrypoints": {
+    "preprocessing/ctd.py": "57a7f96a2ee34d70e97c9597cb23a85ff9e5b1a506d3a9dd17a7e568d328bb49",
+    "preprocessing/metagenome.py": "7c40578ded2f284c1df915e531e0b91807b0f6d4a1d2a589e0212e20154430a0",
+    "preprocessing/metagenome_contract.py": "88edad03f0e5e520f45bced3ae74b0f689c8d2d71682f48589b5ad1c4bb5efe2",
+    "preprocessing/pre_analysis.py": "426a19a3c1f7d9dcc4241c7a187352554ab0711cfc438a20f0633804db6bbed8",
+    "preprocessing/derived_artifacts.py": "deba53d403e8ce3c44f1a6482fb1f5cd5b2b81650401cbdd0bfb2aa8d31d5bd4",
+    "api/overview_coverage.py": "3d16822ca03d5613de269832c02bd5a9bbccd8fb30a9eae809c2cb854b9be252",
+    "db/models.py": "e113fe7e6a2ed27d8f931c0282c398003f0dd8b335c0f1ac8e6276558fd7d086",
+    "retrieval/source_scope.py": "6cf36f91b47ff21f33f1865cb5e4a4baf6d60ae0265cfb1c16035642f7d1a54f",
+    "schema/context_catalogue.py": "c757fa2f91c3e44c5832290faaf9fa01d7501c33348747fc281fd92e7dd13dd0",
+    "tests/test_ctd.py": "33eb74b418528f1c8a35cf571f9a7305f3bc092a0f09493b299003b11c257c1f",
+    "tests/test_metagenome_loaders.py": "8e9f526080a63be090109e774a8ee5922cefe5eaba41102c2df5216680ffaf00",
+    "tests/test_overview_coverage.py": "290d06a0b675831f28d6cd7e8c047e7583d2cee4c8d82efc89eb9b210dd3a437"
+  },
+  "C08_accepted_files": {
+    "frontend-v1/src/catalogue-contract.generated.ts": "59f8bd5727d02f83704fa44175cace4ddda018e8e40af00e4ca7081fa90a16ca",
+    "frontend-v1/src/catalogue-contract.ts": "c9a2d2b8d1f35280cabaa7c399f7af7baaa084cad0e52ddd3304682997ba14d5",
+    "frontend-v1/tests/catalogue-contract.test.ts": "b16592062e880ae7565f73d15b87f5e47ff66a02658d1190c2051740c8874c9b",
+    "schema/context_catalogue.py": "c757fa2f91c3e44c5832290faaf9fa01d7501c33348747fc281fd92e7dd13dd0",
+    "schema/context_catalogue.v1.schema.json": "385d3cb7e8a7e5f5c36fc8f177c0b9c540d3e249496b7b6d869ec7d36785b972",
+    "schema/context_catalogue_examples.json": "258cd0d3c7622d703a29c9840b05e0d418cbd6fee614c1fc9eb4bef12d3d6ed3",
+    "schema/context_catalogue_fixtures.py": "8081971ce01e727dec02fb301fa60941443d3a1943dba357247198761c8b8fdc",
+    "scripts/export_catalogue_examples.py": "7fd86bf2c8b0e796c1436e207c71c912ab279cf859ae22c6fa1ee1182bf59235",
+    "scripts/export_catalogue_types.py": "417fb30b8209cc2422421495e76c50801715ca034d4682d4844d89d71ff2c682",
+    "scripts/export_context_catalogue.py": "107be75e5e6fcaa74c1285dababff4b9673861214c7255cc48ca06abc82820d7",
+    "tests/test_context_catalogue_contract.py": "0af0720cf12be022a4c72d7a8248de13775c074f4ceb06bd2124b1787e717853",
+    "tests/test_context_catalogue_fixtures.py": "36c4e96202f60ba38a606730e7e6b851c5f06b7e39b6ad366779722086412d69"
+  },
+  "unrelated_files": {
+    "README.md": "e4d1cff681128d4b7d40add69f93310298469a9921083bdeeaee043a46ad53e5",
+    "docs/LLM_MODEL_BENCHMARK_2026-10-09.md": "8fba86572f4f077a9152a8853d9a0dc4a8162f39082bcd062ef8fb24067b4c6d",
+    "docs/REPOSITORY_AUDIT_2026-10-09.md": "50c2785cfa90311dd896c419ed72a859c8f27f9eae9f832f6aa7b4ee9d2d3f94",
+    "docs/REPOSITORY_AUDIT_2026-10-12.md": "af8e13265506066aae527490d3a447acc4ab579dad81cba5086843c94b8c5877",
+    "docs/audits/repository-2026-10-09/coverage-summary.json": "fa6657aefd2f1c870579607c6d304440103636f24e55048d60f16fd147179af3",
+    "docs/audits/repository-2026-10-09/csv-probe.json": "6ffd7fb4e39b17af506b3426df702461275bc266ed56e3a59b0d62e460e464b3",
+    "docs/audits/repository-2026-10-09/manifest.json": "0b496b58ce78f93be2f395799212bda7b149b77310c7e355da68e3d5d680a022",
+    "docs/audits/repository-2026-10-09/npm-audit.json": "645689b41348050e14347254fe71d3e8d1a22fe0400e02cccfc98b95165fb48b",
+    "docs/audits/repository-2026-10-09/postgres-probes.json": "b1723c95026b0ee034066d596b2220670d1f3ce1d8ae2bdadc41d19925667923",
+    "docs/audits/repository-2026-10-09/postgres_probes.py": "570f4c6ee32db199cab34a4c6059d615807236c6502fc7cb40d342386659d07d",
+    "docs/audits/repository-2026-10-09/probes.json": "522d9dc57684f5c30eda70f23b3518a1f70044018fbcfc19365c0b9debd95329",
+    "docs/audits/repository-2026-10-09/probes.py": "8d836b64c31060a958ee5932bc331eafb431c740a8c2211b2d2799779b2f567e",
+    "docs/audits/repository-2026-10-12/backend-tests.xml": "220705495080a91d0b2e74f4a1e958d2e54d23352c4fc044a276bef7154bd287",
+    "docs/audits/repository-2026-10-12/csv-probe.json": "26af79c3c9fe3d00a95a5f638b9846fca623c1b7baefbf45c11e54034890a8bb",
+    "docs/audits/repository-2026-10-12/manifest.json": "1c3a287546b34fe9b48596d1e0d409185a2a3f42c75ed0b73449a40e6f3abfd9",
+    "docs/audits/repository-2026-10-12/npm-audit.json": "645689b41348050e14347254fe71d3e8d1a22fe0400e02cccfc98b95165fb48b",
+    "docs/audits/repository-2026-10-12/previous-finding-probes.json": "c5df1a4e5b5c3ba66484b17555b6c08b38459d9910fe33602154e95c6a730054",
+    "docs/audits/repository-2026-10-12/prior-finding-source-comparison.json": "eb241e7fec17cbe008d9ff430c390be084737355b6cb4d53777d66f47a9694f1",
+    "docs/audits/repository-2026-10-12/release-branch-receipt.json": "99638b24cc0e3d246803da198d1128e6720c2e5befc49e23c32daff044909b12",
+    "docs/audits/repository-2026-10-12/scope-probes.json": "b35583595940dd7059744108bb962603a2b58521b0143804826b17da2a9781d8",
+    "docs/audits/repository-2026-10-12/scope_probes.py": "98856bd564f6fcc12c67cdda840123a08155490d7c665147550e2a14bbd7a54b",
+    "docs/benchmarks/llm-2026-10-09/attempts.csv": "bf632d7dddd7e2800a0fd74848a8e827c5620af140b382dadca06f7be2bdc58a",
+    "docs/benchmarks/llm-2026-10-09/metadata.json": "c2a90f20ff813d4e3c1171dfa8cec76d927ba8c45da51ec1e2cf92dd4e1889dd",
+    "docs/benchmarks/llm-2026-10-09/monthly-scenarios.csv": "c46dba092fe56aa6b3cc523f2629d48f88de26a91e8384bdf8e51767502c41ec",
+    "docs/benchmarks/llm-2026-10-09/summary.csv": "7efb18f68c802297d7647b76e9b6173818b576a30b6916db7b8cf942480144ee",
+    "evaluation/model_benchmark/capture.py": "c30a9e369267fedaf8c6fe2a409417ee9328fc511b7654601e91ddac1a2dd9c7",
+    "evaluation/model_benchmark/export.py": "eee59897355081daba05b9201386d0c22de565faece5b863c58ab70dee83d0d0",
+    "evaluation/model_benchmark/runner.py": "5168498cae71db0bed6d8d30ddd90197dfd9483c3fd903b2c8182f0780c7f174",
+    "evaluation/model_benchmark/scoring.py": "eb2617d2a97a80256efa8d811e04acca3c59fa848d67e8d46065e1896fa3cb40",
+    "tests/test_model_benchmark.py": "1ee0cf9438219fb50f27b1a1b3bfd4bacf90355f0f0d12de89969e3b6e866ff3"
+  },
+  "scientific_artifacts": {
+    "data/analysis/analysis_documents.jsonl": "c8822a1083df7bf502e90df87d6cc79ed3ae7963075134d18ce0ef6eb9030998",
+    "data/analysis/taxa_env_correlations.parquet": "aaa33c7f32b0a7abae10944bcde4c26db679ce4a7ca95851f366f766fa6da622",
+    "data/reliability/corroboration.parquet": "3b731b0b81b85b38623d1aa512638b1f7af77bcbbddef353c491d76354d8dbe1",
+    "data/reliability/diversity_prediction.parquet": "714300cd6ac6543a7ec7dea4427641df943945b7e7577be3b5353e32532e5327",
+    "data/reliability/gap_interpolation.parquet": "89712a561cf1301e21d5774d93bccbe3dd4429ffc874ee7f08841aa50a61d432",
+    "data/reliability/reliability_documents.jsonl": "4edc4d3254d87a3cdfdd37b755c1b341bf9109f7c5b2a7e535fdf834d4e6ad22",
+    "data/reliability/sst_ctd_validation.parquet": "e1bcfd1f2f504d6964132a7fd65fda0b2cb87b96f2f4c0c9f2e92e383375a36f"
+  },
+  "serving_files": {
+    "data/serving/retrieval_documents.parquet": "b4d9fe9418613f4340a175c42b0c8b6ddadcedbb815e5aa858342a7a596b676a",
+    "data/serving/sample_multisource_context.parquet": "fdde18dc2f984625fd7a2a2cd4af0fad9cd2c8ad2eb64bb461a7868075652a71"
+  },
+  "P00_current_files": {
+    "frontend-v1/.gitignore": "2c902c5eb5bceb2eac4bb61a521d3afe2af276fe6f5b57becf1acda4d8508500",
+    "frontend-v1/README.md": "9e19dd90cd8c9a30bf98b88d22e76b521a34340b66347d97ba5e5e06e378d84a",
+    "frontend-v1/app/about/page.tsx": "cf9dfa95cab70543adca3b1713757da933069b0a6eed5860f4a6611dc12d6413",
+    "frontend-v1/app/admin/page.tsx": "59d61754a40f4223d5177fe61f8bac01882f3847047e46731be5d454c63339f1",
+    "frontend-v1/app/feedback/page.tsx": "1259b2cd86928ad51061d462dbef6d6584720908dcfb18ee68929afd6ffd3ceb",
+    "frontend-v1/app/globals.css": "47fc09d276ac9e9b5c1a5cc8e97335f0803e6285b612dc8c350e13c3fd8ee2b5",
+    "frontend-v1/app/layout.tsx": "86f13bc7e1055507cd56e9e022ee86c2957e2e427774657e5c5555fd5a9d6ac9",
+    "frontend-v1/app/page.tsx": "da00cc65a5163107e908b7198ac915d6d24e7f4c763643d427bdf77f3d2a0382",
+    "frontend-v1/next-env.d.ts": "85ae5aee75f011967cf2d25cbc342f62d69314e9d925f7f4aa3456fc2cffcca6",
+    "frontend-v1/next.config.mjs": "7505a8f04bd81aae600796c6294cba926f7ea9dda279fc955a9004afe34b43c9",
+    "frontend-v1/package-lock.json": "b2d90430d2ec3bedfd766d8693eb011dade7513a81083e5c9db105c3a3e83540",
+    "frontend-v1/package.json": "f5491bbe9fc19bb25155fab8cb280f1c01f18bc1b63fa47543efbf8cd53835c0",
+    "frontend-v1/scripts/preview.mjs": "6b55746d23ed0d1645b89a163c27bd441f43a44cb15d389137ff2f7cb3dfbc69",
+    "frontend-v1/src/about-view.tsx": "74fe41ba1bf31520dc01e436046f5fd2b0b7426c7e01eaef1a5f4266b8fe0f2b",
+    "frontend-v1/src/adapter.ts": "0c482e5a5062c12afd1d1fd4993652cc9307bc4e84cd3ba362a80b6e5c9c41bb",
+    "frontend-v1/src/admin-model.ts": "43bb4d7722796bce62a30ed63ee76e28a7a75c7bfb4e96df410cf646b588dd3c",
+    "frontend-v1/src/admin-view.tsx": "7b1b5da92e66b3f937a6615c281059e5c1afd05a1080d52942c1b4d46e8e1bff",
+    "frontend-v1/src/admin.css": "f2e6474aa1d0847ac99bbe07a073b97aec48d8eb9487106ee8eea62c4d4da3a3",
+    "frontend-v1/src/catalogue-overview.css": "e7c7db8e86d331d00de694a0563dec0fcadf5ca6dfa338ae8e52eb74da230f69",
+    "frontend-v1/src/catalogue-overview.tsx": "d8c9df29850bf7a3c652e10be6f3508afd7c1dabce84f1bee3a5930a2a2aba96",
+    "frontend-v1/src/catalogue-view.tsx": "60642da929330899b97d3d45aca51bfdfb0371ffceb17ab4712757429c8de8e1",
+    "frontend-v1/src/exports.ts": "c6d44e5cfa921d3bb9328c8553ec67a8bd61673f9fd95848a50ea18e9006be7c",
+    "frontend-v1/src/feedback-model.ts": "7000b5e1620eb2e474bd2856c69e49d58a18f3cab2a29be2bb15a634a96a9bbe",
+    "frontend-v1/src/feedback-view.tsx": "eecc19f4b3ed0b70c0a282969d3f620793f5e446f01133660c2f343c4ba340ff",
+    "frontend-v1/src/fixtures.ts": "ed124b18ff4c0175c2abd5f6bf11c724cbe2890c2df746a14058ae9a66abb8fa",
+    "frontend-v1/src/i18n.ts": "3f14468ff49c647e1b14d71e45e946a312218682abb5c6e489071fafc7a9c5fd",
+    "frontend-v1/src/model.ts": "22f6c8572649db7d3999a19e552ebddd6247dacea70eb4df2159cc00f2536fc5",
+    "frontend-v1/src/research-app.tsx": "af470bb2814a09bd26dc3132206fde717d73aa06620c6d30a9e5170c0629396f",
+    "frontend-v1/src/state.ts": "0cdae9675ef37275b0ca6e963c6bdee18e7a3a4fd24cdb60ca4d86ea9fa101bc",
+    "frontend-v1/src/support-views.css": "2a1a146de5d821d0aa2a04579be7b7a9de8da91528879fb37c4dca9441d25bfe",
+    "frontend-v1/src/ui.tsx": "2c8e5400f1b6baf8102e2539f4edea8705a026b5fd7694310cf9878fb8af0751",
+    "frontend-v1/src/workspace-view.tsx": "edb24d0490da6b645db605cd234792dadf7664a70c08accaa0fdf2ef1adff5ec",
+    "frontend-v1/tests/admin-model.test.ts": "bd5adfdbf34fbca630b5a3469e3163c90eba7b1db75dd79a9ba92f2e9accd55d",
+    "frontend-v1/tests/feedback-exports.test.ts": "e360a12d0db16ec1fa109aef78012a67938d2b387fb526efd4f9ce76c4029998",
+    "frontend-v1/tests/journeys.test.ts": "70c4352c2acc88b7faa2e3383411f7a80c4140b76d013e0d0dc775f0b16fccd6",
+    "frontend-v1/tsconfig.json": "5c14605dfa560eecdf32b50ea5aedbd1b1814ee9073c90d3dfc6c564244153e8"
+  },
+  "C10_implementation_started": false
+}

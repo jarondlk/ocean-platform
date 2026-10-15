@@ -145,3 +145,8 @@ C09 readiness is verified: C03/C08 source receipts match, 51 baseline tests and
 C09 is complete and delivered as `9214bbe` with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38703483565).
 Read [its handoff](handoffs/C09.md), [snapshot contract](C09_SNAPSHOT_CONTRACT.md)
 and [delivery receipt](evidence/C09/delivery.json). C10 remains unselected.
+
+C10 readiness is verified at `ae02e89`: 36 baseline and 534 prerequisite tests
+pass; C02/C09 accepted sources reconcile and generated contracts are current.
+See [the readiness audit](C10_READINESS_AUDIT_2026-10-15.md). C10 remains
+Not started and requires explicit implementation selection.
