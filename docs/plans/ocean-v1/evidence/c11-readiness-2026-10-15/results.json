@@ -1,0 +1,144 @@
+{
+  "checks": [
+    {
+      "name": "baseline",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_sst_nasa_context.py",
+        "tests/test_research_sst.py",
+        "tests/test_regional_publication.py",
+        "tests/test_overview_coverage.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "55 passed, 1532 warnings in 10.66s"
+    },
+    {
+      "name": "prerequisites",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_reliability.py",
+        "tests/test_pre_analysis.py",
+        "tests/test_statistical_analysis.py",
+        "tests/test_derived_artifact_eligibility.py",
+        "tests/test_remote_sensing.py",
+        "tests/test_catalogue_snapshots.py",
+        "tests/test_catalogue_snapshot_capture.py",
+        "tests/test_catalogue_snapshot_transfer.py",
+        "tests/test_catalogue_snapshot_fixtures.py",
+        "tests/test_context_catalogue_contract.py",
+        "tests/test_context_catalogue_fixtures.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "482 passed, 23 warnings in 13.65s"
+    },
+    {
+      "name": "sst-semantics",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_historical_sst_acquisition.py",
+        "tests/test_sst_context_review.py",
+        "tests/test_regional_context_normalization.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "61 passed, 568 warnings in 22.68s"
+    },
+    {
+      "name": "schema",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_context_catalogue.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "Context catalogue schema is current"
+    },
+    {
+      "name": "browser-types",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_types.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "Catalogue browser contract is current."
+    },
+    {
+      "name": "examples",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_examples.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C08 shared examples are current"
+    },
+    {
+      "name": "snapshots",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_snapshot.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C09 snapshot schema and synthetic byte examples are current"
+    },
+    {
+      "name": "scope",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_chat_scope.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "No output; exit recorded above"
+    },
+    {
+      "name": "neighbor-adapters",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_adapter.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C10 frozen adapter schema and logical examples are current"
+    },
+    {
+      "name": "sampling-calendar",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_research_sst_panel.py",
+        "tests/test_research_sst_collection.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "8 passed, 38 warnings in 1.57s"
+    }
+  ],
+  "safe_environment": {
+    "AUTH_MODE": "disabled",
+    "DEPLOYMENT_ENV": "test",
+    "ENABLE_MOCK_LOGIN": "false",
+    "PERSIST_LOCAL_CHAT": "false",
+    "RUN_POSTGRES_INTEGRATION": "0",
+    "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c11_readiness_unused",
+    "MODEL_PROVIDER": "ollama",
+    "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+  },
+  "service_startups": 0,
+  "C11_implementation_started": false
+}

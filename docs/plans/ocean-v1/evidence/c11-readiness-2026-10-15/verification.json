@@ -1,0 +1,930 @@
+{
+  "audit": "C11 readiness only",
+  "date": "2026-10-15 JST",
+  "branch": "overhaul",
+  "base_head": "75703457db6cc011506765c4c24ce3aa8106badc",
+  "verdict": "Ready for explicit local implementation selection; no prerequisite blocker found",
+  "C11_implementation_started": false,
+  "formal_prerequisites": [
+    "C02",
+    "C09"
+  ],
+  "C02_current_source": {
+    "api/main.py": {
+      "current_sha256": "42e0f2a45fb93efb8cd6a7037cd1278e97c43ba0268af71ed2b520a6d6191a5e",
+      "original_sha256": "a00a9c99de53c4db39dc4249ccf726283f3893a1507e47ee4728263f7da4ad06",
+      "original_match": false,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C07/verification.json",
+      "accepted_receipt_sha256": "99b78a6cefac34b9dc98fc67d9b6fc8a572355ca04fb84644a6ba14341fadc69"
+    },
+    "docs/plans/ocean-v1/evidence/C02/verify_synthetic.py": {
+      "current_sha256": "513b67b539b3102195e2627a7b02f707c6836561f49ebe3a2459cae09e2b3cc5",
+      "original_sha256": "513b67b539b3102195e2627a7b02f707c6836561f49ebe3a2459cae09e2b3cc5",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "orchestration/unified.py": {
+      "current_sha256": "c9201413873109153f9098d1041e23c3349229ec95a27aac3e194ed517be01d6",
+      "original_sha256": "c35856c03045ef48bd5d352334c7f62aa24163378b0416ab9d8e5ed0d25d00e7",
+      "original_match": false,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C05/verification.json",
+      "accepted_receipt_sha256": "6575878bcdc75d794c7b52f6794ca018e8c7725eda48eb274da2895b851744ee"
+    },
+    "preprocessing/derived_artifacts.py": {
+      "current_sha256": "deba53d403e8ce3c44f1a6482fb1f5cd5b2b81650401cbdd0bfb2aa8d31d5bd4",
+      "original_sha256": "deba53d403e8ce3c44f1a6482fb1f5cd5b2b81650401cbdd0bfb2aa8d31d5bd4",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "preprocessing/pre_analysis.py": {
+      "current_sha256": "426a19a3c1f7d9dcc4241c7a187352554ab0711cfc438a20f0633804db6bbed8",
+      "original_sha256": "426a19a3c1f7d9dcc4241c7a187352554ab0711cfc438a20f0633804db6bbed8",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "preprocessing/reliability_ensurance.py": {
+      "current_sha256": "46b5cf6c4b3b320467bc121a1572e41e4a00e2327bc0afc6fa7a63471e726c5d",
+      "original_sha256": "46b5cf6c4b3b320467bc121a1572e41e4a00e2327bc0afc6fa7a63471e726c5d",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "preprocessing/remote_sensing.py": {
+      "current_sha256": "e611e7f176677fbece054cb7ff70d57ba378e1135f86a2cfcf1346b781c852cd",
+      "original_sha256": "e611e7f176677fbece054cb7ff70d57ba378e1135f86a2cfcf1346b781c852cd",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "tests/conftest.py": {
+      "current_sha256": "989457a38d9ffefac466e5a0173ca620a4cef42ebacb1d483454ec469e026e19",
+      "original_sha256": "989457a38d9ffefac466e5a0173ca620a4cef42ebacb1d483454ec469e026e19",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "tests/test_derived_artifact_eligibility.py": {
+      "current_sha256": "d37eb145cb224b708dd8c1bf6e0ed3d4ff1ad17eb75341004def6a6b0dde810e",
+      "original_sha256": "47076f2b0e532d869549525e76e6a9fece935c0047fe2fdf0146394b60814bc3",
+      "original_match": false,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json",
+      "accepted_receipt_sha256": "88dfc7825558695d23a7a586386da80ca23ceb9dbdd0a3c003628c4e08dd1bb6"
+    },
+    "tests/test_pre_analysis.py": {
+      "current_sha256": "b2573e4d095aa07135eefcb6278879c16d0e6e154289cec4d7ae6108801789fc",
+      "original_sha256": "b2573e4d095aa07135eefcb6278879c16d0e6e154289cec4d7ae6108801789fc",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "tests/test_reliability.py": {
+      "current_sha256": "346e54fd746a02d614aa5e8a7ac90d7cf99fe3d6cb1d5ee2fb99888ddfd847ca",
+      "original_sha256": "346e54fd746a02d614aa5e8a7ac90d7cf99fe3d6cb1d5ee2fb99888ddfd847ca",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    },
+    "tests/test_remote_sensing.py": {
+      "current_sha256": "0eaf7f291f3a29de55fbf529b6b4cec988133e645d428a4c412a3bb7f5f444c9",
+      "original_sha256": "0eaf7f291f3a29de55fbf529b6b4cec988133e645d428a4c412a3bb7f5f444c9",
+      "original_match": true,
+      "accepted_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+      "accepted_receipt_sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+    }
+  },
+  "C08_accepted_files": {
+    "frontend-v1/src/catalogue-contract.generated.ts": "59f8bd5727d02f83704fa44175cace4ddda018e8e40af00e4ca7081fa90a16ca",
+    "frontend-v1/src/catalogue-contract.ts": "c9a2d2b8d1f35280cabaa7c399f7af7baaa084cad0e52ddd3304682997ba14d5",
+    "frontend-v1/tests/catalogue-contract.test.ts": "b16592062e880ae7565f73d15b87f5e47ff66a02658d1190c2051740c8874c9b",
+    "schema/context_catalogue.py": "c757fa2f91c3e44c5832290faaf9fa01d7501c33348747fc281fd92e7dd13dd0",
+    "schema/context_catalogue.v1.schema.json": "385d3cb7e8a7e5f5c36fc8f177c0b9c540d3e249496b7b6d869ec7d36785b972",
+    "schema/context_catalogue_examples.json": "258cd0d3c7622d703a29c9840b05e0d418cbd6fee614c1fc9eb4bef12d3d6ed3",
+    "schema/context_catalogue_fixtures.py": "8081971ce01e727dec02fb301fa60941443d3a1943dba357247198761c8b8fdc",
+    "scripts/export_catalogue_examples.py": "7fd86bf2c8b0e796c1436e207c71c912ab279cf859ae22c6fa1ee1182bf59235",
+    "scripts/export_catalogue_types.py": "417fb30b8209cc2422421495e76c50801715ca034d4682d4844d89d71ff2c682",
+    "scripts/export_context_catalogue.py": "107be75e5e6fcaa74c1285dababff4b9673861214c7255cc48ca06abc82820d7",
+    "tests/test_context_catalogue_contract.py": "0af0720cf12be022a4c72d7a8248de13775c074f4ceb06bd2124b1787e717853",
+    "tests/test_context_catalogue_fixtures.py": "36c4e96202f60ba38a606730e7e6b851c5f06b7e39b6ad366779722086412d69"
+  },
+  "C09_accepted_files": {
+    ".github/workflows/tests.yml": "f1d30649d2c099512c4fe3b44a1893d7d8f73cd012ed35f9d82c408f865e23aa",
+    "ingestion/catalogue_snapshot.py": "450669acc6bc09a31532e101f9af38a2dee22d57053dd1b0b1e5f23ca892cec4",
+    "ingestion/catalogue_snapshot_capture.py": "bbe8cd9e69de0ab0838f320139a6e152856b533f0aff10fc0077faf493be3dd5",
+    "ingestion/catalogue_snapshot_fixtures.py": "ad35c851b0d23e9f1da91b32cfb60e582d0fe9d82274e103fd4124938879934b",
+    "ingestion/catalogue_snapshot_transfer.py": "0ce74b1cdca6d2a6c465157d542caae44698d0adea2c055ef7b1ac1e0173fc82",
+    "schema/catalogue_snapshot.py": "0035a2946293b9213f5d32fe4ad8f9263db84b8cb55a540442391dcbfc3b3900",
+    "schema/catalogue_snapshot.v1.schema.json": "afabe0cb60c416f5160994cd9d3b5e53806985efc48bb568220128d7b4e0fb38",
+    "schema/catalogue_snapshot_examples.json": "64377255af58b261d597b096ead77fe7370d3eb1ebfb052c791aa8d5e55cc04f",
+    "scripts/export_catalogue_snapshot.py": "dafda2b885202dd0e88c7e237ecf4f577339513e034e73158b627f71c2cd28fe",
+    "tests/integration/test_catalogue_snapshot_capture_postgres.py": "b97f450ed0ac9637b44ef6a0e322b9f84f9192a09185b590e1b4f5b062ebd658",
+    "tests/test_catalogue_snapshot_capture.py": "e3fb4d5b01c2ab2187f498442e3ace2d3e986625eb54886ba988002cf75eef2b",
+    "tests/test_catalogue_snapshot_fixtures.py": "d8b21e9530c61b074e320b6bfef6f9d74a6d3bccacc48bfefaeb258120e98574",
+    "tests/test_catalogue_snapshot_transfer.py": "1036530c19ecc88518395e9dd8a6457bb473dbffd94cb8ade0211f66336bcdb0",
+    "tests/test_catalogue_snapshots.py": "5975a037a81fda6358796a9b5716104809c9bee0a7b76581b7b5659c1d1faf36"
+  },
+  "C10_adjacent_reference_files": {
+    "ingestion/catalogue_adapter_inputs.py": "604a1d72188a7c4ed7bda2bb0f18009c93c5356b0ebf3391ab5dd84803611532",
+    "orchestration/frozen_catalogue.py": "9b3fdb498935f3d5db5594f667bfebf49bf7be487509cea9c448f4f229351609",
+    "schema/catalogue_adapter.py": "ab6580de572dc0c2734f709771300ec40c346f41ee53ce422993fb8897576a4c",
+    "schema/catalogue_adapter.v1.schema.json": "b1b799b944fc148e9d1161a3f0e9f1e78b955422d2dce281f4b00256cd89d855",
+    "schema/catalogue_adapter_examples.json": "f86372e040a75656aa61765691abb7bbf55570f366d28e7f6150500ad155cab6",
+    "schema/catalogue_adapter_fixtures.py": "26ef07510f206c8648ad502b47f8d9bfc865004d995f327735c19c35e62ccef6",
+    "scripts/export_catalogue_adapter.py": "116c63182669cf1277468fd2f826b88f719db4306dd856d70725372e43888075",
+    "tests/test_catalogue_adapter_contract.py": "fba2e4d628544d28d4d547ebdaf59a23ee436cb0a19ce2bdf2d20d403080acc1",
+    "tests/test_catalogue_adapter_inputs.py": "7d9467b89fe6e1ee500a7b83c0bd49ce9cc54a132bb1fcbb69298ea94f0ad2c5",
+    "tests/test_frozen_catalogue_adapters.py": "74d9ed72ed0c35b9777f984fa645be995e143893ff6bc03fed9778489639db72"
+  },
+  "SST_reference_files": {
+    "ingestion/regional_publication.py": "bf052d12268f187f69f802a7808f03b701d2d106ce3d187774ee5f8185826268",
+    "ingestion/sst_inventory.py": "7c13c9b616c65e9614d63a0b280ac2ebab2c0a620e6a77f4756537027016cc93",
+    "preprocessing/research_sst.py": "f344379992400b7e30de5f8cb055fcdf0bfad5e5471b0dfe746db6eb6c50bd67",
+    "retrieval/regional_sst.py": "d4396c346462c5379d30ab74ef4912807d888c08c47b78ecc4fb241654dde7c6",
+    "api/overview_coverage.py": "3d16822ca03d5613de269832c02bd5a9bbccd8fb30a9eae809c2cb854b9be252",
+    "preprocessing/remote_sensing.py": "e611e7f176677fbece054cb7ff70d57ba378e1135f86a2cfcf1346b781c852cd",
+    "preprocessing/sst_context_review.py": "b603f41e0631d1870fd0218ad2f6a96d423e34e5397cb55e5236661ad68b2946",
+    "preprocessing/research_recipe.py": "fa5a4fe25b6cb8a00d6b4d656df4583d9d4a6c6e9c81a8eebb71ff911cfa43f5",
+    "ingestion/research_sst_collection.py": "a614cf1f45aff3aa4cb208ec98c20ebb079935c6296eb51100d084e77aebb657",
+    "ingestion/sst_nasa_context.py": "733c140071f51e27ba18f5cbbef029b3576391e4a1f4ecea9a1b6a016adb59f8",
+    "schema/time_range.py": "efe12f5ecd0e738cdd2aa2999175f29eb3d5a150b6613450e0167c0e7e9b3d91",
+    "retrieval/source_scope.py": "6cf36f91b47ff21f33f1865cb5e4a4baf6d60ae0265cfb1c16035642f7d1a54f"
+  },
+  "historical_receipt_sha256": {
+    "docs/plans/ocean-v1/evidence/C02/verification.json": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e",
+    "docs/plans/ocean-v1/evidence/C08/verification.json": "acfee7a36ecc76cf66d5ad9edeec9711c8d12a95400702e940c1ea263090df14",
+    "docs/plans/ocean-v1/evidence/C08/delivery.json": "13c0e2a9c4e0553c048f5da4d75ab84d24ee71be611eaa14fe0022e873f3c53d",
+    "docs/plans/ocean-v1/evidence/C09/verification.json": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+    "docs/plans/ocean-v1/evidence/C09/delivery.json": "a6298eeeae50a15a2df2370ba0d95a69b8e4e549670ba191d5f7c0699f37f97c",
+    "docs/plans/ocean-v1/evidence/C10/verification.json": "1ad775aef53e9835ec9a8ff121e41f61c483cf95d15dd6fc966bf2d381246df7",
+    "docs/plans/ocean-v1/evidence/C10/delivery.json": "e6ce9c0e123d03349b50ea29c317ff595013000934e84fcc19f573436a6c60f2"
+  },
+  "C10_implementation_commit": "c3d5b8b188bfea325fbc3ccb3c0ac420a428ee9d",
+  "C10_to_audited_HEAD_documentation_only_files": [
+    "docs/plans/ocean-v1/DECISIONS.md",
+    "docs/plans/ocean-v1/README.md",
+    "docs/plans/ocean-v1/STATUS.md",
+    "docs/plans/ocean-v1/evidence/C10/delivery.json",
+    "docs/plans/ocean-v1/evidence/C10/hosted-backend.txt",
+    "docs/plans/ocean-v1/evidence/C10/hosted-ci.json",
+    "docs/plans/ocean-v1/evidence/C10/hosted-frontend-v1.txt",
+    "docs/plans/ocean-v1/evidence/C10/hosted-frontend.txt",
+    "docs/plans/ocean-v1/evidence/C10/hosted-postgres.txt",
+    "docs/plans/ocean-v1/handoffs/C10.md"
+  ],
+  "C10_hosted_ci_reconfirmed": {
+    "source_commit": "c3d5b8b188bfea325fbc3ccb3c0ac420a428ee9d",
+    "run": {
+      "id": 38731722030,
+      "html_url": "https://github.com/jarondlk/ocean-platform/actions/runs/38731722030",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "push",
+      "head_sha": "c3d5b8b188bfea325fbc3ccb3c0ac420a428ee9d",
+      "run_attempt": 1
+    },
+    "jobs": [
+      {
+        "id": 116410863302,
+        "name": "PostgreSQL migration and metadata integration",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-15T12:03:00Z",
+            "completed_at": "2026-10-15T12:03:00Z"
+          },
+          {
+            "name": "Initialize containers",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-15T12:03:00Z",
+            "completed_at": "2026-10-15T12:03:14Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-15T12:03:14Z",
+            "completed_at": "2026-10-15T12:03:17Z"
+          },
+          {
+            "name": "Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-15T12:03:17Z",
+            "completed_at": "2026-10-15T12:03:20Z"
+          },
+          {
+            "name": "Install test dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-15T12:03:20Z",
+            "completed_at": "2026-10-15T12:03:39Z"
+          },
+          {
+            "name": "Apply application migrations",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-15T12:03:39Z",
+            "completed_at": "2026-10-15T12:03:40Z"
+          },
+          {
+            "name": "Verify invite acceptance and metadata persistence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-15T12:03:40Z",
+            "completed_at": "2026-10-15T12:04:00Z"
+          },
+          {
+            "name": "Verify transactional corpus upsert is idempotent",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-15T12:04:00Z",
+            "completed_at": "2026-10-15T12:04:22Z"
+          },
+          {
+            "name": "Create isolated C03 retention test database",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-15T12:04:22Z",
+            "completed_at": "2026-10-15T12:04:22Z"
+          },
+          {
+            "name": "Identify the job-owned PostgreSQL container address",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-15T12:04:22Z",
+            "completed_at": "2026-10-15T12:04:22Z"
+          },
+          {
+            "name": "Verify C03 retention transaction ordering in isolated schemas",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-15T12:04:22Z",
+            "completed_at": "2026-10-15T12:04:24Z"
+          },
+          {
+            "name": "Create isolated C05 retrieval test database",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-10-15T12:04:24Z",
+            "completed_at": "2026-10-15T12:04:25Z"
+          },
+          {
+            "name": "Verify C05 vector identity and metagenome replacement history",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-15T12:04:25Z",
+            "completed_at": "2026-10-15T12:04:27Z"
+          },
+          {
+            "name": "Create isolated C09 snapshot test database",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-15T12:04:27Z",
+            "completed_at": "2026-10-15T12:04:27Z"
+          },
+          {
+            "name": "Verify C09 snapshot capture and publication boundaries",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-15T12:04:27Z",
+            "completed_at": "2026-10-15T12:04:30Z"
+          },
+          {
+            "name": "Verify database backup and isolated restore",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-15T12:04:30Z",
+            "completed_at": "2026-10-15T12:04:31Z"
+          },
+          {
+            "name": "Post Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 30,
+            "started_at": "2026-10-15T12:04:31Z",
+            "completed_at": "2026-10-15T12:04:31Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 31,
+            "started_at": "2026-10-15T12:04:31Z",
+            "completed_at": "2026-10-15T12:04:32Z"
+          },
+          {
+            "name": "Stop containers",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 32,
+            "started_at": "2026-10-15T12:04:32Z",
+            "completed_at": "2026-10-15T12:04:32Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33,
+            "started_at": "2026-10-15T12:04:32Z",
+            "completed_at": "2026-10-15T12:04:32Z"
+          }
+        ]
+      },
+      {
+        "id": 116410863544,
+        "name": "Frontend typecheck and build",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-15T12:03:00Z",
+            "completed_at": "2026-10-15T12:03:01Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-15T12:03:01Z",
+            "completed_at": "2026-10-15T12:03:03Z"
+          },
+          {
+            "name": "Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-15T12:03:03Z",
+            "completed_at": "2026-10-15T12:03:06Z"
+          },
+          {
+            "name": "Install frontend dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-15T12:03:06Z",
+            "completed_at": "2026-10-15T12:03:12Z"
+          },
+          {
+            "name": "Audit production frontend dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-15T12:03:12Z",
+            "completed_at": "2026-10-15T12:03:12Z"
+          },
+          {
+            "name": "Test frontend",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-15T12:03:12Z",
+            "completed_at": "2026-10-15T12:03:15Z"
+          },
+          {
+            "name": "Typecheck frontend",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-15T12:03:15Z",
+            "completed_at": "2026-10-15T12:03:20Z"
+          },
+          {
+            "name": "Build frontend",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-15T12:03:20Z",
+            "completed_at": "2026-10-15T12:03:52Z"
+          },
+          {
+            "name": "Post Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-15T12:03:52Z",
+            "completed_at": "2026-10-15T12:03:52Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-15T12:03:52Z",
+            "completed_at": "2026-10-15T12:03:52Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-15T12:03:52Z",
+            "completed_at": "2026-10-15T12:03:52Z"
+          }
+        ]
+      },
+      {
+        "id": 116410863729,
+        "name": "Backend tests and security boundary",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-15T12:03:01Z",
+            "completed_at": "2026-10-15T12:03:01Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-15T12:03:01Z",
+            "completed_at": "2026-10-15T12:03:04Z"
+          },
+          {
+            "name": "Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-15T12:03:04Z",
+            "completed_at": "2026-10-15T12:03:08Z"
+          },
+          {
+            "name": "Install dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-15T12:03:08Z",
+            "completed_at": "2026-10-15T12:03:36Z"
+          },
+          {
+            "name": "Lint active Python code",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-15T12:03:36Z",
+            "completed_at": "2026-10-15T12:03:36Z"
+          },
+          {
+            "name": "Check generated chat scope contract",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-15T12:03:36Z",
+            "completed_at": "2026-10-15T12:03:37Z"
+          },
+          {
+            "name": "Check frozen catalogue contracts and examples",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-15T12:03:37Z",
+            "completed_at": "2026-10-15T12:03:40Z"
+          },
+          {
+            "name": "Run tests with coverage",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-15T12:03:40Z",
+            "completed_at": "2026-10-15T12:08:16Z"
+          },
+          {
+            "name": "Post Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-15T12:08:16Z",
+            "completed_at": "2026-10-15T12:08:16Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-15T12:08:16Z",
+            "completed_at": "2026-10-15T12:08:16Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-15T12:08:16Z",
+            "completed_at": "2026-10-15T12:08:16Z"
+          }
+        ]
+      },
+      {
+        "id": 116410863767,
+        "name": "OCEAN v1 prototype tests and build",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-15T12:03:00Z",
+            "completed_at": "2026-10-15T12:03:01Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-15T12:03:01Z",
+            "completed_at": "2026-10-15T12:03:04Z"
+          },
+          {
+            "name": "Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-15T12:03:04Z",
+            "completed_at": "2026-10-15T12:03:07Z"
+          },
+          {
+            "name": "Install prototype dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-15T12:03:07Z",
+            "completed_at": "2026-10-15T12:03:13Z"
+          },
+          {
+            "name": "Audit production prototype dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-15T12:03:13Z",
+            "completed_at": "2026-10-15T12:03:14Z"
+          },
+          {
+            "name": "Test prototype",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-15T12:03:14Z",
+            "completed_at": "2026-10-15T12:03:15Z"
+          },
+          {
+            "name": "Typecheck prototype",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-15T12:03:15Z",
+            "completed_at": "2026-10-15T12:03:20Z"
+          },
+          {
+            "name": "Build prototype",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-15T12:03:20Z",
+            "completed_at": "2026-10-15T12:03:41Z"
+          },
+          {
+            "name": "Post Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-15T12:03:41Z",
+            "completed_at": "2026-10-15T12:03:41Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-15T12:03:41Z",
+            "completed_at": "2026-10-15T12:03:41Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-15T12:03:41Z",
+            "completed_at": "2026-10-15T12:03:41Z"
+          }
+        ]
+      },
+      {
+        "id": 116410865159,
+        "name": "Dependency review",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      }
+    ]
+  },
+  "C10_previous_accepted_delivery_verification": {
+    "required_passed": 680,
+    "new_adapter_cases": 110,
+    "hosted_backend_passed": 2570,
+    "hosted_backend_skipped": 84,
+    "hosted_backend_coverage_percent": 83.68,
+    "local_backend_passed": 2579,
+    "local_only_unrelated_tests_excluded_from_commit": 9,
+    "postgres_total": 84,
+    "postgres_breakdown": {
+      "existing_regressions": 39,
+      "C03": 12,
+      "C05": 12,
+      "C09": 21
+    },
+    "frontend_legacy_passed": 132,
+    "frontend_v1_passed": 162,
+    "both_frontend_typechecks": "pass",
+    "both_frontend_builds": "pass",
+    "both_production_dependency_audits": "0 vulnerabilities",
+    "idempotent_upsert_second_run": {
+      "inserted_rows": 0,
+      "updated_rows": 0
+    },
+    "isolated_backup_restore": "ok",
+    "ruff": "pass",
+    "generated_checks": "5 workflow checks and C10 schema/logical-example comparison in backend tests pass"
+  },
+  "readiness_checks": {
+    "checks": [
+      {
+        "name": "baseline",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "-m",
+          "pytest",
+          "tests/test_sst_nasa_context.py",
+          "tests/test_research_sst.py",
+          "tests/test_regional_publication.py",
+          "tests/test_overview_coverage.py",
+          "-q",
+          "--tb=short"
+        ],
+        "exit_code": 0,
+        "summary": "55 passed, 1532 warnings in 10.66s"
+      },
+      {
+        "name": "prerequisites",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "-m",
+          "pytest",
+          "tests/test_reliability.py",
+          "tests/test_pre_analysis.py",
+          "tests/test_statistical_analysis.py",
+          "tests/test_derived_artifact_eligibility.py",
+          "tests/test_remote_sensing.py",
+          "tests/test_catalogue_snapshots.py",
+          "tests/test_catalogue_snapshot_capture.py",
+          "tests/test_catalogue_snapshot_transfer.py",
+          "tests/test_catalogue_snapshot_fixtures.py",
+          "tests/test_context_catalogue_contract.py",
+          "tests/test_context_catalogue_fixtures.py",
+          "-q",
+          "--tb=short"
+        ],
+        "exit_code": 0,
+        "summary": "482 passed, 23 warnings in 13.65s"
+      },
+      {
+        "name": "sst-semantics",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "-m",
+          "pytest",
+          "tests/test_historical_sst_acquisition.py",
+          "tests/test_sst_context_review.py",
+          "tests/test_regional_context_normalization.py",
+          "-q",
+          "--tb=short"
+        ],
+        "exit_code": 0,
+        "summary": "61 passed, 568 warnings in 22.68s"
+      },
+      {
+        "name": "schema",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_context_catalogue.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "Context catalogue schema is current"
+      },
+      {
+        "name": "browser-types",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_types.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "Catalogue browser contract is current."
+      },
+      {
+        "name": "examples",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_examples.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "C08 shared examples are current"
+      },
+      {
+        "name": "snapshots",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_snapshot.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "C09 snapshot schema and synthetic byte examples are current"
+      },
+      {
+        "name": "scope",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_chat_scope.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "No output; exit recorded above"
+      },
+      {
+        "name": "neighbor-adapters",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_adapter.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "C10 frozen adapter schema and logical examples are current"
+      },
+      {
+        "name": "sampling-calendar",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "-m",
+          "pytest",
+          "tests/test_research_sst_panel.py",
+          "tests/test_research_sst_collection.py",
+          "-q",
+          "--tb=short"
+        ],
+        "exit_code": 0,
+        "summary": "8 passed, 38 warnings in 1.57s"
+      }
+    ],
+    "safe_environment": {
+      "AUTH_MODE": "disabled",
+      "DEPLOYMENT_ENV": "test",
+      "ENABLE_MOCK_LOGIN": "false",
+      "PERSIST_LOCAL_CHAT": "false",
+      "RUN_POSTGRES_INTEGRATION": "0",
+      "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c11_readiness_unused",
+      "MODEL_PROVIDER": "ollama",
+      "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+    },
+    "service_startups": 0,
+    "C11_implementation_started": false
+  },
+  "verification": {
+    "fresh_tests_passed": 606,
+    "failures": 0,
+    "skips": 0,
+    "baseline": 55,
+    "prerequisite": 482,
+    "sst_semantics": 61,
+    "sampling_calendar": 8,
+    "generated_contract_checks": 6,
+    "warning_counts": {
+      "baseline": 1532,
+      "prerequisites": 23,
+      "sst_semantics": 568,
+      "sampling_calendar": 38
+    },
+    "broader_jobs": "Unchanged broad backend/PostgreSQL/frontend source acceptance from exact C10 source hosted CI; not rerun locally"
+  },
+  "preservation": {
+    "unrelated_files": {
+      "count": 30,
+      "all_match": true
+    },
+    "scientific_artifacts": {
+      "count": 7,
+      "all_match": true
+    },
+    "serving_files": {
+      "count": 2,
+      "all_match": true
+    },
+    "P00_current_files": {
+      "count": 36,
+      "all_match": true
+    },
+    "C08_accepted_files": {
+      "count": 12,
+      "all_match": true
+    },
+    "C09_accepted_files": {
+      "count": 14,
+      "all_match": true
+    },
+    "C10_accepted_files": {
+      "count": 10,
+      "all_match": true
+    },
+    "SST_reference_files": {
+      "count": 12,
+      "all_match": true
+    },
+    "prior_evidence_files": {
+      "count": 308,
+      "all_match": true
+    }
+  },
+  "start_snapshot_sha256": "4ef75f9f5a551438fb8b3a17002a78a56412e5b45ccf4e92a2ec1f97df3fbc40",
+  "initial_origin_overhaul": "75703457db6cc011506765c4c24ce3aa8106badc",
+  "C11_selection": {
+    "component_status": "Not started",
+    "authorized_components_contains_C11": false,
+    "handoff_exists": false
+  },
+  "scope_limits": [
+    "Local readiness only; no SST adapter implemented",
+    "No service startups or real provider/model requests",
+    "No source acquisition, real publication or transfer",
+    "No real artifact regeneration or serving rebuild",
+    "No frontend/backend integration, cloud provisioning or deployment"
+  ],
+  "evidence_log_normalization": "Only new logs: trailing whitespace/extra EOF blank lines removed; zero-output scope log stays empty. Historical evidence untouched.",
+  "original_log_sha256_before_normalization": {},
+  "documentation_files": {
+    "docs/plans/ocean-v1/C11_READINESS_AUDIT_2026-10-15.md": "68bd63d0803cdd73948c8b669c5aca1c289b7edc8bb94bb878f9638a6e308d08",
+    "docs/plans/ocean-v1/STATUS.md": "be309361182143919172dd469adacb459391526e7c8f55701b08064a2699fc86",
+    "docs/plans/ocean-v1/README.md": "5530a3108fea0a0316cbe0edbd4aaee70a579cf2e0776fab285e324b2400cb2a",
+    "docs/plans/ocean-v1/HUB_PROMPT.md": "b52058ed697906869dcff08ed59ba76c25213796d8ee6c59dbb6f91f41d7e77a",
+    "docs/plans/ocean-v1/components/C11-sst-adapter.md": "dab61811478b09a176c9087e03bb66dc60dfcc359154496e3f039199db0006ae"
+  },
+  "evidence_files": {
+    "docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/baseline.txt": "a2ea510e49a0ab9a3dcf97ab1944cd9bf2bace20de22398b9730b3c285418e1f",
+    "docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/browser-types.txt": "edfc61324e991e3bda912ff0153de8de843149d6e96921f6df836436437bb215",
+    "docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/examples.txt": "962c470ee8e7b1a3fa7cc260238248b74b659e73c4479518cfd90a2fb0468724",
+    "docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/hosted-ci.json": "064cc60285ad14f847dc924663eec2de37886109b099037e4494127377310a2c",
+    "docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/neighbor-adapters.txt": "3616357347d55684342a6b3d04a6cab676714283fd7613babf78aee10db52d5d",
+    "docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/prerequisites.txt": "b8ac36aca18a457573d81f89815e05b0b78aaf89bc41d99a43c4cb64b690c3c2",
+    "docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/qa.json": "4e41e28f18ad9e2c270c4df7f357928506900f0cee198d1dc7b2fc7b13aa97bc",
+    "docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/results.json": "ec3661865fe7f14b4f1a2b620f6f192dea547673b26101d87eb4cfd12265881c",
+    "docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/sampling-calendar.txt": "586cf5bee015b2e4ff0719958bcd8badac181a8ac5dcc71e074a16110fb012b7",
+    "docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/schema.txt": "17f7777b79b05d9f620343086f7948c8a0ec79cbe76e74f59d7490234a67d15b",
+    "docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/scope.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/snapshots.txt": "9b07d6aff6dbefa9ef198cfe8da820676814ff35b8f418400856ff03bb3cc1b9",
+    "docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/sst-semantics.txt": "5a6ff803f5fcec4c5a57b5e64869677dd3c157506bb2a4a37911c91286265e51",
+    "docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/start-snapshot.json": "4ef75f9f5a551438fb8b3a17002a78a56412e5b45ccf4e92a2ec1f97df3fbc40",
+    "docs/plans/ocean-v1/evidence/c11-readiness-2026-10-15/verify_readiness.py": "b144088feb8a69bc0f5296b197eeaae7b07422e907a7caa51f081317a5afa2e6"
+  },
+  "qa": {
+    "local_markdown_links_checked": 156,
+    "missing_local_targets": [],
+    "ruff": {
+      "exit_code": 0,
+      "output": "All checks passed!"
+    },
+    "preserved_implementation_and_historical_evidence": "All saved source and 308 prior-evidence hashes match",
+    "C11_implementation_started": false
+  }
+}

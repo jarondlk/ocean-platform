@@ -40,6 +40,13 @@ Preserve existing SST workflows and published artifacts. Rollback removes catalo
 
 ## Exact prompts
 
+Readiness was verified on 2026-10-15 JST at `7570345`: 55 baseline, 482
+prerequisite and 69 additional SST semantic/calendar tests pass; six generated
+checks are current. C02/C09 accepted sources reconcile. Read the
+[readiness audit](../C11_READINESS_AUDIT_2026-10-15.md) for product, spatial support,
+UTC/JST calendar and sampling constraints. This is readiness evidence only;
+implementation remains Not started and unselected.
+
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c11). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.

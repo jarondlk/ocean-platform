@@ -153,3 +153,9 @@ See [the readiness audit](C10_READINESS_AUDIT_2026-10-15.md). C10 was subsequent
 C10 is complete and delivered as `c3d5b8b` with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38731722030).
 Read [its handoff](handoffs/C10.md), [adapter contract](C10_ADAPTER_CONTRACT.md)
 and [delivery receipt](evidence/C10/delivery.json). C11 remains unselected.
+
+C11 readiness is verified at `7570345`: 55 baseline, 482 prerequisite and 69
+additional SST semantic/calendar tests pass; six generated contracts are current.
+C02/C09 accepted sources reconcile, and C10 exact-source hosted CI is green.
+See [the readiness audit](C11_READINESS_AUDIT_2026-10-15.md). C11 remains
+Not started and unselected.

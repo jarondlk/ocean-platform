@@ -1,0 +1,14 @@
+.............................................................            [100%]
+=============================== warnings summary ===============================
+tests/test_historical_sst_acquisition.py::test_original_nrt_is_verified_without_resolving_final_series_gap
+  <frozen importlib._bootstrap>:488: RuntimeWarning: numpy.ndarray size changed, may indicate binary incompatibility. Expected 16 from C header, got 96 from PyObject
+
+tests/test_historical_sst_acquisition.py: 20 warnings
+tests/test_sst_context_review.py: 472 warnings
+tests/test_regional_context_normalization.py: 75 warnings
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/xarray/backends/netCDF4_.py:96: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
+  As an alternative, you can create a new view using np.reshape (with copy=False if needed).
+    data[key] = value
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+61 passed, 568 warnings in 22.68s
