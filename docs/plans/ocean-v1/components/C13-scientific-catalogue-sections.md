@@ -1,6 +1,6 @@
 # C13 — Scientific catalogue sections
 
-**Status:** Not started. **Prerequisites:** C01, C02, C10, C11, C12.
+**Status:** Complete locally; exact-source delivery pending. **Prerequisites:** C01, C02, C10, C11, C12.
 
 ## Revised delivery boundary
 
@@ -43,3 +43,7 @@ Maintain existing registry, published-result and statistics consumers during mig
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c13). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+## Selected implementation — 2026-10-16 JST
+
+Readiness passes: 1,590 baseline/prerequisite tests, eight generated checks, all formal accepted sources reconciled. The user authorized implementation and automatic sequential progression once future readiness passes. Read [handoff](../handoffs/C13.md) and [readiness report](../evidence/c13-readiness-2026-10-16/audit.md). Local implementation acceptance passes 1,969 required tests, full backend 3,503/127 gated skips/84.49% coverage and nine generated checks. Source checkpoint and hosted delivery remain pending.

@@ -1,0 +1,55 @@
+{
+  "unrelated_files": {
+    "count": 30,
+    "unchanged": true
+  },
+  "scientific_artifacts": {
+    "count": 7,
+    "unchanged": true
+  },
+  "serving_files": {
+    "count": 2,
+    "unchanged": true
+  },
+  "P00_current_files": {
+    "count": 36,
+    "unchanged": true
+  },
+  "prior_evidence_files": {
+    "count": 432,
+    "unchanged": true
+  },
+  "prerequisites": {
+    "C01": {
+      "unchanged_current_sources": 10,
+      "intentional_C13_supersessions": {},
+      "historical_receipts_unchanged": true
+    },
+    "C02": {
+      "unchanged_current_sources": 11,
+      "intentional_C13_supersessions": {
+        "preprocessing/derived_artifacts.py": {
+          "previous_sha256": "deba53d403e8ce3c44f1a6482fb1f5cd5b2b81650401cbdd0bfb2aa8d31d5bd4",
+          "C13_sha256": "e44a7faa42a77159f38e0925c730c319b74a4339f30f8c062ebf5057a446330c",
+          "previous_receipt": "docs/plans/ocean-v1/evidence/C02/verification.json"
+        }
+      },
+      "historical_receipts_unchanged": true
+    },
+    "C10": {
+      "unchanged_current_sources": 10,
+      "intentional_C13_supersessions": {},
+      "historical_receipts_unchanged": true
+    },
+    "C11": {
+      "unchanged_current_sources": 10,
+      "intentional_C13_supersessions": {},
+      "historical_receipts_unchanged": true
+    },
+    "C12": {
+      "unchanged_current_sources": 22,
+      "intentional_C13_supersessions": {},
+      "historical_receipts_unchanged": true
+    }
+  }
+}

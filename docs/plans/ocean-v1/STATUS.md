@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-10-16 JST. **P00 and C01–C12 are Complete locally.**
+Updated: 2026-10-16 JST. **P00 and C01–C13 are Complete locally.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -8,12 +8,14 @@ C02 was explicitly selected on 2026-10-14 JST and passed its software/synthetic
 checks. C03 passed its local transaction-ordering and actual disposable PostgreSQL
 acceptance. C04 now passes concurrent responsiveness, worker-lifetime, security
 and cancellation acceptance. C05 passes embedding isolation, metagenome fidelity
-and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11 passes frozen SST product/coverage acceptance; C12 passes frozen canonical eDNA adapter acceptance; C13–C27 remain Not started.
-P00 and C01–C12 local work is authorized.
+and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11 passes frozen SST product/coverage acceptance; C12 passes frozen canonical eDNA adapter acceptance; C13 passes scientific catalogue acceptance; C14–C27 remain Not started.
+P00 and C01–C13 local work is authorized; the user also authorizes subsequent CXX local implementation after each readiness audit passes.
 See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md), [C08](handoffs/C08.md), [C09](handoffs/C09.md) and [C10](handoffs/C10.md) handoffs for current evidence.
 
-Latest completed implementation: **C12 — eDNA adapter**. Local acceptance: **1,646 required; 3,220 backend/127 gated PostgreSQL skips/84.11% coverage; 82 actual PostgreSQL; 163 v1 tests and eight generated checks**. Read [handoff](handoffs/C12.md), [contract](C12_EDNA_ADAPTER_CONTRACT.md) and [receipt](evidence/C12/verification.json). Source `d3ef699` is committed/pushed with [passing exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38845253029): **3,211 backend/84.85% coverage, 127 actual PostgreSQL cases, 163 v1/132 legacy frontend tests and both typechecks/builds/audits**. [Delivery receipt](evidence/C12/delivery.json).
+Latest completed implementation: **C13 — Scientific catalogue sections**. Local acceptance: **1,969 required; 3,503 backend/127 gated PostgreSQL skips/84.49% coverage; nine generated checks**. Read [handoff](handoffs/C13.md), [contract](C13_SCIENTIFIC_CATALOGUE_CONTRACT.md) and [receipt](evidence/C13/verification.json). Source delivery and exact-source hosted CI pending.
+
+C12 — eDNA adapter. Local acceptance: **1,646 required; 3,220 backend/127 gated PostgreSQL skips/84.11% coverage; 82 actual PostgreSQL; 163 v1 tests and eight generated checks**. Read [handoff](handoffs/C12.md), [contract](C12_EDNA_ADAPTER_CONTRACT.md) and [receipt](evidence/C12/verification.json). Source `d3ef699` is committed/pushed with [passing exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38845253029): **3,211 backend/84.85% coverage, 127 actual PostgreSQL cases, 163 v1/132 legacy frontend tests and both typechecks/builds/audits**. [Delivery receipt](evidence/C12/delivery.json).
 
 C11 — SST adapter. Local acceptance is complete: 966 required tests; full backend 2,829 passed/84 gated PostgreSQL skips, 83.29% coverage. Read [the handoff](handoffs/C11.md), [contract](C11_SST_ADAPTER_CONTRACT.md) and [receipt](evidence/C11/verification.json). Source `41cd876` is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38744193298) passes: 2,820 backend tests/84.04% coverage, 84 actual PostgreSQL cases and both frontend gates. [Delivery receipt](evidence/C11/delivery.json).
 
@@ -52,7 +54,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C10 — CTD and metagenome adapters](components/C10-ctd-metagenome-adapters.md) | Complete | Source-qualified frozen Parquet inputs; exact scoped operations and reproducible C08/C09 integration | 680 required; backend 2,579 passed/84 gated skips, 82.90% coverage; [receipt](evidence/C10/verification.json) | [C10](handoffs/C10.md) |
 | [C11 — SST adapter](components/C11-sst-adapter.md) | Complete | Product-separated frozen observations; exact scoped operations, sampling-aware coverage and reproducibility | 966 required; backend 2,829 passed/84 gated skips, 83.29% coverage; [receipt](evidence/C11/verification.json) | [C11](handoffs/C11.md) |
 | [C12 — eDNA adapter](components/C12-edna-adapter.md) | Complete | Frozen canonical eDNA; shared SQL predicates; qualified raw/eligible full-population operations | 1,646 required; backend 3,220/127 gated skips, 84.11%; 82 actual PostgreSQL; [receipt](evidence/C12/verification.json) | [C12](handoffs/C12.md) |
-| [C13 — Analyses statistics metadata relationships](components/C13-scientific-catalogue-sections.md) | Not started | None | Not run | Not created |
+| [C13 — Analyses statistics metadata relationships](components/C13-scientific-catalogue-sections.md) | Complete | Frozen scientific index, qualified five roots and complete published tables | 1,969 required; backend 3,503/127 gated skips, 84.49%; [receipt](evidence/C13/verification.json) | [C13](handoffs/C13.md) |
 | [C14 — Catalogue service and tools](components/C14-catalogue-service-tools.md) | Not started | None | Not run | Not created |
 | [C15 — New application shell](components/C15-application-shell.md) | Not started | None | Not run | Not created |
 | [C16 — Complete catalogue browser](components/C16-catalogue-browser.md) | Not started | None | Not run | Not created |

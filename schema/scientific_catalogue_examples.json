@@ -1,0 +1,227 @@
+{
+  "example_version": "c13-logical-inputs-v1",
+  "expected": {
+    "independent_researcher_approval": false,
+    "provider_endorsement": false,
+    "published_rows": 3,
+    "workflow_execution": false
+  },
+  "qualification": "Synthetic logical index; bind actual child snapshots and explicitly seal before use.",
+  "registry": {
+    "analyses": [
+      {
+        "approval_basis": "explicit_user_accepted_operational_publication",
+        "availability": {
+          "reason": null,
+          "status": "available"
+        },
+        "derived_receipt": null,
+        "id": "synthetic:analysis:published",
+        "independent_researcher_approval": false,
+        "input_dataset_ids": [
+          "synthetic:ctd:casts"
+        ],
+        "limitations": [
+          "Synthetic retained findings; operational publication is not independent scientific approval."
+        ],
+        "method_id": "synthetic-descriptive-v1",
+        "method_version": "1",
+        "provenance": {
+          "content_sha256": null,
+          "origin": null,
+          "references": [
+            "Synthetic C13 acceptance; no actual scientific data."
+          ],
+          "source_generation": null
+        },
+        "provider_endorsement": false,
+        "publication_status": "published",
+        "purpose": {
+          "en": "Exact retained rows for synthetic acceptance",
+          "ja": "Exact retained rows for synthetic acceptance"
+        },
+        "scope": {
+          "sources": {
+            "ctd": {
+              "enabled": true,
+              "filters": {
+                "bay": null,
+                "sample_id": null,
+                "station": null,
+                "time_from": null,
+                "time_to": null
+              }
+            },
+            "edna_metabarcoding": {
+              "analysis_id": null,
+              "enabled": false,
+              "filters": {
+                "assignment_method": null,
+                "is_control": null,
+                "lat_max": null,
+                "lat_min": null,
+                "lon_max": null,
+                "lon_min": null,
+                "provider": null,
+                "provider_project_id": null,
+                "provider_run_id": null,
+                "sample_id": null,
+                "sample_kind": null,
+                "taxon": null,
+                "time_from": null,
+                "time_to": null
+              }
+            },
+            "metagenome": {
+              "enabled": false,
+              "filters": {
+                "bay": null,
+                "sample_id": null,
+                "station": null,
+                "time_from": null,
+                "time_to": null
+              }
+            },
+            "remote_sensing": {
+              "enabled": false,
+              "filters": {
+                "dataset_id": null,
+                "lat_max": null,
+                "lat_min": null,
+                "lon_max": null,
+                "lon_min": null,
+                "time_from": null,
+                "time_to": null
+              }
+            }
+          },
+          "version": 1
+        },
+        "scope_option": null,
+        "tables": [
+          {
+            "availability": {
+              "reason": null,
+              "status": "available"
+            },
+            "columns": [
+              {
+                "key": "result_id",
+                "title": {
+                  "en": "result_id",
+                  "ja": "result_id"
+                },
+                "unit": null
+              },
+              {
+                "key": "value",
+                "title": {
+                  "en": "value",
+                  "ja": "value"
+                },
+                "unit": null
+              },
+              {
+                "key": "support",
+                "title": {
+                  "en": "support",
+                  "ja": "support"
+                },
+                "unit": null
+              },
+              {
+                "key": "missing",
+                "title": {
+                  "en": "missing",
+                  "ja": "missing"
+                },
+                "unit": null
+              }
+            ],
+            "completeness": "complete",
+            "name": "results",
+            "object_id": "synthetic:analysis:published:results",
+            "row_count": 3
+          }
+        ],
+        "title": {
+          "en": "Published synthetic finding",
+          "ja": "Published synthetic finding"
+        }
+      }
+    ],
+    "datasets": [
+      {
+        "dataset_id": "synthetic:ctd:casts",
+        "snapshot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source_family": "ctd",
+        "source_id": "synthetic-ctd"
+      }
+    ],
+    "definitions": [],
+    "qualification": "The CTD source family is an immutable index storage carrier only; it does not assert CTD measurements, a raw dataset, or scientific source eligibility.",
+    "relationships": [],
+    "schema_version": "catalogue-scientific-registry-v1",
+    "superseded_generations": [],
+    "workflows": [
+      {
+        "analysis_ids": [
+          "synthetic:analysis:published"
+        ],
+        "availability": {
+          "reason": null,
+          "status": "available"
+        },
+        "id": "synthetic:workflow:available",
+        "input_dataset_ids": [
+          "synthetic:ctd:casts"
+        ],
+        "limitations": [
+          "This is a workflow description; it cannot run or approve an experiment."
+        ],
+        "provenance": {
+          "content_sha256": null,
+          "origin": null,
+          "references": [
+            "Synthetic C13 acceptance."
+          ],
+          "source_generation": null
+        },
+        "purpose": {
+          "en": "Describe an operation without executing an experiment",
+          "ja": "Describe an operation without executing an experiment"
+        },
+        "required_sources": [
+          "ctd"
+        ],
+        "title": {
+          "en": "Available descriptive workflow",
+          "ja": "Available descriptive workflow"
+        },
+        "workflow_kind": "descriptive_inventory"
+      }
+    ]
+  },
+  "tables": {
+    "synthetic:analysis:published:results": [
+      {
+        "missing": null,
+        "result_id": "result:0000000",
+        "support": "observed",
+        "value": 0.0
+      },
+      {
+        "missing": null,
+        "result_id": "result:0000001",
+        "support": "qualified",
+        "value": 1.0
+      },
+      {
+        "missing": null,
+        "result_id": "result:0000002",
+        "support": "observed",
+        "value": 2.0
+      }
+    ]
+  }
+}

@@ -472,3 +472,31 @@ corpus upsert changes no rows and isolated backup/restore passes. All 22 accepte
 source paths and the original local receipt remain unchanged. The delivery receipt
 binds source and job/log hashes. C13, real acquisition/copying/review/publication,
 service/UI integration and GCP deployment remain outside this completed checkpoint.
+
+### C13 selection and sequential continuation — 2026-10-16 JST
+
+The user requested C13 readiness and implementation if ready. Readiness passes
+1,590 baseline/prerequisite tests, eight generated checks and all accepted hashes.
+C13 now implements a sealed scientific index over exact C10/C11/C12 snapshots,
+full published tables, workflow descriptions, source summaries, metadata and
+qualified relationships. C02 eligibility/history/tombstones remain enforced.
+The CTD family on the separate index capture is an explicit storage carrier,
+never a CTD measurement, dataset count or scientific input assertion.
+
+The user further authorized recurring continuation every few hours and automatic
+sequential readiness/implementation through the remaining CXX components. A
+three-hour thread heartbeat `continue-ocean-overhaul-checkpoints` is active.
+Subagents and prior commit/push approval persist. This does not supply missing
+real-world scientific reviews, concrete source transfer authority, cloud target
+configuration or deployment approval. Keep those documented gates explicit.
+
+### C13 local acceptance — 2026-10-16 JST
+
+C13 passes the five-root scientific map over exact child snapshots, complete
+published table paging, deduplicated inventory, native source summaries, metadata
+and independently qualified relationships. Required 1,969, full backend 3,503/127 skips
+at 84.49% coverage and nine generated checks pass. Only C02's pure tombstone injection
+supersedes prior app source; all C10–C12/shared contracts and original receipts remain
+unchanged. Real scientific artifacts, review/publication/identity, experiment
+execution, UI/service integration and cloud deployment remain outside acceptance.
+Source checkpoint/hosted delivery follow before automatically auditing C14 readiness.

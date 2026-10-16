@@ -1,0 +1,111 @@
+{
+  "base_head": "5abab665820d59af1a0b23c05992d35864d2011d",
+  "formal_prerequisites": {
+    "C01": {
+      "source_paths": 10,
+      "original_matches": 5,
+      "accepted_supersessions": 5,
+      "all_current_hashes_match": true
+    },
+    "C02": {
+      "source_paths": 12,
+      "original_matches": 9,
+      "accepted_supersessions": 3,
+      "all_current_hashes_match": true
+    },
+    "C10": {
+      "source_paths": 10,
+      "original_matches": 10,
+      "accepted_supersessions": 0,
+      "all_current_hashes_match": true
+    },
+    "C11": {
+      "source_paths": 10,
+      "original_matches": 10,
+      "accepted_supersessions": 0,
+      "all_current_hashes_match": true
+    },
+    "C12": {
+      "source_paths": 22,
+      "original_matches": 22,
+      "accepted_supersessions": 0,
+      "all_current_hashes_match": true
+    }
+  },
+  "C08_C09": {
+    "C08": {
+      "paths": 12,
+      "unchanged": 6,
+      "accepted_C12_supersessions": [
+        "frontend-v1/src/catalogue-contract.generated.ts",
+        "frontend-v1/src/catalogue-contract.ts",
+        "frontend-v1/tests/catalogue-contract.test.ts",
+        "schema/context_catalogue.py",
+        "schema/context_catalogue.v1.schema.json",
+        "schema/context_catalogue_examples.json"
+      ]
+    },
+    "C09": {
+      "paths": 14,
+      "unchanged": 13,
+      "accepted_C12_supersessions": [
+        ".github/workflows/tests.yml"
+      ]
+    }
+  },
+  "prior_evidence_files_preserved": 414,
+  "preservation": {
+    "unrelated_files": {
+      "count": 30,
+      "all_match": true
+    },
+    "scientific_artifacts": {
+      "count": 7,
+      "all_match": true
+    },
+    "serving_files": {
+      "count": 2,
+      "all_match": true
+    },
+    "P00_current_files": {
+      "count": 36,
+      "all_match": true
+    }
+  },
+  "C12_hosted_ci": {
+    "run_id": 38845253029,
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/38845253029",
+    "source_commit": "d3ef6992e97c46ca3f7ff4f554ecc4e60e05bef9",
+    "conclusion": "success",
+    "run_attempt": 1,
+    "jobs": [
+      {
+        "id": 116794201760,
+        "name": "OCEAN v1 prototype tests and build",
+        "conclusion": "success"
+      },
+      {
+        "id": 116794201868,
+        "name": "PostgreSQL migration and metadata integration",
+        "conclusion": "success"
+      },
+      {
+        "id": 116794201930,
+        "name": "Frontend typecheck and build",
+        "conclusion": "success"
+      },
+      {
+        "id": 116794201943,
+        "name": "Backend tests and security boundary",
+        "conclusion": "success"
+      },
+      {
+        "id": 116794203202,
+        "name": "Dependency review",
+        "conclusion": "skipped"
+      }
+    ]
+  },
+  "all_assertions_passed": true,
+  "start_snapshot_sha256": "ac8e40d5b89cb407b7387aa7cb91ecee9f1336144b14b14474f02dcf75beee8f"
+}

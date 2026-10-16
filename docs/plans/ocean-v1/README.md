@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C12 are Complete locally; C13–C27 are not started.**
+**P00 and C01–C13 are Complete locally; C14–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -128,7 +128,7 @@ not a requirement to reset future work to this commit.
 Existing unrelated README, audit and benchmark modifications are preserved.
 P00 progress is recorded in [STATUS.md](STATUS.md) and [its handoff](handoffs/P00.md).
 C01 and C02 are complete with offline evidence; C03 is complete with local unit
-and actual disposable PostgreSQL evidence. C04 and C05 are Complete locally; C06 is Complete locally; C07 is Complete locally; C08 is Complete locally; C09 is Complete locally; C10 is Complete locally; C11 is Complete locally; C12 is Complete locally; C13–C27 remain Not started.
+and actual disposable PostgreSQL evidence. C04 and C05 are Complete locally; C06 is Complete locally; C07 is Complete locally; C08 is Complete locally; C09 is Complete locally; C10 is Complete locally; C11 is Complete locally; C12 is Complete locally; C14–C27 remain Not started.
 The 2026-10-13 revision adds P00 before the original 27 numbered components; the
 setup receipt retains its historical counts and records this amendment.
 
@@ -172,3 +172,10 @@ PostgreSQL skips at 84.11% coverage, 82 actual PostgreSQL cases and 163 v1 brows
 plus typecheck/build/audit. Read [handoff](handoffs/C12.md),
 [contract](C12_EDNA_ADAPTER_CONTRACT.md) and [receipt](evidence/C12/verification.json).
 Source `d3ef699` is committed/pushed with [passing exact-source CI](https://github.com/jarondlk/ocean-platform/actions/runs/38845253029): 3,211 backend/84.85% coverage, 127 actual PostgreSQL cases and both frontend gates. [Delivery receipt](evidence/C12/delivery.json). C13 is not selected.
+
+C13 local acceptance is complete: 1,969 required tests, 3,503 backend/127 gated
+PostgreSQL skips at 84.49% coverage, nine generated checks and preserved previous
+artifacts. [Handoff](handoffs/C13.md), [contract](C13_SCIENTIFIC_CATALOGUE_CONTRACT.md),
+[receipt](evidence/C13/verification.json). Source checkpoint and exact-source hosted
+delivery are pending. Three-hour continuation and later sequential readiness/
+implementation are user-authorized; real scientific/transfer/cloud gates remain explicit.

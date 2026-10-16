@@ -150,14 +150,26 @@ def _superseded_generations():
     return generations
 
 
-def receipt_eligibility(raw, output_sha256, *, expected_inputs=None, require_review=True):
+_CONFIGURED_TOMBSTONES = object()
+
+
+def receipt_eligibility(raw, output_sha256, *, expected_inputs=None, require_review=True,
+                        superseded_generations=_CONFIGURED_TOMBSTONES):
     try:
         receipt = DerivedReceipt.model_validate(raw)
         values = receipt.model_dump(mode="json")
         if receipt.eligibility in {"invalidated", "superseded"}:
             return DerivedEligibility(False, receipt.eligibility, receipt.eligibility_reason,
                                       receipt.method_version, receipt.generation_sha256)
-        superseded = _superseded_generations()
+        # Frozen consumers inject the exact retained tombstones. The sentinel
+        # preserves the existing configured-registry behavior for legacy callers.
+        superseded = (_superseded_generations()
+                      if superseded_generations is _CONFIGURED_TOMBSTONES
+                      else superseded_generations)
+        if superseded is not None and (not isinstance(superseded, (set, frozenset, list, tuple))
+                or any(not isinstance(value, str) or len(value) != 64
+                       or set(value) - set("0123456789abcdef") for value in superseded)):
+            superseded = None
         if superseded is None:
             status, reason = "invalid_registry", "The retained invalidation registry cannot be verified."
         elif receipt.generation_sha256 in superseded:
