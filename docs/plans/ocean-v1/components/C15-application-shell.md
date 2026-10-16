@@ -1,6 +1,6 @@
 # C15 — New application shell
 
-**Status:** Complete for local acceptance; source checkpoint and hosted delivery pending. **Prerequisites:** P00, C08.
+**Status:** Complete; source 7b1659c committed/pushed with passing hosted CI. **Prerequisites:** P00, C08.
 
 ## Revised delivery boundary
 

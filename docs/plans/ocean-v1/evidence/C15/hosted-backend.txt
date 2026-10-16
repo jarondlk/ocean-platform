@@ -1,0 +1,699 @@
+﻿2026-10-16T15:20:32.2838429Z Current runner version: '2.337.0'
+2026-10-16T15:20:32.2864509Z ##[group]Runner Image Provisioner
+2026-10-16T15:20:32.2865382Z Hosted Compute Agent
+2026-10-16T15:20:32.2866122Z Version: 20261012.601
+2026-10-16T15:20:32.2866835Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-16T15:20:32.2867638Z Build Date: 2026-10-12T17:48:21Z
+2026-10-16T15:20:32.2868380Z Worker ID: {9b67542e-d3b6-4cc6-a127-a4f9e91c2cbf}
+2026-10-16T15:20:32.2869135Z Region: northcentralus
+2026-10-16T15:20:32.2869858Z Cloud: Azure
+2026-10-16T15:20:32.2870460Z ##[endgroup]
+2026-10-16T15:20:32.2872813Z ##[group]Operating System
+2026-10-16T15:20:32.2873525Z Ubuntu
+2026-10-16T15:20:32.2874385Z 24.04.5
+2026-10-16T15:20:32.2875090Z LTS
+2026-10-16T15:20:32.2875678Z ##[endgroup]
+2026-10-16T15:20:32.2876300Z ##[group]Runner Image
+2026-10-16T15:20:32.2876958Z Image: ubuntu-24.04
+2026-10-16T15:20:32.2877555Z Version: 20261012.334.1
+2026-10-16T15:20:32.2879396Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-16T15:20:32.2881032Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-16T15:20:32.2882059Z ##[endgroup]
+2026-10-16T15:20:32.2883253Z ##[group]GITHUB_TOKEN Permissions
+2026-10-16T15:20:32.2885786Z Contents: read
+2026-10-16T15:20:32.2886486Z Metadata: read
+2026-10-16T15:20:32.2887096Z ##[endgroup]
+2026-10-16T15:20:32.2889276Z Secret source: Actions
+2026-10-16T15:20:32.2890370Z Cache mode: write
+2026-10-16T15:20:32.2891136Z Prepare workflow directory
+2026-10-16T15:20:32.3234731Z Prepare all required actions
+2026-10-16T15:20:32.3284481Z Getting action download info
+2026-10-16T15:20:32.5747376Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-16T15:20:32.6830519Z Download action repository 'actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97' (SHA:5fda3b95a4ea91299a34e894583c3862153e4b97)
+2026-10-16T15:20:32.8731480Z Complete job name: Backend tests and security boundary
+2026-10-16T15:20:32.9528598Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-16T15:20:32.9529999Z with:
+2026-10-16T15:20:32.9530589Z   persist-credentials: false
+2026-10-16T15:20:32.9531146Z   repository: jarondlk/ocean-platform
+2026-10-16T15:20:32.9535193Z   token: ***
+2026-10-16T15:20:32.9535647Z   ssh-strict: true
+2026-10-16T15:20:32.9536126Z   ssh-user: git
+2026-10-16T15:20:32.9536554Z   clean: true
+2026-10-16T15:20:32.9536999Z   sparse-checkout-cone-mode: true
+2026-10-16T15:20:32.9537526Z   fetch-depth: 1
+2026-10-16T15:20:32.9537964Z   fetch-tags: false
+2026-10-16T15:20:32.9538412Z   show-progress: true
+2026-10-16T15:20:32.9538860Z   lfs: false
+2026-10-16T15:20:32.9539267Z   submodules: false
+2026-10-16T15:20:32.9539717Z   set-safe-directory: true
+2026-10-16T15:20:32.9540223Z   allow-unsafe-pr-checkout: false
+2026-10-16T15:20:32.9541169Z ##[endgroup]
+2026-10-16T15:20:33.0575588Z Syncing repository: jarondlk/ocean-platform
+2026-10-16T15:20:33.0578418Z ##[group]Getting Git version info
+2026-10-16T15:20:33.0579633Z Working directory is '/home/runner/work/ocean-platform/ocean-platform'
+2026-10-16T15:20:33.0581399Z [command]/usr/bin/git version
+2026-10-16T15:20:33.0622040Z git version 2.55.0
+2026-10-16T15:20:33.0643236Z ##[endgroup]
+2026-10-16T15:20:33.0654541Z Temporarily overriding HOME='/home/runner/work/_temp/eafbd02c-d722-4711-b55b-48ddb48241c4' before making global git config changes
+2026-10-16T15:20:33.0657037Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T15:20:33.0661146Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ocean-platform/ocean-platform
+2026-10-16T15:20:33.0718188Z Deleting the contents of '/home/runner/work/ocean-platform/ocean-platform'
+2026-10-16T15:20:33.0720425Z ##[group]Determining repository object format
+2026-10-16T15:20:33.0722043Z ##[endgroup]
+2026-10-16T15:20:33.0723518Z ##[group]Initializing the repository
+2026-10-16T15:20:33.0726242Z [command]/usr/bin/git init /home/runner/work/ocean-platform/ocean-platform
+2026-10-16T15:20:33.0815403Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-16T15:20:33.0817172Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-16T15:20:33.0818917Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-16T15:20:33.0820290Z hint: call:
+2026-10-16T15:20:33.0821143Z hint:
+2026-10-16T15:20:33.0822143Z hint: 	git config --global init.defaultBranch <name>
+2026-10-16T15:20:33.0823275Z hint:
+2026-10-16T15:20:33.0824547Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-16T15:20:33.0826298Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-16T15:20:33.0827735Z hint:
+2026-10-16T15:20:33.0828567Z hint: 	git branch -m <name>
+2026-10-16T15:20:33.0829473Z hint:
+2026-10-16T15:20:33.0830637Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-16T15:20:33.0832560Z Initialized empty Git repository in /home/runner/work/ocean-platform/ocean-platform/.git/
+2026-10-16T15:20:33.0836254Z [command]/usr/bin/git remote add origin https://github.com/jarondlk/ocean-platform
+2026-10-16T15:20:33.0876621Z ##[endgroup]
+2026-10-16T15:20:33.0877823Z ##[group]Disabling automatic garbage collection
+2026-10-16T15:20:33.0880134Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-16T15:20:33.0914784Z ##[endgroup]
+2026-10-16T15:20:33.0916373Z ##[group]Setting up auth
+2026-10-16T15:20:33.0917348Z Removing SSH command configuration
+2026-10-16T15:20:33.0922436Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T15:20:33.0960475Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T15:20:33.1300120Z Removing HTTP extra header
+2026-10-16T15:20:33.1308013Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T15:20:33.1354522Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T15:20:33.1613627Z Removing includeIf entries pointing to credentials config files
+2026-10-16T15:20:33.1619385Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T15:20:33.1661293Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T15:20:33.1913299Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-191bfe93-e875-4024-aaf8-a6372007b6cc.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-16T15:20:33.1959211Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path /home/runner/work/_temp/git-credentials-191bfe93-e875-4024-aaf8-a6372007b6cc.config
+2026-10-16T15:20:33.1998259Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-191bfe93-e875-4024-aaf8-a6372007b6cc.config
+2026-10-16T15:20:33.2040684Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-191bfe93-e875-4024-aaf8-a6372007b6cc.config
+2026-10-16T15:20:33.2081732Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-191bfe93-e875-4024-aaf8-a6372007b6cc.config
+2026-10-16T15:20:33.2117171Z ##[endgroup]
+2026-10-16T15:20:33.2118265Z ##[group]Fetching the repository
+2026-10-16T15:20:33.2123688Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +7b1659c2c563eab86beb8180eac0e71ed7401df6:refs/remotes/origin/overhaul
+2026-10-16T15:20:34.8762277Z From https://github.com/jarondlk/ocean-platform
+2026-10-16T15:20:34.8764330Z  * [new ref]         7b1659c2c563eab86beb8180eac0e71ed7401df6 -> origin/overhaul
+2026-10-16T15:20:34.8771329Z [command]/usr/bin/git branch --list --remote origin/overhaul
+2026-10-16T15:20:34.8805312Z   origin/overhaul
+2026-10-16T15:20:34.8813372Z [command]/usr/bin/git rev-parse refs/remotes/origin/overhaul
+2026-10-16T15:20:34.8844292Z 7b1659c2c563eab86beb8180eac0e71ed7401df6
+2026-10-16T15:20:34.8848835Z ##[endgroup]
+2026-10-16T15:20:34.8850039Z ##[group]Determining the checkout info
+2026-10-16T15:20:34.8851849Z ##[endgroup]
+2026-10-16T15:20:34.8853048Z [command]/usr/bin/git sparse-checkout disable
+2026-10-16T15:20:34.8909695Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-16T15:20:34.8950943Z ##[group]Checking out the ref
+2026-10-16T15:20:34.8952692Z [command]/usr/bin/git checkout --progress --force -B overhaul refs/remotes/origin/overhaul
+2026-10-16T15:20:35.2308861Z Switched to a new branch 'overhaul'
+2026-10-16T15:20:35.2321612Z branch 'overhaul' set up to track 'origin/overhaul'.
+2026-10-16T15:20:35.2337954Z ##[endgroup]
+2026-10-16T15:20:35.2392982Z [command]/usr/bin/git log -1 --format=%H
+2026-10-16T15:20:35.2429409Z 7b1659c2c563eab86beb8180eac0e71ed7401df6
+2026-10-16T15:20:35.2438921Z ##[group]Removing auth
+2026-10-16T15:20:35.2439420Z Removing SSH command configuration
+2026-10-16T15:20:35.2443262Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T15:20:35.2485419Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T15:20:35.2748500Z Removing HTTP extra header
+2026-10-16T15:20:35.2752236Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T15:20:35.2793083Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T15:20:35.3042293Z Removing includeIf entries pointing to credentials config files
+2026-10-16T15:20:35.3045923Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T15:20:35.3081660Z includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path
+2026-10-16T15:20:35.3090427Z includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path
+2026-10-16T15:20:35.3091299Z includeif.gitdir:/github/workspace/.git.path
+2026-10-16T15:20:35.3091772Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-16T15:20:35.3093118Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path
+2026-10-16T15:20:35.3123189Z /home/runner/work/_temp/git-credentials-191bfe93-e875-4024-aaf8-a6372007b6cc.config
+2026-10-16T15:20:35.3133314Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-191bfe93\-e875\-4024\-aaf8\-a6372007b6cc\.config
+2026-10-16T15:20:35.3177497Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path
+2026-10-16T15:20:35.3207776Z /home/runner/work/_temp/git-credentials-191bfe93-e875-4024-aaf8-a6372007b6cc.config
+2026-10-16T15:20:35.3217140Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-191bfe93\-e875\-4024\-aaf8\-a6372007b6cc\.config
+2026-10-16T15:20:35.3260492Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-16T15:20:35.3365603Z /github/runner_temp/git-credentials-191bfe93-e875-4024-aaf8-a6372007b6cc.config
+2026-10-16T15:20:35.3370258Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-191bfe93\-e875\-4024\-aaf8\-a6372007b6cc\.config
+2026-10-16T15:20:35.3372919Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-16T15:20:35.3420806Z /github/runner_temp/git-credentials-191bfe93-e875-4024-aaf8-a6372007b6cc.config
+2026-10-16T15:20:35.3428363Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-191bfe93\-e875\-4024\-aaf8\-a6372007b6cc\.config
+2026-10-16T15:20:35.3474405Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T15:20:35.3720746Z Removing credentials config '/home/runner/work/_temp/git-credentials-191bfe93-e875-4024-aaf8-a6372007b6cc.config'
+2026-10-16T15:20:35.3731273Z ##[endgroup]
+2026-10-16T15:20:35.3992090Z ##[group]Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+2026-10-16T15:20:35.3992562Z with:
+2026-10-16T15:20:35.3992828Z   python-version: 3.12
+2026-10-16T15:20:35.3993096Z   cache: pip
+2026-10-16T15:20:35.3993622Z   cache-dependency-path: requirements/runtime.in
+requirements/runtime.txt
+requirements/dev.in
+requirements/dev.txt
+
+2026-10-16T15:20:35.3994495Z   check-latest: false
+2026-10-16T15:20:35.3996894Z   token: ***
+2026-10-16T15:20:35.3997165Z   update-environment: true
+2026-10-16T15:20:35.3997474Z   allow-prereleases: false
+2026-10-16T15:20:35.3997758Z   freethreaded: false
+2026-10-16T15:20:35.3998025Z ##[endgroup]
+2026-10-16T15:20:35.5250068Z ##[group]Installed versions
+2026-10-16T15:20:35.5324310Z Successfully set up CPython (3.12.15)
+2026-10-16T15:20:35.5324963Z ##[endgroup]
+2026-10-16T15:20:35.5745494Z [command]/opt/hostedtoolcache/Python/3.12.15/x64/bin/pip cache dir
+2026-10-16T15:20:35.8826077Z /home/runner/.cache/pip
+2026-10-16T15:20:36.0348739Z Cache hit for: setup-python-Linux-x64-24.04-Ubuntu-python-3.12.15-pip-0678f5ee12b9d192f99f574742b01e3084dffe499bfe6bfc7f8e5a38fe435056
+2026-10-16T15:20:37.1656205Z Received 146800640 of 173091285 (84.8%), 139.3 MBs/sec
+2026-10-16T15:20:37.2753605Z Received 173091285 of 173091285 (100.0%), 148.0 MBs/sec
+2026-10-16T15:20:37.2754892Z Cache Size: ~165 MB (173091285 B)
+2026-10-16T15:20:37.2862327Z [command]/usr/bin/tar -xf /home/runner/work/_temp/9573cdc7-adbe-44d9-9e53-db5302f743d3/cache.tzst -P -C /home/runner/work/ocean-platform/ocean-platform --use-compress-program unzstd
+2026-10-16T15:20:37.5310455Z Cache restored successfully
+2026-10-16T15:20:37.5402774Z Cache restored from key: setup-python-Linux-x64-24.04-Ubuntu-python-3.12.15-pip-0678f5ee12b9d192f99f574742b01e3084dffe499bfe6bfc7f8e5a38fe435056
+2026-10-16T15:20:37.5600471Z ##[group]Run python -m pip install --upgrade pip
+2026-10-16T15:20:37.5600996Z [36;1mpython -m pip install --upgrade pip[0m
+2026-10-16T15:20:37.5601661Z [36;1mpython -m pip install --require-hashes -r requirements/dev.txt[0m
+2026-10-16T15:20:37.5833738Z shell: /usr/bin/bash -e {0}
+2026-10-16T15:20:37.5834265Z env:
+2026-10-16T15:20:37.5834585Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:20:37.5835075Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T15:20:37.5835576Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:20:37.5835971Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:20:37.5836361Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:20:37.5836754Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T15:20:37.5837112Z ##[endgroup]
+2026-10-16T15:20:38.4699699Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages (26.2.1)
+2026-10-16T15:20:39.6060660Z Collecting alembic==1.20.0 (from -r requirements/dev.txt (line 7))
+2026-10-16T15:20:39.6074805Z   Using cached alembic-1.20.0-py3-none-any.whl (268 kB)
+2026-10-16T15:20:39.6179424Z Collecting annotated-doc==0.0.5 (from -r requirements/dev.txt (line 11))
+2026-10-16T15:20:39.6191891Z   Using cached annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+2026-10-16T15:20:39.6275015Z Collecting annotated-types==0.8.0 (from -r requirements/dev.txt (line 15))
+2026-10-16T15:20:39.6286702Z   Using cached annotated_types-0.8.0-py3-none-any.whl (13 kB)
+2026-10-16T15:20:39.6426009Z Collecting anyio==4.15.1 (from -r requirements/dev.txt (line 19))
+2026-10-16T15:20:39.6447531Z   Using cached anyio-4.15.1-py3-none-any.whl (132 kB)
+2026-10-16T15:20:39.6580426Z Collecting certifi==2026.7.22 (from -r requirements/dev.txt (line 27))
+2026-10-16T15:20:39.6593762Z   Using cached certifi-2026.7.22-py3-none-any.whl (136 kB)
+2026-10-16T15:20:39.7651194Z Collecting cffi==2.1.1 (from -r requirements/dev.txt (line 35))
+2026-10-16T15:20:39.7665346Z   Using cached cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+2026-10-16T15:20:39.8206883Z Collecting cftime==1.6.6 (from -r requirements/dev.txt (line 137))
+2026-10-16T15:20:39.8220780Z   Using cached cftime-1.6.6-cp311-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (1.7 MB)
+2026-10-16T15:20:39.9302940Z Collecting charset-normalizer==3.5.1 (from -r requirements/dev.txt (line 153))
+2026-10-16T15:20:39.9318679Z   Using cached charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (248 kB)
+2026-10-16T15:20:39.9465833Z Collecting click==8.5.0 (from -r requirements/dev.txt (line 327))
+2026-10-16T15:20:39.9478909Z   Using cached click-8.5.0-py3-none-any.whl (125 kB)
+2026-10-16T15:20:40.3005558Z Collecting coverage==7.16.2 (from -r requirements/dev.txt (line 331))
+2026-10-16T15:20:40.3020726Z   Using cached coverage-7.16.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (258 kB)
+2026-10-16T15:20:40.4787238Z Collecting cryptography==50.0.1 (from -r requirements/dev.txt (line 454))
+2026-10-16T15:20:40.4801478Z   Using cached cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl (4.7 MB)
+2026-10-16T15:20:40.4953508Z Collecting distro==1.9.0 (from -r requirements/dev.txt (line 502))
+2026-10-16T15:20:40.4968076Z   Using cached distro-1.9.0-py3-none-any.whl (20 kB)
+2026-10-16T15:20:40.5296103Z Collecting fastapi==0.141.1 (from -r requirements/dev.txt (line 506))
+2026-10-16T15:20:40.5310626Z   Using cached fastapi-0.141.1-py3-none-any.whl (131 kB)
+2026-10-16T15:20:40.5572807Z Collecting google-api-core==2.39.0 (from -r requirements/dev.txt (line 510))
+2026-10-16T15:20:40.5586244Z   Using cached google_api_core-2.39.0-py3-none-any.whl (214 kB)
+2026-10-16T15:20:40.5846869Z Collecting google-auth==2.59.0 (from -r requirements/dev.txt (line 516))
+2026-10-16T15:20:40.5861187Z   Using cached google_auth-2.59.0-py3-none-any.whl (262 kB)
+2026-10-16T15:20:40.6049748Z Collecting google-cloud-core==2.7.0 (from -r requirements/dev.txt (line 524))
+2026-10-16T15:20:40.6063739Z   Using cached google_cloud_core-2.7.0-py3-none-any.whl (31 kB)
+2026-10-16T15:20:40.6248767Z Collecting google-cloud-storage==3.15.0 (from -r requirements/dev.txt (line 528))
+2026-10-16T15:20:40.6262175Z   Using cached google_cloud_storage-3.15.0-py3-none-any.whl (343 kB)
+2026-10-16T15:20:40.6731825Z Collecting google-crc32c==1.9.0 (from -r requirements/dev.txt (line 532))
+2026-10-16T15:20:40.6746796Z   Using cached google_crc32c-1.9.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (36 kB)
+2026-10-16T15:20:40.6931188Z Collecting google-genai==2.25.0 (from -r requirements/dev.txt (line 567))
+2026-10-16T15:20:40.6944804Z   Using cached google_genai-2.25.0-py3-none-any.whl (1.2 MB)
+2026-10-16T15:20:40.7144307Z Collecting google-resumable-media==2.10.2 (from -r requirements/dev.txt (line 571))
+2026-10-16T15:20:40.7156593Z   Using cached google_resumable_media-2.10.2-py3-none-any.whl (81 kB)
+2026-10-16T15:20:40.7288180Z Collecting googleapis-common-protos==1.75.4 (from -r requirements/dev.txt (line 575))
+2026-10-16T15:20:40.7300784Z   Using cached googleapis_common_protos-1.75.4-py3-none-any.whl (307 kB)
+2026-10-16T15:20:40.8576391Z Collecting greenlet==3.5.6 (from -r requirements/dev.txt (line 579))
+2026-10-16T15:20:40.8590999Z   Using cached greenlet-3.5.6-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (621 kB)
+2026-10-16T15:20:40.8690911Z Collecting h11==0.16.0 (from -r requirements/dev.txt (line 662))
+2026-10-16T15:20:40.8702838Z   Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+2026-10-16T15:20:40.8819614Z Collecting httpcore==1.0.9 (from -r requirements/dev.txt (line 668))
+2026-10-16T15:20:40.8832863Z   Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+2026-10-16T15:20:40.9150907Z Collecting httptools==0.8.0 (from -r requirements/dev.txt (line 672))
+2026-10-16T15:20:40.9165938Z   Using cached httptools-0.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (523 kB)
+2026-10-16T15:20:40.9301962Z Collecting httpx==0.28.1 (from -r requirements/dev.txt (line 724))
+2026-10-16T15:20:40.9314580Z   Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+2026-10-16T15:20:40.9432349Z Collecting idna==3.20 (from -r requirements/dev.txt (line 730))
+2026-10-16T15:20:40.9444912Z   Using cached idna-3.20-py3-none-any.whl (69 kB)
+2026-10-16T15:20:40.9529237Z Collecting iniconfig==2.3.0 (from -r requirements/dev.txt (line 737))
+2026-10-16T15:20:40.9541214Z   Using cached iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+2026-10-16T15:20:40.9648370Z Collecting mako==1.4.3 (from -r requirements/dev.txt (line 741))
+2026-10-16T15:20:40.9661897Z   Using cached mako-1.4.3-py3-none-any.whl (80 kB)
+2026-10-16T15:20:41.0215067Z Collecting markupsafe==3.0.3 (from -r requirements/dev.txt (line 745))
+2026-10-16T15:20:41.0229821Z   Using cached markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+2026-10-16T15:20:41.0814812Z Collecting netcdf4==1.7.4 (from -r requirements/dev.txt (line 836))
+2026-10-16T15:20:41.0829269Z   Using cached netcdf4-1.7.4-cp311-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (10.1 MB)
+2026-10-16T15:20:41.3085803Z Collecting numpy==2.5.3 (from -r requirements/dev.txt (line 860))
+2026-10-16T15:20:41.3100115Z   Using cached numpy-2.5.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.7 MB)
+2026-10-16T15:20:41.3510481Z Collecting opentelemetry-api==1.45.0 (from -r requirements/dev.txt (line 934))
+2026-10-16T15:20:41.3525293Z   Using cached opentelemetry_api-1.45.0-py3-none-any.whl (60 kB)
+2026-10-16T15:20:41.3658045Z Collecting packaging==26.3 (from -r requirements/dev.txt (line 938))
+2026-10-16T15:20:41.3672751Z   Using cached packaging-26.3-py3-none-any.whl (129 kB)
+2026-10-16T15:20:41.4724528Z Collecting pandas==2.3.3 (from -r requirements/dev.txt (line 944))
+2026-10-16T15:20:41.4739793Z   Using cached pandas-2.3.3-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (12.4 MB)
+2026-10-16T15:20:41.5294392Z Collecting pgvector==0.5.0 (from -r requirements/dev.txt (line 1003))
+2026-10-16T15:20:41.5307549Z   Using cached pgvector-0.5.0-py3-none-any.whl (30 kB)
+2026-10-16T15:20:41.5419663Z Collecting pluggy==1.6.0 (from -r requirements/dev.txt (line 1007))
+2026-10-16T15:20:41.5432952Z   Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)
+2026-10-16T15:20:41.5565584Z Collecting proto-plus==1.28.4 (from -r requirements/dev.txt (line 1013))
+2026-10-16T15:20:41.5578583Z   Using cached proto_plus-1.28.4-py3-none-any.whl (50 kB)
+2026-10-16T15:20:41.6855898Z Collecting protobuf==7.36.0 (from -r requirements/dev.txt (line 1017))
+2026-10-16T15:20:41.6871570Z   Using cached protobuf-7.36.0-cp310-abi3-manylinux2014_x86_64.whl (340 kB)
+2026-10-16T15:20:41.7437670Z Collecting psycopg2-binary==2.9.13 (from -r requirements/dev.txt (line 1030))
+2026-10-16T15:20:41.7453555Z   Using cached psycopg2_binary-2.9.13-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.3 MB)
+2026-10-16T15:20:41.8282492Z Collecting pyarrow==23.0.1 (from -r requirements/dev.txt (line 1099))
+2026-10-16T15:20:41.8297346Z   Using cached pyarrow-23.0.1-cp312-cp312-manylinux_2_28_x86_64.whl (47.6 MB)
+2026-10-16T15:20:41.9518960Z Collecting pyasn1==0.6.4 (from -r requirements/dev.txt (line 1151))
+2026-10-16T15:20:41.9534268Z   Using cached pyasn1-0.6.4-py3-none-any.whl (84 kB)
+2026-10-16T15:20:41.9697356Z Collecting pyasn1-modules==0.4.2 (from -r requirements/dev.txt (line 1155))
+2026-10-16T15:20:41.9712469Z   Using cached pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
+2026-10-16T15:20:41.9823311Z Collecting pycparser==3.0 (from -r requirements/dev.txt (line 1159))
+2026-10-16T15:20:41.9838551Z   Using cached pycparser-3.0-py3-none-any.whl (48 kB)
+2026-10-16T15:20:42.0781115Z Collecting pydantic==2.13.5 (from -r requirements/dev.txt (line 1163))
+2026-10-16T15:20:42.0796584Z   Using cached pydantic-2.13.5-py3-none-any.whl (472 kB)
+2026-10-16T15:20:42.7509836Z Collecting pydantic-core==2.46.5 (from -r requirements/dev.txt (line 1169))
+2026-10-16T15:20:42.7526713Z   Using cached pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+2026-10-16T15:20:42.7688699Z Collecting pygments==2.21.0 (from -r requirements/dev.txt (line 1291))
+2026-10-16T15:20:42.7701341Z   Using cached pygments-2.21.0-py3-none-any.whl (1.3 MB)
+2026-10-16T15:20:42.7853934Z Collecting pyjwt==2.15.1 (from -r requirements/dev.txt (line 1295))
+2026-10-16T15:20:42.7866179Z   Using cached pyjwt-2.15.1-py3-none-any.whl (33 kB)
+2026-10-16T15:20:42.8064430Z Collecting pytest==9.1.1 (from -r requirements/dev.txt (line 1299))
+2026-10-16T15:20:42.8077949Z   Using cached pytest-9.1.1-py3-none-any.whl (386 kB)
+2026-10-16T15:20:42.8213501Z Collecting pytest-cov==7.1.0 (from -r requirements/dev.txt (line 1305))
+2026-10-16T15:20:42.8227421Z   Using cached pytest_cov-7.1.0-py3-none-any.whl (22 kB)
+2026-10-16T15:20:42.8340512Z Collecting python-dateutil==2.9.0.post0 (from -r requirements/dev.txt (line 1309))
+2026-10-16T15:20:42.8352965Z   Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+2026-10-16T15:20:42.8469032Z Collecting python-dotenv==1.2.3 (from -r requirements/dev.txt (line 1313))
+2026-10-16T15:20:42.8482759Z   Using cached python_dotenv-1.2.3-py3-none-any.whl (22 kB)
+2026-10-16T15:20:42.8771791Z Collecting pytz==2026.4 (from -r requirements/dev.txt (line 1317))
+2026-10-16T15:20:42.8785466Z   Using cached pytz-2026.4-py2.py3-none-any.whl (506 kB)
+2026-10-16T15:20:42.9130819Z Collecting pyyaml==6.0.3 (from -r requirements/dev.txt (line 1321))
+2026-10-16T15:20:42.9145796Z   Using cached pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+2026-10-16T15:20:42.9315125Z Collecting requests==2.34.2 (from -r requirements/dev.txt (line 1396))
+2026-10-16T15:20:42.9327974Z   Using cached requests-2.34.2-py3-none-any.whl (73 kB)
+2026-10-16T15:20:43.2293236Z Collecting ruff==0.16.9 (from -r requirements/dev.txt (line 1405))
+2026-10-16T15:20:43.2308233Z   Using cached ruff-0.16.9-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (10.4 MB)
+2026-10-16T15:20:43.4209689Z Collecting scipy==1.18.1 (from -r requirements/dev.txt (line 1425))
+2026-10-16T15:20:43.4225087Z   Using cached scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
+2026-10-16T15:20:43.5109279Z Collecting six==1.17.0 (from -r requirements/dev.txt (line 1488))
+2026-10-16T15:20:43.5125938Z   Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+2026-10-16T15:20:43.5210654Z Collecting sniffio==1.3.1 (from -r requirements/dev.txt (line 1492))
+2026-10-16T15:20:43.5224704Z   Using cached sniffio-1.3.1-py3-none-any.whl (10 kB)
+2026-10-16T15:20:43.5323220Z Collecting snowballstemmer==3.1.1 (from -r requirements/dev.txt (line 1496))
+2026-10-16T15:20:43.5336354Z   Using cached snowballstemmer-3.1.1-py3-none-any.whl (104 kB)
+2026-10-16T15:20:43.7976579Z Collecting sqlalchemy==2.0.52 (from -r requirements/dev.txt (line 1500))
+2026-10-16T15:20:43.7991438Z   Using cached sqlalchemy-2.0.52-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.4 MB)
+2026-10-16T15:20:43.8281344Z Collecting starlette==1.7.0 (from -r requirements/dev.txt (line 1556))
+2026-10-16T15:20:43.8294881Z   Using cached starlette-1.7.0-py3-none-any.whl (78 kB)
+2026-10-16T15:20:43.8424415Z Collecting tenacity==9.1.4 (from -r requirements/dev.txt (line 1562))
+2026-10-16T15:20:43.8436666Z   Using cached tenacity-9.1.4-py3-none-any.whl (28 kB)
+2026-10-16T15:20:43.8555055Z Collecting typing-extensions==4.16.0 (from -r requirements/dev.txt (line 1566))
+2026-10-16T15:20:43.8567658Z   Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-10-16T15:20:43.8645863Z Collecting typing-inspection==0.4.4 (from -r requirements/dev.txt (line 1580))
+2026-10-16T15:20:43.8658073Z   Using cached typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+2026-10-16T15:20:43.8766184Z Collecting tzdata==2026.4 (from -r requirements/dev.txt (line 1586))
+2026-10-16T15:20:43.8778265Z   Using cached tzdata-2026.4-py2.py3-none-any.whl (347 kB)
+2026-10-16T15:20:43.8953681Z Collecting urllib3==2.8.0 (from -r requirements/dev.txt (line 1590))
+2026-10-16T15:20:43.8968196Z   Using cached urllib3-2.8.0-py3-none-any.whl (135 kB)
+2026-10-16T15:20:43.9154750Z Collecting uvicorn==0.54.0 (from -r requirements/dev.txt (line 1596))
+2026-10-16T15:20:43.9168345Z   Using cached uvicorn-0.54.0-py3-none-any.whl (87 kB)
+2026-10-16T15:20:43.9510003Z Collecting uvloop==0.22.1 (from -r requirements/dev.txt (line 1600))
+2026-10-16T15:20:43.9525156Z   Using cached uvloop-0.22.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.4 MB)
+2026-10-16T15:20:44.0236078Z Collecting watchfiles==1.3.0 (from -r requirements/dev.txt (line 1651))
+2026-10-16T15:20:44.0250700Z   Using cached watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (458 kB)
+2026-10-16T15:20:44.2051310Z Collecting websockets==16.1.1 (from -r requirements/dev.txt (line 1686))
+2026-10-16T15:20:44.2067756Z   Using cached websockets-16.1.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (187 kB)
+2026-10-16T15:20:44.2245901Z Collecting xarray==2026.7.0 (from -r requirements/dev.txt (line 1799))
+2026-10-16T15:20:44.2259550Z   Using cached xarray-2026.7.0-py3-none-any.whl (1.4 MB)
+2026-10-16T15:20:44.5261985Z Installing collected packages: pytz, websockets, uvloop, urllib3, tzdata, typing-extensions, tenacity, snowballstemmer, sniffio, six, ruff, pyyaml, python-dotenv, pyjwt, pygments, pycparser, pyasn1, pyarrow, psycopg2-binary, protobuf, pluggy, pgvector, packaging, numpy, markupsafe, iniconfig, idna, httptools, h11, greenlet, google-crc32c, distro, coverage, click, charset-normalizer, certifi, annotated-types, annotated-doc, uvicorn, typing-inspection, sqlalchemy, scipy, requests, python-dateutil, pytest, pydantic-core, pyasn1-modules, proto-plus, opentelemetry-api, mako, httpcore, googleapis-common-protos, google-resumable-media, cftime, cffi, anyio, watchfiles, starlette, pytest-cov, pydantic, pandas, netcdf4, httpx, cryptography, alembic, xarray, google-auth, fastapi, google-api-core, google-genai, google-cloud-core, google-cloud-storage
+2026-10-16T15:21:07.0870311Z
+2026-10-16T15:21:07.0933706Z Successfully installed alembic-1.20.0 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.15.1 certifi-2026.7.22 cffi-2.1.1 cftime-1.6.6 charset-normalizer-3.5.1 click-8.5.0 coverage-7.16.2 cryptography-50.0.1 distro-1.9.0 fastapi-0.141.1 google-api-core-2.39.0 google-auth-2.59.0 google-cloud-core-2.7.0 google-cloud-storage-3.15.0 google-crc32c-1.9.0 google-genai-2.25.0 google-resumable-media-2.10.2 googleapis-common-protos-1.75.4 greenlet-3.5.6 h11-0.16.0 httpcore-1.0.9 httptools-0.8.0 httpx-0.28.1 idna-3.20 iniconfig-2.3.0 mako-1.4.3 markupsafe-3.0.3 netcdf4-1.7.4 numpy-2.5.3 opentelemetry-api-1.45.0 packaging-26.3 pandas-2.3.3 pgvector-0.5.0 pluggy-1.6.0 proto-plus-1.28.4 protobuf-7.36.0 psycopg2-binary-2.9.13 pyarrow-23.0.1 pyasn1-0.6.4 pyasn1-modules-0.4.2 pycparser-3.0 pydantic-2.13.5 pydantic-core-2.46.5 pygments-2.21.0 pyjwt-2.15.1 pytest-9.1.1 pytest-cov-7.1.0 python-dateutil-2.9.0.post0 python-dotenv-1.2.3 pytz-2026.4 pyyaml-6.0.3 requests-2.34.2 ruff-0.16.9 scipy-1.18.1 six-1.17.0 sniffio-1.3.1 snowballstemmer-3.1.1 sqlalchemy-2.0.52 starlette-1.7.0 tenacity-9.1.4 typing-extensions-4.16.0 typing-inspection-0.4.4 tzdata-2026.4 urllib3-2.8.0 uvicorn-0.54.0 uvloop-0.22.1 watchfiles-1.3.0 websockets-16.1.1 xarray-2026.7.0
+2026-10-16T15:21:07.5287594Z ##[group]Run python -m ruff check \
+2026-10-16T15:21:07.5287966Z [36;1mpython -m ruff check \[0m
+2026-10-16T15:21:07.5288225Z [36;1m  api \[0m
+2026-10-16T15:21:07.5288450Z [36;1m  config.py \[0m
+2026-10-16T15:21:07.5288676Z [36;1m  db \[0m
+2026-10-16T15:21:07.5288895Z [36;1m  evaluation \[0m
+2026-10-16T15:21:07.5289127Z [36;1m  ingestion \[0m
+2026-10-16T15:21:07.5289357Z [36;1m  orchestration \[0m
+2026-10-16T15:21:07.5289608Z [36;1m  preprocessing \[0m
+2026-10-16T15:21:07.5289859Z [36;1m  retrieval \[0m
+2026-10-16T15:21:07.5290082Z [36;1m  schema \[0m
+2026-10-16T15:21:07.5290307Z [36;1m  scripts \[0m
+2026-10-16T15:21:07.5290524Z [36;1m  tests[0m
+2026-10-16T15:21:07.5364882Z shell: /usr/bin/bash -e {0}
+2026-10-16T15:21:07.5365156Z env:
+2026-10-16T15:21:07.5365466Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:07.5365916Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T15:21:07.5366385Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:07.5366782Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:07.5367172Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:07.5367557Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T15:21:07.5367904Z ##[endgroup]
+2026-10-16T15:21:07.6350640Z All checks passed!
+2026-10-16T15:21:07.6395326Z ##[group]Run python scripts/export_chat_scope.py --check
+2026-10-16T15:21:07.6395773Z [36;1mpython scripts/export_chat_scope.py --check[0m
+2026-10-16T15:21:07.6468968Z shell: /usr/bin/bash -e {0}
+2026-10-16T15:21:07.6469233Z env:
+2026-10-16T15:21:07.6469535Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:07.6469985Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T15:21:07.6470438Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:07.6470820Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:07.6471199Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:07.6471575Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T15:21:07.6471915Z ##[endgroup]
+2026-10-16T15:21:08.4033583Z ##[group]Run python scripts/export_context_catalogue.py --check
+2026-10-16T15:21:08.4034820Z [36;1mpython scripts/export_context_catalogue.py --check[0m
+2026-10-16T15:21:08.4035252Z [36;1mpython scripts/export_catalogue_examples.py --check[0m
+2026-10-16T15:21:08.4035662Z [36;1mpython scripts/export_catalogue_types.py --check[0m
+2026-10-16T15:21:08.4036056Z [36;1mpython scripts/export_catalogue_snapshot.py --check[0m
+2026-10-16T15:21:08.4105153Z shell: /usr/bin/bash -e {0}
+2026-10-16T15:21:08.4105427Z env:
+2026-10-16T15:21:08.4105737Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:08.4106196Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T15:21:08.4106633Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:08.4107016Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:08.4107394Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:08.4107807Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T15:21:08.4108135Z ##[endgroup]
+2026-10-16T15:21:09.6303244Z Context catalogue schema is current
+2026-10-16T15:21:10.7900623Z C08 shared examples are current
+2026-10-16T15:21:11.0180069Z Catalogue browser contract is current.
+2026-10-16T15:21:11.9942519Z C09 snapshot schema and synthetic byte examples are current
+2026-10-16T15:21:12.1902491Z ##[group]Run python -m pytest tests/ -q --tb=short \
+2026-10-16T15:21:12.1902939Z [36;1mpython -m pytest tests/ -q --tb=short \[0m
+2026-10-16T15:21:12.1903445Z [36;1m  --cov=api \[0m
+2026-10-16T15:21:12.1903694Z [36;1m  --cov=config \[0m
+2026-10-16T15:21:12.1903938Z [36;1m  --cov=db \[0m
+2026-10-16T15:21:12.1904418Z [36;1m  --cov=preprocessing \[0m
+2026-10-16T15:21:12.1904689Z [36;1m  --cov=ingestion \[0m
+2026-10-16T15:21:12.1904937Z [36;1m  --cov=orchestration \[0m
+2026-10-16T15:21:12.1905185Z [36;1m  --cov=schema \[0m
+2026-10-16T15:21:12.1905427Z [36;1m  --cov=evaluation \[0m
+2026-10-16T15:21:12.1905710Z [36;1m  --cov-report=term-missing \[0m
+2026-10-16T15:21:12.1905999Z [36;1m  --cov-fail-under=70[0m
+2026-10-16T15:21:12.1975860Z shell: /usr/bin/bash -e {0}
+2026-10-16T15:21:12.1976131Z env:
+2026-10-16T15:21:12.1976419Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:12.1976915Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T15:21:12.1977345Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:12.1977739Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:12.1978139Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T15:21:12.1978516Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T15:21:12.1978848Z   AUTH_MODE: disabled
+2026-10-16T15:21:12.1979084Z   DEPLOYMENT_ENV: test
+2026-10-16T15:21:12.1979332Z   ENABLE_MOCK_LOGIN: false
+2026-10-16T15:21:12.1979582Z   PERSIST_LOCAL_CHAT: false
+2026-10-16T15:21:12.1979824Z ##[endgroup]
+2026-10-16T15:21:29.6924273Z ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [  1%]
+2026-10-16T15:21:31.7856681Z sssssssssssssssssssssssssssssssssssssssssssssssssssssss................. [  3%]
+2026-10-16T15:21:48.3689312Z ........................................................................ [  5%]
+2026-10-16T15:21:59.9856696Z ........................................................................ [  7%]
+2026-10-16T15:22:36.4298373Z ........................................................................ [  9%]
+2026-10-16T15:22:40.0655385Z ........................................................................ [ 10%]
+2026-10-16T15:22:41.8092347Z ........................................................................ [ 12%]
+2026-10-16T15:22:46.9372450Z ........................................................................ [ 14%]
+2026-10-16T15:22:48.5978190Z ........................................................................ [ 16%]
+2026-10-16T15:22:50.1675712Z ........................................................................ [ 18%]
+2026-10-16T15:23:00.9273249Z ........................................................................ [ 20%]
+2026-10-16T15:24:38.1367172Z ........................................................................ [ 21%]
+2026-10-16T15:24:38.9621783Z ........................................................................ [ 23%]
+2026-10-16T15:24:39.8449831Z ........................................................................ [ 25%]
+2026-10-16T15:24:40.6525772Z ........................................................................ [ 27%]
+2026-10-16T15:24:44.6548511Z ........................................................................ [ 29%]
+2026-10-16T15:24:54.5785860Z ........................................................................ [ 31%]
+2026-10-16T15:24:54.6757339Z ........................................................................ [ 32%]
+2026-10-16T15:24:54.8180000Z ........................................................................ [ 34%]
+2026-10-16T15:25:43.9877577Z ........................................................................ [ 36%]
+2026-10-16T15:25:44.0838936Z ........................................................................ [ 38%]
+2026-10-16T15:25:44.1921868Z ........................................................................ [ 40%]
+2026-10-16T15:25:44.5766357Z ........................................................................ [ 42%]
+2026-10-16T15:25:48.1339303Z ........................................................................ [ 43%]
+2026-10-16T15:25:49.1129720Z ........................................................................ [ 45%]
+2026-10-16T15:25:50.1169193Z ........................................................................ [ 47%]
+2026-10-16T15:25:52.3052010Z ........................................................................ [ 49%]
+2026-10-16T15:25:53.4258876Z ........................................................................ [ 51%]
+2026-10-16T15:25:54.0319071Z ........................................................................ [ 52%]
+2026-10-16T15:26:09.8877436Z ........................................................................ [ 54%]
+2026-10-16T15:26:51.5269559Z ........................................................................ [ 56%]
+2026-10-16T15:27:00.2440527Z ........................................................................ [ 58%]
+2026-10-16T15:29:58.2687577Z ........................................................................ [ 60%]
+2026-10-16T15:30:00.1845380Z ........................................................................ [ 62%]
+2026-10-16T15:30:06.9776451Z ........................................................................ [ 63%]
+2026-10-16T15:30:08.7660480Z ........................................................................ [ 65%]
+2026-10-16T15:30:08.8915378Z ........................................................................ [ 67%]
+2026-10-16T15:30:09.1454345Z ........................................................................ [ 69%]
+2026-10-16T15:30:10.7146435Z ........................................................................ [ 71%]
+2026-10-16T15:30:16.6324698Z ........................................................................ [ 73%]
+2026-10-16T15:30:18.5999518Z ........................................................................ [ 74%]
+2026-10-16T15:30:19.5365786Z ........................................................................ [ 76%]
+2026-10-16T15:30:28.4413303Z ........................................................................ [ 78%]
+2026-10-16T15:30:35.2171942Z ........................................................................ [ 80%]
+2026-10-16T15:30:41.7665740Z ........................................................................ [ 82%]
+2026-10-16T15:30:43.6638645Z ........................................................................ [ 84%]
+2026-10-16T15:30:44.4540152Z ........................................................................ [ 85%]
+2026-10-16T15:30:45.7573519Z ........................................................................ [ 87%]
+2026-10-16T15:30:55.3771267Z ........................................................................ [ 89%]
+2026-10-16T15:30:55.7116585Z ........................................................................ [ 91%]
+2026-10-16T15:30:56.2228488Z ........................................................................ [ 93%]
+2026-10-16T15:30:56.7696310Z ........................................................................ [ 95%]
+2026-10-16T15:31:09.3946230Z ........................................................................ [ 96%]
+2026-10-16T15:31:47.9217259Z ........................................................................ [ 98%]
+2026-10-16T15:31:55.1085619Z .....................................................                    [100%]
+2026-10-16T15:31:55.1087594Z =============================== warnings summary ===============================
+2026-10-16T15:31:55.1088481Z ../../../../../opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/fastapi/testclient.py:1
+2026-10-16T15:31:55.1090148Z   /opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+2026-10-16T15:31:55.1091944Z     from starlette.testclient import TestClient as TestClient  # noqa
+2026-10-16T15:31:55.1092363Z
+2026-10-16T15:31:55.1093039Z tests/test_auto_settings.py::test_semantic_published_results_reuse_exact_rows_without_rewriting_question[published_exact]
+2026-10-16T15:31:55.1094918Z   <frozen importlib._bootstrap>:488: RuntimeWarning: numpy.ndarray size changed, may indicate binary incompatibility. Expected 16 from C header, got 96 from PyObject
+2026-10-16T15:31:55.1095802Z
+2026-10-16T15:31:55.1095957Z tests/test_auto_settings.py: 45 warnings
+2026-10-16T15:31:55.1096427Z tests/test_conference_demo.py: 18 warnings
+2026-10-16T15:31:55.1096963Z tests/test_historical_sst_acquisition.py: 20 warnings
+2026-10-16T15:31:55.1097520Z tests/test_historical_sst_period.py: 80 warnings
+2026-10-16T15:31:55.1098093Z tests/test_publication_scope_contract.py: 18 warnings
+2026-10-16T15:31:55.1098681Z tests/test_regional_context_normalization.py: 75 warnings
+2026-10-16T15:31:55.1099270Z tests/test_remote_sensing.py: 10 warnings
+2026-10-16T15:31:55.1099707Z tests/test_research_chat.py: 63 warnings
+2026-10-16T15:31:55.1100144Z tests/test_research_sst.py: 25 warnings
+2026-10-16T15:31:55.1100593Z tests/test_research_sst_collection.py: 24 warnings
+2026-10-16T15:31:55.1101080Z tests/test_research_sst_panel.py: 12 warnings
+2026-10-16T15:31:55.1101515Z tests/test_sst_comparison.py: 104 warnings
+2026-10-16T15:31:55.1101978Z tests/test_sst_context_integration.py: 96 warnings
+2026-10-16T15:31:55.1102463Z tests/test_sst_context_review.py: 472 warnings
+2026-10-16T15:31:55.1102922Z tests/test_sst_nasa_context.py: 1484 warnings
+2026-10-16T15:31:55.1103356Z tests/test_sst_nasa_subset.py: 12 warnings
+2026-10-16T15:31:55.1104716Z   /opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/xarray/backends/netCDF4_.py:96: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
+2026-10-16T15:31:55.1106113Z   As an alternative, you can create a new view using np.reshape (with copy=False if needed).
+2026-10-16T15:31:55.1106769Z     data[key] = value
+2026-10-16T15:31:55.1106956Z
+2026-10-16T15:31:55.1107403Z tests/test_bootstrap_database.py::test_migration_status_reads_actual_version_without_upgrading[None]
+2026-10-16T15:31:55.1108436Z tests/test_bootstrap_database.py::test_migration_status_reads_actual_version_without_upgrading[20261004_0015]
+2026-10-16T15:31:55.1109523Z tests/test_bootstrap_database.py::test_migration_status_reads_actual_version_without_upgrading[20261005_0016]
+2026-10-16T15:31:55.1110641Z tests/test_migration_configuration.py::test_encoded_database_url_round_trips_without_interpolation_or_credential_output
+2026-10-16T15:31:55.1112665Z   /opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/alembic/config.py:604: DeprecationWarning: No path_separator found in configuration; falling back to legacy splitting on spaces, commas, and colons for prepend_sys_path.  Consider adding path_separator=os to Alembic config.
+2026-10-16T15:31:55.1114510Z     util.warn_deprecated(
+2026-10-16T15:31:55.1114709Z
+2026-10-16T15:31:55.1114891Z tests/test_regional_publication.py: 21 warnings
+2026-10-16T15:31:55.1116859Z   /home/runner/work/ocean-platform/ocean-platform/api/main.py:1070: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+2026-10-16T15:31:55.1118905Z     legacy = pd.concat([legacy, regional], ignore_index=True)
+2026-10-16T15:31:55.1119250Z
+2026-10-16T15:31:55.1119719Z tests/test_remote_sensing.py::test_sst_extractors_read_point_and_daily_region
+2026-10-16T15:31:55.1120474Z tests/test_remote_sensing.py::test_sst_extractors_read_point_and_daily_region
+2026-10-16T15:31:55.1122508Z   /home/runner/work/ocean-platform/ocean-platform/preprocessing/remote_sensing.py:96: DeprecationWarning: The 'generic' unit for NumPy timedelta is deprecated, and will raise an error in the future. This includes implicit conversion of bare integers (e.g. `+ 1`). Please use a specific unit instead.
+2026-10-16T15:31:55.1124373Z     "time_jst": t_utc + pd.Timedelta(hours=9),
+2026-10-16T15:31:55.1124810Z
+2026-10-16T15:31:55.1125097Z tests/test_remote_sensing.py::test_sst_extractors_read_point_and_daily_region
+2026-10-16T15:31:55.1125815Z tests/test_remote_sensing.py::test_sst_extractors_read_point_and_daily_region
+2026-10-16T15:31:55.1126681Z tests/test_remote_sensing.py::test_daily_summary_retains_exact_unreviewed_requested_bounds_and_sources
+2026-10-16T15:31:55.1127665Z tests/test_remote_sensing.py::test_daily_summary_retains_exact_unreviewed_requested_bounds_and_sources
+2026-10-16T15:31:55.1128549Z tests/test_remote_sensing.py::test_daily_source_hashes_are_bound_to_their_actual_jst_day
+2026-10-16T15:31:55.1129408Z tests/test_remote_sensing.py::test_daily_source_hashes_are_bound_to_their_actual_jst_day
+2026-10-16T15:31:55.1130389Z tests/test_remote_sensing.py::test_matching_reviewed_region_preserves_geometry_decision_and_regional_semantics
+2026-10-16T15:31:55.1131409Z tests/test_remote_sensing.py::test_default_bounds_never_establish_reviewed_spatial_applicability
+2026-10-16T15:31:55.1132403Z tests/test_remote_sensing.py::test_daily_values_and_receipts_use_same_bytes_when_source_path_is_replaced
+2026-10-16T15:31:55.1134577Z   /home/runner/work/ocean-platform/ocean-platform/preprocessing/remote_sensing.py:264: DeprecationWarning: The 'generic' unit for NumPy timedelta is deprecated, and will raise an error in the future. This includes implicit conversion of bare integers (e.g. `+ 1`). Please use a specific unit instead.
+2026-10-16T15:31:55.1136275Z     "time_jst": t_utc + pd.Timedelta(hours=9),
+2026-10-16T15:31:55.1136559Z
+2026-10-16T15:31:55.1136880Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-10-16T15:31:55.1137528Z ================================ tests coverage ================================
+2026-10-16T15:31:55.1138155Z _______________ coverage: platform linux, python 3.12.15-final-0 _______________
+2026-10-16T15:31:55.1138575Z
+2026-10-16T15:31:55.1138783Z Name                                                  Stmts   Miss  Cover   Missing
+2026-10-16T15:31:55.1139386Z -----------------------------------------------------------------------------------
+2026-10-16T15:31:55.1139993Z api/__init__.py                                           0      0   100%
+2026-10-16T15:31:55.1140681Z api/admin_feedback_routes.py                             97      8    92%   48, 50, 52, 54, 56, 90, 99, 444
+2026-10-16T15:31:55.1141610Z api/auth.py                                             290     17    94%   118, 125-126, 153-154, 184, 209, 223, 243, 298, 303-304, 335, 349, 354, 414, 593
+2026-10-16T15:31:55.1142652Z api/auth_routes.py                                      101     34    66%   35, 79-83, 93, 98, 100, 110-133, 141-147, 161-162, 164, 166, 172, 180, 213-214, 232, 236
+2026-10-16T15:31:55.1143490Z api/catalogue_routes.py                                  51      0   100%
+2026-10-16T15:31:55.1144404Z api/chat_records.py                                     105     16    85%   30, 32, 34, 36, 39, 82-96, 109, 127, 129, 154, 156, 186, 188
+2026-10-16T15:31:55.1146008Z api/classification_application_service.py               326     50    85%   98-99, 191, 193, 197, 201, 206, 208, 212, 225, 242, 260, 296, 299, 306, 308, 310, 318-319, 356, 386-387, 396, 436, 438, 446, 469, 475, 482-483, 495, 505, 521, 527, 539, 583, 586, 593, 610, 615-617, 619, 650, 653, 685, 687, 692, 699, 701
+2026-10-16T15:31:55.1147684Z api/classification_operational_contract.py               64     13    80%   84, 86, 125, 129-130, 141-142, 144, 146, 158, 166, 169, 175
+2026-10-16T15:31:55.1148564Z api/classification_review_routes.py                      54      2    96%   66-67
+2026-10-16T15:31:55.1149994Z api/classification_review_service.py                    361     43    88%   297, 300-301, 313, 321, 349, 361, 376, 383, 396, 408, 419, 502, 507, 518-519, 550, 558, 573, 654, 661, 717, 776, 818, 838, 846, 879-891, 1033, 1060-1061, 1186-1188, 1190, 1248-1251
+2026-10-16T15:31:55.1151256Z api/csv_serialization.py                                 32      0   100%
+2026-10-16T15:31:55.1152042Z api/edna_analysis_routes.py                             119     24    80%   28, 41-42, 55-57, 65-66, 92-107
+2026-10-16T15:31:55.1153175Z api/edna_service.py                                     214    168    21%   32-35, 41, 45-86, 90, 118-152, 200-257, 271-301, 334-389, 393-427, 432-463, 472-519, 537-589, 593-630
+2026-10-16T15:31:55.1154237Z api/feedback_routes.py                                   70     13    81%   65, 155-188
+2026-10-16T15:31:55.1159872Z api/main.py                                            2396    547    77%   606-607, 742-743, 750, 756-757, 855-868, 914-915, 923, 927-929, 955, 1005-1006, 1034, 1079, 1081, 1084-1085, 1089, 1093, 1096-1097, 1118-1119, 1141, 1148, 1159-1163, 1179, 1199-1200, 1206, 1212, 1221, 1223, 1246-1254, 1258, 1316, 1330-1332, 1346-1347, 1434, 1448-1458, 1491-1492, 1494, 1503, 1771, 1814, 1827, 1829, 1832-1833, 1863, 1866, 1873, 1904, 1907, 2033, 2052-2055, 2111-2112, 2147-2208, 2227-2230, 2261-2281, 2285, 2319-2322, 2341-2345, 2369-2370, 2390-2400, 2407-2408, 2419, 2423, 2426, 2428-2429, 2443, 2450, 2454, 2460, 2464, 2468-2469, 2479-2486, 2490-2503, 2517-2581, 2593-2697, 2717-2826, 2851, 2858, 2871-2884, 2889-2926, 2958, 2966-2970, 2990-2992, 3005-3006, 3008, 3041, 3076, 3086, 3090, 3096-3098, 3114, 3145, 3152, 3176, 3213, 3244, 3251, 3262, 3286-3288, 3312, 3353-3355, 3384, 3419-3420, 3456, 3460, 3464, 3468-3473, 3511-3512, 3528, 3542-3544, 3559, 3633-3640, 3663-3673, 3697-3706, 3710, 3844-3860, 3913, 3916-3917, 3921-3923, 3971-3973, 4068, 4092, 4115-4116, 4119, 4121, 4207, 4222, 4253, 4278, 4289-4290, 4402-4403, 4417, 4425-4431, 4492-4493, 4501-4507, 4515, 4673, 4706-4718, 4748, 4750, 4752, 4788, 4806-4820, 4952-4976, 4997, 5002, 5084, 5164, 5166, 5168, 5184, 5280-5304, 5328-5330, 5339-5340, 5408-5414, 5418-5419, 5451-5452, 5524, 5561-5563, 5617-5620, 5637, 5792-5793, 6014-6028
+2026-10-16T15:31:55.1166001Z api/overview_coverage.py                                212     10    95%   77, 88, 123, 153, 181, 184, 187, 224, 226, 253
+2026-10-16T15:31:55.1166730Z api/overview_routes.py                                    6      0   100%
+2026-10-16T15:31:55.1167694Z api/provenance_snapshot_service.py                      139     24    83%   41, 43, 52, 54-55, 69, 95-96, 99, 103, 108-109, 112, 114, 116, 118, 120, 122, 132, 136, 140-141, 143, 268
+2026-10-16T15:31:55.1168681Z api/rate_limit.py                                        87     10    89%   41, 43, 58, 94-95, 115, 203-209, 217
+2026-10-16T15:31:55.1169455Z api/research_registry_routes.py                          64      9    86%   44-53, 107, 130, 143
+2026-10-16T15:31:55.1170446Z api/research_registry_service.py                        176     24    86%   42-47, 49, 112, 119, 157, 169, 174, 183, 224, 284, 292, 297, 327, 332, 339, 344-349, 457, 467
+2026-10-16T15:31:55.1171369Z api/retention_routes.py                                  20      0   100%
+2026-10-16T15:31:55.1171993Z api/schemas.py                                          911      4    99%   85, 112, 367, 373
+2026-10-16T15:31:55.1172652Z api/v1_runtime_routes.py                                 66      1    98%   62
+2026-10-16T15:31:55.1173634Z config.py                                               225     27    88%   39-40, 122-123, 125, 325, 331, 386, 420, 505, 534, 538, 540, 542, 544, 548, 552, 560, 562, 564, 566, 568, 570, 574, 578, 585-588
+2026-10-16T15:31:55.1174748Z db/__init__.py                                            2      0   100%
+2026-10-16T15:31:55.1175269Z db/app_models.py                                        237      0   100%
+2026-10-16T15:31:55.1176145Z db/backup.py                                            229     92    60%   74, 99-112, 131-132, 141-147, 175, 187-195, 216-230, 234-249, 258-282, 300, 330, 379, 393, 411-431, 449-533
+2026-10-16T15:31:55.1177072Z db/connection.py                                         46     15    67%   35-37, 61-68, 73-74, 79-81, 86
+2026-10-16T15:31:55.1178017Z db/embedding_identity.py                                 34      0   100%
+2026-10-16T15:31:55.1178606Z db/models.py                                            303      2    99%   30-31
+2026-10-16T15:31:55.1179302Z db/retention.py                                          29      0   100%
+2026-10-16T15:31:55.1179892Z db/vector_store.py                                       81     34    58%   115-121, 135-182
+2026-10-16T15:31:55.1180511Z evaluation/__init__.py                                    0      0   100%
+2026-10-16T15:31:55.1181388Z evaluation/benchmark.py                                 222     49    78%   37-39, 239, 247, 304, 306, 311-313, 359, 392, 423, 431, 484, 486, 491-493, 528-553, 583-611
+2026-10-16T15:31:55.1182367Z evaluation/edna_pilot.py                                 58     11    81%   13, 16, 23-30, 38, 44, 52-53, 94, 108-109
+2026-10-16T15:31:55.1183231Z evaluation/qa/conference_demo.py                        193     57    70%   67, 75, 84, 86, 90, 93, 131, 133, 143, 147, 216-271, 275
+2026-10-16T15:31:55.1184231Z evaluation/qa/conference_review.py                      195     39    80%   146, 242-315, 319
+2026-10-16T15:31:55.1185013Z evaluation/qa/run_anemone_questions.py                  145    133     8%   23-31, 35-248, 257
+2026-10-16T15:31:55.1185836Z evaluation/qa/run_v061_acceptance.py                    148     66    55%   41-42, 55, 69, 80, 113, 117, 124-195, 200
+2026-10-16T15:31:55.1186742Z evaluation/quality_metrics.py                           165     48    71%   149-173, 208, 230-231, 312-342, 370-371, 381-382, 421-463
+2026-10-16T15:31:55.1187526Z evaluation/questions.py                                  31      0   100%
+2026-10-16T15:31:55.1188142Z evaluation/reference_answers.py                          12      0   100%
+2026-10-16T15:31:55.1188846Z evaluation/report.py                                    259      9    97%   319-320, 323, 361, 381, 428-433
+2026-10-16T15:31:55.1189641Z evaluation/statistical_analysis.py                      160      8    95%   134-135, 179-181, 248, 259, 271
+2026-10-16T15:31:55.1190794Z evaluation/visualization.py                             233    176    24%   72-73, 90-95, 130-178, 191-222, 235-281, 294-329, 347-383, 395-432, 464, 479-480, 485-486, 491-492, 497-498, 503-504, 517-518
+2026-10-16T15:31:55.1191787Z ingestion/__init__.py                                     2      0   100%
+2026-10-16T15:31:55.1193720Z ingestion/anemone.py                                    604    102    83%   170, 183-184, 189, 218-221, 233-234, 239, 316, 381, 389-393, 395, 397-398, 403, 434, 443-446, 492-493, 496-497, 500-501, 615-623, 625-632, 635, 643, 651-658, 667, 696-704, 707-715, 756, 780, 833, 841, 857-868, 875-876, 888, 902, 916, 927-937, 945, 979, 985-986, 992, 999-1000, 1018, 1021-1022, 1035, 1040, 1043, 1051, 1060, 1065, 1071, 1078, 1083, 1090, 1096, 1121-1122, 1221, 1229, 1250-1257
+2026-10-16T15:31:55.1196152Z ingestion/anemone_catalogue.py                          226     23    90%   65, 80, 83, 99, 104, 106, 108, 115, 117, 164, 174, 182, 210, 221, 226, 232, 271, 274, 349, 366, 421, 453, 475
+2026-10-16T15:31:55.1197306Z ingestion/anemone_refresh.py                            173     17    90%   51, 74, 95, 97, 106, 109, 111, 166, 172, 215, 225, 231, 245, 253, 259, 266, 279
+2026-10-16T15:31:55.1198476Z ingestion/artifact_store.py                             202     23    89%   93, 104, 106-108, 118, 135, 141, 152, 176, 196, 206, 209, 220, 240, 246, 264-266, 268, 289, 295, 300
+2026-10-16T15:31:55.1199830Z ingestion/catalogue_adapter_inputs.py                   235     23    90%   52, 84, 86, 93, 106, 119, 137, 149, 151, 171, 183, 194, 220, 230, 238, 248, 261, 313, 321, 323, 354, 362, 417
+2026-10-16T15:31:55.1200972Z ingestion/catalogue_snapshot.py                         275     13    95%   97, 113, 150, 163, 170, 180, 210, 221, 240, 380, 393, 413, 421
+2026-10-16T15:31:55.1201926Z ingestion/catalogue_snapshot_capture.py                 223     48    78%   49-51, 127, 191, 194-196, 238, 300, 310-359
+2026-10-16T15:31:55.1202950Z ingestion/catalogue_snapshot_fixtures.py                 44      1    98%   190
+2026-10-16T15:31:55.1203764Z ingestion/catalogue_snapshot_transfer.py                157      7    96%   59, 85, 112, 171, 190, 258, 293
+2026-10-16T15:31:55.1204934Z ingestion/edna_aggregate.py                             120    100    17%   30-38, 42-59, 65-161, 171-255, 261-277, 281-286
+2026-10-16T15:31:55.1206365Z ingestion/edna_analysis_bundle.py                       334     82    75%   41, 47, 50, 53, 59-63, 68-98, 110, 113, 116, 133, 153, 159, 176-177, 180, 184, 190, 203, 209, 211, 215, 218, 222, 224, 229, 235, 244, 257-258, 266-267, 275, 285, 291, 298, 300, 309-311, 336, 342, 344, 358, 373, 390-395
+2026-10-16T15:31:55.1207872Z ingestion/edna_catalogue_inputs.py                      372     11    97%   106, 177, 208, 215, 419, 425, 432, 437, 453, 462, 466
+2026-10-16T15:31:55.1208690Z ingestion/file_inventory.py                              15     10    33%   18-29, 34-46
+2026-10-16T15:31:55.1209534Z ingestion/himawari_probe.py                             172     19    89%   48, 92, 95, 118-123, 146, 174, 187, 200, 215, 219, 240, 258-260
+2026-10-16T15:31:55.1210434Z ingestion/immutable_bundle.py                            85      8    91%   46-48, 52, 76, 83, 87, 101
+2026-10-16T15:31:55.1212001Z ingestion/lineage.py                                    620    104    83%   142, 145-152, 158, 175-177, 188-190, 202, 205-206, 249, 253, 302-305, 308-323, 760-766, 784, 787, 806, 820, 831, 835-836, 866, 925-939, 953-954, 993, 1090-1099, 1107, 1111, 1138, 1141-1143, 1145, 1177, 1181, 1206-1213, 1223-1257, 1333, 1362-1364, 1400-1405
+2026-10-16T15:31:55.1213508Z ingestion/provenance.py                                  66      2    97%   54, 106
+2026-10-16T15:31:55.1214878Z ingestion/provenance_snapshot.py                        336     38    89%   130, 133-134, 136, 153-154, 156, 201, 204, 208, 226, 240-245, 270, 284, 320-321, 325, 381-382, 400, 452, 462-463, 472, 479-480, 485, 493-494, 517-518, 526-528, 536, 559
+2026-10-16T15:31:55.1216243Z ingestion/provisional_research_bundle.py                153     12    92%   111, 114, 134, 138, 140, 147, 166, 179, 192, 199, 294, 337
+2026-10-16T15:31:55.1217826Z ingestion/raw_validation.py                             306     53    83%   66-67, 69, 104, 112, 128, 153-159, 163-169, 192-196, 214, 227, 233-239, 244, 252, 260, 269, 304, 322, 332, 344, 355, 372, 381, 400, 406, 413, 422, 429, 449, 465-466, 469-471, 473, 475, 497, 510-518, 522-531, 533, 543, 584-585, 690-695, 708
+2026-10-16T15:31:55.1219385Z ingestion/regional_publication.py                       140     14    90%   46, 54, 58, 83, 86, 88, 90, 95, 109, 138, 141, 156, 158, 209
+2026-10-16T15:31:55.1220378Z ingestion/research_analysis_bundle.py                   149     73    51%   59-61, 66-188, 195, 203, 207, 229, 232, 333, 359-364, 368-374
+2026-10-16T15:31:55.1221348Z ingestion/research_readiness.py                         155     14    91%   26, 48, 72, 75, 77, 85, 87, 91, 97, 103, 107, 132, 139, 147
+2026-10-16T15:31:55.1222443Z ingestion/research_sst_collection.py                    149     25    83%   46, 51, 54, 61, 87, 98, 111, 118, 131, 134, 166, 185, 209, 221, 223, 226, 244, 250, 277, 287, 294-299, 307
+2026-10-16T15:31:55.1223593Z ingestion/research_sst_panel.py                         142     21    85%   61, 70, 79, 84, 92, 96, 114, 135, 139, 146, 165, 169, 176, 207, 236, 246, 257-262, 267
+2026-10-16T15:31:55.1224738Z ingestion/scientific_catalogue_inputs.py                152      7    95%   215, 224, 226, 259, 265, 282, 293
+2026-10-16T15:31:55.1226006Z ingestion/sst_acquisition.py                            342     40    88%   90, 106, 113, 127, 165, 170, 176, 207, 227, 233, 237, 277-283, 310, 349, 352, 365, 397, 405, 423, 453-456, 512, 521, 524, 527, 563, 590, 593, 595, 613, 634, 651, 667, 679
+2026-10-16T15:31:55.1227287Z ingestion/sst_catalogue_inputs.py                       267     11    96%   73, 128, 190, 213, 218, 223, 368, 373, 393, 396, 402
+2026-10-16T15:31:55.1228563Z ingestion/sst_cloud_acquisition.py                      164     23    86%   56, 79, 83, 91, 94, 107, 114, 122, 145, 156, 179, 205, 214, 217, 239, 266, 271, 284, 297, 335, 346, 349, 391
+2026-10-16T15:31:55.1229698Z ingestion/sst_comparison.py                             141     15    89%   30, 33, 67, 154, 156, 164-170, 209, 298, 320, 328, 337, 341, 363, 417
+2026-10-16T15:31:55.1230756Z ingestion/sst_context_integration.py                    122      9    93%   57, 60, 187, 189, 235, 240, 243, 266, 282
+2026-10-16T15:31:55.1232007Z ingestion/sst_hybrid_acquisition.py                     297     65    78%   73, 85, 98, 107, 148, 163, 206, 261, 265-296, 315, 318, 343, 346, 357, 378, 442, 444, 450, 458, 466, 469, 473, 484-513, 531, 544, 546, 628, 643, 646, 653, 666, 686
+2026-10-16T15:31:55.1233242Z ingestion/sst_inventory.py                              115     31    73%   36-89, 103-104, 111, 126, 128, 141, 154, 165, 202
+2026-10-16T15:31:55.1234160Z ingestion/sst_nasa_context.py                            28      1    96%   23
+2026-10-16T15:31:55.1234967Z ingestion/sst_nasa_subset.py                            126     12    90%   64, 124-125, 131, 169, 175, 179, 196, 204, 208, 249, 262
+2026-10-16T15:31:55.1235784Z orchestration/__init__.py                                 1      0   100%
+2026-10-16T15:31:55.1236458Z orchestration/answer_audit.py                           141      4    97%   100, 114, 341-342
+2026-10-16T15:31:55.1237254Z orchestration/auto_published_settings.py                 96     10    90%   49, 52, 76, 82-86, 103, 122
+2026-10-16T15:31:55.1238043Z orchestration/catalogue_cache.py                         72     32    56%   23-24, 57-92
+2026-10-16T15:31:55.1238749Z orchestration/catalogue_registration.py                  38      0   100%
+2026-10-16T15:31:55.1239741Z orchestration/catalogue_service.py                      318     27    92%   76, 82, 94, 119, 144, 156, 199, 201, 209, 217, 230-233, 312, 314, 322, 368, 371, 399, 404, 411-414, 424, 438
+2026-10-16T15:31:55.1240727Z orchestration/catalogue_tools.py                         75      1    99%   89
+2026-10-16T15:31:55.1241431Z orchestration/citation_syntax.py                         89      3    97%   29, 65-66
+2026-10-16T15:31:55.1242135Z orchestration/citations.py                               76      3    96%   42, 47, 87
+2026-10-16T15:31:55.1242851Z orchestration/comparison_guard.py                        45      2    96%   79-80
+2026-10-16T15:31:55.1243630Z orchestration/edna_aggregation.py                       182      9    95%   153, 202, 240, 242, 371, 400-408
+2026-10-16T15:31:55.1244572Z orchestration/evidence_availability.py                   24      1    96%   40
+2026-10-16T15:31:55.1245330Z orchestration/evidence_scope.py                          68     15    78%   21-22, 47, 54-63, 85, 92
+2026-10-16T15:31:55.1246193Z orchestration/frozen_catalogue.py                       296     10    97%   72, 109, 134, 155, 184, 227, 274, 441, 464, 499
+2026-10-16T15:31:55.1247287Z orchestration/frozen_edna_catalogue.py                  327     20    94%   76, 160, 175, 177, 188, 198, 232-233, 240, 313, 406, 421, 459, 474, 485, 491, 501, 672, 805, 925
+2026-10-16T15:31:55.1248732Z orchestration/frozen_scientific_catalogue.py            399     31    92%   92, 159, 185, 226, 231, 310, 335, 404, 455-461, 553, 610, 619, 637, 640, 670, 702, 707, 713, 739, 772, 806, 811, 816, 821, 826, 945, 1026, 1080
+2026-10-16T15:31:55.1250166Z orchestration/frozen_sst_catalogue.py                   291     19    93%   76, 127-128, 141-142, 151, 156, 182, 251, 307, 322, 348, 373, 378, 392, 410, 587, 671, 765
+2026-10-16T15:31:55.1251122Z orchestration/prompt_safety.py                           13      2    85%   15, 23
+2026-10-16T15:31:55.1251859Z orchestration/publication_scope.py                      247      3    99%   185-186, 205
+2026-10-16T15:31:55.1252628Z orchestration/published_results.py                       48      5    90%   17-18, 58, 60, 70
+2026-10-16T15:31:55.1253386Z orchestration/query_orchestrator.py                      69      2    97%   81-82
+2026-10-16T15:31:55.1254505Z orchestration/research_intents.py                       203     10    95%   103, 146, 248, 259, 265, 271, 289, 492, 518, 531
+2026-10-16T15:31:55.1255328Z orchestration/research_question.py                       25      0   100%
+2026-10-16T15:31:55.1255994Z orchestration/settings_plan.py                           53      2    96%   66, 70
+2026-10-16T15:31:55.1257442Z orchestration/settings_planner.py                       361     56    84%   122-129, 135-138, 150-151, 155, 170, 195, 197, 199, 201, 204, 206, 212, 215, 219, 235, 237, 241, 243, 245-253, 263, 274, 279, 291, 294, 296, 298, 302, 304, 306, 308-309, 314, 324-327, 455, 466-467
+2026-10-16T15:31:55.1258729Z orchestration/statistics_catalog.py                      32      5    84%   31, 70-79
+2026-10-16T15:31:55.1259616Z orchestration/unified.py                                423     59    86%   94-95, 141, 143-158, 245, 288, 310-316, 329-432, 752-757, 906-907, 1104-1106
+2026-10-16T15:31:55.1260443Z preprocessing/__init__.py                                 5      0   100%
+2026-10-16T15:31:55.1262374Z preprocessing/anemone.py                                535     86    84%   100-102, 104, 106-109, 146, 152, 159, 170-171, 176, 182, 193-194, 201, 231, 239, 245, 272, 278-279, 294, 298-309, 321, 328-329, 334, 347-348, 353, 363, 395, 404-405, 417, 423, 429, 437-438, 456, 463, 474, 480, 492, 497, 507, 649, 655, 684, 698, 716, 855, 863, 873, 931, 938, 949, 1190, 1238-1239, 1245, 1270-1273, 1286-1287, 1293, 1302-1303, 1311, 1332, 1337, 1354, 1356, 1376, 1379, 1381
+2026-10-16T15:31:55.1264624Z preprocessing/anemone_classification.py                 218     16    93%   96, 112, 129, 160-165, 168, 186, 324, 364-366, 421
+2026-10-16T15:31:55.1265446Z preprocessing/common.py                                  50     10    80%   65-71, 81-85
+2026-10-16T15:31:55.1266176Z preprocessing/ctd.py                                     68     34    50%   45, 52, 54, 56, 92-106, 114-115, 120-121, 131-172
+2026-10-16T15:31:55.1267016Z preprocessing/derived_artifacts.py                      209      9    96%   108, 116, 196-197, 202, 211, 287, 326, 331
+2026-10-16T15:31:55.1267934Z preprocessing/edna_analysis.py                          207     13    94%   81, 83, 85, 90, 112, 115, 117, 148, 177, 202-203, 265, 279
+2026-10-16T15:31:55.1268836Z preprocessing/edna_catalogue_query.py                   208     17    92%   80-81, 87, 91, 115, 149, 163-165, 200-207
+2026-10-16T15:31:55.1270090Z preprocessing/edna_detection_frequency.py               319     34    89%   62, 65, 108, 116, 121, 125, 131, 133, 154, 162, 171, 173-174, 176-182, 184, 186, 192, 195, 269, 271, 274, 278, 326, 329, 332, 511, 526, 531, 819
+2026-10-16T15:31:55.1271208Z preprocessing/edna_eligibility.py                        39      0   100%
+2026-10-16T15:31:55.1271867Z preprocessing/edna_quality.py                            48      1    98%   59
+2026-10-16T15:31:55.1272604Z preprocessing/edna_recipe.py                             96      6    94%   37-38, 54, 86, 110, 112
+2026-10-16T15:31:55.1273306Z preprocessing/edna_taxonomy.py                           47      0   100%
+2026-10-16T15:31:55.1274314Z preprocessing/historical_sst_matching.py                147     15    90%   30, 39, 49, 88, 97, 139, 141, 153, 170, 285, 299, 301, 304, 317, 321
+2026-10-16T15:31:55.1275207Z preprocessing/historical_sst_period.py                   44      2    95%   52, 76
+2026-10-16T15:31:55.1276243Z preprocessing/metagenome.py                             147     91    38%   45-49, 54-68, 73-85, 90-104, 120-128, 133-140, 158-166, 189-217, 227-231, 240-259, 275-295, 328, 332, 360-416
+2026-10-16T15:31:55.1277389Z preprocessing/metagenome_contract.py                    156     17    89%   35, 37, 52, 54, 63, 66-67, 94, 99, 143, 184, 190, 197, 200-201, 209, 214
+2026-10-16T15:31:55.1278565Z preprocessing/pre_analysis.py                           338     40    88%   48, 50, 55, 57, 75, 78, 81, 84, 175-176, 185, 187, 190, 192, 201, 221-222, 255, 265, 269, 287-307, 362, 370-373
+2026-10-16T15:31:55.1280203Z preprocessing/reliability_ensurance.py                  405     57    86%   47, 88-89, 94, 124-125, 130, 199-200, 206, 220-282, 310-311, 324, 343-344, 349-350, 355, 362, 372-373, 381, 401, 417, 474, 478, 486, 533, 599-601
+2026-10-16T15:31:55.1281576Z preprocessing/remote_sensing.py                         158     37    77%   102-103, 108, 171, 173, 175, 177, 180, 246, 275-276, 280-281, 284-289, 335-371
+2026-10-16T15:31:55.1282767Z preprocessing/research_recipe.py                        125     10    92%   47, 94, 100, 128-132, 182, 189, 193, 195
+2026-10-16T15:31:55.1283899Z preprocessing/research_sst.py                           254     27    89%   95, 101, 108, 117, 132, 139, 145, 168, 181-184, 190, 228, 233, 259, 279, 397, 411, 416, 482, 486, 491, 499, 504, 517, 520
+2026-10-16T15:31:55.1285187Z preprocessing/scientific_catalogue_relationships.py     120      3    98%   47, 82, 89
+2026-10-16T15:31:55.1286010Z preprocessing/sst_context_review.py                     134      3    98%   140, 174, 219
+2026-10-16T15:31:55.1286708Z schema/__init__.py                                        0      0   100%
+2026-10-16T15:31:55.1287298Z schema/anchor_event.py                                   57      1    98%   67
+2026-10-16T15:31:55.1288039Z schema/catalogue_adapter.py                              95     10    89%   94, 122, 125, 148, 152, 184, 186, 193, 196, 208
+2026-10-16T15:31:55.1288823Z schema/catalogue_adapter_fixtures.py                     49      1    98%   310
+2026-10-16T15:31:55.1289500Z schema/catalogue_service.py                              62      1    98%   79
+2026-10-16T15:31:55.1290274Z schema/catalogue_snapshot.py                            108      2    98%   86, 118
+2026-10-16T15:31:55.1291091Z schema/context_catalogue.py                             477     12    97%   129, 152, 379, 403, 419, 530, 622, 629, 694, 723, 732, 754
+2026-10-16T15:31:55.1291973Z schema/context_catalogue_fixtures.py                    162      7    96%   71, 102, 134, 143, 164, 238, 415
+2026-10-16T15:31:55.1292695Z schema/edna_catalogue.py                                 65      1    98%   107
+2026-10-16T15:31:55.1293380Z schema/edna_catalogue_fixtures.py                        60      3    95%   55, 236, 250
+2026-10-16T15:31:55.1294275Z schema/scientific_catalogue.py                          141      8    94%   57, 62, 70, 123, 125, 134, 157, 221
+2026-10-16T15:31:55.1295040Z schema/scientific_catalogue_fixtures.py                  30      1    97%   27
+2026-10-16T15:31:55.1295790Z schema/scientific_catalogue_relationships.py            143      3    98%   92-93, 252
+2026-10-16T15:31:55.1296564Z schema/sst_catalogue.py                                 133      4    97%   88, 120, 195, 228
+2026-10-16T15:31:55.1297255Z schema/sst_catalogue_fixtures.py                         41      3    93%   48, 50, 180
+2026-10-16T15:31:55.1297941Z schema/time_range.py                                     42      6    86%   8, 33-34, 43, 49-50
+2026-10-16T15:31:55.1298585Z -----------------------------------------------------------------------------------
+2026-10-16T15:31:55.1299169Z TOTAL                                                 25931   3762    85%
+2026-10-16T15:31:55.7524232Z Required test coverage of 70% reached. Total coverage: 85.49%
+2026-10-16T15:31:55.7525104Z 3814 passed, 127 skipped, 2596 warnings in 641.29s (0:10:41)
+2026-10-16T15:31:57.2292312Z Post job cleanup.
+2026-10-16T15:31:57.3453335Z Cache hit occurred on the primary key setup-python-Linux-x64-24.04-Ubuntu-python-3.12.15-pip-0678f5ee12b9d192f99f574742b01e3084dffe499bfe6bfc7f8e5a38fe435056, not saving cache.
+2026-10-16T15:31:57.3608317Z Post job cleanup.
+2026-10-16T15:31:57.4458670Z [command]/usr/bin/git version
+2026-10-16T15:31:57.4506973Z git version 2.55.0
+2026-10-16T15:31:57.4577559Z Temporarily overriding HOME='/home/runner/work/_temp/b4f96e14-a02b-441f-afd9-4de691cfa8ac' before making global git config changes
+2026-10-16T15:31:57.4578865Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T15:31:57.4582879Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ocean-platform/ocean-platform
+2026-10-16T15:31:57.4619192Z Removing SSH command configuration
+2026-10-16T15:31:57.4626556Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T15:31:57.4665708Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T15:31:57.4934417Z Removing HTTP extra header
+2026-10-16T15:31:57.4966198Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T15:31:57.4982025Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T15:31:57.5252356Z Removing includeIf entries pointing to credentials config files
+2026-10-16T15:31:57.5262228Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T15:31:57.5326343Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T15:31:57.5792543Z Cleaning up orphan processes
