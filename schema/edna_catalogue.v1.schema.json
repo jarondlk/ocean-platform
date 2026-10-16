@@ -1,0 +1,1541 @@
+{
+  "$defs": {
+    "Availability": {
+      "additionalProperties": false,
+      "properties": {
+        "reason": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "status": {
+          "enum": [
+            "available",
+            "unknown",
+            "unavailable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "Availability",
+      "type": "object"
+    },
+    "CatalogueCount": {
+      "additionalProperties": false,
+      "properties": {
+        "basis": {
+          "const": "complete_scope",
+          "default": "complete_scope",
+          "title": "Basis",
+          "type": "string"
+        },
+        "denominator": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Denominator",
+          "type": "string"
+        },
+        "entity": {
+          "enum": [
+            "canonical_objects",
+            "datasets",
+            "observations",
+            "source_occurrences",
+            "assays",
+            "detection_rows",
+            "rows"
+          ],
+          "title": "Entity",
+          "type": "string"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "state": {
+          "enum": [
+            "known",
+            "unknown"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        }
+      },
+      "required": [
+        "state",
+        "entity",
+        "denominator"
+      ],
+      "title": "CatalogueCount",
+      "type": "object"
+    },
+    "EDNADataset": {
+      "additionalProperties": false,
+      "properties": {
+        "collection_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Collection Id",
+          "type": "string"
+        },
+        "dataset_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Dataset Id",
+          "type": "string"
+        },
+        "descriptor": {
+          "$ref": "#/$defs/EDNADescriptor"
+        },
+        "family": {
+          "const": "edna_metabarcoding",
+          "default": "edna_metabarcoding",
+          "title": "Family",
+          "type": "string"
+        },
+        "methods": {
+          "items": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "title": "Methods",
+          "type": "array"
+        },
+        "provider": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Provider",
+          "type": "string"
+        },
+        "provider_locus": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Provider Locus"
+        },
+        "provider_project_id": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Provider Project Id",
+          "type": "string"
+        },
+        "provider_team": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Provider Team"
+        },
+        "purpose": {
+          "$ref": "#/$defs/LocalizedText"
+        },
+        "qualification": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Qualification",
+          "type": "string"
+        },
+        "related_ids": {
+          "items": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+            "type": "string"
+          },
+          "maxItems": 256,
+          "title": "Related Ids",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "catalogue-edna-dataset-v1",
+          "default": "catalogue-edna-dataset-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "tables": {
+          "items": {
+            "$ref": "#/$defs/EDNATable"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "title": "Tables",
+          "type": "array"
+        },
+        "title": {
+          "$ref": "#/$defs/LocalizedText"
+        }
+      },
+      "required": [
+        "dataset_id",
+        "source_id",
+        "provider",
+        "provider_locus",
+        "provider_team",
+        "provider_project_id",
+        "collection_id",
+        "title",
+        "purpose",
+        "descriptor",
+        "qualification",
+        "methods",
+        "tables"
+      ],
+      "title": "EDNADataset",
+      "type": "object"
+    },
+    "EDNADescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "assignment_method": {
+          "enum": [
+            "qcauto_target",
+            "qcauto_95pct_3nn_target",
+            "qcauto_nontarget",
+            "qcauto_95pct_3nn_nontarget",
+            "mixed",
+            "unknown"
+          ],
+          "title": "Assignment Method",
+          "type": "string"
+        },
+        "family": {
+          "const": "edna_metabarcoding",
+          "title": "Family",
+          "type": "string"
+        },
+        "is_control": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Is Control"
+        },
+        "measurement": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Measurement",
+          "type": "string"
+        },
+        "population": {
+          "default": "scientific",
+          "enum": [
+            "scientific",
+            "raw_inventory"
+          ],
+          "title": "Population",
+          "type": "string"
+        },
+        "protocol": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Protocol",
+          "type": "string"
+        },
+        "protocol_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Protocol Id",
+          "type": "string"
+        },
+        "sample_kind": {
+          "enum": [
+            "environmental",
+            "negative_control",
+            "positive_control",
+            "mock_community",
+            "unknown",
+            "mixed"
+          ],
+          "title": "Sample Kind",
+          "type": "string"
+        },
+        "unit": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "family",
+        "protocol_id",
+        "protocol",
+        "assignment_method",
+        "sample_kind",
+        "is_control",
+        "measurement",
+        "unit"
+      ],
+      "title": "EDNADescriptor",
+      "type": "object"
+    },
+    "EDNAResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "adapter_version": {
+          "const": "c12-v1",
+          "default": "c12-v1",
+          "title": "Adapter Version",
+          "type": "string"
+        },
+        "next_offset": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Next Offset"
+        },
+        "offset": {
+          "default": 0,
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Offset",
+          "type": "integer"
+        },
+        "qualifications": {
+          "items": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "Qualifications",
+          "type": "array"
+        },
+        "result": {
+          "$ref": "#/$defs/QueryResult"
+        }
+      },
+      "required": [
+        "result",
+        "qualifications"
+      ],
+      "title": "EDNAResponse",
+      "type": "object"
+    },
+    "EDNATable": {
+      "additionalProperties": false,
+      "properties": {
+        "availability": {
+          "$ref": "#/$defs/Availability"
+        },
+        "completeness": {
+          "enum": [
+            "complete",
+            "partial",
+            "unknown",
+            "unavailable"
+          ],
+          "title": "Completeness",
+          "type": "string"
+        },
+        "name": {
+          "enum": [
+            "occurrences",
+            "assays",
+            "detections",
+            "classifications"
+          ],
+          "title": "Name",
+          "type": "string"
+        },
+        "object_id": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Object Id"
+        },
+        "row_count": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Row Count"
+        }
+      },
+      "required": [
+        "name",
+        "object_id",
+        "row_count",
+        "availability",
+        "completeness"
+      ],
+      "title": "EDNATable",
+      "type": "object"
+    },
+    "EdnaFilters": {
+      "additionalProperties": false,
+      "properties": {
+        "assignment_method": {
+          "anyOf": [
+            {
+              "enum": [
+                "qcauto_target",
+                "qcauto_95pct_3nn_target"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Assignment Method"
+        },
+        "is_control": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Is Control"
+        },
+        "lat_max": {
+          "anyOf": [
+            {
+              "maximum": 90,
+              "minimum": -90,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lat Max"
+        },
+        "lat_min": {
+          "anyOf": [
+            {
+              "maximum": 90,
+              "minimum": -90,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lat Min"
+        },
+        "lon_max": {
+          "anyOf": [
+            {
+              "maximum": 180,
+              "minimum": -180,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lon Max"
+        },
+        "lon_min": {
+          "anyOf": [
+            {
+              "maximum": 180,
+              "minimum": -180,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lon Min"
+        },
+        "provider": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider"
+        },
+        "provider_project_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Project Id"
+        },
+        "provider_run_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Run Id"
+        },
+        "sample_id": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sample Id"
+        },
+        "sample_kind": {
+          "anyOf": [
+            {
+              "enum": [
+                "environmental",
+                "negative_control",
+                "positive_control",
+                "mock_community",
+                "unknown"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sample Kind"
+        },
+        "taxon": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Taxon"
+        },
+        "time_from": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time From"
+        },
+        "time_to": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time To"
+        }
+      },
+      "title": "EdnaFilters",
+      "type": "object"
+    },
+    "EdnaSelection": {
+      "additionalProperties": false,
+      "properties": {
+        "analysis_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Analysis Id"
+        },
+        "enabled": {
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "filters": {
+          "$ref": "#/$defs/EdnaFilters"
+        }
+      },
+      "required": [
+        "enabled",
+        "filters"
+      ],
+      "title": "EdnaSelection",
+      "type": "object"
+    },
+    "EvidenceScope": {
+      "additionalProperties": false,
+      "properties": {
+        "sources": {
+          "$ref": "#/$defs/SourceSelections"
+        },
+        "version": {
+          "const": 1,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "version",
+        "sources"
+      ],
+      "title": "EvidenceScope",
+      "type": "object"
+    },
+    "InputIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "content_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "object_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Object Id",
+          "type": "string"
+        },
+        "source_generation": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Generation"
+        }
+      },
+      "required": [
+        "object_id",
+        "content_sha256"
+      ],
+      "title": "InputIdentity",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "LocalizedText": {
+      "additionalProperties": false,
+      "properties": {
+        "en": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "En",
+          "type": "string"
+        },
+        "ja": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Ja",
+          "type": "string"
+        }
+      },
+      "required": [
+        "en",
+        "ja"
+      ],
+      "title": "LocalizedText",
+      "type": "object"
+    },
+    "OperationReceipt": {
+      "additionalProperties": false,
+      "properties": {
+        "authority": {
+          "enum": [
+            "descriptive",
+            "published",
+            "experimental"
+          ],
+          "title": "Authority",
+          "type": "string"
+        },
+        "availability": {
+          "$ref": "#/$defs/Availability"
+        },
+        "content_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "inputs": {
+          "items": {
+            "$ref": "#/$defs/InputIdentity"
+          },
+          "title": "Inputs",
+          "type": "array"
+        },
+        "operation_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "operation_version": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Operation Version",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "Parameters",
+          "type": "object"
+        },
+        "preview_truncated": {
+          "title": "Preview Truncated",
+          "type": "boolean"
+        },
+        "provenance": {
+          "$ref": "#/$defs/Provenance"
+        },
+        "query_completion": {
+          "enum": [
+            "not_started",
+            "complete",
+            "partial",
+            "failed"
+          ],
+          "title": "Query Completion",
+          "type": "string"
+        },
+        "receipt_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Receipt Id",
+          "type": "string"
+        },
+        "returned_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Returned Count",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "context-catalogue-v1",
+          "default": "context-catalogue-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/EvidenceScope"
+        },
+        "scope_compatibility": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ScopeCompatibility"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "snapshot_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_completeness": {
+          "enum": [
+            "complete",
+            "partial",
+            "unknown",
+            "unavailable"
+          ],
+          "title": "Source Completeness",
+          "type": "string"
+        },
+        "total_rows": {
+          "$ref": "#/$defs/CatalogueCount"
+        }
+      },
+      "required": [
+        "snapshot_id",
+        "scope",
+        "receipt_id",
+        "operation_id",
+        "operation_version",
+        "inputs",
+        "authority",
+        "availability",
+        "provenance",
+        "total_rows",
+        "returned_count",
+        "preview_truncated",
+        "source_completeness",
+        "query_completion",
+        "content_sha256"
+      ],
+      "title": "OperationReceipt",
+      "type": "object"
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "content_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Content Sha256"
+        },
+        "origin": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TransferOrigin"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "references": {
+          "items": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "References",
+          "type": "array"
+        },
+        "source_generation": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Generation"
+        }
+      },
+      "title": "Provenance",
+      "type": "object"
+    },
+    "QueryResult": {
+      "additionalProperties": false,
+      "properties": {
+        "columns": {
+          "items": {
+            "$ref": "#/$defs/ResultColumn"
+          },
+          "title": "Columns",
+          "type": "array"
+        },
+        "receipt": {
+          "$ref": "#/$defs/OperationReceipt"
+        },
+        "rows": {
+          "items": {
+            "additionalProperties": {
+              "$ref": "#/$defs/JsonValue"
+            },
+            "type": "object"
+          },
+          "title": "Rows",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "context-catalogue-v1",
+          "default": "context-catalogue-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/EvidenceScope"
+        },
+        "snapshot_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Snapshot Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "snapshot_id",
+        "scope",
+        "columns",
+        "rows",
+        "receipt"
+      ],
+      "title": "QueryResult",
+      "type": "object"
+    },
+    "ResultColumn": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Key",
+          "type": "string"
+        },
+        "title": {
+          "$ref": "#/$defs/LocalizedText"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        }
+      },
+      "required": [
+        "key",
+        "title"
+      ],
+      "title": "ResultColumn",
+      "type": "object"
+    },
+    "SampleFilters": {
+      "additionalProperties": false,
+      "properties": {
+        "bay": {
+          "anyOf": [
+            {
+              "enum": [
+                "O",
+                "I",
+                "M"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bay"
+        },
+        "sample_id": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sample Id"
+        },
+        "station": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Station"
+        },
+        "time_from": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time From"
+        },
+        "time_to": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time To"
+        }
+      },
+      "title": "SampleFilters",
+      "type": "object"
+    },
+    "SampleSelection": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "filters": {
+          "$ref": "#/$defs/SampleFilters"
+        }
+      },
+      "required": [
+        "enabled",
+        "filters"
+      ],
+      "title": "SampleSelection",
+      "type": "object"
+    },
+    "SatelliteFilters": {
+      "additionalProperties": false,
+      "properties": {
+        "dataset_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dataset Id"
+        },
+        "lat_max": {
+          "anyOf": [
+            {
+              "maximum": 90,
+              "minimum": -90,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lat Max"
+        },
+        "lat_min": {
+          "anyOf": [
+            {
+              "maximum": 90,
+              "minimum": -90,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lat Min"
+        },
+        "lon_max": {
+          "anyOf": [
+            {
+              "maximum": 180,
+              "minimum": -180,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lon Max"
+        },
+        "lon_min": {
+          "anyOf": [
+            {
+              "maximum": 180,
+              "minimum": -180,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lon Min"
+        },
+        "time_from": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time From"
+        },
+        "time_to": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time To"
+        }
+      },
+      "title": "SatelliteFilters",
+      "type": "object"
+    },
+    "SatelliteSelection": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "filters": {
+          "$ref": "#/$defs/SatelliteFilters"
+        }
+      },
+      "required": [
+        "enabled",
+        "filters"
+      ],
+      "title": "SatelliteSelection",
+      "type": "object"
+    },
+    "ScopeCompatibility": {
+      "properties": {
+        "analysis_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Analysis Id"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/ScopeEvidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "outcome": {
+          "enum": [
+            "compatible",
+            "incompatible",
+            "unresolved"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "version": {
+          "default": "publication-scope-v1",
+          "title": "Version",
+          "type": "string"
+        },
+        "workflow": {
+          "title": "Workflow",
+          "type": "string"
+        }
+      },
+      "required": [
+        "outcome",
+        "reason",
+        "workflow",
+        "analysis_id",
+        "evidence"
+      ],
+      "title": "ScopeCompatibility",
+      "type": "object"
+    },
+    "ScopeEvidence": {
+      "properties": {
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "outcome": {
+          "enum": [
+            "compatible",
+            "incompatible",
+            "unresolved"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "quote": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Quote"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "registered": {
+          "title": "Registered",
+          "type": "string"
+        },
+        "requested": {
+          "title": "Requested",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "question",
+            "selection",
+            "publication"
+          ],
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field",
+        "outcome",
+        "requested",
+        "registered",
+        "quote",
+        "source",
+        "reason"
+      ],
+      "title": "ScopeEvidence",
+      "type": "object"
+    },
+    "SourceSelections": {
+      "additionalProperties": false,
+      "properties": {
+        "ctd": {
+          "$ref": "#/$defs/SampleSelection"
+        },
+        "edna_metabarcoding": {
+          "$ref": "#/$defs/EdnaSelection"
+        },
+        "metagenome": {
+          "$ref": "#/$defs/SampleSelection"
+        },
+        "remote_sensing": {
+          "$ref": "#/$defs/SatelliteSelection"
+        }
+      },
+      "required": [
+        "ctd",
+        "metagenome",
+        "remote_sensing",
+        "edna_metabarcoding"
+      ],
+      "title": "SourceSelections",
+      "type": "object"
+    },
+    "TransferOrigin": {
+      "additionalProperties": false,
+      "description": "Descriptive copied-data provenance; never a live access authorization.",
+      "properties": {
+        "access_conditions": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Access Conditions",
+          "type": "string"
+        },
+        "content_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "live_dependency": {
+          "const": false,
+          "default": false,
+          "title": "Live Dependency",
+          "type": "boolean"
+        },
+        "operation_version": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Operation Version",
+          "type": "string"
+        },
+        "origin_object_id": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Origin Object Id",
+          "type": "string"
+        },
+        "origin_system": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Origin System",
+          "type": "string"
+        },
+        "schema_version": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scientific_qualification": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Scientific Qualification",
+          "type": "string"
+        },
+        "source_generation": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Source Generation",
+          "type": "string"
+        },
+        "source_snapshot_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+          "title": "Source Snapshot Id",
+          "type": "string"
+        },
+        "transfer_authorization_ref": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Transfer Authorization Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "origin_system",
+        "origin_object_id",
+        "source_snapshot_id",
+        "source_generation",
+        "schema_version",
+        "operation_version",
+        "content_sha256",
+        "scientific_qualification",
+        "access_conditions",
+        "transfer_authorization_ref"
+      ],
+      "title": "TransferOrigin",
+      "type": "object"
+    }
+  },
+  "$id": "urn:ocean:edna-catalogue:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "dataset": {
+      "$ref": "#/$defs/EDNADataset"
+    },
+    "response": {
+      "$ref": "#/$defs/EDNAResponse"
+    }
+  },
+  "required": [
+    "dataset",
+    "response"
+  ],
+  "title": "EDNACatalogueContract",
+  "type": "object",
+  "x-runtime-validation-required": "C09 identity/access/withdrawal, relational references, canonical classifications/review lineage, source-backed method availability, exact Arrow types/decoded budgets and C01 scientific eligibility require Python validation. Raw inventory descriptors do not grant scientific execution."
+}

@@ -1,0 +1,3831 @@
+EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+==================================== ERRORS ====================================
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters0] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters1] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters2] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters3] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters4] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters5] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters6] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters7] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters8] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters9] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters10] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters11] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters12] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters13] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters14] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters15] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters16] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters17] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters18] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters19] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters20] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters21] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters22] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters23] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters24] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_unpublished_canonical_four_method_exact_sql_parity[filters25] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_available_empty_tables_select_occurrence_assay_but_no_detection[qcauto_target] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_available_empty_tables_select_occurrence_assay_but_no_detection[qcauto_95pct_3nn_target] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_available_empty_tables_select_occurrence_assay_but_no_detection[qcauto_nontarget] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_available_empty_tables_select_occurrence_assay_but_no_detection[qcauto_95pct_3nn_nontarget] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_control_and_unknown_classifications_remain_raw_not_autoapproved[negative_control-True] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_control_and_unknown_classifications_remain_raw_not_autoapproved[unknown-None] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_control_and_unknown_classifications_remain_raw_not_autoapproved[environmental-False] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_same_assay_correlation_prevents_sibling_evidence_leakage[criterion0] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_same_assay_correlation_prevents_sibling_evidence_leakage[criterion1] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_same_assay_correlation_prevents_sibling_evidence_leakage[criterion2] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_source_unknown_rank_labels_match_sql_without_species_promotion _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+______ ERROR at setup of test_utc_datetime_offsets_match_actual_database _______
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_retained_legacy_detections_can_prove_method_without_inventing_empty_table[None] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_retained_legacy_detections_can_prove_method_without_inventing_empty_table[{}] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_coarse_dates_preserved_and_exact_frozen_time_filter_unavailable[month-2024-01] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_coarse_dates_preserved_and_exact_frozen_time_filter_unavailable[year-2024] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ ERROR at setup of test_coarse_dates_preserved_and_exact_frozen_time_filter_unavailable[None-None] _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedObject: type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_catalogue_postgres.py:34: in database
+    CorpusBase.metadata.create_all(engine, checkfirst=False)
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:5929: in create_all
+    bind._run_ddl_visitor(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:3270: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2469: in _run_ddl_visitor
+    ).traverse_single(element)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:985: in visit_metadata
+    self.traverse_single(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py:661: in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:1023: in visit_table
+    )._invoke_with(self.connection)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:322: in _invoke_with
+    return bind.execute(self)
+           ^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py:188: in _execute_on_connection
+    return connection._execute_ddl(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1532: in _execute_ddl
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedObject) type "vector" does not exist
+E   LINE 30:  embedding VECTOR(768),
+E                       ^
+E
+E   [SQL:
+E   CREATE TABLE retrieval_document (
+E   	doc_id VARCHAR(128) NOT NULL,
+E   	source_type VARCHAR(32) NOT NULL,
+E   	sample_id VARCHAR(64),
+E   	event_id VARCHAR(128),
+E   	time VARCHAR(32),
+E   	lat FLOAT,
+E   	lon FLOAT,
+E   	bay VARCHAR(4),
+E   	station VARCHAR(32),
+E   	title TEXT NOT NULL,
+E   	text TEXT NOT NULL,
+E   	active BOOLEAN DEFAULT 'true' NOT NULL,
+E   	provider VARCHAR(64),
+E   	provider_project_id VARCHAR(128),
+E   	provider_run_id VARCHAR(128),
+E   	assay_id VARCHAR(64),
+E   	assignment_method VARCHAR(64),
+E   	sample_kind VARCHAR(32),
+E   	is_control BOOLEAN,
+E   	source_snapshot_id VARCHAR(64),
+E   	metadata_json TEXT DEFAULT '{}' NOT NULL,
+E   	text_tsv TSVECTOR,
+E   	source_row_hash VARCHAR(64),
+E   	embedding_provider VARCHAR(32),
+E   	embedding_model VARCHAR(128),
+E   	embedding_dim INTEGER,
+E   	embedded_at TIMESTAMP WITH TIME ZONE,
+E   	embedding VECTOR(768),
+E   	PRIMARY KEY (doc_id)
+E   )
+E
+E   ]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+=========================== short test summary info ============================
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters0]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters1]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters2]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters3]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters4]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters5]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters6]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters7]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters8]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters9]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters10]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters11]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters12]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters13]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters14]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters15]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters16]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters17]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters18]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters19]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters20]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters21]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters22]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters23]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters24]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_unpublished_canonical_four_method_exact_sql_parity[filters25]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_available_empty_tables_select_occurrence_assay_but_no_detection[qcauto_target]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_available_empty_tables_select_occurrence_assay_but_no_detection[qcauto_95pct_3nn_target]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_available_empty_tables_select_occurrence_assay_but_no_detection[qcauto_nontarget]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_available_empty_tables_select_occurrence_assay_but_no_detection[qcauto_95pct_3nn_nontarget]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_control_and_unknown_classifications_remain_raw_not_autoapproved[negative_control-True]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_control_and_unknown_classifications_remain_raw_not_autoapproved[unknown-None]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_control_and_unknown_classifications_remain_raw_not_autoapproved[environmental-False]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_same_assay_correlation_prevents_sibling_evidence_leakage[criterion0]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_same_assay_correlation_prevents_sibling_evidence_leakage[criterion1]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_same_assay_correlation_prevents_sibling_evidence_leakage[criterion2]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_source_unknown_rank_labels_match_sql_without_species_promotion
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_utc_datetime_offsets_match_actual_database
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_retained_legacy_detections_can_prove_method_without_inventing_empty_table[None]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_retained_legacy_detections_can_prove_method_without_inventing_empty_table[{}]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_coarse_dates_preserved_and_exact_frozen_time_filter_unavailable[month-2024-01]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_coarse_dates_preserved_and_exact_frozen_time_filter_unavailable[year-2024]
+ERROR tests/integration/test_edna_catalogue_postgres.py::test_coarse_dates_preserved_and_exact_frozen_time_filter_unavailable[None-None]
+43 errors in 5.87s

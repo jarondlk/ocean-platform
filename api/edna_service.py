@@ -16,34 +16,14 @@ from preprocessing.anemone_classification import (
 )
 from preprocessing.edna_eligibility import evaluate_analysis_eligibility
 from preprocessing.edna_recipe import METHODS
-from schema.time_range import sql_time_conditions
+from preprocessing.edna_catalogue_query import (
+    EDNA_ASSIGNMENT_METHODS as EDNA_ASSIGNMENT_METHODS,
+    EDNA_SAMPLE_KINDS as EDNA_SAMPLE_KINDS,
+    sql_conditions,
+)
 
 
-EDNA_ASSIGNMENT_METHODS = frozenset(
-    {"qcauto_target", "qcauto_95pct_3nn_target", "qcauto_nontarget", "qcauto_95pct_3nn_nontarget"}
-)
-EDNA_SAMPLE_KINDS = frozenset(
-    {
-        "environmental",
-        "negative_control",
-        "positive_control",
-        "mock_community",
-        "unknown",
-    }
-)
 SAFE_SHA256 = re.compile(r"^[a-f0-9]{64}$")
-TAXON_COLUMNS = (
-    "assigned_taxon_name",
-    "superkingdom",
-    "kingdom",
-    "phylum",
-    '"class"',
-    '"order"',
-    "family",
-    "genus",
-    "species",
-    "subspecies",
-)
 
 
 @contextmanager
@@ -204,159 +184,16 @@ def _detection_eligibility(row: Mapping[str, Any]) -> dict[str, Any]:
 
 
 def _sample_conditions(filters: Mapping[str, Any]) -> tuple[list[str], dict[str, Any]]:
-    conditions = ["s.active IS TRUE"]
-    params: dict[str, Any] = {}
-    direct = {
-        "provider": "s.provider",
-        "provider_locus": "s.provider_locus",
-        "provider_team": "s.provider_team",
-        "provider_project_id": "s.provider_project_id",
-        "provider_run_id": "s.provider_run_id",
-        "sample_kind": "s.sample_kind",
-        "sample_id": "s.sample_id",
-    }
-    for name, column in direct.items():
-        value = filters.get(name)
-        if value is not None:
-            conditions.append(f"{column} = :{name}")
-            params[name] = value
-    if filters.get("is_control") is not None:
-        conditions.append("s.is_control IS NOT DISTINCT FROM :is_control")
-        params["is_control"] = filters["is_control"]
-    if filters.get("assay_id") is not None:
-        conditions.append(
-            "EXISTS (SELECT 1 FROM edna_assay a WHERE a.sample_id = s.sample_id "
-            "AND a.active IS TRUE AND a.assay_id = :assay_id)"
-        )
-        params["assay_id"] = filters["assay_id"]
-    for name, column, operator in (
-        ("lat_min", "s.lat", ">="),
-        ("lat_max", "s.lat", "<="),
-        ("lon_min", "s.lon", ">="),
-        ("lon_max", "s.lon", "<="),
-    ):
-        value = filters.get(name)
-        if value is not None:
-            conditions.append(f"{column} {operator} :{name}")
-            params[name] = value
-    times, values = sql_time_conditions("s.collection_date_utc", filters.get("time_from"), filters.get("time_to"))
-    conditions.extend(times)
-    params.update(values)
-    method = filters.get("assignment_method")
-    taxon = filters.get("taxon")
-    target_status = filters.get("target_status")
-    if method is not None or taxon is not None or target_status is not None:
-        detection_conditions = [
-            "a.sample_id = s.sample_id",
-            "a.active IS TRUE",
-            "d.assay_id = a.assay_id",
-            "d.active IS TRUE",
-        ]
-        if filters.get("assay_id") is not None:
-            detection_conditions.append("a.assay_id = :assay_id")
-        if target_status is not None:
-            detection_conditions.append("d.target_status = :target_status")
-            params["target_status"] = target_status
-        if method is not None:
-            detection_conditions.append("d.assignment_method = :assignment_method")
-            params["assignment_method"] = method
-        if taxon is not None:
-            comparisons = " OR ".join(
-                f"lower(d.{column}) = lower(:taxon)" for column in TAXON_COLUMNS
-            )
-            detection_conditions.append(f"({comparisons})")
-            params["taxon"] = taxon
-        detection_match = (
-            "EXISTS (SELECT 1 FROM edna_assay AS a "
-            "JOIN edna_detection AS d ON d.assay_id = a.assay_id WHERE "
-            + " AND ".join(detection_conditions) + ")"
-        )
-        if taxon is None:
-            # An available table may contain zero detections. The assay's
-            # versioned source evidence, not a fabricated detection, proves it.
-            available = []
-            if filters.get("assay_id") is not None:
-                available.append("a.assay_id = :assay_id")
-            if method is not None:
-                available.append("m.method = :assignment_method")
-            if target_status is not None:
-                available.append("CASE WHEN m.method LIKE '%_nontarget' THEN 'nontarget' ELSE 'target' END = :target_status")
-            availability_match = (
-                "EXISTS (SELECT 1 FROM edna_assay a CROSS JOIN LATERAL "
-                "jsonb_object_keys(COALESCE(a.community_availability_json, '{}')::jsonb) AS m(method) "
-                "WHERE a.sample_id=s.sample_id AND a.active IS TRUE AND "
-                + " AND ".join(available) + ")"
-            )
-            detection_match = "(" + detection_match + " OR " + availability_match + ")"
-        conditions.append(detection_match)
-    return conditions, params
+    return sql_conditions("occurrences", filters)
 
 
 def _detection_conditions(filters: Mapping[str, Any]) -> tuple[list[str], dict[str, Any]]:
-    conditions = ["s.active IS TRUE", "a.active IS TRUE", "d.active IS TRUE"]
-    times, params = sql_time_conditions("s.collection_date_utc", filters.get("time_from"), filters.get("time_to"))
-    conditions.extend(times)
-    direct = {
-        "sample_id": "s.sample_id",
-        "assay_id": "a.assay_id",
-        "provider": "s.provider",
-        "provider_locus": "s.provider_locus",
-        "provider_team": "s.provider_team",
-        "provider_project_id": "s.provider_project_id",
-        "provider_run_id": "s.provider_run_id",
-        "assignment_method": "d.assignment_method",
-        "target_status": "d.target_status",
-        "sample_kind": "s.sample_kind",
-    }
-    for name, column in direct.items():
-        value = filters.get(name)
-        if value is not None:
-            conditions.append(f"{column} = :{name}")
-            params[name] = value
-    if filters.get("is_control") is not None:
-        conditions.append("s.is_control IS NOT DISTINCT FROM :is_control")
-        params["is_control"] = filters["is_control"]
-    taxon = filters.get("taxon")
-    if taxon is not None:
-        comparisons = " OR ".join(
-            f"lower(d.{column}) = lower(:taxon)" for column in TAXON_COLUMNS
-        )
-        conditions.append(f"({comparisons})")
-        params["taxon"] = taxon
-    for name, column, operator in (
-        ("lat_min", "s.lat", ">="),
-        ("lat_max", "s.lat", "<="),
-        ("lon_min", "s.lon", ">="),
-        ("lon_max", "s.lon", "<="),
-    ):
-        value = filters.get(name)
-        if value is not None:
-            conditions.append(f"{column} {operator} :{name}")
-            params[name] = value
-    return conditions, params
-
-
+    return sql_conditions("detections", filters)
 
 
 def _aggregate_assay_conditions(filters):
-    base = {key:value for key,value in filters.items() if key not in {"assignment_method", "target_status", "taxon"}}
-    conditions, params = _sample_conditions(base)
-    conditions.append("a.active IS TRUE")
-    if filters.get("assay_id") is not None:
-        conditions.append("a.assay_id = :assay_id")
-    if any(filters.get(key) is not None for key in ("assignment_method", "target_status", "taxon")):
-        detection, detection_params = _detection_conditions(filters)
-        params.update(detection_params)
-        match = "EXISTS (SELECT 1 FROM edna_detection d WHERE d.assay_id=a.assay_id AND " + " AND ".join(detection) + ")"
-        if filters.get("taxon") is None:
-            available = []
-            if filters.get("assignment_method") is not None:
-                available.append("m.key = :assignment_method")
-            if filters.get("target_status") is not None:
-                available.append("CASE WHEN m.key LIKE '%_nontarget' THEN 'nontarget' ELSE 'target' END = :target_status")
-            match = "(" + match + " OR EXISTS (SELECT 1 FROM jsonb_object_keys(COALESCE(a.community_availability_json,'{}')::jsonb) AS m(key) WHERE " + " AND ".join(available) + "))"
-        conditions.append(match)
-    return conditions, params
+    return sql_conditions("assays", filters)
+
 
 def edna_summary(filters: Mapping[str, Any], *, connection=None, group_by=()) -> dict[str, Any]:
     """Exact whole-cohort SQL totals, with alternative methods kept separate."""

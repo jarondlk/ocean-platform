@@ -1,0 +1,1780 @@
+{
+  "snapshot_id": "f3004acbb6baf879830c7523366b80d690810b86c4912a7e4492443f2bd5dfcc",
+  "raw_count": {
+    "schema_version": "context-catalogue-v1",
+    "snapshot_id": "f3004acbb6baf879830c7523366b80d690810b86c4912a7e4492443f2bd5dfcc",
+    "scope": {
+      "version": 1,
+      "sources": {
+        "ctd": {
+          "enabled": false,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "bay": null,
+            "station": null,
+            "sample_id": null
+          }
+        },
+        "metagenome": {
+          "enabled": false,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "bay": null,
+            "station": null,
+            "sample_id": null
+          }
+        },
+        "remote_sensing": {
+          "enabled": false,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "lat_min": null,
+            "lat_max": null,
+            "lon_min": null,
+            "lon_max": null,
+            "dataset_id": null
+          }
+        },
+        "edna_metabarcoding": {
+          "enabled": true,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "lat_min": null,
+            "lat_max": null,
+            "lon_min": null,
+            "lon_max": null,
+            "sample_id": null,
+            "provider": null,
+            "provider_project_id": null,
+            "provider_run_id": null,
+            "assignment_method": null,
+            "taxon": null,
+            "sample_kind": null,
+            "is_control": null
+          },
+          "analysis_id": null
+        }
+      }
+    },
+    "columns": [
+      {
+        "key": "population",
+        "title": {
+          "en": "population",
+          "ja": "population"
+        },
+        "unit": null
+      },
+      {
+        "key": "eligibility_definition",
+        "title": {
+          "en": "eligibility_definition",
+          "ja": "eligibility_definition"
+        },
+        "unit": null
+      },
+      {
+        "key": "entity",
+        "title": {
+          "en": "entity",
+          "ja": "entity"
+        },
+        "unit": null
+      },
+      {
+        "key": "source_occurrence_count",
+        "title": {
+          "en": "source_occurrence_count",
+          "ja": "source_occurrence_count"
+        },
+        "unit": null
+      },
+      {
+        "key": "assay_count",
+        "title": {
+          "en": "assay_count",
+          "ja": "assay_count"
+        },
+        "unit": null
+      },
+      {
+        "key": "physical_sample_count",
+        "title": {
+          "en": "physical_sample_count",
+          "ja": "physical_sample_count"
+        },
+        "unit": null
+      },
+      {
+        "key": "controls",
+        "title": {
+          "en": "controls",
+          "ja": "controls"
+        },
+        "unit": null
+      },
+      {
+        "key": "unknown_control_status",
+        "title": {
+          "en": "unknown_control_status",
+          "ja": "unknown_control_status"
+        },
+        "unit": null
+      },
+      {
+        "key": "methods",
+        "title": {
+          "en": "methods",
+          "ja": "methods"
+        },
+        "unit": null
+      },
+      {
+        "key": "denominator",
+        "title": {
+          "en": "denominator",
+          "ja": "denominator"
+        },
+        "unit": null
+      }
+    ],
+    "rows": [
+      {
+        "population": "raw",
+        "eligibility_definition": "Active retained canonical inventory, including controls and unknown classifications",
+        "entity": "source_occurrences",
+        "source_occurrence_count": 1204,
+        "assay_count": 1203,
+        "physical_sample_count": null,
+        "controls": 1,
+        "unknown_control_status": 1,
+        "methods": [
+          {
+            "assignment_method": "qcauto_95pct_3nn_nontarget",
+            "target_status": "nontarget",
+            "target_gene": "12S",
+            "primer_set": "Synthetic-MiFish",
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1200,
+            "read_count_sum": 725384,
+            "available_assays": 1201,
+            "available_empty_assays": 1,
+            "concentration_reported": 400,
+            "concentration_missing": 401,
+            "concentration_column_absent": 399,
+            "concentration_zero": 1,
+            "copies_per_ml_mean": 604.485
+          },
+          {
+            "assignment_method": "qcauto_95pct_3nn_nontarget",
+            "target_status": "nontarget",
+            "target_gene": "12S",
+            "primer_set": null,
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1,
+            "read_count_sum": 5,
+            "available_assays": 1,
+            "available_empty_assays": 0,
+            "concentration_reported": 0,
+            "concentration_missing": 0,
+            "concentration_column_absent": 1,
+            "concentration_zero": 0,
+            "copies_per_ml_mean": null
+          },
+          {
+            "assignment_method": "qcauto_95pct_3nn_nontarget",
+            "target_status": "nontarget",
+            "target_gene": "18S",
+            "primer_set": "Synthetic-MiFish",
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1,
+            "read_count_sum": 8,
+            "available_assays": 1,
+            "available_empty_assays": 0,
+            "concentration_reported": 0,
+            "concentration_missing": 0,
+            "concentration_column_absent": 1,
+            "concentration_zero": 0,
+            "copies_per_ml_mean": null
+          },
+          {
+            "assignment_method": "qcauto_95pct_3nn_target",
+            "target_status": "target",
+            "target_gene": "12S",
+            "primer_set": "Synthetic-MiFish",
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1199,
+            "read_count_sum": 725377,
+            "available_assays": 1200,
+            "available_empty_assays": 1,
+            "concentration_reported": 400,
+            "concentration_missing": 400,
+            "concentration_column_absent": 399,
+            "concentration_zero": 1,
+            "copies_per_ml_mean": 604.485
+          },
+          {
+            "assignment_method": "qcauto_95pct_3nn_target",
+            "target_status": "target",
+            "target_gene": "12S",
+            "primer_set": null,
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1,
+            "read_count_sum": 5,
+            "available_assays": 1,
+            "available_empty_assays": 0,
+            "concentration_reported": 0,
+            "concentration_missing": 0,
+            "concentration_column_absent": 1,
+            "concentration_zero": 0,
+            "copies_per_ml_mean": null
+          },
+          {
+            "assignment_method": "qcauto_95pct_3nn_target",
+            "target_status": "target",
+            "target_gene": "18S",
+            "primer_set": "Synthetic-MiFish",
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1,
+            "read_count_sum": 8,
+            "available_assays": 1,
+            "available_empty_assays": 0,
+            "concentration_reported": 0,
+            "concentration_missing": 0,
+            "concentration_column_absent": 1,
+            "concentration_zero": 0,
+            "copies_per_ml_mean": null
+          },
+          {
+            "assignment_method": "qcauto_nontarget",
+            "target_status": "nontarget",
+            "target_gene": "12S",
+            "primer_set": "Synthetic-MiFish",
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1200,
+            "read_count_sum": 725384,
+            "available_assays": 1201,
+            "available_empty_assays": 1,
+            "concentration_reported": 400,
+            "concentration_missing": 401,
+            "concentration_column_absent": 399,
+            "concentration_zero": 1,
+            "copies_per_ml_mean": 604.485
+          },
+          {
+            "assignment_method": "qcauto_nontarget",
+            "target_status": "nontarget",
+            "target_gene": "12S",
+            "primer_set": null,
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1,
+            "read_count_sum": 5,
+            "available_assays": 1,
+            "available_empty_assays": 0,
+            "concentration_reported": 0,
+            "concentration_missing": 0,
+            "concentration_column_absent": 1,
+            "concentration_zero": 0,
+            "copies_per_ml_mean": null
+          },
+          {
+            "assignment_method": "qcauto_nontarget",
+            "target_status": "nontarget",
+            "target_gene": "18S",
+            "primer_set": "Synthetic-MiFish",
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1,
+            "read_count_sum": 8,
+            "available_assays": 1,
+            "available_empty_assays": 0,
+            "concentration_reported": 0,
+            "concentration_missing": 0,
+            "concentration_column_absent": 1,
+            "concentration_zero": 0,
+            "copies_per_ml_mean": null
+          },
+          {
+            "assignment_method": "qcauto_target",
+            "target_status": "target",
+            "target_gene": "12S",
+            "primer_set": "Synthetic-MiFish",
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1200,
+            "read_count_sum": 725384,
+            "available_assays": 1201,
+            "available_empty_assays": 1,
+            "concentration_reported": 400,
+            "concentration_missing": 401,
+            "concentration_column_absent": 399,
+            "concentration_zero": 1,
+            "copies_per_ml_mean": 604.485
+          },
+          {
+            "assignment_method": "qcauto_target",
+            "target_status": "target",
+            "target_gene": "12S",
+            "primer_set": null,
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1,
+            "read_count_sum": 5,
+            "available_assays": 1,
+            "available_empty_assays": 0,
+            "concentration_reported": 0,
+            "concentration_missing": 0,
+            "concentration_column_absent": 1,
+            "concentration_zero": 0,
+            "copies_per_ml_mean": null
+          },
+          {
+            "assignment_method": "qcauto_target",
+            "target_status": "target",
+            "target_gene": "18S",
+            "primer_set": "Synthetic-MiFish",
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1,
+            "read_count_sum": 8,
+            "available_assays": 1,
+            "available_empty_assays": 0,
+            "concentration_reported": 0,
+            "concentration_missing": 0,
+            "concentration_column_absent": 1,
+            "concentration_zero": 0,
+            "copies_per_ml_mean": null
+          }
+        ],
+        "denominator": "Complete matching active source occurrences and distinct assays; alternative assignment methods are separate"
+      }
+    ],
+    "receipt": {
+      "schema_version": "context-catalogue-v1",
+      "snapshot_id": "f3004acbb6baf879830c7523366b80d690810b86c4912a7e4492443f2bd5dfcc",
+      "scope": {
+        "version": 1,
+        "sources": {
+          "ctd": {
+            "enabled": false,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "bay": null,
+              "station": null,
+              "sample_id": null
+            }
+          },
+          "metagenome": {
+            "enabled": false,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "bay": null,
+              "station": null,
+              "sample_id": null
+            }
+          },
+          "remote_sensing": {
+            "enabled": false,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "lat_min": null,
+              "lat_max": null,
+              "lon_min": null,
+              "lon_max": null,
+              "dataset_id": null
+            }
+          },
+          "edna_metabarcoding": {
+            "enabled": true,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "lat_min": null,
+              "lat_max": null,
+              "lon_min": null,
+              "lon_max": null,
+              "sample_id": null,
+              "provider": null,
+              "provider_project_id": null,
+              "provider_run_id": null,
+              "assignment_method": null,
+              "taxon": null,
+              "sample_kind": null,
+              "is_control": null
+            },
+            "analysis_id": null
+          }
+        }
+      },
+      "receipt_id": "c12:receipt:f2beb80cab99e4b49f23671b94561dadd5acd97216f6cd9c9ce955467bb82e9b",
+      "operation_id": "c12.count",
+      "operation_version": "c12-v1",
+      "inputs": [
+        {
+          "object_id": "synthetic:edna:project-a:metadata",
+          "content_sha256": "7136fe45cac754fbcf222cb60b544a567cd30a9d0b3e3a32237a16360d21b54e",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:assays",
+          "content_sha256": "ed4b35697bb80e2863d8b4dfde61fb2ed78afb0393507f2b9d6a6947d0e1b3b2",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:classifications",
+          "content_sha256": "1e3b0f1ae55645950e15874e82cdcee756f27cf8a8d83b223d96b929adf6bb22",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:detections",
+          "content_sha256": "89ae95b9ddaf7688db45b0edc8645143716daf7f9d2bcd18a7aff42fe76d4273",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:occurrences",
+          "content_sha256": "a508b880ad12606d00db48910da8778121d6a11939d282dfd1ad3d3d93101d41",
+          "source_generation": "publication-1"
+        }
+      ],
+      "parameters": {
+        "limit": 100,
+        "offset": 0,
+        "population": "raw",
+        "table": "occurrences",
+        "filters": {},
+        "target_gene": null,
+        "primer_set": null,
+        "sequencing_method": null,
+        "frequency_unit": "source_occurrences"
+      },
+      "authority": "descriptive",
+      "availability": {
+        "status": "available",
+        "reason": null
+      },
+      "provenance": {
+        "source_generation": "publication-1",
+        "content_sha256": null,
+        "origin": null,
+        "references": [
+          "Synthetic source occurrences are not independently resolved physical samples; raw inventory grants no scientific approval",
+          "C01 environmental false-control, active complete-protocol assay and source-backed supported method (retained active detections or explicit available source table); preprocessing.edna_eligibility.evaluate_analysis_eligibility"
+        ]
+      },
+      "total_rows": {
+        "state": "known",
+        "entity": "rows",
+        "denominator": "Complete scoped operation output rows",
+        "basis": "complete_scope",
+        "value": 1,
+        "reason": null
+      },
+      "returned_count": 1,
+      "preview_truncated": false,
+      "source_completeness": "complete",
+      "query_completion": "complete",
+      "content_sha256": "aabf6d75eff1a1bf760b46ed6c48d828dbc1920c08c88e9dd51cb004cca2114b",
+      "scope_compatibility": null
+    }
+  },
+  "eligible_count": {
+    "schema_version": "context-catalogue-v1",
+    "snapshot_id": "f3004acbb6baf879830c7523366b80d690810b86c4912a7e4492443f2bd5dfcc",
+    "scope": {
+      "version": 1,
+      "sources": {
+        "ctd": {
+          "enabled": false,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "bay": null,
+            "station": null,
+            "sample_id": null
+          }
+        },
+        "metagenome": {
+          "enabled": false,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "bay": null,
+            "station": null,
+            "sample_id": null
+          }
+        },
+        "remote_sensing": {
+          "enabled": false,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "lat_min": null,
+            "lat_max": null,
+            "lon_min": null,
+            "lon_max": null,
+            "dataset_id": null
+          }
+        },
+        "edna_metabarcoding": {
+          "enabled": true,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "lat_min": null,
+            "lat_max": null,
+            "lon_min": null,
+            "lon_max": null,
+            "sample_id": null,
+            "provider": null,
+            "provider_project_id": null,
+            "provider_run_id": null,
+            "assignment_method": null,
+            "taxon": null,
+            "sample_kind": null,
+            "is_control": null
+          },
+          "analysis_id": null
+        }
+      }
+    },
+    "columns": [
+      {
+        "key": "population",
+        "title": {
+          "en": "population",
+          "ja": "population"
+        },
+        "unit": null
+      },
+      {
+        "key": "eligibility_definition",
+        "title": {
+          "en": "eligibility_definition",
+          "ja": "eligibility_definition"
+        },
+        "unit": null
+      },
+      {
+        "key": "entity",
+        "title": {
+          "en": "entity",
+          "ja": "entity"
+        },
+        "unit": null
+      },
+      {
+        "key": "source_occurrence_count",
+        "title": {
+          "en": "source_occurrence_count",
+          "ja": "source_occurrence_count"
+        },
+        "unit": null
+      },
+      {
+        "key": "assay_count",
+        "title": {
+          "en": "assay_count",
+          "ja": "assay_count"
+        },
+        "unit": null
+      },
+      {
+        "key": "physical_sample_count",
+        "title": {
+          "en": "physical_sample_count",
+          "ja": "physical_sample_count"
+        },
+        "unit": null
+      },
+      {
+        "key": "controls",
+        "title": {
+          "en": "controls",
+          "ja": "controls"
+        },
+        "unit": null
+      },
+      {
+        "key": "unknown_control_status",
+        "title": {
+          "en": "unknown_control_status",
+          "ja": "unknown_control_status"
+        },
+        "unit": null
+      },
+      {
+        "key": "methods",
+        "title": {
+          "en": "methods",
+          "ja": "methods"
+        },
+        "unit": null
+      },
+      {
+        "key": "denominator",
+        "title": {
+          "en": "denominator",
+          "ja": "denominator"
+        },
+        "unit": null
+      }
+    ],
+    "rows": [
+      {
+        "population": "eligible",
+        "eligibility_definition": "C01 environmental false-control, active complete-protocol assay and source-backed supported method (retained active detections or explicit available source table); preprocessing.edna_eligibility.evaluate_analysis_eligibility",
+        "entity": "source_occurrences",
+        "source_occurrence_count": 1200,
+        "assay_count": 1200,
+        "physical_sample_count": null,
+        "controls": 0,
+        "unknown_control_status": 0,
+        "methods": [
+          {
+            "assignment_method": "qcauto_95pct_3nn_target",
+            "target_status": "target",
+            "target_gene": "12S",
+            "primer_set": "Synthetic-MiFish",
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1197,
+            "read_count_sum": 725374,
+            "available_assays": 1198,
+            "available_empty_assays": 1,
+            "eligible_assays": 1198,
+            "concentration_reported": 400,
+            "concentration_missing": 399,
+            "concentration_column_absent": 398,
+            "concentration_zero": 1,
+            "copies_per_ml_mean": 604.485
+          },
+          {
+            "assignment_method": "qcauto_95pct_3nn_target",
+            "target_status": "target",
+            "target_gene": "18S",
+            "primer_set": "Synthetic-MiFish",
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1,
+            "read_count_sum": 8,
+            "available_assays": 1,
+            "available_empty_assays": 0,
+            "eligible_assays": 1,
+            "concentration_reported": 0,
+            "concentration_missing": 0,
+            "concentration_column_absent": 1,
+            "concentration_zero": 0,
+            "copies_per_ml_mean": null
+          },
+          {
+            "assignment_method": "qcauto_target",
+            "target_status": "target",
+            "target_gene": "12S",
+            "primer_set": "Synthetic-MiFish",
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1198,
+            "read_count_sum": 725381,
+            "available_assays": 1199,
+            "available_empty_assays": 1,
+            "eligible_assays": 1199,
+            "concentration_reported": 400,
+            "concentration_missing": 400,
+            "concentration_column_absent": 398,
+            "concentration_zero": 1,
+            "copies_per_ml_mean": 604.485
+          },
+          {
+            "assignment_method": "qcauto_target",
+            "target_status": "target",
+            "target_gene": "18S",
+            "primer_set": "Synthetic-MiFish",
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "assignment_rows": 1,
+            "read_count_sum": 8,
+            "available_assays": 1,
+            "available_empty_assays": 0,
+            "eligible_assays": 1,
+            "concentration_reported": 0,
+            "concentration_missing": 0,
+            "concentration_column_absent": 1,
+            "concentration_zero": 0,
+            "copies_per_ml_mean": null
+          }
+        ],
+        "denominator": "Complete matching active source occurrences and distinct assays; alternative assignment methods are separate"
+      }
+    ],
+    "receipt": {
+      "schema_version": "context-catalogue-v1",
+      "snapshot_id": "f3004acbb6baf879830c7523366b80d690810b86c4912a7e4492443f2bd5dfcc",
+      "scope": {
+        "version": 1,
+        "sources": {
+          "ctd": {
+            "enabled": false,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "bay": null,
+              "station": null,
+              "sample_id": null
+            }
+          },
+          "metagenome": {
+            "enabled": false,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "bay": null,
+              "station": null,
+              "sample_id": null
+            }
+          },
+          "remote_sensing": {
+            "enabled": false,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "lat_min": null,
+              "lat_max": null,
+              "lon_min": null,
+              "lon_max": null,
+              "dataset_id": null
+            }
+          },
+          "edna_metabarcoding": {
+            "enabled": true,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "lat_min": null,
+              "lat_max": null,
+              "lon_min": null,
+              "lon_max": null,
+              "sample_id": null,
+              "provider": null,
+              "provider_project_id": null,
+              "provider_run_id": null,
+              "assignment_method": null,
+              "taxon": null,
+              "sample_kind": null,
+              "is_control": null
+            },
+            "analysis_id": null
+          }
+        }
+      },
+      "receipt_id": "c12:receipt:686556ec463193eb36326f33c89235f8e61e4f54f741f2b04e1dfdcb2d30a25c",
+      "operation_id": "c12.count",
+      "operation_version": "c12-v1",
+      "inputs": [
+        {
+          "object_id": "synthetic:edna:project-a:metadata",
+          "content_sha256": "7136fe45cac754fbcf222cb60b544a567cd30a9d0b3e3a32237a16360d21b54e",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:assays",
+          "content_sha256": "ed4b35697bb80e2863d8b4dfde61fb2ed78afb0393507f2b9d6a6947d0e1b3b2",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:classifications",
+          "content_sha256": "1e3b0f1ae55645950e15874e82cdcee756f27cf8a8d83b223d96b929adf6bb22",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:detections",
+          "content_sha256": "89ae95b9ddaf7688db45b0edc8645143716daf7f9d2bcd18a7aff42fe76d4273",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:occurrences",
+          "content_sha256": "a508b880ad12606d00db48910da8778121d6a11939d282dfd1ad3d3d93101d41",
+          "source_generation": "publication-1"
+        }
+      ],
+      "parameters": {
+        "limit": 100,
+        "offset": 0,
+        "population": "eligible",
+        "table": "occurrences",
+        "filters": {},
+        "target_gene": null,
+        "primer_set": null,
+        "sequencing_method": null,
+        "frequency_unit": "source_occurrences"
+      },
+      "authority": "descriptive",
+      "availability": {
+        "status": "available",
+        "reason": null
+      },
+      "provenance": {
+        "source_generation": "publication-1",
+        "content_sha256": null,
+        "origin": null,
+        "references": [
+          "Synthetic source occurrences are not independently resolved physical samples; raw inventory grants no scientific approval",
+          "C01 environmental false-control, active complete-protocol assay and source-backed supported method (retained active detections or explicit available source table); preprocessing.edna_eligibility.evaluate_analysis_eligibility"
+        ]
+      },
+      "total_rows": {
+        "state": "known",
+        "entity": "rows",
+        "denominator": "Complete scoped operation output rows",
+        "basis": "complete_scope",
+        "value": 1,
+        "reason": null
+      },
+      "returned_count": 1,
+      "preview_truncated": false,
+      "source_completeness": "complete",
+      "query_completion": "complete",
+      "content_sha256": "500edcc3380b32645cf89df5f4ca472f9e6fc50e7d4ec3bda7b2366cd360bcf1",
+      "scope_compatibility": null
+    }
+  },
+  "eligible_coverage": {
+    "schema_version": "context-catalogue-v1",
+    "snapshot_id": "f3004acbb6baf879830c7523366b80d690810b86c4912a7e4492443f2bd5dfcc",
+    "scope": {
+      "version": 1,
+      "sources": {
+        "ctd": {
+          "enabled": false,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "bay": null,
+            "station": null,
+            "sample_id": null
+          }
+        },
+        "metagenome": {
+          "enabled": false,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "bay": null,
+            "station": null,
+            "sample_id": null
+          }
+        },
+        "remote_sensing": {
+          "enabled": false,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "lat_min": null,
+            "lat_max": null,
+            "lon_min": null,
+            "lon_max": null,
+            "dataset_id": null
+          }
+        },
+        "edna_metabarcoding": {
+          "enabled": true,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "lat_min": null,
+            "lat_max": null,
+            "lon_min": null,
+            "lon_max": null,
+            "sample_id": null,
+            "provider": null,
+            "provider_project_id": null,
+            "provider_run_id": null,
+            "assignment_method": null,
+            "taxon": null,
+            "sample_kind": null,
+            "is_control": null
+          },
+          "analysis_id": null
+        }
+      }
+    },
+    "columns": [
+      {
+        "key": "population",
+        "title": {
+          "en": "population",
+          "ja": "population"
+        },
+        "unit": null
+      },
+      {
+        "key": "eligibility_definition",
+        "title": {
+          "en": "eligibility_definition",
+          "ja": "eligibility_definition"
+        },
+        "unit": null
+      },
+      {
+        "key": "entity",
+        "title": {
+          "en": "entity",
+          "ja": "entity"
+        },
+        "unit": null
+      },
+      {
+        "key": "observed_occurrences",
+        "title": {
+          "en": "observed_occurrences",
+          "ja": "observed_occurrences"
+        },
+        "unit": null
+      },
+      {
+        "key": "dated_occurrences",
+        "title": {
+          "en": "dated_occurrences",
+          "ja": "dated_occurrences"
+        },
+        "unit": null
+      },
+      {
+        "key": "unknown_date_occurrences",
+        "title": {
+          "en": "unknown_date_occurrences",
+          "ja": "unknown_date_occurrences"
+        },
+        "unit": null
+      },
+      {
+        "key": "temporal_precisions",
+        "title": {
+          "en": "temporal_precisions",
+          "ja": "temporal_precisions"
+        },
+        "unit": null
+      },
+      {
+        "key": "observed_date_labels",
+        "title": {
+          "en": "observed_date_labels",
+          "ja": "observed_date_labels"
+        },
+        "unit": null
+      },
+      {
+        "key": "earliest_retained_label",
+        "title": {
+          "en": "earliest_retained_label",
+          "ja": "earliest_retained_label"
+        },
+        "unit": null
+      },
+      {
+        "key": "latest_retained_label",
+        "title": {
+          "en": "latest_retained_label",
+          "ja": "latest_retained_label"
+        },
+        "unit": null
+      },
+      {
+        "key": "expected_dates",
+        "title": {
+          "en": "expected_dates",
+          "ja": "expected_dates"
+        },
+        "unit": null
+      },
+      {
+        "key": "missing_dates",
+        "title": {
+          "en": "missing_dates",
+          "ja": "missing_dates"
+        },
+        "unit": null
+      },
+      {
+        "key": "coverage_state",
+        "title": {
+          "en": "coverage_state",
+          "ja": "coverage_state"
+        },
+        "unit": null
+      },
+      {
+        "key": "denominator",
+        "title": {
+          "en": "denominator",
+          "ja": "denominator"
+        },
+        "unit": null
+      }
+    ],
+    "rows": [
+      {
+        "population": "eligible",
+        "eligibility_definition": "C01 environmental false-control, active complete-protocol assay and source-backed supported method (retained active detections or explicit available source table); preprocessing.edna_eligibility.evaluate_analysis_eligibility",
+        "entity": "source_occurrences",
+        "observed_occurrences": 1200,
+        "dated_occurrences": 1200,
+        "unknown_date_occurrences": 0,
+        "temporal_precisions": {
+          "date": 1200
+        },
+        "observed_date_labels": 366,
+        "earliest_retained_label": "2024-01-01",
+        "latest_retained_label": "2024-12-31",
+        "expected_dates": null,
+        "missing_dates": null,
+        "coverage_state": "unknown",
+        "denominator": "Matching source occurrences and their retained date precision; no expected sampling calendar supplied"
+      }
+    ],
+    "receipt": {
+      "schema_version": "context-catalogue-v1",
+      "snapshot_id": "f3004acbb6baf879830c7523366b80d690810b86c4912a7e4492443f2bd5dfcc",
+      "scope": {
+        "version": 1,
+        "sources": {
+          "ctd": {
+            "enabled": false,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "bay": null,
+              "station": null,
+              "sample_id": null
+            }
+          },
+          "metagenome": {
+            "enabled": false,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "bay": null,
+              "station": null,
+              "sample_id": null
+            }
+          },
+          "remote_sensing": {
+            "enabled": false,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "lat_min": null,
+              "lat_max": null,
+              "lon_min": null,
+              "lon_max": null,
+              "dataset_id": null
+            }
+          },
+          "edna_metabarcoding": {
+            "enabled": true,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "lat_min": null,
+              "lat_max": null,
+              "lon_min": null,
+              "lon_max": null,
+              "sample_id": null,
+              "provider": null,
+              "provider_project_id": null,
+              "provider_run_id": null,
+              "assignment_method": null,
+              "taxon": null,
+              "sample_kind": null,
+              "is_control": null
+            },
+            "analysis_id": null
+          }
+        }
+      },
+      "receipt_id": "c12:receipt:dfa849d8f12e654ab39f307c2421d8e9c50bed585f533ed18744e02cb443e436",
+      "operation_id": "c12.coverage",
+      "operation_version": "c12-v1",
+      "inputs": [
+        {
+          "object_id": "synthetic:edna:project-a:metadata",
+          "content_sha256": "7136fe45cac754fbcf222cb60b544a567cd30a9d0b3e3a32237a16360d21b54e",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:assays",
+          "content_sha256": "ed4b35697bb80e2863d8b4dfde61fb2ed78afb0393507f2b9d6a6947d0e1b3b2",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:classifications",
+          "content_sha256": "1e3b0f1ae55645950e15874e82cdcee756f27cf8a8d83b223d96b929adf6bb22",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:detections",
+          "content_sha256": "89ae95b9ddaf7688db45b0edc8645143716daf7f9d2bcd18a7aff42fe76d4273",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:occurrences",
+          "content_sha256": "a508b880ad12606d00db48910da8778121d6a11939d282dfd1ad3d3d93101d41",
+          "source_generation": "publication-1"
+        }
+      ],
+      "parameters": {
+        "limit": 100,
+        "offset": 0,
+        "population": "eligible",
+        "table": "occurrences",
+        "filters": {},
+        "target_gene": null,
+        "primer_set": null,
+        "sequencing_method": null,
+        "frequency_unit": "source_occurrences"
+      },
+      "authority": "descriptive",
+      "availability": {
+        "status": "available",
+        "reason": null
+      },
+      "provenance": {
+        "source_generation": "publication-1",
+        "content_sha256": null,
+        "origin": null,
+        "references": [
+          "Synthetic source occurrences are not independently resolved physical samples; raw inventory grants no scientific approval",
+          "C01 environmental false-control, active complete-protocol assay and source-backed supported method (retained active detections or explicit available source table); preprocessing.edna_eligibility.evaluate_analysis_eligibility"
+        ]
+      },
+      "total_rows": {
+        "state": "known",
+        "entity": "rows",
+        "denominator": "Complete scoped operation output rows",
+        "basis": "complete_scope",
+        "value": 1,
+        "reason": null
+      },
+      "returned_count": 1,
+      "preview_truncated": false,
+      "source_completeness": "complete",
+      "query_completion": "complete",
+      "content_sha256": "a28804125a32b8cc6d3b020efc7c1c214d74e61a56904dba15c52b1b6be8f853",
+      "scope_compatibility": null
+    }
+  },
+  "frequency_qcauto_target": {
+    "schema_version": "context-catalogue-v1",
+    "snapshot_id": "f3004acbb6baf879830c7523366b80d690810b86c4912a7e4492443f2bd5dfcc",
+    "scope": {
+      "version": 1,
+      "sources": {
+        "ctd": {
+          "enabled": false,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "bay": null,
+            "station": null,
+            "sample_id": null
+          }
+        },
+        "metagenome": {
+          "enabled": false,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "bay": null,
+            "station": null,
+            "sample_id": null
+          }
+        },
+        "remote_sensing": {
+          "enabled": false,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "lat_min": null,
+            "lat_max": null,
+            "lon_min": null,
+            "lon_max": null,
+            "dataset_id": null
+          }
+        },
+        "edna_metabarcoding": {
+          "enabled": true,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "lat_min": null,
+            "lat_max": null,
+            "lon_min": null,
+            "lon_max": null,
+            "sample_id": null,
+            "provider": null,
+            "provider_project_id": null,
+            "provider_run_id": null,
+            "assignment_method": null,
+            "taxon": null,
+            "sample_kind": null,
+            "is_control": null
+          },
+          "analysis_id": null
+        }
+      }
+    },
+    "columns": [
+      {
+        "key": "population",
+        "title": {
+          "en": "population",
+          "ja": "population"
+        },
+        "unit": null
+      },
+      {
+        "key": "eligibility_definition",
+        "title": {
+          "en": "eligibility_definition",
+          "ja": "eligibility_definition"
+        },
+        "unit": null
+      },
+      {
+        "key": "entity",
+        "title": {
+          "en": "entity",
+          "ja": "entity"
+        },
+        "unit": null
+      },
+      {
+        "key": "assignment_method",
+        "title": {
+          "en": "assignment_method",
+          "ja": "assignment_method"
+        },
+        "unit": null
+      },
+      {
+        "key": "taxon",
+        "title": {
+          "en": "taxon",
+          "ja": "taxon"
+        },
+        "unit": null
+      },
+      {
+        "key": "target_gene",
+        "title": {
+          "en": "target_gene",
+          "ja": "target_gene"
+        },
+        "unit": null
+      },
+      {
+        "key": "primer_set",
+        "title": {
+          "en": "primer_set",
+          "ja": "primer_set"
+        },
+        "unit": null
+      },
+      {
+        "key": "sequencing_method",
+        "title": {
+          "en": "sequencing_method",
+          "ja": "sequencing_method"
+        },
+        "unit": null
+      },
+      {
+        "key": "positive_units",
+        "title": {
+          "en": "positive_units",
+          "ja": "positive_units"
+        },
+        "unit": null
+      },
+      {
+        "key": "eligible_denominator",
+        "title": {
+          "en": "eligible_denominator",
+          "ja": "eligible_denominator"
+        },
+        "unit": null
+      },
+      {
+        "key": "frequency",
+        "title": {
+          "en": "frequency",
+          "ja": "frequency"
+        },
+        "unit": "proportion"
+      },
+      {
+        "key": "denominator",
+        "title": {
+          "en": "denominator",
+          "ja": "denominator"
+        },
+        "unit": null
+      }
+    ],
+    "rows": [
+      {
+        "population": "eligible",
+        "eligibility_definition": "C01 environmental false-control, active complete-protocol assay and source-backed supported method (retained active detections or explicit available source table); preprocessing.edna_eligibility.evaluate_analysis_eligibility",
+        "entity": "source_occurrences",
+        "assignment_method": "qcauto_target",
+        "taxon": "Scomber japonicus",
+        "target_gene": "12S",
+        "primer_set": "Synthetic-MiFish",
+        "sequencing_method": "synthetic-amplicon-sequencing",
+        "positive_units": 598,
+        "eligible_denominator": 1199,
+        "frequency": 0.4987489574645538,
+        "denominator": "Eligible matching protocol units with the selected source-backed method available; taxon predicate removed; positive means retained read_count > 0"
+      }
+    ],
+    "receipt": {
+      "schema_version": "context-catalogue-v1",
+      "snapshot_id": "f3004acbb6baf879830c7523366b80d690810b86c4912a7e4492443f2bd5dfcc",
+      "scope": {
+        "version": 1,
+        "sources": {
+          "ctd": {
+            "enabled": false,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "bay": null,
+              "station": null,
+              "sample_id": null
+            }
+          },
+          "metagenome": {
+            "enabled": false,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "bay": null,
+              "station": null,
+              "sample_id": null
+            }
+          },
+          "remote_sensing": {
+            "enabled": false,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "lat_min": null,
+              "lat_max": null,
+              "lon_min": null,
+              "lon_max": null,
+              "dataset_id": null
+            }
+          },
+          "edna_metabarcoding": {
+            "enabled": true,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "lat_min": null,
+              "lat_max": null,
+              "lon_min": null,
+              "lon_max": null,
+              "sample_id": null,
+              "provider": null,
+              "provider_project_id": null,
+              "provider_run_id": null,
+              "assignment_method": null,
+              "taxon": null,
+              "sample_kind": null,
+              "is_control": null
+            },
+            "analysis_id": null
+          }
+        }
+      },
+      "receipt_id": "c12:receipt:57a20f220484d282e382ba42746a24c223907365f68305a259ac5222f49ef51f",
+      "operation_id": "c12.frequency",
+      "operation_version": "c12-v1",
+      "inputs": [
+        {
+          "object_id": "synthetic:edna:project-a:metadata",
+          "content_sha256": "7136fe45cac754fbcf222cb60b544a567cd30a9d0b3e3a32237a16360d21b54e",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:assays",
+          "content_sha256": "ed4b35697bb80e2863d8b4dfde61fb2ed78afb0393507f2b9d6a6947d0e1b3b2",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:classifications",
+          "content_sha256": "1e3b0f1ae55645950e15874e82cdcee756f27cf8a8d83b223d96b929adf6bb22",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:detections",
+          "content_sha256": "89ae95b9ddaf7688db45b0edc8645143716daf7f9d2bcd18a7aff42fe76d4273",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:occurrences",
+          "content_sha256": "a508b880ad12606d00db48910da8778121d6a11939d282dfd1ad3d3d93101d41",
+          "source_generation": "publication-1"
+        }
+      ],
+      "parameters": {
+        "limit": 100,
+        "offset": 0,
+        "population": "eligible",
+        "table": "occurrences",
+        "filters": {
+          "assignment_method": "qcauto_target",
+          "taxon": "Scomber japonicus"
+        },
+        "target_gene": "12S",
+        "primer_set": "Synthetic-MiFish",
+        "sequencing_method": "synthetic-amplicon-sequencing",
+        "frequency_unit": "source_occurrences"
+      },
+      "authority": "descriptive",
+      "availability": {
+        "status": "available",
+        "reason": null
+      },
+      "provenance": {
+        "source_generation": "publication-1",
+        "content_sha256": null,
+        "origin": null,
+        "references": [
+          "Synthetic source occurrences are not independently resolved physical samples; raw inventory grants no scientific approval",
+          "C01 environmental false-control, active complete-protocol assay and source-backed supported method (retained active detections or explicit available source table); preprocessing.edna_eligibility.evaluate_analysis_eligibility"
+        ]
+      },
+      "total_rows": {
+        "state": "known",
+        "entity": "rows",
+        "denominator": "Complete scoped operation output rows",
+        "basis": "complete_scope",
+        "value": 1,
+        "reason": null
+      },
+      "returned_count": 1,
+      "preview_truncated": false,
+      "source_completeness": "complete",
+      "query_completion": "complete",
+      "content_sha256": "a5845591d5b52788b416abcb494c7a48a538293fd3eecb07a92c6a21c4916764",
+      "scope_compatibility": null
+    }
+  },
+  "frequency_qcauto_95pct_3nn_target": {
+    "schema_version": "context-catalogue-v1",
+    "snapshot_id": "f3004acbb6baf879830c7523366b80d690810b86c4912a7e4492443f2bd5dfcc",
+    "scope": {
+      "version": 1,
+      "sources": {
+        "ctd": {
+          "enabled": false,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "bay": null,
+            "station": null,
+            "sample_id": null
+          }
+        },
+        "metagenome": {
+          "enabled": false,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "bay": null,
+            "station": null,
+            "sample_id": null
+          }
+        },
+        "remote_sensing": {
+          "enabled": false,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "lat_min": null,
+            "lat_max": null,
+            "lon_min": null,
+            "lon_max": null,
+            "dataset_id": null
+          }
+        },
+        "edna_metabarcoding": {
+          "enabled": true,
+          "filters": {
+            "time_from": null,
+            "time_to": null,
+            "lat_min": null,
+            "lat_max": null,
+            "lon_min": null,
+            "lon_max": null,
+            "sample_id": null,
+            "provider": null,
+            "provider_project_id": null,
+            "provider_run_id": null,
+            "assignment_method": null,
+            "taxon": null,
+            "sample_kind": null,
+            "is_control": null
+          },
+          "analysis_id": null
+        }
+      }
+    },
+    "columns": [
+      {
+        "key": "population",
+        "title": {
+          "en": "population",
+          "ja": "population"
+        },
+        "unit": null
+      },
+      {
+        "key": "eligibility_definition",
+        "title": {
+          "en": "eligibility_definition",
+          "ja": "eligibility_definition"
+        },
+        "unit": null
+      },
+      {
+        "key": "entity",
+        "title": {
+          "en": "entity",
+          "ja": "entity"
+        },
+        "unit": null
+      },
+      {
+        "key": "assignment_method",
+        "title": {
+          "en": "assignment_method",
+          "ja": "assignment_method"
+        },
+        "unit": null
+      },
+      {
+        "key": "taxon",
+        "title": {
+          "en": "taxon",
+          "ja": "taxon"
+        },
+        "unit": null
+      },
+      {
+        "key": "target_gene",
+        "title": {
+          "en": "target_gene",
+          "ja": "target_gene"
+        },
+        "unit": null
+      },
+      {
+        "key": "primer_set",
+        "title": {
+          "en": "primer_set",
+          "ja": "primer_set"
+        },
+        "unit": null
+      },
+      {
+        "key": "sequencing_method",
+        "title": {
+          "en": "sequencing_method",
+          "ja": "sequencing_method"
+        },
+        "unit": null
+      },
+      {
+        "key": "positive_units",
+        "title": {
+          "en": "positive_units",
+          "ja": "positive_units"
+        },
+        "unit": null
+      },
+      {
+        "key": "eligible_denominator",
+        "title": {
+          "en": "eligible_denominator",
+          "ja": "eligible_denominator"
+        },
+        "unit": null
+      },
+      {
+        "key": "frequency",
+        "title": {
+          "en": "frequency",
+          "ja": "frequency"
+        },
+        "unit": "proportion"
+      },
+      {
+        "key": "denominator",
+        "title": {
+          "en": "denominator",
+          "ja": "denominator"
+        },
+        "unit": null
+      }
+    ],
+    "rows": [
+      {
+        "population": "eligible",
+        "eligibility_definition": "C01 environmental false-control, active complete-protocol assay and source-backed supported method (retained active detections or explicit available source table); preprocessing.edna_eligibility.evaluate_analysis_eligibility",
+        "entity": "source_occurrences",
+        "assignment_method": "qcauto_95pct_3nn_target",
+        "taxon": "Scomber japonicus",
+        "target_gene": "12S",
+        "primer_set": "Synthetic-MiFish",
+        "sequencing_method": "synthetic-amplicon-sequencing",
+        "positive_units": 598,
+        "eligible_denominator": 1198,
+        "frequency": 0.4991652754590985,
+        "denominator": "Eligible matching protocol units with the selected source-backed method available; taxon predicate removed; positive means retained read_count > 0"
+      }
+    ],
+    "receipt": {
+      "schema_version": "context-catalogue-v1",
+      "snapshot_id": "f3004acbb6baf879830c7523366b80d690810b86c4912a7e4492443f2bd5dfcc",
+      "scope": {
+        "version": 1,
+        "sources": {
+          "ctd": {
+            "enabled": false,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "bay": null,
+              "station": null,
+              "sample_id": null
+            }
+          },
+          "metagenome": {
+            "enabled": false,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "bay": null,
+              "station": null,
+              "sample_id": null
+            }
+          },
+          "remote_sensing": {
+            "enabled": false,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "lat_min": null,
+              "lat_max": null,
+              "lon_min": null,
+              "lon_max": null,
+              "dataset_id": null
+            }
+          },
+          "edna_metabarcoding": {
+            "enabled": true,
+            "filters": {
+              "time_from": null,
+              "time_to": null,
+              "lat_min": null,
+              "lat_max": null,
+              "lon_min": null,
+              "lon_max": null,
+              "sample_id": null,
+              "provider": null,
+              "provider_project_id": null,
+              "provider_run_id": null,
+              "assignment_method": null,
+              "taxon": null,
+              "sample_kind": null,
+              "is_control": null
+            },
+            "analysis_id": null
+          }
+        }
+      },
+      "receipt_id": "c12:receipt:ccca8a7a5b15df5f498a0cd4d32d5a4476b027d8b3fd0febdf6aa8a609d35e21",
+      "operation_id": "c12.frequency",
+      "operation_version": "c12-v1",
+      "inputs": [
+        {
+          "object_id": "synthetic:edna:project-a:metadata",
+          "content_sha256": "7136fe45cac754fbcf222cb60b544a567cd30a9d0b3e3a32237a16360d21b54e",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:assays",
+          "content_sha256": "ed4b35697bb80e2863d8b4dfde61fb2ed78afb0393507f2b9d6a6947d0e1b3b2",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:classifications",
+          "content_sha256": "1e3b0f1ae55645950e15874e82cdcee756f27cf8a8d83b223d96b929adf6bb22",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:detections",
+          "content_sha256": "89ae95b9ddaf7688db45b0edc8645143716daf7f9d2bcd18a7aff42fe76d4273",
+          "source_generation": "publication-1"
+        },
+        {
+          "object_id": "synthetic:edna:project-a:table:occurrences",
+          "content_sha256": "a508b880ad12606d00db48910da8778121d6a11939d282dfd1ad3d3d93101d41",
+          "source_generation": "publication-1"
+        }
+      ],
+      "parameters": {
+        "limit": 100,
+        "offset": 0,
+        "population": "eligible",
+        "table": "occurrences",
+        "filters": {
+          "assignment_method": "qcauto_95pct_3nn_target",
+          "taxon": "Scomber japonicus"
+        },
+        "target_gene": "12S",
+        "primer_set": "Synthetic-MiFish",
+        "sequencing_method": "synthetic-amplicon-sequencing",
+        "frequency_unit": "source_occurrences"
+      },
+      "authority": "descriptive",
+      "availability": {
+        "status": "available",
+        "reason": null
+      },
+      "provenance": {
+        "source_generation": "publication-1",
+        "content_sha256": null,
+        "origin": null,
+        "references": [
+          "Synthetic source occurrences are not independently resolved physical samples; raw inventory grants no scientific approval",
+          "C01 environmental false-control, active complete-protocol assay and source-backed supported method (retained active detections or explicit available source table); preprocessing.edna_eligibility.evaluate_analysis_eligibility"
+        ]
+      },
+      "total_rows": {
+        "state": "known",
+        "entity": "rows",
+        "denominator": "Complete scoped operation output rows",
+        "basis": "complete_scope",
+        "value": 1,
+        "reason": null
+      },
+      "returned_count": 1,
+      "preview_truncated": false,
+      "source_completeness": "complete",
+      "query_completion": "complete",
+      "content_sha256": "c78424b34c4741337a8d04f8261d10f8ba6ab9c3c7cebb8114de88860dee887c",
+      "scope_compatibility": null
+    }
+  }
+}

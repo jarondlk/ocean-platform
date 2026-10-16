@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C11 are Complete locally; C12–C27 are not started.**
+**P00 and C01–C12 are Complete locally; C13–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -128,7 +128,7 @@ not a requirement to reset future work to this commit.
 Existing unrelated README, audit and benchmark modifications are preserved.
 P00 progress is recorded in [STATUS.md](STATUS.md) and [its handoff](handoffs/P00.md).
 C01 and C02 are complete with offline evidence; C03 is complete with local unit
-and actual disposable PostgreSQL evidence. C04 and C05 are Complete locally; C06 is Complete locally; C07 is Complete locally; C08 is Complete locally; C09 is Complete locally; C10 is Complete locally; C11 is Complete locally; C12–C27 remain Not started.
+and actual disposable PostgreSQL evidence. C04 and C05 are Complete locally; C06 is Complete locally; C07 is Complete locally; C08 is Complete locally; C09 is Complete locally; C10 is Complete locally; C11 is Complete locally; C12 is Complete locally; C13–C27 remain Not started.
 The 2026-10-13 revision adds P00 before the original 27 numbered components; the
 setup receipt retains its historical counts and records this amendment.
 
@@ -165,4 +165,10 @@ C12 readiness is verified at `1d3b7b6`: 116 baseline, 677 prerequisite and 83
 additional eDNA semantic tests pass; seven generated contracts are current.
 C01/C09 accepted sources reconcile. See [the readiness audit](C12_READINESS_AUDIT_2026-10-15.md)
 for raw-method representation, cohort/denominator and retrieval-independence work.
-C12 remains Not started and unselected.
+C12 was explicitly selected; [implementation handoff](handoffs/C12.md).
+
+C12 local acceptance is complete: 1,646 required tests, full backend 3,220/127
+PostgreSQL skips at 84.11% coverage, 82 actual PostgreSQL cases and 163 v1 browser tests
+plus typecheck/build/audit. Read [handoff](handoffs/C12.md),
+[contract](C12_EDNA_ADAPTER_CONTRACT.md) and [receipt](evidence/C12/verification.json).
+Source delivery and exact-source hosted CI remain pending; C13 is not selected.

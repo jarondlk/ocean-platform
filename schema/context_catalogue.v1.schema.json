@@ -559,7 +559,11 @@
         "assignment_method": {
           "enum": [
             "qcauto_target",
-            "qcauto_95pct_3nn_target"
+            "qcauto_95pct_3nn_target",
+            "qcauto_nontarget",
+            "qcauto_95pct_3nn_nontarget",
+            "mixed",
+            "unknown"
           ],
           "title": "Assignment Method",
           "type": "string"
@@ -587,6 +591,15 @@
           "title": "Measurement",
           "type": "string"
         },
+        "population": {
+          "default": "scientific",
+          "enum": [
+            "scientific",
+            "raw_inventory"
+          ],
+          "title": "Population",
+          "type": "string"
+        },
         "protocol": {
           "maxLength": 4000,
           "minLength": 1,
@@ -607,7 +620,8 @@
             "negative_control",
             "positive_control",
             "mock_community",
-            "unknown"
+            "unknown",
+            "mixed"
           ],
           "title": "Sample Kind",
           "type": "string"

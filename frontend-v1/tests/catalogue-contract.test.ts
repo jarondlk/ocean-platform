@@ -18,6 +18,25 @@ type Examples = {
   results: QueryResult[];
   invalid: { model: keyof CatalogueModels; value: unknown; reason: string }[];
 };
+
+test("C12 raw inventory describes four methods without widening scientific execution", async () => {
+  const base = { family: "edna_metabarcoding", protocol_id: "synthetic-protocol", protocol: "Synthetic protocol", assignment_method: "qcauto_target", sample_kind: "environmental", is_control: false, measurement: "assigned_reads", unit: "reads" };
+  const old = await parseCatalogueContractModel("EDNADescriptor", base);
+  assert.equal(old.population, "scientific");
+  for (const method of ["qcauto_target", "qcauto_95pct_3nn_target", "qcauto_nontarget", "qcauto_95pct_3nn_nontarget", "mixed", "unknown"]) {
+    const raw = { ...base, population: "raw_inventory", assignment_method: method, sample_kind: "mixed", is_control: null };
+    assert.deepEqual(await parseCatalogueContractModel("EDNADescriptor", raw), raw);
+    if (!["qcauto_target", "qcauto_95pct_3nn_target"].includes(method)) {
+      await assert.rejects(parseCatalogueContractModel("EDNADescriptor", { ...base, assignment_method: method }), CatalogueContractError);
+      await assert.rejects(parseCatalogueContractModel("EDNADescriptor", { ...base, population: "scientific", assignment_method: method }), CatalogueContractError);
+    }
+  }
+  for (const value of [
+    { ...base, sample_kind: "mixed", is_control: null },
+    { ...base, population: "raw_inventory", sample_kind: "mixed", is_control: false },
+    { ...base, population: "raw_inventory", sample_kind: "unknown", is_control: true },
+  ]) await assert.rejects(parseCatalogueContractModel("EDNADescriptor", value), CatalogueContractError);
+});
 const examples = JSON.parse(readFileSync(new URL("../../schema/context_catalogue_examples.json", import.meta.url), "utf8")) as Examples;
 const copy = <T>(value: T): T => structuredClone(value);
 const permissions = (listing: CatalogueListing): CurrentCatalogueAccess => ({

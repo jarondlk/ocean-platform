@@ -303,13 +303,20 @@ class EDNADescriptor(ContractModel):
     family: Literal["edna_metabarcoding"]
     protocol_id: Identifier
     protocol: TextValue
-    assignment_method: Literal["qcauto_target", "qcauto_95pct_3nn_target"]
+    # Descriptive raw inventory is a separate population, never permission to
+    # execute a method unsupported by C01 scientific scope/analysis recipes.
+    population: Literal["scientific", "raw_inventory"] = "scientific"
+    assignment_method: Literal[
+        "qcauto_target", "qcauto_95pct_3nn_target", "qcauto_nontarget",
+        "qcauto_95pct_3nn_nontarget", "mixed", "unknown",
+    ]
     sample_kind: Literal[
         "environmental",
         "negative_control",
         "positive_control",
         "mock_community",
         "unknown",
+        "mixed",
     ]
     is_control: bool | None
     measurement: TextValue
@@ -317,6 +324,15 @@ class EDNADescriptor(ContractModel):
 
     @model_validator(mode="after")
     def controls(self):
+        if self.population == "scientific" and (
+            self.assignment_method not in {"qcauto_target", "qcauto_95pct_3nn_target"}
+            or self.sample_kind == "mixed"
+        ):
+            raise ValueError("Scientific descriptors require a supported target method and one sample kind")
+        if self.sample_kind == "mixed" and self.is_control is not None:
+            raise ValueError("Mixed inventory cannot declare one control status")
+        if self.population == "raw_inventory" and self.sample_kind == "unknown" and self.is_control is not None:
+            raise ValueError("Unknown raw classification requires unknown control status")
         if (
             self.sample_kind == "environmental"
             and self.is_control is not False

@@ -1,0 +1,829 @@
+
+> ocean-v1-local-preview@1.0.0-preview.0 test
+> node --test --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tests/*.test.ts
+
+TAP version 13
+# Subtest: unrelated demo checks preserve unsaved settings while a committed save updates the draft
+ok 1 - unrelated demo checks preserve unsaved settings while a committed save updates the draft
+  ---
+  duration_ms: 0.86325
+  ...
+# Subtest: versioned local restore preserves admin workflows across reopening and refuses non-admin access
+ok 2 - versioned local restore preserves admin workflows across reopening and refuses non-admin access
+  ---
+  duration_ms: 0.826042
+  ...
+# Subtest: restore rejects unknown versions, corrupt records, invalid authority and sequence collisions
+ok 3 - restore rejects unknown versions, corrupt records, invalid authority and sequence collisions
+  ---
+  duration_ms: 0.4735
+  ...
+# Subtest: non-admin role cannot mutate or export admin preview records
+ok 4 - non-admin role cannot mutate or export admin preview records
+  ---
+  duration_ms: 0.238458
+  ...
+# Subtest: role and account type remain independent and the demo administrator cannot be locked out
+ok 5 - role and account type remain independent and the demo administrator cannot be locked out
+  ---
+  duration_ms: 0.417292
+  ...
+# Subtest: demo invitations require synthetic addresses, reject duplicates and can be revoked without sending
+ok 6 - demo invitations require synthetic addresses, reject duplicates and can be revoked without sending
+  ---
+  duration_ms: 0.24675
+  ...
+# Subtest: pause and capacity constrain local jobs, while running work can finish after a pause
+ok 7 - pause and capacity constrain local jobs, while running work can finish after a pause
+  ---
+  duration_ms: 0.30725
+  ...
+# Subtest: cancelling a simulation retains its snapshot and log, and terminal states cannot be advanced
+ok 8 - cancelling a simulation retains its snapshot and log, and terminal states cannot be advanced
+  ---
+  duration_ms: 0.108667
+  ...
+# Subtest: retention settings cannot remove retained fixture evidence or silently raise execution limits
+ok 9 - retention settings cannot remove retained fixture evidence or silently raise execution limits
+  ---
+  duration_ms: 0.280958
+  ...
+# Subtest: database inventory counts all local records and feedback triage records an audit without altering evidence
+ok 10 - database inventory counts all local records and feedback triage records an audit without altering evidence
+  ---
+  duration_ms: 0.337791
+  ...
+# Subtest: CSV exports identify synthetic scope, preserve all rows and escape spreadsheet formulas and quotes
+ok 11 - CSV exports identify synthetic scope, preserve all rows and escape spreadsheet formulas and quotes
+  ---
+  duration_ms: 0.1535
+  ...
+# Subtest: admin CSV shares typed safety and JSON serialization without mutating structured records
+ok 12 - admin CSV shares typed safety and JSON serialization without mutating structured records
+  ---
+  duration_ms: 0.069292
+  ...
+# Subtest: C12 raw inventory describes four methods without widening scientific execution
+ok 13 - C12 raw inventory describes four methods without widening scientific execution
+  ---
+  duration_ms: 3.132125
+  ...
+# Subtest: shared node 0: root:analyses
+ok 14 - shared node 0: root:analyses
+  ---
+  duration_ms: 2.372334
+  ...
+# Subtest: shared node 1: root:data
+ok 15 - shared node 1: root:data
+  ---
+  duration_ms: 1.548458
+  ...
+# Subtest: shared node 2: root:metadata
+ok 16 - shared node 2: root:metadata
+  ---
+  duration_ms: 1.428458
+  ...
+# Subtest: shared node 3: root:relationships
+ok 17 - shared node 3: root:relationships
+  ---
+  duration_ms: 2.032667
+  ...
+# Subtest: shared node 4: root:statistics
+ok 18 - shared node 4: root:statistics
+  ---
+  duration_ms: 1.646541
+  ...
+# Subtest: shared node 5: synthetic:analysis
+ok 19 - shared node 5: synthetic:analysis
+  ---
+  duration_ms: 1.64625
+  ...
+# Subtest: shared node 6: synthetic:candidate-link
+ok 20 - shared node 6: synthetic:candidate-link
+  ---
+  duration_ms: 1.559667
+  ...
+# Subtest: shared node 7: synthetic:coverage
+ok 21 - shared node 7: synthetic:coverage
+  ---
+  duration_ms: 2.125166
+  ...
+# Subtest: shared node 8: synthetic:dataset:000000
+ok 22 - shared node 8: synthetic:dataset:000000
+  ---
+  duration_ms: 1.875041
+  ...
+# Subtest: shared node 9: synthetic:dataset:000001
+ok 23 - shared node 9: synthetic:dataset:000001
+  ---
+  duration_ms: 1.730917
+  ...
+# Subtest: shared node 10: synthetic:dataset:000002
+ok 24 - shared node 10: synthetic:dataset:000002
+  ---
+  duration_ms: 1.782375
+  ...
+# Subtest: shared node 11: synthetic:dataset:000003
+ok 25 - shared node 11: synthetic:dataset:000003
+  ---
+  duration_ms: 1.627834
+  ...
+# Subtest: shared node 12: synthetic:dataset:000004
+ok 26 - shared node 12: synthetic:dataset:000004
+  ---
+  duration_ms: 1.516584
+  ...
+# Subtest: shared node 13: synthetic:dataset:000005
+ok 27 - shared node 13: synthetic:dataset:000005
+  ---
+  duration_ms: 1.597625
+  ...
+# Subtest: shared node 14: synthetic:dataset:000006
+ok 28 - shared node 14: synthetic:dataset:000006
+  ---
+  duration_ms: 1.77375
+  ...
+# Subtest: shared node 15: synthetic:dataset:000007
+ok 29 - shared node 15: synthetic:dataset:000007
+  ---
+  duration_ms: 1.445875
+  ...
+# Subtest: shared node 16: synthetic:method
+ok 30 - shared node 16: synthetic:method
+  ---
+  duration_ms: 1.276333
+  ...
+# Subtest: shared node 17: synthetic:source:ctd
+ok 31 - shared node 17: synthetic:source:ctd
+  ---
+  duration_ms: 1.309709
+  ...
+# Subtest: shared node 18: synthetic:source:edna_metabarcoding
+ok 32 - shared node 18: synthetic:source:edna_metabarcoding
+  ---
+  duration_ms: 1.591542
+  ...
+# Subtest: shared node 19: synthetic:source:metagenome
+ok 33 - shared node 19: synthetic:source:metagenome
+  ---
+  duration_ms: 1.417459
+  ...
+# Subtest: shared node 20: synthetic:source:remote_sensing
+ok 34 - shared node 20: synthetic:source:remote_sensing
+  ---
+  duration_ms: 1.403458
+  ...
+# Subtest: shared node 21: synthetic:unavailable
+ok 35 - shared node 21: synthetic:unavailable
+  ---
+  duration_ms: 1.354584
+  ...
+# Subtest: shared node 22: synthetic:workflow
+ok 36 - shared node 22: synthetic:workflow
+  ---
+  duration_ms: 0.990208
+  ...
+# Subtest: shared node 23: synthetic:dataset:000000
+ok 37 - shared node 23: synthetic:dataset:000000
+  ---
+  duration_ms: 1.258
+  ...
+# Subtest: shared node 24: synthetic:dataset:000003
+ok 38 - shared node 24: synthetic:dataset:000003
+  ---
+  duration_ms: 1.345959
+  ...
+# Subtest: shared listing 0: known/available
+ok 39 - shared listing 0: known/available
+  ---
+  duration_ms: 11.83725
+  ...
+# Subtest: shared listing 1: known/available
+ok 40 - shared listing 1: known/available
+  ---
+  duration_ms: 7.138125
+  ...
+# Subtest: shared listing 2: known/available
+ok 41 - shared listing 2: known/available
+  ---
+  duration_ms: 4.118542
+  ...
+# Subtest: shared listing 3: unknown/available
+ok 42 - shared listing 3: unknown/available
+  ---
+  duration_ms: 5.751291
+  ...
+# Subtest: shared listing 4: unknown/unavailable
+ok 43 - shared listing 4: unknown/unavailable
+  ---
+  duration_ms: 1.228875
+  ...
+# Subtest: shared listing 5: known/available
+ok 44 - shared listing 5: known/available
+  ---
+  duration_ms: 1.260917
+  ...
+# Subtest: shared operation: catalogue.dataset_inventory
+ok 45 - shared operation: catalogue.dataset_inventory
+  ---
+  duration_ms: 1.081625
+  ...
+# Subtest: shared result: synthetic:receipt:e36fd84235be0f2cfb63b7d472b59911fa00ad296c938daa17497617ca39fdc1
+ok 46 - shared result: synthetic:receipt:e36fd84235be0f2cfb63b7d472b59911fa00ad296c938daa17497617ca39fdc1
+  ---
+  duration_ms: 2.81475
+  ...
+# Subtest: shared result: synthetic:coverage-receipt
+ok 47 - shared result: synthetic:coverage-receipt
+  ---
+  duration_ms: 2.342667
+  ...
+# Subtest: reject shared invalid case: Exact JSON integers cannot silently round in browsers
+ok 48 - reject shared invalid case: Exact JSON integers cannot silently round in browsers
+  ---
+  duration_ms: 0.716334
+  ...
+# Subtest: reject shared invalid case: Result integers cannot silently round in browsers
+ok 49 - reject shared invalid case: Result integers cannot silently round in browsers
+  ---
+  duration_ms: 2.116958
+  ...
+# Subtest: reject shared invalid case: UTC calendar overflow: 9999-12-31T23:59:59-23:59
+ok 50 - reject shared invalid case: UTC calendar overflow: 9999-12-31T23:59:59-23:59
+  ---
+  duration_ms: 0.383292
+  ...
+# Subtest: reject shared invalid case: UTC calendar overflow: 0001-01-01T00:00:00+23:59
+ok 51 - reject shared invalid case: UTC calendar overflow: 0001-01-01T00:00:00+23:59
+  ---
+  duration_ms: 0.401709
+  ...
+# Subtest: reject shared invalid case: Exclusive end UTC calendar overflow
+ok 52 - reject shared invalid case: Exclusive end UTC calendar overflow
+  ---
+  duration_ms: 1.341416
+  ...
+# Subtest: reject shared invalid case: Unsupported version
+ok 53 - reject shared invalid case: Unsupported version
+  ---
+  duration_ms: 0.229542
+  ...
+# Subtest: reject shared invalid case: Paths cannot be canonical identity
+ok 54 - reject shared invalid case: Paths cannot be canonical identity
+  ---
+  duration_ms: 0.131125
+  ...
+# Subtest: reject shared invalid case: Missing English title
+ok 55 - reject shared invalid case: Missing English title
+  ---
+  duration_ms: 0.882333
+  ...
+# Subtest: reject shared invalid case: Self-parent
+ok 56 - reject shared invalid case: Self-parent
+  ---
+  duration_ms: 1.226167
+  ...
+# Subtest: reject shared invalid case: Missing dataset sections
+ok 57 - reject shared invalid case: Missing dataset sections
+  ---
+  duration_ms: 1.224167
+  ...
+# Subtest: reject shared invalid case: Aliases adapted before wire validation
+ok 58 - reject shared invalid case: Aliases adapted before wire validation
+  ---
+  duration_ms: 0.87775
+  ...
+# Subtest: reject shared invalid case: Source descriptor mismatch
+ok 59 - reject shared invalid case: Source descriptor mismatch
+  ---
+  duration_ms: 0.156959
+  ...
+# Subtest: reject shared invalid case: Published flag without publication lifecycle
+ok 60 - reject shared invalid case: Published flag without publication lifecycle
+  ---
+  duration_ms: 1.226208
+  ...
+# Subtest: reject shared invalid case: Invalid calendar date
+ok 61 - reject shared invalid case: Invalid calendar date
+  ---
+  duration_ms: 0.265875
+  ...
+# Subtest: reject shared invalid case: Non-text scientific filter
+ok 62 - reject shared invalid case: Non-text scientific filter
+  ---
+  duration_ms: 0.372083
+  ...
+# Subtest: reject shared invalid case: Malformed scientific filter object
+ok 63 - reject shared invalid case: Malformed scientific filter object
+  ---
+  duration_ms: 0.261167
+  ...
+# Subtest: reject shared invalid case: String boolean scope flag
+ok 64 - reject shared invalid case: String boolean scope flag
+  ---
+  duration_ms: 0.263958
+  ...
+# Subtest: reject shared invalid case: Unknown control classification must not be invented
+ok 65 - reject shared invalid case: Unknown control classification must not be invented
+  ---
+  duration_ms: 1.03425
+  ...
+# Subtest: reject shared invalid case: Control conflicts with known environmental sample
+ok 66 - reject shared invalid case: Control conflicts with known environmental sample
+  ---
+  duration_ms: 1.029167
+  ...
+# Subtest: reject shared invalid case: Origin provenance cannot create live dependency
+ok 67 - reject shared invalid case: Origin provenance cannot create live dependency
+  ---
+  duration_ms: 0.248042
+  ...
+# Subtest: reject shared invalid case: Page returned count mismatch
+ok 68 - reject shared invalid case: Page returned count mismatch
+  ---
+  duration_ms: 7.329541
+  ...
+# Subtest: reject shared invalid case: Boolean count
+ok 69 - reject shared invalid case: Boolean count
+  ---
+  duration_ms: 3.753334
+  ...
+# Subtest: reject shared invalid case: Negative population
+ok 70 - reject shared invalid case: Negative population
+  ---
+  duration_ms: 3.587833
+  ...
+# Subtest: reject shared invalid case: Fractional population
+ok 71 - reject shared invalid case: Fractional population
+  ---
+  duration_ms: 1.794291
+  ...
+# Subtest: reject shared invalid case: Unsafe cross-language population
+ok 72 - reject shared invalid case: Unsafe cross-language population
+  ---
+  duration_ms: 2.120833
+  ...
+# Subtest: reject shared invalid case: Page exceeds whole-scope total
+ok 73 - reject shared invalid case: Page exceeds whole-scope total
+  ---
+  duration_ms: 5.557834
+  ...
+# Subtest: reject shared invalid case: Unknown total cannot contain numeric value
+ok 74 - reject shared invalid case: Unknown total cannot contain numeric value
+  ---
+  duration_ms: 5.725042
+  ...
+# Subtest: reject shared invalid case: Complete listing cannot silently drop later pages
+ok 75 - reject shared invalid case: Complete listing cannot silently drop later pages
+  ---
+  duration_ms: 5.272417
+  ...
+# Subtest: reject shared invalid case: Cursor access context mismatch
+ok 76 - reject shared invalid case: Cursor access context mismatch
+  ---
+  duration_ms: 5.412917
+  ...
+# Subtest: reject shared invalid case: Snapshot context mismatch
+ok 77 - reject shared invalid case: Snapshot context mismatch
+  ---
+  duration_ms: 5.050375
+  ...
+# Subtest: reject shared invalid case: Mixed-snapshot item
+ok 78 - reject shared invalid case: Mixed-snapshot item
+  ---
+  duration_ms: 5.329291
+  ...
+# Subtest: reject shared invalid case: Page limit exceeds contract maximum
+ok 79 - reject shared invalid case: Page limit exceeds contract maximum
+  ---
+  duration_ms: 1.396209
+  ...
+# Subtest: reject shared invalid case: Duplicate canonical item
+ok 80 - reject shared invalid case: Duplicate canonical item
+  ---
+  duration_ms: 2.613166
+  ...
+# Subtest: reject shared invalid case: Unavailable is not known zero
+ok 81 - reject shared invalid case: Unavailable is not known zero
+  ---
+  duration_ms: 0.700125
+  ...
+# Subtest: reject shared invalid case: Operation inputs must be distinct
+ok 82 - reject shared invalid case: Operation inputs must be distinct
+  ---
+  duration_ms: 0.884959
+  ...
+# Subtest: reject shared invalid case: Unknown executable fields forbidden
+ok 83 - reject shared invalid case: Unknown executable fields forbidden
+  ---
+  duration_ms: 0.6775
+  ...
+# Subtest: reject shared invalid case: Result/receipt snapshot mismatch
+ok 84 - reject shared invalid case: Result/receipt snapshot mismatch
+  ---
+  duration_ms: 2.236166
+  ...
+# Subtest: reject shared invalid case: Receipt preview length mismatch
+ok 85 - reject shared invalid case: Receipt preview length mismatch
+  ---
+  duration_ms: 2.440291
+  ...
+# Subtest: reject shared invalid case: Preview truncation cannot hide remaining complete result
+ok 86 - reject shared invalid case: Preview truncation cannot hide remaining complete result
+  ---
+  duration_ms: 1.980458
+  ...
+# Subtest: reject shared invalid case: Table column mismatch
+ok 87 - reject shared invalid case: Table column mismatch
+  ---
+  duration_ms: 2.20425
+  ...
+# Subtest: the complete exported contract validates through one boundary
+ok 88 - the complete exported contract validates through one boundary
+  ---
+  duration_ms: 12.548625
+  ...
+# Subtest: optional factory defaults normalize without mutating external input
+ok 89 - optional factory defaults normalize without mutating external input
+  ---
+  duration_ms: 1.452834
+  ...
+# Subtest: legacy aliases and P00 labels use the exported Python registry
+ok 90 - legacy aliases and P00 labels use the exported Python registry
+  ---
+  duration_ms: 0.215708
+  ...
+# Subtest: P00 projection preserves canonical identities and source labels
+ok 91 - P00 projection preserves canonical identities and source labels
+  ---
+  duration_ms: 9.301
+  ...
+# Subtest: new kinds project explicitly without changing the prototype type
+ok 92 - new kinds project explicitly without changing the prototype type
+  ---
+  duration_ms: 9.992375
+  ...
+# Subtest: unknown and unavailable never become an empty known catalogue
+ok 93 - unknown and unavailable never become an empty known catalogue
+  ---
+  duration_ms: 5.886458
+  ...
+# Subtest: a missing or malformed backend produces unavailable without fixture fallback
+ok 94 - a missing or malformed backend produces unavailable without fixture fallback
+  ---
+  duration_ms: 1.728333
+  ...
+# Subtest: permission revision or principal changes invalidate even empty cached membership
+ok 95 - permission revision or principal changes invalidate even empty cached membership
+  ---
+  duration_ms: 7.144541
+  ...
+# Subtest: revoked nodes, parents and related links are not retained in projections
+ok 96 - revoked nodes, parents and related links are not retained in projections
+  ---
+  duration_ms: 3.900875
+  ...
+# Subtest: snapshot selection and provenance origins cannot silently select another backend
+ok 97 - snapshot selection and provenance origins cannot silently select another backend
+  ---
+  duration_ms: 4.664584
+  ...
+# Subtest: readiness, authority and completion remain independent fields
+ok 98 - readiness, authority and completion remain independent fields
+  ---
+  duration_ms: 1.378208
+  ...
+# Subtest: wire input rejects non-JSON values and cannot modify object prototypes
+ok 99 - wire input rejects non-JSON values and cannot modify object prototypes
+  ---
+  duration_ms: 0.751583
+  ...
+# Subtest: v1 shared CSV fixture: ordinary
+ok 100 - v1 shared CSV fixture: ordinary
+  ---
+  duration_ms: 0.672292
+  ...
+# Subtest: v1 shared CSV fixture: japanese
+ok 101 - v1 shared CSV fixture: japanese
+  ---
+  duration_ms: 0.077458
+  ...
+# Subtest: v1 shared CSV fixture: quoted
+ok 102 - v1 shared CSV fixture: quoted
+  ---
+  duration_ms: 0.088083
+  ...
+# Subtest: v1 shared CSV fixture: comma
+ok 103 - v1 shared CSV fixture: comma
+  ---
+  duration_ms: 0.040833
+  ...
+# Subtest: v1 shared CSV fixture: multiline
+ok 104 - v1 shared CSV fixture: multiline
+  ---
+  duration_ms: 0.109833
+  ...
+# Subtest: v1 shared CSV fixture: carriage-return
+ok 105 - v1 shared CSV fixture: carriage-return
+  ---
+  duration_ms: 0.039667
+  ...
+# Subtest: v1 shared CSV fixture: empty
+ok 106 - v1 shared CSV fixture: empty
+  ---
+  duration_ms: 0.078208
+  ...
+# Subtest: v1 shared CSV fixture: equals
+ok 107 - v1 shared CSV fixture: equals
+  ---
+  duration_ms: 0.031167
+  ...
+# Subtest: v1 shared CSV fixture: plus
+ok 108 - v1 shared CSV fixture: plus
+  ---
+  duration_ms: 0.2255
+  ...
+# Subtest: v1 shared CSV fixture: minus-string
+ok 109 - v1 shared CSV fixture: minus-string
+  ---
+  duration_ms: 0.244292
+  ...
+# Subtest: v1 shared CSV fixture: at
+ok 110 - v1 shared CSV fixture: at
+  ---
+  duration_ms: 0.073916
+  ...
+# Subtest: v1 shared CSV fixture: space-formula
+ok 111 - v1 shared CSV fixture: space-formula
+  ---
+  duration_ms: 0.030667
+  ...
+# Subtest: v1 shared CSV fixture: tab-text
+ok 112 - v1 shared CSV fixture: tab-text
+  ---
+  duration_ms: 0.020709
+  ...
+# Subtest: v1 shared CSV fixture: cr-text
+ok 113 - v1 shared CSV fixture: cr-text
+  ---
+  duration_ms: 0.018041
+  ...
+# Subtest: v1 shared CSV fixture: lf-text
+ok 114 - v1 shared CSV fixture: lf-text
+  ---
+  duration_ms: 0.01775
+  ...
+# Subtest: v1 shared CSV fixture: tab-formula
+ok 115 - v1 shared CSV fixture: tab-formula
+  ---
+  duration_ms: 0.020541
+  ...
+# Subtest: v1 shared CSV fixture: crlf-text
+ok 116 - v1 shared CSV fixture: crlf-text
+  ---
+  duration_ms: 0.021458
+  ...
+# Subtest: v1 shared CSV fixture: space-tab-text
+ok 117 - v1 shared CSV fixture: space-tab-text
+  ---
+  duration_ms: 0.018791
+  ...
+# Subtest: v1 shared CSV fixture: nonleading-formula
+ok 118 - v1 shared CSV fixture: nonleading-formula
+  ---
+  duration_ms: 0.019958
+  ...
+# Subtest: v1 shared CSV fixture: multiline-later-formula
+ok 119 - v1 shared CSV fixture: multiline-later-formula
+  ---
+  duration_ms: 0.019125
+  ...
+# Subtest: v1 shared CSV fixture: existing-apostrophe
+ok 120 - v1 shared CSV fixture: existing-apostrophe
+  ---
+  duration_ms: 0.019375
+  ...
+# Subtest: v1 shared CSV fixture: literal-leading-quote
+ok 121 - v1 shared CSV fixture: literal-leading-quote
+  ---
+  duration_ms: 0.018875
+  ...
+# Subtest: v1 shared CSV fixture: negative-number
+ok 122 - v1 shared CSV fixture: negative-number
+  ---
+  duration_ms: 0.020833
+  ...
+# Subtest: v1 shared CSV fixture: negative-scientific
+ok 123 - v1 shared CSV fixture: negative-scientific
+  ---
+  duration_ms: 0.01925
+  ...
+# Subtest: v1 shared CSV fixture: positive-number
+ok 124 - v1 shared CSV fixture: positive-number
+  ---
+  duration_ms: 0.018792
+  ...
+# Subtest: v1 shared CSV fixture: zero
+ok 125 - v1 shared CSV fixture: zero
+  ---
+  duration_ms: 0.018208
+  ...
+# Subtest: v1 shared CSV fixture: null
+ok 126 - v1 shared CSV fixture: null
+  ---
+  duration_ms: 0.023458
+  ...
+# Subtest: v1 shared CSV fixture: true
+ok 127 - v1 shared CSV fixture: true
+  ---
+  duration_ms: 0.016166
+  ...
+# Subtest: v1 shared CSV fixture: false
+ok 128 - v1 shared CSV fixture: false
+  ---
+  duration_ms: 0.017667
+  ...
+# Subtest: v1 shared CSV fixture: object
+ok 129 - v1 shared CSV fixture: object
+  ---
+  duration_ms: 0.034041
+  ...
+# Subtest: v1 shared CSV fixture: array
+ok 130 - v1 shared CSV fixture: array
+  ---
+  duration_ms: 0.021458
+  ...
+# Subtest: v1 shared CSV fixture: empty-object
+ok 131 - v1 shared CSV fixture: empty-object
+  ---
+  duration_ms: 0.018042
+  ...
+# Subtest: v1 shared CSV fixture: empty-array
+ok 132 - v1 shared CSV fixture: empty-array
+  ---
+  duration_ms: 0.016916
+  ...
+# Subtest: v1 shared CSV fixture: undefined
+ok 133 - v1 shared CSV fixture: undefined
+  ---
+  duration_ms: 0.018084
+  ...
+# Subtest: v1 shared CSV fixture: vertical-tab-formula
+ok 134 - v1 shared CSV fixture: vertical-tab-formula
+  ---
+  duration_ms: 0.019167
+  ...
+# Subtest: v1 shared CSV fixture: form-feed-formula
+ok 135 - v1 shared CSV fixture: form-feed-formula
+  ---
+  duration_ms: 0.018625
+  ...
+# Subtest: v1 shared CSV fixture: file-separator-formula
+ok 136 - v1 shared CSV fixture: file-separator-formula
+  ---
+  duration_ms: 0.018333
+  ...
+# Subtest: v1 shared CSV fixture: next-line-formula
+ok 137 - v1 shared CSV fixture: next-line-formula
+  ---
+  duration_ms: 0.017958
+  ...
+# Subtest: v1 shared CSV fixture: nbsp-formula
+ok 138 - v1 shared CSV fixture: nbsp-formula
+  ---
+  duration_ms: 0.018375
+  ...
+# Subtest: v1 shared CSV fixture: ogham-formula
+ok 139 - v1 shared CSV fixture: ogham-formula
+  ---
+  duration_ms: 0.01925
+  ...
+# Subtest: v1 shared CSV fixture: em-space-formula
+ok 140 - v1 shared CSV fixture: em-space-formula
+  ---
+  duration_ms: 0.018958
+  ...
+# Subtest: v1 shared CSV fixture: line-separator-formula
+ok 141 - v1 shared CSV fixture: line-separator-formula
+  ---
+  duration_ms: 0.018959
+  ...
+# Subtest: v1 shared CSV fixture: paragraph-separator-formula
+ok 142 - v1 shared CSV fixture: paragraph-separator-formula
+  ---
+  duration_ms: 0.018417
+  ...
+# Subtest: v1 shared CSV fixture: narrow-nbsp-formula
+ok 143 - v1 shared CSV fixture: narrow-nbsp-formula
+  ---
+  duration_ms: 0.022041
+  ...
+# Subtest: v1 shared CSV fixture: medium-math-space-formula
+ok 144 - v1 shared CSV fixture: medium-math-space-formula
+  ---
+  duration_ms: 0.018416
+  ...
+# Subtest: v1 shared CSV fixture: ideographic-space-formula
+ok 145 - v1 shared CSV fixture: ideographic-space-formula
+  ---
+  duration_ms: 0.018292
+  ...
+# Subtest: v1 shared CSV fixture: bom-formula
+ok 146 - v1 shared CSV fixture: bom-formula
+  ---
+  duration_ms: 0.035959
+  ...
+# Subtest: answer feedback updates one run, preserves another run, and requires negative detail
+ok 147 - answer feedback updates one run, preserves another run, and requires negative detail
+  ---
+  duration_ms: 0.17625
+  ...
+# Subtest: safe exports preserve negative numeric values, protect formulas, and retain units and complete rows
+ok 148 - safe exports preserve negative numeric values, protect formulas, and retain units and complete rows
+  ---
+  duration_ms: 0.126417
+  ...
+# Subtest: CSV protects leading tabs and Python/ECMAScript whitespace without changing row data
+ok 149 - CSV protects leading tabs and Python/ECMAScript whitespace without changing row data
+  ---
+  duration_ms: 0.027667
+  ...
+# Subtest: investigation and evidence exports retain frozen scope, identity and synthetic authority labels
+ok 150 - investigation and evidence exports retain frozen scope, identity and synthetic authority labels
+  ---
+  duration_ms: 0.532625
+  ...
+# Subtest: dedicated support/admin routes restore and first-round local state migrates without losing drafts
+ok 151 - dedicated support/admin routes restore and first-round local state migrates without losing drafts
+  ---
+  duration_ms: 0.683209
+  ...
+# Subtest: catalogue totals and membership remain complete across pages and languages
+ok 152 - catalogue totals and membership remain complete across pages and languages
+  ---
+  duration_ms: 5.748125
+  ...
+# Subtest: unknown, unavailable, revoked and zero inventory outcomes are distinct
+ok 153 - unknown, unavailable, revoked and zero inventory outcomes are distinct
+  ---
+  duration_ms: 0.064041
+  ...
+# Subtest: browsing has no context side effect, adding context does not restrict scope
+ok 154 - browsing has no context side effect, adding context does not restrict scope
+  ---
+  duration_ms: 0.158708
+  ...
+# Subtest: each run freezes context and snapshot, so later context changes affect only future runs
+ok 155 - each run freezes context and snapshot, so later context changes affect only future runs
+  ---
+  duration_ms: 0.411166
+  ...
+# Subtest: drafts and transcripts stay separate, including while opening an evidence deep link
+ok 156 - drafts and transcripts stay separate, including while opening an evidence deep link
+  ---
+  duration_ms: 0.567792
+  ...
+# Subtest: completed and partial runs produce one retained answer, even after repeated ticks
+ok 157 - completed and partial runs produce one retained answer, even after repeated ticks
+  ---
+  duration_ms: 0.195917
+  ...
+# Subtest: cancellation terminates the simulation and a continuation keeps the original scope and a new draft
+ok 158 - cancellation terminates the simulation and a continuation keeps the original scope and a new draft
+  ---
+  duration_ms: 0.149167
+  ...
+# Subtest: clarification and interruption retain the question and never fabricate a result
+ok 159 - clarification and interruption retain the question and never fabricate a result
+  ---
+  duration_ms: 0.109542
+  ...
+# Subtest: refresh creates an independent branch, flags withdrawn context and preserves old evidence
+ok 160 - refresh creates an independent branch, flags withdrawn context and preserves old evidence
+  ---
+  duration_ms: 0.316459
+  ...
+# Subtest: approval binds the reviewed proposal version and code edits invalidate it
+ok 161 - approval binds the reviewed proposal version and code edits invalidate it
+  ---
+  duration_ms: 0.683208
+  ...
+# Subtest: empty scope cannot produce fabricated matching datasets
+ok 162 - empty scope cannot produce fabricated matching datasets
+  ---
+  duration_ms: 0.156292
+  ...
+# Subtest: malformed or stale local state fails safely and navigation preserves catalogue state
+ok 163 - malformed or stale local state fails safely and navigation preserves catalogue state
+  ---
+  duration_ms: 0.290291
+  ...
+1..163
+# tests 163
+# suites 0
+# pass 163
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 309.511542

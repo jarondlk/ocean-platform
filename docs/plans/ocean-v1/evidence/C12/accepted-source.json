@@ -1,0 +1,28 @@
+{
+  "files": {
+    ".github/workflows/tests.yml": "48d22798542ba06fb0e8d58e0a11884828b762ff2c0d8769196723f0cf407727",
+    "api/edna_service.py": "70064b8785952703d812f929794e9189e0d4c765239b9ced57ef004fa15c571f",
+    "frontend-v1/src/catalogue-contract.generated.ts": "663b0bd13f5c3a4a4e6441b102185ddffafff51be6ccc6750ed67e6ceab3ebe0",
+    "frontend-v1/src/catalogue-contract.ts": "5b1fe9accdc455bd5f298af20a97e0f300fcb4d69b362e92baf18782c49f02b1",
+    "frontend-v1/tests/catalogue-contract.test.ts": "1dc22dcb490b5f676d380cac37d9522903f0cc04c3e8feb9e3e653517b0dc816",
+    "ingestion/edna_catalogue_inputs.py": "3942dd82de8319d114bbeae39848aa1ca9b7565ae9af61b80d0352bee88d42a5",
+    "orchestration/frozen_edna_catalogue.py": "9adbfb504c968795db8df2971842b780e1af95ebff3fcda1b93703b68c4b2781",
+    "preprocessing/edna_catalogue_query.py": "daf18f05dd473c01569b3678e1092c21c94cb03ce2f5f7082292b06f7ccaef33",
+    "schema/context_catalogue.py": "548ad672277c286b97dfefcc209559363c44067211d02d6901752d21c20ad0a2",
+    "schema/context_catalogue.v1.schema.json": "152a2a213d7a3d1b0dc1628c665915e7b06f4c7a929f63383d001570a9303565",
+    "schema/context_catalogue_examples.json": "01185ab87710716e82fdb8ca7120e233256e2f4c585aba3860a5368a485399b1",
+    "schema/edna_catalogue.py": "f39b5f3db0a684622935e89415e436cbc6301ca7f72621ed450f84bf0a2b3786",
+    "schema/edna_catalogue.v1.schema.json": "7b130cb4d905f14ec83128e6b8670d9a43f78f624031793f9ca1dfe36f762727",
+    "schema/edna_catalogue_examples.json": "0e79aa297f1bb6ec31d11d16567abc24448ce25d0f17605821731ee01866ca78",
+    "schema/edna_catalogue_fixtures.py": "470f7af39d0740154b8eba032fdd18c5f422febaa6dfdb4a9c08a3d27309e921",
+    "scripts/export_edna_catalogue.py": "4e627d21dced08720d851d2ea2edfb69dcedc11b50db45385c90fcf52c5f5095",
+    "tests/integration/test_edna_catalogue_postgres.py": "49ba394defeee5d7edd9612203ddf60f1bd44c187747ea768eb04b8aa93db98d",
+    "tests/test_edna_catalogue_adversarial.py": "ce87772def539554ed7cc5285f99b37aaf1c48f56f2cc8a864ea81d0c6da9e9a",
+    "tests/test_edna_catalogue_contract.py": "c927d04d30c05e8d9731a0f4cca1858b30a67bfd8e41a8c61303ad58cb0f67ab",
+    "tests/test_edna_catalogue_inputs.py": "14ba15dac7032301595b4096d757397e0b8472b6ceff4bf17afb3b844040f111",
+    "tests/test_edna_catalogue_query.py": "505448cb4992a7ee3462a651b894cea70c6809715875ed480b458d51606d7ef1",
+    "tests/test_frozen_edna_catalogue.py": "bd1f720d4759219c6eff5dbbde0e55dbbf9b9a521314ef5a59125bedb2c65e57"
+  },
+  "source_sha256": "e26d32b6f1d58a7164b7137caa9984476cdf89086719db3ad7ce5a0de980e9e3",
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings"
+}

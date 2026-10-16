@@ -1,0 +1,606 @@
+...........................................FFFFFF...INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+F...................INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+..F.FFINFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+F..INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+.
+=================================== FAILURES ===================================
+__________ test_migrations_and_invite_acceptance_persist_app_metadata __________
+tests/integration/test_app_metadata_postgres.py:26: in test_migrations_and_invite_acceptance_persist_app_metadata
+    assert {
+E   AssertionError: assert False
+E    +  where False = <built-in method issubset of set object at 0x1210089e0>(set())
+E    +    where <built-in method issubset of set object at 0x1210089e0> = {'app_user', 'audit_event', 'chat_feedback', 'chat_interaction', 'classification_review', 'classification_review_event', ...}.issubset
+_________ test_mock_identity_is_database_backed_for_audited_mutations __________
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedTable: relation "app_user" does not exist
+E   LINE 2: FROM app_user
+E                ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_app_metadata_postgres.py:105: in test_mock_identity_is_database_backed_for_audited_mutations
+    current = resolve_identity(
+api/auth.py:307: in resolve_identity
+    return _mock_login_identity(
+api/auth.py:173: in _mock_login_identity
+    user = session.scalar(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2421: in scalar
+    return self._execute_internal(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2271: in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/context.py:306: in orm_execute_statement
+    result = conn.execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "app_user" does not exist
+E   LINE 2: FROM app_user
+E                ^
+E
+E   [SQL: SELECT app_user.id, app_user.auth_provider, app_user.auth_subject, app_user.email, app_user.display_name, app_user.role, app_user.account_type, app_user.status, app_user.invited_by_user_id, app_user.created_at, app_user.updated_at, app_user.last_login_at
+E   FROM app_user
+E   WHERE app_user.auth_provider = %(auth_provider_1)s AND app_user.auth_subject = %(auth_subject_1)s]
+E   [parameters: {'auth_provider_1': 'mock-credentials', 'auth_subject_1': 'mock-login:viewer'}]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+__________ test_classification_review_events_are_database_append_only __________
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedTable: relation "app_user" does not exist
+E   LINE 2:                     INSERT INTO app_user (
+E                                           ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_app_metadata_postgres.py:177: in test_classification_review_events_are_database_append_only
+    connection.execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "app_user" does not exist
+E   LINE 2:                     INSERT INTO app_user (
+E                                           ^
+E
+E   [SQL:
+E                       INSERT INTO app_user (
+E                           id, auth_provider, auth_subject, email, role,
+E                           account_type, status
+E                       ) VALUES (
+E                           %(user_id)s, 'oidc', %(subject)s, %(email)s, 'researcher',
+E                           'research', 'active'
+E                       )
+E                       ]
+E   [parameters: {'user_id': UUID('07efb117-ff88-44d1-a7fb-16f5f5c82bf3'), 'subject': 'append-only-07efb117-ff88-44d1-a7fb-16f5f5c82bf3', 'email': 'append-only-07efb117-ff88-44d1-a7fb-16f5f5c82bf3@example.org'}]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+____ test_application_receipts_are_append_only_and_running_review_is_unique ____
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2127: in _exec_insertmany_context
+    dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedTable: relation "app_user" does not exist
+E   LINE 1: INSERT INTO app_user (id, auth_provider, auth_subject, email...
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_classification_application_postgres.py:54: in test_application_receipts_are_append_only_and_running_review_is_unique
+    users = review_fixture._seed(factory, detection_prefixes=("2", "3"))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_classification_review_domain.py:123: in _seed
+    session.flush()
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4353: in flush
+    self._flush(objects)
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4488: in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:122: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4449: in _flush
+    flush_context.execute()
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:465: in execute
+    rec.execute(self)
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:641: in execute
+    util.preloaded.orm_persistence.save_obj(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:94: in save_obj
+    _emit_insert_statements(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:1144: in _emit_insert_statements
+    result = connection.execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1846: in _execute_context
+    return self._exec_insertmany_context(dialect, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2135: in _exec_insertmany_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2127: in _exec_insertmany_context
+    dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "app_user" does not exist
+E   LINE 1: INSERT INTO app_user (id, auth_provider, auth_subject, email...
+E                       ^
+E
+E   [SQL: INSERT INTO app_user (id, auth_provider, auth_subject, email, display_name, role, account_type, status, invited_by_user_id, last_login_at) VALUES (%(id__0)s::UUID, %(auth_provider__0)s, %(auth_subject__0)s, %(email__0)s, %(display_name__0)s, %(role__ ... 461 characters truncated ... id__2)s::UUID, %(last_login_at__2)s) RETURNING app_user.created_at, app_user.updated_at, app_user.id]
+E   [parameters: {'auth_provider__0': 'oidc', 'status__0': 'active', 'role__0': 'viewer', 'id__0': UUID('22253a60-efa6-47bd-be8e-ed6fc348dc39'), 'last_login_at__0': None, 'auth_subject__0': 'viewer-subject', 'invited_by_user_id__0': None, 'display_name__0': 'Viewer User', 'account_type__0': 'internal', 'email__0': 'viewer@example.org', 'auth_provider__1': 'oidc', 'status__1': 'active', 'role__1': 'researcher', 'id__1': UUID('e90390e0-26be-4c0d-b5e7-5d059c0f3c82'), 'last_login_at__1': None, 'auth_subject__1': 'researcher-subject', 'invited_by_user_id__1': None, 'display_name__1': 'Researcher User', 'account_type__1': 'research', 'email__1': 'researcher@example.org', 'auth_provider__2': 'oidc', 'status__2': 'active', 'role__2': 'admin', 'id__2': UUID('8ea7a47f-6cdf-4edb-93b3-ea1634fe67e4'), 'last_login_at__2': None, 'auth_subject__2': 'admin-subject', 'invited_by_user_id__2': None, 'display_name__2': 'Admin User', 'account_type__2': 'internal', 'email__2': 'admin@example.org'}]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_________ test_preview_uses_repeatable_read_and_keeps_canonical_state __________
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2127: in _exec_insertmany_context
+    dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedTable: relation "app_user" does not exist
+E   LINE 1: INSERT INTO app_user (id, auth_provider, auth_subject, email...
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_classification_preview_postgres.py:56: in test_preview_uses_repeatable_read_and_keeps_canonical_state
+    users = review_fixture._seed(factory, detection_prefixes=("0", "1"))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_classification_review_domain.py:123: in _seed
+    session.flush()
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4353: in flush
+    self._flush(objects)
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4488: in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:122: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4449: in _flush
+    flush_context.execute()
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:465: in execute
+    rec.execute(self)
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:641: in execute
+    util.preloaded.orm_persistence.save_obj(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:94: in save_obj
+    _emit_insert_statements(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:1144: in _emit_insert_statements
+    result = connection.execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1846: in _execute_context
+    return self._exec_insertmany_context(dialect, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2135: in _exec_insertmany_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2127: in _exec_insertmany_context
+    dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "app_user" does not exist
+E   LINE 1: INSERT INTO app_user (id, auth_provider, auth_subject, email...
+E                       ^
+E
+E   [SQL: INSERT INTO app_user (id, auth_provider, auth_subject, email, display_name, role, account_type, status, invited_by_user_id, last_login_at) VALUES (%(id__0)s::UUID, %(auth_provider__0)s, %(auth_subject__0)s, %(email__0)s, %(display_name__0)s, %(role__ ... 461 characters truncated ... id__2)s::UUID, %(last_login_at__2)s) RETURNING app_user.created_at, app_user.updated_at, app_user.id]
+E   [parameters: {'auth_provider__0': 'oidc', 'status__0': 'active', 'role__0': 'viewer', 'id__0': UUID('7434dc74-b1f8-4644-a0cd-0586abbba034'), 'last_login_at__0': None, 'auth_subject__0': 'viewer-subject', 'invited_by_user_id__0': None, 'display_name__0': 'Viewer User', 'account_type__0': 'internal', 'email__0': 'viewer@example.org', 'auth_provider__1': 'oidc', 'status__1': 'active', 'role__1': 'researcher', 'id__1': UUID('70feb7a9-4406-4cc2-b445-0b5ff37b27b7'), 'last_login_at__1': None, 'auth_subject__1': 'researcher-subject', 'invited_by_user_id__1': None, 'display_name__1': 'Researcher User', 'account_type__1': 'research', 'email__1': 'researcher@example.org', 'auth_provider__2': 'oidc', 'status__2': 'active', 'role__2': 'admin', 'id__2': UUID('3d8e7621-9d53-45ec-813a-1d8cb5ddb814'), 'last_login_at__2': None, 'auth_subject__2': 'admin-subject', 'invited_by_user_id__2': None, 'display_name__2': 'Admin User', 'account_type__2': 'internal', 'email__2': 'admin@example.org'}]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_________ test_rate_limit_counter_is_shared_between_limiter_instances __________
+tests/integration/test_operational_postgres.py:27: in test_rate_limit_counter_is_shared_between_limiter_instances
+    assert first_process.retry_after(
+E   AssertionError: assert 60 is None
+E    +  where 60 = retry_after(subject='fcdb432f-83c3-41f2-b261-446c0a07173e', policy=RateLimitPolicy(scope='pytest_2d28ad9666fe456a9ae223f190573916', limit=2, window_seconds=60))
+E    +    where retry_after = <api.rate_limit.PostgresRateLimiter object at 0x120e5d6a0>.retry_after
+
+During handling of the above exception, another exception occurred:
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedTable: relation "rate_limit_bucket" does not exist
+E   LINE 1: DELETE FROM rate_limit_bucket WHERE scope = 'pytest_2d28ad96...
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_operational_postgres.py:41: in test_rate_limit_counter_is_shared_between_limiter_instances
+    connection.execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "rate_limit_bucket" does not exist
+E   LINE 1: DELETE FROM rate_limit_bucket WHERE scope = 'pytest_2d28ad96...
+E                       ^
+E
+E   [SQL: DELETE FROM rate_limit_bucket WHERE scope = %(scope)s]
+E   [parameters: {'scope': 'pytest_2d28ad9666fe456a9ae223f190573916'}]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+------------------------------ Captured log call -------------------------------
+ERROR    api.rate_limit:rate_limit.py:177 Shared rate-limit storage failed for scope pytest_2d28ad9666fe456a9ae223f190573916; denying request
+Traceback (most recent call last):
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UndefinedTable: relation "rate_limit_bucket" does not exist
+LINE 2:             INSERT INTO rate_limit_bucket (
+                                ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/api/rate_limit.py", line 168, in retry_after
+    row = connection.execute(
+          ^^^^^^^^^^^^^^^^^^^
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "rate_limit_bucket" does not exist
+LINE 2:             INSERT INTO rate_limit_bucket (
+                                ^
+
+[SQL:
+            INSERT INTO rate_limit_bucket (
+                scope,
+                subject_hash,
+                window_started_at,
+                request_count,
+                updated_at
+            )
+            VALUES (
+                %(scope)s,
+                %(subject_hash)s,
+                CURRENT_TIMESTAMP,
+                1,
+                CURRENT_TIMESTAMP
+            )
+            ON CONFLICT (scope, subject_hash) DO UPDATE
+            SET
+                request_count = CASE
+                    WHEN rate_limit_bucket.window_started_at
+                         <= CURRENT_TIMESTAMP
+                            - (%(window_seconds)s * INTERVAL '1 second')
+                    THEN 1
+                    ELSE rate_limit_bucket.request_count + 1
+                END,
+                window_started_at = CASE
+                    WHEN rate_limit_bucket.window_started_at
+                         <= CURRENT_TIMESTAMP
+                            - (%(window_seconds)s * INTERVAL '1 second')
+                    THEN CURRENT_TIMESTAMP
+                    ELSE rate_limit_bucket.window_started_at
+                END,
+                updated_at = CURRENT_TIMESTAMP
+            RETURNING
+                request_count,
+                GREATEST(
+                    1,
+                    CEIL(
+                        EXTRACT(
+                            EPOCH FROM (
+                                window_started_at
+                                + (%(window_seconds)s * INTERVAL '1 second')
+                                - CURRENT_TIMESTAMP
+                            )
+                        )
+                    )::integer
+                ) AS retry_after
+            ]
+[parameters: {'scope': 'pytest_2d28ad9666fe456a9ae223f190573916', 'subject_hash': 'c9d00200f08eecfaac079375ab4f9d1c11870da9b21ebc53be1d4f3c7c58176f', 'window_seconds': 60}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+____ test_anemone_migration_downgrade_preserves_prior_schema_and_reupgrades ____
+.venv/lib/python3.12/site-packages/alembic/script/base.py:207: in _catch_revision_errors
+    yield
+.venv/lib/python3.12/site-packages/alembic/script/base.py:444: in _downgrade_revs
+    for script in revs
+                  ^^^^
+.venv/lib/python3.12/site-packages/alembic/script/revision.py:807: in iterate_revisions
+    revisions, heads = fn(
+.venv/lib/python3.12/site-packages/alembic/script/revision.py:1415: in _collect_downgrade_revisions
+    raise RangeNotAncestorError("Nothing to drop", upper)
+E   alembic.script.revision.RangeNotAncestorError: Revision Nothing to drop is not an ancestor of revision base
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_anemone_postgres.py:539: in test_anemone_migration_downgrade_preserves_prior_schema_and_reupgrades
+    command.downgrade(alembic_config, "20260825_0004")
+.venv/lib/python3.12/site-packages/alembic/command.py:534: in downgrade
+    script.run_env()
+.venv/lib/python3.12/site-packages/alembic/script/base.py:550: in run_env
+    util.load_python_file(self.dir, "env.py")
+.venv/lib/python3.12/site-packages/alembic/util/pyfiles.py:114: in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/alembic/util/pyfiles.py:132: in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap>:488: in _call_with_frames_removed
+    ???
+migrations/env.py:54: in <module>
+    run_migrations_online()
+migrations/env.py:48: in run_migrations_online
+    context.run_migrations()
+<string>:8: in run_migrations
+    ???
+.venv/lib/python3.12/site-packages/alembic/runtime/environment.py:970: in run_migrations
+    self.get_context().run_migrations(**kw)
+.venv/lib/python3.12/site-packages/alembic/runtime/migration.py:604: in run_migrations
+    for step in self._migrations_fn(heads, self):
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/alembic/command.py:523: in downgrade
+    return script._downgrade_revs(revision, rev)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/alembic/script/base.py:432: in _downgrade_revs
+    with self._catch_revision_errors(
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:158: in __exit__
+    self.gen.throw(value)
+.venv/lib/python3.12/site-packages/alembic/script/base.py:219: in _catch_revision_errors
+    raise util.CommandError(ancestor) from rna
+E   alembic.util.exc.CommandError: Destination 20260825_0004 is not a valid downgrade target from current head(s)
+______________ test_pr5_import_rollback_and_replay_are_edna_only _______________
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedTable: relation "app_user" does not exist
+E   LINE 1: SELECT count(*) FROM app_user
+E                                ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_edna_analysis_postgres.py:119: in test_pr5_import_rollback_and_replay_are_edna_only
+    before = counts()
+             ^^^^^^^^
+tests/integration/test_edna_analysis_postgres.py:117: in counts
+    return (connection.execute(text('SELECT count(*) FROM app_user')).scalar(),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "app_user" does not exist
+E   LINE 1: SELECT count(*) FROM app_user
+E                                ^
+E
+E   [SQL: SELECT count(*) FROM app_user]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_____________ test_migrated_history_retains_new_abstention_reasons _____________
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedTable: relation "alembic_version" does not exist
+E   LINE 1: SELECT version_num FROM alembic_version
+E                                   ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_chat_source_scope_postgres.py:97: in test_migrated_history_retains_new_abstention_reasons
+    assert connection.execute(text('SELECT version_num FROM alembic_version')).scalar_one() == ScriptDirectory.from_config(Config('alembic.ini')).get_current_head()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "alembic_version" does not exist
+E   LINE 1: SELECT version_num FROM alembic_version
+E                                   ^
+E
+E   [SQL: SELECT version_num FROM alembic_version]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ test_chat_lifecycle_independent_readback_retains_scope_effective_settings_and_evidence _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedTable: relation "app_user" does not exist
+E   LINE 1: INSERT INTO app_user (id, auth_provider, auth_subject, email...
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_chat_source_scope_postgres.py:135: in test_chat_lifecycle_independent_readback_retains_scope_effective_settings_and_evidence
+    session.flush()
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4353: in flush
+    self._flush(objects)
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4488: in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:122: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4449: in _flush
+    flush_context.execute()
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:465: in execute
+    rec.execute(self)
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:641: in execute
+    util.preloaded.orm_persistence.save_obj(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:94: in save_obj
+    _emit_insert_statements(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:1234: in _emit_insert_statements
+    result = connection.execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "app_user" does not exist
+E   LINE 1: INSERT INTO app_user (id, auth_provider, auth_subject, email...
+E                       ^
+E
+E   [SQL: INSERT INTO app_user (id, auth_provider, auth_subject, email, display_name, role, account_type, status, invited_by_user_id, last_login_at) VALUES (%(id)s::UUID, %(auth_provider)s, %(auth_subject)s, %(email)s, %(display_name)s, %(role)s, %(account_type)s, %(status)s, %(invited_by_user_id)s::UUID, %(last_login_at)s) RETURNING app_user.created_at, app_user.updated_at]
+E   [parameters: {'id': UUID('1bab8da3-4108-47b6-8e51-ee925203782e'), 'auth_provider': 'test', 'auth_subject': '94809fbd8a0f4344a345d65d8c166c7f', 'email': 'd518afc4b8034db388e9fab80e9e96c7@test.invalid', 'display_name': None, 'role': 'researcher', 'account_type': 'research', 'status': 'active', 'invited_by_user_id': None, 'last_login_at': None}]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+_ test_coverage_reason_migration_preserves_legacy_rows_and_blocks_destructive_downgrade _
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedTable: relation "app_user" does not exist
+E   LINE 1: INSERT INTO app_user (id, auth_provider, auth_subject, email...
+E                       ^
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_chat_source_scope_postgres.py:199: in test_coverage_reason_migration_preserves_legacy_rows_and_blocks_destructive_downgrade
+    session.flush()
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4353: in flush
+    self._flush(objects)
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4488: in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:122: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4449: in _flush
+    flush_context.execute()
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:465: in execute
+    rec.execute(self)
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:641: in execute
+    util.preloaded.orm_persistence.save_obj(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:94: in save_obj
+    _emit_insert_statements(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:1234: in _emit_insert_statements
+    result = connection.execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "app_user" does not exist
+E   LINE 1: INSERT INTO app_user (id, auth_provider, auth_subject, email...
+E                       ^
+E
+E   [SQL: INSERT INTO app_user (id, auth_provider, auth_subject, email, display_name, role, account_type, status, invited_by_user_id, last_login_at) VALUES (%(id)s::UUID, %(auth_provider)s, %(auth_subject)s, %(email)s, %(display_name)s, %(role)s, %(account_type)s, %(status)s, %(invited_by_user_id)s::UUID, %(last_login_at)s) RETURNING app_user.created_at, app_user.updated_at]
+E   [parameters: {'id': UUID('1a039451-43ea-48d1-a86b-e82fcfd8a0a5'), 'auth_provider': 'test', 'auth_subject': '4150eaa58f69466ab0e5e860ba505a16', 'email': 'a6ff1d4a60564360b3526d408e8c662f@test.invalid', 'display_name': None, 'role': 'researcher', 'account_type': 'research', 'status': 'active', 'invited_by_user_id': None, 'last_login_at': None}]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+------------------------------ Captured log call -------------------------------
+INFO     alembic.runtime.migration:migration.py:205 Context impl PostgresqlImpl.
+INFO     alembic.runtime.migration:migration.py:208 Will assume transactional DDL.
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/integration/test_anemone_postgres.py::test_anemone_migration_downgrade_preserves_prior_schema_and_reupgrades
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/alembic/config.py:604: DeprecationWarning: No path_separator found in configuration; falling back to legacy splitting on spaces, commas, and colons for prepend_sys_path.  Consider adding path_separator=os to Alembic config.
+    util.warn_deprecated(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/integration/test_app_metadata_postgres.py::test_migrations_and_invite_acceptance_persist_app_metadata
+FAILED tests/integration/test_app_metadata_postgres.py::test_mock_identity_is_database_backed_for_audited_mutations
+FAILED tests/integration/test_app_metadata_postgres.py::test_classification_review_events_are_database_append_only
+FAILED tests/integration/test_classification_application_postgres.py::test_application_receipts_are_append_only_and_running_review_is_unique
+FAILED tests/integration/test_classification_preview_postgres.py::test_preview_uses_repeatable_read_and_keeps_canonical_state
+FAILED tests/integration/test_operational_postgres.py::test_rate_limit_counter_is_shared_between_limiter_instances
+FAILED tests/integration/test_anemone_postgres.py::test_anemone_migration_downgrade_preserves_prior_schema_and_reupgrades
+FAILED tests/integration/test_edna_analysis_postgres.py::test_pr5_import_rollback_and_replay_are_edna_only
+FAILED tests/integration/test_chat_source_scope_postgres.py::test_migrated_history_retains_new_abstention_reasons
+FAILED tests/integration/test_chat_source_scope_postgres.py::test_chat_lifecycle_independent_readback_retains_scope_effective_settings_and_evidence
+FAILED tests/integration/test_chat_source_scope_postgres.py::test_coverage_reason_migration_preserves_legacy_rows_and_blocks_destructive_downgrade
+11 failed, 71 passed, 2 warnings in 24.83s

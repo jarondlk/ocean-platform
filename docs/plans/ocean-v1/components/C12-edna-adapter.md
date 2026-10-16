@@ -1,6 +1,6 @@
 # C12 — eDNA adapter
 
-**Status:** Not started. **Prerequisites:** C01, C09.
+**Status:** Complete locally; exact-source delivery pending. **Prerequisites:** C01, C09.
 
 ## Revised delivery boundary
 
@@ -45,8 +45,18 @@ prerequisite and 83 additional eDNA semantic tests pass; seven generated checks
 are current. C01/C09 accepted sources reconcile. Read the
 [readiness audit](../C12_READINESS_AUDIT_2026-10-15.md) for raw/eligible cohort,
 four raw versus two scientific methods, denominator and retrieval-independence
-constraints. This is readiness evidence only; C12 remains Not started/unselected.
+constraints. The user explicitly selected C12 implementation; see [the handoff](../handoffs/C12.md).
 
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c12). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+## Local acceptance — 2026-10-16 JST
+
+C12 implements source-owned frozen canonical eDNA contracts, shared SQL/frozen
+predicates and qualified raw/eligible catalogue operations. Required tests 1,646,
+full backend 3,220/127 gated skips/84.11% coverage and 82 actual PostgreSQL cases pass.
+The affected v1 browser 163 tests/typecheck/build/audit and eight generated checks pass.
+Read [the handoff](../handoffs/C12.md), [contract](../C12_EDNA_ADAPTER_CONTRACT.md)
+and [local receipt](../evidence/C12/verification.json) for exact evidence and limits.
+Source commit/push and exact-source hosted acceptance remain pending.

@@ -1,0 +1,165 @@
+{
+  "unrelated_files": {
+    "unchanged_count": 30,
+    "intentional_supersessions": {},
+    "unexpected_changes": []
+  },
+  "scientific_artifacts": {
+    "unchanged_count": 7,
+    "intentional_supersessions": {},
+    "unexpected_changes": []
+  },
+  "serving_files": {
+    "unchanged_count": 2,
+    "intentional_supersessions": {},
+    "unexpected_changes": []
+  },
+  "P00_current_files": {
+    "unchanged_count": 36,
+    "intentional_supersessions": {},
+    "unexpected_changes": []
+  },
+  "C08_accepted_files": {
+    "unchanged_count": 6,
+    "intentional_supersessions": {
+      "frontend-v1/src/catalogue-contract.generated.ts": {
+        "previous": "59f8bd5727d02f83704fa44175cace4ddda018e8e40af00e4ca7081fa90a16ca",
+        "C12": "663b0bd13f5c3a4a4e6441b102185ddffafff51be6ccc6750ed67e6ceab3ebe0"
+      },
+      "frontend-v1/src/catalogue-contract.ts": {
+        "previous": "c9a2d2b8d1f35280cabaa7c399f7af7baaa084cad0e52ddd3304682997ba14d5",
+        "C12": "5b1fe9accdc455bd5f298af20a97e0f300fcb4d69b362e92baf18782c49f02b1"
+      },
+      "frontend-v1/tests/catalogue-contract.test.ts": {
+        "previous": "b16592062e880ae7565f73d15b87f5e47ff66a02658d1190c2051740c8874c9b",
+        "C12": "1dc22dcb490b5f676d380cac37d9522903f0cc04c3e8feb9e3e653517b0dc816"
+      },
+      "schema/context_catalogue.py": {
+        "previous": "c757fa2f91c3e44c5832290faaf9fa01d7501c33348747fc281fd92e7dd13dd0",
+        "C12": "548ad672277c286b97dfefcc209559363c44067211d02d6901752d21c20ad0a2"
+      },
+      "schema/context_catalogue.v1.schema.json": {
+        "previous": "385d3cb7e8a7e5f5c36fc8f177c0b9c540d3e249496b7b6d869ec7d36785b972",
+        "C12": "152a2a213d7a3d1b0dc1628c665915e7b06f4c7a929f63383d001570a9303565"
+      },
+      "schema/context_catalogue_examples.json": {
+        "previous": "258cd0d3c7622d703a29c9840b05e0d418cbd6fee614c1fc9eb4bef12d3d6ed3",
+        "C12": "01185ab87710716e82fdb8ca7120e233256e2f4c585aba3860a5368a485399b1"
+      }
+    },
+    "unexpected_changes": []
+  },
+  "C09_accepted_files": {
+    "unchanged_count": 13,
+    "intentional_supersessions": {
+      ".github/workflows/tests.yml": {
+        "previous": "f1d30649d2c099512c4fe3b44a1893d7d8f73cd012ed35f9d82c408f865e23aa",
+        "C12": "48d22798542ba06fb0e8d58e0a11884828b762ff2c0d8769196723f0cf407727"
+      }
+    },
+    "unexpected_changes": []
+  },
+  "C10_accepted_files": {
+    "unchanged_count": 10,
+    "intentional_supersessions": {},
+    "unexpected_changes": []
+  },
+  "C11_accepted_files": {
+    "unchanged_count": 10,
+    "intentional_supersessions": {},
+    "unexpected_changes": []
+  },
+  "eDNA_reference_files": {
+    "unchanged_count": 13,
+    "intentional_supersessions": {
+      "api/edna_service.py": {
+        "previous": "2484c6e37659bd7c5612d9195214ae0ce70ef406a280a3bc20335f94cbe1adfd",
+        "C12": "70064b8785952703d812f929794e9189e0d4c765239b9ced57ef004fa15c571f"
+      }
+    },
+    "unexpected_changes": []
+  },
+  "prior_evidence_files": {
+    "unchanged_count": 363,
+    "intentional_supersessions": {},
+    "unexpected_changes": []
+  },
+  "C01_current_source": {
+    "unchanged_count": 10,
+    "original_matches": 5,
+    "accepted_previous_supersessions": 5,
+    "authoritative_receipts_unchanged": true,
+    "files": {
+      "api/main.py": {
+        "current_sha256": "42e0f2a45fb93efb8cd6a7037cd1278e97c43ba0268af71ed2b520a6d6191a5e",
+        "original_sha256": "be6f1540fdab041f82fdf138d66956b19d3a87c30f89fa4adc11a9aed7459c89",
+        "original_match": false,
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C07/verification.json",
+        "accepted_receipt_sha256": "99b78a6cefac34b9dc98fc67d9b6fc8a572355ca04fb84644a6ba14341fadc69"
+      },
+      "orchestration/auto_published_settings.py": {
+        "current_sha256": "c8269e5d1471929a240bce8ddd1d3f8bf674450fd79bd88bc489af0e60eb911f",
+        "original_sha256": "c8269e5d1471929a240bce8ddd1d3f8bf674450fd79bd88bc489af0e60eb911f",
+        "original_match": true,
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C01/verification.json",
+        "accepted_receipt_sha256": "c50ec89fc9c696573cb568c7b90221a3891113e7e711ff258fe50b921194f109"
+      },
+      "orchestration/publication_scope.py": {
+        "current_sha256": "af31d203fb2e766a2e43049c1e0ea2d9235e3f43604efdd993e95796fc3e273e",
+        "original_sha256": "59b7db818cbdac051b6d96d1bb7ab53dc807679dc1f89c3c21676c4b889a210c",
+        "original_match": false,
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json",
+        "accepted_receipt_sha256": "88dfc7825558695d23a7a586386da80ca23ceb9dbdd0a3c003628c4e08dd1bb6"
+      },
+      "orchestration/research_intents.py": {
+        "current_sha256": "eb265c1247148b4c4494199eb0d7941288db836d496326c5701747b8128ce15f",
+        "original_sha256": "eb265c1247148b4c4494199eb0d7941288db836d496326c5701747b8128ce15f",
+        "original_match": true,
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C01/verification.json",
+        "accepted_receipt_sha256": "c50ec89fc9c696573cb568c7b90221a3891113e7e711ff258fe50b921194f109"
+      },
+      "orchestration/research_question.py": {
+        "current_sha256": "a93e3f2b5f3fddb637b9176aedb0abffb08e49d0700238c5679e20ef561bbb81",
+        "original_sha256": "a93e3f2b5f3fddb637b9176aedb0abffb08e49d0700238c5679e20ef561bbb81",
+        "original_match": true,
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C01/verification.json",
+        "accepted_receipt_sha256": "c50ec89fc9c696573cb568c7b90221a3891113e7e711ff258fe50b921194f109"
+      },
+      "orchestration/settings_planner.py": {
+        "current_sha256": "0a7f6fbacfc73cb9b30330f2b9d0187f72f139fa016bff6e1ec6e5b746a634b8",
+        "original_sha256": "12f8231dd51166c631b12388d4e9a33ed8c5e043fabd273509bcc5a4d63dbe3a",
+        "original_match": false,
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+        "accepted_receipt_sha256": "02f25ec13e6076feb5f95a5ce25c1258dd738af8716e9896d8311a7b1ff2e489"
+      },
+      "orchestration/statistics_catalog.py": {
+        "current_sha256": "004a3055a4d8daaf49463a81207b5aa9d3ca6482066cfc6ede0efb757520a22c",
+        "original_sha256": "004a3055a4d8daaf49463a81207b5aa9d3ca6482066cfc6ede0efb757520a22c",
+        "original_match": true,
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C01/verification.json",
+        "accepted_receipt_sha256": "c50ec89fc9c696573cb568c7b90221a3891113e7e711ff258fe50b921194f109"
+      },
+      "tests/test_auto_settings.py": {
+        "current_sha256": "6c95011f8f16c5badf71a54dd1a4d73f32f1191bbf0c6bdc422cdd50cf73c6fa",
+        "original_sha256": "6395109f9cf1736e5294e3464e8c6f5720a800802bddc798ab444c915eeaa86b",
+        "original_match": false,
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+        "accepted_receipt_sha256": "02f25ec13e6076feb5f95a5ce25c1258dd738af8716e9896d8311a7b1ff2e489"
+      },
+      "tests/test_conference_demo.py": {
+        "current_sha256": "60035ab60e1becfde6c195cd7e2dbefb32d730cc4e9b137bc6b6508dc1e7bec9",
+        "original_sha256": "60035ab60e1becfde6c195cd7e2dbefb32d730cc4e9b137bc6b6508dc1e7bec9",
+        "original_match": true,
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C01/verification.json",
+        "accepted_receipt_sha256": "c50ec89fc9c696573cb568c7b90221a3891113e7e711ff258fe50b921194f109"
+      },
+      "tests/test_publication_scope_contract.py": {
+        "current_sha256": "de97584b85d177667ec6afe0522bf4e560c4c0af7745934ca95e07d087b8fb1e",
+        "original_sha256": "7b48257093f7383948b1112e64dcd3b0a687d2b9ce63f58373bdaa30f7aad713",
+        "original_match": false,
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json",
+        "accepted_receipt_sha256": "88dfc7825558695d23a7a586386da80ca23ceb9dbdd0a3c003628c4e08dd1bb6"
+      }
+    }
+  }
+}

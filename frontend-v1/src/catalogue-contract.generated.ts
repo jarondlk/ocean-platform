@@ -69,13 +69,14 @@ export type CatalogueNode = {
 };
 
 export type EDNADescriptor = {
-  "assignment_method": "qcauto_target" | "qcauto_95pct_3nn_target";
+  "assignment_method": "qcauto_target" | "qcauto_95pct_3nn_target" | "qcauto_nontarget" | "qcauto_95pct_3nn_nontarget" | "mixed" | "unknown";
   "family": "edna_metabarcoding";
   "is_control": (boolean | null);
   "measurement": string;
+  "population"?: "scientific" | "raw_inventory";
   "protocol": string;
   "protocol_id": string;
-  "sample_kind": "environmental" | "negative_control" | "positive_control" | "mock_community" | "unknown";
+  "sample_kind": "environmental" | "negative_control" | "positive_control" | "mock_community" | "unknown" | "mixed";
   "unit": string;
 };
 
@@ -906,7 +907,11 @@ export const catalogueContractSchema = {
         "assignment_method": {
           "enum": [
             "qcauto_target",
-            "qcauto_95pct_3nn_target"
+            "qcauto_95pct_3nn_target",
+            "qcauto_nontarget",
+            "qcauto_95pct_3nn_nontarget",
+            "mixed",
+            "unknown"
           ],
           "title": "Assignment Method",
           "type": "string"
@@ -934,6 +939,15 @@ export const catalogueContractSchema = {
           "title": "Measurement",
           "type": "string"
         },
+        "population": {
+          "default": "scientific",
+          "enum": [
+            "scientific",
+            "raw_inventory"
+          ],
+          "title": "Population",
+          "type": "string"
+        },
         "protocol": {
           "maxLength": 4000,
           "minLength": 1,
@@ -954,7 +968,8 @@ export const catalogueContractSchema = {
             "negative_control",
             "positive_control",
             "mock_community",
-            "unknown"
+            "unknown",
+            "mixed"
           ],
           "title": "Sample Kind",
           "type": "string"

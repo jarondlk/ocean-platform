@@ -235,6 +235,10 @@ async function modelSemantics(name: string, raw: unknown, path: string): Promise
   }
   if (name === "EDNADescriptor") {
     const value = raw as EDNADescriptor;
+    if ((value.population ?? "scientific") === "scientific"
+      && (!["qcauto_target", "qcauto_95pct_3nn_target"].includes(value.assignment_method) || value.sample_kind === "mixed")) fail(path, "scientific descriptors require a supported target method and one sample kind");
+    if (value.sample_kind === "mixed" && value.is_control !== null) fail(path, "mixed inventory cannot declare one control status");
+    if (value.population === "raw_inventory" && value.sample_kind === "unknown" && value.is_control !== null) fail(path, "unknown raw classification requires unknown control status");
     if ((value.sample_kind === "environmental" && value.is_control !== false)
       || (["negative_control", "positive_control", "mock_community"].includes(value.sample_kind) && value.is_control !== true)) fail(path, "sample kind requires explicit control status");
   }

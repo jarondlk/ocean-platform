@@ -2,7 +2,7 @@
 
 Recorded 2026-10-12 JST from the originating planning conversation. This file
 records choices, not proof of implementation. P00 is selected for local
-implementation and accepted; C01–C07 local acceptance is Complete. C08 local acceptance is Complete; C09 is Complete locally; C10 is Complete locally; C11–C27 remain Not started.
+implementation and accepted; C01–C07 local acceptance is Complete. C08 local acceptance is Complete; C09 is Complete locally; C10 is Complete locally; C11 is Complete locally; C12 is Complete locally; C13–C27 remain Not started.
 Later explicit user instructions override this baseline; record changes here
 and identify affected components instead of silently drifting.
 
@@ -440,3 +440,25 @@ idempotent upsert and isolated backup/restore. Ten accepted C11 source/test/
 generated files, original local receipts and all prior preservation sets are
 unchanged. See evidence/C11/delivery.json. C12, actual source copies/publication,
 provider services and GCP deployment remain unselected.
+
+### C12 selection — 2026-10-16 JST
+
+The user selected C12 with subagents as useful after readiness checkpoint e781845.
+Work covers frozen canonical eDNA metadata/Parquet, current access, shared SQL
+filter semantics, explicit raw/eligible populations and method-separated operations.
+Minimal C08 raw-inventory descriptor and actual C12 PostgreSQL CI additions
+intentionally supersede selected accepted source paths; original receipts stay immutable.
+C13, acquisition, classification/review/publication changes, physical identity inference,
+service/UI integration and GCP deployment remain outside this selection.
+
+### C12 accepted local boundaries — 2026-10-16 JST
+
+C12 passes frozen canonical eDNA contracts, relational ownership/lineage/bounds,
+shared SQL/frozen filters, raw versus eligible populations and method/protocol
+separated counts, coverage and frequency. Required 1,646, backend 3,220/127 skips
+at 84.11% coverage, 82 actual PostgreSQL and 163 v1 tests/typecheck/build/audit pass.
+Six C08 compatibility files, the C09 workflow list and eDNA SQL predicate wrappers
+are intentional accepted-source supersessions; original receipts are unchanged.
+Local acceptance does not acquire/copy data, change review/publication/identity,
+add service/UI integration or deploy. Source delivery/hosted acceptance are pending;
+C13 remains unselected. See handoffs/C12.md and C12_EDNA_ADAPTER_CONTRACT.md.
