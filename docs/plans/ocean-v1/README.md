@@ -171,4 +171,4 @@ C12 local acceptance is complete: 1,646 required tests, full backend 3,220/127
 PostgreSQL skips at 84.11% coverage, 82 actual PostgreSQL cases and 163 v1 browser tests
 plus typecheck/build/audit. Read [handoff](handoffs/C12.md),
 [contract](C12_EDNA_ADAPTER_CONTRACT.md) and [receipt](evidence/C12/verification.json).
-Source delivery and exact-source hosted CI remain pending; C13 is not selected.
+Source `d3ef699` is committed/pushed with [passing exact-source CI](https://github.com/jarondlk/ocean-platform/actions/runs/38845253029): 3,211 backend/84.85% coverage, 127 actual PostgreSQL cases and both frontend gates. [Delivery receipt](evidence/C12/delivery.json). C13 is not selected.

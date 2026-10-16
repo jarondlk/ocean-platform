@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-10-15 JST. **P00 and C01–C12 are Complete locally.**
+Updated: 2026-10-16 JST. **P00 and C01–C12 are Complete locally.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -13,7 +13,7 @@ P00 and C01–C12 local work is authorized.
 See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md), [C08](handoffs/C08.md), [C09](handoffs/C09.md) and [C10](handoffs/C10.md) handoffs for current evidence.
 
-Latest completed implementation: **C12 — eDNA adapter**. Local acceptance: **1,646 required; 3,220 backend/127 gated PostgreSQL skips/84.11% coverage; 82 actual PostgreSQL; 163 v1 tests and eight generated checks**. Read [handoff](handoffs/C12.md), [contract](C12_EDNA_ADAPTER_CONTRACT.md) and [receipt](evidence/C12/verification.json). Source delivery and exact-source hosted CI pending.
+Latest completed implementation: **C12 — eDNA adapter**. Local acceptance: **1,646 required; 3,220 backend/127 gated PostgreSQL skips/84.11% coverage; 82 actual PostgreSQL; 163 v1 tests and eight generated checks**. Read [handoff](handoffs/C12.md), [contract](C12_EDNA_ADAPTER_CONTRACT.md) and [receipt](evidence/C12/verification.json). Source `d3ef699` is committed/pushed with [passing exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38845253029): **3,211 backend/84.85% coverage, 127 actual PostgreSQL cases, 163 v1/132 legacy frontend tests and both typechecks/builds/audits**. [Delivery receipt](evidence/C12/delivery.json).
 
 C11 — SST adapter. Local acceptance is complete: 966 required tests; full backend 2,829 passed/84 gated PostgreSQL skips, 83.29% coverage. Read [the handoff](handoffs/C11.md), [contract](C11_SST_ADAPTER_CONTRACT.md) and [receipt](evidence/C11/verification.json). Source `41cd876` is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38744193298) passes: 2,820 backend tests/84.04% coverage, 84 actual PostgreSQL cases and both frontend gates. [Delivery receipt](evidence/C11/delivery.json).
 

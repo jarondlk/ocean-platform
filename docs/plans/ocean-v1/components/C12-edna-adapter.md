@@ -1,6 +1,6 @@
 # C12 — eDNA adapter
 
-**Status:** Complete locally; exact-source delivery pending. **Prerequisites:** C01, C09.
+**Status:** Complete; source committed/pushed with passing hosted CI. **Prerequisites:** C01, C09.
 
 ## Revised delivery boundary
 
@@ -59,4 +59,4 @@ full backend 3,220/127 gated skips/84.11% coverage and 82 actual PostgreSQL case
 The affected v1 browser 163 tests/typecheck/build/audit and eight generated checks pass.
 Read [the handoff](../handoffs/C12.md), [contract](../C12_EDNA_ADAPTER_CONTRACT.md)
 and [local receipt](../evidence/C12/verification.json) for exact evidence and limits.
-Source commit/push and exact-source hosted acceptance remain pending.
+Source `d3ef699` is committed/pushed with [passing exact-source CI](https://github.com/jarondlk/ocean-platform/actions/runs/38845253029): 3,211 backend tests/84.85% coverage, 127 actual PostgreSQL cases and both frontend gates. [Delivery receipt](../evidence/C12/delivery.json).

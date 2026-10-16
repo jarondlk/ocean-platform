@@ -462,3 +462,13 @@ are intentional accepted-source supersessions; original receipts are unchanged.
 Local acceptance does not acquire/copy data, change review/publication/identity,
 add service/UI integration or deploy. Source delivery/hosted acceptance are pending;
 C13 remains unselected. See handoffs/C12.md and C12_EDNA_ADAPTER_CONTRACT.md.
+
+### C12 delivery — 2026-10-16 JST
+
+Source `d3ef699` is pushed to overhaul with exact-source hosted CI passing:
+3,211 backend tests/84.85% coverage, 127 actual PostgreSQL cases, 163 v1 and 132
+legacy frontend tests plus both typechecks/builds/production audits. The second
+corpus upsert changes no rows and isolated backup/restore passes. All 22 accepted
+source paths and the original local receipt remain unchanged. The delivery receipt
+binds source and job/log hashes. C13, real acquisition/copying/review/publication,
+service/UI integration and GCP deployment remain outside this completed checkpoint.
