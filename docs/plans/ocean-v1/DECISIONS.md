@@ -2,7 +2,7 @@
 
 Recorded 2026-10-12 JST from the originating planning conversation. This file
 records choices, not proof of implementation. P00 is selected for local
-implementation and accepted; C01–C07 local acceptance is Complete. C08 local acceptance is Complete; C09 is Complete locally; C10 is Complete locally; C11 is Complete locally; C12 is Complete locally; C13–C27 remain Not started.
+implementation and accepted; C01–C07 local acceptance is Complete. C08 local acceptance is Complete; C09 is Complete locally; C10 is Complete locally; C11 is Complete locally; C12 is Complete locally; C13 is Complete locally; C14 is Complete locally; C15–C27 remain Not started.
 Later explicit user instructions override this baseline; record changes here
 and identify affected components instead of silently drifting.
 
@@ -520,3 +520,23 @@ vulnerabilities). The original and final amendment receipts remain immutable;
 all 17 final source paths and preservation sets reconcile. Separate delivery
 evidence records this result. C14 readiness may now complete before automatic
 implementation under the user's sequential authorization.
+
+### C14 readiness and automatic selection — 2026-10-16 JST
+
+C13 final delivery checkpoint b0cac5e clears the final prerequisite. C14 local
+readiness passes 126 tests, all nine generated checks and 89 prerequisite source
+entries. The separate ready-confirmation receipt preserves the earlier pending
+audit. C14 is selected under the user's automatic sequential continuation request.
+Implement one server-authorized service with strict public models, exhaustive
+logical path search before paging, current membership-sensitive revisions and
+seven shared routes/tools. New exposure is default-off; no legacy configured
+cache discovery or synthetic runtime fallback. Local synthetic work only.
+
+### C14 local acceptance and limit recovery — 2026-10-16 JST
+
+C14 passes 2,367 required tests and full backend 3,799/127 gated skips/84.75%
+coverage, 274 new cases and nine generated checks. The 100,000-object oracle
+traverses 200 actual service pages with fresh resolution on every page; actual
+C10–C13 operations, details, revocation and dependency pins pass. Scheduled resume
+after usage interruption verified hashes and reused the completed backend result.
+Source checkpoint and exact-source hosted delivery precede automatic C15 selection.

@@ -440,6 +440,14 @@ def route_permission(method: str, path: str) -> Optional[str]:
     ``None`` means no authorization policy matched and is denied by default.
     """
     method = method.upper()
+    if path.startswith("/catalogue"):
+        if method == "POST" and path in {
+            "/catalogue/overview", "/catalogue/list", "/catalogue/open",
+            "/catalogue/coverage", "/catalogue/query", "/catalogue/relationships",
+            "/catalogue/analysis/get-published",
+        }:
+            return "data:read"
+        return None
     if path == "/me":
         return "profile:read"
     if path == "/overview/coverage" and method == "GET":
@@ -559,9 +567,16 @@ async def authorization_middleware(
         return response
     except AuthenticationFailure as exc:
         headers = {"WWW-Authenticate": "Bearer"} if exc.status_code == 401 else {}
+        content = {"detail": exc.detail}
+        if request.url.path.startswith("/catalogue"):
+            code, message = {
+                401: ("authentication_required", "Authentication is required"),
+                403: ("access_denied", "Catalogue access is denied"),
+            }.get(exc.status_code, ("catalogue_unavailable", "Catalogue is unavailable"))
+            content = {"error": {"code": code, "message": message}}
         return JSONResponse(
             status_code=exc.status_code,
-            content={"detail": exc.detail},
+            content=content,
             headers={
                 **headers,
                 "Cache-Control": "no-store",

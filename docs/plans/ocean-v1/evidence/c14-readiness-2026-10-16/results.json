@@ -1,0 +1,137 @@
+{
+  "checks": [
+    {
+      "name": "baseline",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_catalogue_cache.py",
+        "tests/test_api_security.py",
+        "tests/test_api_schemas.py",
+        "tests/test_auth.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "93 passed, 1 warning in 1.03s"
+    },
+    {
+      "name": "C08-scale-oracle",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_context_catalogue_fixtures.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "33 passed in 7.90s"
+    },
+    {
+      "name": "scope",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_chat_scope.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "No output; exit recorded above"
+    },
+    {
+      "name": "schema",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_context_catalogue.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "Context catalogue schema is current"
+    },
+    {
+      "name": "browser-types",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_types.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "Catalogue browser contract is current."
+    },
+    {
+      "name": "examples",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_examples.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C08 shared examples are current"
+    },
+    {
+      "name": "snapshots",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_snapshot.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C09 snapshot schema and synthetic byte examples are current"
+    },
+    {
+      "name": "adapters",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_adapter.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C10 frozen adapter schema and logical examples are current"
+    },
+    {
+      "name": "sst",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_sst_catalogue.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C11 frozen SST schema and logical examples are current"
+    },
+    {
+      "name": "edna",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_edna_catalogue.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C12 frozen eDNA schema and logical examples are current"
+    },
+    {
+      "name": "scientific",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_scientific_catalogue.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "C13 frozen scientific index schema and logical examples are current"
+    }
+  ],
+  "safe_environment": {
+    "AUTH_MODE": "disabled",
+    "DEPLOYMENT_ENV": "test",
+    "ENABLE_MOCK_LOGIN": "false",
+    "PERSIST_LOCAL_CHAT": "false",
+    "RUN_POSTGRES_INTEGRATION": "0",
+    "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c14_readiness_unused",
+    "MODEL_PROVIDER": "ollama",
+    "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+  },
+  "persistent_service_startups": 0,
+  "C14_implementation_started_by_preparation": false,
+  "C13_final_hosted_CI_and_delivery_gate": "Pending parent confirmation; not inferred from local readiness checks",
+  "scale_scope": "C08 in-memory oracle of 100,000 canonical dataset objects; not C13 registry capacity or authenticated service acceptance"
+}

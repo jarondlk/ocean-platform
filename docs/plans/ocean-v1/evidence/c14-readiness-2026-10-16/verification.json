@@ -1,0 +1,271 @@
+{
+  "audit": "C14 read-only readiness preparation",
+  "date": "2026-10-16 JST",
+  "base_head": "98c2769402cb83602f515348651aca668f21d0dd",
+  "branch": "overhaul",
+  "verdict": "Local checks pass; readiness pending final C13 amended-source hosted CI and parent delivery confirmation",
+  "formal_prerequisites": [
+    "C04",
+    "C08",
+    "C09",
+    "C10",
+    "C11",
+    "C12",
+    "C13"
+  ],
+  "source_verification": {
+    "base_head": "98c2769402cb83602f515348651aca668f21d0dd",
+    "formal_prerequisites": {
+      "C04": {
+        "paths": 4,
+        "original_matches": 4,
+        "accepted_supersessions": 0,
+        "all_current_hashes_match": true
+      },
+      "C08": {
+        "paths": 12,
+        "original_matches": 6,
+        "accepted_supersessions": 6,
+        "all_current_hashes_match": true
+      },
+      "C09": {
+        "paths": 14,
+        "original_matches": 13,
+        "accepted_supersessions": 1,
+        "all_current_hashes_match": true
+      },
+      "C10": {
+        "paths": 10,
+        "original_matches": 10,
+        "accepted_supersessions": 0,
+        "all_current_hashes_match": true
+      },
+      "C11": {
+        "paths": 10,
+        "original_matches": 10,
+        "accepted_supersessions": 0,
+        "all_current_hashes_match": true
+      },
+      "C12": {
+        "paths": 22,
+        "original_matches": 22,
+        "accepted_supersessions": 0,
+        "all_current_hashes_match": true
+      },
+      "C13": {
+        "paths": 17,
+        "original_matches": 15,
+        "accepted_supersessions": 2,
+        "all_current_hashes_match": true
+      }
+    },
+    "prior_evidence_files_preserved": 488,
+    "preservation": {
+      "unrelated_files": {
+        "count": 30,
+        "all_match": true
+      },
+      "scientific_artifacts": {
+        "count": 7,
+        "all_match": true
+      },
+      "serving_files": {
+        "count": 2,
+        "all_match": true
+      },
+      "P00_current_files": {
+        "count": 36,
+        "all_match": true
+      }
+    },
+    "C13_original_local_receipt_sha256": "83a94476d9a5c830142853b5e29fdd38f1710258c09ac1abaa1448be52f810ca",
+    "C13_final_amendment_receipt_sha256": "8a8486f8d9f96f2fdb378c55f0606ae7739e58764089768164251ad38795af95",
+    "C13_final_source_sha256": "6b51bb15ae88835d1e0c1dc2a08609362969bad27fcf180a606be0e25df355ee",
+    "C13_final_hosted_delivery_gate": "Pending parent confirmation",
+    "all_hash_assertions_passed": true,
+    "start_snapshot_sha256": "431b38f22afb445c947662903a8f8e22f848629effff4e46e609d4c800d22a12"
+  },
+  "fresh_verification": {
+    "baseline_passed": 93,
+    "C08_scale_oracle_regressions_passed": 33,
+    "total_passed": 126,
+    "failures": 0,
+    "skips": 0,
+    "generated_checks": 9,
+    "ruff": "All checks passed!"
+  },
+  "checks": {
+    "checks": [
+      {
+        "name": "baseline",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "-m",
+          "pytest",
+          "tests/test_catalogue_cache.py",
+          "tests/test_api_security.py",
+          "tests/test_api_schemas.py",
+          "tests/test_auth.py",
+          "-q",
+          "--tb=short"
+        ],
+        "exit_code": 0,
+        "summary": "93 passed, 1 warning in 1.03s"
+      },
+      {
+        "name": "C08-scale-oracle",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "-m",
+          "pytest",
+          "tests/test_context_catalogue_fixtures.py",
+          "-q",
+          "--tb=short"
+        ],
+        "exit_code": 0,
+        "summary": "33 passed in 7.90s"
+      },
+      {
+        "name": "scope",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_chat_scope.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "No output; exit recorded above"
+      },
+      {
+        "name": "schema",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_context_catalogue.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "Context catalogue schema is current"
+      },
+      {
+        "name": "browser-types",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_types.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "Catalogue browser contract is current."
+      },
+      {
+        "name": "examples",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_examples.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "C08 shared examples are current"
+      },
+      {
+        "name": "snapshots",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_snapshot.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "C09 snapshot schema and synthetic byte examples are current"
+      },
+      {
+        "name": "adapters",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_adapter.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "C10 frozen adapter schema and logical examples are current"
+      },
+      {
+        "name": "sst",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_sst_catalogue.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "C11 frozen SST schema and logical examples are current"
+      },
+      {
+        "name": "edna",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_edna_catalogue.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "C12 frozen eDNA schema and logical examples are current"
+      },
+      {
+        "name": "scientific",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_scientific_catalogue.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "summary": "C13 frozen scientific index schema and logical examples are current"
+      }
+    ],
+    "safe_environment": {
+      "AUTH_MODE": "disabled",
+      "DEPLOYMENT_ENV": "test",
+      "ENABLE_MOCK_LOGIN": "false",
+      "PERSIST_LOCAL_CHAT": "false",
+      "RUN_POSTGRES_INTEGRATION": "0",
+      "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c14_readiness_unused",
+      "MODEL_PROVIDER": "ollama",
+      "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+    },
+    "persistent_service_startups": 0,
+    "C14_implementation_started_by_preparation": false,
+    "C13_final_hosted_CI_and_delivery_gate": "Pending parent confirmation; not inferred from local readiness checks",
+    "scale_scope": "C08 in-memory oracle of 100,000 canonical dataset objects; not C13 registry capacity or authenticated service acceptance"
+  },
+  "scale_evidence": {
+    "existing_oracle": "schema/context_catalogue_fixtures.py:SyntheticCatalogue",
+    "test": "tests/test_context_catalogue_fixtures.py::test_100000_dataset_inventory_is_exhaustively_reachable",
+    "canonical_datasets": 100000,
+    "page_size": 500,
+    "pages": 200,
+    "late_search_ranks": [
+      26,
+      502,
+      100000
+    ],
+    "scope": "C08 in-memory reference transport; no C14 HTTP/tool implementation or C13 100000-binding claim"
+  },
+  "remaining_gate": "Exact-source C13 hosted CI for 98c2769402cb83602f515348651aca668f21d0dd and separate delivery receipt pending parent confirmation",
+  "C14_implementation_started_by_preparation": false,
+  "persistent_services_started": 0,
+  "source_or_global_status_edits": false,
+  "original_log_sha256_before_normalization": {},
+  "evidence_files_sha256": {
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/C08-scale-oracle.txt": "7ea1bed65fa025c3a889670d06a8f256e768c7b4cced8ad7a5badffb3c772b1d",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/adapters.txt": "3616357347d55684342a6b3d04a6cab676714283fd7613babf78aee10db52d5d",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/audit.md": "ec4cf243bd6cadd5c24c477682c477856e284595e55dbc1fbcb86e4f0ac3b9bf",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/baseline.txt": "c3fcbdf0f38e938e8781cb37430a46330d0a7a2ac3a2fd14f133ec2b262cd7d7",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/browser-types.txt": "edfc61324e991e3bda912ff0153de8de843149d6e96921f6df836436437bb215",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/edna.txt": "584bf23af0f9b906b7db1c3224242971b102e573fef6f35a39b1bd259fcb7180",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/examples.txt": "962c470ee8e7b1a3fa7cc260238248b74b659e73c4479518cfd90a2fb0468724",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/results.json": "d75f5ff0df5e8615340955119e524846e5bef401f0cd87d2c0c5bd3fc0b98b3e",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/schema.txt": "17f7777b79b05d9f620343086f7948c8a0ec79cbe76e74f59d7490234a67d15b",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/scientific.txt": "a86862b927682fb9dfbf4d762295399ea797eb54c37be97810494686a02dcc6f",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/scope.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/snapshots.txt": "9b07d6aff6dbefa9ef198cfe8da820676814ff35b8f418400856ff03bb3cc1b9",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/source-verification.json": "771cf68196f3aca82d0af038c5f75f2632008cbdf81f0b65c4cbb3afbf5e99c7",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/sst.txt": "dcb43f84e390bb4ca68514658fbdc4b9605b4f42bb22aa32120ab2f0ebaf8cd7",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/start-snapshot.json": "431b38f22afb445c947662903a8f8e22f848629effff4e46e609d4c800d22a12",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/verify_readiness.py": "0a117f250ef889d263b195d9ff4859d67ed9b1f307507e711e0285decf2c3634",
+    "docs/plans/ocean-v1/evidence/c14-readiness-2026-10-16/verify_sources.py": "89ea5e399ef1ac7e12a0eff1902d40ad0ad59bf43121c2fba377ff750e19f7cb"
+  }
+}

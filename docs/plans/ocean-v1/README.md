@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C13 are Complete locally; C14–C27 are not started.**
+**P00 and C01–C14 are Complete locally; C15–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -186,3 +186,10 @@ tests and both builds/typechecks/audits. Final local acceptance is 1,991 require
 and 3,525 backend/84.50% coverage; 305 new C13 cases. Earlier local counts above
 are historical. [Delivery receipt](evidence/C13/delivery.json),
 [final local receipt](evidence/C13/method-alias-amendment/verification.json).
+
+C14 local acceptance is complete: 2,367 required tests; 3,799 backend/127 gated
+PostgreSQL skips/84.75% coverage; 274 new cases and nine generated checks. One
+authenticated service powers seven routes/tools, complete path/ID/name search,
+100,000-object traversal and actual frozen-source parity. [Handoff](handoffs/C14.md),
+[contract](C14_CATALOGUE_SERVICE_CONTRACT.md), [receipt](evidence/C14/verification.json).
+Exact-source hosted delivery precedes automatic C15 readiness/implementation.

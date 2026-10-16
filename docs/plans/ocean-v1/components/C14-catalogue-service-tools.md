@@ -1,6 +1,6 @@
 # C14 — Catalogue service and agent tools
 
-**Status:** Not started. **Prerequisites:** C04, C08, C09, C10, C11, C12, C13.
+**Status:** Complete locally; source checkpoint and hosted delivery pending. **Prerequisites:** C04, C08, C09, C10, C11, C12, C13.
 
 ## Revised delivery boundary
 
