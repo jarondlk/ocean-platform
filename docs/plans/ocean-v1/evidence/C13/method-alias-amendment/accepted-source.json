@@ -1,0 +1,35 @@
+{
+  "files": {
+    "ingestion/scientific_catalogue_inputs.py": "0d9ee0f16d939c403ab8b2b73fb2cfa5a1307c36992e08ddbbae66b126068d03",
+    "orchestration/frozen_scientific_catalogue.py": "1fda9afe83a67c70a1cfcf752d62d0fe4ef4114b291095f78e357a376486d051",
+    "preprocessing/derived_artifacts.py": "e44a7faa42a77159f38e0925c730c319b74a4339f30f8c062ebf5057a446330c",
+    "preprocessing/scientific_catalogue_relationships.py": "e7b31155e3204a978101da77594a28a444a6dc3ccba43555c212abcd0744f519",
+    "schema/scientific_catalogue.py": "e2d65ac0a6a4d0db9ff931f85d75dca6fffaaf3c0f139395201886642f8efa28",
+    "schema/scientific_catalogue.v1.schema.json": "a63ba1f8a6b377731f8fe1adab8c1df44cf689ffdb7762db29e1b49e7257cbed",
+    "schema/scientific_catalogue_examples.json": "bf552ca2360995043e646028f3e0cbadbad68465bede0fe43d32d596bfb109fe",
+    "schema/scientific_catalogue_fixtures.py": "81ea2a5365915fbaba10e58788555ca758fea11aaf85583fcf54d281ed5582c9",
+    "schema/scientific_catalogue_relationships.py": "ca532dae41160330dd622b9bd009322ffd017ec4d8c2cb7c178343ef8319769d",
+    "scripts/export_scientific_catalogue.py": "2c4e44cfb1efb1191027b60a2feabf496cd083af10520a6a00195349413a5e2d",
+    "tests/test_frozen_scientific_catalogue.py": "a22b1d2c782017e8750b4f50a331bd8c01cd866fec8c38bcc40c7d1b4642c3f2",
+    "tests/test_scientific_catalogue_adversarial.py": "3a78fd181b94062362940d7e8c3cb27fb46a749faa7ee11d9b56b033b0e9428c",
+    "tests/test_scientific_catalogue_contract.py": "6fbe80072fab581ebc7fd9a58645b25198001f703f1fe5f6704f4948ce495a25",
+    "tests/test_scientific_catalogue_inputs.py": "a05378de35055ae3b4cc4b79e447ca2c2a7685680bff2e347fe15de60d13fbc5",
+    "tests/test_scientific_catalogue_publication.py": "d73d4800d33bb2232fb39d86e593d4b6cfd96ee6123767566c863ff7957b0177",
+    "tests/test_scientific_catalogue_relationships.py": "9d4b16d8734ce215f3727df7a73f99a5ffba37de1b3cb4d822561f8dacd4bb05",
+    "tests/test_scientific_catalogue_sources.py": "f9119d770fa00f0bc971f7d0a07d3d4e5e86af7efe8fceb7ae2068dd8afab9e7"
+  },
+  "source_sha256": "6b51bb15ae88835d1e0c1dc2a08609362969bad27fcf180a606be0e25df355ee",
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "supersedes": {
+    "ingestion/scientific_catalogue_inputs.py": {
+      "original_sha256": "e9ac5d8173c50e218e56f5c3ebf4a7005a027370f3291ae55478561924398aa5",
+      "amended_sha256": "0d9ee0f16d939c403ab8b2b73fb2cfa5a1307c36992e08ddbbae66b126068d03"
+    },
+    "tests/test_scientific_catalogue_inputs.py": {
+      "original_sha256": "5f8af7bde8c447bcc28c037fd19cadfc40307b1e36b6e6af1e1d9c3511b9fb0e",
+      "amended_sha256": "a05378de35055ae3b4cc4b79e447ca2c2a7685680bff2e347fe15de60d13fbc5"
+    }
+  },
+  "original_source_commit": "7bfeec738a3c17a9479dd007bfdeec5e8850b6da",
+  "original_local_receipt_sha256": "83a94476d9a5c830142853b5e29fdd38f1710258c09ac1abaa1448be52f810ca"
+}

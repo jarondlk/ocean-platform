@@ -1,6 +1,6 @@
 # C13 — Scientific catalogue sections
 
-**Status:** Complete locally; exact-source delivery pending. **Prerequisites:** C01, C02, C10, C11, C12.
+**Status:** Complete locally; final amended-source hosted delivery pending. **Prerequisites:** C01, C02, C10, C11, C12.
 
 ## Revised delivery boundary
 
@@ -47,3 +47,12 @@ plan, UX brief and listed prerequisite handoffs as well as this specification.
 ## Selected implementation — 2026-10-16 JST
 
 Readiness passes: 1,590 baseline/prerequisite tests, eight generated checks, all formal accepted sources reconciled. The user authorized implementation and automatic sequential progression once future readiness passes. Read [handoff](../handoffs/C13.md) and [readiness report](../evidence/c13-readiness-2026-10-16/audit.md). Local implementation acceptance passes 1,969 required tests, full backend 3,503/127 gated skips/84.49% coverage and nine generated checks. Source checkpoint and hosted delivery remain pending.
+
+A final review found that positive legacy C02 method aliases needed canonical
+normalization before eligibility. The amendment preserves the original local
+receipt, adds 22 regressions and is under required/full verification. Do not
+substitute the first checkpoint CI for acceptance of the amended final source.
+
+The final alias amendment passes 1,991 required tests and full backend
+3,525/127 gated skips/84.50% coverage, with all nine generated comparisons current.
+[Final source receipt](../evidence/C13/method-alias-amendment/verification.json).

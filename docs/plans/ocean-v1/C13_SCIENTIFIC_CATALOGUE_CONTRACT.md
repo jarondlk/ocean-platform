@@ -69,6 +69,8 @@ bindings; rewriting a dataset binding never silently approves old result bytes.
 C02 eligibility reuses its existing method allowlist, input/output/generation
 hashes and bound review decision with explicitly supplied frozen tombstones.
 The optional injection preserves legacy configured behavior for existing callers.
+Existing C02 type, file and result-ID aliases resolve to their canonical affected
+method before eligibility; a legacy label cannot bypass the review rule.
 Affected unversioned, legacy, unavailable, invalidated, superseded, changed or
 unreviewed artifacts remain ineligible. No real artifact was regenerated or
 reviewed by C13. Seven existing deferred scientific files remain unchanged.

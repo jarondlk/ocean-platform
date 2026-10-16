@@ -1,0 +1,279 @@
+{
+  "component": "C13",
+  "state": "Complete local final eligibility amendment; exact-source delivery pending",
+  "date": "2026-10-16 JST",
+  "branch": "overhaul",
+  "base_source_commit": "7bfeec738a3c17a9479dd007bfdeec5e8850b6da",
+  "code_revision": "Uncommitted accepted amendment; separate delivery records final commit and CI",
+  "files": {
+    "ingestion/scientific_catalogue_inputs.py": "0d9ee0f16d939c403ab8b2b73fb2cfa5a1307c36992e08ddbbae66b126068d03",
+    "orchestration/frozen_scientific_catalogue.py": "1fda9afe83a67c70a1cfcf752d62d0fe4ef4114b291095f78e357a376486d051",
+    "preprocessing/derived_artifacts.py": "e44a7faa42a77159f38e0925c730c319b74a4339f30f8c062ebf5057a446330c",
+    "preprocessing/scientific_catalogue_relationships.py": "e7b31155e3204a978101da77594a28a444a6dc3ccba43555c212abcd0744f519",
+    "schema/scientific_catalogue.py": "e2d65ac0a6a4d0db9ff931f85d75dca6fffaaf3c0f139395201886642f8efa28",
+    "schema/scientific_catalogue.v1.schema.json": "a63ba1f8a6b377731f8fe1adab8c1df44cf689ffdb7762db29e1b49e7257cbed",
+    "schema/scientific_catalogue_examples.json": "bf552ca2360995043e646028f3e0cbadbad68465bede0fe43d32d596bfb109fe",
+    "schema/scientific_catalogue_fixtures.py": "81ea2a5365915fbaba10e58788555ca758fea11aaf85583fcf54d281ed5582c9",
+    "schema/scientific_catalogue_relationships.py": "ca532dae41160330dd622b9bd009322ffd017ec4d8c2cb7c178343ef8319769d",
+    "scripts/export_scientific_catalogue.py": "2c4e44cfb1efb1191027b60a2feabf496cd083af10520a6a00195349413a5e2d",
+    "tests/test_frozen_scientific_catalogue.py": "a22b1d2c782017e8750b4f50a331bd8c01cd866fec8c38bcc40c7d1b4642c3f2",
+    "tests/test_scientific_catalogue_adversarial.py": "3a78fd181b94062362940d7e8c3cb27fb46a749faa7ee11d9b56b033b0e9428c",
+    "tests/test_scientific_catalogue_contract.py": "6fbe80072fab581ebc7fd9a58645b25198001f703f1fe5f6704f4948ce495a25",
+    "tests/test_scientific_catalogue_inputs.py": "a05378de35055ae3b4cc4b79e447ca2c2a7685680bff2e347fe15de60d13fbc5",
+    "tests/test_scientific_catalogue_publication.py": "d73d4800d33bb2232fb39d86e593d4b6cfd96ee6123767566c863ff7957b0177",
+    "tests/test_scientific_catalogue_relationships.py": "9d4b16d8734ce215f3727df7a73f99a5ffba37de1b3cb4d822561f8dacd4bb05",
+    "tests/test_scientific_catalogue_sources.py": "f9119d770fa00f0bc971f7d0a07d3d4e5e86af7efe8fceb7ae2068dd8afab9e7"
+  },
+  "source_sha256": "6b51bb15ae88835d1e0c1dc2a08609362969bad27fcf180a606be0e25df355ee",
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "supersedes": {
+    "ingestion/scientific_catalogue_inputs.py": {
+      "original_sha256": "e9ac5d8173c50e218e56f5c3ebf4a7005a027370f3291ae55478561924398aa5",
+      "amended_sha256": "0d9ee0f16d939c403ab8b2b73fb2cfa5a1307c36992e08ddbbae66b126068d03"
+    },
+    "tests/test_scientific_catalogue_inputs.py": {
+      "original_sha256": "5f8af7bde8c447bcc28c037fd19cadfc40307b1e36b6e6af1e1d9c3511b9fb0e",
+      "amended_sha256": "a05378de35055ae3b4cc4b79e447ca2c2a7685680bff2e347fe15de60d13fbc5"
+    }
+  },
+  "original_source_commit": "7bfeec738a3c17a9479dd007bfdeec5e8850b6da",
+  "original_local_receipt_sha256": "83a94476d9a5c830142853b5e29fdd38f1710258c09ac1abaa1448be52f810ca",
+  "reason": "Normalize existing C02 method type/file/result-ID aliases before eligibility so legacy labels cannot evade affected-method review",
+  "verification": {
+    "required_passed": 1991,
+    "new_C13_cases": 305,
+    "additional_alias_cases": 22,
+    "focused_inputs_passed": 86,
+    "full_backend": {
+      "passed": 3525,
+      "skipped": 127,
+      "coverage_percent": 84.5,
+      "warnings": 2596,
+      "unrelated_benchmark_local_cases_excluded_from_commit": 9
+    },
+    "generated_checks": 9,
+    "ruff": "pass"
+  },
+  "checks": {
+    "required": {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_edna_catalogue_contract.py",
+        "tests/test_edna_catalogue_inputs.py",
+        "tests/test_edna_catalogue_query.py",
+        "tests/test_frozen_edna_catalogue.py",
+        "tests/test_edna_catalogue_adversarial.py",
+        "tests/test_edna_service.py",
+        "tests/test_edna_aggregation.py",
+        "tests/test_edna_taxonomy.py",
+        "tests/test_api_edna.py",
+        "tests/test_anemone_classification.py",
+        "tests/test_classification_application.py",
+        "tests/test_classification_review_domain.py",
+        "tests/test_edna_analysis.py",
+        "tests/test_anemone_catalogue.py",
+        "tests/test_anemone_nontarget.py",
+        "tests/test_publication_scope_contract.py",
+        "tests/test_auto_settings.py",
+        "tests/test_research_chat.py",
+        "tests/test_chat_source_scope.py",
+        "tests/test_conference_demo.py",
+        "tests/test_provisional_research_demo.py",
+        "tests/test_regional_publication.py",
+        "tests/test_research_readiness.py",
+        "tests/test_conference_review.py",
+        "tests/test_context_catalogue_contract.py",
+        "tests/test_context_catalogue_fixtures.py",
+        "tests/test_catalogue_snapshots.py",
+        "tests/test_catalogue_snapshot_capture.py",
+        "tests/test_catalogue_snapshot_transfer.py",
+        "tests/test_catalogue_snapshot_fixtures.py",
+        "tests/test_catalogue_adapter_contract.py",
+        "tests/test_catalogue_adapter_inputs.py",
+        "tests/test_frozen_catalogue_adapters.py",
+        "tests/test_sst_catalogue_contract.py",
+        "tests/test_sst_catalogue_inputs.py",
+        "tests/test_frozen_sst_catalogue.py",
+        "tests/test_scientific_catalogue_contract.py",
+        "tests/test_scientific_catalogue_inputs.py",
+        "tests/test_scientific_catalogue_relationships.py",
+        "tests/test_scientific_catalogue_adversarial.py",
+        "tests/test_scientific_catalogue_sources.py",
+        "tests/test_frozen_scientific_catalogue.py",
+        "tests/test_scientific_catalogue_publication.py",
+        "tests/test_research_registry.py",
+        "tests/test_edna_environment.py",
+        "tests/test_derived_artifact_eligibility.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "1991 passed, 167 warnings in 102.86s (0:01:42)",
+      "safe_environment": {
+        "AUTH_MODE": "disabled",
+        "DEPLOYMENT_ENV": "test",
+        "ENABLE_MOCK_LOGIN": "false",
+        "PERSIST_LOCAL_CHAT": "false",
+        "RUN_POSTGRES_INTEGRATION": "0",
+        "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c13_acceptance_unused",
+        "MODEL_PROVIDER": "ollama",
+        "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+      }
+    },
+    "backend": {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/",
+        "-q",
+        "--tb=short",
+        "--cov=api",
+        "--cov=config",
+        "--cov=db",
+        "--cov=preprocessing",
+        "--cov=ingestion",
+        "--cov=orchestration",
+        "--cov=schema",
+        "--cov=evaluation",
+        "--cov-report=term-missing",
+        "--cov-fail-under=70"
+      ],
+      "safe_environment": {
+        "AUTH_MODE": "disabled",
+        "DEPLOYMENT_ENV": "test",
+        "ENABLE_MOCK_LOGIN": "false",
+        "PERSIST_LOCAL_CHAT": "false",
+        "RUN_POSTGRES_INTEGRATION": "0",
+        "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c13_regressions_unused",
+        "MODEL_PROVIDER": "ollama",
+        "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+      },
+      "exit_code": 0
+    },
+    "static": [
+      {
+        "name": "scope",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_chat_scope.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "schema",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_context_catalogue.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "types",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_types.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "examples",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_examples.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "snapshots",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_snapshot.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "adapters",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_adapter.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "sst",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_sst_catalogue.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "edna",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_edna_catalogue.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "scientific",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_scientific_catalogue.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      }
+    ]
+  },
+  "preservation": "Original C13 source receipt/evidence preserved; fifteen accepted paths unchanged and two explicitly superseded. All earlier prerequisites/scientific/serving/unrelated files remain as original preservation receipt.",
+  "evidence_files_sha256": {
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/accepted-source.json": "bf7332e445c29c1c2e1f5009472625e58ba7e48a4f2e88e8db2e8e4e2e2fe17d",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/adapters.txt": "3616357347d55684342a6b3d04a6cab676714283fd7613babf78aee10db52d5d",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/backend-result.json": "99a5e4d745a1eed4d329ad727cb8abc905eacda4665e2d1359f0c33a94ff1211",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/backend-tests.txt": "6c22bccc17598ad981411192044b62e20216638b0c6ced0d8f1685ee19b8cdf3",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/edna.txt": "584bf23af0f9b906b7db1c3224242971b102e573fef6f35a39b1bd259fcb7180",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/examples.txt": "962c470ee8e7b1a3fa7cc260238248b74b659e73c4479518cfd90a2fb0468724",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/log-normalization.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/new-test-counts.json": "03cc8cd47d5a8ac47b6c376b7df99e376435b0253b22da6449f22eecc96c2e79",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/prior-hosted-backend.txt": "7fee4789ca48bff3696181080af5e0cb9d834985dbc0f86dd6e3a750fb880190",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/prior-hosted-ci.json": "50869956304547cc52c9bcc6ef44b34e1d3e02242c17e76c844e1683e3ca402a",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/prior-hosted-frontend.txt": "ff1bdd65e5a53890f01e013ca7b5864b7a04cfbc236414b80d464cde3075d033",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/prior-hosted-postgres.txt": "99a58e4ae65a4ffb652cb8ad484ba566b3b2284fa7867b5e443ac1a1bba775e1",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/prior-hosted-v1.txt": "1f1aaaf84c00c135941403de8c77710cd0bdf87d7a30f313956b9befb3e4c02a",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/required-result.json": "0a5051d1074a1e28201ae4dbb531fe404c38785fccbb1de4180c87365abca407",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/required-tests.txt": "0761025cbb057249ac995d514f27807bf943e14f8506c92c33b836a47b5c84df",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/review.md": "1e4aea6790dc16b73075de4d03cc0076531dd831725d571d9d4add08219abab6",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/schema.txt": "17f7777b79b05d9f620343086f7948c8a0ec79cbe76e74f59d7490234a67d15b",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/scientific.txt": "a86862b927682fb9dfbf4d762295399ea797eb54c37be97810494686a02dcc6f",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/scope.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/snapshots.txt": "9b07d6aff6dbefa9ef198cfe8da820676814ff35b8f418400856ff03bb3cc1b9",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/sst.txt": "dcb43f84e390bb4ca68514658fbdc4b9605b4f42bb22aa32120ab2f0ebaf8cd7",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/static-results.json": "da0ef1bfd151c5e84a81285fa34f0b6fddf30b60cbe0bb3a9cd24535e4763ff8",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/types.txt": "edfc61324e991e3bda912ff0153de8de843149d6e96921f6df836436437bb215",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/verify_acceptance.py": "113d45c3a1fdb118fbea972e931756c85ba5974533c4c7c48c532b3bb940b10c",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/verify_backend.py": "0c7bc9c6e602cf8fbb996ef4d8cc65404e536c39b5649413ac6ac255a4cb18ce",
+    "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/verify_static.py": "046355ffe249b69c60f1140d63c2ed99832663dd991c44e7c18fce70d1147318"
+  }
+}

@@ -500,3 +500,13 @@ supersedes prior app source; all C10–C12/shared contracts and original receipt
 unchanged. Real scientific artifacts, review/publication/identity, experiment
 execution, UI/service integration and cloud deployment remain outside acceptance.
 Source checkpoint/hosted delivery follow before automatically auditing C14 readiness.
+
+### C13 final alias amendment — 2026-10-16 JST
+
+A final review normalized positive legacy C02 type/file/result-ID method aliases
+before applying scientific eligibility. Twenty-two regressions verify unversioned
+aliases cannot appear as unaffected findings while canonical reviewed receipts
+remain supported. Final local acceptance: 1,991 required, 3,525 backend/127 gated
+skips/84.50% coverage and nine generated checks. The original C13 receipt stays
+immutable; the separate amendment receipt binds the two superseded paths.
+Final-source hosted CI is required before delivery/automatic C14 progression.

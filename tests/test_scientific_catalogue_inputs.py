@@ -29,6 +29,96 @@ def frozen(tmp_path, *, count=3, metadata=None, tables=None):
     return manifest, dict(contents)
 
 
+@pytest.mark.parametrize(
+    "alias",
+    sorted(
+        set(derived_artifacts.TYPE_METHODS)
+        | set(derived_artifacts.FILE_METHODS)
+        | set(derived_artifacts.ID_METHODS)
+    ),
+)
+def test_known_legacy_method_aliases_keep_c02_unversioned_gate(tmp_path, alias):
+    metadata, tables = scientific_fixture(1)
+    metadata.analyses[0].method_id = alias
+    manifest, contents = frozen(tmp_path, metadata=metadata, tables=tables)
+    eligibility = inputs.load_registry(manifest, contents).eligibility[
+        metadata.analyses[0].id
+    ]
+    assert not eligibility.eligible
+    assert eligibility.status == "legacy_unversioned"
+    assert not eligibility.scientific_approval
+
+
+@pytest.mark.parametrize(
+    "alias",
+    [
+        "cross_source_validation",
+        "correlation",
+        "analysis_taxa_env_correlations",
+        "sst_ctd_validation.parquet",
+    ],
+)
+def test_known_legacy_labels_can_retain_a_valid_canonical_receipt(tmp_path, alias):
+    metadata, tables = scientific_fixture(1)
+    analysis = metadata.analyses[0]
+    method = (
+        derived_artifacts.ID_METHODS.get(alias)
+        or derived_artifacts.TYPE_METHODS.get(alias)
+        or derived_artifacts.FILE_METHODS[alias]
+    )
+    version = derived_artifacts.CURRENT_METHODS[method]
+    receipt = derived_artifacts.make_receipt(
+        method,
+        digest({table.name: tables[table.object_id] for table in analysis.tables}),
+        {
+            "inputs": {
+                binding.dataset_id: binding.snapshot_id for binding in metadata.datasets
+            },
+            "method_version": version,
+            "status": "computed",
+        },
+    )
+    receipt.update(
+        eligibility="eligible",
+        review={
+            "reviewer": "synthetic C13 fixture reviewer",
+            "rationale": "Bound synthetic eligibility acceptance",
+            "references": ["Synthetic fixture only"],
+            "evidence_sha256": receipt["generation_sha256"],
+        },
+    )
+    analysis.method_id, analysis.method_version, analysis.derived_receipt = (
+        alias,
+        version,
+        receipt,
+    )
+    manifest, contents = frozen(tmp_path, metadata=metadata, tables=tables)
+    eligibility = inputs.load_registry(manifest, contents).eligibility[analysis.id]
+    assert eligibility.eligible and eligibility.status == "eligible"
+    assert not eligibility.scientific_approval
+
+
+def test_legacy_alias_is_history_and_cannot_join_global_published_findings(tmp_path):
+    from tests.test_scientific_catalogue_adversarial import build, listing, ANALYSIS
+
+    def configure(metadata, tables):
+        metadata.analyses[0].method_id = "cross_source_validation"
+
+    _, snapshot, adapter, _, _, _, _ = build(tmp_path, configure=configure)
+    nodes = adapter.list(listing(snapshot)).items
+    assert ANALYSIS not in {node.id for node in nodes}
+    histories = [
+        node
+        for node in nodes
+        if node.root == "metadata" and node.title.en == "Published synthetic finding"
+    ]
+    assert len(histories) == 1
+    assert (
+        adapter.inspect(histories[0].id, listing(snapshot))["eligibility"]["status"]
+        == "legacy_unversioned"
+    )
+
+
 def test_roundtrip_retains_full_rows_and_transport_is_not_raw_measurement(tmp_path):
     manifest, contents = frozen(tmp_path, count=1205)
     data = inputs.load_registry(manifest, contents)

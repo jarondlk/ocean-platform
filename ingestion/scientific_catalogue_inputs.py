@@ -138,7 +138,16 @@ def _eligibility(registry, tables):
     )
     result = {}
     for analysis in registry.analyses:
-        method = ID_METHODS.get(analysis.id, analysis.method_id)
+        # Retained publications may name an affected method using its legacy
+        # document type, file name or result ID. Those positive C02 aliases must
+        # carry the same eligibility gate as the canonical method identity.
+        method = (
+            ID_METHODS.get(analysis.id)
+            or ID_METHODS.get(analysis.method_id)
+            or TYPE_METHODS.get(analysis.method_id)
+            or FILE_METHODS.get(analysis.method_id)
+            or analysis.method_id
+        )
         if analysis.derived_receipt is None:
             blocked = method in affected or method.startswith(
                 ("unknown_reliability", "unknown_analysis")
