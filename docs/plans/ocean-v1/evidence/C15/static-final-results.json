@@ -1,0 +1,39 @@
+[
+  {
+    "name": "ruff-active",
+    "command": [
+      ".venv/bin/ruff",
+      "check",
+      "api",
+      "config.py",
+      "db",
+      "evaluation",
+      "ingestion",
+      "orchestration",
+      "preprocessing",
+      "retrieval",
+      "schema",
+      "scripts",
+      "tests"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "ruff-harness",
+    "command": [
+      ".venv/bin/ruff",
+      "check",
+      "docs/plans/ocean-v1/evidence/C15/serve_shell_qa.py",
+      "docs/plans/ocean-v1/evidence/C15/verify_static.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "static",
+    "command": [
+      ".venv/bin/python",
+      "docs/plans/ocean-v1/evidence/C15/verify_static.py"
+    ],
+    "exit_code": 0
+  }
+]

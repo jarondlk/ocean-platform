@@ -1,0 +1,300 @@
+E402 Module level import not at top of file
+  --> docs/audits/repository-2026-10-09/probes.py:14:1
+   |
+12 | ROOT = Path(__file__).resolve().parents[3]
+13 | sys.path.insert(0, str(ROOT))
+14 | import pandas as pd
+   | ^^^^^^^^^^^^^^^^^^^
+15 | from sqlalchemy import create_engine, select
+16 | from sqlalchemy.orm import Session, sessionmaker
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/audits/repository-2026-10-09/probes.py:15:1
+   |
+13 | sys.path.insert(0, str(ROOT))
+14 | import pandas as pd
+15 | from sqlalchemy import create_engine, select
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+16 | from sqlalchemy.orm import Session, sessionmaker
+17 | import config
+   |
+help: Move module level imports to top of file
+
+F401 [*] `sqlalchemy.select` imported but unused
+  --> docs/audits/repository-2026-10-09/probes.py:15:39
+   |
+13 | sys.path.insert(0, str(ROOT))
+14 | import pandas as pd
+15 | from sqlalchemy import create_engine, select
+   |                                       ^^^^^^
+16 | from sqlalchemy.orm import Session, sessionmaker
+17 | import config
+   |
+help: Remove unused import: `sqlalchemy.select`
+   |
+14 | import pandas as pd
+   - from sqlalchemy import create_engine, select
+15 + from sqlalchemy import create_engine
+16 | from sqlalchemy.orm import Session, sessionmaker
+   |
+
+E402 Module level import not at top of file
+  --> docs/audits/repository-2026-10-09/probes.py:16:1
+   |
+14 | import pandas as pd
+15 | from sqlalchemy import create_engine, select
+16 | from sqlalchemy.orm import Session, sessionmaker
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+17 | import config
+18 | import api.auth as auth
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/audits/repository-2026-10-09/probes.py:17:1
+   |
+15 | from sqlalchemy import create_engine, select
+16 | from sqlalchemy.orm import Session, sessionmaker
+17 | import config
+   | ^^^^^^^^^^^^^
+18 | import api.auth as auth
+19 | import model_runtime
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/audits/repository-2026-10-09/probes.py:18:1
+   |
+16 | from sqlalchemy.orm import Session, sessionmaker
+17 | import config
+18 | import api.auth as auth
+   | ^^^^^^^^^^^^^^^^^^^^^^^
+19 | import model_runtime
+20 | from db import retention
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/audits/repository-2026-10-09/probes.py:19:1
+   |
+17 | import config
+18 | import api.auth as auth
+19 | import model_runtime
+   | ^^^^^^^^^^^^^^^^^^^^
+20 | from db import retention
+21 | from db.app_models import AppBase, AppUser, ChatInteraction
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/audits/repository-2026-10-09/probes.py:20:1
+   |
+18 | import api.auth as auth
+19 | import model_runtime
+20 | from db import retention
+   | ^^^^^^^^^^^^^^^^^^^^^^^^
+21 | from db.app_models import AppBase, AppUser, ChatInteraction
+22 | from preprocessing import pre_analysis, reliability_ensurance as reliability
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/audits/repository-2026-10-09/probes.py:21:1
+   |
+19 | import model_runtime
+20 | from db import retention
+21 | from db.app_models import AppBase, AppUser, ChatInteraction
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+22 | from preprocessing import pre_analysis, reliability_ensurance as reliability
+23 | from retrieval.document_builder import build_metagenome_docs
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/audits/repository-2026-10-09/probes.py:22:1
+   |
+20 | from db import retention
+21 | from db.app_models import AppBase, AppUser, ChatInteraction
+22 | from preprocessing import pre_analysis, reliability_ensurance as reliability
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+23 | from retrieval.document_builder import build_metagenome_docs
+24 | from retrieval import hybrid_retriever
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/audits/repository-2026-10-09/probes.py:23:1
+   |
+21 | from db.app_models import AppBase, AppUser, ChatInteraction
+22 | from preprocessing import pre_analysis, reliability_ensurance as reliability
+23 | from retrieval.document_builder import build_metagenome_docs
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+24 | from retrieval import hybrid_retriever
+25 | from starlette.requests import Request
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/audits/repository-2026-10-09/probes.py:24:1
+   |
+22 | from preprocessing import pre_analysis, reliability_ensurance as reliability
+23 | from retrieval.document_builder import build_metagenome_docs
+24 | from retrieval import hybrid_retriever
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+25 | from starlette.requests import Request
+26 | from starlette.responses import Response
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/audits/repository-2026-10-09/probes.py:25:1
+   |
+23 | from retrieval.document_builder import build_metagenome_docs
+24 | from retrieval import hybrid_retriever
+25 | from starlette.requests import Request
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+26 | from starlette.responses import Response
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/audits/repository-2026-10-09/probes.py:26:1
+   |
+24 | from retrieval import hybrid_retriever
+25 | from starlette.requests import Request
+26 | from starlette.responses import Response
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+27 |
+28 | results = {}
+   |
+help: Move module level imports to top of file
+
+E701 Multiple statements on one line (colon)
+  --> docs/plans/ocean-v1/evidence/C12/verify_static.py:22:20
+   |
+20 |         r=subprocess.run(command,cwd=cwd,stdout=log,stderr=subprocess.STDOUT)
+21 |     results.append({"name":name,"command":command,"cwd":str(cwd.relative_to(root)) or ".","exit_code":r.returncode})
+22 |     if r.returncode: break
+   |                    ^
+23 | (out/"static-results.json").write_text(json.dumps(results,indent=2)+"\n")
+24 | print(json.dumps(results))
+   |
+
+E701 Multiple statements on one line (colon)
+  --> docs/plans/ocean-v1/evidence/C13/method-alias-amendment/verify_static.py:19:20
+   |
+17 |         r=subprocess.run(command,cwd=cwd,stdout=log,stderr=subprocess.STDOUT)
+18 |     results.append({"name":name,"command":command,"cwd":str(cwd.relative_to(root)) or ".","exit_code":r.returncode})
+19 |     if r.returncode: break
+   |                    ^
+20 | (out/"static-results.json").write_text(json.dumps(results,indent=2)+"\n")
+21 | print(json.dumps(results))
+   |
+
+E701 Multiple statements on one line (colon)
+  --> docs/plans/ocean-v1/evidence/C13/verify_static.py:19:20
+   |
+17 |         r=subprocess.run(command,cwd=cwd,stdout=log,stderr=subprocess.STDOUT)
+18 |     results.append({"name":name,"command":command,"cwd":str(cwd.relative_to(root)) or ".","exit_code":r.returncode})
+19 |     if r.returncode: break
+   |                    ^
+20 | (out/"static-results.json").write_text(json.dumps(results,indent=2)+"\n")
+21 | print(json.dumps(results))
+   |
+
+E701 Multiple statements on one line (colon)
+  --> docs/plans/ocean-v1/evidence/C14/verify_static.py:19:20
+   |
+17 |         r=subprocess.run(command,cwd=cwd,stdout=log,stderr=subprocess.STDOUT)
+18 |     results.append({"name":name,"command":command,"cwd":str(cwd.relative_to(root)) or ".","exit_code":r.returncode})
+19 |     if r.returncode: break
+   |                    ^
+20 | (out/"static-results.json").write_text(json.dumps(results,indent=2)+"\n")
+21 | print(json.dumps(results))
+   |
+
+E402 Module level import not at top of file
+  --> docs/plans/ocean-v1/evidence/C15/serve_shell_qa.py:19:1
+   |
+17 | sys.path.insert(0, str(root))
+18 |
+19 | from fastapi import FastAPI
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+20 | from fastapi.responses import FileResponse, JSONResponse
+21 | import uvicorn
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/plans/ocean-v1/evidence/C15/serve_shell_qa.py:20:1
+   |
+19 | from fastapi import FastAPI
+20 | from fastapi.responses import FileResponse, JSONResponse
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+21 | import uvicorn
+22 | from api import auth
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/plans/ocean-v1/evidence/C15/serve_shell_qa.py:21:1
+   |
+19 | from fastapi import FastAPI
+20 | from fastapi.responses import FileResponse, JSONResponse
+21 | import uvicorn
+   | ^^^^^^^^^^^^^^
+22 | from api import auth
+23 | from api.auth import CurrentUser, ROLE_PERMISSIONS
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/plans/ocean-v1/evidence/C15/serve_shell_qa.py:22:1
+   |
+20 | from fastapi.responses import FileResponse, JSONResponse
+21 | import uvicorn
+22 | from api import auth
+   | ^^^^^^^^^^^^^^^^^^^^
+23 | from api.auth import CurrentUser, ROLE_PERMISSIONS
+24 | from api.v1_runtime_routes import V1RuntimeConfiguration, router
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/plans/ocean-v1/evidence/C15/serve_shell_qa.py:23:1
+   |
+21 | import uvicorn
+22 | from api import auth
+23 | from api.auth import CurrentUser, ROLE_PERMISSIONS
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+24 | from api.v1_runtime_routes import V1RuntimeConfiguration, router
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/plans/ocean-v1/evidence/C15/serve_shell_qa.py:24:1
+   |
+22 | from api import auth
+23 | from api.auth import CurrentUser, ROLE_PERMISSIONS
+24 | from api.v1_runtime_routes import V1RuntimeConfiguration, router
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+25 |
+26 | parser = argparse.ArgumentParser()
+   |
+help: Move module level imports to top of file
+
+E701 Multiple statements on one line (colon)
+  --> docs/plans/ocean-v1/evidence/C15/verify_static.py:19:20
+   |
+17 |         r=subprocess.run(command,cwd=cwd,stdout=log,stderr=subprocess.STDOUT)
+18 |     results.append({"name":name,"command":command,"cwd":str(cwd.relative_to(root)) or ".","exit_code":r.returncode})
+19 |     if r.returncode: break
+   |                    ^
+20 | (out/"static-results.json").write_text(json.dumps(results,indent=2)+"\n")
+21 | print(json.dumps(results))
+   |
+
+Found 25 errors.
+[*] 1 fixable with the `--fix` option.

@@ -1,4 +1,21 @@
-# OCEAN P00 local preview
+# OCEAN v1 shell and explicit P00 preview
+
+C15 adds a separate service shell using the authenticated, default-off
+`GET /v1/runtime` bootstrap. Service identity, permissions and capability state
+come from the server. Presentation preferences use `ocean-v1-presentation-v1`;
+saved P00 roles, investigations and scientific selections never supply service
+state. Functional destinations remain unavailable until their owning components
+are integrated. See the [C15 handoff](../docs/plans/ocean-v1/handoffs/C15.md).
+
+`npm run preview` explicitly selects the synthetic P00 preview below.
+`npm run preview:service` serves the built service shell without a configured
+bootstrap and therefore shows an honest unavailable state. Both static preview
+commands are loopback-only. `npm run dev` defaults to service mode because it
+does not expose the explicit preview-mode endpoint. Neither command supplies real
+authentication, catalogue data or a production deployment. A v1 deployment must
+provide its own same-origin authenticated bootstrap and trusted target config.
+
+The following review journeys describe the accepted synthetic prototype only.
 
 Research-first OCEAN v1 UI with sky/baby-blue accents, concise language and a
 replaceable typed synthetic adapter. The legacy frontend and backend are intact.
@@ -81,12 +98,13 @@ real execution protocol is implied by those models.
 | C19/C20/C21 | Simulated exploration, live run transport and evidence |
 | C22–C25 | Proposal eligibility/approval, real isolated execution and experimental UI |
 
-The 27 tests exercise scope, paging, drafts, continuations, evidence links,
+The prototype tests exercise scope, paging, drafts, continuations, evidence links,
 snapshot refresh, approval invalidation, feedback, safe exports, admin guards,
 invites, retained job-model contracts, configuration and validated browser-state restoration. They prove only local
 prototype behavior. Screenshots and observed browser checks are recorded in
 `docs/plans/ocean-v1/handoffs/P00.md`. The user accepted the P00 direction on 2026-10-14 JST after requesting the
-Pipeline & jobs page be omitted. P00 is Complete; C01–C27 remain Not started.
+Pipeline & jobs page be omitted. P00 acceptance is preserved; current component
+status is maintained in [`STATUS.md`](../docs/plans/ocean-v1/STATUS.md).
 
 The industry-guidance UX review and scoped results are recorded in
 [UX verification](../docs/plans/ocean-v1/UX_VERIFICATION_2026-10-13.md).

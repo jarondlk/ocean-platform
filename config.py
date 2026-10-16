@@ -213,6 +213,7 @@ INTERNAL_AUTH_ISSUER = os.environ.get(
 # Exposure requires an explicit C14 service injection as well as this flag.
 # Read it at invocation time so disabling the feature also closes tool access.
 ENABLE_V1_CATALOGUE = os.environ.get("ENABLE_V1_CATALOGUE", "false")
+ENABLE_V1_SHELL = os.environ.get("ENABLE_V1_SHELL", "false")
 INTERNAL_AUTH_AUDIENCE = os.environ.get(
     "INTERNAL_AUTH_AUDIENCE",
     "ocean-platform-api",
@@ -269,6 +270,13 @@ def v1_catalogue_enabled(environ: Optional[Mapping[str, str]] = None) -> bool:
     return _security_flag(
         str(env.get("ENABLE_V1_CATALOGUE", ENABLE_V1_CATALOGUE)),
         "ENABLE_V1_CATALOGUE",
+    )
+
+
+def v1_shell_enabled(environ: Optional[Mapping[str, str]] = None) -> bool:
+    env = os.environ if environ is None else environ
+    return _security_flag(
+        str(env.get("ENABLE_V1_SHELL", ENABLE_V1_SHELL)), "ENABLE_V1_SHELL",
     )
 
 

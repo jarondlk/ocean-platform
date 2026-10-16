@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C14 are Complete locally; C15–C27 are not started.**
+**P00 and C01–C14 are Complete locally; C15 is in progress; C16–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 

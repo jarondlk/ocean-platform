@@ -1,0 +1,37 @@
+[
+  {
+    "name": "v1-tests",
+    "command": [
+      "npm",
+      "--prefix",
+      "frontend-v1",
+      "test"
+    ],
+    "exit_code": 0,
+    "seconds": 0.44
+  },
+  {
+    "name": "v1-typecheck",
+    "command": [
+      "npm",
+      "--prefix",
+      "frontend-v1",
+      "run",
+      "typecheck"
+    ],
+    "exit_code": 0,
+    "seconds": 1.02
+  },
+  {
+    "name": "v1-build",
+    "command": [
+      "npm",
+      "--prefix",
+      "frontend-v1",
+      "run",
+      "build"
+    ],
+    "exit_code": 0,
+    "seconds": 6.52
+  }
+]

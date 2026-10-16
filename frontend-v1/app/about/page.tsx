@@ -1,2 +1,2 @@
-import { ResearchApp } from "../../src/research-app";
-export default function AboutPage() { return <ResearchApp initialView="about" />; }
+import { V1Entry } from "../../src/v1-entry";
+export default function AboutPage() { return <V1Entry initialView="about" />; }

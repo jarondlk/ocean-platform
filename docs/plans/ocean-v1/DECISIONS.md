@@ -550,3 +550,13 @@ The original local receipt/evidence and all 14 source hashes remain unchanged.
 Separate delivery evidence records the result. C15 preparation passes 163 v1 tests,
 typecheck/build, nine generated checks and 48 formal source entries; final readiness
 may now confirm before automatic implementation.
+
+### C15 automatic selection — 2026-10-16 JST
+
+C14 delivery c6eb004 clears the sequential gate. C15 readiness passes 48 formal
+source entries, 163 v1 tests, typecheck/build and nine generated comparisons.
+The user authorizes its implementation automatically. Keep P00 simulations in
+explicit local preview; reuse accepted shell chrome with a separate service
+runtime using trusted server identity/permissions/capabilities. Presentation
+persistence cannot authorize requests or change scientific scope. Missing later
+features and deployed auth/configuration remain honest unavailable states.

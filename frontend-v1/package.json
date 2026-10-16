@@ -8,7 +8,8 @@
     "typecheck": "NEXT_TELEMETRY_DISABLED=1 next typegen && tsc --noEmit",
     "test": "node --test --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tests/*.test.ts",
     "build": "NEXT_TELEMETRY_DISABLED=1 next build",
-    "preview": "node scripts/preview.mjs"
+    "preview": "node scripts/preview.mjs --mode synthetic-preview",
+    "preview:service": "node scripts/preview.mjs --mode service"
   },
   "dependencies": {
     "lucide-react": "0.577.0",

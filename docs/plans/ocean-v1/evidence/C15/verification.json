@@ -1,0 +1,487 @@
+{
+  "component": "C15",
+  "state": "Complete local acceptance; source checkpoint and exact-source hosted delivery pending",
+  "date": "2026-10-17 JST",
+  "branch": "overhaul",
+  "base_commit": "c6eb0041250d0bbcd0323d313a6f452f695faf16",
+  "files": {
+    "api/auth.py": "74283b43d4dbae38b8e1d4977eeb084f86cb465c2a98c9085561ad65b97a5c1d",
+    "api/main.py": "0f0d699b469fdda8b1c9aa1db1f17c2f0265dbb22ad950a95a3e60315476081c",
+    "api/v1_runtime_routes.py": "cb6ee29c51339df747bdaae2b4de8ae0b7dfff7ce2ff0ae8b88ad33397595ebc",
+    "config.py": "c4714880b86bf674fada0f5aaf95e8878bc16be1ab32f7f3caefc1a70233b059",
+    "frontend-v1/README.md": "d36ee930c89d960fe7c792f771bdd41a211134b671908c27648e1a4cecc56782",
+    "frontend-v1/app/about/page.tsx": "7e1373254367b031297747d8626f66794c6e9f83845191019406eb458054dc7e",
+    "frontend-v1/app/admin/page.tsx": "2c776bc8e3f12a54638044d1e4a1c4b3bfe976ecf6cade4dd839f572af53c81b",
+    "frontend-v1/app/feedback/page.tsx": "a64479cdb73b0fba845062b1b051ad38110508d25e1355dae401bc554f0dd102",
+    "frontend-v1/app/layout.tsx": "730f39bd16d2649a19476936b42c68190e89343aaa478030c9faf0692280d2c2",
+    "frontend-v1/app/page.tsx": "97bd5264c34c10da0bf8165f813c4b3da6069a370299834259b2bc240a9dad50",
+    "frontend-v1/package.json": "ef827ab5a0ee9f2350320bb784922a6b32d1e75d6c664e7f70446a35ee758dc2",
+    "frontend-v1/scripts/preview-mode.mjs": "3daaccac78e80df73b2e2622a47f7fd7d82dfc5352486b465a0f8c9799fe8276",
+    "frontend-v1/scripts/preview.mjs": "be29bafbbacedc52eed30728ab6878e2a24a5519c56526f2ece0d3e198eade81",
+    "frontend-v1/src/application-shell.tsx": "797135afe8601957f5e4291c4ff8cf02bec71368a160c0894d457b37d494f968",
+    "frontend-v1/src/presentation.ts": "49e0c1d314482caff2b7507b81154e5cfe138875182acc22caf30486076a5809",
+    "frontend-v1/src/research-app.tsx": "ba5961abb30023c22522eed4e9d6bbf49d67ceb0c881d9ba294f2d97cc29f204",
+    "frontend-v1/src/runtime-app.tsx": "0d943900030b071fdffe6fd1c9983c38b96aa73cf8d1074980befa26f29fc64b",
+    "frontend-v1/src/runtime.ts": "099de7c168eada4567162ab603b1bb743f5fc42a601c5a8e10dad1e25ca5f2ab",
+    "frontend-v1/src/shell-panels.tsx": "9f2fea5dc988c9c3ad1ac374b3b7effe07e2a33756be136c29a0d9755742a50e",
+    "frontend-v1/src/shell.css": "91e598a615d09f113e59e21f2333005801c3754dbb1fc360d6a1efccc41ae9e2",
+    "frontend-v1/src/v1-entry.tsx": "49d09e7d5aa08ee73291a0dbb8116b7f8f68d2b7a957ecf14d4334e8d9eae169",
+    "frontend-v1/tests/presentation.test.ts": "ad3c1fde022ffa3144d016ccaea628e37955d76a2534d1000951f1e6acfb3de7",
+    "frontend-v1/tests/preview-mode.test.ts": "9bbd17b6997b3e390888431ab42cac87ccdac759d8fa98031364792e2199eb32",
+    "frontend-v1/tests/runtime.test.ts": "07e3b62eb94f6ccfdd1138494ee1c96fc9c6646689fd3bdb2d72358dfc86fe0e",
+    "tests/test_v1_runtime.py": "d6a097392b3787e387334b3485b029ef160272a8e05476e3e8f4b4888fe28ced"
+  },
+  "source_sha256": "a2b818a0b9eabd181c91f49e8b412ab87b7d2d7dc8b9d719cf1a4d48e8c3db0c",
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "verification": {
+    "required_passed": 2391,
+    "full_backend": {
+      "passed": 3823,
+      "gated_postgres_skips": 127,
+      "coverage_percent": 84.79,
+      "warnings": 2596,
+      "unrelated_benchmark_local_cases_excluded_from_commit": 9
+    },
+    "v1_frontend_tests": 249,
+    "new_cases": {
+      "backend_bootstrap": 24,
+      "frontend_runtime_presentation": 83,
+      "frontend_preview_mode": 3
+    },
+    "frontend_typecheck": "pass",
+    "frontend_production_build": "pass",
+    "generated_checks": 9,
+    "active_ruff": "pass",
+    "independent_wire_cases": 12,
+    "browser": "browser-qa.md; actual local C15 router/auth middleware with explicit TEST identities",
+    "hosted_delivery": "pending exact-source CI"
+  },
+  "checks": {
+    "required": {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_edna_catalogue_contract.py",
+        "tests/test_edna_catalogue_inputs.py",
+        "tests/test_edna_catalogue_query.py",
+        "tests/test_frozen_edna_catalogue.py",
+        "tests/test_edna_catalogue_adversarial.py",
+        "tests/test_edna_service.py",
+        "tests/test_edna_aggregation.py",
+        "tests/test_edna_taxonomy.py",
+        "tests/test_api_edna.py",
+        "tests/test_anemone_classification.py",
+        "tests/test_classification_application.py",
+        "tests/test_classification_review_domain.py",
+        "tests/test_edna_analysis.py",
+        "tests/test_anemone_catalogue.py",
+        "tests/test_anemone_nontarget.py",
+        "tests/test_publication_scope_contract.py",
+        "tests/test_auto_settings.py",
+        "tests/test_research_chat.py",
+        "tests/test_chat_source_scope.py",
+        "tests/test_conference_demo.py",
+        "tests/test_provisional_research_demo.py",
+        "tests/test_regional_publication.py",
+        "tests/test_research_readiness.py",
+        "tests/test_conference_review.py",
+        "tests/test_context_catalogue_contract.py",
+        "tests/test_context_catalogue_fixtures.py",
+        "tests/test_catalogue_snapshots.py",
+        "tests/test_catalogue_snapshot_capture.py",
+        "tests/test_catalogue_snapshot_transfer.py",
+        "tests/test_catalogue_snapshot_fixtures.py",
+        "tests/test_catalogue_adapter_contract.py",
+        "tests/test_catalogue_adapter_inputs.py",
+        "tests/test_frozen_catalogue_adapters.py",
+        "tests/test_sst_catalogue_contract.py",
+        "tests/test_sst_catalogue_inputs.py",
+        "tests/test_frozen_sst_catalogue.py",
+        "tests/test_scientific_catalogue_contract.py",
+        "tests/test_scientific_catalogue_inputs.py",
+        "tests/test_scientific_catalogue_relationships.py",
+        "tests/test_scientific_catalogue_adversarial.py",
+        "tests/test_scientific_catalogue_sources.py",
+        "tests/test_frozen_scientific_catalogue.py",
+        "tests/test_scientific_catalogue_publication.py",
+        "tests/test_research_registry.py",
+        "tests/test_edna_environment.py",
+        "tests/test_derived_artifact_eligibility.py",
+        "tests/test_auth.py",
+        "tests/test_rate_limit.py",
+        "tests/test_catalogue_cache.py",
+        "tests/test_api_security.py",
+        "tests/test_api_schemas.py",
+        "tests/test_catalogue_service.py",
+        "tests/test_api_catalogue.py",
+        "tests/test_catalogue_tools.py",
+        "tests/test_catalogue_service_scale.py",
+        "tests/test_catalogue_service_frozen.py",
+        "tests/test_v1_runtime.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "summary": "2391 passed, 167 warnings in 139.03s (0:02:19)",
+      "safe_environment": {
+        "AUTH_MODE": "disabled",
+        "DEPLOYMENT_ENV": "test",
+        "ENABLE_V1_SHELL": "false",
+        "ENABLE_V1_CATALOGUE": "false",
+        "ENABLE_MOCK_LOGIN": "false",
+        "PERSIST_LOCAL_CHAT": "false",
+        "RUN_POSTGRES_INTEGRATION": "0",
+        "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c15_acceptance_unused",
+        "MODEL_PROVIDER": "ollama",
+        "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+      }
+    },
+    "backend": {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/",
+        "-q",
+        "--tb=short",
+        "--cov=api",
+        "--cov=config",
+        "--cov=db",
+        "--cov=preprocessing",
+        "--cov=ingestion",
+        "--cov=orchestration",
+        "--cov=schema",
+        "--cov=evaluation",
+        "--cov-report=term-missing",
+        "--cov-fail-under=70"
+      ],
+      "safe_environment": {
+        "AUTH_MODE": "disabled",
+        "DEPLOYMENT_ENV": "test",
+        "ENABLE_V1_SHELL": "false",
+        "ENABLE_V1_CATALOGUE": "false",
+        "ENABLE_MOCK_LOGIN": "false",
+        "PERSIST_LOCAL_CHAT": "false",
+        "RUN_POSTGRES_INTEGRATION": "0",
+        "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c15_regressions_unused",
+        "MODEL_PROVIDER": "ollama",
+        "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+      },
+      "exit_code": 0
+    },
+    "frontend": [
+      {
+        "name": "v1-tests",
+        "command": [
+          "npm",
+          "--prefix",
+          "frontend-v1",
+          "test"
+        ],
+        "exit_code": 0,
+        "seconds": 0.44
+      },
+      {
+        "name": "v1-typecheck",
+        "command": [
+          "npm",
+          "--prefix",
+          "frontend-v1",
+          "run",
+          "typecheck"
+        ],
+        "exit_code": 0,
+        "seconds": 1.02
+      },
+      {
+        "name": "v1-build",
+        "command": [
+          "npm",
+          "--prefix",
+          "frontend-v1",
+          "run",
+          "build"
+        ],
+        "exit_code": 0,
+        "seconds": 6.52
+      }
+    ],
+    "static": [
+      {
+        "name": "ruff-active",
+        "command": [
+          ".venv/bin/ruff",
+          "check",
+          "api",
+          "config.py",
+          "db",
+          "evaluation",
+          "ingestion",
+          "orchestration",
+          "preprocessing",
+          "retrieval",
+          "schema",
+          "scripts",
+          "tests"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "ruff-harness",
+        "command": [
+          ".venv/bin/ruff",
+          "check",
+          "docs/plans/ocean-v1/evidence/C15/serve_shell_qa.py",
+          "docs/plans/ocean-v1/evidence/C15/verify_static.py"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "static",
+        "command": [
+          ".venv/bin/python",
+          "docs/plans/ocean-v1/evidence/C15/verify_static.py"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  "preservation": {
+    "component": "C15",
+    "date": "2026-10-17 JST",
+    "implementation_base": "c6eb0041250d0bbcd0323d313a6f452f695faf16",
+    "source_sha256": "a2b818a0b9eabd181c91f49e8b412ab87b7d2d7dc8b9d719cf1a4d48e8c3db0c",
+    "source_paths": 25,
+    "all_source_hashes_match": true,
+    "preservation": {
+      "unrelated_files": {
+        "count": 30,
+        "all_match": true
+      },
+      "scientific_artifacts": {
+        "count": 7,
+        "all_match": true
+      },
+      "serving_files": {
+        "count": 2,
+        "all_match": true
+      },
+      "legacy_frontend_files": {
+        "count": 106,
+        "all_match": true
+      },
+      "prior_evidence_files": {
+        "count": 572,
+        "all_match": true
+      },
+      "P00_current_files": {
+        "count": 36,
+        "unchanged": 27,
+        "intentional_C15_supersessions": {
+          "frontend-v1/README.md": {
+            "previous_sha256": "9e19dd90cd8c9a30bf98b88d22e76b521a34340b66347d97ba5e5e06e378d84a",
+            "accepted_C15_sha256": "d36ee930c89d960fe7c792f771bdd41a211134b671908c27648e1a4cecc56782"
+          },
+          "frontend-v1/app/about/page.tsx": {
+            "previous_sha256": "cf9dfa95cab70543adca3b1713757da933069b0a6eed5860f4a6611dc12d6413",
+            "accepted_C15_sha256": "7e1373254367b031297747d8626f66794c6e9f83845191019406eb458054dc7e"
+          },
+          "frontend-v1/app/admin/page.tsx": {
+            "previous_sha256": "59d61754a40f4223d5177fe61f8bac01882f3847047e46731be5d454c63339f1",
+            "accepted_C15_sha256": "2c776bc8e3f12a54638044d1e4a1c4b3bfe976ecf6cade4dd839f572af53c81b"
+          },
+          "frontend-v1/app/feedback/page.tsx": {
+            "previous_sha256": "1259b2cd86928ad51061d462dbef6d6584720908dcfb18ee68929afd6ffd3ceb",
+            "accepted_C15_sha256": "a64479cdb73b0fba845062b1b051ad38110508d25e1355dae401bc554f0dd102"
+          },
+          "frontend-v1/app/layout.tsx": {
+            "previous_sha256": "86f13bc7e1055507cd56e9e022ee86c2957e2e427774657e5c5555fd5a9d6ac9",
+            "accepted_C15_sha256": "730f39bd16d2649a19476936b42c68190e89343aaa478030c9faf0692280d2c2"
+          },
+          "frontend-v1/app/page.tsx": {
+            "previous_sha256": "da00cc65a5163107e908b7198ac915d6d24e7f4c763643d427bdf77f3d2a0382",
+            "accepted_C15_sha256": "97bd5264c34c10da0bf8165f813c4b3da6069a370299834259b2bc240a9dad50"
+          },
+          "frontend-v1/package.json": {
+            "previous_sha256": "f5491bbe9fc19bb25155fab8cb280f1c01f18bc1b63fa47543efbf8cd53835c0",
+            "accepted_C15_sha256": "ef827ab5a0ee9f2350320bb784922a6b32d1e75d6c664e7f70446a35ee758dc2"
+          },
+          "frontend-v1/scripts/preview.mjs": {
+            "previous_sha256": "6b55746d23ed0d1645b89a163c27bd441f43a44cb15d389137ff2f7cb3dfbc69",
+            "accepted_C15_sha256": "be29bafbbacedc52eed30728ab6878e2a24a5519c56526f2ece0d3e198eade81"
+          },
+          "frontend-v1/src/research-app.tsx": {
+            "previous_sha256": "af470bb2814a09bd26dc3132206fde717d73aa06620c6d30a9e5170c0629396f",
+            "accepted_C15_sha256": "ba5961abb30023c22522eed4e9d6bbf49d67ceb0c881d9ba294f2d97cc29f204"
+          }
+        },
+        "all_paths_match_or_are_explicitly_superseded": true
+      },
+      "C08_current_source": {
+        "count": 12,
+        "all_match": true
+      },
+      "C14_current_source": {
+        "count": 14,
+        "unchanged": 11,
+        "intentional_C15_supersessions": {
+          "api/auth.py": {
+            "previous_sha256": "c42bf544761bad3c273db2d002b996764344b1b8fec086ad161ffb08d10b49cd",
+            "accepted_C15_sha256": "74283b43d4dbae38b8e1d4977eeb084f86cb465c2a98c9085561ad65b97a5c1d"
+          },
+          "api/main.py": {
+            "previous_sha256": "54acaf07dc607d9a08de2305deaf62844d7eed5efa86bb1b8aca5a3816bfbad0",
+            "accepted_C15_sha256": "0f0d699b469fdda8b1c9aa1db1f17c2f0265dbb22ad950a95a3e60315476081c"
+          },
+          "config.py": {
+            "previous_sha256": "842d338a2e9167fe78558fcb1b6d211b196bc8e873bb7c807492118ad466cd4e",
+            "accepted_C15_sha256": "c4714880b86bf674fada0f5aaf95e8878bc16be1ab32f7f3caefc1a70233b059"
+          }
+        },
+        "all_paths_match_or_are_explicitly_superseded": true
+      }
+    },
+    "backend_tested_source": {
+      "path": "docs/plans/ocean-v1/evidence/C15/backend-tested-source.json",
+      "sha256": "76718ec589282b0e0d382d4fc360438f87a8d4a26659e2aeaa231a377e9ccfbd",
+      "paths": 5,
+      "all_current_hashes_match": true,
+      "files": {
+        "api/v1_runtime_routes.py": "cb6ee29c51339df747bdaae2b4de8ae0b7dfff7ce2ff0ae8b88ad33397595ebc",
+        "api/auth.py": "74283b43d4dbae38b8e1d4977eeb084f86cb465c2a98c9085561ad65b97a5c1d",
+        "api/main.py": "0f0d699b469fdda8b1c9aa1db1f17c2f0265dbb22ad950a95a3e60315476081c",
+        "config.py": "c4714880b86bf674fada0f5aaf95e8878bc16be1ab32f7f3caefc1a70233b059",
+        "tests/test_v1_runtime.py": "d6a097392b3787e387334b3485b029ef160272a8e05476e3e8f4b4888fe28ced"
+      }
+    },
+    "formal_prerequisites": {
+      "P00": {
+        "paths": 36,
+        "unchanged": 27,
+        "intentional_C15_supersessions": {
+          "frontend-v1/README.md": {
+            "previous_sha256": "9e19dd90cd8c9a30bf98b88d22e76b521a34340b66347d97ba5e5e06e378d84a",
+            "accepted_C15_sha256": "d36ee930c89d960fe7c792f771bdd41a211134b671908c27648e1a4cecc56782"
+          },
+          "frontend-v1/app/about/page.tsx": {
+            "previous_sha256": "cf9dfa95cab70543adca3b1713757da933069b0a6eed5860f4a6611dc12d6413",
+            "accepted_C15_sha256": "7e1373254367b031297747d8626f66794c6e9f83845191019406eb458054dc7e"
+          },
+          "frontend-v1/app/admin/page.tsx": {
+            "previous_sha256": "59d61754a40f4223d5177fe61f8bac01882f3847047e46731be5d454c63339f1",
+            "accepted_C15_sha256": "2c776bc8e3f12a54638044d1e4a1c4b3bfe976ecf6cade4dd839f572af53c81b"
+          },
+          "frontend-v1/app/feedback/page.tsx": {
+            "previous_sha256": "1259b2cd86928ad51061d462dbef6d6584720908dcfb18ee68929afd6ffd3ceb",
+            "accepted_C15_sha256": "a64479cdb73b0fba845062b1b051ad38110508d25e1355dae401bc554f0dd102"
+          },
+          "frontend-v1/app/layout.tsx": {
+            "previous_sha256": "86f13bc7e1055507cd56e9e022ee86c2957e2e427774657e5c5555fd5a9d6ac9",
+            "accepted_C15_sha256": "730f39bd16d2649a19476936b42c68190e89343aaa478030c9faf0692280d2c2"
+          },
+          "frontend-v1/app/page.tsx": {
+            "previous_sha256": "da00cc65a5163107e908b7198ac915d6d24e7f4c763643d427bdf77f3d2a0382",
+            "accepted_C15_sha256": "97bd5264c34c10da0bf8165f813c4b3da6069a370299834259b2bc240a9dad50"
+          },
+          "frontend-v1/package.json": {
+            "previous_sha256": "f5491bbe9fc19bb25155fab8cb280f1c01f18bc1b63fa47543efbf8cd53835c0",
+            "accepted_C15_sha256": "ef827ab5a0ee9f2350320bb784922a6b32d1e75d6c664e7f70446a35ee758dc2"
+          },
+          "frontend-v1/scripts/preview.mjs": {
+            "previous_sha256": "6b55746d23ed0d1645b89a163c27bd441f43a44cb15d389137ff2f7cb3dfbc69",
+            "accepted_C15_sha256": "be29bafbbacedc52eed30728ab6878e2a24a5519c56526f2ece0d3e198eade81"
+          },
+          "frontend-v1/src/research-app.tsx": {
+            "previous_sha256": "af470bb2814a09bd26dc3132206fde717d73aa06620c6d30a9e5170c0629396f",
+            "accepted_C15_sha256": "ba5961abb30023c22522eed4e9d6bbf49d67ceb0c881d9ba294f2d97cc29f204"
+          }
+        }
+      },
+      "C08": {
+        "paths": 12,
+        "unchanged": 12,
+        "intentional_C15_supersessions": {}
+      }
+    },
+    "integration_edits": {
+      "api/auth.py": {
+        "previous_sha256": "c42bf544761bad3c273db2d002b996764344b1b8fec086ad161ffb08d10b49cd",
+        "accepted_C15_sha256": "74283b43d4dbae38b8e1d4977eeb084f86cb465c2a98c9085561ad65b97a5c1d"
+      },
+      "api/main.py": {
+        "previous_sha256": "54acaf07dc607d9a08de2305deaf62844d7eed5efa86bb1b8aca5a3816bfbad0",
+        "accepted_C15_sha256": "0f0d699b469fdda8b1c9aa1db1f17c2f0265dbb22ad950a95a3e60315476081c"
+      },
+      "config.py": {
+        "previous_sha256": "842d338a2e9167fe78558fcb1b6d211b196bc8e873bb7c807492118ad466cd4e",
+        "accepted_C15_sha256": "c4714880b86bf674fada0f5aaf95e8878bc16be1ab32f7f3caefc1a70233b059"
+      }
+    },
+    "earlier_receipts": {
+      "docs/plans/ocean-v1/evidence/C14/verification.json": "ebcc52e7193fe09276d142930220705b6454831bca261011b80c7c5e19322d3e",
+      "docs/plans/ocean-v1/evidence/C14/delivery.json": "f2797710a58f584af03f434dce31e29f30def5f02f87918cdde202c0dc260cd0",
+      "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/ready-confirmation.json": "2f673094404ecff6523ec93cd318ada2368d1a2633a7968d5a8c7d127840683d",
+      "docs/plans/ocean-v1/evidence/C15/start-snapshot.json": "a2b3269d975f39f15337f7549e1c5225563979235c79b39093645604975c5dcf"
+    },
+    "earlier_receipts_policy": "Original P00/C08/C14 receipts and all 572 earlier evidence files are immutable; only this later map records C15 supersessions",
+    "scope": "Hash and preservation verification only; no tests, source/docs edits, services, commit or push"
+  },
+  "resource_observations": {
+    "required": {
+      "wall_seconds": 139.98,
+      "maximum_rss_bytes": 4054253568
+    },
+    "backend": {
+      "wall_seconds": 284.71,
+      "maximum_rss_bytes": 4091150336
+    },
+    "qualification": "macOS whole combined fixture-suite measurements; not production request latency, capacity or throughput"
+  },
+  "limits": [
+    "Real OIDC and separately configured deployment target remain unverified",
+    "No live scientific data acquisition, approval, transfer, legacy mutation, provider or cloud operation",
+    "Future domain capabilities remain unavailable until their owning components integrate",
+    "Root-wide Ruff also scans historical evidence/unrelated audit helpers; active CI scope and C15 harness pass"
+  ],
+  "next_action": "Commit/push accepted C15 source on overhaul; verify exact-source hosted CI and record separate delivery, then audit C16 formal prerequisites before implementing automatically.",
+  "evidence_files_sha256": {
+    "docs/plans/ocean-v1/evidence/C15/accepted-source.json": "03703ec2f0ce8e3f72ce6577b79a6c5bcdcb15f853ab941fe4d0fca399002605",
+    "docs/plans/ocean-v1/evidence/C15/adapters.txt": "3616357347d55684342a6b3d04a6cab676714283fd7613babf78aee10db52d5d",
+    "docs/plans/ocean-v1/evidence/C15/backend-resources.txt": "bbda57554e4e402261c3ae496ca9129c71cd4ddc1ab518e2e274aea9d6114ed2",
+    "docs/plans/ocean-v1/evidence/C15/backend-result.json": "fbee29ca1334da6dec295fe366647b5594adfbbac2e9e48aa17229db91f4c19b",
+    "docs/plans/ocean-v1/evidence/C15/backend-tested-source.json": "76718ec589282b0e0d382d4fc360438f87a8d4a26659e2aeaa231a377e9ccfbd",
+    "docs/plans/ocean-v1/evidence/C15/backend-tests.txt": "8443d9ab7c15af55d6b101cded9825217e70a695e76b69ec316abb50c61dd886",
+    "docs/plans/ocean-v1/evidence/C15/browser-qa.md": "1faa30c0453e39668b535a1c4c9c7dd8c7619b01bea04ed1141bd60339537917",
+    "docs/plans/ocean-v1/evidence/C15/edna.txt": "584bf23af0f9b906b7db1c3224242971b102e573fef6f35a39b1bd259fcb7180",
+    "docs/plans/ocean-v1/evidence/C15/examples.txt": "962c470ee8e7b1a3fa7cc260238248b74b659e73c4479518cfd90a2fb0468724",
+    "docs/plans/ocean-v1/evidence/C15/frontend-final-results.json": "39e15d6e7bc97efd1a8118d79819233e08864dd34f260b610dfb590f2e8e61cd",
+    "docs/plans/ocean-v1/evidence/C15/frontend-static-results.json": "ef0ad6b33488da256c9f7333c2d39714436a929bfedaf27e388fcbd558409652",
+    "docs/plans/ocean-v1/evidence/C15/independent-review.md": "2453a8839822491032598dc300d5cbdd8de8cd4b8a5b54f44944fde17503c587",
+    "docs/plans/ocean-v1/evidence/C15/preservation.json": "2f829b54b296726e98cc37cff32cc80727eb3ec563f1b01629adddcd4538e283",
+    "docs/plans/ocean-v1/evidence/C15/required-resources.txt": "d40f3e6228bcca6c4f4ca4d1d8d376da576494f5fb00101ea715b73f04f4d9d6",
+    "docs/plans/ocean-v1/evidence/C15/required-result.json": "ce6116d000fb13423418c864be4fafc2796998f06295c9c631211526e0816d2f",
+    "docs/plans/ocean-v1/evidence/C15/required-tests.txt": "f77bedbe895d3ed77bfd87fe0ca7d3274108971f2c60a91667986af173a78ef6",
+    "docs/plans/ocean-v1/evidence/C15/ruff-active.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C15/ruff-harness.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C15/ruff.txt": "77c9ed8e132c249e3f9701040c98a365438e0e69217e6aa375d793f7917b8599",
+    "docs/plans/ocean-v1/evidence/C15/schema.txt": "17f7777b79b05d9f620343086f7948c8a0ec79cbe76e74f59d7490234a67d15b",
+    "docs/plans/ocean-v1/evidence/C15/scientific.txt": "a86862b927682fb9dfbf4d762295399ea797eb54c37be97810494686a02dcc6f",
+    "docs/plans/ocean-v1/evidence/C15/scope.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C15/serve_shell_qa.py": "89a7452cab00d6144c561e415487cb0dd94f384361963cf6d1b21da4bb2b4f44",
+    "docs/plans/ocean-v1/evidence/C15/snapshots.txt": "9b07d6aff6dbefa9ef198cfe8da820676814ff35b8f418400856ff03bb3cc1b9",
+    "docs/plans/ocean-v1/evidence/C15/sst.txt": "dcb43f84e390bb4ca68514658fbdc4b9605b4f42bb22aa32120ab2f0ebaf8cd7",
+    "docs/plans/ocean-v1/evidence/C15/start-snapshot.json": "a2b3269d975f39f15337f7549e1c5225563979235c79b39093645604975c5dcf",
+    "docs/plans/ocean-v1/evidence/C15/static-final-results.json": "34dd88274a4d1c36ca73d0306c3b65fc50cc425084a344fde1924b5e8d0b48a2",
+    "docs/plans/ocean-v1/evidence/C15/static-results.json": "da0ef1bfd151c5e84a81285fa34f0b6fddf30b60cbe0bb3a9cd24535e4763ff8",
+    "docs/plans/ocean-v1/evidence/C15/static.txt": "4d38865a806198c42ef99af70ca5eec866d0dd515d4b84a4ca26044000aef0ab",
+    "docs/plans/ocean-v1/evidence/C15/types.txt": "edfc61324e991e3bda912ff0153de8de843149d6e96921f6df836436437bb215",
+    "docs/plans/ocean-v1/evidence/C15/v1-build.txt": "adec997bf100f8237cc8cb242c0d009ae76c6b4fce6e5b7cf695f8c054c04bf5",
+    "docs/plans/ocean-v1/evidence/C15/v1-tests.txt": "3441c7b60f5e81621c84da698a06efc5f543d6a5c702379d60dcf804e365591d",
+    "docs/plans/ocean-v1/evidence/C15/v1-typecheck.txt": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936",
+    "docs/plans/ocean-v1/evidence/C15/verify_acceptance.py": "d933e717c4bed1b29d19996791ff65cdeb188bc7dee0c2164320196b5f58303d",
+    "docs/plans/ocean-v1/evidence/C15/verify_backend.py": "dfd595ec1593ed3c12d50adda0a242940131df7e10fa582b9957ad9f3b6ed74d",
+    "docs/plans/ocean-v1/evidence/C15/verify_preservation.py": "79eb006875ea8899f6a2172e0261ba64ff5eaeb9024992273135624a82655da3",
+    "docs/plans/ocean-v1/evidence/C15/verify_static.py": "34b6c8c512e1338de3c808f807386af4ddf0eea648b7721078db863a430d007f"
+  }
+}

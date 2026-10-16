@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "OCEAN · Local preview",
-  description: "OCEAN v1 research workspace. Local preview with synthetic data.",
+  title: "OCEAN Platform",
+  description: "OCEAN v1 research workspace.",
   robots: { index: false, follow: false },
 };
 

@@ -440,6 +440,8 @@ def route_permission(method: str, path: str) -> Optional[str]:
     ``None`` means no authorization policy matched and is denied by default.
     """
     method = method.upper()
+    if path == "/v1/runtime":
+        return "profile:read" if method == "GET" else None
     if path.startswith("/catalogue"):
         if method == "POST" and path in {
             "/catalogue/overview", "/catalogue/list", "/catalogue/open",

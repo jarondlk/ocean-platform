@@ -1,2 +1,2 @@
-import { ResearchApp } from "../../src/research-app";
-export default function AdminPage() { return <ResearchApp initialView="admin" />; }
+import { V1Entry } from "../../src/v1-entry";
+export default function AdminPage() { return <V1Entry initialView="admin" />; }

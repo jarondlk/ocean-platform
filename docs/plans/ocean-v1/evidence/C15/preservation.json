@@ -1,0 +1,180 @@
+{
+  "component": "C15",
+  "date": "2026-10-17 JST",
+  "implementation_base": "c6eb0041250d0bbcd0323d313a6f452f695faf16",
+  "source_sha256": "a2b818a0b9eabd181c91f49e8b412ab87b7d2d7dc8b9d719cf1a4d48e8c3db0c",
+  "source_paths": 25,
+  "all_source_hashes_match": true,
+  "preservation": {
+    "unrelated_files": {
+      "count": 30,
+      "all_match": true
+    },
+    "scientific_artifacts": {
+      "count": 7,
+      "all_match": true
+    },
+    "serving_files": {
+      "count": 2,
+      "all_match": true
+    },
+    "legacy_frontend_files": {
+      "count": 106,
+      "all_match": true
+    },
+    "prior_evidence_files": {
+      "count": 572,
+      "all_match": true
+    },
+    "P00_current_files": {
+      "count": 36,
+      "unchanged": 27,
+      "intentional_C15_supersessions": {
+        "frontend-v1/README.md": {
+          "previous_sha256": "9e19dd90cd8c9a30bf98b88d22e76b521a34340b66347d97ba5e5e06e378d84a",
+          "accepted_C15_sha256": "d36ee930c89d960fe7c792f771bdd41a211134b671908c27648e1a4cecc56782"
+        },
+        "frontend-v1/app/about/page.tsx": {
+          "previous_sha256": "cf9dfa95cab70543adca3b1713757da933069b0a6eed5860f4a6611dc12d6413",
+          "accepted_C15_sha256": "7e1373254367b031297747d8626f66794c6e9f83845191019406eb458054dc7e"
+        },
+        "frontend-v1/app/admin/page.tsx": {
+          "previous_sha256": "59d61754a40f4223d5177fe61f8bac01882f3847047e46731be5d454c63339f1",
+          "accepted_C15_sha256": "2c776bc8e3f12a54638044d1e4a1c4b3bfe976ecf6cade4dd839f572af53c81b"
+        },
+        "frontend-v1/app/feedback/page.tsx": {
+          "previous_sha256": "1259b2cd86928ad51061d462dbef6d6584720908dcfb18ee68929afd6ffd3ceb",
+          "accepted_C15_sha256": "a64479cdb73b0fba845062b1b051ad38110508d25e1355dae401bc554f0dd102"
+        },
+        "frontend-v1/app/layout.tsx": {
+          "previous_sha256": "86f13bc7e1055507cd56e9e022ee86c2957e2e427774657e5c5555fd5a9d6ac9",
+          "accepted_C15_sha256": "730f39bd16d2649a19476936b42c68190e89343aaa478030c9faf0692280d2c2"
+        },
+        "frontend-v1/app/page.tsx": {
+          "previous_sha256": "da00cc65a5163107e908b7198ac915d6d24e7f4c763643d427bdf77f3d2a0382",
+          "accepted_C15_sha256": "97bd5264c34c10da0bf8165f813c4b3da6069a370299834259b2bc240a9dad50"
+        },
+        "frontend-v1/package.json": {
+          "previous_sha256": "f5491bbe9fc19bb25155fab8cb280f1c01f18bc1b63fa47543efbf8cd53835c0",
+          "accepted_C15_sha256": "ef827ab5a0ee9f2350320bb784922a6b32d1e75d6c664e7f70446a35ee758dc2"
+        },
+        "frontend-v1/scripts/preview.mjs": {
+          "previous_sha256": "6b55746d23ed0d1645b89a163c27bd441f43a44cb15d389137ff2f7cb3dfbc69",
+          "accepted_C15_sha256": "be29bafbbacedc52eed30728ab6878e2a24a5519c56526f2ece0d3e198eade81"
+        },
+        "frontend-v1/src/research-app.tsx": {
+          "previous_sha256": "af470bb2814a09bd26dc3132206fde717d73aa06620c6d30a9e5170c0629396f",
+          "accepted_C15_sha256": "ba5961abb30023c22522eed4e9d6bbf49d67ceb0c881d9ba294f2d97cc29f204"
+        }
+      },
+      "all_paths_match_or_are_explicitly_superseded": true
+    },
+    "C08_current_source": {
+      "count": 12,
+      "all_match": true
+    },
+    "C14_current_source": {
+      "count": 14,
+      "unchanged": 11,
+      "intentional_C15_supersessions": {
+        "api/auth.py": {
+          "previous_sha256": "c42bf544761bad3c273db2d002b996764344b1b8fec086ad161ffb08d10b49cd",
+          "accepted_C15_sha256": "74283b43d4dbae38b8e1d4977eeb084f86cb465c2a98c9085561ad65b97a5c1d"
+        },
+        "api/main.py": {
+          "previous_sha256": "54acaf07dc607d9a08de2305deaf62844d7eed5efa86bb1b8aca5a3816bfbad0",
+          "accepted_C15_sha256": "0f0d699b469fdda8b1c9aa1db1f17c2f0265dbb22ad950a95a3e60315476081c"
+        },
+        "config.py": {
+          "previous_sha256": "842d338a2e9167fe78558fcb1b6d211b196bc8e873bb7c807492118ad466cd4e",
+          "accepted_C15_sha256": "c4714880b86bf674fada0f5aaf95e8878bc16be1ab32f7f3caefc1a70233b059"
+        }
+      },
+      "all_paths_match_or_are_explicitly_superseded": true
+    }
+  },
+  "backend_tested_source": {
+    "path": "docs/plans/ocean-v1/evidence/C15/backend-tested-source.json",
+    "sha256": "76718ec589282b0e0d382d4fc360438f87a8d4a26659e2aeaa231a377e9ccfbd",
+    "paths": 5,
+    "all_current_hashes_match": true,
+    "files": {
+      "api/v1_runtime_routes.py": "cb6ee29c51339df747bdaae2b4de8ae0b7dfff7ce2ff0ae8b88ad33397595ebc",
+      "api/auth.py": "74283b43d4dbae38b8e1d4977eeb084f86cb465c2a98c9085561ad65b97a5c1d",
+      "api/main.py": "0f0d699b469fdda8b1c9aa1db1f17c2f0265dbb22ad950a95a3e60315476081c",
+      "config.py": "c4714880b86bf674fada0f5aaf95e8878bc16be1ab32f7f3caefc1a70233b059",
+      "tests/test_v1_runtime.py": "d6a097392b3787e387334b3485b029ef160272a8e05476e3e8f4b4888fe28ced"
+    }
+  },
+  "formal_prerequisites": {
+    "P00": {
+      "paths": 36,
+      "unchanged": 27,
+      "intentional_C15_supersessions": {
+        "frontend-v1/README.md": {
+          "previous_sha256": "9e19dd90cd8c9a30bf98b88d22e76b521a34340b66347d97ba5e5e06e378d84a",
+          "accepted_C15_sha256": "d36ee930c89d960fe7c792f771bdd41a211134b671908c27648e1a4cecc56782"
+        },
+        "frontend-v1/app/about/page.tsx": {
+          "previous_sha256": "cf9dfa95cab70543adca3b1713757da933069b0a6eed5860f4a6611dc12d6413",
+          "accepted_C15_sha256": "7e1373254367b031297747d8626f66794c6e9f83845191019406eb458054dc7e"
+        },
+        "frontend-v1/app/admin/page.tsx": {
+          "previous_sha256": "59d61754a40f4223d5177fe61f8bac01882f3847047e46731be5d454c63339f1",
+          "accepted_C15_sha256": "2c776bc8e3f12a54638044d1e4a1c4b3bfe976ecf6cade4dd839f572af53c81b"
+        },
+        "frontend-v1/app/feedback/page.tsx": {
+          "previous_sha256": "1259b2cd86928ad51061d462dbef6d6584720908dcfb18ee68929afd6ffd3ceb",
+          "accepted_C15_sha256": "a64479cdb73b0fba845062b1b051ad38110508d25e1355dae401bc554f0dd102"
+        },
+        "frontend-v1/app/layout.tsx": {
+          "previous_sha256": "86f13bc7e1055507cd56e9e022ee86c2957e2e427774657e5c5555fd5a9d6ac9",
+          "accepted_C15_sha256": "730f39bd16d2649a19476936b42c68190e89343aaa478030c9faf0692280d2c2"
+        },
+        "frontend-v1/app/page.tsx": {
+          "previous_sha256": "da00cc65a5163107e908b7198ac915d6d24e7f4c763643d427bdf77f3d2a0382",
+          "accepted_C15_sha256": "97bd5264c34c10da0bf8165f813c4b3da6069a370299834259b2bc240a9dad50"
+        },
+        "frontend-v1/package.json": {
+          "previous_sha256": "f5491bbe9fc19bb25155fab8cb280f1c01f18bc1b63fa47543efbf8cd53835c0",
+          "accepted_C15_sha256": "ef827ab5a0ee9f2350320bb784922a6b32d1e75d6c664e7f70446a35ee758dc2"
+        },
+        "frontend-v1/scripts/preview.mjs": {
+          "previous_sha256": "6b55746d23ed0d1645b89a163c27bd441f43a44cb15d389137ff2f7cb3dfbc69",
+          "accepted_C15_sha256": "be29bafbbacedc52eed30728ab6878e2a24a5519c56526f2ece0d3e198eade81"
+        },
+        "frontend-v1/src/research-app.tsx": {
+          "previous_sha256": "af470bb2814a09bd26dc3132206fde717d73aa06620c6d30a9e5170c0629396f",
+          "accepted_C15_sha256": "ba5961abb30023c22522eed4e9d6bbf49d67ceb0c881d9ba294f2d97cc29f204"
+        }
+      }
+    },
+    "C08": {
+      "paths": 12,
+      "unchanged": 12,
+      "intentional_C15_supersessions": {}
+    }
+  },
+  "integration_edits": {
+    "api/auth.py": {
+      "previous_sha256": "c42bf544761bad3c273db2d002b996764344b1b8fec086ad161ffb08d10b49cd",
+      "accepted_C15_sha256": "74283b43d4dbae38b8e1d4977eeb084f86cb465c2a98c9085561ad65b97a5c1d"
+    },
+    "api/main.py": {
+      "previous_sha256": "54acaf07dc607d9a08de2305deaf62844d7eed5efa86bb1b8aca5a3816bfbad0",
+      "accepted_C15_sha256": "0f0d699b469fdda8b1c9aa1db1f17c2f0265dbb22ad950a95a3e60315476081c"
+    },
+    "config.py": {
+      "previous_sha256": "842d338a2e9167fe78558fcb1b6d211b196bc8e873bb7c807492118ad466cd4e",
+      "accepted_C15_sha256": "c4714880b86bf674fada0f5aaf95e8878bc16be1ab32f7f3caefc1a70233b059"
+    }
+  },
+  "earlier_receipts": {
+    "docs/plans/ocean-v1/evidence/C14/verification.json": "ebcc52e7193fe09276d142930220705b6454831bca261011b80c7c5e19322d3e",
+    "docs/plans/ocean-v1/evidence/C14/delivery.json": "f2797710a58f584af03f434dce31e29f30def5f02f87918cdde202c0dc260cd0",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/ready-confirmation.json": "2f673094404ecff6523ec93cd318ada2368d1a2633a7968d5a8c7d127840683d",
+    "docs/plans/ocean-v1/evidence/C15/start-snapshot.json": "a2b3269d975f39f15337f7549e1c5225563979235c79b39093645604975c5dcf"
+  },
+  "earlier_receipts_policy": "Original P00/C08/C14 receipts and all 572 earlier evidence files are immutable; only this later map records C15 supersessions",
+  "scope": "Hash and preservation verification only; no tests, source/docs edits, services, commit or push"
+}

@@ -1,6 +1,6 @@
 # C15 — New application shell
 
-**Status:** Not started. **Prerequisites:** P00, C08.
+**Status:** Complete for local acceptance; source checkpoint and hosted delivery pending. **Prerequisites:** P00, C08.
 
 ## Revised delivery boundary
 
