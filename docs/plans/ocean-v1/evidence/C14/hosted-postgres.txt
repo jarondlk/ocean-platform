@@ -1,0 +1,1117 @@
+﻿2026-10-16T14:30:18.5152093Z Current runner version: '2.337.0'
+2026-10-16T14:30:18.5172995Z ##[group]Runner Image Provisioner
+2026-10-16T14:30:18.5173804Z Hosted Compute Agent
+2026-10-16T14:30:18.5174296Z Version: 20261012.601
+2026-10-16T14:30:18.5174797Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-16T14:30:18.5175479Z Build Date: 2026-10-12T17:48:21Z
+2026-10-16T14:30:18.5176051Z Worker ID: {4eb4cb9c-f7eb-483a-b4c5-10ad1f26e30f}
+2026-10-16T14:30:18.5176665Z Region: westcentralus
+2026-10-16T14:30:18.5177166Z Cloud: Azure
+2026-10-16T14:30:18.5177625Z ##[endgroup]
+2026-10-16T14:30:18.5179130Z ##[group]Operating System
+2026-10-16T14:30:18.5179668Z Ubuntu
+2026-10-16T14:30:18.5180197Z 24.04.5
+2026-10-16T14:30:18.5180646Z LTS
+2026-10-16T14:30:18.5181112Z ##[endgroup]
+2026-10-16T14:30:18.5181614Z ##[group]Runner Image
+2026-10-16T14:30:18.5182147Z Image: ubuntu-24.04
+2026-10-16T14:30:18.5182612Z Version: 20261012.334.1
+2026-10-16T14:30:18.5183736Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-16T14:30:18.5185024Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-16T14:30:18.5185831Z ##[endgroup]
+2026-10-16T14:30:18.5186802Z ##[group]GITHUB_TOKEN Permissions
+2026-10-16T14:30:18.5188443Z Contents: read
+2026-10-16T14:30:18.5188959Z Metadata: read
+2026-10-16T14:30:18.5189518Z ##[endgroup]
+2026-10-16T14:30:18.5191211Z Secret source: Actions
+2026-10-16T14:30:18.5192069Z Cache mode: write
+2026-10-16T14:30:18.5192672Z Prepare workflow directory
+2026-10-16T14:30:18.5562103Z Prepare all required actions
+2026-10-16T14:30:18.5603465Z Getting action download info
+2026-10-16T14:30:18.8252397Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-16T14:30:18.8965461Z Download action repository 'actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97' (SHA:5fda3b95a4ea91299a34e894583c3862153e4b97)
+2026-10-16T14:30:19.0773371Z Complete job name: PostgreSQL migration and metadata integration
+2026-10-16T14:30:19.1204970Z ##[group]Checking docker version
+2026-10-16T14:30:19.1215380Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2026-10-16T14:30:19.1989543Z '1.48'
+2026-10-16T14:30:19.1999594Z Docker daemon API version: '1.48'
+2026-10-16T14:30:19.2000228Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2026-10-16T14:30:19.2130643Z '1.48'
+2026-10-16T14:30:19.2140606Z Docker client API version: '1.48'
+2026-10-16T14:30:19.2144993Z ##[endgroup]
+2026-10-16T14:30:19.2146904Z ##[group]Clean up resources from previous jobs
+2026-10-16T14:30:19.2151511Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=73251f"
+2026-10-16T14:30:19.2263460Z ##[command]/usr/bin/docker network prune --force --filter "label=73251f"
+2026-10-16T14:30:19.2366262Z ##[endgroup]
+2026-10-16T14:30:19.2366675Z ##[group]Create local container network
+2026-10-16T14:30:19.2373996Z ##[command]/usr/bin/docker network create --label 73251f github_network_543439b19c8343c48cd6fb105111a252
+2026-10-16T14:30:19.3038427Z 311ebfb161368f754b0c877cbd4438e47dc84ec0ec363963638f6416138f57f9
+2026-10-16T14:30:19.3053270Z ##[endgroup]
+2026-10-16T14:30:19.3073843Z ##[group]Starting postgres service container
+2026-10-16T14:30:19.3091823Z ##[command]/usr/bin/docker pull pgvector/pgvector:pg16
+2026-10-16T14:30:19.9949718Z pg16: Pulling from pgvector/pgvector
+2026-10-16T14:30:20.2142394Z 774043ccc8cc: Pulling fs layer
+2026-10-16T14:30:20.2143311Z f2455d5db1ca: Pulling fs layer
+2026-10-16T14:30:20.2143951Z 8445317dd84f: Pulling fs layer
+2026-10-16T14:30:20.2144587Z 2dd9b1a67dcf: Pulling fs layer
+2026-10-16T14:30:20.2145218Z e0d7eb465374: Pulling fs layer
+2026-10-16T14:30:20.2145864Z 1a60cdc4b8b6: Pulling fs layer
+2026-10-16T14:30:20.2146482Z 00ea30b13a58: Pulling fs layer
+2026-10-16T14:30:20.2147128Z 708679827647: Pulling fs layer
+2026-10-16T14:30:20.2147748Z 3e13d544cd35: Pulling fs layer
+2026-10-16T14:30:20.2148625Z 639aa37fe549: Pulling fs layer
+2026-10-16T14:30:20.2149613Z b3e09271b721: Pulling fs layer
+2026-10-16T14:30:20.2150264Z aae3fa55f377: Pulling fs layer
+2026-10-16T14:30:20.2150904Z 50a212ffc5a1: Pulling fs layer
+2026-10-16T14:30:20.2151598Z e9cc823db10f: Pulling fs layer
+2026-10-16T14:30:20.2152285Z 003442b28249: Pulling fs layer
+2026-10-16T14:30:20.2152964Z 2ede25b7c579: Pulling fs layer
+2026-10-16T14:30:20.2153614Z e0d7eb465374: Waiting
+2026-10-16T14:30:20.2154220Z 1a60cdc4b8b6: Waiting
+2026-10-16T14:30:20.2154871Z 00ea30b13a58: Waiting
+2026-10-16T14:30:20.2155481Z aae3fa55f377: Waiting
+2026-10-16T14:30:20.2156138Z 708679827647: Waiting
+2026-10-16T14:30:20.2156815Z 50a212ffc5a1: Waiting
+2026-10-16T14:30:20.2157698Z 3e13d544cd35: Waiting
+2026-10-16T14:30:20.2158736Z 639aa37fe549: Waiting
+2026-10-16T14:30:20.2159626Z b3e09271b721: Waiting
+2026-10-16T14:30:20.2160535Z 2dd9b1a67dcf: Waiting
+2026-10-16T14:30:20.2161442Z 2ede25b7c579: Waiting
+2026-10-16T14:30:20.2162324Z 003442b28249: Waiting
+2026-10-16T14:30:20.4439555Z f2455d5db1ca: Verifying Checksum
+2026-10-16T14:30:20.4441712Z f2455d5db1ca: Download complete
+2026-10-16T14:30:20.6132277Z 8445317dd84f: Verifying Checksum
+2026-10-16T14:30:20.6133153Z 8445317dd84f: Download complete
+2026-10-16T14:30:20.7021370Z 774043ccc8cc: Verifying Checksum
+2026-10-16T14:30:20.7025847Z 774043ccc8cc: Download complete
+2026-10-16T14:30:20.7478185Z 2dd9b1a67dcf: Verifying Checksum
+2026-10-16T14:30:20.7480259Z 2dd9b1a67dcf: Download complete
+2026-10-16T14:30:20.9559457Z 00ea30b13a58: Verifying Checksum
+2026-10-16T14:30:20.9561315Z 00ea30b13a58: Download complete
+2026-10-16T14:30:21.0056561Z e0d7eb465374: Verifying Checksum
+2026-10-16T14:30:21.0057038Z e0d7eb465374: Download complete
+2026-10-16T14:30:21.0164472Z 1a60cdc4b8b6: Verifying Checksum
+2026-10-16T14:30:21.0164886Z 1a60cdc4b8b6: Download complete
+2026-10-16T14:30:21.1506863Z 708679827647: Verifying Checksum
+2026-10-16T14:30:21.1507565Z 708679827647: Download complete
+2026-10-16T14:30:21.2142965Z 639aa37fe549: Download complete
+2026-10-16T14:30:21.3559318Z b3e09271b721: Download complete
+2026-10-16T14:30:21.4127125Z aae3fa55f377: Download complete
+2026-10-16T14:30:21.5423364Z 50a212ffc5a1: Download complete
+2026-10-16T14:30:21.6013354Z 774043ccc8cc: Pull complete
+2026-10-16T14:30:21.6337062Z e9cc823db10f: Download complete
+2026-10-16T14:30:21.6771192Z 3e13d544cd35: Verifying Checksum
+2026-10-16T14:30:21.7649813Z 3e13d544cd35: Download complete
+2026-10-16T14:30:21.7650118Z 003442b28249: Download complete
+2026-10-16T14:30:21.9784228Z 2ede25b7c579: Verifying Checksum
+2026-10-16T14:30:21.9784751Z 2ede25b7c579: Download complete
+2026-10-16T14:30:28.5512444Z f2455d5db1ca: Pull complete
+2026-10-16T14:30:28.7300912Z 8445317dd84f: Pull complete
+2026-10-16T14:30:28.7698898Z 2dd9b1a67dcf: Pull complete
+2026-10-16T14:30:29.1569804Z e0d7eb465374: Pull complete
+2026-10-16T14:30:29.2272794Z 1a60cdc4b8b6: Pull complete
+2026-10-16T14:30:29.2326090Z 00ea30b13a58: Pull complete
+2026-10-16T14:30:29.2395341Z 708679827647: Pull complete
+2026-10-16T14:30:32.9597266Z 3e13d544cd35: Pull complete
+2026-10-16T14:30:32.9686642Z 639aa37fe549: Pull complete
+2026-10-16T14:30:32.9783392Z b3e09271b721: Pull complete
+2026-10-16T14:30:32.9843828Z aae3fa55f377: Pull complete
+2026-10-16T14:30:32.9903745Z 50a212ffc5a1: Pull complete
+2026-10-16T14:30:32.9962569Z e9cc823db10f: Pull complete
+2026-10-16T14:30:33.0470220Z 003442b28249: Pull complete
+2026-10-16T14:30:33.1818523Z 2ede25b7c579: Pull complete
+2026-10-16T14:30:33.1846244Z Digest: sha256:7b822b0aac60967beb1ea5e576b8602c94c300a157d187f385ae3e0da199b90a
+2026-10-16T14:30:33.1855906Z Status: Downloaded newer image for pgvector/pgvector:pg16
+2026-10-16T14:30:33.1863468Z docker.io/pgvector/pgvector:pg16
+2026-10-16T14:30:33.1913420Z ##[command]/usr/bin/docker create --name d547bd89878241d2906e3da84bc67425_pgvectorpgvectorpg16_9f9043 --label 73251f --network github_network_543439b19c8343c48cd6fb105111a252 --network-alias postgres -p 5432:5432 --health-cmd "pg_isready -U ocean -d ocean_platform" --health-interval 5s --health-timeout 5s --health-retries 10 -e "POSTGRES_USER=ocean" -e "POSTGRES_PASSWORD=integration-only-password" -e "POSTGRES_DB=ocean_platform" -e GITHUB_ACTIONS=true -e CI=true pgvector/pgvector:pg16
+2026-10-16T14:30:33.2305888Z d930454647e281c7223984d41ad044718f591a4dd82ef9c62ead52c990dfeb06
+2026-10-16T14:30:33.2324837Z ##[command]/usr/bin/docker start d930454647e281c7223984d41ad044718f591a4dd82ef9c62ead52c990dfeb06
+2026-10-16T14:30:33.4029903Z d930454647e281c7223984d41ad044718f591a4dd82ef9c62ead52c990dfeb06
+2026-10-16T14:30:33.4074589Z ##[command]/usr/bin/docker ps --all --filter id=d930454647e281c7223984d41ad044718f591a4dd82ef9c62ead52c990dfeb06 --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2026-10-16T14:30:33.4194208Z d930454647e281c7223984d41ad044718f591a4dd82ef9c62ead52c990dfeb06 Up Less than a second (health: starting)
+2026-10-16T14:30:33.4212643Z ##[command]/usr/bin/docker port d930454647e281c7223984d41ad044718f591a4dd82ef9c62ead52c990dfeb06
+2026-10-16T14:30:33.4324347Z 5432/tcp -> 0.0.0.0:5432
+2026-10-16T14:30:33.4324802Z 5432/tcp -> [::]:5432
+2026-10-16T14:30:33.4372692Z ##[endgroup]
+2026-10-16T14:30:33.4382315Z ##[group]Waiting for all services to be ready
+2026-10-16T14:30:33.4396893Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" d930454647e281c7223984d41ad044718f591a4dd82ef9c62ead52c990dfeb06
+2026-10-16T14:30:33.4503975Z starting
+2026-10-16T14:30:33.4520930Z postgres service is starting, waiting 2 seconds before checking again.
+2026-10-16T14:30:35.4529128Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" d930454647e281c7223984d41ad044718f591a4dd82ef9c62ead52c990dfeb06
+2026-10-16T14:30:35.4633166Z starting
+2026-10-16T14:30:35.4644531Z postgres service is starting, waiting 3 seconds before checking again.
+2026-10-16T14:30:39.1125954Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" d930454647e281c7223984d41ad044718f591a4dd82ef9c62ead52c990dfeb06
+2026-10-16T14:30:39.1231971Z healthy
+2026-10-16T14:30:39.1245943Z postgres service is healthy.
+2026-10-16T14:30:39.1246532Z ##[endgroup]
+2026-10-16T14:30:39.1531790Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-16T14:30:39.1532278Z with:
+2026-10-16T14:30:39.1532456Z   persist-credentials: false
+2026-10-16T14:30:39.1532652Z   fetch-depth: 0
+2026-10-16T14:30:39.1532830Z   repository: jarondlk/ocean-platform
+2026-10-16T14:30:39.1534973Z   token: ***
+2026-10-16T14:30:39.1535148Z   ssh-strict: true
+2026-10-16T14:30:39.1535316Z   ssh-user: git
+2026-10-16T14:30:39.1535481Z   clean: true
+2026-10-16T14:30:39.1535658Z   sparse-checkout-cone-mode: true
+2026-10-16T14:30:39.1535873Z   fetch-tags: false
+2026-10-16T14:30:39.1536039Z   show-progress: true
+2026-10-16T14:30:39.1536204Z   lfs: false
+2026-10-16T14:30:39.1536352Z   submodules: false
+2026-10-16T14:30:39.1536516Z   set-safe-directory: true
+2026-10-16T14:30:39.1536721Z   allow-unsafe-pr-checkout: false
+2026-10-16T14:30:39.1537057Z ##[endgroup]
+2026-10-16T14:30:39.2303415Z Syncing repository: jarondlk/ocean-platform
+2026-10-16T14:30:39.2304917Z ##[group]Getting Git version info
+2026-10-16T14:30:39.2305468Z Working directory is '/home/runner/work/ocean-platform/ocean-platform'
+2026-10-16T14:30:39.2306154Z [command]/usr/bin/git version
+2026-10-16T14:30:39.2406550Z git version 2.55.0
+2026-10-16T14:30:39.2425678Z ##[endgroup]
+2026-10-16T14:30:39.2434860Z Temporarily overriding HOME='/home/runner/work/_temp/a240ad4e-fc60-4448-9f61-1cae24204d8e' before making global git config changes
+2026-10-16T14:30:39.2435848Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T14:30:39.2439862Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ocean-platform/ocean-platform
+2026-10-16T14:30:39.2482213Z Deleting the contents of '/home/runner/work/ocean-platform/ocean-platform'
+2026-10-16T14:30:39.2484599Z ##[group]Determining repository object format
+2026-10-16T14:30:39.2492971Z ##[endgroup]
+2026-10-16T14:30:39.2494024Z ##[group]Initializing the repository
+2026-10-16T14:30:39.2494540Z [command]/usr/bin/git init /home/runner/work/ocean-platform/ocean-platform
+2026-10-16T14:30:39.2590814Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-16T14:30:39.2591649Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-16T14:30:39.2592512Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-16T14:30:39.2593276Z hint: call:
+2026-10-16T14:30:39.2593533Z hint:
+2026-10-16T14:30:39.2593963Z hint: 	git config --global init.defaultBranch <name>
+2026-10-16T14:30:39.2594346Z hint:
+2026-10-16T14:30:39.2594686Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-16T14:30:39.2595263Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-16T14:30:39.2595729Z hint:
+2026-10-16T14:30:39.2595979Z hint: 	git branch -m <name>
+2026-10-16T14:30:39.2596268Z hint:
+2026-10-16T14:30:39.2596712Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-16T14:30:39.2597464Z Initialized empty Git repository in /home/runner/work/ocean-platform/ocean-platform/.git/
+2026-10-16T14:30:39.2604363Z [command]/usr/bin/git remote add origin https://github.com/jarondlk/ocean-platform
+2026-10-16T14:30:39.2651262Z ##[endgroup]
+2026-10-16T14:30:39.2651789Z ##[group]Disabling automatic garbage collection
+2026-10-16T14:30:39.2664792Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-16T14:30:39.2684457Z ##[endgroup]
+2026-10-16T14:30:39.2685215Z ##[group]Setting up auth
+2026-10-16T14:30:39.2685694Z Removing SSH command configuration
+2026-10-16T14:30:39.2692078Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T14:30:39.2722273Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T14:30:39.3095149Z Removing HTTP extra header
+2026-10-16T14:30:39.3100326Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T14:30:39.3131281Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T14:30:39.3321074Z Removing includeIf entries pointing to credentials config files
+2026-10-16T14:30:39.3325914Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T14:30:39.3354977Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T14:30:39.3583047Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-5dba0efc-47f1-4b2b-88a4-ddb5c3ab8296.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-16T14:30:39.3617939Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path /home/runner/work/_temp/git-credentials-5dba0efc-47f1-4b2b-88a4-ddb5c3ab8296.config
+2026-10-16T14:30:39.3646843Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-5dba0efc-47f1-4b2b-88a4-ddb5c3ab8296.config
+2026-10-16T14:30:39.3678726Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-5dba0efc-47f1-4b2b-88a4-ddb5c3ab8296.config
+2026-10-16T14:30:39.3708605Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-5dba0efc-47f1-4b2b-88a4-ddb5c3ab8296.config
+2026-10-16T14:30:39.3734661Z ##[endgroup]
+2026-10-16T14:30:39.3735025Z ##[group]Fetching the repository
+2026-10-16T14:30:39.3739676Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-10-16T14:30:42.7811853Z From https://github.com/jarondlk/ocean-platform
+2026-10-16T14:30:42.7812595Z  * [new branch]      codex/c01-c02-audit-20261014 -> origin/codex/c01-c02-audit-20261014
+2026-10-16T14:30:42.7813063Z  * [new branch]      gcp                    -> origin/gcp
+2026-10-16T14:30:42.7813458Z  * [new branch]      main                   -> origin/main
+2026-10-16T14:30:42.7813853Z  * [new branch]      overhaul               -> origin/overhaul
+2026-10-16T14:30:42.7814290Z  * [new tag]         gcp-prototype-20260824 -> gcp-prototype-20260824
+2026-10-16T14:30:42.7814802Z  * [new tag]         pre-gcp-integration-20260824 -> pre-gcp-integration-20260824
+2026-10-16T14:30:42.7815294Z  * [new tag]         v0.1.0                 -> v0.1.0
+2026-10-16T14:30:42.7815656Z  * [new tag]         v0.2.0                 -> v0.2.0
+2026-10-16T14:30:42.7816054Z  * [new tag]         v0.2.1                 -> v0.2.1
+2026-10-16T14:30:42.7816423Z  * [new tag]         v0.2.2                 -> v0.2.2
+2026-10-16T14:30:42.7816764Z  * [new tag]         v0.2.3                 -> v0.2.3
+2026-10-16T14:30:42.7817091Z  * [new tag]         v0.3.0                 -> v0.3.0
+2026-10-16T14:30:42.7817408Z  * [new tag]         v0.4.0                 -> v0.4.0
+2026-10-16T14:30:42.7818032Z  * [new tag]         v0.4.1                 -> v0.4.1
+2026-10-16T14:30:42.7818398Z  * [new tag]         v0.4.2                 -> v0.4.2
+2026-10-16T14:30:42.7818770Z  * [new tag]         v0.4.3                 -> v0.4.3
+2026-10-16T14:30:42.7819143Z  * [new tag]         v0.4.4                 -> v0.4.4
+2026-10-16T14:30:42.7819478Z  * [new tag]         v0.4.5                 -> v0.4.5
+2026-10-16T14:30:42.7819820Z  * [new tag]         v0.5.0                 -> v0.5.0
+2026-10-16T14:30:42.7820190Z  * [new tag]         v0.6.0                 -> v0.6.0
+2026-10-16T14:30:42.7820549Z  * [new tag]         v0.6.1                 -> v0.6.1
+2026-10-16T14:30:42.7820953Z  * [new tag]         v0.7.0                 -> v0.7.0
+2026-10-16T14:30:42.7821586Z  * [new tag]         v0.7.1                 -> v0.7.1
+2026-10-16T14:30:42.7821955Z  * [new tag]         v0.7.2                 -> v0.7.2
+2026-10-16T14:30:42.7822315Z  * [new tag]         v0.7.3                 -> v0.7.3
+2026-10-16T14:30:42.7822681Z  * [new tag]         v0.7.4                 -> v0.7.4
+2026-10-16T14:30:42.7823047Z  * [new tag]         v0.7.5                 -> v0.7.5
+2026-10-16T14:30:42.7823436Z  * [new tag]         v0.7.6                 -> v0.7.6
+2026-10-16T14:30:42.7823858Z  * [new tag]         v0.7.7                 -> v0.7.7
+2026-10-16T14:30:42.7825234Z [command]/usr/bin/git branch --list --remote origin/overhaul
+2026-10-16T14:30:42.7856272Z   origin/overhaul
+2026-10-16T14:30:42.7864336Z [command]/usr/bin/git rev-parse refs/remotes/origin/overhaul
+2026-10-16T14:30:42.7888967Z 19ba9110206dacb061c23f8e6dd7422be4b2adb1
+2026-10-16T14:30:42.7895492Z ##[endgroup]
+2026-10-16T14:30:42.7895797Z ##[group]Determining the checkout info
+2026-10-16T14:30:42.7896132Z ##[endgroup]
+2026-10-16T14:30:42.7897649Z [command]/usr/bin/git sparse-checkout disable
+2026-10-16T14:30:42.7947191Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-16T14:30:42.7978225Z ##[group]Checking out the ref
+2026-10-16T14:30:42.7982334Z [command]/usr/bin/git checkout --progress --force -B overhaul refs/remotes/origin/overhaul
+2026-10-16T14:30:43.0624802Z Switched to a new branch 'overhaul'
+2026-10-16T14:30:43.0629685Z branch 'overhaul' set up to track 'origin/overhaul'.
+2026-10-16T14:30:43.0646570Z ##[endgroup]
+2026-10-16T14:30:43.0692835Z [command]/usr/bin/git log -1 --format=%H
+2026-10-16T14:30:43.0718406Z 19ba9110206dacb061c23f8e6dd7422be4b2adb1
+2026-10-16T14:30:43.0725417Z ##[group]Removing auth
+2026-10-16T14:30:43.0725801Z Removing SSH command configuration
+2026-10-16T14:30:43.0729142Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T14:30:43.0762387Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T14:30:43.0958849Z Removing HTTP extra header
+2026-10-16T14:30:43.0962275Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T14:30:43.0993678Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T14:30:43.1187950Z Removing includeIf entries pointing to credentials config files
+2026-10-16T14:30:43.1191373Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T14:30:43.1217743Z includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path
+2026-10-16T14:30:43.1218861Z includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path
+2026-10-16T14:30:43.1219710Z includeif.gitdir:/github/workspace/.git.path
+2026-10-16T14:30:43.1220377Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-16T14:30:43.1225505Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path
+2026-10-16T14:30:43.1251132Z /home/runner/work/_temp/git-credentials-5dba0efc-47f1-4b2b-88a4-ddb5c3ab8296.config
+2026-10-16T14:30:43.1259048Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-5dba0efc\-47f1\-4b2b\-88a4\-ddb5c3ab8296\.config
+2026-10-16T14:30:43.1297097Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path
+2026-10-16T14:30:43.1320163Z /home/runner/work/_temp/git-credentials-5dba0efc-47f1-4b2b-88a4-ddb5c3ab8296.config
+2026-10-16T14:30:43.1327031Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-5dba0efc\-47f1\-4b2b\-88a4\-ddb5c3ab8296\.config
+2026-10-16T14:30:43.1361025Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-16T14:30:43.1384677Z /github/runner_temp/git-credentials-5dba0efc-47f1-4b2b-88a4-ddb5c3ab8296.config
+2026-10-16T14:30:43.1392861Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-5dba0efc\-47f1\-4b2b\-88a4\-ddb5c3ab8296\.config
+2026-10-16T14:30:43.1424855Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-16T14:30:43.1447264Z /github/runner_temp/git-credentials-5dba0efc-47f1-4b2b-88a4-ddb5c3ab8296.config
+2026-10-16T14:30:43.1452947Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-5dba0efc\-47f1\-4b2b\-88a4\-ddb5c3ab8296\.config
+2026-10-16T14:30:43.1483557Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T14:30:43.1672037Z Removing credentials config '/home/runner/work/_temp/git-credentials-5dba0efc-47f1-4b2b-88a4-ddb5c3ab8296.config'
+2026-10-16T14:30:43.1678885Z ##[endgroup]
+2026-10-16T14:30:43.1876252Z ##[group]Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+2026-10-16T14:30:43.1876557Z with:
+2026-10-16T14:30:43.1876726Z   python-version: 3.12
+2026-10-16T14:30:43.1876899Z   cache: pip
+2026-10-16T14:30:43.1877269Z   cache-dependency-path: requirements/runtime.in
+requirements/runtime.txt
+requirements/dev.in
+requirements/dev.txt
+
+2026-10-16T14:30:43.1877681Z   check-latest: false
+2026-10-16T14:30:43.1879869Z   token: ***
+2026-10-16T14:30:43.1880053Z   update-environment: true
+2026-10-16T14:30:43.1880246Z   allow-prereleases: false
+2026-10-16T14:30:43.1880594Z   freethreaded: false
+2026-10-16T14:30:43.1880770Z ##[endgroup]
+2026-10-16T14:30:43.2835719Z ##[group]Installed versions
+2026-10-16T14:30:43.2900884Z Successfully set up CPython (3.12.15)
+2026-10-16T14:30:43.2901439Z ##[endgroup]
+2026-10-16T14:30:43.3235977Z [command]/opt/hostedtoolcache/Python/3.12.15/x64/bin/pip cache dir
+2026-10-16T14:30:43.5939267Z /home/runner/.cache/pip
+2026-10-16T14:30:43.8128080Z Cache hit for: setup-python-Linux-x64-24.04-Ubuntu-python-3.12.15-pip-0678f5ee12b9d192f99f574742b01e3084dffe499bfe6bfc7f8e5a38fe435056
+2026-10-16T14:30:45.0441522Z Received 50331648 of 173091285 (29.1%), 48.0 MBs/sec
+2026-10-16T14:30:45.7253526Z Received 173091285 of 173091285 (100.0%), 98.1 MBs/sec
+2026-10-16T14:30:45.7254173Z Cache Size: ~165 MB (173091285 B)
+2026-10-16T14:30:45.7339490Z [command]/usr/bin/tar -xf /home/runner/work/_temp/57174212-c58e-4995-8753-6e24be19f6d1/cache.tzst -P -C /home/runner/work/ocean-platform/ocean-platform --use-compress-program unzstd
+2026-10-16T14:30:45.9245819Z Cache restored successfully
+2026-10-16T14:30:45.9319631Z Cache restored from key: setup-python-Linux-x64-24.04-Ubuntu-python-3.12.15-pip-0678f5ee12b9d192f99f574742b01e3084dffe499bfe6bfc7f8e5a38fe435056
+2026-10-16T14:30:45.9472958Z ##[group]Run python -m pip install --upgrade pip
+2026-10-16T14:30:45.9473329Z [36;1mpython -m pip install --upgrade pip[0m
+2026-10-16T14:30:45.9473676Z [36;1mpython -m pip install --require-hashes -r requirements/dev.txt[0m
+2026-10-16T14:30:45.9654218Z shell: /usr/bin/bash -e {0}
+2026-10-16T14:30:45.9654451Z env:
+2026-10-16T14:30:45.9654685Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:30:45.9655065Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T14:30:45.9655417Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:30:45.9655729Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:30:45.9656029Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:30:45.9656354Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T14:30:45.9656626Z ##[endgroup]
+2026-10-16T14:30:46.4546902Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages (26.2.1)
+2026-10-16T14:30:47.0677214Z Collecting alembic==1.20.0 (from -r requirements/dev.txt (line 7))
+2026-10-16T14:30:47.0687366Z   Using cached alembic-1.20.0-py3-none-any.whl (268 kB)
+2026-10-16T14:30:47.0928297Z Collecting annotated-doc==0.0.5 (from -r requirements/dev.txt (line 11))
+2026-10-16T14:30:47.0937080Z   Using cached annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+2026-10-16T14:30:47.1161392Z Collecting annotated-types==0.8.0 (from -r requirements/dev.txt (line 15))
+2026-10-16T14:30:47.1170157Z   Using cached annotated_types-0.8.0-py3-none-any.whl (13 kB)
+2026-10-16T14:30:47.1433449Z Collecting anyio==4.15.1 (from -r requirements/dev.txt (line 19))
+2026-10-16T14:30:47.1449734Z   Using cached anyio-4.15.1-py3-none-any.whl (132 kB)
+2026-10-16T14:30:47.1715674Z Collecting certifi==2026.7.22 (from -r requirements/dev.txt (line 27))
+2026-10-16T14:30:47.1725258Z   Using cached certifi-2026.7.22-py3-none-any.whl (136 kB)
+2026-10-16T14:30:47.2674304Z Collecting cffi==2.1.1 (from -r requirements/dev.txt (line 35))
+2026-10-16T14:30:47.2684636Z   Using cached cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+2026-10-16T14:30:47.3409334Z Collecting cftime==1.6.6 (from -r requirements/dev.txt (line 137))
+2026-10-16T14:30:47.3438481Z   Using cached cftime-1.6.6-cp311-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (1.7 MB)
+2026-10-16T14:30:47.4405047Z Collecting charset-normalizer==3.5.1 (from -r requirements/dev.txt (line 153))
+2026-10-16T14:30:47.4415697Z   Using cached charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (248 kB)
+2026-10-16T14:30:47.4690659Z Collecting click==8.5.0 (from -r requirements/dev.txt (line 327))
+2026-10-16T14:30:47.4699859Z   Using cached click-8.5.0-py3-none-any.whl (125 kB)
+2026-10-16T14:30:47.7609034Z Collecting coverage==7.16.2 (from -r requirements/dev.txt (line 331))
+2026-10-16T14:30:47.7620757Z   Using cached coverage-7.16.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (258 kB)
+2026-10-16T14:30:47.9063736Z Collecting cryptography==50.0.1 (from -r requirements/dev.txt (line 454))
+2026-10-16T14:30:47.9075196Z   Using cached cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl (4.7 MB)
+2026-10-16T14:30:47.9358555Z Collecting distro==1.9.0 (from -r requirements/dev.txt (line 502))
+2026-10-16T14:30:47.9369081Z   Using cached distro-1.9.0-py3-none-any.whl (20 kB)
+2026-10-16T14:30:47.9815937Z Collecting fastapi==0.141.1 (from -r requirements/dev.txt (line 506))
+2026-10-16T14:30:47.9825810Z   Using cached fastapi-0.141.1-py3-none-any.whl (131 kB)
+2026-10-16T14:30:48.0192254Z Collecting google-api-core==2.39.0 (from -r requirements/dev.txt (line 510))
+2026-10-16T14:30:48.0202095Z   Using cached google_api_core-2.39.0-py3-none-any.whl (214 kB)
+2026-10-16T14:30:48.0581840Z Collecting google-auth==2.59.0 (from -r requirements/dev.txt (line 516))
+2026-10-16T14:30:48.0591856Z   Using cached google_auth-2.59.0-py3-none-any.whl (262 kB)
+2026-10-16T14:30:48.0894291Z Collecting google-cloud-core==2.7.0 (from -r requirements/dev.txt (line 524))
+2026-10-16T14:30:48.0903435Z   Using cached google_cloud_core-2.7.0-py3-none-any.whl (31 kB)
+2026-10-16T14:30:48.1217624Z Collecting google-cloud-storage==3.15.0 (from -r requirements/dev.txt (line 528))
+2026-10-16T14:30:48.1226870Z   Using cached google_cloud_storage-3.15.0-py3-none-any.whl (343 kB)
+2026-10-16T14:30:48.1727603Z Collecting google-crc32c==1.9.0 (from -r requirements/dev.txt (line 532))
+2026-10-16T14:30:48.1737559Z   Using cached google_crc32c-1.9.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (36 kB)
+2026-10-16T14:30:48.2049332Z Collecting google-genai==2.25.0 (from -r requirements/dev.txt (line 567))
+2026-10-16T14:30:48.2058155Z   Using cached google_genai-2.25.0-py3-none-any.whl (1.2 MB)
+2026-10-16T14:30:48.2372718Z Collecting google-resumable-media==2.10.2 (from -r requirements/dev.txt (line 571))
+2026-10-16T14:30:48.2382011Z   Using cached google_resumable_media-2.10.2-py3-none-any.whl (81 kB)
+2026-10-16T14:30:48.2643073Z Collecting googleapis-common-protos==1.75.4 (from -r requirements/dev.txt (line 575))
+2026-10-16T14:30:48.2652185Z   Using cached googleapis_common_protos-1.75.4-py3-none-any.whl (307 kB)
+2026-10-16T14:30:48.3775842Z Collecting greenlet==3.5.6 (from -r requirements/dev.txt (line 579))
+2026-10-16T14:30:48.3786552Z   Using cached greenlet-3.5.6-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (621 kB)
+2026-10-16T14:30:48.4027323Z Collecting h11==0.16.0 (from -r requirements/dev.txt (line 662))
+2026-10-16T14:30:48.4036204Z   Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+2026-10-16T14:30:48.4289717Z Collecting httpcore==1.0.9 (from -r requirements/dev.txt (line 668))
+2026-10-16T14:30:48.4299532Z   Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+2026-10-16T14:30:48.4815592Z Collecting httptools==0.8.0 (from -r requirements/dev.txt (line 672))
+2026-10-16T14:30:48.4825759Z   Using cached httptools-0.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (523 kB)
+2026-10-16T14:30:48.5091068Z Collecting httpx==0.28.1 (from -r requirements/dev.txt (line 724))
+2026-10-16T14:30:48.5100397Z   Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+2026-10-16T14:30:48.5355050Z Collecting idna==3.20 (from -r requirements/dev.txt (line 730))
+2026-10-16T14:30:48.5368265Z   Using cached idna-3.20-py3-none-any.whl (69 kB)
+2026-10-16T14:30:48.5595981Z Collecting iniconfig==2.3.0 (from -r requirements/dev.txt (line 737))
+2026-10-16T14:30:48.5606186Z   Using cached iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+2026-10-16T14:30:48.5853944Z Collecting mako==1.4.3 (from -r requirements/dev.txt (line 741))
+2026-10-16T14:30:48.5864339Z   Using cached mako-1.4.3-py3-none-any.whl (80 kB)
+2026-10-16T14:30:48.6387263Z Collecting markupsafe==3.0.3 (from -r requirements/dev.txt (line 745))
+2026-10-16T14:30:48.6396814Z   Using cached markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+2026-10-16T14:30:48.7033979Z Collecting netcdf4==1.7.4 (from -r requirements/dev.txt (line 836))
+2026-10-16T14:30:48.7043733Z   Using cached netcdf4-1.7.4-cp311-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (10.1 MB)
+2026-10-16T14:30:48.9123253Z Collecting numpy==2.5.3 (from -r requirements/dev.txt (line 860))
+2026-10-16T14:30:48.9134873Z   Using cached numpy-2.5.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.7 MB)
+2026-10-16T14:30:48.9608984Z Collecting opentelemetry-api==1.45.0 (from -r requirements/dev.txt (line 934))
+2026-10-16T14:30:48.9618315Z   Using cached opentelemetry_api-1.45.0-py3-none-any.whl (60 kB)
+2026-10-16T14:30:48.9870772Z Collecting packaging==26.3 (from -r requirements/dev.txt (line 938))
+2026-10-16T14:30:48.9880006Z   Using cached packaging-26.3-py3-none-any.whl (129 kB)
+2026-10-16T14:30:49.0799685Z Collecting pandas==2.3.3 (from -r requirements/dev.txt (line 944))
+2026-10-16T14:30:49.0810897Z   Using cached pandas-2.3.3-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (12.4 MB)
+2026-10-16T14:30:49.1404799Z Collecting pgvector==0.5.0 (from -r requirements/dev.txt (line 1003))
+2026-10-16T14:30:49.1414059Z   Using cached pgvector-0.5.0-py3-none-any.whl (30 kB)
+2026-10-16T14:30:49.1678483Z Collecting pluggy==1.6.0 (from -r requirements/dev.txt (line 1007))
+2026-10-16T14:30:49.1687781Z   Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)
+2026-10-16T14:30:49.1948280Z Collecting proto-plus==1.28.4 (from -r requirements/dev.txt (line 1013))
+2026-10-16T14:30:49.1957119Z   Using cached proto_plus-1.28.4-py3-none-any.whl (50 kB)
+2026-10-16T14:30:49.3078100Z Collecting protobuf==7.36.0 (from -r requirements/dev.txt (line 1017))
+2026-10-16T14:30:49.3089053Z   Using cached protobuf-7.36.0-cp310-abi3-manylinux2014_x86_64.whl (340 kB)
+2026-10-16T14:30:49.3670256Z Collecting psycopg2-binary==2.9.13 (from -r requirements/dev.txt (line 1030))
+2026-10-16T14:30:49.3681399Z   Using cached psycopg2_binary-2.9.13-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.3 MB)
+2026-10-16T14:30:49.4438435Z Collecting pyarrow==23.0.1 (from -r requirements/dev.txt (line 1099))
+2026-10-16T14:30:49.4448562Z   Using cached pyarrow-23.0.1-cp312-cp312-manylinux_2_28_x86_64.whl (47.6 MB)
+2026-10-16T14:30:49.5445523Z Collecting pyasn1==0.6.4 (from -r requirements/dev.txt (line 1151))
+2026-10-16T14:30:49.5455764Z   Using cached pyasn1-0.6.4-py3-none-any.whl (84 kB)
+2026-10-16T14:30:49.5738790Z Collecting pyasn1-modules==0.4.2 (from -r requirements/dev.txt (line 1155))
+2026-10-16T14:30:49.5747725Z   Using cached pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
+2026-10-16T14:30:49.5986020Z Collecting pycparser==3.0 (from -r requirements/dev.txt (line 1159))
+2026-10-16T14:30:49.5995858Z   Using cached pycparser-3.0-py3-none-any.whl (48 kB)
+2026-10-16T14:30:49.6845623Z Collecting pydantic==2.13.5 (from -r requirements/dev.txt (line 1163))
+2026-10-16T14:30:49.6855764Z   Using cached pydantic-2.13.5-py3-none-any.whl (472 kB)
+2026-10-16T14:30:50.2283718Z Collecting pydantic-core==2.46.5 (from -r requirements/dev.txt (line 1169))
+2026-10-16T14:30:50.2294988Z   Using cached pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+2026-10-16T14:30:50.2584405Z Collecting pygments==2.21.0 (from -r requirements/dev.txt (line 1291))
+2026-10-16T14:30:50.2593364Z   Using cached pygments-2.21.0-py3-none-any.whl (1.3 MB)
+2026-10-16T14:30:50.2873049Z Collecting pyjwt==2.15.1 (from -r requirements/dev.txt (line 1295))
+2026-10-16T14:30:50.2881631Z   Using cached pyjwt-2.15.1-py3-none-any.whl (33 kB)
+2026-10-16T14:30:50.3196397Z Collecting pytest==9.1.1 (from -r requirements/dev.txt (line 1299))
+2026-10-16T14:30:50.3205790Z   Using cached pytest-9.1.1-py3-none-any.whl (386 kB)
+2026-10-16T14:30:50.3470998Z Collecting pytest-cov==7.1.0 (from -r requirements/dev.txt (line 1305))
+2026-10-16T14:30:50.3480062Z   Using cached pytest_cov-7.1.0-py3-none-any.whl (22 kB)
+2026-10-16T14:30:50.3726553Z Collecting python-dateutil==2.9.0.post0 (from -r requirements/dev.txt (line 1309))
+2026-10-16T14:30:50.3735282Z   Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+2026-10-16T14:30:50.3986226Z Collecting python-dotenv==1.2.3 (from -r requirements/dev.txt (line 1313))
+2026-10-16T14:30:50.3995703Z   Using cached python_dotenv-1.2.3-py3-none-any.whl (22 kB)
+2026-10-16T14:30:50.4383216Z Collecting pytz==2026.4 (from -r requirements/dev.txt (line 1317))
+2026-10-16T14:30:50.4392575Z   Using cached pytz-2026.4-py2.py3-none-any.whl (506 kB)
+2026-10-16T14:30:50.4815974Z Collecting pyyaml==6.0.3 (from -r requirements/dev.txt (line 1321))
+2026-10-16T14:30:50.4825579Z   Using cached pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+2026-10-16T14:30:50.5119522Z Collecting requests==2.34.2 (from -r requirements/dev.txt (line 1396))
+2026-10-16T14:30:50.5129206Z   Using cached requests-2.34.2-py3-none-any.whl (73 kB)
+2026-10-16T14:30:50.7519575Z Collecting ruff==0.16.9 (from -r requirements/dev.txt (line 1405))
+2026-10-16T14:30:50.7531424Z   Using cached ruff-0.16.9-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (10.4 MB)
+2026-10-16T14:30:50.9080215Z Collecting scipy==1.18.1 (from -r requirements/dev.txt (line 1425))
+2026-10-16T14:30:50.9091912Z   Using cached scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
+2026-10-16T14:30:50.9775423Z Collecting six==1.17.0 (from -r requirements/dev.txt (line 1488))
+2026-10-16T14:30:50.9785006Z   Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+2026-10-16T14:30:51.0016426Z Collecting sniffio==1.3.1 (from -r requirements/dev.txt (line 1492))
+2026-10-16T14:30:51.0025814Z   Using cached sniffio-1.3.1-py3-none-any.whl (10 kB)
+2026-10-16T14:30:51.0252270Z Collecting snowballstemmer==3.1.1 (from -r requirements/dev.txt (line 1496))
+2026-10-16T14:30:51.0261147Z   Using cached snowballstemmer-3.1.1-py3-none-any.whl (104 kB)
+2026-10-16T14:30:51.2414839Z Collecting sqlalchemy==2.0.52 (from -r requirements/dev.txt (line 1500))
+2026-10-16T14:30:51.2426570Z   Using cached sqlalchemy-2.0.52-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.4 MB)
+2026-10-16T14:30:51.2811271Z Collecting starlette==1.7.0 (from -r requirements/dev.txt (line 1556))
+2026-10-16T14:30:51.2820715Z   Using cached starlette-1.7.0-py3-none-any.whl (78 kB)
+2026-10-16T14:30:51.3084496Z Collecting tenacity==9.1.4 (from -r requirements/dev.txt (line 1562))
+2026-10-16T14:30:51.3093722Z   Using cached tenacity-9.1.4-py3-none-any.whl (28 kB)
+2026-10-16T14:30:51.3346384Z Collecting typing-extensions==4.16.0 (from -r requirements/dev.txt (line 1566))
+2026-10-16T14:30:51.3355557Z   Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-10-16T14:30:51.3582974Z Collecting typing-inspection==0.4.4 (from -r requirements/dev.txt (line 1580))
+2026-10-16T14:30:51.3592190Z   Using cached typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+2026-10-16T14:30:51.3838639Z Collecting tzdata==2026.4 (from -r requirements/dev.txt (line 1586))
+2026-10-16T14:30:51.3847518Z   Using cached tzdata-2026.4-py2.py3-none-any.whl (347 kB)
+2026-10-16T14:30:51.4263152Z Collecting urllib3==2.8.0 (from -r requirements/dev.txt (line 1590))
+2026-10-16T14:30:51.4273382Z   Using cached urllib3-2.8.0-py3-none-any.whl (135 kB)
+2026-10-16T14:30:51.4587456Z Collecting uvicorn==0.54.0 (from -r requirements/dev.txt (line 1596))
+2026-10-16T14:30:51.4596826Z   Using cached uvicorn-0.54.0-py3-none-any.whl (87 kB)
+2026-10-16T14:30:51.5014716Z Collecting uvloop==0.22.1 (from -r requirements/dev.txt (line 1600))
+2026-10-16T14:30:51.5024897Z   Using cached uvloop-0.22.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.4 MB)
+2026-10-16T14:30:51.5709153Z Collecting watchfiles==1.3.0 (from -r requirements/dev.txt (line 1651))
+2026-10-16T14:30:51.5719583Z   Using cached watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (458 kB)
+2026-10-16T14:30:51.7088434Z Collecting websockets==16.1.1 (from -r requirements/dev.txt (line 1686))
+2026-10-16T14:30:51.7099702Z   Using cached websockets-16.1.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (187 kB)
+2026-10-16T14:30:51.7389601Z Collecting xarray==2026.7.0 (from -r requirements/dev.txt (line 1799))
+2026-10-16T14:30:51.7398581Z   Using cached xarray-2026.7.0-py3-none-any.whl (1.4 MB)
+2026-10-16T14:30:51.9655599Z Installing collected packages: pytz, websockets, uvloop, urllib3, tzdata, typing-extensions, tenacity, snowballstemmer, sniffio, six, ruff, pyyaml, python-dotenv, pyjwt, pygments, pycparser, pyasn1, pyarrow, psycopg2-binary, protobuf, pluggy, pgvector, packaging, numpy, markupsafe, iniconfig, idna, httptools, h11, greenlet, google-crc32c, distro, coverage, click, charset-normalizer, certifi, annotated-types, annotated-doc, uvicorn, typing-inspection, sqlalchemy, scipy, requests, python-dateutil, pytest, pydantic-core, pyasn1-modules, proto-plus, opentelemetry-api, mako, httpcore, googleapis-common-protos, google-resumable-media, cftime, cffi, anyio, watchfiles, starlette, pytest-cov, pydantic, pandas, netcdf4, httpx, cryptography, alembic, xarray, google-auth, fastapi, google-api-core, google-genai, google-cloud-core, google-cloud-storage
+2026-10-16T14:31:08.6673177Z
+2026-10-16T14:31:08.6718480Z Successfully installed alembic-1.20.0 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.15.1 certifi-2026.7.22 cffi-2.1.1 cftime-1.6.6 charset-normalizer-3.5.1 click-8.5.0 coverage-7.16.2 cryptography-50.0.1 distro-1.9.0 fastapi-0.141.1 google-api-core-2.39.0 google-auth-2.59.0 google-cloud-core-2.7.0 google-cloud-storage-3.15.0 google-crc32c-1.9.0 google-genai-2.25.0 google-resumable-media-2.10.2 googleapis-common-protos-1.75.4 greenlet-3.5.6 h11-0.16.0 httpcore-1.0.9 httptools-0.8.0 httpx-0.28.1 idna-3.20 iniconfig-2.3.0 mako-1.4.3 markupsafe-3.0.3 netcdf4-1.7.4 numpy-2.5.3 opentelemetry-api-1.45.0 packaging-26.3 pandas-2.3.3 pgvector-0.5.0 pluggy-1.6.0 proto-plus-1.28.4 protobuf-7.36.0 psycopg2-binary-2.9.13 pyarrow-23.0.1 pyasn1-0.6.4 pyasn1-modules-0.4.2 pycparser-3.0 pydantic-2.13.5 pydantic-core-2.46.5 pygments-2.21.0 pyjwt-2.15.1 pytest-9.1.1 pytest-cov-7.1.0 python-dateutil-2.9.0.post0 python-dotenv-1.2.3 pytz-2026.4 pyyaml-6.0.3 requests-2.34.2 ruff-0.16.9 scipy-1.18.1 six-1.17.0 sniffio-1.3.1 snowballstemmer-3.1.1 sqlalchemy-2.0.52 starlette-1.7.0 tenacity-9.1.4 typing-extensions-4.16.0 typing-inspection-0.4.4 tzdata-2026.4 urllib3-2.8.0 uvicorn-0.54.0 uvloop-0.22.1 watchfiles-1.3.0 websockets-16.1.1 xarray-2026.7.0
+2026-10-16T14:31:08.9171443Z ##[group]Run python -m alembic upgrade head
+2026-10-16T14:31:08.9171751Z [36;1mpython -m alembic upgrade head[0m
+2026-10-16T14:31:08.9231105Z shell: /usr/bin/bash -e {0}
+2026-10-16T14:31:08.9231323Z env:
+2026-10-16T14:31:08.9231546Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:31:08.9231935Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T14:31:08.9232315Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:31:08.9232632Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:31:08.9232940Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:31:08.9233256Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T14:31:08.9233825Z   DATABASE_URL: ***127.0.0.1:5432/ocean_platform
+2026-10-16T14:31:08.9234084Z ##[endgroup]
+2026-10-16T14:31:09.4303292Z INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+2026-10-16T14:31:09.4304023Z INFO  [alembic.runtime.migration] Will assume transactional DDL.
+2026-10-16T14:31:09.4502265Z INFO  [alembic.runtime.migration] Running upgrade  -> 20260723_0001, Create durable application metadata tables.
+2026-10-16T14:31:09.4734533Z INFO  [alembic.runtime.migration] Running upgrade 20260723_0001 -> 20260726_0002, Add shared rate-limit counters and corpus row hashes.
+2026-10-16T14:31:09.4782862Z INFO  [alembic.runtime.migration] Running upgrade 20260726_0002 -> 20260820_0003, Track the provider identity of retrieval embeddings.
+2026-10-16T14:31:09.4797717Z INFO  [alembic.runtime.migration] Running upgrade 20260820_0003 -> 20260825_0004, Add explicit legal holds for retained chat interactions.
+2026-10-16T14:31:09.4817227Z INFO  [alembic.runtime.migration] Running upgrade 20260825_0004 -> 20260901_0005, Add external-source provenance and canonical eDNA corpus tables.
+2026-10-16T14:31:09.5445410Z INFO  [alembic.runtime.migration] Running upgrade 20260901_0005 -> 20260902_0006, Add structured metadata for ANEMONE retrieval documents.
+2026-10-16T14:31:09.5471801Z INFO  [alembic.runtime.migration] Running upgrade 20260902_0006 -> 20260902_0007, Coordinate immutable corpus publication generations.
+2026-10-16T14:31:09.5508430Z INFO  [alembic.runtime.migration] Running upgrade 20260902_0007 -> 20260903_0008, Retain reviewed sample classification separately from provider metadata.
+2026-10-16T14:31:09.5515917Z INFO  [alembic.runtime.migration] Running upgrade 20260903_0008 -> 20260905_0009, Record deterministic chat abstention outcomes.
+2026-10-16T14:31:09.5543836Z INFO  [alembic.runtime.migration] Running upgrade 20260905_0009 -> 20260905_0010, Add authenticated classification reviews and append-only events.
+2026-10-16T14:31:09.5739763Z INFO  [alembic.runtime.migration] Running upgrade 20260905_0010 -> 20260905_0011, Add resumable controlled classification applications.
+2026-10-16T14:31:09.5891572Z INFO  [alembic.runtime.migration] Running upgrade 20260905_0011 -> 20260924_0012, ANEMONE catalogue namespaces and source evidence; preserve pilot IDs.
+2026-10-16T14:31:09.6036896Z INFO  [alembic.runtime.migration] Running upgrade 20260924_0012 -> 20260925_0013, Retain immutable exact-count evidence with application history.
+2026-10-16T14:31:09.6069078Z INFO  [alembic.runtime.migration] Running upgrade 20260925_0013 -> 20261001_0014, Allow explicit source-selection and freshness abstentions in chat history.
+2026-10-16T14:31:09.6082481Z INFO  [alembic.runtime.migration] Running upgrade 20261001_0014 -> 20261004_0015, Add immutable sampling/product reviews without altering existing corpus rows.
+2026-10-16T14:31:09.6273563Z INFO  [alembic.runtime.migration] Running upgrade 20261004_0015 -> 20261005_0016, Retain explicit incomplete-comparison and unverified-overlap history.
+2026-10-16T14:31:09.7008761Z ##[group]Run python -m pytest tests/integration/test_app_metadata_postgres.py tests/integration/test_classification_application_postgres.py tests/integration/test_classification_preview_postgres.py tests/integration/test_operational_postgres.py tests/integration/test_anemone_postgres.py tests/integration/test_anemone_catalogue_postgres.py tests/integration/test_edna_catalogue_postgres.py tests/integration/test_edna_aggregate_postgres.py tests/integration/test_edna_analysis_postgres.py tests/integration/test_chat_source_scope_postgres.py tests/integration/test_chat_filter_options_postgres.py tests/integration/test_research_registry_postgres.py -q
+2026-10-16T14:31:09.7014664Z [36;1mpython -m pytest tests/integration/test_app_metadata_postgres.py tests/integration/test_classification_application_postgres.py tests/integration/test_classification_preview_postgres.py tests/integration/test_operational_postgres.py tests/integration/test_anemone_postgres.py tests/integration/test_anemone_catalogue_postgres.py tests/integration/test_edna_catalogue_postgres.py tests/integration/test_edna_aggregate_postgres.py tests/integration/test_edna_analysis_postgres.py tests/integration/test_chat_source_scope_postgres.py tests/integration/test_chat_filter_options_postgres.py tests/integration/test_research_registry_postgres.py -q[0m
+2026-10-16T14:31:09.7086693Z shell: /usr/bin/bash -e {0}
+2026-10-16T14:31:09.7087027Z env:
+2026-10-16T14:31:09.7087364Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:31:09.7088089Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T14:31:09.7088623Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:31:09.7089222Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:31:09.7089556Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:31:09.7089879Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T14:31:09.7090178Z   AUTH_MODE: disabled
+2026-10-16T14:31:09.7090378Z   DEPLOYMENT_ENV: test
+2026-10-16T14:31:09.7091101Z   DATABASE_URL: ***127.0.0.1:5432/ocean_platform
+2026-10-16T14:31:09.7091503Z   RUN_POSTGRES_INTEGRATION: 1
+2026-10-16T14:31:09.7091818Z ##[endgroup]
+2026-10-16T14:31:44.9012692Z ........................................................................ [ 87%]
+2026-10-16T14:31:47.5942696Z ..........                                                               [100%]
+2026-10-16T14:31:47.5943092Z =============================== warnings summary ===============================
+2026-10-16T14:31:47.5943710Z ../../../../../opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/fastapi/testclient.py:1
+2026-10-16T14:31:47.5944988Z   /opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+2026-10-16T14:31:47.5946015Z     from starlette.testclient import TestClient as TestClient  # noqa
+2026-10-16T14:31:47.5946246Z
+2026-10-16T14:31:47.5946562Z tests/integration/test_anemone_postgres.py::test_anemone_migration_downgrade_preserves_prior_schema_and_reupgrades
+2026-10-16T14:31:47.5947159Z tests/integration/test_anemone_postgres.py::test_anemone_migration_downgrade_preserves_prior_schema_and_reupgrades
+2026-10-16T14:31:47.5947723Z tests/integration/test_chat_source_scope_postgres.py::test_migrated_history_retains_new_abstention_reasons
+2026-10-16T14:31:47.5949006Z   /opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/alembic/config.py:604: DeprecationWarning: No path_separator found in configuration; falling back to legacy splitting on spaces, commas, and colons for prepend_sys_path.  Consider adding path_separator=os to Alembic config.
+2026-10-16T14:31:47.5949928Z     util.warn_deprecated(
+2026-10-16T14:31:47.5950049Z
+2026-10-16T14:31:47.5950239Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-10-16T14:31:47.5950935Z 82 passed, 4 warnings in 36.20s
+2026-10-16T14:31:48.4171959Z ##[group]Run python scripts/load_db.py --upsert --json
+2026-10-16T14:31:48.4172313Z [36;1mpython scripts/load_db.py --upsert --json[0m
+2026-10-16T14:31:48.4172589Z [36;1mpython scripts/load_db.py --upsert --json[0m
+2026-10-16T14:31:48.4229548Z shell: /usr/bin/bash -e {0}
+2026-10-16T14:31:48.4229762Z env:
+2026-10-16T14:31:48.4229986Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:31:48.4230342Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T14:31:48.4230676Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:31:48.4230981Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:31:48.4231312Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:31:48.4231611Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T14:31:48.4232206Z   DATABASE_URL: ***127.0.0.1:5432/ocean_platform
+2026-10-16T14:31:48.4232448Z ##[endgroup]
+2026-10-16T14:31:49.0369904Z 14:31:49  INFO     load_db  ============================================================
+2026-10-16T14:31:49.0370305Z 14:31:49  INFO     load_db  Loading data into PostgreSQL
+2026-10-16T14:31:49.0370632Z 14:31:49  INFO     load_db  ============================================================
+2026-10-16T14:31:49.0831411Z 14:31:49  INFO     db.connection  Corpus database initialized
+2026-10-16T14:31:49.2897394Z 14:31:49  INFO     load_db    Upserted anchor_event: incoming=286 inserted=286 updated=0 unchanged=0
+2026-10-16T14:31:56.2658900Z 14:31:56  INFO     load_db    Upserted ctd_profile: incoming=10955 inserted=10955 updated=0 unchanged=0
+2026-10-16T14:31:56.3436255Z 14:31:56  INFO     load_db    Upserted ctd_summary: incoming=162 inserted=162 updated=0 unchanged=0
+2026-10-16T14:31:56.3825152Z 14:31:56  INFO     load_db    Upserted metagenome_sample: incoming=82 inserted=82 updated=0 unchanged=0
+2026-10-16T14:31:56.7930804Z 14:31:56  INFO     load_db    Upserted sst_point_observation: incoming=1848 inserted=1848 updated=0 unchanged=0
+2026-10-16T14:31:56.8130931Z 14:31:56  INFO     load_db    Upserted sst_daily_summary: incoming=79 inserted=79 updated=0 unchanged=0
+2026-10-16T14:31:56.9353505Z 14:31:56  INFO     load_db    Upserted retrieval_document: incoming=323 inserted=323 updated=0 unchanged=0
+2026-10-16T14:31:57.0074215Z 14:31:57  INFO     load_db    Upserted cross_source_link: incoming=496 inserted=496 updated=0 unchanged=0
+2026-10-16T14:31:57.0385682Z 14:31:57  INFO     load_db  ============================================================
+2026-10-16T14:31:57.0386277Z 14:31:57  INFO     load_db  Transactional database upsert complete!
+2026-10-16T14:31:57.0386777Z {
+2026-10-16T14:31:57.0386982Z   "mode": "upsert",
+2026-10-16T14:31:57.0387276Z   "stale_rows_deleted": false,
+2026-10-16T14:31:57.0387564Z   "tables": {
+2026-10-16T14:31:57.0387792Z     "anchor_event": {
+2026-10-16T14:31:57.0388166Z       "incoming": 286,
+2026-10-16T14:31:57.0388416Z       "matched": 0,
+2026-10-16T14:31:57.0388656Z       "updated": 0,
+2026-10-16T14:31:57.0388833Z       "inserted": 286,
+2026-10-16T14:31:57.0389054Z       "unchanged": 0,
+2026-10-16T14:31:57.0389305Z       "hashes_refreshed": 0
+2026-10-16T14:31:57.0389529Z     },
+2026-10-16T14:31:57.0389694Z     "ctd_profile": {
+2026-10-16T14:31:57.0389870Z       "incoming": 10955,
+2026-10-16T14:31:57.0390049Z       "matched": 0,
+2026-10-16T14:31:57.0390210Z       "updated": 0,
+2026-10-16T14:31:57.0390377Z       "inserted": 10955,
+2026-10-16T14:31:57.0390546Z       "unchanged": 0,
+2026-10-16T14:31:57.0390720Z       "hashes_refreshed": 0
+2026-10-16T14:31:57.0390895Z     },
+2026-10-16T14:31:57.0391044Z     "ctd_summary": {
+2026-10-16T14:31:57.0391226Z       "incoming": 162,
+2026-10-16T14:31:57.0391394Z       "matched": 0,
+2026-10-16T14:31:57.0391549Z       "updated": 0,
+2026-10-16T14:31:57.0391705Z       "inserted": 162,
+2026-10-16T14:31:57.0391879Z       "unchanged": 0,
+2026-10-16T14:31:57.0392047Z       "hashes_refreshed": 0
+2026-10-16T14:31:57.0392223Z     },
+2026-10-16T14:31:57.0392613Z     "metagenome_sample": {
+2026-10-16T14:31:57.0392815Z       "incoming": 82,
+2026-10-16T14:31:57.0392979Z       "matched": 0,
+2026-10-16T14:31:57.0393137Z       "updated": 0,
+2026-10-16T14:31:57.0393292Z       "inserted": 82,
+2026-10-16T14:31:57.0393461Z       "unchanged": 0,
+2026-10-16T14:31:57.0393637Z       "hashes_refreshed": 0
+2026-10-16T14:31:57.0393817Z     },
+2026-10-16T14:31:57.0393981Z     "sst_point_observation": {
+2026-10-16T14:31:57.0394174Z       "incoming": 1848,
+2026-10-16T14:31:57.0394351Z       "matched": 0,
+2026-10-16T14:31:57.0394511Z       "updated": 0,
+2026-10-16T14:31:57.0394673Z       "inserted": 1848,
+2026-10-16T14:31:57.0394847Z       "unchanged": 0,
+2026-10-16T14:31:57.0395018Z       "hashes_refreshed": 0
+2026-10-16T14:31:57.0395199Z     },
+2026-10-16T14:31:57.0395346Z     "sst_daily_summary": {
+2026-10-16T14:31:57.0395527Z       "incoming": 79,
+2026-10-16T14:31:57.0395687Z       "matched": 0,
+2026-10-16T14:31:57.0395858Z       "updated": 0,
+2026-10-16T14:31:57.0396024Z       "inserted": 79,
+2026-10-16T14:31:57.0396226Z       "unchanged": 0,
+2026-10-16T14:31:57.0396396Z       "hashes_refreshed": 0
+2026-10-16T14:31:57.0396588Z     },
+2026-10-16T14:31:57.0396745Z     "retrieval_document": {
+2026-10-16T14:31:57.0396926Z       "incoming": 323,
+2026-10-16T14:31:57.0397096Z       "matched": 0,
+2026-10-16T14:31:57.0397253Z       "updated": 0,
+2026-10-16T14:31:57.0397416Z       "inserted": 323,
+2026-10-16T14:31:57.0397580Z       "unchanged": 0,
+2026-10-16T14:31:57.0397747Z       "hashes_refreshed": 0,
+2026-10-16T14:31:57.0398167Z       "superseded_inactivated": 0
+2026-10-16T14:31:57.0398366Z     },
+2026-10-16T14:31:57.0398676Z     "cross_source_link": {
+2026-10-16T14:31:57.0398858Z       "incoming": 496,
+2026-10-16T14:31:57.0399032Z       "matched": 0,
+2026-10-16T14:31:57.0399188Z       "updated": 0,
+2026-10-16T14:31:57.0399348Z       "inserted": 496,
+2026-10-16T14:31:57.0399516Z       "unchanged": 0,
+2026-10-16T14:31:57.0399685Z       "hashes_refreshed": 0
+2026-10-16T14:31:57.0399874Z     }
+2026-10-16T14:31:57.0400018Z   },
+2026-10-16T14:31:57.0400170Z   "incoming_rows": 14231,
+2026-10-16T14:31:57.0400352Z   "inserted_rows": 14231,
+2026-10-16T14:31:57.0400540Z   "updated_rows": 0,
+2026-10-16T14:31:57.0400715Z   "unchanged_rows": 0,
+2026-10-16T14:31:57.0400887Z   "anemone": {
+2026-10-16T14:31:57.0401046Z     "included": false,
+2026-10-16T14:31:57.0401234Z     "normalization_id": null,
+2026-10-16T14:31:57.0401445Z     "scientific_corrections": 0,
+2026-10-16T14:31:57.0401652Z     "provenance_refreshes": 0,
+2026-10-16T14:31:57.0401845Z     "inactivated": {},
+2026-10-16T14:31:57.0402023Z     "noncurrent_override": false
+2026-10-16T14:31:57.0402221Z   }
+2026-10-16T14:31:57.0402367Z }
+2026-10-16T14:31:57.7506359Z 14:31:57  INFO     load_db  ============================================================
+2026-10-16T14:31:57.7506911Z 14:31:57  INFO     load_db  Loading data into PostgreSQL
+2026-10-16T14:31:57.7507427Z 14:31:57  INFO     load_db  ============================================================
+2026-10-16T14:31:57.8022968Z 14:31:57  INFO     db.connection  Corpus database initialized
+2026-10-16T14:31:58.0002953Z 14:31:58  INFO     load_db    Upserted anchor_event: incoming=286 inserted=0 updated=0 unchanged=286
+2026-10-16T14:32:15.1382813Z 14:32:15  INFO     load_db    Upserted ctd_profile: incoming=10955 inserted=0 updated=0 unchanged=10955
+2026-10-16T14:32:15.2203951Z 14:32:15  INFO     load_db    Upserted ctd_summary: incoming=162 inserted=0 updated=0 unchanged=162
+2026-10-16T14:32:15.2591901Z 14:32:15  INFO     load_db    Upserted metagenome_sample: incoming=82 inserted=0 updated=0 unchanged=82
+2026-10-16T14:32:16.0348049Z 14:32:16  INFO     load_db    Upserted sst_point_observation: incoming=1848 inserted=0 updated=0 unchanged=1848
+2026-10-16T14:32:16.0549576Z 14:32:16  INFO     load_db    Upserted sst_daily_summary: incoming=79 inserted=0 updated=0 unchanged=79
+2026-10-16T14:32:16.1868642Z 14:32:16  INFO     load_db    Upserted retrieval_document: incoming=323 inserted=0 updated=0 unchanged=323
+2026-10-16T14:32:16.2847734Z 14:32:16  INFO     load_db    Upserted cross_source_link: incoming=496 inserted=0 updated=0 unchanged=496
+2026-10-16T14:32:16.2892985Z 14:32:16  INFO     load_db  ============================================================
+2026-10-16T14:32:16.2893533Z 14:32:16  INFO     load_db  Transactional database upsert complete!
+2026-10-16T14:32:16.2894353Z {
+2026-10-16T14:32:16.2894580Z   "mode": "upsert",
+2026-10-16T14:32:16.2894846Z   "stale_rows_deleted": false,
+2026-10-16T14:32:16.2895168Z   "tables": {
+2026-10-16T14:32:16.2895412Z     "anchor_event": {
+2026-10-16T14:32:16.2895591Z       "incoming": 286,
+2026-10-16T14:32:16.2895791Z       "matched": 286,
+2026-10-16T14:32:16.2895963Z       "updated": 0,
+2026-10-16T14:32:16.2896131Z       "inserted": 0,
+2026-10-16T14:32:16.2896305Z       "unchanged": 286,
+2026-10-16T14:32:16.2896493Z       "hashes_refreshed": 0
+2026-10-16T14:32:16.2897020Z     },
+2026-10-16T14:32:16.2897304Z     "ctd_profile": {
+2026-10-16T14:32:16.2897671Z       "incoming": 10955,
+2026-10-16T14:32:16.2898141Z       "matched": 10955,
+2026-10-16T14:32:16.2898406Z       "updated": 0,
+2026-10-16T14:32:16.2898714Z       "inserted": 0,
+2026-10-16T14:32:16.2899023Z       "unchanged": 10955,
+2026-10-16T14:32:16.2899359Z       "hashes_refreshed": 0
+2026-10-16T14:32:16.2899648Z     },
+2026-10-16T14:32:16.2899897Z     "ctd_summary": {
+2026-10-16T14:32:16.2900236Z       "incoming": 162,
+2026-10-16T14:32:16.2900500Z       "matched": 162,
+2026-10-16T14:32:16.2900813Z       "updated": 0,
+2026-10-16T14:32:16.2901084Z       "inserted": 0,
+2026-10-16T14:32:16.2913169Z       "unchanged": 162,
+2026-10-16T14:32:16.2913764Z       "hashes_refreshed": 0
+2026-10-16T14:32:16.2913994Z     },
+2026-10-16T14:32:16.2914186Z     "metagenome_sample": {
+2026-10-16T14:32:16.2914425Z       "incoming": 82,
+2026-10-16T14:32:16.2914660Z       "matched": 82,
+2026-10-16T14:32:16.2914888Z       "updated": 0,
+2026-10-16T14:32:16.2915116Z       "inserted": 0,
+2026-10-16T14:32:16.2915396Z       "unchanged": 82,
+2026-10-16T14:32:16.2915640Z       "hashes_refreshed": 0
+2026-10-16T14:32:16.2915892Z     },
+2026-10-16T14:32:16.2916101Z     "sst_point_observation": {
+2026-10-16T14:32:16.2916368Z       "incoming": 1848,
+2026-10-16T14:32:16.2916604Z       "matched": 1848,
+2026-10-16T14:32:16.2916850Z       "updated": 0,
+2026-10-16T14:32:16.2917062Z       "inserted": 0,
+2026-10-16T14:32:16.2917246Z       "unchanged": 1848,
+2026-10-16T14:32:16.2917432Z       "hashes_refreshed": 0
+2026-10-16T14:32:16.2917609Z     },
+2026-10-16T14:32:16.2917762Z     "sst_daily_summary": {
+2026-10-16T14:32:16.2918130Z       "incoming": 79,
+2026-10-16T14:32:16.2918307Z       "matched": 79,
+2026-10-16T14:32:16.2918485Z       "updated": 0,
+2026-10-16T14:32:16.2918648Z       "inserted": 0,
+2026-10-16T14:32:16.2918809Z       "unchanged": 79,
+2026-10-16T14:32:16.2918986Z       "hashes_refreshed": 0
+2026-10-16T14:32:16.2919195Z     },
+2026-10-16T14:32:16.2919356Z     "retrieval_document": {
+2026-10-16T14:32:16.2919539Z       "incoming": 323,
+2026-10-16T14:32:16.2919724Z       "matched": 323,
+2026-10-16T14:32:16.2919900Z       "updated": 0,
+2026-10-16T14:32:16.2920067Z       "inserted": 0,
+2026-10-16T14:32:16.2920236Z       "unchanged": 323,
+2026-10-16T14:32:16.2920419Z       "hashes_refreshed": 0,
+2026-10-16T14:32:16.2920622Z       "superseded_inactivated": 0
+2026-10-16T14:32:16.2920827Z     },
+2026-10-16T14:32:16.2920987Z     "cross_source_link": {
+2026-10-16T14:32:16.2921165Z       "incoming": 496,
+2026-10-16T14:32:16.2921345Z       "matched": 496,
+2026-10-16T14:32:16.2921513Z       "updated": 0,
+2026-10-16T14:32:16.2921676Z       "inserted": 0,
+2026-10-16T14:32:16.2921843Z       "unchanged": 496,
+2026-10-16T14:32:16.2922036Z       "hashes_refreshed": 0
+2026-10-16T14:32:16.2922228Z     }
+2026-10-16T14:32:16.2922375Z   },
+2026-10-16T14:32:16.2922532Z   "incoming_rows": 14231,
+2026-10-16T14:32:16.2922721Z   "inserted_rows": 0,
+2026-10-16T14:32:16.2922901Z   "updated_rows": 0,
+2026-10-16T14:32:16.2923075Z   "unchanged_rows": 14231,
+2026-10-16T14:32:16.2923442Z   "anemone": {
+2026-10-16T14:32:16.2923616Z     "included": false,
+2026-10-16T14:32:16.2923820Z     "normalization_id": null,
+2026-10-16T14:32:16.2924026Z     "scientific_corrections": 0,
+2026-10-16T14:32:16.2924233Z     "provenance_refreshes": 0,
+2026-10-16T14:32:16.2924427Z     "inactivated": {},
+2026-10-16T14:32:16.2924606Z     "noncurrent_override": false
+2026-10-16T14:32:16.2924803Z   }
+2026-10-16T14:32:16.2924947Z }
+2026-10-16T14:32:16.4064793Z ##[group]Run python - <<'PY'
+2026-10-16T14:32:16.4065069Z [36;1mpython - <<'PY'[0m
+2026-10-16T14:32:16.4065293Z [36;1mfrom sqlalchemy import create_engine, text[0m
+2026-10-16T14:32:16.4065660Z [36;1m# This job owns the ephemeral service above; never inherit DATABASE_URL.[0m
+2026-10-16T14:32:16.4065980Z [36;1mengine = create_engine([0m
+2026-10-16T14:32:16.4066605Z [36;1m    "***127.0.0.1:5432/ocean_platform",[0m
+2026-10-16T14:32:16.4066865Z [36;1m    isolation_level="AUTOCOMMIT",[0m
+2026-10-16T14:32:16.4067094Z [36;1m)[0m
+2026-10-16T14:32:16.4067277Z [36;1mwith engine.connect() as connection:[0m
+2026-10-16T14:32:16.4067595Z [36;1m    connection.execute(text("CREATE DATABASE ocean_c03_retention_test"))[0m
+2026-10-16T14:32:16.4068129Z [36;1mengine.dispose()[0m
+2026-10-16T14:32:16.4068332Z [36;1mPY[0m
+2026-10-16T14:32:16.4124702Z shell: /usr/bin/bash -e {0}
+2026-10-16T14:32:16.4124915Z env:
+2026-10-16T14:32:16.4125184Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:16.4125545Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T14:32:16.4125902Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:16.4126365Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:16.4126663Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:16.4126962Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T14:32:16.4127217Z ##[endgroup]
+2026-10-16T14:32:16.6834541Z ##[group]Run container_address="$(docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$POSTGRES_TEST_CONTAINER_ID")"
+2026-10-16T14:32:16.6835348Z [36;1mcontainer_address="$(docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$POSTGRES_TEST_CONTAINER_ID")"[0m
+2026-10-16T14:32:16.6835963Z [36;1mpython -c 'import ipaddress, sys; ipaddress.IPv4Address(sys.argv[1])' "$container_address"[0m
+2026-10-16T14:32:16.6836388Z [36;1mprintf 'address=%s\n' "$container_address" >> "$GITHUB_OUTPUT"[0m
+2026-10-16T14:32:16.6891720Z shell: /usr/bin/bash -e {0}
+2026-10-16T14:32:16.6891926Z env:
+2026-10-16T14:32:16.6892149Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:16.6892510Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T14:32:16.6892846Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:16.6893178Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:16.6893488Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:16.6893797Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T14:32:16.6894190Z   POSTGRES_TEST_CONTAINER_ID: d930454647e281c7223984d41ad044718f591a4dd82ef9c62ead52c990dfeb06
+2026-10-16T14:32:16.6894548Z ##[endgroup]
+2026-10-16T14:32:16.7263216Z ##[group]Run python -m pytest tests/integration/test_retention_concurrency_postgres.py -q -s --tb=short
+2026-10-16T14:32:16.7263796Z [36;1mpython -m pytest tests/integration/test_retention_concurrency_postgres.py -q -s --tb=short[0m
+2026-10-16T14:32:16.7316590Z shell: /usr/bin/bash -e {0}
+2026-10-16T14:32:16.7316792Z env:
+2026-10-16T14:32:16.7317032Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:16.7317368Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T14:32:16.7317697Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:16.7318103Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:16.7318405Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:16.7318697Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T14:32:16.7318956Z   AUTH_MODE: disabled
+2026-10-16T14:32:16.7319137Z   DEPLOYMENT_ENV: test
+2026-10-16T14:32:16.7319357Z   RUN_POSTGRES_INTEGRATION: 1
+2026-10-16T14:32:16.7319878Z   C03_TEST_DATABASE_URL: ***127.0.0.1:5432/ocean_c03_retention_test
+2026-10-16T14:32:16.7320177Z   C03_TEST_SERVER_ADDRESS: 172.18.0.2
+2026-10-16T14:32:16.7320390Z ##[endgroup]
+2026-10-16T14:32:18.0469774Z C03 disposable PostgreSQL identity: database=ocean_c03_retention_test address=172.18.0.2 port=5432 version=16.15 (Debian 16.15-1.pgdg12+2) isolation=read committed
+2026-10-16T14:32:18.8726782Z ............
+2026-10-16T14:32:18.8727112Z 12 passed in 1.59s
+2026-10-16T14:32:19.0752683Z ##[group]Run python - <<'PY'
+2026-10-16T14:32:19.0752963Z [36;1mpython - <<'PY'[0m
+2026-10-16T14:32:19.0753200Z [36;1mfrom sqlalchemy import create_engine, text[0m
+2026-10-16T14:32:19.0753543Z [36;1m# The URL and database are owned by this job, never inherited from the app.[0m
+2026-10-16T14:32:19.0753888Z [36;1mengine = create_engine([0m
+2026-10-16T14:32:19.0754383Z [36;1m    "***127.0.0.1:5432/ocean_platform",[0m
+2026-10-16T14:32:19.0754644Z [36;1m    isolation_level="AUTOCOMMIT",[0m
+2026-10-16T14:32:19.0754889Z [36;1m)[0m
+2026-10-16T14:32:19.0755073Z [36;1mwith engine.connect() as connection:[0m
+2026-10-16T14:32:19.0755395Z [36;1m    connection.execute(text("CREATE DATABASE ocean_c05_retrieval_test"))[0m
+2026-10-16T14:32:19.0755716Z [36;1mengine.dispose()[0m
+2026-10-16T14:32:19.0756092Z [36;1mengine = create_engine([0m
+2026-10-16T14:32:19.0756494Z [36;1m    "***127.0.0.1:5432/ocean_c05_retrieval_test"[0m
+2026-10-16T14:32:19.0756738Z [36;1m)[0m
+2026-10-16T14:32:19.0756977Z [36;1mwith engine.begin() as connection:[0m
+2026-10-16T14:32:19.0757287Z [36;1m    connection.execute(text("CREATE EXTENSION vector"))[0m
+2026-10-16T14:32:19.0757567Z [36;1mengine.dispose()[0m
+2026-10-16T14:32:19.0757766Z [36;1mPY[0m
+2026-10-16T14:32:19.0814049Z shell: /usr/bin/bash -e {0}
+2026-10-16T14:32:19.0814257Z env:
+2026-10-16T14:32:19.0814491Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:19.0814857Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T14:32:19.0815196Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:19.0815492Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:19.0815791Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:19.0816098Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T14:32:19.0816368Z ##[endgroup]
+2026-10-16T14:32:19.3707355Z ##[group]Run python -m pytest tests/integration/test_retrieval_identity_postgres.py -q -s --tb=short
+2026-10-16T14:32:19.3708435Z [36;1mpython -m pytest tests/integration/test_retrieval_identity_postgres.py -q -s --tb=short[0m
+2026-10-16T14:32:19.3777083Z shell: /usr/bin/bash -e {0}
+2026-10-16T14:32:19.3777295Z env:
+2026-10-16T14:32:19.3777530Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:19.3777990Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T14:32:19.3778331Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:19.3778631Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:19.3778939Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:19.3779244Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T14:32:19.3779510Z   AUTH_MODE: disabled
+2026-10-16T14:32:19.3779702Z   DEPLOYMENT_ENV: test
+2026-10-16T14:32:19.3779919Z   RUN_POSTGRES_INTEGRATION: 1
+2026-10-16T14:32:19.3780467Z   C05_TEST_DATABASE_URL: ***127.0.0.1:5432/ocean_c05_retrieval_test
+2026-10-16T14:32:19.3780774Z   C05_TEST_SERVER_ADDRESS: 172.18.0.2
+2026-10-16T14:32:19.3780989Z ##[endgroup]
+2026-10-16T14:32:21.0665475Z C05 disposable pgvector identity: database=ocean_c05_retrieval_test address=172.18.0.2 port=5432 PostgreSQL=16.15 (Debian 16.15-1.pgdg12+2) isolation=read committed pgvector=0.8.7
+2026-10-16T14:32:21.8424710Z ............
+2026-10-16T14:32:21.8425163Z =============================== warnings summary ===============================
+2026-10-16T14:32:21.8425831Z ../../../../../opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/fastapi/testclient.py:1
+2026-10-16T14:32:21.8427076Z   /opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+2026-10-16T14:32:21.8428436Z     from starlette.testclient import TestClient as TestClient  # noqa
+2026-10-16T14:32:21.8428769Z
+2026-10-16T14:32:21.8429013Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-10-16T14:32:21.8429435Z 12 passed, 1 warning in 1.88s
+2026-10-16T14:32:22.1186651Z ##[group]Run python - <<'PY'
+2026-10-16T14:32:22.1187063Z [36;1mpython - <<'PY'[0m
+2026-10-16T14:32:22.1187434Z [36;1mfrom sqlalchemy import create_engine, text[0m
+2026-10-16T14:32:22.1188142Z [36;1m# This job owns the service and test database; never inherit app config.[0m
+2026-10-16T14:32:22.1188648Z [36;1mengine = create_engine([0m
+2026-10-16T14:32:22.1189415Z [36;1m    "***127.0.0.1:5432/ocean_platform",[0m
+2026-10-16T14:32:22.1189811Z [36;1m    isolation_level="AUTOCOMMIT",[0m
+2026-10-16T14:32:22.1190156Z [36;1m)[0m
+2026-10-16T14:32:22.1190429Z [36;1mwith engine.connect() as connection:[0m
+2026-10-16T14:32:22.1190935Z [36;1m    connection.execute(text("CREATE DATABASE ocean_c09_snapshot_test"))[0m
+2026-10-16T14:32:22.1191691Z [36;1mengine.dispose()[0m
+2026-10-16T14:32:22.1191976Z [36;1mPY[0m
+2026-10-16T14:32:22.1250126Z shell: /usr/bin/bash -e {0}
+2026-10-16T14:32:22.1250333Z env:
+2026-10-16T14:32:22.1250596Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:22.1250953Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T14:32:22.1251295Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:22.1251602Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:22.1251910Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:22.1252206Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T14:32:22.1252466Z ##[endgroup]
+2026-10-16T14:32:22.3996812Z ##[group]Run python -m pytest tests/integration/test_catalogue_snapshot_capture_postgres.py -q -s --tb=short
+2026-10-16T14:32:22.3997985Z [36;1mpython -m pytest tests/integration/test_catalogue_snapshot_capture_postgres.py -q -s --tb=short[0m
+2026-10-16T14:32:22.4061298Z shell: /usr/bin/bash -e {0}
+2026-10-16T14:32:22.4061516Z env:
+2026-10-16T14:32:22.4061746Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:22.4062116Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T14:32:22.4062463Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:22.4062761Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:22.4063068Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:22.4063370Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T14:32:22.4063630Z   AUTH_MODE: disabled
+2026-10-16T14:32:22.4063809Z   DEPLOYMENT_ENV: test
+2026-10-16T14:32:22.4064040Z   RUN_POSTGRES_INTEGRATION: 1
+2026-10-16T14:32:22.4064584Z   C09_TEST_DATABASE_URL: ***127.0.0.1:5432/ocean_c09_snapshot_test
+2026-10-16T14:32:22.4064887Z   C09_TEST_SERVER_ADDRESS: 172.18.0.2
+2026-10-16T14:32:22.4065104Z ##[endgroup]
+2026-10-16T14:32:23.4273468Z C09 disposable PostgreSQL identity: database=ocean_c09_snapshot_test address=172.18.0.2 port=5432 version=16.15 (Debian 16.15-1.pgdg12+2)
+2026-10-16T14:32:23.4628458Z .C09 disposable schema cleanup: c09_78d9ac51fe7f46218829e8e68ed09989 remaining=0
+2026-10-16T14:32:23.4977659Z .C09 disposable schema cleanup: c09_687f9676989f4fbd9818b4460f23c008 remaining=0
+2026-10-16T14:32:23.5323365Z .C09 disposable schema cleanup: c09_da6236eb9f0748c8bd497edadedb0c27 remaining=0
+2026-10-16T14:32:23.5655406Z .C09 disposable schema cleanup: c09_6759fd6a466447bbb76678cbc5a24a02 remaining=0
+2026-10-16T14:32:23.6019325Z .C09 disposable schema cleanup: c09_7fbfa39b11fc4eab9326e5f791783855 remaining=0
+2026-10-16T14:32:23.6355448Z .C09 disposable schema cleanup: c09_ae7afa460dd641d298d3b9ed556006c4 remaining=0
+2026-10-16T14:32:23.6698469Z .C09 disposable schema cleanup: c09_4243bbd21ee24d8d9cc076276e1d7b40 remaining=0
+2026-10-16T14:32:23.7252335Z .C09 disposable schema cleanup: c09_599e81453cde4725a21da0bce9aefb66 remaining=0
+2026-10-16T14:32:23.7506127Z .C09 disposable schema cleanup: c09_070f7104a6dd4198a8ae005d3e42cc2e remaining=0
+2026-10-16T14:32:23.7717551Z .C09 disposable schema cleanup: c09_89b2cdf0812e4c5c849e1eb860b1e04e remaining=0
+2026-10-16T14:32:23.9449474Z .C09 disposable schema cleanup: c09_b204a761b270412bbcb8827595fc911f remaining=0
+2026-10-16T14:32:23.9967683Z .C09 disposable schema cleanup: c09_1418c847dd964315b856e28b0f417332 remaining=0
+2026-10-16T14:32:24.0448936Z .C09 disposable schema cleanup: c09_284892214b664e519266a40262a147de remaining=0
+2026-10-16T14:32:24.0925570Z .C09 disposable schema cleanup: c09_90689017e9c44512aa9a55f9f2787820 remaining=0
+2026-10-16T14:32:24.1432959Z .C09 disposable schema cleanup: c09_d7d70bebf67d464bb18b9e5315751fe3 remaining=0
+2026-10-16T14:32:24.1953842Z .C09 disposable schema cleanup: c09_794e055f90b347a393b78ba776e53efe remaining=0
+2026-10-16T14:32:24.2522700Z .C09 disposable schema cleanup: c09_10c5e9ad5a1a4401bdcd85a4ad8c484a remaining=0
+2026-10-16T14:32:24.3418802Z .C09 disposable schema cleanup: c09_6656f4b74b924d95879a8181eb20c156 remaining=0
+2026-10-16T14:32:24.3848909Z .C09 disposable schema cleanup: c09_ffbb9ab9389b4e6cb3250658be7dca45 remaining=0
+2026-10-16T14:32:24.4210697Z .C09 disposable schema cleanup: c09_d159e85b3de045bf8b9bcfa1514dbfb3 remaining=0
+2026-10-16T14:32:24.4997610Z .C09 disposable schema cleanup: c09_bd40aad720c9465d8bd8895657e9a21f remaining=0
+2026-10-16T14:32:24.4998253Z
+2026-10-16T14:32:24.4998362Z 21 passed in 1.57s
+2026-10-16T14:32:24.6613120Z ##[group]Run python scripts/database_backup.py create --output-dir "${RUNNER_TEMP}/database-backup" --label ci --restore-test
+2026-10-16T14:32:24.6614456Z [36;1mpython scripts/database_backup.py create --output-dir "${RUNNER_TEMP}/database-backup" --label ci --restore-test[0m
+2026-10-16T14:32:24.6690505Z shell: /usr/bin/bash -e {0}
+2026-10-16T14:32:24.6690831Z env:
+2026-10-16T14:32:24.6691269Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:24.6691773Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T14:32:24.6692215Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:24.6692705Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:24.6693112Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T14:32:24.6693566Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T14:32:24.6694279Z   DATABASE_URL: ***127.0.0.1:5432/ocean_platform
+2026-10-16T14:32:24.6694781Z   DATABASE_BACKUP_CONTAINER:
+2026-10-16T14:32:24.6695081Z ##[endgroup]
+2026-10-16T14:32:26.8070488Z {
+2026-10-16T14:32:26.8071034Z   "archive_path": "/home/runner/work/_temp/database-backup/20261016T143224Z-ci-ocean_platform.dump",
+2026-10-16T14:32:26.8071584Z   "created_at": "2026-10-16T14:32:25.372269+00:00",
+2026-10-16T14:32:26.8071991Z   "database": "127.0.0.1:5432/ocean_platform",
+2026-10-16T14:32:26.8072640Z   "manifest_path": "/home/runner/work/_temp/database-backup/20261016T143224Z-ci-ocean_platform.dump.json",
+2026-10-16T14:32:26.8073404Z   "restore_test": {
+2026-10-16T14:32:26.8074050Z     "archive_path": "/home/runner/work/_temp/database-backup/20261016T143224Z-ci-ocean_platform.dump",
+2026-10-16T14:32:26.8074780Z     "ok": true,
+2026-10-16T14:32:26.8075186Z     "restored_table_counts": {
+2026-10-16T14:32:26.8075737Z       "alembic_version": 1,
+2026-10-16T14:32:26.8076360Z       "anchor_event": 286,
+2026-10-16T14:32:26.8076853Z       "app_user": 0,
+2026-10-16T14:32:26.8077306Z       "audit_event": 0,
+2026-10-16T14:32:26.8077691Z       "chat_feedback": 0,
+2026-10-16T14:32:26.8078201Z       "chat_interaction": 0,
+2026-10-16T14:32:26.8078722Z       "classification_application": 0,
+2026-10-16T14:32:26.8079124Z       "classification_application_event": 0,
+2026-10-16T14:32:26.8079496Z       "classification_review": 0,
+2026-10-16T14:32:26.8079805Z       "classification_review_event": 0,
+2026-10-16T14:32:26.8080184Z       "corpus_publication": 1,
+2026-10-16T14:32:26.8080527Z       "cross_source_link": 496,
+2026-10-16T14:32:26.8080820Z       "ctd_profile": 10955,
+2026-10-16T14:32:26.8081135Z       "ctd_summary": 162,
+2026-10-16T14:32:26.8081457Z       "edna_aggregate_evidence": 0,
+2026-10-16T14:32:26.8081770Z       "edna_assay": 2,
+2026-10-16T14:32:26.8082087Z       "edna_detection": 2,
+2026-10-16T14:32:26.8082369Z       "edna_internal_standard": 2,
+2026-10-16T14:32:26.8082766Z       "edna_sample": 2,
+2026-10-16T14:32:26.8083048Z       "external_source_file": 2,
+2026-10-16T14:32:26.8083378Z       "external_source_snapshot": 2,
+2026-10-16T14:32:26.8083728Z       "metagenome_sample": 82,
+2026-10-16T14:32:26.8084041Z       "provenance_record": 0,
+2026-10-16T14:32:26.8084380Z       "rate_limit_bucket": 0,
+2026-10-16T14:32:26.8084667Z       "research_area_definition": 0,
+2026-10-16T14:32:26.8085003Z       "research_physical_membership": 0,
+2026-10-16T14:32:26.8085396Z       "research_registry_event": 0,
+2026-10-16T14:32:26.8085897Z       "research_registry_head": 0,
+2026-10-16T14:32:26.8086263Z       "research_registry_review": 0,
+2026-10-16T14:32:26.8086576Z       "research_registry_version": 0,
+2026-10-16T14:32:26.8086997Z       "retrieval_document": 324,
+2026-10-16T14:32:26.8087306Z       "sst_daily_summary": 79,
+2026-10-16T14:32:26.8087586Z       "sst_point_observation": 1848,
+2026-10-16T14:32:26.8088111Z       "user_invitation": 0
+2026-10-16T14:32:26.8088423Z     },
+2026-10-16T14:32:26.8088787Z     "temporary_database": "ocean_restore_verify_3a2d0dcc7233",
+2026-10-16T14:32:26.8089350Z     "temporary_database_removed": true
+2026-10-16T14:32:26.8089639Z   },
+2026-10-16T14:32:26.8090093Z   "sha256": "2f91c59ec72654ade9c44bf144b4faa3155f5efa43f42b87ab718b345cdcc240",
+2026-10-16T14:32:26.8090541Z   "size_bytes": 1394725,
+2026-10-16T14:32:26.8090867Z   "table_count": 34,
+2026-10-16T14:32:26.8091132Z   "toc_entries": 301,
+2026-10-16T14:32:26.8091454Z   "toolchain": "native"
+2026-10-16T14:32:26.8091730Z }
+2026-10-16T14:32:26.8634613Z Post job cleanup.
+2026-10-16T14:32:26.9524118Z Cache hit occurred on the primary key setup-python-Linux-x64-24.04-Ubuntu-python-3.12.15-pip-0678f5ee12b9d192f99f574742b01e3084dffe499bfe6bfc7f8e5a38fe435056, not saving cache.
+2026-10-16T14:32:26.9628343Z Post job cleanup.
+2026-10-16T14:32:27.0286512Z [command]/usr/bin/git version
+2026-10-16T14:32:27.0330044Z git version 2.55.0
+2026-10-16T14:32:27.0358022Z Temporarily overriding HOME='/home/runner/work/_temp/9ba31e48-f683-455c-86c9-7e01fbbc2685' before making global git config changes
+2026-10-16T14:32:27.0359018Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T14:32:27.0362674Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ocean-platform/ocean-platform
+2026-10-16T14:32:27.0422421Z Removing SSH command configuration
+2026-10-16T14:32:27.0427689Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T14:32:27.0460705Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T14:32:27.0671304Z Removing HTTP extra header
+2026-10-16T14:32:27.0676389Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T14:32:27.0708713Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T14:32:27.0917689Z Removing includeIf entries pointing to credentials config files
+2026-10-16T14:32:27.0931594Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T14:32:27.0970141Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T14:32:27.1273674Z Print service container logs: d547bd89878241d2906e3da84bc67425_pgvectorpgvectorpg16_9f9043
+2026-10-16T14:32:27.1277510Z ##[command]/usr/bin/docker logs --details d930454647e281c7223984d41ad044718f591a4dd82ef9c62ead52c990dfeb06
+2026-10-16T14:32:27.1384192Z  The files belonging to this database system will be owned by user "postgres".
+2026-10-16T14:32:27.1384830Z  This user must also own the server process.
+2026-10-16T14:32:27.1385240Z
+2026-10-16T14:32:27.1385767Z  The database cluster will be initialized with locale "en_US.utf8".
+2026-10-16T14:32:27.1386379Z  The default database encoding has accordingly been set to "UTF8".
+2026-10-16T14:32:27.1387632Z  initdb: warning: enabling "trust" authentication for local connections
+2026-10-16T14:32:27.1388685Z  initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+2026-10-16T14:32:27.1389839Z  2026-10-16 14:30:34.549 UTC [1] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+2026-10-16T14:32:27.1390944Z  2026-10-16 14:30:34.549 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-10-16T14:32:27.1391527Z  2026-10-16 14:30:34.549 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2026-10-16T14:32:27.1392146Z  2026-10-16 14:30:34.550 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-10-16T14:32:27.1392815Z  2026-10-16 14:30:34.552 UTC [64] LOG:  database system was shut down at 2026-10-16 14:30:34 UTC
+2026-10-16T14:32:27.1393433Z  2026-10-16 14:30:34.556 UTC [1] LOG:  database system is ready to accept connections
+2026-10-16T14:32:27.1394026Z  2026-10-16 14:31:13.476 UTC [128] ERROR:  classification review events are append-only
+2026-10-16T14:32:27.1394802Z  2026-10-16 14:31:13.476 UTC [128] CONTEXT:  PL/pgSQL function ocean_block_classification_review_event_mutation() line 3 at RAISE
+2026-10-16T14:32:27.1395900Z  2026-10-16 14:31:13.476 UTC [128] STATEMENT:  UPDATE classification_review_event SET details_json = '{}' WHERE id = 'facce215-6361-411b-ad27-89ac855d01d2'::uuid
+2026-10-16T14:32:27.1396773Z  2026-10-16 14:31:13.477 UTC [128] ERROR:  classification review events are append-only
+2026-10-16T14:32:27.1397468Z  2026-10-16 14:31:13.477 UTC [128] CONTEXT:  PL/pgSQL function ocean_block_classification_review_event_mutation() line 3 at RAISE
+2026-10-16T14:32:27.1398632Z  2026-10-16 14:31:13.477 UTC [128] STATEMENT:  DELETE FROM classification_review_event WHERE id = 'facce215-6361-411b-ad27-89ac855d01d2'::uuid
+2026-10-16T14:32:27.1399292Z  2026-10-16 14:31:13.545 UTC [129] ERROR:  classification review events are append-only
+2026-10-16T14:32:27.1399815Z  2026-10-16 14:31:13.545 UTC [129] CONTEXT:  PL/pgSQL function ocean_block_classification_review_event_mutation() line 3 at RAISE
+2026-10-16T14:32:27.1400497Z  2026-10-16 14:31:13.545 UTC [129] STATEMENT:  UPDATE classification_application_event SET result_json = '{}' WHERE id = '82727199-e221-4b85-9e6b-6809255075b7'::uuid
+2026-10-16T14:32:27.1401079Z  2026-10-16 14:31:13.545 UTC [129] ERROR:  classification review events are append-only
+2026-10-16T14:32:27.1401574Z  2026-10-16 14:31:13.545 UTC [129] CONTEXT:  PL/pgSQL function ocean_block_classification_review_event_mutation() line 3 at RAISE
+2026-10-16T14:32:27.1402187Z  2026-10-16 14:31:13.545 UTC [129] STATEMENT:  DELETE FROM classification_application_event WHERE id = '82727199-e221-4b85-9e6b-6809255075b7'::uuid
+2026-10-16T14:32:27.1402837Z  2026-10-16 14:31:13.547 UTC [129] ERROR:  duplicate key value violates unique constraint "uq_classification_application_running_review"
+2026-10-16T14:32:27.1403405Z  2026-10-16 14:31:13.547 UTC [129] DETAIL:  Key (review_id)=(9a291019-3bae-49e1-8372-913d61ab7808) already exists.
+2026-10-16T14:32:27.1403773Z  2026-10-16 14:31:13.547 UTC [129] STATEMENT:
+2026-10-16T14:32:27.1404040Z  	                    INSERT INTO classification_application (
+2026-10-16T14:32:27.1404520Z  	                        id, operation_id, review_id, review_version,
+2026-10-16T14:32:27.1404856Z  	                        review_content_sha256, source_snapshot_id, sample_id,
+2026-10-16T14:32:27.1405173Z  	                        mode, actor_user_id, actor_identity_json, status,
+2026-10-16T14:32:27.1405487Z  	                        completed_stages_json, artifacts_json, results_json,
+2026-10-16T14:32:27.1405767Z  	                        recovery_json, started_at
+2026-10-16T14:32:27.1405989Z  	                    )
+2026-10-16T14:32:27.1406169Z  	                    SELECT
+2026-10-16T14:32:27.1406529Z  	                        'bad2dc7e-3633-47f5-9737-24476a6013d1'::uuid, 'postgres-competing', review_id, review_version,
+2026-10-16T14:32:27.1406964Z  	                        review_content_sha256, source_snapshot_id, sample_id,
+2026-10-16T14:32:27.1407310Z  	                        'apply', actor_user_id, actor_identity_json, 'running',
+2026-10-16T14:32:27.1407624Z  	                        '[]'::json, '{}'::json, '{}'::json, '[]'::json,
+2026-10-16T14:32:27.1408088Z  	                        CURRENT_TIMESTAMP
+2026-10-16T14:32:27.1408754Z  	                    FROM classification_application WHERE id = '7b371c1e-a662-4198-a683-79767a3d2ee6'::uuid
+2026-10-16T14:32:27.1409301Z
+2026-10-16T14:32:27.1409611Z  2026-10-16 14:31:17.031 UTC [151] ERROR:  invalid input syntax for type bigint: "invalid"
+2026-10-16T14:32:27.1410016Z  2026-10-16 14:31:17.031 UTC [151] CONTEXT:  COPY copy_failed, line 2, column id: "invalid"
+2026-10-16T14:32:27.1410457Z  2026-10-16 14:31:17.031 UTC [151] STATEMENT:  COPY copy_failed (id, value) FROM STDIN WITH (FORMAT text)
+2026-10-16T14:32:27.1410952Z  2026-10-16 14:31:17.310 UTC [153] ERROR:  duplicate key value violates unique constraint "uq_edna_detection_identity"
+2026-10-16T14:32:27.1411909Z  2026-10-16 14:31:17.310 UTC [153] DETAIL:  Key (assay_id, assignment_method, sequence_sha256)=(dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd, qcauto_target, 1dff3e84fe7877e0673b69bbddcf40124e396e3f9943dd890c91b6a09adb9af0) already exists.
+2026-10-16T14:32:27.1414570Z  2026-10-16 14:31:17.310 UTC [153] STATEMENT:  INSERT INTO edna_detection (detection_id, assay_id, assignment_method, sequence, sequence_sha256, read_count, copies_per_ml, taxonomy_json, source_row_number, source_snapshot_id, source_file_id, active, first_seen_snapshot_id, last_seen_snapshot_id, scientific_content_sha256, source_row_hash) SELECT source.detection_id, source.assay_id, source.assignment_method, source.sequence, source.sequence_sha256, source.read_count, source.copies_per_ml, source.taxonomy_json, source.source_row_number, source.source_snapshot_id, source.source_file_id, source.active, source.first_seen_snapshot_id, source.last_seen_snapshot_id, source.scientific_content_sha256, source.source_row_hash FROM _ocean_edna_edna_detection_30a0c2f1fa AS source ON CONFLICT (detection_id) DO NOTHING
+2026-10-16T14:32:27.1416709Z  2026-10-16 14:31:47.159 UTC [334] ERROR:  Research evidence records are immutable
+2026-10-16T14:32:27.1417142Z  2026-10-16 14:31:47.159 UTC [334] CONTEXT:  PL/pgSQL function ocean_research_immutable_record() line 2 at RAISE
+2026-10-16T14:32:27.1417621Z  2026-10-16 14:31:47.159 UTC [334] STATEMENT:  UPDATE research_registry_event SET payload_json='{}'
+2026-10-16T14:32:27.1418346Z  2026-10-16 14:31:47.159 UTC [334] ERROR:  Research evidence records are immutable
+2026-10-16T14:32:27.1418765Z  2026-10-16 14:31:47.159 UTC [334] CONTEXT:  PL/pgSQL function ocean_research_immutable_record() line 2 at RAISE
+2026-10-16T14:32:27.1419195Z  2026-10-16 14:31:47.159 UTC [334] STATEMENT:  DELETE FROM research_registry_version
+2026-10-16T14:32:27.1419553Z  2026-10-16 14:32:21.200 UTC [424] ERROR:  different vector dimensions 768 and 1
+2026-10-16T14:32:27.1419848Z  2026-10-16 14:32:21.200 UTC [424] STATEMENT:
+2026-10-16T14:32:27.1420128Z  	                SELECT doc_id, source_type, sample_id, event_id, time,
+2026-10-16T14:32:27.1420595Z  	                       bay, station, title, text, lat, lon, metadata_json, provider,
+2026-10-16T14:32:27.1420927Z  	                       provider_project_id, provider_run_id, assay_id,
+2026-10-16T14:32:27.1421231Z  	                       assignment_method, sample_kind, is_control,
+2026-10-16T14:32:27.1421486Z  	                       source_snapshot_id
+2026-10-16T14:32:27.1433911Z  	                FROM retrieval_document
+2026-10-16T14:32:27.1434805Z  	                WHERE active IS TRUE AND source_type = 'metagenome' AND embedding IS NOT NULL AND embedding_provider = 'c05-synthetic-provider' AND embedding_model = 'c05-synthetic-model' AND embedding_dim = 1
+2026-10-16T14:32:27.1435440Z  	                ORDER BY embedding <=> '[1.0]', doc_id ASC
+2026-10-16T14:32:27.1435686Z  	                LIMIT 20
+2026-10-16T14:32:27.1435868Z
+2026-10-16T14:32:27.1436142Z  2026-10-16 14:32:23.749 UTC [451] ERROR:  cannot execute UPDATE in a read-only transaction
+2026-10-16T14:32:27.1436567Z  2026-10-16 14:32:23.749 UTC [451] STATEMENT:  UPDATE canonical_rows SET payload='forbidden'
+2026-10-16T14:32:27.1436966Z  2026-10-16 14:32:23.942 UTC [453] ERROR:  canceling statement due to statement timeout
+2026-10-16T14:32:27.1437469Z  2026-10-16 14:32:23.942 UTC [453] STATEMENT:  SELECT pg_sleep(1)
+2026-10-16T14:32:27.1437948Z  2026-10-16 14:32:26.125 UTC [62] LOG:  checkpoint starting: immediate force wait
+2026-10-16T14:32:27.1438829Z  2026-10-16 14:32:26.770 UTC [62] LOG:  checkpoint complete: wrote 8073 buffers (49.3%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.406 s, sync=0.076 s, total=0.646 s; sync files=14046, longest=0.008 s, average=0.001 s; distance=129743 kB, estimate=129743 kB; lsn=0/97C5D78, redo lsn=0/97C5D40
+2026-10-16T14:32:27.1439701Z  The default text search configuration will be set to "english".
+2026-10-16T14:32:27.1439966Z
+2026-10-16T14:32:27.1440130Z  Data page checksums are disabled.
+2026-10-16T14:32:27.1440339Z
+2026-10-16T14:32:27.1440576Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
+2026-10-16T14:32:27.1440887Z  creating subdirectories ... ok
+2026-10-16T14:32:27.1441145Z  selecting dynamic shared memory implementation ... posix
+2026-10-16T14:32:27.1441425Z  selecting default max_connections ... 100
+2026-10-16T14:32:27.1441659Z  selecting default shared_buffers ... 128MB
+2026-10-16T14:32:27.1441892Z  selecting default time zone ... Etc/UTC
+2026-10-16T14:32:27.1442125Z  creating configuration files ... ok
+2026-10-16T14:32:27.1442349Z  running bootstrap script ... ok
+2026-10-16T14:32:27.1442586Z  performing post-bootstrap initialization ... ok
+2026-10-16T14:32:27.1442838Z  syncing data to disk ... ok
+2026-10-16T14:32:27.1443023Z
+2026-10-16T14:32:27.1443170Z
+2026-10-16T14:32:27.1443355Z  Success. You can now start the database server using:
+2026-10-16T14:32:27.1443599Z
+2026-10-16T14:32:27.1443794Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
+2026-10-16T14:32:27.1444033Z
+2026-10-16T14:32:27.1444548Z  waiting for server to start....2026-10-16 14:30:34.252 UTC [48] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+2026-10-16T14:32:27.1445225Z  2026-10-16 14:30:34.253 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-10-16T14:32:27.1445651Z  2026-10-16 14:30:34.255 UTC [51] LOG:  database system was shut down at 2026-10-16 14:30:33 UTC
+2026-10-16T14:32:27.1446044Z  2026-10-16 14:30:34.258 UTC [48] LOG:  database system is ready to accept connections
+2026-10-16T14:32:27.1446331Z   done
+2026-10-16T14:32:27.1446490Z  server started
+2026-10-16T14:32:27.1446663Z  CREATE DATABASE
+2026-10-16T14:32:27.1446823Z
+2026-10-16T14:32:27.1446967Z
+2026-10-16T14:32:27.1447220Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+2026-10-16T14:32:27.1447528Z
+2026-10-16T14:32:27.1447929Z  waiting for server to shut down...2026-10-16 14:30:34.429 UTC [48] LOG:  received fast shutdown request
+2026-10-16T14:32:27.1448475Z  .2026-10-16 14:30:34.429 UTC [48] LOG:  aborting any active transactions
+2026-10-16T14:32:27.1448925Z  2026-10-16 14:30:34.431 UTC [48] LOG:  background worker "logical replication launcher" (PID 54) exited with exit code 1
+2026-10-16T14:32:27.1449342Z  2026-10-16 14:30:34.431 UTC [49] LOG:  shutting down
+2026-10-16T14:32:27.1449644Z  2026-10-16 14:30:34.431 UTC [49] LOG:  checkpoint starting: shutdown immediate
+2026-10-16T14:32:27.1450440Z  2026-10-16 14:30:34.519 UTC [49] LOG:  checkpoint complete: wrote 922 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.068 s, sync=0.020 s, total=0.089 s; sync files=301, longest=0.018 s, average=0.001 s; distance=4255 kB, estimate=4255 kB; lsn=0/1912110, redo lsn=0/1912110
+2026-10-16T14:32:27.1451230Z  2026-10-16 14:30:34.525 UTC [48] LOG:  database system is shut down
+2026-10-16T14:32:27.1451487Z   done
+2026-10-16T14:32:27.1451661Z  server stopped
+2026-10-16T14:32:27.1451824Z
+2026-10-16T14:32:27.1452015Z  PostgreSQL init process complete; ready for start up.
+2026-10-16T14:32:27.1452266Z
+2026-10-16T14:32:27.1456626Z Stop and remove container: d547bd89878241d2906e3da84bc67425_pgvectorpgvectorpg16_9f9043
+2026-10-16T14:32:27.1460606Z ##[command]/usr/bin/docker rm --force d930454647e281c7223984d41ad044718f591a4dd82ef9c62ead52c990dfeb06
+2026-10-16T14:32:27.5972268Z d930454647e281c7223984d41ad044718f591a4dd82ef9c62ead52c990dfeb06
+2026-10-16T14:32:27.5994740Z Remove container network: github_network_543439b19c8343c48cd6fb105111a252
+2026-10-16T14:32:27.5998557Z ##[command]/usr/bin/docker network rm github_network_543439b19c8343c48cd6fb105111a252
+2026-10-16T14:32:27.7098553Z github_network_543439b19c8343c48cd6fb105111a252
+2026-10-16T14:32:27.7159811Z Cleaning up orphan processes

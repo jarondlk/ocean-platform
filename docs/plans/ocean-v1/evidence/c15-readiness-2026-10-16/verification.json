@@ -1,0 +1,154 @@
+{
+  "component": "C15 read-only readiness preparation",
+  "date": "2026-10-16 JST",
+  "branch": "overhaul",
+  "state": "Formal prerequisites and existing local baseline pass; pending C14 pipeline delivery confirmation",
+  "source_baseline": "b0cac5ef23705852d4420df897db9d1c8f5bd057",
+  "formal_prerequisites": {
+    "P00": {
+      "paths": 36,
+      "original_matches": 32,
+      "accepted_supersessions": 4,
+      "all_current_hashes_match": true
+    },
+    "C08": {
+      "paths": 12,
+      "original_matches": 6,
+      "accepted_supersessions": 6,
+      "all_current_hashes_match": true
+    }
+  },
+  "current_formal_source_files": {
+    "frontend-v1/.gitignore": "2c902c5eb5bceb2eac4bb61a521d3afe2af276fe6f5b57becf1acda4d8508500",
+    "frontend-v1/README.md": "9e19dd90cd8c9a30bf98b88d22e76b521a34340b66347d97ba5e5e06e378d84a",
+    "frontend-v1/app/about/page.tsx": "cf9dfa95cab70543adca3b1713757da933069b0a6eed5860f4a6611dc12d6413",
+    "frontend-v1/app/admin/page.tsx": "59d61754a40f4223d5177fe61f8bac01882f3847047e46731be5d454c63339f1",
+    "frontend-v1/app/feedback/page.tsx": "1259b2cd86928ad51061d462dbef6d6584720908dcfb18ee68929afd6ffd3ceb",
+    "frontend-v1/app/globals.css": "47fc09d276ac9e9b5c1a5cc8e97335f0803e6285b612dc8c350e13c3fd8ee2b5",
+    "frontend-v1/app/layout.tsx": "86f13bc7e1055507cd56e9e022ee86c2957e2e427774657e5c5555fd5a9d6ac9",
+    "frontend-v1/app/page.tsx": "da00cc65a5163107e908b7198ac915d6d24e7f4c763643d427bdf77f3d2a0382",
+    "frontend-v1/next-env.d.ts": "85ae5aee75f011967cf2d25cbc342f62d69314e9d925f7f4aa3456fc2cffcca6",
+    "frontend-v1/next.config.mjs": "7505a8f04bd81aae600796c6294cba926f7ea9dda279fc955a9004afe34b43c9",
+    "frontend-v1/package-lock.json": "b2d90430d2ec3bedfd766d8693eb011dade7513a81083e5c9db105c3a3e83540",
+    "frontend-v1/package.json": "f5491bbe9fc19bb25155fab8cb280f1c01f18bc1b63fa47543efbf8cd53835c0",
+    "frontend-v1/scripts/preview.mjs": "6b55746d23ed0d1645b89a163c27bd441f43a44cb15d389137ff2f7cb3dfbc69",
+    "frontend-v1/src/about-view.tsx": "74fe41ba1bf31520dc01e436046f5fd2b0b7426c7e01eaef1a5f4266b8fe0f2b",
+    "frontend-v1/src/adapter.ts": "0c482e5a5062c12afd1d1fd4993652cc9307bc4e84cd3ba362a80b6e5c9c41bb",
+    "frontend-v1/src/admin-model.ts": "43bb4d7722796bce62a30ed63ee76e28a7a75c7bfb4e96df410cf646b588dd3c",
+    "frontend-v1/src/admin-view.tsx": "7b1b5da92e66b3f937a6615c281059e5c1afd05a1080d52942c1b4d46e8e1bff",
+    "frontend-v1/src/admin.css": "f2e6474aa1d0847ac99bbe07a073b97aec48d8eb9487106ee8eea62c4d4da3a3",
+    "frontend-v1/src/catalogue-overview.css": "e7c7db8e86d331d00de694a0563dec0fcadf5ca6dfa338ae8e52eb74da230f69",
+    "frontend-v1/src/catalogue-overview.tsx": "d8c9df29850bf7a3c652e10be6f3508afd7c1dabce84f1bee3a5930a2a2aba96",
+    "frontend-v1/src/catalogue-view.tsx": "60642da929330899b97d3d45aca51bfdfb0371ffceb17ab4712757429c8de8e1",
+    "frontend-v1/src/exports.ts": "c6d44e5cfa921d3bb9328c8553ec67a8bd61673f9fd95848a50ea18e9006be7c",
+    "frontend-v1/src/feedback-model.ts": "7000b5e1620eb2e474bd2856c69e49d58a18f3cab2a29be2bb15a634a96a9bbe",
+    "frontend-v1/src/feedback-view.tsx": "eecc19f4b3ed0b70c0a282969d3f620793f5e446f01133660c2f343c4ba340ff",
+    "frontend-v1/src/fixtures.ts": "ed124b18ff4c0175c2abd5f6bf11c724cbe2890c2df746a14058ae9a66abb8fa",
+    "frontend-v1/src/i18n.ts": "3f14468ff49c647e1b14d71e45e946a312218682abb5c6e489071fafc7a9c5fd",
+    "frontend-v1/src/model.ts": "22f6c8572649db7d3999a19e552ebddd6247dacea70eb4df2159cc00f2536fc5",
+    "frontend-v1/src/research-app.tsx": "af470bb2814a09bd26dc3132206fde717d73aa06620c6d30a9e5170c0629396f",
+    "frontend-v1/src/state.ts": "0cdae9675ef37275b0ca6e963c6bdee18e7a3a4fd24cdb60ca4d86ea9fa101bc",
+    "frontend-v1/src/support-views.css": "2a1a146de5d821d0aa2a04579be7b7a9de8da91528879fb37c4dca9441d25bfe",
+    "frontend-v1/src/ui.tsx": "2c8e5400f1b6baf8102e2539f4edea8705a026b5fd7694310cf9878fb8af0751",
+    "frontend-v1/src/workspace-view.tsx": "edb24d0490da6b645db605cd234792dadf7664a70c08accaa0fdf2ef1adff5ec",
+    "frontend-v1/tests/admin-model.test.ts": "bd5adfdbf34fbca630b5a3469e3163c90eba7b1db75dd79a9ba92f2e9accd55d",
+    "frontend-v1/tests/feedback-exports.test.ts": "e360a12d0db16ec1fa109aef78012a67938d2b387fb526efd4f9ce76c4029998",
+    "frontend-v1/tests/journeys.test.ts": "70c4352c2acc88b7faa2e3383411f7a80c4140b76d013e0d0dc775f0b16fccd6",
+    "frontend-v1/tsconfig.json": "5c14605dfa560eecdf32b50ea5aedbd1b1814ee9073c90d3dfc6c564244153e8",
+    "frontend-v1/src/catalogue-contract.generated.ts": "663b0bd13f5c3a4a4e6441b102185ddffafff51be6ccc6750ed67e6ceab3ebe0",
+    "frontend-v1/src/catalogue-contract.ts": "5b1fe9accdc455bd5f298af20a97e0f300fcb4d69b362e92baf18782c49f02b1",
+    "frontend-v1/tests/catalogue-contract.test.ts": "1dc22dcb490b5f676d380cac37d9522903f0cc04c3e8feb9e3e653517b0dc816",
+    "schema/context_catalogue.py": "548ad672277c286b97dfefcc209559363c44067211d02d6901752d21c20ad0a2",
+    "schema/context_catalogue.v1.schema.json": "152a2a213d7a3d1b0dc1628c665915e7b06f4c7a929f63383d001570a9303565",
+    "schema/context_catalogue_examples.json": "01185ab87710716e82fdb8ca7120e233256e2f4c585aba3860a5368a485399b1",
+    "schema/context_catalogue_fixtures.py": "8081971ce01e727dec02fb301fa60941443d3a1943dba357247198761c8b8fdc",
+    "scripts/export_catalogue_examples.py": "7fd86bf2c8b0e796c1436e207c71c912ab279cf859ae22c6fa1ee1182bf59235",
+    "scripts/export_catalogue_types.py": "417fb30b8209cc2422421495e76c50801715ca034d4682d4844d89d71ff2c682",
+    "scripts/export_context_catalogue.py": "107be75e5e6fcaa74c1285dababff4b9673861214c7255cc48ca06abc82820d7",
+    "tests/test_context_catalogue_contract.py": "0af0720cf12be022a4c72d7a8248de13775c074f4ceb06bd2124b1787e717853",
+    "tests/test_context_catalogue_fixtures.py": "36c4e96202f60ba38a606730e7e6b851c5f06b7e39b6ad366779722086412d69"
+  },
+  "current_formal_source_sha256": "53ba8ea52abc6481e322874ab36fe1f2d6baa828f0d2dd430672809ce074c166",
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "baseline": {
+    "v1_tests_passed": 163,
+    "v1_tests_failed": 0,
+    "v1_tests_skipped": 0,
+    "typecheck": "passed",
+    "build": "passed",
+    "generated_contract_checks_passed": 9,
+    "checks_repeated_after_interruption": false
+  },
+  "runtime": {
+    "node_path": "/Users/jaronchai/.nvm/versions/node/v22.14.0/bin/node",
+    "node_version": "v22.14.0",
+    "npm_path": "/Users/jaronchai/.nvm/versions/node/v22.14.0/bin/npm",
+    "npm_version": "10.9.2",
+    "v1_environment_files": [],
+    "dependency_installations": 0,
+    "persistent_services_started": 0,
+    "application_source_changes": 0,
+    "build_outputs": "Only ignored frontend-v1/.next and frontend-v1/out outputs",
+    "network_dependency": "Existing local modules only; no provider, model, database or production calls"
+  },
+  "preservation": {
+    "unrelated_files": {
+      "count": 30,
+      "all_match": true
+    },
+    "scientific_artifacts": {
+      "count": 7,
+      "all_match": true
+    },
+    "serving_files": {
+      "count": 2,
+      "all_match": true
+    },
+    "P00_current_files": {
+      "count": 36,
+      "all_match": true
+    },
+    "prior_evidence_files": {
+      "count": 494,
+      "all_match": true
+    }
+  },
+  "P00_historical_review_evidence": {
+    "docs/plans/ocean-v1/mockups/p00/source-revision.json": "0b8d355f6f75c0f67fa8648b285daaedc4b69d987f2a1bc5ad05f2d97db0f205",
+    "docs/plans/ocean-v1/mockups/p00/accepted-2026-10-14/administration.jpg": "77b8772a2414a7e5fda6ac4dcefae2f4565aa766d5cf41cee70661240a831b72"
+  },
+  "C14_current_source": {
+    "paths": 14,
+    "source_sha256": "460a215e57aa22290a30dec9373c4e2fdc813ec846e0f8232794fea7f0573b89",
+    "accepted_source_map_sha256": "e1db56f27a2e5e039e605aaf08b2f381211e57ff4a2873369722197ccd0f6e1f",
+    "all_current_hashes_match": true,
+    "exact_source_hosted_CI_and_delivery": "Pending parent confirmation"
+  },
+  "readiness_promoted": false,
+  "C15_implementation_started": false,
+  "fresh_C15_browser_or_assistive_technology_acceptance": false,
+  "next_action": "Await final C14 source CI and delivery confirmation, then record separate readiness confirmation before C15 checkpoint 1",
+  "application_source_changes_by_preparation": 0,
+  "commits_by_preparation": 0,
+  "cloud_or_production_actions": 0,
+  "evidence_files_sha256": {
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/adapters.txt": "3616357347d55684342a6b3d04a6cab676714283fd7613babf78aee10db52d5d",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/audit.md": "e7a3404ecd8481a7e623537cfcc7c2164fff04288fb40fd69b8ecd0f0c347996",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/browser-types.txt": "edfc61324e991e3bda912ff0153de8de843149d6e96921f6df836436437bb215",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/edna.txt": "584bf23af0f9b906b7db1c3224242971b102e573fef6f35a39b1bd259fcb7180",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/examples.txt": "962c470ee8e7b1a3fa7cc260238248b74b659e73c4479518cfd90a2fb0468724",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/results.json": "68e5a235b3ac5a44f33dc8adb2f874bc92c201802e749b459dce2bcd396d7ff6",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/schema.txt": "17f7777b79b05d9f620343086f7948c8a0ec79cbe76e74f59d7490234a67d15b",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/scientific.txt": "a86862b927682fb9dfbf4d762295399ea797eb54c37be97810494686a02dcc6f",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/scope.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/snapshots.txt": "9b07d6aff6dbefa9ef198cfe8da820676814ff35b8f418400856ff03bb3cc1b9",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/source-verification.json": "7abba76184111bcc33eb56a1f1e885c17fe2275b8712152952aca936ab338f00",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/sst.txt": "dcb43f84e390bb4ca68514658fbdc4b9605b4f42bb22aa32120ab2f0ebaf8cd7",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/start-snapshot.json": "372a19dcab3ccc5b40a6418116d771f39accc41079bdf8896f0c1620900e7fc9",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/v1-build.txt": "ac1a527179a6f3701894bf1c9d8771ffd4ed3b1cdf255ce2ac2222efec25c0ce",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/v1-tests.txt": "ec266fe4faaeb6c1055460c2a5b59c4d864a644fc1394acec835b2dcd63ae5e6",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/v1-typecheck.txt": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/verify_readiness.py": "3d1851864d506630572bd5ddf5679a5792529c7b6f4a50d3d09af488df62f4b0",
+    "docs/plans/ocean-v1/evidence/c15-readiness-2026-10-16/verify_sources.py": "40b777d931d3a1806c57c38bbccd15c3eb4fd0e6ff76e4d423f91eb03b8e9c5d"
+  }
+}

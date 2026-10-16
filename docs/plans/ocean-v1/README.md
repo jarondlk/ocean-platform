@@ -193,3 +193,8 @@ authenticated service powers seven routes/tools, complete path/ID/name search,
 100,000-object traversal and actual frozen-source parity. [Handoff](handoffs/C14.md),
 [contract](C14_CATALOGUE_SERVICE_CONTRACT.md), [receipt](evidence/C14/verification.json).
 Exact-source hosted delivery precedes automatic C15 readiness/implementation.
+
+C14 source `19ba911` is committed/pushed with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38916279621):
+3,790 backend/85.45% coverage, 127 actual PostgreSQL, 163 v1/132 legacy frontend
+tests and both builds/typechecks/audits. [Delivery receipt](evidence/C14/delivery.json).
+C15 local readiness preparation passes; final selection follows this delivery.

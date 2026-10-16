@@ -1,0 +1,186 @@
+{
+  "component": "C14",
+  "state": "Complete; implementation committed and pushed with exact-source hosted CI passing",
+  "date": "2026-10-16 JST",
+  "branch": "overhaul",
+  "implementation_commit": "19ba9110206dacb061c23f8e6dd7422be4b2adb1",
+  "base_commit": "b0cac5ef23705852d4420df897db9d1c8f5bd057",
+  "source_sha256": "460a215e57aa22290a30dec9373c4e2fdc813ec846e0f8232794fea7f0573b89",
+  "source_files": {
+    "api/auth.py": "c42bf544761bad3c273db2d002b996764344b1b8fec086ad161ffb08d10b49cd",
+    "api/catalogue_routes.py": "373f3b05d6ed3f7693beed53564f0598e47a63ab970f40269012f1eae72eaf8d",
+    "api/main.py": "54acaf07dc607d9a08de2305deaf62844d7eed5efa86bb1b8aca5a3816bfbad0",
+    "config.py": "842d338a2e9167fe78558fcb1b6d211b196bc8e873bb7c807492118ad466cd4e",
+    "orchestration/catalogue_registration.py": "3e76cd613f0653988a6999efb884ec574d285a9f19707f58f57aabad32d1c2b4",
+    "orchestration/catalogue_service.py": "92d1ac2a74471eb80537ff9d66461c33cba393700faf1039d10d8ea47ea07508",
+    "orchestration/catalogue_tools.py": "b675111ac5823133ee4f5474354198219fb9ba754fc6c9a8fc9875c2de9e0a1a",
+    "schema/catalogue_service.py": "f9f367566b749317d5a25c53f73686253753369fc5b1cd595767aca6d0e94233",
+    "tests/catalogue_service_support.py": "53bb5f1822c384bac6fedaae394930b39eda7fd2a4dd5e3440f6070327d4c029",
+    "tests/test_api_catalogue.py": "559df3e3520d4f6d9d4e3c78409afa4e8d61b5de5abf618ab3e78a3e23e3e36d",
+    "tests/test_catalogue_service.py": "405465f19f0fcb58a1eaa69251f60d130eed8c87ea8cb9b1370138866dc15e17",
+    "tests/test_catalogue_service_frozen.py": "4ab9ca4fb75b02e67c36af6b8650719bcab86ad6dd76ea1b30c5718f055cc9dc",
+    "tests/test_catalogue_service_scale.py": "0f62248c0e66967a6c7286f1779d0336649f259bc30893f8b5af7991038b3e43",
+    "tests/test_catalogue_tools.py": "49fb2a1794c764019a2ea63fc476f231167fe318e6854793d3b35ebeb13e9a2c"
+  },
+  "source_supersessions": {
+    "api/auth.py": {
+      "base_sha256": "ace7c43baa9a665ada111c30e99d674d743c5e148d14995bf3d9bb3da8ea566a",
+      "accepted_C14_sha256": "c42bf544761bad3c273db2d002b996764344b1b8fec086ad161ffb08d10b49cd"
+    },
+    "api/main.py": {
+      "base_sha256": "42e0f2a45fb93efb8cd6a7037cd1278e97c43ba0268af71ed2b520a6d6191a5e",
+      "accepted_C14_sha256": "54acaf07dc607d9a08de2305deaf62844d7eed5efa86bb1b8aca5a3816bfbad0"
+    },
+    "config.py": {
+      "base_sha256": "a8a61340d9a595cb32e279596ae728dbec525acc99c3e2cac669c0f518b1c55e",
+      "accepted_C14_sha256": "842d338a2e9167fe78558fcb1b6d211b196bc8e873bb7c807492118ad466cd4e"
+    }
+  },
+  "original_local_receipt": {
+    "path": "docs/plans/ocean-v1/evidence/C14/verification.json",
+    "sha256": "ebcc52e7193fe09276d142930220705b6454831bca261011b80c7c5e19322d3e",
+    "unchanged": true
+  },
+  "hosted_ci": {
+    "run_id": 38916279621,
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/38916279621",
+    "source_commit": "19ba9110206dacb061c23f8e6dd7422be4b2adb1",
+    "conclusion": "success",
+    "run_attempt": 1,
+    "jobs": [
+      {
+        "id": 117024459013,
+        "name": "Frontend typecheck and build",
+        "conclusion": "success"
+      },
+      {
+        "id": 117024459042,
+        "name": "OCEAN v1 prototype tests and build",
+        "conclusion": "success"
+      },
+      {
+        "id": 117024459184,
+        "name": "Backend tests and security boundary",
+        "conclusion": "success"
+      },
+      {
+        "id": 117024459430,
+        "name": "PostgreSQL migration and metadata integration",
+        "conclusion": "success"
+      },
+      {
+        "id": 117024460590,
+        "name": "Dependency review",
+        "conclusion": "skipped"
+      }
+    ]
+  },
+  "hosted_verification": {
+    "backend": {
+      "passed": 3790,
+      "gated_postgres_skips": 127,
+      "coverage_percent": 85.45,
+      "warnings": 2596
+    },
+    "actual_postgres": {
+      "passed": 127,
+      "breakdown": {
+        "C12_plus_existing_regressions": 82,
+        "C03": 12,
+        "C05": 12,
+        "C09": 21
+      },
+      "second_corpus_upsert_inserted": 0,
+      "second_corpus_upsert_updated": 0,
+      "isolated_backup_restore_ok": true
+    },
+    "frontend": {
+      "legacy_tests": 132,
+      "v1_tests": 163,
+      "both_typechecks": "pass",
+      "both_builds": "pass",
+      "production_audit_vulnerabilities": 0
+    },
+    "active_ruff": "pass",
+    "generated_contracts": "pass"
+  },
+  "local_verification": {
+    "required_passed": 2367,
+    "new_C14_cases": 274,
+    "new_test_modules": {
+      "tests/test_catalogue_service.py": 64,
+      "tests/test_api_catalogue.py": 92,
+      "tests/test_catalogue_tools.py": 29,
+      "tests/test_catalogue_service_scale.py": 33,
+      "tests/test_catalogue_service_frozen.py": 56
+    },
+    "full_backend": {
+      "passed": 3799,
+      "gated_postgres_skips": 127,
+      "coverage_percent": 84.75,
+      "warnings": 2596,
+      "unrelated_benchmark_local_cases_excluded_from_commit": 9
+    },
+    "generated_checks": 9,
+    "active_ruff": "pass",
+    "exhaustive_fixture": {
+      "datasets": 100000,
+      "pages": 200,
+      "page_size": 500,
+      "current_resolver_calls": 200,
+      "later_ranks": [
+        26,
+        502,
+        100000
+      ]
+    },
+    "actual_frozen_integration_cases": 56,
+    "new_actual_postgres_cases": 0,
+    "hosted_postgres_and_frontend": "Exact-source hosted delivery gate pending; no SQL/workflow/frontend source changed"
+  },
+  "resource_observations": {
+    "required": {
+      "wall_seconds": 135.92,
+      "maximum_rss_bytes": 3982589952
+    },
+    "backend": {
+      "wall_seconds": 282.86,
+      "maximum_rss_bytes": 4100685824
+    },
+    "qualification": "macOS /usr/bin/time measurements of complete combined fixture suites running concurrently, not production per-request latency/throughput/capacity guarantees"
+  },
+  "local_hosted_count_difference": "Nine older unrelated local benchmark tests preserved outside implementation commits",
+  "preservation": {
+    "unrelated_files": {
+      "count": 30,
+      "all_match": true
+    },
+    "scientific_artifacts": {
+      "count": 7,
+      "all_match": true
+    },
+    "serving_files": {
+      "count": 2,
+      "all_match": true
+    },
+    "P00_current_files": {
+      "count": 36,
+      "all_match": true
+    },
+    "prior_evidence_files": {
+      "count": 513,
+      "all_match": true
+    }
+  },
+  "original_local_evidence_sha256": "All original local evidence hashes verified unchanged at delivery",
+  "evidence_files_sha256": {
+    "docs/plans/ocean-v1/evidence/C14/hosted-ci.json": "582b3e688bc20adc4577da2ce17f24b4bed14fd5fb0d8e926f5bccbdbd4cbb85",
+    "docs/plans/ocean-v1/evidence/C14/hosted-backend.txt": "28a28f9edae4bff2aef718c67e2956c32606f9c5e87b82ae5a1d5f8e195ee729",
+    "docs/plans/ocean-v1/evidence/C14/hosted-postgres.txt": "7cfd8f73a1523351cc111f12e1195e774b94ea34888e2d769b49d03890b799c9",
+    "docs/plans/ocean-v1/evidence/C14/hosted-frontend.txt": "c9a9060d989a9c6fb454e0fb0ea35f22e1655adfac74a61b1e8c73c4f05972f1",
+    "docs/plans/ocean-v1/evidence/C14/hosted-v1.txt": "9db74345694acb6f1962106f33704c36b37df3cb80e417a934cc4473dcc562dc"
+  },
+  "job_log_normalization": "Terminal whitespace and extra EOF blank lines removed in new decoded logs only",
+  "delivery_checkpoint": "Separate documentation-only checkpoint; source and original local receipt/evidence unchanged",
+  "next_action": "C14 complete and delivered. Confirm C15 readiness using its existing preparation and this final-source delivery, then implement automatically under sequential authorization. Actual scientific/transfer/cloud authority gates remain separate."
+}

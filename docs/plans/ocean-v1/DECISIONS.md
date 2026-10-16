@@ -540,3 +540,13 @@ traverses 200 actual service pages with fresh resolution on every page; actual
 C10–C13 operations, details, revocation and dependency pins pass. Scheduled resume
 after usage interruption verified hashes and reused the completed backend result.
 Source checkpoint and exact-source hosted delivery precede automatic C15 selection.
+
+### C14 hosted delivery — 2026-10-16 JST
+
+Exact source 19ba911 is committed/pushed and hosted CI run 38916279621 passes
+3,790 backend/85.45% coverage, all 127 actual PostgreSQL cases and both frontend
+gates (163 v1/132 legacy tests, typechecks/builds, zero production vulnerabilities).
+The original local receipt/evidence and all 14 source hashes remain unchanged.
+Separate delivery evidence records the result. C15 preparation passes 163 v1 tests,
+typecheck/build, nine generated checks and 48 formal source entries; final readiness
+may now confirm before automatic implementation.

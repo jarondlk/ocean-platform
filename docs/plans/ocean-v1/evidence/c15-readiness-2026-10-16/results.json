@@ -1,0 +1,156 @@
+{
+  "component": "C15 read-only readiness preparation",
+  "checks": [
+    {
+      "name": "v1-tests",
+      "command": [
+        "/Users/jaronchai/.nvm/versions/node/v22.14.0/bin/npm",
+        "--prefix",
+        "frontend-v1",
+        "test"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.43,
+      "summary": "# duration_ms 318.332333"
+    },
+    {
+      "name": "v1-typecheck",
+      "command": [
+        "/Users/jaronchai/.nvm/versions/node/v22.14.0/bin/npm",
+        "--prefix",
+        "frontend-v1",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.15,
+      "summary": "\u2713 Route types generated successfully"
+    },
+    {
+      "name": "v1-build",
+      "command": [
+        "/Users/jaronchai/.nvm/versions/node/v22.14.0/bin/npm",
+        "--prefix",
+        "frontend-v1",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 6.61,
+      "summary": ""
+    },
+    {
+      "name": "scope",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_chat_scope.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.48,
+      "summary": "No output; exit recorded above"
+    },
+    {
+      "name": "schema",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_context_catalogue.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.72,
+      "summary": "Context catalogue schema is current"
+    },
+    {
+      "name": "browser-types",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_types.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.03,
+      "summary": "Catalogue browser contract is current."
+    },
+    {
+      "name": "examples",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_examples.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.62,
+      "summary": "C08 shared examples are current"
+    },
+    {
+      "name": "snapshots",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_snapshot.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.69,
+      "summary": "C09 snapshot schema and synthetic byte examples are current"
+    },
+    {
+      "name": "adapters",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_adapter.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.72,
+      "summary": "C10 frozen adapter schema and logical examples are current"
+    },
+    {
+      "name": "sst",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_sst_catalogue.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.73,
+      "summary": "C11 frozen SST schema and logical examples are current"
+    },
+    {
+      "name": "edna",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_edna_catalogue.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.75,
+      "summary": "C12 frozen eDNA schema and logical examples are current"
+    },
+    {
+      "name": "scientific",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_scientific_catalogue.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.71,
+      "summary": "C13 frozen scientific index schema and logical examples are current"
+    }
+  ],
+  "runtime": {
+    "node_path": "/Users/jaronchai/.nvm/versions/node/v22.14.0/bin/node",
+    "node_version": "v22.14.0",
+    "npm_path": "/Users/jaronchai/.nvm/versions/node/v22.14.0/bin/npm",
+    "npm_version": "10.9.2",
+    "v1_environment_files": [],
+    "dependency_installations": 0,
+    "persistent_services_started": 0,
+    "application_source_changes": 0,
+    "build_outputs": "Only ignored frontend-v1/.next and frontend-v1/out outputs",
+    "network_dependency": "Existing local modules only; no provider, model, database or production calls"
+  },
+  "C14_final_source_CI_and_delivery_gate": "Pending parent confirmation",
+  "C15_implementation_started": false
+}
