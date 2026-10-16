@@ -179,3 +179,10 @@ artifacts. [Handoff](handoffs/C13.md), [contract](C13_SCIENTIFIC_CATALOGUE_CONTR
 [receipt](evidence/C13/verification.json). Source checkpoint and exact-source hosted
 delivery are pending. Three-hour continuation and later sequential readiness/
 implementation are user-authorized; real scientific/transfer/cloud gates remain explicit.
+
+C13 final eligibility amendment is delivered as `98c2769` with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38876797068):
+3,516 backend/85.22% coverage, 127 actual PostgreSQL, 163 v1/132 legacy frontend
+tests and both builds/typechecks/audits. Final local acceptance is 1,991 required
+and 3,525 backend/84.50% coverage; 305 new C13 cases. Earlier local counts above
+are historical. [Delivery receipt](evidence/C13/delivery.json),
+[final local receipt](evidence/C13/method-alias-amendment/verification.json).

@@ -510,3 +510,13 @@ remain supported. Final local acceptance: 1,991 required, 3,525 backend/127 gate
 skips/84.50% coverage and nine generated checks. The original C13 receipt stays
 immutable; the separate amendment receipt binds the two superseded paths.
 Final-source hosted CI is required before delivery/automatic C14 progression.
+
+### C13 final hosted delivery — 2026-10-16 JST
+
+Final source `98c2769` is committed/pushed. Exact-source CI run 38876797068 passes
+3,516 backend tests/85.22% coverage, all 127 actual PostgreSQL cases and both
+frontend gates (163 v1/132 legacy tests, typechecks/builds, zero production audit
+vulnerabilities). The original and final amendment receipts remain immutable;
+all 17 final source paths and preservation sets reconcile. Separate delivery
+evidence records this result. C14 readiness may now complete before automatic
+implementation under the user's sequential authorization.

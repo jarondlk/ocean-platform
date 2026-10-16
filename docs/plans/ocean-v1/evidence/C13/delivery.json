@@ -1,0 +1,154 @@
+{
+  "component": "C13",
+  "state": "Complete; final implementation committed and pushed with exact-source hosted CI passing",
+  "date": "2026-10-16 JST",
+  "branch": "overhaul",
+  "implementation_commit": "98c2769402cb83602f515348651aca668f21d0dd",
+  "original_source_commit": "7bfeec738a3c17a9479dd007bfdeec5e8850b6da",
+  "base_commit": "5abab665820d59af1a0b23c05992d35864d2011d",
+  "source_sha256": "6b51bb15ae88835d1e0c1dc2a08609362969bad27fcf180a606be0e25df355ee",
+  "source_files": {
+    "ingestion/scientific_catalogue_inputs.py": "0d9ee0f16d939c403ab8b2b73fb2cfa5a1307c36992e08ddbbae66b126068d03",
+    "orchestration/frozen_scientific_catalogue.py": "1fda9afe83a67c70a1cfcf752d62d0fe4ef4114b291095f78e357a376486d051",
+    "preprocessing/derived_artifacts.py": "e44a7faa42a77159f38e0925c730c319b74a4339f30f8c062ebf5057a446330c",
+    "preprocessing/scientific_catalogue_relationships.py": "e7b31155e3204a978101da77594a28a444a6dc3ccba43555c212abcd0744f519",
+    "schema/scientific_catalogue.py": "e2d65ac0a6a4d0db9ff931f85d75dca6fffaaf3c0f139395201886642f8efa28",
+    "schema/scientific_catalogue.v1.schema.json": "a63ba1f8a6b377731f8fe1adab8c1df44cf689ffdb7762db29e1b49e7257cbed",
+    "schema/scientific_catalogue_examples.json": "bf552ca2360995043e646028f3e0cbadbad68465bede0fe43d32d596bfb109fe",
+    "schema/scientific_catalogue_fixtures.py": "81ea2a5365915fbaba10e58788555ca758fea11aaf85583fcf54d281ed5582c9",
+    "schema/scientific_catalogue_relationships.py": "ca532dae41160330dd622b9bd009322ffd017ec4d8c2cb7c178343ef8319769d",
+    "scripts/export_scientific_catalogue.py": "2c4e44cfb1efb1191027b60a2feabf496cd083af10520a6a00195349413a5e2d",
+    "tests/test_frozen_scientific_catalogue.py": "a22b1d2c782017e8750b4f50a331bd8c01cd866fec8c38bcc40c7d1b4642c3f2",
+    "tests/test_scientific_catalogue_adversarial.py": "3a78fd181b94062362940d7e8c3cb27fb46a749faa7ee11d9b56b033b0e9428c",
+    "tests/test_scientific_catalogue_contract.py": "6fbe80072fab581ebc7fd9a58645b25198001f703f1fe5f6704f4948ce495a25",
+    "tests/test_scientific_catalogue_inputs.py": "a05378de35055ae3b4cc4b79e447ca2c2a7685680bff2e347fe15de60d13fbc5",
+    "tests/test_scientific_catalogue_publication.py": "d73d4800d33bb2232fb39d86e593d4b6cfd96ee6123767566c863ff7957b0177",
+    "tests/test_scientific_catalogue_relationships.py": "9d4b16d8734ce215f3727df7a73f99a5ffba37de1b3cb4d822561f8dacd4bb05",
+    "tests/test_scientific_catalogue_sources.py": "f9119d770fa00f0bc971f7d0a07d3d4e5e86af7efe8fceb7ae2068dd8afab9e7"
+  },
+  "source_supersessions": {
+    "ingestion/scientific_catalogue_inputs.py": {
+      "original_sha256": "e9ac5d8173c50e218e56f5c3ebf4a7005a027370f3291ae55478561924398aa5",
+      "amended_sha256": "0d9ee0f16d939c403ab8b2b73fb2cfa5a1307c36992e08ddbbae66b126068d03"
+    },
+    "tests/test_scientific_catalogue_inputs.py": {
+      "original_sha256": "5f8af7bde8c447bcc28c037fd19cadfc40307b1e36b6e6af1e1d9c3511b9fb0e",
+      "amended_sha256": "a05378de35055ae3b4cc4b79e447ca2c2a7685680bff2e347fe15de60d13fbc5"
+    }
+  },
+  "original_local_receipt": {
+    "path": "docs/plans/ocean-v1/evidence/C13/verification.json",
+    "sha256": "83a94476d9a5c830142853b5e29fdd38f1710258c09ac1abaa1448be52f810ca",
+    "unchanged": true
+  },
+  "final_amendment_receipt": {
+    "path": "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/verification.json",
+    "sha256": "8a8486f8d9f96f2fdb378c55f0606ae7739e58764089768164251ad38795af95",
+    "unchanged": true
+  },
+  "hosted_ci": {
+    "run_id": 38876797068,
+    "url": "https://github.com/jarondlk/ocean-platform/actions/runs/38876797068",
+    "source_commit": "98c2769402cb83602f515348651aca668f21d0dd",
+    "conclusion": "success",
+    "run_attempt": 1,
+    "jobs": [
+      {
+        "id": 116893669502,
+        "name": "Backend tests and security boundary",
+        "conclusion": "success"
+      },
+      {
+        "id": 116893669633,
+        "name": "OCEAN v1 prototype tests and build",
+        "conclusion": "success"
+      },
+      {
+        "id": 116893669691,
+        "name": "PostgreSQL migration and metadata integration",
+        "conclusion": "success"
+      },
+      {
+        "id": 116893669790,
+        "name": "Frontend typecheck and build",
+        "conclusion": "success"
+      },
+      {
+        "id": 116893671236,
+        "name": "Dependency review",
+        "conclusion": "skipped"
+      }
+    ]
+  },
+  "hosted_verification": {
+    "backend": {
+      "passed": 3516,
+      "gated_postgres_skips": 127,
+      "coverage_percent": 85.22,
+      "warnings": 2596
+    },
+    "actual_postgres": {
+      "passed": 127,
+      "breakdown": {
+        "C12_plus_existing_regressions": 82,
+        "C03": 12,
+        "C05": 12,
+        "C09": 21
+      },
+      "second_corpus_upsert_inserted": 0,
+      "second_corpus_upsert_updated": 0,
+      "isolated_backup_restore_ok": true
+    },
+    "frontend": {
+      "legacy_tests": 132,
+      "v1_tests": 163,
+      "both_typechecks": "pass",
+      "both_builds": "pass",
+      "production_audit_vulnerabilities": 0
+    },
+    "active_ruff": "pass",
+    "generated_contracts": "pass; C13 generation checked by contract tests"
+  },
+  "local_verification": {
+    "required_passed": 1991,
+    "backend_passed": 3525,
+    "gated_postgres_skips": 127,
+    "coverage_percent": 84.5,
+    "new_C13_cases": 305,
+    "generated_checks": 9
+  },
+  "local_hosted_count_difference": "Nine older unrelated local benchmark tests preserved outside implementation commits",
+  "preservation": {
+    "unrelated_files": {
+      "count": 30,
+      "all_match": true
+    },
+    "scientific_artifacts": {
+      "count": 7,
+      "all_match": true
+    },
+    "serving_files": {
+      "count": 2,
+      "all_match": true
+    },
+    "P00_current_files": {
+      "count": 36,
+      "all_match": true
+    },
+    "prior_evidence_files": {
+      "count": 488,
+      "all_match": true
+    }
+  },
+  "evidence_files_sha256": {
+    "docs/plans/ocean-v1/evidence/C13/hosted-ci.json": "e7dd7e98d627f6a8b05eb21e2c98b10a93d50a520736add1a34bd8def2629e5a",
+    "docs/plans/ocean-v1/evidence/C13/hosted-backend.txt": "18deaff2bbced37d7c8b3e1ebf68e9b0eae78fef2bb6d6966cac235f71e79a18",
+    "docs/plans/ocean-v1/evidence/C13/hosted-postgres.txt": "0886731cac8fd9be226f87c525a45da6991ca938664ede72f0b9c862ead0befc",
+    "docs/plans/ocean-v1/evidence/C13/hosted-frontend.txt": "5d2367d24b6cadcfb90beaebd91804ec0d20cb298dbf27514a706fe831444cca",
+    "docs/plans/ocean-v1/evidence/C13/hosted-v1.txt": "a6e0c4c4c12843a065cd491427f84df178a04681a1b7ffaf888e9fbb444aeee6"
+  },
+  "job_log_normalization": "Terminal whitespace and extra EOF blank lines removed from new decoded logs only",
+  "delivery_checkpoint": "Separate documentation-only checkpoint; final 17 source hashes and original/amendment local receipts unchanged",
+  "continuation": "Active three-hour thread heartbeat; automatically audit next component and implement only when ready through C27, retaining real scientific/transfer/cloud authority gates",
+  "next_action": "C13 complete and delivered. Confirm C14 readiness using its read-only preparation and this exact final-source delivery, then start C14 under user sequential authorization."
+}

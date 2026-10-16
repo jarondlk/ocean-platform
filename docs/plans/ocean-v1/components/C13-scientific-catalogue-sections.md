@@ -1,6 +1,6 @@
 # C13 — Scientific catalogue sections
 
-**Status:** Complete locally; final amended-source hosted delivery pending. **Prerequisites:** C01, C02, C10, C11, C12.
+**Status:** Complete; final source committed/pushed with hosted delivery verified. **Prerequisites:** C01, C02, C10, C11, C12.
 
 ## Revised delivery boundary
 
