@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C14 are Complete locally; C15 is in progress; C16–C27 are not started.**
+**P00 and C01–C15 are Complete locally; C16 is in progress; C17–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -198,3 +198,13 @@ C14 source `19ba911` is committed/pushed with [passing hosted CI](https://github
 3,790 backend/85.45% coverage, 127 actual PostgreSQL, 163 v1/132 legacy frontend
 tests and both builds/typechecks/audits. [Delivery receipt](evidence/C14/delivery.json).
 C15 local readiness preparation passes; final selection follows this delivery.
+
+### C15 delivered; C16 started — 2026-10-17 JST
+
+C15 source7b1659c passes source-bound hosted CI38923128922 and is delivered
+at9688867. Trusted identity, isolated preview, responsive shell and browser gates
+pass; [handoff](handoffs/C15.md), [delivery receipt](evidence/C15/delivery.json).
+C16 formal prerequisites reconcile across75 accepted-current entries and the
+[user-authorized readiness audit](evidence/c16-readiness-2026-10-17/audit.md)
+selects implementation. [Current C16 handoff](handoffs/C16.md). No cloud or real
+data operation is implied.

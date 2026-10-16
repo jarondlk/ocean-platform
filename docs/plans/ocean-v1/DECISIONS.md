@@ -560,3 +560,14 @@ explicit local preview; reuse accepted shell chrome with a separate service
 runtime using trusted server identity/permissions/capabilities. Presentation
 persistence cannot authorize requests or change scientific scope. Missing later
 features and deployed auth/configuration remain honest unavailable states.
+
+### C16 automatic selection — 2026-10-17 JST
+
+C15 source7b1659c is delivered at9688867 with exact-source hosted CI38923128922
+green. Current formal P00/C14/C15 sources and receipts reconcile; completed C15
+checks are reused without repetition. Under the user's sequential authorization,
+C16 now implements the standalone catalogue service browser, explicit eligible
+snapshot discovery, complete navigation/paging and history, with no automatic
+scientific context mutation. [Readiness](evidence/c16-readiness-2026-10-17/audit.md),
+[handoff](handoffs/C16.md). External scientific, identity, transfer and cloud
+configuration/authorization gates remain separate.

@@ -1,6 +1,6 @@
 # C16 — Complete catalogue browser
 
-**Status:** Not started. **Prerequisites:** P00, C14, C15.
+**Status:** In progress; readiness verified, checkpoint1 selected. **Prerequisites:** P00, C14, C15.
 
 ## Revised delivery boundary
 
