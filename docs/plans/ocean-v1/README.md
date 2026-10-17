@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C16 are Complete locally; C16 hosted delivery is pending; C17–C27 are not started.**
+**P00 and C01–C16 are Complete locally; C16 hosted delivery is complete; C17–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -216,6 +216,6 @@ pass local acceptance:510 v1 tests,3895 backend/127 gated skips/84.87%,134 actua
 HTTP/tool wire cases, all51 parent paths and100000-object client/HTTP traversal.
 Rendered EN/JA, light/dark, mobile/desktop, history, revocation and keyboard/
 accessibility-tree observations are recorded in the [C16 handoff](handoffs/C16.md).
-Source checkpoint/exact-source hosted delivery remain pending. Original evidence
+Source4981642 is committed/pushed with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39080160597):3886 backend/85.57%,127 actual PostgreSQL,510 v1/132 legacy tests and both builds/typechecks/audits. [Delivery receipt](evidence/C16/delivery.json). Original evidence
 and unrelated/scientific/legacy files remain unchanged. C17 formal source audit
-is prepared but implementation waits for C16 delivery.
+may now be finalized before automatic local implementation.

@@ -571,3 +571,13 @@ snapshot discovery, complete navigation/paging and history, with no automatic
 scientific context mutation. [Readiness](evidence/c16-readiness-2026-10-17/audit.md),
 [handoff](handoffs/C16.md). External scientific, identity, transfer and cloud
 configuration/authorization gates remain separate.
+
+### C16 delivered — 2026-10-18 JST
+
+C16 source4981642 is committed/pushed with green exact-source hosted CI39080160597.
+Explicit discovery, real C14 service browsing, current-access clearing, native
+scientific qualifications,134 wire cases and100000-object HTTP reachability pass.
+Original C16 and predecessor receipts remain immutable. C17 formal source readiness
+may now be finalized under the user's sequential authorization. Its local work
+persists private conversation metadata/context; executable history remains C20/C21.
+Operational identity/scientific/transfer/capacity/cloud gates stay explicit.

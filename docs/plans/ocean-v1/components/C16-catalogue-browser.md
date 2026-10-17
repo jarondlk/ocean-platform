@@ -1,6 +1,6 @@
 # C16 — Complete catalogue browser
 
-**Status:** Complete local acceptance; source checkpoint and exact-source hosted delivery pending. **Prerequisites:** P00, C14, C15.
+**Status:** Complete local acceptance; source4981642 committed/pushed; exact-source hosted CI39080160597 passed. **Prerequisites:** P00, C14, C15.
 
 ## Revised delivery boundary
 
