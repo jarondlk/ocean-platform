@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C15 are Complete locally; C16 is in progress; C17–C27 are not started.**
+**P00 and C01–C16 are Complete locally; C16 hosted delivery is pending; C17–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -208,3 +208,14 @@ C16 formal prerequisites reconcile across75 accepted-current entries and the
 [user-authorized readiness audit](evidence/c16-readiness-2026-10-17/audit.md)
 selects implementation. [Current C16 handoff](handoffs/C16.md). No cloud or real
 data operation is implied.
+
+### C16 local acceptance — 2026-10-18 JST
+
+Explicit authenticated snapshot discovery and the standalone service catalogue
+pass local acceptance:510 v1 tests,3895 backend/127 gated skips/84.87%,134 actual
+HTTP/tool wire cases, all51 parent paths and100000-object client/HTTP traversal.
+Rendered EN/JA, light/dark, mobile/desktop, history, revocation and keyboard/
+accessibility-tree observations are recorded in the [C16 handoff](handoffs/C16.md).
+Source checkpoint/exact-source hosted delivery remain pending. Original evidence
+and unrelated/scientific/legacy files remain unchanged. C17 formal source audit
+is prepared but implementation waits for C16 delivery.

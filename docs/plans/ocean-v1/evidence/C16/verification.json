@@ -1,0 +1,497 @@
+{
+  "component": "C16",
+  "state": "Complete local acceptance; source checkpoint and exact-source hosted delivery pending",
+  "date": "2026-10-18 JST",
+  "branch": "overhaul",
+  "base_commit": "bb72038",
+  "files": {
+    "api/auth.py": "23ee454554942b1b34fbdfa134e815fdb6fc70699c4b63fe5fadf323d2fe7cd4",
+    "api/catalogue_browser_routes.py": "9d18f958deb532378ce40a49db1fc82febe92b6e58c56d17f5f1804faaec3738",
+    "api/main.py": "28940d6db1f9d1aca24d6f13d3950400bc4955b8ec689d07b6f7bbef547b71ef",
+    "api/v1_runtime_routes.py": "b0e705af205d4a629d450b2abe5e5c190c30476fd605495bd15f13c01dea50a2",
+    "config.py": "5750374e35fe3f03948156e44bccb0e087f8c2adc9ea0b10a9e8a2e6ee90c763",
+    "frontend-v1/README.md": "9dd756634a0a11557fe73bed54676c55a0c31b0ff245cc096baf9d8ca9626c4b",
+    "frontend-v1/src/catalogue-browser-state.ts": "c3d847d0a876e8f9d266f724dff2af4f2e809a8b73c03f01aba34bb2d60b8210",
+    "frontend-v1/src/catalogue-browser.css": "9974beebbba14e480cc15e47ad7375900c4647128e8a8dac2a5d0abc0632eab1",
+    "frontend-v1/src/catalogue-browser.tsx": "217f5702cc331b2e62cefd7ed76dccdf7d9c51787fc8828640cbcac66c024990",
+    "frontend-v1/src/catalogue-service.ts": "c05df3c8d87b97a28ec4c3bc8a0410aa47ae0221e45ede5dc90576520ace77f3",
+    "frontend-v1/src/runtime-app.tsx": "dc73bb659d2e627d38c5cf6742a0c3924e8c9a45b542a40372fd2ef58a9a9a63",
+    "frontend-v1/tests/catalogue-browser-state.test.ts": "3d03588aebba3c890f0a69109e8cf90b7015fe9c3803800ad30b43735c5712b3",
+    "frontend-v1/tests/catalogue-service.test.ts": "3f2d5393bdc72b551c7f813020f4c9066c61f00bbcf35f38e0925676f4e8601a",
+    "orchestration/catalogue_browser.py": "68e9147231cb791df6c73eb79c196e2b971017d76ed54560a878f9e095abc308",
+    "schema/catalogue_browser.py": "196aea286e0442ce88347366a1e39ac83ef6f65ad056917cc6b87bcd82dd0c3a",
+    "tests/test_catalogue_browser.py": "2309f09431c6ca9902918ad81d694e54ff1f6e7eb9e79f273a1e4b1df40a18e8",
+    "tests/test_catalogue_browser_api.py": "88d135f7fe6b7f424f681090ca7cc1ee8d7a1f97fad344cac2e7434a36645504",
+    "tests/test_v1_runtime.py": "663cc5d0b27d7cbd07ab3a14e8f34a86a856d88232432d5fca8d3a4ee2e4472c"
+  },
+  "source_sha256": "9ef4b3065cadf638c281989728eefd6bf4e85101c57a8f47123fdf2dfd47ffec",
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "verification": {
+    "backend": {
+      "passed": 3895,
+      "postgres_gated_skips": 127,
+      "coverage_percent": 84.87,
+      "warnings": 2596,
+      "unrelated_local_benchmark_cases_excluded_from_commit": 9
+    },
+    "focused_backend_passed": 295,
+    "frontend_passed": 510,
+    "focused_client_state_passed": 261,
+    "actual_http_tool_wire_cases": 134,
+    "all_51_objects_reached_through_canonical_parents": {
+      "state": "pass",
+      "canonical_objects": 51,
+      "root_objects": 5,
+      "parents": 22,
+      "parent_pages": 31,
+      "every_object_reachable": true,
+      "all_parent_pages_match_shared_tools": true,
+      "qualification": "Actual sealed synthetic C09/C10-C13 fixtures and real authenticated C14 routes; no real data or scientific approval"
+    },
+    "http_scale": {
+      "state": "pass",
+      "expected_datasets": 100000,
+      "unique_browser_listing_ids": 100000,
+      "browser_listing_pages": 200,
+      "unique_tree_dataset_ids": 100000,
+      "canonical_tree_objects": 100015,
+      "reachable_roots_and_directories": 9,
+      "tree_pages": 205,
+      "dataset_id_sequence_sha256": "0c913606aede7754ec8bebe8b91277b0231e1653feaca53f7a40e413e875ab67",
+      "targets": [
+        {
+          "rank": 26,
+          "id": "synthetic:dataset:000025",
+          "parent_id": "synthetic:source:metagenome",
+          "direct_and_parent_search": true
+        },
+        {
+          "rank": 502,
+          "id": "synthetic:dataset:000501",
+          "parent_id": "synthetic:source:metagenome",
+          "direct_and_parent_search": true
+        },
+        {
+          "rank": 100000,
+          "id": "synthetic:dataset:099999",
+          "parent_id": "synthetic:source:edna_metabarcoding",
+          "direct_and_parent_search": true
+        }
+      ],
+      "requests": 419,
+      "response_content_length_bytes": 425309497,
+      "wall_seconds": 153.61,
+      "node_rss_bytes": 214827008,
+      "qualification": "Actual C16 client/validation/state boundary over owned loopback HTTP and real C14 service with explicit immutable synthetic100000 backend; not production latency/capacity or rendered100000 DOM nodes"
+    },
+    "frontend_typecheck": "pass",
+    "frontend_production_build": "pass",
+    "generated_comparisons": 9,
+    "active_ruff": "pass",
+    "required_predecessor_tests": "covered by completed full backend superset; no separate required run claimed",
+    "browser": "browser-qa.md; manual keyboard/accessibility-tree and rendered synthetic service observations",
+    "independent_review": "independent-review.json; no concrete blockers",
+    "hosted_ci": "pending exact-source run"
+  },
+  "checks": {
+    "backend": {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/",
+        "-q",
+        "--tb=short",
+        "--cov=api",
+        "--cov=config",
+        "--cov=db",
+        "--cov=preprocessing",
+        "--cov=ingestion",
+        "--cov=orchestration",
+        "--cov=schema",
+        "--cov=evaluation",
+        "--cov-report=term-missing",
+        "--cov-fail-under=70"
+      ],
+      "safe_environment": {
+        "AUTH_MODE": "disabled",
+        "DEPLOYMENT_ENV": "test",
+        "ENABLE_V1_SHELL": "false",
+        "ENABLE_V1_CATALOGUE": "false",
+        "ENABLE_MOCK_LOGIN": "false",
+        "PERSIST_LOCAL_CHAT": "false",
+        "RUN_POSTGRES_INTEGRATION": "0",
+        "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c16_regressions_unused",
+        "MODEL_PROVIDER": "ollama",
+        "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+      },
+      "exit_code": 0
+    },
+    "frontend": {
+      "checks": [
+        {
+          "name": "v1-tests",
+          "command": [
+            "npm",
+            "--prefix",
+            "frontend-v1",
+            "test"
+          ],
+          "exit_code": 0,
+          "seconds": 0.92
+        },
+        {
+          "name": "v1-typecheck",
+          "command": [
+            "npm",
+            "--prefix",
+            "frontend-v1",
+            "run",
+            "typecheck"
+          ],
+          "exit_code": 0,
+          "seconds": 1.39
+        },
+        {
+          "name": "v1-build",
+          "command": [
+            "npm",
+            "--prefix",
+            "frontend-v1",
+            "run",
+            "build"
+          ],
+          "exit_code": 0,
+          "seconds": 6.92
+        }
+      ],
+      "source_sha256": {
+        "frontend-v1/src/catalogue-browser.tsx": "217f5702cc331b2e62cefd7ed76dccdf7d9c51787fc8828640cbcac66c024990",
+        "frontend-v1/src/catalogue-browser.css": "9974beebbba14e480cc15e47ad7375900c4647128e8a8dac2a5d0abc0632eab1",
+        "frontend-v1/src/catalogue-service.ts": "c05df3c8d87b97a28ec4c3bc8a0410aa47ae0221e45ede5dc90576520ace77f3",
+        "frontend-v1/src/catalogue-browser-state.ts": "c3d847d0a876e8f9d266f724dff2af4f2e809a8b73c03f01aba34bb2d60b8210",
+        "frontend-v1/src/runtime-app.tsx": "dc73bb659d2e627d38c5cf6742a0c3924e8c9a45b542a40372fd2ef58a9a9a63",
+        "frontend-v1/README.md": "9dd756634a0a11557fe73bed54676c55a0c31b0ff245cc096baf9d8ca9626c4b"
+      }
+    },
+    "static": [
+      {
+        "name": "scope",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_chat_scope.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "schema",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_context_catalogue.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "types",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_types.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "examples",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_examples.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "snapshots",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_snapshot.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "adapters",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_catalogue_adapter.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "sst",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_sst_catalogue.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "edna",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_edna_catalogue.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      },
+      {
+        "name": "scientific",
+        "command": [
+          "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+          "scripts/export_scientific_catalogue.py",
+          "--check"
+        ],
+        "cwd": ".",
+        "exit_code": 0
+      }
+    ]
+  },
+  "preservation": {
+    "component": "C16",
+    "implementation_base": "96888675132adb420df34e75953033307e551fc5",
+    "source_paths": 18,
+    "source_sha256": "9ef4b3065cadf638c281989728eefd6bf4e85101c57a8f47123fdf2dfd47ffec",
+    "accepted_source_status": "created_once",
+    "files": {
+      "api/auth.py": "23ee454554942b1b34fbdfa134e815fdb6fc70699c4b63fe5fadf323d2fe7cd4",
+      "api/catalogue_browser_routes.py": "9d18f958deb532378ce40a49db1fc82febe92b6e58c56d17f5f1804faaec3738",
+      "api/main.py": "28940d6db1f9d1aca24d6f13d3950400bc4955b8ec689d07b6f7bbef547b71ef",
+      "api/v1_runtime_routes.py": "b0e705af205d4a629d450b2abe5e5c190c30476fd605495bd15f13c01dea50a2",
+      "config.py": "5750374e35fe3f03948156e44bccb0e087f8c2adc9ea0b10a9e8a2e6ee90c763",
+      "frontend-v1/README.md": "9dd756634a0a11557fe73bed54676c55a0c31b0ff245cc096baf9d8ca9626c4b",
+      "frontend-v1/src/catalogue-browser-state.ts": "c3d847d0a876e8f9d266f724dff2af4f2e809a8b73c03f01aba34bb2d60b8210",
+      "frontend-v1/src/catalogue-browser.css": "9974beebbba14e480cc15e47ad7375900c4647128e8a8dac2a5d0abc0632eab1",
+      "frontend-v1/src/catalogue-browser.tsx": "217f5702cc331b2e62cefd7ed76dccdf7d9c51787fc8828640cbcac66c024990",
+      "frontend-v1/src/catalogue-service.ts": "c05df3c8d87b97a28ec4c3bc8a0410aa47ae0221e45ede5dc90576520ace77f3",
+      "frontend-v1/src/runtime-app.tsx": "dc73bb659d2e627d38c5cf6742a0c3924e8c9a45b542a40372fd2ef58a9a9a63",
+      "frontend-v1/tests/catalogue-browser-state.test.ts": "3d03588aebba3c890f0a69109e8cf90b7015fe9c3803800ad30b43735c5712b3",
+      "frontend-v1/tests/catalogue-service.test.ts": "3f2d5393bdc72b551c7f813020f4c9066c61f00bbcf35f38e0925676f4e8601a",
+      "orchestration/catalogue_browser.py": "68e9147231cb791df6c73eb79c196e2b971017d76ed54560a878f9e095abc308",
+      "schema/catalogue_browser.py": "196aea286e0442ce88347366a1e39ac83ef6f65ad056917cc6b87bcd82dd0c3a",
+      "tests/test_catalogue_browser.py": "2309f09431c6ca9902918ad81d694e54ff1f6e7eb9e79f273a1e4b1df40a18e8",
+      "tests/test_catalogue_browser_api.py": "88d135f7fe6b7f424f681090ca7cc1ee8d7a1f97fad344cac2e7434a36645504",
+      "tests/test_v1_runtime.py": "663cc5d0b27d7cbd07ab3a14e8f34a86a856d88232432d5fca8d3a4ee2e4472c"
+    },
+    "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+    "preservation": {
+      "unrelated_files": {
+        "count": 30,
+        "all_match": true
+      },
+      "scientific_artifacts": {
+        "count": 7,
+        "all_match": true
+      },
+      "serving_files": {
+        "count": 2,
+        "all_match": true
+      },
+      "legacy_frontend_files": {
+        "count": 106,
+        "all_match": true
+      },
+      "prior_evidence_files": {
+        "count": 617,
+        "all_match": true
+      },
+      "P00_current_source": {
+        "count": 36,
+        "unchanged": 35,
+        "intentional_C16_supersessions": {
+          "frontend-v1/README.md": {
+            "previous_sha256": "d36ee930c89d960fe7c792f771bdd41a211134b671908c27648e1a4cecc56782",
+            "C16_sha256": "9dd756634a0a11557fe73bed54676c55a0c31b0ff245cc096baf9d8ca9626c4b"
+          }
+        },
+        "all_paths_match_or_are_explicitly_superseded": true
+      },
+      "C14_current_source": {
+        "count": 14,
+        "unchanged": 11,
+        "intentional_C16_supersessions": {
+          "api/auth.py": {
+            "previous_sha256": "74283b43d4dbae38b8e1d4977eeb084f86cb465c2a98c9085561ad65b97a5c1d",
+            "C16_sha256": "23ee454554942b1b34fbdfa134e815fdb6fc70699c4b63fe5fadf323d2fe7cd4"
+          },
+          "api/main.py": {
+            "previous_sha256": "0f0d699b469fdda8b1c9aa1db1f17c2f0265dbb22ad950a95a3e60315476081c",
+            "C16_sha256": "28940d6db1f9d1aca24d6f13d3950400bc4955b8ec689d07b6f7bbef547b71ef"
+          },
+          "config.py": {
+            "previous_sha256": "c4714880b86bf674fada0f5aaf95e8878bc16be1ab32f7f3caefc1a70233b059",
+            "C16_sha256": "5750374e35fe3f03948156e44bccb0e087f8c2adc9ea0b10a9e8a2e6ee90c763"
+          }
+        },
+        "all_paths_match_or_are_explicitly_superseded": true
+      },
+      "C15_current_source": {
+        "count": 25,
+        "unchanged": 18,
+        "intentional_C16_supersessions": {
+          "api/auth.py": {
+            "previous_sha256": "74283b43d4dbae38b8e1d4977eeb084f86cb465c2a98c9085561ad65b97a5c1d",
+            "C16_sha256": "23ee454554942b1b34fbdfa134e815fdb6fc70699c4b63fe5fadf323d2fe7cd4"
+          },
+          "api/main.py": {
+            "previous_sha256": "0f0d699b469fdda8b1c9aa1db1f17c2f0265dbb22ad950a95a3e60315476081c",
+            "C16_sha256": "28940d6db1f9d1aca24d6f13d3950400bc4955b8ec689d07b6f7bbef547b71ef"
+          },
+          "api/v1_runtime_routes.py": {
+            "previous_sha256": "cb6ee29c51339df747bdaae2b4de8ae0b7dfff7ce2ff0ae8b88ad33397595ebc",
+            "C16_sha256": "b0e705af205d4a629d450b2abe5e5c190c30476fd605495bd15f13c01dea50a2"
+          },
+          "config.py": {
+            "previous_sha256": "c4714880b86bf674fada0f5aaf95e8878bc16be1ab32f7f3caefc1a70233b059",
+            "C16_sha256": "5750374e35fe3f03948156e44bccb0e087f8c2adc9ea0b10a9e8a2e6ee90c763"
+          },
+          "frontend-v1/README.md": {
+            "previous_sha256": "d36ee930c89d960fe7c792f771bdd41a211134b671908c27648e1a4cecc56782",
+            "C16_sha256": "9dd756634a0a11557fe73bed54676c55a0c31b0ff245cc096baf9d8ca9626c4b"
+          },
+          "frontend-v1/src/runtime-app.tsx": {
+            "previous_sha256": "0d943900030b071fdffe6fd1c9983c38b96aa73cf8d1074980befa26f29fc64b",
+            "C16_sha256": "dc73bb659d2e627d38c5cf6742a0c3924e8c9a45b542a40372fd2ef58a9a9a63"
+          },
+          "tests/test_v1_runtime.py": {
+            "previous_sha256": "d6a097392b3787e387334b3485b029ef160272a8e05476e3e8f4b4888fe28ced",
+            "C16_sha256": "663cc5d0b27d7cbd07ab3a14e8f34a86a856d88232432d5fca8d3a4ee2e4472c"
+          }
+        },
+        "all_paths_match_or_are_explicitly_superseded": true
+      },
+      "C14_core": {
+        "count": 11,
+        "all_match": true
+      },
+      "C08_current_source": {
+        "count": 12,
+        "all_match": true
+      }
+    },
+    "allowed_C16_supersessions": [
+      "api/auth.py",
+      "api/main.py",
+      "api/v1_runtime_routes.py",
+      "config.py",
+      "frontend-v1/README.md",
+      "frontend-v1/src/runtime-app.tsx",
+      "tests/test_v1_runtime.py"
+    ],
+    "earlier_receipts": {
+      "docs/plans/ocean-v1/mockups/p00/source-revision.json": "0b8d355f6f75c0f67fa8648b285daaedc4b69d987f2a1bc5ad05f2d97db0f205",
+      "docs/plans/ocean-v1/evidence/C07/verification.json": "99b78a6cefac34b9dc98fc67d9b6fc8a572355ca04fb84644a6ba14341fadc69",
+      "docs/plans/ocean-v1/evidence/C14/verification.json": "ebcc52e7193fe09276d142930220705b6454831bca261011b80c7c5e19322d3e",
+      "docs/plans/ocean-v1/evidence/C14/delivery.json": "f2797710a58f584af03f434dce31e29f30def5f02f87918cdde202c0dc260cd0",
+      "docs/plans/ocean-v1/evidence/C15/verification.json": "a199b5357aa5b31e721ad59e97a8b5bbb3b7bba1e76d4029a4ae6d4291517b46",
+      "docs/plans/ocean-v1/evidence/C15/delivery.json": "076a03a0c3ecb33d7a32daee5da80e0e0f120f70aed429dd8481a07826904460"
+    },
+    "pinned_C16_receipts": {
+      "docs/plans/ocean-v1/evidence/C16/start-snapshot.json": "f4806dc3a29325adfe042713f509466fcb4c9026d91029a4a6f376f3a504887c",
+      "docs/plans/ocean-v1/evidence/C16/backend-tested-source.json": "ebe3408cc9accea947a4872fe8efeac40ccf958d5bea393cefc262db036e15f2",
+      "docs/plans/ocean-v1/evidence/C16/backend-result.json": "617daf77afd5edfa0c206b949353c47b2afa57c766bee15fd375aeb0aebb08c4",
+      "docs/plans/ocean-v1/evidence/C16/backend-tests.txt": "79beaf791813d8d6faf1834845f6848b9f28d11390ebe76fcb4b7646a3c3e0aa"
+    },
+    "backend_tested_source": {
+      "path": "docs/plans/ocean-v1/evidence/C16/backend-tested-source.json",
+      "sha256": "ebe3408cc9accea947a4872fe8efeac40ccf958d5bea393cefc262db036e15f2",
+      "paths": 10,
+      "all_current_hashes_match": true,
+      "full_run": {
+        "passed": 3895,
+        "skipped": 127,
+        "coverage_percent": 84.87
+      }
+    },
+    "all_assertions_passed": true,
+    "scope": "Hash verification only; no tests, services, commits or pushes. Default runs write nothing; explicit freeze creates only the new C16 accepted-source receipt and refuses any rewrite."
+  },
+  "external_gates": [
+    "Spoken screen-reader/independent assistive-user assessment not claimed",
+    "Real OIDC target configuration and enrollment",
+    "Actual scientific review and authority",
+    "Approved real-data acquisition/transfer",
+    "Production capacity, migrations, cloud provisioning/deployment targets and authorization"
+  ],
+  "process_cleanup": "Owned small/large harnesses stopped; browser tab closed; temporary viewport reset",
+  "evidence_files_sha256": {
+    "docs/plans/ocean-v1/evidence/C16/accepted-source.json": "b3198fc1db49ca5907f42540c34dfe1a3d0e0cb66c4a8fdf5ca4674e6bd2979d",
+    "docs/plans/ocean-v1/evidence/C16/actual-wire.json": "59eab4779d98fb9d1a8f4d059d48e87ef34a4429fee95b3102869530b778e219",
+    "docs/plans/ocean-v1/evidence/C16/adapters.txt": "3616357347d55684342a6b3d04a6cab676714283fd7613babf78aee10db52d5d",
+    "docs/plans/ocean-v1/evidence/C16/backend-driver.txt": "9452557e56fc0e02483ef33c5936396f9dc09d289275db2d25523735d96fa1eb",
+    "docs/plans/ocean-v1/evidence/C16/backend-focused-ruff.txt": "495704dc6750fe3078f2cf73f03201a44483a265cc1eb557bdaaabeea2c6310c",
+    "docs/plans/ocean-v1/evidence/C16/backend-focused-tests.txt": "bb0f3081e8e4902008a8a196acd115621913e38a4104edfdd5a8569ac9de84c2",
+    "docs/plans/ocean-v1/evidence/C16/backend-focused.json": "c1545ab013512d67a2e70fda1460f97d4f1607e5d9865985fe0e2751279785b3",
+    "docs/plans/ocean-v1/evidence/C16/backend-resources.txt": "424fdfb98a55e9eaea56c83f0ccc8d9114df5357b3682c5799f44ffd69e63d2a",
+    "docs/plans/ocean-v1/evidence/C16/backend-result.json": "617daf77afd5edfa0c206b949353c47b2afa57c766bee15fd375aeb0aebb08c4",
+    "docs/plans/ocean-v1/evidence/C16/backend-tested-source.json": "ebe3408cc9accea947a4872fe8efeac40ccf958d5bea393cefc262db036e15f2",
+    "docs/plans/ocean-v1/evidence/C16/backend-tests.txt": "79beaf791813d8d6faf1834845f6848b9f28d11390ebe76fcb4b7646a3c3e0aa",
+    "docs/plans/ocean-v1/evidence/C16/browser-qa.md": "e3eae146c0880e476b8921ab9bc129b65589902ab8e3f0ad5ee65e2a713dceb5",
+    "docs/plans/ocean-v1/evidence/C16/client-state-tests.txt": "62e188c4149cf0d987120c7855764feb46144f911389d616b3819647963800a8",
+    "docs/plans/ocean-v1/evidence/C16/client-state-typecheck.txt": "bf53e0a8f2662acd2862af94d6e2880735bd5e7d30ff26b397472839be79ac33",
+    "docs/plans/ocean-v1/evidence/C16/client-state-verification.json": "1cbe191b052e908fcf196b40432b9b3a0ec9e2aa385ff0625d787cc454440ef1",
+    "docs/plans/ocean-v1/evidence/C16/edna.txt": "584bf23af0f9b906b7db1c3224242971b102e573fef6f35a39b1bd259fcb7180",
+    "docs/plans/ocean-v1/evidence/C16/examples.txt": "962c470ee8e7b1a3fa7cc260238248b74b659e73c4479518cfd90a2fb0468724",
+    "docs/plans/ocean-v1/evidence/C16/export_wire.py": "ac2a149516450cb59b5e419b3a83c06d63a3913493683495531478fe338ae7f4",
+    "docs/plans/ocean-v1/evidence/C16/fixture_support.py": "97089266e553388a3dc3678b1b017faed1f95d78a7ef4b4ed8a0254cbc65f9d7",
+    "docs/plans/ocean-v1/evidence/C16/frontend-before-aggregate-fix-results.json": "f9a7969059aaba5d128561b41a8cd1fbaf9412ec45eeadcd1368b5c6e35d13fb",
+    "docs/plans/ocean-v1/evidence/C16/frontend-final-results.json": "e564b2fc32824fa4d8ea8a34d0171579366b6cf0fd4ee180982efcc75bcab7a5",
+    "docs/plans/ocean-v1/evidence/C16/frontend-results.json": "b6efe782251d4997d9cb5fad26b33f72accb29e28dd3b8802a4ae4d32ee5043a",
+    "docs/plans/ocean-v1/evidence/C16/http-scale-result.json": "3f1309bf39e4ed5705853d4099f1723f733a0d5608912334d8d8cbfa764d2a61",
+    "docs/plans/ocean-v1/evidence/C16/http-scale.txt": "c4b944f6afa8c78d155fc27318986673a103a7c807a4a5caff57b7fbc9c94b5b",
+    "docs/plans/ocean-v1/evidence/C16/independent-review.json": "557c55b69d829b736313b230a5030210c392edc2ee584b5e40eacc9d111f3a2b",
+    "docs/plans/ocean-v1/evidence/C16/parent-reachability.json": "a08c6cfdd4786b9a250a961b297cd2060de2bd14548833920b3af1dc32d24c9d",
+    "docs/plans/ocean-v1/evidence/C16/parent-reachability.txt": "7bfefed31cf69d4e68d54c70541d62dde3ee04123be7bb9bef113083184fb099",
+    "docs/plans/ocean-v1/evidence/C16/preservation.json": "2ad86479e09b470658ffe22dfc8ec583ad93b1c6eceb1a9effc967ce3b42f293",
+    "docs/plans/ocean-v1/evidence/C16/ruff-active.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C16/scale-server-resources.txt": "8b3f1df9ea6a3e253604cff07be0dfdd1f497b6b7970cca123795a8a0fd8e81d",
+    "docs/plans/ocean-v1/evidence/C16/schema.txt": "17f7777b79b05d9f620343086f7948c8a0ec79cbe76e74f59d7490234a67d15b",
+    "docs/plans/ocean-v1/evidence/C16/scientific.txt": "a86862b927682fb9dfbf4d762295399ea797eb54c37be97810494686a02dcc6f",
+    "docs/plans/ocean-v1/evidence/C16/scope.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C16/serve_browser_qa.py": "c0178cd87d9ec023e32da7117343d3c81d0cdc109e8027e212d25efb4f2ba6da",
+    "docs/plans/ocean-v1/evidence/C16/snapshots.txt": "9b07d6aff6dbefa9ef198cfe8da820676814ff35b8f418400856ff03bb3cc1b9",
+    "docs/plans/ocean-v1/evidence/C16/sst.txt": "dcb43f84e390bb4ca68514658fbdc4b9605b4f42bb22aa32120ab2f0ebaf8cd7",
+    "docs/plans/ocean-v1/evidence/C16/start-snapshot.json": "f4806dc3a29325adfe042713f509466fcb4c9026d91029a4a6f376f3a504887c",
+    "docs/plans/ocean-v1/evidence/C16/static-results.json": "da0ef1bfd151c5e84a81285fa34f0b6fddf30b60cbe0bb3a9cd24535e4763ff8",
+    "docs/plans/ocean-v1/evidence/C16/static.txt": "4d38865a806198c42ef99af70ca5eec866d0dd515d4b84a4ca26044000aef0ab",
+    "docs/plans/ocean-v1/evidence/C16/types.txt": "edfc61324e991e3bda912ff0153de8de843149d6e96921f6df836436437bb215",
+    "docs/plans/ocean-v1/evidence/C16/v1-build-final.txt": "c30d386e6f2734c810deb116cad897ebf47ece4a962f8247de477a794db06fe0",
+    "docs/plans/ocean-v1/evidence/C16/v1-build.txt": "6f9b44d7d0f222e3ff2418339ebb5e9f0bd45f602e0732ac6efc83a69aeee242",
+    "docs/plans/ocean-v1/evidence/C16/v1-tests-before-aggregate-fix.txt": "e96d40a1187bf63c440b498f15ebbdb87c3500fc8f77188ca8a1e614e63b6976",
+    "docs/plans/ocean-v1/evidence/C16/v1-tests-final.txt": "ade82aed95fdc8b483f81eec1a14c0711743bac2153317cd1825651c01953614",
+    "docs/plans/ocean-v1/evidence/C16/v1-tests.txt": "da7a6fbea34bb544d5333e35b81a05566e4d17498d0d1a39b6281e545e236c25",
+    "docs/plans/ocean-v1/evidence/C16/v1-typecheck-final.txt": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936",
+    "docs/plans/ocean-v1/evidence/C16/v1-typecheck.txt": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936",
+    "docs/plans/ocean-v1/evidence/C16/verify_acceptance.py": "73564a159b603bac179996e4c2a9df56e81f6149b5a82beb16c8f1e11e228297",
+    "docs/plans/ocean-v1/evidence/C16/verify_backend.py": "6605a9c65b8cbc2311e1d97a755b2aefc432ae57aa927e559e94f0b56fb34a0d",
+    "docs/plans/ocean-v1/evidence/C16/verify_http.ts": "9dce19d6561ab370b6338ec2832830f157a2ed9473ac1b669bac263d2feb29ec",
+    "docs/plans/ocean-v1/evidence/C16/verify_parent_reachability.py": "2af31984a3e0c794a504eaf69b95fca569371267fc3d9b57e4a79768c82de161",
+    "docs/plans/ocean-v1/evidence/C16/verify_preservation.py": "5c82e9f24fdca5d73c49db95326f8c7fc74657f5d275128bc8469d92d80f0565",
+    "docs/plans/ocean-v1/evidence/C16/verify_static.py": "90b8a99e95622e1c92416db407c3faac9b5d2663a43ee69cbc6397e83d58eecc",
+    "docs/plans/ocean-v1/evidence/C16/wire-export-source.json": "86bbb94d97b4223b9734d7776956ea0117f59dc942c22f1a27d0ec97537efc36",
+    "docs/plans/ocean-v1/evidence/C16/wire-export-warnings.txt": "4c1ac33b1cd3060f31af98cbe23371685b03bfca12eff1fc1149ec6782817312",
+    "docs/plans/ocean-v1/evidence/C16/wire-export.txt": "9f93fb15db48dd905626494573acd9b3baf66973a7798be213d5d6cc4e11b30d",
+    "docs/plans/ocean-v1/evidence/C16/wire-python-result.json": "bb0c7e891c46b8d25b6135748ccb36373f71a846b259e03cbf8460c4c1ea7f2d"
+  },
+  "next_action": "Commit/push only C16 source/docs/evidence on overhaul; preserve this local receipt and obtain exact-source hosted CI in a separate delivery receipt. Then audit C17 formal prerequisites and implement automatically if ready."
+}

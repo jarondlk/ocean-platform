@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-10-17 JST. **P00 and C01–C15 are Complete locally.**
+Updated: 2026-10-18 JST. **P00 and C01–C16 are Complete locally; C16 hosted delivery is pending.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -8,10 +8,12 @@ C02 was explicitly selected on 2026-10-14 JST and passed its software/synthetic
 checks. C03 passed its local transaction-ordering and actual disposable PostgreSQL
 acceptance. C04 now passes concurrent responsiveness, worker-lifetime, security
 and cancellation acceptance. C05 passes embedding isolation, metagenome fidelity
-and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11 passes frozen SST product/coverage acceptance; C12 passes frozen canonical eDNA adapter acceptance; C13 passes scientific catalogue acceptance; C14 passes authenticated catalogue service acceptance; C15 passes local application-shell acceptance; C16 is In progress; C17–C27 remain Not started.
+and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11 passes frozen SST product/coverage acceptance; C12 passes frozen canonical eDNA adapter acceptance; C13 passes scientific catalogue acceptance; C14 passes authenticated catalogue service acceptance; C15 passes local application-shell acceptance; C16 passes local catalogue-browser acceptance; C17–C27 remain Not started.
 P00 and C01–C13 local work is authorized; the user also authorizes subsequent CXX local implementation after each readiness audit passes.
 See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md), [C08](handoffs/C08.md), [C09](handoffs/C09.md) and [C10](handoffs/C10.md) handoffs for current evidence.
+
+Current local acceptance: **C16 — Complete catalogue browser**. **3,895 backend/127 gated skips/84.87% coverage;510 v1 tests, typecheck/build, nine generated checks;134 actual HTTP/tool parity cases; all51 canonical objects through parents;100000-object client/HTTP reachability and manual browser keyboard/accessibility-tree checks pass.** Source checkpoint and exact-source hosted CI are pending. [Handoff](handoffs/C16.md), [contract](C16_CATALOGUE_BROWSER_CONTRACT.md), [browser observations](evidence/C16/browser-qa.md). Spoken screen-reader/independent user validation and production capacity are not claimed.
 
 Latest delivered implementation: **C15 — New application shell**. **2,391 required; 3,823 backend/127 gated skips/84.79% coverage; 249 v1 tests, typecheck/build, nine generated checks and local browser/keyboard gates pass.** Trusted current identity, explicit preview isolation and presentation-only storage. [Handoff](handoffs/C15.md), [contract](C15_APPLICATION_SHELL_CONTRACT.md), [receipt](evidence/C15/verification.json). Source `7b1659c` is committed/pushed with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/38923128922): **3,814 backend/85.49% coverage,127 actual PostgreSQL,249 v1/132 legacy frontend tests and both builds/typechecks/audits**. [Delivery receipt](evidence/C15/delivery.json).
 
@@ -61,7 +63,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C13 — Analyses statistics metadata relationships](components/C13-scientific-catalogue-sections.md) | Complete | Final frozen scientific catalogue and legacy-method eligibility | 1,991 required; backend 3,525/127 gated skips, 84.50%; [final receipt](evidence/C13/method-alias-amendment/verification.json) | [C13](handoffs/C13.md) |
 | [C14 — Catalogue service and tools](components/C14-catalogue-service-tools.md) | Complete | Service/routes/tools, exhaustive traversal and boundary hardening | 2,367 required; backend 3,799/127 gated skips, 84.75%; 274 new cases | [C14](handoffs/C14.md) |
 | [C15 — New application shell](components/C15-application-shell.md) | Complete | Trusted runtime shell, preview isolation, browser gates and hosted delivery | 2,391 required; backend3,823/127skips84.79%; frontend249tests/typecheck/build; nine generated checks | [C15](handoffs/C15.md) |
-| [C16 — Complete catalogue browser](components/C16-catalogue-browser.md) | In progress | Readiness verified; snapshot discovery and service browser integration | C15 source-bound gates reused; C16 acceptance pending | [C16](handoffs/C16.md) |
+| [C16 — Complete catalogue browser](components/C16-catalogue-browser.md) | Complete locally; delivery pending | Explicit discovery and service tree/list/inspector; protected-view invalidation | 3,895 backend/127 gated skips/84.87%;510 v1;134 actual wire parity;100000 reachability; browser gates pass | [C16](handoffs/C16.md) |
 | [C17 — Investigation persistence](components/C17-investigation-persistence.md) | Not started | None | Not run | Not created |
 | [C18 — Chat and Workspace interface](components/C18-chat-workspace.md) | Not started | None | Not run | Not created |
 | [C19 — Agent exploration controller](components/C19-agent-controller.md) | Not started | None | Not run | Not created |

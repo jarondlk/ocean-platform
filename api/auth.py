@@ -447,6 +447,7 @@ def route_permission(method: str, path: str) -> Optional[str]:
             "/catalogue/overview", "/catalogue/list", "/catalogue/open",
             "/catalogue/coverage", "/catalogue/query", "/catalogue/relationships",
             "/catalogue/analysis/get-published",
+            "/catalogue/snapshots",
         }:
             return "data:read"
         return None

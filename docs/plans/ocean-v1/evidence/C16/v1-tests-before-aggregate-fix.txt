@@ -1,0 +1,2511 @@
+
+> ocean-v1-local-preview@1.0.0-preview.0 test
+> node --test --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tests/*.test.ts
+
+TAP version 13
+# Subtest: unrelated demo checks preserve unsaved settings while a committed save updates the draft
+ok 1 - unrelated demo checks preserve unsaved settings while a committed save updates the draft
+  ---
+  duration_ms: 0.899041
+  ...
+# Subtest: versioned local restore preserves admin workflows across reopening and refuses non-admin access
+ok 2 - versioned local restore preserves admin workflows across reopening and refuses non-admin access
+  ---
+  duration_ms: 0.842583
+  ...
+# Subtest: restore rejects unknown versions, corrupt records, invalid authority and sequence collisions
+ok 3 - restore rejects unknown versions, corrupt records, invalid authority and sequence collisions
+  ---
+  duration_ms: 0.467334
+  ...
+# Subtest: non-admin role cannot mutate or export admin preview records
+ok 4 - non-admin role cannot mutate or export admin preview records
+  ---
+  duration_ms: 1.471375
+  ...
+# Subtest: role and account type remain independent and the demo administrator cannot be locked out
+ok 5 - role and account type remain independent and the demo administrator cannot be locked out
+  ---
+  duration_ms: 0.2205
+  ...
+# Subtest: demo invitations require synthetic addresses, reject duplicates and can be revoked without sending
+ok 6 - demo invitations require synthetic addresses, reject duplicates and can be revoked without sending
+  ---
+  duration_ms: 0.282291
+  ...
+# Subtest: pause and capacity constrain local jobs, while running work can finish after a pause
+ok 7 - pause and capacity constrain local jobs, while running work can finish after a pause
+  ---
+  duration_ms: 0.3365
+  ...
+# Subtest: cancelling a simulation retains its snapshot and log, and terminal states cannot be advanced
+ok 8 - cancelling a simulation retains its snapshot and log, and terminal states cannot be advanced
+  ---
+  duration_ms: 0.1195
+  ...
+# Subtest: retention settings cannot remove retained fixture evidence or silently raise execution limits
+ok 9 - retention settings cannot remove retained fixture evidence or silently raise execution limits
+  ---
+  duration_ms: 0.293584
+  ...
+# Subtest: database inventory counts all local records and feedback triage records an audit without altering evidence
+ok 10 - database inventory counts all local records and feedback triage records an audit without altering evidence
+  ---
+  duration_ms: 0.355333
+  ...
+# Subtest: CSV exports identify synthetic scope, preserve all rows and escape spreadsheet formulas and quotes
+ok 11 - CSV exports identify synthetic scope, preserve all rows and escape spreadsheet formulas and quotes
+  ---
+  duration_ms: 0.186292
+  ...
+# Subtest: admin CSV shares typed safety and JSON serialization without mutating structured records
+ok 12 - admin CSV shares typed safety and JSON serialization without mutating structured records
+  ---
+  duration_ms: 0.080583
+  ...
+# Subtest: empty location defaults to latest discovery with complete unfiltered navigation
+ok 13 - empty location defaults to latest discovery with complete unfiltered navigation
+  ---
+  duration_ms: 1.492625
+  ...
+# Subtest: deep-link round trip preserves snapshot, deep object, filters, paging and overview
+ok 14 - deep-link round trip preserves snapshot, deep object, filters, paging and overview
+  ---
+  duration_ms: 0.472042
+  ...
+# Subtest: deep-link round trip preserves snapshot, deep object, filters, paging and tables
+ok 15 - deep-link round trip preserves snapshot, deep object, filters, paging and tables
+  ---
+  duration_ms: 0.23725
+  ...
+# Subtest: deep-link round trip preserves snapshot, deep object, filters, paging and coverage
+ok 16 - deep-link round trip preserves snapshot, deep object, filters, paging and coverage
+  ---
+  duration_ms: 0.189709
+  ...
+# Subtest: deep-link round trip preserves snapshot, deep object, filters, paging and methods
+ok 17 - deep-link round trip preserves snapshot, deep object, filters, paging and methods
+  ---
+  duration_ms: 0.103375
+  ...
+# Subtest: deep-link round trip preserves snapshot, deep object, filters, paging and provenance
+ok 18 - deep-link round trip preserves snapshot, deep object, filters, paging and provenance
+  ---
+  duration_ms: 0.089333
+  ...
+# Subtest: deep-link round trip preserves snapshot, deep object, filters, paging and related
+ok 19 - deep-link round trip preserves snapshot, deep object, filters, paging and related
+  ---
+  duration_ms: 0.083333
+  ...
+# Subtest: rejects malformed catalogue query ?snapshot=../private
+ok 20 - rejects malformed catalogue query ?snapshot=../private
+  ---
+  duration_ms: 0.178209
+  ...
+# Subtest: rejects malformed catalogue query ?node=/etc/passwd
+ok 21 - rejects malformed catalogue query ?node=/etc/passwd
+  ---
+  duration_ms: 0.191167
+  ...
+# Subtest: rejects malformed catalogue query ?parent=
+ok 22 - rejects malformed catalogue query ?parent=
+  ---
+  duration_ms: 0.251584
+  ...
+# Subtest: rejects malformed catalogue query ?cursor=
+ok 23 - rejects malformed catalogue query ?cursor=
+  ---
+  duration_ms: 0.079083
+  ...
+# Subtest: rejects malformed catalogue query ?limit=0
+ok 24 - rejects malformed catalogue query ?limit=0
+  ---
+  duration_ms: 0.032875
+  ...
+# Subtest: rejects malformed catalogue query ?limit=501
+ok 25 - rejects malformed catalogue query ?limit=501
+  ---
+  duration_ms: 0.029375
+  ...
+# Subtest: rejects malformed catalogue query ?limit=1.5
+ok 26 - rejects malformed catalogue query ?limit=1.5
+  ---
+  duration_ms: 0.025667
+  ...
+# Subtest: rejects malformed catalogue query ?limit=true
+ok 27 - rejects malformed catalogue query ?limit=true
+  ---
+  duration_ms: 0.023834
+  ...
+# Subtest: rejects malformed catalogue query ?limit=01
+ok 28 - rejects malformed catalogue query ?limit=01
+  ---
+  duration_ms: 0.02575
+  ...
+# Subtest: rejects malformed catalogue query ?limit=1e2
+ok 29 - rejects malformed catalogue query ?limit=1e2
+  ---
+  duration_ms: 0.02625
+  ...
+# Subtest: rejects malformed catalogue query ?section=execute
+ok 30 - rejects malformed catalogue query ?section=execute
+  ---
+  duration_ms: 0.025959
+  ...
+# Subtest: rejects malformed catalogue query ?roots=private
+ok 31 - rejects malformed catalogue query ?roots=private
+  ---
+  duration_ms: 0.028
+  ...
+# Subtest: rejects malformed catalogue query ?sources=edna
+ok 32 - rejects malformed catalogue query ?sources=edna
+  ---
+  duration_ms: 0.024541
+  ...
+# Subtest: rejects malformed catalogue query ?kinds=experiment
+ok 33 - rejects malformed catalogue query ?kinds=experiment
+  ---
+  duration_ms: 0.025625
+  ...
+# Subtest: rejects malformed catalogue query ?authorities=admin
+ok 34 - rejects malformed catalogue query ?authorities=admin
+  ---
+  duration_ms: 0.132042
+  ...
+# Subtest: rejects malformed catalogue query ?kinds=dataset,dataset
+ok 35 - rejects malformed catalogue query ?kinds=dataset,dataset
+  ---
+  duration_ms: 0.057583
+  ...
+# Subtest: rejects malformed catalogue query ?search=
+ok 36 - rejects malformed catalogue query ?search=
+  ---
+  duration_ms: 0.044292
+  ...
+# Subtest: rejects malformed catalogue query ?node=one&node=two
+ok 37 - rejects malformed catalogue query ?node=one&node=two
+  ---
+  duration_ms: 0.030167
+  ...
+# Subtest: rejects malformed catalogue query ?limit=100&limit=200
+ok 38 - rejects malformed catalogue query ?limit=100&limit=200
+  ---
+  duration_ms: 0.027625
+  ...
+# Subtest: rejects malformed catalogue query ?section=tables&section=coverage
+ok 39 - rejects malformed catalogue query ?section=tables&section=coverage
+  ---
+  duration_ms: 0.0265
+  ...
+# Subtest: rejects malformed catalogue query ?sources=ctd&sources=metagenome
+ok 40 - rejects malformed catalogue query ?sources=ctd&sources=metagenome
+  ---
+  duration_ms: 0.026125
+  ...
+# Subtest: rejects malformed catalogue query ?cursor=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ok 41 - rejects malformed catalogue query ?cursor=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  ---
+  duration_ms: 0.089041
+  ...
+# Subtest: rejects malformed catalogue query ?search=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ok 42 - rejects malformed catalogue query ?search=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  ---
+  duration_ms: 0.132542
+  ...
+# Subtest: rejects malformed catalogue query ?snapshot=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ok 43 - rejects malformed catalogue query ?snapshot=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  ---
+  duration_ms: 0.037458
+  ...
+# Subtest: forged authorization, attach, investigation, scope and preview state cannot enter navigation
+ok 44 - forged authorization, attach, investigation, scope and preview state cannot enter navigation
+  ---
+  duration_ms: 0.157291
+  ...
+# Subtest: known navigation duplicates fail even among otherwise ignored query fields
+ok 45 - known navigation duplicates fail even among otherwise ignored query fields
+  ---
+  duration_ms: 0.038792
+  ...
+# Subtest: navigation state remains detached from input and external scientific scope
+ok 46 - navigation state remains detached from input and external scientific scope
+  ---
+  duration_ms: 0.16
+  ...
+# Subtest: membership change resets stale cursor {"snapshotId":"new-snapshot"}
+ok 47 - membership change resets stale cursor {"snapshotId":"new-snapshot"}
+  ---
+  duration_ms: 0.044291
+  ...
+# Subtest: membership change resets stale cursor {"parentId":"new-parent"}
+ok 48 - membership change resets stale cursor {"parentId":"new-parent"}
+  ---
+  duration_ms: 0.030584
+  ...
+# Subtest: membership change resets stale cursor {"filters":{"search":"new"}}
+ok 49 - membership change resets stale cursor {"filters":{"search":"new"}}
+  ---
+  duration_ms: 0.034041
+  ...
+# Subtest: membership change resets stale cursor {"limit":500}
+ok 50 - membership change resets stale cursor {"limit":500}
+  ---
+  duration_ms: 0.027958
+  ...
+# Subtest: snapshot switching clears old selected object, parent and inspector unless explicit
+ok 51 - snapshot switching clears old selected object, parent and inspector unless explicit
+  ---
+  duration_ms: 0.050542
+  ...
+# Subtest: inspector section updates preserve current page and object; new object defaults overview
+ok 52 - inspector section updates preserve current page and object; new object defaults overview
+  ---
+  duration_ms: 0.095208
+  ...
+# Subtest: restored URL remains sufficient across Back, Forward and reload
+ok 53 - restored URL remains sufficient across Back, Forward and reload
+  ---
+  duration_ms: 0.202959
+  ...
+# Subtest: selection is an explicit event contract without attach or pin mutation
+ok 54 - selection is an explicit event contract without attach or pin mutation
+  ---
+  duration_ms: 0.034333
+  ...
+# Subtest: state patch rejects authority fields rather than persisting them
+ok 55 - state patch rejects authority fields rather than persisting them
+  ---
+  duration_ms: 0.040583
+  ...
+# Subtest: C12 raw inventory describes four methods without widening scientific execution
+ok 56 - C12 raw inventory describes four methods without widening scientific execution
+  ---
+  duration_ms: 3.156583
+  ...
+# Subtest: shared node 0: root:analyses
+ok 57 - shared node 0: root:analyses
+  ---
+  duration_ms: 2.684625
+  ...
+# Subtest: shared node 1: root:data
+ok 58 - shared node 1: root:data
+  ---
+  duration_ms: 1.714
+  ...
+# Subtest: shared node 2: root:metadata
+ok 59 - shared node 2: root:metadata
+  ---
+  duration_ms: 1.692542
+  ...
+# Subtest: shared node 3: root:relationships
+ok 60 - shared node 3: root:relationships
+  ---
+  duration_ms: 2.060041
+  ...
+# Subtest: shared node 4: root:statistics
+ok 61 - shared node 4: root:statistics
+  ---
+  duration_ms: 1.599959
+  ...
+# Subtest: shared node 5: synthetic:analysis
+ok 62 - shared node 5: synthetic:analysis
+  ---
+  duration_ms: 1.599917
+  ...
+# Subtest: shared node 6: synthetic:candidate-link
+ok 63 - shared node 6: synthetic:candidate-link
+  ---
+  duration_ms: 1.548167
+  ...
+# Subtest: shared node 7: synthetic:coverage
+ok 64 - shared node 7: synthetic:coverage
+  ---
+  duration_ms: 2.172417
+  ...
+# Subtest: shared node 8: synthetic:dataset:000000
+ok 65 - shared node 8: synthetic:dataset:000000
+  ---
+  duration_ms: 1.903291
+  ...
+# Subtest: shared node 9: synthetic:dataset:000001
+ok 66 - shared node 9: synthetic:dataset:000001
+  ---
+  duration_ms: 1.727958
+  ...
+# Subtest: shared node 10: synthetic:dataset:000002
+ok 67 - shared node 10: synthetic:dataset:000002
+  ---
+  duration_ms: 1.815459
+  ...
+# Subtest: shared node 11: synthetic:dataset:000003
+ok 68 - shared node 11: synthetic:dataset:000003
+  ---
+  duration_ms: 1.630958
+  ...
+# Subtest: shared node 12: synthetic:dataset:000004
+ok 69 - shared node 12: synthetic:dataset:000004
+  ---
+  duration_ms: 1.530833
+  ...
+# Subtest: shared node 13: synthetic:dataset:000005
+ok 70 - shared node 13: synthetic:dataset:000005
+  ---
+  duration_ms: 1.626375
+  ...
+# Subtest: shared node 14: synthetic:dataset:000006
+ok 71 - shared node 14: synthetic:dataset:000006
+  ---
+  duration_ms: 1.73725
+  ...
+# Subtest: shared node 15: synthetic:dataset:000007
+ok 72 - shared node 15: synthetic:dataset:000007
+  ---
+  duration_ms: 1.444959
+  ...
+# Subtest: shared node 16: synthetic:method
+ok 73 - shared node 16: synthetic:method
+  ---
+  duration_ms: 1.357583
+  ...
+# Subtest: shared node 17: synthetic:source:ctd
+ok 74 - shared node 17: synthetic:source:ctd
+  ---
+  duration_ms: 1.470709
+  ...
+# Subtest: shared node 18: synthetic:source:edna_metabarcoding
+ok 75 - shared node 18: synthetic:source:edna_metabarcoding
+  ---
+  duration_ms: 1.658792
+  ...
+# Subtest: shared node 19: synthetic:source:metagenome
+ok 76 - shared node 19: synthetic:source:metagenome
+  ---
+  duration_ms: 1.454459
+  ...
+# Subtest: shared node 20: synthetic:source:remote_sensing
+ok 77 - shared node 20: synthetic:source:remote_sensing
+  ---
+  duration_ms: 1.391542
+  ...
+# Subtest: shared node 21: synthetic:unavailable
+ok 78 - shared node 21: synthetic:unavailable
+  ---
+  duration_ms: 0.969791
+  ...
+# Subtest: shared node 22: synthetic:workflow
+ok 79 - shared node 22: synthetic:workflow
+  ---
+  duration_ms: 0.736167
+  ...
+# Subtest: shared node 23: synthetic:dataset:000000
+ok 80 - shared node 23: synthetic:dataset:000000
+  ---
+  duration_ms: 1.732625
+  ...
+# Subtest: shared node 24: synthetic:dataset:000003
+ok 81 - shared node 24: synthetic:dataset:000003
+  ---
+  duration_ms: 1.547916
+  ...
+# Subtest: shared listing 0: known/available
+ok 82 - shared listing 0: known/available
+  ---
+  duration_ms: 13.019708
+  ...
+# Subtest: shared listing 1: known/available
+ok 83 - shared listing 1: known/available
+  ---
+  duration_ms: 7.99075
+  ...
+# Subtest: shared listing 2: known/available
+ok 84 - shared listing 2: known/available
+  ---
+  duration_ms: 4.746584
+  ...
+# Subtest: shared listing 3: unknown/available
+ok 85 - shared listing 3: unknown/available
+  ---
+  duration_ms: 6.075875
+  ...
+# Subtest: shared listing 4: unknown/unavailable
+ok 86 - shared listing 4: unknown/unavailable
+  ---
+  duration_ms: 1.317791
+  ...
+# Subtest: shared listing 5: known/available
+ok 87 - shared listing 5: known/available
+  ---
+  duration_ms: 1.266083
+  ...
+# Subtest: shared operation: catalogue.dataset_inventory
+ok 88 - shared operation: catalogue.dataset_inventory
+  ---
+  duration_ms: 1.087084
+  ...
+# Subtest: shared result: synthetic:receipt:e36fd84235be0f2cfb63b7d472b59911fa00ad296c938daa17497617ca39fdc1
+ok 89 - shared result: synthetic:receipt:e36fd84235be0f2cfb63b7d472b59911fa00ad296c938daa17497617ca39fdc1
+  ---
+  duration_ms: 2.804667
+  ...
+# Subtest: shared result: synthetic:coverage-receipt
+ok 90 - shared result: synthetic:coverage-receipt
+  ---
+  duration_ms: 2.567041
+  ...
+# Subtest: reject shared invalid case: Exact JSON integers cannot silently round in browsers
+ok 91 - reject shared invalid case: Exact JSON integers cannot silently round in browsers
+  ---
+  duration_ms: 0.732333
+  ...
+# Subtest: reject shared invalid case: Result integers cannot silently round in browsers
+ok 92 - reject shared invalid case: Result integers cannot silently round in browsers
+  ---
+  duration_ms: 2.19775
+  ...
+# Subtest: reject shared invalid case: UTC calendar overflow: 9999-12-31T23:59:59-23:59
+ok 93 - reject shared invalid case: UTC calendar overflow: 9999-12-31T23:59:59-23:59
+  ---
+  duration_ms: 0.39
+  ...
+# Subtest: reject shared invalid case: UTC calendar overflow: 0001-01-01T00:00:00+23:59
+ok 94 - reject shared invalid case: UTC calendar overflow: 0001-01-01T00:00:00+23:59
+  ---
+  duration_ms: 0.379208
+  ...
+# Subtest: reject shared invalid case: Exclusive end UTC calendar overflow
+ok 95 - reject shared invalid case: Exclusive end UTC calendar overflow
+  ---
+  duration_ms: 1.417584
+  ...
+# Subtest: reject shared invalid case: Unsupported version
+ok 96 - reject shared invalid case: Unsupported version
+  ---
+  duration_ms: 0.234208
+  ...
+# Subtest: reject shared invalid case: Paths cannot be canonical identity
+ok 97 - reject shared invalid case: Paths cannot be canonical identity
+  ---
+  duration_ms: 0.134583
+  ...
+# Subtest: reject shared invalid case: Missing English title
+ok 98 - reject shared invalid case: Missing English title
+  ---
+  duration_ms: 0.900125
+  ...
+# Subtest: reject shared invalid case: Self-parent
+ok 99 - reject shared invalid case: Self-parent
+  ---
+  duration_ms: 1.263542
+  ...
+# Subtest: reject shared invalid case: Missing dataset sections
+ok 100 - reject shared invalid case: Missing dataset sections
+  ---
+  duration_ms: 1.288
+  ...
+# Subtest: reject shared invalid case: Aliases adapted before wire validation
+ok 101 - reject shared invalid case: Aliases adapted before wire validation
+  ---
+  duration_ms: 0.909125
+  ...
+# Subtest: reject shared invalid case: Source descriptor mismatch
+ok 102 - reject shared invalid case: Source descriptor mismatch
+  ---
+  duration_ms: 0.160875
+  ...
+# Subtest: reject shared invalid case: Published flag without publication lifecycle
+ok 103 - reject shared invalid case: Published flag without publication lifecycle
+  ---
+  duration_ms: 1.253834
+  ...
+# Subtest: reject shared invalid case: Invalid calendar date
+ok 104 - reject shared invalid case: Invalid calendar date
+  ---
+  duration_ms: 0.302708
+  ...
+# Subtest: reject shared invalid case: Non-text scientific filter
+ok 105 - reject shared invalid case: Non-text scientific filter
+  ---
+  duration_ms: 0.418792
+  ...
+# Subtest: reject shared invalid case: Malformed scientific filter object
+ok 106 - reject shared invalid case: Malformed scientific filter object
+  ---
+  duration_ms: 0.298
+  ...
+# Subtest: reject shared invalid case: String boolean scope flag
+ok 107 - reject shared invalid case: String boolean scope flag
+  ---
+  duration_ms: 0.295167
+  ...
+# Subtest: reject shared invalid case: Unknown control classification must not be invented
+ok 108 - reject shared invalid case: Unknown control classification must not be invented
+  ---
+  duration_ms: 1.184084
+  ...
+# Subtest: reject shared invalid case: Control conflicts with known environmental sample
+ok 109 - reject shared invalid case: Control conflicts with known environmental sample
+  ---
+  duration_ms: 1.1905
+  ...
+# Subtest: reject shared invalid case: Origin provenance cannot create live dependency
+ok 110 - reject shared invalid case: Origin provenance cannot create live dependency
+  ---
+  duration_ms: 0.290542
+  ...
+# Subtest: reject shared invalid case: Page returned count mismatch
+ok 111 - reject shared invalid case: Page returned count mismatch
+  ---
+  duration_ms: 8.37975
+  ...
+# Subtest: reject shared invalid case: Boolean count
+ok 112 - reject shared invalid case: Boolean count
+  ---
+  duration_ms: 3.94375
+  ...
+# Subtest: reject shared invalid case: Negative population
+ok 113 - reject shared invalid case: Negative population
+  ---
+  duration_ms: 4.00925
+  ...
+# Subtest: reject shared invalid case: Fractional population
+ok 114 - reject shared invalid case: Fractional population
+  ---
+  duration_ms: 4.011625
+  ...
+# Subtest: reject shared invalid case: Unsafe cross-language population
+ok 115 - reject shared invalid case: Unsafe cross-language population
+  ---
+  duration_ms: 4.2815
+  ...
+# Subtest: reject shared invalid case: Page exceeds whole-scope total
+ok 116 - reject shared invalid case: Page exceeds whole-scope total
+  ---
+  duration_ms: 6.127083
+  ...
+# Subtest: reject shared invalid case: Unknown total cannot contain numeric value
+ok 117 - reject shared invalid case: Unknown total cannot contain numeric value
+  ---
+  duration_ms: 6.591375
+  ...
+# Subtest: reject shared invalid case: Complete listing cannot silently drop later pages
+ok 118 - reject shared invalid case: Complete listing cannot silently drop later pages
+  ---
+  duration_ms: 5.800708
+  ...
+# Subtest: reject shared invalid case: Cursor access context mismatch
+ok 119 - reject shared invalid case: Cursor access context mismatch
+  ---
+  duration_ms: 6.152333
+  ...
+# Subtest: reject shared invalid case: Snapshot context mismatch
+ok 120 - reject shared invalid case: Snapshot context mismatch
+  ---
+  duration_ms: 4.142875
+  ...
+# Subtest: reject shared invalid case: Mixed-snapshot item
+ok 121 - reject shared invalid case: Mixed-snapshot item
+  ---
+  duration_ms: 3.484208
+  ...
+# Subtest: reject shared invalid case: Page limit exceeds contract maximum
+ok 122 - reject shared invalid case: Page limit exceeds contract maximum
+  ---
+  duration_ms: 1.476417
+  ...
+# Subtest: reject shared invalid case: Duplicate canonical item
+ok 123 - reject shared invalid case: Duplicate canonical item
+  ---
+  duration_ms: 2.782833
+  ...
+# Subtest: reject shared invalid case: Unavailable is not known zero
+ok 124 - reject shared invalid case: Unavailable is not known zero
+  ---
+  duration_ms: 0.732666
+  ...
+# Subtest: reject shared invalid case: Operation inputs must be distinct
+ok 125 - reject shared invalid case: Operation inputs must be distinct
+  ---
+  duration_ms: 0.919125
+  ...
+# Subtest: reject shared invalid case: Unknown executable fields forbidden
+ok 126 - reject shared invalid case: Unknown executable fields forbidden
+  ---
+  duration_ms: 0.718125
+  ...
+# Subtest: reject shared invalid case: Result/receipt snapshot mismatch
+ok 127 - reject shared invalid case: Result/receipt snapshot mismatch
+  ---
+  duration_ms: 2.580625
+  ...
+# Subtest: reject shared invalid case: Receipt preview length mismatch
+ok 128 - reject shared invalid case: Receipt preview length mismatch
+  ---
+  duration_ms: 2.670958
+  ...
+# Subtest: reject shared invalid case: Preview truncation cannot hide remaining complete result
+ok 129 - reject shared invalid case: Preview truncation cannot hide remaining complete result
+  ---
+  duration_ms: 2.021417
+  ...
+# Subtest: reject shared invalid case: Table column mismatch
+ok 130 - reject shared invalid case: Table column mismatch
+  ---
+  duration_ms: 2.261333
+  ...
+# Subtest: the complete exported contract validates through one boundary
+ok 131 - the complete exported contract validates through one boundary
+  ---
+  duration_ms: 13.312
+  ...
+# Subtest: optional factory defaults normalize without mutating external input
+ok 132 - optional factory defaults normalize without mutating external input
+  ---
+  duration_ms: 1.463583
+  ...
+# Subtest: legacy aliases and P00 labels use the exported Python registry
+ok 133 - legacy aliases and P00 labels use the exported Python registry
+  ---
+  duration_ms: 0.226584
+  ...
+# Subtest: P00 projection preserves canonical identities and source labels
+ok 134 - P00 projection preserves canonical identities and source labels
+  ---
+  duration_ms: 9.374625
+  ...
+# Subtest: new kinds project explicitly without changing the prototype type
+ok 135 - new kinds project explicitly without changing the prototype type
+  ---
+  duration_ms: 9.901666
+  ...
+# Subtest: unknown and unavailable never become an empty known catalogue
+ok 136 - unknown and unavailable never become an empty known catalogue
+  ---
+  duration_ms: 5.278042
+  ...
+# Subtest: a missing or malformed backend produces unavailable without fixture fallback
+ok 137 - a missing or malformed backend produces unavailable without fixture fallback
+  ---
+  duration_ms: 1.703875
+  ...
+# Subtest: permission revision or principal changes invalidate even empty cached membership
+ok 138 - permission revision or principal changes invalidate even empty cached membership
+  ---
+  duration_ms: 7.403875
+  ...
+# Subtest: revoked nodes, parents and related links are not retained in projections
+ok 139 - revoked nodes, parents and related links are not retained in projections
+  ---
+  duration_ms: 4.62675
+  ...
+# Subtest: snapshot selection and provenance origins cannot silently select another backend
+ok 140 - snapshot selection and provenance origins cannot silently select another backend
+  ---
+  duration_ms: 5.060083
+  ...
+# Subtest: readiness, authority and completion remain independent fields
+ok 141 - readiness, authority and completion remain independent fields
+  ---
+  duration_ms: 1.396083
+  ...
+# Subtest: wire input rejects non-JSON values and cannot modify object prototypes
+ok 142 - wire input rejects non-JSON values and cannot modify object prototypes
+  ---
+  duration_ms: 0.786041
+  ...
+# Subtest: actual frozen HTTP/tool wire 1: snapshots
+ok 143 - actual frozen HTTP/tool wire 1: snapshots
+  ---
+  duration_ms: 14.901291
+  ...
+# Subtest: actual frozen HTTP/tool wire 2: snapshots-page-2
+ok 144 - actual frozen HTTP/tool wire 2: snapshots-page-2
+  ---
+  duration_ms: 2.591542
+  ...
+# Subtest: actual frozen HTTP/tool wire 3: catalogue.overview
+ok 145 - actual frozen HTTP/tool wire 3: catalogue.overview
+  ---
+  duration_ms: 11.712416
+  ...
+# Subtest: actual frozen HTTP/tool wire 4: catalogue.list
+ok 146 - actual frozen HTTP/tool wire 4: catalogue.list
+  ---
+  duration_ms: 79.869584
+  ...
+# Subtest: actual frozen HTTP/tool wire 5: catalogue.list
+ok 147 - actual frozen HTTP/tool wire 5: catalogue.list
+  ---
+  duration_ms: 8.260167
+  ...
+# Subtest: actual frozen HTTP/tool wire 6: catalogue.list
+ok 148 - actual frozen HTTP/tool wire 6: catalogue.list
+  ---
+  duration_ms: 3.702041
+  ...
+# Subtest: actual frozen HTTP/tool wire 7: catalogue.open
+ok 149 - actual frozen HTTP/tool wire 7: catalogue.open
+  ---
+  duration_ms: 1.506333
+  ...
+# Subtest: actual frozen HTTP/tool wire 8: catalogue.open
+ok 150 - actual frozen HTTP/tool wire 8: catalogue.open
+  ---
+  duration_ms: 1.568042
+  ...
+# Subtest: actual frozen HTTP/tool wire 9: catalogue.open
+ok 151 - actual frozen HTTP/tool wire 9: catalogue.open
+  ---
+  duration_ms: 2.645416
+  ...
+# Subtest: actual frozen HTTP/tool wire 10: catalogue.open
+ok 152 - actual frozen HTTP/tool wire 10: catalogue.open
+  ---
+  duration_ms: 1.710083
+  ...
+# Subtest: actual frozen HTTP/tool wire 11: catalogue.open
+ok 153 - actual frozen HTTP/tool wire 11: catalogue.open
+  ---
+  duration_ms: 1.413583
+  ...
+# Subtest: actual frozen HTTP/tool wire 12: catalogue.open
+ok 154 - actual frozen HTTP/tool wire 12: catalogue.open
+  ---
+  duration_ms: 1.407792
+  ...
+# Subtest: actual frozen HTTP/tool wire 13: catalogue.open
+ok 155 - actual frozen HTTP/tool wire 13: catalogue.open
+  ---
+  duration_ms: 1.32825
+  ...
+# Subtest: actual frozen HTTP/tool wire 14: catalogue.open
+ok 156 - actual frozen HTTP/tool wire 14: catalogue.open
+  ---
+  duration_ms: 1.396625
+  ...
+# Subtest: actual frozen HTTP/tool wire 15: catalogue.open
+ok 157 - actual frozen HTTP/tool wire 15: catalogue.open
+  ---
+  duration_ms: 1.331375
+  ...
+# Subtest: actual frozen HTTP/tool wire 16: catalogue.open
+ok 158 - actual frozen HTTP/tool wire 16: catalogue.open
+  ---
+  duration_ms: 1.381167
+  ...
+# Subtest: actual frozen HTTP/tool wire 17: catalogue.open
+ok 159 - actual frozen HTTP/tool wire 17: catalogue.open
+  ---
+  duration_ms: 1.336375
+  ...
+# Subtest: actual frozen HTTP/tool wire 18: catalogue.open
+ok 160 - actual frozen HTTP/tool wire 18: catalogue.open
+  ---
+  duration_ms: 1.222583
+  ...
+# Subtest: actual frozen HTTP/tool wire 19: catalogue.open
+ok 161 - actual frozen HTTP/tool wire 19: catalogue.open
+  ---
+  duration_ms: 1.2625
+  ...
+# Subtest: actual frozen HTTP/tool wire 20: catalogue.open
+ok 162 - actual frozen HTTP/tool wire 20: catalogue.open
+  ---
+  duration_ms: 1.732708
+  ...
+# Subtest: actual frozen HTTP/tool wire 21: catalogue.open
+ok 163 - actual frozen HTTP/tool wire 21: catalogue.open
+  ---
+  duration_ms: 1.185583
+  ...
+# Subtest: actual frozen HTTP/tool wire 22: catalogue.open
+ok 164 - actual frozen HTTP/tool wire 22: catalogue.open
+  ---
+  duration_ms: 1.181375
+  ...
+# Subtest: actual frozen HTTP/tool wire 23: catalogue.open
+ok 165 - actual frozen HTTP/tool wire 23: catalogue.open
+  ---
+  duration_ms: 1.125625
+  ...
+# Subtest: actual frozen HTTP/tool wire 24: catalogue.open
+ok 166 - actual frozen HTTP/tool wire 24: catalogue.open
+  ---
+  duration_ms: 1.292584
+  ...
+# Subtest: actual frozen HTTP/tool wire 25: catalogue.open
+ok 167 - actual frozen HTTP/tool wire 25: catalogue.open
+  ---
+  duration_ms: 1.264459
+  ...
+# Subtest: actual frozen HTTP/tool wire 26: catalogue.open
+ok 168 - actual frozen HTTP/tool wire 26: catalogue.open
+  ---
+  duration_ms: 1.290458
+  ...
+# Subtest: actual frozen HTTP/tool wire 27: catalogue.open
+ok 169 - actual frozen HTTP/tool wire 27: catalogue.open
+  ---
+  duration_ms: 1.246083
+  ...
+# Subtest: actual frozen HTTP/tool wire 28: catalogue.open
+ok 170 - actual frozen HTTP/tool wire 28: catalogue.open
+  ---
+  duration_ms: 1.402333
+  ...
+# Subtest: actual frozen HTTP/tool wire 29: catalogue.open
+ok 171 - actual frozen HTTP/tool wire 29: catalogue.open
+  ---
+  duration_ms: 1.195292
+  ...
+# Subtest: actual frozen HTTP/tool wire 30: catalogue.open
+ok 172 - actual frozen HTTP/tool wire 30: catalogue.open
+  ---
+  duration_ms: 2.879667
+  ...
+# Subtest: actual frozen HTTP/tool wire 31: catalogue.open
+ok 173 - actual frozen HTTP/tool wire 31: catalogue.open
+  ---
+  duration_ms: 1.247667
+  ...
+# Subtest: actual frozen HTTP/tool wire 32: catalogue.open
+ok 174 - actual frozen HTTP/tool wire 32: catalogue.open
+  ---
+  duration_ms: 1.428333
+  ...
+# Subtest: actual frozen HTTP/tool wire 33: catalogue.open
+ok 175 - actual frozen HTTP/tool wire 33: catalogue.open
+  ---
+  duration_ms: 1.290042
+  ...
+# Subtest: actual frozen HTTP/tool wire 34: catalogue.open
+ok 176 - actual frozen HTTP/tool wire 34: catalogue.open
+  ---
+  duration_ms: 1.403291
+  ...
+# Subtest: actual frozen HTTP/tool wire 35: catalogue.open
+ok 177 - actual frozen HTTP/tool wire 35: catalogue.open
+  ---
+  duration_ms: 1.246042
+  ...
+# Subtest: actual frozen HTTP/tool wire 36: catalogue.open
+ok 178 - actual frozen HTTP/tool wire 36: catalogue.open
+  ---
+  duration_ms: 1.421667
+  ...
+# Subtest: actual frozen HTTP/tool wire 37: catalogue.open
+ok 179 - actual frozen HTTP/tool wire 37: catalogue.open
+  ---
+  duration_ms: 1.258209
+  ...
+# Subtest: actual frozen HTTP/tool wire 38: catalogue.open
+ok 180 - actual frozen HTTP/tool wire 38: catalogue.open
+  ---
+  duration_ms: 1.45
+  ...
+# Subtest: actual frozen HTTP/tool wire 39: catalogue.open
+ok 181 - actual frozen HTTP/tool wire 39: catalogue.open
+  ---
+  duration_ms: 1.793791
+  ...
+# Subtest: actual frozen HTTP/tool wire 40: catalogue.open
+ok 182 - actual frozen HTTP/tool wire 40: catalogue.open
+  ---
+  duration_ms: 1.802041
+  ...
+# Subtest: actual frozen HTTP/tool wire 41: catalogue.open
+ok 183 - actual frozen HTTP/tool wire 41: catalogue.open
+  ---
+  duration_ms: 1.353125
+  ...
+# Subtest: actual frozen HTTP/tool wire 42: catalogue.open
+ok 184 - actual frozen HTTP/tool wire 42: catalogue.open
+  ---
+  duration_ms: 1.382417
+  ...
+# Subtest: actual frozen HTTP/tool wire 43: catalogue.open
+ok 185 - actual frozen HTTP/tool wire 43: catalogue.open
+  ---
+  duration_ms: 1.401167
+  ...
+# Subtest: actual frozen HTTP/tool wire 44: catalogue.open
+ok 186 - actual frozen HTTP/tool wire 44: catalogue.open
+  ---
+  duration_ms: 1.363667
+  ...
+# Subtest: actual frozen HTTP/tool wire 45: catalogue.open
+ok 187 - actual frozen HTTP/tool wire 45: catalogue.open
+  ---
+  duration_ms: 1.338625
+  ...
+# Subtest: actual frozen HTTP/tool wire 46: catalogue.open
+ok 188 - actual frozen HTTP/tool wire 46: catalogue.open
+  ---
+  duration_ms: 1.35725
+  ...
+# Subtest: actual frozen HTTP/tool wire 47: catalogue.open
+ok 189 - actual frozen HTTP/tool wire 47: catalogue.open
+  ---
+  duration_ms: 1.349333
+  ...
+# Subtest: actual frozen HTTP/tool wire 48: catalogue.open
+ok 190 - actual frozen HTTP/tool wire 48: catalogue.open
+  ---
+  duration_ms: 1.288375
+  ...
+# Subtest: actual frozen HTTP/tool wire 49: catalogue.open
+ok 191 - actual frozen HTTP/tool wire 49: catalogue.open
+  ---
+  duration_ms: 1.562375
+  ...
+# Subtest: actual frozen HTTP/tool wire 50: catalogue.open
+ok 192 - actual frozen HTTP/tool wire 50: catalogue.open
+  ---
+  duration_ms: 1.211875
+  ...
+# Subtest: actual frozen HTTP/tool wire 51: catalogue.open
+ok 193 - actual frozen HTTP/tool wire 51: catalogue.open
+  ---
+  duration_ms: 1.1645
+  ...
+# Subtest: actual frozen HTTP/tool wire 52: catalogue.open
+ok 194 - actual frozen HTTP/tool wire 52: catalogue.open
+  ---
+  duration_ms: 1.292916
+  ...
+# Subtest: actual frozen HTTP/tool wire 53: catalogue.open
+ok 195 - actual frozen HTTP/tool wire 53: catalogue.open
+  ---
+  duration_ms: 1.165
+  ...
+# Subtest: actual frozen HTTP/tool wire 54: catalogue.open
+ok 196 - actual frozen HTTP/tool wire 54: catalogue.open
+  ---
+  duration_ms: 1.233916
+  ...
+# Subtest: actual frozen HTTP/tool wire 55: catalogue.open
+ok 197 - actual frozen HTTP/tool wire 55: catalogue.open
+  ---
+  duration_ms: 1.265084
+  ...
+# Subtest: actual frozen HTTP/tool wire 56: catalogue.open
+ok 198 - actual frozen HTTP/tool wire 56: catalogue.open
+  ---
+  duration_ms: 1.519208
+  ...
+# Subtest: actual frozen HTTP/tool wire 57: catalogue.open
+ok 199 - actual frozen HTTP/tool wire 57: catalogue.open
+  ---
+  duration_ms: 1.337208
+  ...
+# Subtest: actual frozen HTTP/tool wire 58: catalogue.open
+ok 200 - actual frozen HTTP/tool wire 58: catalogue.open
+  ---
+  duration_ms: 1.204292
+  ...
+# Subtest: actual frozen HTTP/tool wire 59: catalogue.open
+ok 201 - actual frozen HTTP/tool wire 59: catalogue.open
+  ---
+  duration_ms: 2.590334
+  ...
+# Subtest: actual frozen HTTP/tool wire 60: catalogue.open
+ok 202 - actual frozen HTTP/tool wire 60: catalogue.open
+  ---
+  duration_ms: 1.269166
+  ...
+# Subtest: actual frozen HTTP/tool wire 61: catalogue.open
+ok 203 - actual frozen HTTP/tool wire 61: catalogue.open
+  ---
+  duration_ms: 1.122917
+  ...
+# Subtest: actual frozen HTTP/tool wire 62: catalogue.open
+ok 204 - actual frozen HTTP/tool wire 62: catalogue.open
+  ---
+  duration_ms: 1.206167
+  ...
+# Subtest: actual frozen HTTP/tool wire 63: catalogue.open
+ok 205 - actual frozen HTTP/tool wire 63: catalogue.open
+  ---
+  duration_ms: 1.129458
+  ...
+# Subtest: actual frozen HTTP/tool wire 64: catalogue.open
+ok 206 - actual frozen HTTP/tool wire 64: catalogue.open
+  ---
+  duration_ms: 1.209292
+  ...
+# Subtest: actual frozen HTTP/tool wire 65: catalogue.open
+ok 207 - actual frozen HTTP/tool wire 65: catalogue.open
+  ---
+  duration_ms: 1.20975
+  ...
+# Subtest: actual frozen HTTP/tool wire 66: catalogue.open
+ok 208 - actual frozen HTTP/tool wire 66: catalogue.open
+  ---
+  duration_ms: 1.259666
+  ...
+# Subtest: actual frozen HTTP/tool wire 67: catalogue.open
+ok 209 - actual frozen HTTP/tool wire 67: catalogue.open
+  ---
+  duration_ms: 1.262667
+  ...
+# Subtest: actual frozen HTTP/tool wire 68: catalogue.open
+ok 210 - actual frozen HTTP/tool wire 68: catalogue.open
+  ---
+  duration_ms: 1.3295
+  ...
+# Subtest: actual frozen HTTP/tool wire 69: catalogue.open
+ok 211 - actual frozen HTTP/tool wire 69: catalogue.open
+  ---
+  duration_ms: 1.278375
+  ...
+# Subtest: actual frozen HTTP/tool wire 70: catalogue.open
+ok 212 - actual frozen HTTP/tool wire 70: catalogue.open
+  ---
+  duration_ms: 1.767167
+  ...
+# Subtest: actual frozen HTTP/tool wire 71: catalogue.open
+ok 213 - actual frozen HTTP/tool wire 71: catalogue.open
+  ---
+  duration_ms: 1.447583
+  ...
+# Subtest: actual frozen HTTP/tool wire 72: catalogue.open
+ok 214 - actual frozen HTTP/tool wire 72: catalogue.open
+  ---
+  duration_ms: 1.832208
+  ...
+# Subtest: actual frozen HTTP/tool wire 73: catalogue.open
+ok 215 - actual frozen HTTP/tool wire 73: catalogue.open
+  ---
+  duration_ms: 1.380125
+  ...
+# Subtest: actual frozen HTTP/tool wire 74: catalogue.open
+ok 216 - actual frozen HTTP/tool wire 74: catalogue.open
+  ---
+  duration_ms: 1.255584
+  ...
+# Subtest: actual frozen HTTP/tool wire 75: catalogue.open
+ok 217 - actual frozen HTTP/tool wire 75: catalogue.open
+  ---
+  duration_ms: 1.133125
+  ...
+# Subtest: actual frozen HTTP/tool wire 76: catalogue.open
+ok 218 - actual frozen HTTP/tool wire 76: catalogue.open
+  ---
+  duration_ms: 1.177125
+  ...
+# Subtest: actual frozen HTTP/tool wire 77: catalogue.open
+ok 219 - actual frozen HTTP/tool wire 77: catalogue.open
+  ---
+  duration_ms: 1.226959
+  ...
+# Subtest: actual frozen HTTP/tool wire 78: catalogue.open
+ok 220 - actual frozen HTTP/tool wire 78: catalogue.open
+  ---
+  duration_ms: 1.192708
+  ...
+# Subtest: actual frozen HTTP/tool wire 79: catalogue.open
+ok 221 - actual frozen HTTP/tool wire 79: catalogue.open
+  ---
+  duration_ms: 1.189208
+  ...
+# Subtest: actual frozen HTTP/tool wire 80: catalogue.open
+ok 222 - actual frozen HTTP/tool wire 80: catalogue.open
+  ---
+  duration_ms: 1.615084
+  ...
+# Subtest: actual frozen HTTP/tool wire 81: catalogue.open
+ok 223 - actual frozen HTTP/tool wire 81: catalogue.open
+  ---
+  duration_ms: 1.110208
+  ...
+# Subtest: actual frozen HTTP/tool wire 82: catalogue.open
+ok 224 - actual frozen HTTP/tool wire 82: catalogue.open
+  ---
+  duration_ms: 1.178542
+  ...
+# Subtest: actual frozen HTTP/tool wire 83: catalogue.open
+ok 225 - actual frozen HTTP/tool wire 83: catalogue.open
+  ---
+  duration_ms: 1.239042
+  ...
+# Subtest: actual frozen HTTP/tool wire 84: catalogue.open
+ok 226 - actual frozen HTTP/tool wire 84: catalogue.open
+  ---
+  duration_ms: 1.650208
+  ...
+# Subtest: actual frozen HTTP/tool wire 85: catalogue.open
+ok 227 - actual frozen HTTP/tool wire 85: catalogue.open
+  ---
+  duration_ms: 1.162583
+  ...
+# Subtest: actual frozen HTTP/tool wire 86: catalogue.open
+ok 228 - actual frozen HTTP/tool wire 86: catalogue.open
+  ---
+  duration_ms: 1.211166
+  ...
+# Subtest: actual frozen HTTP/tool wire 87: catalogue.open
+ok 229 - actual frozen HTTP/tool wire 87: catalogue.open
+  ---
+  duration_ms: 1.288417
+  ...
+# Subtest: actual frozen HTTP/tool wire 88: catalogue.open
+ok 230 - actual frozen HTTP/tool wire 88: catalogue.open
+  ---
+  duration_ms: 1.233125
+  ...
+# Subtest: actual frozen HTTP/tool wire 89: catalogue.open
+ok 231 - actual frozen HTTP/tool wire 89: catalogue.open
+  ---
+  duration_ms: 1.166792
+  ...
+# Subtest: actual frozen HTTP/tool wire 90: catalogue.open
+ok 232 - actual frozen HTTP/tool wire 90: catalogue.open
+  ---
+  duration_ms: 2.670125
+  ...
+# Subtest: actual frozen HTTP/tool wire 91: catalogue.open
+ok 233 - actual frozen HTTP/tool wire 91: catalogue.open
+  ---
+  duration_ms: 1.219875
+  ...
+# Subtest: actual frozen HTTP/tool wire 92: catalogue.open
+ok 234 - actual frozen HTTP/tool wire 92: catalogue.open
+  ---
+  duration_ms: 1.168583
+  ...
+# Subtest: actual frozen HTTP/tool wire 93: catalogue.open
+ok 235 - actual frozen HTTP/tool wire 93: catalogue.open
+  ---
+  duration_ms: 1.116292
+  ...
+# Subtest: actual frozen HTTP/tool wire 94: catalogue.open
+ok 236 - actual frozen HTTP/tool wire 94: catalogue.open
+  ---
+  duration_ms: 1.117834
+  ...
+# Subtest: actual frozen HTTP/tool wire 95: catalogue.open
+ok 237 - actual frozen HTTP/tool wire 95: catalogue.open
+  ---
+  duration_ms: 1.065917
+  ...
+# Subtest: actual frozen HTTP/tool wire 96: catalogue.open
+ok 238 - actual frozen HTTP/tool wire 96: catalogue.open
+  ---
+  duration_ms: 1.107459
+  ...
+# Subtest: actual frozen HTTP/tool wire 97: catalogue.open
+ok 239 - actual frozen HTTP/tool wire 97: catalogue.open
+  ---
+  duration_ms: 1.109458
+  ...
+# Subtest: actual frozen HTTP/tool wire 98: catalogue.open
+ok 240 - actual frozen HTTP/tool wire 98: catalogue.open
+  ---
+  duration_ms: 1.273792
+  ...
+# Subtest: actual frozen HTTP/tool wire 99: catalogue.open
+ok 241 - actual frozen HTTP/tool wire 99: catalogue.open
+  ---
+  duration_ms: 1.077958
+  ...
+# Subtest: actual frozen HTTP/tool wire 100: catalogue.open
+ok 242 - actual frozen HTTP/tool wire 100: catalogue.open
+  ---
+  duration_ms: 1.166334
+  ...
+# Subtest: actual frozen HTTP/tool wire 101: catalogue.open
+ok 243 - actual frozen HTTP/tool wire 101: catalogue.open
+  ---
+  duration_ms: 1.581292
+  ...
+# Subtest: actual frozen HTTP/tool wire 102: catalogue.open
+ok 244 - actual frozen HTTP/tool wire 102: catalogue.open
+  ---
+  duration_ms: 1.485
+  ...
+# Subtest: actual frozen HTTP/tool wire 103: catalogue.open
+ok 245 - actual frozen HTTP/tool wire 103: catalogue.open
+  ---
+  duration_ms: 1.098125
+  ...
+# Subtest: actual frozen HTTP/tool wire 104: catalogue.open
+ok 246 - actual frozen HTTP/tool wire 104: catalogue.open
+  ---
+  duration_ms: 1.257875
+  ...
+# Subtest: actual frozen HTTP/tool wire 105: catalogue.open
+ok 247 - actual frozen HTTP/tool wire 105: catalogue.open
+  ---
+  duration_ms: 1.078958
+  ...
+# Subtest: actual frozen HTTP/tool wire 106: catalogue.open
+ok 248 - actual frozen HTTP/tool wire 106: catalogue.open
+  ---
+  duration_ms: 1.099084
+  ...
+# Subtest: actual frozen HTTP/tool wire 107: catalogue.open
+ok 249 - actual frozen HTTP/tool wire 107: catalogue.open
+  ---
+  duration_ms: 1.096667
+  ...
+# Subtest: actual frozen HTTP/tool wire 108: catalogue.open
+ok 250 - actual frozen HTTP/tool wire 108: catalogue.open
+  ---
+  duration_ms: 1.14175
+  ...
+# Subtest: actual frozen HTTP/tool wire 109: catalogue.coverage
+ok 251 - actual frozen HTTP/tool wire 109: catalogue.coverage
+  ---
+  duration_ms: 7.72075
+  ...
+# Subtest: actual frozen HTTP/tool wire 110: catalogue.query
+ok 252 - actual frozen HTTP/tool wire 110: catalogue.query
+  ---
+  duration_ms: 3.730042
+  ...
+# Subtest: actual frozen HTTP/tool wire 111: catalogue.query
+ok 253 - actual frozen HTTP/tool wire 111: catalogue.query
+  ---
+  duration_ms: 3.423667
+  ...
+# Subtest: actual frozen HTTP/tool wire 112: catalogue.coverage
+ok 254 - actual frozen HTTP/tool wire 112: catalogue.coverage
+  ---
+  duration_ms: 3.591208
+  ...
+# Subtest: actual frozen HTTP/tool wire 113: catalogue.query
+ok 255 - actual frozen HTTP/tool wire 113: catalogue.query
+  ---
+  duration_ms: 4.882167
+  ...
+# Subtest: actual frozen HTTP/tool wire 114: catalogue.query
+ok 256 - actual frozen HTTP/tool wire 114: catalogue.query
+  ---
+  duration_ms: 3.646458
+  ...
+# Subtest: actual frozen HTTP/tool wire 115: catalogue.query
+ok 257 - actual frozen HTTP/tool wire 115: catalogue.query
+  ---
+  duration_ms: 3.929792
+  ...
+# Subtest: actual frozen HTTP/tool wire 116: catalogue.query
+ok 258 - actual frozen HTTP/tool wire 116: catalogue.query
+  ---
+  duration_ms: 4.261916
+  ...
+# Subtest: actual frozen HTTP/tool wire 117: catalogue.query
+not ok 259 - actual frozen HTTP/tool wire 117: catalogue.query
+  ---
+  duration_ms: 4.010334
+  location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1/tests/catalogue-service.test.ts:20:51'
+  failureType: 'testCodeFailure'
+  error: 'Catalogue response is invalid'
+  code: 'invalid_response'
+  name: 'CatalogueClientError'
+  stack: |-
+    invalid (file:///Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1/src/catalogue-service.ts:36:35)
+    parseScientific (file:///Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1/src/catalogue-service.ts:139:129)
+    async call (file:///Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1/src/catalogue-service.ts:217:23)
+    async TestContext.<anonymous> (file:///Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1/tests/catalogue-service.test.ts:30:20)
+    async Test.run (node:internal/test_runner/test:980:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: actual frozen HTTP/tool wire 118: catalogue.coverage
+ok 260 - actual frozen HTTP/tool wire 118: catalogue.coverage
+  ---
+  duration_ms: 2.853
+  ...
+# Subtest: actual frozen HTTP/tool wire 119: catalogue.coverage
+ok 261 - actual frozen HTTP/tool wire 119: catalogue.coverage
+  ---
+  duration_ms: 1.982042
+  ...
+# Subtest: actual frozen HTTP/tool wire 120: catalogue.query
+ok 262 - actual frozen HTTP/tool wire 120: catalogue.query
+  ---
+  duration_ms: 1.919041
+  ...
+# Subtest: actual frozen HTTP/tool wire 121: catalogue.query
+ok 263 - actual frozen HTTP/tool wire 121: catalogue.query
+  ---
+  duration_ms: 1.808208
+  ...
+# Subtest: actual frozen HTTP/tool wire 122: catalogue.query
+ok 264 - actual frozen HTTP/tool wire 122: catalogue.query
+  ---
+  duration_ms: 4.052084
+  ...
+# Subtest: actual frozen HTTP/tool wire 123: catalogue.query
+ok 265 - actual frozen HTTP/tool wire 123: catalogue.query
+  ---
+  duration_ms: 3.121417
+  ...
+# Subtest: actual frozen HTTP/tool wire 124: catalogue.query
+ok 266 - actual frozen HTTP/tool wire 124: catalogue.query
+  ---
+  duration_ms: 1.916125
+  ...
+# Subtest: actual frozen HTTP/tool wire 125: catalogue.coverage
+ok 267 - actual frozen HTTP/tool wire 125: catalogue.coverage
+  ---
+  duration_ms: 2.078583
+  ...
+# Subtest: actual frozen HTTP/tool wire 126: catalogue.query
+ok 268 - actual frozen HTTP/tool wire 126: catalogue.query
+  ---
+  duration_ms: 2.246959
+  ...
+# Subtest: actual frozen HTTP/tool wire 127: catalogue.coverage
+ok 269 - actual frozen HTTP/tool wire 127: catalogue.coverage
+  ---
+  duration_ms: 2.014792
+  ...
+# Subtest: actual frozen HTTP/tool wire 128: catalogue.coverage
+ok 270 - actual frozen HTTP/tool wire 128: catalogue.coverage
+  ---
+  duration_ms: 1.974875
+  ...
+# Subtest: actual frozen HTTP/tool wire 129: catalogue.coverage
+ok 271 - actual frozen HTTP/tool wire 129: catalogue.coverage
+  ---
+  duration_ms: 2.56775
+  ...
+# Subtest: actual frozen HTTP/tool wire 130: catalogue.coverage
+ok 272 - actual frozen HTTP/tool wire 130: catalogue.coverage
+  ---
+  duration_ms: 1.989041
+  ...
+# Subtest: actual frozen HTTP/tool wire 131: catalogue.coverage
+ok 273 - actual frozen HTTP/tool wire 131: catalogue.coverage
+  ---
+  duration_ms: 1.937334
+  ...
+# Subtest: actual frozen HTTP/tool wire 132: catalogue.query
+ok 274 - actual frozen HTTP/tool wire 132: catalogue.query
+  ---
+  duration_ms: 1.965792
+  ...
+# Subtest: actual frozen HTTP/tool wire 133: catalogue.relationships
+ok 275 - actual frozen HTTP/tool wire 133: catalogue.relationships
+  ---
+  duration_ms: 3.661292
+  ...
+# Subtest: actual frozen HTTP/tool wire 134: analysis.get_published
+ok 276 - actual frozen HTTP/tool wire 134: analysis.get_published
+  ---
+  duration_ms: 2.042958
+  ...
+# Subtest: scope defaults are detached and enable all four canonical families
+ok 277 - scope defaults are detached and enable all four canonical families
+  ---
+  duration_ms: 0.037792
+  ...
+# Subtest: public request rejects client access binding before any fetch
+ok 278 - public request rejects client access binding before any fetch
+  ---
+  duration_ms: 0.22025
+  ...
+# Subtest: public request rejects client access revision before any fetch
+ok 279 - public request rejects client access revision before any fetch
+  ---
+  duration_ms: 0.062833
+  ...
+# Subtest: public request rejects client role before any fetch
+ok 280 - public request rejects client role before any fetch
+  ---
+  duration_ms: 0.0535
+  ...
+# Subtest: public request rejects limit above500 before any fetch
+ok 281 - public request rejects limit above500 before any fetch
+  ---
+  duration_ms: 0.544334
+  ...
+# Subtest: public request rejects boolean limit before any fetch
+ok 282 - public request rejects boolean limit before any fetch
+  ---
+  duration_ms: 0.515792
+  ...
+# Subtest: public request rejects null limit before any fetch
+ok 283 - public request rejects null limit before any fetch
+  ---
+  duration_ms: 0.482292
+  ...
+# Subtest: public request rejects null filters before any fetch
+ok 284 - public request rejects null filters before any fetch
+  ---
+  duration_ms: 0.483084
+  ...
+# Subtest: public request rejects null ordering before any fetch
+ok 285 - public request rejects null ordering before any fetch
+  ---
+  duration_ms: 0.906166
+  ...
+# Subtest: public request rejects empty cursor before any fetch
+ok 286 - public request rejects empty cursor before any fetch
+  ---
+  duration_ms: 0.56025
+  ...
+# Subtest: public request rejects long cursor before any fetch
+ok 287 - public request rejects long cursor before any fetch
+  ---
+  duration_ms: 0.479584
+  ...
+# Subtest: public request rejects foreign snapshot path before any fetch
+ok 288 - public request rejects foreign snapshot path before any fetch
+  ---
+  duration_ms: 0.4705
+  ...
+# Subtest: public request rejects no ID tie breaker before any fetch
+ok 289 - public request rejects no ID tie breaker before any fetch
+  ---
+  duration_ms: 0.50425
+  ...
+# Subtest: public request rejects duplicate order before any fetch
+ok 290 - public request rejects duplicate order before any fetch
+  ---
+  duration_ms: 0.910333
+  ...
+# Subtest: public request rejects alias source scope before any fetch
+ok 291 - public request rejects alias source scope before any fetch
+  ---
+  duration_ms: 0.708791
+  ...
+# Subtest: response rejects listing snapshot mismatch
+ok 292 - response rejects listing snapshot mismatch
+  ---
+  duration_ms: 57.681833
+  ...
+# Subtest: response rejects listing scope mismatch
+ok 293 - response rejects listing scope mismatch
+  ---
+  duration_ms: 37.9485
+  ...
+# Subtest: response rejects listing filter mismatch
+ok 294 - response rejects listing filter mismatch
+  ---
+  duration_ms: 35.957708
+  ...
+# Subtest: response rejects listing parent mismatch
+ok 295 - response rejects listing parent mismatch
+  ---
+  duration_ms: 37.742792
+  ...
+# Subtest: response rejects listing limit mismatch
+ok 296 - response rejects listing limit mismatch
+  ---
+  duration_ms: 37.986875
+  ...
+# Subtest: response rejects open object mismatch
+ok 297 - response rejects open object mismatch
+  ---
+  duration_ms: 1.237333
+  ...
+# Subtest: response rejects open snapshot mismatch
+ok 298 - response rejects open snapshot mismatch
+  ---
+  duration_ms: 1.150583
+  ...
+# Subtest: response rejects detail extra envelope
+ok 299 - response rejects detail extra envelope
+  ---
+  duration_ms: 0.61975
+  ...
+# Subtest: response rejects detail wrong object
+ok 300 - response rejects detail wrong object
+  ---
+  duration_ms: 1.19125
+  ...
+# Subtest: response rejects science adapter version
+ok 301 - response rejects science adapter version
+  ---
+  duration_ms: 0.615875
+  ...
+# Subtest: response rejects science extension key
+ok 302 - response rejects science extension key
+  ---
+  duration_ms: 0.585833
+  ...
+# Subtest: response rejects science offset mismatch
+ok 303 - response rejects science offset mismatch
+  ---
+  duration_ms: 1.787459
+  ...
+# Subtest: response rejects science nonprogress page
+ok 304 - response rejects science nonprogress page
+  ---
+  duration_ms: 1.8005
+  ...
+# Subtest: response rejects science invented qualification
+ok 305 - response rejects science invented qualification
+  ---
+  duration_ms: 0.596292
+  ...
+# Subtest: response rejects science wrong operation
+ok 306 - response rejects science wrong operation
+  ---
+  duration_ms: 1.75625
+  ...
+# Subtest: response rejects science wrong parameters
+ok 307 - response rejects science wrong parameters
+  ---
+  duration_ms: 1.770875
+  ...
+# Subtest: response rejects science wrong dataset input
+ok 308 - response rejects science wrong dataset input
+  ---
+  duration_ms: 5.084375
+  ...
+# Subtest: preserves typed backend 401 error parity
+ok 309 - preserves typed backend 401 error parity
+  ---
+  duration_ms: 0.742125
+  ...
+# Subtest: preserves typed backend 403 error parity
+ok 310 - preserves typed backend 403 error parity
+  ---
+  duration_ms: 0.562667
+  ...
+# Subtest: preserves typed backend 404 error parity
+ok 311 - preserves typed backend 404 error parity
+  ---
+  duration_ms: 0.534542
+  ...
+# Subtest: preserves typed backend 409 error parity
+ok 312 - preserves typed backend 409 error parity
+  ---
+  duration_ms: 0.528
+  ...
+# Subtest: preserves typed backend 422 error parity
+ok 313 - preserves typed backend 422 error parity
+  ---
+  duration_ms: 0.527709
+  ...
+# Subtest: preserves typed backend 503 error parity
+ok 314 - preserves typed backend 503 error parity
+  ---
+  duration_ms: 0.530167
+  ...
+# Subtest: rejects duplicate top-level JSON
+ok 315 - rejects duplicate top-level JSON
+  ---
+  duration_ms: 0.608334
+  ...
+# Subtest: rejects duplicate escaped JSON
+ok 316 - rejects duplicate escaped JSON
+  ---
+  duration_ms: 0.542167
+  ...
+# Subtest: rejects unsafe integer
+ok 317 - rejects unsafe integer
+  ---
+  duration_ms: 0.552
+  ...
+# Subtest: rejects nonfinite number
+ok 318 - rejects nonfinite number
+  ---
+  duration_ms: 0.54475
+  ...
+# Subtest: rejects HTML fallback
+ok 319 - rejects HTML fallback
+  ---
+  duration_ms: 0.540917
+  ...
+# Subtest: rejects deep payload
+ok 320 - rejects deep payload
+  ---
+  duration_ms: 0.58375
+  ...
+# Subtest: actual stream bytes bound missing/lying Content-Length and cancel live body
+ok 321 - actual stream bytes bound missing/lying Content-Length and cancel live body
+  ---
+  duration_ms: 2.504833
+  ...
+# Subtest: error streams have a separate bounded budget and are cancelled
+ok 322 - error streams have a separate bounded budget and are cancelled
+  ---
+  duration_ms: 0.591042
+  ...
+# Subtest: invalid UTF8 is rejected
+ok 323 - invalid UTF8 is rejected
+  ---
+  duration_ms: 0.606041
+  ...
+# Subtest: caller cancellation works before and during transport, including ignored signals
+ok 324 - caller cancellation works before and during transport, including ignored signals
+  ---
+  duration_ms: 0.700416
+  ...
+# Subtest: abort while consuming a stalled response cancels its reader
+ok 325 - abort while consuming a stalled response cancels its reader
+  ---
+  duration_ms: 0.644459
+  ...
+# Subtest: only trusted in-memory bearer provider supplies authorization
+ok 326 - only trusted in-memory bearer provider supplies authorization
+  ---
+  duration_ms: 3.374916
+  ...
+# Subtest: no implicit fixture fallback on network or redirect refusal
+ok 327 - no implicit fixture fallback on network or redirect refusal
+  ---
+  duration_ms: 0.5445
+  ...
+# Subtest: method-specific public request rejects include_details=null
+ok 328 - method-specific public request rejects include_details=null
+  ---
+  duration_ms: 0.523708
+  ...
+# Subtest: method-specific public request rejects include_details="true"
+ok 329 - method-specific public request rejects include_details="true"
+  ---
+  duration_ms: 0.511958
+  ...
+# Subtest: method-specific public request rejects parameters=null
+ok 330 - method-specific public request rejects parameters=null
+  ---
+  duration_ms: 0.532541
+  ...
+# Subtest: method-specific public request rejects offset=null
+ok 331 - method-specific public request rejects offset=null
+  ---
+  duration_ms: 0.534042
+  ...
+# Subtest: method-specific public request rejects offset=-1
+ok 332 - method-specific public request rejects offset=-1
+  ---
+  duration_ms: 0.6
+  ...
+# Subtest: method-specific public request rejects offset=9007199254740992
+ok 333 - method-specific public request rejects offset=9007199254740992
+  ---
+  duration_ms: 0.034666
+  ...
+# Subtest: method-specific public request rejects parameters={"value":null}
+ok 334 - method-specific public request rejects parameters={"value":null}
+  ---
+  duration_ms: 0.034541
+  ...
+# Subtest: method-specific public request rejects parameters={"value":9007199254740992}
+ok 335 - method-specific public request rejects parameters={"value":9007199254740992}
+  ---
+  duration_ms: 0.033625
+  ...
+# Subtest: method-specific public request rejects operation_id="c14.execute"
+ok 336 - method-specific public request rejects operation_id="c14.execute"
+  ---
+  duration_ms: 0.523708
+  ...
+# Subtest: method-specific public request rejects operation_version="c12-v1"
+ok 337 - method-specific public request rejects operation_version="c12-v1"
+  ---
+  duration_ms: 0.531542
+  ...
+# Subtest: method-specific public request rejects input_ids=["one","two"]
+ok 338 - method-specific public request rejects input_ids=["one","two"]
+  ---
+  duration_ms: 0.525833
+  ...
+# Subtest: relationships reject simultaneous object and parent selectors
+ok 339 - relationships reject simultaneous object and parent selectors
+  ---
+  duration_ms: 0.570958
+  ...
+# Subtest: initial discovery cannot silently omit remaining authorized snapshots
+ok 340 - initial discovery cannot silently omit remaining authorized snapshots
+  ---
+  duration_ms: 1.123334
+  ...
+# Subtest: scientific page cannot silently lose a known remaining table page
+ok 341 - scientific page cannot silently lose a known remaining table page
+  ---
+  duration_ms: 2.09075
+  ...
+# Subtest: HTTP 401 remains authoritative with malformed, misleading or unbounded error body
+ok 342 - HTTP 401 remains authoritative with malformed, misleading or unbounded error body
+  ---
+  duration_ms: 1.844709
+  ...
+# Subtest: HTTP 403 remains authoritative with malformed, misleading or unbounded error body
+ok 343 - HTTP 403 remains authoritative with malformed, misleading or unbounded error body
+  ---
+  duration_ms: 1.645459
+  ...
+# Subtest: HTTP 404 remains authoritative with malformed, misleading or unbounded error body
+ok 344 - HTTP 404 remains authoritative with malformed, misleading or unbounded error body
+  ---
+  duration_ms: 1.639334
+  ...
+# Subtest: HTTP 409 remains authoritative with malformed, misleading or unbounded error body
+ok 345 - HTTP 409 remains authoritative with malformed, misleading or unbounded error body
+  ---
+  duration_ms: 1.726375
+  ...
+# Subtest: qualified unavailable scientific results preserve reasons without inventing input dependencies
+ok 346 - qualified unavailable scientific results preserve reasons without inventing input dependencies
+  ---
+  duration_ms: 2.899625
+  ...
+# Subtest: statistics aliases retain exact source dataset dependency identity
+ok 347 - statistics aliases retain exact source dataset dependency identity
+  ---
+  duration_ms: 1.921625
+  ...
+# Subtest: v1 shared CSV fixture: ordinary
+ok 348 - v1 shared CSV fixture: ordinary
+  ---
+  duration_ms: 1.510208
+  ...
+# Subtest: v1 shared CSV fixture: japanese
+ok 349 - v1 shared CSV fixture: japanese
+  ---
+  duration_ms: 0.110166
+  ...
+# Subtest: v1 shared CSV fixture: quoted
+ok 350 - v1 shared CSV fixture: quoted
+  ---
+  duration_ms: 0.104208
+  ...
+# Subtest: v1 shared CSV fixture: comma
+ok 351 - v1 shared CSV fixture: comma
+  ---
+  duration_ms: 0.04225
+  ...
+# Subtest: v1 shared CSV fixture: multiline
+ok 352 - v1 shared CSV fixture: multiline
+  ---
+  duration_ms: 0.119916
+  ...
+# Subtest: v1 shared CSV fixture: carriage-return
+ok 353 - v1 shared CSV fixture: carriage-return
+  ---
+  duration_ms: 0.040416
+  ...
+# Subtest: v1 shared CSV fixture: empty
+ok 354 - v1 shared CSV fixture: empty
+  ---
+  duration_ms: 0.074875
+  ...
+# Subtest: v1 shared CSV fixture: equals
+ok 355 - v1 shared CSV fixture: equals
+  ---
+  duration_ms: 0.032417
+  ...
+# Subtest: v1 shared CSV fixture: plus
+ok 356 - v1 shared CSV fixture: plus
+  ---
+  duration_ms: 0.222792
+  ...
+# Subtest: v1 shared CSV fixture: minus-string
+ok 357 - v1 shared CSV fixture: minus-string
+  ---
+  duration_ms: 0.241792
+  ...
+# Subtest: v1 shared CSV fixture: at
+ok 358 - v1 shared CSV fixture: at
+  ---
+  duration_ms: 0.073792
+  ...
+# Subtest: v1 shared CSV fixture: space-formula
+ok 359 - v1 shared CSV fixture: space-formula
+  ---
+  duration_ms: 0.02825
+  ...
+# Subtest: v1 shared CSV fixture: tab-text
+ok 360 - v1 shared CSV fixture: tab-text
+  ---
+  duration_ms: 0.020708
+  ...
+# Subtest: v1 shared CSV fixture: cr-text
+ok 361 - v1 shared CSV fixture: cr-text
+  ---
+  duration_ms: 0.01875
+  ...
+# Subtest: v1 shared CSV fixture: lf-text
+ok 362 - v1 shared CSV fixture: lf-text
+  ---
+  duration_ms: 0.018209
+  ...
+# Subtest: v1 shared CSV fixture: tab-formula
+ok 363 - v1 shared CSV fixture: tab-formula
+  ---
+  duration_ms: 0.021916
+  ...
+# Subtest: v1 shared CSV fixture: crlf-text
+ok 364 - v1 shared CSV fixture: crlf-text
+  ---
+  duration_ms: 0.018167
+  ...
+# Subtest: v1 shared CSV fixture: space-tab-text
+ok 365 - v1 shared CSV fixture: space-tab-text
+  ---
+  duration_ms: 0.017833
+  ...
+# Subtest: v1 shared CSV fixture: nonleading-formula
+ok 366 - v1 shared CSV fixture: nonleading-formula
+  ---
+  duration_ms: 0.017584
+  ...
+# Subtest: v1 shared CSV fixture: multiline-later-formula
+ok 367 - v1 shared CSV fixture: multiline-later-formula
+  ---
+  duration_ms: 0.02
+  ...
+# Subtest: v1 shared CSV fixture: existing-apostrophe
+ok 368 - v1 shared CSV fixture: existing-apostrophe
+  ---
+  duration_ms: 0.019834
+  ...
+# Subtest: v1 shared CSV fixture: literal-leading-quote
+ok 369 - v1 shared CSV fixture: literal-leading-quote
+  ---
+  duration_ms: 0.019
+  ...
+# Subtest: v1 shared CSV fixture: negative-number
+ok 370 - v1 shared CSV fixture: negative-number
+  ---
+  duration_ms: 0.019375
+  ...
+# Subtest: v1 shared CSV fixture: negative-scientific
+ok 371 - v1 shared CSV fixture: negative-scientific
+  ---
+  duration_ms: 0.017875
+  ...
+# Subtest: v1 shared CSV fixture: positive-number
+ok 372 - v1 shared CSV fixture: positive-number
+  ---
+  duration_ms: 0.017583
+  ...
+# Subtest: v1 shared CSV fixture: zero
+ok 373 - v1 shared CSV fixture: zero
+  ---
+  duration_ms: 0.01875
+  ...
+# Subtest: v1 shared CSV fixture: null
+ok 374 - v1 shared CSV fixture: null
+  ---
+  duration_ms: 0.017708
+  ...
+# Subtest: v1 shared CSV fixture: true
+ok 375 - v1 shared CSV fixture: true
+  ---
+  duration_ms: 0.018542
+  ...
+# Subtest: v1 shared CSV fixture: false
+ok 376 - v1 shared CSV fixture: false
+  ---
+  duration_ms: 0.017375
+  ...
+# Subtest: v1 shared CSV fixture: object
+ok 377 - v1 shared CSV fixture: object
+  ---
+  duration_ms: 0.036833
+  ...
+# Subtest: v1 shared CSV fixture: array
+ok 378 - v1 shared CSV fixture: array
+  ---
+  duration_ms: 0.021625
+  ...
+# Subtest: v1 shared CSV fixture: empty-object
+ok 379 - v1 shared CSV fixture: empty-object
+  ---
+  duration_ms: 0.018
+  ...
+# Subtest: v1 shared CSV fixture: empty-array
+ok 380 - v1 shared CSV fixture: empty-array
+  ---
+  duration_ms: 0.018792
+  ...
+# Subtest: v1 shared CSV fixture: undefined
+ok 381 - v1 shared CSV fixture: undefined
+  ---
+  duration_ms: 0.017125
+  ...
+# Subtest: v1 shared CSV fixture: vertical-tab-formula
+ok 382 - v1 shared CSV fixture: vertical-tab-formula
+  ---
+  duration_ms: 0.01925
+  ...
+# Subtest: v1 shared CSV fixture: form-feed-formula
+ok 383 - v1 shared CSV fixture: form-feed-formula
+  ---
+  duration_ms: 0.018667
+  ...
+# Subtest: v1 shared CSV fixture: file-separator-formula
+ok 384 - v1 shared CSV fixture: file-separator-formula
+  ---
+  duration_ms: 0.019583
+  ...
+# Subtest: v1 shared CSV fixture: next-line-formula
+ok 385 - v1 shared CSV fixture: next-line-formula
+  ---
+  duration_ms: 0.018458
+  ...
+# Subtest: v1 shared CSV fixture: nbsp-formula
+ok 386 - v1 shared CSV fixture: nbsp-formula
+  ---
+  duration_ms: 0.020917
+  ...
+# Subtest: v1 shared CSV fixture: ogham-formula
+ok 387 - v1 shared CSV fixture: ogham-formula
+  ---
+  duration_ms: 0.02
+  ...
+# Subtest: v1 shared CSV fixture: em-space-formula
+ok 388 - v1 shared CSV fixture: em-space-formula
+  ---
+  duration_ms: 0.019125
+  ...
+# Subtest: v1 shared CSV fixture: line-separator-formula
+ok 389 - v1 shared CSV fixture: line-separator-formula
+  ---
+  duration_ms: 0.019167
+  ...
+# Subtest: v1 shared CSV fixture: paragraph-separator-formula
+ok 390 - v1 shared CSV fixture: paragraph-separator-formula
+  ---
+  duration_ms: 0.01875
+  ...
+# Subtest: v1 shared CSV fixture: narrow-nbsp-formula
+ok 391 - v1 shared CSV fixture: narrow-nbsp-formula
+  ---
+  duration_ms: 0.02075
+  ...
+# Subtest: v1 shared CSV fixture: medium-math-space-formula
+ok 392 - v1 shared CSV fixture: medium-math-space-formula
+  ---
+  duration_ms: 0.018875
+  ...
+# Subtest: v1 shared CSV fixture: ideographic-space-formula
+ok 393 - v1 shared CSV fixture: ideographic-space-formula
+  ---
+  duration_ms: 0.019916
+  ...
+# Subtest: v1 shared CSV fixture: bom-formula
+ok 394 - v1 shared CSV fixture: bom-formula
+  ---
+  duration_ms: 0.037958
+  ...
+# Subtest: answer feedback updates one run, preserves another run, and requires negative detail
+ok 395 - answer feedback updates one run, preserves another run, and requires negative detail
+  ---
+  duration_ms: 0.156542
+  ...
+# Subtest: safe exports preserve negative numeric values, protect formulas, and retain units and complete rows
+ok 396 - safe exports preserve negative numeric values, protect formulas, and retain units and complete rows
+  ---
+  duration_ms: 0.108416
+  ...
+# Subtest: CSV protects leading tabs and Python/ECMAScript whitespace without changing row data
+ok 397 - CSV protects leading tabs and Python/ECMAScript whitespace without changing row data
+  ---
+  duration_ms: 0.028125
+  ...
+# Subtest: investigation and evidence exports retain frozen scope, identity and synthetic authority labels
+ok 398 - investigation and evidence exports retain frozen scope, identity and synthetic authority labels
+  ---
+  duration_ms: 0.609375
+  ...
+# Subtest: dedicated support/admin routes restore and first-round local state migrates without losing drafts
+ok 399 - dedicated support/admin routes restore and first-round local state migrates without losing drafts
+  ---
+  duration_ms: 0.71825
+  ...
+# Subtest: catalogue totals and membership remain complete across pages and languages
+ok 400 - catalogue totals and membership remain complete across pages and languages
+  ---
+  duration_ms: 5.5545
+  ...
+# Subtest: unknown, unavailable, revoked and zero inventory outcomes are distinct
+ok 401 - unknown, unavailable, revoked and zero inventory outcomes are distinct
+  ---
+  duration_ms: 0.073375
+  ...
+# Subtest: browsing has no context side effect, adding context does not restrict scope
+ok 402 - browsing has no context side effect, adding context does not restrict scope
+  ---
+  duration_ms: 0.170209
+  ...
+# Subtest: each run freezes context and snapshot, so later context changes affect only future runs
+ok 403 - each run freezes context and snapshot, so later context changes affect only future runs
+  ---
+  duration_ms: 0.437542
+  ...
+# Subtest: drafts and transcripts stay separate, including while opening an evidence deep link
+ok 404 - drafts and transcripts stay separate, including while opening an evidence deep link
+  ---
+  duration_ms: 0.573292
+  ...
+# Subtest: completed and partial runs produce one retained answer, even after repeated ticks
+ok 405 - completed and partial runs produce one retained answer, even after repeated ticks
+  ---
+  duration_ms: 0.21775
+  ...
+# Subtest: cancellation terminates the simulation and a continuation keeps the original scope and a new draft
+ok 406 - cancellation terminates the simulation and a continuation keeps the original scope and a new draft
+  ---
+  duration_ms: 0.158375
+  ...
+# Subtest: clarification and interruption retain the question and never fabricate a result
+ok 407 - clarification and interruption retain the question and never fabricate a result
+  ---
+  duration_ms: 0.118042
+  ...
+# Subtest: refresh creates an independent branch, flags withdrawn context and preserves old evidence
+ok 408 - refresh creates an independent branch, flags withdrawn context and preserves old evidence
+  ---
+  duration_ms: 0.338125
+  ...
+# Subtest: approval binds the reviewed proposal version and code edits invalidate it
+ok 409 - approval binds the reviewed proposal version and code edits invalidate it
+  ---
+  duration_ms: 1.061625
+  ...
+# Subtest: empty scope cannot produce fabricated matching datasets
+ok 410 - empty scope cannot produce fabricated matching datasets
+  ---
+  duration_ms: 0.172166
+  ...
+# Subtest: malformed or stale local state fails safely and navigation preserves catalogue state
+ok 411 - malformed or stale local state fails safely and navigation preserves catalogue state
+  ---
+  duration_ms: 0.305167
+  ...
+# Subtest: new storage namespace cannot load P00 or legacy state implicitly
+ok 412 - new storage namespace cannot load P00 or legacy state implicitly
+  ---
+  duration_ms: 0.626875
+  ...
+# Subtest: valid display preferences round trip and defaults never alias callers
+ok 413 - valid display preferences round trip and defaults never alias callers
+  ---
+  duration_ms: 0.10475
+  ...
+# Subtest: invalid panel width NaN restores bounded default
+ok 414 - invalid panel width NaN restores bounded default
+  ---
+  duration_ms: 0.046291
+  ...
+# Subtest: invalid panel width Infinity restores bounded default
+ok 415 - invalid panel width Infinity restores bounded default
+  ---
+  duration_ms: 0.039292
+  ...
+# Subtest: invalid panel width -Infinity restores bounded default
+ok 416 - invalid panel width -Infinity restores bounded default
+  ---
+  duration_ms: 0.038375
+  ...
+# Subtest: invalid panel width -1 restores bounded default
+ok 417 - invalid panel width -1 restores bounded default
+  ---
+  duration_ms: 0.029083
+  ...
+# Subtest: invalid panel width 0 restores bounded default
+ok 418 - invalid panel width 0 restores bounded default
+  ---
+  duration_ms: 0.0775
+  ...
+# Subtest: invalid panel width 319 restores bounded default
+ok 419 - invalid panel width 319 restores bounded default
+  ---
+  duration_ms: 0.028666
+  ...
+# Subtest: invalid panel width 621 restores bounded default
+ok 420 - invalid panel width 621 restores bounded default
+  ---
+  duration_ms: 0.2175
+  ...
+# Subtest: invalid panel width 18014398509481984 restores bounded default
+ok 421 - invalid panel width 18014398509481984 restores bounded default
+  ---
+  duration_ms: 0.230916
+  ...
+# Subtest: invalid panel width 390.5 restores bounded default
+ok 422 - invalid panel width 390.5 restores bounded default
+  ---
+  duration_ms: 0.070709
+  ...
+# Subtest: invalid panel width 390 restores bounded default
+ok 423 - invalid panel width 390 restores bounded default
+  ---
+  duration_ms: 0.027875
+  ...
+# Subtest: invalid panel width true restores bounded default
+ok 424 - invalid panel width true restores bounded default
+  ---
+  duration_ms: 4.48775
+  ...
+# Subtest: presentation restoration cannot accept role, account, permission, snapshot or scope
+ok 425 - presentation restoration cannot accept role, account, permission, snapshot or scope
+  ---
+  duration_ms: 0.157583
+  ...
+# Subtest: invalid or oversized storage remains presentational defaults
+ok 426 - invalid or oversized storage remains presentational defaults
+  ---
+  duration_ms: 0.187083
+  ...
+# Subtest: legacy nested preferences cannot migrate authority into v1
+ok 427 - legacy nested preferences cannot migrate authority into v1
+  ---
+  duration_ms: 0.038125
+  ...
+# Subtest: preview host requires an explicit process selection
+ok 428 - preview host requires an explicit process selection
+  ---
+  duration_ms: 0.493417
+  ...
+# Subtest: synthetic host rejects remote, deceptive and absent host headers
+ok 429 - synthetic host rejects remote, deceptive and absent host headers
+  ---
+  duration_ms: 0.126167
+  ...
+# Subtest: mode envelope contains no synthetic identity or credentials
+ok 430 - mode envelope contains no synthetic identity or credentials
+  ---
+  duration_ms: 0.265333
+  ...
+# Subtest: bootstrap exact fields are validated and copied without changing input
+ok 431 - bootstrap exact fields are validated and copied without changing input
+  ---
+  duration_ms: 1.314583
+  ...
+# Subtest: bootstrap rejects foreign mode field
+ok 432 - bootstrap rejects foreign mode field
+  ---
+  duration_ms: 0.187833
+  ...
+# Subtest: bootstrap rejects old version
+ok 433 - bootstrap rejects old version
+  ---
+  duration_ms: 0.050041
+  ...
+# Subtest: bootstrap rejects legacy deployment
+ok 434 - bootstrap rejects legacy deployment
+  ---
+  duration_ms: 0.044667
+  ...
+# Subtest: bootstrap rejects invalid UUID
+ok 435 - bootstrap rejects invalid UUID
+  ---
+  duration_ms: 0.142334
+  ...
+# Subtest: bootstrap rejects suspended identity
+ok 436 - bootstrap rejects suspended identity
+  ---
+  duration_ms: 0.043083
+  ...
+# Subtest: bootstrap rejects unknown role
+ok 437 - bootstrap rejects unknown role
+  ---
+  duration_ms: 0.040833
+  ...
+# Subtest: bootstrap rejects unknown account
+ok 438 - bootstrap rejects unknown account
+  ---
+  duration_ms: 0.038416
+  ...
+# Subtest: bootstrap rejects foreign identity field
+ok 439 - bootstrap rejects foreign identity field
+  ---
+  duration_ms: 0.208208
+  ...
+# Subtest: bootstrap rejects duplicate permissions
+ok 440 - bootstrap rejects duplicate permissions
+  ---
+  duration_ms: 0.298708
+  ...
+# Subtest: bootstrap rejects permission whitespace
+ok 441 - bootstrap rejects permission whitespace
+  ---
+  duration_ms: 0.0975
+  ...
+# Subtest: bootstrap rejects long display name
+ok 442 - bootstrap rejects long display name
+  ---
+  duration_ms: 0.045
+  ...
+# Subtest: bootstrap rejects invalid revision
+ok 443 - bootstrap rejects invalid revision
+  ---
+  duration_ms: 0.032209
+  ...
+# Subtest: bootstrap rejects extra capability
+ok 444 - bootstrap rejects extra capability
+  ---
+  duration_ms: 0.690042
+  ...
+# Subtest: bootstrap rejects missing capability
+ok 445 - bootstrap rejects missing capability
+  ---
+  duration_ms: 0.056333
+  ...
+# Subtest: bootstrap rejects unknown status
+ok 446 - bootstrap rejects unknown status
+  ---
+  duration_ms: 0.125084
+  ...
+# Subtest: bootstrap rejects missing unavailable reason
+ok 447 - bootstrap rejects missing unavailable reason
+  ---
+  duration_ms: 0.044291
+  ...
+# Subtest: bootstrap rejects capability foreign field
+ok 448 - bootstrap rejects capability foreign field
+  ---
+  duration_ms: 0.040416
+  ...
+# Subtest: bootstrap rejects ready without required permission
+ok 449 - bootstrap rejects ready without required permission
+  ---
+  duration_ms: 0.089666
+  ...
+# Subtest: research cannot erase or replace fixed required permissions
+ok 450 - research cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.089
+  ...
+# Subtest: catalogue cannot erase or replace fixed required permissions
+ok 451 - catalogue cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.055584
+  ...
+# Subtest: tools cannot erase or replace fixed required permissions
+ok 452 - tools cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.053375
+  ...
+# Subtest: settings cannot erase or replace fixed required permissions
+ok 453 - settings cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.053958
+  ...
+# Subtest: administration cannot erase or replace fixed required permissions
+ok 454 - administration cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.059292
+  ...
+# Subtest: feedback cannot erase or replace fixed required permissions
+ok 455 - feedback cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.056167
+  ...
+# Subtest: about cannot erase or replace fixed required permissions
+ok 456 - about cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.055708
+  ...
+# Subtest: navigation checks permissions even for unavailable capabilities
+ok 457 - navigation checks permissions even for unavailable capabilities
+  ---
+  duration_ms: 0.087916
+  ...
+# Subtest: navigation checks permissions even for disabled capabilities
+ok 458 - navigation checks permissions even for disabled capabilities
+  ---
+  duration_ms: 0.030959
+  ...
+# Subtest: navigation checks permissions even for forbidden capabilities
+ok 459 - navigation checks permissions even for forbidden capabilities
+  ---
+  duration_ms: 0.028083
+  ...
+# Subtest: account type and role labels never substitute for permissions
+ok 460 - account type and role labels never substitute for permissions
+  ---
+  duration_ms: 0.087375
+  ...
+# Subtest: display-name limits count Unicode code points as the server does
+ok 461 - display-name limits count Unicode code points as the server does
+  ---
+  duration_ms: 0.052542
+  ...
+# Subtest: transport has one fixed v1 URL, no cookies/cache/redirects and optional memory-only token
+ok 462 - transport has one fixed v1 URL, no cookies/cache/redirects and optional memory-only token
+  ---
+  duration_ms: 9.892208
+  ...
+# Subtest: HTTP 401 replaces ready identity with unauthorized
+ok 463 - HTTP 401 replaces ready identity with unauthorized
+  ---
+  duration_ms: 0.408708
+  ...
+# Subtest: HTTP 403 replaces ready identity with forbidden
+ok 464 - HTTP 403 replaces ready identity with forbidden
+  ---
+  duration_ms: 0.188667
+  ...
+# Subtest: HTTP 404 replaces ready identity with unavailable
+ok 465 - HTTP 404 replaces ready identity with unavailable
+  ---
+  duration_ms: 0.193625
+  ...
+# Subtest: HTTP 410 replaces ready identity with unavailable
+ok 466 - HTTP 410 replaces ready identity with unavailable
+  ---
+  duration_ms: 0.509792
+  ...
+# Subtest: HTTP 503 replaces ready identity with unavailable
+ok 467 - HTTP 503 replaces ready identity with unavailable
+  ---
+  duration_ms: 0.2855
+  ...
+# Subtest: HTTP 500 replaces ready identity with error
+ok 468 - HTTP 500 replaces ready identity with error
+  ---
+  duration_ms: 0.189583
+  ...
+# Subtest: malformed successful responses do not fall back to sample identity
+ok 469 - malformed successful responses do not fall back to sample identity
+  ---
+  duration_ms: 0.499458
+  ...
+# Subtest: a runtime server cannot overwrite JSON fields through duplicate keys
+ok 470 - a runtime server cannot overwrite JSON fields through duplicate keys
+  ---
+  duration_ms: 0.1715
+  ...
+# Subtest: actual streaming byte bound rejects a lying length and cancels the reader
+ok 471 - actual streaming byte bound rejects a lying length and cancels the reader
+  ---
+  duration_ms: 0.46325
+  ...
+# Subtest: absent length still enforces bytes and malformed UTF-8 is unavailable
+ok 472 - absent length still enforces bytes and malformed UTF-8 is unavailable
+  ---
+  duration_ms: 0.199375
+  ...
+# Subtest: invalid supplied token never causes a request
+ok 473 - invalid supplied token never causes a request
+  ---
+  duration_ms: 0.042
+  ...
+# Subtest: invalid supplied token never causes a request
+ok 474 - invalid supplied token never causes a request
+  ---
+  duration_ms: 0.027625
+  ...
+# Subtest: invalid supplied token never causes a request
+ok 475 - invalid supplied token never causes a request
+  ---
+  duration_ms: 0.024917
+  ...
+# Subtest: invalid supplied token never causes a request
+ok 476 - invalid supplied token never causes a request
+  ---
+  duration_ms: 0.022125
+  ...
+# Subtest: transport errors are honest and omit raw exception contents
+ok 477 - transport errors are honest and omit raw exception contents
+  ---
+  duration_ms: 0.045375
+  ...
+# Subtest: unused HTTP 401 body is cancelled before retry
+ok 478 - unused HTTP 401 body is cancelled before retry
+  ---
+  duration_ms: 0.071041
+  ...
+# Subtest: unused HTTP 403 body is cancelled before retry
+ok 479 - unused HTTP 403 body is cancelled before retry
+  ---
+  duration_ms: 0.078292
+  ...
+# Subtest: unused HTTP 404 body is cancelled before retry
+ok 480 - unused HTTP 404 body is cancelled before retry
+  ---
+  duration_ms: 0.040125
+  ...
+# Subtest: unused HTTP 500 body is cancelled before retry
+ok 481 - unused HTTP 500 body is cancelled before retry
+  ---
+  duration_ms: 0.038333
+  ...
+# Subtest: unused HTTP 503 body is cancelled before retry
+ok 482 - unused HTTP 503 body is cancelled before retry
+  ---
+  duration_ms: 0.0375
+  ...
+# Subtest: cancelled late ready response cannot return an authorized state
+ok 483 - cancelled late ready response cannot return an authorized state
+  ---
+  duration_ms: 0.112875
+  ...
+# Subtest: trusted loopback localhost may select explicit sample preview
+ok 484 - trusted loopback localhost may select explicit sample preview
+  ---
+  duration_ms: 0.045333
+  ...
+# Subtest: trusted loopback 127.0.0.1 may select explicit sample preview
+ok 485 - trusted loopback 127.0.0.1 may select explicit sample preview
+  ---
+  duration_ms: 0.017959
+  ...
+# Subtest: trusted loopback ::1 may select explicit sample preview
+ok 486 - trusted loopback ::1 may select explicit sample preview
+  ---
+  duration_ms: 0.018375
+  ...
+# Subtest: trusted loopback [::1] may select explicit sample preview
+ok 487 - trusted loopback [::1] may select explicit sample preview
+  ---
+  duration_ms: 0.692708
+  ...
+# Subtest: preview rejects host example.com
+ok 488 - preview rejects host example.com
+  ---
+  duration_ms: 0.048083
+  ...
+# Subtest: preview rejects host localhost.example.com
+ok 489 - preview rejects host localhost.example.com
+  ---
+  duration_ms: 0.024917
+  ...
+# Subtest: preview rejects host 127.0.0.1.example.com
+ok 490 - preview rejects host 127.0.0.1.example.com
+  ---
+  duration_ms: 0.024208
+  ...
+# Subtest: preview rejects host localhost:3100
+ok 491 - preview rejects host localhost:3100
+  ---
+  duration_ms: 0.021167
+  ...
+# Subtest: preview rejects host 0.0.0.0
+ok 492 - preview rejects host 0.0.0.0
+  ---
+  duration_ms: 0.031417
+  ...
+# Subtest: local hostname alone cannot select preview
+ok 493 - local hostname alone cannot select preview
+  ---
+  duration_ms: 0.031459
+  ...
+# Subtest: mode endpoint 404 means service, never sample fallback
+ok 494 - mode endpoint 404 means service, never sample fallback
+  ---
+  duration_ms: 0.082042
+  ...
+# Subtest: mode fallback cancels an unused streaming 404 body
+ok 495 - mode fallback cancels an unused streaming 404 body
+  ---
+  duration_ms: 0.060583
+  ...
+# Subtest: mode payload extras and non-loopback preview fail closed
+ok 496 - mode payload extras and non-loopback preview fail closed
+  ---
+  duration_ms: 0.169958
+  ...
+# Subtest: navigation URL helpers ignore forged authorization and preview queries
+ok 497 - navigation URL helpers ignore forged authorization and preview queries
+  ---
+  duration_ms: 0.168041
+  ...
+1..497
+# tests 497
+# suites 0
+# pass 496
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 749.4745

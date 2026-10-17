@@ -150,7 +150,7 @@ def test_unknown_runtime_paths_or_methods_remain_denied(application, method, pat
         assert client.request(method, path).status_code == 403
 
 
-@pytest.mark.parametrize("capability", list(DEFERRED_REASONS))
+@pytest.mark.parametrize("capability", [name for name in DEFERRED_REASONS if name != "catalogue"])
 def test_configuration_cannot_enable_unintegrated_domain_workflows(capability):
     configuration = V1RuntimeConfiguration(site_id="v1:synthetic", revision="one")
     states = {**configuration.capabilities, capability: "ready"}
@@ -191,3 +191,45 @@ def test_direct_builder_never_accepts_untrusted_or_inactive_identity(monkeypatch
     denied = runtime_response(user(permissions=frozenset()), configured)
     assert denied.status_code == 403
     assert "identity" not in json.loads(denied.body)
+
+
+@pytest.mark.parametrize("gate", ["ready", "catalogue_flag", "browser_flag", "invalid_flag", "service_missing", "browser_missing", "different_service", "not_requested", "viewer"])
+def test_catalogue_ready_requires_explicit_configuration_flags_and_same_service(application, tmp_path, monkeypatch, gate):
+    from tests.test_catalogue_browser import configured
+    from tests.catalogue_service_support import synthetic_service
+
+    app, state = application
+    _, service, browser, _, _, _ = configured(tmp_path, count=1)
+    monkeypatch.setenv("ENABLE_V1_CATALOGUE", "true")
+    monkeypatch.setenv("ENABLE_V1_CATALOGUE_BROWSER", "true")
+    app.state.catalogue_service = service
+    app.state.catalogue_browser = browser
+    initial = V1RuntimeConfiguration(site_id="v1:browser-tests", revision="configuration-1")
+    app.state.v1_runtime_configuration = V1RuntimeConfiguration(
+        site_id=initial.site_id, revision=initial.revision,
+        capabilities={**initial.capabilities, "catalogue": "ready"},
+    )
+    if gate == "catalogue_flag":
+        monkeypatch.setenv("ENABLE_V1_CATALOGUE", "false")
+    elif gate == "browser_flag":
+        monkeypatch.setenv("ENABLE_V1_CATALOGUE_BROWSER", "false")
+    elif gate == "invalid_flag":
+        monkeypatch.setenv("ENABLE_V1_CATALOGUE_BROWSER", "invalid")
+    elif gate == "service_missing":
+        del app.state.catalogue_service
+    elif gate == "browser_missing":
+        del app.state.catalogue_browser
+    elif gate == "different_service":
+        app.state.catalogue_service = synthetic_service(1)[2]
+    elif gate == "not_requested":
+        app.state.v1_runtime_configuration = initial
+    elif gate == "viewer":
+        state["user"] = user("viewer")
+    with TestClient(app) as client:
+        response = client.get("/v1/runtime")
+    assert response.status_code == 200
+    capabilities = response.json()["capabilities"]
+    assert capabilities["catalogue"]["status"] == ("ready" if gate == "ready" else "forbidden" if gate == "viewer" else "unavailable")
+    for name in DEFERRED_REASONS:
+        if name != "catalogue":
+            assert capabilities[name]["status"] != "ready"

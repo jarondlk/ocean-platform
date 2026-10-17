@@ -1,0 +1,37 @@
+{
+  "component": "C16",
+  "recorded_at_utc": "2026-10-16T20:48:56Z",
+  "kind": "completed-tool-result-transcription",
+  "note": "Recorded from completed functions exec results: pytest session99191 final completion chunk aab6ca; Ruff/diff exec chunk dacc55. No rerun and no claim of a full terminal transcript.",
+  "results": [
+    {
+      "command": ".venv/bin/python -m pytest tests/test_catalogue_browser.py tests/test_catalogue_browser_api.py tests/test_v1_runtime.py tests/test_auth.py tests/test_api_security.py tests/test_api_catalogue.py tests/test_catalogue_tools.py -q --tb=short",
+      "exit_code": 0,
+      "passed": 295,
+      "warnings": 1,
+      "duration_seconds": 7.18
+    },
+    {
+      "command": ".venv/bin/python -m ruff check api/catalogue_browser_routes.py orchestration/catalogue_browser.py schema/catalogue_browser.py api/v1_runtime_routes.py tests/test_catalogue_browser.py tests/test_catalogue_browser_api.py tests/test_v1_runtime.py config.py api/auth.py api/main.py",
+      "exit_code": 0,
+      "summary": "All checks passed!"
+    },
+    {
+      "command": "git diff --check -- api/catalogue_browser_routes.py orchestration/catalogue_browser.py schema/catalogue_browser.py api/v1_runtime_routes.py tests/test_catalogue_browser.py tests/test_catalogue_browser_api.py tests/test_v1_runtime.py config.py api/auth.py api/main.py",
+      "exit_code": 0,
+      "stdout": ""
+    }
+  ],
+  "source_hashes_at_recording": {
+    "api/catalogue_browser_routes.py": "9d18f958deb532378ce40a49db1fc82febe92b6e58c56d17f5f1804faaec3738",
+    "orchestration/catalogue_browser.py": "68e9147231cb791df6c73eb79c196e2b971017d76ed54560a878f9e095abc308",
+    "schema/catalogue_browser.py": "196aea286e0442ce88347366a1e39ac83ef6f65ad056917cc6b87bcd82dd0c3a",
+    "api/v1_runtime_routes.py": "b0e705af205d4a629d450b2abe5e5c190c30476fd605495bd15f13c01dea50a2",
+    "tests/test_catalogue_browser.py": "2309f09431c6ca9902918ad81d694e54ff1f6e7eb9e79f273a1e4b1df40a18e8",
+    "tests/test_catalogue_browser_api.py": "88d135f7fe6b7f424f681090ca7cc1ee8d7a1f97fad344cac2e7434a36645504",
+    "tests/test_v1_runtime.py": "663cc5d0b27d7cbd07ab3a14e8f34a86a856d88232432d5fca8d3a4ee2e4472c",
+    "config.py": "5750374e35fe3f03948156e44bccb0e087f8c2adc9ea0b10a9e8a2e6ee90c763",
+    "api/auth.py": "23ee454554942b1b34fbdfa134e815fdb6fc70699c4b63fe5fadf323d2fe7cd4",
+    "api/main.py": "28940d6db1f9d1aca24d6f13d3950400bc4955b8ec689d07b6f7bbef547b71ef"
+  }
+}

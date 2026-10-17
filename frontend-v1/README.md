@@ -4,8 +4,25 @@ C15 adds a separate service shell using the authenticated, default-off
 `GET /v1/runtime` bootstrap. Service identity, permissions and capability state
 come from the server. Presentation preferences use `ocean-v1-presentation-v1`;
 saved P00 roles, investigations and scientific selections never supply service
-state. Functional destinations remain unavailable until their owning components
-are integrated. See the [C15 handoff](../docs/plans/ocean-v1/handoffs/C15.md).
+state. Functional destinations become available only through their owning
+components. See the [C15 handoff](../docs/plans/ocean-v1/handoffs/C15.md).
+
+C16 integrates the service catalogue through the actual C14 read-only API and
+explicit C16 snapshot discovery. The host must configure a `CatalogueService`
+and matching `CatalogueBrowser`, and enable `ENABLE_V1_SHELL`,
+`ENABLE_V1_CATALOGUE` and `ENABLE_V1_CATALOGUE_BROWSER`; all default off. An
+unconfigured host reports the catalogue unavailable. Discovery checks current
+access and frozen source integrity, using an explicit newest-first registry.
+Snapshot and canonical object IDs, filters and paging are restored from the URL.
+Browsing never changes investigation scope or attaches data. Server totals,
+query scope, completeness, scientific qualifications and native table units stay
+visible; retained publication scope is distinguished from browsing scope.
+Current access/revision changes clear protected views before retry. EN/JA,
+light/dark, desktop/tablet/mobile and keyboard directory navigation are supported.
+The service client/state live in `src/catalogue-service.ts` and
+`src/catalogue-browser-state.ts`; `src/catalogue-browser.tsx` renders the tree,
+listing and inspector. C18 may consume its typed selection notification later.
+See the [C16 handoff](../docs/plans/ocean-v1/handoffs/C16.md).
 
 `npm run preview` explicitly selects the synthetic P00 preview below.
 `npm run preview:service` serves the built service shell without a configured

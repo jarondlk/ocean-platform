@@ -1,0 +1,7 @@
+Captured completed result summary; not a complete terminal transcript.
+No tests were rerun to create this record.
+
+Command: .venv/bin/python -m pytest tests/test_catalogue_browser.py tests/test_catalogue_browser_api.py tests/test_v1_runtime.py tests/test_auth.py tests/test_api_security.py tests/test_api_catalogue.py tests/test_catalogue_tools.py -q --tb=short
+Exit code: 0
+295 passed, 1 warning in 7.18s
+Warning: existing StarletteDeprecationWarning about httpx/testclient.

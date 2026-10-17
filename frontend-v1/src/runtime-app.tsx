@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowRight, ChevronDown, Database, Globe2, Info, Layers3, LockKeyhole, MessageSquare, Moon, RefreshCw, Settings2, ShieldCheck, Sun, UserRound, Wrench } from "lucide-react";
 import { ApplicationShell, ShellDialog, type ShellLink } from "./application-shell";
 import { ShellSplitPanels } from "./shell-panels";
+import { CatalogueBrowser } from "./catalogue-browser";
 import {
   capabilityReady, capabilityVisible, createRuntimeTransport, destinationFromLocation,
   destinationPath, getCapability, parseRuntimeBootstrap, routeAccessible,
@@ -83,7 +84,7 @@ export function RuntimeApp({ initialDestination = "research", transport }: { ini
   }, [preferences.theme, locale, destination]);
   const navigate = (link: ShellLink) => {
     const next = canonical(link.id as ShellDestination);
-    window.history.pushState(null, "", destinationPath(next)); setDestination(next);
+    if (next !== destination) { window.history.pushState(null, "", destinationPath(next)); setDestination(next); }
     requestAnimationFrame(() => document.getElementById("main-content")?.focus({ preventScroll: true }));
   };
   const home = () => navigate({ id: "research", href: destinationPath("research"), label: label("research", locale) });
@@ -111,6 +112,7 @@ export function RuntimeApp({ initialDestination = "research", transport }: { ini
   const permitted = bootstrap && routeAccessible(bootstrap, destination);
   const content = !bootstrap ? <RuntimeBoundary state={runtime} locale={locale} retry={reload} />
     : !permitted ? <RuntimeMessage kind="denied" locale={locale} title={language(locale, "Access is restricted", "アクセスが制限されています")} detail={language(locale, "Your current account cannot open this destination.", "現在のアカウントではこの移動先を開けません。")} />
+    : destination === "catalogue" && capabilityReady(bootstrap, destination) ? <CatalogueBrowser key={`${bootstrap.identity.id}:${bootstrap.permission_revision}`} accessKey={`${bootstrap.identity.id}:${bootstrap.permission_revision}`} locale={locale} onAccessLost={reload} />
     : destination === "settings" && capabilityReady(bootstrap, destination) ? <section className="runtime-page"><PageHeading destination={destination} locale={locale} /><p className="runtime-intro">{language(locale, "Choose how this workspace looks on this device.", "この端末でのワークスペースの表示を選択できます。")}</p><div className="runtime-preferences"><label>{language(locale, "Language", "言語")}<select value={locale} onChange={(event) => setPreferences((current) => ({ ...current, locale: event.target.value as Locale }))}><option value="en">English</option><option value="ja">日本語</option></select></label><label>{language(locale, "Theme", "テーマ")}<select value={preferences.theme} onChange={(event) => setPreferences((current) => ({ ...current, theme: event.target.value as "light" | "dark" }))}><option value="light">{language(locale, "Light", "ライト")}</option><option value="dark">{language(locale, "Dark", "ダーク")}</option></select></label></div><p className="muted small">{language(locale, "These preferences do not change your account, permissions or scientific scope.", "表示設定によってアカウント・権限・科学的な対象範囲は変わりません。")}</p></section>
     : destination === "about" && capabilityReady(bootstrap, destination) ? <section className="runtime-page"><PageHeading destination={destination} locale={locale} /><p className="runtime-intro">{language(locale, "OCEAN brings marine data, context and evidence into a research workspace.", "OCEANは海洋データ・コンテキスト・根拠をリサーチワークスペースにまとめます。")}</p><div className="runtime-info-grid"><article><Layers3 size={22} /><h2>{language(locale, "Context before conclusions", "結論の前にコンテキストを")}</h2><p>{language(locale, "Source scope, coverage and qualifications stay with the information they describe.", "ソースの対象範囲・カバレッジ・条件を、それぞれの情報とともに示します。")}</p></article><article><ShieldCheck size={22} /><h2>{language(locale, "Current access", "現在のアクセス権")}</h2><p>{language(locale, "Available destinations follow the permissions supplied by the v1 service.", "利用できる移動先はv1サービスが提供する権限に従います。")}</p></article></div></section>
     : <section className="runtime-destination"><PageHeading destination={destination} locale={locale} />{destination === "research" || destination === "catalogue" ? <ShellSplitPanels

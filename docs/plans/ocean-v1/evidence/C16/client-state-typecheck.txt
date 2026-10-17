@@ -1,0 +1,6 @@
+Working directory: frontend-v1
+Command: ./node_modules/.bin/tsc --noEmit --strict --skipLibCheck --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --esModuleInterop --lib DOM,DOM.Iterable,ESNext src/catalogue-service.ts src/catalogue-browser-state.ts tests/catalogue-service.test.ts tests/catalogue-browser-state.test.ts
+Exit status: 0
+Standard output: empty
+Standard error: empty
+Final source verified after the aggregate paging guard correction and new actual-wire adversarial tests.

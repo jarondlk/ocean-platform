@@ -1,0 +1,13 @@
+[
+  {
+    "name": "v1-tests",
+    "command": [
+      "npm",
+      "--prefix",
+      "frontend-v1",
+      "test"
+    ],
+    "exit_code": 1,
+    "seconds": 0.9
+  }
+]

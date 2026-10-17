@@ -1,0 +1,47 @@
+{
+  "checks": [
+    {
+      "name": "v1-tests",
+      "command": [
+        "npm",
+        "--prefix",
+        "frontend-v1",
+        "test"
+      ],
+      "exit_code": 0,
+      "seconds": 0.92
+    },
+    {
+      "name": "v1-typecheck",
+      "command": [
+        "npm",
+        "--prefix",
+        "frontend-v1",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "seconds": 1.39
+    },
+    {
+      "name": "v1-build",
+      "command": [
+        "npm",
+        "--prefix",
+        "frontend-v1",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "seconds": 6.92
+    }
+  ],
+  "source_sha256": {
+    "frontend-v1/src/catalogue-browser.tsx": "217f5702cc331b2e62cefd7ed76dccdf7d9c51787fc8828640cbcac66c024990",
+    "frontend-v1/src/catalogue-browser.css": "9974beebbba14e480cc15e47ad7375900c4647128e8a8dac2a5d0abc0632eab1",
+    "frontend-v1/src/catalogue-service.ts": "c05df3c8d87b97a28ec4c3bc8a0410aa47ae0221e45ede5dc90576520ace77f3",
+    "frontend-v1/src/catalogue-browser-state.ts": "c3d847d0a876e8f9d266f724dff2af4f2e809a8b73c03f01aba34bb2d60b8210",
+    "frontend-v1/src/runtime-app.tsx": "dc73bb659d2e627d38c5cf6742a0c3924e8c9a45b542a40372fd2ef58a9a9a63",
+    "frontend-v1/README.md": "9dd756634a0a11557fe73bed54676c55a0c31b0ff245cc096baf9d8ca9626c4b"
+  }
+}

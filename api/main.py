@@ -31,6 +31,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 import config
 from api.csv_serialization import rows_to_csv
 from api.catalogue_routes import router as catalogue_router
+from api.catalogue_browser_routes import router as catalogue_browser_router
 from api.v1_runtime_routes import router as v1_runtime_router
 from retrieval.source_scope import EvidenceScope, EdnaFilters, enabled_sources, legacy_scope
 from api.overview_routes import router as overview_router
@@ -208,6 +209,7 @@ app.include_router(edna_analysis_router)
 app.include_router(research_registry_router)
 app.include_router(classification_review_router)
 app.include_router(catalogue_router)
+app.include_router(catalogue_browser_router)
 app.include_router(v1_runtime_router)
 
 logger = logging.getLogger(__name__)

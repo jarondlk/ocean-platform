@@ -1,6 +1,6 @@
 # C16 — Complete catalogue browser
 
-**Status:** In progress; readiness verified, checkpoint1 selected. **Prerequisites:** P00, C14, C15.
+**Status:** Complete local acceptance; source checkpoint and exact-source hosted delivery pending. **Prerequisites:** P00, C14, C15.
 
 ## Revised delivery boundary
 
@@ -52,3 +52,16 @@ Keep relevant v1 specialist workflows accessible; legacy links remain on the exi
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c16). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+## Acceptance result — 2026-10-18 JST
+
+All three local checkpoints pass. The real authenticated C14/C16 fixture routes
+match134 shared-tool responses; all51 sealed-fixture objects are reachable through
+canonical parents. The actual client and URL state traverse100000 datasets over
+200 listing/205 tree pages. Final v1 tests510, typecheck/build, full backend3895
+with127 PostgreSQL-gated skips/84.87% coverage and nine generated checks pass.
+[Contract](../C16_CATALOGUE_BROWSER_CONTRACT.md), [handoff](../handoffs/C16.md),
+[browser observations](../evidence/C16/browser-qa.md). Manual accessibility-tree
+and keyboard observations are recorded; spoken screen-reader and independent
+assistive-user assessment are not claimed. Real identity, scientific validation,
+production performance and deployment retain their separate operational gates.

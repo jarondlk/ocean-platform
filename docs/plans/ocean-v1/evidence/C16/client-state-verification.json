@@ -1,0 +1,96 @@
+{
+  "verified_at_utc": "2026-10-17T02:42:59.161876+00:00",
+  "status": "pass",
+  "owned_files_sha256": {
+    "frontend-v1/src/catalogue-browser-state.ts": "c3d847d0a876e8f9d266f724dff2af4f2e809a8b73c03f01aba34bb2d60b8210",
+    "frontend-v1/src/catalogue-service.ts": "c05df3c8d87b97a28ec4c3bc8a0410aa47ae0221e45ede5dc90576520ace77f3",
+    "frontend-v1/tests/catalogue-browser-state.test.ts": "3d03588aebba3c890f0a69109e8cf90b7015fe9c3803800ad30b43735c5712b3",
+    "frontend-v1/tests/catalogue-service.test.ts": "3f2d5393bdc72b551c7f813020f4c9066c61f00bbcf35f38e0925676f4e8601a"
+  },
+  "commands": {
+    "tests": "node --test --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test-reporter=spec frontend-v1/tests/catalogue-service.test.ts frontend-v1/tests/catalogue-browser-state.test.ts",
+    "typecheck": "./node_modules/.bin/tsc --noEmit --strict --skipLibCheck --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --esModuleInterop --lib DOM,DOM.Iterable,ESNext src/catalogue-service.ts src/catalogue-browser-state.ts tests/catalogue-service.test.ts tests/catalogue-browser-state.test.ts"
+  },
+  "test_result": {
+    "passed": 261,
+    "failed": 0,
+    "skipped": 0,
+    "actual_frozen_http_tool_wire_parity_cases": 134
+  },
+  "typecheck": {
+    "exit_status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "wire_fixture_sha256": "59eab4779d98fb9d1a8f4d059d48e87ef34a4429fee95b3102869530b778e219",
+  "boundary": {
+    "response_byte_limit": 41943040,
+    "nonstandard_error_body_byte_limit": 65536,
+    "known_error_statuses_authoritative": [
+      401,
+      403,
+      404,
+      409,
+      422,
+      503
+    ],
+    "transport": "Same-origin fixed POST paths, credentials omit, cache no-store, redirect error; optional trusted in-memory bearer provider; caller AbortSignal and deadline.",
+    "scope": "Scientific scope supplied externally; navigation URL cannot authorize or alter investigation scope.",
+    "source_input_validation": "Source-operation dataset dependency IDs checked using C13 hashed canonical ID; statistics references use the canonical dataset hash. Qualified-unavailable results retain unknown/reason without inventing dependencies.",
+    "receipt_limit": "Root inventory and analysis-selected published results do not echo the direct requested input ID in unchanged C13 receipts; server enforces those input identities. Snapshot, scope, operation, version, parameters and paging remain checked.",
+    "scientific_paging": "Known remaining continuation is required for c13.table and c13.operation native c10.table/c10.coverage/c11.table/c11.grid_points/c12.table; native aggregates may retain known totals and explicit preview_truncated without an offset cursor. Any provided next offset must advance exactly by returned rows and remain within known total."
+  },
+  "review_regressions": [
+    "Actual c12.summary raw limit1 returns one of12 aggregate rows, explicit truncated preview and no continuation; accepted exactly.",
+    "All12 actual retained source table responses accepted; all11 known-total native table previews reject a missing continuation (ranked_taxa completeness remains unknown).",
+    "Actual aggregate with nonprogressing next_offset rejects."
+  ],
+  "http_scale": {
+    "completed_at_utc": "2026-10-17T02:45:27.653812+00:00",
+    "command": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON docs/plans/ocean-v1/evidence/C16/verify_http.ts 100000 3101",
+    "working_directory": "repository root",
+    "exit_status": 0,
+    "server": "Parent-owned loopback fixture 127.0.0.1:3101; ownership and lifecycle unchanged",
+    "script_sha256": "9dce19d6561ab370b6338ec2832830f157a2ed9473ac1b669bac263d2feb29ec",
+    "stdout_stderr": "http-scale.txt",
+    "stdout_stderr_sha256": "c4b944f6afa8c78d155fc27318986673a103a7c807a4a5caff57b7fbc9c94b5b",
+    "result": "http-scale-result.json",
+    "result_sha256": "3f1309bf39e4ed5705853d4099f1723f733a0d5608912334d8d8cbfa764d2a61",
+    "result_summary": {
+      "state": "pass",
+      "expected_datasets": 100000,
+      "unique_browser_listing_ids": 100000,
+      "browser_listing_pages": 200,
+      "unique_tree_dataset_ids": 100000,
+      "canonical_tree_objects": 100015,
+      "reachable_roots_and_directories": 9,
+      "tree_pages": 205,
+      "dataset_id_sequence_sha256": "0c913606aede7754ec8bebe8b91277b0231e1653feaca53f7a40e413e875ab67",
+      "targets": [
+        {
+          "rank": 26,
+          "id": "synthetic:dataset:000025",
+          "parent_id": "synthetic:source:metagenome",
+          "direct_and_parent_search": true
+        },
+        {
+          "rank": 502,
+          "id": "synthetic:dataset:000501",
+          "parent_id": "synthetic:source:metagenome",
+          "direct_and_parent_search": true
+        },
+        {
+          "rank": 100000,
+          "id": "synthetic:dataset:099999",
+          "parent_id": "synthetic:source:edna_metabarcoding",
+          "direct_and_parent_search": true
+        }
+      ],
+      "requests": 419,
+      "response_content_length_bytes": 425309497,
+      "wall_seconds": 153.61,
+      "node_rss_bytes": 214827008,
+      "qualification": "Actual C16 client/validation/state boundary over owned loopback HTTP and real C14 service with explicit immutable synthetic100000 backend; not production latency/capacity or rendered100000 DOM nodes"
+    }
+  }
+}

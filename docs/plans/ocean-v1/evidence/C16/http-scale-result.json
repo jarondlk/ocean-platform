@@ -1,0 +1,36 @@
+{
+  "state": "pass",
+  "expected_datasets": 100000,
+  "unique_browser_listing_ids": 100000,
+  "browser_listing_pages": 200,
+  "unique_tree_dataset_ids": 100000,
+  "canonical_tree_objects": 100015,
+  "reachable_roots_and_directories": 9,
+  "tree_pages": 205,
+  "dataset_id_sequence_sha256": "0c913606aede7754ec8bebe8b91277b0231e1653feaca53f7a40e413e875ab67",
+  "targets": [
+    {
+      "rank": 26,
+      "id": "synthetic:dataset:000025",
+      "parent_id": "synthetic:source:metagenome",
+      "direct_and_parent_search": true
+    },
+    {
+      "rank": 502,
+      "id": "synthetic:dataset:000501",
+      "parent_id": "synthetic:source:metagenome",
+      "direct_and_parent_search": true
+    },
+    {
+      "rank": 100000,
+      "id": "synthetic:dataset:099999",
+      "parent_id": "synthetic:source:edna_metabarcoding",
+      "direct_and_parent_search": true
+    }
+  ],
+  "requests": 419,
+  "response_content_length_bytes": 425309497,
+  "wall_seconds": 153.61,
+  "node_rss_bytes": 214827008,
+  "qualification": "Actual C16 client/validation/state boundary over owned loopback HTTP and real C14 service with explicit immutable synthetic100000 backend; not production latency/capacity or rendered100000 DOM nodes"
+}

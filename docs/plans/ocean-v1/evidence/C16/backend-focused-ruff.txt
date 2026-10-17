@@ -1,0 +1,9 @@
+Captured completed command/result; no rerun.
+
+Command: .venv/bin/python -m ruff check api/catalogue_browser_routes.py orchestration/catalogue_browser.py schema/catalogue_browser.py api/v1_runtime_routes.py tests/test_catalogue_browser.py tests/test_catalogue_browser_api.py tests/test_v1_runtime.py config.py api/auth.py api/main.py
+Exit code: 0
+All checks passed!
+
+Command: git diff --check -- api/catalogue_browser_routes.py orchestration/catalogue_browser.py schema/catalogue_browser.py api/v1_runtime_routes.py tests/test_catalogue_browser.py tests/test_catalogue_browser_api.py tests/test_v1_runtime.py config.py api/auth.py api/main.py
+Exit code: 0
+Output: empty
