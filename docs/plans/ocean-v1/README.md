@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C17 are Complete locally; C17 hosted delivery is complete; C18 passes local interface acceptance with hosted delivery pending; C19–C27 are not started.**
+**P00 and C01–C18 are Complete locally with C18 hosted delivery complete; C19–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -237,4 +237,6 @@ production typecheck/build and development strict typecheck. Actual C17/C16
 browser journeys cover private navigation/context/refresh/account isolation;
 production execution remains unavailable. [Contract](C18_CHAT_WORKSPACE_CONTRACT.md),
 [handoff](handoffs/C18.md), [receipt](evidence/C18/verification.json). Exact-source
-hosted delivery is pending; C19 remains unselected until delivery.
+hosted delivery is complete; C19 readiness follows.
+
+Source596d871 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39124675912) passes:4205 backend/187 gated skips/85.76%,187 actual PostgreSQL,673 v1/132 legacy frontend, both builds/typechecks/audits, generated checks, migration/idempotence and isolated backup/restore. [Delivery receipt](evidence/C18/delivery.json). C19 readiness follows delivery.

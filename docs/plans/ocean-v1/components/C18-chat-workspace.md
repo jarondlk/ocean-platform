@@ -1,6 +1,6 @@
 # C18 — Chat and Workspace interface
 
-**Status:** Ready for review; all3 local checkpoints pass; source checkpoint and exact-source hosted delivery pending. **Prerequisites:** P00, C15, C16, C17.
+**Status:** Complete; all3 local checkpoints and exact-source hosted delivery pass. **Prerequisites:** P00, C15, C16, C17.
 
 ## Revised delivery boundary
 
@@ -69,4 +69,4 @@ activity covers all6 controls while production execution stays unavailable.
 TypeScript pass. Full backend4214/187 gated skips/85.08% covers final backend
 source. Independent reviews/fixes and browser qualifications are preserved.
 [Contract](../C18_CHAT_WORKSPACE_CONTRACT.md), [handoff](../handoffs/C18.md),
-[local verification](../evidence/C18/verification.json). Hosted CI is pending.
+[local verification](../evidence/C18/verification.json). Source596d871 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39124675912) passes:4205 backend/187 gated skips/85.76%,187 actual PostgreSQL,673 v1/132 legacy frontend, both builds/typechecks/audits, generated checks, migration/idempotence and isolated backup/restore. [Delivery receipt](../evidence/C18/delivery.json).
