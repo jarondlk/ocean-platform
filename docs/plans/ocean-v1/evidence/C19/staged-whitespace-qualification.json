@@ -1,0 +1,30 @@
+{
+  "qualification": "Original pytest traceback logs retain their original trailing whitespace so pinned evidence is immutable. Source and documentation excluding raw text logs pass whitespace check. This is not a code/test failure.",
+  "checks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 2,
+      "stdout": "docs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:13: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:20: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:27: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:34: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:41: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:48: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:55: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:62: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:69: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:76: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:83: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:90: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:97: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:104: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:111: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt:118: trailing whitespace.\n+E     \ndocs/plans/ocean-v1/evidence/C19/native-integration-tests.txt:19: trailing whitespace.\n+E         \ndocs/plans/ocean-v1/evidence/C19/transient-clock-tests.txt:14: trailing whitespace.\n+    \ndocs/plans/ocean-v1/evidence/C19/transient-clock-tests.txt:19: trailing whitespace.\n+    \ndocs/plans/ocean-v1/evidence/C19/transient-clock-tests.txt:24: trailing whitespace.\n+    \ndocs/plans/ocean-v1/evidence/C19/transient-clock-tests.txt:28: trailing whitespace.\n+    \ndocs/plans/ocean-v1/evidence/C19/transient-clock-tests.txt:43: trailing whitespace.\n+E         \ndocs/plans/ocean-v1/evidence/C19/transient-clock-tests.txt:64: trailing whitespace.\n+    \ndocs/plans/ocean-v1/evidence/C19/transient-clock-tests.txt:69: trailing whitespace.\n+    \ndocs/plans/ocean-v1/evidence/C19/transient-clock-tests.txt:74: trailing whitespace.\n+    \ndocs/plans/ocean-v1/evidence/C19/transient-clock-tests.txt:78: trailing whitespace.\n+    \ndocs/plans/ocean-v1/evidence/C19/transient-clock-tests.txt:93: trailing whitespace.\n+E         \n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        ".",
+        ":(glob,exclude)docs/plans/ocean-v1/evidence/C19/*.txt"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__ test_transient_invalid_checkpoint_clock_stops_future_effects[before_tool] ___
+
+actual = Harness(retained=InvestigationFixture(service=<orchestration.investigations.InvestigationService object at 0x11d96b320...ication:read', 'data:read', 'data:export', 'classification:decide', 'overview:read'}), auth_provider='synthetic-c14')})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11d8bfe90>
+phase = 'before_tool'
+
+    @pytest.mark.parametrize("phase", ["before_tool", "before_model"])
+    def test_transient_invalid_checkpoint_clock_stops_future_effects(
+        actual, monkeypatch, phase
+    ):
+        from orchestration.research_controller import _Exploration
+    
+        readings = []
+        original_checkpoint = _Exploration.checkpoint
+        original_execute = actual.retained.service.catalogue.execute
+        calls = []
+    
+        def checkpoint(exploration, current, **details):
+            if current == phase:
+                readings.append(float("nan"))
+            return original_checkpoint(exploration, current, **details)
+    
+        def execute(name, *args, **kwargs):
+            calls.append(name)
+            return original_execute(name, *args, **kwargs)
+    
+        monkeypatch.setattr(_Exploration, "checkpoint", checkpoint)
+        monkeypatch.setattr(actual.retained.service.catalogue, "execute", execute)
+        identity = actual.retained.dataset_ids["ctd"]
+        runtime = FakeRuntime([tool("catalogue.open", object_id=identity)])
+        result = actual.controller(
+            runtime, clock=lambda: readings.pop(0) if readings else 0.0
+        ).execute(
+            actual.request(f'Find object "{identity}"'),
+            on_checkpoint=lambda _: None,
+        )
+        assert result.outcome == "partial" and result.reason == "invalid_clock"
+        assert runtime.calls == []
+>       assert calls == ([] if phase == "before_tool" else ["catalogue.query"])
+E       AssertionError: assert ['catalogue.o...verview', ...] == []
+E         
+E         Left contains 8 more items, first extra item: 'catalogue.overview'
+E         Use -v to get more diff
+
+tests/test_research_controller.py:611: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+__ test_transient_invalid_checkpoint_clock_stops_future_effects[before_model] __
+
+actual = Harness(retained=InvestigationFixture(service=<orchestration.investigations.InvestigationService object at 0x11d96b320...ication:read', 'data:read', 'data:export', 'classification:decide', 'overview:read'}), auth_provider='synthetic-c14')})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x110724b90>
+phase = 'before_model'
+
+    @pytest.mark.parametrize("phase", ["before_tool", "before_model"])
+    def test_transient_invalid_checkpoint_clock_stops_future_effects(
+        actual, monkeypatch, phase
+    ):
+        from orchestration.research_controller import _Exploration
+    
+        readings = []
+        original_checkpoint = _Exploration.checkpoint
+        original_execute = actual.retained.service.catalogue.execute
+        calls = []
+    
+        def checkpoint(exploration, current, **details):
+            if current == phase:
+                readings.append(float("nan"))
+            return original_checkpoint(exploration, current, **details)
+    
+        def execute(name, *args, **kwargs):
+            calls.append(name)
+            return original_execute(name, *args, **kwargs)
+    
+        monkeypatch.setattr(_Exploration, "checkpoint", checkpoint)
+        monkeypatch.setattr(actual.retained.service.catalogue, "execute", execute)
+        identity = actual.retained.dataset_ids["ctd"]
+        runtime = FakeRuntime([tool("catalogue.open", object_id=identity)])
+        result = actual.controller(
+            runtime, clock=lambda: readings.pop(0) if readings else 0.0
+        ).execute(
+            actual.request(f'Find object "{identity}"'),
+            on_checkpoint=lambda _: None,
+        )
+        assert result.outcome == "partial" and result.reason == "invalid_clock"
+        assert runtime.calls == []
+>       assert calls == ([] if phase == "before_tool" else ["catalogue.query"])
+E       AssertionError: assert ['catalogue.o...verview', ...] == ['catalogue.query']
+E         
+E         At index 0 diff: 'catalogue.overview' != 'catalogue.query'
+E         Left contains 11 more items, first extra item: 'catalogue.overview'
+E         Use -v to get more diff
+
+tests/test_research_controller.py:611: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_research_controller.py::test_transient_invalid_checkpoint_clock_stops_future_effects[before_tool]
+FAILED tests/test_research_controller.py::test_transient_invalid_checkpoint_clock_stops_future_effects[before_model]
+2 failed, 33 deselected in 1.77s

@@ -1,0 +1,78 @@
+{
+  "checks": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_research_controller_publication.py",
+        "-q",
+        "--no-cov"
+      ],
+      "exit_code": 0,
+      "output": "publication-integration-fix.txt",
+      "sha256": "cb06a4e0e53685db6f7d11d578fe40e97cf7373573efa9235cac339a5c2e002a"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "tests/test_research_controller_publication.py"
+      ],
+      "exit_code": 0,
+      "output": "publication-integration-fix-ruff.txt",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  ],
+  "component": "C19",
+  "diagnosis": "The unit publication scope and C01 recipe select2020-01-01 through2023-12-31, but the reused actual C12 occurrences begin2024-01-01. The source adapter therefore removes the only declared eDNA input; C13 correctly hides analyses unless all their declared inputs remain visible, so C17 correctly rejects pinning the analysis before the controller starts.",
+  "elapsed_seconds": 9.283,
+  "final_file_sha256": "c1cea7b713c1f7e5a8c00f14e1df80eec7f4ea06ca842233549df676752edf81",
+  "fix": [
+    "Only tests/test_research_controller_publication.py changed. It creates a separate new synthetic eDNA child snapshot with occurrence dates in2020 and recomputed scientific row hashes.",
+    "The new test-only scientific registry references the new child snapshot. Earlier retained snapshots, source fixtures and their receipts are preserved.",
+    "Publication protocol ID and structured metadata are derived from an actual complete retained assay using the existing protocol() and digest() helpers; the unit fixture arbitrary protocol hash/instrument label is not presented as the retained protocol.",
+    "Test page actions use that actual derived protocol ID. Existing C01 original-question qualifiers remain unchanged, including Miyagi/2020--2023 and the Hokkaido/shark counterexamples.",
+    "The five tests now reach actual C17 pinning and C14 published table dispatch: incomplete previews remain partial, all matching pages complete, and conflicting original questions clarify before model calls."
+  ],
+  "limitations": [
+    "Synthetic sealed data, local test SQLite and fake model only. No provider, external data, production server/cloud or original application guard was changed.",
+    "No additional known-zero/unknown-coverage gap was encountered in these five tests; no acceptance assertion was weakened or removed.",
+    "Root owns full compatibility/backend/hosted acceptance after this fixture freeze."
+  ],
+  "original_failure_log": {
+    "path": "publication-integration-initial.txt",
+    "sha256": "eabe15b2820140833281a25bcadc59bf92100c6a0568ff1c30053e29a543ff24"
+  },
+  "owned_source": "tests/test_research_controller_publication.py",
+  "passed": 5,
+  "recorded_at": "2026-10-18T17:59:13.731825+00:00",
+  "source_after_sha256": {
+    "ingestion/scientific_catalogue_inputs.py": "0d9ee0f16d939c403ab8b2b73fb2cfa5a1307c36992e08ddbbae66b126068d03",
+    "orchestration/frozen_scientific_catalogue.py": "1fda9afe83a67c70a1cfcf752d62d0fe4ef4114b291095f78e357a376486d051",
+    "orchestration/research_controller.py": "aa4c37acb255fc24021175fe0f30c9c9b64f262c5ab9c9f0ca8f881634afa6fa",
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "preprocessing/edna_analysis.py": "d89e92325100d8e63d7875fed29600f53aa2e14a4c7efd879d0b9188a92bcae2",
+    "schema/edna_catalogue_fixtures.py": "470f7af39d0740154b8eba032fdd18c5f422febaa6dfdb4a9c08a3d27309e921",
+    "schema/research_controller.py": "af4e1091b11c7affa6d0f1577582d6b4261d9cf9ace9b745312d756af117d634",
+    "tests/test_research_controller.py": "c89a054b48b6baece23703f2c097565dfa10de18554aa318a5a7e30b46eabe2a",
+    "tests/test_research_controller_publication.py": "c1cea7b713c1f7e5a8c00f14e1df80eec7f4ea06ca842233549df676752edf81",
+    "tests/test_research_controller_scope.py": "2ae8eac40a8687bc1c584aeb58f9219ebf27981b469eb302edd310b368d45cd9"
+  },
+  "source_before_sha256": {
+    "ingestion/scientific_catalogue_inputs.py": "0d9ee0f16d939c403ab8b2b73fb2cfa5a1307c36992e08ddbbae66b126068d03",
+    "orchestration/frozen_scientific_catalogue.py": "1fda9afe83a67c70a1cfcf752d62d0fe4ef4114b291095f78e357a376486d051",
+    "orchestration/research_controller.py": "aa4c37acb255fc24021175fe0f30c9c9b64f262c5ab9c9f0ca8f881634afa6fa",
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "preprocessing/edna_analysis.py": "d89e92325100d8e63d7875fed29600f53aa2e14a4c7efd879d0b9188a92bcae2",
+    "schema/edna_catalogue_fixtures.py": "470f7af39d0740154b8eba032fdd18c5f422febaa6dfdb4a9c08a3d27309e921",
+    "schema/research_controller.py": "af4e1091b11c7affa6d0f1577582d6b4261d9cf9ace9b745312d756af117d634",
+    "tests/test_research_controller.py": "c89a054b48b6baece23703f2c097565dfa10de18554aa318a5a7e30b46eabe2a",
+    "tests/test_research_controller_publication.py": "c1cea7b713c1f7e5a8c00f14e1df80eec7f4ea06ca842233549df676752edf81",
+    "tests/test_research_controller_scope.py": "2ae8eac40a8687bc1c584aeb58f9219ebf27981b469eb302edd310b368d45cd9"
+  },
+  "source_changed": [],
+  "task": "Repair only the new actual-publication test fixture"
+}

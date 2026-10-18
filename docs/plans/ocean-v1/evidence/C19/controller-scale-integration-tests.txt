@@ -1,0 +1,15 @@
+............................................................F........    [100%]
+=================================== FAILURES ===================================
+_____ test_actual_listing_cursor_metadata_is_not_shortened_as_preview_text _____
+tests/test_research_controller_observations.py:142: in test_actual_listing_cursor_metadata_is_not_shortened_as_preview_text
+    observation = ObservationCollector(binding).add("catalogue.list", args, listing)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/research_controller_observations.py:311: in add
+    listing = CatalogueListing.model_validate(payload)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for CatalogueListing
+E     Value error, Invalid or stale catalogue cursor [type=value_error, input_value={'schema_version': 'conte...lable', 'reason': None}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+=========================== short test summary info ============================
+FAILED tests/test_research_controller_observations.py::test_actual_listing_cursor_metadata_is_not_shortened_as_preview_text
+1 failed, 68 passed in 65.84s (0:01:05)

@@ -1,0 +1,82 @@
+{
+  "component": "C19",
+  "scope": "Complete publication table paging proof before deterministic fact support",
+  "created_at": "2026-10-18T12:25:56.493683+00:00",
+  "original_immutable_receipts": {
+    "docs/plans/ocean-v1/evidence/C19/contract-verification.json": "5a28d731434fb4dbd3d8c9edb9e0016853689a3439734700350483f71a85a6b8",
+    "docs/plans/ocean-v1/evidence/C19/contract-cohort-verification.json": "c054696fb97626e99cfc5ad584e6546d8b2fde8adf99a3b15b397b83c5a5a0c9",
+    "docs/plans/ocean-v1/evidence/C19/contract-compaction-verification.json": "1544b2d7662898bc0543bd53a04bd94fee3c81a43a122ed36cdfb1683e76a518"
+  },
+  "source_sha256": {
+    "schema/research_controller.py": "af4e1091b11c7affa6d0f1577582d6b4261d9cf9ace9b745312d756af117d634",
+    "tests/test_research_controller_contracts.py": "c0c481cb5d4e3e19905697f9e2457729d08a81dfe182b54297adb8d144262a45"
+  },
+  "intentional_source_supersessions": {
+    "schema/research_controller.py": {
+      "previous_sha256": "828be7ff09feb1d1e1d195ea0556bd461662662b2fff052882ab5e7a3383f3ca",
+      "current_sha256": "af4e1091b11c7affa6d0f1577582d6b4261d9cf9ace9b745312d756af117d634"
+    },
+    "tests/test_research_controller_contracts.py": {
+      "previous_sha256": "980ba7c8efae5549efde082344b0eb21e02512404c8a29089067ed932cc75065",
+      "current_sha256": "c0c481cb5d4e3e19905697f9e2457729d08a81dfe182b54297adb8d144262a45"
+    }
+  },
+  "evidence_sha256": {
+    "docs/plans/ocean-v1/evidence/C19/contract-publication-pages-tests.txt": "abfbe7c084e7bb37c47ee1f3c67982b716732edfb185ad87674e9ab1402e6ce6",
+    "docs/plans/ocean-v1/evidence/C19/contract-publication-pages-tests-final.txt": "bc11639c63a1100aaf02ba950019008b5886f1530dc8398e1a249f3b0901e187",
+    "docs/plans/ocean-v1/evidence/C19/contract-publication-pages-ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  "changes": [
+    "Observation retains explicit full result content SHA256, page offset/returned count/known-or-unknown total, next offset and preview truncation.",
+    "Publication fact requires every requested table to have exact contiguous nonoverlapping coverage from zero to known full table total. One-row previews from each required table do not establish completion.",
+    "Each table page retains the same submitted binding/scope, analysis/workflow/protocol/actual-question C01 compatibility, full content hash, semantic parameter hash, operation/version, target and complete input manifest.",
+    "Publication pages must come from actual allowlisted c13.table/c13-v1 through catalogue.query or analysis.get_published, with complete available source/query state.",
+    "Known empty table is complete only with a single zero-offset zero-returned known-total-zero page; unknown total never becomes zero.",
+    "Last-page preview_truncated may remain true under actual C13 semantics; next_offset must end at None and all observed page ranges must reconcile.",
+    "Whole-population count facts remain independent of row previews and table paging metadata."
+  ],
+  "checks": {
+    "focused_tests": {
+      "command": ".venv/bin/python -m pytest tests/test_research_controller_contracts.py -q --tb=short",
+      "passed": 144,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C19/contract-publication-pages-tests-final.txt"
+    },
+    "ruff": {
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C19/contract-publication-pages-ruff.txt"
+    },
+    "whitespace": {
+      "schema/research_controller.py": {
+        "exit_code": 1,
+        "output": ""
+      },
+      "tests/test_research_controller_contracts.py": {
+        "exit_code": 1,
+        "output": ""
+      }
+    }
+  },
+  "retained_attempts": [
+    {
+      "log": "docs/plans/ocean-v1/evidence/C19/contract-publication-pages-tests.txt",
+      "passed": 139,
+      "failed": 2,
+      "exit_code": 1,
+      "reason": "New publication helper inherited the count helper target_ids=(data,), while new page observations correctly targeted analysis:retained. Corrected new helper to root publication FactSpec target_ids=(); final run includes3more negative tool/operation/version cases."
+    }
+  ],
+  "new_acceptance": [
+    "Premature limit1 pages of ranking/series remain unresolved; all contiguous pages complete and retain exact supporting observation identities.",
+    "Reject missing or inconsistent content hash/total/parameters/input manifest/targets, gaps, overlaps, non-progressing or invalid pages/cursors, incomplete source/query/availability, multiple claimed table names and wrong tool/operation/version.",
+    "Known empty and unknown table populations remain distinct; duplicate empty and overlapping full pages cannot manufacture completion.",
+    "Model whole-population semantic count remains100000 with a one-row/unknown paging preview."
+  ],
+  "limitations": [
+    "Pure host-owned contract projections do not themselves authorize a production user, execute tools, call providers or validate scientific approval",
+    "Root owns actual C17/C14 collector/controller integration, fresh authorization before completion, budget/cancellation orchestration and C20 checkpoint hooks",
+    "Fake-model and end-to-end controller acceptance remain root-owned; no broad suites, provider requests, service startup, commits or deployment performed"
+  ]
+}

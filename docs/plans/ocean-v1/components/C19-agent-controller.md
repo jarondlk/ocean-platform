@@ -1,6 +1,6 @@
 # C19 — Agent exploration controller
 
-**Status:** Not started. **Prerequisites:** C01, C06, C14, C17.
+**Status:** Complete for all3 local checkpoints; source checkpoint and exact-source hosted delivery pending. **Prerequisites:** C01, C06, C14, C17.
 
 ## Revised delivery boundary
 
@@ -45,3 +45,7 @@ Gate the controller independently of legacy `/chat`. Disabling it preserves inve
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c19). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+## Local acceptance — 2026-10-19 JST
+
+C19 local acceptance passes: 4570 backend/187 gated skips/85.43%;356 new C19 cases and164 required compatibility cases; all9 generated checks/Ruff and independent source review. Inventory-first C17/C14 exploration, binding pins, full-count/later-page discovery, deterministic completion and cooperative stopping are implemented. C18 frontend23 sources remain unchanged. Source checkpoint and exact-source hosted delivery are pending. [Handoff](../handoffs/C19.md), [contract](../C19_AGENT_CONTROLLER_CONTRACT.md), [receipt](../evidence/C19/verification.json).

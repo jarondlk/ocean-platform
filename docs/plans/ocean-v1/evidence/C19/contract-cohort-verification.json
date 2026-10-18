@@ -1,0 +1,77 @@
+{
+  "component": "C19",
+  "scope": "Intentional separate inventory membership proof for already supported requested facts",
+  "created_at": "2026-10-18T12:16:39.025373+00:00",
+  "original_immutable_receipt": {
+    "path": "docs/plans/ocean-v1/evidence/C19/contract-verification.json",
+    "sha256": "5a28d731434fb4dbd3d8c9edb9e0016853689a3439734700350483f71a85a6b8"
+  },
+  "intentional_source_supersessions": {
+    "schema/research_controller.py": {
+      "previous_sha256": "0aedd3c7897977d5d1e1450f4c681e488edf1f6d841bcd442fb8f0f0aee17108",
+      "current_sha256": "7dcb5a64bd91b80639c999580a1f3c0b6a0f464d8fe438336a7c7a4debc53855"
+    },
+    "tests/test_research_controller_contracts.py": {
+      "previous_sha256": "98b88f410395f94f9735423ff0defa89ed66c09aa5a05b7c2600794633ba69fc",
+      "current_sha256": "23115831e371c2c6db1c284b13f9e9640ebb766e37250e757f0d7698e5cbeb68"
+    }
+  },
+  "source_sha256": {
+    "schema/research_controller.py": "7dcb5a64bd91b80639c999580a1f3c0b6a0f464d8fe438336a7c7a4debc53855",
+    "tests/test_research_controller_contracts.py": "23115831e371c2c6db1c284b13f9e9640ebb766e37250e757f0d7698e5cbeb68"
+  },
+  "evidence_sha256": {
+    "docs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt": "739b15fca09e6ecccd99095dfc4d44e75c05ef1a94a9ffbaf7c5400f36e82dae",
+    "docs/plans/ocean-v1/evidence/C19/contract-cohort-tests-final.txt": "895e03a6f10dafea712d7ce4545b117df0d81f6d780efe2b333d10240f58ed5e",
+    "docs/plans/ocean-v1/evidence/C19/contract-cohort-ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  "changes": [
+    "Keep original direct supporting-observation cohort manifest proof.",
+    "Also permit a separate same-binding/same-fact-scope complete c13.inventory/c19.inventory_union proof to establish exact cohort membership while another executed observation supports the requested fact.",
+    "Separate inventory proof requires exact allowlisted operation/version, available and complete source/query states, a known complete-scope semantic datasets count, exact input manifest count/hash and supported fact IDs.",
+    "Semantic dataset count remains distinct from receipt manifest input count, which may also include the C13 scientific registry witness."
+  ],
+  "checks": {
+    "focused_tests": {
+      "command": ".venv/bin/python -m pytest tests/test_research_controller_contracts.py -q --tb=short",
+      "passed": 115,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C19/contract-cohort-tests-final.txt"
+    },
+    "ruff": {
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C19/contract-cohort-ruff.txt"
+    },
+    "whitespace": {
+      "schema/research_controller.py": {
+        "exit_code": 1,
+        "output": ""
+      },
+      "tests/test_research_controller_contracts.py": {
+        "exit_code": 1,
+        "output": ""
+      }
+    }
+  },
+  "retained_attempts": [
+    {
+      "log": "docs/plans/ocean-v1/evidence/C19/contract-cohort-tests.txt",
+      "failed": 18,
+      "passed": 97,
+      "exit_code": 1,
+      "reason": "New find helper inherited the count helper target_ids=(data,), preventing its separate open witness from matching. Corrected only the new helper to the actual root find FactSpec target_ids=()."
+    }
+  ],
+  "new_acceptance": [
+    "Find fact support comes only from its open observation, while a separate complete inventory accounts for the full manifest.",
+    "Actual C13 extra registry witness and controller-derived inventory unions remain supported.",
+    "Wrong binding/scope/tool/operation/version, unknown/unavailable/partial inventory, wrong manifest, absent or unknown semantic dataset count, unsupported facts and mixed fact scopes never complete."
+  ],
+  "limitations": [
+    "Pure host-owned contract projections do not themselves authorize a production user, execute tools, call providers or validate scientific approval",
+    "Root owns actual C17/C14 collector/controller integration, fresh authorization before completion, budget/cancellation orchestration and C20 checkpoint hooks",
+    "Fake-model and end-to-end controller acceptance remain root-owned; no broad suites, provider requests, service startup, commits or deployment performed"
+  ]
+}

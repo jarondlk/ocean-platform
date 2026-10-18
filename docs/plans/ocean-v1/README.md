@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C18 are Complete locally with C18 hosted delivery complete; C19–C27 are not started.**
+**P00 and C01–C19 are Complete locally; C18 hosted delivery is complete and C19 hosted delivery is pending; C20–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -240,3 +240,7 @@ production execution remains unavailable. [Contract](C18_CHAT_WORKSPACE_CONTRACT
 hosted delivery is complete; C19 readiness follows.
 
 Source596d871 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39124675912) passes:4205 backend/187 gated skips/85.76%,187 actual PostgreSQL,673 v1/132 legacy frontend, both builds/typechecks/audits, generated checks, migration/idempotence and isolated backup/restore. [Delivery receipt](evidence/C18/delivery.json). C19 readiness follows delivery.
+
+C19 final readiness passes59 entries/52 unique paths after C18 delivery; local implementation is selected automatically. [Handoff](handoffs/C19.md).
+
+C19 local acceptance passes: 4570 backend/187 gated skips/85.43%;356 new C19 cases and164 required compatibility cases; all9 generated checks/Ruff and independent source review. Inventory-first C17/C14 exploration, binding pins, full-count/later-page discovery, deterministic completion and cooperative stopping are implemented. C18 frontend23 sources remain unchanged. Source checkpoint and exact-source hosted delivery are pending. [Handoff](handoffs/C19.md), [contract](C19_AGENT_CONTROLLER_CONTRACT.md), [receipt](evidence/C19/verification.json).

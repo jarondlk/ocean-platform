@@ -1,0 +1,69 @@
+{
+  "component": "C19",
+  "scope": "Bound model-facing object witnesses while preserving full host observations, scientific metadata and recent listing cursors",
+  "created_at": "2026-10-18T12:20:21.504446+00:00",
+  "original_immutable_receipts": {
+    "docs/plans/ocean-v1/evidence/C19/contract-verification.json": "5a28d731434fb4dbd3d8c9edb9e0016853689a3439734700350483f71a85a6b8",
+    "docs/plans/ocean-v1/evidence/C19/contract-cohort-verification.json": "c054696fb97626e99cfc5ad584e6546d8b2fde8adf99a3b15b397b83c5a5a0c9"
+  },
+  "source_sha256": {
+    "schema/research_controller.py": "828be7ff09feb1d1e1d195ea0556bd461662662b2fff052882ab5e7a3383f3ca",
+    "tests/test_research_controller_contracts.py": "980ba7c8efae5549efde082344b0eb21e02512404c8a29089067ed932cc75065"
+  },
+  "intentional_source_supersessions": {
+    "schema/research_controller.py": {
+      "previous_sha256": "7dcb5a64bd91b80639c999580a1f3c0b6a0f464d8fe438336a7c7a4debc53855",
+      "current_sha256": "828be7ff09feb1d1e1d195ea0556bd461662662b2fff052882ab5e7a3383f3ca"
+    },
+    "tests/test_research_controller_contracts.py": {
+      "previous_sha256": "23115831e371c2c6db1c284b13f9e9640ebb766e37250e757f0d7698e5cbeb68",
+      "current_sha256": "980ba7c8efae5549efde082344b0eb21e02512404c8a29089067ed932cc75065"
+    }
+  },
+  "evidence_sha256": {
+    "docs/plans/ocean-v1/evidence/C19/contract-compaction-tests.txt": "299bc6a2a7fba515f294cb2611cea9ea99ef524ad64f8b8dbccb1a899845bc53",
+    "docs/plans/ocean-v1/evidence/C19/contract-compaction-ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  "checks": {
+    "focused_tests": {
+      "command": ".venv/bin/python -m pytest tests/test_research_controller_contracts.py -q --tb=short",
+      "passed": 118,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C19/contract-compaction-tests.txt"
+    },
+    "ruff": {
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C19/contract-compaction-ruff.txt"
+    },
+    "whitespace": {
+      "schema/research_controller.py": {
+        "exit_code": 1,
+        "output": ""
+      },
+      "tests/test_research_controller_contracts.py": {
+        "exit_code": 1,
+        "output": ""
+      }
+    }
+  },
+  "changes": [
+    "Model summaries expose at most20 object witnesses for recent observations and0 for old observations, with exact objects_total/objects_sha256 and explicit objects_quoted_data=true.",
+    "Complete frozen Observation.objects and original model_dump data are unchanged; deterministic fact evaluation continues using full host-retained witnesses.",
+    "If optional row/object previews exceed context budget, drop those previews together while retaining all qualifications, exact binding/scope, semantic counts, completeness, payload references/hashes and object/input manifest witnesses.",
+    "Preserve recent listing_page metadata separately and exactly, so a valid opaque2048-character next_cursor survives optional preview removal; omit old cursor metadata.",
+    "Mandatory scientific metadata still fails explicitly when it exceeds the context budget; no silent limitation truncation."
+  ],
+  "new_acceptance": [
+    "Two500-object listing pages compact within32768bytes, recent preview retains rank502, old objects are omitted with exact full-set hash/count.",
+    "Host retains rank999 and can deterministically support it even when model preview omits it; original observations compare equal before/after compaction.",
+    "500large untrusted object names are omitted at12000byte context bound while exact2048-character cursor and limitations remain intact.",
+    "Hostile object text remains explicitly quoted data and cannot support requested facts or create a finish action."
+  ],
+  "limitations": [
+    "Pure host-owned contract projections do not themselves authorize a production user, execute tools, call providers or validate scientific approval",
+    "Root owns actual C17/C14 collector/controller integration, fresh authorization before completion, budget/cancellation orchestration and C20 checkpoint hooks",
+    "Fake-model and end-to-end controller acceptance remain root-owned; no broad suites, provider requests, service startup, commits or deployment performed"
+  ]
+}

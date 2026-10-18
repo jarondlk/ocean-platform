@@ -1,0 +1,26 @@
+{
+  "formal_intentional_supersessions": {
+    "C14:config.py": {
+      "before_sha256": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61",
+      "C19_sha256": "060275abef07d5598d424f09be499a629f5b1b0fcf70e1ed922b59f0543406aa",
+      "reason": "Add independently strict default-off C19 flag/helper; existing behavior unchanged. Original receipts immutable."
+    },
+    "C17:config.py": {
+      "before_sha256": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61",
+      "C19_sha256": "060275abef07d5598d424f09be499a629f5b1b0fcf70e1ed922b59f0543406aa",
+      "reason": "Add independently strict default-off C19 flag/helper; existing behavior unchanged. Original receipts immutable."
+    }
+  },
+  "prior_evidence_files_unchanged": 823,
+  "protected_counts": {
+    "unrelated_files": 30,
+    "scientific_artifacts": 7,
+    "serving_files": 2,
+    "legacy_frontend_files": 106
+  },
+  "all23_C18_sources_unchanged": true,
+  "formal_source_entries": 59,
+  "original_intermediate_contract_receipts_retained": true,
+  "contract_final_source_receipt": "contract-publication-pages-verification.json",
+  "publication_fixture_supersession": "publication-integration-fix.json"
+}

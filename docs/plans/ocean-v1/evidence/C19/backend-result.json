@@ -1,0 +1,59 @@
+{
+  "results": [
+    {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_research_chat.py",
+        "tests/test_model_runtime.py",
+        "tests/test_chat_source_scope.py",
+        "-q",
+        "--no-cov"
+      ],
+      "output": "compatibility-tests.txt",
+      "seconds": 3.55,
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/",
+        "-q",
+        "--tb=short",
+        "--cov=api",
+        "--cov=config",
+        "--cov=db",
+        "--cov=preprocessing",
+        "--cov=ingestion",
+        "--cov=orchestration",
+        "--cov=schema",
+        "--cov=evaluation",
+        "--cov-report=term-missing",
+        "--cov-fail-under=70"
+      ],
+      "output": "backend-tests.txt",
+      "seconds": 481.23,
+      "exit_code": 0
+    }
+  ],
+  "source_changed_during_run": [],
+  "source_paths": 87,
+  "environment": {
+    "AUTH_MODE": "disabled",
+    "DEPLOYMENT_ENV": "test",
+    "ENABLE_MOCK_LOGIN": "false",
+    "PERSIST_LOCAL_CHAT": "false",
+    "ENABLE_V1_SHELL": "false",
+    "ENABLE_V1_CATALOGUE": "false",
+    "ENABLE_V1_CATALOGUE_BROWSER": "false",
+    "ENABLE_V1_INVESTIGATIONS": "false",
+    "ENABLE_V1_RESEARCH_CONTROLLER": "false",
+    "RUN_POSTGRES_INTEGRATION": "0",
+    "DATABASE_URL": "postgresql://unused:unused@127.0.0.1:1/ocean_c19_unused",
+    "MODEL_PROVIDER": "ollama",
+    "OLLAMA_BASE_URL": "http://127.0.0.1:1"
+  }
+}

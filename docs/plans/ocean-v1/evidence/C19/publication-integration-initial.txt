@@ -1,0 +1,71 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+____________ test_actual_publication_partial_previews_cannot_finish ____________
+tests/test_research_controller_publication.py:151: in test_actual_publication_partial_previews_cannot_finish
+    request = harness.request(QUESTIONS["fish_frequency"][0], pins=[pin(harness)])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:84: in request
+    created = service.invoke(
+orchestration/investigations.py:289: in invoke
+    result = self._apply(self._prepare(name, data, user), user)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/investigations.py:412: in _prepare
+    raise _error("unavailable" if added["kind"] == "artifact" else "not_found")
+E   orchestration.investigations.InvestigationError: Investigation content is unavailable
+---------------------------- Captured stderr setup -----------------------------
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+__ test_actual_publication_all_matching_pages_complete_with_original_binding ___
+tests/test_research_controller_publication.py:164: in test_actual_publication_all_matching_pages_complete_with_original_binding
+    request = harness.request(QUESTIONS["fish_frequency"][0], pins=[pin(harness)])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:84: in request
+    created = service.invoke(
+orchestration/investigations.py:289: in invoke
+    result = self._apply(self._prepare(name, data, user), user)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/investigations.py:412: in _prepare
+    raise _error("unavailable" if added["kind"] == "artifact" else "not_found")
+E   orchestration.investigations.InvestigationError: Investigation content is unavailable
+_ test_actual_published_template_cannot_override_conflicting_original_question[Show the top 10 fish by detection frequency in Hokkaido from 2020 to 2023] _
+tests/test_research_controller_publication.py:203: in test_actual_published_template_cannot_override_conflicting_original_question
+    harness.request(question, pins=[pin(harness)])
+tests/test_research_controller.py:84: in request
+    created = service.invoke(
+orchestration/investigations.py:289: in invoke
+    result = self._apply(self._prepare(name, data, user), user)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/investigations.py:412: in _prepare
+    raise _error("unavailable" if added["kind"] == "artifact" else "not_found")
+E   orchestration.investigations.InvestigationError: Investigation content is unavailable
+_ test_actual_published_template_cannot_override_conflicting_original_question[Show the top 10 sharks by detection frequency in Miyagi from 2020 to 2023] _
+tests/test_research_controller_publication.py:203: in test_actual_published_template_cannot_override_conflicting_original_question
+    harness.request(question, pins=[pin(harness)])
+tests/test_research_controller.py:84: in request
+    created = service.invoke(
+orchestration/investigations.py:289: in invoke
+    result = self._apply(self._prepare(name, data, user), user)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/investigations.py:412: in _prepare
+    raise _error("unavailable" if added["kind"] == "artifact" else "not_found")
+E   orchestration.investigations.InvestigationError: Investigation content is unavailable
+_ test_actual_published_template_cannot_override_conflicting_original_question[\u5317\u6d77\u9053\u3067\u691c\u51fa\u983b\u5ea6\u304c\u9ad8\u3044\u9b5a\u306e\u4e0a\u4f4d10\u7a2e\u3068\u3001\u5e74\u5225\u30fb\u5b63\u7bc0\u5225\u306e\u5909\u5316\u3092\u793a\u3057\u3066\u304f\u3060\u3055\u3044\u3002] _
+tests/test_research_controller_publication.py:203: in test_actual_published_template_cannot_override_conflicting_original_question
+    harness.request(question, pins=[pin(harness)])
+tests/test_research_controller.py:84: in request
+    created = service.invoke(
+orchestration/investigations.py:289: in invoke
+    result = self._apply(self._prepare(name, data, user), user)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/investigations.py:412: in _prepare
+    raise _error("unavailable" if added["kind"] == "artifact" else "not_found")
+E   orchestration.investigations.InvestigationError: Investigation content is unavailable
+=========================== short test summary info ============================
+FAILED tests/test_research_controller_publication.py::test_actual_publication_partial_previews_cannot_finish
+FAILED tests/test_research_controller_publication.py::test_actual_publication_all_matching_pages_complete_with_original_binding
+FAILED tests/test_research_controller_publication.py::test_actual_published_template_cannot_override_conflicting_original_question[Show the top 10 fish by detection frequency in Hokkaido from 2020 to 2023]
+FAILED tests/test_research_controller_publication.py::test_actual_published_template_cannot_override_conflicting_original_question[Show the top 10 sharks by detection frequency in Miyagi from 2020 to 2023]
+FAILED tests/test_research_controller_publication.py::test_actual_published_template_cannot_override_conflicting_original_question[\u5317\u6d77\u9053\u3067\u691c\u51fa\u983b\u5ea6\u304c\u9ad8\u3044\u9b5a\u306e\u4e0a\u4f4d10\u7a2e\u3068\u3001\u5e74\u5225\u30fb\u5b63\u7bc0\u5225\u306e\u5909\u5316\u3092\u793a\u3057\u3066\u304f\u3060\u3055\u3044\u3002]
+5 failed in 1.80s

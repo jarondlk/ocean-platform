@@ -1,0 +1,129 @@
+{
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "base_head": "cde8555e7e1d46820d269f3df41ad2944ba6aae5",
+  "component": "C19",
+  "documentation_reviewed_sha256": {
+    "docs/plans/ocean-v1/C19_AGENT_CONTROLLER_CONTRACT.md": "fc2049d91c21f3eedd6f12252009fef15bdccf91cd2d971a88b247c1c3816caa"
+  },
+  "evidence_inspected_sha256": {
+    "docs/plans/ocean-v1/evidence/C19/contract-publication-pages-tests-final.txt": "bc11639c63a1100aaf02ba950019008b5886f1530dc8398e1a249f3b0901e187",
+    "docs/plans/ocean-v1/evidence/C19/contract-publication-pages-verification.json": "d5bc3609db3948a3fe7d40426ab4242a11fd8e3de440d48744fb4f5efc1a2861",
+    "docs/plans/ocean-v1/evidence/C19/controller-boundary-final-tests.txt": "7d4679ddc909e88157a1f5e4a033872f8b74ebbbb79ef6ffcf0e295c5298812c",
+    "docs/plans/ocean-v1/evidence/C19/controller-scale-integration-tests.txt": "da4b611ef3729e130da0352afd3263e68f8d9b485dfa84790e121a8191f1e1fd",
+    "docs/plans/ocean-v1/evidence/C19/generated-checks.json": "cbe746d1b5fa6063c26bd7daf017d7dc992ef972719b69232d3aa0acee4fb518",
+    "docs/plans/ocean-v1/evidence/C19/native-integration-tests.txt": "ffadafb6c6c38335bd3afb8fefa1e5f3c26b09057baefbb7f1937f6bfe9a3d78",
+    "docs/plans/ocean-v1/evidence/C19/native-known-zero-final.txt": "9d26233b64c8886a584525aee8496451b85809910dcd96b0d65a1bfc8be8bc44",
+    "docs/plans/ocean-v1/evidence/C19/publication-integration-fix.json": "2c56ee9ad3c21a18753944c38f034e99b49ae911f42f17b151f5d38265f1735f",
+    "docs/plans/ocean-v1/evidence/C19/publication-integration-fix.txt": "cb06a4e0e53685db6f7d11d578fe40e97cf7373573efa9235cac339a5c2e002a",
+    "docs/plans/ocean-v1/evidence/C19/publication-integration-initial.txt": "eabe15b2820140833281a25bcadc59bf92100c6a0568ff1c30053e29a543ff24",
+    "docs/plans/ocean-v1/evidence/C19/ruff-final.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C19/scope-tests.txt": "9a9f840fcb31d7726d12417bedfbe2ab76cc9090a91c4e01dca88616d76cd902",
+    "docs/plans/ocean-v1/evidence/C19/scope-verification.json": "f83c41db2ae2a8336f5035d6c564a7e121549ddb8ef9d7cf6acda6047295df8f",
+    "docs/plans/ocean-v1/evidence/C19/transient-clock-tests-final.txt": "fa3ef5f089c3214013de8816bfbce2f1603bbbd347cf5631b8a419f73741ab79"
+  },
+  "findings": [],
+  "fixedissues": [
+    {
+      "id": "C19-R01",
+      "issue": "Known SST coverage includes optional reason=null and was incorrectly treated as unknown.",
+      "resolution": "Coverage support now uses explicit known native sampling semantics, while C12 unknown coverage stays unresolved. Actual retained-input integration records distinguish unknown from known zero."
+    },
+    {
+      "id": "C19-R02",
+      "issue": "Scientific numeric previews omitted source column units/descriptors.",
+      "resolution": "Validated column keys/titles/units, source descriptors, authority and limitations remain mandatory qualifications through compaction; excessive mandatory context yields a partial stop."
+    },
+    {
+      "id": "C19-R03",
+      "issue": "C17 attachments were absent from model context.",
+      "resolution": "Exact attachment references and retained artifact hashes now enter quoted supplementary context; no attachment becomes a pin or permission source."
+    },
+    {
+      "id": "C19-R04",
+      "issue": "A host could accidentally pair an actual C17 service with a different C14 catalogue policy.",
+      "resolution": "Admission requires the same configured catalogue instance exposed by the submission loader and an explicit resolver; mismatched wiring fails before context admission."
+    },
+    {
+      "id": "C19-R05",
+      "issue": "First clock failure during result finalization could escape or preserve completed state.",
+      "resolution": "One safely closed final state is authoritative; first deadline/NaN/backward failure or cancellation downgrades completion. Invalid timing records only a last-valid elapsed lower bound."
+    },
+    {
+      "id": "C19-R06",
+      "issue": "A transient invalid checkpoint clock could permit a subsequent effect after the next clock reading recovered.",
+      "resolution": "Sticky clock_invalid now stops fresh checked admissions before later tool/model effects; final authorization still runs with budget checks disabled. Two recorded regression cases pass."
+    },
+    {
+      "id": "C19-R07",
+      "issue": "One preview page from every required publication table could previously establish false publication completion.",
+      "resolution": "Publication support now requires contiguous nonoverlapping zero-to-total page coverage with consistent content, input, operation and parameter identities, progressing offsets, exact table identity and actual-question C01 compatibility."
+    },
+    {
+      "id": "C19-R08",
+      "issue": "Stop/failure paths could omit after-step checkpoint metadata or publish a stale finishing proposal.",
+      "resolution": "Model/tool boundaries record safe paired before/after checkpoints including discarded late results. Finishing remains a proposal, followed by fresh owner/context/policy and final closed-budget checks; raw runtime exception text is omitted."
+    },
+    {
+      "id": "C19-R09",
+      "issue": "Preview shortening could damage an opaque long listing continuation.",
+      "resolution": "Context-bound cursor metadata is retained outside shortened row previews. The original invalid cursor fixture failure remains historical; corrected fixture uses valid equivalent encoded JSON whitespace."
+    },
+    {
+      "id": "C19-R10",
+      "issue": "Actual publication fixture attempted to pin a 2020--2023 analysis over generic 2024 source rows and arbitrary unit-test protocol identity.",
+      "resolution": "Only the new test fixture now seals a separate synthetic 2020 child snapshot and derives the actual retained assay protocol/hash. Existing access and scientific scope guards remain unchanged; all five actual publication tests pass."
+    },
+    {
+      "id": "C19-R11",
+      "issue": "Known-zero integration fixture used an unsupported bay enum and correctly clarified.",
+      "resolution": "Only the new test question changed to a supported unmatched station string. The original 2-pass/1-fail log is preserved; the corrected known-zero case passes without a model call."
+    }
+  ],
+  "outcome": "No remaining concrete blocker found by source inspection",
+  "preservation": {
+    "C18_client_original_receipt_sha256": "d2cc42bf16b38f4e31ee9295dea8c5968a0a71adb5f1214e0f332d13229ae1b9",
+    "C18_client_source4_unchanged": true,
+    "original_receipt_edits_by_reviewer": [],
+    "source_edits_by_reviewer": []
+  },
+  "qualifications": [
+    "No application tests, services, browser sessions, provider calls or scientific computations were executed by this reviewer; saved logs and receipts were inspected only.",
+    "Full backend verification is currently parent-owned and in flight. Exact-source hosted CI and final preservation/delivery remain required parent gates; this receipt does not replace them.",
+    "The saved 100k integration iteration records 68 passed and one cursor-fixture failure; all eight scale cases passed within it. The corrected cursor case has saved boundary acceptance. No synthetic scale result establishes actual C13/C17 100000-dataset capacity or production performance.",
+    "Original publication and known-zero fixture failure logs remain immutable; corrected successful receipts are separate. No acceptance assertion was weakened to bypass access or scientific scope.",
+    "Publication labels, rows, protocol-bound inputs and identities are explicit synthetic test fixtures; they establish no real scientific approval, independent review, provider endorsement or ecological inference.",
+    "C19 retains observations/full payloads in memory and emits detached checkpoint proposals. C20 must implement durable storage, restored-state validation, production run transport, queue/lease/cancel fencing and final publication transactions.",
+    "C21 owns final synthesis and retained artifact presentation. No assembled browser transport, actual OIDC, live model quality, cloud deployment, real-data acquisition/transfer or production acceptance is claimed.",
+    "Only the C18 client four-file receipt preservation was independently hash-checked here; the parent owns comprehensive earlier/scientific/unrelated/legacy preservation verification."
+  ],
+  "review_kind": "Independent teammate read-only source and saved-evidence inspection after root froze 13 C19 source/test paths",
+  "reviewed_at": "2026-10-18T18:01:41.078209+00:00",
+  "reviewed_source_aggregate_sha256": "53838a7831aec55650237104e7740e49d48b8587fee386159fcc083353032750",
+  "reviewed_source_sha256": {
+    "config.py": "060275abef07d5598d424f09be499a629f5b1b0fcf70e1ed922b59f0543406aa",
+    "orchestration/research_controller.py": "aa4c37acb255fc24021175fe0f30c9c9b64f262c5ab9c9f0ca8f881634afa6fa",
+    "orchestration/research_controller_budget.py": "3d138129265b83504e6a92ef0b662c0b98ea4af2d92f9f8a08a5e42cefa64310",
+    "orchestration/research_controller_observations.py": "e3aeff8f74aa25997ebd1e000ddba490326bde6e908509fc212627379b71b81d",
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "schema/research_controller.py": "af4e1091b11c7affa6d0f1577582d6b4261d9cf9ace9b745312d756af117d634",
+    "tests/test_research_controller.py": "d1da694c39d66309c976616e4d523b8c850fe6ed9b87591a163b6f14e312e3b7",
+    "tests/test_research_controller_budget.py": "d81864c3a56d2a6671ddc91dcb8f23e71293c263360c76267f2a96e7029f180e",
+    "tests/test_research_controller_contracts.py": "c0c481cb5d4e3e19905697f9e2457729d08a81dfe182b54297adb8d144262a45",
+    "tests/test_research_controller_observations.py": "d6922d7f20e86bc9e347f097f8fd547cfe45e5cf3aba347d9f6a3775b3729e65",
+    "tests/test_research_controller_publication.py": "c1cea7b713c1f7e5a8c00f14e1df80eec7f4ea06ca842233549df676752edf81",
+    "tests/test_research_controller_scale.py": "8a72f333bf6d44df893b6b238acf71697965e970d33f376c1cf412fca00d61f4",
+    "tests/test_research_controller_scope.py": "2ae8eac40a8687bc1c584aeb58f9219ebf27981b469eb302edd310b368d45cd9"
+  },
+  "reviewer": "/root/c18_client_state",
+  "reviewer_provenance": "Reviewer authored C18 client/state and a preliminary C19 readiness audit, but authored or edited no C19 application/test source. This is an internal teammate review, not independent scientific or external security certification.",
+  "verified_by_inspection": [
+    "Default-off controller is separate from legacy Chat and constructs no provider, SQL, production transport or worker.",
+    "Frozen C17 revision/hash/snapshot admission precedes deterministic inventory and model exploration. Fresh identity, current account permissions, exact context and catalogue revision bind work and final return.",
+    "Pin restrictions intersect canonical targets and native source constraints; unsupported/conflicting pins and residual qualifiers clarify or remain unavailable. Publication access independently validates the original user question with C01.",
+    "Strict actions reject ambiguous JSON, nonfinite/deep/oversized content, unknown tools and recursive trusted-field injection. Only completed C06 generations can yield an action and one malformed repair shares the original budget.",
+    "Semantic dataset counts derive from complete input receipts and remain distinct from preview rows, registry witness count, known zero and unknown coverage.",
+    "Completion uses host-owned facts and validated observations, never model finish text. Publication page proof and inventory cohort witnesses preserve complete evidence requirements.",
+    "Quoted supplementary context and source/document text cannot add identity, authorization, tools, scientific approval or fact support. Compaction retains mandatory scientific restrictions/units/qualifications or stops explicitly.",
+    "Clock/deadline/cancellation hooks are cooperative. Invalid clocks permanently stop later effects and cannot convert a partial result into completed. Exact counters remain preserved for future trusted-host restoration."
+  ]
+}

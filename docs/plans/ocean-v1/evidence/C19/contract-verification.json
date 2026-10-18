@@ -1,0 +1,86 @@
+{
+  "component": "C19",
+  "scope": "Strict action/binding/budget/observation/checklist/result contracts and pure completion/compaction helpers",
+  "created_at": "2026-10-18T12:12:52.635976+00:00",
+  "base_source": "cde8555e7e1d46820d269f3df41ad2944ba6aae5",
+  "source_sha256": {
+    "schema/research_controller.py": "0aedd3c7897977d5d1e1450f4c681e488edf1f6d841bcd442fb8f0f0aee17108",
+    "tests/test_research_controller_contracts.py": "98b88f410395f94f9735423ff0defa89ed66c09aa5a05b7c2600794633ba69fc"
+  },
+  "dependency_sha256": {
+    "schema/catalogue_service.py": "f9f367566b749317d5a25c53f73686253753369fc5b1cd595767aca6d0e94233",
+    "schema/context_catalogue.py": "548ad672277c286b97dfefcc209559363c44067211d02d6901752d21c20ad0a2",
+    "schema/investigations.py": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+    "retrieval/source_scope.py": "6cf36f91b47ff21f33f1865cb5e4a4baf6d60ae0265cfb1c16035642f7d1a54f",
+    "orchestration/frozen_scientific_catalogue.py": "1fda9afe83a67c70a1cfcf752d62d0fe4ef4114b291095f78e357a376486d051"
+  },
+  "original_receipt_sha256": {
+    "docs/plans/ocean-v1/evidence/C19/start-snapshot.json": "769fb97dc8a25b7e19d3fb379aa3cd967bc540716af2f70030389ef25d17537b",
+    "docs/plans/ocean-v1/evidence/c19-readiness-2026-10-18/verification.json": "f4133ebdaad20d9d0848a4b055c48389ae6a344f59cd9d7064cb3f7db5ecce15",
+    "docs/plans/ocean-v1/evidence/C18/delivery.json": "5964a08ec006b32885b16b2dc9980c03520d5cbd905a28b4ba1555b4150454d8"
+  },
+  "evidence_sha256": {
+    "docs/plans/ocean-v1/evidence/C19/contract-tests-initial.txt": "c99a072aad14ad1b4b098d2a6d3bc49057f5853c70c4cbeb40f0f06b6ce5aae0",
+    "docs/plans/ocean-v1/evidence/C19/contract-tests-final.txt": "1f2a4064db45565681c8a93fec15fd9f392aa7622e915b599b10458e4239a441",
+    "docs/plans/ocean-v1/evidence/C19/contract-tests-acceptance.txt": "c479e87df7244cf8568e921267d9529ebd1753bccf7755b3692ff758ea3c818b",
+    "docs/plans/ocean-v1/evidence/C19/contract-ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C19/contract-ruff-acceptance.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  "checks": {
+    "focused_tests": {
+      "command": ".venv/bin/python -m pytest tests/test_research_controller_contracts.py -q --tb=short",
+      "passed": 97,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C19/contract-tests-acceptance.txt"
+    },
+    "ruff": {
+      "command": ".venv/bin/ruff check schema/research_controller.py tests/test_research_controller_contracts.py",
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C19/contract-ruff-acceptance.txt"
+    },
+    "whitespace": {
+      "schema/research_controller.py": {
+        "exit_code": 1,
+        "output": ""
+      },
+      "tests/test_research_controller_contracts.py": {
+        "exit_code": 1,
+        "output": ""
+      }
+    }
+  },
+  "retained_attempts": [
+    {
+      "log": "docs/plans/ocean-v1/evidence/C19/contract-tests-initial.txt",
+      "passed": 76,
+      "exit_code": 0,
+      "note": "Initial focused contracts before nested authority-smuggling and long scientific limitation coverage."
+    },
+    {
+      "log": "docs/plans/ocean-v1/evidence/C19/contract-tests-final.txt",
+      "passed": 97,
+      "exit_code": 0,
+      "note": "Expanded tests before final result-owned witness consistency guard."
+    }
+  ],
+  "verified_behaviors": [
+    "Exactly seven read-only C14 tool names; arguments validated by actual C14 model with host-only placeholder scope/snapshot; top-level and nested trusted-field injection rejected",
+    "Duplicate-key, nonfinite, malformed UTF-8, depth128 and64KiB action bounds; model finish/clarify has no completion authority",
+    "Frozen five-field submitted binding; bounded180seconds/12tools/1repair/100default500maximum; frozen JSON-roundtrippable budget snapshots",
+    "Raw and actual C13 normalized parameters hash equally after removing only known outer preview/default/null fields; nested scientific semantics retained",
+    "Exact full-payload reference/hash and input manifest count/hash retained without requiring all input IDs in model context",
+    "Semantic count comes from trusted population witness, never summary/preview/input-count inference; zero distinct from unknown; conflicting counts unresolved",
+    "Exact late-object find, required known coverage fields, registered operation parameters/outputs, actual-question publication compatibility and all required tables",
+    "No pending/unresolved required fact or cohort completes; optional pending fact may remain when all required facts supported; no empty required-question completion",
+    "Covered cohorts require exact manifest and executed supporting fact witnesses; source-excluded cohorts require explicit trusted verification",
+    "Compaction removes row previews while preserving every exact binding/scope/completeness/qualification/hash/ref;10000character scientific limitations preserved or explicit bound failure",
+    "Result completion rejects absent or foreign executed observation support and unexecuted evidence references"
+  ],
+  "limitations": [
+    "Pure host-owned contract projections do not themselves authorize a production user, execute tools, call providers or validate scientific approval",
+    "Root owns actual C17/C14 collector/controller integration, fresh authorization before completion, budget/cancellation orchestration and C20 checkpoint hooks",
+    "Fake-model and end-to-end controller acceptance remain root-owned; no broad suites, provider requests, service startup, commits or deployment performed"
+  ]
+}

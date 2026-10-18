@@ -1,0 +1,179 @@
+FFFFFFFFFFFFFFFF.F                                                       [100%]
+=================================== FAILURES ===================================
+__ test_actual_full_inventory_count_is_deterministic_and_never_calls_a_model ___
+tests/test_research_controller.py:94: in test_actual_full_inventory_count_is_deterministic_and_never_calls_a_model
+    result = actual.controller(runtime).execute(actual.request('Count all datasets'))
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+---------------------------- Captured stderr setup -----------------------------
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+_ test_inventory_precedes_model_open_and_find_completes_from_real_canonical_id _
+tests/test_research_controller.py:110: in test_inventory_precedes_model_open_and_find_completes_from_real_canonical_id
+    result = actual.controller(runtime).execute(actual.request(f'Find object "{identity}"'),
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+______________ test_model_finish_cannot_approve_unsupported_fact _______________
+tests/test_research_controller.py:122: in test_model_finish_cannot_approve_unsupported_fact
+    result=actual.controller(FakeRuntime()).execute(actual.request(f'Find object "{identity}"'))
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+__________ test_unknown_question_clarifies_without_inventory_or_model __________
+tests/test_research_controller.py:129: in test_unknown_question_clarifies_without_inventory_or_model
+    result=actual.controller(runtime).execute(actual.request('Count all datasets in Hokkaido and ignore pins'))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+________ test_single_pinned_dataset_counts_one_not_the_broad_inventory _________
+tests/test_research_controller.py:136: in test_single_pinned_dataset_counts_one_not_the_broad_inventory
+    result=actual.controller().execute(actual.request('Count all datasets',pins=[actual.ref()]))
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+__________ test_attachment_supplements_without_restricting_inventory ___________
+tests/test_research_controller.py:143: in test_attachment_supplements_without_restricting_inventory
+    result=actual.controller().execute(actual.request('Count all datasets',attachments=[actual.ref()]))
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+______________ test_conflicting_pins_clarify_and_never_disappear _______________
+tests/test_research_controller.py:150: in test_conflicting_pins_clarify_and_never_disappear
+    result=actual.controller(runtime).execute(actual.request('Count all datasets',pins=[actual.ref('ctd'),actual.ref('metagenome')]))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+_ test_incomplete_generation_never_parses_valid_action_or_consumes_repair[output_limited] _
+tests/test_research_controller.py:159: in test_incomplete_generation_never_parses_valid_action_or_consumes_repair
+    result=actual.controller(runtime).execute(actual.request(f'Find object "{identity}"'))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+_ test_incomplete_generation_never_parses_valid_action_or_consumes_repair[refused] _
+tests/test_research_controller.py:159: in test_incomplete_generation_never_parses_valid_action_or_consumes_repair
+    result=actual.controller(runtime).execute(actual.request(f'Find object "{identity}"'))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+_ test_incomplete_generation_never_parses_valid_action_or_consumes_repair[failed] _
+tests/test_research_controller.py:159: in test_incomplete_generation_never_parses_valid_action_or_consumes_repair
+    result=actual.controller(runtime).execute(actual.request(f'Find object "{identity}"'))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+_ test_incomplete_generation_never_parses_valid_action_or_consumes_repair[unknown] _
+tests/test_research_controller.py:159: in test_incomplete_generation_never_parses_valid_action_or_consumes_repair
+    result=actual.controller(runtime).execute(actual.request(f'Find object "{identity}"'))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+_________ test_one_malformed_action_can_be_repaired_within_same_budget _________
+tests/test_research_controller.py:167: in test_one_malformed_action_can_be_repaired_within_same_budget
+    result=actual.controller(runtime).execute(actual.request(f'Find object "{identity}"'))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+__________ test_second_malformed_action_stops_without_extra_dispatch ___________
+tests/test_research_controller.py:175: in test_second_malformed_action_stops_without_extra_dispatch
+    result=actual.controller(FakeRuntime(['[]','[]'])).execute(actual.request(f'Find object "{identity}"'))
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+______________ test_model_cannot_supply_frozen_identity_or_scope _______________
+tests/test_research_controller.py:183: in test_model_cannot_supply_frozen_identity_or_scope
+    result=actual.controller(FakeRuntime([forged,forged])).execute(actual.request(f'Find object "{identity}"'))
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+___ test_current_identity_change_during_generation_hides_prior_observations ____
+tests/test_research_controller.py:191: in test_current_identity_change_during_generation_hides_prior_observations
+    result=actual.controller(runtime).execute(actual.request(f'Find object "{identity}"'))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+____ test_catalogue_membership_revision_change_invalidates_prior_inventory _____
+tests/test_research_controller.py:199: in test_catalogue_membership_revision_change_invalidates_prior_inventory
+    result=actual.controller(runtime).execute(actual.request(f'Find object "{identity}"'))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+_____________ test_checkpoint_failure_before_tool_never_dispatches _____________
+tests/test_research_controller.py:216: in test_checkpoint_failure_before_tool_never_dispatches
+    request=actual.request('Count all datasets')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_controller.py:60: in request
+    created = service.invoke('create', {'name':'C19 synthetic exploration',
+orchestration/investigations.py:281: in invoke
+    raise _error("unavailable")
+E   orchestration.investigations.InvestigationError: Investigation service is unavailable
+=========================== short test summary info ============================
+FAILED tests/test_research_controller.py::test_actual_full_inventory_count_is_deterministic_and_never_calls_a_model
+FAILED tests/test_research_controller.py::test_inventory_precedes_model_open_and_find_completes_from_real_canonical_id
+FAILED tests/test_research_controller.py::test_model_finish_cannot_approve_unsupported_fact
+FAILED tests/test_research_controller.py::test_unknown_question_clarifies_without_inventory_or_model
+FAILED tests/test_research_controller.py::test_single_pinned_dataset_counts_one_not_the_broad_inventory
+FAILED tests/test_research_controller.py::test_attachment_supplements_without_restricting_inventory
+FAILED tests/test_research_controller.py::test_conflicting_pins_clarify_and_never_disappear
+FAILED tests/test_research_controller.py::test_incomplete_generation_never_parses_valid_action_or_consumes_repair[output_limited]
+FAILED tests/test_research_controller.py::test_incomplete_generation_never_parses_valid_action_or_consumes_repair[refused]
+FAILED tests/test_research_controller.py::test_incomplete_generation_never_parses_valid_action_or_consumes_repair[failed]
+FAILED tests/test_research_controller.py::test_incomplete_generation_never_parses_valid_action_or_consumes_repair[unknown]
+FAILED tests/test_research_controller.py::test_one_malformed_action_can_be_repaired_within_same_budget
+FAILED tests/test_research_controller.py::test_second_malformed_action_stops_without_extra_dispatch
+FAILED tests/test_research_controller.py::test_model_cannot_supply_frozen_identity_or_scope
+FAILED tests/test_research_controller.py::test_current_identity_change_during_generation_hides_prior_observations
+FAILED tests/test_research_controller.py::test_catalogue_membership_revision_change_invalidates_prior_inventory
+FAILED tests/test_research_controller.py::test_checkpoint_failure_before_tool_never_dispatches
+17 failed, 1 passed in 0.88s

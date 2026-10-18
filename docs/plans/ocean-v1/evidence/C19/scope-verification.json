@@ -1,0 +1,107 @@
+{
+  "behavior": [
+    "Exact C17 frozen context canonical payload hash/snapshot and canonical UUID binding; all distinct pins require exact current witnesses.",
+    "Finite whole-input EN/JA dataset count, quoted exact ID lookup, dataset coverage and explicit registered native operation grammar. Every residual or unsupported qualifier clarifies; question is preserved verbatim.",
+    "Typed source-owned qualifier suffix supports existing EvidenceScope fields and exact known pinned external product/version/method/protocol values without silently clipping explicit question dates/geography.",
+    "Dataset pin identity narrows inventory_roots and allowed_dataset_ids. Distinct incompatible pins, disabled pin source, unknown metadata/relationships/tables, and missing artifact semantics remain explicit non-ready outcomes.",
+    "SST canonical dataset/product/version, known eDNA method/control, exact scientific protocol and known Kraken/MetaEuk table-method restrictions are retained and guarded. Raw/mixed/unknown eDNA stays qualified raw inventory.",
+    "Native C12 filters cannot override base or pinned dataset/method/date/taxon/control restrictions; strict actual source-owned parameter models reject unknown product/protocol/SQL fields.",
+    "Exact scientific protocol pin refuses native row computation when the native contract cannot express the protocol. Immutable publication pin does not authorize ad hoc raw-cohort recomputation.",
+    "Actual original-question C01 publication compatibility with exact frozen publication scope and uniquely resolved protocol. Conflicting Hokkaido/shark/date/method questions, ambiguous protocols/publications and generic template substitution cannot authorize tables.",
+    "Attachments supplement and never restrict. Witness and result dictionaries are detached; canonical witness hash is stable under caller edits to returned copies.",
+    "All action requests force exact submitted snapshot/effective scope, strict C14 request shapes, allowlisted read-only operations, and pinned canonical targets; broad traversal cannot bypass dataset pins."
+  ],
+  "checks": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_research_controller_scope.py",
+        "-q",
+        "--no-cov"
+      ],
+      "exit_code": 0,
+      "output": "scope-tests.txt",
+      "sha256": "9a9f840fcb31d7726d12417bedfbe2ab76cc9090a91c4e01dca88616d76cd902"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "orchestration/research_controller_scope.py",
+        "tests/test_research_controller_scope.py"
+      ],
+      "exit_code": 0,
+      "output": "scope-ruff.txt",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "orchestration/research_controller_scope.py",
+        "tests/test_research_controller_scope.py"
+      ],
+      "exit_code": 0,
+      "output": "scope-diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "component": "C19",
+  "development_observations": [
+    "Initial118 focused cases passed; Ruff found style-only compact statements in new tests, corrected with Ruff formatting.",
+    "A subsequently added publication-native-coverage case initially found one missing direct coverage guard (124passed/1failed); the direct route was guarded and subsequent125 cases passed.",
+    "Six additional inherited-scope native filter cases increased the accepted focused suite to131."
+  ],
+  "elapsed_seconds": 0.978,
+  "focused_passed": 131,
+  "head_at_verification": "cde8555e7e1d46820d269f3df41ad2944ba6aae5",
+  "limitations": [
+    "These131 tests are pure synthetic metadata/contract tests. They do not prove real C14/C17 execution or a100000-object inventory; literal late IDs26/502/100000 test grammar preservation only.",
+    "No database/server/provider/network/cloud or legacy Chat execution was performed by this subtask. Root-owned actual service/scale/whole-backend/hosted acceptance remains required.",
+    "MVP grouping is conjunctive: distinct disjoint dataset pins clarify rather than invent union semantics; unsupported catalogue or artifact pin types remain explicit gates.",
+    "Neutral whole-input grammar is intentionally bounded. Broad arbitrary natural language and unregistered qualifiers require clarification rather than guessed constraints."
+  ],
+  "owned_source_sha256": {
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "tests/test_research_controller_scope.py": "2ae8eac40a8687bc1c584aeb58f9219ebf27981b469eb302edd310b368d45cd9"
+  },
+  "part": "Deterministic source scope, pin, whole-question grammar and dispatch guard",
+  "recorded_at": "2026-10-18T12:20:50.648421+00:00",
+  "source_after_sha256": {
+    "orchestration/frozen_catalogue.py": "9b3fdb498935f3d5db5594f667bfebf49bf7be487509cea9c448f4f229351609",
+    "orchestration/frozen_edna_catalogue.py": "9adbfb504c968795db8df2971842b780e1af95ebff3fcda1b93703b68c4b2781",
+    "orchestration/frozen_sst_catalogue.py": "ccaa675acda1d11a7dec5aab71b476800c494b99979b8cba74c56a4286603a65",
+    "orchestration/publication_scope.py": "af31d203fb2e766a2e43049c1e0ea2d9235e3f43604efdd993e95796fc3e273e",
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "orchestration/research_intents.py": "eb265c1247148b4c4494199eb0d7941288db836d496326c5701747b8128ce15f",
+    "retrieval/source_scope.py": "6cf36f91b47ff21f33f1865cb5e4a4baf6d60ae0265cfb1c16035642f7d1a54f",
+    "schema/catalogue_service.py": "f9f367566b749317d5a25c53f73686253753369fc5b1cd595767aca6d0e94233",
+    "schema/context_catalogue.py": "548ad672277c286b97dfefcc209559363c44067211d02d6901752d21c20ad0a2",
+    "schema/investigations.py": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+    "schema/scientific_catalogue.py": "e2d65ac0a6a4d0db9ff931f85d75dca6fffaaf3c0f139395201886642f8efa28",
+    "schema/time_range.py": "efe12f5ecd0e738cdd2aa2999175f29eb3d5a150b6613450e0167c0e7e9b3d91",
+    "tests/test_research_controller_scope.py": "2ae8eac40a8687bc1c584aeb58f9219ebf27981b469eb302edd310b368d45cd9"
+  },
+  "source_before_sha256": {
+    "orchestration/frozen_catalogue.py": "9b3fdb498935f3d5db5594f667bfebf49bf7be487509cea9c448f4f229351609",
+    "orchestration/frozen_edna_catalogue.py": "9adbfb504c968795db8df2971842b780e1af95ebff3fcda1b93703b68c4b2781",
+    "orchestration/frozen_sst_catalogue.py": "ccaa675acda1d11a7dec5aab71b476800c494b99979b8cba74c56a4286603a65",
+    "orchestration/publication_scope.py": "af31d203fb2e766a2e43049c1e0ea2d9235e3f43604efdd993e95796fc3e273e",
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "orchestration/research_intents.py": "eb265c1247148b4c4494199eb0d7941288db836d496326c5701747b8128ce15f",
+    "retrieval/source_scope.py": "6cf36f91b47ff21f33f1865cb5e4a4baf6d60ae0265cfb1c16035642f7d1a54f",
+    "schema/catalogue_service.py": "f9f367566b749317d5a25c53f73686253753369fc5b1cd595767aca6d0e94233",
+    "schema/context_catalogue.py": "548ad672277c286b97dfefcc209559363c44067211d02d6901752d21c20ad0a2",
+    "schema/investigations.py": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+    "schema/scientific_catalogue.py": "e2d65ac0a6a4d0db9ff931f85d75dca6fffaaf3c0f139395201886642f8efa28",
+    "schema/time_range.py": "efe12f5ecd0e738cdd2aa2999175f29eb3d5a150b6613450e0167c0e7e9b3d91",
+    "tests/test_research_controller_scope.py": "2ae8eac40a8687bc1c584aeb58f9219ebf27981b469eb302edd310b368d45cd9"
+  },
+  "source_changed": []
+}

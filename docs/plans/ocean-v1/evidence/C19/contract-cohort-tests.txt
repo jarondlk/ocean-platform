@@ -1,0 +1,145 @@
+........................................................................ [ 62%]
+.....................FFFFFFFFFFFFFFFFFF....                              [100%]
+=================================== FAILURES ===================================
+_ test_complete_inventory_can_prove_cohort_membership_separately_from_supported_find _
+tests/test_research_controller_contracts.py:276: in test_complete_inventory_can_prove_cohort_membership_separately_from_supported_find
+    assert result.complete and result.facts[0].observation_ids == ("obs:open",)
+E   AssertionError: assert (False)
+E    +  where False = CompletionAssessment(complete=False, facts=(FactAssessment(fact_id='population', required=True, state='pending', observation_ids=(), value_json=None, reason=None),), unresolved_cohorts=('cohort:inventory',)).complete
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change0] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change1] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change2] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change3] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change4] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change5] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change6] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change7] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change8] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change9] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change10] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change11] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change12] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change13] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change14] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change15] _
+tests/test_research_controller_contracts.py:300: in test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest
+    assert result.facts[0].state == "supported"
+E   AssertionError: assert 'pending' == 'supported'
+E     
+E     - supported
+E     + pending
+_ test_inventory_membership_never_resolves_an_unsupported_find_or_mixed_fact_scopes _
+tests/test_research_controller_contracts.py:313: in test_inventory_membership_never_resolves_an_unsupported_find_or_mixed_fact_scopes
+    assert all(value.state == "supported" for value in result.facts)
+E   assert False
+E    +  where False = all(<generator object test_inventory_membership_never_resolves_an_unsupported_find_or_mixed_fact_scopes.<locals>.<genexpr> at 0x1194472a0>)
+=========================== short test summary info ============================
+FAILED tests/test_research_controller_contracts.py::test_complete_inventory_can_prove_cohort_membership_separately_from_supported_find
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change0]
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change1]
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change2]
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change3]
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change4]
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change5]
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change6]
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change7]
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change8]
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change9]
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change10]
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change11]
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change12]
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change13]
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change14]
+FAILED tests/test_research_controller_contracts.py::test_separate_inventory_proof_must_be_complete_same_scope_and_exact_manifest[change15]
+FAILED tests/test_research_controller_contracts.py::test_inventory_membership_never_resolves_an_unsupported_find_or_mixed_fact_scopes
+18 failed, 97 passed in 0.50s

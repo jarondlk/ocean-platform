@@ -1,0 +1,26 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_actual_known_empty_scope_returns_zero_without_a_model_or_unavailable_claim _
+
+actual = Harness(retained=InvestigationFixture(service=<orchestration.investigations.InvestigationService object at 0x119fa7aa0..., 'evaluation:read', 'evaluation:run', 'data:read', 'profile:read', 'overview:read'}), auth_provider='synthetic-c14')})
+
+    def test_actual_known_empty_scope_returns_zero_without_a_model_or_unavailable_claim(
+        actual,
+    ):
+        runtime = FakeRuntime(status="failed")
+        question = (
+            'Count datasets where ctd.bay="C19-empty-synthetic-bay" and '
+            "metagenome.enabled=false and remote_sensing.enabled=false and "
+            "edna_metabarcoding.enabled=false"
+        )
+        result = actual.controller(runtime).execute(actual.request(question))
+>       assert result.outcome == "completed" and result.completion.complete
+E       AssertionError: assert ('clarification' == 'completed'
+E         
+E         - completed
+E         + clarification)
+
+tests/test_research_controller.py:663: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_research_controller.py::test_actual_known_empty_scope_returns_zero_without_a_model_or_unavailable_claim
+1 failed, 2 passed, 35 deselected in 3.00s
