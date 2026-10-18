@@ -1,0 +1,41 @@
+{
+  "command": ".venv/bin/python -m pytest tests/test_investigation_api_stream.py tests/test_investigation_api.py tests/test_investigation_api_integration.py -q -s",
+  "exit_code": 0,
+  "source_before": {
+    "tests/test_investigation_api_stream.py": "f21427e5d884c7898f5bb02dc345ce6998e782e80d92d497b5c36e4db3897a48",
+    "tests/test_investigation_api.py": "8df2069fc9b39ac8337b1e4bdca5075025663794486b307004bdc9d4fdc58255",
+    "tests/test_investigation_api_integration.py": "58a36f9d6bd521cce2918cf11695db1f46900bd030c175defd5ee002e8a1f4f4",
+    "tests/investigation_support.py": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce",
+    "orchestration/investigations.py": "e19bb6c27cdfb458c061940de53b5754a012d995dc0d136eb855ba3df0a867f3",
+    "schema/investigations.py": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+    "api/investigation_routes.py": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6",
+    "api/auth.py": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd",
+    "api/main.py": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4",
+    "config.py": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61",
+    "db/app_models.py": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab"
+  },
+  "source_after": {
+    "tests/test_investigation_api_stream.py": "f21427e5d884c7898f5bb02dc345ce6998e782e80d92d497b5c36e4db3897a48",
+    "tests/test_investigation_api.py": "8df2069fc9b39ac8337b1e4bdca5075025663794486b307004bdc9d4fdc58255",
+    "tests/test_investigation_api_integration.py": "58a36f9d6bd521cce2918cf11695db1f46900bd030c175defd5ee002e8a1f4f4",
+    "tests/investigation_support.py": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce",
+    "orchestration/investigations.py": "e19bb6c27cdfb458c061940de53b5754a012d995dc0d136eb855ba3df0a867f3",
+    "schema/investigations.py": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+    "api/investigation_routes.py": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6",
+    "api/auth.py": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd",
+    "api/main.py": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4",
+    "config.py": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61",
+    "db/app_models.py": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab"
+  },
+  "sources_unchanged_during_run": true,
+  "prior_json_sha256": {
+    "storage-verification.json": "f806afbae4951a0f46698fbecc1f589b54dc84a9d8cf697c7dd9259f2e953556",
+    "http-integration-tests-initial-failure-run.json": "2c17bc40df654a4d75f3334218836c223371f5d5fe0efc007c290428e8762420",
+    "start-snapshot.json": "1cd0a7dc80a9e69665eb740f840ab66c4327310ec19797b37deff8a4810f9146",
+    "postgres-tested-source.json": "e408545629e3bf71db6fbe043c9a4791a2aabc93144976b9c736d9c2327be02c",
+    "postgres-result.json": "974ae36b008e44a2b8f292e3b6d0e59445a382dbca4eda8dc37a6cbb9bbd9831",
+    "http-integration-tests-run.json": "ddfe4e75c3dc719b7e0976263de9a4e269ae1e80071f79efecf6df8d130896fd",
+    "http-integration-verification.json": "4725a0fa8f76a1bcb6c9187d2178b8376d81535b6c018d8c8e791b3d7fa43bab"
+  },
+  "prior_json_unchanged": true
+}

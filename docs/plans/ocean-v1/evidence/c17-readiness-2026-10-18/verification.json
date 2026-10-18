@@ -1,0 +1,336 @@
+{
+  "component": "C17",
+  "state": "Ready for isolated local implementation",
+  "date": "2026-10-18 JST",
+  "branch": "overhaul",
+  "head": "b39efc512bbf113d21d751d3619824006e066bfa",
+  "formal_prerequisites": [
+    "C03",
+    "C04",
+    "C08",
+    "C09"
+  ],
+  "source_entries": {
+    "C03": {
+      ".github/workflows/tests.yml": {
+        "original_sha256": "f31b27de90f1454d78701b6d83e54ce3ca33cbf87f8c491336c6d8da2545dca7",
+        "current_sha256": "48d22798542ba06fb0e8d58e0a11884828b762ff2c0d8769196723f0cf407727",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C12/accepted-source.json",
+        "accepted_receipt_sha256": "faf0e9d0af695210382a2937e22e39bced5951d2a6e3dc7d23cfc82de384f871",
+        "intentional_later_supersession": true
+      },
+      "api/retention_routes.py": {
+        "original_sha256": "ae031d5f220abf565a93e869f150b2d727f7d7e5698ba58a9b5f7c79175f0fec",
+        "current_sha256": "ae031d5f220abf565a93e869f150b2d727f7d7e5698ba58a9b5f7c79175f0fec",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C03/verification.json",
+        "accepted_receipt_sha256": "4fe79931c252a672964b9549af855c1868757ec55f698cdb49fa069e67066510",
+        "intentional_later_supersession": false
+      },
+      "db/retention.py": {
+        "original_sha256": "063fb25caf1ad5ba45bf112d66d150090e359f7e98491245309b9d984057e9f1",
+        "current_sha256": "063fb25caf1ad5ba45bf112d66d150090e359f7e98491245309b9d984057e9f1",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C03/verification.json",
+        "accepted_receipt_sha256": "4fe79931c252a672964b9549af855c1868757ec55f698cdb49fa069e67066510",
+        "intentional_later_supersession": false
+      },
+      "tests/integration/test_retention_concurrency_postgres.py": {
+        "original_sha256": "efddcb3146d19beab5543ab8e8335bc98cb598cbbea515d54e4de220ed972cb3",
+        "current_sha256": "f6126b40c801695393dc7b8b4e24fb2d313e2a52329bc7257c6de2fd5245671b",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/verification.json",
+        "accepted_receipt_sha256": "408d9b9d502eaa37028f8059ceb5fde58c2b9a004b758de28010c5dd0a039ff5",
+        "intentional_later_supersession": true
+      },
+      "tests/test_retention.py": {
+        "original_sha256": "3f0bcdef3b65ddf3fc9ba9fd66dcbecaf429a6f91b7bcfaa1922f8191f6ee6f2",
+        "current_sha256": "3f0bcdef3b65ddf3fc9ba9fd66dcbecaf429a6f91b7bcfaa1922f8191f6ee6f2",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C03/verification.json",
+        "accepted_receipt_sha256": "4fe79931c252a672964b9549af855c1868757ec55f698cdb49fa069e67066510",
+        "intentional_later_supersession": false
+      },
+      "tests/test_retention_cleanup_script.py": {
+        "original_sha256": "598d89bad59c67fbb3e330d8c6678d47af07adc2b7805a7fde0a91ca174c692e",
+        "current_sha256": "598d89bad59c67fbb3e330d8c6678d47af07adc2b7805a7fde0a91ca174c692e",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C03/verification.json",
+        "accepted_receipt_sha256": "4fe79931c252a672964b9549af855c1868757ec55f698cdb49fa069e67066510",
+        "intentional_later_supersession": false
+      }
+    },
+    "C04": {
+      "api/auth.py": {
+        "original_sha256": "ace7c43baa9a665ada111c30e99d674d743c5e148d14995bf3d9bb3da8ea566a",
+        "current_sha256": "23ee454554942b1b34fbdfa134e815fdb6fc70699c4b63fe5fadf323d2fe7cd4",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C16/accepted-source.json",
+        "accepted_receipt_sha256": "b3198fc1db49ca5907f42540c34dfe1a3d0e0cb66c4a8fdf5ca4674e6bd2979d",
+        "intentional_later_supersession": true
+      },
+      "tests/test_api_security.py": {
+        "original_sha256": "487a4a8af1451281d5be6d377fb8d14370f0b887c8b267aff019a0abd27f0aa4",
+        "current_sha256": "487a4a8af1451281d5be6d377fb8d14370f0b887c8b267aff019a0abd27f0aa4",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C04/verification.json",
+        "accepted_receipt_sha256": "a03f39b682573b2d7d7e8cb9db6a6c0bda7c7aa9f494bd514d60c7490d1deaaf",
+        "intentional_later_supersession": false
+      },
+      "tests/test_auth.py": {
+        "original_sha256": "2686e0356352d34d71fe43ed52dd060f44c707602c097c71f47de302cdc34196",
+        "current_sha256": "2686e0356352d34d71fe43ed52dd060f44c707602c097c71f47de302cdc34196",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C04/verification.json",
+        "accepted_receipt_sha256": "a03f39b682573b2d7d7e8cb9db6a6c0bda7c7aa9f494bd514d60c7490d1deaaf",
+        "intentional_later_supersession": false
+      },
+      "tests/test_rate_limit.py": {
+        "original_sha256": "da9f7bbec04f8608701f60ff6e3bffd28259b674dc100e5c61394c6e73dbd9de",
+        "current_sha256": "da9f7bbec04f8608701f60ff6e3bffd28259b674dc100e5c61394c6e73dbd9de",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C04/verification.json",
+        "accepted_receipt_sha256": "a03f39b682573b2d7d7e8cb9db6a6c0bda7c7aa9f494bd514d60c7490d1deaaf",
+        "intentional_later_supersession": false
+      }
+    },
+    "C08": {
+      "frontend-v1/src/catalogue-contract.generated.ts": {
+        "original_sha256": "59f8bd5727d02f83704fa44175cace4ddda018e8e40af00e4ca7081fa90a16ca",
+        "current_sha256": "663b0bd13f5c3a4a4e6441b102185ddffafff51be6ccc6750ed67e6ceab3ebe0",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C12/accepted-source.json",
+        "accepted_receipt_sha256": "faf0e9d0af695210382a2937e22e39bced5951d2a6e3dc7d23cfc82de384f871",
+        "intentional_later_supersession": true
+      },
+      "frontend-v1/src/catalogue-contract.ts": {
+        "original_sha256": "c9a2d2b8d1f35280cabaa7c399f7af7baaa084cad0e52ddd3304682997ba14d5",
+        "current_sha256": "5b1fe9accdc455bd5f298af20a97e0f300fcb4d69b362e92baf18782c49f02b1",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C12/accepted-source.json",
+        "accepted_receipt_sha256": "faf0e9d0af695210382a2937e22e39bced5951d2a6e3dc7d23cfc82de384f871",
+        "intentional_later_supersession": true
+      },
+      "frontend-v1/tests/catalogue-contract.test.ts": {
+        "original_sha256": "b16592062e880ae7565f73d15b87f5e47ff66a02658d1190c2051740c8874c9b",
+        "current_sha256": "1dc22dcb490b5f676d380cac37d9522903f0cc04c3e8feb9e3e653517b0dc816",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C12/accepted-source.json",
+        "accepted_receipt_sha256": "faf0e9d0af695210382a2937e22e39bced5951d2a6e3dc7d23cfc82de384f871",
+        "intentional_later_supersession": true
+      },
+      "schema/context_catalogue.py": {
+        "original_sha256": "c757fa2f91c3e44c5832290faaf9fa01d7501c33348747fc281fd92e7dd13dd0",
+        "current_sha256": "548ad672277c286b97dfefcc209559363c44067211d02d6901752d21c20ad0a2",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C12/accepted-source.json",
+        "accepted_receipt_sha256": "faf0e9d0af695210382a2937e22e39bced5951d2a6e3dc7d23cfc82de384f871",
+        "intentional_later_supersession": true
+      },
+      "schema/context_catalogue.v1.schema.json": {
+        "original_sha256": "385d3cb7e8a7e5f5c36fc8f177c0b9c540d3e249496b7b6d869ec7d36785b972",
+        "current_sha256": "152a2a213d7a3d1b0dc1628c665915e7b06f4c7a929f63383d001570a9303565",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C12/accepted-source.json",
+        "accepted_receipt_sha256": "faf0e9d0af695210382a2937e22e39bced5951d2a6e3dc7d23cfc82de384f871",
+        "intentional_later_supersession": true
+      },
+      "schema/context_catalogue_examples.json": {
+        "original_sha256": "258cd0d3c7622d703a29c9840b05e0d418cbd6fee614c1fc9eb4bef12d3d6ed3",
+        "current_sha256": "01185ab87710716e82fdb8ca7120e233256e2f4c585aba3860a5368a485399b1",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C12/accepted-source.json",
+        "accepted_receipt_sha256": "faf0e9d0af695210382a2937e22e39bced5951d2a6e3dc7d23cfc82de384f871",
+        "intentional_later_supersession": true
+      },
+      "schema/context_catalogue_fixtures.py": {
+        "original_sha256": "8081971ce01e727dec02fb301fa60941443d3a1943dba357247198761c8b8fdc",
+        "current_sha256": "8081971ce01e727dec02fb301fa60941443d3a1943dba357247198761c8b8fdc",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C08/verification.json",
+        "accepted_receipt_sha256": "acfee7a36ecc76cf66d5ad9edeec9711c8d12a95400702e940c1ea263090df14",
+        "intentional_later_supersession": false
+      },
+      "scripts/export_catalogue_examples.py": {
+        "original_sha256": "7fd86bf2c8b0e796c1436e207c71c912ab279cf859ae22c6fa1ee1182bf59235",
+        "current_sha256": "7fd86bf2c8b0e796c1436e207c71c912ab279cf859ae22c6fa1ee1182bf59235",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C08/verification.json",
+        "accepted_receipt_sha256": "acfee7a36ecc76cf66d5ad9edeec9711c8d12a95400702e940c1ea263090df14",
+        "intentional_later_supersession": false
+      },
+      "scripts/export_catalogue_types.py": {
+        "original_sha256": "417fb30b8209cc2422421495e76c50801715ca034d4682d4844d89d71ff2c682",
+        "current_sha256": "417fb30b8209cc2422421495e76c50801715ca034d4682d4844d89d71ff2c682",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C08/verification.json",
+        "accepted_receipt_sha256": "acfee7a36ecc76cf66d5ad9edeec9711c8d12a95400702e940c1ea263090df14",
+        "intentional_later_supersession": false
+      },
+      "scripts/export_context_catalogue.py": {
+        "original_sha256": "107be75e5e6fcaa74c1285dababff4b9673861214c7255cc48ca06abc82820d7",
+        "current_sha256": "107be75e5e6fcaa74c1285dababff4b9673861214c7255cc48ca06abc82820d7",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C08/verification.json",
+        "accepted_receipt_sha256": "acfee7a36ecc76cf66d5ad9edeec9711c8d12a95400702e940c1ea263090df14",
+        "intentional_later_supersession": false
+      },
+      "tests/test_context_catalogue_contract.py": {
+        "original_sha256": "0af0720cf12be022a4c72d7a8248de13775c074f4ceb06bd2124b1787e717853",
+        "current_sha256": "0af0720cf12be022a4c72d7a8248de13775c074f4ceb06bd2124b1787e717853",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C08/verification.json",
+        "accepted_receipt_sha256": "acfee7a36ecc76cf66d5ad9edeec9711c8d12a95400702e940c1ea263090df14",
+        "intentional_later_supersession": false
+      },
+      "tests/test_context_catalogue_fixtures.py": {
+        "original_sha256": "36c4e96202f60ba38a606730e7e6b851c5f06b7e39b6ad366779722086412d69",
+        "current_sha256": "36c4e96202f60ba38a606730e7e6b851c5f06b7e39b6ad366779722086412d69",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C08/verification.json",
+        "accepted_receipt_sha256": "acfee7a36ecc76cf66d5ad9edeec9711c8d12a95400702e940c1ea263090df14",
+        "intentional_later_supersession": false
+      }
+    },
+    "C09": {
+      ".github/workflows/tests.yml": {
+        "original_sha256": "f1d30649d2c099512c4fe3b44a1893d7d8f73cd012ed35f9d82c408f865e23aa",
+        "current_sha256": "48d22798542ba06fb0e8d58e0a11884828b762ff2c0d8769196723f0cf407727",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C12/accepted-source.json",
+        "accepted_receipt_sha256": "faf0e9d0af695210382a2937e22e39bced5951d2a6e3dc7d23cfc82de384f871",
+        "intentional_later_supersession": true
+      },
+      "ingestion/catalogue_snapshot.py": {
+        "original_sha256": "450669acc6bc09a31532e101f9af38a2dee22d57053dd1b0b1e5f23ca892cec4",
+        "current_sha256": "450669acc6bc09a31532e101f9af38a2dee22d57053dd1b0b1e5f23ca892cec4",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C09/verification.json",
+        "accepted_receipt_sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+        "intentional_later_supersession": false
+      },
+      "ingestion/catalogue_snapshot_capture.py": {
+        "original_sha256": "bbe8cd9e69de0ab0838f320139a6e152856b533f0aff10fc0077faf493be3dd5",
+        "current_sha256": "bbe8cd9e69de0ab0838f320139a6e152856b533f0aff10fc0077faf493be3dd5",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C09/verification.json",
+        "accepted_receipt_sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+        "intentional_later_supersession": false
+      },
+      "ingestion/catalogue_snapshot_fixtures.py": {
+        "original_sha256": "ad35c851b0d23e9f1da91b32cfb60e582d0fe9d82274e103fd4124938879934b",
+        "current_sha256": "ad35c851b0d23e9f1da91b32cfb60e582d0fe9d82274e103fd4124938879934b",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C09/verification.json",
+        "accepted_receipt_sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+        "intentional_later_supersession": false
+      },
+      "ingestion/catalogue_snapshot_transfer.py": {
+        "original_sha256": "0ce74b1cdca6d2a6c465157d542caae44698d0adea2c055ef7b1ac1e0173fc82",
+        "current_sha256": "0ce74b1cdca6d2a6c465157d542caae44698d0adea2c055ef7b1ac1e0173fc82",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C09/verification.json",
+        "accepted_receipt_sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+        "intentional_later_supersession": false
+      },
+      "schema/catalogue_snapshot.py": {
+        "original_sha256": "0035a2946293b9213f5d32fe4ad8f9263db84b8cb55a540442391dcbfc3b3900",
+        "current_sha256": "0035a2946293b9213f5d32fe4ad8f9263db84b8cb55a540442391dcbfc3b3900",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C09/verification.json",
+        "accepted_receipt_sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+        "intentional_later_supersession": false
+      },
+      "schema/catalogue_snapshot.v1.schema.json": {
+        "original_sha256": "afabe0cb60c416f5160994cd9d3b5e53806985efc48bb568220128d7b4e0fb38",
+        "current_sha256": "afabe0cb60c416f5160994cd9d3b5e53806985efc48bb568220128d7b4e0fb38",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C09/verification.json",
+        "accepted_receipt_sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+        "intentional_later_supersession": false
+      },
+      "schema/catalogue_snapshot_examples.json": {
+        "original_sha256": "64377255af58b261d597b096ead77fe7370d3eb1ebfb052c791aa8d5e55cc04f",
+        "current_sha256": "64377255af58b261d597b096ead77fe7370d3eb1ebfb052c791aa8d5e55cc04f",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C09/verification.json",
+        "accepted_receipt_sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+        "intentional_later_supersession": false
+      },
+      "scripts/export_catalogue_snapshot.py": {
+        "original_sha256": "dafda2b885202dd0e88c7e237ecf4f577339513e034e73158b627f71c2cd28fe",
+        "current_sha256": "dafda2b885202dd0e88c7e237ecf4f577339513e034e73158b627f71c2cd28fe",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C09/verification.json",
+        "accepted_receipt_sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+        "intentional_later_supersession": false
+      },
+      "tests/integration/test_catalogue_snapshot_capture_postgres.py": {
+        "original_sha256": "b97f450ed0ac9637b44ef6a0e322b9f84f9192a09185b590e1b4f5b062ebd658",
+        "current_sha256": "b97f450ed0ac9637b44ef6a0e322b9f84f9192a09185b590e1b4f5b062ebd658",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C09/verification.json",
+        "accepted_receipt_sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+        "intentional_later_supersession": false
+      },
+      "tests/test_catalogue_snapshot_capture.py": {
+        "original_sha256": "e3fb4d5b01c2ab2187f498442e3ace2d3e986625eb54886ba988002cf75eef2b",
+        "current_sha256": "e3fb4d5b01c2ab2187f498442e3ace2d3e986625eb54886ba988002cf75eef2b",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C09/verification.json",
+        "accepted_receipt_sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+        "intentional_later_supersession": false
+      },
+      "tests/test_catalogue_snapshot_fixtures.py": {
+        "original_sha256": "d8b21e9530c61b074e320b6bfef6f9d74a6d3bccacc48bfefaeb258120e98574",
+        "current_sha256": "d8b21e9530c61b074e320b6bfef6f9d74a6d3bccacc48bfefaeb258120e98574",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C09/verification.json",
+        "accepted_receipt_sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+        "intentional_later_supersession": false
+      },
+      "tests/test_catalogue_snapshot_transfer.py": {
+        "original_sha256": "1036530c19ecc88518395e9dd8a6457bb473dbffd94cb8ade0211f66336bcdb0",
+        "current_sha256": "1036530c19ecc88518395e9dd8a6457bb473dbffd94cb8ade0211f66336bcdb0",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C09/verification.json",
+        "accepted_receipt_sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+        "intentional_later_supersession": false
+      },
+      "tests/test_catalogue_snapshots.py": {
+        "original_sha256": "5975a037a81fda6358796a9b5716104809c9bee0a7b76581b7b5659c1d1faf36",
+        "current_sha256": "5975a037a81fda6358796a9b5716104809c9bee0a7b76581b7b5659c1d1faf36",
+        "accepted_receipt": "docs/plans/ocean-v1/evidence/C09/verification.json",
+        "accepted_receipt_sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+        "intentional_later_supersession": false
+      }
+    }
+  },
+  "receipt_sha256": {
+    "docs/plans/ocean-v1/evidence/C16/accepted-source.json": "b3198fc1db49ca5907f42540c34dfe1a3d0e0cb66c4a8fdf5ca4674e6bd2979d",
+    "docs/plans/ocean-v1/evidence/C12/accepted-source.json": "faf0e9d0af695210382a2937e22e39bced5951d2a6e3dc7d23cfc82de384f871",
+    "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/verification.json": "408d9b9d502eaa37028f8059ceb5fde58c2b9a004b758de28010c5dd0a039ff5",
+    "docs/plans/ocean-v1/evidence/C03/verification.json": "4fe79931c252a672964b9549af855c1868757ec55f698cdb49fa069e67066510",
+    "docs/plans/ocean-v1/evidence/C04/verification.json": "a03f39b682573b2d7d7e8cb9db6a6c0bda7c7aa9f494bd514d60c7490d1deaaf",
+    "docs/plans/ocean-v1/evidence/C08/verification.json": "acfee7a36ecc76cf66d5ad9edeec9711c8d12a95400702e940c1ea263090df14",
+    "docs/plans/ocean-v1/evidence/C09/verification.json": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+    "docs/plans/ocean-v1/evidence/C16/verification.json": "3d08bf93659366a59816cb84579dada932bae3a542374a350fde554d5d741f0d",
+    "docs/plans/ocean-v1/evidence/C16/delivery.json": "fbf4ed0276f4b6c711fc10e75fe09006a1e1759a237a32970ccdc74a6bf6846b"
+  },
+  "all_36_formal_source_entries_accepted": true,
+  "sequential_C16_source": "4981642f7f2a9807732d11a1d88b3674fd02d832",
+  "sequential_C16_delivery": "b39efc512bbf113d21d751d3619824006e066bfa",
+  "reused_source_bound_gates": {
+    "backend_passed": 3886,
+    "postgres_gated_skips_in_backend": 127,
+    "backend_coverage_percent": 85.57,
+    "actual_postgres_passed": 127,
+    "actual_postgres_groups": [
+      82,
+      12,
+      12,
+      21
+    ],
+    "migration": "pass",
+    "idempotent_upsert": "pass",
+    "backup_isolated_restore": "pass",
+    "v1_tests": 510,
+    "legacy_frontend_tests": 132,
+    "both_typechecks_builds": "pass",
+    "production_dependency_audits": "zero vulnerabilities",
+    "generated_comparisons": "pass"
+  },
+  "test_policy": "No completed checks repeated; exact-source C16 CI covers current prerequisite auth/retention/catalogue code",
+  "preservation": {
+    "unrelated_files": {
+      "count": 30,
+      "all_match": true
+    },
+    "scientific_artifacts": {
+      "count": 7,
+      "all_match": true
+    },
+    "serving_files": {
+      "count": 2,
+      "all_match": true
+    },
+    "legacy_frontend_files": {
+      "count": 106,
+      "all_match": true
+    }
+  },
+  "prior_tracked_evidence_files": 683,
+  "external_gates": [
+    "Real OIDC enrollment",
+    "Actual data acquisition/transfer and scientific approvals",
+    "Production migrations, retention policy and capacity",
+    "Cloud target configuration, provisioning/deployment authorization"
+  ],
+  "next_action": "Start C17 checkpoint1 additive application persistence/migration; authenticated current ownership/context operations; explicit refresh/retention reconciliation. No UI/controller/execution/history import."
+}

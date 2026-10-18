@@ -1,0 +1,245 @@
+{
+  "component": "C17",
+  "state": "Complete local acceptance; source checkpoint and exact-source hosted delivery pending",
+  "date": "2026-10-18 JST",
+  "branch": "overhaul",
+  "base_commit": "b39efc512bbf113d21d751d3619824006e066bfa",
+  "files": {
+    ".github/workflows/tests.yml": "1cdd60958fc656ca773bd0b2ea1485f16ba95acdec3c355be3700580940bcd5f",
+    "api/auth.py": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd",
+    "api/investigation_routes.py": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6",
+    "api/main.py": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4",
+    "config.py": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61",
+    "db/app_models.py": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab",
+    "migrations/versions/20261018_0017_investigations.py": "2bb803bd1e37e44a3d7a8845d8c800698e88d8ca0e322138d2216f38ff9bf6f3",
+    "orchestration/investigations.py": "e19bb6c27cdfb458c061940de53b5754a012d995dc0d136eb855ba3df0a867f3",
+    "schema/investigations.py": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+    "tests/integration/test_investigation_postgres.py": "cc17431ee9ae12509cf896d9d023d0c4592f08201c113ba96a1b45a9816bb642",
+    "tests/integration/test_investigation_service_postgres.py": "351d9b7bbc80f63e8ccf1e54e64ac40464c4ee2a9067050fad719412946e6405",
+    "tests/investigation_support.py": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce",
+    "tests/test_bootstrap_database.py": "345c98e9713c6ed9b7edf52774ce752fad4030b62277f11e1dc68102fd0b8de9",
+    "tests/test_investigation_api.py": "8df2069fc9b39ac8337b1e4bdca5075025663794486b307004bdc9d4fdc58255",
+    "tests/test_investigation_api_integration.py": "58a36f9d6bd521cce2918cf11695db1f46900bd030c175defd5ee002e8a1f4f4",
+    "tests/test_investigation_api_stream.py": "f21427e5d884c7898f5bb02dc345ce6998e782e80d92d497b5c36e4db3897a48",
+    "tests/test_investigation_models.py": "fdf7b474f33db62fe4a5e140f4cb87d79f9149b31c6fa5391c5f8e2895d377fa",
+    "tests/test_investigation_postgres_guard.py": "31e6042f02ed796f82777bfb133dd8996b25cc0abc507ee723e1836cfff3b979",
+    "tests/test_investigations.py": "c1589de656caaadca3a8f6a55660e9f478e9196479a3d275f2a8a31d357555bd"
+  },
+  "source_sha256": "1a1f3d3ff413c8ba71da1e9a9dbc67823bde23801e5ad1385ae9fe57676d570f",
+  "aggregate_algorithm": "SHA256 of sorted UTF-8 path:SHA256 lines with LF endings",
+  "verification": {
+    "final_backend": {
+      "passed": 4187,
+      "postgres_gated_skips": 187,
+      "coverage_percent": 85.08,
+      "warnings": 2597,
+      "pytest_seconds": 336.64,
+      "driver_seconds": 338.07,
+      "source_unchanged": true,
+      "source_paths": 19,
+      "unrelated_local_benchmark_cases_excluded_from_commit": 9
+    },
+    "actual_disposable_postgresql": {
+      "passed": 60,
+      "storage_migration": 49,
+      "service": 11,
+      "seconds": 16.89,
+      "source_paths_during_run": 14,
+      "source_unchanged_during_run": true,
+      "later_API_service_supersessions": {
+        "api/investigation_routes.py": {
+          "previous_sha256": "d697b87ecbef3735ee0abc04f44a896dc413e0d00dfff7dd58c39743364d7357",
+          "C17_sha256": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6"
+        },
+        "orchestration/investigations.py": {
+          "previous_sha256": "1c55eb703b714db7aac87c27e1b2a43ad10841384636a38f129a8a87866c8662",
+          "C17_sha256": "e19bb6c27cdfb458c061940de53b5754a012d995dc0d136eb855ba3df0a867f3"
+        }
+      },
+      "qualification": "Original PG receipts bind the then-tested source. API streamed-body bound and service committed-retry integrity were superseded afterward, covered by final backend and affected API tests. Exact-source hosted CI must run all60 C17 PostgreSQL cases.",
+      "schemas_remaining": 0,
+      "owned_server_stopped": true,
+      "ambient_database_urls_used": false
+    },
+    "affected_API": {
+      "passed": 155,
+      "raw_ASGI_stream": 15,
+      "contract": 126,
+      "actual_C17_service_C14_ASGI_integration": 14,
+      "actual_HTTP_route_requests_in_integration": 112,
+      "sources_unchanged": true,
+      "not_real_OIDC": true
+    },
+    "required_regressions_and_offline_target_guards": 177,
+    "bootstrap_final": 38,
+    "storage_models": 64,
+    "active_ruff": "pass",
+    "independent_source_review": "independent-review.json",
+    "frontend_generated_gates": "No frontend/scientific source changes in C17. Reuse accepted C16 local510 frontend tests/build/typecheck and9 generated checks; current combined source remains a hosted CI gate.",
+    "hosted_ci": "pending exact-source run"
+  },
+  "preservation": {
+    "unrelated_files": {
+      "count": 30,
+      "all_match": true
+    },
+    "scientific_artifacts": {
+      "count": 7,
+      "all_match": true
+    },
+    "serving_files": {
+      "count": 2,
+      "all_match": true
+    },
+    "legacy_frontend_files": {
+      "count": 106,
+      "all_match": true
+    },
+    "prior_evidence_files": {
+      "count": 683,
+      "all_match": true
+    }
+  },
+  "prerequisite_reconciliation": {
+    "formal_source_entries": 36,
+    "prerequisite_receipts_unchanged": 9,
+    "formal_current_source": {
+      "C03": {
+        "paths": 6,
+        "unchanged": 5,
+        "core_unchanged": 5,
+        "intentional_C17_supersessions": {
+          ".github/workflows/tests.yml": {
+            "previous_sha256": "48d22798542ba06fb0e8d58e0a11884828b762ff2c0d8769196723f0cf407727",
+            "C17_sha256": "1cdd60958fc656ca773bd0b2ea1485f16ba95acdec3c355be3700580940bcd5f"
+          }
+        }
+      },
+      "C04": {
+        "paths": 4,
+        "unchanged": 3,
+        "core_unchanged": 3,
+        "intentional_C17_supersessions": {
+          "api/auth.py": {
+            "previous_sha256": "23ee454554942b1b34fbdfa134e815fdb6fc70699c4b63fe5fadf323d2fe7cd4",
+            "C17_sha256": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd"
+          }
+        }
+      },
+      "C08": {
+        "paths": 12,
+        "unchanged": 12,
+        "core_unchanged": 12,
+        "intentional_C17_supersessions": {}
+      },
+      "C09": {
+        "paths": 14,
+        "unchanged": 13,
+        "core_unchanged": 13,
+        "intentional_C17_supersessions": {
+          ".github/workflows/tests.yml": {
+            "previous_sha256": "48d22798542ba06fb0e8d58e0a11884828b762ff2c0d8769196723f0cf407727",
+            "C17_sha256": "1cdd60958fc656ca773bd0b2ea1485f16ba95acdec3c355be3700580940bcd5f"
+          }
+        }
+      }
+    },
+    "C16_current_source": {
+      "paths": 18,
+      "unchanged": 15,
+      "intentional_C17_supersessions": {
+        "api/auth.py": {
+          "previous_sha256": "23ee454554942b1b34fbdfa134e815fdb6fc70699c4b63fe5fadf323d2fe7cd4",
+          "C17_sha256": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd"
+        },
+        "api/main.py": {
+          "previous_sha256": "28940d6db1f9d1aca24d6f13d3950400bc4955b8ec689d07b6f7bbef547b71ef",
+          "C17_sha256": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4"
+        },
+        "config.py": {
+          "previous_sha256": "5750374e35fe3f03948156e44bccb0e087f8c2adc9ea0b10a9e8a2e6ee90c763",
+          "C17_sha256": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61"
+        }
+      }
+    }
+  },
+  "honest_failure_history": {
+    "initial_broad_run": {
+      "passed": 4132,
+      "failed": 32,
+      "skipped": 187,
+      "errors": 14,
+      "coverage_percent": 83.92,
+      "status": "failed and preserved",
+      "cause": "43 existing synthetic loopback fixture failures/errors from sandbox socket.bind denial;3 stale bootstrap test expectations0016. Corrected final full suite passes; originals are not rewritten."
+    },
+    "bootstrap_supersession": {
+      "from_commit": "b39efc512bbf113d21d751d3619824006e066bfa",
+      "path": "tests/test_bootstrap_database.py",
+      "current_sha256": "345c98e9713c6ed9b7edf52774ce752fad4030b62277f11e1dc68102fd0b8de9",
+      "reason": "Current0017/stale0016 plus four new required tables; production bootstrap already resolves migration head."
+    },
+    "focused_fixture_corrections": "Earlier HTTP null-scope expectation, root fixture policy revision and commit fault-hook failures preserved in original logs; corrected focused and final full suites pass.",
+    "final_run_permission_timeout": "First automatic permission review timed out before execution; one permitted direct-driver retry completed. No final resource/RSS measurement is claimed."
+  },
+  "acceptance_scope": [
+    "Private named investigations and conversations with current ownership/permission checks; four additive v1 application tables and0017 migration.",
+    "Immutable context scope/attachment/pin revisions, explicit snapshots and artifact hash bindings; submitted revision loader never chooses latest.",
+    "Durable idempotent prepare/reference/apply/activate, real PostgreSQL CAS/concurrency and uncertain commit recovery; retained references are conservative.",
+    "Explicit refresh branches expose unresolved selections and preserve original evidence without narrative reuse.",
+    "Trusted metadata-only legal holds and logical retirement; held ancestors protect branches, zero physical deletion/reference release.",
+    "Default-off14 worker-owned POST operations, bounded streamed strict JSON and immutable-current source evidence."
+  ],
+  "external_or_future_gates": [
+    "Real OIDC and independent scientific/data review are unclaimed.",
+    "C18 UI integration, C20 durable execution and C21 answer/history integrations remain future components.",
+    "Production migrations/retention policy, capacity, cloud target configuration/provisioning/deployment require separate gates/authorization.",
+    "No legacy history import, real acquisition/transfer, main/legacy deployment or mutation occurred."
+  ],
+  "evidence_sha256": {
+    "docs/plans/ocean-v1/evidence/C17/accepted-source.json": "6a22a3c9fd179931b9e9f4e4ee8c4151952776ea88a35e5fb5f4fb45fcc23fc1",
+    "docs/plans/ocean-v1/evidence/C17/api-stream-ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C17/api-stream-tests-run.json": "e7de847dfc333206ef8cea2465c7f3c21499cf43d334a58125f50dd81fe357ea",
+    "docs/plans/ocean-v1/evidence/C17/api-stream-tests.txt": "59aa86cb2fcabab1414567b18d4085c2145be7fa5b5033b30be6d250c319b048",
+    "docs/plans/ocean-v1/evidence/C17/api-stream-verification.json": "20d1d14a47e4933b1ac55d01dc2642f59a9a8c3e6e0761eac40c8269edc7d4c2",
+    "docs/plans/ocean-v1/evidence/C17/backend-driver.txt": "43c5349b29723d96b5f57fa0752b7e77a7d85a5c537545194c7840dc2a92be85",
+    "docs/plans/ocean-v1/evidence/C17/backend-resources.txt": "6a70acc4099f907ed27eebbdd97de97a23e344e82ed2a86ddad44790db77337b",
+    "docs/plans/ocean-v1/evidence/C17/backend-result.json": "8dcbb4f488ad7c4ceef3dc34ccfd410752379b301d2a5995c4f81cb27c3f14bd",
+    "docs/plans/ocean-v1/evidence/C17/backend-tested-source.json": "8bc8456a1a975126dfbf4b775964e02e98e8ae641f8c5e68e540da915f00cf40",
+    "docs/plans/ocean-v1/evidence/C17/backend-tests.txt": "be0be7cb13662475c0b568f04a844449f938514ed0dfc69a2f98753e51fe8b4c",
+    "docs/plans/ocean-v1/evidence/C17/bootstrap-final-tests.txt": "f6b50bcc1d5cfa96f1aeb0f574569034f3b1d24b68964cd7835e562f00fe5943",
+    "docs/plans/ocean-v1/evidence/C17/final-backend-result.json": "92712adf51e3742e1f56008b56876f5c4287fe3ef9919bfc57ea2dec4b6ad1e9",
+    "docs/plans/ocean-v1/evidence/C17/final-backend-tested-source.json": "2db472429b5c732042583f14a9423bfae73a26e7c8572a318a82a5f285674cc5",
+    "docs/plans/ocean-v1/evidence/C17/final-backend-tests.txt": "13fa0bf7dfd8f807c3119e6fadd3b07d6178982b24de330de9bf1452d3d4d208",
+    "docs/plans/ocean-v1/evidence/C17/guard-required-regressions.txt": "6e8d5c359af95c7a432f574f2326b04a9d8246a13f1341008118b0b35804350c",
+    "docs/plans/ocean-v1/evidence/C17/http-integration-ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C17/http-integration-tests-initial-failure-run.json": "2c17bc40df654a4d75f3334218836c223371f5d5fe0efc007c290428e8762420",
+    "docs/plans/ocean-v1/evidence/C17/http-integration-tests-initial-failure.txt": "ee63723f8f5f98ffe869345cb99f2263415cd7618b4aabe12e84e9407b8688d2",
+    "docs/plans/ocean-v1/evidence/C17/http-integration-tests-run.json": "ddfe4e75c3dc719b7e0976263de9a4e269ae1e80071f79efecf6df8d130896fd",
+    "docs/plans/ocean-v1/evidence/C17/http-integration-tests.txt": "22272e71f17d68a879b5b23ef15800fe505395f513e8b605aea1ea653a6ee71f",
+    "docs/plans/ocean-v1/evidence/C17/http-integration-verification.json": "4725a0fa8f76a1bcb6c9187d2178b8376d81535b6c018d8c8e791b3d7fa43bab",
+    "docs/plans/ocean-v1/evidence/C17/independent-review.json": "ded5bc7732f16995dcc013f976df59d9f2bbb809d7175462864ee870b65890bf",
+    "docs/plans/ocean-v1/evidence/C17/postgres-lifecycle.txt": "5876ee4e982e56c2c2dd286c470cbbfbc6090932b9b27f352fee37bbc70c84c3",
+    "docs/plans/ocean-v1/evidence/C17/postgres-result.json": "974ae36b008e44a2b8f292e3b6d0e59445a382dbca4eda8dc37a6cbb9bbd9831",
+    "docs/plans/ocean-v1/evidence/C17/postgres-tested-source.json": "e408545629e3bf71db6fbe043c9a4791a2aabc93144976b9c736d9c2327be02c",
+    "docs/plans/ocean-v1/evidence/C17/postgres-tests.txt": "48d0a78d99858194540b85e87d610ed7c6e0a7502627d73e3d114def6fda1d9f",
+    "docs/plans/ocean-v1/evidence/C17/preservation.json": "c3e5d07d06ab338b33b5e64d1743a4d82ba64710b27f6bc7ce7a3193fce8dde3",
+    "docs/plans/ocean-v1/evidence/C17/ruff-active.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C17/ruff-final-fixtures.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C17/ruff-service-tests.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C17/service-commit-fault-tests-corrected.txt": "7b67fc5a5242d64316897e7146188293f54d2e455e4a4b33861d578367a7e303",
+    "docs/plans/ocean-v1/evidence/C17/service-commit-fault-tests.txt": "f2c554ff285833ee9f87c51824888e3c958066c641766b49ff2c5f493e2f7817",
+    "docs/plans/ocean-v1/evidence/C17/service-retry-integrity-tests.txt": "b746a602b355b4bfcc14b99e5cbed4d6f0b297fe0f01b6471fd584298e8da252",
+    "docs/plans/ocean-v1/evidence/C17/service-tests-after-fixture-fix.txt": "770b6623f81785e7d3b92d503cdede1fa983513d9061751d3db7cf57d7a08be3",
+    "docs/plans/ocean-v1/evidence/C17/service-tests-expanded.txt": "bc41812b17ebeb65201fd8ae358f93b9fb7f295953c3872206ec29fe9521ee91",
+    "docs/plans/ocean-v1/evidence/C17/service-tests-initial.txt": "04d844d049716c95d8ad371508b713aa6b71e6e7d351283128466976ee6287a1",
+    "docs/plans/ocean-v1/evidence/C17/start-snapshot.json": "1cd0a7dc80a9e69665eb740f840ab66c4327310ec19797b37deff8a4810f9146",
+    "docs/plans/ocean-v1/evidence/C17/storage-model-tests.txt": "1f2a1d5c64b65c8fc9369b84f386a7fb1e81fcd3c6db075a9c078af4b09ce079",
+    "docs/plans/ocean-v1/evidence/C17/storage-ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C17/storage-verification.json": "f806afbae4951a0f46698fbecc1f589b54dc84a9d8cf697c7dd9259f2e953556",
+    "docs/plans/ocean-v1/evidence/C17/verify_backend.py": "34e09e8636810b1fbbecd376b100185b0c2eb737f2ec332804e87670ac50340f",
+    "docs/plans/ocean-v1/evidence/C17/verify_backend_final.py": "c219c8c0714574adf31bdbf5b40824ff201ce0f803a39949be5c3c96fbab8a3d",
+    "docs/plans/ocean-v1/evidence/C17/verify_postgres.py": "2832220757feb6186a72d82b7884a6af70910ec503d4405845b56f85d7a122d4",
+    "docs/plans/ocean-v1/evidence/C17/verify_preservation.py": "43341a73484a6ea2e354b5e6a457d66951ee7ff9774573fac8e38f3d7e935648"
+  }
+}

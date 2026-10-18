@@ -1,0 +1,60 @@
+{
+  "component": "C17",
+  "evidence_reviewed": {
+    "final_backend": {
+      "exit_code": 0,
+      "file": "final-backend-result.json",
+      "summary": "4187 passed, 187 expected PostgreSQL-gated skips; 85.08% coverage; final source unchanged"
+    },
+    "original_postgresql": {
+      "file": "postgres-result.json",
+      "summary": "60 actual PostgreSQL cases passed; zero remaining schemas; owned server stopped"
+    }
+  },
+  "findings": [],
+  "limitations": [
+    "No tests or services were rerun during this review.",
+    "The immutable original PostgreSQL receipt binds the pre-stream/pre-retry-integrity source. Those later fixes have focused/final backend coverage; final source-bound hosted PostgreSQL acceptance remains a delivery gate.",
+    "Inspection and synthetic local acceptance do not establish actual OIDC enrollment, scientific approvals, real-data transfer authority, production capacity, operator retention policy, or live independent-site IAM/network isolation.",
+    "Artifact production/storage, executable conversation history, UI integration and run execution remain explicitly deferred to their later components; conservative reference release remains unavailable."
+  ],
+  "result": "no_blocking_findings",
+  "review_kind": "final read-only design and code review against component specification",
+  "review_scope": [
+    "docs/plans/ocean-v1/components/C17-investigation-persistence.md",
+    "docs/plans/ocean-v1/C17_INVESTIGATION_CONTRACT.md",
+    "orchestration/investigations.py",
+    "schema/investigations.py",
+    "api/investigation_routes.py",
+    "api/auth.py",
+    "config.py",
+    "db/app_models.py",
+    "migrations/versions/20261018_0017_investigations.py",
+    "db/retention.py",
+    "orchestration/catalogue_registration.py",
+    "ingestion/catalogue_snapshot.py",
+    "tests/integration/test_investigation_service_postgres.py",
+    "tests/test_investigations.py",
+    "tests/test_investigation_api_stream.py"
+  ],
+  "reviewed_at": "2026-10-18T00:25:29.163227+00:00",
+  "reviewer": "/root/c17_storage",
+  "reviewer_provenance": "Separate review pass of parent-authored service/API; reviewer also authored C17 storage/migration and initial PostgreSQL acceptance tests, so this is not an unaffiliated audit.",
+  "source_binding": {
+    "accepted_source_sha256": "1a1f3d3ff413c8ba71da1e9a9dbc67823bde23801e5ad1385ae9fe57676d570f",
+    "files_checked": 19,
+    "mismatches": []
+  },
+  "verified_by_inspection": [
+    "Four application-only tables have restrictive ownership/dependency foreign keys; immutable revision and prepared-operation inputs have PostgreSQL direct SQL guards and corresponding ORM fixture guards.",
+    "Prepared operation registration precedes activation. Activation locks both operation and investigation, checks the exact head and active state, and commits revision/head/operation/audit together.",
+    "Owner-scoped queries remain in force for admin; current application principal and current catalogue policy/lifecycle are checked for context and historical reads.",
+    "Attachments and pins remain separate; explicit submission revisions are resolved without adopting the current head or another conversation narrative.",
+    "Refresh branches retain exact predecessor identity and original bytes, expose unresolved references, and do not infer object replacements.",
+    "Cross-store partial/uncertain results retain references and prepared identity; retries inspect the exact candidate without compensating deletion or release.",
+    "Committed retry now verifies stored revision JSON, payload SHA256 and snapshot identity through the same revision reader as historical access.",
+    "Hold and retirement operations share the site advisory transaction lock; ancestor holds and active/preparing branches preserve records, while retirement never deletes bytes or releases references.",
+    "The request route counts streaming bytes before retaining each chunk, caches the bounded body for FastAPI, rejects ambiguous/nonfinite/invalid UTF-8 input, and stops before oversized unread tails.",
+    "Worker-owned transaction/session cleanup and response serialization finish before the cancellation checkpoint; errors and auth responses are sanitized and no-store."
+  ]
+}

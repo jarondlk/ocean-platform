@@ -1,0 +1,123 @@
+{
+  "component": "C17",
+  "implementation_base": "b39efc512bbf113d21d751d3619824006e066bfa",
+  "source_paths": 19,
+  "source_sha256": "1a1f3d3ff413c8ba71da1e9a9dbc67823bde23801e5ad1385ae9fe57676d570f",
+  "accepted_source_status": "created_once",
+  "preservation": {
+    "unrelated_files": {
+      "count": 30,
+      "all_match": true
+    },
+    "scientific_artifacts": {
+      "count": 7,
+      "all_match": true
+    },
+    "serving_files": {
+      "count": 2,
+      "all_match": true
+    },
+    "legacy_frontend_files": {
+      "count": 106,
+      "all_match": true
+    },
+    "prior_evidence_files": {
+      "count": 683,
+      "all_match": true
+    }
+  },
+  "formal_current_source": {
+    "C03": {
+      "paths": 6,
+      "unchanged": 5,
+      "core_unchanged": 5,
+      "intentional_C17_supersessions": {
+        ".github/workflows/tests.yml": {
+          "previous_sha256": "48d22798542ba06fb0e8d58e0a11884828b762ff2c0d8769196723f0cf407727",
+          "C17_sha256": "1cdd60958fc656ca773bd0b2ea1485f16ba95acdec3c355be3700580940bcd5f"
+        }
+      }
+    },
+    "C04": {
+      "paths": 4,
+      "unchanged": 3,
+      "core_unchanged": 3,
+      "intentional_C17_supersessions": {
+        "api/auth.py": {
+          "previous_sha256": "23ee454554942b1b34fbdfa134e815fdb6fc70699c4b63fe5fadf323d2fe7cd4",
+          "C17_sha256": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd"
+        }
+      }
+    },
+    "C08": {
+      "paths": 12,
+      "unchanged": 12,
+      "core_unchanged": 12,
+      "intentional_C17_supersessions": {}
+    },
+    "C09": {
+      "paths": 14,
+      "unchanged": 13,
+      "core_unchanged": 13,
+      "intentional_C17_supersessions": {
+        ".github/workflows/tests.yml": {
+          "previous_sha256": "48d22798542ba06fb0e8d58e0a11884828b762ff2c0d8769196723f0cf407727",
+          "C17_sha256": "1cdd60958fc656ca773bd0b2ea1485f16ba95acdec3c355be3700580940bcd5f"
+        }
+      }
+    }
+  },
+  "C16_current_source": {
+    "paths": 18,
+    "unchanged": 15,
+    "intentional_C17_supersessions": {
+      "api/auth.py": {
+        "previous_sha256": "23ee454554942b1b34fbdfa134e815fdb6fc70699c4b63fe5fadf323d2fe7cd4",
+        "C17_sha256": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd"
+      },
+      "api/main.py": {
+        "previous_sha256": "28940d6db1f9d1aca24d6f13d3950400bc4955b8ec689d07b6f7bbef547b71ef",
+        "C17_sha256": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4"
+      },
+      "config.py": {
+        "previous_sha256": "5750374e35fe3f03948156e44bccb0e087f8c2adc9ea0b10a9e8a2e6ee90c763",
+        "C17_sha256": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61"
+      }
+    }
+  },
+  "prerequisite_receipts_unchanged": 9,
+  "pinned_receipts_unchanged": 12,
+  "affected_API": {
+    "passed": 155,
+    "source_paths": 11,
+    "all_current_hashes_match": true
+  },
+  "original_PostgreSQL": {
+    "source_paths": 14,
+    "intentional_later_supersessions": {
+      "api/investigation_routes.py": {
+        "previous_sha256": "d697b87ecbef3735ee0abc04f44a896dc413e0d00dfff7dd58c39743364d7357",
+        "C17_sha256": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6"
+      },
+      "orchestration/investigations.py": {
+        "previous_sha256": "1c55eb703b714db7aac87c27e1b2a43ad10841384636a38f129a8a87866c8662",
+        "C17_sha256": "e19bb6c27cdfb458c061940de53b5754a012d995dc0d136eb855ba3df0a867f3"
+      }
+    },
+    "original_receipts_unchanged": true
+  },
+  "final_backend": {
+    "status": "passed_and_current_source_matches",
+    "source_paths": 19,
+    "passed": 4187,
+    "skipped": 187,
+    "coverage_percent": 85.08,
+    "receipt_sha256": {
+      "docs/plans/ocean-v1/evidence/C17/final-backend-tested-source.json": "2db472429b5c732042583f14a9423bfae73a26e7c8572a318a82a5f285674cc5",
+      "docs/plans/ocean-v1/evidence/C17/final-backend-result.json": "92712adf51e3742e1f56008b56876f5c4287fe3ef9919bfc57ea2dec4b6ad1e9",
+      "docs/plans/ocean-v1/evidence/C17/final-backend-tests.txt": "13fa0bf7dfd8f807c3119e6fadd3b07d6178982b24de330de9bf1452d3d4d208"
+    }
+  },
+  "all_assertions_passed": true,
+  "scope": "Hash checks only; default runs write nothing. Explicit freeze creates one accepted-source receipt only after final backend pass and never rewrites an existing receipt."
+}

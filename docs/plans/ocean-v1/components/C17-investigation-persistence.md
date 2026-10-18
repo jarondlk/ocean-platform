@@ -1,6 +1,6 @@
 # C17 — Investigation persistence
 
-**Status:** Not started. **Prerequisites:** C03, C04, C08, C09.
+**Status:** Complete for local acceptance; source checkpoint and exact-source hosted delivery pending. **Prerequisites:** C03, C04, C08, C09.
 
 ## Revised delivery boundary
 
@@ -43,3 +43,22 @@ Additive migrations target v1 databases only. Legacy `/chat`, history, citations
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c17). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+## Accepted implementation — 2026-10-18 JST
+
+All three checkpoints pass local acceptance. The default-off, owner-private
+four-table investigation service exposes14 strict POST operations, immutable
+context revisions, explicit refresh branches and conservative durable cross-store
+prepare/apply/activate recovery. PostgreSQL enforces immutable history and owner/
+revision foreign keys; logical retention respects holds without releasing bytes.
+[Contract](../C17_INVESTIGATION_CONTRACT.md), [handoff](../handoffs/C17.md),
+[accepted19-source map](../evidence/C17/accepted-source.json).
+
+Final backend4187 passed/187 gated PostgreSQL skips/85.08% coverage; source
+unchanged during the run. Actual owned disposable PostgreSQL60 cases passed,
+zero schemas remained and the server stopped. Two later API/service fixes are
+explicit source supersessions; final exact-source hosted CI must run all60 again.
+Affected API155, required regression/guard177 and bootstrap38 pass. Previous
+failed fixture/sandbox runs remain preserved. No frontend, scientific or legacy
+source changed. Conversation execution/history remains C20/C21; Research UI is
+C18. Production migrations, real identity, release and cloud gates remain separate.

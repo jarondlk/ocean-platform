@@ -1,0 +1,27 @@
+{
+  "command": ".venv/bin/python -m pytest tests/test_investigation_api_integration.py -q -s",
+  "exit_code": 1,
+  "source_before": {
+    "tests/test_investigation_api_integration.py": "017f7589aee72158b05a67600301d6916c395667bdc24c5eea6b5a88a3009d8d",
+    "tests/investigation_support.py": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce",
+    "orchestration/investigations.py": "1c55eb703b714db7aac87c27e1b2a43ad10841384636a38f129a8a87866c8662",
+    "schema/investigations.py": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+    "api/investigation_routes.py": "d697b87ecbef3735ee0abc04f44a896dc413e0d00dfff7dd58c39743364d7357",
+    "api/auth.py": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd",
+    "api/main.py": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4",
+    "config.py": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61",
+    "db/app_models.py": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab"
+  },
+  "source_after": {
+    "tests/test_investigation_api_integration.py": "017f7589aee72158b05a67600301d6916c395667bdc24c5eea6b5a88a3009d8d",
+    "tests/investigation_support.py": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce",
+    "orchestration/investigations.py": "1c55eb703b714db7aac87c27e1b2a43ad10841384636a38f129a8a87866c8662",
+    "schema/investigations.py": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+    "api/investigation_routes.py": "d697b87ecbef3735ee0abc04f44a896dc413e0d00dfff7dd58c39743364d7357",
+    "api/auth.py": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd",
+    "api/main.py": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4",
+    "config.py": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61",
+    "db/app_models.py": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab"
+  },
+  "sources_unchanged_during_run": true
+}

@@ -1,0 +1,83 @@
+{
+  "component": "C17",
+  "gate": "Actual in-process ASGI HTTP integration with real InvestigationService and frozen scientific catalogue",
+  "result": "passed",
+  "tests": {
+    "passed": 14,
+    "warnings": 1,
+    "seconds": 12.85
+  },
+  "http": {
+    "requests": 112,
+    "routes": {
+      "archive": 4,
+      "context/change": 16,
+      "context/get": 10,
+      "conversations/create": 8,
+      "conversations/get": 7,
+      "conversations/list": 4,
+      "conversations/rename": 3,
+      "create": 15,
+      "get": 19,
+      "list": 5,
+      "operations/get": 4,
+      "operations/retry": 7,
+      "refresh": 4,
+      "rename": 6
+    },
+    "statuses": {
+      "200": 64,
+      "403": 12,
+      "404": 28,
+      "409": 2,
+      "422": 5,
+      "503": 1
+    }
+  },
+  "authentication": "Explicit server-side TEST CurrentUser supplied to actual authorization middleware; no real OIDC claim",
+  "storage": "Independent temporary AppBase SQLite with foreign keys enabled; actual sealed synthetic C09/C10-C13 scientific snapshots and C14 registered service",
+  "provider_and_ambient_targets": "DATABASE_URL and Ollama endpoint explicitly target unused loopback port1; no provider calls, PostgreSQL server, production resources or legacy history import",
+  "coverage": [
+    "All14 exact POST operations",
+    "Create/list/get and owner keyset pagination",
+    "Two distinct conversations/create/list/get/rename and replay",
+    "Distinct attachments and pins, explicit scope change and immutable historical context",
+    "Explicit refresh branch and original snapshot/revision preservation",
+    "Operations/get/retry and interrupted retained-reference registration recovery",
+    "Rename/archive/unarchive metadata version checks",
+    "Other owner and administrator cross-owner read/write absence",
+    "Fresh application DB role/status/account_type revocation despite stale trusted principal",
+    "Context/idempotency conflicts and wrong conversation/revision binding",
+    "Source withdrawal and explicit refresh_unresolved with unchanged payload hashes",
+    "Malformed requests leave committed context unchanged"
+  ],
+  "source_sha256": {
+    "tests/test_investigation_api_integration.py": "58a36f9d6bd521cce2918cf11695db1f46900bd030c175defd5ee002e8a1f4f4",
+    "tests/investigation_support.py": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce",
+    "orchestration/investigations.py": "1c55eb703b714db7aac87c27e1b2a43ad10841384636a38f129a8a87866c8662",
+    "schema/investigations.py": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+    "api/investigation_routes.py": "d697b87ecbef3735ee0abc04f44a896dc413e0d00dfff7dd58c39743364d7357",
+    "api/auth.py": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd",
+    "api/main.py": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4",
+    "config.py": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61",
+    "db/app_models.py": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab"
+  },
+  "sources_unchanged_during_run": true,
+  "evidence_sha256": {
+    "http-integration-tests.txt": "22272e71f17d68a879b5b23ef15800fe505395f513e8b605aea1ea653a6ee71f",
+    "http-integration-tests-run.json": "ddfe4e75c3dc719b7e0976263de9a4e269ae1e80071f79efecf6df8d130896fd",
+    "http-integration-ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "http-integration-tests-initial-failure.txt": "ee63723f8f5f98ffe869345cb99f2263415cd7618b4aabe12e84e9407b8688d2",
+    "http-integration-tests-initial-failure-run.json": "2c17bc40df654a4d75f3334218836c223371f5d5fe0efc007c290428e8762420"
+  },
+  "initial_failure": {
+    "result": "13passed/1test expectation failure",
+    "cause": "Expected raw fixture scope with explicit nulls instead of canonical EvidenceScope with omitted nulls",
+    "resolution": "Only the new integration test expectation changed to EvidenceScope.canonical(); no application/API/service change"
+  },
+  "limits": [
+    "ASGI test transport, not socket/browser verification",
+    "SQLite integration does not establish PostgreSQL migration or locking acceptance",
+    "No real OIDC, scientific approval, real-data acquisition, deployment or legacy-history import evidence"
+  ]
+}

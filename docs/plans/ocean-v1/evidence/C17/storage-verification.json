@@ -1,0 +1,316 @@
+{
+  "checkpoint": "storage-models-and-additive-migration",
+  "commands": [
+    {
+      "command": ".venv/bin/python -m pytest tests/test_investigation_models.py -q",
+      "exit_code": 0,
+      "passed": 64,
+      "seconds": 0.66
+    },
+    {
+      "command": ".venv/bin/python -m ruff check db/app_models.py migrations/versions/20261018_0017_investigations.py tests/test_investigation_models.py",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check -- db/app_models.py migrations/versions/20261018_0017_investigations.py tests/test_investigation_models.py",
+      "exit_code": 0
+    }
+  ],
+  "component": "C17",
+  "created_at": "2026-10-17T23:57:23.180773+00:00",
+  "evidence_sha256": {
+    "docs/plans/ocean-v1/evidence/C17/storage-model-tests.txt": "1f2a1d5c64b65c8fc9369b84f386a7fb1e81fcd3c6db075a9c078af4b09ce079",
+    "docs/plans/ocean-v1/evidence/C17/storage-ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  "limits": [
+    "SQLite fixtures use ORM immutability events, not a claim of direct SQL trigger protection.",
+    "Actual PostgreSQL migration, direct SQL triggers, clean/existing upgrade, downgrade and concurrency acceptance remain parent-owned gates.",
+    "Canonical JSON and matching SHA256 content are validated by the service contract; storage validates exact lowercase64hex hash shape.",
+    "Candidate revision UUID is reserved before revision insertion and intentionally has no foreign key.",
+    "ORM metadata_version prevents stale ORM metadata updates; service bulk changes must use explicit compare-and-swap predicates."
+  ],
+  "migration": {
+    "actual_postgresql_executed": false,
+    "down_revision": "20261005_0016",
+    "revision": "20261018_0017"
+  },
+  "source_sha256": {
+    "db/app_models.py": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab",
+    "migrations/versions/20261018_0017_investigations.py": "2bb803bd1e37e44a3d7a8845d8c800698e88d8ca0e322138d2216f38ff9bf6f3",
+    "tests/test_investigation_models.py": "fdf7b474f33db62fe4a5e140f4cb87d79f9149b31c6fa5391c5f8e2895d377fa"
+  },
+  "tables": {
+    "research_context_operation": {
+      "columns": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "user_id",
+          "nullable": false,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "investigation_id",
+          "nullable": false,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "idempotency_key",
+          "nullable": false,
+          "type": "VARCHAR(128)"
+        },
+        {
+          "name": "kind",
+          "nullable": false,
+          "type": "VARCHAR(32)"
+        },
+        {
+          "name": "expected_head_id",
+          "nullable": true,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "candidate_revision_id",
+          "nullable": true,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "request_json",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "name": "request_sha256",
+          "nullable": false,
+          "type": "VARCHAR(64)"
+        },
+        {
+          "name": "candidate_json",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "name": "references_json",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "name": "state",
+          "nullable": false,
+          "type": "VARCHAR(16)"
+        },
+        {
+          "name": "error_code",
+          "nullable": true,
+          "type": "VARCHAR(64)"
+        },
+        {
+          "name": "created_at",
+          "nullable": false,
+          "type": "DATETIME"
+        },
+        {
+          "name": "updated_at",
+          "nullable": false,
+          "type": "DATETIME"
+        }
+      ],
+      "constraints": [
+        "ck_research_context_operation_error",
+        "ck_research_context_operation_key",
+        "ck_research_context_operation_kind",
+        "ck_research_context_operation_request_hash",
+        "ck_research_context_operation_state",
+        "fk_research_context_operation_expected_head",
+        "fk_research_context_operation_owner",
+        "uq_research_context_operation_idempotency"
+      ],
+      "indexes": [
+        "ix_research_context_operation_investigation_id"
+      ]
+    },
+    "research_context_revision": {
+      "columns": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "investigation_id",
+          "nullable": false,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "sequence",
+          "nullable": false,
+          "type": "INTEGER"
+        },
+        {
+          "name": "predecessor_revision_id",
+          "nullable": true,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "snapshot_id",
+          "nullable": false,
+          "type": "VARCHAR(64)"
+        },
+        {
+          "name": "payload_json",
+          "nullable": false,
+          "type": "TEXT"
+        },
+        {
+          "name": "payload_sha256",
+          "nullable": false,
+          "type": "VARCHAR(64)"
+        },
+        {
+          "name": "created_by_user_id",
+          "nullable": false,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "created_at",
+          "nullable": false,
+          "type": "DATETIME"
+        }
+      ],
+      "constraints": [
+        "ck_research_context_revision_payload_hash",
+        "ck_research_context_revision_predecessor_other",
+        "ck_research_context_revision_sequence",
+        "ck_research_context_revision_snapshot",
+        "fk_research_context_revision_owner",
+        "fk_research_context_revision_predecessor",
+        "uq_research_context_revision_identity",
+        "uq_research_context_revision_sequence"
+      ],
+      "indexes": []
+    },
+    "research_conversation": {
+      "columns": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "investigation_id",
+          "nullable": false,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "name",
+          "nullable": false,
+          "type": "VARCHAR(255)"
+        },
+        {
+          "name": "metadata_version",
+          "nullable": false,
+          "type": "INTEGER"
+        },
+        {
+          "name": "created_at",
+          "nullable": false,
+          "type": "DATETIME"
+        },
+        {
+          "name": "updated_at",
+          "nullable": false,
+          "type": "DATETIME"
+        }
+      ],
+      "constraints": [
+        "ck_research_conversation_name",
+        "ck_research_conversation_version"
+      ],
+      "indexes": [
+        "ix_research_conversation_investigation_id"
+      ]
+    },
+    "research_investigation": {
+      "columns": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "user_id",
+          "nullable": false,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "name",
+          "nullable": false,
+          "type": "VARCHAR(255)"
+        },
+        {
+          "name": "metadata_version",
+          "nullable": false,
+          "type": "INTEGER"
+        },
+        {
+          "name": "status",
+          "nullable": false,
+          "type": "VARCHAR(16)"
+        },
+        {
+          "name": "head_revision_id",
+          "nullable": true,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "predecessor_investigation_id",
+          "nullable": true,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "predecessor_revision_id",
+          "nullable": true,
+          "type": "CHAR(32)"
+        },
+        {
+          "name": "legal_hold",
+          "nullable": false,
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "created_at",
+          "nullable": false,
+          "type": "DATETIME"
+        },
+        {
+          "name": "updated_at",
+          "nullable": false,
+          "type": "DATETIME"
+        },
+        {
+          "name": "retired_at",
+          "nullable": true,
+          "type": "DATETIME"
+        }
+      ],
+      "constraints": [
+        "ck_research_investigation_name",
+        "ck_research_investigation_predecessor_other",
+        "ck_research_investigation_predecessor_pair",
+        "ck_research_investigation_status",
+        "ck_research_investigation_version",
+        "fk_research_investigation_head",
+        "fk_research_investigation_predecessor_owner",
+        "fk_research_investigation_predecessor_revision",
+        "uq_research_investigation_owner"
+      ],
+      "indexes": [
+        "ix_research_investigation_retention",
+        "ix_research_investigation_user_id"
+      ]
+    }
+  }
+}

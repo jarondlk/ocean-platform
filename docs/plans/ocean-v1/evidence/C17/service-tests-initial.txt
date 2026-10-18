@@ -1,0 +1,66 @@
+E
+==================================== ERRORS ====================================
+_ ERROR at setup of test_create_distinct_conversations_reload_and_recover_idempotent_reply _
+
+tmp_path = PosixPath('/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/pytest-427/test_create_distinct_conversat0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11b602840>
+
+    @pytest.fixture
+    def fixture(tmp_path, monkeypatch):
+        monkeypatch.setenv("ENABLE_V1_INVESTIGATIONS", "true")
+        engine = create_engine("sqlite+pysqlite:///" + str(tmp_path / "v1.sqlite"))
+    
+        @event.listens_for(engine, "connect")
+        def keys(connection, _record):
+            connection.execute("PRAGMA foreign_keys=ON")
+    
+        AppBase.metadata.create_all(engine)
+>       result = make_investigation_fixture(engine, tmp_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_investigations.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/investigation_support.py:57: in make_investigation_fixture
+    datasets = catalogue.list({"snapshot_id": first, "scope": selected_scope, "filters": {"kinds": ["dataset"]}, "limit": 500}, user)["items"]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/catalogue_service.py:239: in list
+    return self.execute("catalogue.list", payload, user)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <orchestration.catalogue_service.CatalogueService object at 0x11b35bfe0>
+name = 'catalogue.list'
+payload = {'snapshot_id': '14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37', 'scope': {'version': 1, 'sources':... None, 'lat_min': None, 'lat_max': None, ...}, 'analysis_id': None}}}, 'filters': {'kinds': ['dataset']}, 'limit': 500}
+user = CurrentUser(id=UUID('6f5ead14-5858-530d-9615-e6cd99d33100'), email='c17-owner@example.invalid', display_name='c17-owne...'chat:use', 'data:read', 'feedback:write', 'evaluation:read', 'classification:decide'}), auth_provider='synthetic-c14')
+
+    def execute(self, name, payload, user):
+        _authorize(user)
+        model = REQUEST_MODELS.get(name)
+        if model is None:
+            raise _error("invalid_request")
+        try:
+            request = model.model_validate(payload.model_dump(mode="json", warnings=False) if hasattr(payload, "model_dump") else payload)
+        except (ValueError, TypeError):
+            raise _error("invalid_request") from None
+        try:
+            resolved = self.resolver.resolve(user, request.snapshot_id)
+            if not isinstance(resolved, ResolvedCatalogue):
+                raise _error("catalogue_unavailable")
+        except CatalogueServiceError:
+            raise
+        except (SnapshotAccessDenied, SnapshotNotFound, AdapterAccessDenied, PermissionError):
+            raise _error("not_found") from None
+        except Exception:
+>           raise _error("catalogue_unavailable") from None
+E           orchestration.catalogue_service.CatalogueServiceError: Catalogue is unavailable
+
+orchestration/catalogue_service.py:223: CatalogueServiceError
+---------------------------- Captured stderr setup -----------------------------
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+=========================== short test summary info ============================
+ERROR tests/test_investigations.py::test_create_distinct_conversations_reload_and_recover_idempotent_reply
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 error in 0.73s

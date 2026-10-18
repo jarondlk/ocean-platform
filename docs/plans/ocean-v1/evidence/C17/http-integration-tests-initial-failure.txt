@@ -1,0 +1,65 @@
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+F.............C17_ACTUAL_HTTP_COUNTS={"requests": 99, "routes": {"archive": 2, "context/change": 16, "context/get": 8, "conversations/create": 8, "conversations/get": 7, "conversations/list": 4, "conversations/rename": 3, "create": 15, "get": 16, "list": 3, "operations/get": 3, "operations/retry": 6, "refresh": 3, "rename": 5}, "statuses": {"200": 51, "403": 12, "404": 28, "409": 2, "422": 5, "503": 1}}
+
+=================================== FAILURES ===================================
+_ test_complete_http_metadata_conversation_context_refresh_and_recovery_contract _
+
+http = HttpFixture(retained=InvestigationFixture(service=<orchestration.investigations.InvestigationService object at 0x11a3d...ations/get', 200), ('context/change', 200), ('context/change', 200), ('context/change', 200), ('context/change', 200)])
+
+    def test_complete_http_metadata_conversation_context_refresh_and_recovery_contract(http):
+        initial = http.create()
+        identity, initial_revision = initial["investigation"]["id"], initial["context"]["id"]
+        owner = {"investigation_id": identity}
+        assert http.post("list", {})["items"] == [initial["investigation"]]
+        resumed = http.post("get", owner)
+        assert resumed["context"] == initial["context"] and resumed["legacy_history_import"] == "unavailable"
+    
+        first_request = {**owner, "name": "Conversation one", "idempotency_key": key()}
+        first = http.post("conversations/create", first_request)
+        second = http.post("conversations/create", {**first_request, "name": "Conversation two", "idempotency_key": key()})
+        assert first["conversation"]["id"] != second["conversation"]["id"]
+        assert http.post("conversations/create", first_request)["conversation"] == first["conversation"]
+        page1 = http.post("conversations/list", {**owner, "limit": 1})
+        page2 = http.post("conversations/list", {**owner, "limit": 1, "after_id": page1["next_after_id"]})
+        assert page2["next_after_id"] is None
+        assert {page1["items"][0]["id"], page2["items"][0]["id"]} == {first["conversation"]["id"], second["conversation"]["id"]}
+        conversation = {**owner, "conversation_id": first["conversation"]["id"]}
+        assert http.post("conversations/get", conversation)["conversation"]["history_status"] == "unavailable_until_c20_c21"
+        renamed_conversation = http.post("conversations/rename", {
+            **conversation, "expected_version": first["conversation"]["metadata_version"],
+            "name": "Renamed conversation", "idempotency_key": key(),
+        })
+        assert http.post("conversations/get", conversation)["conversation"] == renamed_conversation["conversation"]
+    
+        reference = http.reference()
+        attached_request = http.change(initial, {"op": "attach", "reference": reference})
+        attached = http.post("context/change", attached_request)
+        assert attached["context"]["attachments"] == [reference] and attached["context"]["pins"] == []
+        assert attached["context"]["scope"] == initial["context"]["scope"]
+        assert http.post("context/change", attached_request)["context"] == attached["context"]
+        pinned = http.post("context/change", http.change(attached, {"op": "pin", "reference": reference}))
+        assert pinned["context"]["attachments"] == pinned["context"]["pins"] == [reference]
+        selected_scope = json.loads(json.dumps(http.retained.scope))
+        selected_scope["sources"]["metagenome"]["enabled"] = False
+        scoped = http.post("context/change", http.change(pinned, {"op": "scope", "scope": selected_scope}))
+>       assert scoped["context"]["scope"] == selected_scope
+E       AssertionError: assert {'sources': {... 'version': 1} == {'version': 1...s_id': None}}}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'sources': {'ctd': {'enabled': True, 'filters': {}}, 'edna_metabarcoding': {'enabled': True, 'filters': {}}, 'metagenome': {'enabled': False, 'filters': {}}, 'remote_sensing': {'enabled': True, 'filters': {}}}} != {'sources': {'ctd': {'enabled': True, 'filters': {'time_from': None, 'time_to': None, 'bay': None, 'station': None, .....': True, 'filters': {'time_from': None, 'time_to': None, 'lat_min': None, 'lat_max': None, ...}, 'analysis_id': None}}}
+E         Use -v to get more diff
+
+tests/test_investigation_api_integration.py:151: AssertionError
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_investigation_api_integration.py::test_complete_http_metadata_conversation_context_refresh_and_recovery_contract
+1 failed, 13 passed, 1 warning in 13.76s

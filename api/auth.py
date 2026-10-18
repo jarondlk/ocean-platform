@@ -442,6 +442,18 @@ def route_permission(method: str, path: str) -> Optional[str]:
     method = method.upper()
     if path == "/v1/runtime":
         return "profile:read" if method == "GET" else None
+    if path.startswith("/research/investigations"):
+        if method == "POST" and path in {
+            "/research/investigations/create", "/research/investigations/list",
+            "/research/investigations/get", "/research/investigations/rename",
+            "/research/investigations/archive", "/research/investigations/conversations/create",
+            "/research/investigations/conversations/list", "/research/investigations/conversations/get",
+            "/research/investigations/conversations/rename", "/research/investigations/context/get",
+            "/research/investigations/context/change", "/research/investigations/refresh",
+            "/research/investigations/operations/get", "/research/investigations/operations/retry",
+        }:
+            return "data:read"
+        return None
     if path.startswith("/catalogue"):
         if method == "POST" and path in {
             "/catalogue/overview", "/catalogue/list", "/catalogue/open",
@@ -576,6 +588,12 @@ async def authorization_middleware(
                 401: ("authentication_required", "Authentication is required"),
                 403: ("access_denied", "Catalogue access is denied"),
             }.get(exc.status_code, ("catalogue_unavailable", "Catalogue is unavailable"))
+            content = {"error": {"code": code, "message": message}}
+        if request.url.path.startswith("/research/investigations"):
+            code, message = {
+                401: ("authentication_required", "Authentication is required"),
+                403: ("access_denied", "Investigation access is denied"),
+            }.get(exc.status_code, ("investigations_unavailable", "Investigations are unavailable"))
             content = {"error": {"code": code, "message": message}}
         return JSONResponse(
             status_code=exc.status_code,

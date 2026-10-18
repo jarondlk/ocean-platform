@@ -1,0 +1,38 @@
+.........................F
+=================================== FAILURES ===================================
+_ test_database_commit_failure_never_releases_refs_and_exact_retry_recovers[False] _
+
+fixture = InvestigationFixture(service=<orchestration.investigations.InvestigationService object at 0x11c796450>, factory=sessio...tagenome:collection-a', 'remote_sensing': 'synthetic:sst:mur-final', 'edna_metabarcoding': 'synthetic:edna:project-a'})
+ambiguous = False
+
+    @pytest.mark.parametrize("ambiguous", [False, True])
+    def test_database_commit_failure_never_releases_refs_and_exact_retry_recovers(fixture, ambiguous):
+        from sqlalchemy.exc import SQLAlchemyError
+    
+        flag = {"activation": False, "fired": False}
+    
+        def before_commit(session):
+            activation = any(isinstance(row, ResearchContextRevision) for row in session.new)
+            flag["activation"] = activation
+            if activation and not ambiguous and not flag["fired"]:
+                flag["fired"] = True
+                raise SQLAlchemyError("synthetic confirmed failure")
+    
+        def after_commit(session):
+            if ambiguous and flag["activation"] and not flag["fired"]:
+                flag["fired"] = True
+                raise SQLAlchemyError("synthetic lost commit acknowledgement")
+    
+        event.listen(fixture.factory, "before_commit", before_commit)
+        event.listen(fixture.factory, "after_commit", after_commit)
+        data = {"name": "Interrupted", "snapshot_id": fixture.snapshots[0], "scope": fixture.scope, "idempotency_key": key()}
+        try:
+>           with pytest.raises(InvestigationError) as error:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE InvestigationError
+
+tests/test_investigations.py:305: Failed
+=========================== short test summary info ============================
+FAILED tests/test_investigations.py::test_database_commit_failure_never_releases_refs_and_exact_retry_recovers[False]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 25 passed in 19.91s

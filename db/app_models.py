@@ -15,6 +15,7 @@ from sqlalchemy import (
     Column,
     DateTime,
     ForeignKey,
+    ForeignKeyConstraint,
     Index,
     Integer,
     String,
@@ -23,6 +24,7 @@ from sqlalchemy import (
     Uuid,
     event,
     func,
+    inspect,
     text,
 )
 from sqlalchemy.orm import DeclarativeBase, relationship
@@ -681,3 +683,182 @@ def _research_record_is_immutable(*_args):
 for _research_model in (ResearchRegistryEvent, ResearchRegistryVersion, ResearchPhysicalMembership, ResearchAreaDefinition):
     event.listen(_research_model, "before_update", _research_record_is_immutable)
     event.listen(_research_model, "before_delete", _research_record_is_immutable)
+
+
+def _context_sha256_check(column: str) -> str:
+    """Portable exact lowercase hex check for application metadata fixtures."""
+    remaining = column
+    for character in "0123456789abcdef":
+        remaining = f"replace({remaining}, '{character}', '')"
+    return f"length({column}) = 64 AND {remaining} = ''"
+
+
+class ResearchInvestigation(AppBase):
+    """Private v1 context head; retirement preserves its immutable evidence."""
+
+    __tablename__ = "research_investigation"
+
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(Uuid(as_uuid=True), ForeignKey("app_user.id", ondelete="RESTRICT"), nullable=False, index=True)
+    name = Column(String(255), nullable=False)
+    metadata_version = Column(Integer, nullable=False, default=1)
+    status = Column(String(16), nullable=False, default="preparing")
+    head_revision_id = Column(Uuid(as_uuid=True))
+    predecessor_investigation_id = Column(Uuid(as_uuid=True))
+    predecessor_revision_id = Column(Uuid(as_uuid=True))
+    legal_hold = Column(Boolean, nullable=False, default=False, server_default="false")
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
+    retired_at = Column(DateTime(timezone=True))
+
+    __mapper_args__ = {"version_id_col": metadata_version}
+    __table_args__ = (
+        UniqueConstraint("id", "user_id", name="uq_research_investigation_owner"),
+        CheckConstraint("length(name) BETWEEN 1 AND 255 AND length(trim(name)) >= 1", name="ck_research_investigation_name"),
+        CheckConstraint("metadata_version >= 1", name="ck_research_investigation_version"),
+        CheckConstraint("status IN ('preparing', 'active', 'archived', 'retired')", name="ck_research_investigation_status"),
+        CheckConstraint(
+            "(predecessor_investigation_id IS NULL AND predecessor_revision_id IS NULL) OR "
+            "(predecessor_investigation_id IS NOT NULL AND predecessor_revision_id IS NOT NULL)",
+            name="ck_research_investigation_predecessor_pair",
+        ),
+        CheckConstraint("predecessor_investigation_id IS NULL OR predecessor_investigation_id <> id", name="ck_research_investigation_predecessor_other"),
+        ForeignKeyConstraint(
+            ["id", "head_revision_id"],
+            ["research_context_revision.investigation_id", "research_context_revision.id"],
+            name="fk_research_investigation_head", ondelete="RESTRICT",
+            deferrable=True, initially="DEFERRED", use_alter=True,
+        ),
+        ForeignKeyConstraint(
+            ["predecessor_investigation_id", "user_id"],
+            ["research_investigation.id", "research_investigation.user_id"],
+            name="fk_research_investigation_predecessor_owner", ondelete="RESTRICT",
+        ),
+        ForeignKeyConstraint(
+            ["predecessor_investigation_id", "predecessor_revision_id"],
+            ["research_context_revision.investigation_id", "research_context_revision.id"],
+            name="fk_research_investigation_predecessor_revision", ondelete="RESTRICT",
+            deferrable=True, initially="DEFERRED", use_alter=True,
+        ),
+        Index("ix_research_investigation_retention", "updated_at", "legal_hold", "status"),
+    )
+
+
+class ResearchConversation(AppBase):
+    """Conversation identity shares investigation context, never other narratives."""
+
+    __tablename__ = "research_conversation"
+
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    investigation_id = Column(Uuid(as_uuid=True), ForeignKey("research_investigation.id", ondelete="RESTRICT"), nullable=False, index=True)
+    name = Column(String(255), nullable=False)
+    metadata_version = Column(Integer, nullable=False, default=1)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
+
+    __mapper_args__ = {"version_id_col": metadata_version}
+    __table_args__ = (
+        CheckConstraint("length(name) BETWEEN 1 AND 255 AND length(trim(name)) >= 1", name="ck_research_conversation_name"),
+        CheckConstraint("metadata_version >= 1", name="ck_research_conversation_version"),
+    )
+
+
+class ResearchContextRevision(AppBase):
+    """Append-only canonical selected context and snapshot identity."""
+
+    __tablename__ = "research_context_revision"
+
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    investigation_id = Column(Uuid(as_uuid=True), ForeignKey("research_investigation.id", ondelete="RESTRICT"), nullable=False)
+    sequence = Column(Integer, nullable=False)
+    predecessor_revision_id = Column(Uuid(as_uuid=True))
+    snapshot_id = Column(String(64), nullable=False)
+    payload_json = Column(Text, nullable=False)
+    payload_sha256 = Column(String(64), nullable=False)
+    created_by_user_id = Column(Uuid(as_uuid=True), ForeignKey("app_user.id", ondelete="RESTRICT"), nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+
+    __table_args__ = (
+        UniqueConstraint("investigation_id", "sequence", name="uq_research_context_revision_sequence"),
+        UniqueConstraint("investigation_id", "id", name="uq_research_context_revision_identity"),
+        CheckConstraint("sequence >= 1", name="ck_research_context_revision_sequence"),
+        CheckConstraint(_context_sha256_check("snapshot_id"), name="ck_research_context_revision_snapshot"),
+        CheckConstraint(_context_sha256_check("payload_sha256"), name="ck_research_context_revision_payload_hash"),
+        CheckConstraint("predecessor_revision_id IS NULL OR predecessor_revision_id <> id", name="ck_research_context_revision_predecessor_other"),
+        ForeignKeyConstraint(
+            ["investigation_id", "created_by_user_id"],
+            ["research_investigation.id", "research_investigation.user_id"],
+            name="fk_research_context_revision_owner", ondelete="RESTRICT",
+        ),
+        ForeignKeyConstraint(
+            ["investigation_id", "predecessor_revision_id"],
+            ["research_context_revision.investigation_id", "research_context_revision.id"],
+            name="fk_research_context_revision_predecessor", ondelete="RESTRICT",
+        ),
+    )
+
+
+class ResearchContextOperation(AppBase):
+    """Durable immutable preparation inputs; only delivery state can advance."""
+
+    __tablename__ = "research_context_operation"
+
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(Uuid(as_uuid=True), ForeignKey("app_user.id", ondelete="RESTRICT"), nullable=False)
+    investigation_id = Column(Uuid(as_uuid=True), ForeignKey("research_investigation.id", ondelete="RESTRICT"), nullable=False, index=True)
+    idempotency_key = Column(String(128), nullable=False)
+    kind = Column(String(32), nullable=False)
+    expected_head_id = Column(Uuid(as_uuid=True))
+    # A prepared candidate reserves its UUID before the immutable revision exists.
+    candidate_revision_id = Column(Uuid(as_uuid=True))
+    request_json = Column(Text, nullable=False)
+    request_sha256 = Column(String(64), nullable=False)
+    candidate_json = Column(Text, nullable=False)
+    references_json = Column(Text, nullable=False)
+    state = Column(String(16), nullable=False, default="prepared")
+    error_code = Column(String(64))
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
+
+    __table_args__ = (
+        UniqueConstraint("user_id", "idempotency_key", name="uq_research_context_operation_idempotency"),
+        CheckConstraint("length(idempotency_key) BETWEEN 1 AND 128", name="ck_research_context_operation_key"),
+        CheckConstraint("length(kind) BETWEEN 1 AND 32", name="ck_research_context_operation_kind"),
+        CheckConstraint(_context_sha256_check("request_sha256"), name="ck_research_context_operation_request_hash"),
+        CheckConstraint("state IN ('prepared', 'committed', 'conflict', 'unavailable', 'uncertain')", name="ck_research_context_operation_state"),
+        CheckConstraint("error_code IS NULL OR length(error_code) BETWEEN 1 AND 64", name="ck_research_context_operation_error"),
+        ForeignKeyConstraint(
+            ["investigation_id", "user_id"],
+            ["research_investigation.id", "research_investigation.user_id"],
+            name="fk_research_context_operation_owner", ondelete="RESTRICT",
+        ),
+        ForeignKeyConstraint(
+            ["investigation_id", "expected_head_id"],
+            ["research_context_revision.investigation_id", "research_context_revision.id"],
+            name="fk_research_context_operation_expected_head", ondelete="RESTRICT",
+        ),
+    )
+
+
+_CONTEXT_IMMUTABLE_COLUMNS = {
+    ResearchInvestigation: ("id", "user_id", "predecessor_investigation_id", "predecessor_revision_id", "created_at"),
+    ResearchConversation: ("id", "investigation_id", "created_at"),
+    ResearchContextOperation: (
+        "id", "user_id", "investigation_id", "idempotency_key", "kind",
+        "expected_head_id", "candidate_revision_id", "request_json", "request_sha256",
+        "candidate_json", "references_json", "created_at",
+    ),
+}
+
+
+def _research_context_identity_is_immutable(_mapper, _connection, target):
+    state = inspect(target)
+    if any(state.attrs[column].history.has_changes() for column in _CONTEXT_IMMUTABLE_COLUMNS[type(target)]):
+        raise ValueError("Research context identity and prepared inputs are immutable")
+
+
+for _context_model in (ResearchInvestigation, ResearchConversation, ResearchContextOperation):
+    event.listen(_context_model, "before_update", _research_context_identity_is_immutable)
+    event.listen(_context_model, "before_delete", _research_record_is_immutable)
+event.listen(ResearchContextRevision, "before_update", _research_record_is_immutable)
+event.listen(ResearchContextRevision, "before_delete", _research_record_is_immutable)

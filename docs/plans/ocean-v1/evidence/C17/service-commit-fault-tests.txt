@@ -1,0 +1,75 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_database_commit_failure_never_releases_refs_and_exact_retry_recovers[False] _
+
+fixture = InvestigationFixture(service=<orchestration.investigations.InvestigationService object at 0x1192772c0>, factory=sessio...tagenome:collection-a', 'remote_sensing': 'synthetic:sst:mur-final', 'edna_metabarcoding': 'synthetic:edna:project-a'})
+ambiguous = False
+
+    @pytest.mark.parametrize("ambiguous", [False, True])
+    def test_database_commit_failure_never_releases_refs_and_exact_retry_recovers(fixture, ambiguous):
+        from sqlalchemy.exc import SQLAlchemyError
+    
+        flag = {"activation": False, "fired": False}
+    
+        def before_commit(session):
+            activation = any(isinstance(row, AuditEvent) and row.action == "research.context_committed" for row in session.new)
+            flag["activation"] = activation
+            if activation and not ambiguous and not flag["fired"]:
+                flag["fired"] = True
+                raise SQLAlchemyError("synthetic confirmed failure")
+    
+        def after_commit(session):
+            if ambiguous and flag["activation"] and not flag["fired"]:
+                flag["fired"] = True
+                raise SQLAlchemyError("synthetic lost commit acknowledgement")
+    
+        event.listen(fixture.factory, "before_commit", before_commit)
+        event.listen(fixture.factory, "after_commit", after_commit)
+        data = {"name": "Interrupted", "snapshot_id": fixture.snapshots[0], "scope": fixture.scope, "idempotency_key": key()}
+        try:
+>           with pytest.raises(InvestigationError) as error:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE InvestigationError
+
+tests/test_investigations.py:305: Failed
+---------------------------- Captured stderr setup -----------------------------
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+_ test_database_commit_failure_never_releases_refs_and_exact_retry_recovers[True] _
+
+fixture = InvestigationFixture(service=<orchestration.investigations.InvestigationService object at 0x118e758b0>, factory=sessio...tagenome:collection-a', 'remote_sensing': 'synthetic:sst:mur-final', 'edna_metabarcoding': 'synthetic:edna:project-a'})
+ambiguous = True
+
+    @pytest.mark.parametrize("ambiguous", [False, True])
+    def test_database_commit_failure_never_releases_refs_and_exact_retry_recovers(fixture, ambiguous):
+        from sqlalchemy.exc import SQLAlchemyError
+    
+        flag = {"activation": False, "fired": False}
+    
+        def before_commit(session):
+            activation = any(isinstance(row, AuditEvent) and row.action == "research.context_committed" for row in session.new)
+            flag["activation"] = activation
+            if activation and not ambiguous and not flag["fired"]:
+                flag["fired"] = True
+                raise SQLAlchemyError("synthetic confirmed failure")
+    
+        def after_commit(session):
+            if ambiguous and flag["activation"] and not flag["fired"]:
+                flag["fired"] = True
+                raise SQLAlchemyError("synthetic lost commit acknowledgement")
+    
+        event.listen(fixture.factory, "before_commit", before_commit)
+        event.listen(fixture.factory, "after_commit", after_commit)
+        data = {"name": "Interrupted", "snapshot_id": fixture.snapshots[0], "scope": fixture.scope, "idempotency_key": key()}
+        try:
+>           with pytest.raises(InvestigationError) as error:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE InvestigationError
+
+tests/test_investigations.py:305: Failed
+=========================== short test summary info ============================
+FAILED tests/test_investigations.py::test_database_commit_failure_never_releases_refs_and_exact_retry_recovers[False]
+FAILED tests/test_investigations.py::test_database_commit_failure_never_releases_refs_and_exact_retry_recovers[True]
+2 failed, 25 deselected in 1.35s

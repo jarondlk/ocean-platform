@@ -1,0 +1,97 @@
+{
+  "component": "C17",
+  "gate": "Request-stream byte bound and affected API integration",
+  "result": "passed",
+  "tests": {
+    "passed": 155,
+    "warnings": 1,
+    "seconds": 13.43,
+    "breakdown": {
+      "raw_asgi_stream": 15,
+      "api_contract": 126,
+      "actual_service_http": 14
+    }
+  },
+  "stream_acceptance": {
+    "max_request_bytes": 262144,
+    "oversize": "Stop receiving immediately when next chunk exceeds remaining bound, before retaining it; unread tail and zero service calls asserted",
+    "boundaries": "262143/262144 byte JSON bodies accepted once with FastAPI cached-body parsing, empty ASGI messages included",
+    "content_length": "Absent and misleading Content-Length cannot bypass running byte count",
+    "json": "Cross-message duplicate keys/nonfinite numbers/invalid UTF-8 and lone surrogates are sanitized; valid split multibyte UTF-8 preserved"
+  },
+  "actual_service_http": {
+    "requests": 112,
+    "routes": {
+      "archive": 4,
+      "context/change": 16,
+      "context/get": 10,
+      "conversations/create": 8,
+      "conversations/get": 7,
+      "conversations/list": 4,
+      "conversations/rename": 3,
+      "create": 15,
+      "get": 19,
+      "list": 5,
+      "operations/get": 4,
+      "operations/retry": 7,
+      "refresh": 4,
+      "rename": 6
+    },
+    "statuses": {
+      "200": 64,
+      "403": 12,
+      "404": 28,
+      "409": 2,
+      "422": 5,
+      "503": 1
+    }
+  },
+  "source_sha256": {
+    "tests/test_investigation_api_stream.py": "f21427e5d884c7898f5bb02dc345ce6998e782e80d92d497b5c36e4db3897a48",
+    "tests/test_investigation_api.py": "8df2069fc9b39ac8337b1e4bdca5075025663794486b307004bdc9d4fdc58255",
+    "tests/test_investigation_api_integration.py": "58a36f9d6bd521cce2918cf11695db1f46900bd030c175defd5ee002e8a1f4f4",
+    "tests/investigation_support.py": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce",
+    "orchestration/investigations.py": "e19bb6c27cdfb458c061940de53b5754a012d995dc0d136eb855ba3df0a867f3",
+    "schema/investigations.py": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+    "api/investigation_routes.py": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6",
+    "api/auth.py": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd",
+    "api/main.py": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4",
+    "config.py": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61",
+    "db/app_models.py": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab"
+  },
+  "sources_unchanged_during_run": true,
+  "intentional_supersessions": [
+    {
+      "path": "orchestration/investigations.py",
+      "before_sha256": "1c55eb703b714db7aac87c27e1b2a43ad10841384636a38f129a8a87866c8662",
+      "after_sha256": "e19bb6c27cdfb458c061940de53b5754a012d995dc0d136eb855ba3df0a867f3",
+      "reason": "Root-owned committed operation retry integrity validation; original receipt remains source-bound to its recorded version"
+    },
+    {
+      "path": "api/investigation_routes.py",
+      "before_sha256": "d697b87ecbef3735ee0abc04f44a896dc413e0d00dfff7dd58c39743364d7357",
+      "after_sha256": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6",
+      "reason": "Bound chunked request input before buffering; preserve bounded FastAPI cache"
+    }
+  ],
+  "prior_receipts_unchanged": {
+    "storage-verification.json": "f806afbae4951a0f46698fbecc1f589b54dc84a9d8cf697c7dd9259f2e953556",
+    "http-integration-tests-initial-failure-run.json": "2c17bc40df654a4d75f3334218836c223371f5d5fe0efc007c290428e8762420",
+    "start-snapshot.json": "1cd0a7dc80a9e69665eb740f840ab66c4327310ec19797b37deff8a4810f9146",
+    "postgres-tested-source.json": "e408545629e3bf71db6fbe043c9a4791a2aabc93144976b9c736d9c2327be02c",
+    "postgres-result.json": "974ae36b008e44a2b8f292e3b6d0e59445a382dbca4eda8dc37a6cbb9bbd9831",
+    "http-integration-tests-run.json": "ddfe4e75c3dc719b7e0976263de9a4e269ae1e80071f79efecf6df8d130896fd",
+    "http-integration-verification.json": "4725a0fa8f76a1bcb6c9187d2178b8376d81535b6c018d8c8e791b3d7fa43bab"
+  },
+  "evidence_sha256": {
+    "api-stream-tests.txt": "59aa86cb2fcabab1414567b18d4085c2145be7fa5b5033b30be6d250c319b048",
+    "api-stream-tests-run.json": "e7de847dfc333206ef8cea2465c7f3c21499cf43d334a58125f50dd81fe357ea",
+    "api-stream-ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  "limits": [
+    "Raw ASGI and in-process TestClient transport; no socket/real OIDC claim",
+    "Real service HTTP fixture uses independent temporary SQLite and sealed synthetic scientific stores",
+    "Prior PostgreSQL receipts remain immutable with original hashes; these affected API checks do not claim PostgreSQL rerun on superseding source",
+    "Root owns final full-backend/source-bound hosted CI gates"
+  ]
+}
