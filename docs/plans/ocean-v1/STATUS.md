@@ -8,7 +8,7 @@ C02 was explicitly selected on 2026-10-14 JST and passed its software/synthetic
 checks. C03 passed its local transaction-ordering and actual disposable PostgreSQL
 acceptance. C04 now passes concurrent responsiveness, worker-lifetime, security
 and cancellation acceptance. C05 passes embedding isolation, metagenome fidelity
-and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11 passes frozen SST product/coverage acceptance; C12 passes frozen canonical eDNA adapter acceptance; C13 passes scientific catalogue acceptance; C14 passes authenticated catalogue service acceptance; C15 passes local application-shell acceptance; C16 passes local catalogue-browser acceptance; C17 passes local investigation-persistence acceptance; C18–C27 remain Not started.
+and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11 passes frozen SST product/coverage acceptance; C12 passes frozen canonical eDNA adapter acceptance; C13 passes scientific catalogue acceptance; C14 passes authenticated catalogue service acceptance; C15 passes local application-shell acceptance; C16 passes local catalogue-browser acceptance; C17 passes local investigation-persistence acceptance; C18 passes local interface acceptance; hosted delivery is pending; C19–C27 remain Not started.
 P00 and C01–C13 local work is authorized; the user also authorizes subsequent CXX local implementation after each readiness audit passes.
 See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md), [C08](handoffs/C08.md), [C09](handoffs/C09.md) and [C10](handoffs/C10.md) handoffs for current evidence.
@@ -67,7 +67,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C15 — New application shell](components/C15-application-shell.md) | Complete | Trusted runtime shell, preview isolation, browser gates and hosted delivery | 2,391 required; backend3,823/127skips84.79%; frontend249tests/typecheck/build; nine generated checks | [C15](handoffs/C15.md) |
 | [C16 — Complete catalogue browser](components/C16-catalogue-browser.md) | Complete | Explicit discovery and service tree/list/inspector; protected-view invalidation | 3,895 backend/127 gated skips/84.87%;510 v1;134 actual wire parity;100000 reachability; browser gates pass | [C16](handoffs/C16.md) |
 | [C17 — Investigation persistence](components/C17-investigation-persistence.md) | Complete | All3 local checkpoints; source39bb811 hosted delivery complete | 4187 backend/187 gated skips/85.08%;60 actual PostgreSQL;155 affected API; protected files and683 older evidence unchanged | [C17](handoffs/C17.md) |
-| [C18 — Chat and Workspace interface](components/C18-chat-workspace.md) | Not started | None | Not run | Not created |
+| [C18 — Chat and Workspace interface](components/C18-chat-workspace.md) | Ready for review | All3 local checkpoints pass; source checkpoint/hosted CI pending | 4214 backend/187 skips/85.08%;673 frontend; strict builds/typechecks; actual C17/C16 browser and account/refresh checks | [C18](handoffs/C18.md) |
 | [C19 — Agent exploration controller](components/C19-agent-controller.md) | Not started | None | Not run | Not created |
 | [C20 — Durable research execution](components/C20-durable-execution.md) | Not started | None | Not run | Not created |
 | [C21 — Evidence and answer synthesis](components/C21-evidence-synthesis.md) | Not started | None | Not run | Not created |
@@ -160,3 +160,5 @@ C09 was explicitly selected on 2026-10-15 JST after readiness checkpoint
 reference/hold/revocation behavior and synthetic transfer verification. No C10,
 actual data transfer, legacy store access, cloud/provider or deployment work.
 See [handoff](handoffs/C09.md).
+
+C18 local interface acceptance is complete; exact-source hosted delivery remains pending. C18 was automatically selected after [98-entry prerequisite readiness](evidence/c18-readiness-2026-10-18/verification.json) and C17 hosted delivery. [Current C18 handoff](handoffs/C18.md).

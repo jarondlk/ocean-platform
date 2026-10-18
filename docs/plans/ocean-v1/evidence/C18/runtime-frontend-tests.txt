@@ -1,0 +1,355 @@
+TAP version 13
+# Subtest: bootstrap exact fields are validated and copied without changing input
+ok 1 - bootstrap exact fields are validated and copied without changing input
+  ---
+  duration_ms: 1.173583
+  ...
+# Subtest: bootstrap rejects foreign mode field
+ok 2 - bootstrap rejects foreign mode field
+  ---
+  duration_ms: 0.168833
+  ...
+# Subtest: bootstrap rejects old version
+ok 3 - bootstrap rejects old version
+  ---
+  duration_ms: 0.048208
+  ...
+# Subtest: bootstrap rejects legacy deployment
+ok 4 - bootstrap rejects legacy deployment
+  ---
+  duration_ms: 0.044
+  ...
+# Subtest: bootstrap rejects invalid UUID
+ok 5 - bootstrap rejects invalid UUID
+  ---
+  duration_ms: 0.153459
+  ...
+# Subtest: bootstrap rejects suspended identity
+ok 6 - bootstrap rejects suspended identity
+  ---
+  duration_ms: 0.052166
+  ...
+# Subtest: bootstrap rejects unknown role
+ok 7 - bootstrap rejects unknown role
+  ---
+  duration_ms: 0.04475
+  ...
+# Subtest: bootstrap rejects unknown account
+ok 8 - bootstrap rejects unknown account
+  ---
+  duration_ms: 0.042709
+  ...
+# Subtest: bootstrap rejects foreign identity field
+ok 9 - bootstrap rejects foreign identity field
+  ---
+  duration_ms: 0.211458
+  ...
+# Subtest: bootstrap rejects duplicate permissions
+ok 10 - bootstrap rejects duplicate permissions
+  ---
+  duration_ms: 0.26325
+  ...
+# Subtest: bootstrap rejects permission whitespace
+ok 11 - bootstrap rejects permission whitespace
+  ---
+  duration_ms: 0.133375
+  ...
+# Subtest: bootstrap rejects long display name
+ok 12 - bootstrap rejects long display name
+  ---
+  duration_ms: 0.046791
+  ...
+# Subtest: bootstrap rejects invalid revision
+ok 13 - bootstrap rejects invalid revision
+  ---
+  duration_ms: 0.030583
+  ...
+# Subtest: bootstrap rejects extra capability
+ok 14 - bootstrap rejects extra capability
+  ---
+  duration_ms: 0.036958
+  ...
+# Subtest: bootstrap rejects missing capability
+ok 15 - bootstrap rejects missing capability
+  ---
+  duration_ms: 0.02875
+  ...
+# Subtest: bootstrap rejects unknown status
+ok 16 - bootstrap rejects unknown status
+  ---
+  duration_ms: 0.090875
+  ...
+# Subtest: bootstrap rejects missing unavailable reason
+ok 17 - bootstrap rejects missing unavailable reason
+  ---
+  duration_ms: 0.032542
+  ...
+# Subtest: bootstrap rejects capability foreign field
+ok 18 - bootstrap rejects capability foreign field
+  ---
+  duration_ms: 0.030875
+  ...
+# Subtest: bootstrap rejects ready without required permission
+ok 19 - bootstrap rejects ready without required permission
+  ---
+  duration_ms: 0.073834
+  ...
+# Subtest: research cannot erase or replace fixed required permissions
+ok 20 - research cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.071625
+  ...
+# Subtest: catalogue cannot erase or replace fixed required permissions
+ok 21 - catalogue cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.046666
+  ...
+# Subtest: tools cannot erase or replace fixed required permissions
+ok 22 - tools cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.045625
+  ...
+# Subtest: settings cannot erase or replace fixed required permissions
+ok 23 - settings cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.0465
+  ...
+# Subtest: administration cannot erase or replace fixed required permissions
+ok 24 - administration cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.049333
+  ...
+# Subtest: feedback cannot erase or replace fixed required permissions
+ok 25 - feedback cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.048584
+  ...
+# Subtest: about cannot erase or replace fixed required permissions
+ok 26 - about cannot erase or replace fixed required permissions
+  ---
+  duration_ms: 0.047584
+  ...
+# Subtest: navigation checks permissions even for unavailable capabilities
+ok 27 - navigation checks permissions even for unavailable capabilities
+  ---
+  duration_ms: 0.070583
+  ...
+# Subtest: navigation checks permissions even for disabled capabilities
+ok 28 - navigation checks permissions even for disabled capabilities
+  ---
+  duration_ms: 0.025583
+  ...
+# Subtest: navigation checks permissions even for forbidden capabilities
+ok 29 - navigation checks permissions even for forbidden capabilities
+  ---
+  duration_ms: 0.022542
+  ...
+# Subtest: account type and role labels never substitute for permissions
+ok 30 - account type and role labels never substitute for permissions
+  ---
+  duration_ms: 0.070791
+  ...
+# Subtest: Research context readiness requires both chat and data permissions
+ok 31 - Research context readiness requires both chat and data permissions
+  ---
+  duration_ms: 0.118125
+  ...
+# Subtest: the C15 single-permission Research contract cannot enable C18 context
+ok 32 - the C15 single-permission Research contract cannot enable C18 context
+  ---
+  duration_ms: 0.036042
+  ...
+# Subtest: display-name limits count Unicode code points as the server does
+ok 33 - display-name limits count Unicode code points as the server does
+  ---
+  duration_ms: 0.045709
+  ...
+# Subtest: transport has one fixed v1 URL, no cookies/cache/redirects and optional memory-only token
+ok 34 - transport has one fixed v1 URL, no cookies/cache/redirects and optional memory-only token
+  ---
+  duration_ms: 7.732
+  ...
+# Subtest: HTTP 401 replaces ready identity with unauthorized
+ok 35 - HTTP 401 replaces ready identity with unauthorized
+  ---
+  duration_ms: 0.326375
+  ...
+# Subtest: HTTP 403 replaces ready identity with forbidden
+ok 36 - HTTP 403 replaces ready identity with forbidden
+  ---
+  duration_ms: 0.180625
+  ...
+# Subtest: HTTP 404 replaces ready identity with unavailable
+ok 37 - HTTP 404 replaces ready identity with unavailable
+  ---
+  duration_ms: 0.157917
+  ...
+# Subtest: HTTP 410 replaces ready identity with unavailable
+ok 38 - HTTP 410 replaces ready identity with unavailable
+  ---
+  duration_ms: 0.419417
+  ...
+# Subtest: HTTP 503 replaces ready identity with unavailable
+ok 39 - HTTP 503 replaces ready identity with unavailable
+  ---
+  duration_ms: 0.233
+  ...
+# Subtest: HTTP 500 replaces ready identity with error
+ok 40 - HTTP 500 replaces ready identity with error
+  ---
+  duration_ms: 0.174667
+  ...
+# Subtest: malformed successful responses do not fall back to sample identity
+ok 41 - malformed successful responses do not fall back to sample identity
+  ---
+  duration_ms: 0.406125
+  ...
+# Subtest: a runtime server cannot overwrite JSON fields through duplicate keys
+ok 42 - a runtime server cannot overwrite JSON fields through duplicate keys
+  ---
+  duration_ms: 0.142083
+  ...
+# Subtest: actual streaming byte bound rejects a lying length and cancels the reader
+ok 43 - actual streaming byte bound rejects a lying length and cancels the reader
+  ---
+  duration_ms: 0.349541
+  ...
+# Subtest: absent length still enforces bytes and malformed UTF-8 is unavailable
+ok 44 - absent length still enforces bytes and malformed UTF-8 is unavailable
+  ---
+  duration_ms: 0.166875
+  ...
+# Subtest: invalid supplied token never causes a request
+ok 45 - invalid supplied token never causes a request
+  ---
+  duration_ms: 0.034625
+  ...
+# Subtest: invalid supplied token never causes a request
+ok 46 - invalid supplied token never causes a request
+  ---
+  duration_ms: 0.019583
+  ...
+# Subtest: invalid supplied token never causes a request
+ok 47 - invalid supplied token never causes a request
+  ---
+  duration_ms: 0.018417
+  ...
+# Subtest: invalid supplied token never causes a request
+ok 48 - invalid supplied token never causes a request
+  ---
+  duration_ms: 0.018042
+  ...
+# Subtest: transport errors are honest and omit raw exception contents
+ok 49 - transport errors are honest and omit raw exception contents
+  ---
+  duration_ms: 0.036916
+  ...
+# Subtest: unused HTTP 401 body is cancelled before retry
+ok 50 - unused HTTP 401 body is cancelled before retry
+  ---
+  duration_ms: 0.058625
+  ...
+# Subtest: unused HTTP 403 body is cancelled before retry
+ok 51 - unused HTTP 403 body is cancelled before retry
+  ---
+  duration_ms: 0.064291
+  ...
+# Subtest: unused HTTP 404 body is cancelled before retry
+ok 52 - unused HTTP 404 body is cancelled before retry
+  ---
+  duration_ms: 0.033583
+  ...
+# Subtest: unused HTTP 500 body is cancelled before retry
+ok 53 - unused HTTP 500 body is cancelled before retry
+  ---
+  duration_ms: 0.338875
+  ...
+# Subtest: unused HTTP 503 body is cancelled before retry
+ok 54 - unused HTTP 503 body is cancelled before retry
+  ---
+  duration_ms: 0.046542
+  ...
+# Subtest: cancelled late ready response cannot return an authorized state
+ok 55 - cancelled late ready response cannot return an authorized state
+  ---
+  duration_ms: 0.107542
+  ...
+# Subtest: trusted loopback localhost may select explicit sample preview
+ok 56 - trusted loopback localhost may select explicit sample preview
+  ---
+  duration_ms: 0.038333
+  ...
+# Subtest: trusted loopback 127.0.0.1 may select explicit sample preview
+ok 57 - trusted loopback 127.0.0.1 may select explicit sample preview
+  ---
+  duration_ms: 0.016041
+  ...
+# Subtest: trusted loopback ::1 may select explicit sample preview
+ok 58 - trusted loopback ::1 may select explicit sample preview
+  ---
+  duration_ms: 0.014583
+  ...
+# Subtest: trusted loopback [::1] may select explicit sample preview
+ok 59 - trusted loopback [::1] may select explicit sample preview
+  ---
+  duration_ms: 0.014125
+  ...
+# Subtest: preview rejects host example.com
+ok 60 - preview rejects host example.com
+  ---
+  duration_ms: 0.029667
+  ...
+# Subtest: preview rejects host localhost.example.com
+ok 61 - preview rejects host localhost.example.com
+  ---
+  duration_ms: 0.020042
+  ...
+# Subtest: preview rejects host 127.0.0.1.example.com
+ok 62 - preview rejects host 127.0.0.1.example.com
+  ---
+  duration_ms: 0.025125
+  ...
+# Subtest: preview rejects host localhost:3100
+ok 63 - preview rejects host localhost:3100
+  ---
+  duration_ms: 0.01875
+  ...
+# Subtest: preview rejects host 0.0.0.0
+ok 64 - preview rejects host 0.0.0.0
+  ---
+  duration_ms: 0.018166
+  ...
+# Subtest: local hostname alone cannot select preview
+ok 65 - local hostname alone cannot select preview
+  ---
+  duration_ms: 0.026083
+  ...
+# Subtest: mode endpoint 404 means service, never sample fallback
+ok 66 - mode endpoint 404 means service, never sample fallback
+  ---
+  duration_ms: 0.066833
+  ...
+# Subtest: mode fallback cancels an unused streaming 404 body
+ok 67 - mode fallback cancels an unused streaming 404 body
+  ---
+  duration_ms: 0.054208
+  ...
+# Subtest: mode payload extras and non-loopback preview fail closed
+ok 68 - mode payload extras and non-loopback preview fail closed
+  ---
+  duration_ms: 0.180791
+  ...
+# Subtest: navigation URL helpers ignore forged authorization and preview queries
+ok 69 - navigation URL helpers ignore forged authorization and preview queries
+  ---
+  duration_ms: 0.15675
+  ...
+1..69
+# tests 69
+# suites 0
+# pass 69
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 94.418584

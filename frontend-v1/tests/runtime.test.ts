@@ -15,7 +15,7 @@ function bootstrap() {
     permission_revision: "permissions-1",
     capabilities: Object.fromEntries(RUNTIME_DESTINATIONS.map((key) => [key, {
       status: REQUIRED_PERMISSIONS[key].every((p) => permissions.includes(p)) ? "unavailable" : "forbidden",
-      reason: "component_pending", required_permissions: [...REQUIRED_PERMISSIONS[key]],
+      reason: "component_pending" as string | null, required_permissions: [...REQUIRED_PERMISSIONS[key]],
     }])),
   };
 }
@@ -71,6 +71,31 @@ test("account type and role labels never substitute for permissions", () => {
   const value = bootstrap(); value.identity.role = "admin"; value.identity.account_type = "internal";
   const parsed = parseRuntimeBootstrap(value);
   assert.equal(routeAccessible(parsed, "admin"), false);
+});
+test("Research context readiness requires both chat and data permissions", () => {
+  const ready = bootstrap();
+  ready.capabilities.research.status = "ready";
+  ready.capabilities.research.reason = null;
+  assert.deepEqual(REQUIRED_PERMISSIONS.research, ["chat:use", "data:read"]);
+  assert.equal(capabilityReady(parseRuntimeBootstrap(ready), "research"), true);
+  for (const removed of ["chat:use", "data:read"]) {
+    const revoked = structuredClone(ready);
+    revoked.identity.role = "admin";
+    revoked.identity.account_type = "internal";
+    revoked.identity.permissions = revoked.identity.permissions.filter((p) => p !== removed);
+    assert.throws(() => parseRuntimeBootstrap(revoked), RuntimeContractError);
+    revoked.capabilities.research.status = "forbidden";
+    revoked.capabilities.research.reason = "The current identity lacks the required permission.";
+    const parsed = parseRuntimeBootstrap(revoked);
+    assert.equal(capabilityVisible(parsed, "research"), false);
+    assert.equal(routeAccessible(parsed, "research"), false);
+    assert.equal(capabilityReady(parsed, "research"), false);
+  }
+});
+test("the C15 single-permission Research contract cannot enable C18 context", () => {
+  const value = bootstrap();
+  value.capabilities.research.required_permissions = ["chat:use"];
+  assert.throws(() => parseRuntimeBootstrap(value), RuntimeContractError);
 });
 test("display-name limits count Unicode code points as the server does", () => {
   const value = bootstrap(); value.identity.display_name = "🌊".repeat(255);

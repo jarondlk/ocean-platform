@@ -1,0 +1,93 @@
+{
+  "backend_passed": 59,
+  "boundary": "Research context runtime readiness only; production execution unavailable until C20",
+  "checks": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_v1_runtime.py",
+        "-q",
+        "--no-cov"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "output": "runtime-backend-tests.txt",
+      "sha256": "e7b9cc964e8ec800d54291ce39f5ff872d7a9c0102532c41dae2b60825aadaab"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "--experimental-strip-types",
+        "--disable-warning=ExperimentalWarning",
+        "--disable-warning=MODULE_TYPELESS_PACKAGE_JSON",
+        "tests/runtime.test.ts"
+      ],
+      "cwd": "frontend-v1",
+      "exit_code": 0,
+      "output": "runtime-frontend-tests.txt",
+      "sha256": "c433054053935c20021b0bb54b9fba15f97a1acab5affe8da5eed3c2f6fa39a8"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "api/v1_runtime_routes.py",
+        "tests/test_v1_runtime.py"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "output": "runtime-lint.txt",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "api/v1_runtime_routes.py",
+        "tests/test_v1_runtime.py",
+        "frontend-v1/src/runtime.ts",
+        "frontend-v1/tests/runtime.test.ts"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "output": "runtime-diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "component": "C18",
+  "coverage": [
+    "Actual explicitly constructed CatalogueService, CatalogueBrowser and InvestigationService bindings; no database session is opened",
+    "Fresh current-request profile:read, chat:use and data:read permissions, researcher/admin/viewer, flag revocation and recovery",
+    "All catalogue/browser/investigation flags parsed and fail closed, absent/wrong/mismatched service, v1 site identity mismatch, explicit ready/unavailable/disabled configuration",
+    "C17 default configuration remains unavailable; tools/administration/feedback remain deferred",
+    "Configuration callback, readiness guard and complete JSON encoding share a worker; normal, AnyIO and native asyncio cancellation delivery checked",
+    "Strict frontend fixed Research permission pair, old single-permission response rejection, navigation and transport boundaries"
+  ],
+  "elapsed_seconds": 4.127,
+  "frontend_passed": 69,
+  "limitations": [
+    "No real OIDC provider, database, external data transfer, browser or cloud deployment exercised by these focused runtime tests",
+    "Context readiness does not assert production run execution or C20 submission availability"
+  ],
+  "recorded_at": "2026-10-18T06:04:45.955280+00:00",
+  "source_after_sha256": {
+    "api/v1_runtime_routes.py": "316c19aa9d39d6b5bd467b3411eb4fdc340e6e0b5a066981fa82d4f545f2c693",
+    "frontend-v1/src/runtime.ts": "224cd4d2b51a81648da5d7d3e4f474af0ee335a8a672ee1e81b61f34a5492908",
+    "frontend-v1/tests/runtime.test.ts": "98c68d88380d0d5d5aefcf983799719b52ae23739e46d8b8df7e95a119bdff16",
+    "tests/test_v1_runtime.py": "01945c2009cc1747f70e113f94db2a147cd6fc7a274e468797ec1275dcec05ae"
+  },
+  "source_before_sha256": {
+    "api/v1_runtime_routes.py": "316c19aa9d39d6b5bd467b3411eb4fdc340e6e0b5a066981fa82d4f545f2c693",
+    "frontend-v1/src/runtime.ts": "224cd4d2b51a81648da5d7d3e4f474af0ee335a8a672ee1e81b61f34a5492908",
+    "frontend-v1/tests/runtime.test.ts": "98c68d88380d0d5d5aefcf983799719b52ae23739e46d8b8df7e95a119bdff16",
+    "tests/test_v1_runtime.py": "01945c2009cc1747f70e113f94db2a147cd6fc7a274e468797ec1275dcec05ae"
+  },
+  "source_changed": []
+}

@@ -1,0 +1,72 @@
+{
+  "component": "C18",
+  "findings": [],
+  "limitations": [
+    "No source was edited by this reviewer. No tests, browser actions, services, database or cloud operations were run.",
+    "CSS source review does not confirm visual layout, keyboard behavior or actual timing. Root-owned browser and acceptance evidence remain required and separate.",
+    "The exact source map is the review boundary; later source changes must be reconciled in final source-bound acceptance evidence.",
+    "Production run execution/authorization and retained artifact content remain the C20/C21 integration boundary."
+  ],
+  "outcome": "No remaining concrete blocking findings identified in this reviewed source state. Three findings reported during this review have fixes present statically.",
+  "prior_receipt_sha256": {
+    "runtime-verification.json": "029cb1eda8c0759825a4c051c80cd3f41cb06fe60a083a2dc06a8ffba9dd3298",
+    "ui-review-final.json": "96011ab51eae9bf71b53481e44418771288b94429dab00b2da6e22293ed97f57",
+    "ui-review-followup.json": "3f312e855ef98ef93e7fb6daced7d78b0922fc5d0ae51376a73fbd9a78f646b4",
+    "ui-review-initial.json": "cd024a8aa13855087e7a889ae941c2781cf8e689d44f40c58537e4b5e2425602"
+  },
+  "recorded_at": "2026-10-18T06:36:31.909472+00:00",
+  "resolved_during_review": [
+    {
+      "fix": "The existing matchMedia object now has a change listener that sets navigationOpen to !narrow.matches, and the listener is removed on cleanup.",
+      "id": "C18-UI-R10",
+      "initial_evidence": "The controlled details element remained closed after widening beyond950px, while desktop CSS hid its summary.",
+      "line_at_review": 107,
+      "severity": "medium",
+      "status": "Fixed in reviewed current source; browser behavior verification remains root-owned",
+      "title": "Closed mobile investigation navigation had no opener after resizing to desktop"
+    },
+    {
+      "fix": "Selected-read timeout now clears active, conversation, conversation list, displayed runs and selected evidence.",
+      "id": "C18-UI-R11",
+      "initial_evidence": "The timer cleared active but the aborted catch skipped normal failure clearing.",
+      "line_at_review": 126,
+      "severity": "medium",
+      "status": "Fixed in reviewed current source; deadline behavior verification remains root-owned",
+      "title": "Selected-read timeout retained old conversation/activity/evidence after abort"
+    },
+    {
+      "fix": "Both polling-owned read deadlines are8s, below the10s polling period. Mutation and run deadlines remain15s because periodic polling does not restart those operations.",
+      "id": "C18-UI-R12",
+      "initial_evidence": "Hanging list/catalogue/context requests were cleaned up and restarted each10s, preventing their15s deadlines from firing.",
+      "line_at_review": 115,
+      "severity": "medium",
+      "status": "Fixed in reviewed current source; timing behavior verification remains root-owned",
+      "title": "Ten-second polling restarted fifteen-second read deadlines before they could expire"
+    }
+  ],
+  "review": "Read-only review of browser-driven UI, responsive and harness corrections",
+  "reviewed_observations": [
+    "Catalogue snapshot discovery has explicit loading/ready/error states; create/refresh are disabled while availability is unverified, eligible selections are reconciled, and zero snapshots are labeled unavailable rather than invented.",
+    "Selected-read rejection and deadline both clear visible conversation/run/evidence state.401/403 additionally clear the account-bound private session and trigger runtime access revalidation.",
+    "Scope acknowledgment recovery compares canonical null-omitting sorted scope values; matching committed/recovered scope updates editor base revision and clears dirty state, while differing unsaved edits remain for conflict review.",
+    "Existing run updates replace the same array entry in place rather than moving that run to the end; new runs append.",
+    "Refresh branches expose predecessor revision and an explicit original-investigation navigation action, while no conversation narrative is copied.",
+    "Responsive navigation is controlled through details with a visible mobile summary and viewport-change synchronization; split panels constrain internal overflow and preserve access to composer/context controls.",
+    "Development frontend explicitly injects the labeled synthetic run fixture and proxies only explicit API prefixes to127.0.0.1:3101. Production v1-entry supplies no run fixture.",
+    "The owned backend harness requires explicit test/disabled-auth settings, binds127.0.0.1, uses temporary synthetic SQLite/sealed fixtures and private/tmp controls, records actual requests, and preserves the prior erroneous predicate harness receipt separately."
+  ],
+  "source_sha256": {
+    "docs/plans/ocean-v1/evidence/C18/browser-harness-correction.json": "b32c5024202e91897e411330904c492b42f143716f373ac9e1f259531e5ac832",
+    "docs/plans/ocean-v1/evidence/C18/serve_research_qa.py": "522015cc81afc75c809b370f582755a97859fe93fc28f4f016febb6d6fb9d6f1",
+    "frontend-v1/development/c18/app/layout.tsx": "89be047fc29795d4e10c851faa038e380d69eb0efbed1b6520650fe7ae396223",
+    "frontend-v1/development/c18/app/page.tsx": "8aa9d6942cb0bfdf32e7dec21e9e25f163cece8d03c0f20a353a348143ddc9c4",
+    "frontend-v1/development/c18/next.config.mjs": "b8b15a6b332e631ca885cc1ba063cee531cf0e5136517c25e06668c1d1b594d2",
+    "frontend-v1/development/c18/package.json": "7193459eadf54765579bf5459529fe101c9fd287fbef68684eb34a60d41c9f18",
+    "frontend-v1/development/c18/run-fixture.ts": "8963dd832a7b27001bc6639b3273895244293b6a03e575c2c31c101532335b17",
+    "frontend-v1/development/c18/tsconfig.json": "3de3a01b9262cbecdb4be472ee77343fa92ff9ab040440b8125c0c7a3cd980a5",
+    "frontend-v1/src/research-workspace.css": "2cd6c98c665616be69b8723de46287d589d6d6f789056d93bd162802ee718a1e",
+    "frontend-v1/src/research-workspace.tsx": "e23523f07e79a5f27618954c213b87ef74e2acfb08775d9102acda681c0a24ee",
+    "frontend-v1/src/runtime-app.tsx": "bb0171e039609a98be813482418144bb9dda29d2255a51166557259d40216ec0",
+    "frontend-v1/src/v1-entry.tsx": "49d09e7d5aa08ee73291a0dbb8116b7f8f68d2b7a957ecf14d4334e8d9eae169"
+  }
+}

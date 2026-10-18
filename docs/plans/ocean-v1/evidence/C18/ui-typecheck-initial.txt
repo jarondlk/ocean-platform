@@ -1,0 +1,15 @@
+
+> ocean-v1-local-preview@1.0.0-preview.0 typecheck
+> NEXT_TELEMETRY_DISABLED=1 next typegen && tsc --noEmit
+
+Generating route types...
+✓ Route types generated successfully
+src/investigation-service.ts(204,30): error TS2345: Argument of type '((raw: unknown) => Investigation) | ((raw: unknown) => Conversation)' is not assignable to parameter of type '(value: any, index: number, array: any[]) => Investigation'.
+  Type '(raw: unknown) => Conversation' is not assignable to type '(value: any, index: number, array: any[]) => Investigation'.
+    Type 'Conversation' is missing the following properties from type 'Investigation': status, head_revision_id, predecessor_investigation_id, predecessor_revision_id, legal_hold
+src/investigation-service.ts(207,63): error TS2352: Conversion of type 'Investigation' to type 'Conversation' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'Investigation' is missing the following properties from type 'Conversation': investigation_id, history_status
+src/investigation-service.ts(222,302): error TS18048: 'i' is possibly 'undefined'.
+src/research-workspace.tsx(9,30): error TS2305: Module '"./research-state"' has no exported member 'executeInvestigationMutation'.
+src/research-workspace.tsx(9,156): error TS2459: Module '"./research-state"' declares 'InvestigationMutationIntent' locally, but it is not exported.
+tests/investigation-service.test.ts(102,158): error TS2378: A 'get' accessor must return a value.

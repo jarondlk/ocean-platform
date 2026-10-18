@@ -21,8 +21,25 @@ Current access/revision changes clear protected views before retry. EN/JA,
 light/dark, desktop/tablet/mobile and keyboard directory navigation are supported.
 The service client/state live in `src/catalogue-service.ts` and
 `src/catalogue-browser-state.ts`; `src/catalogue-browser.tsx` renders the tree,
-listing and inspector. C18 may consume its typed selection notification later.
+listing and inspector. C18 consumes its typed selection notification through explicit Attach and Pin actions.
 See the [C16 handoff](../docs/plans/ocean-v1/handoffs/C16.md).
+
+C18 connects private investigations, conversations and immutable shared context to
+all fourteen C17 methods. Enable `ENABLE_V1_INVESTIGATIONS` and configure the actual
+investigation service against the same catalogue/site as C16; Research also
+requires current `chat:use` and `data:read`. Drafts and development activity stay
+in account/permission-bound memory and clear on identity or access changes.
+Reload restores persisted metadata/context, not volatile drafts or run history.
+Snapshot refresh creates a named branch, preserves the original and requires
+unavailable selections to be resolved before submission.
+
+The typed six-method run boundary is in `src/research-run-contract.ts`.
+Production execution remains unavailable until C20 supplies its transport; C21
+owns final retained answers/evidence. The production entry never imports the
+synthetic fixture. The separately launched `development/c18` app injects it
+visibly for UI acceptance and proxies only the loopback C18 test harness. See the
+[C18 handoff](../docs/plans/ocean-v1/handoffs/C18.md) and
+[interface contract](../docs/plans/ocean-v1/C18_CHAT_WORKSPACE_CONTRACT.md).
 
 `npm run preview` explicitly selects the synthetic P00 preview below.
 `npm run preview:service` serves the built service shell without a configured

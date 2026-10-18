@@ -1,0 +1,94 @@
+{
+  "actual_http_wire": {
+    "methods": 14,
+    "requests": 28,
+    "sha256": "1578f5fe8e1f1059b4f07d925db454088d62da5f49c8f26ebb85a4c3558775e4",
+    "source_sha256": {
+      "api/investigation_routes.py": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6",
+      "db/app_models.py": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab",
+      "orchestration/investigations.py": "e19bb6c27cdfb458c061940de53b5754a012d995dc0d136eb855ba3df0a867f3",
+      "schema/investigations.py": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+      "tests/investigation_support.py": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce"
+    }
+  },
+  "boundaries": [
+    "Captured actual C17 ASGI HTTP with sealed synthetic fixtures and TEST principal; TypeScript transport consumes immutable captured responses",
+    "No browser, listening socket, PostgreSQL, production OIDC or real-data claim",
+    "Standalone focused TypeScript check; root owns full frontend build/test/browser acceptance",
+    "Bounded real request/response transport, no implicit fixture fallback, account/permission-bound volatile drafts and exact mutation replay",
+    "Original wire capture remains immutable; optional null scope fields validated without altering retained wire DTO"
+  ],
+  "checks": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "--experimental-strip-types",
+        "--disable-warning=ExperimentalWarning",
+        "--disable-warning=MODULE_TYPELESS_PACKAGE_JSON",
+        "tests/investigation-service.test.ts",
+        "tests/research-state.test.ts"
+      ],
+      "cwd": "frontend-v1",
+      "exit_code": 0,
+      "log": "client-tests.txt",
+      "log_sha256": "cffeb3981a9e2b51843f394763c7c6af7045f44d7c187642dafabb2b7a9f1996",
+      "seconds": 0.1727
+    },
+    {
+      "command": [
+        "node_modules/.bin/tsc",
+        "--noEmit",
+        "--strict",
+        "--target",
+        "ES2022",
+        "--lib",
+        "dom,dom.iterable,esnext",
+        "--module",
+        "esnext",
+        "--moduleResolution",
+        "bundler",
+        "--allowImportingTsExtensions",
+        "--skipLibCheck",
+        "src/investigation-service.ts",
+        "src/research-state.ts",
+        "tests/investigation-service.test.ts",
+        "tests/research-state.test.ts"
+      ],
+      "cwd": "frontend-v1",
+      "exit_code": 0,
+      "log": "client-typecheck.txt",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.535
+    },
+    {
+      "command": [
+        ".venv/bin/ruff",
+        "check",
+        "docs/plans/ocean-v1/evidence/C18/client_wire_probe.py",
+        "docs/plans/ocean-v1/evidence/C18/client_verify.py"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "log": "client-python-lint.txt",
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "seconds": 0.0144
+    }
+  ],
+  "source_after_sha256": {
+    "frontend-v1/src/investigation-service.ts": "c8b8164a9438f6f05a4a2d770ea767aec055e3bfe1266f597ebffe484f0ac31c",
+    "frontend-v1/src/research-state.ts": "8a8c00a7b4ecd4c3ab35f79a7b48219f421e0cb55d84c146086ab7226aab3c99",
+    "frontend-v1/tests/investigation-service.test.ts": "b41ee744ec05038dd4ef2a582327de4a9933e8ba2ad5ec99c755fe0d4585b1b9",
+    "frontend-v1/tests/research-state.test.ts": "d8423a4cedd6d6deebcaa79639967efcf8abc06ce4dde5660739b4bcc282c30b"
+  },
+  "source_before_sha256": {
+    "frontend-v1/src/investigation-service.ts": "c8b8164a9438f6f05a4a2d770ea767aec055e3bfe1266f597ebffe484f0ac31c",
+    "frontend-v1/src/research-state.ts": "8a8c00a7b4ecd4c3ab35f79a7b48219f421e0cb55d84c146086ab7226aab3c99",
+    "frontend-v1/tests/investigation-service.test.ts": "b41ee744ec05038dd4ef2a582327de4a9933e8ba2ad5ec99c755fe0d4585b1b9",
+    "frontend-v1/tests/research-state.test.ts": "d8423a4cedd6d6deebcaa79639967efcf8abc06ce4dde5660739b4bcc282c30b"
+  },
+  "source_changed": [],
+  "tests_failed": 0,
+  "tests_passed": 128,
+  "verified_at": "2026-10-18T06:09:30.336071+00:00"
+}

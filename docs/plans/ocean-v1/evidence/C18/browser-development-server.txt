@@ -1,0 +1,347 @@
+   ▲ Next.js 15.5.27
+   - Local:        http://127.0.0.1:3102
+   - Network:      http://127.0.0.1:3102
+   - Experiments (use with caution):
+     · cpus: 2
+     ✓ externalDir
+
+ ✓ Starting...
+
+   We detected TypeScript in your project and created a tsconfig.json file for you.
+ ✓ Ready in 1152ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1416ms (727 modules)
+ GET /?view=research&investigation=0a154a12-cb49-4989-8199-71d4d674640f&conversation=79cbbb6a-0b3e-449f-8597-bb1bc14c71f2 200 in 1638ms
+ ✓ Compiled in 167ms (661 modules)
+ ✓ Compiled in 102ms (661 modules)
+ ✓ Compiled in 120ms (661 modules)
+Failed to proxy http://127.0.0.1:3101/research/investigations/list Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/research/investigations/get Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/research/investigations/conversations/list Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/research/investigations/conversations/get Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/catalogue/snapshots Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 697ms (1024 modules)
+ GET /?view=research&investigation=0a154a12-cb49-4989-8199-71d4d674640f&conversation=79cbbb6a-0b3e-449f-8597-bb1bc14c71f2&pane=workspace 200 in 345ms
+ GET /?view=research&investigation=0a154a12-cb49-4989-8199-71d4d674640f&conversation=79cbbb6a-0b3e-449f-8597-bb1bc14c71f2&pane=workspace 200 in 10ms
+Failed to proxy http://127.0.0.1:3101/research/investigations/list Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/research/investigations/get Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/research/investigations/conversations/list Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/research/investigations/conversations/get Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/catalogue/snapshots Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/research/investigations/list Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/research/investigations/get Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/research/investigations/conversations/list Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/research/investigations/conversations/get Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/catalogue/snapshots Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/research/investigations/list Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/research/investigations/get Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/research/investigations/conversations/list Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/research/investigations/conversations/get Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Failed to proxy http://127.0.0.1:3101/catalogue/snapshots Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+Error: connect ECONNREFUSED 127.0.0.1:3101
+    at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3101) {
+  errno: -61,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3101
+}
+ ✓ Compiled in 179ms (1024 modules)
+ GET /?investigation=862a9ecc-6d07-4f93-9cb1-3aae9e50d054&conversation=e7d4c3ea-cebd-4a48-974a-bf19c28afce7 200 in 146ms
+ ✓ Compiled in 178ms (923 modules)
+ ✓ Compiled in 96ms (923 modules)
+ ✓ Compiled in 111ms (923 modules)
+[?25h

@@ -1,0 +1,96 @@
+{
+  "component": "C18",
+  "excluded_already_known": [
+    "Pending-navigation busy reset",
+    "Immediate stale conversation clear",
+    "List/pagination abort guards",
+    "CatalogueClientError401 detection"
+  ],
+  "findings": [
+    {
+      "evidence": "ResearchDraftStore.rememberMutation refuses a different intent for the same slot. mutate calls it before its try/catch, while action controls only check busy or archived.",
+      "id": "C18-UI-R1",
+      "impact": "The new async handler rejects without the controlled error/retry UX. The original uncertain request must remain immutable.",
+      "line_at_recording": 120,
+      "path": "frontend-v1/src/research-workspace.tsx",
+      "pattern_present_at_recording": true,
+      "recommendation": "Gate unrelated mutations while pending, allow the exact original retry, and handle draft-store failures inside the controlled path.",
+      "severity": "high",
+      "title": "An uncertain pending mutation causes new actions to throw outside error handling",
+      "trigger": "A mutation returns a network/503 uncertainty; user clicks a different mutation in the same investigation while pending is present and busy is false."
+    },
+    {
+      "evidence": "ScopeEditor sets dirty on edits and only resets dirty on Discard. Parent success updates context.id; the effect refuses to adopt it while dirty remains true.",
+      "id": "C18-UI-R2",
+      "impact": "Apply remains enabled and subsequent requests send the old expected_revision_id, causing avoidable conflicts and a stale-change warning after the user saved.",
+      "line_at_recording": 198,
+      "path": "frontend-v1/src/research-workspace.tsx",
+      "pattern_present_at_recording": true,
+      "recommendation": "Acknowledge this editor submission success and reset its dirty/base revision state, while preserving local edits when an unrelated external revision arrives.",
+      "severity": "high",
+      "title": "A successful source-scope save leaves the editor bound to the superseded revision",
+      "trigger": "Edit scope and apply successfully, then edit/apply again without discarding."
+    },
+    {
+      "evidence": "Every successful selection load unconditionally sets both rename input values from the server.",
+      "id": "C18-UI-R3",
+      "impact": "Local unsaved names disappear while the user is editing.",
+      "line_at_recording": 106,
+      "path": "frontend-v1/src/research-workspace.tsx",
+      "pattern_present_at_recording": true,
+      "recommendation": "Keep selection-bound dirty drafts for name fields and reconcile after acknowledged saves, rather than overwriting on every poll.",
+      "severity": "medium",
+      "title": "Background state polling overwrites unsaved naming input",
+      "trigger": "Start typing in investigation/conversation rename input; the ten-second/focus/locale refresh completes."
+    },
+    {
+      "evidence": "More appends items but the periodic refresh replaces the collection with the first page; conversation selection loading does the same.",
+      "id": "C18-UI-R4",
+      "impact": "Previously loaded items disappear and navigation repeatedly loses the expanded range.",
+      "line_at_recording": 90,
+      "path": "frontend-v1/src/research-workspace.tsx",
+      "pattern_present_at_recording": true,
+      "recommendation": "Track/refetch the loaded range or preserve pagination consistently when refreshing current list state.",
+      "severity": "medium",
+      "title": "Periodic first-page refresh discards additional loaded navigation pages",
+      "trigger": "Load More investigations or conversations beyond the first100; wait for the ten-second/focus refresh."
+    },
+    {
+      "evidence": "runAction compares the complete binding only when an expected existing run is supplied. Submit supplies no expected binding and checks only investigation/conversation IDs.",
+      "id": "C18-UI-R5",
+      "impact": "The displayed submitted context may differ from the context frozen by the UI at submission. No production transport is enabled in C18, but the typed presentation boundary can reject this now.",
+      "line_at_recording": 159,
+      "path": "frontend-v1/src/research-workspace.tsx",
+      "pattern_present_at_recording": true,
+      "recommendation": "Compare the returned run binding with the exact frozen submitted binding as well as the address.",
+      "severity": "medium",
+      "title": "Submission accepts a returned run with a different immutable context revision",
+      "trigger": "The injected transport returns the right investigation/conversation but a different revision, snapshot or payload hash for a submitted question."
+    },
+    {
+      "evidence": "The popstate restore catch sets an error but does not clear or block the previous location/active context/draft controls.",
+      "id": "C18-UI-R6",
+      "impact": "The address bar and editable investigation can disagree; a user can act on the prior selection under an invalid URL.",
+      "line_at_recording": 81,
+      "path": "frontend-v1/src/research-workspace.tsx",
+      "pattern_present_at_recording": true,
+      "recommendation": "Clear/block selected context and pending editing when URL restoration fails, then require a valid explicit selection.",
+      "severity": "medium",
+      "title": "Malformed history restoration leaves the previous selected context editable",
+      "trigger": "With an active investigation, navigate Back/Forward to a malformed research URL such as an invalid UUID or duplicated selection parameter."
+    }
+  ],
+  "limitations": [
+    "Findings are static code-path deductions, not browser reproductions.",
+    "Root is editing these UI files concurrently; this report is immutable initial evidence and later fixes must have separate verification."
+  ],
+  "recorded_at": "2026-10-18T06:09:40.324272+00:00",
+  "review": "Read-only initial source review; no tests/browser/services executed",
+  "runtime_app_observation": "Current RuntimeApp keeps the shared session volatile and account/permission-revision bound; changes clear runs/drafts before mounting the newly verified identity. No additional concrete cross-account leak identified in this read-only review.",
+  "source_sha256": {
+    "frontend-v1/src/research-run-contract.ts": "7baa7516d1179eb26b943a192d11e34e393422b2325bb644fc8f8782e7c22f94",
+    "frontend-v1/src/research-state.ts": "8a8c00a7b4ecd4c3ab35f79a7b48219f421e0cb55d84c146086ab7226aab3c99",
+    "frontend-v1/src/research-workspace.tsx": "d531326c43b6e2c4963996aac64026a2bfbcda347f8596d51b4dcb9a032c68b6",
+    "frontend-v1/src/runtime-app.tsx": "bb0171e039609a98be813482418144bb9dda29d2255a51166557259d40216ec0"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "additional_integration_checks": [
+    "Actual C17 client validates response investigation/conversation/context IDs and current head for get, and checks abort at async boundaries.",
+    "Run presentation context permits retained artifact references to keep their own snapshot, while catalogue references must match the investigation snapshot.",
+    "RuntimeApp removes private workspace during access revalidation, keys it by verified account/permission revision, and clears volatile drafts/runs on identity changes and access denial.",
+    "Production v1-entry imports/mounts RuntimeApp without a researchRunTransport; explicit synthetic fixture import/injection is confined to the separately launched development entry.",
+    "No legacy history, provider, cloud or production run fallback was identified in these reviewed paths."
+  ],
+  "component": "C18",
+  "findings": [],
+  "limitations": [
+    "This review executed no tests, browser interaction, services, providers, database or cloud operations.",
+    "Root-owned full suite and browser evidence remain separate acceptance gates; source review does not claim those pass.",
+    "C20 must enforce fresh server-side authorization and immutable context binding at actual production execution; C18 only enables context management and explicitly injected development presentation.",
+    "Root may continue editing during browser QA; this receipt records the exact reviewed source hashes and later changes need independent source-bound verification."
+  ],
+  "outcome": "No additional concrete blocking findings identified in the reviewed current source. All nine previously reported integration findings have fixes present statically.",
+  "prior_findings": {
+    "C18-UI-R1": "Original pending intent is checked; unrelated mutation is refused; exact replay remains available; rememberMutation is inside the controlled try path.",
+    "C18-UI-R2": "Successful scope save resolves true and clears editor dirty state; subsequent effect adopts current scope/revision. Failed/conflicted save preserves edits.",
+    "C18-UI-R3": "Metadata source ref preserves dirty naming inputs during polling and resets values on actual selection change.",
+    "C18-UI-R4": "Loaded investigation/conversation page count is retained and all loaded pages are refreshed with cursor/duplicate guards.",
+    "C18-UI-R5": "Returned submit run is checked against the full frozen binding, as are status/event/cancel/clarify/continue responses.",
+    "C18-UI-R6": "Malformed restoration blocks location and clears selected active/private visible state.",
+    "C18-UI-R7": "Submit blocks pending mutations, freshly requests C17 investigation/context and conversation, verifies active/current available resolution and full binding, and requires explicit review/resubmit if changed.",
+    "C18-UI-R8": "Only actual investigation/conversation transitions invalidate busy work. Presentation tab/pane navigation preserves operation ownership; synchronous Symbol ref serializes mutation/run requests.",
+    "C18-UI-R9": "Monotonic selection epoch binds the async result guard, with explicit abort/invalidation on selection changes and malformed restoration. Returning to the same selection cannot reuse the earlier epoch."
+  },
+  "prior_receipt_sha256": {
+    "runtime-verification.json": "029cb1eda8c0759825a4c051c80cd3f41cb06fe60a083a2dc06a8ffba9dd3298",
+    "ui-review-followup.json": "3f312e855ef98ef93e7fb6daced7d78b0922fc5d0ae51376a73fbd9a78f646b4",
+    "ui-review-initial.json": "cd024a8aa13855087e7a889ae941c2781cf8e689d44f40c58537e4b5e2425602"
+  },
+  "recorded_at": "2026-10-18T06:22:06.620515+00:00",
+  "review": "Final read-only integration source review",
+  "runtime_frozen_source_changes": {},
+  "source_sha256": {
+    "frontend-v1/development/c18/app/page.tsx": "8aa9d6942cb0bfdf32e7dec21e9e25f163cece8d03c0f20a353a348143ddc9c4",
+    "frontend-v1/development/c18/run-fixture.ts": "8963dd832a7b27001bc6639b3273895244293b6a03e575c2c31c101532335b17",
+    "frontend-v1/src/investigation-service.ts": "c8b8164a9438f6f05a4a2d770ea767aec055e3bfe1266f597ebffe484f0ac31c",
+    "frontend-v1/src/research-run-contract.ts": "1dae2270558d62e3bac63e76349cca62b27d26624602a0704ab59e0f1047a7ad",
+    "frontend-v1/src/research-state.ts": "8a8c00a7b4ecd4c3ab35f79a7b48219f421e0cb55d84c146086ab7226aab3c99",
+    "frontend-v1/src/research-workspace.tsx": "8b3e3d2cdce2c1b0c4af9011aceb8d4c1203ed80bdd8d7ff2dcf0134021f6785",
+    "frontend-v1/src/runtime-app.tsx": "bb0171e039609a98be813482418144bb9dda29d2255a51166557259d40216ec0",
+    "frontend-v1/src/v1-entry.tsx": "49d09e7d5aa08ee73291a0dbb8116b7f8f68d2b7a957ecf14d4334e8d9eae169"
+  }
+}

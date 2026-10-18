@@ -1,0 +1,67 @@
+{
+  "account_isolation": "RuntimeApp still clears/binds the volatile session on verified identity/permission revision changes and unmounts private UI during revalidation. No additional concrete cross-account leak identified in that integration.",
+  "component": "C18",
+  "findings": [
+    {
+      "evidence": "submit freezes active directly without a fresh client.get/getContext. Its guard and disabled button use busy/checking but not pending/blocked.",
+      "id": "C18-UI-R7",
+      "impact": "A development submission can use an old revision or the pre-uncertain-write context. Production execution remains unavailable until C20, whose server-side reauthorization is still required.",
+      "line_at_recording": 170,
+      "path": "frontend-v1/src/research-workspace.tsx",
+      "pattern_present_at_recording": true,
+      "recommendation": "Before submission, freshly load and validate current C17 context/status and conversation under an operation guard. If the binding changed, update the displayed context and require review/resubmit. Block new submission while a context mutation is pending.",
+      "severity": "high",
+      "title": "Submission still uses the last polled context rather than a fresh current C17 binding",
+      "trigger": "Another chat changes scope/pins or a current source policy withdraws a selection after the last poll; alternatively a context write is uncertain and pending but busy is false. Submit is then pressed."
+    },
+    {
+      "evidence": "navigate always setBusy(false), even when investigation/conversation and thus guard.current are unchanged. runAction only checks busy, and its controls are likewise enabled from busy.",
+      "id": "C18-UI-R8",
+      "impact": "The old operation is still active but run controls can start overlapping requests; completion/finally from the earlier request can update shared state or clear a newer request busy state.",
+      "line_at_recording": 81,
+      "path": "frontend-v1/src/research-workspace.tsx",
+      "pattern_present_at_recording": true,
+      "recommendation": "Keep busy ownership tied to a synchronous operation token/ref. Presentation-only navigation must not end that ownership; selection changes should explicitly invalidate or move pending work.",
+      "severity": "high",
+      "title": "Presentation-only navigation clears an active request busy state",
+      "trigger": "While a slow context mutation or run request is awaiting a response, switch Workspace tabs or Chat/Workspace panes, or open evidence."
+    },
+    {
+      "evidence": "Malformed restore clears active and sets located=false but leaves the existing location/guard key unchanged and does not invalidate mutation/run work. The mutation result checks mounted and equality of this reusable string before applying fresh context. The same string is reused on A-to-B-to-A navigation.",
+      "id": "C18-UI-R9",
+      "impact": "A delayed mutation can repopulate private active context after malformed navigation blocked it. A delayed run result can overwrite newer state after returning to the same conversation.",
+      "line_at_recording": 66,
+      "path": "frontend-v1/src/research-workspace.tsx",
+      "pattern_present_at_recording": true,
+      "recommendation": "Use a monotonic selection/request generation, invalidate and abort on malformed restoration and real selection changes, and require generation ownership before committing any async result or clearing busy.",
+      "severity": "high",
+      "title": "Reusable selection-key guard allows stale in-flight results after invalid URL or A-to-B-to-A navigation",
+      "trigger": "Start a slow mutation, restore a malformed history URL, then let the request finish. Or leave a conversation and return to the same conversation before an earlier run status response returns."
+    }
+  ],
+  "initial_findings_static_disposition": {
+    "C18-UI-R1": "Fix present in reviewed source; behavioral verification remains root-owned",
+    "C18-UI-R2": "Fix present in reviewed source; behavioral verification remains root-owned",
+    "C18-UI-R3": "Fix present in reviewed source; behavioral verification remains root-owned",
+    "C18-UI-R4": "Fix present in reviewed source; behavioral verification remains root-owned",
+    "C18-UI-R5": "Fix present in reviewed source; behavioral verification remains root-owned",
+    "C18-UI-R6": "Fix present in reviewed source; behavioral verification remains root-owned"
+  },
+  "limitations": [
+    "Static source-path deductions, not browser reproductions.",
+    "Root is editing concurrently. This report is immutable evidence of this review point; later fixes require a separate receipt.",
+    "Run execution is an explicitly injected development fixture in C18; C20 must implement production authorization and immutable server submission."
+  ],
+  "previous_review": {
+    "path": "ui-review-initial.json",
+    "sha256": "cd024a8aa13855087e7a889ae941c2781cf8e689d44f40c58537e4b5e2425602"
+  },
+  "recorded_at": "2026-10-18T06:13:21.702458+00:00",
+  "review": "Read-only second integration review; no source edits, tests, browser or services",
+  "source_sha256": {
+    "frontend-v1/src/research-run-contract.ts": "1dae2270558d62e3bac63e76349cca62b27d26624602a0704ab59e0f1047a7ad",
+    "frontend-v1/src/research-state.ts": "8a8c00a7b4ecd4c3ab35f79a7b48219f421e0cb55d84c146086ab7226aab3c99",
+    "frontend-v1/src/research-workspace.tsx": "d14c9cf613927e7c5daff0755601f52091297d3875609fcde981620f191d9768",
+    "frontend-v1/src/runtime-app.tsx": "bb0171e039609a98be813482418144bb9dda29d2255a51166557259d40216ec0"
+  }
+}

@@ -20,11 +20,12 @@ import config
 from api.auth import CurrentUser, get_current_user
 from orchestration.catalogue_browser import CatalogueBrowser
 from orchestration.catalogue_service import CatalogueService
+from orchestration.investigations import InvestigationService
 from schema.context_catalogue import Identifier, canonical_json
 
 VERSION = "ocean-v1-runtime-v1"
 REQUIRED_PERMISSIONS = MappingProxyType({
-    "research": ("chat:use",),
+    "research": ("chat:use", "data:read"),
     "catalogue": ("data:read",),
     "tools": ("data:read",),
     "settings": ("profile:read",),
@@ -33,7 +34,7 @@ REQUIRED_PERMISSIONS = MappingProxyType({
     "about": ("profile:read",),
 })
 DEFERRED_REASONS = MappingProxyType({
-    "research": "Research sessions and execution are not integrated in this shell stage.",
+    "research": "The configured research context services are unavailable.",
     "catalogue": "The configured catalogue browser services are unavailable.",
     "tools": "Specialist tools are not integrated in this shell stage.",
     "administration": "V1 administration workflows are not integrated in this shell stage.",
@@ -62,7 +63,7 @@ class V1RuntimeConfiguration:
             for value in values.values()
         ):
             raise ValueError("Explicit known capability states required")
-        if any(values[name] == "ready" for name in DEFERRED_REASONS if name != "catalogue"):
+        if any(values[name] == "ready" for name in DEFERRED_REASONS if name not in {"catalogue", "research"}):
             raise ValueError("Unintegrated workflows cannot be enabled by configuration")
         object.__setattr__(self, "capabilities", MappingProxyType(values))
 
@@ -85,7 +86,21 @@ def _catalogue_available(service, browser):
         return False
 
 
-def runtime_response(user, configured, catalogue_service=None, catalogue_browser=None):
+def _research_available(configuration, catalogue_service, catalogue_browser, investigation_service):
+    """Context management readiness; this never enables production execution."""
+    try:
+        return (
+            _catalogue_available(catalogue_service, catalogue_browser)
+            and config.v1_investigations_enabled()
+            and isinstance(investigation_service, InvestigationService)
+            and investigation_service.catalogue is catalogue_service
+            and investigation_service.site_id == configuration.site_id
+        )
+    except config.SecurityConfigurationError:
+        return False
+
+
+def runtime_response(user, configured, catalogue_service=None, catalogue_browser=None, investigation_service=None):
     """Own configuration callback lifetime and serialization in the same worker."""
     if not isinstance(user, CurrentUser):
         return _error(401, "authentication_required", "Authentication is required")
@@ -103,6 +118,9 @@ def runtime_response(user, configured, catalogue_service=None, catalogue_browser
             status = configuration.capabilities[name] if permitted else "forbidden"
             if name == "catalogue" and status == "ready":
                 if not _catalogue_available(catalogue_service, catalogue_browser):
+                    status = "unavailable"
+            if name == "research" and status == "ready":
+                if not _research_available(configuration, catalogue_service, catalogue_browser, investigation_service):
                     status = "unavailable"
             reason = None if status == "ready" else (
                 "This identity does not have the required permissions." if not permitted
@@ -141,6 +159,7 @@ async def runtime(request: Request):
         runtime_response, user, configured,
         getattr(request.app.state, "catalogue_service", None),
         getattr(request.app.state, "catalogue_browser", None),
+        getattr(request.app.state, "investigation_service", None),
     )
     await checkpoint()
     return response

@@ -1,4 +1,4 @@
-/** C15 v1 bootstrap boundary. No sample data, storage, cookie or legacy discovery. */
+/** Explicit v1 bootstrap boundary. Research ready enables context UI; execution requires C20. */
 export const RUNTIME_VERSION = "ocean-v1-runtime-v1" as const;
 export const MODE_VERSION = "ocean-v1-mode-v1" as const;
 export const MAX_RUNTIME_BYTES = 64 * 1024;
@@ -7,7 +7,7 @@ export type RuntimeDestination = typeof RUNTIME_DESTINATIONS[number];
 export type ShellDestination = RuntimeDestination | "admin";
 export type RuntimeMode = "service" | "synthetic-preview";
 export const REQUIRED_PERMISSIONS: Readonly<Record<RuntimeDestination, readonly string[]>> = Object.freeze({
-  research: Object.freeze(["chat:use"]), catalogue: Object.freeze(["data:read"]), tools: Object.freeze(["data:read"]),
+  research: Object.freeze(["chat:use", "data:read"]), catalogue: Object.freeze(["data:read"]), tools: Object.freeze(["data:read"]),
   settings: Object.freeze(["profile:read"]), administration: Object.freeze(["users:manage"]),
   feedback: Object.freeze(["feedback:write"]), about: Object.freeze(["profile:read"]),
 });

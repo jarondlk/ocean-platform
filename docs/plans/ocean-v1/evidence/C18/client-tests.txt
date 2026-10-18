@@ -1,0 +1,650 @@
+TAP version 13
+# Subtest: wire corpus is from all fourteen actual unchanged C17 HTTP operations
+ok 1 - wire corpus is from all fourteen actual unchanged C17 HTTP operations
+  ---
+  duration_ms: 0.7215
+  ...
+# Subtest: actual Python HTTP wire 1: list 200
+ok 2 - actual Python HTTP wire 1: list 200
+  ---
+  duration_ms: 8.044125
+  ...
+# Subtest: actual Python HTTP wire 2: create 200
+ok 3 - actual Python HTTP wire 2: create 200
+  ---
+  duration_ms: 5.579417
+  ...
+# Subtest: actual Python HTTP wire 3: create 200
+ok 4 - actual Python HTTP wire 3: create 200
+  ---
+  duration_ms: 3.451583
+  ...
+# Subtest: actual Python HTTP wire 4: list 200
+ok 5 - actual Python HTTP wire 4: list 200
+  ---
+  duration_ms: 0.35675
+  ...
+# Subtest: actual Python HTTP wire 5: get 200
+ok 6 - actual Python HTTP wire 5: get 200
+  ---
+  duration_ms: 0.628084
+  ...
+# Subtest: actual Python HTTP wire 6: rename 200
+ok 7 - actual Python HTTP wire 6: rename 200
+  ---
+  duration_ms: 0.216333
+  ...
+# Subtest: actual Python HTTP wire 7: archive 200
+ok 8 - actual Python HTTP wire 7: archive 200
+  ---
+  duration_ms: 0.150917
+  ...
+# Subtest: actual Python HTTP wire 8: archive 200
+ok 9 - actual Python HTTP wire 8: archive 200
+  ---
+  duration_ms: 0.315916
+  ...
+# Subtest: actual Python HTTP wire 9: createConversation 200
+ok 10 - actual Python HTTP wire 9: createConversation 200
+  ---
+  duration_ms: 0.695542
+  ...
+# Subtest: actual Python HTTP wire 10: createConversation 200
+ok 11 - actual Python HTTP wire 10: createConversation 200
+  ---
+  duration_ms: 0.2975
+  ...
+# Subtest: actual Python HTTP wire 11: listConversations 200
+ok 12 - actual Python HTTP wire 11: listConversations 200
+  ---
+  duration_ms: 0.140417
+  ...
+# Subtest: actual Python HTTP wire 12: listConversations 200
+ok 13 - actual Python HTTP wire 12: listConversations 200
+  ---
+  duration_ms: 0.094292
+  ...
+# Subtest: actual Python HTTP wire 13: getConversation 200
+ok 14 - actual Python HTTP wire 13: getConversation 200
+  ---
+  duration_ms: 0.118458
+  ...
+# Subtest: actual Python HTTP wire 14: renameConversation 200
+ok 15 - actual Python HTTP wire 14: renameConversation 200
+  ---
+  duration_ms: 0.118666
+  ...
+# Subtest: actual Python HTTP wire 15: getContext 200
+ok 16 - actual Python HTTP wire 15: getContext 200
+  ---
+  duration_ms: 0.530709
+  ...
+# Subtest: actual Python HTTP wire 16: changeContext 200
+ok 17 - actual Python HTTP wire 16: changeContext 200
+  ---
+  duration_ms: 0.677917
+  ...
+# Subtest: actual Python HTTP wire 17: changeContext 200
+ok 18 - actual Python HTTP wire 17: changeContext 200
+  ---
+  duration_ms: 0.601458
+  ...
+# Subtest: actual Python HTTP wire 18: getContext 200
+ok 19 - actual Python HTTP wire 18: getContext 200
+  ---
+  duration_ms: 0.450917
+  ...
+# Subtest: actual Python HTTP wire 19: getOperation 200
+ok 20 - actual Python HTTP wire 19: getOperation 200
+  ---
+  duration_ms: 0.084375
+  ...
+# Subtest: actual Python HTTP wire 20: retryOperation 200
+ok 21 - actual Python HTTP wire 20: retryOperation 200
+  ---
+  duration_ms: 0.489792
+  ...
+# Subtest: actual Python HTTP wire 21: retryOperation 200
+ok 22 - actual Python HTTP wire 21: retryOperation 200
+  ---
+  duration_ms: 0.077583
+  ...
+# Subtest: actual Python HTTP wire 22: refresh 200
+ok 23 - actual Python HTTP wire 22: refresh 200
+  ---
+  duration_ms: 0.825292
+  ...
+# Subtest: actual Python HTTP wire 23: changeContext 200
+ok 24 - actual Python HTTP wire 23: changeContext 200
+  ---
+  duration_ms: 2.737416
+  ...
+# Subtest: actual Python HTTP wire 24: changeContext 200
+ok 25 - actual Python HTTP wire 24: changeContext 200
+  ---
+  duration_ms: 0.480917
+  ...
+# Subtest: actual Python HTTP wire 25: changeContext 200
+ok 26 - actual Python HTTP wire 25: changeContext 200
+  ---
+  duration_ms: 0.534917
+  ...
+# Subtest: actual Python HTTP wire 26: changeContext 409
+ok 27 - actual Python HTTP wire 26: changeContext 409
+  ---
+  duration_ms: 0.311959
+  ...
+# Subtest: actual Python HTTP wire 27: get 404
+ok 28 - actual Python HTTP wire 27: get 404
+  ---
+  duration_ms: 0.066583
+  ...
+# Subtest: actual Python HTTP wire 28: list 401
+ok 29 - actual Python HTTP wire 28: list 401
+  ---
+  duration_ms: 0.059667
+  ...
+# Subtest: HTTP 401 remains authoritative with malformed or misleading bodies
+ok 30 - HTTP 401 remains authoritative with malformed or misleading bodies
+  ---
+  duration_ms: 0.415958
+  ...
+# Subtest: HTTP 403 remains authoritative with malformed or misleading bodies
+ok 31 - HTTP 403 remains authoritative with malformed or misleading bodies
+  ---
+  duration_ms: 0.210542
+  ...
+# Subtest: HTTP 404 remains authoritative with malformed or misleading bodies
+ok 32 - HTTP 404 remains authoritative with malformed or misleading bodies
+  ---
+  duration_ms: 0.204542
+  ...
+# Subtest: HTTP 409 remains authoritative with malformed or misleading bodies
+ok 33 - HTTP 409 remains authoritative with malformed or misleading bodies
+  ---
+  duration_ms: 0.153375
+  ...
+# Subtest: HTTP 422 remains authoritative with malformed or misleading bodies
+ok 34 - HTTP 422 remains authoritative with malformed or misleading bodies
+  ---
+  duration_ms: 0.092334
+  ...
+# Subtest: HTTP 503 remains authoritative with malformed or misleading bodies
+ok 35 - HTTP 503 remains authoritative with malformed or misleading bodies
+  ---
+  duration_ms: 0.087542
+  ...
+# Subtest: rejects wrong version
+ok 36 - rejects wrong version
+  ---
+  duration_ms: 0.17
+  ...
+# Subtest: rejects unknown owner response field
+ok 37 - rejects unknown owner response field
+  ---
+  duration_ms: 0.114417
+  ...
+# Subtest: rejects cross-investigation context
+ok 38 - rejects cross-investigation context
+  ---
+  duration_ms: 0.399166
+  ...
+# Subtest: rejects wrong current context revision
+ok 39 - rejects wrong current context revision
+  ---
+  duration_ms: 0.670542
+  ...
+# Subtest: rejects wrong hash
+ok 40 - rejects wrong hash
+  ---
+  duration_ms: 0.439292
+  ...
+# Subtest: rejects noninteger version
+ok 41 - rejects noninteger version
+  ---
+  duration_ms: 0.142375
+  ...
+# Subtest: rejects null timestamp
+ok 42 - rejects null timestamp
+  ---
+  duration_ms: 0.115
+  ...
+# Subtest: rejects noncanonical UUID
+ok 43 - rejects noncanonical UUID
+  ---
+  duration_ms: 0.102292
+  ...
+# Subtest: rejects legacy imported history
+ok 44 - rejects legacy imported history
+  ---
+  duration_ms: 0.430458
+  ...
+# Subtest: rejects wrong create snapshot
+ok 45 - rejects wrong create snapshot
+  ---
+  duration_ms: 1.286583
+  ...
+# Subtest: rejects uncommitted successful mutation
+ok 46 - rejects uncommitted successful mutation
+  ---
+  duration_ms: 1.290125
+  ...
+# Subtest: rejects wrong operation kind
+ok 47 - rejects wrong operation kind
+  ---
+  duration_ms: 1.342958
+  ...
+# Subtest: rejects wrong candidate revision
+ok 48 - rejects wrong candidate revision
+  ---
+  duration_ms: 1.264875
+  ...
+# Subtest: rejects conversation from another owner investigation
+ok 49 - rejects conversation from another owner investigation
+  ---
+  duration_ms: 0.07425
+  ...
+# Subtest: rejects unavailable history silently ready
+ok 50 - rejects unavailable history silently ready
+  ---
+  duration_ms: 0.077
+  ...
+# Subtest: rejects wrong refresh predecessor
+ok 51 - rejects wrong refresh predecessor
+  ---
+  duration_ms: 0.427333
+  ...
+# Subtest: rejects renamed different metadata
+ok 52 - rejects renamed different metadata
+  ---
+  duration_ms: 0.0835
+  ...
+# Subtest: rejects renamed different conversation
+ok 53 - rejects renamed different conversation
+  ---
+  duration_ms: 0.076125
+  ...
+# Subtest: rejects archive failed to archive
+ok 54 - rejects archive failed to archive
+  ---
+  duration_ms: 0.392167
+  ...
+# Subtest: rejects omitted list continuation
+ok 55 - rejects omitted list continuation
+  ---
+  duration_ms: 0.076209
+  ...
+# Subtest: attached and pinned references remain distinct while resolution joins exact order
+ok 56 - attached and pinned references remain distinct while resolution joins exact order
+  ---
+  duration_ms: 0.573125
+  ...
+# Subtest: refresh branch exposes unavailable selections without rewriting old snapshots
+ok 57 - refresh branch exposes unavailable selections without rewriting old snapshots
+  ---
+  duration_ms: 0.431459
+  ...
+# Subtest: invalid create request never dispatches name=" padded "
+ok 58 - invalid create request never dispatches name=" padded "
+  ---
+  duration_ms: 0.07425
+  ...
+# Subtest: invalid create request never dispatches name="control\\nname"
+ok 59 - invalid create request never dispatches name="control\\nname"
+  ---
+  duration_ms: 0.047083
+  ...
+# Subtest: invalid create request never dispatches name="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+ok 60 - invalid create request never dispatches name="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ---
+  duration_ms: 0.045625
+  ...
+# Subtest: invalid create request never dispatches name="\\ud800"
+ok 61 - invalid create request never dispatches name="\\ud800"
+  ---
+  duration_ms: 0.039
+  ...
+# Subtest: invalid create request never dispatches name=4
+ok 62 - invalid create request never dispatches name=4
+  ---
+  duration_ms: 0.044958
+  ...
+# Subtest: invalid create request never dispatches idempotency_key="UPPERCASE"
+ok 63 - invalid create request never dispatches idempotency_key="UPPERCASE"
+  ---
+  duration_ms: 0.044291
+  ...
+# Subtest: invalid create request never dispatches idempotency_key=null
+ok 64 - invalid create request never dispatches idempotency_key=null
+  ---
+  duration_ms: 0.043041
+  ...
+# Subtest: invalid create request never dispatches snapshot_id="../real-data"
+ok 65 - invalid create request never dispatches snapshot_id="../real-data"
+  ---
+  duration_ms: 0.044083
+  ...
+# Subtest: invalid create request never dispatches snapshot_id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+ok 66 - invalid create request never dispatches snapshot_id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  ---
+  duration_ms: 0.060208
+  ...
+# Subtest: invalid create request never dispatches scope=null
+ok 67 - invalid create request never dispatches scope=null
+  ---
+  duration_ms: 0.083083
+  ...
+# Subtest: invalid create request never dispatches scope={"version":1,"role":"admin"}
+ok 68 - invalid create request never dispatches scope={"version":1,"role":"admin"}
+  ---
+  duration_ms: 0.045916
+  ...
+# Subtest: invalid create request never dispatches user_id="0161d096-6963-4d72-b086-bb398ed9eaef"
+ok 69 - invalid create request never dispatches user_id="0161d096-6963-4d72-b086-bb398ed9eaef"
+  ---
+  duration_ms: 0.044125
+  ...
+# Subtest: invalid create request never dispatches __test_identity="admin"
+ok 70 - invalid create request never dispatches __test_identity="admin"
+  ---
+  duration_ms: 0.042875
+  ...
+# Subtest: strict method request list {"limit":0}
+ok 71 - strict method request list {"limit":0}
+  ---
+  duration_ms: 0.032458
+  ...
+# Subtest: strict method request list {"limit":101}
+ok 72 - strict method request list {"limit":101}
+  ---
+  duration_ms: 0.025583
+  ...
+# Subtest: strict method request list {"limit":null}
+ok 73 - strict method request list {"limit":null}
+  ---
+  duration_ms: 0.025208
+  ...
+# Subtest: strict method request list {"limit":"25"}
+ok 74 - strict method request list {"limit":"25"}
+  ---
+  duration_ms: 0.025292
+  ...
+# Subtest: strict method request list {"after_id":""}
+ok 75 - strict method request list {"after_id":""}
+  ---
+  duration_ms: 0.029958
+  ...
+# Subtest: strict method request archive {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_v
+ok 76 - strict method request archive {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_v
+  ---
+  duration_ms: 0.029083
+  ...
+# Subtest: strict method request archive {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_v
+ok 77 - strict method request archive {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_v
+  ---
+  duration_ms: 0.024083
+  ...
+# Subtest: strict method request getContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","revision_i
+ok 78 - strict method request getContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","revision_i
+  ---
+  duration_ms: 0.026458
+  ...
+# Subtest: strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+ok 79 - strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+  ---
+  duration_ms: 0.059334
+  ...
+# Subtest: strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+ok 80 - strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+  ---
+  duration_ms: 0.051125
+  ...
+# Subtest: strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+ok 81 - strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+  ---
+  duration_ms: 0.034334
+  ...
+# Subtest: strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+ok 82 - strict method request changeContext {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+  ---
+  duration_ms: 0.033541
+  ...
+# Subtest: strict method request refresh {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+ok 83 - strict method request refresh {"investigation_id":"76c77e7b-f003-4248-8f7f-bb89230f216b","expected_r
+  ---
+  duration_ms: 0.031042
+  ...
+# Subtest: non-JSON, cyclic, undefined, sparse and accessor requests cannot bypass validation
+ok 84 - non-JSON, cyclic, undefined, sparse and accessor requests cannot bypass validation
+  ---
+  duration_ms: 0.139125
+  ...
+# Subtest: oversized malformed scientific filters never reach network side effects
+ok 85 - oversized malformed scientific filters never reach network side effects
+  ---
+  duration_ms: 2.26125
+  ...
+# Subtest: bounded decoder rejects duplicate top-level key
+ok 86 - bounded decoder rejects duplicate top-level key
+  ---
+  duration_ms: 0.361958
+  ...
+# Subtest: bounded decoder rejects escaped duplicate key
+ok 87 - bounded decoder rejects escaped duplicate key
+  ---
+  duration_ms: 0.111416
+  ...
+# Subtest: bounded decoder rejects nested duplicate key
+ok 88 - bounded decoder rejects nested duplicate key
+  ---
+  duration_ms: 0.076
+  ...
+# Subtest: bounded decoder rejects unsafe integer
+ok 89 - bounded decoder rejects unsafe integer
+  ---
+  duration_ms: 0.062958
+  ...
+# Subtest: bounded decoder rejects nonfinite number
+ok 90 - bounded decoder rejects nonfinite number
+  ---
+  duration_ms: 0.062708
+  ...
+# Subtest: bounded decoder rejects lone surrogate
+ok 91 - bounded decoder rejects lone surrogate
+  ---
+  duration_ms: 0.052583
+  ...
+# Subtest: bounded decoder rejects deep JSON
+ok 92 - bounded decoder rejects deep JSON
+  ---
+  duration_ms: 0.107292
+  ...
+# Subtest: bounded decoder rejects HTML
+ok 93 - bounded decoder rejects HTML
+  ---
+  duration_ms: 0.092041
+  ...
+# Subtest: invalid UTF8 does not become a replacement-character name
+ok 94 - invalid UTF8 does not become a replacement-character name
+  ---
+  duration_ms: 0.142291
+  ...
+# Subtest: actual streamed bytes bound missing and lying Content-Length and cancel the source
+ok 95 - actual streamed bytes bound missing and lying Content-Length and cancel the source
+  ---
+  duration_ms: 0.404875
+  ...
+# Subtest: trusted bearer injection is optional and URL/requests never choose an identity
+ok 96 - trusted bearer injection is optional and URL/requests never choose an identity
+  ---
+  duration_ms: 0.4695
+  ...
+# Subtest: abort is honored before dispatch and for a transport which ignores the signal
+ok 97 - abort is honored before dispatch and for a transport which ignores the signal
+  ---
+  duration_ms: 8.893125
+  ...
+# Subtest: abort cancels a stalled response reader rather than publishing its late result
+ok 98 - abort cancels a stalled response reader rather than publishing its late result
+  ---
+  duration_ms: 0.442125
+  ...
+# Subtest: uncertain acknowledgement replays the exact original idempotent request
+ok 99 - uncertain acknowledgement replays the exact original idempotent request
+  ---
+  duration_ms: 2.628083
+  ...
+# Subtest: canonical empty research route remains explicitly in the real research view
+ok 100 - canonical empty research route remains explicitly in the real research view
+  ---
+  duration_ms: 0.715458
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and context/chat
+ok 101 - reload/Back/Forward round trips selected conversation and context/chat
+  ---
+  duration_ms: 0.250291
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and context/workspace
+ok 102 - reload/Back/Forward round trips selected conversation and context/workspace
+  ---
+  duration_ms: 0.125417
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and results/chat
+ok 103 - reload/Back/Forward round trips selected conversation and results/chat
+  ---
+  duration_ms: 0.11225
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and results/workspace
+ok 104 - reload/Back/Forward round trips selected conversation and results/workspace
+  ---
+  duration_ms: 0.137666
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and experiments/chat
+ok 105 - reload/Back/Forward round trips selected conversation and experiments/chat
+  ---
+  duration_ms: 0.061416
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and experiments/workspace
+ok 106 - reload/Back/Forward round trips selected conversation and experiments/workspace
+  ---
+  duration_ms: 0.055125
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and evidence/chat
+ok 107 - reload/Back/Forward round trips selected conversation and evidence/chat
+  ---
+  duration_ms: 0.056625
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and evidence/workspace
+ok 108 - reload/Back/Forward round trips selected conversation and evidence/workspace
+  ---
+  duration_ms: 0.278834
+  ...
+# Subtest: rejects invalid research restoration ?view=preview
+ok 109 - rejects invalid research restoration ?view=preview
+  ---
+  duration_ms: 0.338792
+  ...
+# Subtest: rejects invalid research restoration ?view=research&view=research
+ok 110 - rejects invalid research restoration ?view=research&view=research
+  ---
+  duration_ms: 0.081584
+  ...
+# Subtest: rejects invalid research restoration ?conversation=33333333-3333-3333-3333-333333333333
+ok 111 - rejects invalid research restoration ?conversation=33333333-3333-3333-3333-333333333333
+  ---
+  duration_ms: 0.037042
+  ...
+# Subtest: rejects invalid research restoration ?investigation=../private
+ok 112 - rejects invalid research restoration ?investigation=../private
+  ---
+  duration_ms: 0.027542
+  ...
+# Subtest: rejects invalid research restoration ?investigation=11111111-1111-1111-1111-111111111111&investigation=22222222-2222-
+ok 113 - rejects invalid research restoration ?investigation=11111111-1111-1111-1111-111111111111&investigation=22222222-2222-
+  ---
+  duration_ms: 0.025291
+  ...
+# Subtest: rejects invalid research restoration ?investigation=11111111-1111-1111-1111-111111111111&conversation=
+ok 114 - rejects invalid research restoration ?investigation=11111111-1111-1111-1111-111111111111&conversation=
+  ---
+  duration_ms: 0.023916
+  ...
+# Subtest: rejects invalid research restoration ?workspace=admin
+ok 115 - rejects invalid research restoration ?workspace=admin
+  ---
+  duration_ms: 0.022958
+  ...
+# Subtest: rejects invalid research restoration ?workspace=Context
+ok 116 - rejects invalid research restoration ?workspace=Context
+  ---
+  duration_ms: 0.021458
+  ...
+# Subtest: rejects invalid research restoration ?pane=preview
+ok 117 - rejects invalid research restoration ?pane=preview
+  ---
+  duration_ms: 0.022916
+  ...
+# Subtest: rejects invalid research restoration ?pane=chat&pane=workspace
+ok 118 - rejects invalid research restoration ?pane=chat&pane=workspace
+  ---
+  duration_ms: 0.023625
+  ...
+# Subtest: rejects invalid research restoration ?workspace=context&workspace=evidence
+ok 119 - rejects invalid research restoration ?workspace=context&workspace=evidence
+  ---
+  duration_ms: 0.022417
+  ...
+# Subtest: navigation never admits scientific scope, identity, fixture or attach side effects
+ok 120 - navigation never admits scientific scope, identity, fixture or attach side effects
+  ---
+  duration_ms: 0.415375
+  ...
+# Subtest: changing investigation clears old conversation unless explicit without mutating inputs
+ok 121 - changing investigation clears old conversation unless explicit without mutating inputs
+  ---
+  duration_ms: 0.172542
+  ...
+# Subtest: restored explicit routes are sufficient for browser history selection
+ok 122 - restored explicit routes are sufficient for browser history selection
+  ---
+  duration_ms: 0.132667
+  ...
+# Subtest: drafts are isolated by investigation/conversation and survive only an unchanged trusted binding
+ok 123 - drafts are isolated by investigation/conversation and survive only an unchanged trusted binding
+  ---
+  duration_ms: 0.223833
+  ...
+# Subtest: uncertain mutation keeps original key/head and cannot be silently replaced
+ok 124 - uncertain mutation keeps original key/head and cannot be silently replaced
+  ---
+  duration_ms: 1.078
+  ...
+# Subtest: same exact pending intent can be remembered again across temporary presentation mounts
+ok 125 - same exact pending intent can be remembered again across temporary presentation mounts
+  ---
+  duration_ms: 0.155541
+  ...
+# Subtest: draft sizes and invalid private values are bounded without storage or transport side effects
+ok 126 - draft sizes and invalid private values are bounded without storage or transport side effects
+  ---
+  duration_ms: 0.320625
+  ...
+# Subtest: submitted activity preserves a complete detached immutable explicit revision across later changes
+ok 127 - submitted activity preserves a complete detached immutable explicit revision across later changes
+  ---
+  duration_ms: 0.199625
+  ...
+# Subtest: submission binding rejects cross-owner conversation/context joins and invalid hashes
+ok 128 - submission binding rejects cross-owner conversation/context joins and invalid hashes
+  ---
+  duration_ms: 0.100625
+  ...
+1..128
+# tests 128
+# suites 0
+# pass 128
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 149.553625

@@ -1,0 +1,1021 @@
+{
+  "C17_current19_equal_accepted_source": true,
+  "C18_client4_unchanged": true,
+  "application_tests_run": false,
+  "audited_at": "2026-10-18T06:29:28.380545+00:00",
+  "branch": "overhaul",
+  "component": "C19",
+  "component_selected": false,
+  "external_gates": [
+    "No paid/live model calls authorized",
+    "No scientific approval, real-data acquisition/transfer or regeneration inferred",
+    "No cloud provisioning/deployment, production OIDC or production capacity acceptance inferred"
+  ],
+  "formal_current_source_files": {
+    ".github/workflows/tests.yml": "1cdd60958fc656ca773bd0b2ea1485f16ba95acdec3c355be3700580940bcd5f",
+    "api/auth.py": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd",
+    "api/catalogue_routes.py": "373f3b05d6ed3f7693beed53564f0598e47a63ab970f40269012f1eae72eaf8d",
+    "api/chat_records.py": "47f24ac8de7db0b623a9825a18bc705b524f923838b96bcbabec7438b1030dbf",
+    "api/investigation_routes.py": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6",
+    "api/main.py": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4",
+    "config.py": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61",
+    "db/app_models.py": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab",
+    "migrations/versions/20261018_0017_investigations.py": "2bb803bd1e37e44a3d7a8845d8c800698e88d8ca0e322138d2216f38ff9bf6f3",
+    "model_runtime.py": "473d847299f55f4f67c178582f7b6411bea9eeb5af2e4837388bc45e4583f4bf",
+    "orchestration/auto_published_settings.py": "c8269e5d1471929a240bce8ddd1d3f8bf674450fd79bd88bc489af0e60eb911f",
+    "orchestration/catalogue_registration.py": "3e76cd613f0653988a6999efb884ec574d285a9f19707f58f57aabad32d1c2b4",
+    "orchestration/catalogue_service.py": "92d1ac2a74471eb80537ff9d66461c33cba393700faf1039d10d8ea47ea07508",
+    "orchestration/catalogue_tools.py": "b675111ac5823133ee4f5474354198219fb9ba754fc6c9a8fc9875c2de9e0a1a",
+    "orchestration/investigations.py": "e19bb6c27cdfb458c061940de53b5754a012d995dc0d136eb855ba3df0a867f3",
+    "orchestration/publication_scope.py": "af31d203fb2e766a2e43049c1e0ea2d9235e3f43604efdd993e95796fc3e273e",
+    "orchestration/research_intents.py": "eb265c1247148b4c4494199eb0d7941288db836d496326c5701747b8128ce15f",
+    "orchestration/research_question.py": "a93e3f2b5f3fddb637b9176aedb0abffb08e49d0700238c5679e20ef561bbb81",
+    "orchestration/settings_planner.py": "0a7f6fbacfc73cb9b30330f2b9d0187f72f139fa016bff6e1ec6e5b746a634b8",
+    "orchestration/statistics_catalog.py": "004a3055a4d8daaf49463a81207b5aa9d3ca6482066cfc6ede0efb757520a22c",
+    "schema/catalogue_service.py": "f9f367566b749317d5a25c53f73686253753369fc5b1cd595767aca6d0e94233",
+    "schema/investigations.py": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+    "tests/catalogue_service_support.py": "53bb5f1822c384bac6fedaae394930b39eda7fd2a4dd5e3440f6070327d4c029",
+    "tests/integration/test_chat_source_scope_postgres.py": "06ecceec42d7511a743ac945a5259230c39da07770ee8e0cfa07b6ce4887974d",
+    "tests/integration/test_investigation_postgres.py": "cc17431ee9ae12509cf896d9d023d0c4592f08201c113ba96a1b45a9816bb642",
+    "tests/integration/test_investigation_service_postgres.py": "351d9b7bbc80f63e8ccf1e54e64ac40464c4ee2a9067050fad719412946e6405",
+    "tests/investigation_support.py": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce",
+    "tests/runtime_fixtures.py": "7a06f37cdadf3d19bd81b3d099eaa9707b9915f898b7b9eb279b938926538726",
+    "tests/test_api_catalogue.py": "559df3e3520d4f6d9d4e3c78409afa4e8d61b5de5abf618ab3e78a3e23e3e36d",
+    "tests/test_api_retrieve.py": "72edb1e4b9cf5cc600b54dc062419423467b57a1f593eff81cd68c9492736cd1",
+    "tests/test_auto_settings.py": "6c95011f8f16c5badf71a54dd1a4d73f32f1191bbf0c6bdc422cdd50cf73c6fa",
+    "tests/test_bootstrap_database.py": "345c98e9713c6ed9b7edf52774ce752fad4030b62277f11e1dc68102fd0b8de9",
+    "tests/test_catalogue_service.py": "405465f19f0fcb58a1eaa69251f60d130eed8c87ea8cb9b1370138866dc15e17",
+    "tests/test_catalogue_service_frozen.py": "4ab9ca4fb75b02e67c36af6b8650719bcab86ad6dd76ea1b30c5718f055cc9dc",
+    "tests/test_catalogue_service_scale.py": "0f62248c0e66967a6c7286f1779d0336649f259bc30893f8b5af7991038b3e43",
+    "tests/test_catalogue_tools.py": "49fb2a1794c764019a2ea63fc476f231167fe318e6854793d3b35ebeb13e9a2c",
+    "tests/test_chat_feedback.py": "0d9c0eab88f83f5e6d00582389060f0579ebc077ff4f4e778c53cc062d088b5a",
+    "tests/test_chat_issue59.py": "012054faf85c524b3510ce55b15c1061c4c109d42c8743a42c456d23f900bba3",
+    "tests/test_chat_source_scope.py": "ac89588c2a251f32343ed410696fea7ae25dc8e235888f03d1ec20cafed1cfe1",
+    "tests/test_citations.py": "669509d94ab5487b378a2eaf150b55e6307879ab6ad13e8f312c4b67cf1b2aba",
+    "tests/test_conference_demo.py": "60035ab60e1becfde6c195cd7e2dbefb32d730cc4e9b137bc6b6508dc1e7bec9",
+    "tests/test_generation_contract.py": "7a4e3dc99145de50c33db8987ab1fac4cb41d62091c5f269dbd7747c61cb23a1",
+    "tests/test_investigation_api.py": "8df2069fc9b39ac8337b1e4bdca5075025663794486b307004bdc9d4fdc58255",
+    "tests/test_investigation_api_integration.py": "58a36f9d6bd521cce2918cf11695db1f46900bd030c175defd5ee002e8a1f4f4",
+    "tests/test_investigation_api_stream.py": "f21427e5d884c7898f5bb02dc345ce6998e782e80d92d497b5c36e4db3897a48",
+    "tests/test_investigation_models.py": "fdf7b474f33db62fe4a5e140f4cb87d79f9149b31c6fa5391c5f8e2895d377fa",
+    "tests/test_investigation_postgres_guard.py": "31e6042f02ed796f82777bfb133dd8996b25cc0abc507ee723e1836cfff3b979",
+    "tests/test_investigations.py": "c1589de656caaadca3a8f6a55660e9f478e9196479a3d275f2a8a31d357555bd",
+    "tests/test_model_runtime.py": "f4e4a2cba94aacfe007efa0ab6ae558ea079c91bf495c158b6ffa2c651c57c46",
+    "tests/test_publication_scope_contract.py": "de97584b85d177667ec6afe0522bf4e560c4c0af7745934ca95e07d087b8fb1e",
+    "tests/test_source_aware_retrieval.py": "ebcd3bbe53c6c649ff7a592370d4d6dee3d2007def10f498b50af99b510ea42f",
+    "tests/test_v061_acceptance.py": "8a6d4418ed5b177f2ae788a28cc6eee426be5c65d8a99196bd079310218f6a08"
+  },
+  "formal_current_source_sha256": "12df27faa26b7936d1b4b1d278bc72934aff66184dd254243dcd1fd7c7c8c298",
+  "formal_prerequisites": [
+    "C01",
+    "C06",
+    "C14",
+    "C17"
+  ],
+  "formal_source_entries": 59,
+  "head": "78a10a0c17cc29d1fa46498bf7df3c0d1be6e882",
+  "hosted_receipts_reused_without_network_queries": {
+    "C06": {
+      "conclusion": "success",
+      "receipt": "docs/plans/ocean-v1/evidence/C06/delivery.json",
+      "receipt_sha256": "4f425667c2567663797e8bf82afa36520ea8e197a3fe65558898cedb44992cc7",
+      "run_id": 38667543787,
+      "source_commit": "27d76c96aa093e4e77853496c826780a26a5f66a",
+      "source_files_in_commit_equal_accepted_map": 16,
+      "source_is_ancestor_of_current_head": true,
+      "url": "https://github.com/jarondlk/ocean-platform/actions/runs/38667543787"
+    },
+    "C14": {
+      "conclusion": "success",
+      "receipt": "docs/plans/ocean-v1/evidence/C14/delivery.json",
+      "receipt_sha256": "f2797710a58f584af03f434dce31e29f30def5f02f87918cdde202c0dc260cd0",
+      "run_id": 38916279621,
+      "source_commit": "19ba9110206dacb061c23f8e6dd7422be4b2adb1",
+      "source_files_in_commit_equal_accepted_map": 14,
+      "source_is_ancestor_of_current_head": true,
+      "url": "https://github.com/jarondlk/ocean-platform/actions/runs/38916279621"
+    },
+    "C17": {
+      "conclusion": "success",
+      "receipt": "docs/plans/ocean-v1/evidence/C17/delivery.json",
+      "receipt_sha256": "bafa0d83dd7ebacf399cfbb9fb8f445967bdd9aeba5bbbbe1821e3758cfcae5b",
+      "run_id": 39101652175,
+      "source_commit": "39bb811d1053c9dfb4b700f8524162800092aa44",
+      "source_files_in_commit_equal_accepted_map": 19,
+      "source_is_ancestor_of_current_head": true,
+      "url": "https://github.com/jarondlk/ocean-platform/actions/runs/39101652175"
+    }
+  },
+  "known_gaps_owned_by_C19": [
+    "C06 supplies strict provider-independent structured generation outcomes, but C19 must define the exploration action/observation/budget/checklist schema",
+    "C17 stores pins; C14 tools authorize scope but do not independently interpret C17 pins. C19 must enforce compatible effective restrictions before dispatch",
+    "C01 publication compatibility is a bounded exact-workflow contract, not a generic free-question scope parser; new descriptive qualifiers need deterministic conservative resolution",
+    "Inventory and requested-fact/dataset-disposition completion are not implemented; model finish must not authorize completion",
+    "No production durable execution/queue/run route exists; C20 owns that integration and C21 owns final synthesis/evidence presentation"
+  ],
+  "missing_user_decisions_for_isolated_local_fake_runtime_implementation": [],
+  "original_receipt_and_planning_pins_sha256": {
+    "docs/plans/ocean-v1/ACCEPTANCE_MAP.md": "6d9d9fe8c103e19ea2993498ad1dc3705e062c8fba57063e56c22e7d516c5773",
+    "docs/plans/ocean-v1/C14_CATALOGUE_SERVICE_CONTRACT.md": "bf39d3f5fb88de1367b495698971a2b466aca3c490662e598f55bc48d3cbebb2",
+    "docs/plans/ocean-v1/C17_INVESTIGATION_CONTRACT.md": "c9e756e5959ac5fbb658d6cac1aabbe6d7ba89bcdab583b5320902a6c0583c39",
+    "docs/plans/ocean-v1/DECISIONS.md": "a5f3b5983ef697e1467f9a7b564c204e15dd21df50aef63694467a1f1ae9ae95",
+    "docs/plans/ocean-v1/MASTER_PLAN.md": "7f461f08efad737dd23923cd1d730b11e7f937a6d04ed6befca17855970ddb54",
+    "docs/plans/ocean-v1/PROMPTS.md": "b5f401b45ed203a8cff3fedf3d099d5842c2e7c98463e4fe23166da4767cc679",
+    "docs/plans/ocean-v1/README.md": "9788a537de4bc85da55c25b16e760347aa3cf2e7440fea4584eccdfc888e27f0",
+    "docs/plans/ocean-v1/SITE_SEPARATION.md": "7878628f067d8a672d6b8dce4786d6e4a89bb18bd63dcb31082a2f8e9eab4b36",
+    "docs/plans/ocean-v1/STATUS.md": "06ea8bf396f5e642722df0af2f9ed4fdff0e5e4571ba754cbdba24b7347520fb",
+    "docs/plans/ocean-v1/UI_UX_BRIEF.md": "1a17e364434e95665ef20c6fb5d78e63f3e22d3b3737cfa833a007249496d02b",
+    "docs/plans/ocean-v1/components/C19-agent-controller.md": "3fbaca98961ee080b46d6402edb63d7ad142be00793d601cb546739fb8246ec6",
+    "docs/plans/ocean-v1/evidence/C01/verification.json": "c50ec89fc9c696573cb568c7b90221a3891113e7e711ff258fe50b921194f109",
+    "docs/plans/ocean-v1/evidence/C02/verification.json": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e",
+    "docs/plans/ocean-v1/evidence/C03/verification.json": "4fe79931c252a672964b9549af855c1868757ec55f698cdb49fa069e67066510",
+    "docs/plans/ocean-v1/evidence/C04/verification.json": "a03f39b682573b2d7d7e8cb9db6a6c0bda7c7aa9f494bd514d60c7490d1deaaf",
+    "docs/plans/ocean-v1/evidence/C05/verification.json": "6575878bcdc75d794c7b52f6794ca018e8c7725eda48eb274da2895b851744ee",
+    "docs/plans/ocean-v1/evidence/C06/delivery.json": "4f425667c2567663797e8bf82afa36520ea8e197a3fe65558898cedb44992cc7",
+    "docs/plans/ocean-v1/evidence/C06/verification.json": "02f25ec13e6076feb5f95a5ce25c1258dd738af8716e9896d8311a7b1ff2e489",
+    "docs/plans/ocean-v1/evidence/C07/verification.json": "99b78a6cefac34b9dc98fc67d9b6fc8a572355ca04fb84644a6ba14341fadc69",
+    "docs/plans/ocean-v1/evidence/C08/verification.json": "acfee7a36ecc76cf66d5ad9edeec9711c8d12a95400702e940c1ea263090df14",
+    "docs/plans/ocean-v1/evidence/C09/verification.json": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8",
+    "docs/plans/ocean-v1/evidence/C10/verification.json": "1ad775aef53e9835ec9a8ff121e41f61c483cf95d15dd6fc966bf2d381246df7",
+    "docs/plans/ocean-v1/evidence/C11/accepted-source.json": "ed44c754b569c89b77a9e7a6f2b57443f9abfb62ca9d9748ebc6efd78140dbf0",
+    "docs/plans/ocean-v1/evidence/C11/verification.json": "8235fb75a6db284cd8e21fadad8ee79771293a3c856335fb74ce533ad19673ce",
+    "docs/plans/ocean-v1/evidence/C12/accepted-source.json": "faf0e9d0af695210382a2937e22e39bced5951d2a6e3dc7d23cfc82de384f871",
+    "docs/plans/ocean-v1/evidence/C12/verification.json": "46f7ce515be051c2dbf539015d103786808a977484a334d172e2484db2447078",
+    "docs/plans/ocean-v1/evidence/C13/accepted-source.json": "6dd8969b0f0f423d8c1e66783c23bb481e2ddcb1801940522efa06205442b8b9",
+    "docs/plans/ocean-v1/evidence/C13/verification.json": "83a94476d9a5c830142853b5e29fdd38f1710258c09ac1abaa1448be52f810ca",
+    "docs/plans/ocean-v1/evidence/C14/accepted-source.json": "e1db56f27a2e5e039e605aaf08b2f381211e57ff4a2873369722197ccd0f6e1f",
+    "docs/plans/ocean-v1/evidence/C14/delivery.json": "f2797710a58f584af03f434dce31e29f30def5f02f87918cdde202c0dc260cd0",
+    "docs/plans/ocean-v1/evidence/C14/verification.json": "ebcc52e7193fe09276d142930220705b6454831bca261011b80c7c5e19322d3e",
+    "docs/plans/ocean-v1/evidence/C15/accepted-source.json": "03703ec2f0ce8e3f72ce6577b79a6c5bcdcb15f853ab941fe4d0fca399002605",
+    "docs/plans/ocean-v1/evidence/C15/verification.json": "a199b5357aa5b31e721ad59e97a8b5bbb3b7bba1e76d4029a4ae6d4291517b46",
+    "docs/plans/ocean-v1/evidence/C16/accepted-source.json": "b3198fc1db49ca5907f42540c34dfe1a3d0e0cb66c4a8fdf5ca4674e6bd2979d",
+    "docs/plans/ocean-v1/evidence/C16/verification.json": "3d08bf93659366a59816cb84579dada932bae3a542374a350fde554d5d741f0d",
+    "docs/plans/ocean-v1/evidence/C17/accepted-source.json": "6a22a3c9fd179931b9e9f4e4ee8c4151952776ea88a35e5fb5f4fb45fcc23fc1",
+    "docs/plans/ocean-v1/evidence/C17/delivery.json": "bafa0d83dd7ebacf399cfbb9fb8f445967bdd9aeba5bbbbe1821e3758cfcae5b",
+    "docs/plans/ocean-v1/evidence/C17/verification.json": "a59bba711e76ad62dd952135e2db374235d3fa7cfdb01cd2cd2d3a76983da3d7",
+    "docs/plans/ocean-v1/evidence/C18/client-verification.json": "d2cc42bf16b38f4e31ee9295dea8c5968a0a71adb5f1214e0f332d13229ae1b9",
+    "docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json": "88dfc7825558695d23a7a586386da80ca23ceb9dbdd0a3c003628c4e08dd1bb6",
+    "docs/plans/ocean-v1/handoffs/C01.md": "1418cd16a7af69486f90330878a1654aee16534414b6ef5e4ecb3a73bb7072da",
+    "docs/plans/ocean-v1/handoffs/C06.md": "2eb2c94e0f035edf3c5ecbcba6c1f5bbed573cda322af932c18bfc74a5e591ac",
+    "docs/plans/ocean-v1/handoffs/C14.md": "14219685dbcaa49d02709a386212a2f95299f6a86e346326975fc7317e6c1fb3",
+    "docs/plans/ocean-v1/handoffs/C17.md": "10dbb6c355797b90c97c1b762a15b0c9aa97b2823bb4954b64dda892d0a5e35e"
+  },
+  "requires_refresh_after_C18_delivery": true,
+  "services_started": false,
+  "source_entries": {
+    "C01": {
+      "api/main.py": {
+        "acceptance_chain": [
+          {
+            "component": "C01",
+            "receipt": "docs/plans/ocean-v1/evidence/C01/verification.json",
+            "sha256": "be6f1540fdab041f82fdf138d66956b19d3a87c30f89fa4adc11a9aed7459c89"
+          },
+          {
+            "component": "C02",
+            "receipt": "docs/plans/ocean-v1/evidence/C02/verification.json",
+            "sha256": "a00a9c99de53c4db39dc4249ccf726283f3893a1507e47ee4728263f7da4ad06"
+          },
+          {
+            "component": "C01/C02 delivery audit",
+            "receipt": "docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json",
+            "sha256": "25501284aba4cc3f96e4d5fc01ee61a3639e458b42ea0f8f8eb574ff91f379e1"
+          },
+          {
+            "component": "C05",
+            "receipt": "docs/plans/ocean-v1/evidence/C05/verification.json",
+            "sha256": "95c51de43350ce19e171a251fdd6af091ed59673b9ce4baef970462fd1d57d93"
+          },
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "ad848bf8f25c58e00f2a424229c17ed12ba42f3b18ad6df373025331e6df501c"
+          },
+          {
+            "component": "C07",
+            "receipt": "docs/plans/ocean-v1/evidence/C07/verification.json",
+            "sha256": "42e0f2a45fb93efb8cd6a7037cd1278e97c43ba0268af71ed2b520a6d6191a5e"
+          },
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/accepted-source.json",
+            "sha256": "54acaf07dc607d9a08de2305deaf62844d7eed5efa86bb1b8aca5a3816bfbad0"
+          },
+          {
+            "component": "C15",
+            "receipt": "docs/plans/ocean-v1/evidence/C15/accepted-source.json",
+            "sha256": "0f0d699b469fdda8b1c9aa1db1f17c2f0265dbb22ad950a95a3e60315476081c"
+          },
+          {
+            "component": "C16",
+            "receipt": "docs/plans/ocean-v1/evidence/C16/accepted-source.json",
+            "sha256": "28940d6db1f9d1aca24d6f13d3950400bc4955b8ec689d07b6f7bbef547b71ef"
+          },
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/accepted-source.json",
+            "sha256": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4"
+          }
+        ],
+        "current_sha256": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4",
+        "intentional_later_supersession": true,
+        "original_sha256": "be6f1540fdab041f82fdf138d66956b19d3a87c30f89fa4adc11a9aed7459c89"
+      },
+      "orchestration/auto_published_settings.py": {
+        "acceptance_chain": [
+          {
+            "component": "C01",
+            "receipt": "docs/plans/ocean-v1/evidence/C01/verification.json",
+            "sha256": "c8269e5d1471929a240bce8ddd1d3f8bf674450fd79bd88bc489af0e60eb911f"
+          }
+        ],
+        "current_sha256": "c8269e5d1471929a240bce8ddd1d3f8bf674450fd79bd88bc489af0e60eb911f",
+        "intentional_later_supersession": false,
+        "original_sha256": "c8269e5d1471929a240bce8ddd1d3f8bf674450fd79bd88bc489af0e60eb911f"
+      },
+      "orchestration/publication_scope.py": {
+        "acceptance_chain": [
+          {
+            "component": "C01",
+            "receipt": "docs/plans/ocean-v1/evidence/C01/verification.json",
+            "sha256": "59b7db818cbdac051b6d96d1bb7ab53dc807679dc1f89c3c21676c4b889a210c"
+          },
+          {
+            "component": "C01/C02 delivery audit",
+            "receipt": "docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json",
+            "sha256": "af31d203fb2e766a2e43049c1e0ea2d9235e3f43604efdd993e95796fc3e273e"
+          }
+        ],
+        "current_sha256": "af31d203fb2e766a2e43049c1e0ea2d9235e3f43604efdd993e95796fc3e273e",
+        "intentional_later_supersession": true,
+        "original_sha256": "59b7db818cbdac051b6d96d1bb7ab53dc807679dc1f89c3c21676c4b889a210c"
+      },
+      "orchestration/research_intents.py": {
+        "acceptance_chain": [
+          {
+            "component": "C01",
+            "receipt": "docs/plans/ocean-v1/evidence/C01/verification.json",
+            "sha256": "eb265c1247148b4c4494199eb0d7941288db836d496326c5701747b8128ce15f"
+          }
+        ],
+        "current_sha256": "eb265c1247148b4c4494199eb0d7941288db836d496326c5701747b8128ce15f",
+        "intentional_later_supersession": false,
+        "original_sha256": "eb265c1247148b4c4494199eb0d7941288db836d496326c5701747b8128ce15f"
+      },
+      "orchestration/research_question.py": {
+        "acceptance_chain": [
+          {
+            "component": "C01",
+            "receipt": "docs/plans/ocean-v1/evidence/C01/verification.json",
+            "sha256": "a93e3f2b5f3fddb637b9176aedb0abffb08e49d0700238c5679e20ef561bbb81"
+          }
+        ],
+        "current_sha256": "a93e3f2b5f3fddb637b9176aedb0abffb08e49d0700238c5679e20ef561bbb81",
+        "intentional_later_supersession": false,
+        "original_sha256": "a93e3f2b5f3fddb637b9176aedb0abffb08e49d0700238c5679e20ef561bbb81"
+      },
+      "orchestration/settings_planner.py": {
+        "acceptance_chain": [
+          {
+            "component": "C01",
+            "receipt": "docs/plans/ocean-v1/evidence/C01/verification.json",
+            "sha256": "12f8231dd51166c631b12388d4e9a33ed8c5e043fabd273509bcc5a4d63dbe3a"
+          },
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "0a7f6fbacfc73cb9b30330f2b9d0187f72f139fa016bff6e1ec6e5b746a634b8"
+          }
+        ],
+        "current_sha256": "0a7f6fbacfc73cb9b30330f2b9d0187f72f139fa016bff6e1ec6e5b746a634b8",
+        "intentional_later_supersession": true,
+        "original_sha256": "12f8231dd51166c631b12388d4e9a33ed8c5e043fabd273509bcc5a4d63dbe3a"
+      },
+      "orchestration/statistics_catalog.py": {
+        "acceptance_chain": [
+          {
+            "component": "C01",
+            "receipt": "docs/plans/ocean-v1/evidence/C01/verification.json",
+            "sha256": "004a3055a4d8daaf49463a81207b5aa9d3ca6482066cfc6ede0efb757520a22c"
+          }
+        ],
+        "current_sha256": "004a3055a4d8daaf49463a81207b5aa9d3ca6482066cfc6ede0efb757520a22c",
+        "intentional_later_supersession": false,
+        "original_sha256": "004a3055a4d8daaf49463a81207b5aa9d3ca6482066cfc6ede0efb757520a22c"
+      },
+      "tests/test_auto_settings.py": {
+        "acceptance_chain": [
+          {
+            "component": "C01",
+            "receipt": "docs/plans/ocean-v1/evidence/C01/verification.json",
+            "sha256": "6395109f9cf1736e5294e3464e8c6f5720a800802bddc798ab444c915eeaa86b"
+          },
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "6c95011f8f16c5badf71a54dd1a4d73f32f1191bbf0c6bdc422cdd50cf73c6fa"
+          }
+        ],
+        "current_sha256": "6c95011f8f16c5badf71a54dd1a4d73f32f1191bbf0c6bdc422cdd50cf73c6fa",
+        "intentional_later_supersession": true,
+        "original_sha256": "6395109f9cf1736e5294e3464e8c6f5720a800802bddc798ab444c915eeaa86b"
+      },
+      "tests/test_conference_demo.py": {
+        "acceptance_chain": [
+          {
+            "component": "C01",
+            "receipt": "docs/plans/ocean-v1/evidence/C01/verification.json",
+            "sha256": "60035ab60e1becfde6c195cd7e2dbefb32d730cc4e9b137bc6b6508dc1e7bec9"
+          }
+        ],
+        "current_sha256": "60035ab60e1becfde6c195cd7e2dbefb32d730cc4e9b137bc6b6508dc1e7bec9",
+        "intentional_later_supersession": false,
+        "original_sha256": "60035ab60e1becfde6c195cd7e2dbefb32d730cc4e9b137bc6b6508dc1e7bec9"
+      },
+      "tests/test_publication_scope_contract.py": {
+        "acceptance_chain": [
+          {
+            "component": "C01",
+            "receipt": "docs/plans/ocean-v1/evidence/C01/verification.json",
+            "sha256": "7b48257093f7383948b1112e64dcd3b0a687d2b9ce63f58373bdaa30f7aad713"
+          },
+          {
+            "component": "C01/C02 delivery audit",
+            "receipt": "docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json",
+            "sha256": "de97584b85d177667ec6afe0522bf4e560c4c0af7745934ca95e07d087b8fb1e"
+          }
+        ],
+        "current_sha256": "de97584b85d177667ec6afe0522bf4e560c4c0af7745934ca95e07d087b8fb1e",
+        "intentional_later_supersession": true,
+        "original_sha256": "7b48257093f7383948b1112e64dcd3b0a687d2b9ce63f58373bdaa30f7aad713"
+      }
+    },
+    "C06": {
+      "api/chat_records.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "47f24ac8de7db0b623a9825a18bc705b524f923838b96bcbabec7438b1030dbf"
+          }
+        ],
+        "current_sha256": "47f24ac8de7db0b623a9825a18bc705b524f923838b96bcbabec7438b1030dbf",
+        "intentional_later_supersession": false,
+        "original_sha256": "47f24ac8de7db0b623a9825a18bc705b524f923838b96bcbabec7438b1030dbf"
+      },
+      "api/main.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "ad848bf8f25c58e00f2a424229c17ed12ba42f3b18ad6df373025331e6df501c"
+          },
+          {
+            "component": "C07",
+            "receipt": "docs/plans/ocean-v1/evidence/C07/verification.json",
+            "sha256": "42e0f2a45fb93efb8cd6a7037cd1278e97c43ba0268af71ed2b520a6d6191a5e"
+          },
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/accepted-source.json",
+            "sha256": "54acaf07dc607d9a08de2305deaf62844d7eed5efa86bb1b8aca5a3816bfbad0"
+          },
+          {
+            "component": "C15",
+            "receipt": "docs/plans/ocean-v1/evidence/C15/accepted-source.json",
+            "sha256": "0f0d699b469fdda8b1c9aa1db1f17c2f0265dbb22ad950a95a3e60315476081c"
+          },
+          {
+            "component": "C16",
+            "receipt": "docs/plans/ocean-v1/evidence/C16/accepted-source.json",
+            "sha256": "28940d6db1f9d1aca24d6f13d3950400bc4955b8ec689d07b6f7bbef547b71ef"
+          },
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/accepted-source.json",
+            "sha256": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4"
+          }
+        ],
+        "current_sha256": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4",
+        "intentional_later_supersession": true,
+        "original_sha256": "ad848bf8f25c58e00f2a424229c17ed12ba42f3b18ad6df373025331e6df501c"
+      },
+      "model_runtime.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "473d847299f55f4f67c178582f7b6411bea9eeb5af2e4837388bc45e4583f4bf"
+          }
+        ],
+        "current_sha256": "473d847299f55f4f67c178582f7b6411bea9eeb5af2e4837388bc45e4583f4bf",
+        "intentional_later_supersession": false,
+        "original_sha256": "473d847299f55f4f67c178582f7b6411bea9eeb5af2e4837388bc45e4583f4bf"
+      },
+      "orchestration/settings_planner.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "0a7f6fbacfc73cb9b30330f2b9d0187f72f139fa016bff6e1ec6e5b746a634b8"
+          }
+        ],
+        "current_sha256": "0a7f6fbacfc73cb9b30330f2b9d0187f72f139fa016bff6e1ec6e5b746a634b8",
+        "intentional_later_supersession": false,
+        "original_sha256": "0a7f6fbacfc73cb9b30330f2b9d0187f72f139fa016bff6e1ec6e5b746a634b8"
+      },
+      "tests/integration/test_chat_source_scope_postgres.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "06ecceec42d7511a743ac945a5259230c39da07770ee8e0cfa07b6ce4887974d"
+          }
+        ],
+        "current_sha256": "06ecceec42d7511a743ac945a5259230c39da07770ee8e0cfa07b6ce4887974d",
+        "intentional_later_supersession": false,
+        "original_sha256": "06ecceec42d7511a743ac945a5259230c39da07770ee8e0cfa07b6ce4887974d"
+      },
+      "tests/runtime_fixtures.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "7a06f37cdadf3d19bd81b3d099eaa9707b9915f898b7b9eb279b938926538726"
+          }
+        ],
+        "current_sha256": "7a06f37cdadf3d19bd81b3d099eaa9707b9915f898b7b9eb279b938926538726",
+        "intentional_later_supersession": false,
+        "original_sha256": "7a06f37cdadf3d19bd81b3d099eaa9707b9915f898b7b9eb279b938926538726"
+      },
+      "tests/test_api_retrieve.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "72edb1e4b9cf5cc600b54dc062419423467b57a1f593eff81cd68c9492736cd1"
+          }
+        ],
+        "current_sha256": "72edb1e4b9cf5cc600b54dc062419423467b57a1f593eff81cd68c9492736cd1",
+        "intentional_later_supersession": false,
+        "original_sha256": "72edb1e4b9cf5cc600b54dc062419423467b57a1f593eff81cd68c9492736cd1"
+      },
+      "tests/test_auto_settings.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "6c95011f8f16c5badf71a54dd1a4d73f32f1191bbf0c6bdc422cdd50cf73c6fa"
+          }
+        ],
+        "current_sha256": "6c95011f8f16c5badf71a54dd1a4d73f32f1191bbf0c6bdc422cdd50cf73c6fa",
+        "intentional_later_supersession": false,
+        "original_sha256": "6c95011f8f16c5badf71a54dd1a4d73f32f1191bbf0c6bdc422cdd50cf73c6fa"
+      },
+      "tests/test_chat_feedback.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "0d9c0eab88f83f5e6d00582389060f0579ebc077ff4f4e778c53cc062d088b5a"
+          }
+        ],
+        "current_sha256": "0d9c0eab88f83f5e6d00582389060f0579ebc077ff4f4e778c53cc062d088b5a",
+        "intentional_later_supersession": false,
+        "original_sha256": "0d9c0eab88f83f5e6d00582389060f0579ebc077ff4f4e778c53cc062d088b5a"
+      },
+      "tests/test_chat_issue59.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "012054faf85c524b3510ce55b15c1061c4c109d42c8743a42c456d23f900bba3"
+          }
+        ],
+        "current_sha256": "012054faf85c524b3510ce55b15c1061c4c109d42c8743a42c456d23f900bba3",
+        "intentional_later_supersession": false,
+        "original_sha256": "012054faf85c524b3510ce55b15c1061c4c109d42c8743a42c456d23f900bba3"
+      },
+      "tests/test_chat_source_scope.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "ac89588c2a251f32343ed410696fea7ae25dc8e235888f03d1ec20cafed1cfe1"
+          }
+        ],
+        "current_sha256": "ac89588c2a251f32343ed410696fea7ae25dc8e235888f03d1ec20cafed1cfe1",
+        "intentional_later_supersession": false,
+        "original_sha256": "ac89588c2a251f32343ed410696fea7ae25dc8e235888f03d1ec20cafed1cfe1"
+      },
+      "tests/test_citations.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "669509d94ab5487b378a2eaf150b55e6307879ab6ad13e8f312c4b67cf1b2aba"
+          }
+        ],
+        "current_sha256": "669509d94ab5487b378a2eaf150b55e6307879ab6ad13e8f312c4b67cf1b2aba",
+        "intentional_later_supersession": false,
+        "original_sha256": "669509d94ab5487b378a2eaf150b55e6307879ab6ad13e8f312c4b67cf1b2aba"
+      },
+      "tests/test_generation_contract.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "7a4e3dc99145de50c33db8987ab1fac4cb41d62091c5f269dbd7747c61cb23a1"
+          }
+        ],
+        "current_sha256": "7a4e3dc99145de50c33db8987ab1fac4cb41d62091c5f269dbd7747c61cb23a1",
+        "intentional_later_supersession": false,
+        "original_sha256": "7a4e3dc99145de50c33db8987ab1fac4cb41d62091c5f269dbd7747c61cb23a1"
+      },
+      "tests/test_model_runtime.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "f4e4a2cba94aacfe007efa0ab6ae558ea079c91bf495c158b6ffa2c651c57c46"
+          }
+        ],
+        "current_sha256": "f4e4a2cba94aacfe007efa0ab6ae558ea079c91bf495c158b6ffa2c651c57c46",
+        "intentional_later_supersession": false,
+        "original_sha256": "f4e4a2cba94aacfe007efa0ab6ae558ea079c91bf495c158b6ffa2c651c57c46"
+      },
+      "tests/test_source_aware_retrieval.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "ebcd3bbe53c6c649ff7a592370d4d6dee3d2007def10f498b50af99b510ea42f"
+          }
+        ],
+        "current_sha256": "ebcd3bbe53c6c649ff7a592370d4d6dee3d2007def10f498b50af99b510ea42f",
+        "intentional_later_supersession": false,
+        "original_sha256": "ebcd3bbe53c6c649ff7a592370d4d6dee3d2007def10f498b50af99b510ea42f"
+      },
+      "tests/test_v061_acceptance.py": {
+        "acceptance_chain": [
+          {
+            "component": "C06",
+            "receipt": "docs/plans/ocean-v1/evidence/C06/verification.json",
+            "sha256": "8a6d4418ed5b177f2ae788a28cc6eee426be5c65d8a99196bd079310218f6a08"
+          }
+        ],
+        "current_sha256": "8a6d4418ed5b177f2ae788a28cc6eee426be5c65d8a99196bd079310218f6a08",
+        "intentional_later_supersession": false,
+        "original_sha256": "8a6d4418ed5b177f2ae788a28cc6eee426be5c65d8a99196bd079310218f6a08"
+      }
+    },
+    "C14": {
+      "api/auth.py": {
+        "acceptance_chain": [
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/verification.json",
+            "sha256": "c42bf544761bad3c273db2d002b996764344b1b8fec086ad161ffb08d10b49cd"
+          },
+          {
+            "component": "C15",
+            "receipt": "docs/plans/ocean-v1/evidence/C15/accepted-source.json",
+            "sha256": "74283b43d4dbae38b8e1d4977eeb084f86cb465c2a98c9085561ad65b97a5c1d"
+          },
+          {
+            "component": "C16",
+            "receipt": "docs/plans/ocean-v1/evidence/C16/accepted-source.json",
+            "sha256": "23ee454554942b1b34fbdfa134e815fdb6fc70699c4b63fe5fadf323d2fe7cd4"
+          },
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/accepted-source.json",
+            "sha256": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd"
+          }
+        ],
+        "current_sha256": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd",
+        "intentional_later_supersession": true,
+        "original_sha256": "c42bf544761bad3c273db2d002b996764344b1b8fec086ad161ffb08d10b49cd"
+      },
+      "api/catalogue_routes.py": {
+        "acceptance_chain": [
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/verification.json",
+            "sha256": "373f3b05d6ed3f7693beed53564f0598e47a63ab970f40269012f1eae72eaf8d"
+          }
+        ],
+        "current_sha256": "373f3b05d6ed3f7693beed53564f0598e47a63ab970f40269012f1eae72eaf8d",
+        "intentional_later_supersession": false,
+        "original_sha256": "373f3b05d6ed3f7693beed53564f0598e47a63ab970f40269012f1eae72eaf8d"
+      },
+      "api/main.py": {
+        "acceptance_chain": [
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/verification.json",
+            "sha256": "54acaf07dc607d9a08de2305deaf62844d7eed5efa86bb1b8aca5a3816bfbad0"
+          },
+          {
+            "component": "C15",
+            "receipt": "docs/plans/ocean-v1/evidence/C15/accepted-source.json",
+            "sha256": "0f0d699b469fdda8b1c9aa1db1f17c2f0265dbb22ad950a95a3e60315476081c"
+          },
+          {
+            "component": "C16",
+            "receipt": "docs/plans/ocean-v1/evidence/C16/accepted-source.json",
+            "sha256": "28940d6db1f9d1aca24d6f13d3950400bc4955b8ec689d07b6f7bbef547b71ef"
+          },
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/accepted-source.json",
+            "sha256": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4"
+          }
+        ],
+        "current_sha256": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4",
+        "intentional_later_supersession": true,
+        "original_sha256": "54acaf07dc607d9a08de2305deaf62844d7eed5efa86bb1b8aca5a3816bfbad0"
+      },
+      "config.py": {
+        "acceptance_chain": [
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/verification.json",
+            "sha256": "842d338a2e9167fe78558fcb1b6d211b196bc8e873bb7c807492118ad466cd4e"
+          },
+          {
+            "component": "C15",
+            "receipt": "docs/plans/ocean-v1/evidence/C15/accepted-source.json",
+            "sha256": "c4714880b86bf674fada0f5aaf95e8878bc16be1ab32f7f3caefc1a70233b059"
+          },
+          {
+            "component": "C16",
+            "receipt": "docs/plans/ocean-v1/evidence/C16/accepted-source.json",
+            "sha256": "5750374e35fe3f03948156e44bccb0e087f8c2adc9ea0b10a9e8a2e6ee90c763"
+          },
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/accepted-source.json",
+            "sha256": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61"
+          }
+        ],
+        "current_sha256": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61",
+        "intentional_later_supersession": true,
+        "original_sha256": "842d338a2e9167fe78558fcb1b6d211b196bc8e873bb7c807492118ad466cd4e"
+      },
+      "orchestration/catalogue_registration.py": {
+        "acceptance_chain": [
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/verification.json",
+            "sha256": "3e76cd613f0653988a6999efb884ec574d285a9f19707f58f57aabad32d1c2b4"
+          }
+        ],
+        "current_sha256": "3e76cd613f0653988a6999efb884ec574d285a9f19707f58f57aabad32d1c2b4",
+        "intentional_later_supersession": false,
+        "original_sha256": "3e76cd613f0653988a6999efb884ec574d285a9f19707f58f57aabad32d1c2b4"
+      },
+      "orchestration/catalogue_service.py": {
+        "acceptance_chain": [
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/verification.json",
+            "sha256": "92d1ac2a74471eb80537ff9d66461c33cba393700faf1039d10d8ea47ea07508"
+          }
+        ],
+        "current_sha256": "92d1ac2a74471eb80537ff9d66461c33cba393700faf1039d10d8ea47ea07508",
+        "intentional_later_supersession": false,
+        "original_sha256": "92d1ac2a74471eb80537ff9d66461c33cba393700faf1039d10d8ea47ea07508"
+      },
+      "orchestration/catalogue_tools.py": {
+        "acceptance_chain": [
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/verification.json",
+            "sha256": "b675111ac5823133ee4f5474354198219fb9ba754fc6c9a8fc9875c2de9e0a1a"
+          }
+        ],
+        "current_sha256": "b675111ac5823133ee4f5474354198219fb9ba754fc6c9a8fc9875c2de9e0a1a",
+        "intentional_later_supersession": false,
+        "original_sha256": "b675111ac5823133ee4f5474354198219fb9ba754fc6c9a8fc9875c2de9e0a1a"
+      },
+      "schema/catalogue_service.py": {
+        "acceptance_chain": [
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/verification.json",
+            "sha256": "f9f367566b749317d5a25c53f73686253753369fc5b1cd595767aca6d0e94233"
+          }
+        ],
+        "current_sha256": "f9f367566b749317d5a25c53f73686253753369fc5b1cd595767aca6d0e94233",
+        "intentional_later_supersession": false,
+        "original_sha256": "f9f367566b749317d5a25c53f73686253753369fc5b1cd595767aca6d0e94233"
+      },
+      "tests/catalogue_service_support.py": {
+        "acceptance_chain": [
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/verification.json",
+            "sha256": "53bb5f1822c384bac6fedaae394930b39eda7fd2a4dd5e3440f6070327d4c029"
+          }
+        ],
+        "current_sha256": "53bb5f1822c384bac6fedaae394930b39eda7fd2a4dd5e3440f6070327d4c029",
+        "intentional_later_supersession": false,
+        "original_sha256": "53bb5f1822c384bac6fedaae394930b39eda7fd2a4dd5e3440f6070327d4c029"
+      },
+      "tests/test_api_catalogue.py": {
+        "acceptance_chain": [
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/verification.json",
+            "sha256": "559df3e3520d4f6d9d4e3c78409afa4e8d61b5de5abf618ab3e78a3e23e3e36d"
+          }
+        ],
+        "current_sha256": "559df3e3520d4f6d9d4e3c78409afa4e8d61b5de5abf618ab3e78a3e23e3e36d",
+        "intentional_later_supersession": false,
+        "original_sha256": "559df3e3520d4f6d9d4e3c78409afa4e8d61b5de5abf618ab3e78a3e23e3e36d"
+      },
+      "tests/test_catalogue_service.py": {
+        "acceptance_chain": [
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/verification.json",
+            "sha256": "405465f19f0fcb58a1eaa69251f60d130eed8c87ea8cb9b1370138866dc15e17"
+          }
+        ],
+        "current_sha256": "405465f19f0fcb58a1eaa69251f60d130eed8c87ea8cb9b1370138866dc15e17",
+        "intentional_later_supersession": false,
+        "original_sha256": "405465f19f0fcb58a1eaa69251f60d130eed8c87ea8cb9b1370138866dc15e17"
+      },
+      "tests/test_catalogue_service_frozen.py": {
+        "acceptance_chain": [
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/verification.json",
+            "sha256": "4ab9ca4fb75b02e67c36af6b8650719bcab86ad6dd76ea1b30c5718f055cc9dc"
+          }
+        ],
+        "current_sha256": "4ab9ca4fb75b02e67c36af6b8650719bcab86ad6dd76ea1b30c5718f055cc9dc",
+        "intentional_later_supersession": false,
+        "original_sha256": "4ab9ca4fb75b02e67c36af6b8650719bcab86ad6dd76ea1b30c5718f055cc9dc"
+      },
+      "tests/test_catalogue_service_scale.py": {
+        "acceptance_chain": [
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/verification.json",
+            "sha256": "0f62248c0e66967a6c7286f1779d0336649f259bc30893f8b5af7991038b3e43"
+          }
+        ],
+        "current_sha256": "0f62248c0e66967a6c7286f1779d0336649f259bc30893f8b5af7991038b3e43",
+        "intentional_later_supersession": false,
+        "original_sha256": "0f62248c0e66967a6c7286f1779d0336649f259bc30893f8b5af7991038b3e43"
+      },
+      "tests/test_catalogue_tools.py": {
+        "acceptance_chain": [
+          {
+            "component": "C14",
+            "receipt": "docs/plans/ocean-v1/evidence/C14/verification.json",
+            "sha256": "49fb2a1794c764019a2ea63fc476f231167fe318e6854793d3b35ebeb13e9a2c"
+          }
+        ],
+        "current_sha256": "49fb2a1794c764019a2ea63fc476f231167fe318e6854793d3b35ebeb13e9a2c",
+        "intentional_later_supersession": false,
+        "original_sha256": "49fb2a1794c764019a2ea63fc476f231167fe318e6854793d3b35ebeb13e9a2c"
+      }
+    },
+    "C17": {
+      ".github/workflows/tests.yml": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "1cdd60958fc656ca773bd0b2ea1485f16ba95acdec3c355be3700580940bcd5f"
+          }
+        ],
+        "current_sha256": "1cdd60958fc656ca773bd0b2ea1485f16ba95acdec3c355be3700580940bcd5f",
+        "intentional_later_supersession": false,
+        "original_sha256": "1cdd60958fc656ca773bd0b2ea1485f16ba95acdec3c355be3700580940bcd5f"
+      },
+      "api/auth.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd"
+          }
+        ],
+        "current_sha256": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd",
+        "intentional_later_supersession": false,
+        "original_sha256": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd"
+      },
+      "api/investigation_routes.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6"
+          }
+        ],
+        "current_sha256": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6",
+        "intentional_later_supersession": false,
+        "original_sha256": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6"
+      },
+      "api/main.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4"
+          }
+        ],
+        "current_sha256": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4",
+        "intentional_later_supersession": false,
+        "original_sha256": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4"
+      },
+      "config.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61"
+          }
+        ],
+        "current_sha256": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61",
+        "intentional_later_supersession": false,
+        "original_sha256": "9517cd8860145073ee59e663cf572904c6c9969bd2433463d2f01c9264212f61"
+      },
+      "db/app_models.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab"
+          }
+        ],
+        "current_sha256": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab",
+        "intentional_later_supersession": false,
+        "original_sha256": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab"
+      },
+      "migrations/versions/20261018_0017_investigations.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "2bb803bd1e37e44a3d7a8845d8c800698e88d8ca0e322138d2216f38ff9bf6f3"
+          }
+        ],
+        "current_sha256": "2bb803bd1e37e44a3d7a8845d8c800698e88d8ca0e322138d2216f38ff9bf6f3",
+        "intentional_later_supersession": false,
+        "original_sha256": "2bb803bd1e37e44a3d7a8845d8c800698e88d8ca0e322138d2216f38ff9bf6f3"
+      },
+      "orchestration/investigations.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "e19bb6c27cdfb458c061940de53b5754a012d995dc0d136eb855ba3df0a867f3"
+          }
+        ],
+        "current_sha256": "e19bb6c27cdfb458c061940de53b5754a012d995dc0d136eb855ba3df0a867f3",
+        "intentional_later_supersession": false,
+        "original_sha256": "e19bb6c27cdfb458c061940de53b5754a012d995dc0d136eb855ba3df0a867f3"
+      },
+      "schema/investigations.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8"
+          }
+        ],
+        "current_sha256": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+        "intentional_later_supersession": false,
+        "original_sha256": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8"
+      },
+      "tests/integration/test_investigation_postgres.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "cc17431ee9ae12509cf896d9d023d0c4592f08201c113ba96a1b45a9816bb642"
+          }
+        ],
+        "current_sha256": "cc17431ee9ae12509cf896d9d023d0c4592f08201c113ba96a1b45a9816bb642",
+        "intentional_later_supersession": false,
+        "original_sha256": "cc17431ee9ae12509cf896d9d023d0c4592f08201c113ba96a1b45a9816bb642"
+      },
+      "tests/integration/test_investigation_service_postgres.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "351d9b7bbc80f63e8ccf1e54e64ac40464c4ee2a9067050fad719412946e6405"
+          }
+        ],
+        "current_sha256": "351d9b7bbc80f63e8ccf1e54e64ac40464c4ee2a9067050fad719412946e6405",
+        "intentional_later_supersession": false,
+        "original_sha256": "351d9b7bbc80f63e8ccf1e54e64ac40464c4ee2a9067050fad719412946e6405"
+      },
+      "tests/investigation_support.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce"
+          }
+        ],
+        "current_sha256": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce",
+        "intentional_later_supersession": false,
+        "original_sha256": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce"
+      },
+      "tests/test_bootstrap_database.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "345c98e9713c6ed9b7edf52774ce752fad4030b62277f11e1dc68102fd0b8de9"
+          }
+        ],
+        "current_sha256": "345c98e9713c6ed9b7edf52774ce752fad4030b62277f11e1dc68102fd0b8de9",
+        "intentional_later_supersession": false,
+        "original_sha256": "345c98e9713c6ed9b7edf52774ce752fad4030b62277f11e1dc68102fd0b8de9"
+      },
+      "tests/test_investigation_api.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "8df2069fc9b39ac8337b1e4bdca5075025663794486b307004bdc9d4fdc58255"
+          }
+        ],
+        "current_sha256": "8df2069fc9b39ac8337b1e4bdca5075025663794486b307004bdc9d4fdc58255",
+        "intentional_later_supersession": false,
+        "original_sha256": "8df2069fc9b39ac8337b1e4bdca5075025663794486b307004bdc9d4fdc58255"
+      },
+      "tests/test_investigation_api_integration.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "58a36f9d6bd521cce2918cf11695db1f46900bd030c175defd5ee002e8a1f4f4"
+          }
+        ],
+        "current_sha256": "58a36f9d6bd521cce2918cf11695db1f46900bd030c175defd5ee002e8a1f4f4",
+        "intentional_later_supersession": false,
+        "original_sha256": "58a36f9d6bd521cce2918cf11695db1f46900bd030c175defd5ee002e8a1f4f4"
+      },
+      "tests/test_investigation_api_stream.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "f21427e5d884c7898f5bb02dc345ce6998e782e80d92d497b5c36e4db3897a48"
+          }
+        ],
+        "current_sha256": "f21427e5d884c7898f5bb02dc345ce6998e782e80d92d497b5c36e4db3897a48",
+        "intentional_later_supersession": false,
+        "original_sha256": "f21427e5d884c7898f5bb02dc345ce6998e782e80d92d497b5c36e4db3897a48"
+      },
+      "tests/test_investigation_models.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "fdf7b474f33db62fe4a5e140f4cb87d79f9149b31c6fa5391c5f8e2895d377fa"
+          }
+        ],
+        "current_sha256": "fdf7b474f33db62fe4a5e140f4cb87d79f9149b31c6fa5391c5f8e2895d377fa",
+        "intentional_later_supersession": false,
+        "original_sha256": "fdf7b474f33db62fe4a5e140f4cb87d79f9149b31c6fa5391c5f8e2895d377fa"
+      },
+      "tests/test_investigation_postgres_guard.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "31e6042f02ed796f82777bfb133dd8996b25cc0abc507ee723e1836cfff3b979"
+          }
+        ],
+        "current_sha256": "31e6042f02ed796f82777bfb133dd8996b25cc0abc507ee723e1836cfff3b979",
+        "intentional_later_supersession": false,
+        "original_sha256": "31e6042f02ed796f82777bfb133dd8996b25cc0abc507ee723e1836cfff3b979"
+      },
+      "tests/test_investigations.py": {
+        "acceptance_chain": [
+          {
+            "component": "C17",
+            "receipt": "docs/plans/ocean-v1/evidence/C17/verification.json",
+            "sha256": "c1589de656caaadca3a8f6a55660e9f478e9196479a3d275f2a8a31d357555bd"
+          }
+        ],
+        "current_sha256": "c1589de656caaadca3a8f6a55660e9f478e9196479a3d275f2a8a31d357555bd",
+        "intentional_later_supersession": false,
+        "original_sha256": "c1589de656caaadca3a8f6a55660e9f478e9196479a3d275f2a8a31d357555bd"
+      }
+    }
+  },
+  "source_implementation_edits": false,
+  "state": "Preliminary prerequisites reconciled; pending C18 delivery and parent final readiness selection",
+  "unique_source_paths": 52
+}

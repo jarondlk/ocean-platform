@@ -1,0 +1,38 @@
+.ra-activity, .ra-results, .ra-evidence { min-width: 0; font-size: 13px; line-height: 1.65; color: var(--text); }
+.ra-empty { padding: 24px 16px; color: var(--muted); line-height: 1.7; }
+.ra-empty h3 { font-size: 15px; font-weight: 550; color: var(--text); margin-bottom: 9px; }
+.ra-runs { list-style: none; padding: 0; margin: 0; display: grid; gap: 18px; }
+.ra-run, .ra-results > article, .ra-evidence { padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); overflow-wrap: anywhere; }
+.ra-run > header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.ra-run h3, .ra-results h3, .ra-evidence h3 { font-size: 15px; font-weight: 550; white-space: pre-wrap; }
+.ra-status { color: var(--blue-ink); font-size: 11px; flex-shrink: 0; }
+.ra-synthetic { color: var(--blue-ink); background: var(--blue-wash); padding: 8px 10px; margin: 10px 0; border-radius: 5px; font-size: 11px; }
+.ra-run-meta { display: grid; gap: 4px; margin: 12px 0; font-size: 11px; color: var(--muted); }
+.ra-run-meta code, .ra-continuation code { overflow-wrap: anywhere; font-size: 10px; }
+.ra-binding, .ra-public-events { margin: 12px 0; font-size: 11px; }
+.ra-binding summary, .ra-public-events summary { cursor: pointer; color: var(--blue-ink); min-height: 28px; }
+.ra-binding dl, .ra-evidence dl { display: grid; gap: 9px; margin: 12px 0; }
+.ra-binding dl > div, .ra-evidence dl > div { display: grid; grid-template-columns: minmax(95px, .4fr) minmax(0, 1fr); gap: 9px; }
+.ra-binding dt, .ra-evidence dt { color: var(--muted); }
+.ra-binding dd, .ra-evidence dd { margin: 0; }
+.ra-binding pre { font-size: 10px; white-space: pre-wrap; max-height: 260px; overflow-y: auto; background: var(--canvas); padding: 9px; border-radius: 5px; }
+.ra-public-events ol { margin: 9px 0; padding-left: 22px; }
+.ra-public-events li { padding: 5px 0; }
+.ra-public-events time { color: var(--muted); margin-right: 10px; font-variant-numeric: tabular-nums; }
+.ra-unavailable, .ra-continuation, .ra-qualification { color: var(--muted); font-size: 11px; margin: 12px 0; }
+.ra-error, .ra-partial { padding: 10px; border: 1px solid var(--control-line); border-left: 3px solid var(--blue-ink); border-radius: 5px; margin: 12px 0; font-size: 12px; }
+.ra-controls { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.ra-controls button { min-height: 36px; font-size: 11px; }
+.ra-clarification { display: grid; gap: 9px; margin-top: 15px; }
+.ra-clarification label { font-size: 12px; }
+.ra-clarification textarea { min-height: 72px; padding: 9px; width: 100%; resize: vertical; background: var(--canvas); border: 1px solid var(--control-line); border-radius: 5px; color: var(--text); }
+.ra-clarification button { justify-self: start; }
+.ra-result { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+.ra-authority { color: var(--blue-ink); font-size: 11px; margin: 10px 0; }
+.ra-result-body { white-space: pre-wrap; }
+.ra-citations { margin: 14px 0 0; padding-left: 20px; font-size: 11px; }
+.ra-citations li { padding: 5px 0; }
+.ra-citations button { color: var(--blue-ink); text-align: left; text-decoration: underline; min-height: 32px; }
+.ra-citations span { display: block; color: var(--muted); }
+.ra-results { display: grid; gap: 15px; }
+@media (max-width: 760px) { .ra-run, .ra-results > article, .ra-evidence { padding: 12px; } .ra-run > header { display: grid; gap: 6px; } .ra-binding dl > div, .ra-evidence dl > div { grid-template-columns: 1fr; gap: 2px; } .ra-controls button { min-height: 40px; } }

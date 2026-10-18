@@ -1,0 +1,88 @@
+{
+  "component": "C18",
+  "scope": "Intentional run reference semantics alignment with accepted C17",
+  "created_at": "2026-10-18T06:11:10.563267+00:00",
+  "original_immutable_receipt": {
+    "path": "docs/plans/ocean-v1/evidence/C18/run-verification.json",
+    "sha256": "a6c96b182081c209ce75d902e0dc6f46bdec7705a9f1e49efb59d2e075ece244"
+  },
+  "source_sha256": {
+    "frontend-v1/src/research-run-contract.ts": "1dae2270558d62e3bac63e76349cca62b27d26624602a0704ab59e0f1047a7ad",
+    "frontend-v1/src/research-activity.tsx": "9abf45b432158b776e7d42c95f8d21450fc8b564e5dd8ca79240bf24b699d684",
+    "frontend-v1/src/research-activity.css": "3b5a993df6a2b58bfd35dfeea553387ef860611cb568eb1070adde385511e4c0",
+    "frontend-v1/development/c18/run-fixture.ts": "8963dd832a7b27001bc6639b3273895244293b6a03e575c2c31c101532335b17",
+    "frontend-v1/tests/research-run-contract.test.ts": "64f2544e204f16ba38f775fb880a507e11d2d7c56d9753a4399b2d0f35322adc"
+  },
+  "intentional_source_supersessions": {
+    "frontend-v1/src/research-run-contract.ts": {
+      "previous_sha256": "7baa7516d1179eb26b943a192d11e34e393422b2325bb644fc8f8782e7c22f94",
+      "current_sha256": "1dae2270558d62e3bac63e76349cca62b27d26624602a0704ab59e0f1047a7ad"
+    },
+    "frontend-v1/tests/research-run-contract.test.ts": {
+      "previous_sha256": "285e24a02e8d9ce7e02c24b23dc6837ab98a7cd311c27d24c76c99bfae6b271c",
+      "current_sha256": "64f2544e204f16ba38f775fb880a507e11d2d7c56d9753a4399b2d0f35322adc"
+    }
+  },
+  "accepted_C17_implementation": {
+    "path": "orchestration/investigations.py",
+    "sha256": "e19bb6c27cdfb458c061940de53b5754a012d995dc0d136eb855ba3df0a867f3",
+    "observations": [
+      "C17 _resolve requires catalogue reference.snapshot_id to match payload snapshot; artifacts retain an independent reference snapshot validated by the trusted resolver against owner, ID and hash.",
+      "C17 _key hashes the complete canonical reference object; identity therefore includes kind, id and snapshot_id."
+    ]
+  },
+  "changes": [
+    "Allow a retained artifact reference from a different snapshot while retaining exact original scientific run binding. Catalogue references remain constrained to that binding snapshot.",
+    "Define duplicate identity using all three C17 reference fields; different artifact snapshots remain distinct and exact duplicates still fail."
+  ],
+  "checks": {
+    "focused_tests": {
+      "passed": 33,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C18/run-artifact-semantics-tests.txt"
+    },
+    "strict_focused_typecheck": {
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C18/run-artifact-semantics-typecheck.txt"
+    },
+    "whitespace": {
+      "frontend-v1/src/research-run-contract.ts": {
+        "returncode": 1,
+        "output": ""
+      },
+      "frontend-v1/src/research-activity.tsx": {
+        "returncode": 1,
+        "output": ""
+      },
+      "frontend-v1/src/research-activity.css": {
+        "returncode": 1,
+        "output": ""
+      },
+      "frontend-v1/development/c18/run-fixture.ts": {
+        "returncode": 1,
+        "output": ""
+      },
+      "frontend-v1/tests/research-run-contract.test.ts": {
+        "returncode": 1,
+        "output": ""
+      }
+    }
+  },
+  "evidence_sha256": {
+    "docs/plans/ocean-v1/evidence/C18/run-artifact-semantics-tests.txt": "0bba2f76f501919889c1801f4da1b659865e77b40c44d9829a2f8ce516111558",
+    "docs/plans/ocean-v1/evidence/C18/run-artifact-semantics-typecheck.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "new_acceptance_cases": [
+    "Cross-snapshot retained artifact attachments and pins survive deep freeze, caller mutation and linked continuation while the original run binding remains fixed.",
+    "Cross-snapshot catalogue references remain rejected.",
+    "Same artifact kind/ID with two retained snapshots is permitted; an exact kind/ID/snapshot duplicate is rejected."
+  ],
+  "limitations": [
+    "No production execution, model calls, network calls, scientific computation, scientific approval, retained artifact creation or real evidence content reading",
+    "C20 supplies production run transport, server authorization and durable execution",
+    "C21 supplies retained artifact content and final answer/evidence integration",
+    "Root owns composer submit wiring and interactive browser/keyboard/mobile verification; SSR checks alone do not establish those gates"
+  ]
+}

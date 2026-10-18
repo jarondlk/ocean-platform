@@ -1,0 +1,99 @@
+{
+  "prerequisite_entries": 98,
+  "formal_intentional_supersessions": {
+    "P00:frontend-v1/README.md": {
+      "before_sha256": "9dd756634a0a11557fe73bed54676c55a0c31b0ff245cc096baf9d8ca9626c4b",
+      "C18_sha256": "d52deadad88fafadb84abdffae8b2fa5e0547a70879d86a83829f8566eab1d66",
+      "reason": "C18 actual Research UI/runtime integration and documentation; original receipt remains immutable"
+    },
+    "C15:api/v1_runtime_routes.py": {
+      "before_sha256": "b0e705af205d4a629d450b2abe5e5c190c30476fd605495bd15f13c01dea50a2",
+      "C18_sha256": "316c19aa9d39d6b5bd467b3411eb4fdc340e6e0b5a066981fa82d4f545f2c693",
+      "reason": "C18 actual Research UI/runtime integration and documentation; original receipt remains immutable"
+    },
+    "C15:frontend-v1/README.md": {
+      "before_sha256": "9dd756634a0a11557fe73bed54676c55a0c31b0ff245cc096baf9d8ca9626c4b",
+      "C18_sha256": "d52deadad88fafadb84abdffae8b2fa5e0547a70879d86a83829f8566eab1d66",
+      "reason": "C18 actual Research UI/runtime integration and documentation; original receipt remains immutable"
+    },
+    "C15:frontend-v1/src/runtime-app.tsx": {
+      "before_sha256": "dc73bb659d2e627d38c5cf6742a0c3924e8c9a45b542a40372fd2ef58a9a9a63",
+      "C18_sha256": "bb0171e039609a98be813482418144bb9dda29d2255a51166557259d40216ec0",
+      "reason": "C18 actual Research UI/runtime integration and documentation; original receipt remains immutable"
+    },
+    "C15:frontend-v1/src/runtime.ts": {
+      "before_sha256": "099de7c168eada4567162ab603b1bb743f5fc42a601c5a8e10dad1e25ca5f2ab",
+      "C18_sha256": "224cd4d2b51a81648da5d7d3e4f474af0ee335a8a672ee1e81b61f34a5492908",
+      "reason": "C18 actual Research UI/runtime integration and documentation; original receipt remains immutable"
+    },
+    "C15:frontend-v1/tests/runtime.test.ts": {
+      "before_sha256": "07e3b62eb94f6ccfdd1138494ee1c96fc9c6646689fd3bdb2d72358dfc86fe0e",
+      "C18_sha256": "98c68d88380d0d5d5aefcf983799719b52ae23739e46d8b8df7e95a119bdff16",
+      "reason": "C18 actual Research UI/runtime integration and documentation; original receipt remains immutable"
+    },
+    "C15:tests/test_v1_runtime.py": {
+      "before_sha256": "663cc5d0b27d7cbd07ab3a14e8f34a86a856d88232432d5fca8d3a4ee2e4472c",
+      "C18_sha256": "01945c2009cc1747f70e113f94db2a147cd6fc7a274e468797ec1275dcec05ae",
+      "reason": "C18 actual Research UI/runtime integration and documentation; original receipt remains immutable"
+    },
+    "C16:api/v1_runtime_routes.py": {
+      "before_sha256": "b0e705af205d4a629d450b2abe5e5c190c30476fd605495bd15f13c01dea50a2",
+      "C18_sha256": "316c19aa9d39d6b5bd467b3411eb4fdc340e6e0b5a066981fa82d4f545f2c693",
+      "reason": "C18 actual Research UI/runtime integration and documentation; original receipt remains immutable"
+    },
+    "C16:frontend-v1/README.md": {
+      "before_sha256": "9dd756634a0a11557fe73bed54676c55a0c31b0ff245cc096baf9d8ca9626c4b",
+      "C18_sha256": "d52deadad88fafadb84abdffae8b2fa5e0547a70879d86a83829f8566eab1d66",
+      "reason": "C18 actual Research UI/runtime integration and documentation; original receipt remains immutable"
+    },
+    "C16:frontend-v1/src/runtime-app.tsx": {
+      "before_sha256": "dc73bb659d2e627d38c5cf6742a0c3924e8c9a45b542a40372fd2ef58a9a9a63",
+      "C18_sha256": "bb0171e039609a98be813482418144bb9dda29d2255a51166557259d40216ec0",
+      "reason": "C18 actual Research UI/runtime integration and documentation; original receipt remains immutable"
+    },
+    "C16:tests/test_v1_runtime.py": {
+      "before_sha256": "663cc5d0b27d7cbd07ab3a14e8f34a86a856d88232432d5fca8d3a4ee2e4472c",
+      "C18_sha256": "01945c2009cc1747f70e113f94db2a147cd6fc7a274e468797ec1275dcec05ae",
+      "reason": "C18 actual Research UI/runtime integration and documentation; original receipt remains immutable"
+    }
+  },
+  "review_source_supersessions": {
+    "ui-review-initial.json": {
+      "frontend-v1/src/research-run-contract.ts": {
+        "reviewed_sha256": "7baa7516d1179eb26b943a192d11e34e393422b2325bb644fc8f8782e7c22f94",
+        "accepted_sha256": "1dae2270558d62e3bac63e76349cca62b27d26624602a0704ab59e0f1047a7ad",
+        "reason": "Subsequent recorded R1-R12 fixes, final current review and final frontend checks"
+      },
+      "frontend-v1/src/research-workspace.tsx": {
+        "reviewed_sha256": "d531326c43b6e2c4963996aac64026a2bfbcda347f8596d51b4dcb9a032c68b6",
+        "accepted_sha256": "e23523f07e79a5f27618954c213b87ef74e2acfb08775d9102acda681c0a24ee",
+        "reason": "Subsequent recorded R1-R12 fixes, final current review and final frontend checks"
+      }
+    },
+    "ui-review-followup.json": {
+      "frontend-v1/src/research-workspace.tsx": {
+        "reviewed_sha256": "d14c9cf613927e7c5daff0755601f52091297d3875609fcde981620f191d9768",
+        "accepted_sha256": "e23523f07e79a5f27618954c213b87ef74e2acfb08775d9102acda681c0a24ee",
+        "reason": "Subsequent recorded R1-R12 fixes, final current review and final frontend checks"
+      }
+    },
+    "ui-review-final.json": {
+      "frontend-v1/src/research-workspace.tsx": {
+        "reviewed_sha256": "8b3e3d2cdce2c1b0c4af9011aceb8d4c1203ed80bdd8d7ff2dcf0134021f6785",
+        "accepted_sha256": "e23523f07e79a5f27618954c213b87ef74e2acfb08775d9102acda681c0a24ee",
+        "reason": "Subsequent recorded R1-R12 fixes, final current review and final frontend checks"
+      }
+    }
+  },
+  "C17_all19_sources_unchanged": true,
+  "backend21_sources_unchanged": true,
+  "frontend_all_tested_sources_unchanged": true,
+  "prior_evidence_files_unchanged": 736,
+  "protected_counts": {
+    "unrelated_files": 30,
+    "scientific_artifacts": 7,
+    "serving_files": 2,
+    "legacy_frontend_files": 106
+  },
+  "original_run_semantics_supersession": "run-artifact-semantics-verification.json"
+}

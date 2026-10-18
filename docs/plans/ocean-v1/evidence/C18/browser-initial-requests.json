@@ -1,0 +1,5695 @@
+{
+  "metadata": {
+    "fixture": "sealed synthetic data and TEST identities only",
+    "directory": "/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/ocean-c18-research-lose4cci",
+    "site_id": "v1:c17-synthetic",
+    "investigation": {
+      "id": "0a154a12-cb49-4989-8199-71d4d674640f",
+      "name": "C18 synthetic coastal investigation",
+      "metadata_version": 2,
+      "status": "active",
+      "head_revision_id": "0745e1fe-c04a-480c-a9d5-951b2a23e6e9",
+      "predecessor_investigation_id": null,
+      "predecessor_revision_id": null,
+      "legal_hold": false,
+      "created_at": "2026-10-18T06:14:51",
+      "updated_at": "2026-10-18T06:14:51"
+    },
+    "context": {
+      "id": "0745e1fe-c04a-480c-a9d5-951b2a23e6e9",
+      "investigation_id": "0a154a12-cb49-4989-8199-71d4d674640f",
+      "sequence": 1,
+      "predecessor_revision_id": null,
+      "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+      "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+      "scope": {
+        "sources": {
+          "ctd": {
+            "enabled": true,
+            "filters": {}
+          },
+          "edna_metabarcoding": {
+            "enabled": true,
+            "filters": {}
+          },
+          "metagenome": {
+            "enabled": true,
+            "filters": {}
+          },
+          "remote_sensing": {
+            "enabled": true,
+            "filters": {}
+          }
+        },
+        "version": 1
+      },
+      "attachments": [],
+      "pins": [],
+      "resolution": [],
+      "refresh_unresolved": [],
+      "created_by_user_id": "6f5ead14-5858-530d-9615-e6cd99d33100",
+      "created_at": "2026-10-18T06:14:51",
+      "artifact_capability": "unavailable"
+    },
+    "conversations": [
+      {
+        "id": "79cbbb6a-0b3e-449f-8597-bb1bc14c71f2",
+        "investigation_id": "0a154a12-cb49-4989-8199-71d4d674640f",
+        "name": "Temperature question",
+        "metadata_version": 1,
+        "created_at": "2026-10-18T06:14:51",
+        "updated_at": "2026-10-18T06:14:51",
+        "history_status": "unavailable_until_c20_c21"
+      },
+      {
+        "id": "dc3e94d8-55bc-4b33-998d-f0493d2f70aa",
+        "investigation_id": "0a154a12-cb49-4989-8199-71d4d674640f",
+        "name": "Independent conversation",
+        "metadata_version": 1,
+        "created_at": "2026-10-18T06:14:51",
+        "updated_at": "2026-10-18T06:14:51",
+        "history_status": "unavailable_until_c20_c21"
+      }
+    ],
+    "snapshots": [
+      "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+      "f6b0a6c4b56d402054e071be7f9d37c4d32db2ff02cd024179d9b1a39a1ace03"
+    ],
+    "dataset_ids": {
+      "ctd": "synthetic:ctd:campaign-a",
+      "edna_metabarcoding": "synthetic:edna:project-a",
+      "metagenome": "synthetic:metagenome:collection-a",
+      "remote_sensing": "synthetic:sst:mur-final"
+    },
+    "source_dataset_ids": {
+      "ctd": "synthetic:ctd:campaign-a",
+      "metagenome": "synthetic:metagenome:collection-a",
+      "remote_sensing": "synthetic:sst:mur-final",
+      "edna_metabarcoding": "synthetic:edna:project-a"
+    }
+  },
+  "actual_requests": [
+    {
+      "path": "/v1/runtime",
+      "method": "GET",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/v1/runtime",
+      "method": "GET",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/overview",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/overview",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/open",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/open",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/open",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/open",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/open",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/context/change",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/context/change",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/v1/runtime",
+      "method": "GET",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/v1/runtime",
+      "method": "GET",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/context/change",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/context/change",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/context/change",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/v1/runtime",
+      "method": "GET",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 400,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/v1/runtime",
+      "method": "GET",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/context/change",
+      "method": "POST",
+      "status": 503,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/context/change",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/context/change",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/v1/runtime",
+      "method": "GET",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/catalogue/snapshots",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/list",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/conversations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    },
+    {
+      "path": "/research/investigations/get",
+      "method": "POST",
+      "status": 200,
+      "actor": "owner"
+    }
+  ],
+  "faults_consumed": [
+    "c18:ack-loss-one"
+  ],
+  "server_stopped": true
+}

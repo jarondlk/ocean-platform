@@ -1,0 +1,101 @@
+{
+  "component": "C18",
+  "scope": "Synthetic run boundary and controlled activity/results/evidence presentation only",
+  "created_at": "2026-10-18T06:08:30.214515+00:00",
+  "base_source": "78a10a0c17cc29d1fa46498bf7df3c0d1be6e882",
+  "source_sha256": {
+    "frontend-v1/src/research-run-contract.ts": "7baa7516d1179eb26b943a192d11e34e393422b2325bb644fc8f8782e7c22f94",
+    "frontend-v1/src/research-activity.tsx": "9abf45b432158b776e7d42c95f8d21450fc8b564e5dd8ca79240bf24b699d684",
+    "frontend-v1/src/research-activity.css": "3b5a993df6a2b58bfd35dfeea553387ef860611cb568eb1070adde385511e4c0",
+    "frontend-v1/development/c18/run-fixture.ts": "8963dd832a7b27001bc6639b3273895244293b6a03e575c2c31c101532335b17",
+    "frontend-v1/tests/research-run-contract.test.ts": "285e24a02e8d9ce7e02c24b23dc6837ab98a7cd311c27d24c76c99bfae6b271c"
+  },
+  "evidence_sha256": {
+    "docs/plans/ocean-v1/evidence/C18/run-focused-tests.txt": "b6762104510ec9a82fa6239aaeb918776d72d75a5861c542b9d5c68a93dc845f",
+    "docs/plans/ocean-v1/evidence/C18/run-focused-typecheck.txt": "b1ffef13401d2ba7d87039d57d8eb82ef8d83640c4b2aa06605033634e1d91f6",
+    "docs/plans/ocean-v1/evidence/C18/run-focused-typecheck-final.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C18/run-focused-tests-final.txt": "9f1f64e042ef81bb4676bc056ff04464d6662f4bb6b8e048be7bc5d7e68abed1",
+    "docs/plans/ocean-v1/evidence/C18/run-focused-typecheck-final-v2.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "checks": {
+    "focused_tests": {
+      "command": "node --test --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON tests/research-run-contract.test.ts",
+      "cwd": "frontend-v1",
+      "log": "docs/plans/ocean-v1/evidence/C18/run-focused-tests-final.txt",
+      "passed": 31,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    "strict_focused_typecheck": {
+      "command": "node node_modules/typescript/bin/tsc --noEmit --strict --skipLibCheck --esModuleInterop --jsx react-jsx --target es2022 --module esnext --moduleResolution bundler --allowImportingTsExtensions src/research-run-contract.ts src/research-activity.tsx development/c18/run-fixture.ts tests/research-run-contract.test.ts",
+      "cwd": "frontend-v1",
+      "log": "docs/plans/ocean-v1/evidence/C18/run-focused-typecheck-final-v2.txt",
+      "exit_code": 0
+    },
+    "whitespace": {
+      "frontend-v1/src/research-run-contract.ts": {
+        "returncode": 1,
+        "output": ""
+      },
+      "frontend-v1/src/research-activity.tsx": {
+        "returncode": 1,
+        "output": ""
+      },
+      "frontend-v1/src/research-activity.css": {
+        "returncode": 1,
+        "output": ""
+      },
+      "frontend-v1/development/c18/run-fixture.ts": {
+        "returncode": 1,
+        "output": ""
+      },
+      "frontend-v1/tests/research-run-contract.test.ts": {
+        "returncode": 1,
+        "output": ""
+      }
+    }
+  },
+  "retained_attempts": [
+    {
+      "log": "docs/plans/ocean-v1/evidence/C18/run-focused-tests.txt",
+      "passed": 29,
+      "exit_code": 0,
+      "note": "Initial focused cases before two additional tests and strict context-field/reference validation."
+    },
+    {
+      "log": "docs/plans/ocean-v1/evidence/C18/run-focused-typecheck.txt",
+      "exit_code": 2,
+      "note": "Scoped TypeScript command launched from repository root could not find frontend-v1 node type declarations. Corrected by running the same scoped check from frontend-v1."
+    },
+    {
+      "log": "docs/plans/ocean-v1/evidence/C18/run-focused-typecheck-final.txt",
+      "exit_code": 0,
+      "note": "Successful corrected-cwd check before final two tests and stricter context/reference validation."
+    }
+  ],
+  "verified_behaviors": [
+    "Exact immutable investigation/conversation/revision/snapshot/payload SHA-256 binding; defensive deep JSON copy/freeze",
+    "Explicit six-method transport with no selected production implementation",
+    "Deterministic completed, partial, failed, running, cancellation and clarification; active elapsed pauses while waiting and remains monotonic",
+    "Original submitted context persists through later context updates and linked continuation",
+    "Idempotent operation identity rejects changed replay input; addresses bind every lookup to investigation and conversation",
+    "Public cursor events reject gaps, reordering, stale context and undeclared private reasoning fields",
+    "Real React EN/JA empty, running, error, partial, cancelled, clarification, citation and evidence-identity markup",
+    "Actual result citation callback receives exact evidence and run",
+    "Transitive production RuntimeApp/V1Entry import graph excludes development fixture"
+  ],
+  "limitations": [
+    "No production execution, model calls, network calls, scientific computation, scientific approval, retained artifact creation or real evidence content reading",
+    "C20 supplies production run transport, server authorization and durable execution",
+    "C21 supplies retained artifact content and final answer/evidence integration",
+    "Root owns composer submit wiring and interactive browser/keyboard/mobile verification; SSR checks alone do not establish those gates"
+  ],
+  "exported_interfaces": {
+    "transport": "ResearchRunTransport: submit/status/events/cancel/clarify/continue; all methods optional AbortSignal",
+    "activity": "ResearchActivity({locale,runs,busy?,executionAvailable?,onStatus?,onEvents?,onCancel?,onClarify?,onContinue?,onOpenEvidence?})",
+    "results": "ResearchResults({locale,runs,onOpenEvidence?})",
+    "evidence": "ResearchEvidence({locale,evidence:RunEvidence|null})",
+    "fixture": "createC18RunFixture({scenario?,now?}) returns ResearchRunTransport plus setScenario; explicit injected development-only dependency"
+  }
+}

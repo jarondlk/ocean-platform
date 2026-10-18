@@ -1,0 +1,1556 @@
+{
+  "boundary": "Actual C17 ASGI HTTP + TEST identity + synthetic frozen sources + separate SQLite; no socket/browser/OIDC/production claim",
+  "source_before_sha256": {
+    "api/investigation_routes.py": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6",
+    "orchestration/investigations.py": "e19bb6c27cdfb458c061940de53b5754a012d995dc0d136eb855ba3df0a867f3",
+    "schema/investigations.py": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+    "tests/investigation_support.py": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce",
+    "db/app_models.py": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab"
+  },
+  "source_after_sha256": {
+    "api/investigation_routes.py": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6",
+    "orchestration/investigations.py": "e19bb6c27cdfb458c061940de53b5754a012d995dc0d136eb855ba3df0a867f3",
+    "schema/investigations.py": "bb890c011fffba300f863753cccc4a3f88d6fc35f1ec746190ba1e57081150a8",
+    "tests/investigation_support.py": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce",
+    "db/app_models.py": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab"
+  },
+  "method_count": 14,
+  "methods": [
+    "archive",
+    "changeContext",
+    "create",
+    "createConversation",
+    "get",
+    "getContext",
+    "getConversation",
+    "getOperation",
+    "list",
+    "listConversations",
+    "refresh",
+    "rename",
+    "renameConversation",
+    "retryOperation"
+  ],
+  "request_count": 28,
+  "cases": [
+    {
+      "method": "list",
+      "path": "/research/investigations/list",
+      "payload": {},
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "items": [],
+        "next_after_id": null
+      }
+    },
+    {
+      "method": "create",
+      "path": "/research/investigations/create",
+      "payload": {
+        "name": "Synthetic private investigation 調査",
+        "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+        "scope": {
+          "version": 1,
+          "sources": {
+            "ctd": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "bay": null,
+                "station": null,
+                "sample_id": null
+              }
+            },
+            "metagenome": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "bay": null,
+                "station": null,
+                "sample_id": null
+              }
+            },
+            "remote_sensing": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "lat_min": null,
+                "lat_max": null,
+                "lon_min": null,
+                "lon_max": null,
+                "dataset_id": null
+              }
+            },
+            "edna_metabarcoding": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "lat_min": null,
+                "lat_max": null,
+                "lon_min": null,
+                "lon_max": null,
+                "sample_id": null,
+                "provider": null,
+                "provider_project_id": null,
+                "provider_run_id": null,
+                "assignment_method": null,
+                "taxon": null,
+                "sample_kind": null,
+                "is_control": null
+              },
+              "analysis_id": null
+            }
+          }
+        },
+        "idempotency_key": "6c8724db-e3cf-4642-81c0-9e70a4b684a9"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "eec27035-4e6d-4b9b-9744-a2d7d0a776c6",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "create",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": "0b4000e0-20d5-44ac-b26a-6f28706baa69"
+        },
+        "investigation": {
+          "id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "Synthetic private investigation 調査",
+          "metadata_version": 2,
+          "status": "active",
+          "head_revision_id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+          "predecessor_investigation_id": null,
+          "predecessor_revision_id": null,
+          "legal_hold": false,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:55"
+        },
+        "context": {
+          "id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "sequence": 1,
+          "predecessor_revision_id": null,
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {}
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {}
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {}
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {}
+              }
+            },
+            "version": 1
+          },
+          "attachments": [],
+          "pins": [],
+          "resolution": [],
+          "refresh_unresolved": [],
+          "created_by_user_id": "6f5ead14-5858-530d-9615-e6cd99d33100",
+          "created_at": "2026-10-18T06:05:55",
+          "artifact_capability": "unavailable"
+        }
+      }
+    },
+    {
+      "method": "create",
+      "path": "/research/investigations/create",
+      "payload": {
+        "name": "Synthetic private investigation 調査",
+        "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+        "scope": {
+          "version": 1,
+          "sources": {
+            "ctd": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "bay": null,
+                "station": null,
+                "sample_id": null
+              }
+            },
+            "metagenome": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "bay": null,
+                "station": null,
+                "sample_id": null
+              }
+            },
+            "remote_sensing": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "lat_min": null,
+                "lat_max": null,
+                "lon_min": null,
+                "lon_max": null,
+                "dataset_id": null
+              }
+            },
+            "edna_metabarcoding": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "lat_min": null,
+                "lat_max": null,
+                "lon_min": null,
+                "lon_max": null,
+                "sample_id": null,
+                "provider": null,
+                "provider_project_id": null,
+                "provider_run_id": null,
+                "assignment_method": null,
+                "taxon": null,
+                "sample_kind": null,
+                "is_control": null
+              },
+              "analysis_id": null
+            }
+          }
+        },
+        "idempotency_key": "6c8724db-e3cf-4642-81c0-9e70a4b684a9"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "eec27035-4e6d-4b9b-9744-a2d7d0a776c6",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "create",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": "0b4000e0-20d5-44ac-b26a-6f28706baa69"
+        },
+        "investigation": {
+          "id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "Synthetic private investigation 調査",
+          "metadata_version": 2,
+          "status": "active",
+          "head_revision_id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+          "predecessor_investigation_id": null,
+          "predecessor_revision_id": null,
+          "legal_hold": false,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:55"
+        },
+        "context": {
+          "id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "sequence": 1,
+          "predecessor_revision_id": null,
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {}
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {}
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {}
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {}
+              }
+            },
+            "version": 1
+          },
+          "attachments": [],
+          "pins": [],
+          "resolution": [],
+          "refresh_unresolved": [],
+          "created_by_user_id": "6f5ead14-5858-530d-9615-e6cd99d33100",
+          "created_at": "2026-10-18T06:05:55",
+          "artifact_capability": "unavailable"
+        }
+      }
+    },
+    {
+      "method": "list",
+      "path": "/research/investigations/list",
+      "payload": {
+        "limit": 1
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "items": [
+          {
+            "id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+            "name": "Synthetic private investigation 調査",
+            "metadata_version": 2,
+            "status": "active",
+            "head_revision_id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+            "predecessor_investigation_id": null,
+            "predecessor_revision_id": null,
+            "legal_hold": false,
+            "created_at": "2026-10-18T06:05:55",
+            "updated_at": "2026-10-18T06:05:55"
+          }
+        ],
+        "next_after_id": null
+      }
+    },
+    {
+      "method": "get",
+      "path": "/research/investigations/get",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "investigation": {
+          "id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "Synthetic private investigation 調査",
+          "metadata_version": 2,
+          "status": "active",
+          "head_revision_id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+          "predecessor_investigation_id": null,
+          "predecessor_revision_id": null,
+          "legal_hold": false,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:55"
+        },
+        "context": {
+          "id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "sequence": 1,
+          "predecessor_revision_id": null,
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {}
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {}
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {}
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {}
+              }
+            },
+            "version": 1
+          },
+          "attachments": [],
+          "pins": [],
+          "resolution": [],
+          "refresh_unresolved": [],
+          "created_by_user_id": "6f5ead14-5858-530d-9615-e6cd99d33100",
+          "created_at": "2026-10-18T06:05:55",
+          "artifact_capability": "unavailable"
+        },
+        "legacy_history_import": "unavailable"
+      }
+    },
+    {
+      "method": "rename",
+      "path": "/research/investigations/rename",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "name": "Renamed 調査",
+        "expected_version": 2,
+        "idempotency_key": "a0272917-3954-40da-88ff-3ad6bb121d25"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "da64bae3-168b-41e5-90c5-0c9a8e9d504b",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "rename",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": null
+        },
+        "investigation": {
+          "id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "Renamed 調査",
+          "metadata_version": 3,
+          "status": "active",
+          "head_revision_id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+          "predecessor_investigation_id": null,
+          "predecessor_revision_id": null,
+          "legal_hold": false,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:55"
+        }
+      }
+    },
+    {
+      "method": "archive",
+      "path": "/research/investigations/archive",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "expected_version": 3,
+        "idempotency_key": "72815fcc-e76a-41de-b301-cea971c02a90"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "96594c62-a81e-48e0-923e-fc2179e476fc",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "archive",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": null
+        },
+        "investigation": {
+          "id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "Renamed 調査",
+          "metadata_version": 4,
+          "status": "archived",
+          "head_revision_id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+          "predecessor_investigation_id": null,
+          "predecessor_revision_id": null,
+          "legal_hold": false,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:55"
+        }
+      }
+    },
+    {
+      "method": "archive",
+      "path": "/research/investigations/archive",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "archived": false,
+        "expected_version": 4,
+        "idempotency_key": "afb03b4b-e0a3-461d-864a-13128c59b8a9"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "ee151f38-4010-47f6-9f07-1db344632665",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "archive",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": null
+        },
+        "investigation": {
+          "id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "Renamed 調査",
+          "metadata_version": 5,
+          "status": "active",
+          "head_revision_id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+          "predecessor_investigation_id": null,
+          "predecessor_revision_id": null,
+          "legal_hold": false,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:55"
+        }
+      }
+    },
+    {
+      "method": "createConversation",
+      "path": "/research/investigations/conversations/create",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "name": "First synthetic chat",
+        "idempotency_key": "e6dad8aa-6eaa-4078-88b3-abce78134cd9"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "4c32701e-77f8-4088-841b-7d14133cd582",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "conversations/create",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": null
+        },
+        "conversation": {
+          "id": "3e434e81-89be-43fd-8128-3f5daf76c14a",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "First synthetic chat",
+          "metadata_version": 1,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:55",
+          "history_status": "unavailable_until_c20_c21"
+        }
+      }
+    },
+    {
+      "method": "createConversation",
+      "path": "/research/investigations/conversations/create",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "name": "Separate synthetic chat",
+        "idempotency_key": "b5d8c44c-2ea7-4d25-914b-3f76b64a7536"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "9877922c-681a-47b9-b0b5-a9f8a211e3c0",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "conversations/create",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": null
+        },
+        "conversation": {
+          "id": "8411e44a-7e94-4e1f-bf2d-56a22e3f37bd",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "Separate synthetic chat",
+          "metadata_version": 1,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:55",
+          "history_status": "unavailable_until_c20_c21"
+        }
+      }
+    },
+    {
+      "method": "listConversations",
+      "path": "/research/investigations/conversations/list",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "limit": 1
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "items": [
+          {
+            "id": "3e434e81-89be-43fd-8128-3f5daf76c14a",
+            "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+            "name": "First synthetic chat",
+            "metadata_version": 1,
+            "created_at": "2026-10-18T06:05:55",
+            "updated_at": "2026-10-18T06:05:55",
+            "history_status": "unavailable_until_c20_c21"
+          }
+        ],
+        "next_after_id": "3e434e81-89be-43fd-8128-3f5daf76c14a"
+      }
+    },
+    {
+      "method": "listConversations",
+      "path": "/research/investigations/conversations/list",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "limit": 1,
+        "after_id": "3e434e81-89be-43fd-8128-3f5daf76c14a"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "items": [
+          {
+            "id": "8411e44a-7e94-4e1f-bf2d-56a22e3f37bd",
+            "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+            "name": "Separate synthetic chat",
+            "metadata_version": 1,
+            "created_at": "2026-10-18T06:05:55",
+            "updated_at": "2026-10-18T06:05:55",
+            "history_status": "unavailable_until_c20_c21"
+          }
+        ],
+        "next_after_id": null
+      }
+    },
+    {
+      "method": "getConversation",
+      "path": "/research/investigations/conversations/get",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "conversation_id": "3e434e81-89be-43fd-8128-3f5daf76c14a"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "conversation": {
+          "id": "3e434e81-89be-43fd-8128-3f5daf76c14a",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "First synthetic chat",
+          "metadata_version": 1,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:55",
+          "history_status": "unavailable_until_c20_c21"
+        }
+      }
+    },
+    {
+      "method": "renameConversation",
+      "path": "/research/investigations/conversations/rename",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "conversation_id": "3e434e81-89be-43fd-8128-3f5daf76c14a",
+        "name": "Renamed synthetic chat",
+        "expected_version": 1,
+        "idempotency_key": "7b343880-fb64-4c7f-bf35-882babb40f1f"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "88997706-62f4-41f2-837d-672b4572c072",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "conversations/rename",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": null
+        },
+        "conversation": {
+          "id": "3e434e81-89be-43fd-8128-3f5daf76c14a",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "Renamed synthetic chat",
+          "metadata_version": 2,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:55",
+          "history_status": "unavailable_until_c20_c21"
+        }
+      }
+    },
+    {
+      "method": "getContext",
+      "path": "/research/investigations/context/get",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "context": {
+          "id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "sequence": 1,
+          "predecessor_revision_id": null,
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {}
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {}
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {}
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {}
+              }
+            },
+            "version": 1
+          },
+          "attachments": [],
+          "pins": [],
+          "resolution": [],
+          "refresh_unresolved": [],
+          "created_by_user_id": "6f5ead14-5858-530d-9615-e6cd99d33100",
+          "created_at": "2026-10-18T06:05:55",
+          "artifact_capability": "unavailable"
+        }
+      }
+    },
+    {
+      "method": "changeContext",
+      "path": "/research/investigations/context/change",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "expected_revision_id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+        "change": {
+          "op": "attach",
+          "reference": {
+            "kind": "catalogue",
+            "id": "synthetic:ctd:campaign-a",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+          }
+        },
+        "idempotency_key": "6bc6a81f-1028-47e2-96ad-c1a902f52f62"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "87f57940-be46-47a6-8c1d-e56b67496e44",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "context/change",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": "af918a6c-8cd9-4f39-8d39-43ab1b635214"
+        },
+        "investigation": {
+          "id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "Renamed 調査",
+          "metadata_version": 9,
+          "status": "active",
+          "head_revision_id": "af918a6c-8cd9-4f39-8d39-43ab1b635214",
+          "predecessor_investigation_id": null,
+          "predecessor_revision_id": null,
+          "legal_hold": false,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:56"
+        },
+        "context": {
+          "id": "af918a6c-8cd9-4f39-8d39-43ab1b635214",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "sequence": 2,
+          "predecessor_revision_id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "e1a362df9821ed41f5a44eb755b4efe7a2dbc1e57d56d638352a1b509d601892",
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {}
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {}
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {}
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {}
+              }
+            },
+            "version": 1
+          },
+          "attachments": [
+            {
+              "id": "synthetic:ctd:campaign-a",
+              "kind": "catalogue",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            }
+          ],
+          "pins": [],
+          "resolution": [
+            {
+              "reference": {
+                "kind": "catalogue",
+                "id": "synthetic:ctd:campaign-a",
+                "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+              },
+              "status": "available"
+            }
+          ],
+          "refresh_unresolved": [],
+          "created_by_user_id": "6f5ead14-5858-530d-9615-e6cd99d33100",
+          "created_at": "2026-10-18T06:05:56",
+          "artifact_capability": "unavailable"
+        }
+      }
+    },
+    {
+      "method": "changeContext",
+      "path": "/research/investigations/context/change",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "expected_revision_id": "af918a6c-8cd9-4f39-8d39-43ab1b635214",
+        "change": {
+          "op": "pin",
+          "reference": {
+            "kind": "catalogue",
+            "id": "synthetic:ctd:campaign-a",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+          }
+        },
+        "idempotency_key": "affb5e9b-3c3f-45cb-8893-6be1cde4f53a"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "cbb62393-26cb-4f34-a77f-21f06425235f",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "context/change",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": "aa8589b7-5b93-494d-8c39-3b6282063a79"
+        },
+        "investigation": {
+          "id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "Renamed 調査",
+          "metadata_version": 10,
+          "status": "active",
+          "head_revision_id": "aa8589b7-5b93-494d-8c39-3b6282063a79",
+          "predecessor_investigation_id": null,
+          "predecessor_revision_id": null,
+          "legal_hold": false,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:56"
+        },
+        "context": {
+          "id": "aa8589b7-5b93-494d-8c39-3b6282063a79",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "sequence": 3,
+          "predecessor_revision_id": "af918a6c-8cd9-4f39-8d39-43ab1b635214",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "7246734c64d23f6e7834a1dc3a14afd0ff6cfa9dcf75bd218cf20c32003f3ee4",
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {}
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {}
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {}
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {}
+              }
+            },
+            "version": 1
+          },
+          "attachments": [
+            {
+              "id": "synthetic:ctd:campaign-a",
+              "kind": "catalogue",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            }
+          ],
+          "pins": [
+            {
+              "id": "synthetic:ctd:campaign-a",
+              "kind": "catalogue",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            }
+          ],
+          "resolution": [
+            {
+              "reference": {
+                "kind": "catalogue",
+                "id": "synthetic:ctd:campaign-a",
+                "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+              },
+              "status": "available"
+            },
+            {
+              "reference": {
+                "kind": "catalogue",
+                "id": "synthetic:ctd:campaign-a",
+                "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+              },
+              "status": "available"
+            }
+          ],
+          "refresh_unresolved": [],
+          "created_by_user_id": "6f5ead14-5858-530d-9615-e6cd99d33100",
+          "created_at": "2026-10-18T06:05:56",
+          "artifact_capability": "unavailable"
+        }
+      }
+    },
+    {
+      "method": "getContext",
+      "path": "/research/investigations/context/get",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "revision_id": "0b4000e0-20d5-44ac-b26a-6f28706baa69"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "context": {
+          "id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "sequence": 1,
+          "predecessor_revision_id": null,
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {}
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {}
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {}
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {}
+              }
+            },
+            "version": 1
+          },
+          "attachments": [],
+          "pins": [],
+          "resolution": [],
+          "refresh_unresolved": [],
+          "created_by_user_id": "6f5ead14-5858-530d-9615-e6cd99d33100",
+          "created_at": "2026-10-18T06:05:55",
+          "artifact_capability": "unavailable"
+        }
+      }
+    },
+    {
+      "method": "getOperation",
+      "path": "/research/investigations/operations/get",
+      "payload": {
+        "operation_id": "87f57940-be46-47a6-8c1d-e56b67496e44"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "87f57940-be46-47a6-8c1d-e56b67496e44",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "context/change",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": "af918a6c-8cd9-4f39-8d39-43ab1b635214"
+        }
+      }
+    },
+    {
+      "method": "retryOperation",
+      "path": "/research/investigations/operations/retry",
+      "payload": {
+        "operation_id": "87f57940-be46-47a6-8c1d-e56b67496e44"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "87f57940-be46-47a6-8c1d-e56b67496e44",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "context/change",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": "af918a6c-8cd9-4f39-8d39-43ab1b635214"
+        },
+        "investigation": {
+          "id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "Renamed 調査",
+          "metadata_version": 10,
+          "status": "active",
+          "head_revision_id": "aa8589b7-5b93-494d-8c39-3b6282063a79",
+          "predecessor_investigation_id": null,
+          "predecessor_revision_id": null,
+          "legal_hold": false,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:56"
+        },
+        "context": {
+          "id": "af918a6c-8cd9-4f39-8d39-43ab1b635214",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "sequence": 2,
+          "predecessor_revision_id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "e1a362df9821ed41f5a44eb755b4efe7a2dbc1e57d56d638352a1b509d601892",
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {}
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {}
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {}
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {}
+              }
+            },
+            "version": 1
+          },
+          "attachments": [
+            {
+              "id": "synthetic:ctd:campaign-a",
+              "kind": "catalogue",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            }
+          ],
+          "pins": [],
+          "resolution": [
+            {
+              "reference": {
+                "kind": "catalogue",
+                "id": "synthetic:ctd:campaign-a",
+                "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+              },
+              "status": "available"
+            }
+          ],
+          "refresh_unresolved": [],
+          "created_by_user_id": "6f5ead14-5858-530d-9615-e6cd99d33100",
+          "created_at": "2026-10-18T06:05:56",
+          "artifact_capability": "unavailable"
+        }
+      }
+    },
+    {
+      "method": "retryOperation",
+      "path": "/research/investigations/operations/retry",
+      "payload": {
+        "operation_id": "da64bae3-168b-41e5-90c5-0c9a8e9d504b"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "da64bae3-168b-41e5-90c5-0c9a8e9d504b",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "rename",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": null
+        }
+      }
+    },
+    {
+      "method": "refresh",
+      "path": "/research/investigations/refresh",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "expected_revision_id": "aa8589b7-5b93-494d-8c39-3b6282063a79",
+        "target_snapshot_id": "f6b0a6c4b56d402054e071be7f9d37c4d32db2ff02cd024179d9b1a39a1ace03",
+        "name": "Explicit refresh branch",
+        "idempotency_key": "cdc30392-154b-4b7f-b9e3-47efbece70a8"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "3206f798-2522-44c7-b480-d3f0bb7ee7df",
+          "investigation_id": "c2639cfa-f349-47b8-a681-ba94a6da1823",
+          "kind": "refresh",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": "61526f08-0841-459b-bf5f-f16337e89351"
+        },
+        "investigation": {
+          "id": "c2639cfa-f349-47b8-a681-ba94a6da1823",
+          "name": "Explicit refresh branch",
+          "metadata_version": 2,
+          "status": "active",
+          "head_revision_id": "61526f08-0841-459b-bf5f-f16337e89351",
+          "predecessor_investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "predecessor_revision_id": "aa8589b7-5b93-494d-8c39-3b6282063a79",
+          "legal_hold": false,
+          "created_at": "2026-10-18T06:05:57",
+          "updated_at": "2026-10-18T06:05:57"
+        },
+        "context": {
+          "id": "61526f08-0841-459b-bf5f-f16337e89351",
+          "investigation_id": "c2639cfa-f349-47b8-a681-ba94a6da1823",
+          "sequence": 1,
+          "predecessor_revision_id": null,
+          "snapshot_id": "f6b0a6c4b56d402054e071be7f9d37c4d32db2ff02cd024179d9b1a39a1ace03",
+          "payload_sha256": "6b62e2769440bcaa8192bb9563648f2919e29433cddee6f92e9bc214b0837844",
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {}
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {}
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {}
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {}
+              }
+            },
+            "version": 1
+          },
+          "attachments": [
+            {
+              "id": "synthetic:ctd:campaign-a",
+              "kind": "catalogue",
+              "snapshot_id": "f6b0a6c4b56d402054e071be7f9d37c4d32db2ff02cd024179d9b1a39a1ace03"
+            }
+          ],
+          "pins": [
+            {
+              "id": "synthetic:ctd:campaign-a",
+              "kind": "catalogue",
+              "snapshot_id": "f6b0a6c4b56d402054e071be7f9d37c4d32db2ff02cd024179d9b1a39a1ace03"
+            }
+          ],
+          "resolution": [
+            {
+              "reference": {
+                "kind": "catalogue",
+                "id": "synthetic:ctd:campaign-a",
+                "snapshot_id": "f6b0a6c4b56d402054e071be7f9d37c4d32db2ff02cd024179d9b1a39a1ace03"
+              },
+              "status": "unavailable"
+            },
+            {
+              "reference": {
+                "kind": "catalogue",
+                "id": "synthetic:ctd:campaign-a",
+                "snapshot_id": "f6b0a6c4b56d402054e071be7f9d37c4d32db2ff02cd024179d9b1a39a1ace03"
+              },
+              "status": "unavailable"
+            }
+          ],
+          "refresh_unresolved": [
+            {
+              "reference": {
+                "id": "synthetic:ctd:campaign-a",
+                "kind": "catalogue",
+                "snapshot_id": "f6b0a6c4b56d402054e071be7f9d37c4d32db2ff02cd024179d9b1a39a1ace03"
+              },
+              "status": "unavailable"
+            },
+            {
+              "reference": {
+                "id": "synthetic:ctd:campaign-a",
+                "kind": "catalogue",
+                "snapshot_id": "f6b0a6c4b56d402054e071be7f9d37c4d32db2ff02cd024179d9b1a39a1ace03"
+              },
+              "status": "unavailable"
+            }
+          ],
+          "created_by_user_id": "6f5ead14-5858-530d-9615-e6cd99d33100",
+          "created_at": "2026-10-18T06:05:57",
+          "artifact_capability": "unavailable"
+        }
+      }
+    },
+    {
+      "method": "changeContext",
+      "path": "/research/investigations/context/change",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "expected_revision_id": "aa8589b7-5b93-494d-8c39-3b6282063a79",
+        "change": {
+          "op": "scope",
+          "scope": {
+            "version": 1,
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "bay": null,
+                  "station": null,
+                  "sample_id": null
+                }
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "bay": null,
+                  "station": null,
+                  "sample_id": null
+                }
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "lat_min": null,
+                  "lat_max": null,
+                  "lon_min": null,
+                  "lon_max": null,
+                  "dataset_id": null
+                }
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "lat_min": null,
+                  "lat_max": null,
+                  "lon_min": null,
+                  "lon_max": null,
+                  "sample_id": null,
+                  "provider": null,
+                  "provider_project_id": null,
+                  "provider_run_id": null,
+                  "assignment_method": null,
+                  "taxon": null,
+                  "sample_kind": null,
+                  "is_control": null
+                },
+                "analysis_id": null
+              }
+            }
+          }
+        },
+        "idempotency_key": "01dd708a-a912-403d-9dd9-87d71bae074f"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "29746043-3710-4b09-8a90-bdfe9eb724dc",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "context/change",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": "82ec347b-8038-42d3-9678-287ce130b9ca"
+        },
+        "investigation": {
+          "id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "Renamed 調査",
+          "metadata_version": 11,
+          "status": "active",
+          "head_revision_id": "82ec347b-8038-42d3-9678-287ce130b9ca",
+          "predecessor_investigation_id": null,
+          "predecessor_revision_id": null,
+          "legal_hold": false,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:57"
+        },
+        "context": {
+          "id": "82ec347b-8038-42d3-9678-287ce130b9ca",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "sequence": 4,
+          "predecessor_revision_id": "aa8589b7-5b93-494d-8c39-3b6282063a79",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "7246734c64d23f6e7834a1dc3a14afd0ff6cfa9dcf75bd218cf20c32003f3ee4",
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {}
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {}
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {}
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {}
+              }
+            },
+            "version": 1
+          },
+          "attachments": [
+            {
+              "id": "synthetic:ctd:campaign-a",
+              "kind": "catalogue",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            }
+          ],
+          "pins": [
+            {
+              "id": "synthetic:ctd:campaign-a",
+              "kind": "catalogue",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            }
+          ],
+          "resolution": [
+            {
+              "reference": {
+                "kind": "catalogue",
+                "id": "synthetic:ctd:campaign-a",
+                "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+              },
+              "status": "available"
+            },
+            {
+              "reference": {
+                "kind": "catalogue",
+                "id": "synthetic:ctd:campaign-a",
+                "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+              },
+              "status": "available"
+            }
+          ],
+          "refresh_unresolved": [],
+          "created_by_user_id": "6f5ead14-5858-530d-9615-e6cd99d33100",
+          "created_at": "2026-10-18T06:05:57",
+          "artifact_capability": "unavailable"
+        }
+      }
+    },
+    {
+      "method": "changeContext",
+      "path": "/research/investigations/context/change",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "expected_revision_id": "82ec347b-8038-42d3-9678-287ce130b9ca",
+        "change": {
+          "op": "unpin",
+          "reference": {
+            "kind": "catalogue",
+            "id": "synthetic:ctd:campaign-a",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+          }
+        },
+        "idempotency_key": "8b5e9816-38bb-4831-a5ae-5df3c36f8bdd"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "11a52e0b-6366-4898-8de6-c4cc50d8a3d7",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "context/change",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": "01486492-b4bb-4a6c-aad3-cff3f768fb2c"
+        },
+        "investigation": {
+          "id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "Renamed 調査",
+          "metadata_version": 12,
+          "status": "active",
+          "head_revision_id": "01486492-b4bb-4a6c-aad3-cff3f768fb2c",
+          "predecessor_investigation_id": null,
+          "predecessor_revision_id": null,
+          "legal_hold": false,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:58"
+        },
+        "context": {
+          "id": "01486492-b4bb-4a6c-aad3-cff3f768fb2c",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "sequence": 5,
+          "predecessor_revision_id": "82ec347b-8038-42d3-9678-287ce130b9ca",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "e1a362df9821ed41f5a44eb755b4efe7a2dbc1e57d56d638352a1b509d601892",
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {}
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {}
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {}
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {}
+              }
+            },
+            "version": 1
+          },
+          "attachments": [
+            {
+              "id": "synthetic:ctd:campaign-a",
+              "kind": "catalogue",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            }
+          ],
+          "pins": [],
+          "resolution": [
+            {
+              "reference": {
+                "kind": "catalogue",
+                "id": "synthetic:ctd:campaign-a",
+                "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+              },
+              "status": "available"
+            }
+          ],
+          "refresh_unresolved": [],
+          "created_by_user_id": "6f5ead14-5858-530d-9615-e6cd99d33100",
+          "created_at": "2026-10-18T06:05:58",
+          "artifact_capability": "unavailable"
+        }
+      }
+    },
+    {
+      "method": "changeContext",
+      "path": "/research/investigations/context/change",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "expected_revision_id": "01486492-b4bb-4a6c-aad3-cff3f768fb2c",
+        "change": {
+          "op": "detach",
+          "reference": {
+            "kind": "catalogue",
+            "id": "synthetic:ctd:campaign-a",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+          }
+        },
+        "idempotency_key": "671dbb7d-c1cf-4ba8-b21e-a928b0a3acf6"
+      },
+      "status": 200,
+      "expected": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "cdce80b7-e9e5-48b1-8766-c3b1664284b8",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "kind": "context/change",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": "9ad0b700-798f-45be-9b47-3ffe53a7f34b"
+        },
+        "investigation": {
+          "id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "name": "Renamed 調査",
+          "metadata_version": 13,
+          "status": "active",
+          "head_revision_id": "9ad0b700-798f-45be-9b47-3ffe53a7f34b",
+          "predecessor_investigation_id": null,
+          "predecessor_revision_id": null,
+          "legal_hold": false,
+          "created_at": "2026-10-18T06:05:55",
+          "updated_at": "2026-10-18T06:05:58"
+        },
+        "context": {
+          "id": "9ad0b700-798f-45be-9b47-3ffe53a7f34b",
+          "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+          "sequence": 6,
+          "predecessor_revision_id": "01486492-b4bb-4a6c-aad3-cff3f768fb2c",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {}
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {}
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {}
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {}
+              }
+            },
+            "version": 1
+          },
+          "attachments": [],
+          "pins": [],
+          "resolution": [],
+          "refresh_unresolved": [],
+          "created_by_user_id": "6f5ead14-5858-530d-9615-e6cd99d33100",
+          "created_at": "2026-10-18T06:05:58",
+          "artifact_capability": "unavailable"
+        }
+      }
+    },
+    {
+      "method": "changeContext",
+      "path": "/research/investigations/context/change",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b",
+        "expected_revision_id": "0b4000e0-20d5-44ac-b26a-6f28706baa69",
+        "change": {
+          "op": "pin",
+          "reference": {
+            "kind": "catalogue",
+            "id": "synthetic:ctd:campaign-a",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+          }
+        },
+        "idempotency_key": "1ff6d542-49f3-4de8-a034-c9ab6ba90103"
+      },
+      "status": 409,
+      "expected": {
+        "error": {
+          "code": "conflict",
+          "message": "Investigation version has changed"
+        }
+      }
+    },
+    {
+      "method": "get",
+      "path": "/research/investigations/get",
+      "payload": {
+        "investigation_id": "76c77e7b-f003-4248-8f7f-bb89230f216b"
+      },
+      "status": 404,
+      "expected": {
+        "error": {
+          "code": "not_found",
+          "message": "Investigation content is unavailable"
+        }
+      }
+    },
+    {
+      "method": "list",
+      "path": "/research/investigations/list",
+      "payload": {},
+      "status": 401,
+      "expected": {
+        "error": {
+          "code": "authentication_required",
+          "message": "Authentication is required"
+        }
+      }
+    }
+  ]
+}

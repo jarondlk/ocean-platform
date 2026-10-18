@@ -1,6 +1,6 @@
 # C18 — Chat and Workspace interface
 
-**Status:** Not started. **Prerequisites:** P00, C15, C16, C17.
+**Status:** Ready for review; all3 local checkpoints pass; source checkpoint and exact-source hosted delivery pending. **Prerequisites:** P00, C15, C16, C17.
 
 ## Revised delivery boundary
 
@@ -59,3 +59,14 @@ Legacy `/chat` remains on the existing site. V1 rollback changes only v1 navigat
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c18). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+## Local acceptance — 2026-10-18 JST
+
+Actual C17 metadata/context UI and C16 selection pass browser acceptance; all14
+client methods are exercised through28 actual ASGI requests. Typed development
+activity covers all6 controls while production execution stays unavailable.
+673 frontend tests, both production checks and separate development strict
+TypeScript pass. Full backend4214/187 gated skips/85.08% covers final backend
+source. Independent reviews/fixes and browser qualifications are preserved.
+[Contract](../C18_CHAT_WORKSPACE_CONTRACT.md), [handoff](../handoffs/C18.md),
+[local verification](../evidence/C18/verification.json). Hosted CI is pending.
