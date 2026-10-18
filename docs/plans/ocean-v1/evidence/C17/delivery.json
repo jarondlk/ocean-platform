@@ -1,0 +1,566 @@
+{
+  "component": "C17",
+  "state": "Complete local acceptance and exact-source hosted delivery",
+  "date": "2026-10-18 JST",
+  "branch": "overhaul",
+  "source_commit": "39bb811d1053c9dfb4b700f8524162800092aa44",
+  "source_sha256": "1a1f3d3ff413c8ba71da1e9a9dbc67823bde23801e5ad1385ae9fe57676d570f",
+  "original_local_receipt_sha256": "a59bba711e76ad62dd952135e2db374235d3fa7cfdb01cd2cd2d3a76983da3d7",
+  "original_local_evidence_files_unchanged": 44,
+  "hosted_ci": {
+    "source_commit": "39bb811d1053c9dfb4b700f8524162800092aa44",
+    "run": {
+      "id": 39101652175,
+      "html_url": "https://github.com/jarondlk/ocean-platform/actions/runs/39101652175",
+      "status": "completed",
+      "conclusion": "success",
+      "event": "push",
+      "head_sha": "39bb811d1053c9dfb4b700f8524162800092aa44",
+      "run_attempt": 1
+    },
+    "jobs": [
+      {
+        "id": 117598976707,
+        "name": "PostgreSQL migration and metadata integration",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-18T05:45:34Z",
+            "completed_at": "2026-10-18T05:45:35Z"
+          },
+          {
+            "name": "Initialize containers",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-18T05:45:35Z",
+            "completed_at": "2026-10-18T05:45:55Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-18T05:45:55Z",
+            "completed_at": "2026-10-18T05:45:58Z"
+          },
+          {
+            "name": "Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-18T05:45:58Z",
+            "completed_at": "2026-10-18T05:45:59Z"
+          },
+          {
+            "name": "Install test dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-18T05:45:59Z",
+            "completed_at": "2026-10-18T05:46:23Z"
+          },
+          {
+            "name": "Apply application migrations",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-18T05:46:23Z",
+            "completed_at": "2026-10-18T05:46:24Z"
+          },
+          {
+            "name": "Verify invite acceptance and metadata persistence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-18T05:46:24Z",
+            "completed_at": "2026-10-18T05:47:15Z"
+          },
+          {
+            "name": "Verify transactional corpus upsert is idempotent",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-18T05:47:15Z",
+            "completed_at": "2026-10-18T05:47:44Z"
+          },
+          {
+            "name": "Create isolated C03 retention test database",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-18T05:47:44Z",
+            "completed_at": "2026-10-18T05:47:44Z"
+          },
+          {
+            "name": "Identify the job-owned PostgreSQL container address",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-18T05:47:44Z",
+            "completed_at": "2026-10-18T05:47:44Z"
+          },
+          {
+            "name": "Verify C03 retention transaction ordering in isolated schemas",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-18T05:47:44Z",
+            "completed_at": "2026-10-18T05:47:49Z"
+          },
+          {
+            "name": "Create isolated C05 retrieval test database",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-10-18T05:47:49Z",
+            "completed_at": "2026-10-18T05:47:49Z"
+          },
+          {
+            "name": "Verify C05 vector identity and metagenome replacement history",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-18T05:47:49Z",
+            "completed_at": "2026-10-18T05:47:53Z"
+          },
+          {
+            "name": "Create isolated C09 snapshot test database",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-18T05:47:53Z",
+            "completed_at": "2026-10-18T05:47:54Z"
+          },
+          {
+            "name": "Verify C09 snapshot capture and publication boundaries",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-18T05:47:54Z",
+            "completed_at": "2026-10-18T05:47:57Z"
+          },
+          {
+            "name": "Create isolated C17 investigation test database",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-18T05:47:57Z",
+            "completed_at": "2026-10-18T05:47:58Z"
+          },
+          {
+            "name": "Verify C17 investigation migrations and retained context history",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-18T05:47:58Z",
+            "completed_at": "2026-10-18T05:48:33Z"
+          },
+          {
+            "name": "Verify database backup and isolated restore",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18,
+            "started_at": "2026-10-18T05:48:33Z",
+            "completed_at": "2026-10-18T05:48:36Z"
+          },
+          {
+            "name": "Post Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 34,
+            "started_at": "2026-10-18T05:48:36Z",
+            "completed_at": "2026-10-18T05:48:36Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 35,
+            "started_at": "2026-10-18T05:48:36Z",
+            "completed_at": "2026-10-18T05:48:36Z"
+          },
+          {
+            "name": "Stop containers",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 36,
+            "started_at": "2026-10-18T05:48:36Z",
+            "completed_at": "2026-10-18T05:48:36Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 37,
+            "started_at": "2026-10-18T05:48:36Z",
+            "completed_at": "2026-10-18T05:48:36Z"
+          }
+        ]
+      },
+      {
+        "id": 117598976772,
+        "name": "Frontend typecheck and build",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-18T05:45:35Z",
+            "completed_at": "2026-10-18T05:45:35Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-18T05:45:35Z",
+            "completed_at": "2026-10-18T05:45:38Z"
+          },
+          {
+            "name": "Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-18T05:45:38Z",
+            "completed_at": "2026-10-18T05:45:40Z"
+          },
+          {
+            "name": "Install frontend dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-18T05:45:40Z",
+            "completed_at": "2026-10-18T05:45:49Z"
+          },
+          {
+            "name": "Audit production frontend dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-18T05:45:49Z",
+            "completed_at": "2026-10-18T05:45:49Z"
+          },
+          {
+            "name": "Test frontend",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-18T05:45:49Z",
+            "completed_at": "2026-10-18T05:45:52Z"
+          },
+          {
+            "name": "Typecheck frontend",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-18T05:45:52Z",
+            "completed_at": "2026-10-18T05:45:59Z"
+          },
+          {
+            "name": "Build frontend",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-18T05:45:59Z",
+            "completed_at": "2026-10-18T05:46:41Z"
+          },
+          {
+            "name": "Post Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-18T05:46:41Z",
+            "completed_at": "2026-10-18T05:46:41Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-18T05:46:41Z",
+            "completed_at": "2026-10-18T05:46:41Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-18T05:46:41Z",
+            "completed_at": "2026-10-18T05:46:41Z"
+          }
+        ]
+      },
+      {
+        "id": 117598976794,
+        "name": "Backend tests and security boundary",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-18T05:45:35Z",
+            "completed_at": "2026-10-18T05:45:35Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-18T05:45:35Z",
+            "completed_at": "2026-10-18T05:45:37Z"
+          },
+          {
+            "name": "Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-18T05:45:37Z",
+            "completed_at": "2026-10-18T05:45:40Z"
+          },
+          {
+            "name": "Install dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-18T05:45:40Z",
+            "completed_at": "2026-10-18T05:46:10Z"
+          },
+          {
+            "name": "Lint active Python code",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-18T05:46:10Z",
+            "completed_at": "2026-10-18T05:46:10Z"
+          },
+          {
+            "name": "Check generated chat scope contract",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-18T05:46:10Z",
+            "completed_at": "2026-10-18T05:46:11Z"
+          },
+          {
+            "name": "Check frozen catalogue contracts and examples",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-18T05:46:11Z",
+            "completed_at": "2026-10-18T05:46:16Z"
+          },
+          {
+            "name": "Run tests with coverage",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-18T05:46:16Z",
+            "completed_at": "2026-10-18T05:59:32Z"
+          },
+          {
+            "name": "Post Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-18T05:59:32Z",
+            "completed_at": "2026-10-18T05:59:32Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-18T05:59:32Z",
+            "completed_at": "2026-10-18T05:59:32Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-18T05:59:32Z",
+            "completed_at": "2026-10-18T05:59:32Z"
+          }
+        ]
+      },
+      {
+        "id": 117598976985,
+        "name": "OCEAN v1 prototype tests and build",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-18T05:45:35Z",
+            "completed_at": "2026-10-18T05:45:36Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-18T05:45:36Z",
+            "completed_at": "2026-10-18T05:45:39Z"
+          },
+          {
+            "name": "Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-18T05:45:39Z",
+            "completed_at": "2026-10-18T05:45:42Z"
+          },
+          {
+            "name": "Install prototype dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-18T05:45:42Z",
+            "completed_at": "2026-10-18T05:45:47Z"
+          },
+          {
+            "name": "Audit production prototype dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-18T05:45:47Z",
+            "completed_at": "2026-10-18T05:45:47Z"
+          },
+          {
+            "name": "Test prototype",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-18T05:45:47Z",
+            "completed_at": "2026-10-18T05:45:50Z"
+          },
+          {
+            "name": "Typecheck prototype",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-18T05:45:50Z",
+            "completed_at": "2026-10-18T05:45:55Z"
+          },
+          {
+            "name": "Build prototype",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-18T05:45:55Z",
+            "completed_at": "2026-10-18T05:46:12Z"
+          },
+          {
+            "name": "Post Set up Node.js 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-18T05:46:12Z",
+            "completed_at": "2026-10-18T05:46:13Z"
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-18T05:46:13Z",
+            "completed_at": "2026-10-18T05:46:13Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-18T05:46:13Z",
+            "completed_at": "2026-10-18T05:46:13Z"
+          }
+        ]
+      },
+      {
+        "id": 117598977506,
+        "name": "Dependency review",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      }
+    ]
+  },
+  "hosted_verification": {
+    "backend_passed": 4178,
+    "backend_postgres_gated_skips": 187,
+    "backend_coverage_percent": 85.76,
+    "backend_warnings": 2597,
+    "actual_postgresql_passed": 187,
+    "actual_postgresql_groups": [
+      82,
+      12,
+      12,
+      21,
+      60
+    ],
+    "C17_actual_postgresql": 60,
+    "v1_frontend_passed": 510,
+    "legacy_frontend_passed": 132,
+    "both_frontend_typechecks": "pass",
+    "both_frontend_production_builds": "pass",
+    "both_production_dependency_audits": "zero vulnerabilities",
+    "migrations_idempotence_backup_restore": "pass",
+    "nine_unrelated_local_benchmark_cases_excluded_from_commit": true
+  },
+  "source_binding": {
+    "all19_current_files_equal_commit_and_accepted_receipt": true,
+    "original_postgresql_API_service_supersessions_now_covered_by_final_hosted_60": true,
+    "original_local_receipt_immutable": true
+  },
+  "preservation": {
+    "unrelated_files": {
+      "count": 30,
+      "all_match": true
+    },
+    "scientific_artifacts": {
+      "count": 7,
+      "all_match": true
+    },
+    "serving_files": {
+      "count": 2,
+      "all_match": true
+    },
+    "legacy_frontend_files": {
+      "count": 106,
+      "all_match": true
+    },
+    "prior_evidence_files": {
+      "count": 683,
+      "all_match": true
+    }
+  },
+  "hosted_evidence_sha256": {
+    "hosted-ci.json": "5a3db63c24f975babef28549e8c44f387c7543ef9604238c37fea134fe1ec6d5",
+    "hosted-backend.txt": "f4ebbd4fe3060454c8e2bf0d58c10351529cfc10249433ed51ff8db7eddcd353",
+    "hosted-postgres.txt": "31f1be0040e34bc366f1cf871b4d024c303481780d51145d1b33e7bdf54a5672",
+    "hosted-frontend-v1.txt": "4fd8bf78ab313de917d75164138b43921c46566ecea9ea6db6108fb7f04b018f",
+    "hosted-frontend-legacy.txt": "7eacbbdb7e5e970036aef23e45ae014088d5b4ff8507e421c89c22fe986cde9e"
+  },
+  "log_representation": "Decoded job logs; trailing line whitespace and excess final blank lines normalized once when creating these new files. Original local receipts/logs unchanged.",
+  "remaining_gates": [
+    "Real OIDC and independent scientific/data review are unclaimed.",
+    "C18 UI integration, C20 durable execution and C21 answer/history integrations remain future components.",
+    "Production migrations/retention policy, capacity, cloud target configuration/provisioning/deployment require separate gates/authorization.",
+    "No legacy history import, real acquisition/transfer, main/legacy deployment or mutation occurred."
+  ]
+}

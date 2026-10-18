@@ -1,6 +1,6 @@
 # C17 — Investigation persistence
 
-**Status:** Complete for local acceptance; source checkpoint and exact-source hosted delivery pending. **Prerequisites:** C03, C04, C08, C09.
+**Status:** Complete; source39bb811 committed/pushed and exact-source hosted delivery passes. **Prerequisites:** C03, C04, C08, C09.
 
 ## Revised delivery boundary
 
@@ -57,8 +57,10 @@ revision foreign keys; logical retention respects holds without releasing bytes.
 Final backend4187 passed/187 gated PostgreSQL skips/85.08% coverage; source
 unchanged during the run. Actual owned disposable PostgreSQL60 cases passed,
 zero schemas remained and the server stopped. Two later API/service fixes are
-explicit source supersessions; final exact-source hosted CI must run all60 again.
+explicit source supersessions; final exact-source hosted CI now passes all60.
 Affected API155, required regression/guard177 and bootstrap38 pass. Previous
 failed fixture/sandbox runs remain preserved. No frontend, scientific or legacy
 source changed. Conversation execution/history remains C20/C21; Research UI is
 C18. Production migrations, real identity, release and cloud gates remain separate.
+
+Source39bb811d1053c9dfb4b700f8524162800092aa44 passes [hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39101652175):4178 backend/85.76%,187 actual PostgreSQL,510 v1/132 legacy frontend tests and both build/typecheck/audit gates. [Separate delivery receipt](../evidence/C17/delivery.json) preserves the original local receipt.

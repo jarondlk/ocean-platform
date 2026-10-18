@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C17 are Complete locally; C17 source checkpoint and hosted delivery are pending; C18–C27 are not started.**
+**P00 and C01–C17 are Complete locally; C17 hosted delivery is complete; C18–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -228,4 +228,4 @@ skips/85.08%,60 actual disposable PostgreSQL cases,155 affected API and177 requi
 regression/guard cases pass. All19 final source hashes remain stable; original
 receipts and protected unrelated/scientific/legacy files are preserved. See
 [handoff](handoffs/C17.md) and [contract](C17_INVESTIGATION_CONTRACT.md).
-Checkpoint/push and exact-source hosted CI precede C18 readiness selection.
+Source39bb811 is committed/pushed with [passing hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39101652175):4178 backend/85.76%,187 actual PostgreSQL,510 v1/132 legacy frontend tests and both builds/typechecks/audits. [Delivery receipt](evidence/C17/delivery.json). C18 readiness selection follows the delivery checkpoint.
