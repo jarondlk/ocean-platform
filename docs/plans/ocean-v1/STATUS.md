@@ -164,3 +164,8 @@ actual data transfer, legacy store access, cloud/provider or deployment work.
 See [handoff](handoffs/C09.md).
 
 C18 local interface acceptance and exact-source hosted delivery are complete. C18 was automatically selected after [98-entry prerequisite readiness](evidence/c18-readiness-2026-10-18/verification.json) and C17 hosted delivery. [Current C18 handoff](handoffs/C18.md).
+
+C19 hosted delivery remains pending: original sourcea38b181 CI reached98percent
+without a reported failure before its20-minute job timeout. A verified CI-only
+amendment increases that job to30minutes with all13 application/test sources
+unchanged; new exact-source hosted success is required. [Amendment](evidence/C19/ci-budget-amendment/verification.json).

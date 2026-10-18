@@ -1,0 +1,64 @@
+{
+  "component": "C19",
+  "state": "CI budget amendment verified; new exact-source hosted run pending",
+  "original_source_commit": "a38b181cb7ac6472095a2b279e3c0aacbabb8e5c",
+  "original_local_receipt_sha256": "7f0236c1f73ff670f17863c94c87f3bacf31165619a4b081052674f34dc0b1ee",
+  "original_accepted_source_receipt_sha256": "44fed33e1bf9f21b15d0494210db6bb7bc7cac2bc3cb224aeb0215b736335f8d",
+  "original13_application_test_sources_unchanged": true,
+  "local_tested_source_paths": 87,
+  "unchanged_tested_paths": 86,
+  "workflow_change": {
+    "path": ".github/workflows/tests.yml",
+    "before_sha256": "1cdd60958fc656ca773bd0b2ea1485f16ba95acdec3c355be3700580940bcd5f",
+    "after_sha256": "50ea87310b653096cbce7bcc9ef01a55a88b74872b3baa56ebf8ea9ad6d153e9",
+    "before_job_minutes": 20,
+    "after_job_minutes": 30,
+    "reason": "The4500-plus-case source-bound backend suite reached98percent with no reported test failure before the20-minute workflow timeout. Allow bounded completion while retaining every command and gate."
+  },
+  "files": {
+    "config.py": "060275abef07d5598d424f09be499a629f5b1b0fcf70e1ed922b59f0543406aa",
+    "orchestration/research_controller.py": "aa4c37acb255fc24021175fe0f30c9c9b64f262c5ab9c9f0ca8f881634afa6fa",
+    "orchestration/research_controller_budget.py": "3d138129265b83504e6a92ef0b662c0b98ea4af2d92f9f8a08a5e42cefa64310",
+    "orchestration/research_controller_observations.py": "e3aeff8f74aa25997ebd1e000ddba490326bde6e908509fc212627379b71b81d",
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "schema/research_controller.py": "af4e1091b11c7affa6d0f1577582d6b4261d9cf9ace9b745312d756af117d634",
+    "tests/test_research_controller.py": "d1da694c39d66309c976616e4d523b8c850fe6ed9b87591a163b6f14e312e3b7",
+    "tests/test_research_controller_budget.py": "d81864c3a56d2a6671ddc91dcb8f23e71293c263360c76267f2a96e7029f180e",
+    "tests/test_research_controller_contracts.py": "c0c481cb5d4e3e19905697f9e2457729d08a81dfe182b54297adb8d144262a45",
+    "tests/test_research_controller_observations.py": "d6922d7f20e86bc9e347f097f8fd547cfe45e5cf3aba347d9f6a3775b3729e65",
+    "tests/test_research_controller_publication.py": "c1cea7b713c1f7e5a8c00f14e1df80eec7f4ea06ca842233549df676752edf81",
+    "tests/test_research_controller_scale.py": "8a72f333bf6d44df893b6b238acf71697965e970d33f376c1cf412fca00d61f4",
+    "tests/test_research_controller_scope.py": "2ae8eac40a8687bc1c584aeb58f9219ebf27981b469eb302edd310b368d45cd9",
+    ".github/workflows/tests.yml": "50ea87310b653096cbce7bcc9ef01a55a88b74872b3baa56ebf8ea9ad6d153e9"
+  },
+  "source_sha256": "6dd22f34563b4349efba7c03ae70ec79393c7d8840086c8e6a9b13bdd3d4002b",
+  "cancelled_run": {
+    "id": 39152862279,
+    "html_url": "https://github.com/jarondlk/ocean-platform/actions/runs/39152862279",
+    "status": "completed",
+    "conclusion": "cancelled",
+    "event": "push",
+    "head_sha": "a38b181cb7ac6472095a2b279e3c0aacbabb8e5c",
+    "run_attempt": 1
+  },
+  "cancelled_evidence_sha256": {
+    "docs/plans/ocean-v1/evidence/C19/hosted-backend-cancelled-log-metadata.json": "fadd39e358f8a3ffc1a3be5183f2eac0536e0d083f76dbd721c676bc7e61ed0e",
+    "docs/plans/ocean-v1/evidence/C19/hosted-backend-cancelled.txt": "e2596448ae38b8509d46ce286ee418a98860e447c320960e09026fc9b259b3d0",
+    "docs/plans/ocean-v1/evidence/C19/hosted-ci-cancelled.json": "607b603453ac8f449f7ea2856f7b89139d8bfd74af93b7b29f4296c024c80f36"
+  },
+  "preservation": {
+    "original_local_receipt_and_evidence": "unchanged",
+    "prior_evidence_files": 823,
+    "protected_counts": {
+      "unrelated_files": 30,
+      "scientific_artifacts": 7,
+      "serving_files": 2,
+      "legacy_frontend_files": 106
+    }
+  },
+  "qualifications": [
+    "Only backend CI job wall-time allowance changes; controller180seconds/12actions/one-repair and test/coverage commands are unchanged.",
+    "No local application suite repeated for this workflow-only change; original4570/187skips/85.43percent acceptance remains immutable.",
+    "The cancelled hosted run is not a complete acceptance receipt. New exact-source hosted success is required before C20 selection."
+  ]
+}

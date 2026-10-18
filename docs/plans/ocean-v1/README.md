@@ -244,3 +244,8 @@ Source596d871 is committed/pushed; [exact-source hosted CI](https://github.com/j
 C19 final readiness passes59 entries/52 unique paths after C18 delivery; local implementation is selected automatically. [Handoff](handoffs/C19.md).
 
 C19 local acceptance passes: 4570 backend/187 gated skips/85.43%;356 new C19 cases and164 required compatibility cases; all9 generated checks/Ruff and independent source review. Inventory-first C17/C14 exploration, binding pins, full-count/later-page discovery, deterministic completion and cooperative stopping are implemented. C18 frontend23 sources remain unchanged. Source checkpoint and exact-source hosted delivery are pending. [Handoff](handoffs/C19.md), [contract](C19_AGENT_CONTROLLER_CONTRACT.md), [receipt](evidence/C19/verification.json).
+
+C19 hosted CI reached98percent before its20-minute job timeout. The CI-only
+[amendment](evidence/C19/ci-budget-amendment/verification.json) permits30minutes;
+all application/test sources and original receipts remain unchanged. Delivery is
+pending a complete new exact-source run; C20 remains unselected.
