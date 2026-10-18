@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C19 are Complete locally; C18 hosted delivery is complete and C19 hosted delivery is pending; C20–C27 are not started.**
+**P00 and C01–C19 are Complete locally with C19 hosted delivery complete; C20–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -243,9 +243,11 @@ Source596d871 is committed/pushed; [exact-source hosted CI](https://github.com/j
 
 C19 final readiness passes59 entries/52 unique paths after C18 delivery; local implementation is selected automatically. [Handoff](handoffs/C19.md).
 
-C19 local acceptance passes: 4570 backend/187 gated skips/85.43%;356 new C19 cases and164 required compatibility cases; all9 generated checks/Ruff and independent source review. Inventory-first C17/C14 exploration, binding pins, full-count/later-page discovery, deterministic completion and cooperative stopping are implemented. C18 frontend23 sources remain unchanged. Source checkpoint and exact-source hosted delivery are pending. [Handoff](handoffs/C19.md), [contract](C19_AGENT_CONTROLLER_CONTRACT.md), [receipt](evidence/C19/verification.json).
+C19 local acceptance passes: 4570 backend/187 gated skips/85.43%;356 new C19 cases and164 required compatibility cases; all9 generated checks/Ruff and independent source review. Inventory-first C17/C14 exploration, binding pins, full-count/later-page discovery, deterministic completion and cooperative stopping are implemented. C18 frontend23 sources remain unchanged. Exact-source hosted delivery is complete. [Handoff](handoffs/C19.md), [contract](C19_AGENT_CONTROLLER_CONTRACT.md), [receipt](evidence/C19/verification.json).
 
 C19 hosted CI reached98percent before its20-minute job timeout. The CI-only
 [amendment](evidence/C19/ci-budget-amendment/verification.json) permits30minutes;
-all application/test sources and original receipts remain unchanged. Delivery is
-pending a complete new exact-source run; C20 remains unselected.
+all application/test sources and original receipts remain unchanged. This historical
+attempt is superseded by the complete exact-source delivery below.
+
+Source4618188 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39154765984) passes:4561 backend/187 gated skips/86.08%,187 actual PostgreSQL,673 v1/132 legacy frontend, both builds/typechecks/audits, generated checks, migration/idempotence and isolated backup/restore. [Delivery receipt](evidence/C19/delivery.json). C20 readiness follows delivery.

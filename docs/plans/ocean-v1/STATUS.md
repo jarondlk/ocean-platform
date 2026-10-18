@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-10-19 JST. **P00 and C01–C19 are Complete locally; C18 hosted delivery is complete and C19 hosted delivery is pending.**
+Updated: 2026-10-19 JST. **P00 and C01–C19 are Complete locally; C19 hosted delivery is complete.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -8,14 +8,14 @@ C02 was explicitly selected on 2026-10-14 JST and passed its software/synthetic
 checks. C03 passed its local transaction-ordering and actual disposable PostgreSQL
 acceptance. C04 now passes concurrent responsiveness, worker-lifetime, security
 and cancellation acceptance. C05 passes embedding isolation, metagenome fidelity
-and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11 passes frozen SST product/coverage acceptance; C12 passes frozen canonical eDNA adapter acceptance; C13 passes scientific catalogue acceptance; C14 passes authenticated catalogue service acceptance; C15 passes local application-shell acceptance; C16 passes local catalogue-browser acceptance; C17 passes local investigation-persistence acceptance; C18 passes local interface acceptance and hosted delivery; C19 passes local controller acceptance; C20–C27 remain Not started.
+and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11 passes frozen SST product/coverage acceptance; C12 passes frozen canonical eDNA adapter acceptance; C13 passes scientific catalogue acceptance; C14 passes authenticated catalogue service acceptance; C15 passes local application-shell acceptance; C16 passes local catalogue-browser acceptance; C17 passes local investigation-persistence acceptance; C18 passes local interface acceptance and hosted delivery; C19 passes local controller acceptance and hosted delivery; C20–C27 remain Not started.
 P00 and C01–C13 local work is authorized; the user also authorizes subsequent CXX local implementation after each readiness audit passes.
 See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md), [C08](handoffs/C08.md), [C09](handoffs/C09.md) and [C10](handoffs/C10.md) handoffs for current evidence.
 
-Latest local implementation: **C19 — Agent exploration controller**. C19 local acceptance passes: 4570 backend/187 gated skips/85.43%;356 new C19 cases and164 required compatibility cases; all9 generated checks/Ruff and independent source review. Inventory-first C17/C14 exploration, binding pins, full-count/later-page discovery, deterministic completion and cooperative stopping are implemented. C18 frontend23 sources remain unchanged. Source checkpoint and exact-source hosted delivery are pending. [Handoff](handoffs/C19.md), [contract](C19_AGENT_CONTROLLER_CONTRACT.md), [receipt](evidence/C19/verification.json).
+Latest local implementation: **C19 — Agent exploration controller**. C19 local acceptance passes: 4570 backend/187 gated skips/85.43%;356 new C19 cases and164 required compatibility cases; all9 generated checks/Ruff and independent source review. Inventory-first C17/C14 exploration, binding pins, full-count/later-page discovery, deterministic completion and cooperative stopping are implemented. C18 frontend23 sources remain unchanged. Exact-source hosted delivery is complete. [Handoff](handoffs/C19.md), [contract](C19_AGENT_CONTROLLER_CONTRACT.md), [receipt](evidence/C19/verification.json).
 
-Latest delivered implementation: **C18 — Chat and Workspace interface**. Source596d871 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39124675912) passes:4205 backend/187 gated skips/85.76%,187 actual PostgreSQL,673 v1/132 legacy frontend, both builds/typechecks/audits, generated checks, migration/idempotence and isolated backup/restore. [Handoff](handoffs/C18.md), [contract](C18_CHAT_WORKSPACE_CONTRACT.md), [delivery receipt](evidence/C18/delivery.json). C19 readiness follows this delivery.
+Latest delivered implementation: **C19 — Agent exploration controller**. Source4618188 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39154765984) passes:4561 backend/187 gated skips/86.08%,187 actual PostgreSQL,673 v1/132 legacy frontend, both builds/typechecks/audits, generated checks, migration/idempotence and isolated backup/restore. [Handoff](handoffs/C19.md), [contract](C19_AGENT_CONTROLLER_CONTRACT.md), [delivery receipt](evidence/C19/delivery.json). C20 readiness follows delivery.
 
 Previous delivered implementation: **C16 — Complete catalogue browser**. **3,895 backend/127 gated skips/84.87% coverage;510 v1 tests, typecheck/build, nine generated checks;134 actual HTTP/tool parity cases; all51 canonical objects through parents;100000-object client/HTTP reachability and manual browser keyboard/accessibility-tree checks pass.** Source `4981642` is committed/pushed with [passing exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39080160597):3886 backend/85.57%,127 actual PostgreSQL,510 v1/132 legacy tests and both typechecks/builds/audits. [Delivery receipt](evidence/C16/delivery.json). [Handoff](handoffs/C16.md), [contract](C16_CATALOGUE_BROWSER_CONTRACT.md), [browser observations](evidence/C16/browser-qa.md). Spoken screen-reader/independent user validation and production capacity are not claimed.
 
@@ -70,7 +70,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C16 — Complete catalogue browser](components/C16-catalogue-browser.md) | Complete | Explicit discovery and service tree/list/inspector; protected-view invalidation | 3,895 backend/127 gated skips/84.87%;510 v1;134 actual wire parity;100000 reachability; browser gates pass | [C16](handoffs/C16.md) |
 | [C17 — Investigation persistence](components/C17-investigation-persistence.md) | Complete | All3 local checkpoints; source39bb811 hosted delivery complete | 4187 backend/187 gated skips/85.08%;60 actual PostgreSQL;155 affected API; protected files and683 older evidence unchanged | [C17](handoffs/C17.md) |
 | [C18 — Chat and Workspace interface](components/C18-chat-workspace.md) | Complete | All3 local checkpoints and source596d871 hosted delivery pass | 4214 backend/187 skips/85.08%;673 frontend; strict builds/typechecks; actual C17/C16 browser and account/refresh checks | [C18](handoffs/C18.md) |
-| [C19 — Agent exploration controller](components/C19-agent-controller.md) | Complete | All3 local checkpoints; source checkpoint/hosted delivery pending | 4570 backend/187 gated skips/85.43%;356 new cases/164 compatibility;9 generated checks; actual synthetic C14/C17 and100000 backend | [C19](handoffs/C19.md) |
+| [C19 — Agent exploration controller](components/C19-agent-controller.md) | Complete | All3 local checkpoints and source4618188 hosted delivery pass | 4570 backend/187 gated skips/85.43%;356 new cases/164 compatibility;9 generated checks; actual synthetic C14/C17 and100000 backend | [C19](handoffs/C19.md) |
 | [C20 — Durable research execution](components/C20-durable-execution.md) | Not started | None | Not run | Not created |
 | [C21 — Evidence and answer synthesis](components/C21-evidence-synthesis.md) | Not started | None | Not run | Not created |
 | [C22 — Experiment proposals and frozen exports](components/C22-experiment-proposals.md) | Not started | None | Not run | Not created |
@@ -165,7 +165,7 @@ See [handoff](handoffs/C09.md).
 
 C18 local interface acceptance and exact-source hosted delivery are complete. C18 was automatically selected after [98-entry prerequisite readiness](evidence/c18-readiness-2026-10-18/verification.json) and C17 hosted delivery. [Current C18 handoff](handoffs/C18.md).
 
-C19 hosted delivery remains pending: original sourcea38b181 CI reached98percent
+Historical C19 attempt before CI budget amendment: sourcea38b181 CI reached98percent
 without a reported failure before its20-minute job timeout. A verified CI-only
 amendment increases that job to30minutes with all13 application/test sources
-unchanged; new exact-source hosted success is required. [Amendment](evidence/C19/ci-budget-amendment/verification.json).
+unchanged; the subsequent exact-source hosted run passes. [Amendment](evidence/C19/ci-budget-amendment/verification.json).

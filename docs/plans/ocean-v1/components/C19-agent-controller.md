@@ -1,6 +1,6 @@
 # C19 — Agent exploration controller
 
-**Status:** Complete for all3 local checkpoints; source checkpoint and exact-source hosted delivery pending. **Prerequisites:** C01, C06, C14, C17.
+**Status:** Complete; all3 local checkpoints and exact-source hosted delivery pass. **Prerequisites:** C01, C06, C14, C17.
 
 ## Revised delivery boundary
 
@@ -48,4 +48,6 @@ plan, UX brief and listed prerequisite handoffs as well as this specification.
 
 ## Local acceptance — 2026-10-19 JST
 
-C19 local acceptance passes: 4570 backend/187 gated skips/85.43%;356 new C19 cases and164 required compatibility cases; all9 generated checks/Ruff and independent source review. Inventory-first C17/C14 exploration, binding pins, full-count/later-page discovery, deterministic completion and cooperative stopping are implemented. C18 frontend23 sources remain unchanged. Source checkpoint and exact-source hosted delivery are pending. [Handoff](../handoffs/C19.md), [contract](../C19_AGENT_CONTROLLER_CONTRACT.md), [receipt](../evidence/C19/verification.json).
+C19 local acceptance passes: 4570 backend/187 gated skips/85.43%;356 new C19 cases and164 required compatibility cases; all9 generated checks/Ruff and independent source review. Inventory-first C17/C14 exploration, binding pins, full-count/later-page discovery, deterministic completion and cooperative stopping are implemented. C18 frontend23 sources remain unchanged. Exact-source hosted delivery is complete. [Handoff](../handoffs/C19.md), [contract](../C19_AGENT_CONTROLLER_CONTRACT.md), [receipt](../evidence/C19/verification.json).
+
+Source4618188 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39154765984) passes:4561 backend/187 gated skips/86.08%,187 actual PostgreSQL,673 v1/132 legacy frontend, both builds/typechecks/audits, generated checks, migration/idempotence and isolated backup/restore. [Delivery receipt](../evidence/C19/delivery.json).
