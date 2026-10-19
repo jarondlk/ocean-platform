@@ -1,0 +1,120 @@
+{
+  "component": "C20",
+  "outcome": "Complete frontend-v1 local suite, typecheck, production build and production dependency audit passed on unchanged source",
+  "versions": {
+    "node": "v22.14.0",
+    "npm": "10.9.2"
+  },
+  "commands": [
+    {
+      "name": "test",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "cwd": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1",
+      "started_at": "2026-10-19T00:14:46.222176+00:00",
+      "finished_at": "2026-10-19T00:14:47.282433+00:00",
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C20/frontend-full-test.txt",
+      "log_sha256": "8fd41351ad438d95b320ee43ef3701e478f4f0b7bee90837ed5483ddb142a5bd"
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "cwd": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1",
+      "started_at": "2026-10-19T00:14:47.282912+00:00",
+      "finished_at": "2026-10-19T00:14:49.060078+00:00",
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C20/frontend-full-typecheck.txt",
+      "log_sha256": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936"
+    },
+    {
+      "name": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1",
+      "started_at": "2026-10-19T00:14:49.060670+00:00",
+      "finished_at": "2026-10-19T00:14:56.826751+00:00",
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C20/frontend-full-build.txt",
+      "log_sha256": "f58f6d1d2b361d4dff83627e4bc388ea9acb2922e1335f5d37136f81df68bb3f"
+    },
+    {
+      "command": [
+        "npm",
+        "audit",
+        "--omit=dev",
+        "--audit-level=moderate",
+        "--json"
+      ],
+      "started_at": "2026-10-19T00:14:55.523380+00:00",
+      "finished_at": "2026-10-19T00:14:56.248208+00:00",
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C20/frontend-full-audit.json",
+      "log_sha256": "1edfafa47b19e0370e6d56a342e61d4a7e05f3fc950dbbb9a217fdcb10dee904"
+    }
+  ],
+  "test_counts": {
+    "passed": 781,
+    "failed": 0,
+    "skipped": 0
+  },
+  "production_dependency_vulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "reviewed_source_sha256": {
+    "frontend-v1/src/research-run-contract.ts": "3b191b2ea7cf7b384392dc4a99234590adfdaafe921d78eae72989028ef48c33",
+    "frontend-v1/src/research-run-service.ts": "f6bc0c418fcf5c68f84f4e32bc6c47953954a8ab5e45bf0825c57636e8242eb3",
+    "frontend-v1/src/research-state.ts": "f85a9744d872d230ca93811dd70097a640adc3fb2c7dd6cc3db7f0ce27e5aeb9",
+    "frontend-v1/src/research-activity.tsx": "1dd568bef762e4d3088d1e3a00862c32821dcc9444af2585922762ea6940d1a1",
+    "frontend-v1/src/research-workspace.tsx": "0958fa73fe9b25143c324d523471c341fac81c31fca883325c2565997032e5fd",
+    "frontend-v1/src/runtime.ts": "dec621ad1c629c65bb818236c8fecdadadcd15001d28996d0d44c8086b87c80d",
+    "frontend-v1/src/runtime-app.tsx": "087616c555ae75eaf6e28f064b9d51878642acb5f9963dbdc9c303d58a264826",
+    "frontend-v1/tests/research-run-contract.test.ts": "5af27861628e8a4acb85d3bb2ec07605b712e0ea3384cbbfc8ebc9cfc56eabe7",
+    "frontend-v1/tests/research-run-service.test.ts": "7f03cc7b8026296be63afeac22c5396ed1314f4172b74034b1e9aa9f49fe939e",
+    "frontend-v1/tests/research-run-wire.test.ts": "ef19edf42a4cf2e2910721759e236a0972d8f5946285fb598cbc47480aaf63f0",
+    "frontend-v1/tests/research-state.test.ts": "9a8ea55f2798be319af7ba01a773522869bb4b4c1ede5bb8c701d029ee530390",
+    "frontend-v1/tests/runtime.test.ts": "db73df3ebae7232e46b4c04f949c2f25d9d6abbbb5df068b32202a69eb93f328",
+    "frontend-v1/src/research-history-scheduler.ts": "a7893bbe5eb4a578a54559d2938c3164fb0f2b96447c818ebdcd4c85cbc82c2f",
+    "frontend-v1/tests/research-history-scheduler.test.ts": "fb1f4b4a79cc7a156602cf125e18590f4910446b62a85ae364dc7ed29c5861d9"
+  },
+  "source_aggregate_sha256": "55051274e77e6ee1d0ee8d55fa6a812e4c32cf3555a7522592c72fb9f9b35596",
+  "scheduler_amendment": {
+    "path": "docs/plans/ocean-v1/evidence/C20/frontend-scheduler-amendment.json",
+    "sha256": "adeb46620824fb97493a35d496e13e10462c7ce5ca39e1d45da0620ac66c2238"
+  },
+  "before": {
+    "path": "docs/plans/ocean-v1/evidence/C20/frontend-full-source-before.json",
+    "sha256": "ae998ecfbf977b5f4f6d3409ac7ded39276cf4255022077157808baae6043834",
+    "frontend_files": 78,
+    "legacy_files": 106
+  },
+  "after": {
+    "path": "docs/plans/ocean-v1/evidence/C20/frontend-full-source-after.json",
+    "sha256": "ae998ecfbf977b5f4f6d3409ac7ded39276cf4255022077157808baae6043834"
+  },
+  "frontend_source_unchanged": true,
+  "legacy_source_unchanged": true,
+  "wire_fixture_unchanged": true,
+  "dependencies_and_lockfiles_unchanged": true,
+  "qualifications": [
+    "All commands ran once on current Node22, with no dependency, lockfile or source edits.",
+    "npm audit used authorized public registry network access and found zero production dependency vulnerabilities.",
+    "Legacy frontend tests were not rerun locally; its complete tracked/untracked nonignored source hash map stayed unchanged.",
+    "Production build creates the separate v1 static output locally; no publication or deployment occurred.",
+    "Root owns full backend/PG/hosted CI and final component checkpoint. C26 assembled browser acceptance remains an explicit later gate."
+  ]
+}

@@ -19,9 +19,11 @@ export type RuntimeCapability = {
   status: "ready" | "unavailable" | "disabled" | "forbidden";
   reason: string | null; required_permissions: string[];
 };
+export type ResearchRunCapability = { version: "research-runs-v1"; transport: "http-v1" | "unavailable"; submit_enabled: boolean; dispatch_enabled: boolean; synthesis: "unavailable"; reason: string | null };
 export type RuntimeBootstrap = {
   version: typeof RUNTIME_VERSION; deployment: "v1"; identity: RuntimeIdentity;
   permission_revision: string; capabilities: Record<RuntimeDestination, RuntimeCapability>;
+  research_runs?: ResearchRunCapability;
 };
 export type RuntimeState = { status: "loading" } | { status: "ready"; bootstrap: RuntimeBootstrap }
   | { status: "unauthorized" | "forbidden" | "unavailable" | "error"; message: string; retryable: boolean };
@@ -54,7 +56,7 @@ function permissions(value: unknown): string[] {
 
 /** Validate then copy every accepted field; identity never comes from preferences. */
 export function parseRuntimeBootstrap(value: unknown): RuntimeBootstrap {
-  const root = exact(value, ["version", "deployment", "identity", "permission_revision", "capabilities"]);
+  const root = exact(value, ["version", "deployment", "identity", "permission_revision", "capabilities", ...(record(value) && Object.hasOwn(value, "research_runs") ? ["research_runs"] : [])]);
   if (root.version !== RUNTIME_VERSION || root.deployment !== "v1" || typeof root.permission_revision !== "string" || !identifier.test(root.permission_revision)) return fail();
   const identity = exact(root.identity, ["id", "display_name", "role", "account_type", "status", "permissions"]);
   if (typeof identity.id !== "string" || !/^[a-f\d]{8}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{12}$/i.test(identity.id)
@@ -76,11 +78,22 @@ export function parseRuntimeBootstrap(value: unknown): RuntimeBootstrap {
     if (capability.status !== "ready" && (reason === null || !reason.trim())) return fail();
     capabilities[destination] = { status: capability.status as RuntimeCapability["status"], reason, required_permissions: required };
   }
+  let researchRuns: ResearchRunCapability | undefined;
+  if (Object.hasOwn(root, "research_runs")) {
+    const runs = exact(root.research_runs, ["version", "transport", "submit_enabled", "dispatch_enabled", "synthesis", "reason"]);
+    if (runs.version !== "research-runs-v1" || !["http-v1", "unavailable"].includes(runs.transport as string)
+      || typeof runs.submit_enabled !== "boolean" || typeof runs.dispatch_enabled !== "boolean" || runs.synthesis !== "unavailable") return fail();
+    const reason = boundedText(runs.reason, 1000, true);
+    if (runs.transport === "unavailable" && (runs.submit_enabled || runs.dispatch_enabled || !reason?.trim())) return fail();
+    if (runs.submit_enabled && !runs.dispatch_enabled) return fail();
+    if (runs.transport === "http-v1" && REQUIRED_PERMISSIONS.research.some(p => !actualPermissions.includes(p))) return fail();
+    researchRuns = { version: "research-runs-v1", transport: runs.transport as ResearchRunCapability["transport"], submit_enabled: runs.submit_enabled, dispatch_enabled: runs.dispatch_enabled, synthesis: "unavailable", reason };
+  }
   return {
     version: RUNTIME_VERSION, deployment: "v1", permission_revision: root.permission_revision,
     identity: { id: identity.id, display_name: displayName, role: identity.role as RuntimeIdentity["role"],
       account_type: identity.account_type as RuntimeIdentity["account_type"], status: "active", permissions: actualPermissions },
-    capabilities,
+    capabilities, ...(researchRuns === undefined ? {} : { research_runs: researchRuns }),
   };
 }
 

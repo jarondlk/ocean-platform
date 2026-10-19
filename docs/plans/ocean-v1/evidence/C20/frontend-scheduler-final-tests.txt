@@ -1,0 +1,45 @@
+TAP version 13
+# Subtest: a slow valid history request survives repeated 2s polls and the 10s context refresh without deadline reset
+ok 1 - a slow valid history request survives repeated 2s polls and the 10s context refresh without deadline reset
+  ---
+  duration_ms: 0.591708
+  ...
+# Subtest: poll requests coalesce while a mutation is running and cannot replace its saved result
+ok 2 - poll requests coalesce while a mutation is running and cannot replace its saved result
+  ---
+  duration_ms: 0.159708
+  ...
+# Subtest: a scheduler created during a mutation waits for its release before fetching
+ok 3 - a scheduler created during a mutation waits for its release before fetching
+  ---
+  duration_ms: 0.102708
+  ...
+# Subtest: one original deadline aborts an overlong read despite every refresh and reports timeout exactly once
+ok 4 - one original deadline aborts an overlong read despite every refresh and reports timeout exactly once
+  ---
+  duration_ms: 0.269042
+  ...
+# Subtest: navigation or access disposal aborts immediately and late completion cannot start a queued refresh
+ok 5 - navigation or access disposal aborts immediately and late completion cannot start a queued refresh
+  ---
+  duration_ms: 0.184583
+  ...
+# Subtest: an ordinary failed read settles and permits a later refresh without leaking unhandled rejection
+ok 6 - an ordinary failed read settles and permits a later refresh without leaking unhandled rejection
+  ---
+  duration_ms: 0.373
+  ...
+# Subtest: the actual React workspace wires polling to the coordinator and excludes periodic state from its lifecycle
+ok 7 - the actual React workspace wires polling to the coordinator and excludes periodic state from its lifecycle
+  ---
+  duration_ms: 25.283584
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 262.433834

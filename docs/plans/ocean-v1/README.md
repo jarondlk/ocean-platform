@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C19 are Complete locally with C19 hosted delivery complete; C20–C27 are not started.**
+**P00 and C01–C19 are Complete locally with C19 hosted delivery complete; C20 passes local acceptance and is Ready for review; source/hosted delivery is pending; C21–C27 are not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -251,3 +251,7 @@ all application/test sources and original receipts remain unchanged. This histor
 attempt is superseded by the complete exact-source delivery below.
 
 Source4618188 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39154765984) passes:4561 backend/187 gated skips/86.08%,187 actual PostgreSQL,673 v1/132 legacy frontend, both builds/typechecks/audits, generated checks, migration/idempotence and isolated backup/restore. [Delivery receipt](evidence/C19/delivery.json). C20 readiness follows delivery.
+
+C20 final36-entry/34-path readiness passes after C19 exact-source delivery; isolated local implementation is selected. [Handoff](handoffs/C20.md).
+
+C20 local acceptance passes:4847 backend/231 gated skips/85.64%,104 actual PostgreSQL,781 v1 frontend/typecheck/build/audit, nine generated checks/Ruff and independent source reviews. All912 prior evidence and protected files remain unchanged. Source checkpoint and hosted delivery remain pending. [Handoff](handoffs/C20.md), [contract](C20_DURABLE_EXECUTION_CONTRACT.md), [receipt](evidence/C20/verification.json).

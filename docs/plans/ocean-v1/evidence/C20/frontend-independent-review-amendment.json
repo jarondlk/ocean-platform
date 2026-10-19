@@ -1,0 +1,35 @@
+{
+  "component": "C20",
+  "review_kind": "independent read-only source amendment review; no tests rerun",
+  "prior_review": "frontend-independent-review.json",
+  "prior_review_sha256": "50db1d05acb64acec798ff79584c4028355aa26a787682fbcb1f0194e57a8917",
+  "reviewed_source_sha256": {
+    "frontend-v1/src/research-run-service.ts": "f6bc0c418fcf5c68f84f4e32bc6c47953954a8ab5e45bf0825c57636e8242eb3",
+    "frontend-v1/src/research-run-contract.ts": "3b191b2ea7cf7b384392dc4a99234590adfdaafe921d78eae72989028ef48c33",
+    "frontend-v1/src/research-state.ts": "f85a9744d872d230ca93811dd70097a640adc3fb2c7dd6cc3db7f0ce27e5aeb9",
+    "frontend-v1/src/research-workspace.tsx": "0958fa73fe9b25143c324d523471c341fac81c31fca883325c2565997032e5fd",
+    "frontend-v1/src/research-activity.tsx": "1dd568bef762e4d3088d1e3a00862c32821dcc9444af2585922762ea6940d1a1",
+    "frontend-v1/src/runtime.ts": "dec621ad1c629c65bb818236c8fecdadadcd15001d28996d0d44c8086b87c80d",
+    "frontend-v1/src/runtime-app.tsx": "087616c555ae75eaf6e28f064b9d51878642acb5f9963dbdc9c303d58a264826",
+    "frontend-v1/src/research-history-scheduler.ts": "a7893bbe5eb4a578a54559d2938c3164fb0f2b96447c818ebdcd4c85cbc82c2f",
+    "frontend-v1/tests/research-history-scheduler.test.ts": "fb1f4b4a79cc7a156602cf125e18590f4910446b62a85ae364dc7ed29c5861d9"
+  },
+  "status": "no concrete blocker found in reviewed amendment",
+  "resolved_findings": [
+    {
+      "id": "C20-FR1",
+      "state": "resolved in reviewed source",
+      "evidence": "ResearchHistoryScheduler owns one active AbortController and original15s timer. request() coalesces ordinary refreshes; active work completes before queued work starts. Workspace history lifecycle excludes tick/historyTick/runs/busy, while2s polling and10s refresh request the current scheduler. Thus a12s valid history load is not replaced by periodic polls.",
+      "mutation_race": "Both C17 mutate and runAction pause+abort history before the operation and advance its epoch. Their token-owned finally resumes the current scheduler only after the operation settles. A scheduler created during mutation is paused before initial request.",
+      "lifecycle": "Navigation, unauthorized access, invalid URL and unmount dispose the scheduler. Disposal aborts and clears the timer, refuses new work; the history writer additionally checks signal, mounted selection guard and history epoch before publishing."
+    }
+  ],
+  "test_source_review": "Seven deterministic cases cover12s load under2s/10s refreshes, coalesced mutation wait/resume, scheduler created during mutation, original15s timeout, disposal/late failures, ordinary rejection recovery, and actual React AST wiring.",
+  "remaining_findings": [],
+  "verification_handoff": "Frontend owner informed directly to proceed with parent-authorized full frontend test/typecheck/build/audit.",
+  "limitations": [
+    "Source review only; focused42-case/typecheck results were reported by the frontend owner, not independently rerun.",
+    "Parent retains assembled browser/full-suite/hosted acceptance responsibility.",
+    "The scheduler intentionally waits for an aborted transport job to settle before admitting another read; the actual HTTP transport provides abort settlement."
+  ]
+}

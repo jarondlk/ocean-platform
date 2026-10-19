@@ -1,6 +1,6 @@
 # C20 — Durable research execution
 
-**Status:** Not started. **Prerequisites:** C04, C17, C19.
+**Status:** Ready for review; all3 local checkpoints verified, source/hosted delivery pending. **Prerequisites:** C04, C17, C19.
 
 ## Revised delivery boundary
 
@@ -17,6 +17,9 @@ Make investigations survive browser reloads, process interruption and repeated q
 Include research run APIs, persisted events, transactional outbox, leases, idempotent execution, continuation and cancellation. Exclude changing scientific query behavior, final synthesis (C21), experiments and live Cloud Tasks/Cloud Run resources.
 
 ## Verified entry points and contracts
+
+The implementation's [durable execution contract](../C20_DURABLE_EXECUTION_CONTRACT.md)
+records the public wire, transaction, lease, replay, budget and rollback invariants.
 
 Inspect [chat records](../../../../api/chat_records.py), [application models](../../../../db/app_models.py), [authentication](../../../../api/auth.py), [API entry point](../../../../api/main.py) and [migrations](../../../../migrations/versions/). Legacy chat lifecycle records are references for persistence conventions, not the new run state model.
 
@@ -50,6 +53,8 @@ v1 execution reports unavailable. Ownership/session checks use v1 identities.
 Existing regressions: `python -m pytest tests/test_auth.py tests/test_rate_limit.py tests/test_migration_configuration.py -q`. During implementation, add a dedicated durable-run suite and record its invocation; test with local fixtures/fake queue and disposable local PostgreSQL where transactional races require it.
 
 Acceptance requires identical snapshot/context after redelivery, no duplicate committed steps, monotonic event cursors, expired-lease recovery, no budget reset, permission revocation, cancel-versus-complete races and retained partial observations. Browser disconnection must not cancel a run. A cancelled experiment is not treated as stopped until its execution boundary confirms termination. Cloud integration checks remain pending until explicitly authorized.
+
+Current local verification:4847 backend/231 gated skips/85.64%,76 required compatibility;104 actual PostgreSQL (44 C20/60 C17) with zero schemas remaining and owned server stopped;781 v1 frontend tests/typecheck/build/zero-vulnerability audit; nine generated checks/Ruff and independent reviews. The [local receipt](../evidence/C20/verification.json) binds46 owned paths and167 tested source paths. All912 older evidence and protected files are unchanged. Original parity, sandbox/head-assertion and scheduler failures are preserved with explicit tested amendments. Source checkpoint and exact-source hosted CI are the remaining delivery gates.
 
 ## Compatibility, rollback and handoff
 

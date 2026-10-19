@@ -217,6 +217,8 @@ ENABLE_V1_CATALOGUE_BROWSER = os.environ.get("ENABLE_V1_CATALOGUE_BROWSER", "fal
 ENABLE_V1_SHELL = os.environ.get("ENABLE_V1_SHELL", "false")
 ENABLE_V1_INVESTIGATIONS = os.environ.get("ENABLE_V1_INVESTIGATIONS", "false")
 ENABLE_V1_RESEARCH_CONTROLLER = os.environ.get("ENABLE_V1_RESEARCH_CONTROLLER", "false")
+ENABLE_V1_RESEARCH_RUNS = os.environ.get("ENABLE_V1_RESEARCH_RUNS", "false")
+ENABLE_V1_RESEARCH_DISPATCH = os.environ.get("ENABLE_V1_RESEARCH_DISPATCH", "false")
 INTERNAL_AUTH_AUDIENCE = os.environ.get(
     "INTERNAL_AUTH_AUDIENCE",
     "ocean-platform-api",
@@ -304,6 +306,22 @@ def v1_research_controller_enabled(environ: Optional[Mapping[str, str]] = None) 
     return _security_flag(
         str(env.get("ENABLE_V1_RESEARCH_CONTROLLER", ENABLE_V1_RESEARCH_CONTROLLER)),
         "ENABLE_V1_RESEARCH_CONTROLLER",
+    )
+
+
+def v1_research_runs_enabled(environ: Optional[Mapping[str, str]] = None) -> bool:
+    env = os.environ if environ is None else environ
+    return _security_flag(
+        str(env.get("ENABLE_V1_RESEARCH_RUNS", ENABLE_V1_RESEARCH_RUNS)),
+        "ENABLE_V1_RESEARCH_RUNS",
+    )
+
+
+def v1_research_dispatch_enabled(environ: Optional[Mapping[str, str]] = None) -> bool:
+    env = os.environ if environ is None else environ
+    return _security_flag(
+        str(env.get("ENABLE_V1_RESEARCH_DISPATCH", ENABLE_V1_RESEARCH_DISPATCH)),
+        "ENABLE_V1_RESEARCH_DISPATCH",
     )
 
 

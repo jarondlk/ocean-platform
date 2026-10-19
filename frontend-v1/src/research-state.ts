@@ -1,5 +1,6 @@
 /** C18 pure navigation and deliberately volatile, trusted-account-bound private drafts. */
 import type { Conversation, Investigation, InvestigationContext, InvestigationMutationIntent } from "./investigation-service.ts";
+import type { RunMutationIntent } from "./research-run-contract.ts";
 export const WORKSPACE_TABS = ["context", "results", "experiments", "evidence"] as const;
 export type WorkspaceTab = typeof WORKSPACE_TABS[number];
 export type ResearchLocation = { investigationId: string | null; conversationId: string | null; workspaceTab: WorkspaceTab; mobilePane: "chat" | "workspace" };
@@ -58,11 +59,12 @@ export class ResearchDraftStore {
   private identity: ResearchDraftIdentity | null = null;
   private readonly drafts = new Map<string, string>();
   private readonly mutations = new Map<string, InvestigationMutationIntent>();
+  private readonly runMutations = new Map<string, RunMutationIntent>();
   bind(identity: ResearchDraftIdentity | null): void {
     if (identity === null) { this.clear(); return; }
     if (!plain(identity) || Object.keys(identity).some((key) => !["accountId", "permissionRevision"].includes(key))) return fail();
     const next = { accountId: textKey(identity.accountId), permissionRevision: textKey(identity.permissionRevision) };
-    if (this.identity?.accountId !== next.accountId || this.identity.permissionRevision !== next.permissionRevision) { this.drafts.clear(); this.mutations.clear(); }
+    if (this.identity?.accountId !== next.accountId || this.identity.permissionRevision !== next.permissionRevision) { this.drafts.clear(); this.mutations.clear(); this.runMutations.clear(); }
     this.identity = next;
   }
   private bound(): void { if (this.identity === null) return fail(); }
@@ -87,7 +89,26 @@ export class ResearchDraftStore {
   }
   pendingMutation(slot: string): InvestigationMutationIntent | null { this.bound(); textKey(slot); return this.mutations.get(slot) ?? null; }
   forgetMutation(slot: string): void { this.bound(); textKey(slot); this.mutations.delete(slot); }
-  clear(): void { this.drafts.clear(); this.mutations.clear(); this.identity = null; }
+  rememberRunMutation(slot: string, intent: RunMutationIntent): void {
+    this.bound(); textKey(slot); const copied = copiedJson(intent) as RunMutationIntent;
+    if (!plain(copied) || !["submit", "cancel", "clarify", "continue"].includes(copied.method) || !plain(copied.request)
+      || Object.keys(copied).some(key => !["method", "request", "binding"].includes(key))
+      || new TextEncoder().encode(JSON.stringify(copied)).byteLength > 1024 * 1024) return fail();
+    uuid(copied.request.idempotency_key);
+    if (copied.method === "submit" && (!plain(copied.request.context) || !plain(copied.request.context.binding))) return fail();
+    const binding = copied.method === "submit" ? copied.request.context.binding : copied.binding;
+    if (!plain(binding) || Object.keys(binding).sort().join(",") !== "conversation_id,investigation_id,payload_sha256,revision_id,snapshot_id") return fail();
+    uuid(binding.investigation_id); uuid(binding.conversation_id); uuid(binding.revision_id);
+    if (typeof binding.snapshot_id !== "string" || !shaPattern.test(binding.snapshot_id) || typeof binding.payload_sha256 !== "string" || !shaPattern.test(binding.payload_sha256)) return fail();
+    if (copied.method !== "submit" && (copied.request.investigation_id !== binding.investigation_id || copied.request.conversation_id !== binding.conversation_id)) return fail();
+    const existing = this.runMutations.get(slot);
+    if (existing && JSON.stringify(existing) !== JSON.stringify(copied)) return fail();
+    if (!existing && this.runMutations.size >= 32) return fail();
+    this.runMutations.set(slot, frozen(copied) as RunMutationIntent);
+  }
+  pendingRunMutation(slot: string): RunMutationIntent | null { this.bound(); textKey(slot); return this.runMutations.get(slot) ?? null; }
+  forgetRunMutation(slot: string): void { this.bound(); textKey(slot); this.runMutations.delete(slot); }
+  clear(): void { this.drafts.clear(); this.mutations.clear(); this.runMutations.clear(); this.identity = null; }
 }
 export type SubmittedResearchBinding = {
   investigation_id: string; conversation_id: string; revision_id: string; snapshot_id: string;

@@ -1,0 +1,32 @@
+{
+  "component": "C20",
+  "created_at": "2026-10-19T00:15:22.617212+00:00",
+  "reviewer": "/root/c18_run_presentation",
+  "scope": "Read-only review of test-only PostgreSQL parity and additive migration-head amendments",
+  "blocking_findings": 0,
+  "reviewed_source_sha256": {
+    "tests/integration/test_research_runs_postgres.py": "6f2aeb344edcbc1328e10ac6f5424796debcf14fef3f15da6927f0b09751a063",
+    "tests/test_bootstrap_database.py": "61f10108675e2032a55859080e65276f34b46df6a659b00f89fc35504d7f5a53"
+  },
+  "prior_review_receipt_sha256": "c4e2bc448ba86931cc196815192d48e2b0fe75aeed5563583c7044cf1dc89b59",
+  "application_sources_unchanged": true,
+  "changes": [
+    "Compare unique column tuples exactly, retain exact explicitly named constraints, accept PostgreSQL generated names only for unnamed ORM constraints. Check/FK/index parity unchanged.",
+    "Expect additive0018 migration head; preserve0017 and earlier/absent states as stale, add0018 current case."
+  ],
+  "preserved_initial_verification": [
+    "initial-postgres/postgres-result.json",
+    "backend-result.json",
+    "backend-tested-source.json",
+    "backend-tests.txt"
+  ],
+  "current_verification": {
+    "postgres_receipt": "parity-repair/postgres-result.json",
+    "postgres_passed": 104,
+    "schemas_remaining": 0,
+    "owned_server_stopped": true,
+    "bootstrap_unit_passed": 39,
+    "broad_backend": "in progress; no acceptance claim yet"
+  },
+  "tests_rerun_by_reviewer": false
+}

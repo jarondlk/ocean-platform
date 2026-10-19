@@ -1,0 +1,3 @@
+tests/research-state.test.ts(99,123): error TS2339: Property 'context' does not exist on type 'Readonly<{ idempotency_key: string; context: Readonly<{ binding: Readonly<{ investigation_id: string; conversation_id: string; revision_id: string; snapshot_id: string; payload_sha256: string; }>; scope: EvidenceScope; attachments: readonly Readonly<...>[]; pins: readonly Readonly<...>[]; }>; question: string; }> | ...'.
+  Property 'context' does not exist on type 'ClarifyRunRequest'.
+tests/research-state.test.ts(100,18): error TS2540: Cannot assign to 'idempotency_key' because it is a read-only property.

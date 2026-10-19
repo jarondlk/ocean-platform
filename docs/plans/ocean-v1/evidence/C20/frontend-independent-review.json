@@ -1,0 +1,53 @@
+{
+  "component": "C20",
+  "review_kind": "independent read-only source review; no tests run",
+  "reviewed_source_sha256": {
+    "frontend-v1/src/research-run-service.ts": "f6bc0c418fcf5c68f84f4e32bc6c47953954a8ab5e45bf0825c57636e8242eb3",
+    "frontend-v1/src/research-run-contract.ts": "3b191b2ea7cf7b384392dc4a99234590adfdaafe921d78eae72989028ef48c33",
+    "frontend-v1/src/research-state.ts": "f85a9744d872d230ca93811dd70097a640adc3fb2c7dd6cc3db7f0ce27e5aeb9",
+    "frontend-v1/src/research-workspace.tsx": "5388fe291867e078a35927636b19ced8ae0b8a5ba03eeedc606752c41bee746f",
+    "frontend-v1/src/research-activity.tsx": "1dd568bef762e4d3088d1e3a00862c32821dcc9444af2585922762ea6940d1a1",
+    "frontend-v1/src/runtime.ts": "dec621ad1c629c65bb818236c8fecdadadcd15001d28996d0d44c8086b87c80d",
+    "frontend-v1/src/runtime-app.tsx": "087616c555ae75eaf6e28f064b9d51878642acb5f9963dbdc9c303d58a264826"
+  },
+  "source_sha256_at_receipt": {
+    "frontend-v1/src/research-run-service.ts": "f6bc0c418fcf5c68f84f4e32bc6c47953954a8ab5e45bf0825c57636e8242eb3",
+    "frontend-v1/src/research-run-contract.ts": "3b191b2ea7cf7b384392dc4a99234590adfdaafe921d78eae72989028ef48c33",
+    "frontend-v1/src/research-state.ts": "f85a9744d872d230ca93811dd70097a640adc3fb2c7dd6cc3db7f0ce27e5aeb9",
+    "frontend-v1/src/research-workspace.tsx": "5388fe291867e078a35927636b19ced8ae0b8a5ba03eeedc606752c41bee746f",
+    "frontend-v1/src/research-activity.tsx": "1dd568bef762e4d3088d1e3a00862c32821dcc9444af2585922762ea6940d1a1",
+    "frontend-v1/src/runtime.ts": "dec621ad1c629c65bb818236c8fecdadadcd15001d28996d0d44c8086b87c80d",
+    "frontend-v1/src/runtime-app.tsx": "087616c555ae75eaf6e28f064b9d51878642acb5f9963dbdc9c303d58a264826"
+  },
+  "status": "one concrete finding; frontend owner implementing correction",
+  "findings": [
+    {
+      "id": "C20-FR1",
+      "severity": "P1",
+      "file": "frontend-v1/src/research-workspace.tsx",
+      "lines": [
+        164,
+        202
+      ],
+      "title": "Periodic history refresh aborts slower valid history loads indefinitely",
+      "evidence": "The history effect aborts the previous historyAbort on each historyTick/tick change. Active runs increment historyTick every2000ms without a history-in-flight guard. A valid list and event-backfill load taking more than2s is aborted before publishing; repeating this leaves cached runs permanently active and prevents fresh status/events. The independent10s context tick can also reset the15s history deadline before it expires.",
+      "reproduction_by_source": "After one active run is displayed, make runTransport.list+events resolve after3s. The2s interval starts a new effect and aborts the earlier request; its final guard returns before session.runs/setRuns. Repeating responses never advance visible state.",
+      "recommended_fix": "Single-flight/coalesced history polling or self-schedule after settlement. Periodic context ticks must not cancel an otherwise valid history request. Selection/account changes still abort; coordinate writes so an in-flight mutation cannot be overwritten by an old history snapshot.",
+      "owner_notified": true,
+      "fix_verification": "pending amended source re-review; no dynamic reproduction run by this reviewer"
+    }
+  ],
+  "checked_boundaries": {
+    "no_fixture_fallback": "Fixed relative /research/runs/* POST paths, redirect:error, explicit transport injection only; runtime HTTP discovery requires verified capability. HTTP failures never select fixtures or legacy chat.",
+    "bindings": "Strict five-field binding, readonly frozen context, server-owned flattened submission authority. Snapshot merge preserves full context identity, question, continuation identity, monotonic elapsed/high-water. Event merge checks exact binding and consecutive cursor.",
+    "acknowledgements": "Exact immutable mutation intent and UUID key are remembered before fresh preflight/HTTP; uncertain5xx/abort retains intent; conflicting intents cannot replace it. Successful replay recovers original key/body. Full reload discovers saved runs before submit.",
+    "account_guards": "Runtime generation guards discard stale bootstrap responses; account/permission revision remount/bind clears private maps and intents. Unauthorized failures clear drafts/runs/visible state and abort active requests. Private content uses in-memory maps, not browser persistent storage.",
+    "events": "Fresh status keeps locally verified activity separately from high-water. Initial/history load backfills consecutive pages, controlled20-page chunks with visible remaining-update notice; explicit activity action can fetch more.",
+    "dispatch_disabled": "Verified HTTP history remains connected with submit_enabled false; submit/clarify/continue controls disabled while status/events/cancel remain available.",
+    "synthesis": "HTTP parser rejects nonnull production result and synthetic=true; completed controller exploration displays answer unavailable. Awaiting approval has no invented approval operation."
+  },
+  "limitations": [
+    "Source review only; dynamic/browser and actual wire acceptance belong to parent/frontend owner.",
+    "Only listed reviewed hashes are covered; subsequent source changes require a new review receipt."
+  ]
+}

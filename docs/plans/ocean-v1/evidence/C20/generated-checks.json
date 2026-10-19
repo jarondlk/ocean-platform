@@ -1,0 +1,101 @@
+[
+  {
+    "command": [
+      "scripts/export_chat_scope.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "script_sha256": "90beecda0a0e2e489dccb3d04bbb15e3dc4dcb03dd65f81c68db8e242aa5af3a",
+    "source_unchanged": true,
+    "output": "docs/plans/ocean-v1/evidence/C20/export_chat_scope-check.txt",
+    "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "command": [
+      "scripts/export_context_catalogue.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "script_sha256": "107be75e5e6fcaa74c1285dababff4b9673861214c7255cc48ca06abc82820d7",
+    "source_unchanged": true,
+    "output": "docs/plans/ocean-v1/evidence/C20/export_context_catalogue-check.txt",
+    "output_sha256": "17f7777b79b05d9f620343086f7948c8a0ec79cbe76e74f59d7490234a67d15b"
+  },
+  {
+    "command": [
+      "scripts/export_catalogue_examples.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "script_sha256": "7fd86bf2c8b0e796c1436e207c71c912ab279cf859ae22c6fa1ee1182bf59235",
+    "source_unchanged": true,
+    "output": "docs/plans/ocean-v1/evidence/C20/export_catalogue_examples-check.txt",
+    "output_sha256": "962c470ee8e7b1a3fa7cc260238248b74b659e73c4479518cfd90a2fb0468724"
+  },
+  {
+    "command": [
+      "scripts/export_catalogue_types.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "script_sha256": "417fb30b8209cc2422421495e76c50801715ca034d4682d4844d89d71ff2c682",
+    "source_unchanged": true,
+    "output": "docs/plans/ocean-v1/evidence/C20/export_catalogue_types-check.txt",
+    "output_sha256": "edfc61324e991e3bda912ff0153de8de843149d6e96921f6df836436437bb215"
+  },
+  {
+    "command": [
+      "scripts/export_catalogue_snapshot.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "script_sha256": "dafda2b885202dd0e88c7e237ecf4f577339513e034e73158b627f71c2cd28fe",
+    "source_unchanged": true,
+    "output": "docs/plans/ocean-v1/evidence/C20/export_catalogue_snapshot-check.txt",
+    "output_sha256": "9b07d6aff6dbefa9ef198cfe8da820676814ff35b8f418400856ff03bb3cc1b9"
+  },
+  {
+    "command": [
+      "scripts/export_scientific_catalogue.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "script_sha256": "2c4e44cfb1efb1191027b60a2feabf496cd083af10520a6a00195349413a5e2d",
+    "source_unchanged": true,
+    "output": "docs/plans/ocean-v1/evidence/C20/export_scientific_catalogue-check.txt",
+    "output_sha256": "a86862b927682fb9dfbf4d762295399ea797eb54c37be97810494686a02dcc6f"
+  },
+  {
+    "command": [
+      "scripts/export_sst_catalogue.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "script_sha256": "5e2a0eec3a58f8cc251c554b7ef4e9867329bc9a943f965ac9f1b0ee4668602e",
+    "source_unchanged": true,
+    "output": "docs/plans/ocean-v1/evidence/C20/export_sst_catalogue-check.txt",
+    "output_sha256": "dcb43f84e390bb4ca68514658fbdc4b9605b4f42bb22aa32120ab2f0ebaf8cd7"
+  },
+  {
+    "command": [
+      "scripts/export_edna_catalogue.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "script_sha256": "4e627d21dced08720d851d2ea2edfb69dcedc11b50db45385c90fcf52c5f5095",
+    "source_unchanged": true,
+    "output": "docs/plans/ocean-v1/evidence/C20/export_edna_catalogue-check.txt",
+    "output_sha256": "584bf23af0f9b906b7db1c3224242971b102e573fef6f35a39b1bd259fcb7180"
+  },
+  {
+    "command": [
+      "scripts/export_catalogue_adapter.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "script_sha256": "116c63182669cf1277468fd2f826b88f719db4306dd856d70725372e43888075",
+    "source_unchanged": true,
+    "output": "docs/plans/ocean-v1/evidence/C20/export_catalogue_adapter-check.txt",
+    "output_sha256": "3616357347d55684342a6b3d04a6cab676714283fd7613babf78aee10db52d5d"
+  }
+]

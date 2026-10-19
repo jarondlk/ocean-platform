@@ -1,0 +1,916 @@
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [  1%]
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [  2%]
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [  4%]
+sssssssssssssss....................EEEEEEEEEEEEFE..................E...F [  5%]
+FFFFFFFFFFF.......................FFFFFFF.FFFFFFFFF..................... [  7%]
+........................................................................ [  8%]
+........................................................................ [  9%]
+........................................................................ [ 11%]
+........................................................................ [ 12%]
+........................................................................ [ 14%]
+................................FFFF.................................... [ 15%]
+........................................................................ [ 17%]
+........................................................................ [ 18%]
+.....................................................
+==================================== ERRORS ====================================
+_ ERROR at setup of test_draft_is_read_only_unapproved_and_source_remains_unknown _
+tests/test_anemone_classification.py:65: in unknown_snapshot
+    sid, contract = _acquire_snapshot(raw, mutate=_remove_classification)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+_ ERROR at setup of test_review_preserves_source_creates_distinct_replayable_history _
+tests/test_anemone_classification.py:65: in unknown_snapshot
+    sid, contract = _acquire_snapshot(raw, mutate=_remove_classification)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+_ ERROR at setup of test_reviewed_controls_never_gain_environmental_anchor[negative_control] _
+tests/test_anemone_classification.py:65: in unknown_snapshot
+    sid, contract = _acquire_snapshot(raw, mutate=_remove_classification)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+_ ERROR at setup of test_reviewed_controls_never_gain_environmental_anchor[positive_control] _
+tests/test_anemone_classification.py:65: in unknown_snapshot
+    sid, contract = _acquire_snapshot(raw, mutate=_remove_classification)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+_ ERROR at setup of test_reviewed_controls_never_gain_environmental_anchor[mock_community] _
+tests/test_anemone_classification.py:65: in unknown_snapshot
+    sid, contract = _acquire_snapshot(raw, mutate=_remove_classification)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+_ ERROR at setup of test_reviewed_unknown_round_trips_without_boolean_coercion _
+tests/test_anemone_classification.py:65: in unknown_snapshot
+    sid, contract = _acquire_snapshot(raw, mutate=_remove_classification)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+_____ ERROR at setup of test_review_rejects_wrong_evidence_scope[snapshot] _____
+tests/test_anemone_classification.py:65: in unknown_snapshot
+    sid, contract = _acquire_snapshot(raw, mutate=_remove_classification)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+______ ERROR at setup of test_review_rejects_wrong_evidence_scope[sample] ______
+tests/test_anemone_classification.py:65: in unknown_snapshot
+    sid, contract = _acquire_snapshot(raw, mutate=_remove_classification)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+_______ ERROR at setup of test_review_rejects_wrong_evidence_scope[sha] ________
+tests/test_anemone_classification.py:65: in unknown_snapshot
+    sid, contract = _acquire_snapshot(raw, mutate=_remove_classification)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+_______ ERROR at setup of test_review_rejects_wrong_evidence_scope[row] ________
+tests/test_anemone_classification.py:65: in unknown_snapshot
+    sid, contract = _acquire_snapshot(raw, mutate=_remove_classification)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+_______ ERROR at setup of test_review_rejects_wrong_evidence_scope[key] ________
+tests/test_anemone_classification.py:65: in unknown_snapshot
+    sid, contract = _acquire_snapshot(raw, mutate=_remove_classification)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+______ ERROR at setup of test_review_rejects_wrong_evidence_scope[value] _______
+tests/test_anemone_classification.py:65: in unknown_snapshot
+    sid, contract = _acquire_snapshot(raw, mutate=_remove_classification)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+_ ERROR at setup of test_review_variants_link_exact_normalization_and_export_attestation _
+tests/test_anemone_classification.py:65: in unknown_snapshot
+    sid, contract = _acquire_snapshot(raw, mutate=_remove_classification)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+__________ ERROR at setup of test_review_manifest_tamper_is_rejected ___________
+tests/test_anemone_classification.py:65: in unknown_snapshot
+    sid, contract = _acquire_snapshot(raw, mutate=_remove_classification)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+=================================== FAILURES ===================================
+_____________ test_review_cannot_override_provider_classification ______________
+tests/test_anemone_classification.py:268: in test_review_cannot_override_provider_classification
+    sid, contract = _acquire_snapshot(raw)
+                    ^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+____ test_inventory_is_bounded_deterministic_and_downloads_no_source_files _____
+tests/test_anemone_ingestion.py:273: in test_inventory_is_bounded_deterministic_and_downloads_no_source_files
+    with _fixture_server(contract) as (base, _, server):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+__________ test_execute_validates_five_tsvs_and_never_downloads_fastq __________
+tests/test_anemone_ingestion.py:309: in test_execute_validates_five_tsvs_and_never_downloads_fastq
+    with _fixture_server(contract) as (base, _, server):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+___________ test_unchanged_source_reuses_snapshot_without_redownload ___________
+tests/test_anemone_ingestion.py:340: in test_unchanged_source_reuses_snapshot_without_redownload
+    with _fixture_server(contract) as (base, _, server):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+_____________ test_changed_remote_validator_creates_a_new_snapshot _____________
+tests/test_anemone_ingestion.py:364: in test_changed_remote_validator_creates_a_new_snapshot
+    with _fixture_server(contract) as (base, _, server):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+______ test_run_scope_discovers_samples_and_preserves_relative_directory _______
+tests/test_anemone_ingestion.py:385: in test_run_scope_discovers_samples_and_preserves_relative_directory
+    with _fixture_server(contract) as (base, _, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+___________ test_unknown_or_missing_roles_and_limits_block_execution ___________
+tests/test_anemone_ingestion.py:401: in test_unknown_or_missing_roles_and_limits_block_execution
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+_____________ test_corrupt_xz_never_publishes_a_complete_snapshot ______________
+tests/test_anemone_ingestion.py:448: in test_corrupt_xz_never_publishes_a_complete_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+______________ test_tsv_schema_drift_blocks_snapshot_publication _______________
+tests/test_anemone_ingestion.py:467: in test_tsv_schema_drift_blocks_snapshot_publication
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+________ test_interrupted_transfer_resumes_from_hash_addressed_staging _________
+tests/test_anemone_ingestion.py:491: in test_interrupted_transfer_resumes_from_hash_addressed_staging
+    with _fixture_server(contract, interrupt_once=interrupted_path) as (base, _, server):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+________________ test_resume_fails_if_remote_validator_changes _________________
+tests/test_anemone_ingestion.py:516: in test_resume_fails_if_remote_validator_changes
+    with _fixture_server(contract, interrupt_once=interrupted_path) as (base, _, server):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+____________________ test_authentication_error_is_sanitized ____________________
+tests/test_anemone_ingestion.py:536: in test_authentication_error_is_sanitized
+    with _fixture_server(contract) as (base, _, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+___________ test_cross_origin_redirect_is_rejected_before_following ____________
+tests/test_anemone_ingestion.py:551: in test_cross_origin_redirect_is_rejected_before_following
+    with _fixture_server(contract) as (base, _, server):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+______ test_nontargets_are_optional_bounded_metadata_only[names0-sample] _______
+tests/test_anemone_nontarget.py:51: in test_nontargets_are_optional_bounded_metadata_only
+    with _fixture_server(contract) as (base, payloads, server):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+________ test_nontargets_are_optional_bounded_metadata_only[names0-run] ________
+tests/test_anemone_nontarget.py:51: in test_nontargets_are_optional_bounded_metadata_only
+    with _fixture_server(contract) as (base, payloads, server):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+______ test_nontargets_are_optional_bounded_metadata_only[names1-sample] _______
+tests/test_anemone_nontarget.py:51: in test_nontargets_are_optional_bounded_metadata_only
+    with _fixture_server(contract) as (base, payloads, server):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+________ test_nontargets_are_optional_bounded_metadata_only[names1-run] ________
+tests/test_anemone_nontarget.py:51: in test_nontargets_are_optional_bounded_metadata_only
+    with _fixture_server(contract) as (base, payloads, server):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+______ test_nontargets_are_optional_bounded_metadata_only[names2-sample] _______
+tests/test_anemone_nontarget.py:51: in test_nontargets_are_optional_bounded_metadata_only
+    with _fixture_server(contract) as (base, payloads, server):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+________ test_nontargets_are_optional_bounded_metadata_only[names2-run] ________
+tests/test_anemone_nontarget.py:51: in test_nontargets_are_optional_bounded_metadata_only
+    with _fixture_server(contract) as (base, payloads, server):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+_____________ test_nontargets_cannot_replace_required_target_files _____________
+tests/test_anemone_nontarget.py:135: in test_nontargets_cannot_replace_required_target_files
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+______ test_old_snapshot_uses_original_contract_without_rewriting_source _______
+tests/test_anemone_nontarget.py:172: in test_old_snapshot_uses_original_contract_without_rewriting_source
+    with _fixture_server(legacy) as (base, _, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+__________ test_validate_only_builds_complete_frames_without_writing ___________
+tests/test_anemone_normalization.py:63: in test_validate_only_builds_complete_frames_without_writing
+    snapshot_id, contract = _acquire_snapshot(raw_root)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+______ test_execute_publishes_deterministic_bundle_and_activation_pointer ______
+tests/test_anemone_normalization.py:102: in test_execute_publishes_deterministic_bundle_and_activation_pointer
+    snapshot_id, contract = _acquire_snapshot(raw_root)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+______ test_provider_ids_and_scientific_hashes_ignore_metadata_row_order _______
+tests/test_anemone_normalization.py:144: in test_provider_ids_and_scientific_hashes_ignore_metadata_row_order
+    first_id, first_contract = _acquire_snapshot(first_root)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+___________________ test_control_is_preserved_without_anchor ___________________
+tests/test_anemone_normalization.py:191: in test_control_is_preserved_without_anchor
+    snapshot_id, contract = _acquire_snapshot(raw_root, mutate=make_control)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+____________ test_unknown_classification_is_explicit_and_preserved _____________
+tests/test_anemone_normalization.py:214: in test_unknown_classification_is_explicit_and_preserved
+    snapshot_id, contract = _acquire_snapshot(
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+________ test_reference_taxonomy_normalizes_without_losing_raw_evidence ________
+tests/test_anemone_normalization.py:247: in test_reference_taxonomy_normalizes_without_losing_raw_evidence
+    snapshot_id, contract = _acquire_snapshot(raw_root, mutate=replace_community)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+__________ test_invalid_coordinate_fails_normalization_without_output __________
+tests/test_anemone_normalization.py:285: in test_invalid_coordinate_fails_normalization_without_output
+    snapshot_id, contract = _acquire_snapshot(raw_root, mutate=invalid_coordinate)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+_________________ test_tampered_completed_snapshot_is_rejected _________________
+tests/test_anemone_normalization.py:300: in test_tampered_completed_snapshot_is_rejected
+    snapshot_id, contract = _acquire_snapshot(raw_root)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_anemone_normalization.py:45: in _acquire_snapshot
+    with _fixture_server(contract) as (base, payloads, _):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_anemone_ingestion.py:180: in _fixture_server
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AnemoneFixtureHandler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:473: in server_bind
+    self.socket.bind(self.server_address)
+E   PermissionError: [Errno 1] Operation not permitted
+______ test_migration_status_reads_actual_version_without_upgrading[None] ______
+tests/test_bootstrap_database.py:208: in test_migration_status_reads_actual_version_without_upgrading
+    assert status["migration_expected_heads"] == ["20261018_0017"]
+E   AssertionError: assert ['20261019_0018'] == ['20261018_0017']
+E     
+E     At index 0 diff: '20261019_0018' != '20261018_0017'
+E     Use -v to get more diff
+_ test_migration_status_reads_actual_version_without_upgrading[20261004_0015] __
+tests/test_bootstrap_database.py:208: in test_migration_status_reads_actual_version_without_upgrading
+    assert status["migration_expected_heads"] == ["20261018_0017"]
+E   AssertionError: assert ['20261019_0018'] == ['20261018_0017']
+E     
+E     At index 0 diff: '20261019_0018' != '20261018_0017'
+E     Use -v to get more diff
+_ test_migration_status_reads_actual_version_without_upgrading[20261005_0016] __
+tests/test_bootstrap_database.py:208: in test_migration_status_reads_actual_version_without_upgrading
+    assert status["migration_expected_heads"] == ["20261018_0017"]
+E   AssertionError: assert ['20261019_0018'] == ['20261018_0017']
+E     
+E     At index 0 diff: '20261019_0018' != '20261018_0017'
+E     Use -v to get more diff
+_ test_migration_status_reads_actual_version_without_upgrading[20261018_0017] __
+tests/test_bootstrap_database.py:208: in test_migration_status_reads_actual_version_without_upgrading
+    assert status["migration_expected_heads"] == ["20261018_0017"]
+E   AssertionError: assert ['20261019_0018'] == ['20261018_0017']
+E     
+E     At index 0 diff: '20261019_0018' != '20261018_0017'
+E     Use -v to get more diff
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_auto_settings.py::test_semantic_published_results_reuse_exact_rows_without_rewriting_question[published_exact]
+  <frozen importlib._bootstrap>:488: RuntimeWarning: numpy.ndarray size changed, may indicate binary incompatibility. Expected 16 from C header, got 96 from PyObject
+
+tests/test_auto_settings.py: 45 warnings
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/xarray/backends/netCDF4_.py:96: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
+  As an alternative, you can create a new view using np.reshape (with copy=False if needed).
+    data[key] = value
+
+tests/test_bootstrap_database.py::test_migration_status_reads_actual_version_without_upgrading[None]
+tests/test_bootstrap_database.py::test_migration_status_reads_actual_version_without_upgrading[20261004_0015]
+tests/test_bootstrap_database.py::test_migration_status_reads_actual_version_without_upgrading[20261005_0016]
+tests/test_bootstrap_database.py::test_migration_status_reads_actual_version_without_upgrading[20261018_0017]
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/alembic/config.py:604: DeprecationWarning: No path_separator found in configuration; falling back to legacy splitting on spaces, commas, and colons for prepend_sys_path.  Consider adding path_separator=os to Alembic config.
+    util.warn_deprecated(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_anemone_classification.py::test_review_cannot_override_provider_classification
+FAILED tests/test_anemone_ingestion.py::test_inventory_is_bounded_deterministic_and_downloads_no_source_files
+FAILED tests/test_anemone_ingestion.py::test_execute_validates_five_tsvs_and_never_downloads_fastq
+FAILED tests/test_anemone_ingestion.py::test_unchanged_source_reuses_snapshot_without_redownload
+FAILED tests/test_anemone_ingestion.py::test_changed_remote_validator_creates_a_new_snapshot
+FAILED tests/test_anemone_ingestion.py::test_run_scope_discovers_samples_and_preserves_relative_directory
+FAILED tests/test_anemone_ingestion.py::test_unknown_or_missing_roles_and_limits_block_execution
+FAILED tests/test_anemone_ingestion.py::test_corrupt_xz_never_publishes_a_complete_snapshot
+FAILED tests/test_anemone_ingestion.py::test_tsv_schema_drift_blocks_snapshot_publication
+FAILED tests/test_anemone_ingestion.py::test_interrupted_transfer_resumes_from_hash_addressed_staging
+FAILED tests/test_anemone_ingestion.py::test_resume_fails_if_remote_validator_changes
+FAILED tests/test_anemone_ingestion.py::test_authentication_error_is_sanitized
+FAILED tests/test_anemone_ingestion.py::test_cross_origin_redirect_is_rejected_before_following
+FAILED tests/test_anemone_nontarget.py::test_nontargets_are_optional_bounded_metadata_only[names0-sample]
+FAILED tests/test_anemone_nontarget.py::test_nontargets_are_optional_bounded_metadata_only[names0-run]
+FAILED tests/test_anemone_nontarget.py::test_nontargets_are_optional_bounded_metadata_only[names1-sample]
+FAILED tests/test_anemone_nontarget.py::test_nontargets_are_optional_bounded_metadata_only[names1-run]
+FAILED tests/test_anemone_nontarget.py::test_nontargets_are_optional_bounded_metadata_only[names2-sample]
+FAILED tests/test_anemone_nontarget.py::test_nontargets_are_optional_bounded_metadata_only[names2-run]
+FAILED tests/test_anemone_nontarget.py::test_nontargets_cannot_replace_required_target_files
+FAILED tests/test_anemone_nontarget.py::test_old_snapshot_uses_original_contract_without_rewriting_source
+FAILED tests/test_anemone_normalization.py::test_validate_only_builds_complete_frames_without_writing
+FAILED tests/test_anemone_normalization.py::test_execute_publishes_deterministic_bundle_and_activation_pointer
+FAILED tests/test_anemone_normalization.py::test_provider_ids_and_scientific_hashes_ignore_metadata_row_order
+FAILED tests/test_anemone_normalization.py::test_control_is_preserved_without_anchor
+FAILED tests/test_anemone_normalization.py::test_unknown_classification_is_explicit_and_preserved
+FAILED tests/test_anemone_normalization.py::test_reference_taxonomy_normalizes_without_losing_raw_evidence
+FAILED tests/test_anemone_normalization.py::test_invalid_coordinate_fails_normalization_without_output
+FAILED tests/test_anemone_normalization.py::test_tampered_completed_snapshot_is_rejected
+FAILED tests/test_bootstrap_database.py::test_migration_status_reads_actual_version_without_upgrading[None]
+FAILED tests/test_bootstrap_database.py::test_migration_status_reads_actual_version_without_upgrading[20261004_0015]
+FAILED tests/test_bootstrap_database.py::test_migration_status_reads_actual_version_without_upgrading[20261005_0016]
+FAILED tests/test_bootstrap_database.py::test_migration_status_reads_actual_version_without_upgrading[20261018_0017]
+ERROR tests/test_anemone_classification.py::test_draft_is_read_only_unapproved_and_source_remains_unknown
+ERROR tests/test_anemone_classification.py::test_review_preserves_source_creates_distinct_replayable_history
+ERROR tests/test_anemone_classification.py::test_reviewed_controls_never_gain_environmental_anchor[negative_control]
+ERROR tests/test_anemone_classification.py::test_reviewed_controls_never_gain_environmental_anchor[positive_control]
+ERROR tests/test_anemone_classification.py::test_reviewed_controls_never_gain_environmental_anchor[mock_community]
+ERROR tests/test_anemone_classification.py::test_reviewed_unknown_round_trips_without_boolean_coercion
+ERROR tests/test_anemone_classification.py::test_review_rejects_wrong_evidence_scope[snapshot]
+ERROR tests/test_anemone_classification.py::test_review_rejects_wrong_evidence_scope[sample]
+ERROR tests/test_anemone_classification.py::test_review_rejects_wrong_evidence_scope[sha]
+ERROR tests/test_anemone_classification.py::test_review_rejects_wrong_evidence_scope[row]
+ERROR tests/test_anemone_classification.py::test_review_rejects_wrong_evidence_scope[key]
+ERROR tests/test_anemone_classification.py::test_review_rejects_wrong_evidence_scope[value]
+ERROR tests/test_anemone_classification.py::test_review_variants_link_exact_normalization_and_export_attestation
+ERROR tests/test_anemone_classification.py::test_review_manifest_tamper_is_rejected
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/coverage/collector.py:239: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+33 failed, 711 passed, 231 skipped, 51 warnings, 14 errors in 42.80s

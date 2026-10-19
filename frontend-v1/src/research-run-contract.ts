@@ -13,7 +13,7 @@ export type RunContext = Readonly<{
   binding: RunContextBinding; scope: EvidenceScope;
   attachments: readonly RunReference[]; pins: readonly RunReference[];
 }>;
-export type ResearchRunStatus = "queued" | "running" | "awaiting_clarification" | "completed" | "partial" | "failed" | "cancelled";
+export type ResearchRunStatus = "queued" | "running" | "awaiting_clarification" | "awaiting_approval" | "completed" | "partial" | "failed" | "cancelled";
 export type ResearchRunAddress = Readonly<{ run_id: string; investigation_id: string; conversation_id: string }>;
 export type RunEvidence = Readonly<{
   id: string; title: Text; authority: "published" | "descriptive" | "experimental";
@@ -28,7 +28,7 @@ export type RunResult = Readonly<{
 }>;
 export type RunPublicEvent = Readonly<{
   cursor: number; run_id: string; elapsed_ms: number;
-  kind: "accepted" | "started" | "progress" | "clarification" | "resumed" | "completed" | "partial" | "failed" | "cancelled";
+  kind: "accepted" | "started" | "progress" | "clarification" | "approval" | "resumed" | "completed" | "partial" | "failed" | "cancelled";
   /** Public activity summaries only; private model reasoning has no field. */
   summary: Text;
 }>;
@@ -36,22 +36,43 @@ export type ResearchRun = Readonly<{
   id: string; context: RunContext; question: string; status: ResearchRunStatus;
   active_elapsed_ms: number; event_cursor: number; activity: readonly RunPublicEvent[];
   continuation_of: string | null; clarification: Text | null;
+  /** Optional only for the earlier explicit development fixture. HTTP requires these. */
+  latest_event_cursor?: number; clarification_id?: string | null;
   result: RunResult | null; error: Text | null; synthetic: boolean;
 }>;
 export type RunEventPage = Readonly<{
   run_id: string; binding: RunContextBinding; after_cursor: number;
   next_cursor: number; events: readonly RunPublicEvent[];
+  latest_event_cursor?: number; has_more?: boolean;
 }>;
 export type SubmitRunRequest = Readonly<{ idempotency_key: string; context: RunContext; question: string }>;
-export type ClarifyRunRequest = ResearchRunAddress & Readonly<{ idempotency_key: string; answer: string }>;
+export type ClarifyRunRequest = ResearchRunAddress & Readonly<{ idempotency_key: string; answer: string; clarification_id?: string }>;
 export type ContinueRunRequest = ResearchRunAddress & Readonly<{ idempotency_key: string }>;
+export type CancelRunRequest = ResearchRunAddress & Readonly<{ idempotency_key?: string }>;
+export type RunListRequest = Readonly<{ investigation_id: string; conversation_id: string; limit?: number; cursor?: string | null }>;
+export type RunListPage = Readonly<{ items: readonly ResearchRun[]; next_cursor: string | null }>;
 export interface ResearchRunTransport {
   submit(request: SubmitRunRequest, signal?: AbortSignal): Promise<ResearchRun>;
   status(request: ResearchRunAddress, signal?: AbortSignal): Promise<ResearchRun>;
-  events(request: ResearchRunAddress & Readonly<{ after_cursor: number }>, signal?: AbortSignal): Promise<RunEventPage>;
-  cancel(request: ResearchRunAddress, signal?: AbortSignal): Promise<ResearchRun>;
+  events(request: ResearchRunAddress & Readonly<{ after_cursor: number; limit?: number }>, signal?: AbortSignal): Promise<RunEventPage>;
+  cancel(request: CancelRunRequest, signal?: AbortSignal): Promise<ResearchRun>;
   clarify(request: ClarifyRunRequest, signal?: AbortSignal): Promise<ResearchRun>;
   continue(request: ContinueRunRequest, signal?: AbortSignal): Promise<ResearchRun>;
+  /** Durable production discovery; absent from the explicit C18 fixture. */
+  list?(request: RunListRequest, signal?: AbortSignal): Promise<RunListPage>;
+}
+export type RunMutationIntent =
+  | Readonly<{ method: "submit"; request: SubmitRunRequest }>
+  | Readonly<{ method: "cancel"; request: CancelRunRequest & { idempotency_key: string }; binding: RunContextBinding }>
+  | Readonly<{ method: "clarify"; request: ClarifyRunRequest; binding: RunContextBinding }>
+  | Readonly<{ method: "continue"; request: ContinueRunRequest; binding: RunContextBinding }>;
+export function executeRunMutation(transport: ResearchRunTransport, intent: RunMutationIntent, signal?: AbortSignal): Promise<ResearchRun> {
+  switch (intent.method) {
+    case "submit": return transport.submit(intent.request, signal);
+    case "cancel": return transport.cancel(intent.request, signal);
+    case "clarify": return transport.clarify(intent.request, signal);
+    case "continue": return transport.continue(intent.request, signal);
+  }
 }
 
 export class ResearchRunContractError extends Error {
@@ -73,6 +94,11 @@ export function assertRunBinding(binding: RunContextBinding): void {
 export function sameRunBinding(left: RunContextBinding, right: RunContextBinding): boolean {
   return left.investigation_id === right.investigation_id && left.conversation_id === right.conversation_id
     && left.revision_id === right.revision_id && left.snapshot_id === right.snapshot_id && left.payload_sha256 === right.payload_sha256;
+}
+function contextIdentity(context: RunContext): string {
+  const canonical = (value: unknown): unknown => Array.isArray(value) ? value.map(canonical)
+    : value !== null && typeof value === "object" ? Object.fromEntries(Object.entries(value).sort(([left], [right]) => left.localeCompare(right)).map(([key, item]) => [key, canonical(item)])) : value;
+  return JSON.stringify(canonical(context));
 }
 /** JSON-only defensive copy, deeply frozen so later UI edits cannot change a run. */
 export function freezeRunValue<T>(value: T): T {
@@ -117,6 +143,7 @@ export function researchRunAddress(run: ResearchRun): ResearchRunAddress {
 }
 export function isRunActive(status: ResearchRunStatus): boolean { return status === "queued" || status === "running"; }
 export function canContinueRun(status: ResearchRunStatus): boolean { return ["partial", "failed", "cancelled"].includes(status); }
+export function canCancelRun(status: ResearchRunStatus): boolean { return isRunActive(status) || status === "awaiting_clarification" || status === "awaiting_approval"; }
 export function formatActiveElapsed(milliseconds: number): string {
   if (!integer(milliseconds)) fail("Invalid active elapsed time");
   const seconds = Math.floor(milliseconds / 1000);
@@ -131,10 +158,27 @@ export function mergeRunEvents(run: ResearchRun, page: RunEventPage): ResearchRu
   for (const event of page.events) {
     if (event.run_id !== run.id || event.cursor !== ++cursor || !integer(event.elapsed_ms) || event.elapsed_ms < elapsed
       || Object.keys(event).sort().join(",") !== "cursor,elapsed_ms,kind,run_id,summary"
-      || !["accepted", "started", "progress", "clarification", "resumed", "completed", "partial", "failed", "cancelled"].includes(event.kind)
+      || !["accepted", "started", "progress", "clarification", "approval", "resumed", "completed", "partial", "failed", "cancelled"].includes(event.kind)
       || !event.summary || Object.keys(event.summary).sort().join(",") !== "en,ja"
       || typeof event.summary.en !== "string" || typeof event.summary.ja !== "string") fail("Invalid public run event");
     elapsed = event.elapsed_ms;
   }
-  return freezeRunValue({ ...run, event_cursor: page.next_cursor, activity: [...run.activity, ...page.events] });
+  if (page.latest_event_cursor !== undefined && (!integer(page.latest_event_cursor) || page.latest_event_cursor < page.next_cursor || (run.latest_event_cursor !== undefined && page.latest_event_cursor < run.latest_event_cursor))) fail("Run event high water regressed");
+  if (page.has_more !== undefined && page.has_more !== (page.next_cursor < (page.latest_event_cursor ?? page.next_cursor))) fail("Run event continuation is inconsistent");
+  const latest = page.latest_event_cursor ?? run.latest_event_cursor;
+  return freezeRunValue({ ...run, active_elapsed_ms: Math.max(run.active_elapsed_ms, elapsed), event_cursor: page.next_cursor, ...(latest === undefined ? {} : { latest_event_cursor: latest }), activity: [...run.activity, ...page.events] });
+}
+/** Fresh status may update state, never erase locally verified consecutive history. */
+export function mergeRunSnapshot(previous: ResearchRun | undefined, snapshot: ResearchRun): ResearchRun {
+  if (!previous) return snapshot;
+  if (previous.id !== snapshot.id || !sameRunBinding(previous.context.binding, snapshot.context.binding) || contextIdentity(previous.context) !== contextIdentity(snapshot.context)
+    || previous.question !== snapshot.question || previous.continuation_of !== snapshot.continuation_of
+    || previous.synthetic !== snapshot.synthetic || snapshot.active_elapsed_ms < previous.active_elapsed_ms
+    || (snapshot.latest_event_cursor ?? snapshot.event_cursor) < (previous.latest_event_cursor ?? previous.event_cursor)) fail("Run status changed its retained identity or regressed");
+  if (snapshot.latest_event_cursor !== undefined) {
+    if (snapshot.event_cursor === 0) return freezeRunValue({ ...snapshot, activity: previous.activity, event_cursor: previous.event_cursor });
+    if (snapshot.event_cursor < previous.event_cursor || snapshot.activity.length !== snapshot.event_cursor
+      || JSON.stringify(snapshot.activity.slice(0, previous.activity.length)) !== JSON.stringify(previous.activity)) fail("Run history cannot replace committed events");
+  }
+  return snapshot; // The explicit development fixture returns its complete in-memory history.
 }

@@ -228,11 +228,11 @@ def stored(isolated):
 
 def test_fresh_full_alembic_head_and_repeat_upgrade_match_models(isolated):
     alembic(isolated, "upgrade", "head")
-    assert revision(isolated) == "20261018_0017"
+    assert revision(isolated) == "20261019_0018"
     assert_schema_matches_models(isolated["engine"])
     isolated.update(seed(isolated))
     alembic(isolated, "upgrade", "head")
-    assert revision(isolated) == "20261018_0017"
+    assert revision(isolated) == "20261019_0018"
     with isolated["factory"]() as session:
         assert session.get(ResearchContextRevision, isolated["revisions"][0]).payload_json == '{"synthetic":true}'
 
@@ -247,7 +247,7 @@ def test_populated_0016_alembic_upgrade_preserves_prior_application_history(isol
         session.add(ChatInteraction(id=chat, user_id=owner, status="completed", query="Synthetic prior query", answer="Preserved prior evidence", request_options={}, evidence_snapshot={"synthetic": True}, legal_hold=True))
         session.add(AuditEvent(id=audit, actor_user_id=owner, action="synthetic.c17.preexisting", metadata_json={"preserved": True}))
     alembic(isolated, "upgrade", "head")
-    assert revision(isolated) == "20261018_0017"
+    assert revision(isolated) == "20261019_0018"
     assert_schema_matches_models(isolated["engine"])
     with factory() as session:
         assert session.get(ChatInteraction, chat).evidence_snapshot == {"synthetic": True}
@@ -269,7 +269,7 @@ def test_populated_alembic_downgrade_is_rejected_and_keeps_history(isolated):
     isolated.update(seed(isolated))
     result = alembic(isolated, "downgrade", "20261005_0016", succeeds=False)
     assert "populated C17 storage cannot be downgraded" in result.stderr
-    assert revision(isolated) == "20261018_0017"
+    assert revision(isolated) == "20261019_0018"
     with isolated["factory"]() as session:
         assert session.get(ResearchContextRevision, isolated["revisions"][0]).payload_json == '{"synthetic":true}'
         assert session.get(ResearchConversation, isolated["conversation"])

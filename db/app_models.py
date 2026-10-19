@@ -758,6 +758,7 @@ class ResearchConversation(AppBase):
 
     __mapper_args__ = {"version_id_col": metadata_version}
     __table_args__ = (
+        UniqueConstraint("investigation_id", "id", name="uq_research_conversation_identity"),
         CheckConstraint("length(name) BETWEEN 1 AND 255 AND length(trim(name)) >= 1", name="ck_research_conversation_name"),
         CheckConstraint("metadata_version >= 1", name="ck_research_conversation_version"),
     )
@@ -781,6 +782,7 @@ class ResearchContextRevision(AppBase):
     __table_args__ = (
         UniqueConstraint("investigation_id", "sequence", name="uq_research_context_revision_sequence"),
         UniqueConstraint("investigation_id", "id", name="uq_research_context_revision_identity"),
+        UniqueConstraint("investigation_id", "id", "snapshot_id", "payload_sha256", name="uq_research_context_revision_binding"),
         CheckConstraint("sequence >= 1", name="ck_research_context_revision_sequence"),
         CheckConstraint(_context_sha256_check("snapshot_id"), name="ck_research_context_revision_snapshot"),
         CheckConstraint(_context_sha256_check("payload_sha256"), name="ck_research_context_revision_payload_hash"),
@@ -862,3 +864,197 @@ for _context_model in (ResearchInvestigation, ResearchConversation, ResearchCont
     event.listen(_context_model, "before_delete", _research_record_is_immutable)
 event.listen(ResearchContextRevision, "before_update", _research_record_is_immutable)
 event.listen(ResearchContextRevision, "before_delete", _research_record_is_immutable)
+
+
+class ResearchRun(AppBase):
+    """C20 private execution head; frozen context and original input never move."""
+
+    __tablename__ = "research_run"
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(Uuid(as_uuid=True), nullable=False)
+    investigation_id = Column(Uuid(as_uuid=True), nullable=False)
+    conversation_id = Column(Uuid(as_uuid=True), nullable=False)
+    revision_id = Column(Uuid(as_uuid=True), nullable=False)
+    snapshot_id = Column(String(64), nullable=False)
+    payload_sha256 = Column(String(64), nullable=False)
+    context_json = Column(Text, nullable=False)
+    original_question = Column(Text, nullable=False)
+    effective_question = Column(Text, nullable=False)
+    continuation_of = Column(Uuid(as_uuid=True))
+    status = Column(String(32), nullable=False, default="queued")
+    version = Column(Integer, nullable=False, default=1)
+    input_version = Column(Integer, nullable=False, default=1)
+    clarification_id = Column(Uuid(as_uuid=True))
+    event_cursor = Column(Integer, nullable=False, default=0)
+    active_elapsed_ms = Column(Integer, nullable=False, default=0)
+    tool_actions = Column(Integer, nullable=False, default=0)
+    model_calls = Column(Integer, nullable=False, default=0)
+    malformed_repairs = Column(Integer, nullable=False, default=0)
+    lease_epoch = Column(Integer, nullable=False, default=0)
+    lease_until = Column(DateTime(timezone=True))
+    active_started_at = Column(DateTime(timezone=True))
+    cancellation_requested = Column(Boolean, nullable=False, default=False)
+    checkpoint_json = Column(Text, nullable=False, default="{}")
+    manifest_json = Column(Text)
+    controller_result_json = Column(Text)
+    reason_code = Column(String(64))
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        UniqueConstraint("id", "user_id", name="uq_research_run_owner"),
+        UniqueConstraint("id", "investigation_id", "conversation_id", "revision_id", name="uq_research_run_binding"),
+        ForeignKeyConstraint(["investigation_id", "user_id"], ["research_investigation.id", "research_investigation.user_id"], ondelete="RESTRICT", name="fk_research_run_owner"),
+        ForeignKeyConstraint(["investigation_id", "conversation_id"], ["research_conversation.investigation_id", "research_conversation.id"], ondelete="RESTRICT", name="fk_research_run_conversation"),
+        ForeignKeyConstraint(["investigation_id", "revision_id", "snapshot_id", "payload_sha256"], ["research_context_revision.investigation_id", "research_context_revision.id", "research_context_revision.snapshot_id", "research_context_revision.payload_sha256"], ondelete="RESTRICT", name="fk_research_run_revision"),
+        ForeignKeyConstraint(["continuation_of", "user_id"], ["research_run.id", "research_run.user_id"], ondelete="RESTRICT", name="fk_research_run_continuation_owner"),
+        ForeignKeyConstraint(["continuation_of", "investigation_id", "conversation_id", "revision_id"], ["research_run.id", "research_run.investigation_id", "research_run.conversation_id", "research_run.revision_id"], ondelete="RESTRICT", name="fk_research_run_continuation_binding"),
+        CheckConstraint("status IN ('queued','running','awaiting_clarification','awaiting_approval','completed','partial','cancelled','failed')", name="ck_research_run_status"),
+        CheckConstraint("version >= 1 AND input_version >= 1 AND event_cursor >= 0 AND lease_epoch >= 0", name="ck_research_run_versions"),
+        CheckConstraint("active_elapsed_ms >= 0 AND tool_actions BETWEEN 0 AND 12 AND model_calls BETWEEN 0 AND 14 AND malformed_repairs BETWEEN 0 AND 1", name="ck_research_run_budget"),
+        CheckConstraint("length(original_question) BETWEEN 1 AND 8000 AND length(effective_question) BETWEEN 1 AND 8000", name="ck_research_run_question"),
+        CheckConstraint(_context_sha256_check("snapshot_id"), name="ck_research_run_snapshot"),
+        CheckConstraint(_context_sha256_check("payload_sha256"), name="ck_research_run_payload_hash"),
+        CheckConstraint("continuation_of IS NULL OR continuation_of <> id", name="ck_research_run_continuation_other"),
+        Index("ix_research_run_conversation", "user_id", "investigation_id", "conversation_id", "created_at", "id"),
+    )
+
+
+class ResearchRunInputHistory(AppBase):
+    __tablename__ = "research_run_input_history"
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(Uuid(as_uuid=True), nullable=False)
+    run_id = Column(Uuid(as_uuid=True), nullable=False)
+    sequence = Column(Integer, nullable=False)
+    kind = Column(String(16), nullable=False)
+    idempotency_key = Column(String(128), nullable=False)
+    request_json = Column(Text, nullable=False)
+    request_sha256 = Column(String(64), nullable=False)
+    effective_question = Column(Text, nullable=False)
+    result_run_id = Column(Uuid(as_uuid=True), nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        UniqueConstraint("user_id", "idempotency_key", name="uq_research_run_input_key"),
+        UniqueConstraint("run_id", "sequence", name="uq_research_run_input_sequence"),
+        ForeignKeyConstraint(["run_id", "user_id"], ["research_run.id", "research_run.user_id"], ondelete="RESTRICT", name="fk_research_run_input_owner"),
+        ForeignKeyConstraint(["result_run_id", "user_id"], ["research_run.id", "research_run.user_id"], ondelete="RESTRICT", name="fk_research_run_input_result_owner"),
+        CheckConstraint("sequence >= 1 AND kind IN ('submit','clarify','continue','cancel')", name="ck_research_run_input_kind"),
+        CheckConstraint(_context_sha256_check("request_sha256"), name="ck_research_run_input_hash"),
+    )
+
+
+class ResearchRunEvent(AppBase):
+    __tablename__ = "research_run_event"
+    run_id = Column(Uuid(as_uuid=True), ForeignKey("research_run.id", ondelete="RESTRICT"), primary_key=True)
+    cursor = Column(Integer, primary_key=True)
+    kind = Column(String(32), nullable=False)
+    elapsed_ms = Column(Integer, nullable=False)
+    summary_json = Column(Text, nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (CheckConstraint("cursor >= 1 AND elapsed_ms >= 0", name="ck_research_run_event_cursor"),)
+
+
+class ResearchRunPayload(AppBase):
+    __tablename__ = "research_run_payload"
+    run_id = Column(Uuid(as_uuid=True), ForeignKey("research_run.id", ondelete="RESTRICT"), primary_key=True)
+    sha256 = Column(String(64), primary_key=True)
+    payload_json = Column(Text, nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (CheckConstraint(_context_sha256_check("sha256"), name="ck_research_run_retained_hash"),)
+
+
+class ResearchRunStep(AppBase):
+    __tablename__ = "research_run_step"
+    run_id = Column(Uuid(as_uuid=True), ForeignKey("research_run.id", ondelete="RESTRICT"), primary_key=True)
+    step_id = Column(String(255), primary_key=True)
+    kind = Column(String(16), nullable=False)
+    request_sha256 = Column(String(64), nullable=False)
+    request_json = Column(Text, nullable=False)
+    outcome_sha256 = Column(String(64))
+    state = Column(String(16), nullable=False, default="prepared")
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        ForeignKeyConstraint(["run_id", "outcome_sha256"], ["research_run_payload.run_id", "research_run_payload.sha256"], ondelete="RESTRICT", name="fk_research_run_step_payload"),
+        CheckConstraint("kind IN ('tool','model','repair')", name="ck_research_run_step_kind"),
+        CheckConstraint("(state = 'prepared' AND outcome_sha256 IS NULL) OR (state = 'committed' AND outcome_sha256 IS NOT NULL)", name="ck_research_run_step_state"),
+        CheckConstraint(_context_sha256_check("request_sha256"), name="ck_research_run_step_hash"),
+    )
+
+
+class ResearchRunAttempt(AppBase):
+    """Append-only physical reservations; uncertain calls never become free."""
+    __tablename__ = "research_run_attempt"
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    run_id = Column(Uuid(as_uuid=True), nullable=False)
+    step_id = Column(String(255), nullable=False)
+    ordinal = Column(Integer, nullable=False)
+    lease_epoch = Column(Integer, nullable=False)
+    budget_json = Column(Text, nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        UniqueConstraint("run_id", "step_id", "ordinal", name="uq_research_run_attempt_ordinal"),
+        ForeignKeyConstraint(["run_id", "step_id"], ["research_run_step.run_id", "research_run_step.step_id"], ondelete="RESTRICT", name="fk_research_run_attempt_step"),
+        CheckConstraint("ordinal >= 1 AND lease_epoch >= 1", name="ck_research_run_attempt_version"),
+    )
+
+
+class ResearchRunManifest(AppBase):
+    __tablename__ = "research_run_manifest"
+    run_id = Column(Uuid(as_uuid=True), ForeignKey("research_run.id", ondelete="RESTRICT"), primary_key=True)
+    input_version = Column(Integer, primary_key=True)
+    manifest_json = Column(Text, nullable=False)
+    manifest_sha256 = Column(String(64), nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        CheckConstraint("input_version >= 1", name="ck_research_run_manifest_version"),
+        CheckConstraint(_context_sha256_check("manifest_sha256"), name="ck_research_run_manifest_hash"),
+    )
+
+
+class ResearchRunOutbox(AppBase):
+    __tablename__ = "research_run_outbox"
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    run_id = Column(Uuid(as_uuid=True), ForeignKey("research_run.id", ondelete="RESTRICT"), nullable=False)
+    input_version = Column(Integer, nullable=False)
+    delivery_id = Column(Uuid(as_uuid=True), nullable=False, unique=True, default=uuid.uuid4)
+    state = Column(String(16), nullable=False, default="pending")
+    attempts = Column(Integer, nullable=False, default=0)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    sent_at = Column(DateTime(timezone=True))
+    __table_args__ = (
+        UniqueConstraint("run_id", "input_version", name="uq_research_run_outbox_input"),
+        CheckConstraint("input_version >= 1 AND attempts >= 0 AND state IN ('pending','sent')", name="ck_research_run_outbox_state"),
+    )
+
+
+_RUN_IMMUTABLE_COLUMNS = {
+    ResearchRun: ("id", "user_id", "investigation_id", "conversation_id", "revision_id", "snapshot_id", "payload_sha256", "context_json", "original_question", "continuation_of", "created_at"),
+    ResearchRunStep: ("run_id", "step_id", "kind", "request_sha256", "request_json", "created_at"),
+    ResearchRunOutbox: ("id", "run_id", "input_version", "delivery_id", "created_at"),
+}
+
+
+def _research_run_update_guard(_mapper, _connection, target):
+    state = inspect(target)
+    if any(state.attrs[column].history.has_changes() for column in _RUN_IMMUTABLE_COLUMNS[type(target)]):
+        raise ValueError("Research run identity and prepared requests are immutable")
+    if isinstance(target, ResearchRunStep) and (state.attrs.state.history.deleted == ["committed"] or (target.state == "committed" and not state.attrs.state.history.has_changes())):
+        raise ValueError("Committed research steps are immutable")
+    if isinstance(target, ResearchRun) and state.attrs.manifest_json.history.deleted and state.attrs.manifest_json.history.deleted[0] is not None:
+        raise ValueError("Research run execution manifest is immutable")
+    if isinstance(target, ResearchRun):
+        for column in ("version", "input_version", "event_cursor", "active_elapsed_ms", "tool_actions", "model_calls", "malformed_repairs", "lease_epoch"):
+            history = state.attrs[column].history
+            if history.deleted and getattr(target, column) < history.deleted[0]:
+                raise ValueError("Research run counters are monotonic")
+        old_status = state.attrs.status.history.deleted
+        previous = old_status[0] if old_status else target.status
+        if previous in {"completed", "partial", "cancelled", "failed"} and any(item.history.has_changes() for item in state.attrs):
+            raise ValueError("Terminal research runs are immutable")
+
+
+for _run_model in _RUN_IMMUTABLE_COLUMNS:
+    event.listen(_run_model, "before_update", _research_run_update_guard)
+    event.listen(_run_model, "before_delete", _research_record_is_immutable)
+for _run_model in (ResearchRunInputHistory, ResearchRunEvent, ResearchRunPayload, ResearchRunAttempt, ResearchRunManifest):
+    event.listen(_run_model, "before_update", _research_record_is_immutable)
+    event.listen(_run_model, "before_delete", _research_record_is_immutable)

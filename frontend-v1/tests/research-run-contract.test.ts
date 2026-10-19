@@ -189,7 +189,7 @@ const { ResearchActivity, ResearchResults, ResearchEvidence } = activityModule.e
 
 for (const locale of ["en", "ja"] as const) test(`actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (${locale})`, async () => {
   const empty = renderToStaticMarkup(React.createElement(ResearchActivity, { locale, runs: [] }));
-  assert.match(empty, locale === "en" ? /No submitted activity/ : /実行履歴はありません/); assert.match(empty, /C20/);
+  assert.match(empty, locale === "en" ? /No submitted activity/ : /実行履歴はありません/); assert.match(empty, locale === "en" ? /Research execution is unavailable/ : /リサーチの実行は利用できません/); assert.doesNotMatch(empty, /C\d{2}/);
   const runs: contract.ResearchRun[] = [];
   for (const scenario of ["running", "failed", "partial", "clarification"] as const) {
     const fixture = createC18RunFixture({ scenario }); const run = await fixture.submit(request()); await fixture.status(address(run)); runs.push(await fixture.status(address(run)));
@@ -204,6 +204,16 @@ for (const locale of ["en", "ja"] as const) test(`actual React activity/results/
   const evidence = runs.find((run) => run.result)!.result!.evidence[0];
   const detail = renderToStaticMarkup(React.createElement(ResearchEvidence, { locale, evidence })); assert.match(detail, snapshot === "a".repeat(64) ? /aaaaaaaaaaaaaaaa/ : /impossible/);
   assert.match(detail, locale === "en" ? /Retained artifact content is unavailable/ : /保持された成果物の内容は利用できません/);
+});
+for (const locale of ["en", "ja"] as const) test(`production completion and approval are honest without fixture labels or invented answers (${locale})`, () => {
+  const base: contract.ResearchRun = { id: uuid(4), context: context(), question: "Explore selected inventory", status: "completed", active_elapsed_ms: 3000, activity: [], event_cursor: 0, latest_event_cursor: 3, continuation_of: null, clarification: null, clarification_id: null, result: null, error: null, synthetic: false };
+  const complete = renderToStaticMarkup(React.createElement(ResearchActivity, { locale, runs: [base], executionAvailable: true }));
+  const results = renderToStaticMarkup(React.createElement(ResearchResults, { locale, runs: [base] }));
+  for (const markup of [complete, results]) { assert.match(markup, locale === "en" ? /Exploration finished\. An answer is not available yet\./ : /探索が完了しました。回答はまだありません。/); assert.doesNotMatch(markup, /Synthetic|C20|C21|ra-result-body|ra-citations/); }
+  assert.match(complete, locale === "en" ? /Showing 0 of 3 saved activity updates/ : /処理状況3件のうち0件を表示/);
+  const approval = renderToStaticMarkup(React.createElement(ResearchActivity, { locale, runs: [{ ...base, status: "awaiting_approval" }], executionAvailable: true, onCancel: () => undefined }));
+  assert.match(approval, locale === "en" ? /Awaiting approval/ : /承認待ち/); assert.match(approval, locale === "en" ? /paused while waiting/ : /一時停止中/);
+  assert.match(approval, locale === "en" ? />Cancel activity<\/button>/ : />処理をキャンセル<\/button>/); assert.doesNotMatch(approval, /<button[^>]*>Approve|<form|ra-result-body/);
 });
 test("a result citation invokes the supplied evidence action with the exact run and identity", async () => {
   const fixture = createC18RunFixture(); const run = await fixture.submit(request()); await fixture.status(address(run)); const done = await fixture.status(address(run));

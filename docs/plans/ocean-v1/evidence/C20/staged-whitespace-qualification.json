@@ -1,0 +1,584 @@
+{
+  "component": "C20",
+  "unqualified_source_and_docs_check": "passed",
+  "qualified_exact_byte_paths": {
+    "docs/plans/ocean-v1/evidence/C20/backend-tests.txt": {
+      "sha256": "f7321a8797df8471ef9d2e39b3af0de4a48e5392feeddf46de5deae5b6ab4d8c",
+      "reason": "Immutable raw test/build output; exact original bytes and prior receipt hashes retained.",
+      "findings": [
+        {
+          "line": 820,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 827,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 834,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 841,
+          "kind": "trailing whitespace"
+        }
+      ]
+    },
+    "docs/plans/ocean-v1/evidence/C20/frontend-full-build.txt": {
+      "sha256": "f58f6d1d2b361d4dff83627e4bc388ea9acb2922e1335f5d37136f81df68bb3f",
+      "reason": "Immutable raw test/build output; exact original bytes and prior receipt hashes retained.",
+      "findings": [
+        {
+          "line": 14,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 15,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 16,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 36,
+          "kind": "new blank line at EOF"
+        }
+      ]
+    },
+    "docs/plans/ocean-v1/evidence/C20/initial-postgres/postgres-tests.txt": {
+      "sha256": "09f7e2b5594f0ba4c9e1ec7125a2bf4c8383a1631dddd7356f5c237f9f40319a",
+      "reason": "Immutable raw test/build output; exact original bytes and prior receipt hashes retained.",
+      "findings": [
+        {
+          "line": 182,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 194,
+          "kind": "trailing whitespace"
+        }
+      ]
+    },
+    "docs/plans/ocean-v1/evidence/C20/store-initial.txt": {
+      "sha256": "3e289f86ce6475a2dcef3762146a5ed37c33e289791a1fd0856419427f83bdab",
+      "reason": "Immutable raw test/build output; exact original bytes and prior receipt hashes retained.",
+      "findings": [
+        {
+          "line": 17,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 21,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 29,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 61,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 65,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 73,
+          "kind": "trailing whitespace"
+        }
+      ]
+    },
+    "migrations/versions/20261019_0018_research_runs.py": {
+      "sha256": "bbd66a61de9b80eea7e9dce9304315ac6347b75704eacb4ad702cf1b0fb45a43",
+      "reason": "Whitespace inside source-pinned, actually tested CREATE TABLE SQL string literals; original exact DDL bytes retained.",
+      "findings": [
+        {
+          "line": 14,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 15,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 16,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 17,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 18,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 19,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 20,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 21,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 22,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 23,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 24,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 25,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 26,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 27,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 28,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 29,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 30,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 31,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 32,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 33,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 34,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 35,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 36,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 37,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 38,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 39,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 40,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 41,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 42,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 43,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 44,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 45,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 46,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 47,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 48,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 49,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 50,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 51,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 52,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 53,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 54,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 55,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 56,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 57,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 64,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 65,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 66,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 67,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 68,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 69,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 70,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 71,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 72,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 73,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 74,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 75,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 76,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 77,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 78,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 79,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 80,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 86,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 87,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 88,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 89,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 90,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 91,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 92,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 93,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 99,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 100,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 101,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 102,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 103,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 104,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 110,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 111,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 112,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 113,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 114,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 115,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 116,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 117,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 118,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 119,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 120,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 121,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 122,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 128,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 129,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 130,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 131,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 132,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 133,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 134,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 135,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 136,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 137,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 143,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 144,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 145,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 146,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 147,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 148,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 149,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 150,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 156,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 157,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 158,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 159,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 160,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 161,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 162,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 163,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 164,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 165,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 166,
+          "kind": "trailing whitespace"
+        },
+        {
+          "line": 167,
+          "kind": "trailing whitespace"
+        }
+      ]
+    },
+    "tests/research_run_postgres_support.py": {
+      "sha256": "f583a6cd09a5cd68c9bb8311b995827a68c86c30e41609ec3b3a3f9c3f50166e",
+      "reason": "One harmless final empty line in the source-pinned disposable PostgreSQL helper; no executable whitespace finding.",
+      "findings": [
+        {
+          "line": 135,
+          "kind": "new blank line at EOF"
+        }
+      ]
+    }
+  },
+  "qualified_finding_count": 135,
+  "notes": "No source or original receipt bytes changed after acceptance. SQL-literal locations were checked against Python AST; helper exception is EOF only."
+}

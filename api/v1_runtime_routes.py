@@ -21,6 +21,7 @@ from api.auth import CurrentUser, get_current_user
 from orchestration.catalogue_browser import CatalogueBrowser
 from orchestration.catalogue_service import CatalogueService
 from orchestration.investigations import InvestigationService
+from orchestration.research_runs import ResearchRunService
 from schema.context_catalogue import Identifier, canonical_json
 
 VERSION = "ocean-v1-runtime-v1"
@@ -100,7 +101,40 @@ def _research_available(configuration, catalogue_service, catalogue_browser, inv
         return False
 
 
-def runtime_response(user, configured, catalogue_service=None, catalogue_browser=None, investigation_service=None):
+def _research_runs(configuration, user, research_status, investigations, service):
+    capability = {
+        "version": "research-runs-v1", "transport": "unavailable",
+        "submit_enabled": False, "dispatch_enabled": False,
+        "synthesis": "unavailable", "reason": "Research execution is unavailable.",
+    }
+    try:
+        history_available = (
+            research_status == "ready" and {"chat:use", "data:read"} <= user.permissions
+            and config.v1_research_runs_enabled()
+            and isinstance(service, ResearchRunService)
+            and service.investigations is investigations
+            and service.site_id == configuration.site_id
+        )
+    except config.SecurityConfigurationError:
+        history_available = False
+    if not history_available:
+        return capability
+    capability["transport"] = "http-v1"
+    capability["reason"] = "New research execution is unavailable. Saved research remains accessible."
+    try:
+        dispatch = (
+            config.v1_research_dispatch_enabled() and config.v1_research_controller_enabled()
+            and service.dispatch_available is True
+        )
+    except config.SecurityConfigurationError:
+        dispatch = False
+    capability["submit_enabled"] = capability["dispatch_enabled"] = dispatch
+    if dispatch:
+        capability["reason"] = None
+    return capability
+
+
+def runtime_response(user, configured, catalogue_service=None, catalogue_browser=None, investigation_service=None, research_run_service=None):
     """Own configuration callback lifetime and serialization in the same worker."""
     if not isinstance(user, CurrentUser):
         return _error(401, "authentication_required", "Authentication is required")
@@ -135,13 +169,19 @@ def runtime_response(user, configured, catalogue_service=None, catalogue_browser
             "role": user.role, "account_type": user.account_type,
             "status": user.status, "permissions": sorted(user.permissions),
         }
+        research_runs = _research_runs(
+            configuration, user, capabilities["research"]["status"],
+            investigation_service, research_run_service,
+        )
         revision = hashlib.sha256(canonical_json({
             "identity": identity, "site_id": configuration.site_id,
             "configuration_revision": configuration.revision, "capabilities": capabilities,
+            "research_runs": research_runs,
         }).encode()).hexdigest()
         return JSONResponse(content={
             "version": VERSION, "deployment": "v1", "identity": identity,
             "permission_revision": revision, "capabilities": capabilities,
+            "research_runs": research_runs,
         })
     except Exception:
         # Host callbacks/configuration may fail; paths and provider text are not
@@ -160,6 +200,7 @@ async def runtime(request: Request):
         getattr(request.app.state, "catalogue_service", None),
         getattr(request.app.state, "catalogue_browser", None),
         getattr(request.app.state, "investigation_service", None),
+        getattr(request.app.state, "research_run_service", None),
     )
     await checkpoint()
     return response

@@ -442,6 +442,14 @@ def route_permission(method: str, path: str) -> Optional[str]:
     method = method.upper()
     if path == "/v1/runtime":
         return "profile:read" if method == "GET" else None
+    if path.startswith("/research/runs"):
+        if method == "POST" and path in {
+            "/research/runs/submit", "/research/runs/status", "/research/runs/events",
+            "/research/runs/cancel", "/research/runs/clarify", "/research/runs/continue",
+            "/research/runs/list",
+        }:
+            return "chat:use"
+        return None
     if path.startswith("/research/investigations"):
         if method == "POST" and path in {
             "/research/investigations/create", "/research/investigations/list",
@@ -555,6 +563,8 @@ async def authorization_middleware(
                 403,
                 f"Permission required: {permission}",
             )
+        if request.url.path.startswith("/research/runs") and "data:read" not in user.permissions:
+            raise AuthenticationFailure(403, "Research access is denied")
         if config.production_like_environment():
             policy = policy_for_request(request.method, request.url.path)
             if policy is not None:
@@ -594,6 +604,12 @@ async def authorization_middleware(
                 401: ("authentication_required", "Authentication is required"),
                 403: ("access_denied", "Investigation access is denied"),
             }.get(exc.status_code, ("investigations_unavailable", "Investigations are unavailable"))
+            content = {"error": {"code": code, "message": message}}
+        if request.url.path.startswith("/research/runs"):
+            code, message = {
+                401: ("authentication_required", "Authentication is required"),
+                403: ("access_denied", "Research access is denied"),
+            }.get(exc.status_code, ("research_runs_unavailable", "Research history is unavailable"))
             content = {"error": {"code": code, "message": message}}
         return JSONResponse(
             status_code=exc.status_code,

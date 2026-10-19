@@ -1,0 +1,90 @@
+{
+  "component": "C20",
+  "created_at": "2026-10-19T00:08:09.006815+00:00",
+  "scope": "Independent read-only backend/API/store review and replay integration review at exact source hashes",
+  "reviewer": "/root/c18_run_presentation",
+  "reviewer_independence": "Reviewer did not author C20 backend/API/store/models/migration. Reviewer authored the C19/C20 controller contracts/replay port; those paths are included for integration review and source binding, not claimed as independently authored-code review.",
+  "status": "no_remaining_blockers_in_reviewed_scope_not_component_acceptance",
+  "blocking_findings": 0,
+  "findings": [],
+  "reviewed_source_sha256": {
+    "api/main.py": "0d9e527e2fc5ee22671232755b76cc845024cbdc67f67b6525f6d1e76f8b090a",
+    "api/research_run_routes.py": "dade58a4067252b8b0e9ac05dea2ebcd3773c036b38d4280678961b3c644cb45",
+    "api/v1_runtime_routes.py": "d1d0c8ca31466694223b783c570110fbe1a4c1abbd67f8dfb8502b2b47b378e5",
+    "api/auth.py": "d9f4813b3ce392869ceb317da3600f183aa80d09b0b5e4526d04f3ca6f9c8752",
+    "api/rate_limit.py": "4e9a3b159ab72af632911f4be06eaaf7f695e78ee2f739e14cb34e1dc01f2971",
+    "config.py": "4c285a4e7baaf72802fd743c5a0e9d08a059ea7050bd369172b44d578c9f5800",
+    "schema/research_runs.py": "080080703d0d758ebf5c301cb2c33d7e7a7f2f1511f0f084caa4208ac2548dfb",
+    "schema/research_controller.py": "af4e1091b11c7affa6d0f1577582d6b4261d9cf9ace9b745312d756af117d634",
+    "db/app_models.py": "6b2c59e854537a02e2fd7c3f0a85aac4389793cfca832c0fb71e1315d6c4fe2d",
+    "migrations/versions/20261019_0018_research_runs.py": "bbd66a61de9b80eea7e9dce9304315ac6347b75704eacb4ad702cf1b0fb45a43",
+    "orchestration/research_runs.py": "11f62de141f07c04a0a9bf736a3875154dab5ab438d4d354ea4c634ad15b8b0b",
+    "orchestration/research_dispatch.py": "f4af629f34995572abf47a0db77925ad7a648c45091547fc401b933c533f7e06",
+    "orchestration/research_controller.py": "3b612ccec487ea771357c04b89c9bf90f51a78314242d61fec8b0e1f2abbc2d0",
+    "orchestration/research_controller_budget.py": "d8b6884b6cb3a957b7b0733f5b1326f61d94b43ca2b10c29e0750801a3993f57",
+    "orchestration/research_controller_replay.py": "71af040917e23c248ea04c49adcadf3683e0e16719090af08f3e6eec06c7cf45",
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "orchestration/research_controller_observations.py": "e3aeff8f74aa25997ebd1e000ddba490326bde6e908509fc212627379b71b81d"
+  },
+  "reviewed_test_source_sha256": {
+    "tests/test_research_runs.py": "b139dd3c4128d49347104d570c901d5aa2cd9065f567e02ce7701a45e2742af8",
+    "tests/research_run_support.py": "3b601d61d83859d9ead46cf26bc0728d0e0c43ecca71b34036ace16235b65829",
+    "tests/integration/test_research_runs_postgres.py": "2f687fcf45592a77921d41c55ddd6670449fad42ba52c38214dc7d4ed1c1db29",
+    "tests/research_run_postgres_support.py": "f583a6cd09a5cd68c9bb8311b995827a68c86c30e41609ec3b3a3f9c3f50166e",
+    "tests/test_research_controller_replay.py": "8751dd3f56c3d3244c012490ab5a986de3928f0241550d0bcd989f09c956ef84"
+  },
+  "preserved_receipt_sha256": {
+    "docs/plans/ocean-v1/evidence/C20/store-verification.json": "edc518952380d04b90ae000b4363bd0e319f62ca09fc0b32867b17788d35ff7e",
+    "docs/plans/ocean-v1/evidence/C20/replay-verification.json": "ce9b2c0572efbd12a49d28904b78b1a4f0ad212be64ddcd164f890dbd3ff2788",
+    "docs/plans/ocean-v1/evidence/C19/verification.json": "7f0236c1f73ff670f17863c94c87f3bacf31165619a4b081052674f34dc0b1ee",
+    "docs/plans/ocean-v1/evidence/C19/accepted-source.json": "44fed33e1bf9f21b15d0494210db6bb7bc7cac2bc3cb224aeb0215b736335f8d",
+    "docs/plans/ocean-v1/evidence/C19/delivery.json": "85a4cc6f288fb9078c99f4002f6d2f24cf480594801b6c5f0d0f24af7d6c89fb"
+  },
+  "resolved_during_review": [
+    {
+      "issue": "A policy change at terminal event creation could occur after the initial lease authorization check.",
+      "resolution": "Terminal event and result are flushed, then current owner, active frozen C17 context and catalogue policy are checked again inside the transaction before commit. The event-hook revocation test asserts rollback of terminal status/result/event."
+    },
+    {
+      "issue": "A long uncertain active interval could overflow a PostgreSQL INTEGER elapsed counter.",
+      "resolution": "Database active elapsed is conservatively saturated at the explicit exhausted180000ms high-water; the100-day uncertainty test asserts this without granting fresh budget."
+    },
+    {
+      "issue": "Concurrent investigation archive/retirement needed serialization with active execution/publication.",
+      "resolution": "Require-active checks lock the actual owned ResearchInvestigation row FOR UPDATE and check active status in the outer execution/admission transaction."
+    },
+    {
+      "issue": "Owner FOR UPDATE could conflict with C17 audit foreign-key KEY SHARE in an owner/investigation lock-order cycle.",
+      "resolution": "Fresh owner locking uses PostgreSQL FOR NO KEY UPDATE, blocking role/status changes while allowing audit foreign-key KEY SHARE checks."
+    }
+  ],
+  "review_checks": [
+    "Exact action allowlist, current-owner permissions, no private cross-owner administrative bypass, strict bounded finite UTF-8 JSON, controlled errors and public DTO validation.",
+    "Default-off history/controller/dispatch flags, explicit same-site service/queue/controller wiring, history availability separated from dispatch, no production fake-queue fallback.",
+    "Frozen investigation/conversation/revision/snapshot/hash binding, immutable original/clarification history, request-bound idempotency and immutable linked continuation segments.",
+    "Current C17 context, source-policy revision and actor binding at journal/replay/publication/history boundaries; saved authorization never grants current access.",
+    "Lease epoch/input-version/cancellation fencing and persisted physical reservations before effects; committed exact-outcome replay bypasses new charges while uncertain attempts remain charged.",
+    "Single repair reservation survives recovery, invalid database clock is sticky exhaustion, conservative database elapsed time remains monotonic.",
+    "Parent continuation reuse is restricted to matching-manifest committed pre-model pin/inventory prefix; model/repair/turn/finish decisions are not seeded.",
+    "Append-only retained payload/input/event/attempt/manifest tables, immutable prepared-step identity and committed outcomes, monotonic run counters and terminal immutability in ORM and native PostgreSQL migration guards.",
+    "Native PostgreSQL test source uses real sessions/row locks, commit-loss injection, populated C17 compatibility, direct SQL guard checks, protected downgrade and dedicated observed loopback disposable schemas with cleanup."
+  ],
+  "tests_rerun_by_this_review": false,
+  "verification_relied_on": {
+    "store_focused": "Pinned store-verification.json records31 passed in40.67s; final relevant test source was inspected.",
+    "replay_focused": "Pinned replay-verification.json records34 final focused replay cases and the scoped87-case C19 compatibility/replay run with its explicit source-stage qualification.",
+    "postgresql_acceptance": "Parent-owned actual PostgreSQL acceptance is in progress at review creation; static test review is not a passing PostgreSQL execution claim.",
+    "full_backend": "Parent-owned source-frozen backend compatibility suite is in progress at review creation."
+  },
+  "remaining_acceptance_gates": [
+    "Actual source-bound disposable PostgreSQL migrations/races/direct-SQL/cleanup acceptance.",
+    "Full backend compatibility, HTTP/wire/frontend/browser acceptance and any resulting source amendments.",
+    "Final component status/spec/handoff/checkpoint and source-bound hosted CI."
+  ],
+  "qualifications": [
+    "This receipt is a static review result at the listed hashes; it does not replace component acceptance or scientific approval.",
+    "No tests were rerun, no source files were modified by this review, and original receipts were preserved.",
+    "No live provider, cloud provisioning/deployment, real-data acquisition/transfer or legacy-site mutation was performed.",
+    "Final source amendments require explicit revalidation against these review pins; pending frontend polling amendments are outside this backend review."
+  ]
+}

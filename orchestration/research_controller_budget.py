@@ -138,6 +138,25 @@ class ActiveBudget:
         self.repairs += 1
         return self.snapshot()
 
+    def adopt_high_water(self, restored: BudgetState):
+        """Adopt a host's conservatively settled durable charge, never refund."""
+        if (
+            type(restored.active_seconds) not in (int, float)
+            or not math.isfinite(restored.active_seconds)
+            or restored.active_seconds < 0
+            or type(restored.tool_actions) is not int
+            or not 0 <= restored.tool_actions <= self.max_tools
+            or type(restored.repairs) is not int
+            or not 0 <= restored.repairs <= self.max_repairs
+        ):
+            raise ValueError("Invalid durable budget high water")
+        current = self.snapshot()
+        self.initial_seconds += max(
+            0.0, restored.active_seconds - current.active_seconds
+        )
+        self.tools = max(self.tools, restored.tool_actions)
+        self.repairs = max(self.repairs, restored.repairs)
+
     def close(self, *, clock_failed=False):
         self.closed = self.last_known_state() if clock_failed else self.snapshot()
         return self.closed

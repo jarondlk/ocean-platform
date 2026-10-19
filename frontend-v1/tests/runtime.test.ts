@@ -29,6 +29,28 @@ test("bootstrap exact fields are validated and copied without changing input", (
   assert.deepEqual(input, before);
 });
 
+const runCapability = () => ({ version: "research-runs-v1", transport: "http-v1", submit_enabled: true, dispatch_enabled: true, synthesis: "unavailable", reason: null as string | null });
+test("run discovery is optional and copied only from the exact verified runtime block", () => {
+  assert.equal(parseRuntimeBootstrap(bootstrap()).research_runs, undefined);
+  const input = { ...bootstrap(), research_runs: runCapability() }, parsed = parseRuntimeBootstrap(input);
+  assert.deepEqual(parsed.research_runs, input.research_runs); assert.notEqual(parsed.research_runs, input.research_runs);
+  input.research_runs.submit_enabled = false; assert.equal(parsed.research_runs!.submit_enabled, true);
+  const disabled = { ...bootstrap(), research_runs: { ...runCapability(), transport: "unavailable", submit_enabled: false, dispatch_enabled: false, reason: "Execution is not configured" } };
+  assert.equal(parseRuntimeBootstrap(disabled).research_runs!.transport, "unavailable");
+  const paused = { ...bootstrap(), research_runs: { ...runCapability(), submit_enabled: false, dispatch_enabled: false, reason: "New work is paused" } };
+  assert.equal(parseRuntimeBootstrap(paused).research_runs!.transport, "http-v1");
+});
+for (const [label, change] of [
+  ["old version", (value: any) => { value.version = "old"; }], ["unknown transport", (value: any) => { value.transport = "fixture"; }],
+  ["endpoint injection", (value: any) => { value.endpoint = "https://untrusted.invalid"; }], ["synthesis claim", (value: any) => { value.synthesis = "ready"; }],
+  ["nonboolean flag", (value: any) => { value.dispatch_enabled = 1; }], ["missing flag", (value: any) => { delete value.submit_enabled; }],
+  ["submit without dispatch", (value: any) => { value.dispatch_enabled = false; }], ["unavailable with submit", (value: any) => { value.transport = "unavailable"; value.reason = "Stopped"; }],
+  ["unavailable without reason", (value: any) => { value.transport = "unavailable"; value.submit_enabled = false; value.dispatch_enabled = false; }],
+] as const) test(`run discovery rejects ${label}`, () => { const capability = runCapability(); change(capability); assert.throws(() => parseRuntimeBootstrap({ ...bootstrap(), research_runs: capability }), RuntimeContractError); });
+test("a run HTTP capability cannot restore missing research permissions", () => {
+  for (const permission of ["chat:use", "data:read"]) { const input = { ...bootstrap(), research_runs: runCapability() }; input.identity.permissions = input.identity.permissions.filter(value => value !== permission); assert.throws(() => parseRuntimeBootstrap(input), RuntimeContractError); }
+});
+
 const malformed: [string, (v: ReturnType<typeof bootstrap>) => void][] = [
   ["foreign mode field", (v) => Object.assign(v, { mode: "preview" })],
   ["old version", (v) => { v.version = "old" as typeof RUNTIME_VERSION; }],

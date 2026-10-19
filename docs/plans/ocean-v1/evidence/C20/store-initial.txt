@@ -1,0 +1,94 @@
+....FF........                                                           [100%]
+=================================== FAILURES ===================================
+________ test_crash_boundary_charges_uncertain_or_replays_commit[False] ________
+
+actual = RunFixture(retained=InvestigationFixture(service=<orchestration.investigations.InvestigationService object at 0x1145ff...ef3e0>, clock=<tests.research_run_support.RunClock object at 0x11d5efe00>, state={'runtime': None, 'factory_calls': 4})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11e3ff650>
+committed = False
+
+    @pytest.mark.parametrize("committed", [False, True])
+    def test_crash_boundary_charges_uncertain_or_replays_commit(actual, monkeypatch, committed):
+        run = actual.submit()
+        delivery = actual.delivery(run)
+        original = RunJournal.commit_step
+        failed, outbound = [], []
+        catalogue = actual.retained.service.catalogue
+        execute = catalogue.execute
+    
+        def observed(*args, **kwargs):
+            outbound.append(args[0])
+            return execute(*args, **kwargs)
+    
+        def crash(self, *args):
+            if not failed:
+                failed.append(True)
+                if committed:
+                    original(self, *args)
+                raise RuntimeError("Synthetic worker interruption")
+            return original(self, *args)
+    
+        monkeypatch.setattr(catalogue, "execute", observed)
+        monkeypatch.setattr(RunJournal, "commit_step", crash)
+        with pytest.raises(ControllerAdmissionError):
+            actual.service.execute_delivery(**delivery)
+        actual.clock.advance(31)
+        result = actual.service.execute_delivery(**delivery)
+        assert result["run"]["status"] == "completed"
+        with actual.retained.factory() as session:
+            stored = session.get(ResearchRun, uuid.UUID(run["id"]))
+            assert stored.active_elapsed_ms >= 31000
+            assert stored.tool_actions == (1 if committed else 2)
+            assert len(session.scalars(select(ResearchRunAttempt).where(ResearchRunAttempt.run_id == stored.id)).all()) == (1 if committed else 2)
+>       assert len(outbound) == (1 if committed else 2)
+E       AssertionError: assert 27 == 2
+E        +  where 27 = len(['catalogue.overview', 'catalogue.overview', 'catalogue.overview', 'catalogue.overview', 'catalogue.overview', 'catalogue.overview', ...])
+
+tests/test_research_runs.py:155: AssertionError
+________ test_crash_boundary_charges_uncertain_or_replays_commit[True] _________
+
+actual = RunFixture(retained=InvestigationFixture(service=<orchestration.investigations.InvestigationService object at 0x1145ff...ef3e0>, clock=<tests.research_run_support.RunClock object at 0x11d5efe00>, state={'runtime': None, 'factory_calls': 6})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11d69ccb0>
+committed = True
+
+    @pytest.mark.parametrize("committed", [False, True])
+    def test_crash_boundary_charges_uncertain_or_replays_commit(actual, monkeypatch, committed):
+        run = actual.submit()
+        delivery = actual.delivery(run)
+        original = RunJournal.commit_step
+        failed, outbound = [], []
+        catalogue = actual.retained.service.catalogue
+        execute = catalogue.execute
+    
+        def observed(*args, **kwargs):
+            outbound.append(args[0])
+            return execute(*args, **kwargs)
+    
+        def crash(self, *args):
+            if not failed:
+                failed.append(True)
+                if committed:
+                    original(self, *args)
+                raise RuntimeError("Synthetic worker interruption")
+            return original(self, *args)
+    
+        monkeypatch.setattr(catalogue, "execute", observed)
+        monkeypatch.setattr(RunJournal, "commit_step", crash)
+        with pytest.raises(ControllerAdmissionError):
+            actual.service.execute_delivery(**delivery)
+        actual.clock.advance(31)
+        result = actual.service.execute_delivery(**delivery)
+        assert result["run"]["status"] == "completed"
+        with actual.retained.factory() as session:
+            stored = session.get(ResearchRun, uuid.UUID(run["id"]))
+            assert stored.active_elapsed_ms >= 31000
+            assert stored.tool_actions == (1 if committed else 2)
+            assert len(session.scalars(select(ResearchRunAttempt).where(ResearchRunAttempt.run_id == stored.id)).all()) == (1 if committed else 2)
+>       assert len(outbound) == (1 if committed else 2)
+E       AssertionError: assert 22 == 1
+E        +  where 22 = len(['catalogue.overview', 'catalogue.overview', 'catalogue.overview', 'catalogue.overview', 'catalogue.overview', 'catalogue.overview', ...])
+
+tests/test_research_runs.py:155: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_research_runs.py::test_crash_boundary_charges_uncertain_or_replays_commit[False]
+FAILED tests/test_research_runs.py::test_crash_boundary_charges_uncertain_or_replays_commit[True]
+2 failed, 12 passed in 17.22s

@@ -1,0 +1,80 @@
+{
+  "component": "C20",
+  "scope": "Production frontend run HTTP transport, account memory replay, runtime discovery, history/event integration and presentation",
+  "outcome": "Focused frontend implementation verification passed on the pinned source",
+  "reviewed_source_sha256": {
+    "frontend-v1/src/research-run-contract.ts": "3b191b2ea7cf7b384392dc4a99234590adfdaafe921d78eae72989028ef48c33",
+    "frontend-v1/src/research-run-service.ts": "f6bc0c418fcf5c68f84f4e32bc6c47953954a8ab5e45bf0825c57636e8242eb3",
+    "frontend-v1/src/research-state.ts": "f85a9744d872d230ca93811dd70097a640adc3fb2c7dd6cc3db7f0ce27e5aeb9",
+    "frontend-v1/src/research-activity.tsx": "1dd568bef762e4d3088d1e3a00862c32821dcc9444af2585922762ea6940d1a1",
+    "frontend-v1/src/research-workspace.tsx": "5388fe291867e078a35927636b19ced8ae0b8a5ba03eeedc606752c41bee746f",
+    "frontend-v1/src/runtime.ts": "dec621ad1c629c65bb818236c8fecdadadcd15001d28996d0d44c8086b87c80d",
+    "frontend-v1/src/runtime-app.tsx": "087616c555ae75eaf6e28f064b9d51878642acb5f9963dbdc9c303d58a264826",
+    "frontend-v1/tests/research-run-contract.test.ts": "5af27861628e8a4acb85d3bb2ec07605b712e0ea3384cbbfc8ebc9cfc56eabe7",
+    "frontend-v1/tests/research-run-service.test.ts": "7f03cc7b8026296be63afeac22c5396ed1314f4172b74034b1e9aa9f49fe939e",
+    "frontend-v1/tests/research-run-wire.test.ts": "ef19edf42a4cf2e2910721759e236a0972d8f5946285fb598cbc47480aaf63f0",
+    "frontend-v1/tests/research-state.test.ts": "9a8ea55f2798be319af7ba01a773522869bb4b4c1ede5bb8c701d029ee530390",
+    "frontend-v1/tests/runtime.test.ts": "db73df3ebae7232e46b4c04f949c2f25d9d6abbbb5df068b32202a69eb93f328"
+  },
+  "source_aggregate_sha256": "600782581bda13aa71db92bdd18ce62394082ad40b7718a416592bdae0834c1f",
+  "verification": [
+    {
+      "log": "docs/plans/ocean-v1/evidence/C20/frontend-focused-tests.txt",
+      "sha256": "e6f87faf970acb7249df4b8b6f82ec59b5fc706e78a4e42d6f1ed980d29eb963",
+      "passed": 222,
+      "failed": 0
+    },
+    {
+      "log": "docs/plans/ocean-v1/evidence/C20/frontend-event-presentation-tests.txt",
+      "sha256": "eb7d3877808d7f2b19d10dbe94b267fcfe5d1ab2bbd3998261d6113bc675d64b",
+      "passed": 35,
+      "failed": 0
+    },
+    {
+      "log": "docs/plans/ocean-v1/evidence/C20/frontend-wire-tests.txt",
+      "sha256": "993dbecf80b5b8dd2db9789e69ef9b05adb0e2264400d8e7ac048d005e677cb0",
+      "passed": 10,
+      "failed": 0
+    }
+  ],
+  "unique_focused_cases": 232,
+  "overlap_note": "The 35 presentation/contract follow-up cases overlap the 222-case focused suite and verify the final event-backfill copy change. The 10 actual-wire cases are additional.",
+  "strict_typecheck": {
+    "exit_code": 0,
+    "log": "docs/plans/ocean-v1/evidence/C20/frontend-typecheck-final.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "includes": "All seven owned app source files and all five owned test files"
+  },
+  "actual_python_wire": {
+    "path": "docs/plans/ocean-v1/evidence/C20/wire-fixtures.json",
+    "sha256": "65ff8f22460ed34b1cc2baba6849e71f7499e3880e9fd9df85795124df1bd7b0",
+    "captured_envelopes": 9,
+    "actions": [
+      "submit",
+      "status",
+      "events",
+      "cancel",
+      "clarify",
+      "continue",
+      "list"
+    ],
+    "frontend_tests": 10,
+    "execution": "Standalone TypeScript client decodes saved root-captured Python HTTP stack envelopes; frontend CI needs no Python or database."
+  },
+  "implemented_boundaries": [
+    "Fixed same-origin POST paths; no-store, omitted cookies, rejected redirects, optional in-memory bearer injection.",
+    "Strict bounded JSON/UTF-8/duplicate-key/depth/unsafe-number validation; authoritative HTTP error status despite malformed error body; aborted or late responses cannot commit.",
+    "Submit transmits original C17 IDs and expected hashes only; server owns frozen context resolution. Mutation retry preserves original immutable body and key.",
+    "Exact runtime research_runs discovery controls production availability; no network, URL, browser storage or legacy fixture fallback. Explicit development fixture injection remains separate.",
+    "Conversation-scoped history discovery and consecutive event backfill retain a separate high-water cursor. Snapshot merges preserve the complete immutable original context and verified events.",
+    "Permission/account changes clear protected in-memory state. Production history is displayed only after current authorized discovery; failures/timeouts hide it.",
+    "Disabled dispatch preserves authorized history and cancellation. Awaiting approval has no fabricated approval action. Ordinary completion with result:null states that an answer is not available."
+  ],
+  "qualifications": [
+    "No assembled browser verification is claimed; C26 remains the formal reload/reconnect/all-actions browser gate.",
+    "No external provider call, real-data acquisition, cloud provisioning or deployment was performed by this frontend task.",
+    "Root owns broad regressions, PostgreSQL acceptance, hosted CI, source checkpoint and final component delivery.",
+    "Initial test-only TypeScript narrowing/readonly failures are retained in frontend-typecheck-initial.txt and corrected before final checks.",
+    "Original C18/C19 receipts and the explicit development fixture source were not modified."
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "component": "C20",
+  "scope": "History polling and mutation coordination amendment",
+  "outcome": "Scheduler starvation and concurrent mutation history overwrite blocker resolved",
+  "supersedes_intentionally": {
+    "receipt": "docs/plans/ocean-v1/evidence/C20/frontend-verification.json",
+    "sha256": "5f7425eb2fd29c2cebc63d623ca0d15955ca1c41e70962c75926d83447ac1ccd",
+    "changes": {
+      "frontend-v1/src/research-workspace.tsx": {
+        "before": "5388fe291867e078a35927636b19ced8ae0b8a5ba03eeedc606752c41bee746f",
+        "after": "0958fa73fe9b25143c324d523471c341fac81c31fca883325c2565997032e5fd"
+      }
+    },
+    "reason": "Original history effect restarted slow reads on every2s poll or10s context tick; a tick could also start history during a mutation. Previous receipt remains immutable."
+  },
+  "added_sources": [
+    "frontend-v1/src/research-history-scheduler.ts",
+    "frontend-v1/tests/research-history-scheduler.test.ts"
+  ],
+  "reviewed_source_sha256": {
+    "frontend-v1/src/research-run-contract.ts": "3b191b2ea7cf7b384392dc4a99234590adfdaafe921d78eae72989028ef48c33",
+    "frontend-v1/src/research-run-service.ts": "f6bc0c418fcf5c68f84f4e32bc6c47953954a8ab5e45bf0825c57636e8242eb3",
+    "frontend-v1/src/research-state.ts": "f85a9744d872d230ca93811dd70097a640adc3fb2c7dd6cc3db7f0ce27e5aeb9",
+    "frontend-v1/src/research-activity.tsx": "1dd568bef762e4d3088d1e3a00862c32821dcc9444af2585922762ea6940d1a1",
+    "frontend-v1/src/research-workspace.tsx": "0958fa73fe9b25143c324d523471c341fac81c31fca883325c2565997032e5fd",
+    "frontend-v1/src/runtime.ts": "dec621ad1c629c65bb818236c8fecdadadcd15001d28996d0d44c8086b87c80d",
+    "frontend-v1/src/runtime-app.tsx": "087616c555ae75eaf6e28f064b9d51878642acb5f9963dbdc9c303d58a264826",
+    "frontend-v1/tests/research-run-contract.test.ts": "5af27861628e8a4acb85d3bb2ec07605b712e0ea3384cbbfc8ebc9cfc56eabe7",
+    "frontend-v1/tests/research-run-service.test.ts": "7f03cc7b8026296be63afeac22c5396ed1314f4172b74034b1e9aa9f49fe939e",
+    "frontend-v1/tests/research-run-wire.test.ts": "ef19edf42a4cf2e2910721759e236a0972d8f5946285fb598cbc47480aaf63f0",
+    "frontend-v1/tests/research-state.test.ts": "9a8ea55f2798be319af7ba01a773522869bb4b4c1ede5bb8c701d029ee530390",
+    "frontend-v1/tests/runtime.test.ts": "db73df3ebae7232e46b4c04f949c2f25d9d6abbbb5df068b32202a69eb93f328",
+    "frontend-v1/src/research-history-scheduler.ts": "a7893bbe5eb4a578a54559d2938c3164fb0f2b96447c818ebdcd4c85cbc82c2f",
+    "frontend-v1/tests/research-history-scheduler.test.ts": "fb1f4b4a79cc7a156602cf125e18590f4910446b62a85ae364dc7ed29c5861d9"
+  },
+  "source_aggregate_sha256": "55051274e77e6ee1d0ee8d55fa6a812e4c32cf3555a7522592c72fb9f9b35596",
+  "behavior": [
+    "One active read retains one original15s deadline. Repeated2s/10s/manual refreshes coalesce into at most one subsequent read.",
+    "History lifecycle dependencies exclude periodic context tick, run updates and busy presentation state.",
+    "Both C17 and run mutation paths pause/abort history before dispatch and resume only after their ownership-checked completion.",
+    "Navigation, invalid URL, access denial and unmount dispose immediately; signal, selection and epoch checks reject late publication."
+  ],
+  "verification": {
+    "tests": {
+      "path": "docs/plans/ocean-v1/evidence/C20/frontend-scheduler-contract-tests.txt",
+      "sha256": "aee106725b54783cc65a0237a9e365eb7eb45d1da5a0489de80f6b7b143003f8",
+      "passed": 42,
+      "failed": 0,
+      "note": "7 deterministic scheduler/actual TSX wiring cases plus35 existing contract/React/import-graph cases."
+    },
+    "typecheck": {
+      "path": "docs/plans/ocean-v1/evidence/C20/frontend-scheduler-final-typecheck.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "includes": "All8app and6test paths pinned here."
+    }
+  },
+  "qualifications": [
+    "Independent reviewer c18_runtime_guard reported no remaining concrete blocker; its separate source-pinned review receipt is authoritative for that review.",
+    "Initial scheduler Node strip-only syntax failure is preserved in frontend-scheduler-tests.txt; explicit options property fixed compatibility before final tests.",
+    "C26 assembled browser acceptance remains pending. This amendment performs no deployment, provider call or data acquisition."
+  ]
+}

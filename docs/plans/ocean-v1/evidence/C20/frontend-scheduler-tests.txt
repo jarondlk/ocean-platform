@@ -1,0 +1,45 @@
+TAP version 13
+# node:internal/modules/typescript:62
+#         throw new ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX(error.message);
+#               ^
+# SyntaxError [ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX]:   x TypeScript parameter property is not supported in strip-only mode
+#     ,-[17:1]
+#  14 |   private disposed = false;
+#  15 |   private readonly setTimer: NonNullable<HistorySchedulerOptions["setTimer"]>;
+#  16 |   private readonly clearTimer: NonNullable<HistorySchedulerOptions["clearTimer"]>;
+#  17 |   constructor(private readonly options: HistorySchedulerOptions) {
+#     :                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#  18 |     this.setTimer = options.setTimer ?? ((callback, delay) => setTimeout(callback, delay));
+#  19 |     this.clearTimer = options.clearTimer ?? (timer => clearTimeout(timer as ReturnType<typeof setTimeout>));
+#  20 |     if (!Number.isSafeInteger(options.timeoutMs ?? 15000) || (options.timeoutMs ?? 15000) < 1) throw new RangeError("Invalid history deadline");
+#     `----
+#     at parseTypeScript (node:internal/modules/typescript:62:15)
+#     at processTypeScriptCode (node:internal/modules/typescript:116:42)
+#     at stripTypeScriptModuleTypes (node:internal/modules/typescript:150:10)
+#     at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:170:30)
+#     at defaultGetFormat (node:internal/modules/esm/get_format:245:36)
+#     at defaultLoad (node:internal/modules/esm/load:120:22)
+#     at async ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:514:32) {
+#   code: 'ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX'
+# }
+# Node.js v22.14.0
+# Subtest: tests/research-history-scheduler.test.ts
+not ok 1 - tests/research-history-scheduler.test.ts
+  ---
+  duration_ms: 63.54225
+  location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1/tests/research-history-scheduler.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 66.661042

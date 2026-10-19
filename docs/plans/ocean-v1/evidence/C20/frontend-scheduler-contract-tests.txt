@@ -1,0 +1,220 @@
+TAP version 13
+# Subtest: a slow valid history request survives repeated 2s polls and the 10s context refresh without deadline reset
+ok 1 - a slow valid history request survives repeated 2s polls and the 10s context refresh without deadline reset
+  ---
+  duration_ms: 0.989875
+  ...
+# Subtest: poll requests coalesce and do not start another history read while a mutation is running
+ok 2 - poll requests coalesce and do not start another history read while a mutation is running
+  ---
+  duration_ms: 0.204958
+  ...
+# Subtest: a scheduler created during a mutation waits for its release before fetching
+ok 3 - a scheduler created during a mutation waits for its release before fetching
+  ---
+  duration_ms: 0.109208
+  ...
+# Subtest: one original deadline aborts an overlong read despite every refresh and reports timeout exactly once
+ok 4 - one original deadline aborts an overlong read despite every refresh and reports timeout exactly once
+  ---
+  duration_ms: 0.289209
+  ...
+# Subtest: navigation or access disposal aborts immediately and late completion cannot start a queued refresh
+ok 5 - navigation or access disposal aborts immediately and late completion cannot start a queued refresh
+  ---
+  duration_ms: 0.216459
+  ...
+# Subtest: an ordinary failed read settles and permits a later refresh without leaking unhandled rejection
+ok 6 - an ordinary failed read settles and permits a later refresh without leaking unhandled rejection
+  ---
+  duration_ms: 0.610292
+  ...
+# Subtest: the actual React workspace wires polling to the coordinator and excludes periodic state from its lifecycle
+ok 7 - the actual React workspace wires polling to the coordinator and excludes periodic state from its lifecycle
+  ---
+  duration_ms: 26.37875
+  ...
+# Subtest: submit snapshots and deeply freezes context without freezing or aliasing the caller
+ok 8 - submit snapshots and deeply freezes context without freezing or aliasing the caller
+  ---
+  duration_ms: 1.943917
+  ...
+# Subtest: a later context update affects new submissions while active activity and continuation retain the old revision
+ok 9 - a later context update affects new submissions while active activity and continuation retain the old revision
+  ---
+  duration_ms: 0.501542
+  ...
+# Subtest: all six operations are exposed with no implicit production transport
+ok 10 - all six operations are exposed with no implicit production transport
+  ---
+  duration_ms: 0.054333
+  ...
+# Subtest: deterministic completed outcome and public evidence qualifications
+ok 11 - deterministic completed outcome and public evidence qualifications
+  ---
+  duration_ms: 0.262125
+  ...
+# Subtest: deterministic partial outcome and public evidence qualifications
+ok 12 - deterministic partial outcome and public evidence qualifications
+  ---
+  duration_ms: 0.201792
+  ...
+# Subtest: deterministic failed outcome and public evidence qualifications
+ok 13 - deterministic failed outcome and public evidence qualifications
+  ---
+  duration_ms: 0.152042
+  ...
+# Subtest: clarification pauses active elapsed time and resumes the original binding
+ok 14 - clarification pauses active elapsed time and resumes the original binding
+  ---
+  duration_ms: 0.366042
+  ...
+# Subtest: cancellation or continuation from partial retains the immutable source run
+ok 15 - cancellation or continuation from partial retains the immutable source run
+  ---
+  duration_ms: 0.269459
+  ...
+# Subtest: cancellation or continuation from failed retains the immutable source run
+ok 16 - cancellation or continuation from failed retains the immutable source run
+  ---
+  duration_ms: 0.413916
+  ...
+# Subtest: cancellation or continuation from running retains the immutable source run
+ok 17 - cancellation or continuation from running retains the immutable source run
+  ---
+  duration_ms: 0.419167
+  ...
+# Subtest: cancellation or continuation from clarification retains the immutable source run
+ok 18 - cancellation or continuation from clarification retains the immutable source run
+  ---
+  duration_ms: 0.226042
+  ...
+# Subtest: monotonic public event pages replay exactly, reject reordered/context-substituted pages
+ok 19 - monotonic public event pages replay exactly, reject reordered/context-substituted pages
+  ---
+  duration_ms: 0.490291
+  ...
+# Subtest: event cursor -1 fails closed
+ok 20 - event cursor -1 fails closed
+  ---
+  duration_ms: 0.134084
+  ...
+# Subtest: event cursor 0.5 fails closed
+ok 21 - event cursor 0.5 fails closed
+  ---
+  duration_ms: 0.071958
+  ...
+# Subtest: event cursor Infinity fails closed
+ok 22 - event cursor Infinity fails closed
+  ---
+  duration_ms: 0.082041
+  ...
+# Subtest: event cursor 999 fails closed
+ok 23 - event cursor 999 fails closed
+  ---
+  duration_ms: 0.075208
+  ...
+# Subtest: status, events, cancellation, clarification and continuation cannot cross conversations
+ok 24 - status, events, cancellation, clarification and continuation cannot cross conversations
+  ---
+  duration_ms: 0.190667
+  ...
+# Subtest: operation replay reuses its result and rejects changed payload
+ok 25 - operation replay reuses its result and rejects changed payload
+  ---
+  duration_ms: 0.158542
+  ...
+# Subtest: aborted operations make no state changes
+ok 26 - aborted operations make no state changes
+  ---
+  duration_ms: 0.265875
+  ...
+# Subtest: elapsed time is monotonic despite a backwards injected clock
+ok 27 - elapsed time is monotonic despite a backwards injected clock
+  ---
+  duration_ms: 0.143208
+  ...
+# Subtest: invalid question does not enter a synthetic run
+ok 28 - invalid question does not enter a synthetic run
+  ---
+  duration_ms: 0.048542
+  ...
+# Subtest: invalid question does not enter a synthetic run
+ok 29 - invalid question does not enter a synthetic run
+  ---
+  duration_ms: 0.032625
+  ...
+# Subtest: invalid question does not enter a synthetic run
+ok 30 - invalid question does not enter a synthetic run
+  ---
+  duration_ms: 0.082625
+  ...
+# Subtest: invalid question does not enter a synthetic run
+ok 31 - invalid question does not enter a synthetic run
+  ---
+  duration_ms: 0.03225
+  ...
+# Subtest: invalid question does not enter a synthetic run
+ok 32 - invalid question does not enter a synthetic run
+  ---
+  duration_ms: 0.033542
+  ...
+# Subtest: binding and reference identity validation rejects invalid/mismatched/duplicate input
+ok 33 - binding and reference identity validation rejects invalid/mismatched/duplicate input
+  ---
+  duration_ms: 0.2555
+  ...
+# Subtest: C17 retained artifact references keep their own snapshots while catalogue references require the current snapshot
+ok 34 - C17 retained artifact references keep their own snapshots while catalogue references require the current snapshot
+  ---
+  duration_ms: 0.208333
+  ...
+# Subtest: reference uniqueness follows the complete C17 kind/id/snapshot identity
+ok 35 - reference uniqueness follows the complete C17 kind/id/snapshot identity
+  ---
+  duration_ms: 0.068209
+  ...
+# Subtest: production entry import graphs cannot select the development fixture
+ok 36 - production entry import graphs cannot select the development fixture
+  ---
+  duration_ms: 86.4755
+  ...
+# Subtest: elapsed formatter preserves zero and avoids fabricated wall time
+ok 37 - elapsed formatter preserves zero and avoids fabricated wall time
+  ---
+  duration_ms: 0.133541
+  ...
+# Subtest: actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (en)
+ok 38 - actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (en)
+  ---
+  duration_ms: 9.789125
+  ...
+# Subtest: actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (ja)
+ok 39 - actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (ja)
+  ---
+  duration_ms: 5.274667
+  ...
+# Subtest: production completion and approval are honest without fixture labels or invented answers (en)
+ok 40 - production completion and approval are honest without fixture labels or invented answers (en)
+  ---
+  duration_ms: 1.877875
+  ...
+# Subtest: production completion and approval are honest without fixture labels or invented answers (ja)
+ok 41 - production completion and approval are honest without fixture labels or invented answers (ja)
+  ---
+  duration_ms: 1.345
+  ...
+# Subtest: a result citation invokes the supplied evidence action with the exact run and identity
+ok 42 - a result citation invokes the supplied evidence action with the exact run and identity
+  ---
+  duration_ms: 0.23775
+  ...
+1..42
+# tests 42
+# suites 0
+# pass 42
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 461.573

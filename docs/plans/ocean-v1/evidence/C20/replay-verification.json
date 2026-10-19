@@ -1,0 +1,138 @@
+{
+  "component": "C20",
+  "scope": "Versioned C19 host replay port and budget compatibility; no persistence/dispatch implementation in this subtask",
+  "created_at": "2026-10-19T00:01:17.995068+00:00",
+  "base_source": "55b0e62ef49cd1c302b68d5127cf46a0d5d9d55c",
+  "source_sha256": {
+    "orchestration/research_controller.py": "3b612ccec487ea771357c04b89c9bf90f51a78314242d61fec8b0e1f2abbc2d0",
+    "orchestration/research_controller_budget.py": "d8b6884b6cb3a957b7b0733f5b1326f61d94b43ca2b10c29e0750801a3993f57",
+    "orchestration/research_controller_replay.py": "71af040917e23c248ea04c49adcadf3683e0e16719090af08f3e6eec06c7cf45",
+    "tests/test_research_controller_replay.py": "8751dd3f56c3d3244c012490ab5a986de3928f0241550d0bcd989f09c956ef84"
+  },
+  "intentional_C19_supersessions": {
+    "orchestration/research_controller.py": {
+      "accepted_C19_sha256": "aa4c37acb255fc24021175fe0f30c9c9b64f262c5ab9c9f0ca8f881634afa6fa",
+      "current_C20_sha256": "3b612ccec487ea771357c04b89c9bf90f51a78314242d61fec8b0e1f2abbc2d0"
+    },
+    "orchestration/research_controller_budget.py": {
+      "accepted_C19_sha256": "3d138129265b83504e6a92ef0b662c0b98ea4af2d92f9f8a08a5e42cefa64310",
+      "current_C20_sha256": "d8b6884b6cb3a957b7b0733f5b1326f61d94b43ca2b10c29e0750801a3993f57"
+    }
+  },
+  "original_immutable_receipt_sha256": {
+    "docs/plans/ocean-v1/evidence/C19/verification.json": "7f0236c1f73ff670f17863c94c87f3bacf31165619a4b081052674f34dc0b1ee",
+    "docs/plans/ocean-v1/evidence/C19/accepted-source.json": "44fed33e1bf9f21b15d0494210db6bb7bc7cac2bc3cb224aeb0215b736335f8d",
+    "docs/plans/ocean-v1/evidence/C19/delivery.json": "85a4cc6f288fb9078c99f4002f6d2f24cf480594801b6c5f0d0f24af7d6c89fb",
+    "docs/plans/ocean-v1/evidence/C20/start-snapshot.json": "e34eca9c908bfeecd8dece5b469391cacfe20f781c5810ce4036a7cbb90374f2",
+    "docs/plans/ocean-v1/evidence/c20-readiness-2026-10-19/verification.json": "bd83e773b2665bced0c7cd2f4a0d802b4aafcbbc4a48b10034f9aa22f2a9ba83"
+  },
+  "evidence_sha256": {
+    "docs/plans/ocean-v1/evidence/C20/replay-initial-tests.txt": "836eec4a6f45e7ebdf3456559c5dc7512297456491ed9f4be3ac48b0beaa1c3e",
+    "docs/plans/ocean-v1/evidence/C20/replay-compat-tests.txt": "705c189f082fa935fcf626e98608631d741f7412a6d0f0bacaf5e9cd0236b23f",
+    "docs/plans/ocean-v1/evidence/C20/replay-edge-tests.txt": "34aef2d9f2e3bcd3b77f54a9071357cfca705a4a332091aa1ef43c605fc43d7a",
+    "docs/plans/ocean-v1/evidence/C20/replay-final-tests.txt": "b3d5f5b85ff9bf9a196b980fe582392c365cbab26715234f548edd9cac2c848e",
+    "docs/plans/ocean-v1/evidence/C20/replay-acceptance-tests.txt": "615f907e95f4a3ee9881e27452ac8f2f9c871501215ca698779fa6462366ed38",
+    "docs/plans/ocean-v1/evidence/C20/replay-ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  "checks": {
+    "final_focused_replay": {
+      "command": ".venv/bin/python -m pytest tests/test_research_controller_replay.py -q --tb=short",
+      "passed": 34,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C20/replay-acceptance-tests.txt"
+    },
+    "C19_original_compatibility_and_replay": {
+      "command": ".venv/bin/python -m pytest tests/test_research_controller.py tests/test_research_controller_budget.py tests/test_research_controller_replay.py -q --tb=short",
+      "passed": 87,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C20/replay-final-tests.txt",
+      "note": "Scoped compatibility run includes61 originalC19 tests plus26 replay cases before final8 counter-only/error-mapping cases and final source formatting. Final replay34 passes on the final owned source; source-frozen complete backend acceptance remains parent-owned."
+    },
+    "ruff": {
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C20/replay-ruff.txt"
+    },
+    "whitespace": {
+      "orchestration/research_controller.py": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "orchestration/research_controller_budget.py": {
+        "exit_code": 0,
+        "output": ""
+      },
+      "orchestration/research_controller_replay.py": {
+        "exit_code": 1,
+        "output": ""
+      },
+      "tests/test_research_controller_replay.py": {
+        "exit_code": 1,
+        "output": ""
+      }
+    }
+  },
+  "port": {
+    "execute": "ResearchController.execute(request,*,cancelled,on_checkpoint,restored_budget,journal=None)",
+    "journal_methods": [
+      "bind(manifest)->restore metadata",
+      "lookup_step(logical_id,request_sha256)->{outcome,outcome_sha256}|None",
+      "prepare_step(logical_id,kind,request_sha256,request,budget,checkpoint)->attempt token",
+      "commit_step(token,outcome,budget,checkpoint)->None"
+    ],
+    "version": "research-controller-replay-v1",
+    "bind_metadata": [
+      "budget",
+      "actor_binding",
+      "catalogue_policy_revision",
+      "clock_invalid",
+      "reserved_repair_steps"
+    ],
+    "logical_steps": [
+      "pin:<ordinal>",
+      "inventory:<ordinal>",
+      "turn:<n>:model:<repair0or1>",
+      "turn:<n>:tool",
+      "turn:<n>:repair:1"
+    ]
+  },
+  "verified_behaviors": [
+    "Committed lookup precedes new-effect time/action/model/repair admission; stored exact outcomes replay through current pure projections without another outbound call/counter reservation.",
+    "Frozen manifest pins effective request/context/binding, controller and critical C06/C14 source fingerprint, runtime class/configuration hash, model, limits, actor binding and catalogue policy revision. Current C17 authorization/policy checks remain fresh.",
+    "Tool outcomes retain exact status/body and accepted/discarded reason; model outcomes retain exact C06 content/status/finish/elapsed/nullableusage/cap privately. Hash and deterministic reconstructed projection verified before reuse.",
+    "Lost tool/model/repair commit acknowledgements replay committed results. Uncommitted physical model retry may repeat and bill again; model count increases again.",
+    "Prepared pure repair reservation survives interruption without consuming a second logical repair; second malformed output still stops.",
+    "Committed evidence reconstructed at180seconds/12actions and sticky invalid clock before refusing new effects.",
+    "Late model return retained as discarded and never accepted as successful evidence during replay.",
+    "Explicit linked child segment may reuse verified pre-model pin/inventory prefix; parent terminal model/repair/finish decisions are not seeded.",
+    "Counter-only nonzero restoration without a journal is rejected; configuration/request drift, corruption, invalid C06 metadata and machine journal errors fail safely."
+  ],
+  "retained_attempts": [
+    {
+      "log": "docs/plans/ocean-v1/evidence/C20/replay-initial-tests.txt",
+      "passed": 14,
+      "exit_code": 0
+    },
+    {
+      "log": "docs/plans/ocean-v1/evidence/C20/replay-compat-tests.txt",
+      "passed": 75,
+      "exit_code": 0
+    },
+    {
+      "log": "docs/plans/ocean-v1/evidence/C20/replay-edge-tests.txt",
+      "passed": 25,
+      "exit_code": 0
+    }
+  ],
+  "limitations": [
+    "Actual database transactions, attempt-time settlement, lease fencing, terminal event publication, API and frontend are owned by parent/store agents and require their own acceptance.",
+    "Terminal redelivery must return stored terminal state in the durable service; the controller port is for active replay.",
+    "The host settles unresolved pending active time before restoration; lease expiry does not prove an old RPC stopped.",
+    "Exact raw outcomes are owner-private journal data; public events must use safe controlled summaries.",
+    "No exactly-once provider billing or execution claim; no live models, cloud resources, real data or legacy work was invoked.",
+    "Original C19 receipts/tests remain immutable; only the two explicitly owned C19 source paths are intentionally superseded."
+  ]
+}

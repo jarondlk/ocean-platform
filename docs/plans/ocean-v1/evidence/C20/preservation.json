@@ -1,0 +1,186 @@
+{
+  "prior_evidence_files_unchanged": 912,
+  "protected_counts": {
+    "unrelated_files": 30,
+    "scientific_artifacts": 7,
+    "serving_files": 2,
+    "legacy_frontend_files": 106
+  },
+  "intentional_source_supersessions": {
+    "formal prerequisites:api/auth.py": {
+      "before_sha256": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd",
+      "C20_sha256": "d9f4813b3ce392869ceb317da3600f183aa80d09b0b5e4526d04f3ca6f9c8752"
+    },
+    "formal prerequisites:.github/workflows/tests.yml": {
+      "before_sha256": "50ea87310b653096cbce7bcc9ef01a55a88b74872b3baa56ebf8ea9ad6d153e9",
+      "C20_sha256": "fcbfb1ba41f02d59e67907e0a56040dc14b05eb559f6d555af8b8f609c80cb9f"
+    },
+    "formal prerequisites:api/main.py": {
+      "before_sha256": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4",
+      "C20_sha256": "0d9e527e2fc5ee22671232755b76cc845024cbdc67f67b6525f6d1e76f8b090a"
+    },
+    "formal prerequisites:config.py": {
+      "before_sha256": "060275abef07d5598d424f09be499a629f5b1b0fcf70e1ed922b59f0543406aa",
+      "C20_sha256": "4c285a4e7baaf72802fd743c5a0e9d08a059ea7050bd369172b44d578c9f5800"
+    },
+    "formal prerequisites:db/app_models.py": {
+      "before_sha256": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab",
+      "C20_sha256": "6b2c59e854537a02e2fd7c3f0a85aac4389793cfca832c0fb71e1315d6c4fe2d"
+    },
+    "formal prerequisites:tests/integration/test_investigation_postgres.py": {
+      "before_sha256": "cc17431ee9ae12509cf896d9d023d0c4592f08201c113ba96a1b45a9816bb642",
+      "C20_sha256": "37a98cd1b8178d619dd3b3cd5ab57f7e0bbe768a5a8bb82cf31201134da1efc6"
+    },
+    "formal prerequisites:tests/test_bootstrap_database.py": {
+      "before_sha256": "345c98e9713c6ed9b7edf52774ce752fad4030b62277f11e1dc68102fd0b8de9",
+      "C20_sha256": "61f10108675e2032a55859080e65276f34b46df6a659b00f89fc35504d7f5a53"
+    },
+    "formal prerequisites:orchestration/research_controller.py": {
+      "before_sha256": "aa4c37acb255fc24021175fe0f30c9c9b64f262c5ab9c9f0ca8f881634afa6fa",
+      "C20_sha256": "3b612ccec487ea771357c04b89c9bf90f51a78314242d61fec8b0e1f2abbc2d0"
+    },
+    "formal prerequisites:orchestration/research_controller_budget.py": {
+      "before_sha256": "3d138129265b83504e6a92ef0b662c0b98ea4af2d92f9f8a08a5e42cefa64310",
+      "C20_sha256": "d8b6884b6cb3a957b7b0733f5b1326f61d94b43ca2b10c29e0750801a3993f57"
+    },
+    "C19 accepted:config.py": {
+      "before_sha256": "060275abef07d5598d424f09be499a629f5b1b0fcf70e1ed922b59f0543406aa",
+      "C20_sha256": "4c285a4e7baaf72802fd743c5a0e9d08a059ea7050bd369172b44d578c9f5800"
+    },
+    "C19 accepted:orchestration/research_controller.py": {
+      "before_sha256": "aa4c37acb255fc24021175fe0f30c9c9b64f262c5ab9c9f0ca8f881634afa6fa",
+      "C20_sha256": "3b612ccec487ea771357c04b89c9bf90f51a78314242d61fec8b0e1f2abbc2d0"
+    },
+    "C19 accepted:orchestration/research_controller_budget.py": {
+      "before_sha256": "3d138129265b83504e6a92ef0b662c0b98ea4af2d92f9f8a08a5e42cefa64310",
+      "C20_sha256": "d8b6884b6cb3a957b7b0733f5b1326f61d94b43ca2b10c29e0750801a3993f57"
+    },
+    "C19 accepted:.github/workflows/tests.yml": {
+      "before_sha256": "50ea87310b653096cbce7bcc9ef01a55a88b74872b3baa56ebf8ea9ad6d153e9",
+      "C20_sha256": "fcbfb1ba41f02d59e67907e0a56040dc14b05eb559f6d555af8b8f609c80cb9f"
+    },
+    "C19 transitive:.github/workflows/tests.yml": {
+      "before_sha256": "50ea87310b653096cbce7bcc9ef01a55a88b74872b3baa56ebf8ea9ad6d153e9",
+      "C20_sha256": "fcbfb1ba41f02d59e67907e0a56040dc14b05eb559f6d555af8b8f609c80cb9f"
+    },
+    "C19 transitive:api/auth.py": {
+      "before_sha256": "ae981cc6f7e887b7d3a9657c4d2163c5227d38546c49f5509829ca0eaf7103fd",
+      "C20_sha256": "d9f4813b3ce392869ceb317da3600f183aa80d09b0b5e4526d04f3ca6f9c8752"
+    },
+    "C19 transitive:api/main.py": {
+      "before_sha256": "979385f2334d2e89a06c61539bf55a81311c28de881dae98cd168235539e62d4",
+      "C20_sha256": "0d9e527e2fc5ee22671232755b76cc845024cbdc67f67b6525f6d1e76f8b090a"
+    },
+    "C19 transitive:api/v1_runtime_routes.py": {
+      "before_sha256": "316c19aa9d39d6b5bd467b3411eb4fdc340e6e0b5a066981fa82d4f545f2c693",
+      "C20_sha256": "d1d0c8ca31466694223b783c570110fbe1a4c1abbd67f8dfb8502b2b47b378e5"
+    },
+    "C19 transitive:config.py": {
+      "before_sha256": "060275abef07d5598d424f09be499a629f5b1b0fcf70e1ed922b59f0543406aa",
+      "C20_sha256": "4c285a4e7baaf72802fd743c5a0e9d08a059ea7050bd369172b44d578c9f5800"
+    },
+    "C19 transitive:db/app_models.py": {
+      "before_sha256": "58a2716e54deb82ad15cfb1bf926e1368639803c4382bd24a78a240a8b35a7ab",
+      "C20_sha256": "6b2c59e854537a02e2fd7c3f0a85aac4389793cfca832c0fb71e1315d6c4fe2d"
+    },
+    "C19 transitive:frontend-v1/src/research-activity.tsx": {
+      "before_sha256": "9abf45b432158b776e7d42c95f8d21450fc8b564e5dd8ca79240bf24b699d684",
+      "C20_sha256": "1dd568bef762e4d3088d1e3a00862c32821dcc9444af2585922762ea6940d1a1"
+    },
+    "C19 transitive:frontend-v1/src/research-run-contract.ts": {
+      "before_sha256": "1dae2270558d62e3bac63e76349cca62b27d26624602a0704ab59e0f1047a7ad",
+      "C20_sha256": "3b191b2ea7cf7b384392dc4a99234590adfdaafe921d78eae72989028ef48c33"
+    },
+    "C19 transitive:frontend-v1/src/research-state.ts": {
+      "before_sha256": "8a8c00a7b4ecd4c3ab35f79a7b48219f421e0cb55d84c146086ab7226aab3c99",
+      "C20_sha256": "f85a9744d872d230ca93811dd70097a640adc3fb2c7dd6cc3db7f0ce27e5aeb9"
+    },
+    "C19 transitive:frontend-v1/src/research-workspace.tsx": {
+      "before_sha256": "e23523f07e79a5f27618954c213b87ef74e2acfb08775d9102acda681c0a24ee",
+      "C20_sha256": "0958fa73fe9b25143c324d523471c341fac81c31fca883325c2565997032e5fd"
+    },
+    "C19 transitive:frontend-v1/src/runtime-app.tsx": {
+      "before_sha256": "bb0171e039609a98be813482418144bb9dda29d2255a51166557259d40216ec0",
+      "C20_sha256": "087616c555ae75eaf6e28f064b9d51878642acb5f9963dbdc9c303d58a264826"
+    },
+    "C19 transitive:frontend-v1/src/runtime.ts": {
+      "before_sha256": "224cd4d2b51a81648da5d7d3e4f474af0ee335a8a672ee1e81b61f34a5492908",
+      "C20_sha256": "dec621ad1c629c65bb818236c8fecdadadcd15001d28996d0d44c8086b87c80d"
+    },
+    "C19 transitive:frontend-v1/tests/research-run-contract.test.ts": {
+      "before_sha256": "64f2544e204f16ba38f775fb880a507e11d2d7c56d9753a4399b2d0f35322adc",
+      "C20_sha256": "5af27861628e8a4acb85d3bb2ec07605b712e0ea3384cbbfc8ebc9cfc56eabe7"
+    },
+    "C19 transitive:frontend-v1/tests/research-state.test.ts": {
+      "before_sha256": "d8423a4cedd6d6deebcaa79639967efcf8abc06ce4dde5660739b4bcc282c30b",
+      "C20_sha256": "9a8ea55f2798be319af7ba01a773522869bb4b4c1ede5bb8c701d029ee530390"
+    },
+    "C19 transitive:frontend-v1/tests/runtime.test.ts": {
+      "before_sha256": "98c68d88380d0d5d5aefcf983799719b52ae23739e46d8b8df7e95a119bdff16",
+      "C20_sha256": "db73df3ebae7232e46b4c04f949c2f25d9d6abbbb5df068b32202a69eb93f328"
+    },
+    "C19 transitive:orchestration/research_controller.py": {
+      "before_sha256": "aa4c37acb255fc24021175fe0f30c9c9b64f262c5ab9c9f0ca8f881634afa6fa",
+      "C20_sha256": "3b612ccec487ea771357c04b89c9bf90f51a78314242d61fec8b0e1f2abbc2d0"
+    },
+    "C19 transitive:orchestration/research_controller_budget.py": {
+      "before_sha256": "3d138129265b83504e6a92ef0b662c0b98ea4af2d92f9f8a08a5e42cefa64310",
+      "C20_sha256": "d8b6884b6cb3a957b7b0733f5b1326f61d94b43ca2b10c29e0750801a3993f57"
+    },
+    "C19 transitive:tests/integration/test_investigation_postgres.py": {
+      "before_sha256": "cc17431ee9ae12509cf896d9d023d0c4592f08201c113ba96a1b45a9816bb642",
+      "C20_sha256": "37a98cd1b8178d619dd3b3cd5ab57f7e0bbe768a5a8bb82cf31201134da1efc6"
+    },
+    "C19 transitive:tests/test_bootstrap_database.py": {
+      "before_sha256": "345c98e9713c6ed9b7edf52774ce752fad4030b62277f11e1dc68102fd0b8de9",
+      "C20_sha256": "61f10108675e2032a55859080e65276f34b46df6a659b00f89fc35504d7f5a53"
+    },
+    "C18 accepted:api/v1_runtime_routes.py": {
+      "before_sha256": "316c19aa9d39d6b5bd467b3411eb4fdc340e6e0b5a066981fa82d4f545f2c693",
+      "C20_sha256": "d1d0c8ca31466694223b783c570110fbe1a4c1abbd67f8dfb8502b2b47b378e5"
+    },
+    "C18 accepted:frontend-v1/src/research-activity.tsx": {
+      "before_sha256": "9abf45b432158b776e7d42c95f8d21450fc8b564e5dd8ca79240bf24b699d684",
+      "C20_sha256": "1dd568bef762e4d3088d1e3a00862c32821dcc9444af2585922762ea6940d1a1"
+    },
+    "C18 accepted:frontend-v1/src/research-run-contract.ts": {
+      "before_sha256": "1dae2270558d62e3bac63e76349cca62b27d26624602a0704ab59e0f1047a7ad",
+      "C20_sha256": "3b191b2ea7cf7b384392dc4a99234590adfdaafe921d78eae72989028ef48c33"
+    },
+    "C18 accepted:frontend-v1/src/research-state.ts": {
+      "before_sha256": "8a8c00a7b4ecd4c3ab35f79a7b48219f421e0cb55d84c146086ab7226aab3c99",
+      "C20_sha256": "f85a9744d872d230ca93811dd70097a640adc3fb2c7dd6cc3db7f0ce27e5aeb9"
+    },
+    "C18 accepted:frontend-v1/src/research-workspace.tsx": {
+      "before_sha256": "e23523f07e79a5f27618954c213b87ef74e2acfb08775d9102acda681c0a24ee",
+      "C20_sha256": "0958fa73fe9b25143c324d523471c341fac81c31fca883325c2565997032e5fd"
+    },
+    "C18 accepted:frontend-v1/src/runtime-app.tsx": {
+      "before_sha256": "bb0171e039609a98be813482418144bb9dda29d2255a51166557259d40216ec0",
+      "C20_sha256": "087616c555ae75eaf6e28f064b9d51878642acb5f9963dbdc9c303d58a264826"
+    },
+    "C18 accepted:frontend-v1/src/runtime.ts": {
+      "before_sha256": "224cd4d2b51a81648da5d7d3e4f474af0ee335a8a672ee1e81b61f34a5492908",
+      "C20_sha256": "dec621ad1c629c65bb818236c8fecdadadcd15001d28996d0d44c8086b87c80d"
+    },
+    "C18 accepted:frontend-v1/tests/research-run-contract.test.ts": {
+      "before_sha256": "64f2544e204f16ba38f775fb880a507e11d2d7c56d9753a4399b2d0f35322adc",
+      "C20_sha256": "5af27861628e8a4acb85d3bb2ec07605b712e0ea3384cbbfc8ebc9cfc56eabe7"
+    },
+    "C18 accepted:frontend-v1/tests/research-state.test.ts": {
+      "before_sha256": "d8423a4cedd6d6deebcaa79639967efcf8abc06ce4dde5660739b4bcc282c30b",
+      "C20_sha256": "9a8ea55f2798be319af7ba01a773522869bb4b4c1ede5bb8c701d029ee530390"
+    },
+    "C18 accepted:frontend-v1/tests/runtime.test.ts": {
+      "before_sha256": "98c68d88380d0d5d5aefcf983799719b52ae23739e46d8b8df7e95a119bdff16",
+      "C20_sha256": "db73df3ebae7232e46b4c04f949c2f25d9d6abbbb5df068b32202a69eb93f328"
+    }
+  },
+  "reasons": [
+    "Add owner-private run persistence/dispatch/replay and strict HTTP/runtime capability gates; preserve legacy/scientific files.",
+    "C19 controller/budget sources intentionally add the independently tested C20 replay port; original receipts remain immutable.",
+    "C18 frontend sources intentionally add explicit production transport and recovery; scheduler amendment supersedes only its originally verified workspace source.",
+    "CI adds isolated C20 PostgreSQL gates, preserving the accepted30-minute backend timeout. Migration-head assertions advance additively to0018.",
+    "Initial PostgreSQL parity and sandbox/head-assertion failures remain preserved; repaired runs have separate immutable receipts."
+  ]
+}

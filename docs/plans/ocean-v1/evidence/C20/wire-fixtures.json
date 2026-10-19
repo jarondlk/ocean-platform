@@ -1,0 +1,625 @@
+{
+  "version": "research-runs-wire-v1",
+  "synthetic_only": true,
+  "source_sha256": {
+    "api/research_run_routes.py": "dade58a4067252b8b0e9ac05dea2ebcd3773c036b38d4280678961b3c644cb45",
+    "schema/research_runs.py": "080080703d0d758ebf5c301cb2c33d7e7a7f2f1511f0f084caa4208ac2548dfb",
+    "db/app_models.py": "6b2c59e854537a02e2fd7c3f0a85aac4389793cfca832c0fb71e1315d6c4fe2d",
+    "orchestration/research_runs.py": "11f62de141f07c04a0a9bf736a3875154dab5ab438d4d354ea4c634ad15b8b0b",
+    "orchestration/research_dispatch.py": "f4af629f34995572abf47a0db77925ad7a648c45091547fc401b933c533f7e06",
+    "orchestration/research_controller.py": "3b612ccec487ea771357c04b89c9bf90f51a78314242d61fec8b0e1f2abbc2d0",
+    "orchestration/research_controller_budget.py": "d8b6884b6cb3a957b7b0733f5b1326f61d94b43ca2b10c29e0750801a3993f57",
+    "orchestration/research_controller_replay.py": "71af040917e23c248ea04c49adcadf3683e0e16719090af08f3e6eec06c7cf45",
+    "tests/research_run_support.py": "3b601d61d83859d9ead46cf26bc0728d0e0c43ecca71b34036ace16235b65829",
+    "tests/investigation_support.py": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce",
+    "docs/plans/ocean-v1/evidence/C20/export_wire.py": "a56953f4bfc0841e8bc56e5173823196be50afff9c9c474a8e109acf54ac795d"
+  },
+  "cases": [
+    {
+      "method": "submit",
+      "request": {
+        "context": {
+          "binding": {
+            "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+            "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17",
+            "revision_id": "c6e6e9c7-6570-4af9-90a4-1ae234106265",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+            "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+          },
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {}
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {}
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {}
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {}
+              }
+            },
+            "version": 1
+          },
+          "attachments": [],
+          "pins": []
+        },
+        "question": "Count all datasets",
+        "idempotency_key": "8d32c63a-8fae-49fe-be20-47bc6c50e98c"
+      },
+      "response": {
+        "version": "research-runs-v1",
+        "run": {
+          "id": "18fa002a-7dc3-4f08-91a7-3d935a1d9e4c",
+          "context": {
+            "binding": {
+              "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+              "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17",
+              "revision_id": "c6e6e9c7-6570-4af9-90a4-1ae234106265",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+              "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+            },
+            "scope": {
+              "version": 1,
+              "sources": {
+                "ctd": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "metagenome": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "remote_sensing": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "edna_metabarcoding": {
+                  "enabled": true,
+                  "filters": {}
+                }
+              }
+            },
+            "attachments": [],
+            "pins": []
+          },
+          "question": "Count all datasets",
+          "status": "queued",
+          "active_elapsed_ms": 0,
+          "event_cursor": 0,
+          "latest_event_cursor": 1,
+          "activity": [],
+          "continuation_of": null,
+          "clarification": null,
+          "clarification_id": null,
+          "result": null,
+          "error": null,
+          "synthetic": false
+        }
+      },
+      "status_code": 200
+    },
+    {
+      "method": "status",
+      "request": {
+        "run_id": "18fa002a-7dc3-4f08-91a7-3d935a1d9e4c",
+        "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+        "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17"
+      },
+      "response": {
+        "version": "research-runs-v1",
+        "run": {
+          "id": "18fa002a-7dc3-4f08-91a7-3d935a1d9e4c",
+          "context": {
+            "binding": {
+              "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+              "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17",
+              "revision_id": "c6e6e9c7-6570-4af9-90a4-1ae234106265",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+              "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+            },
+            "scope": {
+              "version": 1,
+              "sources": {
+                "ctd": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "metagenome": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "remote_sensing": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "edna_metabarcoding": {
+                  "enabled": true,
+                  "filters": {}
+                }
+              }
+            },
+            "attachments": [],
+            "pins": []
+          },
+          "question": "Count all datasets",
+          "status": "queued",
+          "active_elapsed_ms": 0,
+          "event_cursor": 0,
+          "latest_event_cursor": 1,
+          "activity": [],
+          "continuation_of": null,
+          "clarification": null,
+          "clarification_id": null,
+          "result": null,
+          "error": null,
+          "synthetic": false
+        }
+      },
+      "status_code": 200
+    },
+    {
+      "method": "events",
+      "request": {
+        "run_id": "18fa002a-7dc3-4f08-91a7-3d935a1d9e4c",
+        "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+        "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17",
+        "after_cursor": 0,
+        "limit": 100
+      },
+      "response": {
+        "version": "research-runs-v1",
+        "run_id": "18fa002a-7dc3-4f08-91a7-3d935a1d9e4c",
+        "binding": {
+          "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+          "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17",
+          "revision_id": "c6e6e9c7-6570-4af9-90a4-1ae234106265",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+        },
+        "after_cursor": 0,
+        "next_cursor": 1,
+        "latest_event_cursor": 1,
+        "has_more": false,
+        "events": [
+          {
+            "cursor": 1,
+            "run_id": "18fa002a-7dc3-4f08-91a7-3d935a1d9e4c",
+            "elapsed_ms": 0,
+            "kind": "accepted",
+            "summary": {
+              "en": "Research question accepted",
+              "ja": "質問を受け付けました"
+            }
+          }
+        ]
+      },
+      "status_code": 200
+    },
+    {
+      "method": "cancel",
+      "request": {
+        "run_id": "18fa002a-7dc3-4f08-91a7-3d935a1d9e4c",
+        "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+        "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17",
+        "idempotency_key": "7003ac0e-ead9-46b1-b330-6d1da0358a92"
+      },
+      "response": {
+        "version": "research-runs-v1",
+        "run": {
+          "id": "18fa002a-7dc3-4f08-91a7-3d935a1d9e4c",
+          "context": {
+            "binding": {
+              "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+              "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17",
+              "revision_id": "c6e6e9c7-6570-4af9-90a4-1ae234106265",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+              "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+            },
+            "scope": {
+              "version": 1,
+              "sources": {
+                "ctd": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "metagenome": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "remote_sensing": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "edna_metabarcoding": {
+                  "enabled": true,
+                  "filters": {}
+                }
+              }
+            },
+            "attachments": [],
+            "pins": []
+          },
+          "question": "Count all datasets",
+          "status": "cancelled",
+          "active_elapsed_ms": 0,
+          "event_cursor": 0,
+          "latest_event_cursor": 2,
+          "activity": [],
+          "continuation_of": null,
+          "clarification": null,
+          "clarification_id": null,
+          "result": null,
+          "error": null,
+          "synthetic": false
+        }
+      },
+      "status_code": 200
+    },
+    {
+      "method": "continue",
+      "request": {
+        "run_id": "18fa002a-7dc3-4f08-91a7-3d935a1d9e4c",
+        "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+        "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17",
+        "idempotency_key": "29b4bb0e-2fa3-4aed-99f7-0e9ffc5f29aa"
+      },
+      "response": {
+        "version": "research-runs-v1",
+        "run": {
+          "id": "339fbf1f-1c91-4d6a-bca0-b659195a6cd0",
+          "context": {
+            "binding": {
+              "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+              "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17",
+              "revision_id": "c6e6e9c7-6570-4af9-90a4-1ae234106265",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+              "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+            },
+            "scope": {
+              "version": 1,
+              "sources": {
+                "ctd": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "metagenome": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "remote_sensing": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "edna_metabarcoding": {
+                  "enabled": true,
+                  "filters": {}
+                }
+              }
+            },
+            "attachments": [],
+            "pins": []
+          },
+          "question": "Count all datasets",
+          "status": "queued",
+          "active_elapsed_ms": 0,
+          "event_cursor": 0,
+          "latest_event_cursor": 1,
+          "activity": [],
+          "continuation_of": "18fa002a-7dc3-4f08-91a7-3d935a1d9e4c",
+          "clarification": null,
+          "clarification_id": null,
+          "result": null,
+          "error": null,
+          "synthetic": false
+        }
+      },
+      "status_code": 200
+    },
+    {
+      "method": "list",
+      "request": {
+        "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+        "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17",
+        "limit": 25,
+        "cursor": null
+      },
+      "response": {
+        "version": "research-runs-v1",
+        "items": [
+          {
+            "id": "18fa002a-7dc3-4f08-91a7-3d935a1d9e4c",
+            "context": {
+              "binding": {
+                "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+                "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17",
+                "revision_id": "c6e6e9c7-6570-4af9-90a4-1ae234106265",
+                "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+                "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+              },
+              "scope": {
+                "version": 1,
+                "sources": {
+                  "ctd": {
+                    "enabled": true,
+                    "filters": {}
+                  },
+                  "metagenome": {
+                    "enabled": true,
+                    "filters": {}
+                  },
+                  "remote_sensing": {
+                    "enabled": true,
+                    "filters": {}
+                  },
+                  "edna_metabarcoding": {
+                    "enabled": true,
+                    "filters": {}
+                  }
+                }
+              },
+              "attachments": [],
+              "pins": []
+            },
+            "question": "Count all datasets",
+            "status": "cancelled",
+            "active_elapsed_ms": 0,
+            "event_cursor": 0,
+            "latest_event_cursor": 2,
+            "activity": [],
+            "continuation_of": null,
+            "clarification": null,
+            "clarification_id": null,
+            "result": null,
+            "error": null,
+            "synthetic": false
+          },
+          {
+            "id": "339fbf1f-1c91-4d6a-bca0-b659195a6cd0",
+            "context": {
+              "binding": {
+                "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+                "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17",
+                "revision_id": "c6e6e9c7-6570-4af9-90a4-1ae234106265",
+                "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+                "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+              },
+              "scope": {
+                "version": 1,
+                "sources": {
+                  "ctd": {
+                    "enabled": true,
+                    "filters": {}
+                  },
+                  "metagenome": {
+                    "enabled": true,
+                    "filters": {}
+                  },
+                  "remote_sensing": {
+                    "enabled": true,
+                    "filters": {}
+                  },
+                  "edna_metabarcoding": {
+                    "enabled": true,
+                    "filters": {}
+                  }
+                }
+              },
+              "attachments": [],
+              "pins": []
+            },
+            "question": "Count all datasets",
+            "status": "queued",
+            "active_elapsed_ms": 0,
+            "event_cursor": 0,
+            "latest_event_cursor": 1,
+            "activity": [],
+            "continuation_of": "18fa002a-7dc3-4f08-91a7-3d935a1d9e4c",
+            "clarification": null,
+            "clarification_id": null,
+            "result": null,
+            "error": null,
+            "synthetic": false
+          }
+        ],
+        "next_cursor": null
+      },
+      "status_code": 200
+    },
+    {
+      "method": "status",
+      "request": {
+        "run_id": "339fbf1f-1c91-4d6a-bca0-b659195a6cd0",
+        "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+        "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17"
+      },
+      "response": {
+        "version": "research-runs-v1",
+        "run": {
+          "id": "339fbf1f-1c91-4d6a-bca0-b659195a6cd0",
+          "context": {
+            "binding": {
+              "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+              "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17",
+              "revision_id": "c6e6e9c7-6570-4af9-90a4-1ae234106265",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+              "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+            },
+            "scope": {
+              "version": 1,
+              "sources": {
+                "ctd": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "metagenome": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "remote_sensing": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "edna_metabarcoding": {
+                  "enabled": true,
+                  "filters": {}
+                }
+              }
+            },
+            "attachments": [],
+            "pins": []
+          },
+          "question": "Count all datasets",
+          "status": "completed",
+          "active_elapsed_ms": 555,
+          "event_cursor": 0,
+          "latest_event_cursor": 4,
+          "activity": [],
+          "continuation_of": "18fa002a-7dc3-4f08-91a7-3d935a1d9e4c",
+          "clarification": null,
+          "clarification_id": null,
+          "result": null,
+          "error": null,
+          "synthetic": false
+        }
+      },
+      "status_code": 200
+    },
+    {
+      "method": "events",
+      "request": {
+        "run_id": "339fbf1f-1c91-4d6a-bca0-b659195a6cd0",
+        "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+        "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17",
+        "after_cursor": 0,
+        "limit": 100
+      },
+      "response": {
+        "version": "research-runs-v1",
+        "run_id": "339fbf1f-1c91-4d6a-bca0-b659195a6cd0",
+        "binding": {
+          "investigation_id": "996e7e06-2491-4451-9f17-3355370a9bfc",
+          "conversation_id": "a43b6157-401f-45c4-a17d-08f3555dbd17",
+          "revision_id": "c6e6e9c7-6570-4af9-90a4-1ae234106265",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+        },
+        "after_cursor": 0,
+        "next_cursor": 4,
+        "latest_event_cursor": 4,
+        "has_more": false,
+        "events": [
+          {
+            "cursor": 1,
+            "run_id": "339fbf1f-1c91-4d6a-bca0-b659195a6cd0",
+            "elapsed_ms": 0,
+            "kind": "accepted",
+            "summary": {
+              "en": "Research question accepted",
+              "ja": "質問を受け付けました"
+            }
+          },
+          {
+            "cursor": 2,
+            "run_id": "339fbf1f-1c91-4d6a-bca0-b659195a6cd0",
+            "elapsed_ms": 0,
+            "kind": "started",
+            "summary": {
+              "en": "Research execution started",
+              "ja": "調査を開始しました"
+            }
+          },
+          {
+            "cursor": 3,
+            "run_id": "339fbf1f-1c91-4d6a-bca0-b659195a6cd0",
+            "elapsed_ms": 453,
+            "kind": "progress",
+            "summary": {
+              "en": "Research step retained",
+              "ja": "調査のステップを保存しました"
+            }
+          },
+          {
+            "cursor": 4,
+            "run_id": "339fbf1f-1c91-4d6a-bca0-b659195a6cd0",
+            "elapsed_ms": 555,
+            "kind": "completed",
+            "summary": {
+              "en": "Requested evidence exploration completed",
+              "ja": "要求された根拠の探索が完了しました"
+            }
+          }
+        ]
+      },
+      "status_code": 200
+    },
+    {
+      "method": "clarify",
+      "request": {
+        "run_id": "7936f2ef-02d9-4021-a114-ea8ccc5d8107",
+        "investigation_id": "d1065bca-8d1e-4ae0-81bd-05ad3fc2fd10",
+        "conversation_id": "da10d195-8a17-48e3-b927-198061b1e5d2",
+        "clarification_id": "caf2cb44-a1b2-4a06-bcd4-f1d101a214a8",
+        "idempotency_key": "bbabb0c4-d6e7-46eb-b91a-d1d8957c034a",
+        "answer": "Count all datasets"
+      },
+      "response": {
+        "version": "research-runs-v1",
+        "run": {
+          "id": "7936f2ef-02d9-4021-a114-ea8ccc5d8107",
+          "context": {
+            "binding": {
+              "investigation_id": "d1065bca-8d1e-4ae0-81bd-05ad3fc2fd10",
+              "conversation_id": "da10d195-8a17-48e3-b927-198061b1e5d2",
+              "revision_id": "ec637f3d-9ab0-4cb4-bb84-8a6114ae7294",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+              "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+            },
+            "scope": {
+              "version": 1,
+              "sources": {
+                "ctd": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "metagenome": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "remote_sensing": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "edna_metabarcoding": {
+                  "enabled": true,
+                  "filters": {}
+                }
+              }
+            },
+            "attachments": [],
+            "pins": []
+          },
+          "question": "Help me understand this",
+          "status": "queued",
+          "active_elapsed_ms": 159,
+          "event_cursor": 0,
+          "latest_event_cursor": 4,
+          "activity": [],
+          "continuation_of": null,
+          "clarification": null,
+          "clarification_id": null,
+          "result": null,
+          "error": null,
+          "synthetic": false
+        }
+      },
+      "status_code": 200
+    }
+  ]
+}
