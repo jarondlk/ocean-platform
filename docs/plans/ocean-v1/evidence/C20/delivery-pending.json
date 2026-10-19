@@ -1,0 +1,399 @@
+{
+  "component": "C20",
+  "created_at": "2026-10-19T06:00:20.871075+00:00",
+  "state": "Source checkpoint committed/pushed; exact-source hosted CI pending",
+  "source_commit": "fc46da36aa27c203357a1b5874a02378ae089847",
+  "branch": "overhaul",
+  "local_verification": "docs/plans/ocean-v1/evidence/C20/verification.json",
+  "local_verification_sha256": "ab3765b873ba37b5ab14ad1c921d597123ff7de27ce826b3372080b7fef06a94",
+  "accepted_source_sha256": "5498955b220eda3aebd4cecca71703d9ea5e5da9ac0aaa0c0f1acf09cc093a1b",
+  "accepted_paths": 46,
+  "tested_source_paths": 167,
+  "all_tested_paths_match_source_commit": true,
+  "hosted_ci_initial": {
+    "source_commit": "fc46da36aa27c203357a1b5874a02378ae089847",
+    "run": {
+      "id": 39207358123,
+      "html_url": "https://github.com/jarondlk/ocean-platform/actions/runs/39207358123",
+      "status": "queued",
+      "conclusion": null,
+      "event": "push",
+      "head_sha": "fc46da36aa27c203357a1b5874a02378ae089847",
+      "run_attempt": 1
+    },
+    "jobs": [
+      {
+        "id": 117912999670,
+        "name": "Frontend typecheck and build",
+        "status": "queued",
+        "conclusion": null,
+        "steps": []
+      },
+      {
+        "id": 117912999868,
+        "name": "Backend tests and security boundary",
+        "status": "in_progress",
+        "conclusion": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-19T05:59:21Z",
+            "completed_at": "2026-10-19T05:59:21Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-19T05:59:21Z",
+            "completed_at": "2026-10-19T05:59:24Z"
+          },
+          {
+            "name": "Set up Python 3.12",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-19T05:59:24Z",
+            "completed_at": "2026-10-19T05:59:26Z"
+          },
+          {
+            "name": "Install dependencies",
+            "status": "in_progress",
+            "conclusion": null,
+            "number": 4,
+            "started_at": "2026-10-19T05:59:26Z",
+            "completed_at": null
+          },
+          {
+            "name": "Lint active Python code",
+            "status": "pending",
+            "conclusion": null,
+            "number": 5,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Check generated chat scope contract",
+            "status": "pending",
+            "conclusion": null,
+            "number": 6,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Check frozen catalogue contracts and examples",
+            "status": "pending",
+            "conclusion": null,
+            "number": 7,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Run tests with coverage",
+            "status": "pending",
+            "conclusion": null,
+            "number": 8,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Post Set up Python 3.12",
+            "status": "pending",
+            "conclusion": null,
+            "number": 15,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "pending",
+            "conclusion": null,
+            "number": 16,
+            "started_at": null,
+            "completed_at": null
+          }
+        ]
+      },
+      {
+        "id": 117912999932,
+        "name": "OCEAN v1 prototype tests and build",
+        "status": "in_progress",
+        "conclusion": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-19T05:59:21Z",
+            "completed_at": "2026-10-19T05:59:22Z"
+          },
+          {
+            "name": "Checkout repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-19T05:59:22Z",
+            "completed_at": "2026-10-19T05:59:27Z"
+          },
+          {
+            "name": "Set up Node.js 22",
+            "status": "in_progress",
+            "conclusion": null,
+            "number": 3,
+            "started_at": "2026-10-19T05:59:27Z",
+            "completed_at": null
+          },
+          {
+            "name": "Install prototype dependencies",
+            "status": "pending",
+            "conclusion": null,
+            "number": 4,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Audit production prototype dependencies",
+            "status": "pending",
+            "conclusion": null,
+            "number": 5,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Test prototype",
+            "status": "pending",
+            "conclusion": null,
+            "number": 6,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Typecheck prototype",
+            "status": "pending",
+            "conclusion": null,
+            "number": 7,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Build prototype",
+            "status": "pending",
+            "conclusion": null,
+            "number": 8,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Post Set up Node.js 22",
+            "status": "pending",
+            "conclusion": null,
+            "number": 15,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Post Checkout repository",
+            "status": "pending",
+            "conclusion": null,
+            "number": 16,
+            "started_at": null,
+            "completed_at": null
+          }
+        ]
+      },
+      {
+        "id": 117912999949,
+        "name": "PostgreSQL migration and metadata integration",
+        "status": "in_progress",
+        "conclusion": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-19T05:59:21Z",
+            "completed_at": "2026-10-19T05:59:22Z"
+          },
+          {
+            "name": "Initialize containers",
+            "status": "in_progress",
+            "conclusion": null,
+            "number": 2,
+            "started_at": "2026-10-19T05:59:22Z",
+            "completed_at": null
+          },
+          {
+            "name": "Checkout repository",
+            "status": "pending",
+            "conclusion": null,
+            "number": 3,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Set up Python 3.12",
+            "status": "pending",
+            "conclusion": null,
+            "number": 4,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Install test dependencies",
+            "status": "pending",
+            "conclusion": null,
+            "number": 5,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Apply application migrations",
+            "status": "pending",
+            "conclusion": null,
+            "number": 6,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Verify invite acceptance and metadata persistence",
+            "status": "pending",
+            "conclusion": null,
+            "number": 7,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Verify transactional corpus upsert is idempotent",
+            "status": "pending",
+            "conclusion": null,
+            "number": 8,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Create isolated C03 retention test database",
+            "status": "pending",
+            "conclusion": null,
+            "number": 9,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Identify the job-owned PostgreSQL container address",
+            "status": "pending",
+            "conclusion": null,
+            "number": 10,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Verify C03 retention transaction ordering in isolated schemas",
+            "status": "pending",
+            "conclusion": null,
+            "number": 11,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Create isolated C05 retrieval test database",
+            "status": "pending",
+            "conclusion": null,
+            "number": 12,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Verify C05 vector identity and metagenome replacement history",
+            "status": "pending",
+            "conclusion": null,
+            "number": 13,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Create isolated C09 snapshot test database",
+            "status": "pending",
+            "conclusion": null,
+            "number": 14,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Verify C09 snapshot capture and publication boundaries",
+            "status": "pending",
+            "conclusion": null,
+            "number": 15,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Create isolated C17 investigation test database",
+            "status": "pending",
+            "conclusion": null,
+            "number": 16,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Verify C17 investigation migrations and retained context history",
+            "status": "pending",
+            "conclusion": null,
+            "number": 17,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Create isolated C20 durable execution test database",
+            "status": "pending",
+            "conclusion": null,
+            "number": 18,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Verify C20 durable execution races and immutable replay",
+            "status": "pending",
+            "conclusion": null,
+            "number": 19,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Verify database backup and isolated restore",
+            "status": "pending",
+            "conclusion": null,
+            "number": 20,
+            "started_at": null,
+            "completed_at": null
+          },
+          {
+            "name": "Stop containers",
+            "status": "pending",
+            "conclusion": null,
+            "number": 40,
+            "started_at": null,
+            "completed_at": null
+          }
+        ]
+      },
+      {
+        "id": 117913000990,
+        "name": "Dependency review",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      }
+    ]
+  },
+  "remaining": [
+    "Exact-source hosted backend/PostgreSQL/frontend/build/typecheck/audit/backup gates",
+    "Immutable final hosted logs/delivery receipt and delivery ledger checkpoint",
+    "C21 final readiness after C20 delivery"
+  ],
+  "preservation": "All original receipts and unrelated/scientific/serving/legacy sources retained; C21 preparation is separate and not implemented."
+}

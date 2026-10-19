@@ -1,0 +1,500 @@
+TAP version 13
+# Subtest: a slow valid history request survives repeated 2s polls and the 10s context refresh without deadline reset
+ok 1 - a slow valid history request survives repeated 2s polls and the 10s context refresh without deadline reset
+  ---
+  duration_ms: 0.601792
+  ...
+# Subtest: poll requests coalesce and do not start another history read while a mutation is running
+ok 2 - poll requests coalesce and do not start another history read while a mutation is running
+  ---
+  duration_ms: 0.154209
+  ...
+# Subtest: a scheduler created during a mutation waits for its release before fetching
+ok 3 - a scheduler created during a mutation waits for its release before fetching
+  ---
+  duration_ms: 0.102458
+  ...
+# Subtest: one original deadline aborts an overlong read despite every refresh and reports timeout exactly once
+ok 4 - one original deadline aborts an overlong read despite every refresh and reports timeout exactly once
+  ---
+  duration_ms: 0.269583
+  ...
+# Subtest: navigation or access disposal aborts immediately and late completion cannot start a queued refresh
+ok 5 - navigation or access disposal aborts immediately and late completion cannot start a queued refresh
+  ---
+  duration_ms: 0.176917
+  ...
+# Subtest: an ordinary failed read settles and permits a later refresh without leaking unhandled rejection
+ok 6 - an ordinary failed read settles and permits a later refresh without leaking unhandled rejection
+  ---
+  duration_ms: 0.372417
+  ...
+# Subtest: the actual React workspace wires polling to the coordinator and excludes periodic state from its lifecycle
+ok 7 - the actual React workspace wires polling to the coordinator and excludes periodic state from its lifecycle
+  ---
+  duration_ms: 25.563333
+  ...
+# Subtest: more than25 actual HTTP history records keep an acknowledged off-page queued run active through repeated scheduler polls
+ok 8 - more than25 actual HTTP history records keep an acknowledged off-page queued run active through repeated scheduler polls
+  ---
+  duration_ms: 57.572333
+  ...
+# Subtest: cached activity without an explicit acknowledgement cannot retain or authorize itself
+ok 9 - cached activity without an explicit acknowledgement cannot retain or authorize itself
+  ---
+  duration_ms: 0.148958
+  ...
+# Subtest: off-page status401 cannot publish a list-only replacement or stale cached run
+ok 10 - off-page status401 cannot publish a list-only replacement or stale cached run
+  ---
+  duration_ms: 0.230041
+  ...
+# Subtest: off-page status403 cannot publish a list-only replacement or stale cached run
+ok 11 - off-page status403 cannot publish a list-only replacement or stale cached run
+  ---
+  duration_ms: 0.054542
+  ...
+# Subtest: off-page status503 cannot publish a list-only replacement or stale cached run
+ok 12 - off-page status503 cannot publish a list-only replacement or stale cached run
+  ---
+  duration_ms: 0.052666
+  ...
+# Subtest: 404 omission is returned without mutating retention before the guarded workspace publication
+ok 13 - 404 omission is returned without mutating retention before the guarded workspace publication
+  ---
+  duration_ms: 0.162208
+  ...
+# Subtest: off-page status cannot change retained investigation_id
+ok 14 - off-page status cannot change retained investigation_id
+  ---
+  duration_ms: 0.086625
+  ...
+# Subtest: off-page status cannot change retained conversation_id
+ok 15 - off-page status cannot change retained conversation_id
+  ---
+  duration_ms: 0.041917
+  ...
+# Subtest: off-page status cannot change retained revision_id
+ok 16 - off-page status cannot change retained revision_id
+  ---
+  duration_ms: 0.146125
+  ...
+# Subtest: off-page status cannot change retained snapshot_id
+ok 17 - off-page status cannot change retained snapshot_id
+  ---
+  duration_ms: 0.210125
+  ...
+# Subtest: off-page status cannot change retained payload_sha256
+ok 18 - off-page status cannot change retained payload_sha256
+  ---
+  duration_ms: 0.041458
+  ...
+# Subtest: off-page status cannot substitute its run ID, scope or references under the same retained binding
+ok 19 - off-page status cannot substitute its run ID, scope or references under the same retained binding
+  ---
+  duration_ms: 0.226167
+  ...
+# Subtest: a listed retained run must match its binding too; status backfill cannot bypass this check
+ok 20 - a listed retained run must match its binding too; status backfill cannot bypass this check
+  ---
+  duration_ms: 0.050959
+  ...
+# Subtest: off-page event high water and immutable history cannot regress or substitute the submitted context
+ok 21 - off-page event high water and immutable history cannot regress or substitute the submitted context
+  ---
+  duration_ms: 0.159833
+  ...
+# Subtest: account change during late status hydration cannot publish or request subsequent events
+ok 22 - account change during late status hydration cannot publish or request subsequent events
+  ---
+  duration_ms: 0.148333
+  ...
+# Subtest: permission change during late status hydration cannot publish or request subsequent events
+ok 23 - permission change during late status hydration cannot publish or request subsequent events
+  ---
+  duration_ms: 0.091458
+  ...
+# Subtest: navigation change during late status hydration cannot publish or request subsequent events
+ok 24 - navigation change during late status hydration cannot publish or request subsequent events
+  ---
+  duration_ms: 0.052958
+  ...
+# Subtest: mutation change during late status hydration cannot publish or request subsequent events
+ok 25 - mutation change during late status hydration cannot publish or request subsequent events
+  ---
+  duration_ms: 0.044375
+  ...
+# Subtest: abort change during late status hydration cannot publish or request subsequent events
+ok 26 - abort change during late status hydration cannot publish or request subsequent events
+  ---
+  duration_ms: 0.047958
+  ...
+# Subtest: navigation during list discovery aborts before any explicit off-page request
+ok 27 - navigation during list discovery aborts before any explicit off-page request
+  ---
+  duration_ms: 0.064958
+  ...
+# Subtest: retention bounds always keep newest acknowledgements, refresh explicit actions and clear on denied identity
+ok 28 - retention bounds always keep newest acknowledgements, refresh explicit actions and clear on denied identity
+  ---
+  duration_ms: 0.327209
+  ...
+# Subtest: retained identities are detached, conversation scoped, immutable and bounded across conversations
+ok 29 - retained identities are detached, conversation scoped, immutable and bounded across conversations
+  ---
+  duration_ms: 0.621375
+  ...
+# Subtest: forged or oversized retained metadata fails before any transport call
+ok 30 - forged or oversized retained metadata fails before any transport call
+  ---
+  duration_ms: 0.119542
+  ...
+# Subtest: actual workspace acknowledges after response guards and publishes only complete current hydration
+ok 31 - actual workspace acknowledges after response guards and publishes only complete current hydration
+  ---
+  duration_ms: 23.719333
+  ...
+# Subtest: submit snapshots and deeply freezes context without freezing or aliasing the caller
+ok 32 - submit snapshots and deeply freezes context without freezing or aliasing the caller
+  ---
+  duration_ms: 1.322959
+  ...
+# Subtest: a later context update affects new submissions while active activity and continuation retain the old revision
+ok 33 - a later context update affects new submissions while active activity and continuation retain the old revision
+  ---
+  duration_ms: 0.484625
+  ...
+# Subtest: all six operations are exposed with no implicit production transport
+ok 34 - all six operations are exposed with no implicit production transport
+  ---
+  duration_ms: 0.0535
+  ...
+# Subtest: deterministic completed outcome and public evidence qualifications
+ok 35 - deterministic completed outcome and public evidence qualifications
+  ---
+  duration_ms: 0.256458
+  ...
+# Subtest: deterministic partial outcome and public evidence qualifications
+ok 36 - deterministic partial outcome and public evidence qualifications
+  ---
+  duration_ms: 0.188958
+  ...
+# Subtest: deterministic failed outcome and public evidence qualifications
+ok 37 - deterministic failed outcome and public evidence qualifications
+  ---
+  duration_ms: 0.148708
+  ...
+# Subtest: clarification pauses active elapsed time and resumes the original binding
+ok 38 - clarification pauses active elapsed time and resumes the original binding
+  ---
+  duration_ms: 0.315333
+  ...
+# Subtest: cancellation or continuation from partial retains the immutable source run
+ok 39 - cancellation or continuation from partial retains the immutable source run
+  ---
+  duration_ms: 0.267041
+  ...
+# Subtest: cancellation or continuation from failed retains the immutable source run
+ok 40 - cancellation or continuation from failed retains the immutable source run
+  ---
+  duration_ms: 0.376125
+  ...
+# Subtest: cancellation or continuation from running retains the immutable source run
+ok 41 - cancellation or continuation from running retains the immutable source run
+  ---
+  duration_ms: 0.379959
+  ...
+# Subtest: cancellation or continuation from clarification retains the immutable source run
+ok 42 - cancellation or continuation from clarification retains the immutable source run
+  ---
+  duration_ms: 0.213417
+  ...
+# Subtest: monotonic public event pages replay exactly, reject reordered/context-substituted pages
+ok 43 - monotonic public event pages replay exactly, reject reordered/context-substituted pages
+  ---
+  duration_ms: 0.641125
+  ...
+# Subtest: event cursor -1 fails closed
+ok 44 - event cursor -1 fails closed
+  ---
+  duration_ms: 0.164625
+  ...
+# Subtest: event cursor 0.5 fails closed
+ok 45 - event cursor 0.5 fails closed
+  ---
+  duration_ms: 0.075833
+  ...
+# Subtest: event cursor Infinity fails closed
+ok 46 - event cursor Infinity fails closed
+  ---
+  duration_ms: 0.075
+  ...
+# Subtest: event cursor 999 fails closed
+ok 47 - event cursor 999 fails closed
+  ---
+  duration_ms: 0.064
+  ...
+# Subtest: status, events, cancellation, clarification and continuation cannot cross conversations
+ok 48 - status, events, cancellation, clarification and continuation cannot cross conversations
+  ---
+  duration_ms: 0.203917
+  ...
+# Subtest: operation replay reuses its result and rejects changed payload
+ok 49 - operation replay reuses its result and rejects changed payload
+  ---
+  duration_ms: 0.131208
+  ...
+# Subtest: aborted operations make no state changes
+ok 50 - aborted operations make no state changes
+  ---
+  duration_ms: 0.248625
+  ...
+# Subtest: elapsed time is monotonic despite a backwards injected clock
+ok 51 - elapsed time is monotonic despite a backwards injected clock
+  ---
+  duration_ms: 0.127292
+  ...
+# Subtest: invalid question does not enter a synthetic run
+ok 52 - invalid question does not enter a synthetic run
+  ---
+  duration_ms: 0.042041
+  ...
+# Subtest: invalid question does not enter a synthetic run
+ok 53 - invalid question does not enter a synthetic run
+  ---
+  duration_ms: 0.02625
+  ...
+# Subtest: invalid question does not enter a synthetic run
+ok 54 - invalid question does not enter a synthetic run
+  ---
+  duration_ms: 0.067334
+  ...
+# Subtest: invalid question does not enter a synthetic run
+ok 55 - invalid question does not enter a synthetic run
+  ---
+  duration_ms: 0.024959
+  ...
+# Subtest: invalid question does not enter a synthetic run
+ok 56 - invalid question does not enter a synthetic run
+  ---
+  duration_ms: 0.030875
+  ...
+# Subtest: binding and reference identity validation rejects invalid/mismatched/duplicate input
+ok 57 - binding and reference identity validation rejects invalid/mismatched/duplicate input
+  ---
+  duration_ms: 0.195417
+  ...
+# Subtest: C17 retained artifact references keep their own snapshots while catalogue references require the current snapshot
+ok 58 - C17 retained artifact references keep their own snapshots while catalogue references require the current snapshot
+  ---
+  duration_ms: 0.17725
+  ...
+# Subtest: reference uniqueness follows the complete C17 kind/id/snapshot identity
+ok 59 - reference uniqueness follows the complete C17 kind/id/snapshot identity
+  ---
+  duration_ms: 0.05975
+  ...
+# Subtest: production entry import graphs cannot select the development fixture
+ok 60 - production entry import graphs cannot select the development fixture
+  ---
+  duration_ms: 82.897541
+  ...
+# Subtest: elapsed formatter preserves zero and avoids fabricated wall time
+ok 61 - elapsed formatter preserves zero and avoids fabricated wall time
+  ---
+  duration_ms: 0.106708
+  ...
+# Subtest: actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (en)
+ok 62 - actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (en)
+  ---
+  duration_ms: 8.196917
+  ...
+# Subtest: actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (ja)
+ok 63 - actual React activity/results/evidence render localized empty/running/error/partial/cancelled/clarification states (ja)
+  ---
+  duration_ms: 5.383125
+  ...
+# Subtest: production completion and approval are honest without fixture labels or invented answers (en)
+ok 64 - production completion and approval are honest without fixture labels or invented answers (en)
+  ---
+  duration_ms: 2.279667
+  ...
+# Subtest: production completion and approval are honest without fixture labels or invented answers (ja)
+ok 65 - production completion and approval are honest without fixture labels or invented answers (ja)
+  ---
+  duration_ms: 1.388875
+  ...
+# Subtest: a result citation invokes the supplied evidence action with the exact run and identity
+ok 66 - a result citation invokes the supplied evidence action with the exact run and identity
+  ---
+  duration_ms: 0.263625
+  ...
+# Subtest: canonical empty research route remains explicitly in the real research view
+ok 67 - canonical empty research route remains explicitly in the real research view
+  ---
+  duration_ms: 0.846959
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and context/chat
+ok 68 - reload/Back/Forward round trips selected conversation and context/chat
+  ---
+  duration_ms: 0.272459
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and context/workspace
+ok 69 - reload/Back/Forward round trips selected conversation and context/workspace
+  ---
+  duration_ms: 0.127
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and results/chat
+ok 70 - reload/Back/Forward round trips selected conversation and results/chat
+  ---
+  duration_ms: 0.127458
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and results/workspace
+ok 71 - reload/Back/Forward round trips selected conversation and results/workspace
+  ---
+  duration_ms: 0.127875
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and experiments/chat
+ok 72 - reload/Back/Forward round trips selected conversation and experiments/chat
+  ---
+  duration_ms: 0.071542
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and experiments/workspace
+ok 73 - reload/Back/Forward round trips selected conversation and experiments/workspace
+  ---
+  duration_ms: 0.058542
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and evidence/chat
+ok 74 - reload/Back/Forward round trips selected conversation and evidence/chat
+  ---
+  duration_ms: 0.05675
+  ...
+# Subtest: reload/Back/Forward round trips selected conversation and evidence/workspace
+ok 75 - reload/Back/Forward round trips selected conversation and evidence/workspace
+  ---
+  duration_ms: 0.268209
+  ...
+# Subtest: rejects invalid research restoration ?view=preview
+ok 76 - rejects invalid research restoration ?view=preview
+  ---
+  duration_ms: 0.352292
+  ...
+# Subtest: rejects invalid research restoration ?view=research&view=research
+ok 77 - rejects invalid research restoration ?view=research&view=research
+  ---
+  duration_ms: 0.085834
+  ...
+# Subtest: rejects invalid research restoration ?conversation=33333333-3333-3333-3333-333333333333
+ok 78 - rejects invalid research restoration ?conversation=33333333-3333-3333-3333-333333333333
+  ---
+  duration_ms: 0.037875
+  ...
+# Subtest: rejects invalid research restoration ?investigation=../private
+ok 79 - rejects invalid research restoration ?investigation=../private
+  ---
+  duration_ms: 0.033292
+  ...
+# Subtest: rejects invalid research restoration ?investigation=11111111-1111-1111-1111-111111111111&investigation=22222222-2222-
+ok 80 - rejects invalid research restoration ?investigation=11111111-1111-1111-1111-111111111111&investigation=22222222-2222-
+  ---
+  duration_ms: 0.027
+  ...
+# Subtest: rejects invalid research restoration ?investigation=11111111-1111-1111-1111-111111111111&conversation=
+ok 81 - rejects invalid research restoration ?investigation=11111111-1111-1111-1111-111111111111&conversation=
+  ---
+  duration_ms: 0.026834
+  ...
+# Subtest: rejects invalid research restoration ?workspace=admin
+ok 82 - rejects invalid research restoration ?workspace=admin
+  ---
+  duration_ms: 0.024708
+  ...
+# Subtest: rejects invalid research restoration ?workspace=Context
+ok 83 - rejects invalid research restoration ?workspace=Context
+  ---
+  duration_ms: 0.023417
+  ...
+# Subtest: rejects invalid research restoration ?pane=preview
+ok 84 - rejects invalid research restoration ?pane=preview
+  ---
+  duration_ms: 0.025458
+  ...
+# Subtest: rejects invalid research restoration ?pane=chat&pane=workspace
+ok 85 - rejects invalid research restoration ?pane=chat&pane=workspace
+  ---
+  duration_ms: 0.0255
+  ...
+# Subtest: rejects invalid research restoration ?workspace=context&workspace=evidence
+ok 86 - rejects invalid research restoration ?workspace=context&workspace=evidence
+  ---
+  duration_ms: 0.02425
+  ...
+# Subtest: navigation never admits scientific scope, identity, fixture or attach side effects
+ok 87 - navigation never admits scientific scope, identity, fixture or attach side effects
+  ---
+  duration_ms: 0.12425
+  ...
+# Subtest: changing investigation clears old conversation unless explicit without mutating inputs
+ok 88 - changing investigation clears old conversation unless explicit without mutating inputs
+  ---
+  duration_ms: 0.127458
+  ...
+# Subtest: restored explicit routes are sufficient for browser history selection
+ok 89 - restored explicit routes are sufficient for browser history selection
+  ---
+  duration_ms: 0.119083
+  ...
+# Subtest: drafts are isolated by investigation/conversation and survive only an unchanged trusted binding
+ok 90 - drafts are isolated by investigation/conversation and survive only an unchanged trusted binding
+  ---
+  duration_ms: 0.198583
+  ...
+# Subtest: uncertain mutation keeps original key/head and cannot be silently replaced
+ok 91 - uncertain mutation keeps original key/head and cannot be silently replaced
+  ---
+  duration_ms: 1.330125
+  ...
+# Subtest: same exact pending intent can be remembered again across temporary presentation mounts
+ok 92 - same exact pending intent can be remembered again across temporary presentation mounts
+  ---
+  duration_ms: 0.207708
+  ...
+# Subtest: draft sizes and invalid private values are bounded without storage or transport side effects
+ok 93 - draft sizes and invalid private values are bounded without storage or transport side effects
+  ---
+  duration_ms: 0.65025
+  ...
+# Subtest: submitted activity preserves a complete detached immutable explicit revision across later changes
+ok 94 - submitted activity preserves a complete detached immutable explicit revision across later changes
+  ---
+  duration_ms: 0.245709
+  ...
+# Subtest: submission binding rejects cross-owner conversation/context joins and invalid hashes
+ok 95 - submission binding rejects cross-owner conversation/context joins and invalid hashes
+  ---
+  duration_ms: 0.115875
+  ...
+# Subtest: uncertain run mutations preserve the complete original frozen intent across temporary mounts
+ok 96 - uncertain run mutations preserve the complete original frozen intent across temporary mounts
+  ---
+  duration_ms: 0.355166
+  ...
+# Subtest: run intents remain account and permission bound and never migrate to a later identity
+ok 97 - run intents remain account and permission bound and never migrate to a later identity
+  ---
+  duration_ms: 0.145416
+  ...
+# Subtest: run intent validation rejects missing binding, substituted addresses, non-JSON and oversized values
+ok 98 - run intent validation rejects missing binding, substituted addresses, non-JSON and oversized values
+  ---
+  duration_ms: 3.248125
+  ...
+1..98
+# tests 98
+# suites 0
+# pass 98
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 437.434958

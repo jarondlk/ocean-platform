@@ -1,0 +1,80 @@
+{
+  "component": "C20",
+  "review_kind": "independent read-only source review plus focused synthetic behavioral probe",
+  "baseline_commit": "fc46da36aa27c203357a1b5874a02378ae089847",
+  "reviewed_source_sha256": {
+    "frontend-v1/src/research-state.ts": "4fed20f2aebc59065e1e5c4cb4c26cb37fa46f2b9f1593f38b04ecccd46bc52c",
+    "frontend-v1/src/research-workspace.tsx": "c959f0bcbfa3ed7cdebeaeddfbebab0edd758a9406cbcbc46d290ad94e19bd4a",
+    "frontend-v1/src/research-history.ts": "bffaf8b8e9780c2f6306b54e12da972ed8faa796e35adf15c4d2033c08c74c27",
+    "frontend-v1/tests/research-history.test.ts": "165c44b40155a08809735f64256332563743261801272a4b19beffdea6320f63"
+  },
+  "status": "passed targeted pagination amendment review",
+  "remaining_findings": [],
+  "resolved_findings": [
+    {
+      "id": "C20-FR2",
+      "status": "resolved in reviewed source and independent probe",
+      "evidence": "With31 server runs and only first25 loaded, the acknowledged off-page queued run remains visible after hydration:26 runs,1 active. Repeated fresh status/event refresh advances its consecutive cursor from1to2. Loading the second page yields31 unique runs without extra status calls or duplication."
+    }
+  ],
+  "checks": {
+    "baseline_evidence": {
+      "review-baseline.json": "4fca9cffd7f7f5a63e3f34b58853a40d64a1b6262fadf84f269d253aaca245c8",
+      "review-baseline-probe.json": "c95b53fbd863fcc3d371ea0b0d751d2b23ffe9bdc2edc5164e0777191c4d00e6"
+    },
+    "repair_probe": {
+      "file": "review-repair-probe.json",
+      "sha256": "62e59ae93d23047fe5ec0580630833a705ffe50f13922f41f08bdd22cd3402c6",
+      "result": {
+        "server_runs": 31,
+        "first_page_runs": 25,
+        "first_hydrated_runs": 26,
+        "new_accepted_visible": true,
+        "active_count": 1,
+        "repeated_refresh_event_cursors": [
+          1,
+          2
+        ],
+        "more_page_unique_runs": 31,
+        "missing_run_status_calls_before_more": 2,
+        "untracked_cache_excluded": true,
+        "denied_or_unavailable_status_rejected": [
+          401,
+          403,
+          503
+        ],
+        "all_five_binding_fields_rejected_on_change": [
+          "investigation_id",
+          "conversation_id",
+          "revision_id",
+          "snapshot_id",
+          "payload_sha256"
+        ],
+        "same_binding_scope_refs_id_question_parent_substitution_rejected": true,
+        "missing404_not_forgotten_before_guarded_commit": true,
+        "late_responses_rejected_without_event_calls": [
+          "account",
+          "permission",
+          "navigation",
+          "mutation",
+          "abort"
+        ],
+        "newest_acknowledgement_survives_capacity": true,
+        "permission_revision_clears_retained_ids": true
+      }
+    },
+    "fresh_authorization": "Only explicit acknowledged IDs/bindings are retained. Missing page IDs require fresh owner-scoped status. Bare cached activity cannot authorize retention.401/403/503 status failures reject the whole hydration before publication; workspace hides history and invokes existing unauthorized cleanup for401/403.",
+    "immutable_context": "Status result must match requested run ID and all5 binding fields. Existing mergeRunSnapshot additionally rejects changed full scope/refs, original question, parent identity and cursor/time regressions. Event pages retain exact binding and consecutive cursor checks.",
+    "guarded404": "Helper reports unavailable IDs without changing retention. Workspace verifies signal, mounted selection and epoch before forgetting404 IDs and publishing the fresh run union.",
+    "account_scope": "Retention is detached/frozen, keyed by investigation/conversation, and bound to verified account+permission revision. Binding changes and denied identity clear it; no private content or IDs were added to persistent browser storage.",
+    "bounded_memory": "Latest25 acknowledgements per conversation and128 conversations are retained; successful newest acknowledgement survives capacity by deterministic oldest eviction. Ordinary discovery pagination remains available for other history.",
+    "late_identity_mutation": "Independent pending-status probes for account, permission, navigation, mutation and abort all reject with AbortError before subsequent event requests. Workspace keeps scheduler pause/resume and final selection/epoch write guards.",
+    "unchanged_boundaries": "Fixed same-origin HTTP and explicit fixture selection remain unchanged. No server persistence/cursor contract changed. Production result remains null and synthesis unavailable."
+  },
+  "accepted_files_modified_by_reviewer": false,
+  "full_suites_run_by_reviewer": false,
+  "limitations": [
+    "Independent probe invokes actual helper/store with synthetic transports; assembled browser and full frontend acceptance remain parent/frontend-owner responsibilities.",
+    "Bounded acknowledged-ID retention supplements currently loaded discovery pages; it is not unbounded historical caching."
+  ]
+}

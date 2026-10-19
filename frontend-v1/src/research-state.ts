@@ -1,10 +1,13 @@
 /** C18 pure navigation and deliberately volatile, trusted-account-bound private drafts. */
 import type { Conversation, Investigation, InvestigationContext, InvestigationMutationIntent } from "./investigation-service.ts";
-import type { RunMutationIntent } from "./research-run-contract.ts";
+import type { RunContextBinding, RunMutationIntent } from "./research-run-contract.ts";
 export const WORKSPACE_TABS = ["context", "results", "experiments", "evidence"] as const;
 export type WorkspaceTab = typeof WORKSPACE_TABS[number];
 export type ResearchLocation = { investigationId: string | null; conversationId: string | null; workspaceTab: WorkspaceTab; mobilePane: "chat" | "workspace" };
 export type ResearchDraftIdentity = { accountId: string; permissionRevision: string };
+export type RetainedResearchRun = Readonly<{ id: string; binding: RunContextBinding }>;
+export const MAX_RETAINED_RUNS_PER_CONVERSATION = 25;
+const MAX_RETAINED_CONVERSATIONS = 128;
 export class ResearchStateError extends Error { constructor() { super("Research state is invalid"); this.name = "ResearchStateError"; } }
 const uuidPattern = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
 const shaPattern = /^[a-f0-9]{64}$/;
@@ -54,17 +57,25 @@ function frozen<T>(value: T): DeepReadonly<T> {
   return value as DeepReadonly<T>;
 }
 function textKey(value: unknown, maximum = 512): string { if (typeof value !== "string" || !value || value.length > maximum || !value.isWellFormed() || /[\x00-\x1f\x7f]/.test(value)) return fail(); return value; }
+function runBinding(value: unknown): RunContextBinding {
+  const binding = copiedJson(value);
+  if (!plain(binding) || Object.keys(binding).sort().join(",") !== "conversation_id,investigation_id,payload_sha256,revision_id,snapshot_id") return fail();
+  uuid(binding.investigation_id); uuid(binding.conversation_id); uuid(binding.revision_id);
+  if (typeof binding.snapshot_id !== "string" || !shaPattern.test(binding.snapshot_id) || typeof binding.payload_sha256 !== "string" || !shaPattern.test(binding.payload_sha256)) return fail();
+  return frozen(binding) as RunContextBinding;
+}
 /** Root retains this instance across temporary verification/unmount; no private value enters storage. */
 export class ResearchDraftStore {
   private identity: ResearchDraftIdentity | null = null;
   private readonly drafts = new Map<string, string>();
   private readonly mutations = new Map<string, InvestigationMutationIntent>();
   private readonly runMutations = new Map<string, RunMutationIntent>();
+  private readonly retainedRuns = new Map<string, Map<string, RetainedResearchRun>>();
   bind(identity: ResearchDraftIdentity | null): void {
     if (identity === null) { this.clear(); return; }
     if (!plain(identity) || Object.keys(identity).some((key) => !["accountId", "permissionRevision"].includes(key))) return fail();
     const next = { accountId: textKey(identity.accountId), permissionRevision: textKey(identity.permissionRevision) };
-    if (this.identity?.accountId !== next.accountId || this.identity.permissionRevision !== next.permissionRevision) { this.drafts.clear(); this.mutations.clear(); this.runMutations.clear(); }
+    if (this.identity?.accountId !== next.accountId || this.identity.permissionRevision !== next.permissionRevision) { this.drafts.clear(); this.mutations.clear(); this.runMutations.clear(); this.retainedRuns.clear(); }
     this.identity = next;
   }
   private bound(): void { if (this.identity === null) return fail(); }
@@ -96,10 +107,7 @@ export class ResearchDraftStore {
       || new TextEncoder().encode(JSON.stringify(copied)).byteLength > 1024 * 1024) return fail();
     uuid(copied.request.idempotency_key);
     if (copied.method === "submit" && (!plain(copied.request.context) || !plain(copied.request.context.binding))) return fail();
-    const binding = copied.method === "submit" ? copied.request.context.binding : copied.binding;
-    if (!plain(binding) || Object.keys(binding).sort().join(",") !== "conversation_id,investigation_id,payload_sha256,revision_id,snapshot_id") return fail();
-    uuid(binding.investigation_id); uuid(binding.conversation_id); uuid(binding.revision_id);
-    if (typeof binding.snapshot_id !== "string" || !shaPattern.test(binding.snapshot_id) || typeof binding.payload_sha256 !== "string" || !shaPattern.test(binding.payload_sha256)) return fail();
+    const binding = runBinding(copied.method === "submit" ? copied.request.context.binding : copied.binding);
     if (copied.method !== "submit" && (copied.request.investigation_id !== binding.investigation_id || copied.request.conversation_id !== binding.conversation_id)) return fail();
     const existing = this.runMutations.get(slot);
     if (existing && JSON.stringify(existing) !== JSON.stringify(copied)) return fail();
@@ -108,7 +116,26 @@ export class ResearchDraftStore {
   }
   pendingRunMutation(slot: string): RunMutationIntent | null { this.bound(); textKey(slot); return this.runMutations.get(slot) ?? null; }
   forgetRunMutation(slot: string): void { this.bound(); textKey(slot); this.runMutations.delete(slot); }
-  clear(): void { this.drafts.clear(); this.mutations.clear(); this.runMutations.clear(); this.identity = null; }
+  /** Explicit acknowledgements identify off-page runs to reauthorize; cache alone grants no retention. */
+  retainRun(id: string, supplied: RunContextBinding): void {
+    this.bound(); uuid(id); const binding = runBinding(supplied), key = this.draftKey(binding.investigation_id, binding.conversation_id);
+    const retained = this.retainedRuns.get(key) ?? new Map<string, RetainedResearchRun>();
+    const previous = retained.get(id);
+    if (previous && Object.keys(binding).some(field => previous.binding[field as keyof RunContextBinding] !== binding[field as keyof RunContextBinding])) return fail();
+    // Keep the newest successful acknowledgement even when capacity is full.
+    retained.delete(id); retained.set(id, frozen({ id, binding }));
+    while (retained.size > MAX_RETAINED_RUNS_PER_CONVERSATION) retained.delete(retained.keys().next().value!);
+    this.retainedRuns.delete(key); this.retainedRuns.set(key, retained);
+    while (this.retainedRuns.size > MAX_RETAINED_CONVERSATIONS) this.retainedRuns.delete(this.retainedRuns.keys().next().value!);
+  }
+  retainedRunBindings(investigationId: string, conversationId: string): readonly RetainedResearchRun[] {
+    return Object.freeze([...(this.retainedRuns.get(this.draftKey(investigationId, conversationId))?.values() ?? [])]);
+  }
+  forgetRetainedRun(investigationId: string, conversationId: string, id: string): void {
+    uuid(id); const key = this.draftKey(investigationId, conversationId), retained = this.retainedRuns.get(key);
+    retained?.delete(id); if (retained?.size === 0) this.retainedRuns.delete(key);
+  }
+  clear(): void { this.drafts.clear(); this.mutations.clear(); this.runMutations.clear(); this.retainedRuns.clear(); this.identity = null; }
 }
 export type SubmittedResearchBinding = {
   investigation_id: string; conversation_id: string; revision_id: string; snapshot_id: string;

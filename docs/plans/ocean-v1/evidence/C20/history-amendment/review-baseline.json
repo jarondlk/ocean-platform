@@ -1,0 +1,37 @@
+{
+  "component": "C20",
+  "review_kind": "independent targeted read-only assessment and synthetic fragment probe",
+  "baseline_commit": "fc46da36aa27c203357a1b5874a02378ae089847",
+  "baseline_source_sha256": {
+    "frontend-v1/src/research-workspace.tsx": "0958fa73fe9b25143c324d523471c341fac81c31fca883325c2565997032e5fd",
+    "frontend-v1/src/research-run-contract.ts": "3b191b2ea7cf7b384392dc4a99234590adfdaafe921d78eae72989028ef48c33",
+    "frontend-v1/src/research-run-service.ts": "f6bc0c418fcf5c68f84f4e32bc6c47953954a8ab5e45bf0825c57636e8242eb3",
+    "frontend-v1/src/research-state.ts": "f85a9744d872d230ca93811dd70097a640adc3fb2c7dd6cc3db7f0ce27e5aeb9",
+    "orchestration/research_runs.py": "11f62de141f07c04a0a9bf736a3875154dab5ab438d4d354ea4c634ad15b8b0b"
+  },
+  "probe": "review-baseline-probe.json",
+  "probe_sha256": "c95b53fbd863fcc3d371ea0b0d751d2b23ffe9bdc2edc5164e0777191c4d00e6",
+  "finding": {
+    "id": "C20-FR2",
+    "severity": "P1",
+    "status": "confirmed baseline defect; repair not yet reviewed",
+    "file": "frontend-v1/src/research-workspace.tsx",
+    "lines": [
+      180,
+      203
+    ],
+    "problem": "History hydration replaces visible/cache runs with only snapshots from the currently loaded UUID-ascending pages. A newly accepted run outside the first25 disappears on refresh; if all listed runs are terminal the active polling timer is removed.",
+    "impact": "A successful submit/continuation can vanish immediately and stop receiving automatic status/activity updates. Durable source data remains retained; this is a material activity-discovery/tracking defect.",
+    "additional_case": "The same omission can occur when the server8MiB page bound returns fewer than25 records.",
+    "remediation": "Keep a bounded set of explicitly observed/locally accepted run identities in the account/conversation scope. For missing identities, fetch fresh authorized status and then exact-binding/event merges before publishing the union. Do not blindly retain stale cached private payloads. Avoid a server ordering/cursor redesign for this frontend amendment."
+  },
+  "repair_review_gates": [
+    "Greater-than25 UUID-ordered runs retain the newly accepted outside-page activity and polling.",
+    "Missing cached runs are freshly authorized by status; denial clears protected state and does not reuse cached payloads.",
+    "All five binding fields, scope/refs, original question and parent identity remain immutable.",
+    "Read/mutation coordination and late account/selection guards still prevent stale writes.",
+    "No fixture fallback or C21 fabricated result."
+  ],
+  "accepted_files_modified": false,
+  "full_suites_run": false
+}

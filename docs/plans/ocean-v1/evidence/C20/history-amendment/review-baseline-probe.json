@@ -1,0 +1,20 @@
+{
+  "component": "C20",
+  "baseline_commit": "fc46da36aa27c203357a1b5874a02378ae089847",
+  "probe_kind": "independently executed actual unchanged workspace merge fragment after TypeScript transpilation",
+  "source": "frontend-v1/src/research-workspace.tsx",
+  "source_sha256": "0958fa73fe9b25143c324d523471c341fac81c31fca883325c2565997032e5fd",
+  "fragment_sha256": "908e97d12599fa33554aba57eb0460b4d85325f3acc4588d66ae6442d39259e6",
+  "synthetic_inputs_only": true,
+  "server_runs": 31,
+  "server_page_order": "UUID ascending",
+  "loaded_page_runs": 25,
+  "cached_visible_before": 26,
+  "accepted_visible_before": true,
+  "visible_after": 25,
+  "accepted_visible_after": false,
+  "active_before": 1,
+  "active_after": 0,
+  "conclusion": "Newly accepted run is removed by first-page refresh; active polling predicate becomes false when listed runs are terminal.",
+  "changed_accepted_files": false
+}

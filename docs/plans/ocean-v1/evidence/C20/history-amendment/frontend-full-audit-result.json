@@ -1,0 +1,15 @@
+{
+  "name": "audit",
+  "command": [
+    "/Users/jaronchai/.nvm/versions/node/v22.14.0/bin/npm",
+    "audit",
+    "--omit=dev",
+    "--audit-level=moderate",
+    "--json"
+  ],
+  "started_at": "2026-10-19T06:14:48.887868+00:00",
+  "finished_at": "2026-10-19T06:14:49.371806+00:00",
+  "exit_code": 0,
+  "log": "docs/plans/ocean-v1/evidence/C20/history-amendment/frontend-full-audit.json",
+  "log_sha256": "1edfafa47b19e0370e6d56a342e61d4a7e05f3fc950dbbb9a217fdcb10dee904"
+}

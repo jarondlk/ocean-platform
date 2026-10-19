@@ -1,6 +1,6 @@
 # C20 — Durable research execution
 
-**Status:** Ready for review; all3 local checkpoints verified, source/hosted delivery pending. **Prerequisites:** C04, C17, C19.
+**Status:** Ready for review; original3 local checkpoints and final history repair verified; amended source checkpoint/hosted delivery pending. **Prerequisites:** C04, C17, C19.
 
 ## Revised delivery boundary
 
@@ -54,7 +54,7 @@ Existing regressions: `python -m pytest tests/test_auth.py tests/test_rate_limit
 
 Acceptance requires identical snapshot/context after redelivery, no duplicate committed steps, monotonic event cursors, expired-lease recovery, no budget reset, permission revocation, cancel-versus-complete races and retained partial observations. Browser disconnection must not cancel a run. A cancelled experiment is not treated as stopped until its execution boundary confirms termination. Cloud integration checks remain pending until explicitly authorized.
 
-Current local verification:4847 backend/231 gated skips/85.64%,76 required compatibility;104 actual PostgreSQL (44 C20/60 C17) with zero schemas remaining and owned server stopped;781 v1 frontend tests/typecheck/build/zero-vulnerability audit; nine generated checks/Ruff and independent reviews. The [local receipt](../evidence/C20/verification.json) binds46 owned paths and167 tested source paths. All912 older evidence and protected files are unchanged. Original parity, sandbox/head-assertion and scheduler failures are preserved with explicit tested amendments. Source checkpoint and exact-source hosted CI are the remaining delivery gates.
+Current local verification:4847 backend/231 gated skips/85.64%,76 required compatibility;104 actual PostgreSQL (44 C20/60 C17) with zero schemas remaining and owned server stopped;781 v1 frontend tests/typecheck/build/zero-vulnerability audit; nine generated checks/Ruff and independent reviews. The [local receipt](../evidence/C20/verification.json) binds46 owned paths and167 tested source paths. All912 older evidence and protected files are unchanged. Original parity, sandbox/head-assertion and scheduler failures are preserved with explicit tested amendments. The final pagination amendment adds fresh owner-authorized retention for up to25 recent explicit run acknowledgements per conversation;805 frontend tests, full types/build/audit and independent repair review pass. Original backend/PG sources and evidence are unchanged. Amended source checkpoint, exact-source hosted CI and final delivery remain. The [original fc46da3 run](https://github.com/jarondlk/ocean-platform/actions/runs/39207358123) is historical and cannot accept the repaired source.
 
 ## Compatibility, rollback and handoff
 

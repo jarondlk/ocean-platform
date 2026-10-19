@@ -9,6 +9,7 @@ import { createInvestigationClient, executeInvestigationMutation, type Investiga
 import { ResearchDraftStore, parseResearchLocation, researchLocationUrl, updateResearchLocation, type ResearchLocation } from "./research-state";
 import { ResearchActivity, ResearchResults, ResearchEvidence } from "./research-activity";
 import { ResearchHistoryScheduler } from "./research-history-scheduler";
+import { loadResearchRunHistory } from "./research-history";
 import { executeRunMutation, freezeRunContext, isRunActive, mergeRunEvents, mergeRunSnapshot, researchRunAddress, sameRunBinding, type ResearchRun, type ResearchRunTransport, type RunEvidence, type RunContextBinding, type RunMutationIntent } from "./research-run-contract";
 import { ShellSplitPanels, ShellTabs } from "./shell-panels";
 import type { PresentationPreferences } from "./presentation";
@@ -170,23 +171,12 @@ export function ResearchWorkspace({ locale, accessKey, session, preferences, onP
     const scheduler = new ResearchHistoryScheduler({
       run: async signal => {
         const epoch = ++historyEpoch.current;
-        const snapshots: ResearchRun[] = []; let cursor: string | null = null; const cursors = new Set<string>();
-        for (let pageIndex = 0; pageIndex < historyPages; pageIndex++) {
-          const page = await runTransport.list!({ ...address, limit: 25, cursor }, signal);
-          for (const item of page.items) { if (snapshots.some(prior => prior.id === item.id)) throw new Error("Repeated run page"); snapshots.push(item); }
-          cursor = page.next_cursor; if (cursor === null) break;
-          if (cursors.has(cursor)) throw new Error("Repeated run cursor"); cursors.add(cursor);
-        }
-        const cached = session.runs.get(slot) ?? [], merged: ResearchRun[] = [];
-        for (const snapshot of snapshots) {
-          let item = mergeRunSnapshot(cached.find(prior => prior.id === snapshot.id), snapshot);
-          for (let pageIndex = 0; pageIndex < 20 && item.event_cursor < (item.latest_event_cursor ?? item.event_cursor); pageIndex++) {
-            item = mergeRunEvents(item, await runTransport.events({ ...researchRunAddress(item), after_cursor: item.event_cursor, limit: 100 }, signal));
-          }
-          merged.push(item);
-        }
+        const page = await loadResearchRunHistory({ transport: runTransport, address, pages: historyPages, cached: session.runs.get(slot) ?? [],
+          retained: session.drafts.retainedRunBindings(address.investigation_id, address.conversation_id), signal,
+          isCurrent: () => current() && historyEpoch.current === epoch });
         if (signal.aborted || !current() || historyEpoch.current !== epoch) return;
-        session.runs.set(slot, merged); setRuns(merged); setNextRunPage(cursor); setHistoryVerified(true);
+        for (const id of page.unavailable_ids) session.drafts.forgetRetainedRun(address.investigation_id, address.conversation_id, id);
+        session.runs.set(slot, page.runs); setRuns(page.runs); setNextRunPage(page.next_cursor); setHistoryVerified(true);
       },
       onFailure: error => { if (current()) { setRuns([]); setHistoryVerified(false); fail(error); } },
       onTimeout: () => { if (current()) { setRuns([]); setHistoryVerified(false); setError(503); } },
@@ -238,6 +228,7 @@ export function ResearchWorkspace({ locale, accessKey, session, preferences, onP
     const previous = session.runs.get(`${run.context.binding.investigation_id}:${run.context.binding.conversation_id}`) ?? [];
     const updated = mergeRunSnapshot(previous.find(item => item.id === run.id), run);
     const next = previous.some(item => item.id === run.id) ? previous.map(item => item.id === run.id ? updated : item) : [...previous, updated];
+    if (runSource === "service") session.drafts.retainRun(run.id, run.context.binding);
     session.runs.set(`${run.context.binding.investigation_id}:${run.context.binding.conversation_id}`, next); setRuns(next);
   };
   const runAction = async (execute: (signal: AbortSignal) => Promise<ResearchRun>, expected?: ResearchRun | RunContextBinding, intent?: RunMutationIntent) => {

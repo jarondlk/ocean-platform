@@ -1,0 +1,14 @@
+{
+  "qualification": "Original immutable raw production build log preserves progress-line carriage returns and final blank line; no tested application source or pinned log was rewritten",
+  "findings": [
+    "docs/plans/ocean-v1/evidence/C20/history-amendment/frontend-full-build.txt:14: trailing whitespace.",
+    "docs/plans/ocean-v1/evidence/C20/history-amendment/frontend-full-build.txt:15: trailing whitespace.",
+    "docs/plans/ocean-v1/evidence/C20/history-amendment/frontend-full-build.txt:16: trailing whitespace.",
+    "docs/plans/ocean-v1/evidence/C20/history-amendment/frontend-full-build.txt:36: new blank line at EOF."
+  ],
+  "findings_count": 4,
+  "file_sha256": {
+    "docs/plans/ocean-v1/evidence/C20/history-amendment/frontend-full-build.txt": "15224d6f9b7091fd7494dfdd8ae47e8efd8145e04f7f9a5c4ab79c3d1de1fc3a"
+  },
+  "all_other_staged_source_and_documentation_whitespace": "clean"
+}

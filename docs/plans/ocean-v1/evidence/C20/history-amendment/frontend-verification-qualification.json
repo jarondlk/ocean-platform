@@ -1,0 +1,14 @@
+{
+  "qualifies": {
+    "path": "docs/plans/ocean-v1/evidence/C20/history-amendment/frontend-verification.json",
+    "sha256": "f8f6843d35df44b4e3bae616a2a1c6bdd04af27e4ac296dd63ae0e274aa07d8d"
+  },
+  "focused_test_boundary": "The new off-page history tests execute the production TypeScript HTTP transport, strict parser, history hydration helper and scheduler with synthetic mocked fetch responses. They do not contact a new Python server or assemble a browser UI.",
+  "actual_wire_boundary": "The earlier nine saved real Python HTTP stack envelopes and their ten TypeScript wire tests remain unchanged and separate. The full805-case frontend suite includes those existing wire tests.",
+  "acceptance_limit": "No new assembled browser or server roundtrip acceptance is claimed by this history amendment. C26 remains the assembled browser gate; root owns current-source hosted CI and delivery.",
+  "independent_review": {
+    "path": "docs/plans/ocean-v1/evidence/C20/history-amendment/independent-review.json",
+    "sha256": "5ff720b9bec91e4ff989843d882bbb536d12d6c11c85ae43b5431a28ae34e26d"
+  },
+  "source_changes_after_full_verification": false
+}

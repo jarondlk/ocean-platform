@@ -1,0 +1,53 @@
+{
+  "component": "C20",
+  "probe_kind": "independent direct invocation of frozen actual history helper and draft store; synthetic transports only",
+  "reviewed_source_sha256": {
+    "frontend-v1/src/research-state.ts": "4fed20f2aebc59065e1e5c4cb4c26cb37fa46f2b9f1593f38b04ecccd46bc52c",
+    "frontend-v1/src/research-workspace.tsx": "c959f0bcbfa3ed7cdebeaeddfbebab0edd758a9406cbcbc46d290ad94e19bd4a",
+    "frontend-v1/src/research-history.ts": "bffaf8b8e9780c2f6306b54e12da972ed8faa796e35adf15c4d2033c08c74c27",
+    "frontend-v1/tests/research-history.test.ts": "165c44b40155a08809735f64256332563743261801272a4b19beffdea6320f63"
+  },
+  "findings_resolved": [
+    "C20-FR2"
+  ],
+  "observed": {
+    "server_runs": 31,
+    "first_page_runs": 25,
+    "first_hydrated_runs": 26,
+    "new_accepted_visible": true,
+    "active_count": 1,
+    "repeated_refresh_event_cursors": [
+      1,
+      2
+    ],
+    "more_page_unique_runs": 31,
+    "missing_run_status_calls_before_more": 2,
+    "untracked_cache_excluded": true,
+    "denied_or_unavailable_status_rejected": [
+      401,
+      403,
+      503
+    ],
+    "all_five_binding_fields_rejected_on_change": [
+      "investigation_id",
+      "conversation_id",
+      "revision_id",
+      "snapshot_id",
+      "payload_sha256"
+    ],
+    "same_binding_scope_refs_id_question_parent_substitution_rejected": true,
+    "missing404_not_forgotten_before_guarded_commit": true,
+    "late_responses_rejected_without_event_calls": [
+      "account",
+      "permission",
+      "navigation",
+      "mutation",
+      "abort"
+    ],
+    "newest_acknowledgement_survives_capacity": true,
+    "permission_revision_clears_retained_ids": true
+  },
+  "source_pins_stable": true,
+  "no_accepted_files_modified": true,
+  "no_full_suite_run": true
+}
