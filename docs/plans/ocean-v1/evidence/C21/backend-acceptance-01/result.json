@@ -1,0 +1,71 @@
+{
+  "component": "C21",
+  "group": "backend",
+  "created_at": "2026-10-20T15:28:13.007459+00:00",
+  "commands": [
+    {
+      "name": "backend",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/",
+        "-q",
+        "--tb=short",
+        "--cov=api",
+        "--cov=config",
+        "--cov=db",
+        "--cov=preprocessing",
+        "--cov=ingestion",
+        "--cov=orchestration",
+        "--cov=schema",
+        "--cov=evaluation",
+        "--cov-report=term-missing",
+        "--cov-fail-under=70"
+      ],
+      "cwd": ".",
+      "exit_code": 1,
+      "seconds": 959.34,
+      "log": "backend.txt",
+      "log_sha256": "c9b02111b9c1af7fc1c80ddea72e2c5de9822347f4a7be943eb87c885d8eb0d8"
+    }
+  ],
+  "source_changed_during_run": [
+    "migrations/versions/20261019_0019_research_evidence.py",
+    "tests/integration/test_research_evidence_postgres.py",
+    "tests/integration/test_research_runs_postgres.py"
+  ],
+  "preservation": {
+    "counts": {
+      "unrelated_files": 30,
+      "scientific_artifacts": 7,
+      "serving_files": 2,
+      "legacy_frontend_files": 106,
+      "prior_evidence_files": 1068
+    },
+    "changed": {
+      "unrelated_files": [],
+      "scientific_artifacts": [],
+      "serving_files": [],
+      "legacy_frontend_files": [],
+      "prior_evidence_files": []
+    }
+  },
+  "protected_before": {
+    "counts": {
+      "unrelated_files": 30,
+      "scientific_artifacts": 7,
+      "serving_files": 2,
+      "legacy_frontend_files": 106,
+      "prior_evidence_files": 1068
+    },
+    "changed": {
+      "unrelated_files": [],
+      "scientific_artifacts": [],
+      "serving_files": [],
+      "legacy_frontend_files": [],
+      "prior_evidence_files": []
+    }
+  },
+  "success": false
+}

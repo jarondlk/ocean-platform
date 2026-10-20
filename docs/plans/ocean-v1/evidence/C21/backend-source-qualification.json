@@ -1,0 +1,27 @@
+{
+  "reason": "Only reviewed PostgreSQL migration/test changes occurred during the local non-PostgreSQL suite; application/runtime files and executed tests stayed fixed.",
+  "changed_during_backend": {
+    "migrations/versions/20261019_0019_research_evidence.py": {
+      "before": "fe2dce75d616d67dd9c6dace1130c6100d1c9121811edd92510742f122407e1f",
+      "after": "2e06592c0f2c307fead5985a0639d1520ca60fafb250f9ac64ea32f63dc5f1ae"
+    },
+    "tests/integration/test_research_evidence_postgres.py": {
+      "before": "caca84d2d3ce7fa69c6562c006272db31423af1badaccdb3fd045644efd67bfc",
+      "after": "2531591b5b50cee63b68625e762573782907dfc7cc4170615d8dd30d14ea370b"
+    },
+    "tests/integration/test_research_runs_postgres.py": {
+      "before": "f560e6d186cd0cca11265f822188f11111385943622a91e18f103aef8bd91cd1",
+      "after": "156fde18a6d1019c6f4943018cb94304ace557c7e7579beaf2d06a8676428fdb"
+    }
+  },
+  "final_database_verification": "20 original actual C21 cases plus 3 targeted closure amendment cases and 104 final C17/C20 regressions",
+  "requirement": "Component delivery additionally requires exact-source hosted CI on 0ab726a243a4c74d584a4894dca1a71158cb9cc2",
+  "original_full_suite": {
+    "failed": 29,
+    "passed": 4997,
+    "skipped": 251,
+    "errors": 14
+  },
+  "loopback_retry": "Exactly43 previously blocked synthetic local HTTP-server cases pass with loopback permission; original sandbox failure report remains immutable.",
+  "no_broad_repeat": true
+}

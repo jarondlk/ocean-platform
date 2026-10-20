@@ -1,6 +1,6 @@
 # C21 — Evidence and answer synthesis
 
-**Status:** In progress; integrated implementation and scoped reviews pass, final migration amendment/full acceptance/hosted delivery pending. **Prerequisites:** C05, C06, C07, C13, C19, C20.
+**Status:** In progress; reviewed implementation/local acceptance pass, exact-source hosted delivery pending after a CI time allowance amendment. **Prerequisites:** C05, C06, C07, C13, C19, C20.
 
 ## Revised delivery boundary
 
