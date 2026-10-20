@@ -59,6 +59,9 @@ jobs:
       - name: Check generated chat scope contract
         run: python scripts/export_chat_scope.py --check
 
+      - name: Check C21 evidence and answer wire contract
+        run: python docs/plans/ocean-v1/evidence/C21/frontend-export-contract.py --check
+
       - name: Check frozen catalogue contracts and examples
         run: |
           python scripts/export_context_catalogue.py --check
@@ -382,6 +385,30 @@ jobs:
           C20_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
         run: >-
           python -m pytest tests/integration/test_research_runs_postgres.py
+          -q -s --tb=short
+
+      - name: Create isolated C21 evidence and synthesis test database
+        run: |
+          python - <<'PY'
+          from sqlalchemy import create_engine, text
+          engine = create_engine(
+              "postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform",
+              isolation_level="AUTOCOMMIT",
+          )
+          with engine.connect() as connection:
+              connection.execute(text("CREATE DATABASE ocean_c21_evidence_test"))
+          engine.dispose()
+          PY
+
+      - name: Verify C21 retained evidence and durable synthesis fences
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_POSTGRES_INTEGRATION: "1"
+          C21_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c21_evidence_test
+          C21_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
+        run: >-
+          python -m pytest tests/integration/test_research_evidence_postgres.py
           -q -s --tb=short
 
       - name: Verify database backup and isolated restore

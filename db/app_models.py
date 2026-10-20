@@ -824,6 +824,7 @@ class ResearchContextOperation(AppBase):
 
     __table_args__ = (
         UniqueConstraint("user_id", "idempotency_key", name="uq_research_context_operation_idempotency"),
+        UniqueConstraint("id", "investigation_id", "user_id", name="uq_research_context_operation_owner_identity"),
         CheckConstraint("length(idempotency_key) BETWEEN 1 AND 128", name="ck_research_context_operation_key"),
         CheckConstraint("length(kind) BETWEEN 1 AND 32", name="ck_research_context_operation_kind"),
         CheckConstraint(_context_sha256_check("request_sha256"), name="ck_research_context_operation_request_hash"),
@@ -1058,3 +1059,275 @@ for _run_model in _RUN_IMMUTABLE_COLUMNS:
 for _run_model in (ResearchRunInputHistory, ResearchRunEvent, ResearchRunPayload, ResearchRunAttempt, ResearchRunManifest):
     event.listen(_run_model, "before_update", _research_record_is_immutable)
     event.listen(_run_model, "before_delete", _research_record_is_immutable)
+
+
+class ResearchEvidenceBlob(AppBase):
+    """Owner-private immutable canonical evidence bytes and exact input manifest."""
+    __tablename__ = "research_evidence_blob"
+    user_id = Column(Uuid(as_uuid=True), ForeignKey("app_user.id", ondelete="RESTRICT"), primary_key=True)
+    sha256 = Column(String(64), primary_key=True)
+    payload_json = Column(Text, nullable=False)
+    inputs_json = Column(Text, nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (CheckConstraint(_context_sha256_check("sha256"), name="ck_research_evidence_blob_hash"),)
+
+
+class ResearchEvidenceReceipt(AppBase):
+    __tablename__ = "research_evidence_receipt"
+    id = Column(String(76), primary_key=True)
+    user_id = Column(Uuid(as_uuid=True), nullable=False)
+    run_id = Column(Uuid(as_uuid=True), nullable=False)
+    input_version = Column(Integer, nullable=False)
+    investigation_id = Column(Uuid(as_uuid=True), nullable=False)
+    conversation_id = Column(Uuid(as_uuid=True), nullable=False)
+    revision_id = Column(Uuid(as_uuid=True), nullable=False)
+    snapshot_id = Column(String(64), nullable=False)
+    payload_sha256 = Column(String(64), nullable=False)
+    sha256 = Column(String(64), nullable=False)
+    blob_sha256 = Column(String(64), nullable=False)
+    receipt_json = Column(Text, nullable=False)
+    state = Column(String(16), nullable=False, default="prepared")
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        UniqueConstraint("id", "user_id", name="uq_research_evidence_receipt_owner"),
+        ForeignKeyConstraint(["run_id", "user_id"], ["research_run.id", "research_run.user_id"], ondelete="RESTRICT", name="fk_research_evidence_receipt_owner"),
+        ForeignKeyConstraint(["run_id", "investigation_id", "conversation_id", "revision_id"], ["research_run.id", "research_run.investigation_id", "research_run.conversation_id", "research_run.revision_id"], ondelete="RESTRICT", name="fk_research_evidence_receipt_run_binding"),
+        ForeignKeyConstraint(["run_id", "input_version"], ["research_run_manifest.run_id", "research_run_manifest.input_version"], ondelete="RESTRICT", name="fk_research_evidence_receipt_input"),
+        ForeignKeyConstraint(["investigation_id", "revision_id", "snapshot_id", "payload_sha256"], ["research_context_revision.investigation_id", "research_context_revision.id", "research_context_revision.snapshot_id", "research_context_revision.payload_sha256"], ondelete="RESTRICT", name="fk_research_evidence_receipt_revision"),
+        ForeignKeyConstraint(["user_id", "blob_sha256"], ["research_evidence_blob.user_id", "research_evidence_blob.sha256"], ondelete="RESTRICT", name="fk_research_evidence_receipt_blob"),
+        CheckConstraint("id = 'c21:receipt:' || sha256", name="ck_research_evidence_receipt_identity"),
+        CheckConstraint("state IN ('prepared','ready')", name="ck_research_evidence_receipt_state"),
+        CheckConstraint(_context_sha256_check("sha256"), name="ck_research_evidence_receipt_hash"),
+        Index("ix_research_evidence_run_input", "user_id", "run_id", "input_version", "id"),
+    )
+
+
+class ResearchEvidenceProtection(AppBase):
+    __tablename__ = "research_evidence_protection"
+    receipt_id = Column(String(76), primary_key=True)
+    user_id = Column(Uuid(as_uuid=True), nullable=False)
+    references_json = Column(Text, nullable=False)
+    state = Column(String(16), nullable=False, default="prepared")
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        ForeignKeyConstraint(["receipt_id", "user_id"], ["research_evidence_receipt.id", "research_evidence_receipt.user_id"], ondelete="RESTRICT", name="fk_research_evidence_protection_owner"),
+        CheckConstraint("state IN ('prepared','uncertain','ready')", name="ck_research_evidence_protection_state"),
+    )
+
+
+class ResearchEvidenceDependency(AppBase):
+    __tablename__ = "research_evidence_dependency"
+    receipt_id = Column(String(76), primary_key=True)
+    origin_receipt_id = Column(String(76), primary_key=True)
+    user_id = Column(Uuid(as_uuid=True), nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        ForeignKeyConstraint(["receipt_id", "user_id"], ["research_evidence_receipt.id", "research_evidence_receipt.user_id"], ondelete="RESTRICT", name="fk_research_evidence_dependency_owner"),
+        ForeignKeyConstraint(["origin_receipt_id", "user_id"], ["research_evidence_receipt.id", "research_evidence_receipt.user_id"], ondelete="RESTRICT", name="fk_research_evidence_dependency_origin"),
+        CheckConstraint("receipt_id <> origin_receipt_id", name="ck_research_evidence_dependency_other"),
+    )
+
+
+class ResearchEvidenceContextDependency(AppBase):
+    __tablename__ = "research_evidence_context_dependency"
+    operation_id = Column(Uuid(as_uuid=True), primary_key=True)
+    receipt_id = Column(String(76), primary_key=True)
+    user_id = Column(Uuid(as_uuid=True), nullable=False)
+    investigation_id = Column(Uuid(as_uuid=True), nullable=False)
+    state = Column(String(16), nullable=False, default="prepared")
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        ForeignKeyConstraint(["operation_id", "investigation_id", "user_id"], ["research_context_operation.id", "research_context_operation.investigation_id", "research_context_operation.user_id"], ondelete="RESTRICT", name="fk_research_evidence_context_operation"),
+        ForeignKeyConstraint(["receipt_id", "user_id"], ["research_evidence_receipt.id", "research_evidence_receipt.user_id"], ondelete="RESTRICT", name="fk_research_evidence_context_receipt"),
+        CheckConstraint("state IN ('prepared','committed')", name="ck_research_evidence_context_state"),
+    )
+
+
+class ResearchAnswerJob(AppBase):
+    __tablename__ = "research_answer_job"
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(Uuid(as_uuid=True), nullable=False)
+    run_id = Column(Uuid(as_uuid=True), nullable=False)
+    investigation_id = Column(Uuid(as_uuid=True), nullable=False)
+    conversation_id = Column(Uuid(as_uuid=True), nullable=False)
+    revision_id = Column(Uuid(as_uuid=True), nullable=False)
+    snapshot_id = Column(String(64), nullable=False)
+    payload_sha256 = Column(String(64), nullable=False)
+    input_version = Column(Integer, nullable=False)
+    locale = Column(String(2), nullable=False)
+    idempotency_key = Column(String(128), nullable=False)
+    request_json = Column(Text, nullable=False)
+    request_sha256 = Column(String(64), nullable=False)
+    budget_floor_json = Column(Text, nullable=False)
+    status = Column(String(16), nullable=False, default="queued")
+    version = Column(Integer, nullable=False, default=1)
+    event_cursor = Column(Integer, nullable=False, default=0)
+    cancellation_requested = Column(Boolean, nullable=False, default=False)
+    active_elapsed_ms = Column(Integer, nullable=False, default=0)
+    tool_actions = Column(Integer, nullable=False, default=0)
+    model_calls = Column(Integer, nullable=False, default=0)
+    malformed_repairs = Column(Integer, nullable=False, default=0)
+    active_started_at = Column(DateTime(timezone=True))
+    lease_epoch = Column(Integer, nullable=False, default=0)
+    lease_until = Column(DateTime(timezone=True))
+    manifest_json = Column(Text)
+    pack_sha256 = Column(String(64))
+    reason_code = Column(String(64))
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        UniqueConstraint("id", "user_id", name="uq_research_answer_job_owner"),
+        UniqueConstraint("id", "user_id", "run_id", name="uq_research_answer_job_run_owner"),
+        UniqueConstraint("run_id", "input_version", name="uq_research_answer_job_input"),
+        UniqueConstraint("user_id", "idempotency_key", name="uq_research_answer_job_key"),
+        ForeignKeyConstraint(["run_id", "user_id"], ["research_run.id", "research_run.user_id"], ondelete="RESTRICT", name="fk_research_answer_job_owner"),
+        ForeignKeyConstraint(["run_id", "investigation_id", "conversation_id", "revision_id"], ["research_run.id", "research_run.investigation_id", "research_run.conversation_id", "research_run.revision_id"], ondelete="RESTRICT", name="fk_research_answer_job_run_binding"),
+        ForeignKeyConstraint(["run_id", "input_version"], ["research_run_manifest.run_id", "research_run_manifest.input_version"], ondelete="RESTRICT", name="fk_research_answer_job_input"),
+        ForeignKeyConstraint(["investigation_id", "revision_id", "snapshot_id", "payload_sha256"], ["research_context_revision.investigation_id", "research_context_revision.id", "research_context_revision.snapshot_id", "research_context_revision.payload_sha256"], ondelete="RESTRICT", name="fk_research_answer_job_revision"),
+        CheckConstraint("status IN ('queued','running','completed','partial','cancelled','failed','unavailable')", name="ck_research_answer_job_status"),
+        CheckConstraint("version >= 1 AND input_version >= 1 AND event_cursor >= 0 AND lease_epoch >= 0", name="ck_research_answer_job_versions"),
+        CheckConstraint("active_elapsed_ms BETWEEN 0 AND 180000 AND tool_actions BETWEEN 0 AND 12 AND model_calls BETWEEN 0 AND 14 AND malformed_repairs BETWEEN 0 AND 1", name="ck_research_answer_job_budget"),
+        CheckConstraint("locale IN ('en','ja') AND length(idempotency_key) BETWEEN 1 AND 128", name="ck_research_answer_job_locale_key"),
+        CheckConstraint(_context_sha256_check("request_sha256"), name="ck_research_answer_job_request_hash"),
+    )
+
+
+class ResearchAnswerEvent(AppBase):
+    __tablename__ = "research_answer_event"
+    job_id = Column(Uuid(as_uuid=True), ForeignKey("research_answer_job.id", ondelete="RESTRICT"), primary_key=True)
+    cursor = Column(Integer, primary_key=True)
+    kind = Column(String(32), nullable=False)
+    elapsed_ms = Column(Integer, nullable=False)
+    summary_json = Column(Text, nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (CheckConstraint("cursor >= 1 AND elapsed_ms BETWEEN 0 AND 180000", name="ck_research_answer_event_cursor"),)
+
+
+class ResearchAnswerPayload(AppBase):
+    __tablename__ = "research_answer_payload"
+    job_id = Column(Uuid(as_uuid=True), ForeignKey("research_answer_job.id", ondelete="RESTRICT"), primary_key=True)
+    sha256 = Column(String(64), primary_key=True)
+    payload_json = Column(Text, nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (CheckConstraint(_context_sha256_check("sha256"), name="ck_research_answer_payload_hash"),)
+
+
+class ResearchAnswerStep(AppBase):
+    __tablename__ = "research_answer_step"
+    job_id = Column(Uuid(as_uuid=True), ForeignKey("research_answer_job.id", ondelete="RESTRICT"), primary_key=True)
+    step_id = Column(String(255), primary_key=True)
+    kind = Column(String(16), nullable=False)
+    request_json = Column(Text, nullable=False)
+    request_sha256 = Column(String(64), nullable=False)
+    outcome_sha256 = Column(String(64))
+    state = Column(String(16), nullable=False, default="prepared")
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        ForeignKeyConstraint(["job_id", "outcome_sha256"], ["research_answer_payload.job_id", "research_answer_payload.sha256"], ondelete="RESTRICT", name="fk_research_answer_step_payload"),
+        CheckConstraint("kind IN ('tool','model','repair')", name="ck_research_answer_step_kind"),
+        CheckConstraint("(state = 'prepared' AND outcome_sha256 IS NULL) OR (state = 'committed' AND outcome_sha256 IS NOT NULL)", name="ck_research_answer_step_state"),
+        CheckConstraint(_context_sha256_check("request_sha256"), name="ck_research_answer_step_hash"),
+    )
+
+
+class ResearchAnswerAttempt(AppBase):
+    __tablename__ = "research_answer_attempt"
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    job_id = Column(Uuid(as_uuid=True), nullable=False)
+    step_id = Column(String(255), nullable=False)
+    ordinal = Column(Integer, nullable=False)
+    lease_epoch = Column(Integer, nullable=False)
+    budget_json = Column(Text, nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        UniqueConstraint("job_id", "step_id", "ordinal", name="uq_research_answer_attempt_ordinal"),
+        ForeignKeyConstraint(["job_id", "step_id"], ["research_answer_step.job_id", "research_answer_step.step_id"], ondelete="RESTRICT", name="fk_research_answer_attempt_step"),
+        CheckConstraint("ordinal >= 1 AND lease_epoch >= 1", name="ck_research_answer_attempt_version"),
+    )
+
+
+class ResearchAnswerOutbox(AppBase):
+    __tablename__ = "research_answer_outbox"
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    job_id = Column(Uuid(as_uuid=True), ForeignKey("research_answer_job.id", ondelete="RESTRICT"), nullable=False, unique=True)
+    delivery_id = Column(Uuid(as_uuid=True), nullable=False, unique=True, default=uuid.uuid4)
+    state = Column(String(16), nullable=False, default="pending")
+    attempts = Column(Integer, nullable=False, default=0)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    sent_at = Column(DateTime(timezone=True))
+    __table_args__ = (CheckConstraint("attempts >= 0 AND state IN ('pending','sent')", name="ck_research_answer_outbox_state"),)
+
+
+class ResearchAnswerInputHistory(AppBase):
+    __tablename__ = "research_answer_input_history"
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(Uuid(as_uuid=True), nullable=False)
+    job_id = Column(Uuid(as_uuid=True), nullable=False)
+    kind = Column(String(16), nullable=False)
+    idempotency_key = Column(String(128), nullable=False)
+    request_json = Column(Text, nullable=False)
+    request_sha256 = Column(String(64), nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        UniqueConstraint("user_id", "idempotency_key", name="uq_research_answer_input_key"),
+        ForeignKeyConstraint(["job_id", "user_id"], ["research_answer_job.id", "research_answer_job.user_id"], ondelete="RESTRICT", name="fk_research_answer_input_owner"),
+        CheckConstraint("kind IN ('submit','cancel') AND length(idempotency_key) BETWEEN 1 AND 128", name="ck_research_answer_input_kind"),
+        CheckConstraint(_context_sha256_check("request_sha256"), name="ck_research_answer_input_hash"),
+    )
+
+
+class ResearchAnswer(AppBase):
+    __tablename__ = "research_answer"
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    job_id = Column(Uuid(as_uuid=True), nullable=False, unique=True)
+    user_id = Column(Uuid(as_uuid=True), nullable=False)
+    run_id = Column(Uuid(as_uuid=True), nullable=False)
+    answer_json = Column(Text, nullable=False)
+    answer_sha256 = Column(String(64), nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        ForeignKeyConstraint(["job_id", "user_id", "run_id"], ["research_answer_job.id", "research_answer_job.user_id", "research_answer_job.run_id"], ondelete="RESTRICT", name="fk_research_answer_owner_run"),
+        CheckConstraint(_context_sha256_check("answer_sha256"), name="ck_research_answer_hash"),
+    )
+
+
+_EVIDENCE_MUTABLE = {
+    ResearchEvidenceReceipt: {"state"}, ResearchEvidenceProtection: {"state"},
+    ResearchEvidenceContextDependency: {"state"},
+    ResearchAnswerJob: {"status", "version", "event_cursor", "cancellation_requested", "active_elapsed_ms", "tool_actions", "model_calls", "malformed_repairs", "active_started_at", "lease_epoch", "lease_until", "manifest_json", "pack_sha256", "reason_code", "updated_at"},
+    ResearchAnswerStep: {"state", "outcome_sha256"},
+    ResearchAnswerOutbox: {"state", "attempts", "sent_at"},
+}
+
+
+def _research_evidence_update_guard(_mapper, _connection, target):
+    state = inspect(target)
+    mutable = _EVIDENCE_MUTABLE[type(target)]
+    if any(item.history.has_changes() and item.key not in mutable for item in state.attrs):
+        raise ValueError("Evidence identities and prepared inputs are immutable")
+    def previous(key):
+        history = state.attrs[key].history
+        return history.deleted[0] if history.deleted else getattr(target, key)
+    if isinstance(target, (ResearchEvidenceReceipt, ResearchEvidenceProtection)) and previous("state") == "ready":
+        raise ValueError("Ready evidence protection is immutable")
+    if isinstance(target, ResearchEvidenceContextDependency) and previous("state") == "committed":
+        raise ValueError("Committed context dependencies are immutable")
+    if isinstance(target, ResearchAnswerStep) and previous("state") == "committed":
+        raise ValueError("Committed answer steps are immutable")
+    if isinstance(target, ResearchAnswerJob):
+        if previous("status") in {"completed", "partial", "cancelled", "failed", "unavailable"}:
+            raise ValueError("Terminal answer jobs are immutable")
+        for column in ("version", "event_cursor", "active_elapsed_ms", "tool_actions", "model_calls", "malformed_repairs", "lease_epoch"):
+            if getattr(target, column) < previous(column):
+                raise ValueError("Answer budgets and fencing counters are monotonic")
+        for column in ("manifest_json", "pack_sha256"):
+            if state.attrs[column].history.has_changes() and previous(column) is not None:
+                raise ValueError("Answer execution manifest is immutable")
+
+
+for _evidence_model in _EVIDENCE_MUTABLE:
+    event.listen(_evidence_model, "before_update", _research_evidence_update_guard)
+    event.listen(_evidence_model, "before_delete", _research_record_is_immutable)
+for _evidence_model in (ResearchEvidenceBlob, ResearchEvidenceDependency, ResearchAnswerEvent, ResearchAnswerPayload, ResearchAnswerAttempt, ResearchAnswerInputHistory, ResearchAnswer):
+    event.listen(_evidence_model, "before_update", _research_record_is_immutable)
+    event.listen(_evidence_model, "before_delete", _research_record_is_immutable)

@@ -1,0 +1,65 @@
+{
+  "component": "C21",
+  "review_version": "c21-store-independent-review-v1",
+  "reviewer": "/root/c18_run_presentation",
+  "method": "Independent read-only source review and final amendment reread. No tests, providers, SQL mutations or services were executed by this reviewer.",
+  "outcome": "No remaining confirmed blocker in reviewed store/projection/C17/access-epoch/native-integrity scope after closure amendment.",
+  "open_blockers": [],
+  "source_sha256": {
+    "db/app_models.py": "e8219674179b9de41ac0a817f306adccf11ca5cc50f1b4eb31f7da4d8fed8024",
+    "docs/plans/ocean-v1/evidence/C21/store_verify_postgres.py": "2d17e77a819c55defda0b29aecc0d69d43d4bd140f86deeb1bb32fad8fb42fde",
+    "migrations/versions/20261019_0019_research_evidence.py": "2e06592c0f2c307fead5985a0639d1520ca60fafb250f9ac64ea32f63dc5f1ae",
+    "orchestration/investigations.py": "9312f3ec4a788ceb1430052a2840a702100eb5bedf5cc284ca88f196c45537c7",
+    "orchestration/research_evidence.py": "cd721ffec16372b4685725e3082c2d0745a1e5586f6fc9963e822b24adbb42fc",
+    "orchestration/research_evidence_projection.py": "833539e6093f2d0978e8973bb1df3b4b1d0cd19b6e05d0f06dbd2bddcd9fd1b7",
+    "tests/integration/test_research_evidence_postgres.py": "2531591b5b50cee63b68625e762573782907dfc7cc4170615d8dd30d14ea370b",
+    "tests/research_evidence_postgres_support.py": "db85813e4106d3754f239c8555a5dba9ccc0166bc7f3b36b1b77902fc39e82bf",
+    "tests/research_evidence_support.py": "9f29b33a3e5b811ea75c005aceb4ee85e591284c7de2eaa55611b36f6b1058e1",
+    "tests/test_research_evidence_store.py": "476879b1d28e4e125f5e71c69bdf5cabd060468a67115388801703d5268490bc",
+    "orchestration/catalogue_service.py": "50b3d587ca0cb0f754b3d0f0a742c3bf184e687e147b52f60a5f51bfc9939a48",
+    "orchestration/research_runs.py": "de66c4c917686656fe9449a4d3e884a175ed6a94ec4a686f9953ba71474dc4d2",
+    "schema/research_evidence.py": "79617dba452bdc144c6e43e998f0627a0fcbe5b5475caa88a916de4fef820d92",
+    "ingestion/catalogue_snapshot.py": "450669acc6bc09a31532e101f9af38a2dee22d57053dd1b0b1e5f23ca892cec4"
+  },
+  "resolved_findings": [
+    {
+      "id": "C21-NATIVE-DAG-1",
+      "finding": "Recursive UNION ALL(id,depth) in the native dependency insert guard enumerated exponentially many paths in a valid shared receipt DAG; depth limit did not bound work by distinct receipts.",
+      "resolution": "Deduplicated UNION(id) traversal, bounded origin cycle/size check and bounded combined existing-plus-proposed closure check enforce at most1024 unique nodes including consumer. Prepared consumer row lock remains before checks.",
+      "source": "migrations/versions/20261019_0019_research_evidence.py",
+      "regressions": [
+        "36-node shared Fibonacci DAG under1500ms per-statement deadline",
+        "Combined512+511 ancestors plus consumer1024 accepted; extra leaf1025 rejected with rollback",
+        "Reachable proposed-origin cycle rejected in disposable native database fixture"
+      ],
+      "amendment": "docs/plans/ocean-v1/evidence/C21/closure-amendment/verification.json",
+      "amendment_sha256": "2e4831bbf3a170f3bc7d7616c9d363b802f15fede5903c435b9584b30aabd1f7"
+    }
+  ],
+  "reviewed_guarantees": [
+    "Current owner, frozen run/context/revision/input binding and source policy are independently rechecked; old C20 manifests remain immutable.",
+    "Additive C09 reference tails alone preserve catalogue visibility epoch; complete consecutive audit chains/live reference mappings are required. Every non-reference lifecycle action advances epoch. Current registration/actor/policy checks still execute.",
+    "Current CataloguePolicy.revision must change when callback membership changes, as required by the existing C14 trusted callback contract.",
+    "Committed raw C20 request/outcome hashes and physical-attempt or coherent parent-prefix ancestry are verified before pure historical C19 projection; unsupported fingerprints fail closed.",
+    "Projected observations and completion are recomputed from accepted raw payloads, exact scope, host requested facts, semantic counts and published table coverage. No active controller or model is run by historical opening.",
+    "C17 target preparation/activation, receipt retention and retirement use the shared retention lock; read-only artifact resolution avoids origin lock recursion.",
+    "Prepared application protections precede independent C09 reference effects. Lost acknowledgements preserve uncertain protection; no compensating reference release or physical deletion is introduced.",
+    "Receipt/blob hashes, exact input manifests, transitive origin dependencies and current snapshot withdrawal are checked before disclosure.",
+    "Native composite foreign keys bind owner/run/conversation/revision/snapshot/context/input and immutable records reject SQL update/delete/truncate; ready/committed protection and terminal answer identities remain fixed.",
+    "Retirement is blocked independently of C21 feature flags for receipts, prepared context dependencies and queued answer jobs; transitive original evidence remains protected."
+  ],
+  "supporting_verification": {
+    "original_store_receipt": "docs/plans/ocean-v1/evidence/C21/store-verification.json",
+    "original_store_receipt_sha256": "4a6fa1c4f25b6d7ecf2943791503af04ecc73e47282e375904fd12cff98ec0e0",
+    "original_source_qualified_tests": "Owner reported16 focused and20 actual PostgreSQL tests on original frozen store map; two source pins intentionally superseded by closure amendment.",
+    "amendment_tests": "Owner reported3 actual PostgreSQL cases passed19.61s on unchanged amended source; cluster stopped, zero schemas, Ruff passed.",
+    "amendment_report": "docs/plans/ocean-v1/evidence/C21/closure-amendment/verified-01/postgres-result.json",
+    "amendment_report_sha256": "0291a4aa7777e4dc6d19e44b52f11027d84343d563b01d49db26c98ab8096c0e",
+    "reviewer_tests_rerun": false
+  },
+  "qualifications": [
+    "This source review does not replace parent-owned full component regression/hosted CI/delivery gates.",
+    "No live model, acquisition/real-data transfer, cloud deployment or scientific approval was exercised.",
+    "Original receipts and failed-development logs remain immutable; amendment source supersessions are explicit."
+  ]
+}

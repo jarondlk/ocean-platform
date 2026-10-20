@@ -1,0 +1,35 @@
+{
+  "kind": "independent-current-source-local-synthetic-repair-probe",
+  "reviewed_source_sha256": {
+    "orchestration/research_answers.py": "99847661a24236f172107b7aa1c132bb74c09673691e0ce2e2ba51f5d4e988c6",
+    "api/research_evidence_routes.py": "137a23e4cdc0281214c5ca9a9b7c7e5eef80fd9fdbf9ac5a44c8fc2a6af9fa01",
+    "api/v1_runtime_routes.py": "7642e4463b80873e5c9eef920cc9f31bccdd30b3c7177118b014befbf7430de6"
+  },
+  "cases": [
+    {
+      "final_authorization_advance_seconds": 181,
+      "callback_ran": true,
+      "status": "unavailable",
+      "active_elapsed_ms": 180000,
+      "answer_published": false,
+      "answer_rows": 0
+    },
+    {
+      "final_authorization_advance_seconds": -1,
+      "callback_ran": true,
+      "status": "unavailable",
+      "active_elapsed_ms": 180000,
+      "answer_published": false,
+      "answer_rows": 0
+    },
+    {
+      "synthesis_paused": true,
+      "exact_persisted_submit_replayed": true,
+      "new_key_denied": "synthesis_unavailable",
+      "recovered_job_cancelled": true,
+      "queue_absent": true
+    }
+  ],
+  "source_unchanged": true,
+  "outcome": "All three focused repair probes passed"
+}

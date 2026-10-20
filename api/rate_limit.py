@@ -29,6 +29,17 @@ class RateLimitPolicy:
 
 def policy_for_request(method: str, path: str) -> Optional[RateLimitPolicy]:
     method = method.upper()
+    if method == "POST" and path == "/research/answers/submit":
+        return RateLimitPolicy("answer_dispatch", 10)
+    if method == "POST" and path == "/research/answers/cancel":
+        return RateLimitPolicy("answer_cancel", 30)
+    if method == "POST" and path == "/research/evidence/export":
+        return RateLimitPolicy("evidence_export", 30)
+    if method == "POST" and path in {
+        "/research/answers/status", "/research/answers/events", "/research/answers/list",
+        "/research/evidence/list", "/research/evidence/open", "/research/evidence/page",
+    }:
+        return RateLimitPolicy("answer_evidence_history", 240)
     if method == "POST" and path in {
         "/research/runs/submit", "/research/runs/clarify", "/research/runs/continue",
     }:

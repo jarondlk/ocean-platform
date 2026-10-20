@@ -1,0 +1,35 @@
+C21 disposable PostgreSQL identity: database=ocean_c21_8e5cafbbea35451e8c3bcd9de319380c address=127.0.0.1 port=55902 version=18.3 (Homebrew) isolation=read committed
+C21 Alembic upgrade head: exit=0 schema=c21_07883534a96f416ebfb7c152d563c8ad
+C21 Alembic upgrade head: exit=0 schema=c21_07883534a96f416ebfb7c152d563c8ad
+C21 Alembic downgrade 20261019_0018: exit=0 schema=c21_07883534a96f416ebfb7c152d563c8ad
+C21 Alembic upgrade head: exit=0 schema=c21_07883534a96f416ebfb7c152d563c8ad
+.C21 disposable schema cleanup: c21_07883534a96f416ebfb7c152d563c8ad remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_c944f228b97c4ee4b3c863ab4ddfa3f2
+.C21 disposable schema cleanup: c21_c944f228b97c4ee4b3c863ab4ddfa3f2 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_3ca446a774ec4895a1db493a317fac09
+.C21 disposable schema cleanup: c21_3ca446a774ec4895a1db493a317fac09 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_958077063531421abdeab66716f09eda
+.C21 disposable schema cleanup: c21_958077063531421abdeab66716f09eda remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_86354a4c0a5e4c8ea918bf44d81e5193
+.C21 disposable schema cleanup: c21_86354a4c0a5e4c8ea918bf44d81e5193 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_2841cf0c1fb2427d80b295187a3e5751
+.C21 disposable schema cleanup: c21_2841cf0c1fb2427d80b295187a3e5751 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_5796c16f86fa4e6d8e8d7abbea80995f
+.C21 disposable schema cleanup: c21_5796c16f86fa4e6d8e8d7abbea80995f remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_02e2455bc4464412ab6ff4a03c61357c
+.C21 disposable schema cleanup: c21_02e2455bc4464412ab6ff4a03c61357c remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_217151a8b06f47e2bb25f749fbace3ec
+C21 Alembic downgrade 20261019_0018: exit=1 schema=c21_217151a8b06f47e2bb25f749fbace3ec
+.C21 disposable schema cleanup: c21_217151a8b06f47e2bb25f749fbace3ec remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_074bfca8d9b94acbb72e25b88dad017d
+.C21 disposable schema cleanup: c21_074bfca8d9b94acbb72e25b88dad017d remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_9a35bd94c0384b83bb170c0760fc7644
+.C21 disposable schema cleanup: c21_9a35bd94c0384b83bb170c0760fc7644 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_e509df7682354b4db2418f3e5a99fe27
+.C21 disposable schema cleanup: c21_e509df7682354b4db2418f3e5a99fe27 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_a18b495a375842b7a6df071bc380d8e1
+.C21 disposable schema cleanup: c21_a18b495a375842b7a6df071bc380d8e1 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_5dbcc6f3c0234cb195e754cb524fcbb2
+.C21 disposable schema cleanup: c21_5dbcc6f3c0234cb195e754cb524fcbb2 remaining=0
+
+14 passed in 30.71s

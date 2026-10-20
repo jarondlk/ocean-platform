@@ -219,6 +219,8 @@ ENABLE_V1_INVESTIGATIONS = os.environ.get("ENABLE_V1_INVESTIGATIONS", "false")
 ENABLE_V1_RESEARCH_CONTROLLER = os.environ.get("ENABLE_V1_RESEARCH_CONTROLLER", "false")
 ENABLE_V1_RESEARCH_RUNS = os.environ.get("ENABLE_V1_RESEARCH_RUNS", "false")
 ENABLE_V1_RESEARCH_DISPATCH = os.environ.get("ENABLE_V1_RESEARCH_DISPATCH", "false")
+ENABLE_V1_EVIDENCE = os.environ.get("ENABLE_V1_EVIDENCE", "false")
+ENABLE_V1_SYNTHESIS = os.environ.get("ENABLE_V1_SYNTHESIS", "false")
 INTERNAL_AUTH_AUDIENCE = os.environ.get(
     "INTERNAL_AUTH_AUDIENCE",
     "ocean-platform-api",
@@ -323,6 +325,16 @@ def v1_research_dispatch_enabled(environ: Optional[Mapping[str, str]] = None) ->
         str(env.get("ENABLE_V1_RESEARCH_DISPATCH", ENABLE_V1_RESEARCH_DISPATCH)),
         "ENABLE_V1_RESEARCH_DISPATCH",
     )
+
+
+def v1_evidence_enabled(environ: Optional[Mapping[str, str]] = None) -> bool:
+    env = os.environ if environ is None else environ
+    return _security_flag(str(env.get("ENABLE_V1_EVIDENCE", ENABLE_V1_EVIDENCE)), "ENABLE_V1_EVIDENCE")
+
+
+def v1_synthesis_enabled(environ: Optional[Mapping[str, str]] = None) -> bool:
+    env = os.environ if environ is None else environ
+    return _security_flag(str(env.get("ENABLE_V1_SYNTHESIS", ENABLE_V1_SYNTHESIS)), "ENABLE_V1_SYNTHESIS")
 
 
 def _placeholder_secret(value: str) -> bool:

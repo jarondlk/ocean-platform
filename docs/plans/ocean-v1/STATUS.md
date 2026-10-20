@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-10-19 JST. **P00 and C01–C20 are Complete with source-bound hosted delivery; C21–C27 are Not started.**
+Updated: 2026-10-21 JST. **P00 and C01–C20 are Complete with source-bound hosted delivery; C21 is In progress; C22–C27 are Not started.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -8,7 +8,7 @@ C02 was explicitly selected on 2026-10-14 JST and passed its software/synthetic
 checks. C03 passed its local transaction-ordering and actual disposable PostgreSQL
 acceptance. C04 now passes concurrent responsiveness, worker-lifetime, security
 and cancellation acceptance. C05 passes embedding isolation, metagenome fidelity
-and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11 passes frozen SST product/coverage acceptance; C12 passes frozen canonical eDNA adapter acceptance; C13 passes scientific catalogue acceptance; C14 passes authenticated catalogue service acceptance; C15 passes local application-shell acceptance; C16 passes local catalogue-browser acceptance; C17 passes local investigation-persistence acceptance; C18 passes local interface acceptance and hosted delivery; C19 passes local controller acceptance and hosted delivery; C20 passes amended local acceptance and hosted delivery; C21–C27 remain Not started.
+and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11 passes frozen SST product/coverage acceptance; C12 passes frozen canonical eDNA adapter acceptance; C13 passes scientific catalogue acceptance; C14 passes authenticated catalogue service acceptance; C15 passes local application-shell acceptance; C16 passes local catalogue-browser acceptance; C17 passes local investigation-persistence acceptance; C18 passes local interface acceptance and hosted delivery; C19 passes local controller acceptance and hosted delivery; C20 passes amended local acceptance and hosted delivery; C21 is In progress; C22–C27 remain Not started.
 P00 and C01–C13 local work is authorized; the user also authorizes subsequent CXX local implementation after each readiness audit passes.
 See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md), [C08](handoffs/C08.md), [C09](handoffs/C09.md) and [C10](handoffs/C10.md) handoffs for current evidence.
@@ -74,7 +74,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C18 — Chat and Workspace interface](components/C18-chat-workspace.md) | Complete | All3 local checkpoints and source596d871 hosted delivery pass | 4214 backend/187 skips/85.08%;673 frontend; strict builds/typechecks; actual C17/C16 browser and account/refresh checks | [C18](handoffs/C18.md) |
 | [C19 — Agent exploration controller](components/C19-agent-controller.md) | Complete | All3 local checkpoints and source4618188 hosted delivery pass | 4570 backend/187 gated skips/85.43%;356 new cases/164 compatibility;9 generated checks; actual synthetic C14/C17 and100000 backend | [C19](handoffs/C19.md) |
 | [C20 — Durable research execution](components/C20-durable-execution.md) | Complete | Original checkpoints plus pagination amendment; sourcea149239 hosted delivery passes | Local 4847 backend/231 skips/85.64%, 104 actual PG, 805 v1; hosted 4838 backend/231 actual PG/805 v1/132 legacy | [C20](handoffs/C20.md) |
-| [C21 — Evidence and answer synthesis](components/C21-evidence-synthesis.md) | Not started | None | Not run | Not created |
+| [C21 — Evidence and answer synthesis](components/C21-evidence-synthesis.md) | In progress | Storage, durable synthesis, HTTP/runtime and UI implemented; review repairs and full acceptance underway | 930 frontend tests/typecheck/build/audit pass; 66 pure synthesis/provider, 16 store and 20 actual PG cases pass; dependency-closure amendment/full backend/hosted delivery pending | [C21](handoffs/C21.md) |
 | [C22 — Experiment proposals and frozen exports](components/C22-experiment-proposals.md) | Not started | None | Not run | Not created |
 | [C23 — Isolated Python execution](components/C23-python-sandbox.md) | Not started | None | Not run | Not created |
 | [C24 — Isolated GCP site and worker configuration](components/C24-gcp-worker-configuration.md) | Not started | None | Not run | Not created |

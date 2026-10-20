@@ -1,0 +1,57 @@
+C21 disposable PostgreSQL identity: database=ocean_c21_3bf981af64284be5ba83d0a2dfa09dc4 address=127.0.0.1 port=50120 version=18.3 (Homebrew) isolation=read committed
+C21 Alembic upgrade head: exit=0 schema=c21_5caae453abca4ab9ae6d6225950dc3b8
+FC21 disposable schema cleanup: c21_5caae453abca4ab9ae6d6225950dc3b8 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_02cb39f150874cd2af72d1b146a3f4e3
+.C21 disposable schema cleanup: c21_02cb39f150874cd2af72d1b146a3f4e3 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_050382c27347499b8f93d682bd40cb60
+.C21 disposable schema cleanup: c21_050382c27347499b8f93d682bd40cb60 remaining=0
+
+=================================== FAILURES ===================================
+_______ test_shared_fibonacci_dag_is_bounded_by_distinct_nodes_not_paths _______
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.DatatypeMismatch: recursive query "closure" column 1 has type text in non-recursive term but type character varying overall
+E   LINE 2:             SELECT 'c21:receipt:353bf1ec2966d088563c0b0d2328...
+E                              ^
+E   HINT:  Cast the output of the non-recursive term to the correct type.
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_research_evidence_postgres.py:375: in test_shared_fibonacci_dag_is_bounded_by_distinct_nodes_not_paths
+    closure = session.scalar(text("""WITH RECURSIVE closure(id) AS (
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2421: in scalar
+    return self._execute_internal(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2266: in _execute_internal
+    return conn.scalar(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1310: in scalar
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:544: in _execute_on_scalar
+    return self._execute_on_connection(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.DatatypeMismatch) recursive query "closure" column 1 has type text in non-recursive term but type character varying overall
+E   LINE 2:             SELECT 'c21:receipt:353bf1ec2966d088563c0b0d2328...
+E                              ^
+E   HINT:  Cast the output of the non-recursive term to the correct type.
+E   
+E   [SQL: WITH RECURSIVE closure(id) AS (
+E               SELECT %(root)s UNION SELECT d.origin_receipt_id FROM research_evidence_dependency d
+E               JOIN closure c ON d.receipt_id=c.id) SELECT count(*) FROM closure]
+E   [parameters: {'root': 'c21:receipt:353bf1ec2966d088563c0b0d23280b3efd8180a85a8f2c72a654c4f99eb88a72'}]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)
+=========================== short test summary info ============================
+FAILED tests/integration/test_research_evidence_postgres.py::test_shared_fibonacci_dag_is_bounded_by_distinct_nodes_not_paths
+1 failed, 2 passed in 19.74s

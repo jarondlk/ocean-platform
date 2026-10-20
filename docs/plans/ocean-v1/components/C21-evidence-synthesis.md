@@ -1,6 +1,6 @@
 # C21 — Evidence and answer synthesis
 
-**Status:** Not started. **Prerequisites:** C05, C06, C07, C13, C19, C20.
+**Status:** In progress; integrated implementation and scoped reviews pass, final migration amendment/full acceptance/hosted delivery pending. **Prerequisites:** C05, C06, C07, C13, C19, C20.
 
 ## Revised delivery boundary
 
@@ -9,6 +9,8 @@ Work on overhaul for the separate v1 system described in
 remain unchanged. Existing entry points are reuse/regression references, not
 permission to connect to production. P00 precedes backend implementation; its
 prototype is not acceptance evidence for this component.
+
+Implementation contract: [evidence and structured synthesis](../C21_EVIDENCE_SYNTHESIS_CONTRACT.md).
 
 ## Objective and boundaries
 

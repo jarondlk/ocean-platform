@@ -94,6 +94,7 @@ class InvestigationService:
         catalogue_service: CatalogueService, snapshot_store,
         registrations: dict[str, ScientificCatalogueRegistration],
         artifact_resolver: Callable | None = None,
+        evidence_protection=None,
     ):
         if not callable(session_factory) or not isinstance(site_id, str) or not site_id.startswith("v1:") or not 3 < len(site_id) <= 128:
             raise ValueError("Explicit independent v1 application binding required")
@@ -108,9 +109,12 @@ class InvestigationService:
             raise ValueError("Explicit scientific snapshot registrations required")
         if artifact_resolver is not None and not callable(artifact_resolver):
             raise ValueError("Artifact resolver must be a trusted callable")
+        if evidence_protection is not None and not all(callable(getattr(evidence_protection, name, None)) for name in ("prepare_context", "activate_context")):
+            raise ValueError("Evidence protection must implement same-session context hooks")
         self.session_factory, self.site_id = session_factory, site_id
         self.catalogue, self.store = catalogue_service, snapshot_store
         self.registrations, self.artifact_resolver = dict(registrations), artifact_resolver
+        self.evidence_protection = evidence_protection
 
     @contextmanager
     def _transaction(self):
@@ -359,6 +363,9 @@ class InvestigationService:
     def _prepare(self, name, data, user):
         with self._transaction() as session:
             self._actor(session, user)
+            # Preparation and retirement share one lock before investigation
+            # locks. The read-only artifact resolver acquires no source locks.
+            self._retention_lock(session)
             existing, request = self._existing_operation(session, user, data, name)
             if existing is not None:
                 return existing.id
@@ -425,6 +432,8 @@ class InvestigationService:
             )
             session.add(operation)
             session.flush()
+            if self.evidence_protection is not None:
+                self.evidence_protection.prepare_context(session, operation, candidate, user)
             self._audit(session, user, "context_prepared", item.id, {"operation_id": str(operation.id)})
             return operation.id
 
@@ -433,6 +442,7 @@ class InvestigationService:
         try:
             with self._transaction() as session:
                 self._actor(session, user)
+                self._retention_lock(session)
                 op = session.scalar(select(ResearchContextOperation).where(
                     ResearchContextOperation.id == identity,
                     ResearchContextOperation.user_id == user.id,
@@ -469,6 +479,7 @@ class InvestigationService:
         try:
             with self._transaction() as session:
                 self._actor(session, user)
+                self._retention_lock(session)
                 op = session.scalar(select(ResearchContextOperation).where(
                     ResearchContextOperation.id == identity, ResearchContextOperation.user_id == user.id,
                 ).with_for_update())
@@ -503,6 +514,8 @@ class InvestigationService:
                     )
                     session.add(revision)
                     session.flush()
+                    if self.evidence_protection is not None:
+                        self.evidence_protection.activate_context(session, op, candidate, user)
                     item.head_revision_id = revision.id
                     if item.status == "preparing":
                         item.status = "active"
@@ -636,7 +649,13 @@ class InvestigationService:
                     ResearchInvestigation.predecessor_investigation_id == item.id,
                     ResearchInvestigation.status != "retired",
                 ).limit(1))
-                if pending is None and descendants is None and not self._held_ancestor(session, item):
+                # Retention applies independently of C21 feature flags and
+                # runtime wiring. Prepared/uncertain evidence and queued answer
+                # jobs remain dependencies even before publication.
+                from db.app_models import ResearchAnswerJob, ResearchEvidenceContextDependency, ResearchEvidenceReceipt
+                protected = any(session.scalar(select(model).where(model.investigation_id == item.id).limit(1)) is not None
+                    for model in (ResearchAnswerJob, ResearchEvidenceContextDependency, ResearchEvidenceReceipt))
+                if pending is None and descendants is None and not protected and not self._held_ancestor(session, item):
                     eligible.append(item)
             if not dry_run:
                 for item in eligible:

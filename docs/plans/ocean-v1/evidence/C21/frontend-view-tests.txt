@@ -1,0 +1,50 @@
+TAP version 13
+# Subtest: actual React answer markup retains qualifiers, literal host table values and citations (en)
+ok 1 - actual React answer markup retains qualifiers, literal host table values and citations (en)
+  ---
+  duration_ms: 4.591333
+  ...
+# Subtest: actual React answer markup retains qualifiers, literal host table values and citations (ja)
+ok 2 - actual React answer markup retains qualifiers, literal host table values and citations (ja)
+  ---
+  duration_ms: 0.511708
+  ...
+# Subtest: actual React retained page shows exact totals, denominator, unit, original snapshot and current export gates (en)
+ok 3 - actual React retained page shows exact totals, denominator, unit, original snapshot and current export gates (en)
+  ---
+  duration_ms: 0.70725
+  ...
+# Subtest: actual React retained page shows exact totals, denominator, unit, original snapshot and current export gates (ja)
+ok 4 - actual React retained page shows exact totals, denominator, unit, original snapshot and current export gates (ja)
+  ---
+  duration_ms: 0.484834
+  ...
+# Subtest: actual retained empty states distinguish known zero and unknown population without preview-count promotion
+ok 5 - actual retained empty states distinguish known zero and unknown population without preview-count promotion
+  ---
+  duration_ms: 0.989125
+  ...
+# Subtest: actual answer terminal, active and cancelled states keep cancellation and shared budget separate
+ok 6 - actual answer terminal, active and cancelled states keep cancellation and shared budget separate
+  ---
+  duration_ms: 1.247209
+  ...
+# Subtest: initial actual React hook render never dispatches generation from reads/restoration
+ok 7 - initial actual React hook render never dispatches generation from reads/restoration
+  ---
+  duration_ms: 0.9065
+  ...
+# Subtest: production runtime and workspace wire independent transport and explicit attachment without changing C20 synthesis
+ok 8 - production runtime and workspace wire independent transport and explicit attachment without changing C20 synthesis
+  ---
+  duration_ms: 0.855042
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 329.296375

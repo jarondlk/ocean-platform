@@ -145,7 +145,40 @@ class FrozenCatalogueResolver:
         self.store, self.policy_resolver = store, policy_resolver
         self.registrations = dict(registrations)
 
-    def resolve(self, user, snapshot_id):
+    @staticmethod
+    def _access_epoch(lifecycle):
+        """Retention reference additions do not change scientific visibility.
+
+        Every other lifecycle action still invalidates. Require a complete audit
+        chain and live mappings for its additive tail; incomplete control data
+        cannot attest compatibility with a historical execution.
+        """
+        revision, audits = lifecycle['revision'], lifecycle['audits']
+        if type(revision) is not int or revision < 0 or not isinstance(audits, list) or len(audits) != revision:
+            raise ValueError('Incomplete catalogue lifecycle audit')
+        epoch = 0
+        for expected, audit in enumerate(audits, 1):
+            if (not isinstance(audit, dict) or type(audit.get('revision')) is not int
+                    or audit['revision'] != expected or audit.get('action') not in {
+                        'seal', 'promote', 'reference', 'unreference', 'hold', 'revoke', 'retire'}):
+                raise ValueError('Invalid catalogue lifecycle audit')
+            if audit['action'] != 'reference':
+                epoch = expected
+        for audit in audits[epoch:]:
+            reference, snapshot_id = audit.get('reference'), audit.get('snapshot_id')
+            if (not isinstance(reference, str) or not reference or not isinstance(snapshot_id, str) or not snapshot_id
+                    or not isinstance(lifecycle.get('references'), dict)
+                    or lifecycle['references'].get(reference) != snapshot_id):
+                raise ValueError('Unverified additive catalogue reference')
+        return epoch
+
+    @staticmethod
+    def _revision(policy_revision, lifecycle_revision):
+        return 'c14:' + hashlib.sha256(canonical_json({
+            'policy': policy_revision, 'lifecycle': lifecycle_revision,
+        }).encode()).hexdigest()
+
+    def _authorization_state(self, user, snapshot_id):
         _authorize(user)
         registration = self.registrations.get(snapshot_id)
         if registration is None or registration.snapshot_id != snapshot_id:
@@ -155,9 +188,17 @@ class FrozenCatalogueResolver:
         if not isinstance(policy, CataloguePolicy):
             raise _error("catalogue_unavailable")
         lifecycle = self.store.lifecycle()
-        revision = "c14:" + hashlib.sha256(canonical_json({
-            "policy": policy.revision, "lifecycle": lifecycle["revision"],
-        }).encode()).hexdigest()
+        return registration, policy, lifecycle, self._access_epoch(lifecycle)
+
+    def revision_compatible(self, user, snapshot_id, expected_revision):
+        """Accept old raw-revision hashes only through a proven reference tail."""
+        _, policy, lifecycle, epoch = self._authorization_state(user, snapshot_id)
+        return any(expected_revision == self._revision(policy.revision, candidate)
+                   for candidate in range(epoch, lifecycle['revision'] + 1))
+
+    def resolve(self, user, snapshot_id):
+        registration, policy, _lifecycle, epoch = self._authorization_state(user, snapshot_id)
+        revision = self._revision(policy.revision, epoch)
         binding = catalogue_access_binding(user)
 
         def eligible(family):

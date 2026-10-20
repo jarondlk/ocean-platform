@@ -190,8 +190,12 @@ class ResearchRunService:
                     witness = json.loads(manifest.manifest_json)
                     if witness.get("actor_binding") is not None and witness["actor_binding"] != catalogue_access_binding(actor):
                         raise ValueError("Changed owner access epoch")
-                    if witness.get("catalogue_policy_revision") is not None and witness["catalogue_policy_revision"] != self.investigations.catalogue.resolver.resolve(actor, run.snapshot_id).revision:
-                        raise ValueError("Changed current source policy")
+                    expected = witness.get("catalogue_policy_revision")
+                    resolver = self.investigations.catalogue.resolver
+                    if expected is not None and expected != resolver.resolve(actor, run.snapshot_id).revision:
+                        compatible = getattr(resolver, "revision_compatible", None)
+                        if not callable(compatible) or compatible(actor, run.snapshot_id, expected) is not True:
+                            raise ValueError("Changed current source policy")
         except Exception:
             raise ResearchRunError("access_denied", 403) from None
 

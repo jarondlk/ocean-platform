@@ -1,0 +1,17 @@
+{
+  "component": "C21",
+  "checkpoint": "initial shared schema guards only",
+  "recorded_at": "2026-10-19T12:04:16.293108+00:00",
+  "command": ".venv/bin/python -m pytest tests/test_research_evidence_contracts.py -q --no-cov",
+  "observed_result": {
+    "exit_code": 0,
+    "passed": 13,
+    "seconds": 0.35
+  },
+  "source_sha256": {
+    "schema/research_evidence.py": "739e83e6ddc85e10d0013e11e487e4d006327f88dae5686700f9e377d3874214",
+    "tests/test_research_evidence_contracts.py": "9f6f1a5e6170672ca01fe51ef14a9daf59293af39a809829ffe1b387e2812122"
+  },
+  "scope": "No full backend/frontend/storage/migration/C21 acceptance claimed; focused shared-schema result from the recorded tool run",
+  "ruff": "Shared schema, test and new default-off config helpers pass"
+}

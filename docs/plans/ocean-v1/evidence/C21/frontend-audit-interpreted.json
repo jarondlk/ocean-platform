@@ -1,0 +1,39 @@
+{
+  "component": "C21",
+  "outcome": "Network-enabled npm audit command passed with zero production dependency vulnerabilities",
+  "original_retry_recorder_preserved": true,
+  "recorder_qualification": "Retry recorder expected one JSON document; npm appended a version-notice footer, so its metadata field is null and success false despite audit exit0. This read-only interpretation extracts the complete first audit JSON and verifies the remaining lines are npm notice text. No command was rerun.",
+  "audit_command_exit_code": 0,
+  "audit": {
+    "auditReportVersion": 2,
+    "vulnerabilities": {},
+    "metadata": {
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0,
+        "total": 0
+      },
+      "dependencies": {
+        "prod": 16,
+        "dev": 6,
+        "optional": 39,
+        "peer": 0,
+        "peerOptional": 0,
+        "total": 60
+      }
+    }
+  },
+  "raw_log": {
+    "path": "docs/plans/ocean-v1/evidence/C21/frontend-audit-acceptance-02/audit.json",
+    "sha256": "294dcd5b78e680a209ad003a90be26a19efbad0ab948a9d1cfd6c4d73637585b"
+  },
+  "retry_receipt": {
+    "path": "docs/plans/ocean-v1/evidence/C21/frontend-audit-acceptance-02/result.json",
+    "sha256": "556fc2692d9766c6080b84e13ee131d44c7764dd8e049e387dbf8e8255f7c2b3"
+  },
+  "source_unchanged": true,
+  "same_source_as_original_full_verification": true
+}

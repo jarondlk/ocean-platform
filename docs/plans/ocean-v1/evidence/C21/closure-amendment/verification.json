@@ -1,0 +1,50 @@
+{
+  "checks": [
+    "36-node shared Fibonacci DAG passes with per-statement1500ms deadline",
+    "512+511 disjoint ancestors plus consumer=1024 accepted; additional distinct node1025 rejected with rollback",
+    "Reachable cycle from proposed origin rejected under native guard",
+    "Prepared consumer locked before graph queries; distinct origin and combined closures capped",
+    "No app runtime/projection/model/C17 changes in this amendment"
+  ],
+  "component": "C21",
+  "evidence_sha256": {
+    "postgres-result.json": "88a2f72e95ea8b1f4cfcfa0318cc493142fdb686152b2765cee59dfc0c83a736",
+    "postgres-tests.txt": "35fb31d03fbf5e98871b31e45a674292af6af2781365eebeb5e1d83e00e3e1c6",
+    "ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "verified-01/postgres-result.json": "0291a4aa7777e4dc6d19e44b52f11027d84343d563b01d49db26c98ab8096c0e",
+    "verified-01/postgres-tested-source.json": "d2af19633680e921c153e288a441075fc0c38049c0605aac4bb51757e13c25be",
+    "verified-01/postgres-tests.txt": "f6e1082419a67e59592e739274a761bfe04ba107d51da52311f200ad2d7f6d6d"
+  },
+  "new_driver_sha256": "e837d33deb8955f086caac94dd008497797d60a0edb46a1270bc397e745bb5bb",
+  "original_receipts_unchanged": true,
+  "original_store_verification_sha256": "4a6fa1c4f25b6d7ecf2943791503af04ecc73e47282e375904fd12cff98ec0e0",
+  "prior_amendment_report": "postgres-result.json;1failed/2passed only because verification fixture CTE required explicit VARCHAR(76) root cast, corrected in verified-01",
+  "reason": "Independent review found recursive UNION ALL(id,depth) expanded duplicate paths in a small shared DAG. Node-identity deduplication is required for bounded traversal.",
+  "recorded_at": "2026-10-20T15:18:29.153647+00:00",
+  "ruff_exit_code": 0,
+  "source_sha256": {
+    "db/app_models.py": "e8219674179b9de41ac0a817f306adccf11ca5cc50f1b4eb31f7da4d8fed8024",
+    "docs/plans/ocean-v1/evidence/C21/store_verify_postgres.py": "2d17e77a819c55defda0b29aecc0d69d43d4bd140f86deeb1bb32fad8fb42fde",
+    "migrations/versions/20261019_0019_research_evidence.py": "2e06592c0f2c307fead5985a0639d1520ca60fafb250f9ac64ea32f63dc5f1ae",
+    "orchestration/investigations.py": "9312f3ec4a788ceb1430052a2840a702100eb5bedf5cc284ca88f196c45537c7",
+    "orchestration/research_evidence.py": "cd721ffec16372b4685725e3082c2d0745a1e5586f6fc9963e822b24adbb42fc",
+    "orchestration/research_evidence_projection.py": "833539e6093f2d0978e8973bb1df3b4b1d0cd19b6e05d0f06dbd2bddcd9fd1b7",
+    "tests/integration/test_research_evidence_postgres.py": "2531591b5b50cee63b68625e762573782907dfc7cc4170615d8dd30d14ea370b",
+    "tests/research_evidence_postgres_support.py": "db85813e4106d3754f239c8555a5dba9ccc0166bc7f3b36b1b77902fc39e82bf",
+    "tests/research_evidence_support.py": "9f29b33a3e5b811ea75c005aceb4ee85e591284c7de2eaa55611b36f6b1058e1",
+    "tests/test_research_evidence_store.py": "476879b1d28e4e125f5e71c69bdf5cabd060468a67115388801703d5268490bc"
+  },
+  "status": "closure_amendment_verified_source_frozen",
+  "supersedes_source_pins_only": {
+    "migrations/versions/20261019_0019_research_evidence.py": "fe2dce75d616d67dd9c6dace1130c6100d1c9121811edd92510742f122407e1f",
+    "tests/integration/test_research_evidence_postgres.py": "caca84d2d3ce7fa69c6562c006272db31423af1badaccdb3fd045644efd67bfc"
+  },
+  "targeted_postgres": {
+    "cluster_stopped": true,
+    "passed": 3,
+    "remaining_schemas": 0,
+    "report": "verified-01/postgres-result.json",
+    "seconds": 19.61,
+    "source_unchanged": true
+  }
+}

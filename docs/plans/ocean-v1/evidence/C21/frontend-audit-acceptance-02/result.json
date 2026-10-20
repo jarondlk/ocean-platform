@@ -1,0 +1,43 @@
+{
+  "component": "C21",
+  "group": "frontend-audit-retry",
+  "created_at": "2026-10-20T15:13:20.692865+00:00",
+  "command": [
+    "npm",
+    "audit",
+    "--omit=dev",
+    "--audit-level=moderate",
+    "--json",
+    "--cache=/private/tmp/c21-npm-audit-cache"
+  ],
+  "exit_code": 0,
+  "seconds": 0.74,
+  "log": "audit.json",
+  "log_sha256": "294dcd5b78e680a209ad003a90be26a19efbad0ab948a9d1cfd6c4d73637585b",
+  "source_changed_during_run": [],
+  "same_source_as_original_full_verification": true,
+  "preservation": {
+    "counts": {
+      "unrelated_files": 30,
+      "scientific_artifacts": 7,
+      "serving_files": 2,
+      "legacy_frontend_files": 106,
+      "prior_evidence_files": 1068
+    },
+    "changed": {
+      "unrelated_files": [],
+      "scientific_artifacts": [],
+      "serving_files": [],
+      "legacy_frontend_files": [],
+      "prior_evidence_files": []
+    }
+  },
+  "production_dependency_vulnerabilities": null,
+  "original_full_run": {
+    "path": "docs/plans/ocean-v1/evidence/C21/frontend-acceptance-01/result.json",
+    "sha256": "1a6479b59d9f2dd02a9040b82f0e0df150091b2f0b0663dc0cab38b4b01082a5",
+    "test_typecheck_build_passed": true,
+    "audit_failure": "sandbox DNS resolution unavailable; original attempt preserved"
+  },
+  "success": false
+}

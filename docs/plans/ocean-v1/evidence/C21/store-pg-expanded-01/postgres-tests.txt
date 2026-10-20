@@ -1,0 +1,184 @@
+C21 disposable PostgreSQL identity: database=ocean_c21_d0e8047e49054d6aa4f522efb75ead24 address=127.0.0.1 port=56813 version=18.3 (Homebrew) isolation=read committed
+C21 Alembic upgrade head: exit=0 schema=c21_2fe42021f1594390a2930c9af8047c70
+C21 Alembic upgrade head: exit=0 schema=c21_2fe42021f1594390a2930c9af8047c70
+C21 Alembic downgrade 20261019_0018: exit=0 schema=c21_2fe42021f1594390a2930c9af8047c70
+C21 Alembic upgrade head: exit=0 schema=c21_2fe42021f1594390a2930c9af8047c70
+.C21 disposable schema cleanup: c21_2fe42021f1594390a2930c9af8047c70 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_6918ed58485e49458925db9c862131e8
+.C21 disposable schema cleanup: c21_6918ed58485e49458925db9c862131e8 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_dd44a97d95a141deb4509837b1a5a160
+.C21 disposable schema cleanup: c21_dd44a97d95a141deb4509837b1a5a160 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_32a2ec70f372418f91e84ab0b4c3786d
+.C21 disposable schema cleanup: c21_32a2ec70f372418f91e84ab0b4c3786d remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_0b18f0d9fd354f6dace033f75b511f73
+.C21 disposable schema cleanup: c21_0b18f0d9fd354f6dace033f75b511f73 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_4235a2284c284da3a811f577afc3b443
+.C21 disposable schema cleanup: c21_4235a2284c284da3a811f577afc3b443 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_66e57f09b4ec4371a567378fef7f501c
+.C21 disposable schema cleanup: c21_66e57f09b4ec4371a567378fef7f501c remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_bbae41afd1e740cfb19db8758f0e8210
+.C21 disposable schema cleanup: c21_bbae41afd1e740cfb19db8758f0e8210 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_ce47c35d305b4e14a97aa7ed5b099555
+C21 Alembic downgrade 20261019_0018: exit=1 schema=c21_ce47c35d305b4e14a97aa7ed5b099555
+.C21 disposable schema cleanup: c21_ce47c35d305b4e14a97aa7ed5b099555 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_e4184f933e364d32ab57830f88d6a8a9
+.C21 disposable schema cleanup: c21_e4184f933e364d32ab57830f88d6a8a9 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_5f2bd826c51d49cb917f6314dc4b8b0d
+.C21 disposable schema cleanup: c21_5f2bd826c51d49cb917f6314dc4b8b0d remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_6cb63190454a48ddbfc8b2cb9ea2c5ae
+.C21 disposable schema cleanup: c21_6cb63190454a48ddbfc8b2cb9ea2c5ae remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_781409972c9143a8ad8246a21286332a
+.C21 disposable schema cleanup: c21_781409972c9143a8ad8246a21286332a remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_2931e296361e4df887face01243eb1f5
+.C21 disposable schema cleanup: c21_2931e296361e4df887face01243eb1f5 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_13bc8d16a6d243ecb5fb1aa4347f0f0a
+.C21 disposable schema cleanup: c21_13bc8d16a6d243ecb5fb1aa4347f0f0a remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_f9fe98929e214474b81bef13c902b63e
+FC21 disposable schema cleanup: c21_f9fe98929e214474b81bef13c902b63e remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_faffb72cb0c940409184d082c94e65d5
+FC21 disposable schema cleanup: c21_faffb72cb0c940409184d082c94e65d5 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_7405d0c0d25743e38cd28e5a4a89e073
+.C21 disposable schema cleanup: c21_7405d0c0d25743e38cd28e5a4a89e073 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_fb5e11d9f4b944108961e2d61274d297
+.C21 disposable schema cleanup: c21_fb5e11d9f4b944108961e2d61274d297 remaining=0
+C21 Alembic upgrade head: exit=0 schema=c21_665ddfd810c14d31a2f5a977a2ae1018
+FC21 disposable schema cleanup: c21_665ddfd810c14d31a2f5a977a2ae1018 remaining=0
+
+=================================== FAILURES ===================================
+________ test_concurrent_answer_submit_and_claim_share_one_budget_head _________
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "research_answer_event_pkey"
+E   DETAIL:  Key (job_id, cursor)=(f7db7060-ef43-45b2-94f4-e7b973fc0ccb, 2) already exists.
+
+The above exception was the direct cause of the following exception:
+tests/integration/test_research_evidence_postgres.py:246: in test_concurrent_answer_submit_and_claim_share_one_budget_head
+    leases = [future.result(timeout=25) for future in (pool.submit(claim), pool.submit(claim))]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/thread.py:58: in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/integration/test_research_evidence_postgres.py:243: in claim
+    return answers.claim(**delivery(fixture, jobs[0]))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/research_answers.py:323: in claim
+    with self._transaction() as session:
+         ^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py:144: in __exit__
+    next(self.gen)
+orchestration/research_answers.py:103: in _transaction
+    with session.begin():
+         ^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/util.py:147: in __exit__
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:122: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/util.py:145: in __exit__
+    self.commit()
+<string>:2: in commit
+    ???
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py:137: in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:1316: in commit
+    self._prepare_impl()
+<string>:2: in _prepare_impl
+    ???
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py:137: in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:1290: in _prepare_impl
+    self.session.flush()
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4353: in flush
+    self._flush(objects)
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4488: in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:122: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4449: in _flush
+    flush_context.execute()
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:465: in execute
+    rec.execute(self)
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:641: in execute
+    util.preloaded.orm_persistence.save_obj(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:94: in save_obj
+    _emit_insert_statements(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:1234: in _emit_insert_statements
+    result = connection.execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "research_answer_event_pkey"
+E   DETAIL:  Key (job_id, cursor)=(f7db7060-ef43-45b2-94f4-e7b973fc0ccb, 2) already exists.
+E   
+E   [SQL: INSERT INTO research_answer_event (job_id, cursor, kind, elapsed_ms, summary_json) VALUES (%(job_id)s::UUID, %(cursor)s, %(kind)s, %(elapsed_ms)s, %(summary_json)s) RETURNING research_answer_event.created_at]
+E   [parameters: {'job_id': UUID('f7db7060-ef43-45b2-94f4-e7b973fc0ccb'), 'cursor': 2, 'kind': 'started', 'elapsed_ms': 578, 'summary_json': '{"en":"Preparing retained evidence","ja":"保持された根拠を準備しています"}'}]
+E   (Background on this error at: https://sqlalche.me/e/20/gkpj)
+_ test_answer_actual_pg_raw_commit_or_uncertain_response_preserves_reservations[False] _
+tests/integration/test_research_evidence_postgres.py:293: in test_answer_actual_pg_raw_commit_or_uncertain_response_preserves_reservations
+    assert outcome["status"] == "completed"
+E   AssertionError: assert 'unavailable' == 'completed'
+E     
+E     - completed
+E     + unavailable
+_ test_cancel_or_policy_change_after_candidate_before_answer_commit_fences_publication[True] _
+tests/integration/test_research_evidence_postgres.py:325: in test_cancel_or_policy_change_after_candidate_before_answer_commit_fences_publication
+    worker.result(timeout=15)
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/thread.py:58: in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/research_answers.py:491: in execute_delivery
+    return self._execute_leased(lease)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/research_answers.py:580: in _execute_leased
+    return self._finish(lease, answer=answer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/integration/test_research_evidence_postgres.py:311: in waiting
+    return finish(lease, answer=answer, reason=reason)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/research_answers.py:455: in _finish
+    actor = self.fresh_actor(lease)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/research_answers.py:384: in fresh_actor
+    _, _, actor = self._leased(session, lease)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/research_answers.py:365: in _leased
+    run = self._source(session, actor, self._address(job), active=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/research_answers.py:130: in _source
+    self.runs._check_context(run, actor, require_active=active, session=session)
+orchestration/research_runs.py:200: in _check_context
+    raise ResearchRunError("access_denied", 403) from None
+E   orchestration.research_runs.ResearchRunError: access_denied
+=========================== short test summary info ============================
+FAILED tests/integration/test_research_evidence_postgres.py::test_concurrent_answer_submit_and_claim_share_one_budget_head
+FAILED tests/integration/test_research_evidence_postgres.py::test_answer_actual_pg_raw_commit_or_uncertain_response_preserves_reservations[False]
+FAILED tests/integration/test_research_evidence_postgres.py::test_cancel_or_policy_change_after_candidate_before_answer_commit_fences_publication[True]
+3 failed, 17 passed in 55.37s

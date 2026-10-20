@@ -1,0 +1,94 @@
+{
+  "component": "C21",
+  "group": "frontend",
+  "created_at": "2026-10-20T15:12:28.258713+00:00",
+  "commands": [
+    {
+      "name": "test",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "cwd": "frontend-v1",
+      "exit_code": 0,
+      "seconds": 1.25,
+      "log": "test.txt",
+      "log_sha256": "12451678de3dfc0f3e74cbd479a4bd994ab7e3f97590a4b5ebbc9f54aae7a6b2"
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "cwd": "frontend-v1",
+      "exit_code": 0,
+      "seconds": 2.0,
+      "log": "typecheck.txt",
+      "log_sha256": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936"
+    },
+    {
+      "name": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "frontend-v1",
+      "exit_code": 0,
+      "seconds": 8.24,
+      "log": "build.txt",
+      "log_sha256": "37aa7ec2b86d1de8ae98d505b808e058f561e5dce2250d282cb5d286987f4fb6"
+    },
+    {
+      "name": "audit",
+      "command": [
+        "npm",
+        "audit",
+        "--omit=dev",
+        "--audit-level=moderate",
+        "--json"
+      ],
+      "cwd": "frontend-v1",
+      "exit_code": 1,
+      "seconds": 0.53,
+      "log": "audit.txt",
+      "log_sha256": "76342841d396b69c265c81e5ea8ea75ce54a7a606c648e9d3e4a4ae897fca067"
+    }
+  ],
+  "source_changed_during_run": [],
+  "preservation": {
+    "counts": {
+      "unrelated_files": 30,
+      "scientific_artifacts": 7,
+      "serving_files": 2,
+      "legacy_frontend_files": 106,
+      "prior_evidence_files": 1068
+    },
+    "changed": {
+      "unrelated_files": [],
+      "scientific_artifacts": [],
+      "serving_files": [],
+      "legacy_frontend_files": [],
+      "prior_evidence_files": []
+    }
+  },
+  "protected_before": {
+    "counts": {
+      "unrelated_files": 30,
+      "scientific_artifacts": 7,
+      "serving_files": 2,
+      "legacy_frontend_files": 106,
+      "prior_evidence_files": 1068
+    },
+    "changed": {
+      "unrelated_files": [],
+      "scientific_artifacts": [],
+      "serving_files": [],
+      "legacy_frontend_files": [],
+      "prior_evidence_files": []
+    }
+  },
+  "success": false
+}

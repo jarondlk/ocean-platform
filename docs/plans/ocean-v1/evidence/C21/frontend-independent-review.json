@@ -1,0 +1,74 @@
+{
+  "component": "C21",
+  "review_version": "c21-frontend-independent-review-v1",
+  "reviewer": "/root/c18_run_presentation",
+  "review_method": "Read-only source review; no test, typecheck, build or audit rerun by this reviewer.",
+  "outcome": "No remaining confirmed blocker in the reviewed frontend scope after the two reported findings were fixed.",
+  "open_blockers": [],
+  "source_sha256": {
+    "frontend-v1/src/research-answer-history.ts": "274446b0fd48bccb0d5a82d516f35e54fa33f7be53cd739e711db8fe05cabc07",
+    "frontend-v1/src/research-answer-state.ts": "09cee76eba48f62785149f97eeafb007ac3396f4b53d8e2b223e47cc6486d363",
+    "frontend-v1/src/research-answers.tsx": "08eeb168d067080396acbfbd08eae4b80ddd8d9e1b65131fc76637284bfba57f",
+    "frontend-v1/src/research-evidence-contract.ts": "c78a9d1cc677d51244d674136e28055314928681df324152cbd52298328c8986",
+    "frontend-v1/src/research-evidence-http.ts": "38175cbcda396e1e61a1b7347614e265a485a49e2174f011af4b4e5f5815ccdc",
+    "frontend-v1/src/research-evidence-service.ts": "76293bd6cf39d9aa9c2fc2e3e51d4c68167ee87583500ae803e05f98450eecd9",
+    "frontend-v1/src/research-evidence.generated.ts": "bc06ce3fb9320d21cbf64698be8128fbe69b73a9d731d68629d29ae49bfe3911",
+    "frontend-v1/src/research-state.ts": "0cc3cdbf61a6a30bb1933abd7a6456e2f3e19e58d40edabc4a5604cfe476a3c8",
+    "frontend-v1/src/research-workspace.tsx": "f1ec8a15cf47cc9d8bff9f0bd97fc5b7397c3e919645a8afb839748f82d2619b",
+    "frontend-v1/src/runtime-app.tsx": "7c9125d6cd16504fbb0ac6429bec9fbc6f7588fe6fe20c4918254acc459021cd",
+    "frontend-v1/src/runtime.ts": "f5a389fe6063362a411222d0d07b901112d8205dd4828d8fafc533b4ce4691a1",
+    "frontend-v1/tests/research-answer-history.test.ts": "7b94f859429348f224d44f6c5765b51a4ad7c954ac1fb9180812adf1de55379d",
+    "frontend-v1/tests/research-answer-state.test.ts": "e18884f9cb2824197351d04530486b86c1197ba25ad82c4fbbd146a23344c61d",
+    "frontend-v1/tests/research-answers-view.test.ts": "e1fa10419543c2bb2c246c7491e89eb09bad396096a1b9a840c9631ff70cd1a2",
+    "frontend-v1/tests/research-evidence-fixtures.ts": "3a52353585d5fcf14fb2e4a4e3892a47989e123bc1617fcc24e3e026acbf4e60",
+    "frontend-v1/tests/research-evidence-http.test.ts": "1a5121fdeac4dc40c6f08ccfc93d1c3dd170b1b018a5edb691b9802c680b6d98",
+    "frontend-v1/tests/research-evidence-runtime.test.ts": "84f573f9617fb7ee3043fe53ddd25a457d7ad49014255a869292be26135d3abc",
+    "frontend-v1/tests/research-evidence-service.test.ts": "59e824fff52e4d3d9ca0d8c81f2f9a810412d7cf934dd81728b8d119ae95bd12",
+    "frontend-v1/tests/research-evidence-wire.test.ts": "8d23ada9dbd5b87b27ac253a48bf2306c4088c4217103dfa2c0bdfd8e2e7fa69"
+  },
+  "findings_resolved": [
+    {
+      "id": "C21-FR1",
+      "finding": "RetainedEvidence rendered zero cells for valid nonempty catalogue/documentary rows when receipt.columns was empty.",
+      "resolution": "Zero-column pages now render exact retained rows as literal JSON objects with React escaping, preserving independently paged bytes.",
+      "source": "frontend-v1/src/research-answers.tsx",
+      "regression": "frontend-v1/tests/research-answers-view.test.ts covers actual documentary quotation and catalogue relationship payload without a preview fallback."
+    },
+    {
+      "id": "C21-FR2",
+      "finding": "Generic recursive scope discovery mistook arbitrary quoted receipt-shaped scientific rows/answer details for protocol EvidenceReceipt objects.",
+      "resolution": "Scope semantic validation now uses only actual generated schema receipt positions and directly requested EvidenceScope/EvidenceReceipt roots; quoted payload data remains literal.",
+      "source": "frontend-v1/src/research-evidence-contract.ts",
+      "regression": "frontend-v1/tests/research-evidence-service.test.ts accepts receipt-shaped quoted rows/details while still rejecting malformed real receipt scopes."
+    }
+  ],
+  "additional_hardening_reviewed": "Generated-schema property and definition lookup uses Object.hasOwn so inherited constructor/__proto__/toString names cannot bypass strict envelope field validation.",
+  "reviewed_boundaries": [
+    "Nine separate answer/evidence actions use explicit strict bounded transport without implicit read-side generation.",
+    "Current account/permission/conversation epochs and AbortSignal guards prevent stale responses from restoring private views.",
+    "Off-page selected answer recovery remains freshly authorized; arbitrary cached prose does not establish history.",
+    "Idempotency-key mutation intents retain original binding and survive uncertain acknowledgements; readonly polling pauses around mutations.",
+    "Answer/source authority, partial/unknown/known-zero distinctions, original snapshot binding, qualifications and receipt citations remain visible.",
+    "Evidence page/exports/attachments use retained receipt hash plus current authorization, preserve original binding and never narrow inventory automatically.",
+    "React renders literal source values; no raw HTML or private answer body browser storage was introduced."
+  ],
+  "supporting_verification": {
+    "path": "docs/plans/ocean-v1/evidence/C21/frontend-full-verification.json",
+    "sha256": "396bbdfa12f6bc0fec2a5b0bb8a774530588fbd1ed209ea85734bf7a9dbcddbc",
+    "owner_reported_tests": {
+      "tests": 930,
+      "pass": 930,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "owner_reported_typecheck_build_audit": "Pass; production dependency audit zero vulnerabilities",
+    "reviewer_verification": "All 19 current source pins exactly match the reviewed source map. Supporting test logs were not rerun."
+  },
+  "qualifications": [
+    "This is scoped source review, not an assembled browser/system acceptance claim.",
+    "Backend current-authority, retention, lease/budget and final publication guarantees require their separate source-bound acceptance evidence.",
+    "No live provider, GCP deployment, real-data transfer or independent scientific approval was performed."
+  ]
+}

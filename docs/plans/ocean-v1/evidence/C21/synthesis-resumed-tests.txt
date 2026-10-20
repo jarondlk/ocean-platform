@@ -1,0 +1,12 @@
+..............................F...............                           [100%]
+=================================== FAILURES ===================================
+__ test_context_compaction_drops_only_optional_rows_and_never_qualifications ___
+tests/test_research_synthesis.py:195: in test_context_compaction_drops_only_optional_rows_and_never_qualifications
+    assert pack.payload["packets"]["S1"]["rows"] == []
+E   AssertionError: assert [{'row': {'lo...e53d9f'}, ...] == []
+E     
+E     Left contains 20 more items, first extra item: {'row': {'long': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'}, 'row_id': 'c21:row:29e009fc40fc9de42b9e8b09fb10df9331ae30866af2942b26b011b6019f0715'}
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_research_synthesis.py::test_context_compaction_drops_only_optional_rows_and_never_qualifications
+1 failed, 45 passed in 1.85s

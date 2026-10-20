@@ -1,0 +1,73 @@
+{
+  "component": "C21",
+  "evidence_sha256": {
+    "store-focused-final-01.json": "5b3716bd854af41221098120ae647b369d7a48df2371e4a69a975e603da771aa",
+    "store-focused-final-01.txt": "70890ff6eafc28eff07e7301f2a5476c3135b8d81bb4b53c195aee35009c3efa",
+    "store-focused-final-02.json": "f677c5a4fd7fdabb4caf43f60ffbcfca3a78cebf8aedb98d77c20652536d1e5a",
+    "store-focused-final-02.txt": "61f201950c6d2c2a46b189fe8e93e2844181d2333dd0e64c8ef62460961adbc7",
+    "store-pg-expanded-01/postgres-result.json": "cda4e4d39ef9d2160d1ec15ae3928de9dd02c4da6e30d5d5f9ad9c238bbcd1de",
+    "store-pg-expanded-01/postgres-tests.txt": "a17cdb913b8dc372bbd3222ae0c95ceb2c804f7ce18dfea2dd12f8363797997e",
+    "store-pg-final-01/postgres-result.json": "807dc4c757cfff6ec79d5bc69b285318e5fe3d6302b230a95da3ec11201bc1ca",
+    "store-pg-final-01/postgres-tested-source.json": "c6fa793827d5ad521cd5a986f074b8d47fdb93da3d90356b8f54155fb4fbeea9",
+    "store-pg-final-01/postgres-tests.txt": "58b6144d82892e1696f43fd404f601b2ef93d4334bfc4dae89beba7c59fcd79b",
+    "store-pg-native-01/postgres-result.json": "68fd8dedc4d127fdc356467477f24905e39df40c6cd2c1b2a85b994fcf3cdd2b",
+    "store-ruff-final.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  "external_gates": [
+    "No real model provider or real-data acquisition/transfer was exercised",
+    "No GCP provisioning or deployment was performed",
+    "No scientific approval or independent verification is claimed",
+    "Full component compatibility/hosted CI and delivery are owned by the parent checkpoint"
+  ],
+  "focused_tests": {
+    "passed": 16,
+    "report": "store-focused-final-02.json",
+    "seconds": 53.31,
+    "source_unchanged": true
+  },
+  "postgres_tests": {
+    "cluster_stopped": true,
+    "fresh_owned_loopback_cluster": true,
+    "passed": 20,
+    "remaining_test_schemas": 0,
+    "report": "store-pg-final-01/postgres-result.json",
+    "seconds": 57.08,
+    "source_unchanged": true
+  },
+  "preserved_development_results": {
+    "initial_sandbox_bind": "Denied loopback bind in workspace sandbox; authorized native cluster ran with reviewed escalation; empty store-pg-initial directory preserved",
+    "store-focused-final-01": "16 passed; provider source changed during run, superseded by final-02 without overwriting",
+    "store-pg-expanded-01": "17 passed/3 failed: real stale-head answer claim race, single-response test fixture, controlled error translation; failures preserved and resolved in final-01",
+    "store-pg-native-01": "initial14 store gates passed"
+  },
+  "recorded_at": "2026-10-20T15:12:06.813630+00:00",
+  "ruff_exit_code": 0,
+  "scope": "verified evidence projection, immutable receipt/blob storage, C17 protection hooks, additive ORM/migration and local PostgreSQL acceptance",
+  "source_sha256": {
+    "db/app_models.py": "e8219674179b9de41ac0a817f306adccf11ca5cc50f1b4eb31f7da4d8fed8024",
+    "docs/plans/ocean-v1/evidence/C21/store_verify_postgres.py": "2d17e77a819c55defda0b29aecc0d69d43d4bd140f86deeb1bb32fad8fb42fde",
+    "migrations/versions/20261019_0019_research_evidence.py": "fe2dce75d616d67dd9c6dace1130c6100d1c9121811edd92510742f122407e1f",
+    "orchestration/investigations.py": "9312f3ec4a788ceb1430052a2840a702100eb5bedf5cc284ca88f196c45537c7",
+    "orchestration/research_evidence.py": "cd721ffec16372b4685725e3082c2d0745a1e5586f6fc9963e822b24adbb42fc",
+    "orchestration/research_evidence_projection.py": "833539e6093f2d0978e8973bb1df3b4b1d0cd19b6e05d0f06dbd2bddcd9fd1b7",
+    "tests/integration/test_research_evidence_postgres.py": "caca84d2d3ce7fa69c6562c006272db31423af1badaccdb3fd045644efd67bfc",
+    "tests/research_evidence_postgres_support.py": "db85813e4106d3754f239c8555a5dba9ccc0166bc7f3b36b1b77902fc39e82bf",
+    "tests/research_evidence_support.py": "9f29b33a3e5b811ea75c005aceb4ee85e591284c7de2eaa55611b36f6b1058e1",
+    "tests/test_research_evidence_store.py": "476879b1d28e4e125f5e71c69bdf5cabd060468a67115388801703d5268490bc"
+  },
+  "status": "owned_scope_verified_source_frozen",
+  "verified_behaviors": [
+    "actual immutable C20 raw payload/request/manifest/input verification without active controller execution",
+    "raw model and repair projection; unsupported/corrupt bytes fail closed",
+    "canonical JSON insertion-order loss preserves only exact proven qualification set and immutable terminal ordering",
+    "actual declared multi-input analysis-derived inventory union and origin receipts",
+    "actual continuation prefix traces committed no-local-attempt steps to coherent physical parent origin",
+    "current owner/current source policy and withdrawal checks with central C14 append-only-reference revision compatibility",
+    "exact UTF-8 positive sealed documentary excerpts and normalized input manifests retained only through actual provider revalidation",
+    "C17 read-only artifact resolver plus same-session prepared/committed context dependencies, including original old snapshot",
+    "conservative reference protection; uncertain acknowledgement is never compensated by release",
+    "retirement guard active independently of feature flags and includes queued/pending answer origins",
+    "bounded receipt dependency closure, immutable SQL guards, no physical deletion or reference release",
+    "actual PostgreSQL concurrent receipt retention, retirement race and answer submit/claim/replay/cancel/publication fences"
+  ]
+}

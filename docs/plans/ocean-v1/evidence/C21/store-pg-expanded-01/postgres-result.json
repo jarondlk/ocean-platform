@@ -1,0 +1,77 @@
+{
+  "cluster_root": "/private/tmp/ocean-c21-postgres-iqwuu9fy",
+  "component": "C21",
+  "data_directory": "/private/tmp/ocean-c21-postgres-iqwuu9fy/data",
+  "database": "ocean_c21_d0e8047e49054d6aa4f522efb75ead24",
+  "driver_exit_code": 1,
+  "evidence_sha256": {
+    "postgres-lifecycle.txt": "942da5495fc540e4bce9a01e0c92954c23babc5b6c59340452a66c13c70f52b4",
+    "postgres-tested-source.json": "adcd61b8b40be23ab91f0a1da64431dcc090187811c9428f65d54b651ad6b10c",
+    "postgres-tests.txt": "a17cdb913b8dc372bbd3222ae0c95ceb2c804f7ce18dfea2dd12f8363797997e"
+  },
+  "existing_database_urls_used": false,
+  "finished_at": "2026-10-20T09:29:27.584519+00:00",
+  "host": "127.0.0.1",
+  "identity": {
+    "data_directory": "/private/tmp/ocean-c21-postgres-iqwuu9fy/data",
+    "database": "ocean_c21_d0e8047e49054d6aa4f522efb75ead24",
+    "host": "127.0.0.1",
+    "isolation": "read committed",
+    "port": 56813,
+    "role": "ocean_c17",
+    "version": "PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit"
+  },
+  "port": 56813,
+  "remaining_test_schemas": {
+    "ocean_c21_d0e8047e49054d6aa4f522efb75ead24": []
+  },
+  "role": "ocean_c17",
+  "server_stopped": true,
+  "source_after_sha256": {
+    "db/app_models.py": "e8219674179b9de41ac0a817f306adccf11ca5cc50f1b4eb31f7da4d8fed8024",
+    "docs/plans/ocean-v1/evidence/C21/store_verify_postgres.py": "77fbd2d5873bd0352c95aea668315e567870c5683e7e16e4afc5dbb165533085",
+    "migrations/versions/20261019_0019_research_evidence.py": "fe2dce75d616d67dd9c6dace1130c6100d1c9121811edd92510742f122407e1f",
+    "orchestration/catalogue_service.py": "50b3d587ca0cb0f754b3d0f0a742c3bf184e687e147b52f60a5f51bfc9939a48",
+    "orchestration/investigations.py": "9312f3ec4a788ceb1430052a2840a702100eb5bedf5cc284ca88f196c45537c7",
+    "orchestration/research_evidence.py": "cd721ffec16372b4685725e3082c2d0745a1e5586f6fc9963e822b24adbb42fc",
+    "orchestration/research_evidence_projection.py": "833539e6093f2d0978e8973bb1df3b4b1d0cd19b6e05d0f06dbd2bddcd9fd1b7",
+    "schema/research_evidence.py": "79617dba452bdc144c6e43e998f0627a0fcbe5b5475caa88a916de4fef820d92",
+    "tests/integration/test_research_evidence_postgres.py": "19baeb878cf1e1dff830230c5f9614dd3135582bfc9fb2ef5c7a05c588bb4457",
+    "tests/research_evidence_postgres_support.py": "db85813e4106d3754f239c8555a5dba9ccc0166bc7f3b36b1b77902fc39e82bf",
+    "tests/research_evidence_support.py": "903f3c4f103fcd5022b2470dfcf2e7d1ffb0bf5bd4e935cf6e34353b9156ffcf"
+  },
+  "source_before_sha256": {
+    "db/app_models.py": "e8219674179b9de41ac0a817f306adccf11ca5cc50f1b4eb31f7da4d8fed8024",
+    "docs/plans/ocean-v1/evidence/C21/store_verify_postgres.py": "77fbd2d5873bd0352c95aea668315e567870c5683e7e16e4afc5dbb165533085",
+    "migrations/versions/20261019_0019_research_evidence.py": "fe2dce75d616d67dd9c6dace1130c6100d1c9121811edd92510742f122407e1f",
+    "orchestration/catalogue_service.py": "50b3d587ca0cb0f754b3d0f0a742c3bf184e687e147b52f60a5f51bfc9939a48",
+    "orchestration/investigations.py": "9312f3ec4a788ceb1430052a2840a702100eb5bedf5cc284ca88f196c45537c7",
+    "orchestration/research_evidence.py": "cd721ffec16372b4685725e3082c2d0745a1e5586f6fc9963e822b24adbb42fc",
+    "orchestration/research_evidence_projection.py": "833539e6093f2d0978e8973bb1df3b4b1d0cd19b6e05d0f06dbd2bddcd9fd1b7",
+    "schema/research_evidence.py": "79617dba452bdc144c6e43e998f0627a0fcbe5b5475caa88a916de4fef820d92",
+    "tests/integration/test_research_evidence_postgres.py": "19baeb878cf1e1dff830230c5f9614dd3135582bfc9fb2ef5c7a05c588bb4457",
+    "tests/research_evidence_postgres_support.py": "db85813e4106d3754f239c8555a5dba9ccc0166bc7f3b36b1b77902fc39e82bf",
+    "tests/research_evidence_support.py": "903f3c4f103fcd5022b2470dfcf2e7d1ffb0bf5bd4e935cf6e34353b9156ffcf"
+  },
+  "source_changed_during_run": [],
+  "started_at": "2026-10-20T09:28:29.738374+00:00",
+  "stop_exit_code": 0,
+  "test_command": [
+    "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/integration/test_research_evidence_postgres.py",
+    "-q",
+    "-s",
+    "--tb=short"
+  ],
+  "test_counts": {
+    "failed": 3,
+    "passed": 17
+  },
+  "test_exit_code": 1,
+  "test_schemas_remaining": 0,
+  "test_seconds": 55.946,
+  "test_summary": "3 failed, 17 passed in 55.37s",
+  "tested_source_unchanged": true
+}

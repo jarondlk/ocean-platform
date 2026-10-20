@@ -1,0 +1,324 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.............                            [100%]
+=================================== FAILURES ===================================
+______ test_exact_count_shortcut_uses_semantic_population_not_preview[0] _______
+tests/test_research_synthesis.py:66: in test_exact_count_shortcut_uses_semantic_population_not_preview
+    source = verified(count=count, rows=1, qualifications=("Preview is not population.",))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:7143f...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+____ test_exact_count_shortcut_uses_semantic_population_not_preview[100000] ____
+tests/test_research_synthesis.py:66: in test_exact_count_shortcut_uses_semantic_population_not_preview
+    source = verified(count=count, rows=1, qualifications=("Preview is not population.",))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:e0333...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+__ test_model_can_omit_no_required_fact_or_qualification_and_replay_is_stable __
+tests/test_research_synthesis.py:78: in test_model_can_omit_no_required_fact_or_qualification_and_replay_is_stable
+    pack = build_synthesis_pack(verified(qualifications=("Sampling is limited.", "No independent approval.")))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:0b019...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+__ test_scientific_assertions_and_control_fields_are_not_model_schema[extra0] __
+tests/test_research_synthesis.py:92: in test_scientific_assertions_and_control_fields_are_not_model_schema
+    pack = build_synthesis_pack(verified())
+                                ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:dae87...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+__ test_scientific_assertions_and_control_fields_are_not_model_schema[extra1] __
+tests/test_research_synthesis.py:92: in test_scientific_assertions_and_control_fields_are_not_model_schema
+    pack = build_synthesis_pack(verified())
+                                ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:a0de6...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+__ test_scientific_assertions_and_control_fields_are_not_model_schema[extra2] __
+tests/test_research_synthesis.py:92: in test_scientific_assertions_and_control_fields_are_not_model_schema
+    pack = build_synthesis_pack(verified())
+                                ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:8ad6a...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+__ test_scientific_assertions_and_control_fields_are_not_model_schema[extra3] __
+tests/test_research_synthesis.py:92: in test_scientific_assertions_and_control_fields_are_not_model_schema
+    pack = build_synthesis_pack(verified())
+                                ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:a47e8...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+__ test_scientific_assertions_and_control_fields_are_not_model_schema[extra4] __
+tests/test_research_synthesis.py:92: in test_scientific_assertions_and_control_fields_are_not_model_schema
+    pack = build_synthesis_pack(verified())
+                                ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:6929e...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+__ test_scientific_assertions_and_control_fields_are_not_model_schema[extra5] __
+tests/test_research_synthesis.py:92: in test_scientific_assertions_and_control_fields_are_not_model_schema
+    pack = build_synthesis_pack(verified())
+                                ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:00119...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected[blocks0] _
+tests/test_research_synthesis.py:108: in test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected
+    parse_selection(select(blocks), build_synthesis_pack(verified()))
+                                                         ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:fb1cb...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected[blocks1] _
+tests/test_research_synthesis.py:108: in test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected
+    parse_selection(select(blocks), build_synthesis_pack(verified()))
+                                                         ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:03000...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected[blocks2] _
+tests/test_research_synthesis.py:108: in test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected
+    parse_selection(select(blocks), build_synthesis_pack(verified()))
+                                                         ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:97292...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected[blocks3] _
+tests/test_research_synthesis.py:108: in test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected
+    parse_selection(select(blocks), build_synthesis_pack(verified()))
+                                                         ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:e3ec3...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected[blocks4] _
+tests/test_research_synthesis.py:108: in test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected
+    parse_selection(select(blocks), build_synthesis_pack(verified()))
+                                                         ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:89e85...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected[blocks5] _
+tests/test_research_synthesis.py:108: in test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected
+    parse_selection(select(blocks), build_synthesis_pack(verified()))
+                                                         ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:265e7...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_rows_beyond_supplied_preview_are_not_citable_and_table_keeps_authority __
+tests/test_research_synthesis.py:112: in test_rows_beyond_supplied_preview_are_not_citable_and_table_keeps_authority
+    source = verified(rows=30, authority="experimental")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:34aac...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_____________ test_unknown_coverage_partial_stays_unknown_not_zero _____________
+tests/test_research_synthesis.py:125: in test_unknown_coverage_partial_stays_unknown_not_zero
+    pack = build_synthesis_pack(verified(count=None, partial=True))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:a9927...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_parseable_but_incomplete_c06_generation_never_becomes_an_answer[output_limited] _
+tests/test_research_synthesis.py:136: in test_parseable_but_incomplete_c06_generation_never_becomes_an_answer
+    pack = build_synthesis_pack(verified())
+                                ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:9d088...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_parseable_but_incomplete_c06_generation_never_becomes_an_answer[refused] _
+tests/test_research_synthesis.py:136: in test_parseable_but_incomplete_c06_generation_never_becomes_an_answer
+    pack = build_synthesis_pack(verified())
+                                ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:55e62...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_parseable_but_incomplete_c06_generation_never_becomes_an_answer[failed] _
+tests/test_research_synthesis.py:136: in test_parseable_but_incomplete_c06_generation_never_becomes_an_answer
+    pack = build_synthesis_pack(verified())
+                                ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:a8418...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_parseable_but_incomplete_c06_generation_never_becomes_an_answer[unknown] _
+tests/test_research_synthesis.py:136: in test_parseable_but_incomplete_c06_generation_never_becomes_an_answer
+    pack = build_synthesis_pack(verified())
+                                ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:a3b2e...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_completed_generation_replays_purely_and_request_has_only_selection_schema _
+tests/test_research_synthesis.py:143: in test_completed_generation_replays_purely_and_request_has_only_selection_schema
+    pack = build_synthesis_pack(verified())
+                                ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:4ba2b...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_ambiguous_nonfinite_and_invalid_json_rejected[{"version":"c21-selection-v1","blocks":[],"blocks":[]}] _
+tests/test_research_synthesis.py:156: in test_ambiguous_nonfinite_and_invalid_json_rejected
+    parse_selection(content, build_synthesis_pack(verified()))
+                                                  ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:4806d...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_ambiguous_nonfinite_and_invalid_json_rejected[{"version":"c21-selection-v1","blocks":[],"value":NaN}] _
+tests/test_research_synthesis.py:156: in test_ambiguous_nonfinite_and_invalid_json_rejected
+    parse_selection(content, build_synthesis_pack(verified()))
+                                                  ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:dd013...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_ambiguous_nonfinite_and_invalid_json_rejected[{"blocks":[],"version":"c21-selection-v1"}trailing] _
+tests/test_research_synthesis.py:156: in test_ambiguous_nonfinite_and_invalid_json_rejected
+    parse_selection(content, build_synthesis_pack(verified()))
+                                                  ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:d4781...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+____________ test_payload_and_semantic_count_tampering_are_rejected ____________
+tests/test_research_synthesis.py:160: in test_payload_and_semantic_count_tampering_are_rejected
+    source = verified()
+             ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:6d612...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_relationship_templates_never_promote_unverified_physical_identity[reviewed_matching-reviewed_retained_matching] _
+tests/test_research_synthesis.py:177: in test_relationship_templates_never_promote_unverified_physical_identity
+    pack = build_synthesis_pack(verified(payload=payload))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:c2088...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_relationship_templates_never_promote_unverified_physical_identity[proximity-retained_environmental_context] _
+tests/test_research_synthesis.py:177: in test_relationship_templates_never_promote_unverified_physical_identity
+    pack = build_synthesis_pack(verified(payload=payload))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:685b0...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_ test_relationship_templates_never_promote_unverified_physical_identity[unresolved-unresolved] _
+tests/test_research_synthesis.py:177: in test_relationship_templates_never_promote_unverified_physical_identity
+    pack = build_synthesis_pack(verified(payload=payload))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:3e431...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+_____________ test_forged_relationship_category_is_not_renderable ______________
+tests/test_research_synthesis.py:190: in test_forged_relationship_category_is_not_renderable
+    build_synthesis_pack(verified(payload=payload))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:1f1dc...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+__ test_context_compaction_drops_only_optional_rows_and_never_qualifications ___
+tests/test_research_synthesis.py:194: in test_context_compaction_drops_only_optional_rows_and_never_qualifications
+    source = verified(rows=20, payload={"rows": [{"long": "x" * 3000} for _ in range(20)]}, qualifications=("Keep every scientific limitation.",))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:6f8ba...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+__________ test_unsupported_output_locale_does_not_invent_translation __________
+tests/test_research_synthesis.py:204: in test_unsupported_output_locale_does_not_invent_translation
+    pack = build_synthesis_pack(verified())
+                                ^^^^^^^^^^
+tests/test_research_synthesis.py:42: in verified
+    receipt = EvidenceReceipt(id=receipt_id, sha256=receipt_hash, run_id=run_id, input_version=1, binding=binding,
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for EvidenceReceipt
+E     Value error, Investigation values must be finite UTF-8 JSON [type=value_error, input_value={'id': 'c21:receipt:2fcf4...aaaaaaaaaaaaaaaaaaaaa'}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/value_error
+=========================== short test summary info ============================
+FAILED tests/test_research_synthesis.py::test_exact_count_shortcut_uses_semantic_population_not_preview[0]
+FAILED tests/test_research_synthesis.py::test_exact_count_shortcut_uses_semantic_population_not_preview[100000]
+FAILED tests/test_research_synthesis.py::test_model_can_omit_no_required_fact_or_qualification_and_replay_is_stable
+FAILED tests/test_research_synthesis.py::test_scientific_assertions_and_control_fields_are_not_model_schema[extra0]
+FAILED tests/test_research_synthesis.py::test_scientific_assertions_and_control_fields_are_not_model_schema[extra1]
+FAILED tests/test_research_synthesis.py::test_scientific_assertions_and_control_fields_are_not_model_schema[extra2]
+FAILED tests/test_research_synthesis.py::test_scientific_assertions_and_control_fields_are_not_model_schema[extra3]
+FAILED tests/test_research_synthesis.py::test_scientific_assertions_and_control_fields_are_not_model_schema[extra4]
+FAILED tests/test_research_synthesis.py::test_scientific_assertions_and_control_fields_are_not_model_schema[extra5]
+FAILED tests/test_research_synthesis.py::test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected[blocks0]
+FAILED tests/test_research_synthesis.py::test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected[blocks1]
+FAILED tests/test_research_synthesis.py::test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected[blocks2]
+FAILED tests/test_research_synthesis.py::test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected[blocks3]
+FAILED tests/test_research_synthesis.py::test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected[blocks4]
+FAILED tests/test_research_synthesis.py::test_only_supplied_typed_ids_and_exact_fact_witnesses_can_be_selected[blocks5]
+FAILED tests/test_research_synthesis.py::test_rows_beyond_supplied_preview_are_not_citable_and_table_keeps_authority
+FAILED tests/test_research_synthesis.py::test_unknown_coverage_partial_stays_unknown_not_zero
+FAILED tests/test_research_synthesis.py::test_parseable_but_incomplete_c06_generation_never_becomes_an_answer[output_limited]
+FAILED tests/test_research_synthesis.py::test_parseable_but_incomplete_c06_generation_never_becomes_an_answer[refused]
+FAILED tests/test_research_synthesis.py::test_parseable_but_incomplete_c06_generation_never_becomes_an_answer[failed]
+FAILED tests/test_research_synthesis.py::test_parseable_but_incomplete_c06_generation_never_becomes_an_answer[unknown]
+FAILED tests/test_research_synthesis.py::test_completed_generation_replays_purely_and_request_has_only_selection_schema
+FAILED tests/test_research_synthesis.py::test_ambiguous_nonfinite_and_invalid_json_rejected[{"version":"c21-selection-v1","blocks":[],"blocks":[]}]
+FAILED tests/test_research_synthesis.py::test_ambiguous_nonfinite_and_invalid_json_rejected[{"version":"c21-selection-v1","blocks":[],"value":NaN}]
+FAILED tests/test_research_synthesis.py::test_ambiguous_nonfinite_and_invalid_json_rejected[{"blocks":[],"version":"c21-selection-v1"}trailing]
+FAILED tests/test_research_synthesis.py::test_payload_and_semantic_count_tampering_are_rejected
+FAILED tests/test_research_synthesis.py::test_relationship_templates_never_promote_unverified_physical_identity[reviewed_matching-reviewed_retained_matching]
+FAILED tests/test_research_synthesis.py::test_relationship_templates_never_promote_unverified_physical_identity[proximity-retained_environmental_context]
+FAILED tests/test_research_synthesis.py::test_relationship_templates_never_promote_unverified_physical_identity[unresolved-unresolved]
+FAILED tests/test_research_synthesis.py::test_forged_relationship_category_is_not_renderable
+FAILED tests/test_research_synthesis.py::test_context_compaction_drops_only_optional_rows_and_never_qualifications
+FAILED tests/test_research_synthesis.py::test_unsupported_output_locale_does_not_invent_translation
+32 failed, 13 passed in 3.98s

@@ -1,11 +1,13 @@
 /** C18 pure navigation and deliberately volatile, trusted-account-bound private drafts. */
 import type { Conversation, Investigation, InvestigationContext, InvestigationMutationIntent } from "./investigation-service.ts";
 import type { RunContextBinding, RunMutationIntent } from "./research-run-contract.ts";
+import type { AnswerMutationIntent } from "./research-evidence-service.ts";
 export const WORKSPACE_TABS = ["context", "results", "experiments", "evidence"] as const;
 export type WorkspaceTab = typeof WORKSPACE_TABS[number];
 export type ResearchLocation = { investigationId: string | null; conversationId: string | null; workspaceTab: WorkspaceTab; mobilePane: "chat" | "workspace" };
 export type ResearchDraftIdentity = { accountId: string; permissionRevision: string };
 export type RetainedResearchRun = Readonly<{ id: string; binding: RunContextBinding }>;
+export type AnswerSelection = Readonly<{ runId: string | null; jobId: string | null; receiptId: string | null }>;
 export const MAX_RETAINED_RUNS_PER_CONVERSATION = 25;
 const MAX_RETAINED_CONVERSATIONS = 128;
 export class ResearchStateError extends Error { constructor() { super("Research state is invalid"); this.name = "ResearchStateError"; } }
@@ -71,11 +73,13 @@ export class ResearchDraftStore {
   private readonly mutations = new Map<string, InvestigationMutationIntent>();
   private readonly runMutations = new Map<string, RunMutationIntent>();
   private readonly retainedRuns = new Map<string, Map<string, RetainedResearchRun>>();
+  private readonly answerMutations = new Map<string, AnswerMutationIntent>();
+  private readonly answerSelections = new Map<string, AnswerSelection>();
   bind(identity: ResearchDraftIdentity | null): void {
     if (identity === null) { this.clear(); return; }
     if (!plain(identity) || Object.keys(identity).some((key) => !["accountId", "permissionRevision"].includes(key))) return fail();
     const next = { accountId: textKey(identity.accountId), permissionRevision: textKey(identity.permissionRevision) };
-    if (this.identity?.accountId !== next.accountId || this.identity.permissionRevision !== next.permissionRevision) { this.drafts.clear(); this.mutations.clear(); this.runMutations.clear(); this.retainedRuns.clear(); }
+    if (this.identity?.accountId !== next.accountId || this.identity.permissionRevision !== next.permissionRevision) { this.drafts.clear(); this.mutations.clear(); this.runMutations.clear(); this.retainedRuns.clear(); this.answerMutations.clear(); this.answerSelections.clear(); }
     this.identity = next;
   }
   private bound(): void { if (this.identity === null) return fail(); }
@@ -135,7 +139,33 @@ export class ResearchDraftStore {
     uuid(id); const key = this.draftKey(investigationId, conversationId), retained = this.retainedRuns.get(key);
     retained?.delete(id); if (retained?.size === 0) this.retainedRuns.delete(key);
   }
-  clear(): void { this.drafts.clear(); this.mutations.clear(); this.runMutations.clear(); this.retainedRuns.clear(); this.identity = null; }
+  rememberAnswerMutation(slot: string, intent: AnswerMutationIntent): void {
+    this.bound(); textKey(slot); const copied = copiedJson(intent) as AnswerMutationIntent;
+    if (!plain(copied) || Object.keys(copied).sort().join(",") !== "binding,method,request" || !["submit", "cancel"].includes(copied.method) || !plain(copied.request)
+      || new TextEncoder().encode(JSON.stringify(copied)).byteLength > 65536) return fail();
+    const binding = runBinding(copied.binding); uuid(copied.request.idempotency_key); uuid(copied.request.run_id);
+    if (copied.request.investigation_id !== binding.investigation_id || copied.request.conversation_id !== binding.conversation_id) return fail();
+    if (copied.method === "submit") {
+      if (Object.keys(copied.request).sort().join(",") !== ["conversation_id", "idempotency_key", "input_version", "investigation_id", "locale", "run_id"].filter(key => key !== "locale" || Object.hasOwn(copied.request, key)).sort().join(",")
+        || !Number.isSafeInteger(copied.request.input_version) || copied.request.input_version < 1 || copied.request.locale !== undefined && !["en", "ja"].includes(copied.request.locale)) return fail();
+    } else { if (Object.keys(copied.request).sort().join(",") !== "conversation_id,idempotency_key,investigation_id,job_id,run_id") return fail(); uuid(copied.request.job_id); }
+    const previous = this.answerMutations.get(slot); if (previous && JSON.stringify(previous) !== JSON.stringify(copied)) return fail();
+    if (!previous && this.answerMutations.size >= 32) return fail(); this.answerMutations.set(slot, frozen(copied));
+  }
+  pendingAnswerMutation(slot: string): AnswerMutationIntent | null { this.bound(); textKey(slot); return this.answerMutations.get(slot) ?? null; }
+  forgetAnswerMutation(slot: string): void { this.bound(); textKey(slot); this.answerMutations.delete(slot); }
+  answerSelection(investigationId: string, conversationId: string): AnswerSelection {
+    return this.answerSelections.get(this.draftKey(investigationId, conversationId)) ?? { runId: null, jobId: null, receiptId: null };
+  }
+  selectAnswer(investigationId: string, conversationId: string, supplied: AnswerSelection): void {
+    const key = this.draftKey(investigationId, conversationId), value = copiedJson(supplied) as AnswerSelection;
+    if (!plain(value) || Object.keys(value).sort().join(",") !== "jobId,receiptId,runId") return fail();
+    nullableUuid(value.runId); nullableUuid(value.jobId);
+    if (value.receiptId !== null && (typeof value.receiptId !== "string" || !/^c21:receipt:[a-f0-9]{64}$/.test(value.receiptId)) || value.runId === null && (value.jobId !== null || value.receiptId !== null)) return fail();
+    this.answerSelections.delete(key); this.answerSelections.set(key, frozen(value));
+    while (this.answerSelections.size > 128) this.answerSelections.delete(this.answerSelections.keys().next().value!);
+  }
+  clear(): void { this.drafts.clear(); this.mutations.clear(); this.runMutations.clear(); this.retainedRuns.clear(); this.answerMutations.clear(); this.answerSelections.clear(); this.identity = null; }
 }
 export type SubmittedResearchBinding = {
   investigation_id: string; conversation_id: string; revision_id: string; snapshot_id: string;

@@ -1,0 +1,95 @@
+{
+  "component": "C21",
+  "verification_version": "c21-synthesis-verification-v1",
+  "status": "scoped_local_verified",
+  "base_commit": "7f0cc78f9ccc9a89786eae7320b866e8495ab74f",
+  "files": {
+    "orchestration/research_synthesis.py": "9991a2af117aa6747417c3e2d85b8e76e1494163bb245d49249790b935526a50",
+    "orchestration/frozen_documentary.py": "c3672d21a8a61145b1935879b535f02eb8439fdf8dc3aedb73675274449b1ac5",
+    "tests/test_research_synthesis.py": "706b637c2d6bee4bf9df627092cee4915ce74ba3ffff9fdf3e3a65696d4fe354",
+    "tests/test_frozen_documentary.py": "c340336b0f85be882a0e9ae93f9eeb3284d2afaa16c0709be094af2e04caa167"
+  },
+  "source_sha256": {
+    "orchestration/research_synthesis.py": "9991a2af117aa6747417c3e2d85b8e76e1494163bb245d49249790b935526a50",
+    "orchestration/frozen_documentary.py": "c3672d21a8a61145b1935879b535f02eb8439fdf8dc3aedb73675274449b1ac5",
+    "tests/test_research_synthesis.py": "706b637c2d6bee4bf9df627092cee4915ce74ba3ffff9fdf3e3a65696d4fe354",
+    "tests/test_frozen_documentary.py": "c340336b0f85be882a0e9ae93f9eeb3284d2afaa16c0709be094af2e04caa167"
+  },
+  "focused_verification": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "tests/test_research_synthesis.py",
+      "tests/test_frozen_documentary.py",
+      "-q"
+    ],
+    "result": "66 passed in 2.19s",
+    "exit_code": 0,
+    "log": "docs/plans/ocean-v1/evidence/C21/synthesis-versioned-index-tests.txt",
+    "log_sha256": "8945d61bd74251bd8156d3c4b69de3d9f36e6b2eed4309b5cd83ecc270fdc952",
+    "source_pins": "docs/plans/ocean-v1/evidence/C21/synthesis-versioned-index-source-pins.json",
+    "source_pins_sha256": "01a501cc947285520add1960156cdfadf2ea4a0fb3f453ef66d63ecd5f4d6123"
+  },
+  "lint": {
+    "result": "All checks passed; owned trailing whitespace violations []",
+    "exit_code": 0,
+    "log": "docs/plans/ocean-v1/evidence/C21/synthesis-versioned-index-lint.txt",
+    "log_sha256": "2c5c5c80e89e037dfd4a675820d3a1438a124d42b8782dbe0ba488dec13d7e9c"
+  },
+  "preserved_logs": {
+    "docs/plans/ocean-v1/evidence/C21/documentary-initial-tests.txt": "54a949e8ead3e075b5bde8549f2bc828eee5e5f3729e335b9f5f813ae035dc86",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-attached-tests.txt": "b56e8b5cc76b4a9621a84a07850cfd1d94394bb2531171621bfc41cf3c54f1f3",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-denominator-tests.txt": "d69320dffad23607893786c6d46b02ed5909224655bf08cdce3098e60a1644ae",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-expanded-tests.txt": "6291db82e8e47c41ff2277109b29e4aff30a7286c77bf5216c6f19409ad2f652",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-final-lint.txt": "a26a0a4d7f89969ec24b9d11a43fd6430a582e2a3bb73daaf24e2418cf768a49",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-followup-tests.txt": "cc7005e159a317ae9b694d804948155a4269975b7131577e2f5dfd3284952e11",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-initial-tests.txt": "f47c7eebda901b5cf8bd5c7d7a02a7e79ea21092ee9fd9207caca7d3dcc7d52f",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-output-bounds-tests.txt": "b6cdf648559504b588c645b5f608743d1e4db774c96e57942efa14d010d284a4",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-qualified-tests.txt": "6a31b8364edfc73e0fcffd888af62773ed5564c33f838b4d62beaeb95601b66c",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-request-context-tests.txt": "27746d51142c24c33c1d7b555f9989846f43bac574dfb27d56351b3ea6210e5f",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-resumed-tests.txt": "4727ffd780908906af22a60e61ddfe4a25a71f86504c0c2c86b9e474524327af",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-reviewed-lint.txt": "d3845c7da343530cd9df7b4ccd7a67a218168ee7dccae346d1a551c411d11d80",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-source-proof-tests.txt": "207aa92467f31f99aa74fd54529be37f4bbe6ef22076d052168e0fe12b161533",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-supported-index-tests.txt": "0751d73bcd73c250b91005bf0b3a9920990fbd6d1fa7d931a59a257db2313f30",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-versioned-index-lint.txt": "2c5c5c80e89e037dfd4a675820d3a1438a124d42b8782dbe0ba488dec13d7e9c",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-versioned-index-source-pins.json": "01a501cc947285520add1960156cdfadf2ea4a0fb3f453ef66d63ecd5f4d6123",
+    "docs/plans/ocean-v1/evidence/C21/synthesis-versioned-index-tests.txt": "8945d61bd74251bd8156d3c4b69de3d9f36e6b2eed4309b5cd83ecc270fdc952"
+  },
+  "prior_failed_runs": {
+    "synthesis-initial-tests.txt": "Preserved fixture/model nesting strict-JSON failures; corrected before later focused runs.",
+    "synthesis-followup-tests.txt": "Preserved strict model revalidation failures; normalized DTOs through JSON before later focused runs.",
+    "synthesis-resumed-tests.txt": "Preserved one test-fixture threshold failure; corrected oversized-preview fixture before later focused runs."
+  },
+  "independent_source_reviews": [
+    {
+      "reviewer": "/root/c18_client_state",
+      "result": "Count denominator presentation overflow found and fixed; no further confirmed pure synthesis/provider blocker. Exact denominator retained in fact values; EN/JA maximum-boundary tests added.",
+      "review_type": "Read-only source review and focused pure boundary probe; component acceptance not claimed"
+    },
+    {
+      "reviewer": "/root/c18_runtime_guard",
+      "result": "No additional concrete provider/pack blocker. Verified actual source registrations/current policy; input/provenance separation from attachments; authored index and malformed version handling; UTF-8 witnesses; supplementary C17 bindings and no current-fact support. Positive actual sealed provider/store round trip passed in separate owned tests.",
+      "review_type": "Read-only integration review; separate store tests are not counted in this 66-test receipt"
+    },
+    {
+      "reviewer": "/root",
+      "result": "Final pure/provider reread clear after complete request byte-cap fix and opaque missing-version qualification. Positive real provider/store path confirmed.",
+      "review_type": "Read-only final source review; durable worker, PG and overall component acceptance remain parent-owned"
+    }
+  ],
+  "contracts": {
+    "packing": "build_synthesis_pack(VerifiedEvidenceSet,documentary=None)->SynthesisPack. Only retained documentary receipt/payload pairs; attached bytes require explicit frozen C17 reference/hash and remain supplementary under original binding.",
+    "selection": "Strict c21-selection-v1 IDs only. Exact supported fact witness aliases; supplied row IDs, relationship IDs and excerpt IDs. No arbitrary scientific prose, scope, status, values, authority or completion fields.",
+    "completion": "Host ControllerResult alone controls complete/partial. Required supported facts and all mandatory qualifiers/unresolved facts remain rendered even if omitted by model. Exact semantic counts including zero use deterministic rendering; no supported facts and incomplete host result use deterministic unknown partial.",
+    "model_boundary": "parse_generation requires completed C06 GenerationResult. Pure functions initiate no model/provider/database calls. Complete UTF-8 prompt plus canonical selection schema, including repair overhead, must fit frozen SynthesisPack.model_context_bytes.",
+    "documentary": "FrozenDocumentaryProvider uses explicit same-store C09 scientific registration and actual C14 metadata pagination/current policy, exact C13 input/provenance identities, supported authored metadata, stable lexical EN/JA ranking and original UTF-8 excerpt offsets/hashes. Missing-version opaque metadata is qualified/skipped; declared incompatible/malformed version fails closed. Private inputs is the exact canonical input_count/hash list.",
+    "rendering": "Stable UUID5 candidate identity; exact facts/denominators/authority and full source relationship validation remain available. Optional row compaction marks truncation; mandatory metadata/qualification/output budget overflow fails explicitly without dropping source qualifications."
+  },
+  "limitations": [
+    "Scoped local source verification only; no C21 component acceptance, source commit, hosted CI or delivery claim.",
+    "Root durable worker owns combined active-time/tool/model/repair budgets, committed raw outcome replay, leases/cancellation and final publication authorization.",
+    "Store owns actual retention/holds/current owner-policy checks and immutable receipt identity.",
+    "No live provider, real-data acquisition, legacy mutation, cloud provisioning/deployment or independent scientific review was performed."
+  ]
+}

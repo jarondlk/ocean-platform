@@ -1,0 +1,197 @@
+TAP version 13
+# Subtest: answer reads, explicit submit and cancellation use all five separate typed HTTP actions
+ok 1 - answer reads, explicit submit and cancellation use all five separate typed HTTP actions
+  ---
+  duration_ms: 15.279209
+  ...
+# Subtest: evidence list preserves explicitly attached original run bindings, while reads bind selected receipt/hash
+ok 2 - evidence list preserves explicitly attached original run bindings, while reads bind selected receipt/hash
+  ---
+  duration_ms: 2.853791
+  ...
+# Subtest: page/export preserve literal retained values, scoped page totals, UTF8 content digest and server CSV escaping
+not ok 3 - page/export preserve literal retained values, scoped page totals, UTF8 content digest and server CSV escaping
+  ---
+  duration_ms: 5.3255
+  location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1/tests/research-evidence-service.test.ts:24:1'
+  failureType: 'testCodeFailure'
+  error: 'The answer or evidence response could not be verified'
+  code: 'invalid_response'
+  name: 'ResearchEvidenceClientError'
+  stack: |-
+    fail (file:///Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1/src/research-evidence-contract.ts:8:35)
+    schema (file:///Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1/src/research-evidence-contract.ts:29:190)
+    parseEvidenceModel (file:///Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1/src/research-evidence-contract.ts:56:41)
+    call (file:///Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1/src/research-evidence-service.ts:47:26)
+    async TestContext.<anonymous> (file:///Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1/tests/research-evidence-service.test.ts:28:102)
+    async Test.run (node:internal/test_runner/test:980:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: strict answer model rejects missing version
+ok 4 - strict answer model rejects missing version
+  ---
+  duration_ms: 0.441166
+  ...
+# Subtest: strict answer model rejects wrong version
+ok 5 - strict answer model rejects wrong version
+  ---
+  duration_ms: 0.271625
+  ...
+# Subtest: strict answer model rejects unknown field
+ok 6 - strict answer model rejects unknown field
+  ---
+  duration_ms: 0.111
+  ...
+# Subtest: strict answer model rejects synthetic flag
+ok 7 - strict answer model rejects synthetic flag
+  ---
+  duration_ms: 0.133459
+  ...
+# Subtest: strict answer model rejects bool cursor
+ok 8 - strict answer model rejects bool cursor
+  ---
+  duration_ms: 0.075458
+  ...
+# Subtest: strict answer model rejects snapshot activity injection
+ok 9 - strict answer model rejects snapshot activity injection
+  ---
+  duration_ms: 0.235208
+  ...
+# Subtest: strict answer model rejects unpublished prose
+ok 10 - strict answer model rejects unpublished prose
+  ---
+  duration_ms: 0.251292
+  ...
+# Subtest: strict answer model rejects independent scientific approval
+ok 11 - strict answer model rejects independent scientific approval
+  ---
+  duration_ms: 0.138792
+  ...
+# Subtest: strict answer model rejects missing scientific qualification
+ok 12 - strict answer model rejects missing scientific qualification
+  ---
+  duration_ms: 0.131541
+  ...
+# Subtest: strict answer model rejects uncited receipt
+ok 13 - strict answer model rejects uncited receipt
+  ---
+  duration_ms: 0.133042
+  ...
+# Subtest: strict answer model rejects repeated block
+ok 14 - strict answer model rejects repeated block
+  ---
+  duration_ms: 0.099875
+  ...
+# Subtest: strict answer model rejects unsafe elapsed
+ok 15 - strict answer model rejects unsafe elapsed
+  ---
+  duration_ms: 0.045958
+  ...
+# Subtest: strict evidence rejects id/hash mismatch
+ok 16 - strict evidence rejects id/hash mismatch
+  ---
+  duration_ms: 0.165666
+  ...
+# Subtest: strict evidence rejects attachment snapshot mismatch
+ok 17 - strict evidence rejects attachment snapshot mismatch
+  ---
+  duration_ms: 0.170333
+  ...
+# Subtest: strict evidence rejects pin substitution
+ok 18 - strict evidence rejects pin substitution
+  ---
+  duration_ms: 0.170958
+  ...
+# Subtest: strict evidence rejects unknown rendered as zero
+ok 19 - strict evidence rejects unknown rendered as zero
+  ---
+  duration_ms: 0.210459
+  ...
+# Subtest: strict evidence rejects known without actual count
+ok 20 - strict evidence rejects known without actual count
+  ---
+  duration_ms: 0.187208
+  ...
+# Subtest: strict evidence rejects coverage unknown without reason
+ok 21 - strict evidence rejects coverage unknown without reason
+  ---
+  duration_ms: 0.136875
+  ...
+# Subtest: strict evidence rejects invalid scope dates
+not ok 22 - strict evidence rejects invalid scope dates
+  ---
+  duration_ms: 0.455625
+  location: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1/tests/research-evidence-service.test.ts:36:13'
+  failureType: 'testCodeFailure'
+  error: |-
+    The "bad" validation function is expected to return "true". Received false
+    
+    Caught error:
+    
+    CatalogueContractError: $.sources.ctd.filters.time_from: expected an ISO date or timestamp with seconds
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (file:///Users/jaronchai/Documents/GitHub/provenance-eco-rag/frontend-v1/tests/research-evidence-service.test.ts:36:106)
+    async Test.run (node:internal/test_runner/test:980:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: strict evidence rejects duplicate columns
+ok 23 - strict evidence rejects duplicate columns
+  ---
+  duration_ms: 0.1705
+  ...
+# Subtest: strict evidence rejects documentary promoted to exact result
+ok 24 - strict evidence rejects documentary promoted to exact result
+  ---
+  duration_ms: 0.152917
+  ...
+# Subtest: known zero and unknown totals remain distinct, valid and immutable
+ok 25 - known zero and unknown totals remain distinct, valid and immutable
+  ---
+  duration_ms: 0.066708
+  ...
+# Subtest: bad requests fail before network, including forged receipt hashes and unsafe cursors
+ok 26 - bad requests fail before network, including forged receipt hashes and unsafe cursors
+  ---
+  duration_ms: 0.245916
+  ...
+# Subtest: typed clients reject wrong run/job/list identity, cursor bindings, locale and changed page offsets
+ok 27 - typed clients reject wrong run/job/list identity, cursor bindings, locale and changed page offsets
+  ---
+  duration_ms: 2.033459
+  ...
+# Subtest: events reject nonconsecutive, cross-job or inconsistent highwater pages
+ok 28 - events reject nonconsecutive, cross-job or inconsistent highwater pages
+  ---
+  duration_ms: 0.1605
+  ...
+# Subtest: events reject nonconsecutive, cross-job or inconsistent highwater pages
+ok 29 - events reject nonconsecutive, cross-job or inconsistent highwater pages
+  ---
+  duration_ms: 0.126084
+  ...
+# Subtest: events reject nonconsecutive, cross-job or inconsistent highwater pages
+ok 30 - events reject nonconsecutive, cross-job or inconsistent highwater pages
+  ---
+  duration_ms: 0.149292
+  ...
+# Subtest: events reject nonconsecutive, cross-job or inconsistent highwater pages
+ok 31 - events reject nonconsecutive, cross-job or inconsistent highwater pages
+  ---
+  duration_ms: 0.11325
+  ...
+# Subtest: events reject nonconsecutive, cross-job or inconsistent highwater pages
+ok 32 - events reject nonconsecutive, cross-job or inconsistent highwater pages
+  ---
+  duration_ms: 0.130667
+  ...
+1..32
+# tests 32
+# suites 0
+# pass 30
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 142.873292

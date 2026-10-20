@@ -1,0 +1,5 @@
+Command: .venv/bin/ruff check orchestration/research_synthesis.py orchestration/frozen_documentary.py tests/test_research_synthesis.py tests/test_frozen_documentary.py
+All checks passed!
+Exit code: 0
+Owned-file trailing whitespace violations: []
+Source files: {"orchestration/frozen_documentary.py": "323f44dcac2b34540a49b8b8a061f5abe3372aca0206b31931d321513caee704", "orchestration/research_synthesis.py": "eca1cd650b07f8ab447b3f0fb2c8d507e226a89a61f452544de0cc19d5e652fa", "tests/test_frozen_documentary.py": "2c51ee3b580cd4cc3179a7aafd145b71bbdb136401867c0e12671b17f2630a01", "tests/test_research_synthesis.py": "e8d550ab1cb1e0e4f5db67daa300becb296ec37da857ebec3805a96a3e39f302"}

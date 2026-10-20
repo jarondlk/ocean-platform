@@ -18,6 +18,7 @@ from starlette.concurrency import run_in_threadpool
 
 import config
 from api.auth import CurrentUser, get_current_user
+from api.research_evidence_routes import configured_answer_service, configured_evidence_service
 from orchestration.catalogue_browser import CatalogueBrowser
 from orchestration.catalogue_service import CatalogueService
 from orchestration.investigations import InvestigationService
@@ -134,7 +135,27 @@ def _research_runs(configuration, user, research_status, investigations, service
     return capability
 
 
-def runtime_response(user, configured, catalogue_service=None, catalogue_browser=None, investigation_service=None, research_run_service=None):
+def _research_evidence(user, research_status, investigations, evidence, answers):
+    capability = {'version': 'research-evidence-v1', 'transport': 'unavailable',
+        'synthesis': 'unavailable', 'submit_enabled': False, 'reason': 'Retained evidence is unavailable.'}
+    try:
+        history = (research_status == 'ready' and {'chat:use', 'data:read'} <= user.permissions
+            and config.v1_evidence_enabled() and configured_evidence_service(evidence, investigations)
+            and configured_answer_service(answers, evidence))
+        if not history:
+            return capability
+        capability['transport'] = 'http-v1'
+        capability['reason'] = 'New answer preparation is unavailable. Retained evidence remains accessible.'
+        if (config.v1_synthesis_enabled() and configured_answer_service(answers, evidence)
+                and answers.dispatch_available is True):
+            capability.update(synthesis='http-v1', submit_enabled=True, reason=None)
+    except config.SecurityConfigurationError:
+        pass
+    return capability
+
+
+def runtime_response(user, configured, catalogue_service=None, catalogue_browser=None, investigation_service=None,
+                     research_run_service=None, research_evidence_service=None, research_answer_service=None):
     """Own configuration callback lifetime and serialization in the same worker."""
     if not isinstance(user, CurrentUser):
         return _error(401, "authentication_required", "Authentication is required")
@@ -173,15 +194,21 @@ def runtime_response(user, configured, catalogue_service=None, catalogue_browser
             configuration, user, capabilities["research"]["status"],
             investigation_service, research_run_service,
         )
+        extra = {}
+        if research_evidence_service is not None or research_answer_service is not None:
+            extra['research_evidence'] = _research_evidence(user, capabilities['research']['status'],
+                investigation_service, research_evidence_service, research_answer_service)
         revision = hashlib.sha256(canonical_json({
             "identity": identity, "site_id": configuration.site_id,
             "configuration_revision": configuration.revision, "capabilities": capabilities,
             "research_runs": research_runs,
+            **extra,
         }).encode()).hexdigest()
         return JSONResponse(content={
             "version": VERSION, "deployment": "v1", "identity": identity,
             "permission_revision": revision, "capabilities": capabilities,
             "research_runs": research_runs,
+            **extra,
         })
     except Exception:
         # Host callbacks/configuration may fail; paths and provider text are not
@@ -201,6 +228,8 @@ async def runtime(request: Request):
         getattr(request.app.state, "catalogue_browser", None),
         getattr(request.app.state, "investigation_service", None),
         getattr(request.app.state, "research_run_service", None),
+        getattr(request.app.state, "research_evidence_service", None),
+        getattr(request.app.state, "research_answer_service", None),
     )
     await checkpoint()
     return response

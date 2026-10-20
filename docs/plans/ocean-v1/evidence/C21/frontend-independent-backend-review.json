@@ -1,0 +1,65 @@
+{
+  "component": "C21",
+  "review_kind": "Independent source review of other agents backend and synthesis boundaries; implementation owner of frontend is explicitly excluded from an independent frontend-review claim",
+  "outcome": "No remaining concrete blocker found by source inspection and three focused local repair probes",
+  "final_component_acceptance": false,
+  "reviewed_source_sha256": {
+    "orchestration/research_answers.py": "99847661a24236f172107b7aa1c132bb74c09673691e0ce2e2ba51f5d4e988c6",
+    "api/research_evidence_routes.py": "137a23e4cdc0281214c5ca9a9b7c7e5eef80fd9fdbf9ac5a44c8fc2a6af9fa01",
+    "api/v1_runtime_routes.py": "7642e4463b80873e5c9eef920cc9f31bccdd30b3c7177118b014befbf7430de6",
+    "api/auth.py": "23e539f8a920c356ec2c86793af0ec2bed2d96f2c8fb39a7b17a8f1a301e5ea0",
+    "api/rate_limit.py": "9d1814438bd65e9091a3d019e820587583cfa588e75b0f390f476ec41e2a1f4e",
+    "api/main.py": "c0caaba49b6ac9cff7ac95f02db86bc177164d15ad08ce0bb767cc8a324d2938",
+    "config.py": "1002aed1b54e704e72d2a90beddedb31225132951f3618b29180a52fd080178d",
+    "schema/research_evidence.py": "79617dba452bdc144c6e43e998f0627a0fcbe5b5475caa88a916de4fef820d92",
+    "orchestration/research_synthesis.py": "9991a2af117aa6747417c3e2d85b8e76e1494163bb245d49249790b935526a50",
+    "orchestration/frozen_documentary.py": "c3672d21a8a61145b1935879b535f02eb8439fdf8dc3aedb73675274449b1ac5",
+    "tests/test_research_answers.py": "f3d65fd2496fb8a85e020068521ee71f3a6259554ffaa87ebaaef8b2c10c4301",
+    "tests/test_research_evidence_api.py": "a0f64b1ecd79c0c12a29b7830d17e97877a921d875656e781166a80b7528201e",
+    "tests/test_research_evidence_runtime.py": "f38bd6616b328c1d3271d7af3fbf640aa72f6593c73aaf7647b330a889d12ecf",
+    "tests/test_research_synthesis.py": "706b637c2d6bee4bf9df627092cee4915ce74ba3ffff9fdf3e3a65696d4fe354",
+    "tests/test_frozen_documentary.py": "c340336b0f85be882a0e9ae93f9eeb3284d2afaa16c0709be094af2e04caa167"
+  },
+  "remaining_findings": [],
+  "resolved_findings": [
+    {
+      "finding": "Valid maximum-length semantic count denominator overflowed host AnswerBlock text after prefixes",
+      "resolution": "Exact value and denominator remain in structured data; bounded host summary and controlled output-budget failure; EN/JA boundary tests reviewed"
+    },
+    {
+      "finding": "Final authorization or serialization could cross the budget/clock boundary after the initial publication decision",
+      "resolution": "Candidate validation and serialization plus all fresh principal/source/policy callbacks precede authoritative closing settle; no candidate row is inserted before closing decision; expiry/backwards probes publish no answer or row"
+    },
+    {
+      "finding": "Lost exact submit acknowledgement was unrecoverable during a synthesis pause and blocked safe cancellation",
+      "resolution": "Current-authorized exact persisted key replay precedes new-submit dispatch gate; new keys remain unavailable; read/cancel continue"
+    },
+    {
+      "finding": "Runtime advertised joint answer/evidence transport even when answer-history service was missing or mismatched",
+      "resolution": "Joint transport requires both matching explicitly configured history services; synthesis/queue pause does not disable history"
+    },
+    {
+      "finding": "Other reviewer identified stale pre-lock answer head identity map and raw ResearchRunError worker translation",
+      "resolution": "Source reread confirms populate_existing on locked claim/lease rows and current source row; worker actor/source adapt ResearchRunError to ResearchAnswerError; independent PG verification belongs to separate receipt"
+    }
+  ],
+  "reviewed_properties": [
+    "Only host-projected facts/rows/source excerpts are rendered; finite model-selected IDs cannot inject authority, scientific approval, scope or completion",
+    "Exact semantic counts and complete-scope denominators never derive from preview length; unknown remains distinct from zero",
+    "Current exact witness aliases, receipt/payload hashes, original attachment snapshot/binding and supplementary-only attached evidence preserve source authority",
+    "Sealed local documentary metadata search applies permitted input manifests and current policy before lexical rank/top-k; exact UTF8 excerpt bytes and identities retained",
+    "C06 non-completed outcomes never publish answers or trigger malformed-selection repair; residual C20 budget/repair floors and uncertain physical attempts are retained",
+    "Committed journal lookup precedes physical attempt reservation; unknown physical outcomes can retry only with additional charged attempt",
+    "Dual permission/export checks precede request parsing; fixed bounded routes run service/session/serialization in worker; no provider/legacy/production fallback"
+  ],
+  "evidence_sha256": {
+    "docs/plans/ocean-v1/evidence/C21/frontend-durable-publication-probe.json": "00f6fdc0818c29051bbc0a94c9fccf6ca3ec29746291ec3dae4f1f1b9de8f65d",
+    "docs/plans/ocean-v1/evidence/C21/frontend-durable-publication-repair-probe.json": "2f906798cd1aee85d9c0aec65c11390a24e1261373dfb43ae376c0377fdcdda0"
+  },
+  "qualifications": [
+    "Reviewed application/test source and performed only three independent local synthetic repair probes plus the preserved original publication reproduction; did not rerun broad backend/frontend suites.",
+    "Other-agent focused and PostgreSQL logs are supporting work, not independent execution claims here.",
+    "No assembled browser, live provider, scientific approval, real-data acquisition, cloud provisioning or deployment was performed.",
+    "This pins the reviewed candidate only. Root must freeze/reconcile source and complete acceptance/CI before component delivery."
+  ]
+}

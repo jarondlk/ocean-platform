@@ -1,0 +1,365 @@
+TAP version 13
+# Subtest: 31 server answers keep the freshly acknowledged off-page active job and poll its separate event cursor
+ok 1 - 31 server answers keep the freshly acknowledged off-page active job and poll its separate event cursor
+  ---
+  duration_ms: 27.29825
+  ...
+# Subtest: off-page 401 cannot retain cached private answers
+ok 2 - off-page 401 cannot retain cached private answers
+  ---
+  duration_ms: 2.105542
+  ...
+# Subtest: off-page 403 cannot retain cached private answers
+ok 3 - off-page 403 cannot retain cached private answers
+  ---
+  duration_ms: 1.777667
+  ...
+# Subtest: off-page 503 cannot retain cached private answers
+ok 4 - off-page 503 cannot retain cached private answers
+  ---
+  duration_ms: 1.776041
+  ...
+# Subtest: a missing selected answer is reported for guarded publication rather than retained from stale cache
+ok 5 - a missing selected answer is reported for guarded publication rather than retained from stale cache
+  ---
+  duration_ms: 2.361708
+  ...
+# Subtest: only an explicit current selection authorizes status backfill, not arbitrary cached private history
+ok 6 - only an explicit current selection authorizes status backfill, not arbitrary cached private history
+  ---
+  duration_ms: 2.390416
+  ...
+# Subtest: late account transition prevents read publication or another request
+ok 7 - late account transition prevents read publication or another request
+  ---
+  duration_ms: 4.954291
+  ...
+# Subtest: late permission transition prevents read publication or another request
+ok 8 - late permission transition prevents read publication or another request
+  ---
+  duration_ms: 3.013209
+  ...
+# Subtest: late navigation transition prevents read publication or another request
+ok 9 - late navigation transition prevents read publication or another request
+  ---
+  duration_ms: 2.10875
+  ...
+# Subtest: late mutation transition prevents read publication or another request
+ok 10 - late mutation transition prevents read publication or another request
+  ---
+  duration_ms: 2.20775
+  ...
+# Subtest: already aborted request never starts a client or exposes cached views
+ok 11 - already aborted request never starts a client or exposes cached views
+  ---
+  duration_ms: 0.174
+  ...
+# Subtest: answer policy changes require reauthorization; independent evidence resource revision is permitted
+ok 12 - answer policy changes require reauthorization; independent evidence resource revision is permitted
+  ---
+  duration_ms: 4.476541
+  ...
+# Subtest: bounded public read window rejects invalid page counts before contacting a service
+ok 13 - bounded public read window rejects invalid page counts before contacting a service
+  ---
+  duration_ms: 0.179833
+  ...
+# Subtest: separate answer key and original submitted binding survive unchanged identity mounts, with no body storage
+ok 14 - separate answer key and original submitted binding survive unchanged identity mounts, with no body storage
+  ---
+  duration_ms: 2.33
+  ...
+# Subtest: volatile selected run/job/original receipt IDs restore within conversation and clear at permission/account/denial changes
+ok 15 - volatile selected run/job/original receipt IDs restore within conversation and clear at permission/account/denial changes
+  ---
+  duration_ms: 0.375083
+  ...
+# Subtest: answer intents reject private payload additions and forged immutable request fields
+ok 16 - answer intents reject private payload additions and forged immutable request fields
+  ---
+  duration_ms: 0.081
+  ...
+# Subtest: answer intents reject private payload additions and forged immutable request fields
+ok 17 - answer intents reject private payload additions and forged immutable request fields
+  ---
+  duration_ms: 0.127292
+  ...
+# Subtest: answer intents reject private payload additions and forged immutable request fields
+ok 18 - answer intents reject private payload additions and forged immutable request fields
+  ---
+  duration_ms: 0.070875
+  ...
+# Subtest: answer intents reject private payload additions and forged immutable request fields
+ok 19 - answer intents reject private payload additions and forged immutable request fields
+  ---
+  duration_ms: 0.059958
+  ...
+# Subtest: answer intents reject private payload additions and forged immutable request fields
+ok 20 - answer intents reject private payload additions and forged immutable request fields
+  ---
+  duration_ms: 0.0535
+  ...
+# Subtest: answer intents reject private payload additions and forged immutable request fields
+ok 21 - answer intents reject private payload additions and forged immutable request fields
+  ---
+  duration_ms: 0.051
+  ...
+# Subtest: selection cannot restore a forged receipt, unbound job, arbitrary fields or invalid run URL
+ok 22 - selection cannot restore a forged receipt, unbound job, arbitrary fields or invalid run URL
+  ---
+  duration_ms: 0.268666
+  ...
+# Subtest: wire snapshot highwater does not impersonate already merged answer events
+ok 23 - wire snapshot highwater does not impersonate already merged answer events
+  ---
+  duration_ms: 0.462708
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 24 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.147042
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 25 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.04875
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 26 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.048917
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 27 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.280375
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 28 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.041
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 29 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.032667
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 30 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.073375
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 31 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.034125
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 32 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.037875
+  ...
+# Subtest: snapshot merge rejects changed binding or spent budget/highwater regression
+ok 33 - snapshot merge rejects changed binding or spent budget/highwater regression
+  ---
+  duration_ms: 0.035875
+  ...
+# Subtest: immutable completed answer cannot be changed, removed or restarted; cancelled preparation remains distinct
+ok 34 - immutable completed answer cannot be changed, removed or restarted; cancelled preparation remains distinct
+  ---
+  duration_ms: 0.1125
+  ...
+# Subtest: event merge rejects cross-job/context, repeated or regressing events before appending
+ok 35 - event merge rejects cross-job/context, repeated or regressing events before appending
+  ---
+  duration_ms: 0.045125
+  ...
+# Subtest: event merge rejects cross-job/context, repeated or regressing events before appending
+ok 36 - event merge rejects cross-job/context, repeated or regressing events before appending
+  ---
+  duration_ms: 0.031667
+  ...
+# Subtest: event merge rejects cross-job/context, repeated or regressing events before appending
+ok 37 - event merge rejects cross-job/context, repeated or regressing events before appending
+  ---
+  duration_ms: 0.029334
+  ...
+# Subtest: event merge rejects cross-job/context, repeated or regressing events before appending
+ok 38 - event merge rejects cross-job/context, repeated or regressing events before appending
+  ---
+  duration_ms: 0.028333
+  ...
+# Subtest: event merge rejects cross-job/context, repeated or regressing events before appending
+ok 39 - event merge rejects cross-job/context, repeated or regressing events before appending
+  ---
+  duration_ms: 0.028584
+  ...
+# Subtest: answer reads, explicit submit and cancellation use all five separate typed HTTP actions
+ok 40 - answer reads, explicit submit and cancellation use all five separate typed HTTP actions
+  ---
+  duration_ms: 12.238833
+  ...
+# Subtest: evidence list preserves explicitly attached original run bindings, while reads bind selected receipt/hash
+ok 41 - evidence list preserves explicitly attached original run bindings, while reads bind selected receipt/hash
+  ---
+  duration_ms: 3.040709
+  ...
+# Subtest: page/export preserve literal retained values, scoped page totals, UTF8 content digest and server CSV escaping
+ok 42 - page/export preserve literal retained values, scoped page totals, UTF8 content digest and server CSV escaping
+  ---
+  duration_ms: 6.85875
+  ...
+# Subtest: strict answer model rejects missing version
+ok 43 - strict answer model rejects missing version
+  ---
+  duration_ms: 0.2325
+  ...
+# Subtest: strict answer model rejects wrong version
+ok 44 - strict answer model rejects wrong version
+  ---
+  duration_ms: 0.103458
+  ...
+# Subtest: strict answer model rejects unknown field
+ok 45 - strict answer model rejects unknown field
+  ---
+  duration_ms: 0.141208
+  ...
+# Subtest: strict answer model rejects synthetic flag
+ok 46 - strict answer model rejects synthetic flag
+  ---
+  duration_ms: 0.161125
+  ...
+# Subtest: strict answer model rejects bool cursor
+ok 47 - strict answer model rejects bool cursor
+  ---
+  duration_ms: 0.113417
+  ...
+# Subtest: strict answer model rejects snapshot activity injection
+ok 48 - strict answer model rejects snapshot activity injection
+  ---
+  duration_ms: 0.31175
+  ...
+# Subtest: strict answer model rejects unpublished prose
+ok 49 - strict answer model rejects unpublished prose
+  ---
+  duration_ms: 0.362875
+  ...
+# Subtest: strict answer model rejects independent scientific approval
+ok 50 - strict answer model rejects independent scientific approval
+  ---
+  duration_ms: 0.251667
+  ...
+# Subtest: strict answer model rejects missing scientific qualification
+ok 51 - strict answer model rejects missing scientific qualification
+  ---
+  duration_ms: 0.170292
+  ...
+# Subtest: strict answer model rejects uncited receipt
+ok 52 - strict answer model rejects uncited receipt
+  ---
+  duration_ms: 0.13
+  ...
+# Subtest: strict answer model rejects repeated block
+ok 53 - strict answer model rejects repeated block
+  ---
+  duration_ms: 0.146333
+  ...
+# Subtest: strict answer model rejects unsafe elapsed
+ok 54 - strict answer model rejects unsafe elapsed
+  ---
+  duration_ms: 0.059
+  ...
+# Subtest: strict evidence rejects id/hash mismatch
+ok 55 - strict evidence rejects id/hash mismatch
+  ---
+  duration_ms: 0.247875
+  ...
+# Subtest: strict evidence rejects attachment snapshot mismatch
+ok 56 - strict evidence rejects attachment snapshot mismatch
+  ---
+  duration_ms: 0.202916
+  ...
+# Subtest: strict evidence rejects pin substitution
+ok 57 - strict evidence rejects pin substitution
+  ---
+  duration_ms: 0.201833
+  ...
+# Subtest: strict evidence rejects unknown rendered as zero
+ok 58 - strict evidence rejects unknown rendered as zero
+  ---
+  duration_ms: 0.203834
+  ...
+# Subtest: strict evidence rejects known without actual count
+ok 59 - strict evidence rejects known without actual count
+  ---
+  duration_ms: 0.231459
+  ...
+# Subtest: strict evidence rejects coverage unknown without reason
+ok 60 - strict evidence rejects coverage unknown without reason
+  ---
+  duration_ms: 0.170041
+  ...
+# Subtest: strict evidence rejects invalid scope dates
+ok 61 - strict evidence rejects invalid scope dates
+  ---
+  duration_ms: 0.390958
+  ...
+# Subtest: strict evidence rejects duplicate columns
+ok 62 - strict evidence rejects duplicate columns
+  ---
+  duration_ms: 0.227167
+  ...
+# Subtest: strict evidence rejects documentary promoted to exact result
+ok 63 - strict evidence rejects documentary promoted to exact result
+  ---
+  duration_ms: 0.199209
+  ...
+# Subtest: known zero and unknown totals remain distinct, valid and immutable
+ok 64 - known zero and unknown totals remain distinct, valid and immutable
+  ---
+  duration_ms: 0.06575
+  ...
+# Subtest: bad requests fail before network, including forged receipt hashes and unsafe cursors
+ok 65 - bad requests fail before network, including forged receipt hashes and unsafe cursors
+  ---
+  duration_ms: 0.780708
+  ...
+# Subtest: typed clients reject wrong run/job/list identity, cursor bindings, locale and changed page offsets
+ok 66 - typed clients reject wrong run/job/list identity, cursor bindings, locale and changed page offsets
+  ---
+  duration_ms: 2.262083
+  ...
+# Subtest: events reject nonconsecutive, cross-job or inconsistent highwater pages
+ok 67 - events reject nonconsecutive, cross-job or inconsistent highwater pages
+  ---
+  duration_ms: 0.340875
+  ...
+# Subtest: events reject nonconsecutive, cross-job or inconsistent highwater pages
+ok 68 - events reject nonconsecutive, cross-job or inconsistent highwater pages
+  ---
+  duration_ms: 0.229
+  ...
+# Subtest: events reject nonconsecutive, cross-job or inconsistent highwater pages
+ok 69 - events reject nonconsecutive, cross-job or inconsistent highwater pages
+  ---
+  duration_ms: 0.2345
+  ...
+# Subtest: events reject nonconsecutive, cross-job or inconsistent highwater pages
+ok 70 - events reject nonconsecutive, cross-job or inconsistent highwater pages
+  ---
+  duration_ms: 0.211125
+  ...
+# Subtest: events reject nonconsecutive, cross-job or inconsistent highwater pages
+ok 71 - events reject nonconsecutive, cross-job or inconsistent highwater pages
+  ---
+  duration_ms: 0.1725
+  ...
+1..71
+# tests 71
+# suites 0
+# pass 71
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 162.886167
