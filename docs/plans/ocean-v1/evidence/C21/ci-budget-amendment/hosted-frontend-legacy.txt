@@ -1,0 +1,1109 @@
+﻿2026-10-20T15:53:34.3137635Z Current runner version: '2.337.0'
+2026-10-20T15:53:34.3161234Z ##[group]Runner Image Provisioner
+2026-10-20T15:53:34.3162056Z Hosted Compute Agent
+2026-10-20T15:53:34.3162650Z Version: 20261015.610
+2026-10-20T15:53:34.3163214Z Commit: 267fdb4e8bbec4ab5ea31367f3a00d5c480c7656
+2026-10-20T15:53:34.3163893Z Build Date: 2026-10-14T17:06:54Z
+2026-10-20T15:53:34.3164517Z Worker ID: {3a6d4bda-bb68-4a2f-9f56-ee5332bc0cdb}
+2026-10-20T15:53:34.3165137Z Region: centralus
+2026-10-20T15:53:34.3165740Z Cloud: Azure
+2026-10-20T15:53:34.3166203Z ##[endgroup]
+2026-10-20T15:53:34.3167375Z ##[group]Operating System
+2026-10-20T15:53:34.3168180Z Ubuntu
+2026-10-20T15:53:34.3168797Z 24.04.5
+2026-10-20T15:53:34.3169268Z LTS
+2026-10-20T15:53:34.3169737Z ##[endgroup]
+2026-10-20T15:53:34.3170191Z ##[group]Runner Image
+2026-10-20T15:53:34.3171064Z Image: ubuntu-24.04
+2026-10-20T15:53:34.3171589Z Version: 20261018.339.1
+2026-10-20T15:53:34.3172783Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261018.339/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-20T15:53:34.3174043Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261018.339
+2026-10-20T15:53:34.3174853Z ##[endgroup]
+2026-10-20T15:53:34.3175718Z ##[group]GITHUB_TOKEN Permissions
+2026-10-20T15:53:34.3178147Z Contents: read
+2026-10-20T15:53:34.3178737Z Metadata: read
+2026-10-20T15:53:34.3179227Z ##[endgroup]
+2026-10-20T15:53:34.3181187Z Secret source: Actions
+2026-10-20T15:53:34.3182074Z Cache mode: write
+2026-10-20T15:53:34.3182828Z Prepare workflow directory
+2026-10-20T15:53:34.3451171Z Prepare all required actions
+2026-10-20T15:53:34.3486369Z Getting action download info
+2026-10-20T15:53:34.5752468Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-20T15:53:34.6946764Z Download action repository 'actions/setup-node@820762786026740c76f36085b0efc47a31fe5020' (SHA:820762786026740c76f36085b0efc47a31fe5020)
+2026-10-20T15:53:34.9343094Z Complete job name: Frontend typecheck and build
+2026-10-20T15:53:34.9946846Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-20T15:53:34.9947666Z with:
+2026-10-20T15:53:34.9948621Z   persist-credentials: false
+2026-10-20T15:53:34.9949198Z   repository: jarondlk/ocean-platform
+2026-10-20T15:53:34.9952288Z   token: ***
+2026-10-20T15:53:34.9952762Z   ssh-strict: true
+2026-10-20T15:53:34.9953175Z   ssh-user: git
+2026-10-20T15:53:34.9953585Z   clean: true
+2026-10-20T15:53:34.9954025Z   sparse-checkout-cone-mode: true
+2026-10-20T15:53:34.9954517Z   fetch-depth: 1
+2026-10-20T15:53:34.9954998Z   fetch-tags: false
+2026-10-20T15:53:34.9955415Z   show-progress: true
+2026-10-20T15:53:34.9955832Z   lfs: false
+2026-10-20T15:53:34.9956243Z   submodules: false
+2026-10-20T15:53:34.9956675Z   set-safe-directory: true
+2026-10-20T15:53:34.9957181Z   allow-unsafe-pr-checkout: false
+2026-10-20T15:53:34.9958120Z ##[endgroup]
+2026-10-20T15:53:35.0831930Z Syncing repository: jarondlk/ocean-platform
+2026-10-20T15:53:35.0833717Z ##[group]Getting Git version info
+2026-10-20T15:53:35.0834397Z Working directory is '/home/runner/work/ocean-platform/ocean-platform'
+2026-10-20T15:53:35.0835446Z [command]/usr/bin/git version
+2026-10-20T15:53:35.0900791Z git version 2.55.0
+2026-10-20T15:53:35.0916488Z ##[endgroup]
+2026-10-20T15:53:35.0939026Z Temporarily overriding HOME='/home/runner/work/_temp/0fa8331e-efbb-493c-bc3f-aedcb5c4697a' before making global git config changes
+2026-10-20T15:53:35.0940763Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-20T15:53:35.0944166Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ocean-platform/ocean-platform
+2026-10-20T15:53:35.0994059Z Deleting the contents of '/home/runner/work/ocean-platform/ocean-platform'
+2026-10-20T15:53:35.1003756Z ##[group]Determining repository object format
+2026-10-20T15:53:35.1004772Z ##[endgroup]
+2026-10-20T15:53:35.1005675Z ##[group]Initializing the repository
+2026-10-20T15:53:35.1006596Z [command]/usr/bin/git init /home/runner/work/ocean-platform/ocean-platform
+2026-10-20T15:53:35.1098754Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-20T15:53:35.1100315Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-20T15:53:35.1101800Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-20T15:53:35.1102727Z hint: call:
+2026-10-20T15:53:35.1103438Z hint:
+2026-10-20T15:53:35.1104308Z hint: 	git config --global init.defaultBranch <name>
+2026-10-20T15:53:35.1105105Z hint:
+2026-10-20T15:53:35.1105821Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-20T15:53:35.1107177Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-20T15:53:35.1108715Z hint:
+2026-10-20T15:53:35.1109324Z hint: 	git branch -m <name>
+2026-10-20T15:53:35.1109869Z hint:
+2026-10-20T15:53:35.1110722Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-20T15:53:35.1112199Z Initialized empty Git repository in /home/runner/work/ocean-platform/ocean-platform/.git/
+2026-10-20T15:53:35.1115054Z [command]/usr/bin/git remote add origin https://github.com/jarondlk/ocean-platform
+2026-10-20T15:53:35.1155402Z ##[endgroup]
+2026-10-20T15:53:35.1156381Z ##[group]Disabling automatic garbage collection
+2026-10-20T15:53:35.1157286Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-20T15:53:35.1183834Z ##[endgroup]
+2026-10-20T15:53:35.1185092Z ##[group]Setting up auth
+2026-10-20T15:53:35.1186100Z Removing SSH command configuration
+2026-10-20T15:53:35.1188837Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-20T15:53:35.1219441Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-20T15:53:35.1586553Z Removing HTTP extra header
+2026-10-20T15:53:35.1592171Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-20T15:53:35.1617350Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-20T15:53:35.1775287Z Removing includeIf entries pointing to credentials config files
+2026-10-20T15:53:35.1780021Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-20T15:53:35.1808569Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-20T15:53:35.1970740Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-3939f748-bb19-4418-8175-e180c0b1d8a6.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-20T15:53:35.2000334Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path /home/runner/work/_temp/git-credentials-3939f748-bb19-4418-8175-e180c0b1d8a6.config
+2026-10-20T15:53:35.2026323Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-3939f748-bb19-4418-8175-e180c0b1d8a6.config
+2026-10-20T15:53:35.2055151Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-3939f748-bb19-4418-8175-e180c0b1d8a6.config
+2026-10-20T15:53:35.2082036Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-3939f748-bb19-4418-8175-e180c0b1d8a6.config
+2026-10-20T15:53:35.2105757Z ##[endgroup]
+2026-10-20T15:53:35.2106803Z ##[group]Fetching the repository
+2026-10-20T15:53:35.2111632Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +567684b6649ed8a31ed4f89f1a0e223a677f2fe8:refs/remotes/origin/overhaul
+2026-10-20T15:53:37.5350427Z From https://github.com/jarondlk/ocean-platform
+2026-10-20T15:53:37.5353106Z  * [new ref]         567684b6649ed8a31ed4f89f1a0e223a677f2fe8 -> origin/overhaul
+2026-10-20T15:53:37.5359376Z [command]/usr/bin/git branch --list --remote origin/overhaul
+2026-10-20T15:53:37.5382821Z   origin/overhaul
+2026-10-20T15:53:37.5389131Z [command]/usr/bin/git rev-parse refs/remotes/origin/overhaul
+2026-10-20T15:53:37.5409066Z 567684b6649ed8a31ed4f89f1a0e223a677f2fe8
+2026-10-20T15:53:37.5412774Z ##[endgroup]
+2026-10-20T15:53:37.5414129Z ##[group]Determining the checkout info
+2026-10-20T15:53:37.5415888Z ##[endgroup]
+2026-10-20T15:53:37.5417156Z [command]/usr/bin/git sparse-checkout disable
+2026-10-20T15:53:37.5464190Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-20T15:53:37.5486843Z ##[group]Checking out the ref
+2026-10-20T15:53:37.5490513Z [command]/usr/bin/git checkout --progress --force -B overhaul refs/remotes/origin/overhaul
+2026-10-20T15:53:37.8621621Z Switched to a new branch 'overhaul'
+2026-10-20T15:53:37.8622735Z branch 'overhaul' set up to track 'origin/overhaul'.
+2026-10-20T15:53:37.8635267Z ##[endgroup]
+2026-10-20T15:53:37.8672463Z [command]/usr/bin/git log -1 --format=%H
+2026-10-20T15:53:37.8694649Z 567684b6649ed8a31ed4f89f1a0e223a677f2fe8
+2026-10-20T15:53:37.8701482Z ##[group]Removing auth
+2026-10-20T15:53:37.8702586Z Removing SSH command configuration
+2026-10-20T15:53:37.8703895Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-20T15:53:37.8730225Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-20T15:53:37.8880454Z Removing HTTP extra header
+2026-10-20T15:53:37.8882162Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-20T15:53:37.8904894Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-20T15:53:37.9052355Z Removing includeIf entries pointing to credentials config files
+2026-10-20T15:53:37.9053664Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-20T15:53:37.9077148Z includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path
+2026-10-20T15:53:37.9078659Z includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path
+2026-10-20T15:53:37.9079784Z includeif.gitdir:/github/workspace/.git.path
+2026-10-20T15:53:37.9080953Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-20T15:53:37.9083596Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path
+2026-10-20T15:53:37.9099364Z /home/runner/work/_temp/git-credentials-3939f748-bb19-4418-8175-e180c0b1d8a6.config
+2026-10-20T15:53:37.9106706Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-3939f748\-bb19\-4418\-8175\-e180c0b1d8a6\.config
+2026-10-20T15:53:37.9133578Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path
+2026-10-20T15:53:37.9151283Z /home/runner/work/_temp/git-credentials-3939f748-bb19-4418-8175-e180c0b1d8a6.config
+2026-10-20T15:53:37.9156207Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-3939f748\-bb19\-4418\-8175\-e180c0b1d8a6\.config
+2026-10-20T15:53:37.9185347Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-20T15:53:37.9242210Z /github/runner_temp/git-credentials-3939f748-bb19-4418-8175-e180c0b1d8a6.config
+2026-10-20T15:53:37.9246196Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-3939f748\-bb19\-4418\-8175\-e180c0b1d8a6\.config
+2026-10-20T15:53:37.9286744Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-20T15:53:37.9306037Z /github/runner_temp/git-credentials-3939f748-bb19-4418-8175-e180c0b1d8a6.config
+2026-10-20T15:53:37.9312081Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-3939f748\-bb19\-4418\-8175\-e180c0b1d8a6\.config
+2026-10-20T15:53:37.9341106Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-20T15:53:37.9490036Z Removing credentials config '/home/runner/work/_temp/git-credentials-3939f748-bb19-4418-8175-e180c0b1d8a6.config'
+2026-10-20T15:53:37.9498981Z ##[endgroup]
+2026-10-20T15:53:37.9725497Z ##[group]Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+2026-10-20T15:53:37.9726395Z with:
+2026-10-20T15:53:37.9727060Z   node-version: 22
+2026-10-20T15:53:37.9727708Z   cache: npm
+2026-10-20T15:53:37.9728652Z   cache-dependency-path: frontend/package-lock.json
+2026-10-20T15:53:37.9729411Z   check-latest: false
+2026-10-20T15:53:37.9732299Z   token: ***
+2026-10-20T15:53:37.9733046Z   package-manager-cache: true
+2026-10-20T15:53:37.9733738Z ##[endgroup]
+2026-10-20T15:53:38.0703694Z Found in cache @ /opt/hostedtoolcache/node/22.23.3/x64
+2026-10-20T15:53:38.0750440Z ##[group]Environment details
+2026-10-20T15:53:38.3953002Z node: v22.23.3
+2026-10-20T15:53:38.3953510Z npm: 10.9.9
+2026-10-20T15:53:38.3953772Z yarn: 1.22.22
+2026-10-20T15:53:38.3968624Z ##[endgroup]
+2026-10-20T15:53:38.3969005Z [command]/opt/hostedtoolcache/node/22.23.3/x64/bin/npm config get cache
+2026-10-20T15:53:38.8075201Z /home/runner/.npm
+2026-10-20T15:53:38.9871996Z Cache hit for: node-cache-Linux-x64-npm-69699c4df6784ca734e5fc61035dbe3fe52fdf94b9c89828ecd2f91b6395a33d
+2026-10-20T15:53:40.1782112Z Received 79691776 of 158672789 (50.2%), 76.0 MBs/sec
+2026-10-20T15:53:40.7818782Z Received 158672789 of 158672789 (100.0%), 94.6 MBs/sec
+2026-10-20T15:53:40.7819378Z Cache Size: ~151 MB (158672789 B)
+2026-10-20T15:53:40.7906284Z [command]/usr/bin/tar -xf /home/runner/work/_temp/c205f00f-3289-4420-8500-4143c1712483/cache.tzst -P -C /home/runner/work/ocean-platform/ocean-platform --use-compress-program unzstd
+2026-10-20T15:53:40.9561859Z Cache restored successfully
+2026-10-20T15:53:40.9626175Z Cache restored from key: node-cache-Linux-x64-npm-69699c4df6784ca734e5fc61035dbe3fe52fdf94b9c89828ecd2f91b6395a33d
+2026-10-20T15:53:40.9773224Z ##[group]Run npm ci
+2026-10-20T15:53:40.9773678Z [36;1mnpm ci[0m
+2026-10-20T15:53:40.9891428Z shell: /usr/bin/bash -e {0}
+2026-10-20T15:53:40.9891776Z ##[endgroup]
+2026-10-20T15:53:48.3901534Z 
+2026-10-20T15:53:48.3907701Z added 42 packages in 7s
+2026-10-20T15:53:48.4934019Z ##[group]Run npm audit --omit=dev --audit-level=moderate
+2026-10-20T15:53:48.4934541Z [36;1mnpm audit --omit=dev --audit-level=moderate[0m
+2026-10-20T15:53:48.4966881Z shell: /usr/bin/bash -e {0}
+2026-10-20T15:53:48.4967234Z ##[endgroup]
+2026-10-20T15:53:49.0406419Z found 0 vulnerabilities
+2026-10-20T15:53:49.0495409Z ##[group]Run npm test
+2026-10-20T15:53:49.0495767Z [36;1mnpm test[0m
+2026-10-20T15:53:49.0529449Z shell: /usr/bin/bash -e {0}
+2026-10-20T15:53:49.0530049Z ##[endgroup]
+2026-10-20T15:53:49.1563334Z 
+2026-10-20T15:53:49.1564477Z > ocean-platform-frontend@0.7.6 test
+2026-10-20T15:53:49.1567576Z > node --test --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON lib/citation-navigation.test.ts lib/edna-navigation.test.ts lib/edna-analysis-navigation.test.ts lib/chat-presentation.test.ts lib/classification-preview.test.ts lib/edna-exclusions.test.ts lib/chat-contract.test.cjs lib/chat-settings.test.ts lib/auto-settings.test.ts lib/chat-auto-mounted.test.cjs lib/chat-filter-options.test.ts lib/chat-settings-lifecycle.test.cjs lib/research-workflows.test.cjs lib/source-coverage.test.ts lib/source-coverage-mounted.test.cjs lib/temporal-coverage.test.ts lib/temporal-coverage-mounted.test.cjs lib/csv.test.ts
+2026-10-20T15:53:49.1570222Z 
+2026-10-20T15:53:49.2226299Z TAP version 13
+2026-10-20T15:53:49.4494447Z # Subtest: old settings default to manual; AUTO preference persists without generated results
+2026-10-20T15:53:49.4569268Z ok 1 - old settings default to manual; AUTO preference persists without generated results
+2026-10-20T15:53:49.4570363Z   ---
+2026-10-20T15:53:49.4599050Z   duration_ms: 2.007706
+2026-10-20T15:53:49.4628665Z   type: 'test'
+2026-10-20T15:53:49.4632702Z   ...
+2026-10-20T15:53:49.4633549Z # Subtest: only validated applied scope is displayed and failures retain the explanation
+2026-10-20T15:53:49.4634469Z ok 2 - only validated applied scope is displayed and failures retain the explanation
+2026-10-20T15:53:49.4635160Z   ---
+2026-10-20T15:53:49.4635738Z   duration_ms: 0.471426
+2026-10-20T15:53:49.4636206Z   type: 'test'
+2026-10-20T15:53:49.4636656Z   ...
+2026-10-20T15:53:49.4637425Z # Subtest: effective retrieval/context can be copied into manual settings without changing generation
+2026-10-20T15:53:49.4638687Z ok 3 - effective retrieval/context can be copied into manual settings without changing generation
+2026-10-20T15:53:49.4639367Z   ---
+2026-10-20T15:53:49.4639748Z   duration_ms: 0.460111
+2026-10-20T15:53:49.4640244Z   type: 'test'
+2026-10-20T15:53:49.4640662Z   ...
+2026-10-20T15:53:49.8866975Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:50.0473760Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:50.0898007Z # Subtest: AUTO displays applied settings; toggling off restores manual, editing copies the result
+2026-10-20T15:53:50.0939789Z ok 4 - AUTO displays applied settings; toggling off restores manual, editing copies the result
+2026-10-20T15:53:50.0972375Z   ---
+2026-10-20T15:53:50.1012739Z   duration_ms: 162.151748
+2026-10-20T15:53:50.1013993Z   type: 'test'
+2026-10-20T15:53:50.1024193Z   ...
+2026-10-20T15:53:50.1903564Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:50.2209954Z # Subtest: a late AUTO response cannot appear or change settings after switching accounts
+2026-10-20T15:53:50.2239480Z ok 5 - a late AUTO response cannot appear or change settings after switching accounts
+2026-10-20T15:53:50.2269094Z   ---
+2026-10-20T15:53:50.2328773Z   duration_ms: 141.592658
+2026-10-20T15:53:50.2329336Z   type: 'test'
+2026-10-20T15:53:50.2329837Z   ...
+2026-10-20T15:53:50.3174623Z # Subtest: fresh AUTO renders selected published analysis, workflow and default protocol without manual pins
+2026-10-20T15:53:50.3176205Z ok 6 - fresh AUTO renders selected published analysis, workflow and default protocol without manual pins
+2026-10-20T15:53:50.3177025Z   ---
+2026-10-20T15:53:50.3177491Z   duration_ms: 126.864749
+2026-10-20T15:53:50.3178182Z   type: 'test'
+2026-10-20T15:53:50.3178620Z   ...
+2026-10-20T15:53:50.3339219Z # Subtest: citation contract: plain
+2026-10-20T15:53:50.3340354Z ok 7 - citation contract: plain
+2026-10-20T15:53:50.3341031Z   ---
+2026-10-20T15:53:50.3342388Z   duration_ms: 12.927693
+2026-10-20T15:53:50.3343001Z   type: 'test'
+2026-10-20T15:53:50.3343880Z   ...
+2026-10-20T15:53:50.3344576Z # Subtest: citation contract: bold
+2026-10-20T15:53:50.3345650Z ok 8 - citation contract: bold
+2026-10-20T15:53:50.3346356Z   ---
+2026-10-20T15:53:50.3347285Z   duration_ms: 1.407328
+2026-10-20T15:53:50.3419706Z   type: 'test'
+2026-10-20T15:53:50.3420375Z   ...
+2026-10-20T15:53:50.3421129Z # Subtest: citation contract: italic
+2026-10-20T15:53:50.3421828Z ok 9 - citation contract: italic
+2026-10-20T15:53:50.3449215Z   ---
+2026-10-20T15:53:50.3488996Z   duration_ms: 0.978362
+2026-10-20T15:53:50.3494714Z   type: 'test'
+2026-10-20T15:53:50.3498603Z   ...
+2026-10-20T15:53:50.3499279Z # Subtest: citation contract: group
+2026-10-20T15:53:50.3500271Z ok 10 - citation contract: group
+2026-10-20T15:53:50.3500861Z   ---
+2026-10-20T15:53:50.3501317Z   duration_ms: 0.520982
+2026-10-20T15:53:50.3501705Z   type: 'test'
+2026-10-20T15:53:50.3502120Z   ...
+2026-10-20T15:53:50.3502671Z # Subtest: citation contract: link
+2026-10-20T15:53:50.3503240Z ok 11 - citation contract: link
+2026-10-20T15:53:50.3503703Z   ---
+2026-10-20T15:53:50.3504164Z   duration_ms: 0.840827
+2026-10-20T15:53:50.3504628Z   type: 'test'
+2026-10-20T15:53:50.3505062Z   ...
+2026-10-20T15:53:50.3505576Z # Subtest: citation contract: inline code
+2026-10-20T15:53:50.3506141Z ok 12 - citation contract: inline code
+2026-10-20T15:53:50.3507244Z   ---
+2026-10-20T15:53:50.3508056Z   duration_ms: 0.444142
+2026-10-20T15:53:50.3508520Z   type: 'test'
+2026-10-20T15:53:50.3509014Z   ...
+2026-10-20T15:53:50.3509489Z # Subtest: citation contract: code block
+2026-10-20T15:53:50.3510133Z ok 13 - citation contract: code block
+2026-10-20T15:53:50.3510680Z   ---
+2026-10-20T15:53:50.3511133Z   duration_ms: 0.476782
+2026-10-20T15:53:50.3511567Z   type: 'test'
+2026-10-20T15:53:50.3512020Z   ...
+2026-10-20T15:53:50.3512530Z # Subtest: citation contract: unclosed block
+2026-10-20T15:53:50.3513138Z ok 14 - citation contract: unclosed block
+2026-10-20T15:53:50.3513675Z   ---
+2026-10-20T15:53:50.3514050Z   duration_ms: 0.372194
+2026-10-20T15:53:50.3514461Z   type: 'test'
+2026-10-20T15:53:50.3514899Z   ...
+2026-10-20T15:53:50.3515279Z # Subtest: citation contract: table
+2026-10-20T15:53:50.3515849Z ok 15 - citation contract: table
+2026-10-20T15:53:50.3516364Z   ---
+2026-10-20T15:53:50.3516805Z   duration_ms: 1.855485
+2026-10-20T15:53:50.3540421Z   type: 'test'
+2026-10-20T15:53:50.3548806Z   ...
+2026-10-20T15:53:50.3549366Z # Subtest: citation contract: mixed
+2026-10-20T15:53:50.3549989Z ok 16 - citation contract: mixed
+2026-10-20T15:53:50.3550527Z   ---
+2026-10-20T15:53:50.3550934Z   duration_ms: 0.980277
+2026-10-20T15:53:50.3551362Z   type: 'test'
+2026-10-20T15:53:50.3551864Z   ...
+2026-10-20T15:53:50.3552354Z # Subtest: citation contract: ordinary bracket prose
+2026-10-20T15:53:50.3553065Z ok 17 - citation contract: ordinary bracket prose
+2026-10-20T15:53:50.3553561Z   ---
+2026-10-20T15:53:50.3553967Z   duration_ms: 0.298463
+2026-10-20T15:53:50.3554464Z   type: 'test'
+2026-10-20T15:53:50.3554901Z   ...
+2026-10-20T15:53:50.3555579Z # Subtest: citation contract: code cannot span paragraphs
+2026-10-20T15:53:50.3556239Z ok 18 - citation contract: code cannot span paragraphs
+2026-10-20T15:53:50.3556804Z   ---
+2026-10-20T15:53:50.3557225Z   duration_ms: 0.275605
+2026-10-20T15:53:50.3557933Z   type: 'test'
+2026-10-20T15:53:50.3558430Z   ...
+2026-10-20T15:53:50.3559025Z # Subtest: citation contract: code cannot span table cells
+2026-10-20T15:53:50.3559757Z ok 19 - citation contract: code cannot span table cells
+2026-10-20T15:53:50.3560295Z   ---
+2026-10-20T15:53:50.3560734Z   duration_ms: 0.506282
+2026-10-20T15:53:50.3561148Z   type: 'test'
+2026-10-20T15:53:50.3561524Z   ...
+2026-10-20T15:53:50.3562198Z # Subtest: citation contract: extra table cells are not rendered
+2026-10-20T15:53:50.3562880Z ok 20 - citation contract: extra table cells are not rendered
+2026-10-20T15:53:50.3563566Z   ---
+2026-10-20T15:53:50.3563994Z   duration_ms: 0.380819
+2026-10-20T15:53:50.3564717Z   type: 'test'
+2026-10-20T15:53:50.3565149Z   ...
+2026-10-20T15:53:50.3565673Z # Subtest: citation contract: code can span paragraph lines
+2026-10-20T15:53:50.3566386Z ok 21 - citation contract: code can span paragraph lines
+2026-10-20T15:53:50.3566995Z   ---
+2026-10-20T15:53:50.3567457Z   duration_ms: 0.211734
+2026-10-20T15:53:50.3568892Z   type: 'test'
+2026-10-20T15:53:50.3569344Z   ...
+2026-10-20T15:53:50.3569857Z # Subtest: citation contract: blockquote citation group
+2026-10-20T15:53:50.3570620Z ok 22 - citation contract: blockquote citation group
+2026-10-20T15:53:50.3571103Z   ---
+2026-10-20T15:53:50.3571457Z   duration_ms: 0.414097
+2026-10-20T15:53:50.3571911Z   type: 'test'
+2026-10-20T15:53:50.3572837Z   ...
+2026-10-20T15:53:50.3573760Z # Subtest: citation contract: links cannot cross paragraphs
+2026-10-20T15:53:50.3574473Z ok 23 - citation contract: links cannot cross paragraphs
+2026-10-20T15:53:50.3574970Z   ---
+2026-10-20T15:53:50.3575340Z   duration_ms: 0.313425
+2026-10-20T15:53:50.3575819Z   type: 'test'
+2026-10-20T15:53:50.3576174Z   ...
+2026-10-20T15:53:50.3576837Z # Subtest: structured errors retain diagnostics, and validation never echoes request input
+2026-10-20T15:53:50.3578076Z ok 24 - structured errors retain diagnostics, and validation never echoes request input
+2026-10-20T15:53:50.3578713Z   ---
+2026-10-20T15:53:50.3579118Z   duration_ms: 44.576572
+2026-10-20T15:53:50.3579584Z   type: 'test'
+2026-10-20T15:53:50.3579912Z   ...
+2026-10-20T15:53:50.3580609Z # Subtest: saved selections stay explicit when another filter or corpus change removes them
+2026-10-20T15:53:50.3581589Z ok 25 - saved selections stay explicit when another filter or corpus change removes them
+2026-10-20T15:53:50.3582255Z   ---
+2026-10-20T15:53:50.3582615Z   duration_ms: 7.466101
+2026-10-20T15:53:50.3582980Z   type: 'test'
+2026-10-20T15:53:50.3583398Z   ...
+2026-10-20T15:53:50.3584089Z # Subtest: choices respect the source contract and preserve an explicit false control filter
+2026-10-20T15:53:50.3585041Z ok 26 - choices respect the source contract and preserve an explicit false control filter
+2026-10-20T15:53:50.3585694Z   ---
+2026-10-20T15:53:50.3586055Z   duration_ms: 0.261114
+2026-10-20T15:53:50.3586460Z   type: 'test'
+2026-10-20T15:53:50.3586861Z   ...
+2026-10-20T15:53:50.3587484Z # Subtest: appliedFilterRows includes only explicit scientific scope
+2026-10-20T15:53:50.3588434Z ok 27 - appliedFilterRows includes only explicit scientific scope
+2026-10-20T15:53:50.3589034Z   ---
+2026-10-20T15:53:50.3589366Z   duration_ms: 1.529705
+2026-10-20T15:53:50.3589705Z   type: 'test'
+2026-10-20T15:53:50.3590212Z   ...
+2026-10-20T15:53:50.3590714Z # Subtest: abstentionReasonLabel presents stable direct labels
+2026-10-20T15:53:50.3591322Z ok 28 - abstentionReasonLabel presents stable direct labels
+2026-10-20T15:53:50.3591843Z   ---
+2026-10-20T15:53:50.3592167Z   duration_ms: 9.242607
+2026-10-20T15:53:50.3592520Z   type: 'test'
+2026-10-20T15:53:50.3592837Z   ...
+2026-10-20T15:53:50.3593446Z # Subtest: resolved aggregate filters display inferred and explicit scope
+2026-10-20T15:53:50.3594161Z ok 29 - resolved aggregate filters display inferred and explicit scope
+2026-10-20T15:53:50.3594660Z   ---
+2026-10-20T15:53:50.3595028Z   duration_ms: 0.325061
+2026-10-20T15:53:50.3595355Z   type: 'test'
+2026-10-20T15:53:50.3595735Z   ...
+2026-10-20T15:53:50.8871740Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:50.8899371Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:50.8900413Z # Subtest: account transitions never render or save the previous account scope; missing identity blocks submission
+2026-10-20T15:53:50.8901383Z ok 30 - account transitions never render or save the previous account scope; missing identity blocks submission
+2026-10-20T15:53:50.8902033Z   ---
+2026-10-20T15:53:50.8902323Z   duration_ms: 20.26253
+2026-10-20T15:53:50.8902700Z   type: 'test'
+2026-10-20T15:53:50.8902974Z   ...
+2026-10-20T15:53:50.8903747Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:50.8904643Z # Subtest: corrupt account settings block writes, reset is explicit and notices do not leak between accounts
+2026-10-20T15:53:50.8905446Z ok 31 - corrupt account settings block writes, reset is explicit and notices do not leak between accounts
+2026-10-20T15:53:50.8906027Z   ---
+2026-10-20T15:53:50.8906380Z   duration_ms: 6.23201
+2026-10-20T15:53:50.8906706Z   type: 'test'
+2026-10-20T15:53:50.8907015Z   ...
+2026-10-20T15:53:50.8907519Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:50.8908605Z # Subtest: analysis-linked scope changes stay transient; reset also resets the retained defaults
+2026-10-20T15:53:50.8909531Z ok 32 - analysis-linked scope changes stay transient; reset also resets the retained defaults
+2026-10-20T15:53:50.8910184Z   ---
+2026-10-20T15:53:50.8910470Z   duration_ms: 3.584698
+2026-10-20T15:53:50.8910815Z   type: 'test'
+2026-10-20T15:53:50.8911124Z   ...
+2026-10-20T15:53:50.8911761Z # Subtest: an aborted filter search cannot replace current choices, even if the transport resolves late
+2026-10-20T15:53:50.8912633Z ok 33 - an aborted filter search cannot replace current choices, even if the transport resolves late
+2026-10-20T15:53:50.8913160Z   ---
+2026-10-20T15:53:50.8913494Z   duration_ms: 569.988943
+2026-10-20T15:53:50.8913832Z   type: 'test'
+2026-10-20T15:53:50.8914103Z   ...
+2026-10-20T15:53:50.9063275Z # Subtest: source scope supports all sixteen combinations, including empty
+2026-10-20T15:53:50.9188892Z ok 34 - source scope supports all sixteen combinations, including empty
+2026-10-20T15:53:50.9204167Z   ---
+2026-10-20T15:53:50.9229897Z   duration_ms: 5.923904
+2026-10-20T15:53:50.9298443Z   type: 'test'
+2026-10-20T15:53:50.9338422Z   ...
+2026-10-20T15:53:50.9398760Z # Subtest: per-source validation rejects invalid dates, ranges, types, conflicts and unsupported filters
+2026-10-20T15:53:50.9428848Z ok 35 - per-source validation rejects invalid dates, ranges, types, conflicts and unsupported filters
+2026-10-20T15:53:50.9458550Z   ---
+2026-10-20T15:53:50.9478906Z   duration_ms: 0.875542
+2026-10-20T15:53:50.9488218Z   type: 'test'
+2026-10-20T15:53:50.9489828Z   ...
+2026-10-20T15:53:50.9490873Z # Subtest: false controls and zero coordinates survive storage and the applied ledger
+2026-10-20T15:53:50.9491673Z ok 36 - false controls and zero coordinates survive storage and the applied ledger
+2026-10-20T15:53:50.9492285Z   ---
+2026-10-20T15:53:50.9492685Z   duration_ms: 1.209498
+2026-10-20T15:53:50.9493091Z   type: 'test'
+2026-10-20T15:53:50.9493497Z   ...
+2026-10-20T15:53:50.9494055Z # Subtest: saved source corruption requires reset rather than unfiltered defaults
+2026-10-20T15:53:50.9494866Z ok 37 - saved source corruption requires reset rather than unfiltered defaults
+2026-10-20T15:53:50.9495388Z   ---
+2026-10-20T15:53:50.9495813Z   duration_ms: 0.354047
+2026-10-20T15:53:50.9496215Z   type: 'test'
+2026-10-20T15:53:50.9496679Z   ...
+2026-10-20T15:53:50.9497327Z # Subtest: account keys are distinct and only settings persist, excluding pinned analyses and chat content
+2026-10-20T15:53:50.9548900Z ok 38 - account keys are distinct and only settings persist, excluding pinned analyses and chat content
+2026-10-20T15:53:50.9558756Z   ---
+2026-10-20T15:53:50.9588685Z   duration_ms: 0.541225
+2026-10-20T15:53:50.9592429Z   type: 'test'
+2026-10-20T15:53:50.9592892Z   ...
+2026-10-20T15:53:50.9593531Z # Subtest: generation controls validate bounds and output limits
+2026-10-20T15:53:50.9594294Z ok 39 - generation controls validate bounds and output limits
+2026-10-20T15:53:50.9594812Z   ---
+2026-10-20T15:53:50.9595303Z   duration_ms: 0.217426
+2026-10-20T15:53:50.9595743Z   type: 'test'
+2026-10-20T15:53:50.9596258Z   ...
+2026-10-20T15:53:50.9596935Z # Subtest: clearing a selected analysis after editing source filters removes its request binding
+2026-10-20T15:53:50.9598447Z ok 40 - clearing a selected analysis after editing source filters removes its request binding
+2026-10-20T15:53:50.9599225Z   ---
+2026-10-20T15:53:50.9599609Z   duration_ms: 0.243548
+2026-10-20T15:53:50.9600053Z   type: 'test'
+2026-10-20T15:53:50.9600486Z   ...
+2026-10-20T15:53:50.9601152Z # Subtest: resolves source, context, invalid, and uncited evidence targets
+2026-10-20T15:53:50.9601929Z ok 41 - resolves source, context, invalid, and uncited evidence targets
+2026-10-20T15:53:50.9602528Z   ---
+2026-10-20T15:53:50.9602967Z   duration_ms: 2.906029
+2026-10-20T15:53:50.9603389Z   type: 'test'
+2026-10-20T15:53:50.9603864Z   ...
+2026-10-20T15:53:50.9604386Z # Subtest: returns an empty target index without a response
+2026-10-20T15:53:50.9605131Z ok 42 - returns an empty target index without a response
+2026-10-20T15:53:50.9605827Z   ---
+2026-10-20T15:53:50.9606233Z   duration_ms: 0.262304
+2026-10-20T15:53:50.9606695Z   type: 'test'
+2026-10-20T15:53:50.9607090Z   ...
+2026-10-20T15:53:50.9607685Z # Subtest: parses single and grouped bracket citation tokens
+2026-10-20T15:53:50.9608666Z ok 43 - parses single and grouped bracket citation tokens
+2026-10-20T15:53:50.9609159Z   ---
+2026-10-20T15:53:50.9609584Z   duration_ms: 1.038942
+2026-10-20T15:53:50.9610063Z   type: 'test'
+2026-10-20T15:53:50.9610483Z   ...
+2026-10-20T15:53:50.9610996Z # Subtest: builds deterministic raw-source evidence links
+2026-10-20T15:53:50.9611696Z ok 44 - builds deterministic raw-source evidence links
+2026-10-20T15:53:50.9612221Z   ---
+2026-10-20T15:53:50.9612604Z   duration_ms: 0.769878
+2026-10-20T15:53:50.9613103Z   type: 'test'
+2026-10-20T15:53:50.9613493Z   ...
+2026-10-20T15:53:50.9614065Z # Subtest: maps exact analysis and reliability context documents
+2026-10-20T15:53:50.9614803Z ok 45 - maps exact analysis and reliability context documents
+2026-10-20T15:53:50.9615347Z   ---
+2026-10-20T15:53:50.9615790Z   duration_ms: 0.291929
+2026-10-20T15:53:50.9616192Z   type: 'test'
+2026-10-20T15:53:50.9616627Z   ...
+2026-10-20T15:53:50.9617262Z # Subtest: builds source-specific SST and metagenome destinations
+2026-10-20T15:53:50.9618298Z ok 46 - builds source-specific SST and metagenome destinations
+2026-10-20T15:53:50.9618845Z   ---
+2026-10-20T15:53:50.9619328Z   duration_ms: 0.707549
+2026-10-20T15:53:50.9619985Z   type: 'test'
+2026-10-20T15:53:50.9620484Z   ...
+2026-10-20T15:53:50.9621076Z # Subtest: routes eDNA evidence to the exact eDNA data view
+2026-10-20T15:53:50.9621716Z ok 47 - routes eDNA evidence to the exact eDNA data view
+2026-10-20T15:53:50.9622723Z   ---
+2026-10-20T15:53:50.9623243Z   duration_ms: 0.433437
+2026-10-20T15:53:50.9623630Z   type: 'test'
+2026-10-20T15:53:50.9624062Z   ...
+2026-10-20T15:53:50.9624663Z # Subtest: only publishes full-page links for known context artifacts
+2026-10-20T15:53:50.9625437Z ok 48 - only publishes full-page links for known context artifacts
+2026-10-20T15:53:50.9626036Z   ---
+2026-10-20T15:53:50.9626425Z   duration_ms: 2.672195
+2026-10-20T15:53:50.9626849Z   type: 'test'
+2026-10-20T15:53:50.9627252Z   ...
+2026-10-20T15:53:50.9628053Z # Subtest: rejects unsafe or malformed deep-link values
+2026-10-20T15:53:50.9628799Z ok 49 - rejects unsafe or malformed deep-link values
+2026-10-20T15:53:50.9629351Z   ---
+2026-10-20T15:53:50.9629720Z   duration_ms: 0.556959
+2026-10-20T15:53:50.9630140Z   type: 'test'
+2026-10-20T15:53:50.9630631Z   ...
+2026-10-20T15:53:50.9631289Z # Subtest: aggregate citations link to retained evidence and reject mismatched identities
+2026-10-20T15:53:50.9632187Z ok 50 - aggregate citations link to retained evidence and reject mismatched identities
+2026-10-20T15:53:50.9632823Z   ---
+2026-10-20T15:53:50.9633238Z   duration_ms: 0.583123
+2026-10-20T15:53:50.9633658Z   type: 'test'
+2026-10-20T15:53:50.9634124Z   ...
+2026-10-20T15:53:50.9634811Z # Subtest: historical SST coverage citations preserve product and complete extent
+2026-10-20T15:53:50.9635671Z ok 51 - historical SST coverage citations preserve product and complete extent
+2026-10-20T15:53:50.9636243Z   ---
+2026-10-20T15:53:50.9636672Z   duration_ms: 0.497253
+2026-10-20T15:53:50.9637094Z   type: 'test'
+2026-10-20T15:53:50.9638063Z   ...
+2026-10-20T15:53:50.9638731Z # Subtest: classification preview rows preserve scenario and scientific values
+2026-10-20T15:53:50.9639600Z ok 52 - classification preview rows preserve scenario and scientific values
+2026-10-20T15:53:50.9640236Z   ---
+2026-10-20T15:53:50.9640643Z   duration_ms: 1.550005
+2026-10-20T15:53:50.9641086Z   type: 'test'
+2026-10-20T15:53:50.9641521Z   ...
+2026-10-20T15:53:50.9642056Z # Subtest: classification preview deltas omit unchanged tables
+2026-10-20T15:53:50.9642729Z ok 53 - classification preview deltas omit unchanged tables
+2026-10-20T15:53:50.9643309Z   ---
+2026-10-20T15:53:50.9643731Z   duration_ms: 9.760235
+2026-10-20T15:53:50.9644161Z   type: 'test'
+2026-10-20T15:53:50.9644573Z   ...
+2026-10-20T15:53:50.9645214Z # Subtest: shared CSV fixture: ordinary
+2026-10-20T15:53:50.9645921Z ok 54 - shared CSV fixture: ordinary
+2026-10-20T15:53:50.9646385Z   ---
+2026-10-20T15:53:50.9646814Z   duration_ms: 5.76391
+2026-10-20T15:53:50.9647227Z   type: 'test'
+2026-10-20T15:53:50.9647655Z   ...
+2026-10-20T15:53:50.9648314Z # Subtest: shared CSV fixture: japanese
+2026-10-20T15:53:50.9648889Z ok 55 - shared CSV fixture: japanese
+2026-10-20T15:53:50.9649334Z   ---
+2026-10-20T15:53:50.9649715Z   duration_ms: 0.314054
+2026-10-20T15:53:50.9650207Z   type: 'test'
+2026-10-20T15:53:50.9650573Z   ...
+2026-10-20T15:53:50.9651013Z # Subtest: shared CSV fixture: quoted
+2026-10-20T15:53:50.9651581Z ok 56 - shared CSV fixture: quoted
+2026-10-20T15:53:50.9652011Z   ---
+2026-10-20T15:53:50.9652459Z   duration_ms: 0.114026
+2026-10-20T15:53:50.9652868Z   type: 'test'
+2026-10-20T15:53:50.9653272Z   ...
+2026-10-20T15:53:50.9653698Z # Subtest: shared CSV fixture: comma
+2026-10-20T15:53:50.9654240Z ok 57 - shared CSV fixture: comma
+2026-10-20T15:53:50.9654725Z   ---
+2026-10-20T15:53:50.9655118Z   duration_ms: 0.160097
+2026-10-20T15:53:50.9655587Z   type: 'test'
+2026-10-20T15:53:50.9655964Z   ...
+2026-10-20T15:53:50.9656442Z # Subtest: shared CSV fixture: multiline
+2026-10-20T15:53:50.9657039Z ok 58 - shared CSV fixture: multiline
+2026-10-20T15:53:50.9657474Z   ---
+2026-10-20T15:53:50.9658201Z   duration_ms: 0.160115
+2026-10-20T15:53:50.9658707Z   type: 'test'
+2026-10-20T15:53:50.9659142Z   ...
+2026-10-20T15:53:50.9659604Z # Subtest: shared CSV fixture: carriage-return
+2026-10-20T15:53:50.9660222Z ok 59 - shared CSV fixture: carriage-return
+2026-10-20T15:53:50.9660708Z   ---
+2026-10-20T15:53:50.9661145Z   duration_ms: 0.120709
+2026-10-20T15:53:50.9661664Z   type: 'test'
+2026-10-20T15:53:50.9662049Z   ...
+2026-10-20T15:53:50.9662542Z # Subtest: shared CSV fixture: empty
+2026-10-20T15:53:50.9663062Z ok 60 - shared CSV fixture: empty
+2026-10-20T15:53:50.9663511Z   ---
+2026-10-20T15:53:50.9663967Z   duration_ms: 0.207888
+2026-10-20T15:53:50.9664402Z   type: 'test'
+2026-10-20T15:53:50.9664809Z   ...
+2026-10-20T15:53:50.9665259Z # Subtest: shared CSV fixture: equals
+2026-10-20T15:53:50.9665802Z ok 61 - shared CSV fixture: equals
+2026-10-20T15:53:50.9666238Z   ---
+2026-10-20T15:53:50.9666699Z   duration_ms: 0.118147
+2026-10-20T15:53:50.9667126Z   type: 'test'
+2026-10-20T15:53:50.9667537Z   ...
+2026-10-20T15:53:50.9668277Z # Subtest: shared CSV fixture: plus
+2026-10-20T15:53:50.9668782Z ok 62 - shared CSV fixture: plus
+2026-10-20T15:53:50.9669228Z   ---
+2026-10-20T15:53:50.9669689Z   duration_ms: 0.367996
+2026-10-20T15:53:50.9670097Z   type: 'test'
+2026-10-20T15:53:50.9670523Z   ...
+2026-10-20T15:53:50.9670985Z # Subtest: shared CSV fixture: minus-string
+2026-10-20T15:53:50.9671534Z ok 63 - shared CSV fixture: minus-string
+2026-10-20T15:53:50.9672078Z   ---
+2026-10-20T15:53:50.9672509Z   duration_ms: 0.375881
+2026-10-20T15:53:50.9672950Z   type: 'test'
+2026-10-20T15:53:50.9673333Z   ...
+2026-10-20T15:53:50.9673821Z # Subtest: shared CSV fixture: at
+2026-10-20T15:53:50.9674357Z ok 64 - shared CSV fixture: at
+2026-10-20T15:53:50.9674851Z   ---
+2026-10-20T15:53:50.9675235Z   duration_ms: 0.109609
+2026-10-20T15:53:50.9675625Z   type: 'test'
+2026-10-20T15:53:50.9676085Z   ...
+2026-10-20T15:53:50.9676776Z # Subtest: shared CSV fixture: space-formula
+2026-10-20T15:53:50.9677353Z ok 65 - shared CSV fixture: space-formula
+2026-10-20T15:53:50.9678053Z   ---
+2026-10-20T15:53:50.9678481Z   duration_ms: 0.047327
+2026-10-20T15:53:50.9678947Z   type: 'test'
+2026-10-20T15:53:50.9679349Z   ...
+2026-10-20T15:53:50.9679837Z # Subtest: shared CSV fixture: tab-text
+2026-10-20T15:53:50.9680310Z ok 66 - shared CSV fixture: tab-text
+2026-10-20T15:53:50.9680796Z   ---
+2026-10-20T15:53:50.9681165Z   duration_ms: 0.033061
+2026-10-20T15:53:50.9681515Z   type: 'test'
+2026-10-20T15:53:50.9681939Z   ...
+2026-10-20T15:53:50.9682344Z # Subtest: shared CSV fixture: cr-text
+2026-10-20T15:53:50.9682973Z ok 67 - shared CSV fixture: cr-text
+2026-10-20T15:53:50.9683439Z   ---
+2026-10-20T15:53:50.9684061Z   duration_ms: 0.06616
+2026-10-20T15:53:50.9684479Z   type: 'test'
+2026-10-20T15:53:50.9684855Z   ...
+2026-10-20T15:53:50.9685359Z # Subtest: shared CSV fixture: lf-text
+2026-10-20T15:53:50.9685829Z ok 68 - shared CSV fixture: lf-text
+2026-10-20T15:53:50.9686318Z   ---
+2026-10-20T15:53:50.9686681Z   duration_ms: 0.028322
+2026-10-20T15:53:50.9687148Z   type: 'test'
+2026-10-20T15:53:50.9687546Z   ...
+2026-10-20T15:53:50.9688312Z # Subtest: shared CSV fixture: tab-formula
+2026-10-20T15:53:50.9688953Z ok 69 - shared CSV fixture: tab-formula
+2026-10-20T15:53:50.9689403Z   ---
+2026-10-20T15:53:50.9689822Z   duration_ms: 0.027563
+2026-10-20T15:53:50.9690277Z   type: 'test'
+2026-10-20T15:53:50.9690620Z   ...
+2026-10-20T15:53:50.9691078Z # Subtest: shared CSV fixture: crlf-text
+2026-10-20T15:53:50.9691672Z ok 70 - shared CSV fixture: crlf-text
+2026-10-20T15:53:50.9692142Z   ---
+2026-10-20T15:53:50.9692522Z   duration_ms: 0.027444
+2026-10-20T15:53:50.9692982Z   type: 'test'
+2026-10-20T15:53:50.9693374Z   ...
+2026-10-20T15:53:50.9693843Z # Subtest: shared CSV fixture: space-tab-text
+2026-10-20T15:53:50.9694464Z ok 71 - shared CSV fixture: space-tab-text
+2026-10-20T15:53:50.9694956Z   ---
+2026-10-20T15:53:50.9695330Z   duration_ms: 0.078229
+2026-10-20T15:53:50.9695795Z   type: 'test'
+2026-10-20T15:53:50.9696185Z   ...
+2026-10-20T15:53:50.9696649Z # Subtest: shared CSV fixture: nonleading-formula
+2026-10-20T15:53:50.9697238Z ok 72 - shared CSV fixture: nonleading-formula
+2026-10-20T15:53:50.9697974Z   ---
+2026-10-20T15:53:50.9698468Z   duration_ms: 0.029379
+2026-10-20T15:53:50.9699041Z   type: 'test'
+2026-10-20T15:53:50.9699414Z   ...
+2026-10-20T15:53:50.9699946Z # Subtest: shared CSV fixture: multiline-later-formula
+2026-10-20T15:53:50.9700566Z ok 73 - shared CSV fixture: multiline-later-formula
+2026-10-20T15:53:50.9701091Z   ---
+2026-10-20T15:53:50.9701520Z   duration_ms: 0.033185
+2026-10-20T15:53:50.9701911Z   type: 'test'
+2026-10-20T15:53:50.9702297Z   ...
+2026-10-20T15:53:50.9702813Z # Subtest: shared CSV fixture: existing-apostrophe
+2026-10-20T15:53:50.9703432Z ok 74 - shared CSV fixture: existing-apostrophe
+2026-10-20T15:53:50.9703950Z   ---
+2026-10-20T15:53:50.9704352Z   duration_ms: 0.068216
+2026-10-20T15:53:50.9704761Z   type: 'test'
+2026-10-20T15:53:50.9705155Z   ...
+2026-10-20T15:53:50.9705661Z # Subtest: shared CSV fixture: literal-leading-quote
+2026-10-20T15:53:50.9706249Z ok 75 - shared CSV fixture: literal-leading-quote
+2026-10-20T15:53:50.9706685Z   ---
+2026-10-20T15:53:50.9707118Z   duration_ms: 0.030894
+2026-10-20T15:53:50.9707507Z   type: 'test'
+2026-10-20T15:53:50.9708149Z   ...
+2026-10-20T15:53:50.9708599Z # Subtest: shared CSV fixture: negative-number
+2026-10-20T15:53:50.9709112Z ok 76 - shared CSV fixture: negative-number
+2026-10-20T15:53:50.9709631Z   ---
+2026-10-20T15:53:50.9709985Z   duration_ms: 0.091533
+2026-10-20T15:53:50.9710377Z   type: 'test'
+2026-10-20T15:53:50.9710761Z   ...
+2026-10-20T15:53:50.9711195Z # Subtest: shared CSV fixture: negative-scientific
+2026-10-20T15:53:50.9711789Z ok 77 - shared CSV fixture: negative-scientific
+2026-10-20T15:53:50.9712243Z   ---
+2026-10-20T15:53:50.9712642Z   duration_ms: 0.030418
+2026-10-20T15:53:50.9713020Z   type: 'test'
+2026-10-20T15:53:50.9713454Z   ...
+2026-10-20T15:53:50.9714080Z # Subtest: shared CSV fixture: positive-number
+2026-10-20T15:53:50.9714580Z ok 78 - shared CSV fixture: positive-number
+2026-10-20T15:53:50.9715072Z   ---
+2026-10-20T15:53:50.9715430Z   duration_ms: 0.026645
+2026-10-20T15:53:50.9715847Z   type: 'test'
+2026-10-20T15:53:50.9716237Z   ...
+2026-10-20T15:53:50.9716633Z # Subtest: shared CSV fixture: zero
+2026-10-20T15:53:50.9717098Z ok 79 - shared CSV fixture: zero
+2026-10-20T15:53:50.9717543Z   ---
+2026-10-20T15:53:50.9718164Z   duration_ms: 0.025836
+2026-10-20T15:53:50.9718552Z   type: 'test'
+2026-10-20T15:53:50.9718955Z   ...
+2026-10-20T15:53:50.9719348Z # Subtest: shared CSV fixture: null
+2026-10-20T15:53:50.9719836Z ok 80 - shared CSV fixture: null
+2026-10-20T15:53:50.9720250Z   ---
+2026-10-20T15:53:50.9720602Z   duration_ms: 0.071605
+2026-10-20T15:53:50.9721253Z   type: 'test'
+2026-10-20T15:53:50.9721632Z   ...
+2026-10-20T15:53:50.9722058Z # Subtest: shared CSV fixture: true
+2026-10-20T15:53:50.9722548Z ok 81 - shared CSV fixture: true
+2026-10-20T15:53:50.9722937Z   ---
+2026-10-20T15:53:50.9723308Z   duration_ms: 0.026587
+2026-10-20T15:53:50.9723757Z   type: 'test'
+2026-10-20T15:53:50.9724163Z   ...
+2026-10-20T15:53:50.9724563Z # Subtest: shared CSV fixture: false
+2026-10-20T15:53:50.9725090Z ok 82 - shared CSV fixture: false
+2026-10-20T15:53:50.9725506Z   ---
+2026-10-20T15:53:50.9725837Z   duration_ms: 0.804078
+2026-10-20T15:53:50.9726303Z   type: 'test'
+2026-10-20T15:53:50.9726659Z   ...
+2026-10-20T15:53:50.9727074Z # Subtest: shared CSV fixture: object
+2026-10-20T15:53:50.9727586Z ok 83 - shared CSV fixture: object
+2026-10-20T15:53:50.9758639Z   ---
+2026-10-20T15:53:50.9816877Z   duration_ms: 0.088533
+2026-10-20T15:53:50.9836276Z   type: 'test'
+2026-10-20T15:53:50.9837002Z   ...
+2026-10-20T15:53:50.9837443Z # Subtest: shared CSV fixture: array
+2026-10-20T15:53:50.9838307Z ok 84 - shared CSV fixture: array
+2026-10-20T15:53:50.9838821Z   ---
+2026-10-20T15:53:50.9839180Z   duration_ms: 0.038376
+2026-10-20T15:53:50.9839635Z   type: 'test'
+2026-10-20T15:53:50.9840065Z   ...
+2026-10-20T15:53:50.9840560Z # Subtest: shared CSV fixture: empty-object
+2026-10-20T15:53:50.9841108Z ok 85 - shared CSV fixture: empty-object
+2026-10-20T15:53:50.9841550Z   ---
+2026-10-20T15:53:50.9841930Z   duration_ms: 0.065027
+2026-10-20T15:53:50.9842379Z   type: 'test'
+2026-10-20T15:53:50.9842795Z   ...
+2026-10-20T15:53:50.9843244Z # Subtest: shared CSV fixture: empty-array
+2026-10-20T15:53:50.9843815Z ok 86 - shared CSV fixture: empty-array
+2026-10-20T15:53:50.9844279Z   ---
+2026-10-20T15:53:50.9844658Z   duration_ms: 0.028249
+2026-10-20T15:53:50.9845141Z   type: 'test'
+2026-10-20T15:53:50.9845720Z   ...
+2026-10-20T15:53:50.9846340Z # Subtest: shared CSV fixture: undefined
+2026-10-20T15:53:50.9846977Z ok 87 - shared CSV fixture: undefined
+2026-10-20T15:53:50.9847446Z   ---
+2026-10-20T15:53:50.9847978Z   duration_ms: 0.0267
+2026-10-20T15:53:50.9848410Z   type: 'test'
+2026-10-20T15:53:50.9848827Z   ...
+2026-10-20T15:53:50.9849366Z # Subtest: shared CSV fixture: vertical-tab-formula
+2026-10-20T15:53:50.9850041Z ok 88 - shared CSV fixture: vertical-tab-formula
+2026-10-20T15:53:50.9850510Z   ---
+2026-10-20T15:53:50.9850861Z   duration_ms: 0.030368
+2026-10-20T15:53:50.9851384Z   type: 'test'
+2026-10-20T15:53:50.9851751Z   ...
+2026-10-20T15:53:50.9852188Z # Subtest: shared CSV fixture: form-feed-formula
+2026-10-20T15:53:50.9852772Z ok 89 - shared CSV fixture: form-feed-formula
+2026-10-20T15:53:50.9853213Z   ---
+2026-10-20T15:53:50.9853664Z   duration_ms: 0.0623
+2026-10-20T15:53:50.9854043Z   type: 'test'
+2026-10-20T15:53:50.9854447Z   ...
+2026-10-20T15:53:50.9854949Z # Subtest: shared CSV fixture: file-separator-formula
+2026-10-20T15:53:50.9855529Z ok 90 - shared CSV fixture: file-separator-formula
+2026-10-20T15:53:50.9855982Z   ---
+2026-10-20T15:53:50.9856431Z   duration_ms: 0.029604
+2026-10-20T15:53:50.9856897Z   type: 'test'
+2026-10-20T15:53:50.9857257Z   ...
+2026-10-20T15:53:50.9857983Z # Subtest: shared CSV fixture: next-line-formula
+2026-10-20T15:53:50.9858555Z ok 91 - shared CSV fixture: next-line-formula
+2026-10-20T15:53:50.9859401Z   ---
+2026-10-20T15:53:50.9859906Z   duration_ms: 0.026278
+2026-10-20T15:53:50.9864920Z   type: 'test'
+2026-10-20T15:53:50.9865376Z   ...
+2026-10-20T15:53:50.9865867Z # Subtest: shared CSV fixture: nbsp-formula
+2026-10-20T15:53:50.9866469Z ok 92 - shared CSV fixture: nbsp-formula
+2026-10-20T15:53:50.9866935Z   ---
+2026-10-20T15:53:50.9867403Z   duration_ms: 0.026079
+2026-10-20T15:53:50.9867993Z   type: 'test'
+2026-10-20T15:53:50.9868450Z   ...
+2026-10-20T15:53:50.9868924Z # Subtest: shared CSV fixture: ogham-formula
+2026-10-20T15:53:50.9869482Z ok 93 - shared CSV fixture: ogham-formula
+2026-10-20T15:53:50.9870013Z   ---
+2026-10-20T15:53:50.9870458Z   duration_ms: 0.063442
+2026-10-20T15:53:50.9870814Z   type: 'test'
+2026-10-20T15:53:50.9871775Z   ...
+2026-10-20T15:53:50.9872544Z # Subtest: shared CSV fixture: em-space-formula
+2026-10-20T15:53:50.9873113Z ok 94 - shared CSV fixture: em-space-formula
+2026-10-20T15:53:50.9873582Z   ---
+2026-10-20T15:53:50.9873913Z   duration_ms: 0.027771
+2026-10-20T15:53:50.9874298Z   type: 'test'
+2026-10-20T15:53:50.9874594Z   ...
+2026-10-20T15:53:50.9874996Z # Subtest: shared CSV fixture: line-separator-formula
+2026-10-20T15:53:50.9875558Z ok 95 - shared CSV fixture: line-separator-formula
+2026-10-20T15:53:50.9876020Z   ---
+2026-10-20T15:53:50.9876334Z   duration_ms: 0.027024
+2026-10-20T15:53:50.9876659Z   type: 'test'
+2026-10-20T15:53:50.9876983Z   ...
+2026-10-20T15:53:50.9877462Z # Subtest: shared CSV fixture: paragraph-separator-formula
+2026-10-20T15:53:50.9883317Z ok 96 - shared CSV fixture: paragraph-separator-formula
+2026-10-20T15:53:50.9884093Z   ---
+2026-10-20T15:53:50.9884468Z   duration_ms: 0.031568
+2026-10-20T15:53:50.9884876Z   type: 'test'
+2026-10-20T15:53:50.9885181Z   ...
+2026-10-20T15:53:50.9885593Z # Subtest: shared CSV fixture: narrow-nbsp-formula
+2026-10-20T15:53:50.9886110Z ok 97 - shared CSV fixture: narrow-nbsp-formula
+2026-10-20T15:53:50.9886501Z   ---
+2026-10-20T15:53:50.9886852Z   duration_ms: 0.076903
+2026-10-20T15:53:50.9887184Z   type: 'test'
+2026-10-20T15:53:50.9887659Z   ...
+2026-10-20T15:53:50.9888298Z # Subtest: shared CSV fixture: medium-math-space-formula
+2026-10-20T15:53:50.9888782Z ok 98 - shared CSV fixture: medium-math-space-formula
+2026-10-20T15:53:50.9889314Z   ---
+2026-10-20T15:53:50.9889620Z   duration_ms: 0.031441
+2026-10-20T15:53:50.9889969Z   type: 'test'
+2026-10-20T15:53:50.9890299Z   ...
+2026-10-20T15:53:50.9890758Z # Subtest: shared CSV fixture: ideographic-space-formula
+2026-10-20T15:53:50.9891323Z ok 99 - shared CSV fixture: ideographic-space-formula
+2026-10-20T15:53:50.9891753Z   ---
+2026-10-20T15:53:50.9892096Z   duration_ms: 0.054593
+2026-10-20T15:53:50.9892424Z   type: 'test'
+2026-10-20T15:53:50.9892739Z   ...
+2026-10-20T15:53:50.9893146Z # Subtest: shared CSV fixture: bom-formula
+2026-10-20T15:53:50.9893582Z ok 100 - shared CSV fixture: bom-formula
+2026-10-20T15:53:50.9893976Z   ---
+2026-10-20T15:53:50.9894302Z   duration_ms: 0.155873
+2026-10-20T15:53:50.9894665Z   type: 'test'
+2026-10-20T15:53:50.9894953Z   ...
+2026-10-20T15:53:50.9895576Z # Subtest: CSV protects formula text and headers while preserving signed numeric measurements
+2026-10-20T15:53:50.9896433Z ok 101 - CSV protects formula text and headers while preserving signed numeric measurements
+2026-10-20T15:53:50.9896974Z   ---
+2026-10-20T15:53:50.9897321Z   duration_ms: 0.897072
+2026-10-20T15:53:50.9897643Z   type: 'test'
+2026-10-20T15:53:50.9898113Z   ...
+2026-10-20T15:53:50.9898719Z # Subtest: CSV protects leading control strings and the complete shared whitespace set
+2026-10-20T15:53:50.9899701Z ok 102 - CSV protects leading control strings and the complete shared whitespace set
+2026-10-20T15:53:50.9900250Z   ---
+2026-10-20T15:53:50.9900581Z   duration_ms: 0.424431
+2026-10-20T15:53:50.9900921Z   type: 'test'
+2026-10-20T15:53:50.9901203Z   ...
+2026-10-20T15:53:50.9901787Z # Subtest: CSV preserves column order, minimal quoting, empty cells and compact JSON
+2026-10-20T15:53:50.9902763Z ok 103 - CSV preserves column order, minimal quoting, empty cells and compact JSON
+2026-10-20T15:53:50.9903269Z   ---
+2026-10-20T15:53:50.9903577Z   duration_ms: 0.161549
+2026-10-20T15:53:50.9903960Z   type: 'test'
+2026-10-20T15:53:50.9904254Z   ...
+2026-10-20T15:53:50.9904652Z # Subtest: CSV filename behavior remains stable
+2026-10-20T15:53:50.9905113Z ok 104 - CSV filename behavior remains stable
+2026-10-20T15:53:50.9905491Z   ---
+2026-10-20T15:53:50.9905801Z   duration_ms: 0.159875
+2026-10-20T15:53:50.9906169Z   type: 'test'
+2026-10-20T15:53:50.9906448Z   ...
+2026-10-20T15:53:50.9906948Z # Subtest: analysis navigation round-trips exact run/table/result/method/page
+2026-10-20T15:53:50.9907933Z ok 105 - analysis navigation round-trips exact run/table/result/method/page
+2026-10-20T15:53:50.9908440Z   ---
+2026-10-20T15:53:50.9908876Z   duration_ms: 2.137093
+2026-10-20T15:53:50.9909225Z   type: 'test'
+2026-10-20T15:53:50.9909514Z   ...
+2026-10-20T15:53:50.9910046Z # Subtest: eDNA analysis citations link to the exact analysis and provenance
+2026-10-20T15:53:50.9910780Z ok 106 - eDNA analysis citations link to the exact analysis and provenance
+2026-10-20T15:53:50.9911289Z   ---
+2026-10-20T15:53:50.9911574Z   duration_ms: 0.550563
+2026-10-20T15:53:50.9911887Z   type: 'test'
+2026-10-20T15:53:50.9912251Z   ...
+2026-10-20T15:53:50.9912656Z # Subtest: exclusion reason labels retain exact reason codes
+2026-10-20T15:53:50.9913266Z ok 107 - exclusion reason labels retain exact reason codes
+2026-10-20T15:53:50.9913722Z   ---
+2026-10-20T15:53:50.9914052Z   duration_ms: 0.5217
+2026-10-20T15:53:50.9914361Z   type: 'test'
+2026-10-20T15:53:50.9914695Z   ...
+2026-10-20T15:53:50.9915274Z # Subtest: eDNA URLs preserve exact evidence, false controls, zero coordinates and pagination
+2026-10-20T15:53:50.9916086Z ok 108 - eDNA URLs preserve exact evidence, false controls, zero coordinates and pagination
+2026-10-20T15:53:50.9916691Z   ---
+2026-10-20T15:53:50.9916986Z   duration_ms: 3.512223
+2026-10-20T15:53:50.9917316Z   type: 'test'
+2026-10-20T15:53:50.9917662Z   ...
+2026-10-20T15:53:50.9918304Z # Subtest: eDNA invalid destinations never fall back to another method or sample
+2026-10-20T15:53:50.9919073Z ok 109 - eDNA invalid destinations never fall back to another method or sample
+2026-10-20T15:53:50.9919583Z   ---
+2026-10-20T15:53:50.9919883Z   duration_ms: 0.679859
+2026-10-20T15:53:50.9920199Z   type: 'test'
+2026-10-20T15:53:50.9920556Z   ...
+2026-10-20T15:53:50.9921039Z # Subtest: an unfiltered eDNA URL has no hidden method or control choice
+2026-10-20T15:53:50.9921694Z ok 110 - an unfiltered eDNA URL has no hidden method or control choice
+2026-10-20T15:53:50.9922157Z   ---
+2026-10-20T15:53:50.9922464Z   duration_ms: 0.188801
+2026-10-20T15:53:50.9922812Z   type: 'test'
+2026-10-20T15:53:50.9923101Z   ...
+2026-10-20T15:53:50.9923609Z # Subtest: catalogue namespace and nontarget filters survive URL navigation
+2026-10-20T15:53:50.9924331Z ok 111 - catalogue namespace and nontarget filters survive URL navigation
+2026-10-20T15:53:50.9924796Z   ---
+2026-10-20T15:53:50.9925161Z   duration_ms: 0.14785
+2026-10-20T15:53:50.9925475Z   type: 'test'
+2026-10-20T15:53:50.9925750Z   ...
+2026-10-20T15:53:50.9926363Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:50.9927206Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:50.9928258Z # Subtest: regional demo rectangles show unknown coordinate uncertainty without inventing zero precision
+2026-10-20T15:53:50.9929226Z ok 112 - regional demo rectangles show unknown coordinate uncertainty without inventing zero precision
+2026-10-20T15:53:50.9929781Z   ---
+2026-10-20T15:53:50.9930094Z   duration_ms: 22.017987
+2026-10-20T15:53:50.9930481Z   type: 'test'
+2026-10-20T15:53:50.9930821Z   ...
+2026-10-20T15:53:51.0039287Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:51.0140098Z # Subtest: reviewed maps distinguish sampled zero, unsampled null and unloaded cells; keyboard selects exact row
+2026-10-20T15:53:51.0142856Z ok 113 - reviewed maps distinguish sampled zero, unsampled null and unloaded cells; keyboard selects exact row
+2026-10-20T15:53:51.0144421Z   ---
+2026-10-20T15:53:51.0145589Z   duration_ms: 16.768677
+2026-10-20T15:53:51.0146645Z   type: 'test'
+2026-10-20T15:53:51.0147341Z   ...
+2026-10-20T15:53:51.0148141Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:51.2409812Z # Subtest: series retain chronological seasons and break across missing values; axes and matched denominators are separate
+2026-10-20T15:53:51.2419597Z ok 114 - series retain chronological seasons and break across missing values; axes and matched denominators are separate
+2026-10-20T15:53:51.2420529Z   ---
+2026-10-20T15:53:51.2421641Z   duration_ms: 14.607508
+2026-10-20T15:53:51.2422467Z   type: 'test'
+2026-10-20T15:53:51.2422849Z   ...
+2026-10-20T15:53:51.2484605Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:51.2517528Z # Subtest: chat chart selection opens the exact row on its table page without privileged Data links
+2026-10-20T15:53:51.2518942Z ok 115 - chat chart selection opens the exact row on its table page without privileged Data links
+2026-10-20T15:53:51.2519568Z   ---
+2026-10-20T15:53:51.2520014Z   duration_ms: 235.502933
+2026-10-20T15:53:51.2520444Z   type: 'test'
+2026-10-20T15:53:51.2520802Z   ...
+2026-10-20T15:53:51.2670404Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:51.2686135Z # Subtest: conference Japanese selectors expose all ten taxa and every temporal group beyond six charts
+2026-10-20T15:53:51.2687387Z ok 116 - conference Japanese selectors expose all ten taxa and every temporal group beyond six charts
+2026-10-20T15:53:51.2688473Z   ---
+2026-10-20T15:53:51.2688925Z   duration_ms: 20.266648
+2026-10-20T15:53:51.2689463Z   type: 'test'
+2026-10-20T15:53:51.2689926Z   ...
+2026-10-20T15:53:51.2690794Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:51.2704719Z # Subtest: SST contrasts disclose aggregate and supported-stratum differences with their support count
+2026-10-20T15:53:51.2705869Z ok 117 - SST contrasts disclose aggregate and supported-stratum differences with their support count
+2026-10-20T15:53:51.2706517Z   ---
+2026-10-20T15:53:51.2706955Z   duration_ms: 2.300422
+2026-10-20T15:53:51.2707560Z   type: 'test'
+2026-10-20T15:53:51.2708145Z   ...
+2026-10-20T15:53:51.2726417Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:51.2742044Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:51.2778401Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:51.2780125Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:51.2810769Z # Subtest: researcher decisions and administrator application are distinct UI actions
+2026-10-20T15:53:51.2811564Z ok 118 - researcher decisions and administrator application are distinct UI actions
+2026-10-20T15:53:51.2812061Z   ---
+2026-10-20T15:53:51.2812635Z   duration_ms: 9.145657
+2026-10-20T15:53:51.2812954Z   type: 'test'
+2026-10-20T15:53:51.2813304Z   ...
+2026-10-20T15:53:51.2863251Z # Subtest: analysis/workflow/protocol selections preserve disabled sources and existing filters
+2026-10-20T15:53:51.2864346Z ok 119 - analysis/workflow/protocol selections preserve disabled sources and existing filters
+2026-10-20T15:53:51.2864955Z   ---
+2026-10-20T15:53:51.2865382Z   duration_ms: 6.835621
+2026-10-20T15:53:51.2865737Z   type: 'test'
+2026-10-20T15:53:51.2866011Z   ...
+2026-10-20T15:53:51.2978253Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:51.2979099Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:51.2980680Z # Subtest: mounted coverage announces unverified overlap and retains both source counts
+2026-10-20T15:53:51.2981530Z ok 120 - mounted coverage announces unverified overlap and retains both source counts
+2026-10-20T15:53:51.2982005Z   ---
+2026-10-20T15:53:51.2982329Z   duration_ms: 14.930951
+2026-10-20T15:53:51.2982654Z   type: 'test'
+2026-10-20T15:53:51.2982972Z   ...
+2026-10-20T15:53:51.2983532Z # Subtest: legacy history renders no invented warning and a later partial response announces the failure
+2026-10-20T15:53:51.2984408Z ok 121 - legacy history renders no invented warning and a later partial response announces the failure
+2026-10-20T15:53:51.2984940Z   ---
+2026-10-20T15:53:51.2985206Z   duration_ms: 3.784648
+2026-10-20T15:53:51.2985598Z   type: 'test'
+2026-10-20T15:53:51.2985884Z   ...
+2026-10-20T15:53:51.2986574Z # Subtest: final supplied counts distinguish empty, failed and disabled sources
+2026-10-20T15:53:51.2987305Z ok 122 - final supplied counts distinguish empty, failed and disabled sources
+2026-10-20T15:53:51.2989314Z   ---
+2026-10-20T15:53:51.2989646Z   duration_ms: 0.952375
+2026-10-20T15:53:51.2989988Z   type: 'test'
+2026-10-20T15:53:51.2990323Z   ...
+2026-10-20T15:53:51.2990831Z # Subtest: retrieval workbench counts are not described as supplied prompt evidence
+2026-10-20T15:53:51.2991683Z ok 123 - retrieval workbench counts are not described as supplied prompt evidence
+2026-10-20T15:53:51.2992193Z   ---
+2026-10-20T15:53:51.2992468Z   duration_ms: 0.16586
+2026-10-20T15:53:51.2992849Z   type: 'test'
+2026-10-20T15:53:51.2993171Z   ...
+2026-10-20T15:53:51.2993673Z # Subtest: old and malformed histories do not manufacture complete coverage
+2026-10-20T15:53:51.2994380Z ok 124 - old and malformed histories do not manufacture complete coverage
+2026-10-20T15:53:51.2994831Z   ---
+2026-10-20T15:53:51.2995143Z   duration_ms: 0.651177
+2026-10-20T15:53:51.2995473Z   type: 'test'
+2026-10-20T15:53:51.2995821Z   ...
+2026-10-20T15:53:51.2996327Z # Subtest: unverified overlap is visible even when both sources were retrieved
+2026-10-20T15:53:51.2997020Z ok 125 - unverified overlap is visible even when both sources were retrieved
+2026-10-20T15:53:51.2997527Z   ---
+2026-10-20T15:53:51.2999190Z   duration_ms: 0.185682
+2026-10-20T15:53:51.2999575Z   type: 'test'
+2026-10-20T15:53:51.2999952Z   ...
+2026-10-20T15:53:51.3000449Z # Subtest: degraded branch stays visible with a positive supplied count
+2026-10-20T15:53:51.3001131Z ok 126 - degraded branch stays visible with a positive supplied count
+2026-10-20T15:53:51.3001615Z   ---
+2026-10-20T15:53:51.3001922Z   duration_ms: 0.190537
+2026-10-20T15:53:51.3002251Z   type: 'test'
+2026-10-20T15:53:51.3002599Z   ...
+2026-10-20T15:53:51.3003180Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:51.3004009Z # react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-20T15:53:51.3004959Z # Subtest: mounted selection preserves unavailable sources, then computes populated-month intersection
+2026-10-20T15:53:51.3005878Z ok 127 - mounted selection preserves unavailable sources, then computes populated-month intersection
+2026-10-20T15:53:51.3006541Z   ---
+2026-10-20T15:53:51.3006829Z   duration_ms: 30.586743
+2026-10-20T15:53:51.3007161Z   type: 'test'
+2026-10-20T15:53:51.3007457Z   ...
+2026-10-20T15:53:51.3008690Z # Subtest: refresh loads replacement coverage and failed refresh clears stale claims
+2026-10-20T15:53:51.3009454Z ok 128 - refresh loads replacement coverage and failed refresh clears stale claims
+2026-10-20T15:53:51.3009953Z   ---
+2026-10-20T15:53:51.3010337Z   duration_ms: 13.631689
+2026-10-20T15:53:51.3010663Z   type: 'test'
+2026-10-20T15:53:51.3010961Z   ...
+2026-10-20T15:53:51.3011493Z # Subtest: shared months use occupied bins rather than broad envelopes
+2026-10-20T15:53:51.3012129Z ok 129 - shared months use occupied bins rather than broad envelopes
+2026-10-20T15:53:51.3012584Z   ---
+2026-10-20T15:53:51.3012908Z   duration_ms: 1.882282
+2026-10-20T15:53:51.3013254Z   type: 'test'
+2026-10-20T15:53:51.3013570Z   ...
+2026-10-20T15:53:51.3014321Z # Subtest: an unavailable or missing selected source cannot become zero overlap
+2026-10-20T15:53:51.3015035Z ok 130 - an unavailable or missing selected source cannot become zero overlap
+2026-10-20T15:53:51.3015506Z   ---
+2026-10-20T15:53:51.3015873Z   duration_ms: 0.208814
+2026-10-20T15:53:51.3016194Z   type: 'test'
+2026-10-20T15:53:51.3016491Z   ...
+2026-10-20T15:53:51.3016945Z # Subtest: disjoint and empty sources have known zero overlap
+2026-10-20T15:53:51.3017529Z ok 131 - disjoint and empty sources have known zero overlap
+2026-10-20T15:53:51.3018179Z   ---
+2026-10-20T15:53:51.3018477Z   duration_ms: 0.253664
+2026-10-20T15:53:51.3018851Z   type: 'test'
+2026-10-20T15:53:51.3019145Z   ...
+2026-10-20T15:53:51.3019557Z # Subtest: single-month geometry and coarse date labels remain valid
+2026-10-20T15:53:51.3020379Z ok 132 - single-month geometry and coarse date labels remain valid
+2026-10-20T15:53:51.3020799Z   ---
+2026-10-20T15:53:51.3021087Z   duration_ms: 0.252701
+2026-10-20T15:53:51.3021355Z   type: 'test'
+2026-10-20T15:53:51.3021694Z   ...
+2026-10-20T15:53:51.3021922Z 1..132
+2026-10-20T15:53:51.3022150Z # tests 132
+2026-10-20T15:53:51.3022382Z # suites 0
+2026-10-20T15:53:51.3022611Z # pass 132
+2026-10-20T15:53:51.3022817Z # fail 0
+2026-10-20T15:53:51.3023069Z # cancelled 0
+2026-10-20T15:53:51.3023274Z # skipped 0
+2026-10-20T15:53:51.3023510Z # todo 0
+2026-10-20T15:53:51.3023787Z # duration_ms 2101.273294
+2026-10-20T15:53:51.3126097Z ##[group]Run npm run typecheck
+2026-10-20T15:53:51.3126400Z [36;1mnpm run typecheck[0m
+2026-10-20T15:53:51.3156126Z shell: /usr/bin/bash -e {0}
+2026-10-20T15:53:51.3156399Z ##[endgroup]
+2026-10-20T15:53:51.3830218Z 
+2026-10-20T15:53:51.3830780Z > ocean-platform-frontend@0.7.6 typecheck
+2026-10-20T15:53:51.3831150Z > tsc --noEmit
+2026-10-20T15:53:51.3831446Z 
+2026-10-20T15:53:56.0323195Z ##[group]Run npm run build
+2026-10-20T15:53:56.0323563Z [36;1mnpm run build[0m
+2026-10-20T15:53:56.0356668Z shell: /usr/bin/bash -e {0}
+2026-10-20T15:53:56.0357038Z env:
+2026-10-20T15:53:56.0357306Z   DEPLOYMENT_ENV: test
+2026-10-20T15:53:56.0357581Z   AUTH_MODE: required
+2026-10-20T15:53:56.0357941Z   ENABLE_MOCK_LOGIN: false
+2026-10-20T15:53:56.0358242Z   AUTH_SECRET: ci-only-auth-secret-that-is-long-enough
+2026-10-20T15:53:56.0358694Z   INTERNAL_AUTH_SECRET: ci-only-internal-secret-that-is-long-enough
+2026-10-20T15:53:56.0359029Z ##[endgroup]
+2026-10-20T15:53:56.2044239Z 
+2026-10-20T15:53:56.2045526Z > ocean-platform-frontend@0.7.6 build
+2026-10-20T15:53:56.2046406Z > next build
+2026-10-20T15:53:56.2046750Z 
+2026-10-20T15:53:56.5385497Z ⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+2026-10-20T15:53:56.6954725Z Attention: Next.js now collects completely anonymous telemetry regarding usage.
+2026-10-20T15:53:56.6955816Z This information is used to shape Next.js' roadmap and prioritize features.
+2026-10-20T15:53:56.6956540Z You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+2026-10-20T15:53:56.6957158Z https://nextjs.org/telemetry
+2026-10-20T15:53:56.6957334Z 
+2026-10-20T15:53:56.8876782Z    ▲ Next.js 15.5.27
+2026-10-20T15:53:56.8877123Z 
+2026-10-20T15:53:57.0222448Z    Creating an optimized production build ...
+2026-10-20T15:54:06.1917971Z  ✓ Compiled successfully in 7.3s
+2026-10-20T15:54:06.1956724Z    Linting and checking validity of types ...
+2026-10-20T15:54:10.9313530Z    Collecting page data ...
+2026-10-20T15:54:12.5218866Z    Generating static pages (0/24) ...
+2026-10-20T15:54:12.9491736Z    Generating static pages (6/24) 
+2026-10-20T15:54:12.9768172Z    Generating static pages (12/24) 
+2026-10-20T15:54:13.0273644Z    Generating static pages (18/24) 
+2026-10-20T15:54:13.0274809Z  ✓ Generating static pages (24/24)
+2026-10-20T15:54:13.6115457Z    Finalizing page optimization ...
+2026-10-20T15:54:13.6116428Z    Collecting build traces ...
+2026-10-20T15:54:24.8596887Z 
+2026-10-20T15:54:24.8625414Z Route (app)                                 Size  First Load JS
+2026-10-20T15:54:24.8626468Z ┌ ƒ /                                    6.45 kB         121 kB
+2026-10-20T15:54:24.8627349Z ├ ƒ /_not-found                            993 B         104 kB
+2026-10-20T15:54:24.8628305Z ├ ƒ /admin                               1.32 kB         120 kB
+2026-10-20T15:54:24.8628904Z ├ ƒ /admin/database                        164 B         122 kB
+2026-10-20T15:54:24.8629589Z ├ ƒ /admin/debug                           159 B         118 kB
+2026-10-20T15:54:24.8630270Z ├ ƒ /admin/feedback                      10.9 kB         125 kB
+2026-10-20T15:54:24.8631044Z ├ ƒ /admin/pipeline                        162 B         124 kB
+2026-10-20T15:54:24.8631745Z ├ ƒ /admin/system                          165 B         122 kB
+2026-10-20T15:54:24.8633183Z ├ ƒ /admin/users                         4.43 kB         119 kB
+2026-10-20T15:54:24.8634820Z ├ ƒ /analysis                              138 B         103 kB
+2026-10-20T15:54:24.8635716Z ├ ƒ /api/auth/[...nextauth]                138 B         103 kB
+2026-10-20T15:54:24.8636532Z ├ ƒ /api/backend/[...path]                 138 B         103 kB
+2026-10-20T15:54:24.8637424Z ├ ƒ /chat                                22.8 kB         147 kB
+2026-10-20T15:54:24.8638461Z ├ ƒ /data                                  23 kB         147 kB
+2026-10-20T15:54:24.8639314Z ├ ƒ /database                              164 B         122 kB
+2026-10-20T15:54:24.8640054Z ├ ƒ /debug                                 160 B         118 kB
+2026-10-20T15:54:24.8640548Z ├ ƒ /evaluation                          9.27 kB         128 kB
+2026-10-20T15:54:24.8641082Z ├ ƒ /evidence                              138 B         103 kB
+2026-10-20T15:54:24.8641557Z ├ ƒ /explore                             9.58 kB         128 kB
+2026-10-20T15:54:24.8642293Z ├ ƒ /login                                 138 B         103 kB
+2026-10-20T15:54:24.8642798Z ├ ○ /manifest.webmanifest                  138 B         103 kB
+2026-10-20T15:54:24.8643458Z ├ ƒ /pipeline                              162 B         124 kB
+2026-10-20T15:54:24.8644340Z ├ ƒ /provenance                           9.6 kB         124 kB
+2026-10-20T15:54:24.8644865Z ├ ƒ /settings                               2 kB         116 kB
+2026-10-20T15:54:24.8645395Z └ ƒ /system                                164 B         122 kB
+2026-10-20T15:54:24.8645962Z + First Load JS shared by all             103 kB
+2026-10-20T15:54:24.8646621Z   ├ chunks/255-ce8c7c75002f810b.js       46.5 kB
+2026-10-20T15:54:24.8647204Z   ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+2026-10-20T15:54:24.8648031Z   └ other shared chunks (total)          1.92 kB
+2026-10-20T15:54:24.8648303Z 
+2026-10-20T15:54:24.8648310Z 
+2026-10-20T15:54:24.8648562Z ○  (Static)   prerendered as static content
+2026-10-20T15:54:24.8648980Z ƒ  (Dynamic)  server-rendered on demand
+2026-10-20T15:54:24.8649147Z 
+2026-10-20T15:54:24.9149932Z Post job cleanup.
+2026-10-20T15:54:24.9954522Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-69699c4df6784ca734e5fc61035dbe3fe52fdf94b9c89828ecd2f91b6395a33d, not saving cache.
+2026-10-20T15:54:25.0076499Z Post job cleanup.
+2026-10-20T15:54:25.0853132Z [command]/usr/bin/git version
+2026-10-20T15:54:25.0890220Z git version 2.55.0
+2026-10-20T15:54:25.0926707Z Temporarily overriding HOME='/home/runner/work/_temp/3b570e15-8f43-45ad-a47d-ecd0b4edea52' before making global git config changes
+2026-10-20T15:54:25.0928139Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-20T15:54:25.0930962Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ocean-platform/ocean-platform
+2026-10-20T15:54:25.0958830Z Removing SSH command configuration
+2026-10-20T15:54:25.0964904Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-20T15:54:25.0995133Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-20T15:54:25.1189095Z Removing HTTP extra header
+2026-10-20T15:54:25.1194095Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-20T15:54:25.1218787Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-20T15:54:25.1396198Z Removing includeIf entries pointing to credentials config files
+2026-10-20T15:54:25.1400267Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-20T15:54:25.1425792Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-20T15:54:25.1766062Z Cleaning up orphan processes

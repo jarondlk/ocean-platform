@@ -1,0 +1,81 @@
+{
+  "kind": "read-only CI progress diagnosis; percentages only approximate test boundaries",
+  "collected_hosted_case_count": 5285,
+  "largest_progress_gaps": [
+    {
+      "from_percent": 69,
+      "to_percent": 70,
+      "seconds": 491.54,
+      "approximate_test_files": {
+        "tests/test_reliability.py": 21,
+        "tests/test_remote_sensing.py": 17,
+        "tests/test_render_gcp_templates.py": 4,
+        "tests/test_report.py": 18,
+        "tests/test_research_analysis_bundle.py": 4,
+        "tests/test_research_answers.py": 20,
+        "tests/test_research_chat.py": 7,
+        "tests/test_research_controller.py": 15
+      }
+    },
+    {
+      "from_percent": 70,
+      "to_percent": 72,
+      "seconds": 203.87,
+      "approximate_test_files": {
+        "tests/test_report.py": 7,
+        "tests/test_research_analysis_bundle.py": 4,
+        "tests/test_research_answers.py": 20,
+        "tests/test_research_chat.py": 7,
+        "tests/test_research_controller.py": 38,
+        "tests/test_research_controller_budget.py": 23,
+        "tests/test_research_controller_contracts.py": 60
+      }
+    },
+    {
+      "from_percent": 47,
+      "to_percent": 49,
+      "seconds": 190.72,
+      "approximate_test_files": {
+        "tests/test_frozen_edna_catalogue.py": 31,
+        "tests/test_frozen_scientific_catalogue.py": 61,
+        "tests/test_frozen_sst_catalogue.py": 67
+      }
+    },
+    {
+      "from_percent": 74,
+      "to_percent": 76,
+      "seconds": 187.31,
+      "approximate_test_files": {
+        "tests/test_research_controller_contracts.py": 32,
+        "tests/test_research_controller_observations.py": 7,
+        "tests/test_research_controller_publication.py": 5,
+        "tests/test_research_controller_replay.py": 34,
+        "tests/test_research_controller_scale.py": 8,
+        "tests/test_research_controller_scope.py": 73
+      }
+    },
+    {
+      "from_percent": 19,
+      "to_percent": 20,
+      "seconds": 100.34,
+      "approximate_test_files": {
+        "tests/test_catalogue_service_frozen.py": 51,
+        "tests/test_catalogue_service_scale.py": 33,
+        "tests/test_catalogue_snapshot_capture.py": 21
+      }
+    },
+    {
+      "from_percent": 73,
+      "to_percent": 74,
+      "seconds": 65.65,
+      "approximate_test_files": {
+        "tests/test_research_controller_contracts.py": 84,
+        "tests/test_research_controller_observations.py": 7,
+        "tests/test_research_controller_publication.py": 5,
+        "tests/test_research_controller_replay.py": 9
+      }
+    }
+  ],
+  "application_or_test_changes": false,
+  "tests_executed": 0
+}

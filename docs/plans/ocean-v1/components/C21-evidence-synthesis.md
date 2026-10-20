@@ -1,6 +1,6 @@
 # C21 — Evidence and answer synthesis
 
-**Status:** In progress; reviewed implementation/local acceptance pass, exact-source hosted delivery pending after a CI time allowance amendment. **Prerequisites:** C05, C06, C07, C13, C19, C20.
+**Status:** Complete for the authorized separate-v1 synthetic/local implementation; source567684b hosted delivery passes. **Prerequisites:** C05, C06, C07, C13, C19, C20.
 
 ## Revised delivery boundary
 

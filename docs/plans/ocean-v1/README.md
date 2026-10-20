@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C20 are Complete with hosted delivery; C21 is In progress; C22–C27 are Not started.**
+**P00 and C01–C21 are Complete with hosted delivery; C22–C27 are Not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 
@@ -257,3 +257,5 @@ C20 final36-entry/34-path readiness passes after C19 exact-source delivery; isol
 C20 amended local acceptance passes: unchanged4847 backend/231 gated skips/85.64%,104 actual PostgreSQL,805 v1 frontend/typecheck/build/audit, nine generated checks/Ruff and independent source reviews. The final pagination amendment keeps newly acknowledged off-page runs visible through fresh authorization. All1005 evidence files tracked at the original source and protected files remain unchanged. Amended sourcea149239 is pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39209113719) and final delivery pass. [Handoff](handoffs/C20.md), [contract](C20_DURABLE_EXECUTION_CONTRACT.md), [receipt](evidence/C20/verification.json).
 
 C20 final hosted delivery: Sourcea149239 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39209113719) passes: 4838 backend / 231 gated skips / 86.27% coverage, 231 actual PostgreSQL cases, 805 v1 and 132 legacy frontend tests, both typechecks/builds/audits, generated contracts, migrations/idempotence and isolated backup/restore. [Receipt](evidence/C20/delivery.json). C21 final readiness and selection follow this committed/pushed delivery checkpoint.
+
+C21 final hosted delivery: source567684b is committed/pushed; [CI39452550964](https://github.com/jarondlk/ocean-platform/actions/runs/39452550964) passes5031 backend/254 gated skips/86.48% coverage,254 actual PostgreSQL cases,930 v1/132 legacy tests, both typechecks/builds/audits, generated contracts and backup/restore. [Delivery receipt](evidence/C21/delivery.json) preserves the original local receipt and cancelled CI attempt with an explicit workflow-only time allowance amendment. C22 readiness follows the pushed delivery metadata checkpoint.
