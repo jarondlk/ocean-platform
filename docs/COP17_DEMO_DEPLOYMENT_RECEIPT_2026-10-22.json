@@ -10,17 +10,22 @@
   },
   "cloud_run": {
     "service": "ocean-cop17-demo",
-    "revision": "ocean-cop17-demo-00001-ldr",
+    "revision": "ocean-cop17-demo-00002-2b6",
     "region": "asia-northeast1",
     "application_auth_required": true,
-    "public_invoker_grant": "pending_explicit_approval",
+    "public_invoker_grant": "allUsers:roles/run.invoker",
     "origin": "https://demo.oceaninfobio.com",
     "tls_control_plane_ready": true,
     "https_browser_verified": false,
     "oauth_callback_registered": false,
     "https_certificate_verified_cli": true,
     "certificate_expires_utc": "2027-01-19T15:15:12Z",
-    "unauthenticated_cloud_run_status": 403
+    "unauthenticated_cloud_run_status": 200,
+    "public_invoker_explicitly_approved_by_user": true,
+    "min_instances": 1,
+    "max_instances": 2,
+    "unauthenticated_application_api_status": 401,
+    "public_login_browser_render_verified": true
   },
   "scientific_database_snapshot": {
     "excluded_application_tables": [
@@ -440,7 +445,48 @@
         }
       }
     },
-    "browser_oauth_and_presenter_rehearsal": "pending"
+    "browser_oauth_and_presenter_rehearsal": "pending_user_passkey_verification_and_oauth_callback_registration",
+    "public_boundary_checks": [
+      {
+        "route": "/login",
+        "status": 200,
+        "final_url": "https://demo.oceaninfobio.com/login",
+        "seconds": 7.371
+      },
+      {
+        "route": "/api/auth/providers",
+        "status": 200,
+        "final_url": "https://demo.oceaninfobio.com/api/auth/providers",
+        "seconds": 0.173,
+        "providers": {
+          "google": {
+            "id": "google",
+            "name": "Google",
+            "type": "oidc",
+            "signinUrl": "https://demo.oceaninfobio.com/api/auth/signin/google",
+            "callbackUrl": "https://demo.oceaninfobio.com/api/auth/callback/google"
+          }
+        }
+      },
+      {
+        "route": "/api/backend/chat/analysis-options",
+        "status": 401,
+        "final_url": "https://demo.oceaninfobio.com/api/backend/chat/analysis-options",
+        "seconds": 0.177
+      },
+      {
+        "route": "/api/backend/provenance/manifest",
+        "status": 401,
+        "final_url": "https://demo.oceaninfobio.com/api/backend/provenance/manifest",
+        "seconds": 0.168
+      },
+      {
+        "route": "/",
+        "status": 200,
+        "final_url": "https://demo.oceaninfobio.com/login?returnTo=%2F",
+        "seconds": 0.355
+      }
+    ]
   },
   "local_validation": {
     "backend_passed": 1448,
