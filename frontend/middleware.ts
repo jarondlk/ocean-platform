@@ -10,7 +10,14 @@ const legacyAdminRoutes: Record<string, string> = {
   "/debug": "/admin/debug",
 };
 
+const cop17Demo = process.env.NEXT_PUBLIC_COP17_DEMO === "true";
+
 export default auth((request) => {
+  if (cop17Demo && request.nextUrl.pathname === "/") {
+    const destination = request.nextUrl.clone();
+    destination.pathname = "/chat";
+    return NextResponse.redirect(destination);
+  }
   const adminRoute = legacyAdminRoutes[request.nextUrl.pathname];
   if (adminRoute) {
     const destination = request.nextUrl.clone();
@@ -30,7 +37,7 @@ export default auth((request) => {
     return NextResponse.redirect(loginUrl);
   }
   if (request.auth && isLogin && !request.nextUrl.searchParams.has("error")) {
-    return NextResponse.redirect(new URL("/", request.nextUrl.origin));
+    return NextResponse.redirect(new URL(cop17Demo ? "/chat" : "/", request.nextUrl.origin));
   }
   return NextResponse.next();
 });

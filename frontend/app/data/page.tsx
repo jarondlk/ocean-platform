@@ -16,6 +16,7 @@ import {
   safeIsoDate,
 } from "@/lib/citation-navigation";
 import { useAppPreferences } from "@/lib/preferences";
+import { cop17Demo } from "@/lib/chat-settings";
 import type {
   CtdProfileResponse,
   DataCatalogResponse,
@@ -49,13 +50,13 @@ export default function DataPage() {
 }
 
 function DataPageContent() {
-  const { ui } = useAppPreferences();
+  const { ui, preferences, setPreference } = useAppPreferences();
   const router = useRouter();
   const searchParams = useSearchParams();
   const requestedView = searchParams.get("view");
   const requestedSampleRaw = searchParams.get("sample_id");
   const requestedSample = safeEvidenceIdentifier(requestedSampleRaw);
-  const requestedDataset = searchParams.get("dataset_id") || "";
+  const requestedDataset = searchParams.get("dataset_id") || (cop17Demo && requestedView === "sst" ? "mur-miyagi-2020-2023" : "");
   const requestedFromRaw = searchParams.get("time_from");
   const requestedToRaw = searchParams.get("time_to");
   const requestedFrom = safeIsoDate(requestedFromRaw);
@@ -65,7 +66,7 @@ function DataPageContent() {
   const contextTarget = resolveContextWorkspace(requestedContext);
   const urlView: DataView = isDataView(requestedView)
     ? requestedView
-    : contextTarget?.scope || "observations";
+    : contextTarget?.scope || (cop17Demo ? "edna" : "observations");
   const [catalog, setCatalog] = useState<DataCatalogResponse | null>(null);
   const [view, setView] = useState<DataView>(urlView);
   const [ctdSample, setCtdSample] = useState("");
@@ -262,10 +263,18 @@ function DataPageContent() {
   return (
     <section>
       <header className="page-header">
-        <h2>{ui("Data")}</h2>
+        <div>
+          <h2>{ui(cop17Demo ? "Data explorer" : "Data")}</h2>
+          {cop17Demo ? <p>{ui("Browse the ANEMONE eDNA records and satellite sea surface temperatures behind the answers.")}</p> : null}
+        </div>
+        {cop17Demo ? <div className="button-row" aria-label={ui("Language")}>
+          <button type="button" className="button secondary-button" aria-pressed={preferences.locale === "en"} onClick={() => setPreference("locale", "en")}>English</button>
+          <button type="button" className="button secondary-button" aria-pressed={preferences.locale === "ja"} onClick={() => setPreference("locale", "ja")}>日本語</button>
+        </div> : null}
       </header>
 
       <div className="data-tabs" role="tablist" aria-label={ui("Data views")}>
+        {!cop17Demo ? <>
         <button className={view === "observations" ? "active" : ""} onClick={() => changeView("observations")} type="button">
           {ui("Observations")}
         </button>
@@ -275,13 +284,15 @@ function DataPageContent() {
         <button className={view === "taxa" ? "active" : ""} onClick={() => changeView("taxa")} type="button">
           {ui("Taxa")}
         </button>
+        </> : null}
         <button className={view === "edna" ? "active" : ""} onClick={() => changeView("edna")} type="button">
-          eDNA
+          {cop17Demo ? ui("ANEMONE eDNA") : "eDNA"}
         </button>
         <button className={view === "sst" ? "active" : ""} onClick={() => changeView("sst")} type="button">
-          SST
+          {cop17Demo ? ui("Satellite SST") : "SST"}
         </button>
-        <button className={view === "edna_analysis" ? "active" : ""} onClick={() => changeView("edna_analysis")} type="button">eDNA analysis</button>
+        {!cop17Demo || view === "edna_analysis" ? <button className={view === "edna_analysis" ? "active" : ""} onClick={() => changeView("edna_analysis")} type="button">{ui("eDNA analysis")}</button> : null}
+        {!cop17Demo ? <>
         <button className={view === "research_reviews" ? "active" : ""} onClick={() => changeView("research_reviews")} type="button">Research reviews</button>
         <button className={view === "analysis" ? "active" : ""} onClick={() => changeView("analysis")} type="button">
           {ui("Derived Analysis")}
@@ -289,6 +300,7 @@ function DataPageContent() {
         <button className={view === "reliability" ? "active" : ""} onClick={() => changeView("reliability")} type="button">
           {ui("Reliability")}
         </button>
+        </> : null}
       </div>
 
       {error ? <p className="error-text">{error}</p> : null}
