@@ -1,0 +1,436 @@
+{
+  "branch": "overhaul",
+  "checks": {
+    "backend": {
+      "coverage_percent": 87.0,
+      "errors": 0,
+      "failed": 0,
+      "passed": 5264,
+      "precise_coverage_percent": 86.7,
+      "skipped": 275
+    },
+    "frontend_legacy_passed": 132,
+    "frontend_typechecks_builds_audits": "passed",
+    "frontend_v1_passed": 930,
+    "generated_contracts": "passed",
+    "lint": "passed",
+    "migration_upsert_backup_restore": "passed",
+    "postgres_suites": [
+      82,
+      12,
+      12,
+      21,
+      60,
+      44,
+      23,
+      21
+    ]
+  },
+  "component": "C22",
+  "external_gates": [
+    "C22 fake acceptance executes no Python and confers no scientific approval",
+    "C23 real Linux/gVisor containment and C24 target/configuration/live gates remain separate",
+    "No cloud provisioning/deployment or real-data/provider acquisition/transfer acceptance",
+    "C25 experiment UI and C26 assembled browser/system acceptance remain"
+  ],
+  "hosted_receipt": {
+    "path": "docs/plans/ocean-v1/evidence/C22/hosted-ci.json",
+    "sha256": "6eb179d20730e5e9807f15d42f9ddb054119083c9e7c858bcec107dde65d45c3"
+  },
+  "hosted_run": {
+    "actor": {
+      "avatar_url": "https://avatars.githubusercontent.com/u/82869981?v=4",
+      "events_url": "https://api.github.com/users/jarondlk/events{/privacy}",
+      "followers_url": "https://api.github.com/users/jarondlk/followers",
+      "following_url": "https://api.github.com/users/jarondlk/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jarondlk/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/jarondlk",
+      "id": 82869981,
+      "login": "jarondlk",
+      "node_id": "MDQ6VXNlcjgyODY5OTgx",
+      "organizations_url": "https://api.github.com/users/jarondlk/orgs",
+      "received_events_url": "https://api.github.com/users/jarondlk/received_events",
+      "repos_url": "https://api.github.com/users/jarondlk/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/jarondlk/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jarondlk/subscriptions",
+      "type": "User",
+      "url": "https://api.github.com/users/jarondlk",
+      "user_view_type": "public"
+    },
+    "artifacts_url": "https://api.github.com/repos/jarondlk/ocean-platform/actions/runs/39539257759/artifacts",
+    "cancel_url": "https://api.github.com/repos/jarondlk/ocean-platform/actions/runs/39539257759/cancel",
+    "check_suite_id": 107148985827,
+    "check_suite_node_id": "CS_kwDOSPd9888AAAAY8pPF4w",
+    "check_suite_url": "https://api.github.com/repos/jarondlk/ocean-platform/check-suites/107148985827",
+    "conclusion": "success",
+    "created_at": "2026-10-21T03:33:45Z",
+    "display_title": "test: synchronize catalogue cancellation worker completion",
+    "event": "push",
+    "head_branch": "overhaul",
+    "head_commit": {
+      "author": {
+        "email": "jaronchai78@gmail.com",
+        "name": "Jaronchai Dilokkalayakul"
+      },
+      "committer": {
+        "email": "jaronchai78@gmail.com",
+        "name": "Jaronchai Dilokkalayakul"
+      },
+      "id": "66b41063a77561ad959b27eed3e9920747fd6563",
+      "message": "test: synchronize catalogue cancellation worker completion",
+      "timestamp": "2026-10-21T03:33:42Z",
+      "tree_id": "6e8510089513de54a9222aba96ea9baba8ecfaf9"
+    },
+    "head_repository": {
+      "archive_url": "https://api.github.com/repos/jarondlk/ocean-platform/{archive_format}{/ref}",
+      "assignees_url": "https://api.github.com/repos/jarondlk/ocean-platform/assignees{/user}",
+      "blobs_url": "https://api.github.com/repos/jarondlk/ocean-platform/git/blobs{/sha}",
+      "branches_url": "https://api.github.com/repos/jarondlk/ocean-platform/branches{/branch}",
+      "collaborators_url": "https://api.github.com/repos/jarondlk/ocean-platform/collaborators{/collaborator}",
+      "comments_url": "https://api.github.com/repos/jarondlk/ocean-platform/comments{/number}",
+      "commits_url": "https://api.github.com/repos/jarondlk/ocean-platform/commits{/sha}",
+      "compare_url": "https://api.github.com/repos/jarondlk/ocean-platform/compare/{base}...{head}",
+      "contents_url": "https://api.github.com/repos/jarondlk/ocean-platform/contents/{+path}",
+      "contributors_url": "https://api.github.com/repos/jarondlk/ocean-platform/contributors",
+      "deployments_url": "https://api.github.com/repos/jarondlk/ocean-platform/deployments",
+      "description": "OCEAN Platform — Ocean Coastal Ecosystem Archive Network: provenance-aware marine environmental research platform.",
+      "downloads_url": "https://api.github.com/repos/jarondlk/ocean-platform/downloads",
+      "events_url": "https://api.github.com/repos/jarondlk/ocean-platform/events",
+      "fork": false,
+      "forks_url": "https://api.github.com/repos/jarondlk/ocean-platform/forks",
+      "full_name": "jarondlk/ocean-platform",
+      "git_commits_url": "https://api.github.com/repos/jarondlk/ocean-platform/git/commits{/sha}",
+      "git_refs_url": "https://api.github.com/repos/jarondlk/ocean-platform/git/refs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/jarondlk/ocean-platform/git/tags{/sha}",
+      "hooks_url": "https://api.github.com/repos/jarondlk/ocean-platform/hooks",
+      "html_url": "https://github.com/jarondlk/ocean-platform",
+      "id": 1224179187,
+      "issue_comment_url": "https://api.github.com/repos/jarondlk/ocean-platform/issues/comments{/number}",
+      "issue_events_url": "https://api.github.com/repos/jarondlk/ocean-platform/issues/events{/number}",
+      "issues_url": "https://api.github.com/repos/jarondlk/ocean-platform/issues{/number}",
+      "keys_url": "https://api.github.com/repos/jarondlk/ocean-platform/keys{/key_id}",
+      "labels_url": "https://api.github.com/repos/jarondlk/ocean-platform/labels{/name}",
+      "languages_url": "https://api.github.com/repos/jarondlk/ocean-platform/languages",
+      "merges_url": "https://api.github.com/repos/jarondlk/ocean-platform/merges",
+      "milestones_url": "https://api.github.com/repos/jarondlk/ocean-platform/milestones{/number}",
+      "name": "ocean-platform",
+      "node_id": "R_kgDOSPd98w",
+      "notifications_url": "https://api.github.com/repos/jarondlk/ocean-platform/notifications{?since,all,participating}",
+      "owner": {
+        "avatar_url": "https://avatars.githubusercontent.com/u/82869981?v=4",
+        "events_url": "https://api.github.com/users/jarondlk/events{/privacy}",
+        "followers_url": "https://api.github.com/users/jarondlk/followers",
+        "following_url": "https://api.github.com/users/jarondlk/following{/other_user}",
+        "gists_url": "https://api.github.com/users/jarondlk/gists{/gist_id}",
+        "gravatar_id": "",
+        "html_url": "https://github.com/jarondlk",
+        "id": 82869981,
+        "login": "jarondlk",
+        "node_id": "MDQ6VXNlcjgyODY5OTgx",
+        "organizations_url": "https://api.github.com/users/jarondlk/orgs",
+        "received_events_url": "https://api.github.com/users/jarondlk/received_events",
+        "repos_url": "https://api.github.com/users/jarondlk/repos",
+        "site_admin": false,
+        "starred_url": "https://api.github.com/users/jarondlk/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/jarondlk/subscriptions",
+        "type": "User",
+        "url": "https://api.github.com/users/jarondlk",
+        "user_view_type": "public"
+      },
+      "private": false,
+      "pulls_url": "https://api.github.com/repos/jarondlk/ocean-platform/pulls{/number}",
+      "releases_url": "https://api.github.com/repos/jarondlk/ocean-platform/releases{/id}",
+      "stargazers_url": "https://api.github.com/repos/jarondlk/ocean-platform/stargazers",
+      "statuses_url": "https://api.github.com/repos/jarondlk/ocean-platform/statuses/{sha}",
+      "subscribers_url": "https://api.github.com/repos/jarondlk/ocean-platform/subscribers",
+      "subscription_url": "https://api.github.com/repos/jarondlk/ocean-platform/subscription",
+      "tags_url": "https://api.github.com/repos/jarondlk/ocean-platform/tags",
+      "teams_url": "https://api.github.com/repos/jarondlk/ocean-platform/teams",
+      "trees_url": "https://api.github.com/repos/jarondlk/ocean-platform/git/trees{/sha}",
+      "url": "https://api.github.com/repos/jarondlk/ocean-platform"
+    },
+    "head_sha": "66b41063a77561ad959b27eed3e9920747fd6563",
+    "html_url": "https://github.com/jarondlk/ocean-platform/actions/runs/39539257759",
+    "id": 39539257759,
+    "jobs_url": "https://api.github.com/repos/jarondlk/ocean-platform/actions/runs/39539257759/jobs",
+    "logs_url": "https://api.github.com/repos/jarondlk/ocean-platform/actions/runs/39539257759/logs",
+    "name": "CI",
+    "node_id": "WFR_kwLOSPd9888AAAAJNLkxnw",
+    "path": ".github/workflows/tests.yml",
+    "previous_attempt_url": null,
+    "pull_requests": [],
+    "referenced_workflows": [],
+    "repository": {
+      "archive_url": "https://api.github.com/repos/jarondlk/ocean-platform/{archive_format}{/ref}",
+      "assignees_url": "https://api.github.com/repos/jarondlk/ocean-platform/assignees{/user}",
+      "blobs_url": "https://api.github.com/repos/jarondlk/ocean-platform/git/blobs{/sha}",
+      "branches_url": "https://api.github.com/repos/jarondlk/ocean-platform/branches{/branch}",
+      "collaborators_url": "https://api.github.com/repos/jarondlk/ocean-platform/collaborators{/collaborator}",
+      "comments_url": "https://api.github.com/repos/jarondlk/ocean-platform/comments{/number}",
+      "commits_url": "https://api.github.com/repos/jarondlk/ocean-platform/commits{/sha}",
+      "compare_url": "https://api.github.com/repos/jarondlk/ocean-platform/compare/{base}...{head}",
+      "contents_url": "https://api.github.com/repos/jarondlk/ocean-platform/contents/{+path}",
+      "contributors_url": "https://api.github.com/repos/jarondlk/ocean-platform/contributors",
+      "deployments_url": "https://api.github.com/repos/jarondlk/ocean-platform/deployments",
+      "description": "OCEAN Platform — Ocean Coastal Ecosystem Archive Network: provenance-aware marine environmental research platform.",
+      "downloads_url": "https://api.github.com/repos/jarondlk/ocean-platform/downloads",
+      "events_url": "https://api.github.com/repos/jarondlk/ocean-platform/events",
+      "fork": false,
+      "forks_url": "https://api.github.com/repos/jarondlk/ocean-platform/forks",
+      "full_name": "jarondlk/ocean-platform",
+      "git_commits_url": "https://api.github.com/repos/jarondlk/ocean-platform/git/commits{/sha}",
+      "git_refs_url": "https://api.github.com/repos/jarondlk/ocean-platform/git/refs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/jarondlk/ocean-platform/git/tags{/sha}",
+      "hooks_url": "https://api.github.com/repos/jarondlk/ocean-platform/hooks",
+      "html_url": "https://github.com/jarondlk/ocean-platform",
+      "id": 1224179187,
+      "issue_comment_url": "https://api.github.com/repos/jarondlk/ocean-platform/issues/comments{/number}",
+      "issue_events_url": "https://api.github.com/repos/jarondlk/ocean-platform/issues/events{/number}",
+      "issues_url": "https://api.github.com/repos/jarondlk/ocean-platform/issues{/number}",
+      "keys_url": "https://api.github.com/repos/jarondlk/ocean-platform/keys{/key_id}",
+      "labels_url": "https://api.github.com/repos/jarondlk/ocean-platform/labels{/name}",
+      "languages_url": "https://api.github.com/repos/jarondlk/ocean-platform/languages",
+      "merges_url": "https://api.github.com/repos/jarondlk/ocean-platform/merges",
+      "milestones_url": "https://api.github.com/repos/jarondlk/ocean-platform/milestones{/number}",
+      "name": "ocean-platform",
+      "node_id": "R_kgDOSPd98w",
+      "notifications_url": "https://api.github.com/repos/jarondlk/ocean-platform/notifications{?since,all,participating}",
+      "owner": {
+        "avatar_url": "https://avatars.githubusercontent.com/u/82869981?v=4",
+        "events_url": "https://api.github.com/users/jarondlk/events{/privacy}",
+        "followers_url": "https://api.github.com/users/jarondlk/followers",
+        "following_url": "https://api.github.com/users/jarondlk/following{/other_user}",
+        "gists_url": "https://api.github.com/users/jarondlk/gists{/gist_id}",
+        "gravatar_id": "",
+        "html_url": "https://github.com/jarondlk",
+        "id": 82869981,
+        "login": "jarondlk",
+        "node_id": "MDQ6VXNlcjgyODY5OTgx",
+        "organizations_url": "https://api.github.com/users/jarondlk/orgs",
+        "received_events_url": "https://api.github.com/users/jarondlk/received_events",
+        "repos_url": "https://api.github.com/users/jarondlk/repos",
+        "site_admin": false,
+        "starred_url": "https://api.github.com/users/jarondlk/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/jarondlk/subscriptions",
+        "type": "User",
+        "url": "https://api.github.com/users/jarondlk",
+        "user_view_type": "public"
+      },
+      "private": false,
+      "pulls_url": "https://api.github.com/repos/jarondlk/ocean-platform/pulls{/number}",
+      "releases_url": "https://api.github.com/repos/jarondlk/ocean-platform/releases{/id}",
+      "stargazers_url": "https://api.github.com/repos/jarondlk/ocean-platform/stargazers",
+      "statuses_url": "https://api.github.com/repos/jarondlk/ocean-platform/statuses/{sha}",
+      "subscribers_url": "https://api.github.com/repos/jarondlk/ocean-platform/subscribers",
+      "subscription_url": "https://api.github.com/repos/jarondlk/ocean-platform/subscription",
+      "tags_url": "https://api.github.com/repos/jarondlk/ocean-platform/tags",
+      "teams_url": "https://api.github.com/repos/jarondlk/ocean-platform/teams",
+      "trees_url": "https://api.github.com/repos/jarondlk/ocean-platform/git/trees{/sha}",
+      "url": "https://api.github.com/repos/jarondlk/ocean-platform"
+    },
+    "rerun_url": "https://api.github.com/repos/jarondlk/ocean-platform/actions/runs/39539257759/rerun",
+    "run_attempt": 1,
+    "run_number": 459,
+    "run_started_at": "2026-10-21T03:33:45Z",
+    "status": "completed",
+    "triggering_actor": {
+      "avatar_url": "https://avatars.githubusercontent.com/u/82869981?v=4",
+      "events_url": "https://api.github.com/users/jarondlk/events{/privacy}",
+      "followers_url": "https://api.github.com/users/jarondlk/followers",
+      "following_url": "https://api.github.com/users/jarondlk/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jarondlk/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/jarondlk",
+      "id": 82869981,
+      "login": "jarondlk",
+      "node_id": "MDQ6VXNlcjgyODY5OTgx",
+      "organizations_url": "https://api.github.com/users/jarondlk/orgs",
+      "received_events_url": "https://api.github.com/users/jarondlk/received_events",
+      "repos_url": "https://api.github.com/users/jarondlk/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/jarondlk/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jarondlk/subscriptions",
+      "type": "User",
+      "url": "https://api.github.com/users/jarondlk",
+      "user_view_type": "public"
+    },
+    "updated_at": "2026-10-21T04:09:57Z",
+    "url": "https://api.github.com/repos/jarondlk/ocean-platform/actions/runs/39539257759",
+    "workflow_id": 280120407,
+    "workflow_url": "https://api.github.com/repos/jarondlk/ocean-platform/actions/workflows/280120407"
+  },
+  "intentional_source_supersessions": {
+    ".github/workflows/tests.yml": {
+      "current": "d328874ac87e45d9776e95a66a170ddf0a73350446d4500b3984c7c646385355",
+      "prior": "eb0cdd3b8fe0af6a329ecd32645674f7fb0a101d7cac464c9c7c911ef7f9884f"
+    },
+    "api/auth.py": {
+      "current": "0e6fa6fad84ba4e02c86dd6a678d996eab293fb12c37460475fa53597d7c14dd",
+      "prior": "23e539f8a920c356ec2c86793af0ec2bed2d96f2c8fb39a7b17a8f1a301e5ea0"
+    },
+    "api/main.py": {
+      "current": "c6719a5624b0527aa9a7426e110c723a3aecffdfcb0c9d4db6c13080447db3fd",
+      "prior": "c0caaba49b6ac9cff7ac95f02db86bc177164d15ad08ce0bb767cc8a324d2938"
+    },
+    "api/rate_limit.py": {
+      "current": "153093871398d94bbafd46cd7ed4013bb6a0eb8685a8eea23cf8eb9ecc0f5d58",
+      "prior": "9d1814438bd65e9091a3d019e820587583cfa588e75b0f390f476ec41e2a1f4e"
+    },
+    "config.py": {
+      "current": "231008b62b23ddf83ccd1eb8fe7520ce4a724f776b8fb0c721195fdecbd9b533",
+      "prior": "1002aed1b54e704e72d2a90beddedb31225132951f3618b29180a52fd080178d"
+    },
+    "db/app_models.py": {
+      "current": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+      "prior": "e8219674179b9de41ac0a817f306adccf11ca5cc50f1b4eb31f7da4d8fed8024"
+    },
+    "orchestration/investigations.py": {
+      "current": "dd9d733121d9f1587e3b59b31b67e60a75bc50976589886cc96705c94efa46de",
+      "prior": "9312f3ec4a788ceb1430052a2840a702100eb5bedf5cc284ca88f196c45537c7"
+    },
+    "tests/integration/test_investigation_postgres.py": {
+      "current": "57bf87b365ead1be954dfc0d4ce7d6f963223395709e3aa21dc5e78875c04270",
+      "prior": "469bb913920b29d13619a8019d5b631e6e8a0bbab23ec3f7c327bab31a589f23"
+    },
+    "tests/integration/test_research_evidence_postgres.py": {
+      "current": "474980e4ec931ee19281c9317d45aa6c0cc9d1381257f83875ab2dc92fb3688b",
+      "prior": "2531591b5b50cee63b68625e762573782907dfc7cc4170615d8dd30d14ea370b"
+    },
+    "tests/integration/test_research_runs_postgres.py": {
+      "current": "bc5153115f00c211f93f610d7f5979eac8aa784f6252ed6e77882782db9b4153",
+      "prior": "156fde18a6d1019c6f4943018cb94304ace557c7e7579beaf2d06a8676428fdb"
+    },
+    "tests/test_bootstrap_database.py": {
+      "current": "815f4e6de1bb2957350dc94ec745397350ea68a84dd47435a88c3f39fda2c12a",
+      "prior": "0e7f4c7550e1aa9e563510b69703011dabc6dae7a938d7e5722af74864862be9"
+    },
+    "tests/test_catalogue_browser_api.py": {
+      "current": "4bcecf3a3dfe294b70557fdeea5e17a0adee075b31bab6483afa7bdbe098c50e",
+      "prior": "88d135f7fe6b7f424f681090ca7cc1ee8d7a1f97fad344cac2e7434a36645504"
+    }
+  },
+  "local_checks": {
+    "actual_postgres": {
+      "qualification": "Only service exceptional replay response and focused fixture/test changed afterward; database models/migration/PG tests unchanged. Root final backend/hosted CI must bind superseding source.",
+      "records": [
+        {
+          "passed": 21,
+          "path": "docs/plans/ocean-v1/evidence/C22/store-pg-final-01/postgres-result.json",
+          "qualified_source_changes": [
+            "orchestration/research_experiments.py",
+            "tests/test_research_experiments.py"
+          ],
+          "sha256": "c95f41a01bb00e363a81a5cd75b33d208dfcbd199b0eb30f554ce1a7f4795318"
+        },
+        {
+          "passed": 104,
+          "path": "docs/plans/ocean-v1/evidence/C22/pg-c17-c20-regressions-01/postgres-result.json",
+          "qualified_source_changes": [],
+          "sha256": "683f2c21ccf64a10f9c1bab525122970b5ddd388a940072e68d2655e7c35eadf"
+        },
+        {
+          "passed": 23,
+          "path": "docs/plans/ocean-v1/evidence/C22/pg-c21-regressions-01/postgres-result.json",
+          "qualified_source_changes": [],
+          "sha256": "0eef84678574add1389f1292afd0fd95b1b80c6f41d3a893ac6edeaf182edba8"
+        }
+      ],
+      "total": 148
+    },
+    "backend": {
+      "coverage_percent": 86.0,
+      "errors": 0,
+      "failed": 0,
+      "passed": 5273,
+      "qualification": "docs/plans/ocean-v1/evidence/C22/cancellation-amendment/verification.json",
+      "qualification_sha256": "31eb14a83c2bbe81e73a8aa48d50dade74fd92033311492f56ef1033eb963272",
+      "receipt": "docs/plans/ocean-v1/evidence/C22/backend-acceptance-01/result.json",
+      "receipt_sha256": "283f0ee0e8118a16e2c84b485f1950d19f91010a0fbb8078e6207756cc041a7e",
+      "skipped": 275,
+      "summary": "5273 passed, 275 skipped, 2600 warnings in 1069.47s (0:17:49)"
+    },
+    "frontend_reuse": {
+      "legacy_passed": 132,
+      "path": "docs/plans/ocean-v1/evidence/C21/frontend-full-verification.json",
+      "qualification": "C22 changes no frontend source; complete C21 source/dependency hashes and delivery are revalidated. Final C22 hosted frontend gates remain mandatory.",
+      "sha256": "396bbdfa12f6bc0fec2a5b0bb8a774530588fbd1ed209ea85734bf7a9dbcddbc",
+      "source_and_dependencies_unchanged": true,
+      "v1_passed": 930
+    },
+    "independent_reviews": [
+      {
+        "path": "docs/plans/ocean-v1/evidence/C22/independent-contract-api-review.json",
+        "sha256": "f279da5446d536f2db902d21bed4ff237ac58ef9a85cdad890178db829162ef6"
+      },
+      {
+        "path": "docs/plans/ocean-v1/evidence/C22/independent-export-review.json",
+        "sha256": "39716ae502715f7cdf63ebe9ec0108c544af413c4f0a458f1945ed26a7cb1611"
+      }
+    ],
+    "static": {
+      "commands": 11,
+      "generated_checks": 10,
+      "label_qualification": "docs/plans/ocean-v1/evidence/C22/static-harness-qualification.json",
+      "original_label": "C21",
+      "qualified_component": "C22",
+      "receipt": "docs/plans/ocean-v1/evidence/C22/static-acceptance-01/result.json",
+      "receipt_sha256": "576998dd622e8112fbeb4b73bbc4257686649c164cd5f3fe7fa882c015eb5c8c",
+      "source_qualification": "docs/plans/ocean-v1/evidence/C22/static-later-source-qualification.json"
+    }
+  },
+  "local_receipt": {
+    "path": "docs/plans/ocean-v1/evidence/C22/verification.json",
+    "sha256": "52ea0c6d7b8e02e62b9585ca07331597bbd1feb50277df5fbeb3d0e26bddd906"
+  },
+  "next_component": "C23 readiness must audit this delivered C22 source; real Linux/gVisor containment, configuration and deployment are separate gates",
+  "preserved_prior_evidence_count": 1204,
+  "protected_counts": {
+    "legacy_frontend_files": 106,
+    "scientific_artifacts": 7,
+    "serving_files": 2,
+    "unrelated_files": 30
+  },
+  "recorded_at": "2026-10-21T09:04:37.665538+00:00",
+  "remote_overhaul_head": "66b41063a77561ad959b27eed3e9920747fd6563",
+  "source_commit": "66b41063a77561ad959b27eed3e9920747fd6563",
+  "source_files": {
+    ".github/workflows/tests.yml": "d328874ac87e45d9776e95a66a170ddf0a73350446d4500b3984c7c646385355",
+    "api/auth.py": "0e6fa6fad84ba4e02c86dd6a678d996eab293fb12c37460475fa53597d7c14dd",
+    "api/main.py": "c6719a5624b0527aa9a7426e110c723a3aecffdfcb0c9d4db6c13080447db3fd",
+    "api/rate_limit.py": "153093871398d94bbafd46cd7ed4013bb6a0eb8685a8eea23cf8eb9ecc0f5d58",
+    "api/research_experiment_routes.py": "1bb9f82c0d172a8b663b57abfa7d668c3e543f77d119e82c38d94d45ad10824d",
+    "config.py": "231008b62b23ddf83ccd1eb8fe7520ce4a724f776b8fb0c721195fdecbd9b533",
+    "db/app_models.py": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+    "migrations/versions/20261020_0020_research_experiments.py": "2f5eb82dfefdd6a02bafddb58a44936fa42197c8eb2ac70b726d83fc57f14dff",
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "orchestration/investigations.py": "dd9d733121d9f1587e3b59b31b67e60a75bc50976589886cc96705c94efa46de",
+    "orchestration/research_experiments.py": "bab02f05549655977e2f95ef7885a59d3a311c3ad64941b0846d79b94b0db2ee",
+    "schema/research_experiments.py": "3623b8ce0349316f5e28597752a798817acc1641d55e05d3614ebd61f0d87494",
+    "tests/integration/test_investigation_postgres.py": "57bf87b365ead1be954dfc0d4ce7d6f963223395709e3aa21dc5e78875c04270",
+    "tests/integration/test_research_evidence_postgres.py": "474980e4ec931ee19281c9317d45aa6c0cc9d1381257f83875ab2dc92fb3688b",
+    "tests/integration/test_research_experiments_postgres.py": "581e67d6a0eda2db87c40dfca6e635660bacf43f7b916a1543a4465c2ea2ff8f",
+    "tests/integration/test_research_runs_postgres.py": "bc5153115f00c211f93f610d7f5979eac8aa784f6252ed6e77882782db9b4153",
+    "tests/research_experiment_postgres_support.py": "08643b469b66ca2874a14838b81e003c0af9069c8b227bebe42619f6644c0e33",
+    "tests/research_experiment_support.py": "fb881711350462c9bf0c3efa8a4460741aa354a4d7269f72384aef7476e1e4c1",
+    "tests/test_bootstrap_database.py": "815f4e6de1bb2957350dc94ec745397350ea68a84dd47435a88c3f39fda2c12a",
+    "tests/test_catalogue_browser_api.py": "4bcecf3a3dfe294b70557fdeea5e17a0adee075b31bab6483afa7bdbe098c50e",
+    "tests/test_frozen_experiment_export.py": "b1cf8f14d5205333068712ffd97f60d7a8860f2b143be50b74fbc3fe332c6ddf",
+    "tests/test_research_experiment_api.py": "f7c65e360ff49799ddbb8d9333f433448e48cc0bbcd86faa582b4bc4238de5fa",
+    "tests/test_research_experiment_contracts.py": "31a0c011f38b5c040828cb8e495e42b8351957f9b3c22aa5ef3f2bc70b4584f7",
+    "tests/test_research_experiment_security.py": "21680b38f5fdb9650fca9055cb2341769178a3eeac5a80918602721f86884e4e",
+    "tests/test_research_experiments.py": "eb33fdfb5f435f047b44c104ca406efa09f55b4913312ac30ef2d47cd396a749"
+  },
+  "source_sha256": "62e7cb3a58e884ee5578f8c4fa27ce6e282e42366feeb7e9b16050ca8097ce97",
+  "state": "Complete for authorized separate-v1 synthetic/local C22 implementation and exact-source hosted acceptance",
+  "test_only_amendment": {
+    "backend_qualification": "docs/plans/ocean-v1/evidence/C22/cancellation-amendment/verification.json",
+    "baseline_source_commit": "2213306acf9fbb369472cae9f7d9ca881dcd9afd",
+    "changed_paths": [
+      "tests/test_catalogue_browser_api.py"
+    ],
+    "map": "docs/plans/ocean-v1/evidence/C22/test-coordination-amendment.json",
+    "qualification": "Original local broad run and source-drift record remain immutable; the approved deterministic coordination test is separately exercised. Prior hosted timeout cause is not inferred."
+  }
+}
