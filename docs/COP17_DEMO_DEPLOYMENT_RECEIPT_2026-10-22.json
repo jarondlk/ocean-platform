@@ -1,0 +1,492 @@
+{
+  "checkpoint_date_jst": "2026-10-22",
+  "branch": "cop17-demo",
+  "production_base": "37383917024021c912491416b2fba0651381f79a",
+  "runtime_source": "966908718516f78b65380907c7fd7071075359e8",
+  "cloud_build_id": "30429321-7dcc-4c0b-98db-1bab0469a8fa",
+  "images": {
+    "api": "sha256:398e53b2dae64509263be64071af5f6cfaefd212b18a1c8e79f41c9c8c2797bb",
+    "frontend": "sha256:83dbc8ddf18071d4c02c97ca6c2438f3a49884252bb70dcf229e5845da53af23"
+  },
+  "cloud_run": {
+    "service": "ocean-cop17-demo",
+    "revision": "ocean-cop17-demo-00001-ldr",
+    "region": "asia-northeast1",
+    "application_auth_required": true,
+    "public_invoker_grant": "pending_explicit_approval",
+    "origin": "https://demo.oceaninfobio.com",
+    "tls_control_plane_ready": true,
+    "https_browser_verified": false,
+    "oauth_callback_registered": false
+  },
+  "scientific_database_snapshot": {
+    "excluded_application_tables": [
+      "app_user",
+      "audit_event",
+      "chat_feedback",
+      "chat_interaction",
+      "classification_application",
+      "classification_application_event",
+      "classification_review",
+      "classification_review_event",
+      "edna_aggregate_evidence",
+      "rate_limit_bucket",
+      "research_area_definition",
+      "research_physical_membership",
+      "research_registry_event",
+      "research_registry_head",
+      "research_registry_review",
+      "research_registry_version",
+      "user_invitation"
+    ],
+    "schema_heads": [
+      "20261005_0016"
+    ],
+    "scientific_snapshot_verified": true,
+    "source_instance": "data-infra-infobio:asia-northeast1:ocean-postgres",
+    "tables": {
+      "anchor_event": {
+        "rows": 286,
+        "sha256": "9575c69b00cbd67489112db5f90ad8f6fd14e6bb280703c0ab5d34cbb25761d9"
+      },
+      "corpus_publication": {
+        "rows": 3,
+        "sha256": "a6e705248506206827b9a105aa8ef1d6b8baa16b81faeace19f421d439e011cf"
+      },
+      "cross_source_link": {
+        "rows": 496,
+        "sha256": "06d81fbb89acc22d2f69b0205d342eb1c6984fabd8451cdcb73226dca7d304f1"
+      },
+      "ctd_profile": {
+        "rows": 10955,
+        "sha256": "8d56c80f95dc7392af947f890968126e5a2e1705a33954d58042aa9afd4dbab7"
+      },
+      "ctd_summary": {
+        "rows": 162,
+        "sha256": "0f2e459b48644466646507b1cbc16d8123f7984ef68e6f3653d4e7825c232e4d"
+      },
+      "edna_assay": {
+        "rows": 3498,
+        "sha256": "7f21b3b62bdc741423ca46ba0e7fa3a4b22b9a62d1767c27b0b61b24c4b81507"
+      },
+      "edna_detection": {
+        "rows": 349638,
+        "sha256": "6168deec1d2993c796f7bd4d44d5a7085564d1fd6d11611ed332e6d50c4e38bc"
+      },
+      "edna_internal_standard": {
+        "rows": 13932,
+        "sha256": "7d801fe264e2b9438ba8ed812d18b6d75eb579915879ef54456d067347917d82"
+      },
+      "edna_sample": {
+        "rows": 3498,
+        "sha256": "4bc7242fe57c610c7a991e0bbfb8e90819aa799056fcd790fd3740a7c4fe698d"
+      },
+      "external_source_file": {
+        "rows": 45157,
+        "sha256": "7dc6be3347a9348875889d431fef645e47141925f3ca3a35a055504f5283e4c8"
+      },
+      "external_source_snapshot": {
+        "rows": 40,
+        "sha256": "c7066219019f6f95b01ae3562016ebf2fa45c7b8f037077e8aea0cccfaaf74ff"
+      },
+      "metagenome_sample": {
+        "rows": 82,
+        "sha256": "8a1e9fd0f0e0146a5812e039a430dad58eed6c37e07fba5ce1c090900fa8d645"
+      },
+      "provenance_record": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "retrieval_document": {
+        "rows": 7319,
+        "sha256": "410d79c5bb429f2769468351aec6daa1625fd17ab610a4f348d95675ab41361f"
+      },
+      "sst_daily_summary": {
+        "rows": 79,
+        "sha256": "d4017005aeabc4202819eb29ad78737083f6a11fedbfeb6fb4676954a9447c0c"
+      },
+      "sst_point_observation": {
+        "rows": 1848,
+        "sha256": "2e36837d7ff1d6a53150927037e507823833d067bcf54d0f7f2da09c475ebe0a"
+      }
+    },
+    "target_instance": "data-infra-infobio:asia-northeast1:ocean-cop17-postgres"
+  },
+  "production_secret_access_revoked": true,
+  "immutable_artifacts": {
+    "source": "gs://data-infra-infobio-ocean-data/edna",
+    "destination": "gs://data-infra-infobio-ocean-cop17/edna-cop17-snapshot",
+    "artifact_count": 52,
+    "namespaces": {
+      "analysis": 2,
+      "provisional-demos": 2,
+      "regional-publications": 1,
+      "recipes": 1,
+      "raw": 1,
+      "normalized": 41,
+      "retrieval": 4
+    },
+    "scientific_bytes": 328997536,
+    "scientific_ids_and_bytes_preserved": true,
+    "generation_receipts_rebound": true,
+    "excluded_namespaces": [
+      "classification-reviews",
+      "evaluation",
+      "operations"
+    ]
+  },
+  "acceptance": {
+    "execution": "ocean-cop17-acceptance-w4xhj",
+    "transport": "authenticated ASGI in Cloud Run job with actual database, artifact store and Vertex model",
+    "report": {
+      "analysis_id": "9312a7e12211be66f58f17a1e57f2ce0f581da427d9074cada8787657af6d56b",
+      "auth_boundaries": "anonymous 401; viewer admin 403",
+      "bilingual_free_text": true,
+      "cases": [
+        {
+          "interaction_id": "8cf45c9a-c9e3-4c9f-8dbe-ef62db83d8d8",
+          "model_invoked": false,
+          "name": "E3-A",
+          "outcome": "answered",
+          "primary_sources": 0,
+          "reason": null,
+          "seconds": 7.513
+        },
+        {
+          "interaction_id": "29102f0f-299d-429f-97ac-3094dcc9ad98",
+          "model_invoked": false,
+          "name": "E3-B",
+          "outcome": "answered",
+          "primary_sources": 0,
+          "reason": null,
+          "seconds": 7.373
+        },
+        {
+          "interaction_id": "474c859e-58d3-48eb-8687-78f50d669cf3",
+          "model_invoked": false,
+          "name": "E3-JA",
+          "outcome": "answered",
+          "primary_sources": 0,
+          "reason": null,
+          "seconds": 7.386
+        },
+        {
+          "interaction_id": "5dbf2c00-95f4-41ee-9911-c4287ca47b58",
+          "model_invoked": false,
+          "name": "E4-A",
+          "outcome": "answered",
+          "primary_sources": 0,
+          "reason": null,
+          "seconds": 7.554
+        },
+        {
+          "interaction_id": "a354264b-783b-4583-8a9c-31093ad2ac11",
+          "model_invoked": false,
+          "name": "E4-B",
+          "outcome": "answered",
+          "primary_sources": 0,
+          "reason": null,
+          "seconds": 7.321
+        },
+        {
+          "interaction_id": "cdec3385-0a28-43e1-a240-272f4f23ee7e",
+          "model_invoked": false,
+          "name": "E4-JA",
+          "outcome": "answered",
+          "primary_sources": 0,
+          "reason": null,
+          "seconds": 7.133
+        },
+        {
+          "interaction_id": "44c6f238-3f12-4a26-87f7-0f3203cde721",
+          "model_invoked": false,
+          "name": "wrong-year",
+          "outcome": "abstained",
+          "primary_sources": 0,
+          "reason": "aggregate_scope_required",
+          "seconds": 7.235
+        },
+        {
+          "interaction_id": "bb2bdc41-1240-4fd7-9158-d4320676879f",
+          "model_invoked": false,
+          "name": "sst-disabled",
+          "outcome": "abstained",
+          "primary_sources": 0,
+          "reason": "source_disabled",
+          "seconds": 7.138
+        },
+        {
+          "interaction_id": "94ce3580-52a6-4391-bfed-dd2540159c98",
+          "model_invoked": true,
+          "name": "free-text-EN",
+          "outcome": "answered",
+          "primary_sources": 2,
+          "reason": null,
+          "seconds": 6.325
+        },
+        {
+          "interaction_id": "a9eee434-5c8c-4021-86b4-18592e60b529",
+          "model_invoked": true,
+          "name": "free-text-JA",
+          "outcome": "answered",
+          "primary_sources": 2,
+          "reason": null,
+          "seconds": 6.335
+        }
+      ],
+      "cop17_acceptance_passed": true,
+      "evidence_row_hashes": {
+        "relative_sst_thresholds": "d29d48955ad0ebfa4bd971d03af703770ed13ed43934c00394c3c16fc956e7d7",
+        "temperature_bins": "2f7c0f56273b852975df0622d3b01d888f7697857b3a2972687e7eda155de893",
+        "temperature_contrasts": "75101020f836d58a78fa0f43b09f3fa3877e5b1c16812bf2c8b83c85106b968d",
+        "temperature_series": "eddc21598045433db7858ba918672385a24984a672d45d6108b1b3dd006651f5"
+      },
+      "exact_professor_parity": true,
+      "protocol_id": "91e3ce341d150bdab5bc156775bd9257fa6a2833e3b53194841fc558c1dddfa6",
+      "scientific_scope_rejections": true,
+      "section": "all"
+    },
+    "data_and_citation_audit_execution": "ocean-cop17-data-qa-bkg5c",
+    "data_and_citation_audit": {
+      "cop17_audit_and_data_passed": true,
+      "interaction_audits": [
+        {
+          "context_count": 3,
+          "id": "c0a28eac-8b2b-4e67-82ca-23fd9579c827",
+          "invalid_citations": 0,
+          "latency_ms": 2051,
+          "outcome": "answered",
+          "reason": null,
+          "source_count": 0,
+          "status": "completed"
+        },
+        {
+          "context_count": 3,
+          "id": "89b88efb-a8f5-45ca-8e6b-68ea654781bc",
+          "invalid_citations": 0,
+          "latency_ms": 2563,
+          "outcome": "answered",
+          "reason": null,
+          "source_count": 0,
+          "status": "completed"
+        },
+        {
+          "context_count": 3,
+          "id": "1f08b6ea-7bb3-45cf-85a8-88c58d4a304c",
+          "invalid_citations": 0,
+          "latency_ms": 2213,
+          "outcome": "answered",
+          "reason": null,
+          "source_count": 0,
+          "status": "completed"
+        },
+        {
+          "context_count": 4,
+          "id": "68972785-a659-424f-bf6e-8737764f8953",
+          "invalid_citations": 0,
+          "latency_ms": 2225,
+          "outcome": "answered",
+          "reason": null,
+          "source_count": 0,
+          "status": "completed"
+        },
+        {
+          "context_count": 4,
+          "id": "66d218b0-e8cd-40b6-bf1c-20f17c5a1f0c",
+          "invalid_citations": 0,
+          "latency_ms": 1937,
+          "outcome": "answered",
+          "reason": null,
+          "source_count": 0,
+          "status": "completed"
+        },
+        {
+          "context_count": 4,
+          "id": "7c90a111-784c-471b-9ac7-8d2430e887a6",
+          "invalid_citations": 0,
+          "latency_ms": 1934,
+          "outcome": "answered",
+          "reason": null,
+          "source_count": 0,
+          "status": "completed"
+        },
+        {
+          "context_count": 0,
+          "id": "28d63404-bb19-446d-bfc5-2a14225fca10",
+          "invalid_citations": null,
+          "latency_ms": 1565,
+          "outcome": "abstained",
+          "reason": "aggregate_scope_required",
+          "source_count": 0,
+          "status": "completed"
+        },
+        {
+          "context_count": 0,
+          "id": "269a9040-7b5e-448c-bb55-ff87767c5faf",
+          "invalid_citations": null,
+          "latency_ms": 1586,
+          "outcome": "abstained",
+          "reason": "source_disabled",
+          "source_count": 0,
+          "status": "completed"
+        },
+        {
+          "context_count": 0,
+          "id": "625ac4e2-3131-41a6-8ba4-1fc1891513eb",
+          "invalid_citations": null,
+          "latency_ms": 44,
+          "outcome": "abstained",
+          "reason": "aggregate_scope_required",
+          "source_count": 0,
+          "status": "completed"
+        },
+        {
+          "context_count": 0,
+          "id": "6141247f-1f72-40b6-8769-be766506c724",
+          "invalid_citations": 0,
+          "latency_ms": 8396,
+          "outcome": "answered",
+          "reason": null,
+          "source_count": 2,
+          "status": "completed"
+        },
+        {
+          "context_count": 0,
+          "id": "fbd1c00d-5342-47f4-a0d4-cf8bf9b07ab3",
+          "invalid_citations": 0,
+          "latency_ms": 8413,
+          "outcome": "answered",
+          "reason": null,
+          "source_count": 2,
+          "status": "completed"
+        }
+      ],
+      "read_endpoints": {
+        "/data/edna/catalog": {
+          "keys": [
+            "loci",
+            "teams",
+            "physical_sample_count",
+            "sample_count_definition",
+            "samples",
+            "assays",
+            "detections",
+            "controls",
+            "unknown_control_status",
+            "providers",
+            "projects",
+            "runs",
+            "assignment_methods",
+            "sample_kinds",
+            "time_extent",
+            "coordinate_extent"
+          ],
+          "status": 200
+        },
+        "/data/edna/samples?limit=1": {
+          "keys": [
+            "total",
+            "limit",
+            "offset",
+            "rows"
+          ],
+          "status": 200
+        },
+        "/provenance/manifest?limit_documents=1&include_embeddings=false": {
+          "keys": [
+            "edna_analyses",
+            "schema_version",
+            "generated_at",
+            "project_root",
+            "snapshot",
+            "summary",
+            "source_files",
+            "artifacts",
+            "documents",
+            "embeddings",
+            "limitations"
+          ],
+          "status": 200
+        },
+        "trace:analysis_edna_9312a7e12211be66f58f17a1e57f2ce0f581da427d9074cada8787657af6d56b_ranking": {
+          "status": 200
+        },
+        "trace:analysis_edna_9312a7e12211be66f58f17a1e57f2ce0f581da427d9074cada8787657af6d56b_read_ranking": {
+          "status": 200
+        },
+        "trace:analysis_edna_9312a7e12211be66f58f17a1e57f2ce0f581da427d9074cada8787657af6d56b_relative_sst_thresholds": {
+          "status": 200
+        },
+        "trace:analysis_edna_9312a7e12211be66f58f17a1e57f2ce0f581da427d9074cada8787657af6d56b_series": {
+          "status": 200
+        },
+        "trace:analysis_edna_9312a7e12211be66f58f17a1e57f2ce0f581da427d9074cada8787657af6d56b_temperature_bins": {
+          "status": 200
+        },
+        "trace:analysis_edna_9312a7e12211be66f58f17a1e57f2ce0f581da427d9074cada8787657af6d56b_temperature_contrasts": {
+          "status": 200
+        },
+        "trace:analysis_edna_9312a7e12211be66f58f17a1e57f2ce0f581da427d9074cada8787657af6d56b_temperature_series": {
+          "status": 200
+        },
+        "trace:edna_7cabad968d086c431851ec1ebc04917c7c8c267f3a7ddc74756467fc4e5d6721_qcauto_95pct_3nn_target": {
+          "status": 200
+        },
+        "trace:edna_7cabad968d086c431851ec1ebc04917c7c8c267f3a7ddc74756467fc4e5d6721_qcauto_target": {
+          "status": 200
+        }
+      }
+    },
+    "browser_oauth_and_presenter_rehearsal": "pending"
+  },
+  "local_validation": {
+    "backend_passed": 1448,
+    "backend_optional_skipped": 39,
+    "frontend_passed": 83,
+    "additional_artifact_integrity_tests_passed": 7,
+    "typescript": "passed",
+    "demo_frontend_build": "passed",
+    "source_lint": "passed"
+  },
+  "image_scans": {
+    "critical": 0,
+    "language_package_findings": 0,
+    "inherited_os_findings": {
+      "api": {
+        "high": 44,
+        "medium": 70,
+        "low": 82,
+        "unknown": 1
+      },
+      "frontend": {
+        "high": 43,
+        "medium": 58,
+        "low": 60,
+        "unknown": 1
+      }
+    },
+    "patched_advisory": "GHSA-6q48-6c7w-9gw2",
+    "certifi": "2026.10.19"
+  },
+  "budget": {
+    "currency": "JPY",
+    "project_monthly_budget": 100000,
+    "cloud_run_configured_spend_cap": 100000,
+    "universal_hard_cap": false,
+    "cloud_sql_existing_alert_unchanged": true
+  },
+  "production_traffic": [
+    {
+      "revision": "ocean-platform-conference1012",
+      "percent": 100
+    }
+  ],
+  "demo_ready_for_public_rehearsal": false,
+  "production_application_code_data_and_traffic_modified": false,
+  "overhaul_checkout_modified": false,
+  "disposable_qa_actor": {
+    "status": "suspended",
+    "signed_session_denied": 403,
+    "execution": "ocean-cop17-data-qa-lpnjs"
+  }
+}
