@@ -17,7 +17,10 @@
     "origin": "https://demo.oceaninfobio.com",
     "tls_control_plane_ready": true,
     "https_browser_verified": false,
-    "oauth_callback_registered": false
+    "oauth_callback_registered": false,
+    "https_certificate_verified_cli": true,
+    "certificate_expires_utc": "2027-01-19T15:15:12Z",
+    "unauthenticated_cloud_run_status": 403
   },
   "scientific_database_snapshot": {
     "excluded_application_tables": [
@@ -488,5 +491,6 @@
     "status": "suspended",
     "signed_session_denied": 403,
     "execution": "ocean-cop17-data-qa-lpnjs"
-  }
+  },
+  "completed_setup_and_qa_job_definitions_sealed": true
 }
