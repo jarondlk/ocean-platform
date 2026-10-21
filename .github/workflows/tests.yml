@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, master, gcp]
+    branches: [main, master, gcp, cop17-demo]
   pull_request:
     branches: [main, master]
 

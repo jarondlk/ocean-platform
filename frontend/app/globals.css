@@ -3420,3 +3420,12 @@ button.temporal-cell { cursor: pointer; }
 .temporal-table summary { cursor: pointer; color: var(--blue-ink); padding: 8px 0; }
 .temporal-table td p { margin: 0 0 6px; }
 .temporal-table td { overflow-wrap: anywhere; }
+
+/* COP17 controls keep free text and scientific source choices prominent. */
+.cop17-banner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem; border: 1px solid var(--border); border-radius: 12px; }
+.cop17-banner p { margin: .35rem 0 0; }
+.cop17-preset-buttons { display: grid; gap: .6rem; margin: .8rem 0; }
+.cop17-presets { margin-bottom: 1rem; }
+.cop17-presets .field { width: 100%; min-width: 0; }
+.chat-evidence-details > summary { cursor: pointer; padding: .75rem 0; }
+@media (max-width: 640px) { .cop17-banner { align-items: flex-start; flex-direction: column; } }

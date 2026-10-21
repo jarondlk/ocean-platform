@@ -703,6 +703,23 @@ const japaneseInterface: Record<string, string> = {
   "User": "ユーザー",
   "Users and invitations": "ユーザーと招待",
   "Viewer": "閲覧者",
+  "COP17 demonstration": "COP17 デモンストレーション",
+  "Ask your own question, or choose a published analysis preset in Settings.": "自由に質問するか、設定から公表済み解析を選択してください。",
+  "Published analysis presets": "公表済み解析のかんたん設定",
+  "Choose a complete setup, then select an analysis. You can edit the question before asking.": "データセットとアッセイを選び、解析ボタンを押してください。質問文は自由に編集できます。",
+  "Dataset and assay": "データセットとアッセイ",
+  "Choose a dataset and assay": "データセットとアッセイを選択",
+  "Selected setup is unavailable": "選択した設定は現在利用できません",
+  "Fish detection frequency": "魚の検出頻度",
+  "Fish and sea surface temperature": "魚の検出頻度と海面水温",
+  "Free-text search": "自由な質問に戻る",
+  "Selected analysis": "選択した解析",
+  "Presets replace source filters with the published setup. Published datasets are fixed; detection frequency is not abundance.": "ボタンを押すと公表済み解析の条件に切り替わります。データセットは固定されており、検出頻度は個体数ではありません。",
+  "Results from the selected published dataset and assay are shown below. Methods, full answer, and citations remain available.": "選択した公表済みデータセットとアッセイの結果です。解析方法・回答全文・出典も確認できます。",
+  "Full answer and citations": "回答全文と出典",
+  "Evidence, methods and checks": "根拠・解析方法・検証の詳細",
+  "Show the top 10 fish by detection frequency, with yearly and seasonal changes": "検出頻度が高い魚の上位10種と、年別・季節別の変化を示してください。",
+  "Compare fish detection frequency in high and low SST conditions and show a representative series": "高いSSTと低いSSTの条件で魚の検出頻度を比較し、代表的な時系列を示してください。",
 };
 
 type MessageKey = keyof typeof messages.en.settings;

@@ -5277,6 +5277,7 @@ def chat_capabilities():
     from retrieval.source_scope import FAMILIES, SourceSelections
     schema = SourceSelections.model_json_schema()
     return {"scope_version": 1, "sources": list(FAMILIES), "source_schema": schema,
+            "cop17_demo": config.COP17_DEMO_ENABLED,
             "auto_settings": {"enabled": config.AUTO_SETTINGS_ENABLED, "plan_version": 1},
             "provider": config.MODEL_PROVIDER,
             "generation_fields": ["temperature", "top_p", "sampling_top_k", "seed", "num_predict"] + ([] if config.MODEL_PROVIDER == "vertex" else ["repeat_penalty", "num_ctx"]),

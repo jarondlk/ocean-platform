@@ -17,6 +17,9 @@ from urllib.parse import urlparse
 # ---------------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parent
 
+# Isolated COP17 deployment profile; production behavior stays opt-in.
+COP17_DEMO_ENABLED = os.environ.get("COP17_DEMO_ENABLED", "false").strip().lower() == "true"
+
 # ---------------------------------------------------------------------------
 # Data directory layout
 # ---------------------------------------------------------------------------

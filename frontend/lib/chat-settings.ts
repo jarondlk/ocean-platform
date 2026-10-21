@@ -4,9 +4,15 @@ export type SourceFamily = keyof EvidenceScope["sources"];
 export const sourceLabels: Record<SourceFamily, string> = {
   ctd: "CTD", metagenome: "Metagenome", remote_sensing: "Satellite SST", edna_metabarcoding: "ANEMONE eDNA",
 };
+export const cop17Demo = process.env.NEXT_PUBLIC_COP17_DEMO === "true";
+export const visibleSourceFamilies = (Object.keys(sourceLabels) as SourceFamily[]).filter(family => !cop17Demo || !["ctd", "metagenome"].includes(family));
+export function demoScope(scope: EvidenceScope): EvidenceScope {
+  if (!cop17Demo) return scope;
+  return {...scope, sources: {...scope.sources, ctd: {enabled: false, filters: {}}, metagenome: {enabled: false, filters: {}}}};
+}
 export function defaultScope(): EvidenceScope {
   return { version: 1, sources: {
-    ctd: { enabled: true, filters: {} }, metagenome: { enabled: true, filters: {} },
+    ctd: { enabled: !cop17Demo, filters: {} }, metagenome: { enabled: !cop17Demo, filters: {} },
     remote_sensing: { enabled: true, filters: {} }, edna_metabarcoding: { enabled: true, filters: {} },
   }};
 }
@@ -86,7 +92,7 @@ export function scopeForAnalysis(scope: EvidenceScope, analysisId: string): Evid
   const edna = {...scope.sources.edna_metabarcoding};
   delete edna.analysis_id;
   if (edna.enabled && analysisId.trim()) edna.analysis_id = analysisId.trim();
-  return {...scope, sources: {...scope.sources, edna_metabarcoding: edna}};
+  return demoScope({...scope, sources: {...scope.sources, edna_metabarcoding: edna}});
 }
 export function settingsStorageKey(accountId: string): string { return `ocean-chat-settings:v1:${accountId}`; }
 export function decodeSettings(raw: string | null): {settings: ChatSettings; scope: EvidenceScope} {
@@ -100,11 +106,35 @@ export function decodeSettings(raw: string | null): {settings: ChatSettings; sco
     if (typeof value.settings?.[key] === typeof defaultSettings[key]) Object.assign(settings, {[key]: value.settings[key]});
   }
   if (settingsErrors(settings).length) return {settings: {...defaultSettings}, scope: value.scope};
-  return {settings, scope: value.scope};
+  return {settings: cop17Demo ? {...settings, autoSettings: false} : settings, scope: demoScope(value.scope)};
 }
 export function encodeSettings(settings: ChatSettings, scope: EvidenceScope): string {
   const sources = structuredClone(scope.sources);
   delete sources.edna_metabarcoding.analysis_id;
   const safeSettings = Object.fromEntries(Object.keys(defaultSettings).map(key => [key, settings[key as keyof ChatSettings]]));
   return JSON.stringify({version: 1, settings: safeSettings, scope: {...scope, sources}});
+}
+
+export type PublishedDemoOption = {
+  analysis_id: string; status: string; analysis_kind: string; label: string;
+  publication_id?: string | null; time_from?: string; time_to?: string;
+  assignment_methods?: string[]; sst_dataset_id?: string | null; sst_available?: boolean;
+  protocol_ids: string[]; protocol_labels?: Record<string, string>;
+  protocols?: Record<string, {target_gene?: string; sequencing_method?: string; library_layout?: string}>;
+  workflows: {kind: "fish_frequency" | "temperature_comparison" | "monthly_spatial" | "spatial_temperature" | "distribution_change" | "follow_through"; question: string}[];
+};
+export function demoSetups(options: PublishedDemoOption[]) {
+  return options.filter(option => option.status === "current" && ["regional_frequency", "detection_frequency"].includes(option.analysis_kind))
+    .flatMap(option => option.protocol_ids.map(protocolId => {
+      const protocol = option.protocols?.[protocolId];
+      const assay = protocol ? [protocol.target_gene, protocol.sequencing_method, protocol.library_layout].filter(Boolean).join(" · ") : option.protocol_labels?.[protocolId] || protocolId.slice(0, 8);
+      return {key: `${option.analysis_id}:${protocolId}`, option, protocolId,
+        label: `${option.label} · ${assay} · ${protocolId.slice(0, 8)}`};
+    }));
+}
+export function preferredDemoSetup(setups: ReturnType<typeof demoSetups>) {
+  const preferred = setups.filter(setup => setup.option.assignment_methods?.includes("qcauto_95pct_3nn_target")
+    && setup.option.protocols?.[setup.protocolId]?.sequencing_method?.toLowerCase() === "miseq"
+    && setup.option.protocols?.[setup.protocolId]?.library_layout?.toLowerCase() === "paired");
+  return preferred.length === 1 ? preferred[0].key : setups.length === 1 ? setups[0].key : "";
 }

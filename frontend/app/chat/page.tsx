@@ -22,9 +22,9 @@ import type { ResearchIntent } from "@/types";
 import { useChatSettings } from "@/lib/use-chat-settings";
 import { useChatIdentity } from "@/components/ChatIdentityProvider";
 import { effectiveChatSettings, readAutoPlan } from "@/lib/auto-settings";
-import { sourceLabels, scopeErrors, settingsErrors, scopeForAnalysis, type SourceFamily, type ChatSettings } from "@/lib/chat-settings";
+import { cop17Demo, sourceLabels, scopeErrors, settingsErrors, scopeForAnalysis, type SourceFamily, type ChatSettings } from "@/lib/chat-settings";
 
-const quickQuestions = [
+const quickQuestions = cop17Demo ? [] : [
   {
     label: "Temperature Reliability",
     query: "Compare CTD surface temperature and satellite SST reliability in Onagawa Bay.",
@@ -48,7 +48,7 @@ const quickQuestions = [
 ];
 
 export default function ChatPage() {
-  const { ui } = useAppPreferences();
+  const { ui, preferences, setPreference } = useAppPreferences();
   const [query, setQuery] = useState("");
   const [analysisId, setAnalysisId] = useState("");
   const [researchIntent, setResearchIntent] = useState<ResearchIntent | undefined>();
@@ -242,6 +242,13 @@ export default function ChatPage() {
       <form className="chat-form" onSubmit={submit}>
         <div className="chat-layout">
           <section className="chat-main">
+            {cop17Demo ? <div className="cop17-banner" role="region" aria-label={ui("COP17 demonstration")}>
+              <div><strong>{ui("COP17 demonstration")}</strong><p>{ui("Ask your own question, or choose a published analysis preset in Settings.")}</p></div>
+              <div className="button-row" aria-label={ui("Language")}>
+                <button type="button" className="button secondary-button" aria-pressed={preferences?.locale === "en"} onClick={() => setPreference("locale", "en")}>English</button>
+                <button type="button" className="button secondary-button" aria-pressed={preferences?.locale === "ja"} onClick={() => setPreference("locale", "ja")}>日本語</button>
+              </div>
+            </div> : null}
             <article className="card">
               <label className="section-label" htmlFor="query-input" title={ui("User question sent to retrieval and the selected chat model.")}>
                 {ui("Question")}
@@ -306,12 +313,18 @@ export default function ChatPage() {
                 </div>
               ) : null}
               {response ? <SourceCoverage diagnostics={response.retrieval_diagnostics} /> : null}
-              <MarkdownAnswer
+              {cop17Demo && response?.analysis_context?.some(document => document.result_rows?.length) ? <>
+                <p>{ui("Results from the selected published dataset and assay are shown below. Methods, full answer, and citations remain available.")}</p>
+                <ResearchResultCards key={`research:${response.interaction_id || response.answer}`} documents={response.analysis_context || []} compact />
+                <details className="debug-block"><summary>{ui("Full answer and citations")}</summary>
+                  <MarkdownAnswer citationTargets={citationTargets} onCitationSelect={setSelectedCitation} text={response.answer} />
+                </details>
+              </> : <MarkdownAnswer
                 citationTargets={citationTargets}
                 onCitationSelect={setSelectedCitation}
                 text={response?.answer || ""}
-              />
-              {response ? <ResearchResultCards key={`research:${response.interaction_id || response.answer}`} documents={response.analysis_context || []} /> : null}
+              />}
+              {response && !cop17Demo ? <ResearchResultCards key={`research:${response.interaction_id || response.answer}`} documents={response.analysis_context || []} /> : null}
               {response?.interaction_id ? (
                 <ChatFeedback
                   interactionId={response.interaction_id}
@@ -320,6 +333,7 @@ export default function ChatPage() {
               ) : null}
             </article>
 
+            <details className="chat-evidence-details" open={cop17Demo ? undefined : true}><summary>{ui("Evidence, methods and checks")}</summary>
             {answerAudit ? (
               <article className="card">
                 <div className="section-toolbar">
@@ -473,6 +487,7 @@ export default function ChatPage() {
                 <pre>{appliedSettings}</pre>
               </details>
             ) : null}
+            </details>
           </section>
 
           <aside className="chat-settings" aria-label={ui("Chat settings")}>
@@ -486,10 +501,16 @@ export default function ChatPage() {
             <ChatSourceSettings disabled={!ready || loading} scope={displayedScope} onChange={editSources}
               analysisId={displayedAnalysisId} onAnalysisChange={value => {materializeManual(); setAnalysisId(value);}}
               researchIntent={displayedResearchIntent} onResearchChange={(intent, question) => {materializeManual(); setResearchIntent(intent); if (question) setQuery(question);}}
+              onPresetChange={preset => {
+                setSettings(current => ({...current, autoSettings: false}));
+                setScope(preset.scope); setAnalysisId(preset.analysisId); setResearchIntent(preset.intent);
+                if (preset.question) setQuery(preset.question);
+                setResponse(null); setSelectedCitation(null);
+              }}
               autoEnabled={settings.autoSettings} autoAvailable={autoAvailable}
               onAutoChange={enabled => setSettings(current => ({...current, autoSettings: enabled}))} />
             {settings.autoSettings && autoPlan?.scope ? <p className="empty-state">{ui("Settings shown apply to the last submitted question; AUTO will recompute them when you ask.")}</p> : null}
-            <details className="chat-advanced"><summary>{ui("Advanced settings")}</summary>
+            {!cop17Demo ? <details className="chat-advanced"><summary>{ui("Advanced settings")}</summary>
             <fieldset className="settings-section" disabled={!ready || loading}>
               <legend>{ui("Retrieval")}</legend>
               <NumericControl
@@ -672,7 +693,7 @@ export default function ChatPage() {
                 onChange={(value) => updateSetting("seed", value)}
               />
             </fieldset>
-            </details>
+            </details> : null}
           </aside>
         </div>
       </form>

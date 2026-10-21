@@ -100,7 +100,7 @@ def parse_intent(query, recipe=None):
         )
         if query.endswith(suffix):
             query = query[: -len(suffix)].strip()
-    return next(
+    exact = next(
         (
             kind
             for kind, aliases in QUESTIONS.items()
@@ -108,6 +108,15 @@ def parse_intent(query, recipe=None):
         ),
         None,
     )
+    if exact:
+        return exact
+    import config
+    if config.COP17_DEMO_ENABLED:
+        from orchestration.cop17_intents import parse_cop17_intent
+        kind = parse_cop17_intent(query, recipe)
+        if kind and not publication_question_error(query, kind, recipe):
+            return kind
+    return None
 
 
 @dataclass

@@ -5,7 +5,7 @@ import { getChatFilterOptions, request } from "@/lib/api";
 import type { ResearchIntent } from "@/types";
 import type { ChatFilterOptions } from "@/lib/chat-filter-options";
 import { useAppPreferences } from "@/lib/preferences";
-import { sourceLabels, scopeErrors, type SourceFamily } from "@/lib/chat-settings";
+import { cop17Demo, defaultScope, demoSetups, preferredDemoSetup, sourceLabels, scopeErrors, visibleSourceFamilies, type PublishedDemoOption, type SourceFamily } from "@/lib/chat-settings";
 import { evidenceScopeSchema, type EvidenceScope } from "@/lib/generated/chat-scope";
 
 export const filterLabels: Record<string, string> = {
@@ -19,10 +19,11 @@ const filterSchemas = {
   remote_sensing: evidenceScopeSchema.$defs.SatelliteFilters, edna_metabarcoding: evidenceScopeSchema.$defs.EdnaFilters,
 };
 type Field = {type?: string; enum?: readonly string[]; minimum?: number; maximum?: number; maxLength?: number; anyOf?: readonly Field[]};
-type PublishedOption = { analysis_id: string; status: string; analysis_kind: string; label: string; time_from?: string; time_to?: string; protocol_ids: string[]; protocol_labels?: Record<string, string>; workflows: {kind: ResearchIntent["kind"]; question: string}[] };
-export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChange, disabled, researchIntent, onResearchChange, autoEnabled = false, autoAvailable = false, onAutoChange }: {
+type PublishedOption = PublishedDemoOption & { analysis_id: string; status: string; analysis_kind: string; label: string; time_from?: string; time_to?: string; protocol_ids: string[]; protocol_labels?: Record<string, string>; workflows: {kind: ResearchIntent["kind"]; question: string}[] };
+export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChange, disabled, researchIntent, onResearchChange, autoEnabled = false, autoAvailable = false, onAutoChange, onPresetChange }: {
   disabled?: boolean; scope: EvidenceScope; onChange: (value: EvidenceScope) => void; analysisId: string; onAnalysisChange: (value: string) => void;
   researchIntent?: ResearchIntent; onResearchChange?: (intent: ResearchIntent | undefined, question?: string) => void;
+  onPresetChange?: (setup: {scope: EvidenceScope; analysisId: string; intent?: ResearchIntent; question?: string}) => void;
   autoEnabled?: boolean; autoAvailable?: boolean; onAutoChange?: (enabled: boolean) => void;
 }) {
   const {ui} = useAppPreferences();
@@ -32,6 +33,10 @@ export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChan
   const [retry, setRetry] = useState(0);
   const [analysisOptions, setAnalysisOptions] = useState<PublishedOption[]>([]);
   const [analysisError, setAnalysisError] = useState("");
+  const [setupKey, setSetupKey] = useState("");
+  const setups = demoSetups(analysisOptions);
+  const selectedSetupKey = setupKey || preferredDemoSetup(setups);
+  const setup = setups.find(item => item.key === selectedSetupKey);
   const selectedAnalysis = analysisOptions.find(option => option.analysis_id === analysisId);
   useEffect(() => {
     if (disabled) return;
@@ -62,19 +67,48 @@ export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChan
     else filters[key] = kind === "number" ? Number(value) : kind === "boolean" ? value === "true" : value;
     onChange({...scope, sources: {...scope.sources, [family]: {...scope.sources[family], filters}}});
   }
+  function applyPreset(kind: "fish_frequency" | "temperature_comparison") {
+    if (!setup || !onPresetChange) return;
+    const workflow = setup.option.workflows.find(workflow => workflow.kind === kind);
+    if (!workflow || kind === "temperature_comparison" && !setup.option.sst_available) return;
+    const next = defaultScope();
+    next.sources.remote_sensing.enabled = kind === "temperature_comparison";
+    if (kind === "temperature_comparison" && setup.option.sst_dataset_id) next.sources.remote_sensing.filters = {dataset_id: setup.option.sst_dataset_id};
+    onPresetChange({scope: next, analysisId: setup.option.analysis_id,
+      intent: {kind, protocol_id: setup.protocolId}, question: ui(workflow.question)});
+  }
   return <fieldset className="settings-section" disabled={disabled}><legend>{ui("Evidence sources")}</legend>
+    {cop17Demo ? <section className="cop17-presets" aria-label={ui("Published analysis presets")}>
+      <h4>{ui("Published analysis presets")}</h4>
+      <p className="empty-state">{ui("Choose a complete setup, then select an analysis. You can edit the question before asking.")}</p>
+      <label className="settings-field" htmlFor="chat-demo-setup"><span>{ui("Dataset and assay")}</span>
+        <select id="chat-demo-setup" className="field" value={selectedSetupKey} onChange={event => setSetupKey(event.target.value)}>
+          <option value="">{ui("Choose a dataset and assay")}</option>
+          {setupKey && !setup ? <option value={setupKey}>{ui("Selected setup is unavailable")}</option> : null}
+          {setups.map(item => <option key={item.key} value={item.key}>{item.label}</option>)}
+        </select>
+      </label>
+      <div className="cop17-preset-buttons">
+        <button className="button secondary-button" type="button" disabled={!setup?.option.workflows.some(w => w.kind === "fish_frequency")} onClick={() => applyPreset("fish_frequency")}>{ui("Fish detection frequency")}</button>
+        <button className="button secondary-button" type="button" disabled={!setup?.option.sst_available || !setup.option.workflows.some(w => w.kind === "temperature_comparison")} onClick={() => applyPreset("temperature_comparison")}>{ui("Fish and sea surface temperature")}</button>
+        <button className="button secondary-button" type="button" onClick={() => onPresetChange?.({scope: defaultScope(), analysisId: ""})}>{ui("Free-text search")}</button>
+      </div>
+      <p className="empty-state">{ui("Presets replace source filters with the published setup. Published datasets are fixed; detection frequency is not abundance.")}</p>
+      {selectedAnalysis ? <p role="status">{ui("Selected analysis")}: {selectedAnalysis.label} · {ui(researchIntent?.kind === "temperature_comparison" ? "Fish and sea surface temperature" : "Fish detection frequency")}</p> : null}
+      {analysisError ? <p role="status">{ui(analysisError)}</p> : null}
+    </section> : null}
     <div className={`settings-pair${onAutoChange ? ' auto-settings-toolbar' : ''}`}>
-      <button type="button" className="button secondary-button" onClick={() => onChange({...scope, sources: Object.fromEntries(Object.entries(scope.sources).map(([key, source]) => [key, {...source, enabled: true}])) as typeof scope.sources})}>{ui("Select all")}</button>
+      <button type="button" className="button secondary-button" onClick={() => onChange({...scope, sources: Object.fromEntries(Object.entries(scope.sources).map(([key, source]) => [key, {...source, enabled: visibleSourceFamilies.includes(key as SourceFamily)}])) as typeof scope.sources})}>{ui("Select all")}</button>
       <button type="button" className="button secondary-button" onClick={() => onChange({...scope, sources: Object.fromEntries(Object.entries(scope.sources).map(([key, source]) => [key, {...source, enabled: false}])) as typeof scope.sources})}>{ui("Clear selection")}</button>
-      {onAutoChange ? <button type="button" className={`button secondary-button auto-settings-toggle${autoEnabled ? ' active' : ''}`}
+      {onAutoChange && !cop17Demo ? <button type="button" className={`button secondary-button auto-settings-toggle${autoEnabled ? ' active' : ''}`}
         aria-pressed={autoEnabled} disabled={!autoAvailable && !autoEnabled}
         onClick={() => onAutoChange(!autoEnabled)}>{ui("AUTO")}</button> : null}
     </div>
     {autoEnabled ? <p className="empty-state" role="status">{ui("AUTO selects sources and filters when you ask. Editing settings switches to manual.")}</p> : null}
     <p className="empty-state">{ui("Select the sources to use. Filters apply only to their own source.")}</p>
     {invalid ? <p className="empty-state" role="status">{ui("Fix invalid filters to load choices.")}</p> : null}
-    {choicesFailed ? <button className="button secondary-button" type="button" onClick={() => setRetry(value => value + 1)}>{ui("Retry loading choices")}</button> : null}
-    {(Object.keys(sourceLabels) as SourceFamily[]).map(family => {
+    {choicesFailed || analysisError ? <button className="button secondary-button" type="button" onClick={() => setRetry(value => value + 1)}>{ui("Retry loading choices")}</button> : null}
+    {visibleSourceFamilies.map(family => {
       const selection = scope.sources[family];
       const filters = selection.filters as Record<string, unknown>;
       return <section className="chat-source-panel" key={family}>
@@ -104,7 +138,7 @@ export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChan
                   onChange={event => setFilter(family, key, event.target.value, kind)} />
               </label>;
             })}
-            {family === "edna_metabarcoding" ? <>
+            {family === "edna_metabarcoding" && !cop17Demo ? <>
               <label className="settings-field" htmlFor="chat-analysis-id"><span>{ui("Published eDNA analysis")}</span>
                 <select id="chat-analysis-id" className="field" value={analysisId} onChange={event => { onAnalysisChange(event.target.value); onResearchChange?.(undefined); }}>
                   <option value="">No analysis selected</option>

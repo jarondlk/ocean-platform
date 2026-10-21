@@ -22,7 +22,7 @@ CAPABILITIES = [
 
 def analysis_choices():
     from ingestion.edna_analysis_bundle import _registered_records, load_analysis, analysis_status
-    from ingestion.regional_publication import analysis_publication
+    from ingestion.regional_publication import analysis_publication, DATASET
     from preprocessing.edna_analysis import protocol
 
     records = _registered_records()
@@ -45,6 +45,7 @@ def analysis_choices():
             'time_from': recipe.get('time_from') or recipe.get('cohort', {}).get('time_from'),
             'time_to': recipe.get('time_to') or recipe.get('cohort', {}).get('time_to'),
             'assignment_methods': [recipe['assignment_method']] if research else recipe['assignment_methods'],
+            'sst_dataset_id': DATASET if accepted and recipe.get('sst_panel_id') else None,
             'protocol_ids': protocol_ids,
             'protocol_labels': {key: ' · '.join(str(value[field] or 'unspecified') for field in ('target_gene', 'primer_set', 'sequencing_method', 'library_layout')) + ' · ' + key[:8] for key, value in protocols.items()},
             'protocols': protocols, 'sst_available': bool(recipe.get('sst_panel_id')) if research else False,
