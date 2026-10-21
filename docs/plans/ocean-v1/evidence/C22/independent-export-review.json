@@ -1,0 +1,165 @@
+{
+  "version": "c22-independent-export-review-v1",
+  "created_at_utc": "2026-10-21T03:20:51.398593+00:00",
+  "outcome": "No remaining concrete blocker found by source inspection and scoped synthetic probes",
+  "remaining_findings": [],
+  "reviewed_source_sha256": {
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "tests/test_frozen_experiment_export.py": "b1cf8f14d5205333068712ffd97f60d7a8860f2b143be50b74fbc3fe332c6ddf",
+    "schema/research_experiments.py": "3623b8ce0349316f5e28597752a798817acc1641d55e05d3614ebd61f0d87494",
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "orchestration/frozen_catalogue.py": "9b3fdb498935f3d5db5594f667bfebf49bf7be487509cea9c448f4f229351609",
+    "orchestration/frozen_scientific_catalogue.py": "1fda9afe83a67c70a1cfcf752d62d0fe4ef4114b291095f78e357a376486d051"
+  },
+  "primary_frozen_source_sha256": {
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "tests/test_frozen_experiment_export.py": "b1cf8f14d5205333068712ffd97f60d7a8860f2b143be50b74fbc3fe332c6ddf"
+  },
+  "review_scope": [
+    "Exact C09/C13 source identities/current C14 policy and host publication-policy witnesses",
+    "C17 scope and all pin intersection restrictions; unsupported restrictions fail explicitly",
+    "C01 complete native scientific selectors, source-owned exclusion FK cascades and visible verified physical proof",
+    "Canonical private machine bytes/Arrow schemas/scientific support/provenance/size and tamper boundaries",
+    "Current verify_access final-publication consumer semantics; complete recomputation remains verify()"
+  ],
+  "resolved_findings": [
+    {
+      "finding": "A custom host publication callback could return a different nonempty publication generation",
+      "resolution": "Exporter now compares it to the actual uniquely matched C09 source capture; original and final actual probes reject mismatch"
+    },
+    {
+      "candidate": "CTD/metagenome selector anchor completeness",
+      "resolution": "Existing native _scoped calls _anchor(require_complete=True), and support tables independently require completeness; actual sealed partial anchor probe refused. Not reported as an implementation defect."
+    },
+    {
+      "finding": "Final eligibility flag callbacks could follow publication verification in the private service",
+      "resolution": "Service owner refreshed verify_access after those callbacks; separate actual hostile-callback probe403 with zero committed approvals. Fix landed before probe import, so no old-source failed execution is claimed."
+    },
+    {
+      "observation": "Date/classification/protocol/dtype support and source generation/provenance needed exact retained representation",
+      "resolution": "Frozen candidate retains filtered actual source-owned support rows inside machine files, Arrow type/nullability metadata, full selected SourceCapture and SnapshotObject provenance, all counted in bounds"
+    }
+  ],
+  "independent_actual_probe": {
+    "command": ".venv/bin/python docs/plans/ocean-v1/evidence/C22/independent-export-final-probe-02.py --output docs/plans/ocean-v1/evidence/C22/independent-export-final-probe-02.json",
+    "passed": 13,
+    "failed": 0,
+    "source_unchanged": true,
+    "cases": [
+      {
+        "name": "actual_complete_ctd_baseline",
+        "passed": true,
+        "row_count": 4
+      },
+      {
+        "name": "exact_selected_capture_object_provenance_and_arrow_schema",
+        "passed": true
+      },
+      {
+        "name": "C17_published_analysis_selection_cannot_be_ignored_by_native_read",
+        "expected": "refused",
+        "observed": "refused",
+        "reason": "export_analysis_selection_requires_exact_table",
+        "passed": true
+      },
+      {
+        "name": "host_callback_wrong_publication_generation",
+        "expected": "refused",
+        "observed": "refused",
+        "reason": "export_publication_unavailable",
+        "passed": true
+      },
+      {
+        "name": "dependent_depth_values_keep_exact_source_owned_date_and_identity_support",
+        "passed": true
+      },
+      {
+        "name": "actual_ctd_exclusion_cascades_cast_fk",
+        "passed": true,
+        "remaining_casts": 3
+      },
+      {
+        "name": "ctd_pin_cannot_export_metagenome",
+        "expected": "refused",
+        "observed": "refused",
+        "reason": "export_target_unavailable",
+        "passed": true
+      },
+      {
+        "name": "current_dataset_revocation_blocks_reuse",
+        "expected": "refused",
+        "observed": "refused",
+        "reason": "export_target_unavailable",
+        "passed": true
+      },
+      {
+        "name": "publication_withdrawal_blocks_reuse",
+        "expected": "refused",
+        "observed": "refused",
+        "reason": "export_publication_unavailable",
+        "passed": true
+      },
+      {
+        "name": "proximity_cannot_establish_physical_identity",
+        "expected": "refused",
+        "observed": "refused",
+        "reason": "export_physical_pairing_unavailable",
+        "passed": true
+      },
+      {
+        "name": "staged_file_tamper_rejected_at_reconstruction",
+        "expected": "refused",
+        "observed": "refused",
+        "reason": "export_integrity",
+        "passed": true
+      },
+      {
+        "name": "manifest_and_sidecars_count_toward_input_limit",
+        "expected": "refused",
+        "observed": "refused",
+        "reason": "export_input_size_exceeded",
+        "passed": true
+      },
+      {
+        "name": "partial_selector_anchor_cannot_claim_complete_dependent_run_cohort",
+        "expected": "refused",
+        "observed": "refused",
+        "reason": "export_unavailable",
+        "passed": true
+      }
+    ]
+  },
+  "separate_test_owner_evidence": {
+    "receipt": "docs/plans/ocean-v1/evidence/C22/export-verification.json",
+    "qualification": "Inspected source-pinned30-case locked run, including actual C12 int64 and positive C01/known-zero/verified physical proof. Not rerun by this reviewer."
+  },
+  "preserved_prior_probe_history": [
+    "Original10-case independent probe binds its pre-final source and is immutable.",
+    "First supplemental driver used a non-SHA analysis_id, so C17 rejected the probe fixture before exporter dispatch. Exact driver and failure log preserved. Corrected create-only driver02 uses SHA256 and all13 cases pass on final frozen source.",
+    "The source candidate changed intentionally from original7db126d8/a9c7b426 to final6edb1ab6/b1cf8f14; original receipts retained."
+  ],
+  "evidence_sha256": {
+    "docs/plans/ocean-v1/evidence/C22/independent-export-probe.py": "aa24394706439cf0cf476c4920e538685b4d79d4296b12060bddb51ac655d3f3",
+    "docs/plans/ocean-v1/evidence/C22/independent-export-probe-01.json": "d126c38f962fb7dbff7c9d7e4598ca60648146571400b0309f77bae3f57e1195",
+    "docs/plans/ocean-v1/evidence/C22/independent-export-probe-01.txt": "1c92eb657ef75c3a74fb37fb5af11bfb878cea6035331800b73a5d01818d48eb",
+    "docs/plans/ocean-v1/evidence/C22/independent-export-final-probe.py": "8a0a1e7856ad28e06bca16128881332d4fddc0ab3959ab083b7163086f0c32ac",
+    "docs/plans/ocean-v1/evidence/C22/independent-export-final-probe-01.txt": "4f3c566fa9deddd2507016af9883ae486913e16d79e11664e17b58a419e2a1e5",
+    "docs/plans/ocean-v1/evidence/C22/independent-export-final-probe-02.py": "291e9b50111b2d0676a62611f477660569994193cd1a5d4696ac0b3b546964e3",
+    "docs/plans/ocean-v1/evidence/C22/independent-export-final-probe-02.json": "91ddee5e772020ca2e4bd2d5f535e0419611e84e768219825cce5a0b1e1def23",
+    "docs/plans/ocean-v1/evidence/C22/independent-export-final-probe-02.txt": "b225aeb9aab220e06931411c5564dc22ae1adf5bbb28d8b7a71212f86ebf4f14",
+    "docs/plans/ocean-v1/evidence/C22/independent-closing-publication-probe.py": "d76fec9ccdf0ae5cf4a52033134d08c39e1b3cf35f1468e9ebd84f678b8aa824",
+    "docs/plans/ocean-v1/evidence/C22/independent-closing-publication-01.json": "991046234e37f1a9e51c300d67fdec2ef93390592b8a6f9b57fc3325e4a417b9",
+    "docs/plans/ocean-v1/evidence/C22/independent-closing-publication-01.txt": "5ed943292eb6a393c23f177a14ea861946eceb0f20d15a3146693d81890e088b",
+    "docs/plans/ocean-v1/evidence/C22/export-verification.json": "56302d500440ad5fb28a8260d4144f0a1a806b10adb72e0cd1ad58898dee3367",
+    "docs/plans/ocean-v1/evidence/C22/export-locked-source-pins.json": "27d1aba4bf2e5d4f3f0afb2df74bffadd2b9d0360edee5f7ca183a80c5b2bb94",
+    "docs/plans/ocean-v1/evidence/C22/export-locked-tests.txt": "bce717089f9d586dcf34280c8d8b0d2090242a42c118ff5194783cc4b318bd32"
+  },
+  "qualifications": [
+    "Actual software probes use sealed explicitly synthetic C09/C13/C14/C17 fixtures and separate temporary SQLite; no server, executor, real data, external provider, deployment or cloud action.",
+    "Durable PostgreSQL capacity/retention/native SQL guards, assembled HTTP acceptance, full regressions and hosted CI are separate parent-owned gates; this report does not establish full component delivery.",
+    "Existing C10 source-admission rejects integral values above browser-safe range before C22. This limitation remains explicit; actual exact private int64 is demonstrated through separately recorded C12 sealed read_count, without weakening source validation.",
+    "Export requires current owner-authorized C17 context and prepared dependency protection from its caller. Missing real publication-policy decisions/environment configuration remain external gates; synthetic policy decisions assert no independent scientific approval.",
+    "verify_access rechecks current policy/identity and reconstructed file hashes; complete scientific byte recomputation is verify(). Durable consumers retain expected immutable manifest/source hashes.",
+    "No Python execution or independent scientific review is claimed. Experimental authority remains private and explicit; C23/C24/C25 gates remain separate."
+  ]
+}

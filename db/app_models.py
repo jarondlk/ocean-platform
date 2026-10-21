@@ -18,6 +18,7 @@ from sqlalchemy import (
     ForeignKeyConstraint,
     Index,
     Integer,
+    LargeBinary,
     String,
     Text,
     UniqueConstraint,
@@ -1331,3 +1332,228 @@ for _evidence_model in _EVIDENCE_MUTABLE:
 for _evidence_model in (ResearchEvidenceBlob, ResearchEvidenceDependency, ResearchAnswerEvent, ResearchAnswerPayload, ResearchAnswerAttempt, ResearchAnswerInputHistory, ResearchAnswer):
     event.listen(_evidence_model, "before_update", _research_record_is_immutable)
     event.listen(_evidence_model, "before_delete", _research_record_is_immutable)
+
+
+class ResearchExperiment(AppBase):
+    """Private proposal head; scientific and execution authority live elsewhere."""
+    __tablename__ = "research_experiment"
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(Uuid(as_uuid=True), nullable=False)
+    investigation_id = Column(Uuid(as_uuid=True), nullable=False)
+    conversation_id = Column(Uuid(as_uuid=True), nullable=False)
+    head_revision_id = Column(Uuid(as_uuid=True))
+    version = Column(Integer, nullable=False, default=1)
+    event_cursor = Column(Integer, nullable=False, default=0)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        UniqueConstraint("id", "user_id", name="uq_research_experiment_owner"),
+        UniqueConstraint("id", "investigation_id", "conversation_id", name="uq_research_experiment_context"),
+        ForeignKeyConstraint(["investigation_id", "user_id"], ["research_investigation.id", "research_investigation.user_id"], ondelete="RESTRICT", name="fk_research_experiment_owner"),
+        ForeignKeyConstraint(["investigation_id", "conversation_id"], ["research_conversation.investigation_id", "research_conversation.id"], ondelete="RESTRICT", name="fk_research_experiment_conversation"),
+        ForeignKeyConstraint(["id", "head_revision_id"], ["research_experiment_revision.experiment_id", "research_experiment_revision.id"], ondelete="RESTRICT", use_alter=True, deferrable=True, initially="DEFERRED", name="fk_research_experiment_head"),
+        CheckConstraint("version >= 1 AND event_cursor >= 0", name="ck_research_experiment_version"),
+    )
+
+
+class ResearchExperimentRevision(AppBase):
+    __tablename__ = "research_experiment_revision"
+    id = Column(Uuid(as_uuid=True), primary_key=True)
+    experiment_id = Column(Uuid(as_uuid=True), nullable=False)
+    user_id = Column(Uuid(as_uuid=True), nullable=False)
+    investigation_id = Column(Uuid(as_uuid=True), nullable=False)
+    conversation_id = Column(Uuid(as_uuid=True), nullable=False)
+    context_revision_id = Column(Uuid(as_uuid=True), nullable=False)
+    snapshot_id = Column(String(64), nullable=False)
+    payload_sha256 = Column(String(64), nullable=False)
+    sequence = Column(Integer, nullable=False)
+    context_json = Column(Text, nullable=False)
+    proposal_json = Column(Text, nullable=False)
+    environment_json = Column(Text, nullable=False)
+    manifest_json = Column(Text, nullable=False)
+    proposal_sha256 = Column(String(64), nullable=False)
+    code_sha256 = Column(String(64), nullable=False)
+    input_manifest_sha256 = Column(String(64), nullable=False)
+    environment_sha256 = Column(String(64), nullable=False)
+    resources_sha256 = Column(String(64), nullable=False)
+    source_sha256 = Column(String(64), nullable=False)
+    total_bytes = Column(Integer, nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        UniqueConstraint("experiment_id", "id", name="uq_research_experiment_revision_identity"),
+        UniqueConstraint("id", "experiment_id", "user_id", name="uq_research_experiment_revision_owner"),
+        UniqueConstraint("experiment_id", "sequence", name="uq_research_experiment_revision_sequence"),
+        ForeignKeyConstraint(["experiment_id", "user_id"], ["research_experiment.id", "research_experiment.user_id"], ondelete="RESTRICT", name="fk_research_experiment_revision_owner"),
+        ForeignKeyConstraint(["experiment_id", "investigation_id", "conversation_id"], ["research_experiment.id", "research_experiment.investigation_id", "research_experiment.conversation_id"], ondelete="RESTRICT", name="fk_research_experiment_revision_context"),
+        ForeignKeyConstraint(["investigation_id", "context_revision_id", "snapshot_id", "payload_sha256"], ["research_context_revision.investigation_id", "research_context_revision.id", "research_context_revision.snapshot_id", "research_context_revision.payload_sha256"], ondelete="RESTRICT", name="fk_research_experiment_revision_frozen"),
+        CheckConstraint("sequence >= 1 AND total_bytes BETWEEN 1 AND 268435456", name="ck_research_experiment_revision_bounds"),
+        *[CheckConstraint(_context_sha256_check(key), name="ck_research_experiment_revision_" + key) for key in ("snapshot_id", "payload_sha256", "proposal_sha256", "code_sha256", "input_manifest_sha256", "environment_sha256", "resources_sha256", "source_sha256")],
+    )
+
+
+class ResearchExperimentInputBlob(AppBase):
+    __tablename__ = "research_experiment_input_blob"
+    user_id = Column(Uuid(as_uuid=True), ForeignKey("app_user.id", ondelete="RESTRICT"), primary_key=True)
+    sha256 = Column(String(64), primary_key=True)
+    content = Column(LargeBinary, nullable=False)
+    size_bytes = Column(Integer, nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        CheckConstraint(_context_sha256_check("sha256"), name="ck_research_experiment_blob_hash"),
+        CheckConstraint("size_bytes BETWEEN 0 AND 268435456 AND length(content) = size_bytes", name="ck_research_experiment_blob_bytes"),
+    )
+
+
+class ResearchExperimentRevisionFile(AppBase):
+    __tablename__ = "research_experiment_revision_file"
+    revision_id = Column(Uuid(as_uuid=True), primary_key=True)
+    name = Column(String(255), primary_key=True)
+    experiment_id = Column(Uuid(as_uuid=True), nullable=False)
+    user_id = Column(Uuid(as_uuid=True), nullable=False)
+    sha256 = Column(String(64), nullable=False)
+    size_bytes = Column(Integer, nullable=False)
+    __table_args__ = (
+        ForeignKeyConstraint(["revision_id", "experiment_id", "user_id"], ["research_experiment_revision.id", "research_experiment_revision.experiment_id", "research_experiment_revision.user_id"], ondelete="RESTRICT", name="fk_research_experiment_file_revision"),
+        ForeignKeyConstraint(["user_id", "sha256"], ["research_experiment_input_blob.user_id", "research_experiment_input_blob.sha256"], ondelete="RESTRICT", name="fk_research_experiment_file_blob"),
+        CheckConstraint("length(name) BETWEEN 1 AND 255 AND size_bytes BETWEEN 0 AND 268435456", name="ck_research_experiment_file_bounds"),
+    )
+
+
+class ResearchExperimentOperation(AppBase):
+    __tablename__ = "research_experiment_operation"
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    experiment_id = Column(Uuid(as_uuid=True), nullable=False)
+    user_id = Column(Uuid(as_uuid=True), nullable=False)
+    investigation_id = Column(Uuid(as_uuid=True), nullable=False)
+    kind = Column(String(16), nullable=False)
+    idempotency_key = Column(String(128), nullable=False)
+    expected_version = Column(Integer, nullable=False)
+    candidate_revision_id = Column(Uuid(as_uuid=True))
+    request_json = Column(Text, nullable=False)
+    request_sha256 = Column(String(64), nullable=False)
+    frozen_json = Column(Text, nullable=False)
+    references_json = Column(Text, nullable=False)
+    state = Column(String(16), nullable=False, default="prepared")
+    result_json = Column(Text)
+    error_code = Column(String(64))
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        UniqueConstraint("user_id", "idempotency_key", name="uq_research_experiment_operation_key"),
+        ForeignKeyConstraint(["experiment_id", "user_id"], ["research_experiment.id", "research_experiment.user_id"], ondelete="RESTRICT", name="fk_research_experiment_operation_owner"),
+        ForeignKeyConstraint(["investigation_id", "user_id"], ["research_investigation.id", "research_investigation.user_id"], ondelete="RESTRICT", name="fk_research_experiment_operation_origin"),
+        CheckConstraint("kind IN ('create','revise','approve','dispatch') AND length(idempotency_key) BETWEEN 1 AND 128 AND expected_version >= 1", name="ck_research_experiment_operation_request"),
+        CheckConstraint("state IN ('prepared','committed','conflict','uncertain','unavailable')", name="ck_research_experiment_operation_state"),
+        CheckConstraint(_context_sha256_check("request_sha256"), name="ck_research_experiment_operation_hash"),
+    )
+
+
+class ResearchExperimentApproval(AppBase):
+    __tablename__ = "research_experiment_approval"
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    experiment_id = Column(Uuid(as_uuid=True), nullable=False)
+    revision_id = Column(Uuid(as_uuid=True), nullable=False)
+    user_id = Column(Uuid(as_uuid=True), nullable=False)
+    request_json = Column(Text, nullable=False)
+    request_sha256 = Column(String(64), nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        UniqueConstraint("id", "experiment_id", "revision_id", "user_id", name="uq_research_experiment_approval_binding"),
+        UniqueConstraint("revision_id", name="uq_research_experiment_approval_revision"),
+        ForeignKeyConstraint(["revision_id", "experiment_id", "user_id"], ["research_experiment_revision.id", "research_experiment_revision.experiment_id", "research_experiment_revision.user_id"], ondelete="RESTRICT", name="fk_research_experiment_approval_owner"),
+        CheckConstraint(_context_sha256_check("request_sha256"), name="ck_research_experiment_approval_hash"),
+    )
+
+
+class ResearchExperimentEvent(AppBase):
+    __tablename__ = "research_experiment_event"
+    experiment_id = Column(Uuid(as_uuid=True), ForeignKey("research_experiment.id", ondelete="RESTRICT"), primary_key=True)
+    cursor = Column(Integer, primary_key=True)
+    kind = Column(String(32), nullable=False)
+    summary_json = Column(Text, nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (CheckConstraint("cursor >= 1", name="ck_research_experiment_event_cursor"),)
+
+
+class ResearchExperimentCapacity(AppBase):
+    """One fixed lock row serializes capacity; it is never a TTL lease."""
+    __tablename__ = "research_experiment_capacity"
+    id = Column(Integer, primary_key=True)
+    __table_args__ = (CheckConstraint("id = 1", name="ck_research_experiment_capacity_singleton"),)
+
+
+class ResearchExperimentReservation(AppBase):
+    __tablename__ = "research_experiment_reservation"
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    experiment_id = Column(Uuid(as_uuid=True), nullable=False)
+    revision_id = Column(Uuid(as_uuid=True), nullable=False)
+    approval_id = Column(Uuid(as_uuid=True), nullable=False)
+    user_id = Column(Uuid(as_uuid=True), nullable=False)
+    slot = Column(Integer, nullable=False)
+    state = Column(String(16), nullable=False, default="reserved")
+    envelope_sha256 = Column(String(64), nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    __table_args__ = (
+        UniqueConstraint("id", "user_id", name="uq_research_experiment_reservation_owner"),
+        UniqueConstraint("revision_id", name="uq_research_experiment_reservation_revision"),
+        ForeignKeyConstraint(["approval_id", "experiment_id", "revision_id", "user_id"], ["research_experiment_approval.id", "research_experiment_approval.experiment_id", "research_experiment_approval.revision_id", "research_experiment_approval.user_id"], ondelete="RESTRICT", name="fk_research_experiment_reservation_approval"),
+        CheckConstraint("slot IN (0,1) AND state IN ('reserved','accepted','uncertain','released')", name="ck_research_experiment_reservation_state"),
+        CheckConstraint(_context_sha256_check("envelope_sha256"), name="ck_research_experiment_reservation_hash"),
+        Index("uq_research_experiment_active_owner", "user_id", unique=True, postgresql_where=text("state <> 'released'"), sqlite_where=text("state <> 'released'")),
+        Index("uq_research_experiment_active_slot", "slot", unique=True, postgresql_where=text("state <> 'released'"), sqlite_where=text("state <> 'released'")),
+    )
+
+
+class ResearchExperimentOutbox(AppBase):
+    __tablename__ = "research_experiment_outbox"
+    id = Column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    reservation_id = Column(Uuid(as_uuid=True), ForeignKey("research_experiment_reservation.id", ondelete="RESTRICT"), nullable=False, unique=True)
+    delivery_id = Column(Uuid(as_uuid=True), nullable=False, unique=True, default=uuid.uuid4)
+    state = Column(String(16), nullable=False, default="pending")
+    attempts = Column(Integer, nullable=False, default=0)
+    receipt_json = Column(Text)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    sent_at = Column(DateTime(timezone=True))
+    __table_args__ = (CheckConstraint("state IN ('pending','sent','uncertain') AND attempts >= 0", name="ck_research_experiment_outbox_state"),)
+
+
+_EXPERIMENT_MUTABLE = {
+    ResearchExperiment: {"head_revision_id", "version", "event_cursor", "updated_at"},
+    ResearchExperimentOperation: {"state", "result_json", "error_code", "updated_at"},
+    ResearchExperimentReservation: {"state", "updated_at"},
+    ResearchExperimentOutbox: {"state", "attempts", "receipt_json", "sent_at"},
+}
+
+
+def _research_experiment_guard(_mapper, _connection, target):
+    state = inspect(target)
+    if any(item.history.has_changes() and item.key not in _EXPERIMENT_MUTABLE[type(target)] for item in state.attrs):
+        raise ValueError("Experiment identity and frozen inputs are immutable")
+    def previous(key):
+        history = state.attrs[key].history
+        return history.deleted[0] if history.deleted else getattr(target, key)
+    if isinstance(target, ResearchExperiment) and (target.version < previous("version") or target.event_cursor < previous("event_cursor")):
+        raise ValueError("Experiment counters are monotonic")
+    if isinstance(target, ResearchExperiment) and state.attrs.head_revision_id.history.has_changes() and previous("head_revision_id") is not None and target.version != previous("version") + 1:
+        raise ValueError("A new proposal head requires a new version")
+    if isinstance(target, ResearchExperimentOperation) and previous("state") in {"committed", "conflict"}:
+        raise ValueError("Final experiment operations are immutable")
+    if isinstance(target, ResearchExperimentOperation) and previous("result_json") is not None and state.attrs.result_json.history.has_changes():
+        raise ValueError("Experiment operation results are immutable")
+    if isinstance(target, ResearchExperimentOutbox):
+        if (target.attempts < previous("attempts") or previous("state") == "sent"
+                or (previous("state") == "uncertain" and target.state == "pending")
+                or (previous("receipt_json") is not None and state.attrs.receipt_json.history.has_changes())):
+            raise ValueError("Acknowledged experiment delivery is immutable")
+    if isinstance(target, ResearchExperimentReservation):
+        if previous("state") in {"accepted", "released"} or target.state == "released" or (previous("state") == "uncertain" and target.state == "reserved"):
+            raise ValueError("C22 cannot release an execution reservation")
+
+
+for _experiment_model in _EXPERIMENT_MUTABLE:
+    event.listen(_experiment_model, "before_update", _research_experiment_guard)
+    event.listen(_experiment_model, "before_delete", _research_record_is_immutable)
+for _experiment_model in (ResearchExperimentRevision, ResearchExperimentInputBlob, ResearchExperimentRevisionFile, ResearchExperimentApproval, ResearchExperimentEvent, ResearchExperimentCapacity):
+    event.listen(_experiment_model, "before_update", _research_record_is_immutable)
+    event.listen(_experiment_model, "before_delete", _research_record_is_immutable)

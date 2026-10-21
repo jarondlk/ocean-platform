@@ -1,0 +1,3801 @@
+{
+  "kind": "actual-local-synthetic-http",
+  "python_executed": false,
+  "scientific_approval": "not_independently_verified",
+  "actions": [
+    {
+      "action": "create",
+      "request": {
+        "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+        "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+        "context_revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+        "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+        "context_payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+        "idempotency_key": "a96af9de-8222-4820-91d1-d1608a0911b0",
+        "proposal": {
+          "question": "Explore synthetic CTD casts without claiming a scientific result",
+          "cohort": {
+            "selections": [
+              {
+                "kind": "dataset",
+                "target_id": "synthetic:ctd:campaign-a",
+                "table": "casts",
+                "columns": [
+                  "cast_id"
+                ]
+              }
+            ]
+          },
+          "method": "Review a complete frozen synthetic cast identity table",
+          "assumptions": [
+            "Synthetic source only; not an independent scientific approval"
+          ],
+          "python_code": "from pathlib import Path\nPath('/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/pytest-542/test_all_nine_actual_actions_r0/C22-PYTHON-MUST-NOT-EXECUTE').write_text(\"unexpected\")\n",
+          "expected_outputs": [
+            {
+              "name": "summary.json",
+              "kind": "table",
+              "description": "Future experimental summary"
+            }
+          ],
+          "environment_id": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+          "limitations": [
+            "Fake dispatch performs no execution and produces no scientific output"
+          ],
+          "seeds": {
+            "numpy": 7
+          }
+        }
+      },
+      "response": {
+        "version": "research-experiments-v1",
+        "experiment": {
+          "id": "00aec01b-ce11-4f3e-a040-3a70f043f8b7",
+          "binding": {
+            "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+            "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+            "context_revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+            "context_payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+          },
+          "version": 1,
+          "proposal_revision_id": "7ad19622-5e2f-4ca2-968c-bccbe903e6fb",
+          "proposal": {
+            "question": "Explore synthetic CTD casts without claiming a scientific result",
+            "cohort": {
+              "version": "c22-cohort-v1",
+              "selections": [
+                {
+                  "kind": "dataset",
+                  "target_id": "synthetic:ctd:campaign-a",
+                  "table": "casts",
+                  "columns": [
+                    "cast_id"
+                  ]
+                }
+              ],
+              "pairing": {
+                "mode": "independent",
+                "relationship_ids": []
+              },
+              "exclusions": []
+            },
+            "method": "Review a complete frozen synthetic cast identity table",
+            "assumptions": [
+              "Synthetic source only; not an independent scientific approval"
+            ],
+            "python_code": "from pathlib import Path\nPath('/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/pytest-542/test_all_nine_actual_actions_r0/C22-PYTHON-MUST-NOT-EXECUTE').write_text(\"unexpected\")\n",
+            "expected_outputs": [
+              {
+                "name": "summary.json",
+                "kind": "table",
+                "description": "Future experimental summary"
+              }
+            ],
+            "environment_id": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+            "limitations": [
+              "Fake dispatch performs no execution and produces no scientific output"
+            ],
+            "seeds": {
+              "numpy": 7
+            },
+            "resources": {
+              "cpus": 2,
+              "memory_bytes": 4294967296,
+              "wall_seconds": 600,
+              "max_input_bytes": 268435456,
+              "max_output_bytes": 52428800
+            }
+          },
+          "hashes": {
+            "proposal_sha256": "664c9dea20261db13d74317dc675686b5239daa4eab20ead8117765c600c3bc6",
+            "code_sha256": "356b607d867e34eaeb349b34e76f5c0f3c8a8296bc0bcabca3974b0d22be8f74",
+            "input_manifest_sha256": "8edb39ba673a7eefb42e4d301e18389228c4c2690dab1a06513e7335c883b527",
+            "environment_sha256": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+            "resources_sha256": "af6d9b83267e87da95dd7a3406268d3821f0060f46c7771c7e99580fa77559a7"
+          },
+          "manifest": {
+            "actor_binding": "d8ccd5c856d08de36c16bd101605711d17180bb0c0862d0a81f6329dbdf22466",
+            "attachment_use": "supplementary_only; no implicit scientific inputs",
+            "attachments": [],
+            "authority": "experimental",
+            "binding": {
+              "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+              "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+              "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+              "revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            },
+            "catalogue_policy_revision": "c14:1c38231ee7e26818f422b7a5fbce128fb6f62dd5bebc79f9da7c7e2fe652a410",
+            "cohort": {
+              "exclusions": [],
+              "pairing": {
+                "mode": "independent",
+                "relationship_ids": []
+              },
+              "selections": [
+                {
+                  "columns": [
+                    "cast_id"
+                  ],
+                  "kind": "dataset",
+                  "table": "casts",
+                  "target_id": "synthetic:ctd:campaign-a"
+                }
+              ],
+              "version": "c22-cohort-v1"
+            },
+            "execution_performed": false,
+            "files": [
+              {
+                "kind": "scientific_sidecar",
+                "name": "exclusions.json",
+                "sha256": "6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056",
+                "size_bytes": 55
+              },
+              {
+                "kind": "scientific_sidecar",
+                "name": "pairing.json",
+                "sha256": "fdb152ab5a7f50998d53df5b9bd96583b089543fa424ba1cc387f17261373875",
+                "size_bytes": 115
+              },
+              {
+                "kind": "machine_table",
+                "name": "table-01.json",
+                "sha256": "38ffeef98e5d9daa4bacf2dc7b27525aa5ae203a48c6cc1938f849d621c41086",
+                "size_bytes": 611
+              }
+            ],
+            "independent_scientific_approval": false,
+            "max_input_bytes": 268435456,
+            "pin_limitations": [],
+            "pin_witnesses": [],
+            "pins": [],
+            "proposal_sha256": "664c9dea20261db13d74317dc675686b5239daa4eab20ead8117765c600c3bc6",
+            "question": "Explore synthetic CTD casts without claiming a scientific result",
+            "question_interpretation": "explicit_typed_cohort; published_tables_require_C01_exact_question",
+            "scope": {
+              "sources": {
+                "ctd": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "edna_metabarcoding": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "metagenome": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "remote_sensing": {
+                  "enabled": true,
+                  "filters": {}
+                }
+              },
+              "version": 1
+            },
+            "snapshot_ids": [
+              "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+              "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0"
+            ],
+            "source_sha256": "6a5068cff25c533cc62009abea4ef4e816f6d420599342be7dbb150d1404dfea",
+            "sources": {
+              "datasets": [
+                {
+                  "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "object_provenance": [
+                    {
+                      "dataset_id": "synthetic:ctd:campaign-a",
+                      "object_id": "synthetic:ctd:campaign-a:metadata",
+                      "operation_id": "c10:ctd:dataset_metadata",
+                      "operation_version": "c10-v1",
+                      "provenance": {
+                        "content_sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "origin": null,
+                        "references": [
+                          "Synthetic local acceptance only; not scientific publication"
+                        ],
+                        "source_generation": "synthetic-generation-1"
+                      },
+                      "role": "dataset_metadata",
+                      "schema_version": "catalogue-dataset-v1",
+                      "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                      "size_bytes": 2650,
+                      "source_family": "ctd",
+                      "source_id": "synthetic-ctd"
+                    },
+                    {
+                      "dataset_id": "synthetic:ctd:campaign-a",
+                      "object_id": "synthetic:ctd:campaign-a:table:casts",
+                      "operation_id": "c10:ctd:casts",
+                      "operation_version": "c10-v1",
+                      "provenance": {
+                        "content_sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "origin": null,
+                        "references": [
+                          "Synthetic local acceptance only; not scientific publication"
+                        ],
+                        "source_generation": "synthetic-generation-1"
+                      },
+                      "role": "casts",
+                      "schema_version": "catalogue-parquet-v1",
+                      "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                      "size_bytes": 1471,
+                      "source_family": "ctd",
+                      "source_id": "synthetic-ctd"
+                    }
+                  ],
+                  "objects": [
+                    {
+                      "object_id": "synthetic:ctd:campaign-a:metadata",
+                      "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                      "size_bytes": 2650
+                    },
+                    {
+                      "object_id": "synthetic:ctd:campaign-a:table:casts",
+                      "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                      "size_bytes": 1471
+                    }
+                  ],
+                  "publication": {
+                    "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                    "dataset_id": "synthetic:ctd:campaign-a",
+                    "decision_reference": "C22 explicitly synthetic local publication-policy fixture; no scientific approval",
+                    "eligible": true,
+                    "independent_scientific_approval": false,
+                    "objects": [
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:metadata",
+                        "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "size_bytes": 2650
+                      },
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:table:casts",
+                        "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "size_bytes": 1471
+                      }
+                    ],
+                    "policy_id": "c22:synthetic:publication",
+                    "policy_revision": "synthetic-policy-1",
+                    "publication_generation": "synthetic-generation-1",
+                    "source_id": "synthetic-ctd",
+                    "test_only": true
+                  },
+                  "source_capture": {
+                    "capture_method": "synthetic-c10-frozen-parquet-v1",
+                    "classification_generation": "no-scientific-approval-v1",
+                    "operation_generation": "c10-v1",
+                    "publication_generation": "synthetic-generation-1",
+                    "qualifiers": [
+                      "Synthetic local acceptance only; not scientific publication"
+                    ],
+                    "relationship_generation": "no-unified-samples-v1",
+                    "source_family": "ctd",
+                    "source_generation": "synthetic-generation-1",
+                    "source_id": "synthetic-ctd"
+                  },
+                  "source_family": "ctd",
+                  "source_id": "synthetic-ctd"
+                }
+              ],
+              "index_objects": [
+                {
+                  "object_id": "scientific:registry",
+                  "sha256": "5b7568cf9fb1e8aac8a0d29f6abac23831af30ec4c845b865067d3ec5072848a",
+                  "size_bytes": 13782
+                }
+              ],
+              "index_snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            },
+            "tables": [
+              {
+                "column_schema": [
+                  {
+                    "arrow_type": "string",
+                    "name": "cast_id",
+                    "nullable": false
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "sample_id",
+                    "nullable": false
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "collection_date",
+                    "nullable": true
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "bay",
+                    "nullable": true
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "station",
+                    "nullable": true
+                  }
+                ],
+                "effective_columns": [
+                  "cast_id",
+                  "sample_id",
+                  "collection_date",
+                  "bay",
+                  "station"
+                ],
+                "entity": "casts",
+                "file": "table-01.json",
+                "kind": "dataset",
+                "machine_encoding": "c22-lossless-machine-table-v1",
+                "requested_columns": [
+                  "cast_id"
+                ],
+                "restrictions": {},
+                "row_count": 4,
+                "scientific_metadata": {
+                  "collection_date_precision": "day",
+                  "collection_id": "synthetic:ctd:campaign-a:collection",
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "depth_convention": "positive_down",
+                  "descriptor": {
+                    "depth_unit": "m",
+                    "family": "ctd",
+                    "measurement": "temperature",
+                    "observation_entity": "cast",
+                    "sampling_contract": "Observed campaign casts only; no expected sampling schedule",
+                    "unit": "degC"
+                  },
+                  "entity": "casts",
+                  "family": "ctd",
+                  "methods": [
+                    "Distinct source-owned casts and depth observations; no inferred expected casts"
+                  ],
+                  "purpose": {
+                    "en": "Frozen cast and depth acceptance",
+                    "ja": "観測と深度の検証"
+                  },
+                  "qualification": "Synthetic local acceptance only; not scientific publication",
+                  "schema_version": "catalogue-dataset-v1",
+                  "source_id": "synthetic-ctd",
+                  "table": {
+                    "abundance_denominator": null,
+                    "availability": {
+                      "reason": null,
+                      "status": "available"
+                    },
+                    "columns": [
+                      {
+                        "description": "Synthetic source-owned cast_id",
+                        "dtype": "string",
+                        "name": "cast_id",
+                        "nullable": false,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned sample_id",
+                        "dtype": "string",
+                        "name": "sample_id",
+                        "nullable": false,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned collection_date",
+                        "dtype": "string",
+                        "name": "collection_date",
+                        "nullable": true,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned bay",
+                        "dtype": "string",
+                        "name": "bay",
+                        "nullable": true,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned station",
+                        "dtype": "string",
+                        "name": "station",
+                        "nullable": true,
+                        "unit": null
+                      }
+                    ],
+                    "completeness": "complete",
+                    "denominator": "All retained matching casts records in this source dataset",
+                    "entity": "casts",
+                    "method": null,
+                    "name": "casts",
+                    "object_id": "synthetic:ctd:campaign-a:table:casts",
+                    "row_count": 4,
+                    "taxonomic_rank": null
+                  },
+                  "title": {
+                    "en": "Synthetic CTD campaign",
+                    "ja": "合成CTD観測"
+                  }
+                },
+                "scope": {
+                  "sources": {
+                    "ctd": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "edna_metabarcoding": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "metagenome": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "remote_sensing": {
+                      "enabled": true,
+                      "filters": {}
+                    }
+                  },
+                  "version": 1
+                },
+                "source_object_id": "synthetic:ctd:campaign-a:table:casts",
+                "source_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                "table": "casts",
+                "target_id": "synthetic:ctd:campaign-a"
+              }
+            ],
+            "version": "c22-frozen-experiment-export-v1"
+          },
+          "environment": {
+            "kind": "c22-fake",
+            "test_only": true,
+            "python_version": "not-executed",
+            "image_digest": null,
+            "lockfile_sha256": null,
+            "packages": {},
+            "description": "Explicit C22 synthetic acceptance adapter; no Python runtime"
+          },
+          "approval": {
+            "status": "none",
+            "proposal_revision_id": null,
+            "approved_at": null
+          },
+          "dispatch": {
+            "eligible": false,
+            "reason": "Exact current approval and enabled fake dispatch are required",
+            "reservation_id": null,
+            "status": "unavailable"
+          },
+          "event_cursor": 0,
+          "latest_event_cursor": 1,
+          "authority": "experimental",
+          "scientific_approval": "not_independently_verified",
+          "execution_performed": false
+        },
+        "operation": {
+          "id": "1297c92a-5b1e-4bab-8d1d-49265e0e6ddf",
+          "state": "ready",
+          "result_revision_id": "7ad19622-5e2f-4ca2-968c-bccbe903e6fb",
+          "error_code": null,
+          "reason": null
+        }
+      }
+    },
+    {
+      "action": "revise",
+      "request": {
+        "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+        "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+        "context_revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+        "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+        "context_payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+        "idempotency_key": "cd308d11-5227-48b6-81e1-de2564a6b2fb",
+        "proposal": {
+          "question": "Explore synthetic CTD casts without claiming a scientific result",
+          "cohort": {
+            "selections": [
+              {
+                "kind": "dataset",
+                "target_id": "synthetic:ctd:campaign-a",
+                "table": "casts",
+                "columns": [
+                  "cast_id"
+                ]
+              }
+            ]
+          },
+          "method": "Revised exact synthetic review method",
+          "assumptions": [
+            "Synthetic source only; not an independent scientific approval"
+          ],
+          "python_code": "from pathlib import Path\nPath('/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/pytest-542/test_all_nine_actual_actions_r0/C22-PYTHON-MUST-NOT-EXECUTE').write_text(\"unexpected\")\n",
+          "expected_outputs": [
+            {
+              "name": "summary.json",
+              "kind": "table",
+              "description": "Future experimental summary"
+            }
+          ],
+          "environment_id": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+          "limitations": [
+            "Fake dispatch performs no execution and produces no scientific output"
+          ],
+          "seeds": {
+            "numpy": 7
+          }
+        },
+        "experiment_id": "00aec01b-ce11-4f3e-a040-3a70f043f8b7",
+        "expected_version": 1,
+        "expected_proposal_revision_id": "7ad19622-5e2f-4ca2-968c-bccbe903e6fb"
+      },
+      "response": {
+        "version": "research-experiments-v1",
+        "experiment": {
+          "id": "00aec01b-ce11-4f3e-a040-3a70f043f8b7",
+          "binding": {
+            "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+            "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+            "context_revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+            "context_payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+          },
+          "version": 2,
+          "proposal_revision_id": "b955658e-422d-467c-a1f3-7c2e0a524e2d",
+          "proposal": {
+            "question": "Explore synthetic CTD casts without claiming a scientific result",
+            "cohort": {
+              "version": "c22-cohort-v1",
+              "selections": [
+                {
+                  "kind": "dataset",
+                  "target_id": "synthetic:ctd:campaign-a",
+                  "table": "casts",
+                  "columns": [
+                    "cast_id"
+                  ]
+                }
+              ],
+              "pairing": {
+                "mode": "independent",
+                "relationship_ids": []
+              },
+              "exclusions": []
+            },
+            "method": "Revised exact synthetic review method",
+            "assumptions": [
+              "Synthetic source only; not an independent scientific approval"
+            ],
+            "python_code": "from pathlib import Path\nPath('/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/pytest-542/test_all_nine_actual_actions_r0/C22-PYTHON-MUST-NOT-EXECUTE').write_text(\"unexpected\")\n",
+            "expected_outputs": [
+              {
+                "name": "summary.json",
+                "kind": "table",
+                "description": "Future experimental summary"
+              }
+            ],
+            "environment_id": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+            "limitations": [
+              "Fake dispatch performs no execution and produces no scientific output"
+            ],
+            "seeds": {
+              "numpy": 7
+            },
+            "resources": {
+              "cpus": 2,
+              "memory_bytes": 4294967296,
+              "wall_seconds": 600,
+              "max_input_bytes": 268435456,
+              "max_output_bytes": 52428800
+            }
+          },
+          "hashes": {
+            "proposal_sha256": "3ee1bb46ad705d3876479bb62991e6db0b11986ea42c50f672116f2fd7199da3",
+            "code_sha256": "356b607d867e34eaeb349b34e76f5c0f3c8a8296bc0bcabca3974b0d22be8f74",
+            "input_manifest_sha256": "95c06229df27e43e70eb5a77b46b393c7ab187c1a063e2499a16d27537838d5d",
+            "environment_sha256": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+            "resources_sha256": "af6d9b83267e87da95dd7a3406268d3821f0060f46c7771c7e99580fa77559a7"
+          },
+          "manifest": {
+            "actor_binding": "d8ccd5c856d08de36c16bd101605711d17180bb0c0862d0a81f6329dbdf22466",
+            "attachment_use": "supplementary_only; no implicit scientific inputs",
+            "attachments": [],
+            "authority": "experimental",
+            "binding": {
+              "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+              "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+              "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+              "revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            },
+            "catalogue_policy_revision": "c14:1c38231ee7e26818f422b7a5fbce128fb6f62dd5bebc79f9da7c7e2fe652a410",
+            "cohort": {
+              "exclusions": [],
+              "pairing": {
+                "mode": "independent",
+                "relationship_ids": []
+              },
+              "selections": [
+                {
+                  "columns": [
+                    "cast_id"
+                  ],
+                  "kind": "dataset",
+                  "table": "casts",
+                  "target_id": "synthetic:ctd:campaign-a"
+                }
+              ],
+              "version": "c22-cohort-v1"
+            },
+            "execution_performed": false,
+            "files": [
+              {
+                "kind": "scientific_sidecar",
+                "name": "exclusions.json",
+                "sha256": "6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056",
+                "size_bytes": 55
+              },
+              {
+                "kind": "scientific_sidecar",
+                "name": "pairing.json",
+                "sha256": "fdb152ab5a7f50998d53df5b9bd96583b089543fa424ba1cc387f17261373875",
+                "size_bytes": 115
+              },
+              {
+                "kind": "machine_table",
+                "name": "table-01.json",
+                "sha256": "38ffeef98e5d9daa4bacf2dc7b27525aa5ae203a48c6cc1938f849d621c41086",
+                "size_bytes": 611
+              }
+            ],
+            "independent_scientific_approval": false,
+            "max_input_bytes": 268435456,
+            "pin_limitations": [],
+            "pin_witnesses": [],
+            "pins": [],
+            "proposal_sha256": "3ee1bb46ad705d3876479bb62991e6db0b11986ea42c50f672116f2fd7199da3",
+            "question": "Explore synthetic CTD casts without claiming a scientific result",
+            "question_interpretation": "explicit_typed_cohort; published_tables_require_C01_exact_question",
+            "scope": {
+              "sources": {
+                "ctd": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "edna_metabarcoding": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "metagenome": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "remote_sensing": {
+                  "enabled": true,
+                  "filters": {}
+                }
+              },
+              "version": 1
+            },
+            "snapshot_ids": [
+              "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+              "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0"
+            ],
+            "source_sha256": "6a5068cff25c533cc62009abea4ef4e816f6d420599342be7dbb150d1404dfea",
+            "sources": {
+              "datasets": [
+                {
+                  "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "object_provenance": [
+                    {
+                      "dataset_id": "synthetic:ctd:campaign-a",
+                      "object_id": "synthetic:ctd:campaign-a:metadata",
+                      "operation_id": "c10:ctd:dataset_metadata",
+                      "operation_version": "c10-v1",
+                      "provenance": {
+                        "content_sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "origin": null,
+                        "references": [
+                          "Synthetic local acceptance only; not scientific publication"
+                        ],
+                        "source_generation": "synthetic-generation-1"
+                      },
+                      "role": "dataset_metadata",
+                      "schema_version": "catalogue-dataset-v1",
+                      "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                      "size_bytes": 2650,
+                      "source_family": "ctd",
+                      "source_id": "synthetic-ctd"
+                    },
+                    {
+                      "dataset_id": "synthetic:ctd:campaign-a",
+                      "object_id": "synthetic:ctd:campaign-a:table:casts",
+                      "operation_id": "c10:ctd:casts",
+                      "operation_version": "c10-v1",
+                      "provenance": {
+                        "content_sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "origin": null,
+                        "references": [
+                          "Synthetic local acceptance only; not scientific publication"
+                        ],
+                        "source_generation": "synthetic-generation-1"
+                      },
+                      "role": "casts",
+                      "schema_version": "catalogue-parquet-v1",
+                      "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                      "size_bytes": 1471,
+                      "source_family": "ctd",
+                      "source_id": "synthetic-ctd"
+                    }
+                  ],
+                  "objects": [
+                    {
+                      "object_id": "synthetic:ctd:campaign-a:metadata",
+                      "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                      "size_bytes": 2650
+                    },
+                    {
+                      "object_id": "synthetic:ctd:campaign-a:table:casts",
+                      "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                      "size_bytes": 1471
+                    }
+                  ],
+                  "publication": {
+                    "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                    "dataset_id": "synthetic:ctd:campaign-a",
+                    "decision_reference": "C22 explicitly synthetic local publication-policy fixture; no scientific approval",
+                    "eligible": true,
+                    "independent_scientific_approval": false,
+                    "objects": [
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:metadata",
+                        "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "size_bytes": 2650
+                      },
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:table:casts",
+                        "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "size_bytes": 1471
+                      }
+                    ],
+                    "policy_id": "c22:synthetic:publication",
+                    "policy_revision": "synthetic-policy-1",
+                    "publication_generation": "synthetic-generation-1",
+                    "source_id": "synthetic-ctd",
+                    "test_only": true
+                  },
+                  "source_capture": {
+                    "capture_method": "synthetic-c10-frozen-parquet-v1",
+                    "classification_generation": "no-scientific-approval-v1",
+                    "operation_generation": "c10-v1",
+                    "publication_generation": "synthetic-generation-1",
+                    "qualifiers": [
+                      "Synthetic local acceptance only; not scientific publication"
+                    ],
+                    "relationship_generation": "no-unified-samples-v1",
+                    "source_family": "ctd",
+                    "source_generation": "synthetic-generation-1",
+                    "source_id": "synthetic-ctd"
+                  },
+                  "source_family": "ctd",
+                  "source_id": "synthetic-ctd"
+                }
+              ],
+              "index_objects": [
+                {
+                  "object_id": "scientific:registry",
+                  "sha256": "5b7568cf9fb1e8aac8a0d29f6abac23831af30ec4c845b865067d3ec5072848a",
+                  "size_bytes": 13782
+                }
+              ],
+              "index_snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            },
+            "tables": [
+              {
+                "column_schema": [
+                  {
+                    "arrow_type": "string",
+                    "name": "cast_id",
+                    "nullable": false
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "sample_id",
+                    "nullable": false
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "collection_date",
+                    "nullable": true
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "bay",
+                    "nullable": true
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "station",
+                    "nullable": true
+                  }
+                ],
+                "effective_columns": [
+                  "cast_id",
+                  "sample_id",
+                  "collection_date",
+                  "bay",
+                  "station"
+                ],
+                "entity": "casts",
+                "file": "table-01.json",
+                "kind": "dataset",
+                "machine_encoding": "c22-lossless-machine-table-v1",
+                "requested_columns": [
+                  "cast_id"
+                ],
+                "restrictions": {},
+                "row_count": 4,
+                "scientific_metadata": {
+                  "collection_date_precision": "day",
+                  "collection_id": "synthetic:ctd:campaign-a:collection",
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "depth_convention": "positive_down",
+                  "descriptor": {
+                    "depth_unit": "m",
+                    "family": "ctd",
+                    "measurement": "temperature",
+                    "observation_entity": "cast",
+                    "sampling_contract": "Observed campaign casts only; no expected sampling schedule",
+                    "unit": "degC"
+                  },
+                  "entity": "casts",
+                  "family": "ctd",
+                  "methods": [
+                    "Distinct source-owned casts and depth observations; no inferred expected casts"
+                  ],
+                  "purpose": {
+                    "en": "Frozen cast and depth acceptance",
+                    "ja": "観測と深度の検証"
+                  },
+                  "qualification": "Synthetic local acceptance only; not scientific publication",
+                  "schema_version": "catalogue-dataset-v1",
+                  "source_id": "synthetic-ctd",
+                  "table": {
+                    "abundance_denominator": null,
+                    "availability": {
+                      "reason": null,
+                      "status": "available"
+                    },
+                    "columns": [
+                      {
+                        "description": "Synthetic source-owned cast_id",
+                        "dtype": "string",
+                        "name": "cast_id",
+                        "nullable": false,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned sample_id",
+                        "dtype": "string",
+                        "name": "sample_id",
+                        "nullable": false,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned collection_date",
+                        "dtype": "string",
+                        "name": "collection_date",
+                        "nullable": true,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned bay",
+                        "dtype": "string",
+                        "name": "bay",
+                        "nullable": true,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned station",
+                        "dtype": "string",
+                        "name": "station",
+                        "nullable": true,
+                        "unit": null
+                      }
+                    ],
+                    "completeness": "complete",
+                    "denominator": "All retained matching casts records in this source dataset",
+                    "entity": "casts",
+                    "method": null,
+                    "name": "casts",
+                    "object_id": "synthetic:ctd:campaign-a:table:casts",
+                    "row_count": 4,
+                    "taxonomic_rank": null
+                  },
+                  "title": {
+                    "en": "Synthetic CTD campaign",
+                    "ja": "合成CTD観測"
+                  }
+                },
+                "scope": {
+                  "sources": {
+                    "ctd": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "edna_metabarcoding": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "metagenome": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "remote_sensing": {
+                      "enabled": true,
+                      "filters": {}
+                    }
+                  },
+                  "version": 1
+                },
+                "source_object_id": "synthetic:ctd:campaign-a:table:casts",
+                "source_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                "table": "casts",
+                "target_id": "synthetic:ctd:campaign-a"
+              }
+            ],
+            "version": "c22-frozen-experiment-export-v1"
+          },
+          "environment": {
+            "kind": "c22-fake",
+            "test_only": true,
+            "python_version": "not-executed",
+            "image_digest": null,
+            "lockfile_sha256": null,
+            "packages": {},
+            "description": "Explicit C22 synthetic acceptance adapter; no Python runtime"
+          },
+          "approval": {
+            "status": "none",
+            "proposal_revision_id": null,
+            "approved_at": null
+          },
+          "dispatch": {
+            "eligible": false,
+            "reason": "Exact current approval and enabled fake dispatch are required",
+            "reservation_id": null,
+            "status": "unavailable"
+          },
+          "event_cursor": 0,
+          "latest_event_cursor": 2,
+          "authority": "experimental",
+          "scientific_approval": "not_independently_verified",
+          "execution_performed": false
+        },
+        "operation": {
+          "id": "58e0f68d-1365-4a3c-8180-dbab8f4cea47",
+          "state": "ready",
+          "result_revision_id": "b955658e-422d-467c-a1f3-7c2e0a524e2d",
+          "error_code": null,
+          "reason": null
+        }
+      }
+    },
+    {
+      "action": "get",
+      "request": {
+        "experiment_id": "00aec01b-ce11-4f3e-a040-3a70f043f8b7",
+        "proposal_revision_id": "7ad19622-5e2f-4ca2-968c-bccbe903e6fb"
+      },
+      "response": {
+        "version": "research-experiments-v1",
+        "experiment": {
+          "id": "00aec01b-ce11-4f3e-a040-3a70f043f8b7",
+          "binding": {
+            "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+            "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+            "context_revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+            "context_payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+          },
+          "version": 2,
+          "proposal_revision_id": "7ad19622-5e2f-4ca2-968c-bccbe903e6fb",
+          "proposal": {
+            "question": "Explore synthetic CTD casts without claiming a scientific result",
+            "cohort": {
+              "version": "c22-cohort-v1",
+              "selections": [
+                {
+                  "kind": "dataset",
+                  "target_id": "synthetic:ctd:campaign-a",
+                  "table": "casts",
+                  "columns": [
+                    "cast_id"
+                  ]
+                }
+              ],
+              "pairing": {
+                "mode": "independent",
+                "relationship_ids": []
+              },
+              "exclusions": []
+            },
+            "method": "Review a complete frozen synthetic cast identity table",
+            "assumptions": [
+              "Synthetic source only; not an independent scientific approval"
+            ],
+            "python_code": "from pathlib import Path\nPath('/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/pytest-542/test_all_nine_actual_actions_r0/C22-PYTHON-MUST-NOT-EXECUTE').write_text(\"unexpected\")\n",
+            "expected_outputs": [
+              {
+                "name": "summary.json",
+                "kind": "table",
+                "description": "Future experimental summary"
+              }
+            ],
+            "environment_id": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+            "limitations": [
+              "Fake dispatch performs no execution and produces no scientific output"
+            ],
+            "seeds": {
+              "numpy": 7
+            },
+            "resources": {
+              "cpus": 2,
+              "memory_bytes": 4294967296,
+              "wall_seconds": 600,
+              "max_input_bytes": 268435456,
+              "max_output_bytes": 52428800
+            }
+          },
+          "hashes": {
+            "proposal_sha256": "664c9dea20261db13d74317dc675686b5239daa4eab20ead8117765c600c3bc6",
+            "code_sha256": "356b607d867e34eaeb349b34e76f5c0f3c8a8296bc0bcabca3974b0d22be8f74",
+            "input_manifest_sha256": "8edb39ba673a7eefb42e4d301e18389228c4c2690dab1a06513e7335c883b527",
+            "environment_sha256": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+            "resources_sha256": "af6d9b83267e87da95dd7a3406268d3821f0060f46c7771c7e99580fa77559a7"
+          },
+          "manifest": {
+            "actor_binding": "d8ccd5c856d08de36c16bd101605711d17180bb0c0862d0a81f6329dbdf22466",
+            "attachment_use": "supplementary_only; no implicit scientific inputs",
+            "attachments": [],
+            "authority": "experimental",
+            "binding": {
+              "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+              "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+              "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+              "revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            },
+            "catalogue_policy_revision": "c14:1c38231ee7e26818f422b7a5fbce128fb6f62dd5bebc79f9da7c7e2fe652a410",
+            "cohort": {
+              "exclusions": [],
+              "pairing": {
+                "mode": "independent",
+                "relationship_ids": []
+              },
+              "selections": [
+                {
+                  "columns": [
+                    "cast_id"
+                  ],
+                  "kind": "dataset",
+                  "table": "casts",
+                  "target_id": "synthetic:ctd:campaign-a"
+                }
+              ],
+              "version": "c22-cohort-v1"
+            },
+            "execution_performed": false,
+            "files": [
+              {
+                "kind": "scientific_sidecar",
+                "name": "exclusions.json",
+                "sha256": "6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056",
+                "size_bytes": 55
+              },
+              {
+                "kind": "scientific_sidecar",
+                "name": "pairing.json",
+                "sha256": "fdb152ab5a7f50998d53df5b9bd96583b089543fa424ba1cc387f17261373875",
+                "size_bytes": 115
+              },
+              {
+                "kind": "machine_table",
+                "name": "table-01.json",
+                "sha256": "38ffeef98e5d9daa4bacf2dc7b27525aa5ae203a48c6cc1938f849d621c41086",
+                "size_bytes": 611
+              }
+            ],
+            "independent_scientific_approval": false,
+            "max_input_bytes": 268435456,
+            "pin_limitations": [],
+            "pin_witnesses": [],
+            "pins": [],
+            "proposal_sha256": "664c9dea20261db13d74317dc675686b5239daa4eab20ead8117765c600c3bc6",
+            "question": "Explore synthetic CTD casts without claiming a scientific result",
+            "question_interpretation": "explicit_typed_cohort; published_tables_require_C01_exact_question",
+            "scope": {
+              "sources": {
+                "ctd": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "edna_metabarcoding": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "metagenome": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "remote_sensing": {
+                  "enabled": true,
+                  "filters": {}
+                }
+              },
+              "version": 1
+            },
+            "snapshot_ids": [
+              "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+              "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0"
+            ],
+            "source_sha256": "6a5068cff25c533cc62009abea4ef4e816f6d420599342be7dbb150d1404dfea",
+            "sources": {
+              "datasets": [
+                {
+                  "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "object_provenance": [
+                    {
+                      "dataset_id": "synthetic:ctd:campaign-a",
+                      "object_id": "synthetic:ctd:campaign-a:metadata",
+                      "operation_id": "c10:ctd:dataset_metadata",
+                      "operation_version": "c10-v1",
+                      "provenance": {
+                        "content_sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "origin": null,
+                        "references": [
+                          "Synthetic local acceptance only; not scientific publication"
+                        ],
+                        "source_generation": "synthetic-generation-1"
+                      },
+                      "role": "dataset_metadata",
+                      "schema_version": "catalogue-dataset-v1",
+                      "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                      "size_bytes": 2650,
+                      "source_family": "ctd",
+                      "source_id": "synthetic-ctd"
+                    },
+                    {
+                      "dataset_id": "synthetic:ctd:campaign-a",
+                      "object_id": "synthetic:ctd:campaign-a:table:casts",
+                      "operation_id": "c10:ctd:casts",
+                      "operation_version": "c10-v1",
+                      "provenance": {
+                        "content_sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "origin": null,
+                        "references": [
+                          "Synthetic local acceptance only; not scientific publication"
+                        ],
+                        "source_generation": "synthetic-generation-1"
+                      },
+                      "role": "casts",
+                      "schema_version": "catalogue-parquet-v1",
+                      "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                      "size_bytes": 1471,
+                      "source_family": "ctd",
+                      "source_id": "synthetic-ctd"
+                    }
+                  ],
+                  "objects": [
+                    {
+                      "object_id": "synthetic:ctd:campaign-a:metadata",
+                      "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                      "size_bytes": 2650
+                    },
+                    {
+                      "object_id": "synthetic:ctd:campaign-a:table:casts",
+                      "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                      "size_bytes": 1471
+                    }
+                  ],
+                  "publication": {
+                    "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                    "dataset_id": "synthetic:ctd:campaign-a",
+                    "decision_reference": "C22 explicitly synthetic local publication-policy fixture; no scientific approval",
+                    "eligible": true,
+                    "independent_scientific_approval": false,
+                    "objects": [
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:metadata",
+                        "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "size_bytes": 2650
+                      },
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:table:casts",
+                        "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "size_bytes": 1471
+                      }
+                    ],
+                    "policy_id": "c22:synthetic:publication",
+                    "policy_revision": "synthetic-policy-1",
+                    "publication_generation": "synthetic-generation-1",
+                    "source_id": "synthetic-ctd",
+                    "test_only": true
+                  },
+                  "source_capture": {
+                    "capture_method": "synthetic-c10-frozen-parquet-v1",
+                    "classification_generation": "no-scientific-approval-v1",
+                    "operation_generation": "c10-v1",
+                    "publication_generation": "synthetic-generation-1",
+                    "qualifiers": [
+                      "Synthetic local acceptance only; not scientific publication"
+                    ],
+                    "relationship_generation": "no-unified-samples-v1",
+                    "source_family": "ctd",
+                    "source_generation": "synthetic-generation-1",
+                    "source_id": "synthetic-ctd"
+                  },
+                  "source_family": "ctd",
+                  "source_id": "synthetic-ctd"
+                }
+              ],
+              "index_objects": [
+                {
+                  "object_id": "scientific:registry",
+                  "sha256": "5b7568cf9fb1e8aac8a0d29f6abac23831af30ec4c845b865067d3ec5072848a",
+                  "size_bytes": 13782
+                }
+              ],
+              "index_snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            },
+            "tables": [
+              {
+                "column_schema": [
+                  {
+                    "arrow_type": "string",
+                    "name": "cast_id",
+                    "nullable": false
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "sample_id",
+                    "nullable": false
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "collection_date",
+                    "nullable": true
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "bay",
+                    "nullable": true
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "station",
+                    "nullable": true
+                  }
+                ],
+                "effective_columns": [
+                  "cast_id",
+                  "sample_id",
+                  "collection_date",
+                  "bay",
+                  "station"
+                ],
+                "entity": "casts",
+                "file": "table-01.json",
+                "kind": "dataset",
+                "machine_encoding": "c22-lossless-machine-table-v1",
+                "requested_columns": [
+                  "cast_id"
+                ],
+                "restrictions": {},
+                "row_count": 4,
+                "scientific_metadata": {
+                  "collection_date_precision": "day",
+                  "collection_id": "synthetic:ctd:campaign-a:collection",
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "depth_convention": "positive_down",
+                  "descriptor": {
+                    "depth_unit": "m",
+                    "family": "ctd",
+                    "measurement": "temperature",
+                    "observation_entity": "cast",
+                    "sampling_contract": "Observed campaign casts only; no expected sampling schedule",
+                    "unit": "degC"
+                  },
+                  "entity": "casts",
+                  "family": "ctd",
+                  "methods": [
+                    "Distinct source-owned casts and depth observations; no inferred expected casts"
+                  ],
+                  "purpose": {
+                    "en": "Frozen cast and depth acceptance",
+                    "ja": "観測と深度の検証"
+                  },
+                  "qualification": "Synthetic local acceptance only; not scientific publication",
+                  "schema_version": "catalogue-dataset-v1",
+                  "source_id": "synthetic-ctd",
+                  "table": {
+                    "abundance_denominator": null,
+                    "availability": {
+                      "reason": null,
+                      "status": "available"
+                    },
+                    "columns": [
+                      {
+                        "description": "Synthetic source-owned cast_id",
+                        "dtype": "string",
+                        "name": "cast_id",
+                        "nullable": false,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned sample_id",
+                        "dtype": "string",
+                        "name": "sample_id",
+                        "nullable": false,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned collection_date",
+                        "dtype": "string",
+                        "name": "collection_date",
+                        "nullable": true,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned bay",
+                        "dtype": "string",
+                        "name": "bay",
+                        "nullable": true,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned station",
+                        "dtype": "string",
+                        "name": "station",
+                        "nullable": true,
+                        "unit": null
+                      }
+                    ],
+                    "completeness": "complete",
+                    "denominator": "All retained matching casts records in this source dataset",
+                    "entity": "casts",
+                    "method": null,
+                    "name": "casts",
+                    "object_id": "synthetic:ctd:campaign-a:table:casts",
+                    "row_count": 4,
+                    "taxonomic_rank": null
+                  },
+                  "title": {
+                    "en": "Synthetic CTD campaign",
+                    "ja": "合成CTD観測"
+                  }
+                },
+                "scope": {
+                  "sources": {
+                    "ctd": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "edna_metabarcoding": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "metagenome": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "remote_sensing": {
+                      "enabled": true,
+                      "filters": {}
+                    }
+                  },
+                  "version": 1
+                },
+                "source_object_id": "synthetic:ctd:campaign-a:table:casts",
+                "source_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                "table": "casts",
+                "target_id": "synthetic:ctd:campaign-a"
+              }
+            ],
+            "version": "c22-frozen-experiment-export-v1"
+          },
+          "environment": {
+            "kind": "c22-fake",
+            "test_only": true,
+            "python_version": "not-executed",
+            "image_digest": null,
+            "lockfile_sha256": null,
+            "packages": {},
+            "description": "Explicit C22 synthetic acceptance adapter; no Python runtime"
+          },
+          "approval": {
+            "status": "none",
+            "proposal_revision_id": null,
+            "approved_at": null
+          },
+          "dispatch": {
+            "eligible": false,
+            "reason": "Exact current approval and enabled fake dispatch are required",
+            "reservation_id": null,
+            "status": "unavailable"
+          },
+          "event_cursor": 0,
+          "latest_event_cursor": 2,
+          "authority": "experimental",
+          "scientific_approval": "not_independently_verified",
+          "execution_performed": false
+        },
+        "operation": null
+      }
+    },
+    {
+      "action": "status",
+      "request": {
+        "experiment_id": "00aec01b-ce11-4f3e-a040-3a70f043f8b7"
+      },
+      "response": {
+        "version": "research-experiments-v1",
+        "experiment": {
+          "id": "00aec01b-ce11-4f3e-a040-3a70f043f8b7",
+          "binding": {
+            "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+            "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+            "context_revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+            "context_payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+          },
+          "version": 2,
+          "proposal_revision_id": "b955658e-422d-467c-a1f3-7c2e0a524e2d",
+          "proposal": {
+            "question": "Explore synthetic CTD casts without claiming a scientific result",
+            "cohort": {
+              "version": "c22-cohort-v1",
+              "selections": [
+                {
+                  "kind": "dataset",
+                  "target_id": "synthetic:ctd:campaign-a",
+                  "table": "casts",
+                  "columns": [
+                    "cast_id"
+                  ]
+                }
+              ],
+              "pairing": {
+                "mode": "independent",
+                "relationship_ids": []
+              },
+              "exclusions": []
+            },
+            "method": "Revised exact synthetic review method",
+            "assumptions": [
+              "Synthetic source only; not an independent scientific approval"
+            ],
+            "python_code": "from pathlib import Path\nPath('/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/pytest-542/test_all_nine_actual_actions_r0/C22-PYTHON-MUST-NOT-EXECUTE').write_text(\"unexpected\")\n",
+            "expected_outputs": [
+              {
+                "name": "summary.json",
+                "kind": "table",
+                "description": "Future experimental summary"
+              }
+            ],
+            "environment_id": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+            "limitations": [
+              "Fake dispatch performs no execution and produces no scientific output"
+            ],
+            "seeds": {
+              "numpy": 7
+            },
+            "resources": {
+              "cpus": 2,
+              "memory_bytes": 4294967296,
+              "wall_seconds": 600,
+              "max_input_bytes": 268435456,
+              "max_output_bytes": 52428800
+            }
+          },
+          "hashes": {
+            "proposal_sha256": "3ee1bb46ad705d3876479bb62991e6db0b11986ea42c50f672116f2fd7199da3",
+            "code_sha256": "356b607d867e34eaeb349b34e76f5c0f3c8a8296bc0bcabca3974b0d22be8f74",
+            "input_manifest_sha256": "95c06229df27e43e70eb5a77b46b393c7ab187c1a063e2499a16d27537838d5d",
+            "environment_sha256": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+            "resources_sha256": "af6d9b83267e87da95dd7a3406268d3821f0060f46c7771c7e99580fa77559a7"
+          },
+          "manifest": {
+            "actor_binding": "d8ccd5c856d08de36c16bd101605711d17180bb0c0862d0a81f6329dbdf22466",
+            "attachment_use": "supplementary_only; no implicit scientific inputs",
+            "attachments": [],
+            "authority": "experimental",
+            "binding": {
+              "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+              "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+              "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+              "revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            },
+            "catalogue_policy_revision": "c14:1c38231ee7e26818f422b7a5fbce128fb6f62dd5bebc79f9da7c7e2fe652a410",
+            "cohort": {
+              "exclusions": [],
+              "pairing": {
+                "mode": "independent",
+                "relationship_ids": []
+              },
+              "selections": [
+                {
+                  "columns": [
+                    "cast_id"
+                  ],
+                  "kind": "dataset",
+                  "table": "casts",
+                  "target_id": "synthetic:ctd:campaign-a"
+                }
+              ],
+              "version": "c22-cohort-v1"
+            },
+            "execution_performed": false,
+            "files": [
+              {
+                "kind": "scientific_sidecar",
+                "name": "exclusions.json",
+                "sha256": "6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056",
+                "size_bytes": 55
+              },
+              {
+                "kind": "scientific_sidecar",
+                "name": "pairing.json",
+                "sha256": "fdb152ab5a7f50998d53df5b9bd96583b089543fa424ba1cc387f17261373875",
+                "size_bytes": 115
+              },
+              {
+                "kind": "machine_table",
+                "name": "table-01.json",
+                "sha256": "38ffeef98e5d9daa4bacf2dc7b27525aa5ae203a48c6cc1938f849d621c41086",
+                "size_bytes": 611
+              }
+            ],
+            "independent_scientific_approval": false,
+            "max_input_bytes": 268435456,
+            "pin_limitations": [],
+            "pin_witnesses": [],
+            "pins": [],
+            "proposal_sha256": "3ee1bb46ad705d3876479bb62991e6db0b11986ea42c50f672116f2fd7199da3",
+            "question": "Explore synthetic CTD casts without claiming a scientific result",
+            "question_interpretation": "explicit_typed_cohort; published_tables_require_C01_exact_question",
+            "scope": {
+              "sources": {
+                "ctd": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "edna_metabarcoding": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "metagenome": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "remote_sensing": {
+                  "enabled": true,
+                  "filters": {}
+                }
+              },
+              "version": 1
+            },
+            "snapshot_ids": [
+              "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+              "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0"
+            ],
+            "source_sha256": "6a5068cff25c533cc62009abea4ef4e816f6d420599342be7dbb150d1404dfea",
+            "sources": {
+              "datasets": [
+                {
+                  "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "object_provenance": [
+                    {
+                      "dataset_id": "synthetic:ctd:campaign-a",
+                      "object_id": "synthetic:ctd:campaign-a:metadata",
+                      "operation_id": "c10:ctd:dataset_metadata",
+                      "operation_version": "c10-v1",
+                      "provenance": {
+                        "content_sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "origin": null,
+                        "references": [
+                          "Synthetic local acceptance only; not scientific publication"
+                        ],
+                        "source_generation": "synthetic-generation-1"
+                      },
+                      "role": "dataset_metadata",
+                      "schema_version": "catalogue-dataset-v1",
+                      "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                      "size_bytes": 2650,
+                      "source_family": "ctd",
+                      "source_id": "synthetic-ctd"
+                    },
+                    {
+                      "dataset_id": "synthetic:ctd:campaign-a",
+                      "object_id": "synthetic:ctd:campaign-a:table:casts",
+                      "operation_id": "c10:ctd:casts",
+                      "operation_version": "c10-v1",
+                      "provenance": {
+                        "content_sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "origin": null,
+                        "references": [
+                          "Synthetic local acceptance only; not scientific publication"
+                        ],
+                        "source_generation": "synthetic-generation-1"
+                      },
+                      "role": "casts",
+                      "schema_version": "catalogue-parquet-v1",
+                      "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                      "size_bytes": 1471,
+                      "source_family": "ctd",
+                      "source_id": "synthetic-ctd"
+                    }
+                  ],
+                  "objects": [
+                    {
+                      "object_id": "synthetic:ctd:campaign-a:metadata",
+                      "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                      "size_bytes": 2650
+                    },
+                    {
+                      "object_id": "synthetic:ctd:campaign-a:table:casts",
+                      "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                      "size_bytes": 1471
+                    }
+                  ],
+                  "publication": {
+                    "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                    "dataset_id": "synthetic:ctd:campaign-a",
+                    "decision_reference": "C22 explicitly synthetic local publication-policy fixture; no scientific approval",
+                    "eligible": true,
+                    "independent_scientific_approval": false,
+                    "objects": [
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:metadata",
+                        "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "size_bytes": 2650
+                      },
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:table:casts",
+                        "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "size_bytes": 1471
+                      }
+                    ],
+                    "policy_id": "c22:synthetic:publication",
+                    "policy_revision": "synthetic-policy-1",
+                    "publication_generation": "synthetic-generation-1",
+                    "source_id": "synthetic-ctd",
+                    "test_only": true
+                  },
+                  "source_capture": {
+                    "capture_method": "synthetic-c10-frozen-parquet-v1",
+                    "classification_generation": "no-scientific-approval-v1",
+                    "operation_generation": "c10-v1",
+                    "publication_generation": "synthetic-generation-1",
+                    "qualifiers": [
+                      "Synthetic local acceptance only; not scientific publication"
+                    ],
+                    "relationship_generation": "no-unified-samples-v1",
+                    "source_family": "ctd",
+                    "source_generation": "synthetic-generation-1",
+                    "source_id": "synthetic-ctd"
+                  },
+                  "source_family": "ctd",
+                  "source_id": "synthetic-ctd"
+                }
+              ],
+              "index_objects": [
+                {
+                  "object_id": "scientific:registry",
+                  "sha256": "5b7568cf9fb1e8aac8a0d29f6abac23831af30ec4c845b865067d3ec5072848a",
+                  "size_bytes": 13782
+                }
+              ],
+              "index_snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            },
+            "tables": [
+              {
+                "column_schema": [
+                  {
+                    "arrow_type": "string",
+                    "name": "cast_id",
+                    "nullable": false
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "sample_id",
+                    "nullable": false
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "collection_date",
+                    "nullable": true
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "bay",
+                    "nullable": true
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "station",
+                    "nullable": true
+                  }
+                ],
+                "effective_columns": [
+                  "cast_id",
+                  "sample_id",
+                  "collection_date",
+                  "bay",
+                  "station"
+                ],
+                "entity": "casts",
+                "file": "table-01.json",
+                "kind": "dataset",
+                "machine_encoding": "c22-lossless-machine-table-v1",
+                "requested_columns": [
+                  "cast_id"
+                ],
+                "restrictions": {},
+                "row_count": 4,
+                "scientific_metadata": {
+                  "collection_date_precision": "day",
+                  "collection_id": "synthetic:ctd:campaign-a:collection",
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "depth_convention": "positive_down",
+                  "descriptor": {
+                    "depth_unit": "m",
+                    "family": "ctd",
+                    "measurement": "temperature",
+                    "observation_entity": "cast",
+                    "sampling_contract": "Observed campaign casts only; no expected sampling schedule",
+                    "unit": "degC"
+                  },
+                  "entity": "casts",
+                  "family": "ctd",
+                  "methods": [
+                    "Distinct source-owned casts and depth observations; no inferred expected casts"
+                  ],
+                  "purpose": {
+                    "en": "Frozen cast and depth acceptance",
+                    "ja": "観測と深度の検証"
+                  },
+                  "qualification": "Synthetic local acceptance only; not scientific publication",
+                  "schema_version": "catalogue-dataset-v1",
+                  "source_id": "synthetic-ctd",
+                  "table": {
+                    "abundance_denominator": null,
+                    "availability": {
+                      "reason": null,
+                      "status": "available"
+                    },
+                    "columns": [
+                      {
+                        "description": "Synthetic source-owned cast_id",
+                        "dtype": "string",
+                        "name": "cast_id",
+                        "nullable": false,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned sample_id",
+                        "dtype": "string",
+                        "name": "sample_id",
+                        "nullable": false,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned collection_date",
+                        "dtype": "string",
+                        "name": "collection_date",
+                        "nullable": true,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned bay",
+                        "dtype": "string",
+                        "name": "bay",
+                        "nullable": true,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned station",
+                        "dtype": "string",
+                        "name": "station",
+                        "nullable": true,
+                        "unit": null
+                      }
+                    ],
+                    "completeness": "complete",
+                    "denominator": "All retained matching casts records in this source dataset",
+                    "entity": "casts",
+                    "method": null,
+                    "name": "casts",
+                    "object_id": "synthetic:ctd:campaign-a:table:casts",
+                    "row_count": 4,
+                    "taxonomic_rank": null
+                  },
+                  "title": {
+                    "en": "Synthetic CTD campaign",
+                    "ja": "合成CTD観測"
+                  }
+                },
+                "scope": {
+                  "sources": {
+                    "ctd": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "edna_metabarcoding": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "metagenome": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "remote_sensing": {
+                      "enabled": true,
+                      "filters": {}
+                    }
+                  },
+                  "version": 1
+                },
+                "source_object_id": "synthetic:ctd:campaign-a:table:casts",
+                "source_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                "table": "casts",
+                "target_id": "synthetic:ctd:campaign-a"
+              }
+            ],
+            "version": "c22-frozen-experiment-export-v1"
+          },
+          "environment": {
+            "kind": "c22-fake",
+            "test_only": true,
+            "python_version": "not-executed",
+            "image_digest": null,
+            "lockfile_sha256": null,
+            "packages": {},
+            "description": "Explicit C22 synthetic acceptance adapter; no Python runtime"
+          },
+          "approval": {
+            "status": "none",
+            "proposal_revision_id": null,
+            "approved_at": null
+          },
+          "dispatch": {
+            "eligible": false,
+            "reason": "Exact current approval and enabled fake dispatch are required",
+            "reservation_id": null,
+            "status": "unavailable"
+          },
+          "event_cursor": 0,
+          "latest_event_cursor": 2,
+          "authority": "experimental",
+          "scientific_approval": "not_independently_verified",
+          "execution_performed": false
+        },
+        "operation": null
+      }
+    },
+    {
+      "action": "list",
+      "request": {
+        "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+        "limit": 1
+      },
+      "response": {
+        "version": "research-experiments-v1",
+        "items": [
+          {
+            "id": "00aec01b-ce11-4f3e-a040-3a70f043f8b7",
+            "binding": {
+              "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+              "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+              "context_revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+              "context_payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+            },
+            "version": 2,
+            "proposal_revision_id": "b955658e-422d-467c-a1f3-7c2e0a524e2d",
+            "proposal": {
+              "question": "Explore synthetic CTD casts without claiming a scientific result",
+              "cohort": {
+                "version": "c22-cohort-v1",
+                "selections": [
+                  {
+                    "kind": "dataset",
+                    "target_id": "synthetic:ctd:campaign-a",
+                    "table": "casts",
+                    "columns": [
+                      "cast_id"
+                    ]
+                  }
+                ],
+                "pairing": {
+                  "mode": "independent",
+                  "relationship_ids": []
+                },
+                "exclusions": []
+              },
+              "method": "Revised exact synthetic review method",
+              "assumptions": [
+                "Synthetic source only; not an independent scientific approval"
+              ],
+              "python_code": "from pathlib import Path\nPath('/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/pytest-542/test_all_nine_actual_actions_r0/C22-PYTHON-MUST-NOT-EXECUTE').write_text(\"unexpected\")\n",
+              "expected_outputs": [
+                {
+                  "name": "summary.json",
+                  "kind": "table",
+                  "description": "Future experimental summary"
+                }
+              ],
+              "environment_id": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+              "limitations": [
+                "Fake dispatch performs no execution and produces no scientific output"
+              ],
+              "seeds": {
+                "numpy": 7
+              },
+              "resources": {
+                "cpus": 2,
+                "memory_bytes": 4294967296,
+                "wall_seconds": 600,
+                "max_input_bytes": 268435456,
+                "max_output_bytes": 52428800
+              }
+            },
+            "hashes": {
+              "proposal_sha256": "3ee1bb46ad705d3876479bb62991e6db0b11986ea42c50f672116f2fd7199da3",
+              "code_sha256": "356b607d867e34eaeb349b34e76f5c0f3c8a8296bc0bcabca3974b0d22be8f74",
+              "input_manifest_sha256": "95c06229df27e43e70eb5a77b46b393c7ab187c1a063e2499a16d27537838d5d",
+              "environment_sha256": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+              "resources_sha256": "af6d9b83267e87da95dd7a3406268d3821f0060f46c7771c7e99580fa77559a7"
+            },
+            "manifest": {
+              "actor_binding": "d8ccd5c856d08de36c16bd101605711d17180bb0c0862d0a81f6329dbdf22466",
+              "attachment_use": "supplementary_only; no implicit scientific inputs",
+              "attachments": [],
+              "authority": "experimental",
+              "binding": {
+                "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+                "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+                "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+                "revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+                "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+              },
+              "catalogue_policy_revision": "c14:1c38231ee7e26818f422b7a5fbce128fb6f62dd5bebc79f9da7c7e2fe652a410",
+              "cohort": {
+                "exclusions": [],
+                "pairing": {
+                  "mode": "independent",
+                  "relationship_ids": []
+                },
+                "selections": [
+                  {
+                    "columns": [
+                      "cast_id"
+                    ],
+                    "kind": "dataset",
+                    "table": "casts",
+                    "target_id": "synthetic:ctd:campaign-a"
+                  }
+                ],
+                "version": "c22-cohort-v1"
+              },
+              "execution_performed": false,
+              "files": [
+                {
+                  "kind": "scientific_sidecar",
+                  "name": "exclusions.json",
+                  "sha256": "6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056",
+                  "size_bytes": 55
+                },
+                {
+                  "kind": "scientific_sidecar",
+                  "name": "pairing.json",
+                  "sha256": "fdb152ab5a7f50998d53df5b9bd96583b089543fa424ba1cc387f17261373875",
+                  "size_bytes": 115
+                },
+                {
+                  "kind": "machine_table",
+                  "name": "table-01.json",
+                  "sha256": "38ffeef98e5d9daa4bacf2dc7b27525aa5ae203a48c6cc1938f849d621c41086",
+                  "size_bytes": 611
+                }
+              ],
+              "independent_scientific_approval": false,
+              "max_input_bytes": 268435456,
+              "pin_limitations": [],
+              "pin_witnesses": [],
+              "pins": [],
+              "proposal_sha256": "3ee1bb46ad705d3876479bb62991e6db0b11986ea42c50f672116f2fd7199da3",
+              "question": "Explore synthetic CTD casts without claiming a scientific result",
+              "question_interpretation": "explicit_typed_cohort; published_tables_require_C01_exact_question",
+              "scope": {
+                "sources": {
+                  "ctd": {
+                    "enabled": true,
+                    "filters": {}
+                  },
+                  "edna_metabarcoding": {
+                    "enabled": true,
+                    "filters": {}
+                  },
+                  "metagenome": {
+                    "enabled": true,
+                    "filters": {}
+                  },
+                  "remote_sensing": {
+                    "enabled": true,
+                    "filters": {}
+                  }
+                },
+                "version": 1
+              },
+              "snapshot_ids": [
+                "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+                "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0"
+              ],
+              "source_sha256": "6a5068cff25c533cc62009abea4ef4e816f6d420599342be7dbb150d1404dfea",
+              "sources": {
+                "datasets": [
+                  {
+                    "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                    "dataset_id": "synthetic:ctd:campaign-a",
+                    "object_provenance": [
+                      {
+                        "dataset_id": "synthetic:ctd:campaign-a",
+                        "object_id": "synthetic:ctd:campaign-a:metadata",
+                        "operation_id": "c10:ctd:dataset_metadata",
+                        "operation_version": "c10-v1",
+                        "provenance": {
+                          "content_sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                          "origin": null,
+                          "references": [
+                            "Synthetic local acceptance only; not scientific publication"
+                          ],
+                          "source_generation": "synthetic-generation-1"
+                        },
+                        "role": "dataset_metadata",
+                        "schema_version": "catalogue-dataset-v1",
+                        "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "size_bytes": 2650,
+                        "source_family": "ctd",
+                        "source_id": "synthetic-ctd"
+                      },
+                      {
+                        "dataset_id": "synthetic:ctd:campaign-a",
+                        "object_id": "synthetic:ctd:campaign-a:table:casts",
+                        "operation_id": "c10:ctd:casts",
+                        "operation_version": "c10-v1",
+                        "provenance": {
+                          "content_sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                          "origin": null,
+                          "references": [
+                            "Synthetic local acceptance only; not scientific publication"
+                          ],
+                          "source_generation": "synthetic-generation-1"
+                        },
+                        "role": "casts",
+                        "schema_version": "catalogue-parquet-v1",
+                        "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "size_bytes": 1471,
+                        "source_family": "ctd",
+                        "source_id": "synthetic-ctd"
+                      }
+                    ],
+                    "objects": [
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:metadata",
+                        "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "size_bytes": 2650
+                      },
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:table:casts",
+                        "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "size_bytes": 1471
+                      }
+                    ],
+                    "publication": {
+                      "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                      "dataset_id": "synthetic:ctd:campaign-a",
+                      "decision_reference": "C22 explicitly synthetic local publication-policy fixture; no scientific approval",
+                      "eligible": true,
+                      "independent_scientific_approval": false,
+                      "objects": [
+                        {
+                          "object_id": "synthetic:ctd:campaign-a:metadata",
+                          "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                          "size_bytes": 2650
+                        },
+                        {
+                          "object_id": "synthetic:ctd:campaign-a:table:casts",
+                          "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                          "size_bytes": 1471
+                        }
+                      ],
+                      "policy_id": "c22:synthetic:publication",
+                      "policy_revision": "synthetic-policy-1",
+                      "publication_generation": "synthetic-generation-1",
+                      "source_id": "synthetic-ctd",
+                      "test_only": true
+                    },
+                    "source_capture": {
+                      "capture_method": "synthetic-c10-frozen-parquet-v1",
+                      "classification_generation": "no-scientific-approval-v1",
+                      "operation_generation": "c10-v1",
+                      "publication_generation": "synthetic-generation-1",
+                      "qualifiers": [
+                        "Synthetic local acceptance only; not scientific publication"
+                      ],
+                      "relationship_generation": "no-unified-samples-v1",
+                      "source_family": "ctd",
+                      "source_generation": "synthetic-generation-1",
+                      "source_id": "synthetic-ctd"
+                    },
+                    "source_family": "ctd",
+                    "source_id": "synthetic-ctd"
+                  }
+                ],
+                "index_objects": [
+                  {
+                    "object_id": "scientific:registry",
+                    "sha256": "5b7568cf9fb1e8aac8a0d29f6abac23831af30ec4c845b865067d3ec5072848a",
+                    "size_bytes": 13782
+                  }
+                ],
+                "index_snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+              },
+              "tables": [
+                {
+                  "column_schema": [
+                    {
+                      "arrow_type": "string",
+                      "name": "cast_id",
+                      "nullable": false
+                    },
+                    {
+                      "arrow_type": "string",
+                      "name": "sample_id",
+                      "nullable": false
+                    },
+                    {
+                      "arrow_type": "string",
+                      "name": "collection_date",
+                      "nullable": true
+                    },
+                    {
+                      "arrow_type": "string",
+                      "name": "bay",
+                      "nullable": true
+                    },
+                    {
+                      "arrow_type": "string",
+                      "name": "station",
+                      "nullable": true
+                    }
+                  ],
+                  "effective_columns": [
+                    "cast_id",
+                    "sample_id",
+                    "collection_date",
+                    "bay",
+                    "station"
+                  ],
+                  "entity": "casts",
+                  "file": "table-01.json",
+                  "kind": "dataset",
+                  "machine_encoding": "c22-lossless-machine-table-v1",
+                  "requested_columns": [
+                    "cast_id"
+                  ],
+                  "restrictions": {},
+                  "row_count": 4,
+                  "scientific_metadata": {
+                    "collection_date_precision": "day",
+                    "collection_id": "synthetic:ctd:campaign-a:collection",
+                    "dataset_id": "synthetic:ctd:campaign-a",
+                    "depth_convention": "positive_down",
+                    "descriptor": {
+                      "depth_unit": "m",
+                      "family": "ctd",
+                      "measurement": "temperature",
+                      "observation_entity": "cast",
+                      "sampling_contract": "Observed campaign casts only; no expected sampling schedule",
+                      "unit": "degC"
+                    },
+                    "entity": "casts",
+                    "family": "ctd",
+                    "methods": [
+                      "Distinct source-owned casts and depth observations; no inferred expected casts"
+                    ],
+                    "purpose": {
+                      "en": "Frozen cast and depth acceptance",
+                      "ja": "観測と深度の検証"
+                    },
+                    "qualification": "Synthetic local acceptance only; not scientific publication",
+                    "schema_version": "catalogue-dataset-v1",
+                    "source_id": "synthetic-ctd",
+                    "table": {
+                      "abundance_denominator": null,
+                      "availability": {
+                        "reason": null,
+                        "status": "available"
+                      },
+                      "columns": [
+                        {
+                          "description": "Synthetic source-owned cast_id",
+                          "dtype": "string",
+                          "name": "cast_id",
+                          "nullable": false,
+                          "unit": null
+                        },
+                        {
+                          "description": "Synthetic source-owned sample_id",
+                          "dtype": "string",
+                          "name": "sample_id",
+                          "nullable": false,
+                          "unit": null
+                        },
+                        {
+                          "description": "Synthetic source-owned collection_date",
+                          "dtype": "string",
+                          "name": "collection_date",
+                          "nullable": true,
+                          "unit": null
+                        },
+                        {
+                          "description": "Synthetic source-owned bay",
+                          "dtype": "string",
+                          "name": "bay",
+                          "nullable": true,
+                          "unit": null
+                        },
+                        {
+                          "description": "Synthetic source-owned station",
+                          "dtype": "string",
+                          "name": "station",
+                          "nullable": true,
+                          "unit": null
+                        }
+                      ],
+                      "completeness": "complete",
+                      "denominator": "All retained matching casts records in this source dataset",
+                      "entity": "casts",
+                      "method": null,
+                      "name": "casts",
+                      "object_id": "synthetic:ctd:campaign-a:table:casts",
+                      "row_count": 4,
+                      "taxonomic_rank": null
+                    },
+                    "title": {
+                      "en": "Synthetic CTD campaign",
+                      "ja": "合成CTD観測"
+                    }
+                  },
+                  "scope": {
+                    "sources": {
+                      "ctd": {
+                        "enabled": true,
+                        "filters": {}
+                      },
+                      "edna_metabarcoding": {
+                        "enabled": true,
+                        "filters": {}
+                      },
+                      "metagenome": {
+                        "enabled": true,
+                        "filters": {}
+                      },
+                      "remote_sensing": {
+                        "enabled": true,
+                        "filters": {}
+                      }
+                    },
+                    "version": 1
+                  },
+                  "source_object_id": "synthetic:ctd:campaign-a:table:casts",
+                  "source_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                  "table": "casts",
+                  "target_id": "synthetic:ctd:campaign-a"
+                }
+              ],
+              "version": "c22-frozen-experiment-export-v1"
+            },
+            "environment": {
+              "kind": "c22-fake",
+              "test_only": true,
+              "python_version": "not-executed",
+              "image_digest": null,
+              "lockfile_sha256": null,
+              "packages": {},
+              "description": "Explicit C22 synthetic acceptance adapter; no Python runtime"
+            },
+            "approval": {
+              "status": "none",
+              "proposal_revision_id": null,
+              "approved_at": null
+            },
+            "dispatch": {
+              "eligible": false,
+              "reason": "Exact current approval and enabled fake dispatch are required",
+              "reservation_id": null,
+              "status": "unavailable"
+            },
+            "event_cursor": 0,
+            "latest_event_cursor": 2,
+            "authority": "experimental",
+            "scientific_approval": "not_independently_verified",
+            "execution_performed": false
+          }
+        ],
+        "next_cursor": null
+      }
+    },
+    {
+      "action": "retry",
+      "request": {
+        "operation_id": "58e0f68d-1365-4a3c-8180-dbab8f4cea47"
+      },
+      "response": {
+        "version": "research-experiments-v1",
+        "experiment": {
+          "id": "00aec01b-ce11-4f3e-a040-3a70f043f8b7",
+          "binding": {
+            "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+            "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+            "context_revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+            "context_payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+          },
+          "version": 2,
+          "proposal_revision_id": "b955658e-422d-467c-a1f3-7c2e0a524e2d",
+          "proposal": {
+            "question": "Explore synthetic CTD casts without claiming a scientific result",
+            "cohort": {
+              "version": "c22-cohort-v1",
+              "selections": [
+                {
+                  "kind": "dataset",
+                  "target_id": "synthetic:ctd:campaign-a",
+                  "table": "casts",
+                  "columns": [
+                    "cast_id"
+                  ]
+                }
+              ],
+              "pairing": {
+                "mode": "independent",
+                "relationship_ids": []
+              },
+              "exclusions": []
+            },
+            "method": "Revised exact synthetic review method",
+            "assumptions": [
+              "Synthetic source only; not an independent scientific approval"
+            ],
+            "python_code": "from pathlib import Path\nPath('/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/pytest-542/test_all_nine_actual_actions_r0/C22-PYTHON-MUST-NOT-EXECUTE').write_text(\"unexpected\")\n",
+            "expected_outputs": [
+              {
+                "name": "summary.json",
+                "kind": "table",
+                "description": "Future experimental summary"
+              }
+            ],
+            "environment_id": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+            "limitations": [
+              "Fake dispatch performs no execution and produces no scientific output"
+            ],
+            "seeds": {
+              "numpy": 7
+            },
+            "resources": {
+              "cpus": 2,
+              "memory_bytes": 4294967296,
+              "wall_seconds": 600,
+              "max_input_bytes": 268435456,
+              "max_output_bytes": 52428800
+            }
+          },
+          "hashes": {
+            "proposal_sha256": "3ee1bb46ad705d3876479bb62991e6db0b11986ea42c50f672116f2fd7199da3",
+            "code_sha256": "356b607d867e34eaeb349b34e76f5c0f3c8a8296bc0bcabca3974b0d22be8f74",
+            "input_manifest_sha256": "95c06229df27e43e70eb5a77b46b393c7ab187c1a063e2499a16d27537838d5d",
+            "environment_sha256": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+            "resources_sha256": "af6d9b83267e87da95dd7a3406268d3821f0060f46c7771c7e99580fa77559a7"
+          },
+          "manifest": {
+            "actor_binding": "d8ccd5c856d08de36c16bd101605711d17180bb0c0862d0a81f6329dbdf22466",
+            "attachment_use": "supplementary_only; no implicit scientific inputs",
+            "attachments": [],
+            "authority": "experimental",
+            "binding": {
+              "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+              "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+              "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+              "revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            },
+            "catalogue_policy_revision": "c14:1c38231ee7e26818f422b7a5fbce128fb6f62dd5bebc79f9da7c7e2fe652a410",
+            "cohort": {
+              "exclusions": [],
+              "pairing": {
+                "mode": "independent",
+                "relationship_ids": []
+              },
+              "selections": [
+                {
+                  "columns": [
+                    "cast_id"
+                  ],
+                  "kind": "dataset",
+                  "table": "casts",
+                  "target_id": "synthetic:ctd:campaign-a"
+                }
+              ],
+              "version": "c22-cohort-v1"
+            },
+            "execution_performed": false,
+            "files": [
+              {
+                "kind": "scientific_sidecar",
+                "name": "exclusions.json",
+                "sha256": "6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056",
+                "size_bytes": 55
+              },
+              {
+                "kind": "scientific_sidecar",
+                "name": "pairing.json",
+                "sha256": "fdb152ab5a7f50998d53df5b9bd96583b089543fa424ba1cc387f17261373875",
+                "size_bytes": 115
+              },
+              {
+                "kind": "machine_table",
+                "name": "table-01.json",
+                "sha256": "38ffeef98e5d9daa4bacf2dc7b27525aa5ae203a48c6cc1938f849d621c41086",
+                "size_bytes": 611
+              }
+            ],
+            "independent_scientific_approval": false,
+            "max_input_bytes": 268435456,
+            "pin_limitations": [],
+            "pin_witnesses": [],
+            "pins": [],
+            "proposal_sha256": "3ee1bb46ad705d3876479bb62991e6db0b11986ea42c50f672116f2fd7199da3",
+            "question": "Explore synthetic CTD casts without claiming a scientific result",
+            "question_interpretation": "explicit_typed_cohort; published_tables_require_C01_exact_question",
+            "scope": {
+              "sources": {
+                "ctd": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "edna_metabarcoding": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "metagenome": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "remote_sensing": {
+                  "enabled": true,
+                  "filters": {}
+                }
+              },
+              "version": 1
+            },
+            "snapshot_ids": [
+              "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+              "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0"
+            ],
+            "source_sha256": "6a5068cff25c533cc62009abea4ef4e816f6d420599342be7dbb150d1404dfea",
+            "sources": {
+              "datasets": [
+                {
+                  "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "object_provenance": [
+                    {
+                      "dataset_id": "synthetic:ctd:campaign-a",
+                      "object_id": "synthetic:ctd:campaign-a:metadata",
+                      "operation_id": "c10:ctd:dataset_metadata",
+                      "operation_version": "c10-v1",
+                      "provenance": {
+                        "content_sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "origin": null,
+                        "references": [
+                          "Synthetic local acceptance only; not scientific publication"
+                        ],
+                        "source_generation": "synthetic-generation-1"
+                      },
+                      "role": "dataset_metadata",
+                      "schema_version": "catalogue-dataset-v1",
+                      "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                      "size_bytes": 2650,
+                      "source_family": "ctd",
+                      "source_id": "synthetic-ctd"
+                    },
+                    {
+                      "dataset_id": "synthetic:ctd:campaign-a",
+                      "object_id": "synthetic:ctd:campaign-a:table:casts",
+                      "operation_id": "c10:ctd:casts",
+                      "operation_version": "c10-v1",
+                      "provenance": {
+                        "content_sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "origin": null,
+                        "references": [
+                          "Synthetic local acceptance only; not scientific publication"
+                        ],
+                        "source_generation": "synthetic-generation-1"
+                      },
+                      "role": "casts",
+                      "schema_version": "catalogue-parquet-v1",
+                      "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                      "size_bytes": 1471,
+                      "source_family": "ctd",
+                      "source_id": "synthetic-ctd"
+                    }
+                  ],
+                  "objects": [
+                    {
+                      "object_id": "synthetic:ctd:campaign-a:metadata",
+                      "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                      "size_bytes": 2650
+                    },
+                    {
+                      "object_id": "synthetic:ctd:campaign-a:table:casts",
+                      "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                      "size_bytes": 1471
+                    }
+                  ],
+                  "publication": {
+                    "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                    "dataset_id": "synthetic:ctd:campaign-a",
+                    "decision_reference": "C22 explicitly synthetic local publication-policy fixture; no scientific approval",
+                    "eligible": true,
+                    "independent_scientific_approval": false,
+                    "objects": [
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:metadata",
+                        "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "size_bytes": 2650
+                      },
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:table:casts",
+                        "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "size_bytes": 1471
+                      }
+                    ],
+                    "policy_id": "c22:synthetic:publication",
+                    "policy_revision": "synthetic-policy-1",
+                    "publication_generation": "synthetic-generation-1",
+                    "source_id": "synthetic-ctd",
+                    "test_only": true
+                  },
+                  "source_capture": {
+                    "capture_method": "synthetic-c10-frozen-parquet-v1",
+                    "classification_generation": "no-scientific-approval-v1",
+                    "operation_generation": "c10-v1",
+                    "publication_generation": "synthetic-generation-1",
+                    "qualifiers": [
+                      "Synthetic local acceptance only; not scientific publication"
+                    ],
+                    "relationship_generation": "no-unified-samples-v1",
+                    "source_family": "ctd",
+                    "source_generation": "synthetic-generation-1",
+                    "source_id": "synthetic-ctd"
+                  },
+                  "source_family": "ctd",
+                  "source_id": "synthetic-ctd"
+                }
+              ],
+              "index_objects": [
+                {
+                  "object_id": "scientific:registry",
+                  "sha256": "5b7568cf9fb1e8aac8a0d29f6abac23831af30ec4c845b865067d3ec5072848a",
+                  "size_bytes": 13782
+                }
+              ],
+              "index_snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            },
+            "tables": [
+              {
+                "column_schema": [
+                  {
+                    "arrow_type": "string",
+                    "name": "cast_id",
+                    "nullable": false
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "sample_id",
+                    "nullable": false
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "collection_date",
+                    "nullable": true
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "bay",
+                    "nullable": true
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "station",
+                    "nullable": true
+                  }
+                ],
+                "effective_columns": [
+                  "cast_id",
+                  "sample_id",
+                  "collection_date",
+                  "bay",
+                  "station"
+                ],
+                "entity": "casts",
+                "file": "table-01.json",
+                "kind": "dataset",
+                "machine_encoding": "c22-lossless-machine-table-v1",
+                "requested_columns": [
+                  "cast_id"
+                ],
+                "restrictions": {},
+                "row_count": 4,
+                "scientific_metadata": {
+                  "collection_date_precision": "day",
+                  "collection_id": "synthetic:ctd:campaign-a:collection",
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "depth_convention": "positive_down",
+                  "descriptor": {
+                    "depth_unit": "m",
+                    "family": "ctd",
+                    "measurement": "temperature",
+                    "observation_entity": "cast",
+                    "sampling_contract": "Observed campaign casts only; no expected sampling schedule",
+                    "unit": "degC"
+                  },
+                  "entity": "casts",
+                  "family": "ctd",
+                  "methods": [
+                    "Distinct source-owned casts and depth observations; no inferred expected casts"
+                  ],
+                  "purpose": {
+                    "en": "Frozen cast and depth acceptance",
+                    "ja": "観測と深度の検証"
+                  },
+                  "qualification": "Synthetic local acceptance only; not scientific publication",
+                  "schema_version": "catalogue-dataset-v1",
+                  "source_id": "synthetic-ctd",
+                  "table": {
+                    "abundance_denominator": null,
+                    "availability": {
+                      "reason": null,
+                      "status": "available"
+                    },
+                    "columns": [
+                      {
+                        "description": "Synthetic source-owned cast_id",
+                        "dtype": "string",
+                        "name": "cast_id",
+                        "nullable": false,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned sample_id",
+                        "dtype": "string",
+                        "name": "sample_id",
+                        "nullable": false,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned collection_date",
+                        "dtype": "string",
+                        "name": "collection_date",
+                        "nullable": true,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned bay",
+                        "dtype": "string",
+                        "name": "bay",
+                        "nullable": true,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned station",
+                        "dtype": "string",
+                        "name": "station",
+                        "nullable": true,
+                        "unit": null
+                      }
+                    ],
+                    "completeness": "complete",
+                    "denominator": "All retained matching casts records in this source dataset",
+                    "entity": "casts",
+                    "method": null,
+                    "name": "casts",
+                    "object_id": "synthetic:ctd:campaign-a:table:casts",
+                    "row_count": 4,
+                    "taxonomic_rank": null
+                  },
+                  "title": {
+                    "en": "Synthetic CTD campaign",
+                    "ja": "合成CTD観測"
+                  }
+                },
+                "scope": {
+                  "sources": {
+                    "ctd": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "edna_metabarcoding": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "metagenome": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "remote_sensing": {
+                      "enabled": true,
+                      "filters": {}
+                    }
+                  },
+                  "version": 1
+                },
+                "source_object_id": "synthetic:ctd:campaign-a:table:casts",
+                "source_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                "table": "casts",
+                "target_id": "synthetic:ctd:campaign-a"
+              }
+            ],
+            "version": "c22-frozen-experiment-export-v1"
+          },
+          "environment": {
+            "kind": "c22-fake",
+            "test_only": true,
+            "python_version": "not-executed",
+            "image_digest": null,
+            "lockfile_sha256": null,
+            "packages": {},
+            "description": "Explicit C22 synthetic acceptance adapter; no Python runtime"
+          },
+          "approval": {
+            "status": "none",
+            "proposal_revision_id": null,
+            "approved_at": null
+          },
+          "dispatch": {
+            "eligible": false,
+            "reason": "Exact current approval and enabled fake dispatch are required",
+            "reservation_id": null,
+            "status": "unavailable"
+          },
+          "event_cursor": 0,
+          "latest_event_cursor": 2,
+          "authority": "experimental",
+          "scientific_approval": "not_independently_verified",
+          "execution_performed": false
+        },
+        "operation": {
+          "id": "58e0f68d-1365-4a3c-8180-dbab8f4cea47",
+          "state": "ready",
+          "result_revision_id": "b955658e-422d-467c-a1f3-7c2e0a524e2d",
+          "error_code": null,
+          "reason": null
+        }
+      }
+    },
+    {
+      "action": "approve",
+      "request": {
+        "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+        "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+        "context_revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+        "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+        "context_payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+        "experiment_id": "00aec01b-ce11-4f3e-a040-3a70f043f8b7",
+        "expected_version": 2,
+        "expected_proposal_revision_id": "b955658e-422d-467c-a1f3-7c2e0a524e2d",
+        "expected_hashes": {
+          "proposal_sha256": "3ee1bb46ad705d3876479bb62991e6db0b11986ea42c50f672116f2fd7199da3",
+          "code_sha256": "356b607d867e34eaeb349b34e76f5c0f3c8a8296bc0bcabca3974b0d22be8f74",
+          "input_manifest_sha256": "95c06229df27e43e70eb5a77b46b393c7ab187c1a063e2499a16d27537838d5d",
+          "environment_sha256": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+          "resources_sha256": "af6d9b83267e87da95dd7a3406268d3821f0060f46c7771c7e99580fa77559a7"
+        },
+        "idempotency_key": "8a400ac5-87f6-4250-97ae-da16889fe8f0"
+      },
+      "response": {
+        "version": "research-experiments-v1",
+        "experiment": {
+          "id": "00aec01b-ce11-4f3e-a040-3a70f043f8b7",
+          "binding": {
+            "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+            "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+            "context_revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+            "context_payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+          },
+          "version": 2,
+          "proposal_revision_id": "b955658e-422d-467c-a1f3-7c2e0a524e2d",
+          "proposal": {
+            "question": "Explore synthetic CTD casts without claiming a scientific result",
+            "cohort": {
+              "version": "c22-cohort-v1",
+              "selections": [
+                {
+                  "kind": "dataset",
+                  "target_id": "synthetic:ctd:campaign-a",
+                  "table": "casts",
+                  "columns": [
+                    "cast_id"
+                  ]
+                }
+              ],
+              "pairing": {
+                "mode": "independent",
+                "relationship_ids": []
+              },
+              "exclusions": []
+            },
+            "method": "Revised exact synthetic review method",
+            "assumptions": [
+              "Synthetic source only; not an independent scientific approval"
+            ],
+            "python_code": "from pathlib import Path\nPath('/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/pytest-542/test_all_nine_actual_actions_r0/C22-PYTHON-MUST-NOT-EXECUTE').write_text(\"unexpected\")\n",
+            "expected_outputs": [
+              {
+                "name": "summary.json",
+                "kind": "table",
+                "description": "Future experimental summary"
+              }
+            ],
+            "environment_id": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+            "limitations": [
+              "Fake dispatch performs no execution and produces no scientific output"
+            ],
+            "seeds": {
+              "numpy": 7
+            },
+            "resources": {
+              "cpus": 2,
+              "memory_bytes": 4294967296,
+              "wall_seconds": 600,
+              "max_input_bytes": 268435456,
+              "max_output_bytes": 52428800
+            }
+          },
+          "hashes": {
+            "proposal_sha256": "3ee1bb46ad705d3876479bb62991e6db0b11986ea42c50f672116f2fd7199da3",
+            "code_sha256": "356b607d867e34eaeb349b34e76f5c0f3c8a8296bc0bcabca3974b0d22be8f74",
+            "input_manifest_sha256": "95c06229df27e43e70eb5a77b46b393c7ab187c1a063e2499a16d27537838d5d",
+            "environment_sha256": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+            "resources_sha256": "af6d9b83267e87da95dd7a3406268d3821f0060f46c7771c7e99580fa77559a7"
+          },
+          "manifest": {
+            "actor_binding": "d8ccd5c856d08de36c16bd101605711d17180bb0c0862d0a81f6329dbdf22466",
+            "attachment_use": "supplementary_only; no implicit scientific inputs",
+            "attachments": [],
+            "authority": "experimental",
+            "binding": {
+              "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+              "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+              "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+              "revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            },
+            "catalogue_policy_revision": "c14:1c38231ee7e26818f422b7a5fbce128fb6f62dd5bebc79f9da7c7e2fe652a410",
+            "cohort": {
+              "exclusions": [],
+              "pairing": {
+                "mode": "independent",
+                "relationship_ids": []
+              },
+              "selections": [
+                {
+                  "columns": [
+                    "cast_id"
+                  ],
+                  "kind": "dataset",
+                  "table": "casts",
+                  "target_id": "synthetic:ctd:campaign-a"
+                }
+              ],
+              "version": "c22-cohort-v1"
+            },
+            "execution_performed": false,
+            "files": [
+              {
+                "kind": "scientific_sidecar",
+                "name": "exclusions.json",
+                "sha256": "6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056",
+                "size_bytes": 55
+              },
+              {
+                "kind": "scientific_sidecar",
+                "name": "pairing.json",
+                "sha256": "fdb152ab5a7f50998d53df5b9bd96583b089543fa424ba1cc387f17261373875",
+                "size_bytes": 115
+              },
+              {
+                "kind": "machine_table",
+                "name": "table-01.json",
+                "sha256": "38ffeef98e5d9daa4bacf2dc7b27525aa5ae203a48c6cc1938f849d621c41086",
+                "size_bytes": 611
+              }
+            ],
+            "independent_scientific_approval": false,
+            "max_input_bytes": 268435456,
+            "pin_limitations": [],
+            "pin_witnesses": [],
+            "pins": [],
+            "proposal_sha256": "3ee1bb46ad705d3876479bb62991e6db0b11986ea42c50f672116f2fd7199da3",
+            "question": "Explore synthetic CTD casts without claiming a scientific result",
+            "question_interpretation": "explicit_typed_cohort; published_tables_require_C01_exact_question",
+            "scope": {
+              "sources": {
+                "ctd": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "edna_metabarcoding": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "metagenome": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "remote_sensing": {
+                  "enabled": true,
+                  "filters": {}
+                }
+              },
+              "version": 1
+            },
+            "snapshot_ids": [
+              "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+              "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0"
+            ],
+            "source_sha256": "6a5068cff25c533cc62009abea4ef4e816f6d420599342be7dbb150d1404dfea",
+            "sources": {
+              "datasets": [
+                {
+                  "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "object_provenance": [
+                    {
+                      "dataset_id": "synthetic:ctd:campaign-a",
+                      "object_id": "synthetic:ctd:campaign-a:metadata",
+                      "operation_id": "c10:ctd:dataset_metadata",
+                      "operation_version": "c10-v1",
+                      "provenance": {
+                        "content_sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "origin": null,
+                        "references": [
+                          "Synthetic local acceptance only; not scientific publication"
+                        ],
+                        "source_generation": "synthetic-generation-1"
+                      },
+                      "role": "dataset_metadata",
+                      "schema_version": "catalogue-dataset-v1",
+                      "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                      "size_bytes": 2650,
+                      "source_family": "ctd",
+                      "source_id": "synthetic-ctd"
+                    },
+                    {
+                      "dataset_id": "synthetic:ctd:campaign-a",
+                      "object_id": "synthetic:ctd:campaign-a:table:casts",
+                      "operation_id": "c10:ctd:casts",
+                      "operation_version": "c10-v1",
+                      "provenance": {
+                        "content_sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "origin": null,
+                        "references": [
+                          "Synthetic local acceptance only; not scientific publication"
+                        ],
+                        "source_generation": "synthetic-generation-1"
+                      },
+                      "role": "casts",
+                      "schema_version": "catalogue-parquet-v1",
+                      "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                      "size_bytes": 1471,
+                      "source_family": "ctd",
+                      "source_id": "synthetic-ctd"
+                    }
+                  ],
+                  "objects": [
+                    {
+                      "object_id": "synthetic:ctd:campaign-a:metadata",
+                      "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                      "size_bytes": 2650
+                    },
+                    {
+                      "object_id": "synthetic:ctd:campaign-a:table:casts",
+                      "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                      "size_bytes": 1471
+                    }
+                  ],
+                  "publication": {
+                    "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                    "dataset_id": "synthetic:ctd:campaign-a",
+                    "decision_reference": "C22 explicitly synthetic local publication-policy fixture; no scientific approval",
+                    "eligible": true,
+                    "independent_scientific_approval": false,
+                    "objects": [
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:metadata",
+                        "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "size_bytes": 2650
+                      },
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:table:casts",
+                        "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "size_bytes": 1471
+                      }
+                    ],
+                    "policy_id": "c22:synthetic:publication",
+                    "policy_revision": "synthetic-policy-1",
+                    "publication_generation": "synthetic-generation-1",
+                    "source_id": "synthetic-ctd",
+                    "test_only": true
+                  },
+                  "source_capture": {
+                    "capture_method": "synthetic-c10-frozen-parquet-v1",
+                    "classification_generation": "no-scientific-approval-v1",
+                    "operation_generation": "c10-v1",
+                    "publication_generation": "synthetic-generation-1",
+                    "qualifiers": [
+                      "Synthetic local acceptance only; not scientific publication"
+                    ],
+                    "relationship_generation": "no-unified-samples-v1",
+                    "source_family": "ctd",
+                    "source_generation": "synthetic-generation-1",
+                    "source_id": "synthetic-ctd"
+                  },
+                  "source_family": "ctd",
+                  "source_id": "synthetic-ctd"
+                }
+              ],
+              "index_objects": [
+                {
+                  "object_id": "scientific:registry",
+                  "sha256": "5b7568cf9fb1e8aac8a0d29f6abac23831af30ec4c845b865067d3ec5072848a",
+                  "size_bytes": 13782
+                }
+              ],
+              "index_snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            },
+            "tables": [
+              {
+                "column_schema": [
+                  {
+                    "arrow_type": "string",
+                    "name": "cast_id",
+                    "nullable": false
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "sample_id",
+                    "nullable": false
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "collection_date",
+                    "nullable": true
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "bay",
+                    "nullable": true
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "station",
+                    "nullable": true
+                  }
+                ],
+                "effective_columns": [
+                  "cast_id",
+                  "sample_id",
+                  "collection_date",
+                  "bay",
+                  "station"
+                ],
+                "entity": "casts",
+                "file": "table-01.json",
+                "kind": "dataset",
+                "machine_encoding": "c22-lossless-machine-table-v1",
+                "requested_columns": [
+                  "cast_id"
+                ],
+                "restrictions": {},
+                "row_count": 4,
+                "scientific_metadata": {
+                  "collection_date_precision": "day",
+                  "collection_id": "synthetic:ctd:campaign-a:collection",
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "depth_convention": "positive_down",
+                  "descriptor": {
+                    "depth_unit": "m",
+                    "family": "ctd",
+                    "measurement": "temperature",
+                    "observation_entity": "cast",
+                    "sampling_contract": "Observed campaign casts only; no expected sampling schedule",
+                    "unit": "degC"
+                  },
+                  "entity": "casts",
+                  "family": "ctd",
+                  "methods": [
+                    "Distinct source-owned casts and depth observations; no inferred expected casts"
+                  ],
+                  "purpose": {
+                    "en": "Frozen cast and depth acceptance",
+                    "ja": "観測と深度の検証"
+                  },
+                  "qualification": "Synthetic local acceptance only; not scientific publication",
+                  "schema_version": "catalogue-dataset-v1",
+                  "source_id": "synthetic-ctd",
+                  "table": {
+                    "abundance_denominator": null,
+                    "availability": {
+                      "reason": null,
+                      "status": "available"
+                    },
+                    "columns": [
+                      {
+                        "description": "Synthetic source-owned cast_id",
+                        "dtype": "string",
+                        "name": "cast_id",
+                        "nullable": false,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned sample_id",
+                        "dtype": "string",
+                        "name": "sample_id",
+                        "nullable": false,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned collection_date",
+                        "dtype": "string",
+                        "name": "collection_date",
+                        "nullable": true,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned bay",
+                        "dtype": "string",
+                        "name": "bay",
+                        "nullable": true,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned station",
+                        "dtype": "string",
+                        "name": "station",
+                        "nullable": true,
+                        "unit": null
+                      }
+                    ],
+                    "completeness": "complete",
+                    "denominator": "All retained matching casts records in this source dataset",
+                    "entity": "casts",
+                    "method": null,
+                    "name": "casts",
+                    "object_id": "synthetic:ctd:campaign-a:table:casts",
+                    "row_count": 4,
+                    "taxonomic_rank": null
+                  },
+                  "title": {
+                    "en": "Synthetic CTD campaign",
+                    "ja": "合成CTD観測"
+                  }
+                },
+                "scope": {
+                  "sources": {
+                    "ctd": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "edna_metabarcoding": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "metagenome": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "remote_sensing": {
+                      "enabled": true,
+                      "filters": {}
+                    }
+                  },
+                  "version": 1
+                },
+                "source_object_id": "synthetic:ctd:campaign-a:table:casts",
+                "source_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                "table": "casts",
+                "target_id": "synthetic:ctd:campaign-a"
+              }
+            ],
+            "version": "c22-frozen-experiment-export-v1"
+          },
+          "environment": {
+            "kind": "c22-fake",
+            "test_only": true,
+            "python_version": "not-executed",
+            "image_digest": null,
+            "lockfile_sha256": null,
+            "packages": {},
+            "description": "Explicit C22 synthetic acceptance adapter; no Python runtime"
+          },
+          "approval": {
+            "status": "current",
+            "proposal_revision_id": "b955658e-422d-467c-a1f3-7c2e0a524e2d",
+            "approved_at": "2026-10-21T03:17:49"
+          },
+          "dispatch": {
+            "eligible": true,
+            "reason": null,
+            "reservation_id": null,
+            "status": "ready"
+          },
+          "event_cursor": 0,
+          "latest_event_cursor": 3,
+          "authority": "experimental",
+          "scientific_approval": "not_independently_verified",
+          "execution_performed": false
+        },
+        "operation": {
+          "id": "0404dc00-ea3c-43fd-8151-42a287f089c2",
+          "state": "ready",
+          "result_revision_id": "b955658e-422d-467c-a1f3-7c2e0a524e2d",
+          "error_code": null,
+          "reason": null
+        }
+      }
+    },
+    {
+      "action": "dispatch",
+      "request": {
+        "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+        "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+        "context_revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+        "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+        "context_payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+        "experiment_id": "00aec01b-ce11-4f3e-a040-3a70f043f8b7",
+        "expected_version": 2,
+        "expected_proposal_revision_id": "b955658e-422d-467c-a1f3-7c2e0a524e2d",
+        "expected_hashes": {
+          "proposal_sha256": "3ee1bb46ad705d3876479bb62991e6db0b11986ea42c50f672116f2fd7199da3",
+          "code_sha256": "356b607d867e34eaeb349b34e76f5c0f3c8a8296bc0bcabca3974b0d22be8f74",
+          "input_manifest_sha256": "95c06229df27e43e70eb5a77b46b393c7ab187c1a063e2499a16d27537838d5d",
+          "environment_sha256": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+          "resources_sha256": "af6d9b83267e87da95dd7a3406268d3821f0060f46c7771c7e99580fa77559a7"
+        },
+        "idempotency_key": "42238a60-4658-4979-83d2-c3cebb4c7a4d"
+      },
+      "response": {
+        "version": "research-experiments-v1",
+        "experiment": {
+          "id": "00aec01b-ce11-4f3e-a040-3a70f043f8b7",
+          "binding": {
+            "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+            "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+            "context_revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+            "context_payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+          },
+          "version": 2,
+          "proposal_revision_id": "b955658e-422d-467c-a1f3-7c2e0a524e2d",
+          "proposal": {
+            "question": "Explore synthetic CTD casts without claiming a scientific result",
+            "cohort": {
+              "version": "c22-cohort-v1",
+              "selections": [
+                {
+                  "kind": "dataset",
+                  "target_id": "synthetic:ctd:campaign-a",
+                  "table": "casts",
+                  "columns": [
+                    "cast_id"
+                  ]
+                }
+              ],
+              "pairing": {
+                "mode": "independent",
+                "relationship_ids": []
+              },
+              "exclusions": []
+            },
+            "method": "Revised exact synthetic review method",
+            "assumptions": [
+              "Synthetic source only; not an independent scientific approval"
+            ],
+            "python_code": "from pathlib import Path\nPath('/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/pytest-542/test_all_nine_actual_actions_r0/C22-PYTHON-MUST-NOT-EXECUTE').write_text(\"unexpected\")\n",
+            "expected_outputs": [
+              {
+                "name": "summary.json",
+                "kind": "table",
+                "description": "Future experimental summary"
+              }
+            ],
+            "environment_id": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+            "limitations": [
+              "Fake dispatch performs no execution and produces no scientific output"
+            ],
+            "seeds": {
+              "numpy": 7
+            },
+            "resources": {
+              "cpus": 2,
+              "memory_bytes": 4294967296,
+              "wall_seconds": 600,
+              "max_input_bytes": 268435456,
+              "max_output_bytes": 52428800
+            }
+          },
+          "hashes": {
+            "proposal_sha256": "3ee1bb46ad705d3876479bb62991e6db0b11986ea42c50f672116f2fd7199da3",
+            "code_sha256": "356b607d867e34eaeb349b34e76f5c0f3c8a8296bc0bcabca3974b0d22be8f74",
+            "input_manifest_sha256": "95c06229df27e43e70eb5a77b46b393c7ab187c1a063e2499a16d27537838d5d",
+            "environment_sha256": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+            "resources_sha256": "af6d9b83267e87da95dd7a3406268d3821f0060f46c7771c7e99580fa77559a7"
+          },
+          "manifest": {
+            "actor_binding": "d8ccd5c856d08de36c16bd101605711d17180bb0c0862d0a81f6329dbdf22466",
+            "attachment_use": "supplementary_only; no implicit scientific inputs",
+            "attachments": [],
+            "authority": "experimental",
+            "binding": {
+              "conversation_id": "fc8a267b-e9c9-40f9-b1f5-3b444f6dc278",
+              "investigation_id": "cd69d714-bffe-4472-9fcf-262906aabdc3",
+              "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+              "revision_id": "2aa655c8-9b18-4ccc-8cd0-2ea165d891aa",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            },
+            "catalogue_policy_revision": "c14:1c38231ee7e26818f422b7a5fbce128fb6f62dd5bebc79f9da7c7e2fe652a410",
+            "cohort": {
+              "exclusions": [],
+              "pairing": {
+                "mode": "independent",
+                "relationship_ids": []
+              },
+              "selections": [
+                {
+                  "columns": [
+                    "cast_id"
+                  ],
+                  "kind": "dataset",
+                  "table": "casts",
+                  "target_id": "synthetic:ctd:campaign-a"
+                }
+              ],
+              "version": "c22-cohort-v1"
+            },
+            "execution_performed": false,
+            "files": [
+              {
+                "kind": "scientific_sidecar",
+                "name": "exclusions.json",
+                "sha256": "6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056",
+                "size_bytes": 55
+              },
+              {
+                "kind": "scientific_sidecar",
+                "name": "pairing.json",
+                "sha256": "fdb152ab5a7f50998d53df5b9bd96583b089543fa424ba1cc387f17261373875",
+                "size_bytes": 115
+              },
+              {
+                "kind": "machine_table",
+                "name": "table-01.json",
+                "sha256": "38ffeef98e5d9daa4bacf2dc7b27525aa5ae203a48c6cc1938f849d621c41086",
+                "size_bytes": 611
+              }
+            ],
+            "independent_scientific_approval": false,
+            "max_input_bytes": 268435456,
+            "pin_limitations": [],
+            "pin_witnesses": [],
+            "pins": [],
+            "proposal_sha256": "3ee1bb46ad705d3876479bb62991e6db0b11986ea42c50f672116f2fd7199da3",
+            "question": "Explore synthetic CTD casts without claiming a scientific result",
+            "question_interpretation": "explicit_typed_cohort; published_tables_require_C01_exact_question",
+            "scope": {
+              "sources": {
+                "ctd": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "edna_metabarcoding": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "metagenome": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "remote_sensing": {
+                  "enabled": true,
+                  "filters": {}
+                }
+              },
+              "version": 1
+            },
+            "snapshot_ids": [
+              "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+              "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0"
+            ],
+            "source_sha256": "6a5068cff25c533cc62009abea4ef4e816f6d420599342be7dbb150d1404dfea",
+            "sources": {
+              "datasets": [
+                {
+                  "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "object_provenance": [
+                    {
+                      "dataset_id": "synthetic:ctd:campaign-a",
+                      "object_id": "synthetic:ctd:campaign-a:metadata",
+                      "operation_id": "c10:ctd:dataset_metadata",
+                      "operation_version": "c10-v1",
+                      "provenance": {
+                        "content_sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "origin": null,
+                        "references": [
+                          "Synthetic local acceptance only; not scientific publication"
+                        ],
+                        "source_generation": "synthetic-generation-1"
+                      },
+                      "role": "dataset_metadata",
+                      "schema_version": "catalogue-dataset-v1",
+                      "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                      "size_bytes": 2650,
+                      "source_family": "ctd",
+                      "source_id": "synthetic-ctd"
+                    },
+                    {
+                      "dataset_id": "synthetic:ctd:campaign-a",
+                      "object_id": "synthetic:ctd:campaign-a:table:casts",
+                      "operation_id": "c10:ctd:casts",
+                      "operation_version": "c10-v1",
+                      "provenance": {
+                        "content_sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "origin": null,
+                        "references": [
+                          "Synthetic local acceptance only; not scientific publication"
+                        ],
+                        "source_generation": "synthetic-generation-1"
+                      },
+                      "role": "casts",
+                      "schema_version": "catalogue-parquet-v1",
+                      "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                      "size_bytes": 1471,
+                      "source_family": "ctd",
+                      "source_id": "synthetic-ctd"
+                    }
+                  ],
+                  "objects": [
+                    {
+                      "object_id": "synthetic:ctd:campaign-a:metadata",
+                      "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                      "size_bytes": 2650
+                    },
+                    {
+                      "object_id": "synthetic:ctd:campaign-a:table:casts",
+                      "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                      "size_bytes": 1471
+                    }
+                  ],
+                  "publication": {
+                    "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                    "dataset_id": "synthetic:ctd:campaign-a",
+                    "decision_reference": "C22 explicitly synthetic local publication-policy fixture; no scientific approval",
+                    "eligible": true,
+                    "independent_scientific_approval": false,
+                    "objects": [
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:metadata",
+                        "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                        "size_bytes": 2650
+                      },
+                      {
+                        "object_id": "synthetic:ctd:campaign-a:table:casts",
+                        "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                        "size_bytes": 1471
+                      }
+                    ],
+                    "policy_id": "c22:synthetic:publication",
+                    "policy_revision": "synthetic-policy-1",
+                    "publication_generation": "synthetic-generation-1",
+                    "source_id": "synthetic-ctd",
+                    "test_only": true
+                  },
+                  "source_capture": {
+                    "capture_method": "synthetic-c10-frozen-parquet-v1",
+                    "classification_generation": "no-scientific-approval-v1",
+                    "operation_generation": "c10-v1",
+                    "publication_generation": "synthetic-generation-1",
+                    "qualifiers": [
+                      "Synthetic local acceptance only; not scientific publication"
+                    ],
+                    "relationship_generation": "no-unified-samples-v1",
+                    "source_family": "ctd",
+                    "source_generation": "synthetic-generation-1",
+                    "source_id": "synthetic-ctd"
+                  },
+                  "source_family": "ctd",
+                  "source_id": "synthetic-ctd"
+                }
+              ],
+              "index_objects": [
+                {
+                  "object_id": "scientific:registry",
+                  "sha256": "5b7568cf9fb1e8aac8a0d29f6abac23831af30ec4c845b865067d3ec5072848a",
+                  "size_bytes": 13782
+                }
+              ],
+              "index_snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            },
+            "tables": [
+              {
+                "column_schema": [
+                  {
+                    "arrow_type": "string",
+                    "name": "cast_id",
+                    "nullable": false
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "sample_id",
+                    "nullable": false
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "collection_date",
+                    "nullable": true
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "bay",
+                    "nullable": true
+                  },
+                  {
+                    "arrow_type": "string",
+                    "name": "station",
+                    "nullable": true
+                  }
+                ],
+                "effective_columns": [
+                  "cast_id",
+                  "sample_id",
+                  "collection_date",
+                  "bay",
+                  "station"
+                ],
+                "entity": "casts",
+                "file": "table-01.json",
+                "kind": "dataset",
+                "machine_encoding": "c22-lossless-machine-table-v1",
+                "requested_columns": [
+                  "cast_id"
+                ],
+                "restrictions": {},
+                "row_count": 4,
+                "scientific_metadata": {
+                  "collection_date_precision": "day",
+                  "collection_id": "synthetic:ctd:campaign-a:collection",
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "depth_convention": "positive_down",
+                  "descriptor": {
+                    "depth_unit": "m",
+                    "family": "ctd",
+                    "measurement": "temperature",
+                    "observation_entity": "cast",
+                    "sampling_contract": "Observed campaign casts only; no expected sampling schedule",
+                    "unit": "degC"
+                  },
+                  "entity": "casts",
+                  "family": "ctd",
+                  "methods": [
+                    "Distinct source-owned casts and depth observations; no inferred expected casts"
+                  ],
+                  "purpose": {
+                    "en": "Frozen cast and depth acceptance",
+                    "ja": "観測と深度の検証"
+                  },
+                  "qualification": "Synthetic local acceptance only; not scientific publication",
+                  "schema_version": "catalogue-dataset-v1",
+                  "source_id": "synthetic-ctd",
+                  "table": {
+                    "abundance_denominator": null,
+                    "availability": {
+                      "reason": null,
+                      "status": "available"
+                    },
+                    "columns": [
+                      {
+                        "description": "Synthetic source-owned cast_id",
+                        "dtype": "string",
+                        "name": "cast_id",
+                        "nullable": false,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned sample_id",
+                        "dtype": "string",
+                        "name": "sample_id",
+                        "nullable": false,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned collection_date",
+                        "dtype": "string",
+                        "name": "collection_date",
+                        "nullable": true,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned bay",
+                        "dtype": "string",
+                        "name": "bay",
+                        "nullable": true,
+                        "unit": null
+                      },
+                      {
+                        "description": "Synthetic source-owned station",
+                        "dtype": "string",
+                        "name": "station",
+                        "nullable": true,
+                        "unit": null
+                      }
+                    ],
+                    "completeness": "complete",
+                    "denominator": "All retained matching casts records in this source dataset",
+                    "entity": "casts",
+                    "method": null,
+                    "name": "casts",
+                    "object_id": "synthetic:ctd:campaign-a:table:casts",
+                    "row_count": 4,
+                    "taxonomic_rank": null
+                  },
+                  "title": {
+                    "en": "Synthetic CTD campaign",
+                    "ja": "合成CTD観測"
+                  }
+                },
+                "scope": {
+                  "sources": {
+                    "ctd": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "edna_metabarcoding": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "metagenome": {
+                      "enabled": true,
+                      "filters": {}
+                    },
+                    "remote_sensing": {
+                      "enabled": true,
+                      "filters": {}
+                    }
+                  },
+                  "version": 1
+                },
+                "source_object_id": "synthetic:ctd:campaign-a:table:casts",
+                "source_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                "table": "casts",
+                "target_id": "synthetic:ctd:campaign-a"
+              }
+            ],
+            "version": "c22-frozen-experiment-export-v1"
+          },
+          "environment": {
+            "kind": "c22-fake",
+            "test_only": true,
+            "python_version": "not-executed",
+            "image_digest": null,
+            "lockfile_sha256": null,
+            "packages": {},
+            "description": "Explicit C22 synthetic acceptance adapter; no Python runtime"
+          },
+          "approval": {
+            "status": "current",
+            "proposal_revision_id": "b955658e-422d-467c-a1f3-7c2e0a524e2d",
+            "approved_at": "2026-10-21T03:17:49"
+          },
+          "dispatch": {
+            "eligible": false,
+            "reason": "Retained fake delivery; Python was not executed",
+            "reservation_id": "a9767103-2e93-47e2-8081-d66ace863097",
+            "status": "reserved"
+          },
+          "event_cursor": 0,
+          "latest_event_cursor": 4,
+          "authority": "experimental",
+          "scientific_approval": "not_independently_verified",
+          "execution_performed": false
+        },
+        "operation": {
+          "id": "e7763bb5-520b-422f-b3d1-5108cab91062",
+          "state": "ready",
+          "result_revision_id": "b955658e-422d-467c-a1f3-7c2e0a524e2d",
+          "error_code": null,
+          "reason": null
+        }
+      }
+    },
+    {
+      "action": "events",
+      "request": {
+        "experiment_id": "00aec01b-ce11-4f3e-a040-3a70f043f8b7",
+        "limit": 2
+      },
+      "response": {
+        "version": "research-experiments-v1",
+        "experiment_id": "00aec01b-ce11-4f3e-a040-3a70f043f8b7",
+        "after_cursor": 0,
+        "items": [
+          {
+            "cursor": 1,
+            "kind": "created",
+            "summary": {
+              "en": "Experiment proposal prepared; Python was not executed",
+              "ja": "実験計画を準備しました。Pythonは実行していません"
+            }
+          },
+          {
+            "cursor": 2,
+            "kind": "revised",
+            "summary": {
+              "en": "Experiment proposal revised; review is required",
+              "ja": "実験計画を改訂しました。再確認が必要です"
+            }
+          }
+        ],
+        "next_cursor": 2,
+        "latest_event_cursor": 5,
+        "has_more": true
+      }
+    }
+  ]
+}

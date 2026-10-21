@@ -1,0 +1,37 @@
+F................                                                        [100%]
+=================================== FAILURES ===================================
+____ test_actual_export_review_exact_hashes_private_bytes_and_no_execution _____
+
+actual = ExperimentFixture(retained=InvestigationFixture(service=<orchestration.investigations.InvestigationService object at 0...ion='Explicit C22 synthetic acceptance adapter; no Python runtime'), state={'enabled': True, 'dispatch_enabled': True})
+tmp_path = PosixPath('/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/pytest-540/test_actual_export_review_exac0')
+
+    def test_actual_export_review_exact_hashes_private_bytes_and_no_execution(actual, tmp_path):
+        request = actual.request()
+        sentinel = tmp_path / 'must-not-exist'
+        request['proposal']['python_code'] = f'from pathlib import Path\nPath({str(sentinel)!r}).write_text("bad")\n'
+        response = actual.service.invoke('create', request, actual.user)
+        experiment = response['experiment']
+        assert response['operation']['state'] == 'ready'
+        assert experiment['binding'] == {key: request[key] for key in experiment['binding']}
+        assert experiment['authority'] == 'experimental' and experiment['execution_performed'] is False
+        assert experiment['scientific_approval'] == 'not_independently_verified'
+        assert experiment['manifest']['sources']['datasets'][0]['publication']['test_only'] is True
+        assert not sentinel.exists()
+        assert actual.service.invoke('get', actual.address(experiment), actual.user)['experiment'] == experiment
+>       assert 'files' not in response and 'content' not in json.dumps(response)
+E       assert ('files' not in {'version': 'research-experiments-v1', 'experiment': {'id': '61f19354-be36-4e57-8db1-198f6d47c1e9', 'binding': {'inves...5c84b27082e', 'state': 'ready', 'result_revision_id': '89afda9c-5fc7-41ce-82f7-1802e10e6f5f', 'error_code': None, ...}} and 'content' not in '{"version":...son": null}}'
+E         
+E         'content' is contained here:
+E           nance": {"content_sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1", "origin": null, "references": ["Synthetic local acceptance only; not scientific publication"], "source_generation": "synthetic-generation-1"}, "role": "dataset_metadata", "schema_version": "catalogue-dataset-v1", "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1", "size_bytes": 2650, "source_family": "ctd", "source_id": "synthetic-ctd"}, {"dataset_id": "synthetic:ctd:campaign-a", "object_id": "synthetic:ctd:campaign-a:table:casts", "operati...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show)
+
+tests/test_research_experiments.py:65: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+=========================== short test summary info ============================
+FAILED tests/test_research_experiments.py::test_actual_export_review_exact_hashes_private_bytes_and_no_execution
+1 failed, 16 passed in 50.74s

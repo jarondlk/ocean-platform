@@ -1,0 +1,199 @@
+..........F
+=================================== FAILURES ===================================
+________________ test_sql_blob_tamper_rejected_before_approval _________________
+
+self = <sqlalchemy.engine.base.Connection object at 0x10fbe6300>
+dialect = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x11e04b8f0>
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x11f1a0b90>
+statement = <sqlalchemy.dialects.sqlite.base.SQLiteCompiler object at 0x11f1a3d40>
+parameters = [(b'tampered', '6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056')]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x11e04b8f0>
+cursor = <sqlite3.Cursor object at 0x11f026a40>
+statement = 'UPDATE research_experiment_input_blob SET content=? WHERE sha256=?'
+parameters = (b'tampered', '6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056')
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x11f1a0b90>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       sqlite3.IntegrityError: CHECK constraint failed: ck_research_experiment_blob_bytes
+
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: IntegrityError
+
+The above exception was the direct cause of the following exception:
+
+actual = ExperimentFixture(retained=InvestigationFixture(service=<orchestration.investigations.InvestigationService object at 0...ion='Explicit C22 synthetic acceptance adapter; no Python runtime'), state={'enabled': True, 'dispatch_enabled': True})
+
+    def test_sql_blob_tamper_rejected_before_approval(actual):
+        initial = actual.create()
+        with actual.factory() as session:
+            file = session.execute(text('SELECT sha256 FROM research_experiment_revision_file WHERE revision_id=:id LIMIT 1'),
+                {'id': initial['proposal_revision_id'].replace('-', '')}).scalar_one()
+        with actual.factory.begin() as session:
+            original = session.execute(text('SELECT content FROM research_experiment_input_blob WHERE sha256=:hash'), {'hash': file}).scalar_one()
+>           session.execute(text('UPDATE research_experiment_input_blob SET content=:content WHERE sha256=:hash'), {'hash': file, 'content': b'tampered'})
+
+tests/test_research_experiments.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2373: in execute
+    return self._execute_internal(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2280: in _execute_internal
+    result = conn.execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x11e04b8f0>
+cursor = <sqlite3.Cursor object at 0x11f026a40>
+statement = 'UPDATE research_experiment_input_blob SET content=? WHERE sha256=?'
+parameters = (b'tampered', '6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056')
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x11f1a0b90>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) CHECK constraint failed: ck_research_experiment_blob_bytes
+E       [SQL: UPDATE research_experiment_input_blob SET content=? WHERE sha256=?]
+E       [parameters: (b'tampered', '6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056')]
+E       (Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: IntegrityError
+=========================== short test summary info ============================
+FAILED tests/test_research_experiments.py::test_sql_blob_tamper_rejected_before_approval
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 10 passed in 20.79s

@@ -1,0 +1,37 @@
+{
+  "after_sha256": {
+    "api/auth.py": "0e6fa6fad84ba4e02c86dd6a678d996eab293fb12c37460475fa53597d7c14dd",
+    "config.py": "231008b62b23ddf83ccd1eb8fe7520ce4a724f776b8fb0c721195fdecbd9b533",
+    "db/app_models.py": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+    "docs/plans/ocean-v1/evidence/C22/store_verify_postgres.py": "e792291eb950a2882f677641f7f3c62a18488db689b7e88ccf4e712657b5fe16",
+    "migrations/versions/20261020_0020_research_experiments.py": "2f5eb82dfefdd6a02bafddb58a44936fa42197c8eb2ac70b726d83fc57f14dff",
+    "orchestration/catalogue_service.py": "50b3d587ca0cb0f754b3d0f0a742c3bf184e687e147b52f60a5f51bfc9939a48",
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "orchestration/investigations.py": "dd9d733121d9f1587e3b59b31b67e60a75bc50976589886cc96705c94efa46de",
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "orchestration/research_experiments.py": "48dba4d754fb008f0577d21041140b5a537cd3a6a7267d380096617854e5ff2e",
+    "schema/research_experiments.py": "3623b8ce0349316f5e28597752a798817acc1641d55e05d3614ebd61f0d87494",
+    "tests/integration/test_research_experiments_postgres.py": "581e67d6a0eda2db87c40dfca6e635660bacf43f7b916a1543a4465c2ea2ff8f",
+    "tests/research_experiment_postgres_support.py": "08643b469b66ca2874a14838b81e003c0af9069c8b227bebe42619f6644c0e33",
+    "tests/research_experiment_support.py": "fb881711350462c9bf0c3efa8a4460741aa354a4d7269f72384aef7476e1e4c1",
+    "tests/test_research_experiments.py": "354de6fa33ca9cb00d8e922cdeb855998ef203671c5110337e488c7707f99a0b"
+  },
+  "before_sha256": {
+    "api/auth.py": "0e6fa6fad84ba4e02c86dd6a678d996eab293fb12c37460475fa53597d7c14dd",
+    "config.py": "231008b62b23ddf83ccd1eb8fe7520ce4a724f776b8fb0c721195fdecbd9b533",
+    "db/app_models.py": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+    "docs/plans/ocean-v1/evidence/C22/store_verify_postgres.py": "e792291eb950a2882f677641f7f3c62a18488db689b7e88ccf4e712657b5fe16",
+    "migrations/versions/20261020_0020_research_experiments.py": "2f5eb82dfefdd6a02bafddb58a44936fa42197c8eb2ac70b726d83fc57f14dff",
+    "orchestration/catalogue_service.py": "50b3d587ca0cb0f754b3d0f0a742c3bf184e687e147b52f60a5f51bfc9939a48",
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "orchestration/investigations.py": "dd9d733121d9f1587e3b59b31b67e60a75bc50976589886cc96705c94efa46de",
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "orchestration/research_experiments.py": "48dba4d754fb008f0577d21041140b5a537cd3a6a7267d380096617854e5ff2e",
+    "schema/research_experiments.py": "3623b8ce0349316f5e28597752a798817acc1641d55e05d3614ebd61f0d87494",
+    "tests/integration/test_research_experiments_postgres.py": "581e67d6a0eda2db87c40dfca6e635660bacf43f7b916a1543a4465c2ea2ff8f",
+    "tests/research_experiment_postgres_support.py": "08643b469b66ca2874a14838b81e003c0af9069c8b227bebe42619f6644c0e33",
+    "tests/research_experiment_support.py": "fb881711350462c9bf0c3efa8a4460741aa354a4d7269f72384aef7476e1e4c1",
+    "tests/test_research_experiments.py": "354de6fa33ca9cb00d8e922cdeb855998ef203671c5110337e488c7707f99a0b"
+  },
+  "changed": []
+}

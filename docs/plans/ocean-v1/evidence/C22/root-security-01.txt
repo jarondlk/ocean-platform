@@ -1,0 +1,54 @@
+FF.................                                                      [100%]
+=================================== FAILURES ===================================
+_ test_independent_opt_in_defaults_and_live_disable[ENABLE_V1_EXPERIMENTS-v1_experiments_enabled] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x119898da0>
+name = 'ENABLE_V1_EXPERIMENTS'
+helper = <function v1_experiments_enabled at 0x10c628180>
+
+    @pytest.mark.parametrize('name,helper', [
+        ('ENABLE_V1_EXPERIMENTS', config.v1_experiments_enabled),
+        ('ENABLE_V1_EXPERIMENT_DISPATCH', config.v1_experiment_dispatch_enabled),
+    ])
+    def test_independent_opt_in_defaults_and_live_disable(monkeypatch, name, helper):
+        monkeypatch.setattr(config, name, 'false')
+        assert helper({}) is False
+        assert helper({name: 'true'}) is True
+        monkeypatch.setenv(name, 'true')
+        assert helper() is True
+        monkeypatch.setenv(name, 'false')
+        assert helper() is False
+        for invalid in ('', 'maybe', 'null', 'enabled', '2'):
+>           with pytest.raises(config.SecurityConfigurationError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE SecurityConfigurationError
+
+tests/test_research_experiment_security.py:22: Failed
+_ test_independent_opt_in_defaults_and_live_disable[ENABLE_V1_EXPERIMENT_DISPATCH-v1_experiment_dispatch_enabled] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x119898dd0>
+name = 'ENABLE_V1_EXPERIMENT_DISPATCH'
+helper = <function v1_experiment_dispatch_enabled at 0x10c628220>
+
+    @pytest.mark.parametrize('name,helper', [
+        ('ENABLE_V1_EXPERIMENTS', config.v1_experiments_enabled),
+        ('ENABLE_V1_EXPERIMENT_DISPATCH', config.v1_experiment_dispatch_enabled),
+    ])
+    def test_independent_opt_in_defaults_and_live_disable(monkeypatch, name, helper):
+        monkeypatch.setattr(config, name, 'false')
+        assert helper({}) is False
+        assert helper({name: 'true'}) is True
+        monkeypatch.setenv(name, 'true')
+        assert helper() is True
+        monkeypatch.setenv(name, 'false')
+        assert helper() is False
+        for invalid in ('', 'maybe', 'null', 'enabled', '2'):
+>           with pytest.raises(config.SecurityConfigurationError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE SecurityConfigurationError
+
+tests/test_research_experiment_security.py:22: Failed
+=========================== short test summary info ============================
+FAILED tests/test_research_experiment_security.py::test_independent_opt_in_defaults_and_live_disable[ENABLE_V1_EXPERIMENTS-v1_experiments_enabled]
+FAILED tests/test_research_experiment_security.py::test_independent_opt_in_defaults_and_live_disable[ENABLE_V1_EXPERIMENT_DISPATCH-v1_experiment_dispatch_enabled]
+2 failed, 17 passed in 0.35s

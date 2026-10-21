@@ -1,0 +1,92 @@
+{
+  "version": "c22-independent-export-probe-v1",
+  "synthetic_only": true,
+  "qualification": "Actual sealed C09/C13/C14/C17 code and exporter; separate temporary SQLite only, no server/executor/provider/real data/cloud. Source was not declared frozen.",
+  "source_before_sha256": {
+    "orchestration/frozen_experiment_export.py": "7db126d80d073c33de5e7a81f344b01fcb86b8f16579e533d46d69d28bdb1e81",
+    "tests/test_frozen_experiment_export.py": "a9c7b426738705d18e4386ed1022b19005a9d5bf9e58b3b159f9e91a6cf335f8",
+    "schema/research_experiments.py": "1c4ef27b6b9206307854e5008df59beef94fe8f9b767b4ef7bcfd3da406cf014",
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "orchestration/frozen_catalogue.py": "9b3fdb498935f3d5db5594f667bfebf49bf7be487509cea9c448f4f229351609",
+    "orchestration/frozen_scientific_catalogue.py": "1fda9afe83a67c70a1cfcf752d62d0fe4ef4114b291095f78e357a376486d051"
+  },
+  "source_after_sha256": {
+    "orchestration/frozen_experiment_export.py": "7db126d80d073c33de5e7a81f344b01fcb86b8f16579e533d46d69d28bdb1e81",
+    "tests/test_frozen_experiment_export.py": "a9c7b426738705d18e4386ed1022b19005a9d5bf9e58b3b159f9e91a6cf335f8",
+    "schema/research_experiments.py": "1c4ef27b6b9206307854e5008df59beef94fe8f9b767b4ef7bcfd3da406cf014",
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "orchestration/frozen_catalogue.py": "9b3fdb498935f3d5db5594f667bfebf49bf7be487509cea9c448f4f229351609",
+    "orchestration/frozen_scientific_catalogue.py": "1fda9afe83a67c70a1cfcf752d62d0fe4ef4114b291095f78e357a376486d051"
+  },
+  "source_unchanged": true,
+  "cases": [
+    {
+      "name": "actual_complete_ctd_baseline",
+      "passed": true,
+      "row_count": 4
+    },
+    {
+      "name": "host_callback_wrong_publication_generation",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_publication_unavailable",
+      "passed": true
+    },
+    {
+      "name": "actual_ctd_exclusion_cascades_cast_fk",
+      "passed": true,
+      "remaining_casts": 3
+    },
+    {
+      "name": "ctd_pin_cannot_export_metagenome",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_target_unavailable",
+      "passed": true
+    },
+    {
+      "name": "current_dataset_revocation_blocks_reuse",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_target_unavailable",
+      "passed": true
+    },
+    {
+      "name": "publication_withdrawal_blocks_reuse",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_publication_unavailable",
+      "passed": true
+    },
+    {
+      "name": "proximity_cannot_establish_physical_identity",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_physical_pairing_unavailable",
+      "passed": true
+    },
+    {
+      "name": "staged_file_tamper_rejected_at_reconstruction",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_integrity",
+      "passed": true
+    },
+    {
+      "name": "manifest_and_sidecars_count_toward_input_limit",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_input_size_exceeded",
+      "passed": true
+    },
+    {
+      "name": "partial_selector_anchor_cannot_claim_complete_dependent_run_cohort",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_unavailable",
+      "passed": true
+    }
+  ],
+  "passed": 10,
+  "failed": 0
+}

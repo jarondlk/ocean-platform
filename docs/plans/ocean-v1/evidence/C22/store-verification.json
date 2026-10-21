@@ -1,0 +1,54 @@
+{
+  "boundaries": {
+    "cloud_resources": false,
+    "legacy_mutation": false,
+    "published_scientific_approval": false,
+    "python_execution": false,
+    "real_data_acquisition": false
+  },
+  "component": "C22",
+  "evidence_sha256": {
+    "replay-amendment/baseline-source.json": "13e5286e26100fea5ea89538a14a27fcdd32c34e19e205620e8ec45bbec28b6d",
+    "replay-amendment/baseline.txt": "23824c4f543bd3bb1c3567837a7e429a2fc1012d3fac1fa321780165f8f55eb3",
+    "replay-amendment/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "replay-amendment/verified.txt": "0a033ca5c522f8fe8f192255ac15dcfa5fff18112710a8a89d07446525c62c56",
+    "store-focused-final-01.json": "880e2cd79319eccc844a0865186c7f1ed45f93cc491f3d610e942e26704412bd",
+    "store-pg-final-01/postgres-result.json": "c95f41a01bb00e363a81a5cd75b33d208dfcbd199b0eb30f554ce1a7f4795318",
+    "store-resumed-tests.txt": "731fc94142b65d4d8224d5d234fdf6a9dc0fb4d17845ef6878124184dc856bbc"
+  },
+  "focused": {
+    "amendment_baseline": "replay-amendment/baseline.txt",
+    "amendment_result": "2 passed",
+    "amendment_summary": "Actual nested-worker replay reproduced wrong new-head response before fix; corrected error and COMMIT recovery use immutable result revision",
+    "amendment_verified": "replay-amendment/verified.txt",
+    "final_initial": "store-focused-final-01.json",
+    "final_initial_summary": "16 passed/1 failed: overbroad content substring fixture assertion matched legitimate content_sha256 metadata",
+    "initial": "store-resumed-tests.txt",
+    "initial_summary": "17 passed in43.42s; prior source, qualified by later receipt",
+    "ruff": "replay-amendment/ruff.txt"
+  },
+  "owned_source_sha256": {
+    "db/app_models.py": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+    "docs/plans/ocean-v1/evidence/C22/store_verify_postgres.py": "e792291eb950a2882f677641f7f3c62a18488db689b7e88ccf4e712657b5fe16",
+    "migrations/versions/20261020_0020_research_experiments.py": "2f5eb82dfefdd6a02bafddb58a44936fa42197c8eb2ac70b726d83fc57f14dff",
+    "orchestration/investigations.py": "dd9d733121d9f1587e3b59b31b67e60a75bc50976589886cc96705c94efa46de",
+    "orchestration/research_experiments.py": "bab02f05549655977e2f95ef7885a59d3a311c3ad64941b0846d79b94b0db2ee",
+    "tests/integration/test_research_experiments_postgres.py": "581e67d6a0eda2db87c40dfca6e635660bacf43f7b916a1543a4465c2ea2ff8f",
+    "tests/research_experiment_postgres_support.py": "08643b469b66ca2874a14838b81e003c0af9069c8b227bebe42619f6644c0e33",
+    "tests/research_experiment_support.py": "fb881711350462c9bf0c3efa8a4460741aa354a4d7269f72384aef7476e1e4c1",
+    "tests/test_research_experiments.py": "eb33fdfb5f435f047b44c104ca406efa09f55b4913312ac30ef2d47cd396a749"
+  },
+  "postgres": {
+    "intentional_postrun_supersession": [
+      "orchestration/research_experiments.py",
+      "tests/test_research_experiments.py"
+    ],
+    "qualification": "Only service exceptional replay response and focused fixture/test changed afterward; database models/migration/PG tests unchanged. Root final backend/hosted CI must bind superseding source.",
+    "receipt": "store-pg-final-01/postgres-result.json",
+    "remaining_schemas": 0,
+    "server_stopped": true,
+    "source_unchanged_during_run": true,
+    "test_summary": "21 passed in 66.87s (0:01:06)"
+  },
+  "status": "owned_source_frozen_pending_root_acceptance"
+}

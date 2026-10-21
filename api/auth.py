@@ -442,6 +442,17 @@ def route_permission(method: str, path: str) -> Optional[str]:
     method = method.upper()
     if path == "/v1/runtime":
         return "profile:read" if method == "GET" else None
+    if path.startswith("/research/experiments"):
+        if method == "POST" and path in {
+            "/research/experiments/create", "/research/experiments/revise", "/research/experiments/approve",
+            "/research/experiments/dispatch", "/research/experiments/retry",
+        }:
+            return "data:export"
+        if method == "POST" and path in {
+            "/research/experiments/get", "/research/experiments/status", "/research/experiments/list", "/research/experiments/events",
+        }:
+            return "chat:use"
+        return None
     if path.startswith(("/research/answers", "/research/evidence")):
         if method == "POST" and path in {
             "/research/answers/submit", "/research/answers/status", "/research/answers/events",
@@ -571,7 +582,7 @@ async def authorization_middleware(
                 403,
                 f"Permission required: {permission}",
             )
-        if request.url.path.startswith(("/research/runs", "/research/answers", "/research/evidence")) and not {"chat:use", "data:read"} <= user.permissions:
+        if request.url.path.startswith(("/research/runs", "/research/answers", "/research/evidence", "/research/experiments")) and not {"chat:use", "data:read"} <= user.permissions:
             raise AuthenticationFailure(403, "Research access is denied")
         if config.production_like_environment():
             policy = policy_for_request(request.method, request.url.path)
@@ -613,7 +624,7 @@ async def authorization_middleware(
                 403: ("access_denied", "Investigation access is denied"),
             }.get(exc.status_code, ("investigations_unavailable", "Investigations are unavailable"))
             content = {"error": {"code": code, "message": message}}
-        if request.url.path.startswith(("/research/runs", "/research/answers", "/research/evidence")):
+        if request.url.path.startswith(("/research/runs", "/research/answers", "/research/evidence", "/research/experiments")):
             code, message = {
                 401: ("authentication_required", "Authentication is required"),
                 403: ("access_denied", "Research access is denied"),

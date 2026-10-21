@@ -1,0 +1,5 @@
+$ .venv/bin/python -m pytest tests/test_research_experiment_contracts.py -q --tb=short -k operation_recovery
+.....                                                                    [100%]
+5 passed, 125 deselected in 0.39s
+
+exit_code=0

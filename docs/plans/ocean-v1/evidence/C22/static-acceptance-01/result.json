@@ -1,0 +1,197 @@
+{
+  "component": "C21",
+  "group": "static",
+  "created_at": "2026-10-21T03:18:10.945387+00:00",
+  "commands": [
+    {
+      "name": "ruff",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "api",
+        "config.py",
+        "db",
+        "evaluation",
+        "ingestion",
+        "orchestration",
+        "preprocessing",
+        "retrieval",
+        "schema",
+        "scripts",
+        "tests",
+        "migrations/versions/20261020_0020_research_experiments.py"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "seconds": 0.05,
+      "log": "ruff.txt",
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "export_catalogue_adapter",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_adapter.py",
+        "--check"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "seconds": 0.68,
+      "log": "export_catalogue_adapter.txt",
+      "log_sha256": "3616357347d55684342a6b3d04a6cab676714283fd7613babf78aee10db52d5d"
+    },
+    {
+      "name": "export_catalogue_examples",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_examples.py",
+        "--check"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "seconds": 0.74,
+      "log": "export_catalogue_examples.txt",
+      "log_sha256": "962c470ee8e7b1a3fa7cc260238248b74b659e73c4479518cfd90a2fb0468724"
+    },
+    {
+      "name": "export_catalogue_snapshot",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_snapshot.py",
+        "--check"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "seconds": 0.73,
+      "log": "export_catalogue_snapshot.txt",
+      "log_sha256": "9b07d6aff6dbefa9ef198cfe8da820676814ff35b8f418400856ff03bb3cc1b9"
+    },
+    {
+      "name": "export_catalogue_types",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_catalogue_types.py",
+        "--check"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "seconds": 0.04,
+      "log": "export_catalogue_types.txt",
+      "log_sha256": "edfc61324e991e3bda912ff0153de8de843149d6e96921f6df836436437bb215"
+    },
+    {
+      "name": "export_chat_scope",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_chat_scope.py",
+        "--check"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "seconds": 0.51,
+      "log": "export_chat_scope.txt",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "export_context_catalogue",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_context_catalogue.py",
+        "--check"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "seconds": 0.67,
+      "log": "export_context_catalogue.txt",
+      "log_sha256": "17f7777b79b05d9f620343086f7948c8a0ec79cbe76e74f59d7490234a67d15b"
+    },
+    {
+      "name": "export_edna_catalogue",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_edna_catalogue.py",
+        "--check"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "seconds": 0.8,
+      "log": "export_edna_catalogue.txt",
+      "log_sha256": "584bf23af0f9b906b7db1c3224242971b102e573fef6f35a39b1bd259fcb7180"
+    },
+    {
+      "name": "export_scientific_catalogue",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_scientific_catalogue.py",
+        "--check"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "seconds": 0.72,
+      "log": "export_scientific_catalogue.txt",
+      "log_sha256": "a86862b927682fb9dfbf4d762295399ea797eb54c37be97810494686a02dcc6f"
+    },
+    {
+      "name": "export_sst_catalogue",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "scripts/export_sst_catalogue.py",
+        "--check"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "seconds": 0.8,
+      "log": "export_sst_catalogue.txt",
+      "log_sha256": "dcb43f84e390bb4ca68514658fbdc4b9605b4f42bb22aa32120ab2f0ebaf8cd7"
+    },
+    {
+      "name": "evidence-contract",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "docs/plans/ocean-v1/evidence/C21/frontend-export-contract.py",
+        "--check"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "seconds": 0.78,
+      "log": "evidence-contract.txt",
+      "log_sha256": "d18a709505bcfafe2a129568fe2f242821a3ee036dc0b2c9d3635055ceaedcdc"
+    }
+  ],
+  "source_changed_during_run": [],
+  "preservation": {
+    "counts": {
+      "unrelated_files": 30,
+      "scientific_artifacts": 7,
+      "serving_files": 2,
+      "legacy_frontend_files": 106,
+      "prior_evidence_files": 1204
+    },
+    "changed": {
+      "unrelated_files": [],
+      "scientific_artifacts": [],
+      "serving_files": [],
+      "legacy_frontend_files": [],
+      "prior_evidence_files": []
+    }
+  },
+  "protected_before": {
+    "counts": {
+      "unrelated_files": 30,
+      "scientific_artifacts": 7,
+      "serving_files": 2,
+      "legacy_frontend_files": 106,
+      "prior_evidence_files": 1204
+    },
+    "changed": {
+      "unrelated_files": [],
+      "scientific_artifacts": [],
+      "serving_files": [],
+      "legacy_frontend_files": [],
+      "prior_evidence_files": []
+    }
+  },
+  "success": true
+}

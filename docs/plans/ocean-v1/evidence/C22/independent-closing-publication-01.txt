@@ -1,0 +1,8 @@
+$ .venv/bin/python docs/plans/ocean-v1/evidence/C22/independent-closing-publication-probe.py --output docs/plans/ocean-v1/evidence/C22/independent-closing-publication-01.json
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+{"output": "docs/plans/ocean-v1/evidence/C22/independent-closing-publication-01.json", "passed": true, "outcome": {"observed": "refused", "code": "access_denied", "status_code": 403}, "persisted_approvals": 0, "source_unchanged": true}
+
+exit_code=0

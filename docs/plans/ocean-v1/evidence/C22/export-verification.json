@@ -1,0 +1,88 @@
+{
+  "acceptance_evidence": [
+    "Actual C09/C13/C14/C17 complete source exports across CTD/metagenome/SST/eDNA; source entity, units, denominators, date precision, classifications, protocol, support, quality/exclusion metadata retained.",
+    "All selected rows use actual scientific selectors, source PK ordering and exact Arrow bytes. Mandatory FK metadata retains source date/classification/protocol support without implicit cross-source joins.",
+    "Exact original C01 publication question and immutable C13 scope required; actual full and known-zero tables export. Generic unverified publication scope, changed question, native recomputation under analysis pins or analysis_id selection fail closed.",
+    "Canonical private JSON retains int64 min/max and values above browser safe range, finite float64, nulls, Unicode and formula-like literal strings. Actual sealed C12 read_count int64 roundtrip succeeds; public manifest contains only browser-finite metadata.",
+    "Explicit cast/library/SST observation/eDNA source-occurrence exclusions cascade through native FKs; unknown/out-of-cohort exclusions fail. Independent selection asserts no pairing. Actual verified physical proof succeeds only with every exported endpoint retained; proximity and excluded endpoints fail.",
+    "C17 dataset pin intersection and unsupported pins cannot widen cohort; attachments remain supplementary. Source policy withdrawal/current dataset revocation stop reuse.",
+    "Manifest/files/sidecars and Python UTF8 count against approved input bound; tamper and mismatched source/hash/snapshot domain reconstruction rejected."
+  ],
+  "base_commit": "69123408c5bf9caaefe365ef0fc05905c70984c5",
+  "component": "C22",
+  "files": {
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "tests/test_frozen_experiment_export.py": "b1cf8f14d5205333068712ffd97f60d7a8860f2b143be50b74fbc3fe332c6ddf"
+  },
+  "focused_verification": {
+    "command": ".venv/bin/python -m pytest tests/test_frozen_experiment_export.py -q",
+    "exit_code": 0,
+    "log": "docs/plans/ocean-v1/evidence/C22/export-locked-tests.txt",
+    "log_sha256": "bce717089f9d586dcf34280c8d8b0d2090242a42c118ff5194783cc4b318bd32",
+    "result": "30 passed, 1 third-party deprecation warning in 29.03s",
+    "source_pins": "docs/plans/ocean-v1/evidence/C22/export-locked-source-pins.json",
+    "source_pins_sha256": "27d1aba4bf2e5d4f3f0afb2df74bffadd2b9d0360edee5f7ca183a80c5b2bb94",
+    "source_unchanged": true
+  },
+  "independent_probe": {
+    "path": "docs/plans/ocean-v1/evidence/C22/independent-export-probe-01.json",
+    "qualification": "Probe binds its original pre-final source; current provenance and analysis-selection amendments are covered by the locked focused run and independent final source review separately.",
+    "result": "10 passed, 0 failed",
+    "sha256": "d126c38f962fb7dbff7c9d7e4598ca60648146571400b0309f77bae3f57e1195",
+    "source_was_unfrozen": true
+  },
+  "intentional_source_supersessions_since_independent_probe": {
+    "orchestration/frozen_experiment_export.py": {
+      "after_sha256": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+      "before_sha256": "7db126d80d073c33de5e7a81f344b01fcb86b8f16579e533d46d69d28bdb1e81"
+    },
+    "tests/test_frozen_experiment_export.py": {
+      "after_sha256": "b1cf8f14d5205333068712ffd97f60d7a8860f2b143be50b74fbc3fe332c6ddf",
+      "before_sha256": "a9c7b426738705d18e4386ed1022b19005a9d5bf9e58b3b159f9e91a6cf335f8"
+    }
+  },
+  "interfaces": {
+    "exporter": "FrozenExperimentExporter(*,store,catalogue,registrations,publication_policy=None)",
+    "freeze": "freeze(*,frozen,proposal,user)->FrozenExperimentExport",
+    "publication": "Concrete PinnedSourcePublicationPolicy over explicit SourcePublicationDecision records and actual C09 manifest objects. Missing/withdrawn/mismatched generation/hash fails closed; synthetic decisions remain test_only.",
+    "reconstruct": "FrozenExperimentExport(*,manifest_json,files); immutable detached metadata/read-only bytes, validated hashes/sizes/source domain, exact snapshot_ids closure",
+    "verify": "verify(*,frozen,proposal,user,exported)->None; complete deterministic byte recomputation",
+    "verify_access": "verify_access(*,frozen,proposal,user,exported)->None; current registration, actor, policy, full pin projection and exact source publication witness check"
+  },
+  "limitations": [
+    "Scoped local implementation verification only; no component delivery, hosted CI, commit or push claim. Root owns final actual PostgreSQL/native acceptance and full source-bound hosted CI.",
+    "Caller must obtain current owner-bound C17 load_for_submission and protect source dependencies before exporting; durable approval/dispatch/retention belongs to research_experiments service.",
+    "Existing C10 source-admission validator rejects exact integers outside browser-safe range before C22 sees source data. C22 retains that explicit upstream limitation; actual private int64 support is proven through C12, never by bypassing source validation.",
+    "Real source publication decisions and execution environment configuration remain explicit external gates. No operational promotion is inferred to grant publication/scientific approval.",
+    "No Python execution, real data acquisition/transfer, live model/provider, legacy mutation, scientific review, cloud provisioning or deployment performed."
+  ],
+  "lint": {
+    "command": ".venv/bin/ruff check orchestration/frozen_experiment_export.py tests/test_frozen_experiment_export.py",
+    "exit_code": 0,
+    "log": "docs/plans/ocean-v1/evidence/C22/export-locked-ruff.txt",
+    "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "result": "All checks passed"
+  },
+  "preserved_logs": {
+    "docs/plans/ocean-v1/evidence/C22/export-expanded-tests.txt": "bec1bf678c309b20975bb98af1577b65e4f8152e6358b22d768da2a626179c93",
+    "docs/plans/ocean-v1/evidence/C22/export-final-focused-source-pins.json": "c7db104b9e56e8bda933e409f7ee3443f0e2dbd866ee2f6a42569ab6c611d71b",
+    "docs/plans/ocean-v1/evidence/C22/export-final-tests.txt": "13664671d434374dd5402fcfa2882c8f51132d2e45795478aa1d0ea6a35c72d0",
+    "docs/plans/ocean-v1/evidence/C22/export-followup-tests.txt": "453b26897a140dbf9d50bcb9ec1e559888cdc833d9ba2ba5b55e77089f0ff414",
+    "docs/plans/ocean-v1/evidence/C22/export-initial-tests.txt": "5c3d24efb8dbacd85aac8966402723485f2baf5ed46735b1c95a4df1b0dd0677",
+    "docs/plans/ocean-v1/evidence/C22/export-locked-ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C22/export-locked-source-pins.json": "27d1aba4bf2e5d4f3f0afb2df74bffadd2b9d0360edee5f7ca183a80c5b2bb94",
+    "docs/plans/ocean-v1/evidence/C22/export-locked-tests.txt": "bce717089f9d586dcf34280c8d8b0d2090242a42c118ff5194783cc4b318bd32"
+  },
+  "prior_run_qualifications": {
+    "export-expanded-tests.txt": "27 passed before complete source provenance and additional native exclusion cases.",
+    "export-final-tests.txt": "30 passed before final analysis_id-only native-recomputation guard. Original receipt/log immutable; locked run binds final source.",
+    "export-followup-tests.txt": "23 passed before expanded C01 and physical-identity positives.",
+    "export-initial-tests.txt": "21 passed and 2 fixture failures preserved: station label mismatch and existing C10 source-admission browser-integer bound. Corrected scoped station fixture and proved exact int64 through actual C12 sealed read_count source; did not weaken upstream C10 admission."
+  },
+  "source_sha256": {
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "tests/test_frozen_experiment_export.py": "b1cf8f14d5205333068712ffd97f60d7a8860f2b143be50b74fbc3fe332c6ddf"
+  },
+  "status": "scoped_local_verified",
+  "verification_version": "c22-frozen-export-verification-v1"
+}

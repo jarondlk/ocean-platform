@@ -1,0 +1,95 @@
+.........F..........F..                                                  [100%]
+=================================== FAILURES ===================================
+_______ test_scope_is_executed_and_anchor_exclusions_cascade_depth_rows ________
+
+actual = InvestigationFixture(service=<orchestration.investigations.InvestigationService object at 0x11ba75f70>, factory=sessio...tagenome:collection-a', 'remote_sensing': 'synthetic:sst:mur-final', 'edna_metabarcoding': 'synthetic:edna:project-a'})
+
+    def test_scope_is_executed_and_anchor_exclusions_cascade_depth_rows(actual):
+        selected_scope = json.loads(canonical_json(actual.scope))
+        selected_scope["sources"]["ctd"]["filters"] = {"station": "station-0"}
+        context = frozen(actual, scope=selected_scope)
+        plan = proposal(actual, selection(actual), selection(actual, "ctd", "depth_observations"))
+>       before = exporter(actual).freeze(frozen=context, proposal=plan, user=actual.user)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_frozen_experiment_export.py:171: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+orchestration/frozen_experiment_export.py:290: in freeze
+    return self._freeze(frozen=frozen, proposal=proposal, user=user)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <orchestration.frozen_experiment_export.FrozenExperimentExporter object at 0x11cfb1850>
+frozen = {'investigation_id': '2b19c6b2-e2b5-4433-8358-aef060c20b0b', 'conversation_id': '66ae1791-a0e5-4442-bb89-df5e08783aa7'...c-612c-47a3-9fc0-977fc92dfa54', 'snapshot_id': '14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37', ...}
+proposal = ExperimentProposal(question='Review the explicitly selected synthetic cohort', cohort=FrozenCohortSpec(version='c22-co...mentResources(cpus=2, memory_bytes=4294967296, wall_seconds=600, max_input_bytes=268435456, max_output_bytes=52428800))
+user = CurrentUser(id=UUID('6f5ead14-5858-530d-9615-e6cd99d33100'), email='c17-owner@example.invalid', display_name='c17-owne... 'chat:use', 'overview:read', 'provenance:read', 'classification:read', 'data:export'}), auth_provider='synthetic-c14')
+
+    def _freeze(self, *, frozen, proposal, user):
+        proposal = ExperimentProposal.model_validate(proposal.model_dump(mode="json")
+            if isinstance(proposal, ExperimentProposal) else proposal)
+        revision, context, resolution = self._load(frozen, user)
+        scope = EvidenceScope.model_validate(resolution.effective_scope)
+        files, table_descriptors, sources, selected_rows, exclusion_ledger = {}, [], {}, {}, []
+        selected_datasets, selected_analyses = set(), set()
+        exclusions = {}
+        for item in proposal.cohort.exclusions:
+            exclusions.setdefault(item.dataset_id, []).append(item)
+        publication_pins = {item.constraints["analysis"]["id"] for item in resolution.pins
+                            if item.constraints.get("kind") == "publication"}
+        for ordinal, selection in enumerate(proposal.cohort.selections):
+            if selection.kind == "dataset":
+                if publication_pins:
+                    raise FrozenExperimentExportError("export_publication_pin_requires_exact_table")
+                identity = selection.target_id
+                if identity not in context.data or (resolution.allowed_dataset_ids is not None
+                        and identity not in resolution.allowed_dataset_ids):
+>                   raise FrozenExperimentExportError("export_target_unavailable")
+E                   orchestration.frozen_experiment_export.FrozenExperimentExportError: export_target_unavailable
+
+orchestration/frozen_experiment_export.py:315: FrozenExperimentExportError
+_ test_actual_sealed_int64_above_browser_safe_range_roundtrips_without_pandas_coercion _
+
+actual = InvestigationFixture(service=<orchestration.investigations.InvestigationService object at 0x11ba75f70>, factory=sessio...tagenome:collection-a', 'remote_sensing': 'synthetic:sst:mur-final', 'edna_metabarcoding': 'synthetic:edna:project-a'})
+
+    def test_actual_sealed_int64_above_browser_safe_range_roundtrips_without_pandas_coercion(actual):
+        metadata, frames = metagenome_fixture(2, dataset_id="synthetic:c22:int64", source_id="synthetic-c22-int64")
+        frames["run_qc"].loc[:, "reads"] = [2**63 - 1, 2**53 + 1]
+>       child = seal_fixture(actual.store, [(metadata, frames)])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_frozen_experiment_export.py:281: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+schema/catalogue_adapter_fixtures.py:307: in seal_fixture
+    captured = dataset_exports(metadata, frames, generation=generation)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ingestion/catalogue_adapter_inputs.py:363: in dataset_exports
+    contents[table.object_id] = encode_table(table, frames[table.name])
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ingestion/catalogue_adapter_inputs.py:345: in encode_table
+    parse_table(spec, payload)
+ingestion/catalogue_adapter_inputs.py:142: in parse_table
+    _finite_json(row)
+schema/context_catalogue.py:134: in _finite_json
+    _finite_json(child, _depth + 1, seen)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = 9223372036854775807, _depth = 1, _seen = {4766076160}
+
+    def _finite_json(value, _depth=0, _seen=None):
+        if _depth > 128:
+            raise ValueError("JSON nesting exceeds the contract depth limit")
+        if isinstance(value, float) and not math.isfinite(value):
+            raise ValueError("Nonfinite JSON numbers are forbidden")
+        if (type(value) is int or type(value) is float and value.is_integer()) and abs(
+            value
+        ) > 9007199254740991:
+>           raise ValueError(
+                "Integral JSON values must fit the exact browser integer range; encode larger exact values as text"
+            )
+E           ValueError: Integral JSON values must fit the exact browser integer range; encode larger exact values as text
+
+schema/context_catalogue.py:118: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_frozen_experiment_export.py::test_scope_is_executed_and_anchor_exclusions_cascade_depth_rows
+FAILED tests/test_frozen_experiment_export.py::test_actual_sealed_int64_above_browser_safe_range_roundtrips_without_pandas_coercion
+2 failed, 21 passed in 19.71s

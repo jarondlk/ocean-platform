@@ -1,0 +1,38 @@
+F....................................................................... [ 72%]
+................FF.........                                              [100%]
+=================================== FAILURES ===================================
+____ test_all_nine_actions_have_explicit_strict_request_and_response_models ____
+tests/test_research_experiment_contracts.py:89: in test_all_nine_actions_have_explicit_strict_request_and_response_models
+    assert EXPERIMENT_REQUEST_MODELS[name].model_validate(data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   pydantic_core._pydantic_core.ValidationError: 5 validation errors for ExperimentApprovalRequest
+E   investigation_id
+E     Field required [type=missing, input_value={'experiment_id': '000000...0000-0000-000000000002'}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/missing
+E   conversation_id
+E     Field required [type=missing, input_value={'experiment_id': '000000...0000-0000-000000000002'}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/missing
+E   context_revision_id
+E     Field required [type=missing, input_value={'experiment_id': '000000...0000-0000-000000000002'}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/missing
+E   snapshot_id
+E     Field required [type=missing, input_value={'experiment_id': '000000...0000-0000-000000000002'}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/missing
+E   context_payload_sha256
+E     Field required [type=missing, input_value={'experiment_id': '000000...0000-0000-000000000002'}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/missing
+________ test_snapshot_execution_flag_requires_literal_boolean_false[0] ________
+tests/test_research_experiment_contracts.py:250: in test_snapshot_execution_flag_requires_literal_boolean_false
+    with pytest.raises(ValidationError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValidationError
+_______ test_snapshot_execution_flag_requires_literal_boolean_false[0.0] _______
+tests/test_research_experiment_contracts.py:250: in test_snapshot_execution_flag_requires_literal_boolean_false
+    with pytest.raises(ValidationError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValidationError
+=========================== short test summary info ============================
+FAILED tests/test_research_experiment_contracts.py::test_all_nine_actions_have_explicit_strict_request_and_response_models
+FAILED tests/test_research_experiment_contracts.py::test_snapshot_execution_flag_requires_literal_boolean_false[0]
+FAILED tests/test_research_experiment_contracts.py::test_snapshot_execution_flag_requires_literal_boolean_false[0.0]
+3 failed, 96 passed in 0.42s

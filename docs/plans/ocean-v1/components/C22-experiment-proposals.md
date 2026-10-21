@@ -1,6 +1,6 @@
 # C22 — Experiment proposals and frozen exports
 
-**Status:** Not started. **Prerequisites:** C01, C07, C09, C17, C21.
+**Status:** In progress; selected after formal readiness on delivered C21. **Prerequisites:** C01, C07, C09, C17, C21.
 
 ## Revised delivery boundary
 

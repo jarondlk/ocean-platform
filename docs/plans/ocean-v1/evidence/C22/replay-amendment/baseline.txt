@@ -1,0 +1,49 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_late_failed_duplicate_preserves_its_saved_revision_after_head_advanced __
+
+actual = ExperimentFixture(retained=InvestigationFixture(service=<orchestration.investigations.InvestigationService object at 0...ion='Explicit C22 synthetic acceptance adapter; no Python runtime'), state={'enabled': True, 'dispatch_enabled': True})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11a55a630>
+
+    def test_late_failed_duplicate_preserves_its_saved_revision_after_head_advanced(actual, monkeypatch):
+        request = actual.request()
+        original = actual.exporter.freeze
+        observed = {}
+    
+        def a_second_worker_finishes_first(**kwargs):
+            if observed:
+                return original(**kwargs)
+            observed['entered'] = True
+            with actual.factory() as session:
+                operation = session.scalar(select(ResearchExperimentOperation).where(
+                    ResearchExperimentOperation.idempotency_key == request['idempotency_key']))
+                operation_id = str(operation.id)
+            initial = actual.service.invoke('retry', {'operation_id': operation_id}, actual.user)['experiment']
+            observed['original_revision'] = initial['proposal_revision_id']
+            revised_request = {**initial['binding'], 'proposal': deepcopy(initial['proposal']),
+                'experiment_id': initial['id'], 'expected_version': initial['version'],
+                'expected_proposal_revision_id': initial['proposal_revision_id'], 'idempotency_key': str(uuid.uuid4())}
+            revised_request['proposal']['python_code'] += '# A later owner revision must not replace the first operation result\n'
+            revised = actual.service.invoke('revise', revised_request, actual.user)['experiment']
+            observed['new_revision'] = revised['proposal_revision_id']
+            raise OSError('The older duplicate worker failed after another worker committed')
+    
+        monkeypatch.setattr(actual.exporter, 'freeze', a_second_worker_finishes_first)
+        response = actual.service.invoke('create', request, actual.user)
+        assert observed['original_revision'] != observed['new_revision']
+        assert response['operation']['result_revision_id'] == observed['original_revision']
+>       assert response['experiment']['proposal_revision_id'] == observed['original_revision']
+E       AssertionError: assert '3857df53-27d...-c2f612c7cda4' == '75221cd5-664...-761b17cd6763'
+E         
+E         - 75221cd5-6641-4f81-ae26-761b17cd6763
+E         + 3857df53-27d3-4b2b-abe3-c2f612c7cda4
+
+tests/test_research_experiments.py:324: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+=========================== short test summary info ============================
+FAILED tests/test_research_experiments.py::test_late_failed_duplicate_preserves_its_saved_revision_after_head_advanced
+1 failed in 2.92s

@@ -411,6 +411,30 @@ jobs:
           python -m pytest tests/integration/test_research_evidence_postgres.py
           -q -s --tb=short
 
+      - name: Create isolated C22 experiment proposal test database
+        run: |
+          python - <<'PY'
+          from sqlalchemy import create_engine, text
+          engine = create_engine(
+              "postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform",
+              isolation_level="AUTOCOMMIT",
+          )
+          with engine.connect() as connection:
+              connection.execute(text("CREATE DATABASE ocean_c22_experiments_test"))
+          engine.dispose()
+          PY
+
+      - name: Verify C22 immutable proposals and transactional reservations
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_POSTGRES_INTEGRATION: "1"
+          C22_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c22_experiments_test
+          C22_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
+        run: >-
+          python -m pytest tests/integration/test_research_experiments_postgres.py
+          -q -s --tb=short
+
       - name: Verify database backup and isolated restore
         env:
           DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform

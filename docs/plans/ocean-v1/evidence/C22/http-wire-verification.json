@@ -1,0 +1,35 @@
+{
+  "case": "all nine actual synthetic HTTP actions; no Python execution",
+  "exit_code": 0,
+  "source_before_sha256": {
+    "api/research_experiment_routes.py": "1bb9f82c0d172a8b663b57abfa7d668c3e543f77d119e82c38d94d45ad10824d",
+    "schema/research_experiments.py": "3623b8ce0349316f5e28597752a798817acc1641d55e05d3614ebd61f0d87494",
+    "api/auth.py": "0e6fa6fad84ba4e02c86dd6a678d996eab293fb12c37460475fa53597d7c14dd",
+    "api/main.py": "c6719a5624b0527aa9a7426e110c723a3aecffdfcb0c9d4db6c13080447db3fd",
+    "api/rate_limit.py": "153093871398d94bbafd46cd7ed4013bb6a0eb8685a8eea23cf8eb9ecc0f5d58",
+    "config.py": "231008b62b23ddf83ccd1eb8fe7520ce4a724f776b8fb0c721195fdecbd9b533",
+    "db/app_models.py": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+    "orchestration/research_experiments.py": "48dba4d754fb008f0577d21041140b5a537cd3a6a7267d380096617854e5ff2e",
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "orchestration/investigations.py": "dd9d733121d9f1587e3b59b31b67e60a75bc50976589886cc96705c94efa46de",
+    "tests/research_experiment_support.py": "fb881711350462c9bf0c3efa8a4460741aa354a4d7269f72384aef7476e1e4c1",
+    "tests/test_research_experiment_api.py": "f7c65e360ff49799ddbb8d9333f433448e48cc0bbcd86faa582b4bc4238de5fa"
+  },
+  "source_after_sha256": {
+    "api/research_experiment_routes.py": "1bb9f82c0d172a8b663b57abfa7d668c3e543f77d119e82c38d94d45ad10824d",
+    "schema/research_experiments.py": "3623b8ce0349316f5e28597752a798817acc1641d55e05d3614ebd61f0d87494",
+    "api/auth.py": "0e6fa6fad84ba4e02c86dd6a678d996eab293fb12c37460475fa53597d7c14dd",
+    "api/main.py": "c6719a5624b0527aa9a7426e110c723a3aecffdfcb0c9d4db6c13080447db3fd",
+    "api/rate_limit.py": "153093871398d94bbafd46cd7ed4013bb6a0eb8685a8eea23cf8eb9ecc0f5d58",
+    "config.py": "231008b62b23ddf83ccd1eb8fe7520ce4a724f776b8fb0c721195fdecbd9b533",
+    "db/app_models.py": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+    "orchestration/research_experiments.py": "48dba4d754fb008f0577d21041140b5a537cd3a6a7267d380096617854e5ff2e",
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "orchestration/investigations.py": "dd9d733121d9f1587e3b59b31b67e60a75bc50976589886cc96705c94efa46de",
+    "tests/research_experiment_support.py": "fb881711350462c9bf0c3efa8a4460741aa354a4d7269f72384aef7476e1e4c1",
+    "tests/test_research_experiment_api.py": "f7c65e360ff49799ddbb8d9333f433448e48cc0bbcd86faa582b4bc4238de5fa"
+  },
+  "changed": [],
+  "log_sha256": "7118598bd56aadf3b6b74442b16a5737f7ee0f53717d4bc291a210c492be4b29",
+  "capture_sha256": "8dcfd131587879e8051843140c10a85f59c3552b2b57a2b6fb05d76cdd6ee3e7"
+}

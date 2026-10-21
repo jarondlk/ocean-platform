@@ -44,7 +44,7 @@ def retained(actual):
 
 def test_migration_exact_schema_repeat_and_empty_downgrade(isolated):
     pg.alembic(isolated, "upgrade", "head")
-    assert pg.revision(isolated) == "20261019_0019"
+    assert pg.revision(isolated) == "20261020_0020"
     reflected = inspect(isolated["engine"])
     for model in NEW_MODELS:
         table = model.__table__

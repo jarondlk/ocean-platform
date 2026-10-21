@@ -1,0 +1,107 @@
+{
+  "version": "c22-independent-export-final-probe-v1",
+  "synthetic_only": true,
+  "qualification": "Actual sealed C09/C13/C14/C17 code and exporter; separate temporary SQLite only, no server/executor/provider/real data/cloud. Exporter and exporter tests were declared frozen by their owner before this supplemental probe.",
+  "source_before_sha256": {
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "tests/test_frozen_experiment_export.py": "b1cf8f14d5205333068712ffd97f60d7a8860f2b143be50b74fbc3fe332c6ddf",
+    "schema/research_experiments.py": "3623b8ce0349316f5e28597752a798817acc1641d55e05d3614ebd61f0d87494",
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "orchestration/frozen_catalogue.py": "9b3fdb498935f3d5db5594f667bfebf49bf7be487509cea9c448f4f229351609",
+    "orchestration/frozen_scientific_catalogue.py": "1fda9afe83a67c70a1cfcf752d62d0fe4ef4114b291095f78e357a376486d051"
+  },
+  "source_after_sha256": {
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "tests/test_frozen_experiment_export.py": "b1cf8f14d5205333068712ffd97f60d7a8860f2b143be50b74fbc3fe332c6ddf",
+    "schema/research_experiments.py": "3623b8ce0349316f5e28597752a798817acc1641d55e05d3614ebd61f0d87494",
+    "orchestration/research_controller_scope.py": "ef467081034801df20c49b94ffd0132e461c7f602bfcbeddda7d8044f8e14351",
+    "orchestration/frozen_catalogue.py": "9b3fdb498935f3d5db5594f667bfebf49bf7be487509cea9c448f4f229351609",
+    "orchestration/frozen_scientific_catalogue.py": "1fda9afe83a67c70a1cfcf752d62d0fe4ef4114b291095f78e357a376486d051"
+  },
+  "source_unchanged": true,
+  "cases": [
+    {
+      "name": "actual_complete_ctd_baseline",
+      "passed": true,
+      "row_count": 4
+    },
+    {
+      "name": "exact_selected_capture_object_provenance_and_arrow_schema",
+      "passed": true
+    },
+    {
+      "name": "C17_published_analysis_selection_cannot_be_ignored_by_native_read",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_analysis_selection_requires_exact_table",
+      "passed": true
+    },
+    {
+      "name": "host_callback_wrong_publication_generation",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_publication_unavailable",
+      "passed": true
+    },
+    {
+      "name": "dependent_depth_values_keep_exact_source_owned_date_and_identity_support",
+      "passed": true
+    },
+    {
+      "name": "actual_ctd_exclusion_cascades_cast_fk",
+      "passed": true,
+      "remaining_casts": 3
+    },
+    {
+      "name": "ctd_pin_cannot_export_metagenome",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_target_unavailable",
+      "passed": true
+    },
+    {
+      "name": "current_dataset_revocation_blocks_reuse",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_target_unavailable",
+      "passed": true
+    },
+    {
+      "name": "publication_withdrawal_blocks_reuse",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_publication_unavailable",
+      "passed": true
+    },
+    {
+      "name": "proximity_cannot_establish_physical_identity",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_physical_pairing_unavailable",
+      "passed": true
+    },
+    {
+      "name": "staged_file_tamper_rejected_at_reconstruction",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_integrity",
+      "passed": true
+    },
+    {
+      "name": "manifest_and_sidecars_count_toward_input_limit",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_input_size_exceeded",
+      "passed": true
+    },
+    {
+      "name": "partial_selector_anchor_cannot_claim_complete_dependent_run_cohort",
+      "expected": "refused",
+      "observed": "refused",
+      "reason": "export_unavailable",
+      "passed": true
+    }
+  ],
+  "passed": 13,
+  "failed": 0
+}

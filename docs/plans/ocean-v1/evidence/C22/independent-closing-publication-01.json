@@ -1,0 +1,29 @@
+{
+  "version": "c22-closing-publication-probe-v1",
+  "synthetic_only": true,
+  "qualification": "Actual private service/exporter with sealed synthetic sources and separate temporary SQLite. Deliberately adversarial host flag callback; no Python/executor/server/provider/real data/cloud.",
+  "callback_calls": [
+    "publication withdrawn inside _public enabled callback"
+  ],
+  "expected": "refused with no approval commit after publication withdrawal",
+  "outcome": {
+    "observed": "refused",
+    "code": "access_denied",
+    "status_code": 403
+  },
+  "persisted_approvals": 0,
+  "passed": true,
+  "source_before_sha256": {
+    "orchestration/research_experiments.py": "48dba4d754fb008f0577d21041140b5a537cd3a6a7267d380096617854e5ff2e",
+    "orchestration/frozen_experiment_export.py": "81951fc7417417947277e8be01bdac30a3d4134460c2943eb58696dac67050f9",
+    "schema/research_experiments.py": "3623b8ce0349316f5e28597752a798817acc1641d55e05d3614ebd61f0d87494",
+    "tests/research_experiment_support.py": "fb881711350462c9bf0c3efa8a4460741aa354a4d7269f72384aef7476e1e4c1"
+  },
+  "source_after_sha256": {
+    "orchestration/research_experiments.py": "48dba4d754fb008f0577d21041140b5a537cd3a6a7267d380096617854e5ff2e",
+    "orchestration/frozen_experiment_export.py": "81951fc7417417947277e8be01bdac30a3d4134460c2943eb58696dac67050f9",
+    "schema/research_experiments.py": "3623b8ce0349316f5e28597752a798817acc1641d55e05d3614ebd61f0d87494",
+    "tests/research_experiment_support.py": "fb881711350462c9bf0c3efa8a4460741aa354a4d7269f72384aef7476e1e4c1"
+  },
+  "source_unchanged": true
+}

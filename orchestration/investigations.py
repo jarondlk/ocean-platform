@@ -652,9 +652,13 @@ class InvestigationService:
                 # Retention applies independently of C21 feature flags and
                 # runtime wiring. Prepared/uncertain evidence and queued answer
                 # jobs remain dependencies even before publication.
-                from db.app_models import ResearchAnswerJob, ResearchEvidenceContextDependency, ResearchEvidenceReceipt
+                from db.app_models import (
+                    ResearchAnswerJob, ResearchEvidenceContextDependency, ResearchEvidenceReceipt,
+                    ResearchExperiment, ResearchExperimentOperation,
+                )
                 protected = any(session.scalar(select(model).where(model.investigation_id == item.id).limit(1)) is not None
-                    for model in (ResearchAnswerJob, ResearchEvidenceContextDependency, ResearchEvidenceReceipt))
+                    for model in (ResearchAnswerJob, ResearchEvidenceContextDependency, ResearchEvidenceReceipt,
+                                  ResearchExperiment, ResearchExperimentOperation))
                 if pending is None and descendants is None and not protected and not self._held_ancestor(session, item):
                     eligible.append(item)
             if not dry_run:

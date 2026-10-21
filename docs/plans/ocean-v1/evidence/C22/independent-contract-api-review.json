@@ -1,0 +1,89 @@
+{
+  "version": "c22-independent-contract-api-review-v1",
+  "created_at_utc": "2026-10-21T03:17:32.706020+00:00",
+  "outcome": "No remaining concrete blocker found by source inspection",
+  "remaining_findings": [],
+  "reviewed_source_sha256": {
+    "schema/research_experiments.py": "3623b8ce0349316f5e28597752a798817acc1641d55e05d3614ebd61f0d87494",
+    "api/research_experiment_routes.py": "1bb9f82c0d172a8b663b57abfa7d668c3e543f77d119e82c38d94d45ad10824d",
+    "api/auth.py": "0e6fa6fad84ba4e02c86dd6a678d996eab293fb12c37460475fa53597d7c14dd",
+    "config.py": "231008b62b23ddf83ccd1eb8fe7520ce4a724f776b8fb0c721195fdecbd9b533",
+    "api/rate_limit.py": "153093871398d94bbafd46cd7ed4013bb6a0eb8685a8eea23cf8eb9ecc0f5d58",
+    "api/main.py": "c6719a5624b0527aa9a7426e110c723a3aecffdfcb0c9d4db6c13080447db3fd",
+    "tests/test_research_experiment_api.py": "f7c65e360ff49799ddbb8d9333f433448e48cc0bbcd86faa582b4bc4238de5fa",
+    "tests/test_research_experiment_security.py": "21680b38f5fdb9650fca9055cb2341769178a3eeac5a80918602721f86884e4e",
+    "tests/test_research_experiment_contracts.py": "31a0c011f38b5c040828cb8e495e42b8351957f9b3c22aa5ef3f2bc70b4584f7"
+  },
+  "review_scope": [
+    "Complete C22 DTO and nine fixed private route implementations",
+    "C22 changes in existing auth/bootstrap/rate/config modules; source hashes cover complete files",
+    "Current root HTTP/security test sources and owned adversarial pure contract test source"
+  ],
+  "fixed_issues": [
+    {
+      "issue": "Unpinned environment strings were not rejected",
+      "resolution": "Real descriptors require exact Python release syntax and valid scientific package versions; fake descriptor cannot claim a runtime"
+    },
+    {
+      "issue": "An empty event page could claim more retained history without progress",
+      "resolution": "Consecutive-page validator rejects empty has_more pages"
+    },
+    {
+      "issue": "Approval/dispatch lacked the full C17 request binding",
+      "resolution": "Both require all five context fields as well as CAS version/revision and five approval hashes"
+    },
+    {
+      "issue": "Literal[False] accepted numeric zero under Pydantic literal semantics",
+      "resolution": "Before validator requires value is False; numeric0/0.0 tests pass"
+    },
+    {
+      "issue": "A completed create/revise response could be self-consistent but contain a different proposal",
+      "resolution": "Route binds completed proposal content and retained operation result revision to the request"
+    },
+    {
+      "issue": "Applying complete new-context binding to a pending failed revise hides the retained retry operation",
+      "resolution": "Pending response may retain original head context while still binding investigation/conversation; actual root HTTP regression inspected"
+    }
+  ],
+  "owned_test_results": [
+    {
+      "command": ".venv/bin/python -m pytest tests/test_research_experiment_contracts.py -q --tb=short",
+      "passed": 125,
+      "failed": 0,
+      "log": "docs/plans/ocean-v1/evidence/C22/independent-contract-tests-expanded.txt",
+      "qualification": "Before optional operation error_code/reason fields and five new compatibility cases were added"
+    },
+    {
+      "command": ".venv/bin/python -m pytest tests/test_research_experiment_contracts.py -q --tb=short -k operation_recovery",
+      "passed": 5,
+      "failed": 0,
+      "deselected": 125,
+      "log": "docs/plans/ocean-v1/evidence/C22/independent-contract-operation-compatibility-01.txt",
+      "qualification": "Focused compatibility for the additive optional operation fields; total current file has130 cases, not claimed as a single130-case executed run"
+    },
+    {
+      "command": ".venv/bin/ruff check tests/test_research_experiment_contracts.py",
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C22/independent-contract-final-lint.txt"
+    }
+  ],
+  "evidence_sha256": {
+    "docs/plans/ocean-v1/evidence/C22/independent-contract-tests-initial.txt": "3327ece56f91a4c21a01220e91de21070991b8181904ab69ff95144e8f8d0279",
+    "docs/plans/ocean-v1/evidence/C22/independent-contract-tests-repaired.txt": "c1281a31d32c2fd202cfc4614e199f6683af8745ff41b86f7031c7c0c8387436",
+    "docs/plans/ocean-v1/evidence/C22/independent-contract-tests-expanded.txt": "9f8bb89473a7d1fa4ef451c7c82a5cc168f5227a12cdaf43efa81383309b89b1",
+    "docs/plans/ocean-v1/evidence/C22/independent-contract-operation-compatibility-01.txt": "c1fe84b31735214e8248627c26d9c3baf31836499e248a1ac09fdbf3201a0dd4",
+    "docs/plans/ocean-v1/evidence/C22/independent-contract-final-lint.txt": "d0a7d38d1436813614653528fa22822afffa693c1cb5bb50f6e420dfe17e43a9",
+    "docs/plans/ocean-v1/evidence/C22/root-http-01.txt": "fc3db8218484eaef6eaac958af16f034bf0fb9e06f9791d4bbb4f52deb8f0f2b",
+    "docs/plans/ocean-v1/evidence/C22/root-http-prepared-01.txt": "d0cf885e3c8108d37816f6a0193ee74b0a831f1a623b5e4645c856df9446234a",
+    "docs/plans/ocean-v1/evidence/C22/root-security-02.txt": "408093f06ea4ae7097cc84b8612de462ff0b91c8867a24307c55c4430a4a098f",
+    "docs/plans/ocean-v1/evidence/C22/root-bootstrap-01.txt": "62f4794d1fb7068e9bac71318180ef7ed60ed1919fc81bb2dbf2bc701c5aed90"
+  },
+  "preserved_initial_history": "Initial96passed/3failed log retained; one failure was the test fixture missing concurrently added C17 fields and two were numeric false coercion. Repaired99 and expanded125 runs retained. No original receipt overwritten.",
+  "qualifications": [
+    "Source review and pure DTO/canonical tests do not establish full component acceptance; durable store, complete exporter, PostgreSQL and hosted CI gates belong to their actual separate receipts.",
+    "Root actual HTTP/security/bootstrap logs were inspected, not executed by this reviewer; live HTTP fixtures are explicitly synthetic.",
+    "No frontend/runtime wire change, real execution, model/provider service, real-data acquisition, publication mutation or cloud/deployment action performed.",
+    "AST parsing stores inert Python and does not establish C23 containment or independent scientific approval.",
+    "All current approval records remain private experimental authority; C25 owns UI and experiment capability integration."
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "component": "C22",
+  "original_static_receipt": "static-acceptance-01/result.json",
+  "changes": {
+    "orchestration/research_experiments.py": {
+      "tested": "48dba4d754fb008f0577d21041140b5a537cd3a6a7267d380096617854e5ff2e",
+      "current": "bab02f05549655977e2f95ef7885a59d3a311c3ad64941b0846d79b94b0db2ee"
+    },
+    "tests/test_research_experiments.py": {
+      "tested": "354de6fa33ca9cb00d8e922cdeb855998ef203671c5110337e488c7707f99a0b",
+      "current": "eb33fdfb5f435f047b44c104ca406efa09f55b4913312ac30ef2d47cd396a749"
+    }
+  },
+  "qualification": "Only final replay-response service and its regression test changed; all generated contract inputs remain unchanged. Final affected Ruff and full backend bind current source; original static and wrong inherited component-label receipts retained."
+}
