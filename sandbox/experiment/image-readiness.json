@@ -1,0 +1,17 @@
+{
+  "version": "c23-scientific-image-readiness-v1",
+  "ready": false,
+  "dispatch_eligible": false,
+  "evidence_class": "preparation-only",
+  "built_image_digest": null,
+  "required_operator_inputs": [
+    "Separately authorized Linux build/acceptance environment",
+    "Exact locally available Python scientific base reference with sha256 digest",
+    "Dedicated complete hash-locked requirements and wheelhouse for the target architecture",
+    "Exact Python patch and all installed package versions, including six scientific libraries",
+    "Recorded platform OCI image manifest/config/layers and authenticated rootfs materialization",
+    "Complete pinned runsc release, adjacent sidecars and supported flags",
+    "Actual namespace, resource, filesystem, whole-job termination and numerical acceptance evidence"
+  ],
+  "not_performed": ["No download", "No install", "No image build", "No runtime launch", "No cloud operation"]
+}

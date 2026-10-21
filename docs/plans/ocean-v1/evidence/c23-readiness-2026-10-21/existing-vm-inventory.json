@@ -1,0 +1,79 @@
+{
+  "component": "C23",
+  "kind": "read-only conditional host inventory; not component selection or containment acceptance",
+  "recorded_at": "2026-10-21T03:51:50.458563+00:00",
+  "host": "macOS ARM64",
+  "commands": [
+    {
+      "argv": [
+        "/opt/homebrew/bin/podman",
+        "machine",
+        "list",
+        "--format",
+        "json"
+      ],
+      "exit_code": 125,
+      "result": "sandbox denied creating VM lockfile outside workspace; not retried with changed permissions"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/podman",
+        "system",
+        "connection",
+        "list",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "result": "four existing local connections for custom/default rootful/user sockets; no connection attempted"
+    },
+    {
+      "argv": [
+        "lsof",
+        "-nP",
+        "-iTCP:49601",
+        "-iTCP:50246",
+        "-sTCP:LISTEN"
+      ],
+      "exit_code": 1,
+      "result": "no visible listeners; not a universal assertion of stopped VM state"
+    }
+  ],
+  "existing_vm_configurations": [
+    {
+      "name": "podman-machine-custom",
+      "config_sha256": "bb96b590621ddf532afb8d5aed06db9385eff840af018cb0271ed12c71f3b552",
+      "resources": {
+        "CPUs": 6,
+        "DiskSize": 76,
+        "Memory": 3814,
+        "USBs": []
+      },
+      "last_up_recorded": "2025-09-25T14:16:43.023362+09:00",
+      "starting_recorded": false,
+      "runtime_availability": "unverified; configuration is not live runtime evidence"
+    },
+    {
+      "name": "podman-machine-default",
+      "config_sha256": "46aab2c1ef7feb1ce5e60240ba0d7c26b2c04acb058653a084a8e3eb534cf079",
+      "resources": {
+        "CPUs": 5,
+        "DiskSize": 93,
+        "Memory": 3814,
+        "USBs": []
+      },
+      "last_up_recorded": "2026-10-09T20:06:29.213259+09:00",
+      "starting_recorded": false,
+      "runtime_availability": "unverified; configuration is not live runtime evidence"
+    }
+  ],
+  "runtime_gate": "No verified compatible Linux/runsc installation, scientific image or containment evidence. Existing configurations do not satisfy acceptance.",
+  "changes_performed": [],
+  "not_performed": [
+    "No VM start/stop/reconfigure",
+    "No SSH or container execution",
+    "No installs/builds/downloads",
+    "No cloud provisioning/deployment",
+    "No generated Python execution"
+  ]
+}

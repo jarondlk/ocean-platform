@@ -1,0 +1,14 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_experiment_sandbox_supervisor.py",
+    "-q"
+  ],
+  "exit_code": 2,
+  "phase": "collection before any cases",
+  "error": "Pytest attempted to stringify 10**10000 for automatic parameter IDs and hit Python integer-string digit bound",
+  "correction": "Explicit bounded parameter IDs; hostile huge-integer values retained unchanged",
+  "qualification": "First direct command output observed in tool result; this note is not acceptance evidence and no complete raw log was captured."
+}

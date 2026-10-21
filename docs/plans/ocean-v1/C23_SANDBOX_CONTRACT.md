@@ -1,0 +1,73 @@
+# C23 local sandbox preparation contract
+
+Version: `c23-sandbox-contract-v1`. This is the local implementation checkpoint
+on `overhaul`, following delivered C22 source `66b4106`, CI `39539257759` and
+metadata checkpoint `f4f702c`. C23 is In progress. It is not accepted execution.
+
+The user confirmed there is no existing Linux/gVisor host and instructed that
+real execution remain gated. No scheduler was resumed. No host installation,
+VM start, scientific image build, generated Python execution, cloud resource
+change or real-data operation is part of this checkpoint.
+
+## Retained input and authority
+
+`verify_execution_envelope` accepts C22's exact `metadata` and byte-valued
+`files`, an envelope hash from the retained reservation, and a trusted
+environment registry. It validates the strict metadata model, all five approved
+hashes, context binding, cohort, complete manifest and exact file set. The
+256 MiB ceiling includes code, manifest and files; narrower proposal bounds
+apply. It preserves private integer and Unicode bytes without browser-number
+normalization. The returned `VerifiedEnvelope` detaches mutable callers.
+
+Verification is not admission. A new current C22 service check is required
+before an effect or result publication. The caller cannot substitute a Boolean
+approval or a newly calculated hash for the retained reservation. A changed
+environment requires a revised proposal and new approval. Fake envelopes cannot
+be promoted into real execution by changing an executor object.
+
+The C22 application APIs, fake-only executor, approval history, reservation
+limits and immutable capacity-release guards remain unchanged. C23's local
+supervisor is not registered in the serving application. It releases no C22
+reservation and creates no scientific publication.
+
+## Local implementation boundary
+
+The synthetic supervisor models deterministic job identity, journal fencing,
+create/verify/start/observe/terminate/collect ordering, current admission,
+cancellation and uncertain effects. Its runtime never interprets stored Python.
+Every result must retain simulation and non-execution labels. An in-memory
+journal is local test support, not durable execution or exactly-once evidence.
+Cleanup does not depend on a revoked owner's permission to launch or publish.
+Missing acknowledgements and stale epochs cannot imply termination or release.
+
+Staging copies only approved code, manifest and file bytes into a private
+create-only job tree. Reuse requires exact immutable bytes and safe file types.
+Output validation reads a trusted extracted directory only after a future
+adapter proves all untrusted writers stopped. It must reject unsafe paths and
+file types, unexpected/missing outputs, malformed formats and exceeded bounds.
+Table and raster support is deliberately bounded; unsupported formats require
+a revised proposal. Aggregate output accounting includes logs and manifests.
+Raw machine artifacts stay distinct from any human CSV presentation.
+
+The OCI/profile renderer is configuration preparation. It must not invoke an
+engine, download an image or establish eligibility. Rendered limits, namespaces
+and deny-network flags are not proof of enforcement. A recipe, fabricated digest
+or structural test receipt cannot become an accepted scientific environment.
+
+## Mandatory outstanding acceptance
+
+| Gate | Required evidence before C23 completion |
+|---|---|
+| Environment | Authorized compatible Linux host, complete pinned gVisor installation, verified materialized image identity, exact Python and hash-locked scientific dependencies |
+| Containment | Actual denial of external/metadata networking, host files/sockets, credentials, package installation and unauthorized mounts |
+| Resources | Measured CPU/memory/process/time/input/output/log/scratch enforcement covering the complete job |
+| Termination | Actual descendant termination and trusted runtime cleanup; uncertain effects retain capacity |
+| Output retention | Tested extraction/retention ordering that preserves bounded outputs while preventing untrusted writer races, including tmpfs lifecycle |
+| Durability | Real journal/worker reconciliation and narrow verified-termination reservation-release integration; memory fakes do not establish either |
+| Science | Repeated numerical fixtures under the exact image, explicit seeds and declared tolerances; execution success is separate from scientific correctness |
+
+Actual runtime adapters and separately marked Linux/gVisor acceptance remain
+future work. Ordinary host Python, the default Podman runtime and unit mocks
+cannot clear those gates. C24 target configuration and provisioning/deployment
+authorization remain separate. C23 cannot be marked Complete, nor can its
+completion be inferred by later components, while these gates are outstanding.

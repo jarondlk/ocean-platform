@@ -1,0 +1,64 @@
+{
+  "component": "C23",
+  "recorded_at": "2026-10-21T09:31:56.685278+00:00",
+  "state": "Targeted CSV preparse safety amendment; final combined acceptance remains with root",
+  "old_source_files": {
+    "orchestration/experiment_sandbox/files.py": "62cb50649340ada1b93623b53e4b5d77c721723a97fb870342b02f49017f8ce3",
+    "tests/test_experiment_sandbox_files.py": "decedbbdb0dc31a17a8b6c4c045c28c78efde9372c37308d7b650893377ca77c"
+  },
+  "new_source_files": {
+    "orchestration/experiment_sandbox/files.py": "a2e1d4883b17513bbe82b7de43f16ce47d86480bffb39a64a5b7bf65dc3440ca",
+    "tests/test_experiment_sandbox_files.py": "99412b7f3bb3268c869040124fcf3e245cc83ece75b36630786c955bd95d38f7"
+  },
+  "tested_source_before": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "a2e1d4883b17513bbe82b7de43f16ce47d86480bffb39a64a5b7bf65dc3440ca",
+    "tests/test_experiment_sandbox_files.py": "99412b7f3bb3268c869040124fcf3e245cc83ece75b36630786c955bd95d38f7"
+  },
+  "tested_source_after": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "a2e1d4883b17513bbe82b7de43f16ce47d86480bffb39a64a5b7bf65dc3440ca",
+    "tests/test_experiment_sandbox_files.py": "99412b7f3bb3268c869040124fcf3e245cc83ece75b36630786c955bd95d38f7"
+  },
+  "source_changed_during_run": [],
+  "commands": [
+    {
+      "name": "targeted-csv-tests",
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_files.py",
+        "-q",
+        "-k",
+        "csv",
+        "--color=no"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.567,
+      "log": "docs/plans/ocean-v1/evidence/C23/files/csv-bound-amendment/targeted-csv-tests.txt",
+      "sha256": "7ea0594705951d77dafc4054d3fa71c3d101acb379a1ca206a0fb8ecff3a6405"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "orchestration/experiment_sandbox/files.py",
+        "tests/test_experiment_sandbox_files.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.078,
+      "log": "docs/plans/ocean-v1/evidence/C23/files/csv-bound-amendment/ruff.txt",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  ],
+  "tests_passed": 21,
+  "success": true,
+  "finding": "The earlier quotegrammar pass did not cap row/cell/field sizes before csv.reader could allocate an overwide record. New pass caps decoded UTF8 field bytes, row columns, data rows and cells before parser allocation.",
+  "scope": "Local synthetic CSV validation; no execution or containment evidence",
+  "execution_performed": false,
+  "prior_evidence": "Original93/95case and coverage receipts remain immutable; this amendment supersedes only two owned source/test files; root combinedsourcepins will bind all final tests."
+}

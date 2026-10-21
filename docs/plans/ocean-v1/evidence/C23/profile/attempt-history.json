@@ -1,0 +1,28 @@
+{
+  "component": "C23",
+  "kind": "Historical unpinned development tool outcomes; not final source acceptance",
+  "attempts": [
+    {
+      "command": ".venv/bin/python -m pytest tests/test_experiment_sandbox_profile.py -q",
+      "observed": "51 passed in 4.05s",
+      "qualification": "Before bounded-directory discovery amendment; shared source was not pinned by this development attempt"
+    },
+    {
+      "command": ".venv/bin/python -m pytest tests/test_experiment_sandbox_profile.py -q",
+      "observed": "53 passed in 3.77s",
+      "qualification": "After two rootfs discovery regressions; before image material tests"
+    },
+    {
+      "command": ".venv/bin/python -m ruff check orchestration/experiment_sandbox/profile.py tests/test_experiment_sandbox_profile.py sandbox/experiment/verify_image.py",
+      "observed": "Initial test lint: 16 issues (unused Path import and multiple statements on one line)",
+      "qualification": "Corrected by material tests using Path and formatting owned test/helper files; later Ruff passed"
+    },
+    {
+      "command": ".venv/bin/python -m pytest tests/test_experiment_sandbox_profile.py -q",
+      "observed": "76 passed in 3.73s",
+      "qualification": "All current focused cases passed before final create-only source-pinned recorder"
+    }
+  ],
+  "review_amendment": "Root identified unbounded os.listdir allocation and deferred sibling accounting. Rootfs discovery now stops scandir before materializing more than the remaining global discovered-entry budget, with two focused regressions.",
+  "evidence_boundary": "No runtime/image/containment claim; exact historical commands/output remain in the conversation tool records. Final verification.json separately binds current source and logs."
+}

@@ -1,0 +1,19 @@
+{
+  "checks": {
+    "ast_parse": true,
+    "frozen_source_pins_match": true
+  },
+  "component": "C23",
+  "configuration_only": true,
+  "dispatch_eligible": false,
+  "log": "docs/plans/ocean-v1/evidence/C23/profile/ast-check.txt",
+  "log_sha256": "716f1b1fae843591cb2b28ed708df74fa03626e96bc13446b096ca1817503f55",
+  "python_version": "3.12.7",
+  "recorded_at": "2026-10-21T09:35:37.195416+00:00",
+  "source_receipt_sha256": "9f424fe96c29e80a10034e777e1752b54ff1657b4372f57a8b67f55a3a28ca55",
+  "sources": {
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01",
+    "sandbox/experiment/verify_image.py": "e7f1c315936cd72ba65fb4de8d759c71fba9bcd59b8137f07b25403d1de12b7a",
+    "tests/test_experiment_sandbox_profile.py": "c250728055020e22b059a9024e98d1a6e6ec3f636701f51cc5c60d31ac10780d"
+  }
+}

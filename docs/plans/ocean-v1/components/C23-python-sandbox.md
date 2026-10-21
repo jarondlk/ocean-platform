@@ -1,6 +1,6 @@
 # C23 — Isolated Python execution
 
-**Status:** Not started. **Prerequisites:** C22.
+**Status:** In progress; local preparation checkpoint passes393 scoped cases and Ruff after C22 delivery/readiness. Real execution and mandatory acceptance remain gated. **Prerequisites:** C22.
 
 ## Revised delivery boundary
 
@@ -47,3 +47,15 @@ Keep execution independently disabled by default. Rollback stops dispatch and re
 Use the independent planning, implementation or resume prompt in
 [PROMPTS.md](../PROMPTS.md#c23). Read the current site-separation
 plan, UX brief and listed prerequisite handoffs as well as this specification.
+
+
+## Implemented local checkpoint — 2026-10-21 JST
+
+Strict byte/hash contracts, synthetic supervisor ports, bounded staging/output
+validation, fixed OCI preparation and offline image recipe checks pass393 scoped
+cases with unchanged source/preserved prior artifacts. See [contract](../C23_SANDBOX_CONTRACT.md),
+[handoff](../handoffs/C23.md) and [checkpoint](../evidence/C23/checkpoint.json).
+No production dispatch path or real runtime was built/activated. This checkpoint
+does not satisfy actual containment, durable runtime integration, safe extraction
+or numerical acceptance; C23 is not Complete. The user confirmed no host exists
+and real execution must remain gated. Scheduled continuation remains paused.

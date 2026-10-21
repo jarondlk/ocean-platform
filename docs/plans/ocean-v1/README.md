@@ -1,6 +1,6 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C22 are Complete with hosted delivery; C23–C27 are Not started.**
+**P00 and C01–C22 are Complete with hosted delivery; C23 is In progress; C24–C27 are Not started.**
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 

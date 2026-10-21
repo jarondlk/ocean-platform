@@ -1,0 +1,45 @@
+{
+  "changed_during_tests": [],
+  "component": "C23",
+  "evidence_files": {
+    "docs/plans/ocean-v1/evidence/C23/supervisor/dto-amendment/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C23/supervisor/dto-amendment/targeted-tests.txt": "cabc2ee4284e8a3fbf14afa84fae159bbf6f01c4f70cb674beeeeab29e2a6cb1"
+  },
+  "old_focused_receipt": "docs/plans/ocean-v1/evidence/C23/supervisor/verification.json",
+  "old_focused_receipt_sha256": "ea916dd60e6b0c486c3ccd51127a585469d8807bceaa922f3c7a252f6922819f",
+  "passed": 21,
+  "qualification": "Original46pass receipt/log/sourcepins remain immutable. Only21new targetedcases run for this amendment; root final combined acceptance must bind final complete source. No runtime, generatedPython, VM, container, providers or cloud.",
+  "recorded_at": "2026-10-21T09:25:30.826856+00:00",
+  "ruff_exit_code": 0,
+  "scope": "Strict JournalToken-only DTO amendment; synthetic supervisor remains non-executing",
+  "source_after_amendment": {
+    "orchestration/experiment_sandbox/supervisor.py": "7b515315bb8bcbcf1b41def5676a3547a7e2107a5fd79970f96c2fd13e84c54b",
+    "tests/test_experiment_sandbox_supervisor.py": "74f968b2f4f54c0407712654ae0d3d7a3898dd248c9ca986842c71204ca6369c"
+  },
+  "source_after_tests": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "62cb50649340ada1b93623b53e4b5d77c721723a97fb870342b02f49017f8ce3",
+    "orchestration/experiment_sandbox/supervisor.py": "7b515315bb8bcbcf1b41def5676a3547a7e2107a5fd79970f96c2fd13e84c54b",
+    "tests/test_experiment_sandbox_supervisor.py": "74f968b2f4f54c0407712654ae0d3d7a3898dd248c9ca986842c71204ca6369c"
+  },
+  "source_before_amendment": {
+    "orchestration/experiment_sandbox/supervisor.py": "2e9d07a82378974ac0339d8e9fe3aa92aa2153695ead6f79f74335c1d52e43dc",
+    "tests/test_experiment_sandbox_supervisor.py": "3c52b45df4839889fe2d0400712ea9f2f565e621ec8b98029e6e95fe8b887cc2"
+  },
+  "source_before_tests": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "62cb50649340ada1b93623b53e4b5d77c721723a97fb870342b02f49017f8ce3",
+    "orchestration/experiment_sandbox/supervisor.py": "7b515315bb8bcbcf1b41def5676a3547a7e2107a5fd79970f96c2fd13e84c54b",
+    "tests/test_experiment_sandbox_supervisor.py": "74f968b2f4f54c0407712654ae0d3d7a3898dd248c9ca986842c71204ca6369c"
+  },
+  "targeted_command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_experiment_sandbox_supervisor.py::test_journal_token_rejects_malformed_identifiers_and_epochs",
+    "tests/test_experiment_sandbox_supervisor.py::test_journal_token_boundary_and_claim_saturation",
+    "tests/test_experiment_sandbox_supervisor.py::test_journal_rejects_ducktyped_lease",
+    "-q"
+  ],
+  "test_exit_code": 0
+}

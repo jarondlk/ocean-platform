@@ -1,0 +1,615 @@
+F.....F.....FFFFFF............FFFFFF..........                           [100%]
+=================================== FAILURES ===================================
+___ test_actual_c22_envelope_simulates_with_exact_identity_and_inert_python ____
+
+prepared = (VerifiedEnvelope(_metadata_json='{"approval_id":"99c659fd-da2e-4d03-bf44-f12a00c55bf4","authority":"experimental","bi...lders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/pytest-553/c23-supervisor0/generated-code-must-not-run'))
+
+    def test_actual_c22_envelope_simulates_with_exact_identity_and_inert_python(prepared):
+        envelope, sentinel = prepared
+        result, runtime, journal = run(envelope)
+        document = result.document
+>       assert result.state == 'simulated'
+E       AssertionError: assert 'failed' == 'simulated'
+E         
+E         - simulated
+E         + failed
+
+tests/test_experiment_sandbox_supervisor.py:94: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+______ test_lost_create_ack_reconciles_same_job_without_duplicate_create _______
+
+envelope = VerifiedEnvelope(_metadata_json='{"approval_id":"99c659fd-da2e-4d03-bf44-f12a00c55bf4","authority":"experimental","bin...9e3ea7e000bccc2332c91d2b67394515ec022ce438b6316c239095', job_id='c23-a23b34e37d0b334aac4c4c6a2c8fc2c7cbb5105f7b022017')
+
+    def test_lost_create_ack_reconciles_same_job_without_duplicate_create(envelope):
+        runtime, journal = SyntheticRuntime(lose_ack=['create']), MemoryExecutionJournal()
+        first, _, _ = run(envelope, runtime=runtime, journal=journal)
+        assert first.state == 'uncertain' and first.document['reservation_released'] is False
+        assert journal.completed(envelope.job_id, envelope.envelope_sha256) is None
+        second, _, _ = run(envelope, runtime=runtime, journal=journal)
+>       assert second.state == 'simulated'
+E       AssertionError: assert 'failed' == 'simulated'
+E         
+E         - simulated
+E         + failed
+
+tests/test_experiment_sandbox_supervisor.py:134: AssertionError
+_________ test_revocation_during_collection_discards_private_manifest __________
+
+envelope = VerifiedEnvelope(_metadata_json='{"approval_id":"99c659fd-da2e-4d03-bf44-f12a00c55bf4","authority":"experimental","bin...9e3ea7e000bccc2332c91d2b67394515ec022ce438b6316c239095', job_id='c23-a23b34e37d0b334aac4c4c6a2c8fc2c7cbb5105f7b022017')
+
+    def test_revocation_during_collection_discards_private_manifest(envelope):
+        allowed = [True]
+        def collect(*_):
+            allowed[0] = False
+            return collected()
+        result, runtime, _ = run(envelope, collect=collect,
+            admission=lambda value: value.envelope_sha256 if allowed[0] else None)
+>       assert result.state == 'unavailable' and result.document['output_manifest'] is None
+E       AssertionError: assert ('failed' == 'unavailable'
+E         
+E         - unavailable
+E         + failed)
+
+tests/test_experiment_sandbox_supervisor.py:195: AssertionError
+_______ test_invalid_or_backwards_clock_after_start_still_cleans_up[nan] _______
+
+envelope = VerifiedEnvelope(_metadata_json='{"approval_id":"99c659fd-da2e-4d03-bf44-f12a00c55bf4","authority":"experimental","bin...9e3ea7e000bccc2332c91d2b67394515ec022ce438b6316c239095', job_id='c23-a23b34e37d0b334aac4c4c6a2c8fc2c7cbb5105f7b022017')
+after_start = nan
+
+    @pytest.mark.parametrize('after_start', [float('nan'), float('inf'), -1.0, 99.0, 10**10000],
+                             ids=['nan', 'infinity', 'negative', 'rollback', 'huge_integer'])
+    def test_invalid_or_backwards_clock_after_start_still_cleans_up(envelope, after_start):
+        clock = Clock()
+        class ClockRuntime(SyntheticRuntime):
+            def start(self, job_id):
+                value = super().start(job_id)
+                clock.now = after_start
+                return value
+        result, _, _ = run(envelope, runtime=ClockRuntime(), clock=clock)
+>       assert result.state == 'failed' and result.document['reason'] == 'sandbox_clock_invalid'
+E       AssertionError: assert ('uncertain' == 'failed'
+E         
+E         - failed
+E         + uncertain)
+
+tests/test_experiment_sandbox_supervisor.py:210: AssertionError
+____ test_invalid_or_backwards_clock_after_start_still_cleans_up[infinity] _____
+
+envelope = VerifiedEnvelope(_metadata_json='{"approval_id":"99c659fd-da2e-4d03-bf44-f12a00c55bf4","authority":"experimental","bin...9e3ea7e000bccc2332c91d2b67394515ec022ce438b6316c239095', job_id='c23-a23b34e37d0b334aac4c4c6a2c8fc2c7cbb5105f7b022017')
+after_start = inf
+
+    @pytest.mark.parametrize('after_start', [float('nan'), float('inf'), -1.0, 99.0, 10**10000],
+                             ids=['nan', 'infinity', 'negative', 'rollback', 'huge_integer'])
+    def test_invalid_or_backwards_clock_after_start_still_cleans_up(envelope, after_start):
+        clock = Clock()
+        class ClockRuntime(SyntheticRuntime):
+            def start(self, job_id):
+                value = super().start(job_id)
+                clock.now = after_start
+                return value
+        result, _, _ = run(envelope, runtime=ClockRuntime(), clock=clock)
+>       assert result.state == 'failed' and result.document['reason'] == 'sandbox_clock_invalid'
+E       AssertionError: assert ('uncertain' == 'failed'
+E         
+E         - failed
+E         + uncertain)
+
+tests/test_experiment_sandbox_supervisor.py:210: AssertionError
+____ test_invalid_or_backwards_clock_after_start_still_cleans_up[negative] _____
+
+envelope = VerifiedEnvelope(_metadata_json='{"approval_id":"99c659fd-da2e-4d03-bf44-f12a00c55bf4","authority":"experimental","bin...9e3ea7e000bccc2332c91d2b67394515ec022ce438b6316c239095', job_id='c23-a23b34e37d0b334aac4c4c6a2c8fc2c7cbb5105f7b022017')
+after_start = -1.0
+
+    @pytest.mark.parametrize('after_start', [float('nan'), float('inf'), -1.0, 99.0, 10**10000],
+                             ids=['nan', 'infinity', 'negative', 'rollback', 'huge_integer'])
+    def test_invalid_or_backwards_clock_after_start_still_cleans_up(envelope, after_start):
+        clock = Clock()
+        class ClockRuntime(SyntheticRuntime):
+            def start(self, job_id):
+                value = super().start(job_id)
+                clock.now = after_start
+                return value
+        result, _, _ = run(envelope, runtime=ClockRuntime(), clock=clock)
+>       assert result.state == 'failed' and result.document['reason'] == 'sandbox_clock_invalid'
+E       AssertionError: assert ('uncertain' == 'failed'
+E         
+E         - failed
+E         + uncertain)
+
+tests/test_experiment_sandbox_supervisor.py:210: AssertionError
+____ test_invalid_or_backwards_clock_after_start_still_cleans_up[rollback] _____
+
+envelope = VerifiedEnvelope(_metadata_json='{"approval_id":"99c659fd-da2e-4d03-bf44-f12a00c55bf4","authority":"experimental","bin...9e3ea7e000bccc2332c91d2b67394515ec022ce438b6316c239095', job_id='c23-a23b34e37d0b334aac4c4c6a2c8fc2c7cbb5105f7b022017')
+after_start = 99.0
+
+    @pytest.mark.parametrize('after_start', [float('nan'), float('inf'), -1.0, 99.0, 10**10000],
+                             ids=['nan', 'infinity', 'negative', 'rollback', 'huge_integer'])
+    def test_invalid_or_backwards_clock_after_start_still_cleans_up(envelope, after_start):
+        clock = Clock()
+        class ClockRuntime(SyntheticRuntime):
+            def start(self, job_id):
+                value = super().start(job_id)
+                clock.now = after_start
+                return value
+        result, _, _ = run(envelope, runtime=ClockRuntime(), clock=clock)
+>       assert result.state == 'failed' and result.document['reason'] == 'sandbox_clock_invalid'
+E       AssertionError: assert ('uncertain' == 'failed'
+E         
+E         - failed
+E         + uncertain)
+
+tests/test_experiment_sandbox_supervisor.py:210: AssertionError
+__ test_invalid_or_backwards_clock_after_start_still_cleans_up[huge_integer] ___
+
+envelope = VerifiedEnvelope(_metadata_json='{"approval_id":"99c659fd-da2e-4d03-bf44-f12a00c55bf4","authority":"experimental","bin...9e3ea7e000bccc2332c91d2b67394515ec022ce438b6316c239095', job_id='c23-a23b34e37d0b334aac4c4c6a2c8fc2c7cbb5105f7b022017')
+after_start = <[ValueError('Exceeds the limit (4300 digits) for integer string conversion; use sys.set_int_max_str_digits() to increase the limit') raised in repr()] int object at 0x74aa283800>
+
+    @pytest.mark.parametrize('after_start', [float('nan'), float('inf'), -1.0, 99.0, 10**10000],
+                             ids=['nan', 'infinity', 'negative', 'rollback', 'huge_integer'])
+    def test_invalid_or_backwards_clock_after_start_still_cleans_up(envelope, after_start):
+        clock = Clock()
+        class ClockRuntime(SyntheticRuntime):
+            def start(self, job_id):
+                value = super().start(job_id)
+                clock.now = after_start
+                return value
+        result, _, _ = run(envelope, runtime=ClockRuntime(), clock=clock)
+>       assert result.state == 'failed' and result.document['reason'] == 'sandbox_clock_invalid'
+E       AssertionError: assert ('uncertain' == 'failed'
+E         
+E         - failed
+E         + uncertain)
+
+tests/test_experiment_sandbox_supervisor.py:210: AssertionError
+_______ test_tampered_validated_output_receipt_cannot_be_published[hash] _______
+
+envelope = VerifiedEnvelope(_metadata_json='{"approval_id":"99c659fd-da2e-4d03-bf44-f12a00c55bf4","authority":"experimental","bin...9e3ea7e000bccc2332c91d2b67394515ec022ce438b6316c239095', job_id='c23-a23b34e37d0b334aac4c4c6a2c8fc2c7cbb5105f7b022017')
+damage = 'hash'
+
+    @pytest.mark.parametrize('damage', ['hash', 'size', 'extra', 'count', 'authority', 'logs'])
+    def test_tampered_validated_output_receipt_cannot_be_published(envelope, damage):
+>       valid = collected()
+                ^^^^^^^^^^^
+
+tests/test_experiment_sandbox_supervisor.py:295: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_experiment_sandbox_supervisor.py:70: in collected
+    return validate_outputs(Path(directory), expected_outputs=expected, max_output_bytes=50 * 1024 * 1024, logs=logs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+output_dir = PosixPath('/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/c23-validated-7_rz4cwb')
+expected_outputs = [{'name': 'summary.json', 'kind': 'table', 'description': 'Synthetic fixture'}]
+max_output_bytes = 52428800, logs = None
+
+    def validate_outputs(output_dir, *, expected_outputs, max_output_bytes, logs=None):
+        """Collect from stable no-follow FDs after trusted whole-job termination.
+    
+        This validates bytes, not scientific correctness or current publication
+        authority. It never executes returned code, HTML, notebooks or images.
+        """
+        try:
+            limit = _limit(max_output_bytes, MAX_OUTPUT_BYTES, 'sandbox_output_limit')
+            profiles = validate_expected_outputs(expected_outputs)
+            retained_logs = dict(logs or {})
+            if (not isinstance(logs, (Mapping, type(None))) or not set(retained_logs) <= {'stdout', 'stderr'}
+                    or any(type(raw) is not bytes or len(raw) > MAX_LOG_BYTES for raw in retained_logs.values())):
+                raise SandboxError('sandbox_output_limit')
+            total = sum(map(len, retained_logs.values()))
+            if total > limit:
+                raise SandboxError('sandbox_output_limit')
+            retained, descriptors = {}, []
+            with _directory(output_dir) as (directory, _):
+                names_before = set(os.listdir(directory))
+                if names_before != set(profiles):
+                    raise SandboxError('sandbox_output_integrity')
+                for name, profile in profiles.items():
+                    raw = _read_file(directory, name, limit - total)
+                    try:
+                        validation = {'json-table-v1': _json_table, 'csv-table-v1': _csv_table, 'png-rgb8-v1': _png}[profile['format']](raw)
+                    except (ValueError, TypeError, UnicodeError, RecursionError, csv.Error, zlib.error, struct.error, StopIteration):
+                        raise SandboxError('sandbox_output_format') from None
+                    retained[name] = raw
+                    total += len(raw)
+                    descriptors.append({'name': name, 'sha256': _hash(raw), 'size_bytes': len(raw), **profile, 'validation': validation})
+                if set(os.listdir(directory)) != names_before:
+                    raise SandboxError('sandbox_file_changed')
+            manifest = {'version': VERSION, 'authority': 'experimental', 'scientific_approval': 'not_independently_verified',
+                'files': descriptors, 'logs': [{'name': name, 'sha256': _hash(raw), 'size_bytes': len(raw),
+                    'capture_completeness': 'not_asserted'} for name, raw in sorted(retained_logs.items())]}
+            manifest_bytes = _canonical(manifest)
+            total += len(manifest_bytes)
+            if total > limit:
+                raise SandboxError('sandbox_output_limit')
+            result = object.__new__(ValidatedOutputs)
+            for name, value in {'_files': MappingProxyType(retained), '_logs': MappingProxyType(retained_logs),
+                                '_manifest_json': manifest_bytes, 'total_bytes': total}.items():
+                object.__setattr__(result, name, value)
+            return result
+        except SandboxError:
+            raise
+        except (OSError, ValueError, TypeError, KeyError, AttributeError):
+>           raise SandboxError('sandbox_output_integrity') from None
+E           orchestration.experiment_sandbox.contracts.SandboxError: sandbox_output_integrity
+
+orchestration/experiment_sandbox/files.py:553: SandboxError
+_______ test_tampered_validated_output_receipt_cannot_be_published[size] _______
+
+envelope = VerifiedEnvelope(_metadata_json='{"approval_id":"99c659fd-da2e-4d03-bf44-f12a00c55bf4","authority":"experimental","bin...9e3ea7e000bccc2332c91d2b67394515ec022ce438b6316c239095', job_id='c23-a23b34e37d0b334aac4c4c6a2c8fc2c7cbb5105f7b022017')
+damage = 'size'
+
+    @pytest.mark.parametrize('damage', ['hash', 'size', 'extra', 'count', 'authority', 'logs'])
+    def test_tampered_validated_output_receipt_cannot_be_published(envelope, damage):
+>       valid = collected()
+                ^^^^^^^^^^^
+
+tests/test_experiment_sandbox_supervisor.py:295: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_experiment_sandbox_supervisor.py:70: in collected
+    return validate_outputs(Path(directory), expected_outputs=expected, max_output_bytes=50 * 1024 * 1024, logs=logs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+output_dir = PosixPath('/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/c23-validated-jf3e7mc6')
+expected_outputs = [{'name': 'summary.json', 'kind': 'table', 'description': 'Synthetic fixture'}]
+max_output_bytes = 52428800, logs = None
+
+    def validate_outputs(output_dir, *, expected_outputs, max_output_bytes, logs=None):
+        """Collect from stable no-follow FDs after trusted whole-job termination.
+    
+        This validates bytes, not scientific correctness or current publication
+        authority. It never executes returned code, HTML, notebooks or images.
+        """
+        try:
+            limit = _limit(max_output_bytes, MAX_OUTPUT_BYTES, 'sandbox_output_limit')
+            profiles = validate_expected_outputs(expected_outputs)
+            retained_logs = dict(logs or {})
+            if (not isinstance(logs, (Mapping, type(None))) or not set(retained_logs) <= {'stdout', 'stderr'}
+                    or any(type(raw) is not bytes or len(raw) > MAX_LOG_BYTES for raw in retained_logs.values())):
+                raise SandboxError('sandbox_output_limit')
+            total = sum(map(len, retained_logs.values()))
+            if total > limit:
+                raise SandboxError('sandbox_output_limit')
+            retained, descriptors = {}, []
+            with _directory(output_dir) as (directory, _):
+                names_before = set(os.listdir(directory))
+                if names_before != set(profiles):
+                    raise SandboxError('sandbox_output_integrity')
+                for name, profile in profiles.items():
+                    raw = _read_file(directory, name, limit - total)
+                    try:
+                        validation = {'json-table-v1': _json_table, 'csv-table-v1': _csv_table, 'png-rgb8-v1': _png}[profile['format']](raw)
+                    except (ValueError, TypeError, UnicodeError, RecursionError, csv.Error, zlib.error, struct.error, StopIteration):
+                        raise SandboxError('sandbox_output_format') from None
+                    retained[name] = raw
+                    total += len(raw)
+                    descriptors.append({'name': name, 'sha256': _hash(raw), 'size_bytes': len(raw), **profile, 'validation': validation})
+                if set(os.listdir(directory)) != names_before:
+                    raise SandboxError('sandbox_file_changed')
+            manifest = {'version': VERSION, 'authority': 'experimental', 'scientific_approval': 'not_independently_verified',
+                'files': descriptors, 'logs': [{'name': name, 'sha256': _hash(raw), 'size_bytes': len(raw),
+                    'capture_completeness': 'not_asserted'} for name, raw in sorted(retained_logs.items())]}
+            manifest_bytes = _canonical(manifest)
+            total += len(manifest_bytes)
+            if total > limit:
+                raise SandboxError('sandbox_output_limit')
+            result = object.__new__(ValidatedOutputs)
+            for name, value in {'_files': MappingProxyType(retained), '_logs': MappingProxyType(retained_logs),
+                                '_manifest_json': manifest_bytes, 'total_bytes': total}.items():
+                object.__setattr__(result, name, value)
+            return result
+        except SandboxError:
+            raise
+        except (OSError, ValueError, TypeError, KeyError, AttributeError):
+>           raise SandboxError('sandbox_output_integrity') from None
+E           orchestration.experiment_sandbox.contracts.SandboxError: sandbox_output_integrity
+
+orchestration/experiment_sandbox/files.py:553: SandboxError
+______ test_tampered_validated_output_receipt_cannot_be_published[extra] _______
+
+envelope = VerifiedEnvelope(_metadata_json='{"approval_id":"99c659fd-da2e-4d03-bf44-f12a00c55bf4","authority":"experimental","bin...9e3ea7e000bccc2332c91d2b67394515ec022ce438b6316c239095', job_id='c23-a23b34e37d0b334aac4c4c6a2c8fc2c7cbb5105f7b022017')
+damage = 'extra'
+
+    @pytest.mark.parametrize('damage', ['hash', 'size', 'extra', 'count', 'authority', 'logs'])
+    def test_tampered_validated_output_receipt_cannot_be_published(envelope, damage):
+>       valid = collected()
+                ^^^^^^^^^^^
+
+tests/test_experiment_sandbox_supervisor.py:295: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_experiment_sandbox_supervisor.py:70: in collected
+    return validate_outputs(Path(directory), expected_outputs=expected, max_output_bytes=50 * 1024 * 1024, logs=logs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+output_dir = PosixPath('/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/c23-validated-va319dyz')
+expected_outputs = [{'name': 'summary.json', 'kind': 'table', 'description': 'Synthetic fixture'}]
+max_output_bytes = 52428800, logs = None
+
+    def validate_outputs(output_dir, *, expected_outputs, max_output_bytes, logs=None):
+        """Collect from stable no-follow FDs after trusted whole-job termination.
+    
+        This validates bytes, not scientific correctness or current publication
+        authority. It never executes returned code, HTML, notebooks or images.
+        """
+        try:
+            limit = _limit(max_output_bytes, MAX_OUTPUT_BYTES, 'sandbox_output_limit')
+            profiles = validate_expected_outputs(expected_outputs)
+            retained_logs = dict(logs or {})
+            if (not isinstance(logs, (Mapping, type(None))) or not set(retained_logs) <= {'stdout', 'stderr'}
+                    or any(type(raw) is not bytes or len(raw) > MAX_LOG_BYTES for raw in retained_logs.values())):
+                raise SandboxError('sandbox_output_limit')
+            total = sum(map(len, retained_logs.values()))
+            if total > limit:
+                raise SandboxError('sandbox_output_limit')
+            retained, descriptors = {}, []
+            with _directory(output_dir) as (directory, _):
+                names_before = set(os.listdir(directory))
+                if names_before != set(profiles):
+                    raise SandboxError('sandbox_output_integrity')
+                for name, profile in profiles.items():
+                    raw = _read_file(directory, name, limit - total)
+                    try:
+                        validation = {'json-table-v1': _json_table, 'csv-table-v1': _csv_table, 'png-rgb8-v1': _png}[profile['format']](raw)
+                    except (ValueError, TypeError, UnicodeError, RecursionError, csv.Error, zlib.error, struct.error, StopIteration):
+                        raise SandboxError('sandbox_output_format') from None
+                    retained[name] = raw
+                    total += len(raw)
+                    descriptors.append({'name': name, 'sha256': _hash(raw), 'size_bytes': len(raw), **profile, 'validation': validation})
+                if set(os.listdir(directory)) != names_before:
+                    raise SandboxError('sandbox_file_changed')
+            manifest = {'version': VERSION, 'authority': 'experimental', 'scientific_approval': 'not_independently_verified',
+                'files': descriptors, 'logs': [{'name': name, 'sha256': _hash(raw), 'size_bytes': len(raw),
+                    'capture_completeness': 'not_asserted'} for name, raw in sorted(retained_logs.items())]}
+            manifest_bytes = _canonical(manifest)
+            total += len(manifest_bytes)
+            if total > limit:
+                raise SandboxError('sandbox_output_limit')
+            result = object.__new__(ValidatedOutputs)
+            for name, value in {'_files': MappingProxyType(retained), '_logs': MappingProxyType(retained_logs),
+                                '_manifest_json': manifest_bytes, 'total_bytes': total}.items():
+                object.__setattr__(result, name, value)
+            return result
+        except SandboxError:
+            raise
+        except (OSError, ValueError, TypeError, KeyError, AttributeError):
+>           raise SandboxError('sandbox_output_integrity') from None
+E           orchestration.experiment_sandbox.contracts.SandboxError: sandbox_output_integrity
+
+orchestration/experiment_sandbox/files.py:553: SandboxError
+______ test_tampered_validated_output_receipt_cannot_be_published[count] _______
+
+envelope = VerifiedEnvelope(_metadata_json='{"approval_id":"99c659fd-da2e-4d03-bf44-f12a00c55bf4","authority":"experimental","bin...9e3ea7e000bccc2332c91d2b67394515ec022ce438b6316c239095', job_id='c23-a23b34e37d0b334aac4c4c6a2c8fc2c7cbb5105f7b022017')
+damage = 'count'
+
+    @pytest.mark.parametrize('damage', ['hash', 'size', 'extra', 'count', 'authority', 'logs'])
+    def test_tampered_validated_output_receipt_cannot_be_published(envelope, damage):
+>       valid = collected()
+                ^^^^^^^^^^^
+
+tests/test_experiment_sandbox_supervisor.py:295: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_experiment_sandbox_supervisor.py:70: in collected
+    return validate_outputs(Path(directory), expected_outputs=expected, max_output_bytes=50 * 1024 * 1024, logs=logs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+output_dir = PosixPath('/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/c23-validated-cx90kc_f')
+expected_outputs = [{'name': 'summary.json', 'kind': 'table', 'description': 'Synthetic fixture'}]
+max_output_bytes = 52428800, logs = None
+
+    def validate_outputs(output_dir, *, expected_outputs, max_output_bytes, logs=None):
+        """Collect from stable no-follow FDs after trusted whole-job termination.
+    
+        This validates bytes, not scientific correctness or current publication
+        authority. It never executes returned code, HTML, notebooks or images.
+        """
+        try:
+            limit = _limit(max_output_bytes, MAX_OUTPUT_BYTES, 'sandbox_output_limit')
+            profiles = validate_expected_outputs(expected_outputs)
+            retained_logs = dict(logs or {})
+            if (not isinstance(logs, (Mapping, type(None))) or not set(retained_logs) <= {'stdout', 'stderr'}
+                    or any(type(raw) is not bytes or len(raw) > MAX_LOG_BYTES for raw in retained_logs.values())):
+                raise SandboxError('sandbox_output_limit')
+            total = sum(map(len, retained_logs.values()))
+            if total > limit:
+                raise SandboxError('sandbox_output_limit')
+            retained, descriptors = {}, []
+            with _directory(output_dir) as (directory, _):
+                names_before = set(os.listdir(directory))
+                if names_before != set(profiles):
+                    raise SandboxError('sandbox_output_integrity')
+                for name, profile in profiles.items():
+                    raw = _read_file(directory, name, limit - total)
+                    try:
+                        validation = {'json-table-v1': _json_table, 'csv-table-v1': _csv_table, 'png-rgb8-v1': _png}[profile['format']](raw)
+                    except (ValueError, TypeError, UnicodeError, RecursionError, csv.Error, zlib.error, struct.error, StopIteration):
+                        raise SandboxError('sandbox_output_format') from None
+                    retained[name] = raw
+                    total += len(raw)
+                    descriptors.append({'name': name, 'sha256': _hash(raw), 'size_bytes': len(raw), **profile, 'validation': validation})
+                if set(os.listdir(directory)) != names_before:
+                    raise SandboxError('sandbox_file_changed')
+            manifest = {'version': VERSION, 'authority': 'experimental', 'scientific_approval': 'not_independently_verified',
+                'files': descriptors, 'logs': [{'name': name, 'sha256': _hash(raw), 'size_bytes': len(raw),
+                    'capture_completeness': 'not_asserted'} for name, raw in sorted(retained_logs.items())]}
+            manifest_bytes = _canonical(manifest)
+            total += len(manifest_bytes)
+            if total > limit:
+                raise SandboxError('sandbox_output_limit')
+            result = object.__new__(ValidatedOutputs)
+            for name, value in {'_files': MappingProxyType(retained), '_logs': MappingProxyType(retained_logs),
+                                '_manifest_json': manifest_bytes, 'total_bytes': total}.items():
+                object.__setattr__(result, name, value)
+            return result
+        except SandboxError:
+            raise
+        except (OSError, ValueError, TypeError, KeyError, AttributeError):
+>           raise SandboxError('sandbox_output_integrity') from None
+E           orchestration.experiment_sandbox.contracts.SandboxError: sandbox_output_integrity
+
+orchestration/experiment_sandbox/files.py:553: SandboxError
+____ test_tampered_validated_output_receipt_cannot_be_published[authority] _____
+
+envelope = VerifiedEnvelope(_metadata_json='{"approval_id":"99c659fd-da2e-4d03-bf44-f12a00c55bf4","authority":"experimental","bin...9e3ea7e000bccc2332c91d2b67394515ec022ce438b6316c239095', job_id='c23-a23b34e37d0b334aac4c4c6a2c8fc2c7cbb5105f7b022017')
+damage = 'authority'
+
+    @pytest.mark.parametrize('damage', ['hash', 'size', 'extra', 'count', 'authority', 'logs'])
+    def test_tampered_validated_output_receipt_cannot_be_published(envelope, damage):
+>       valid = collected()
+                ^^^^^^^^^^^
+
+tests/test_experiment_sandbox_supervisor.py:295: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_experiment_sandbox_supervisor.py:70: in collected
+    return validate_outputs(Path(directory), expected_outputs=expected, max_output_bytes=50 * 1024 * 1024, logs=logs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+output_dir = PosixPath('/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/c23-validated-k8uysxl1')
+expected_outputs = [{'name': 'summary.json', 'kind': 'table', 'description': 'Synthetic fixture'}]
+max_output_bytes = 52428800, logs = None
+
+    def validate_outputs(output_dir, *, expected_outputs, max_output_bytes, logs=None):
+        """Collect from stable no-follow FDs after trusted whole-job termination.
+    
+        This validates bytes, not scientific correctness or current publication
+        authority. It never executes returned code, HTML, notebooks or images.
+        """
+        try:
+            limit = _limit(max_output_bytes, MAX_OUTPUT_BYTES, 'sandbox_output_limit')
+            profiles = validate_expected_outputs(expected_outputs)
+            retained_logs = dict(logs or {})
+            if (not isinstance(logs, (Mapping, type(None))) or not set(retained_logs) <= {'stdout', 'stderr'}
+                    or any(type(raw) is not bytes or len(raw) > MAX_LOG_BYTES for raw in retained_logs.values())):
+                raise SandboxError('sandbox_output_limit')
+            total = sum(map(len, retained_logs.values()))
+            if total > limit:
+                raise SandboxError('sandbox_output_limit')
+            retained, descriptors = {}, []
+            with _directory(output_dir) as (directory, _):
+                names_before = set(os.listdir(directory))
+                if names_before != set(profiles):
+                    raise SandboxError('sandbox_output_integrity')
+                for name, profile in profiles.items():
+                    raw = _read_file(directory, name, limit - total)
+                    try:
+                        validation = {'json-table-v1': _json_table, 'csv-table-v1': _csv_table, 'png-rgb8-v1': _png}[profile['format']](raw)
+                    except (ValueError, TypeError, UnicodeError, RecursionError, csv.Error, zlib.error, struct.error, StopIteration):
+                        raise SandboxError('sandbox_output_format') from None
+                    retained[name] = raw
+                    total += len(raw)
+                    descriptors.append({'name': name, 'sha256': _hash(raw), 'size_bytes': len(raw), **profile, 'validation': validation})
+                if set(os.listdir(directory)) != names_before:
+                    raise SandboxError('sandbox_file_changed')
+            manifest = {'version': VERSION, 'authority': 'experimental', 'scientific_approval': 'not_independently_verified',
+                'files': descriptors, 'logs': [{'name': name, 'sha256': _hash(raw), 'size_bytes': len(raw),
+                    'capture_completeness': 'not_asserted'} for name, raw in sorted(retained_logs.items())]}
+            manifest_bytes = _canonical(manifest)
+            total += len(manifest_bytes)
+            if total > limit:
+                raise SandboxError('sandbox_output_limit')
+            result = object.__new__(ValidatedOutputs)
+            for name, value in {'_files': MappingProxyType(retained), '_logs': MappingProxyType(retained_logs),
+                                '_manifest_json': manifest_bytes, 'total_bytes': total}.items():
+                object.__setattr__(result, name, value)
+            return result
+        except SandboxError:
+            raise
+        except (OSError, ValueError, TypeError, KeyError, AttributeError):
+>           raise SandboxError('sandbox_output_integrity') from None
+E           orchestration.experiment_sandbox.contracts.SandboxError: sandbox_output_integrity
+
+orchestration/experiment_sandbox/files.py:553: SandboxError
+_______ test_tampered_validated_output_receipt_cannot_be_published[logs] _______
+
+envelope = VerifiedEnvelope(_metadata_json='{"approval_id":"99c659fd-da2e-4d03-bf44-f12a00c55bf4","authority":"experimental","bin...9e3ea7e000bccc2332c91d2b67394515ec022ce438b6316c239095', job_id='c23-a23b34e37d0b334aac4c4c6a2c8fc2c7cbb5105f7b022017')
+damage = 'logs'
+
+    @pytest.mark.parametrize('damage', ['hash', 'size', 'extra', 'count', 'authority', 'logs'])
+    def test_tampered_validated_output_receipt_cannot_be_published(envelope, damage):
+>       valid = collected()
+                ^^^^^^^^^^^
+
+tests/test_experiment_sandbox_supervisor.py:295: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_experiment_sandbox_supervisor.py:70: in collected
+    return validate_outputs(Path(directory), expected_outputs=expected, max_output_bytes=50 * 1024 * 1024, logs=logs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+output_dir = PosixPath('/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/c23-validated-yy2sjea3')
+expected_outputs = [{'name': 'summary.json', 'kind': 'table', 'description': 'Synthetic fixture'}]
+max_output_bytes = 52428800, logs = None
+
+    def validate_outputs(output_dir, *, expected_outputs, max_output_bytes, logs=None):
+        """Collect from stable no-follow FDs after trusted whole-job termination.
+    
+        This validates bytes, not scientific correctness or current publication
+        authority. It never executes returned code, HTML, notebooks or images.
+        """
+        try:
+            limit = _limit(max_output_bytes, MAX_OUTPUT_BYTES, 'sandbox_output_limit')
+            profiles = validate_expected_outputs(expected_outputs)
+            retained_logs = dict(logs or {})
+            if (not isinstance(logs, (Mapping, type(None))) or not set(retained_logs) <= {'stdout', 'stderr'}
+                    or any(type(raw) is not bytes or len(raw) > MAX_LOG_BYTES for raw in retained_logs.values())):
+                raise SandboxError('sandbox_output_limit')
+            total = sum(map(len, retained_logs.values()))
+            if total > limit:
+                raise SandboxError('sandbox_output_limit')
+            retained, descriptors = {}, []
+            with _directory(output_dir) as (directory, _):
+                names_before = set(os.listdir(directory))
+                if names_before != set(profiles):
+                    raise SandboxError('sandbox_output_integrity')
+                for name, profile in profiles.items():
+                    raw = _read_file(directory, name, limit - total)
+                    try:
+                        validation = {'json-table-v1': _json_table, 'csv-table-v1': _csv_table, 'png-rgb8-v1': _png}[profile['format']](raw)
+                    except (ValueError, TypeError, UnicodeError, RecursionError, csv.Error, zlib.error, struct.error, StopIteration):
+                        raise SandboxError('sandbox_output_format') from None
+                    retained[name] = raw
+                    total += len(raw)
+                    descriptors.append({'name': name, 'sha256': _hash(raw), 'size_bytes': len(raw), **profile, 'validation': validation})
+                if set(os.listdir(directory)) != names_before:
+                    raise SandboxError('sandbox_file_changed')
+            manifest = {'version': VERSION, 'authority': 'experimental', 'scientific_approval': 'not_independently_verified',
+                'files': descriptors, 'logs': [{'name': name, 'sha256': _hash(raw), 'size_bytes': len(raw),
+                    'capture_completeness': 'not_asserted'} for name, raw in sorted(retained_logs.items())]}
+            manifest_bytes = _canonical(manifest)
+            total += len(manifest_bytes)
+            if total > limit:
+                raise SandboxError('sandbox_output_limit')
+            result = object.__new__(ValidatedOutputs)
+            for name, value in {'_files': MappingProxyType(retained), '_logs': MappingProxyType(retained_logs),
+                                '_manifest_json': manifest_bytes, 'total_bytes': total}.items():
+                object.__setattr__(result, name, value)
+            return result
+        except SandboxError:
+            raise
+        except (OSError, ValueError, TypeError, KeyError, AttributeError):
+>           raise SandboxError('sandbox_output_integrity') from None
+E           orchestration.experiment_sandbox.contracts.SandboxError: sandbox_output_integrity
+
+orchestration/experiment_sandbox/files.py:553: SandboxError
+=========================== short test summary info ============================
+FAILED tests/test_experiment_sandbox_supervisor.py::test_actual_c22_envelope_simulates_with_exact_identity_and_inert_python
+FAILED tests/test_experiment_sandbox_supervisor.py::test_lost_create_ack_reconciles_same_job_without_duplicate_create
+FAILED tests/test_experiment_sandbox_supervisor.py::test_revocation_during_collection_discards_private_manifest
+FAILED tests/test_experiment_sandbox_supervisor.py::test_invalid_or_backwards_clock_after_start_still_cleans_up[nan]
+FAILED tests/test_experiment_sandbox_supervisor.py::test_invalid_or_backwards_clock_after_start_still_cleans_up[infinity]
+FAILED tests/test_experiment_sandbox_supervisor.py::test_invalid_or_backwards_clock_after_start_still_cleans_up[negative]
+FAILED tests/test_experiment_sandbox_supervisor.py::test_invalid_or_backwards_clock_after_start_still_cleans_up[rollback]
+FAILED tests/test_experiment_sandbox_supervisor.py::test_invalid_or_backwards_clock_after_start_still_cleans_up[huge_integer]
+FAILED tests/test_experiment_sandbox_supervisor.py::test_tampered_validated_output_receipt_cannot_be_published[hash]
+FAILED tests/test_experiment_sandbox_supervisor.py::test_tampered_validated_output_receipt_cannot_be_published[size]
+FAILED tests/test_experiment_sandbox_supervisor.py::test_tampered_validated_output_receipt_cannot_be_published[extra]
+FAILED tests/test_experiment_sandbox_supervisor.py::test_tampered_validated_output_receipt_cannot_be_published[count]
+FAILED tests/test_experiment_sandbox_supervisor.py::test_tampered_validated_output_receipt_cannot_be_published[authority]
+FAILED tests/test_experiment_sandbox_supervisor.py::test_tampered_validated_output_receipt_cannot_be_published[logs]
+14 failed, 32 passed in 3.57s

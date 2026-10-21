@@ -1,0 +1,49 @@
+{
+  "component": "C23",
+  "recorded_at": "2026-10-21T09:24:04.071213+00:00",
+  "state": "Local file-boundary cases pass; final integrated source-pinned binding remains with root",
+  "observed_terminal_commands": [
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_files.py",
+        "-q",
+        "--cov=orchestration/experiment_sandbox",
+        "--cov-config=docs/plans/ocean-v1/evidence/C23/files/coverage.ini",
+        "--cov-report=term-missing",
+        "--cov-fail-under=85"
+      ],
+      "exit_code": 0,
+      "passed": 95,
+      "seconds": 5.76,
+      "coverage_percent": 93.23
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "orchestration/experiment_sandbox/files.py",
+        "tests/test_experiment_sandbox_files.py"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "capture_qualification": "Terminal tool output persisted after completion, not a redirected run. Source snapshot below was taken after the run; no source-before map is invented. Root combined source-pinned acceptance must bind final source. Original failed coverage startup and its source-before/after pins remain immutable in focused-01.",
+  "source_after_snapshot": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "62cb50649340ada1b93623b53e4b5d77c721723a97fb870342b02f49017f8ce3",
+    "tests/test_experiment_sandbox_files.py": "decedbbdb0dc31a17a8b6c4c045c28c78efde9372c37308d7b650893377ca77c",
+    "docs/plans/ocean-v1/evidence/C23/files/coverage.ini": "144abbb67c75030c8d3bcd96d515b2cf57e5c927b015913ff8702fe44b756f1b"
+  },
+  "logs_sha256": {
+    "docs/plans/ocean-v1/evidence/C23/files/focused-02-observed/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C23/files/focused-02-observed/tests.txt": "d053669916cf62454d2bef49b4bac1c0bc95499d9bf24098eb5ceb29cf774525"
+  },
+  "scientific_approval": "not_independently_verified",
+  "execution_performed": false,
+  "containment_proven": false
+}

@@ -1,0 +1,26 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_experiment_sandbox_supervisor.py",
+    "-q"
+  ],
+  "exit_code": 0,
+  "source_before": {
+    "orchestration/experiment_sandbox/supervisor.py": "2e9d07a82378974ac0339d8e9fe3aa92aa2153695ead6f79f74335c1d52e43dc",
+    "tests/test_experiment_sandbox_supervisor.py": "3c52b45df4839889fe2d0400712ea9f2f565e621ec8b98029e6e95fe8b887cc2",
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "d94bd7afce69c48ee67241cb4221f13ab220b37bb484349e2d3bc5d34c3d54a0"
+  },
+  "source_after": {
+    "orchestration/experiment_sandbox/supervisor.py": "2e9d07a82378974ac0339d8e9fe3aa92aa2153695ead6f79f74335c1d52e43dc",
+    "tests/test_experiment_sandbox_supervisor.py": "3c52b45df4839889fe2d0400712ea9f2f565e621ec8b98029e6e95fe8b887cc2",
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "d94bd7afce69c48ee67241cb4221f13ab220b37bb484349e2d3bc5d34c3d54a0"
+  },
+  "corrections": [
+    "Resolved macOS tempfile alias before strict output directory validation",
+    "Distinguished received start acknowledgement from subsequent invalid clock observation; cleanup still mandatory"
+  ]
+}

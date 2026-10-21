@@ -1,0 +1,55 @@
+{
+  "component": "C23",
+  "scope": "Local staging and output validation only; no runtime or containment evidence",
+  "recorded_at": "2026-10-21T09:20:33.047476+00:00",
+  "base_commit": "f4f702c6ee8467011c3733eede939be611494a7a",
+  "source_before": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "d94bd7afce69c48ee67241cb4221f13ab220b37bb484349e2d3bc5d34c3d54a0",
+    "tests/test_experiment_sandbox_files.py": "be0df87cc2ee669ac091905083468553478b379a47e3ad400122804edc54f272"
+  },
+  "source_after": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "d94bd7afce69c48ee67241cb4221f13ab220b37bb484349e2d3bc5d34c3d54a0",
+    "tests/test_experiment_sandbox_files.py": "be0df87cc2ee669ac091905083468553478b379a47e3ad400122804edc54f272"
+  },
+  "source_changed_during_run": [],
+  "commands": [
+    {
+      "name": "tests",
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_files.py",
+        "-q",
+        "--cov=orchestration.experiment_sandbox.files",
+        "--cov-report=term-missing",
+        "--cov-fail-under=85"
+      ],
+      "exit_code": 4,
+      "seconds": 0.982,
+      "log": "docs/plans/ocean-v1/evidence/C23/files/focused-01/tests.txt"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "orchestration/experiment_sandbox/files.py",
+        "tests/test_experiment_sandbox_files.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.049,
+      "log": "docs/plans/ocean-v1/evidence/C23/files/focused-01/ruff.txt"
+    }
+  ],
+  "execution_performed": false,
+  "scientific_approval": "not_independently_verified",
+  "log_sha256": {
+    "docs/plans/ocean-v1/evidence/C23/files/focused-01/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C23/files/focused-01/tests.txt": "96695a6c4bd4c3616785501221a0fc7fbf16d98261914614e3048757268de44d"
+  }
+}

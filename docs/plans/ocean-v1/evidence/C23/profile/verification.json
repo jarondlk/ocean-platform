@@ -1,0 +1,94 @@
+{
+  "actual_containment_tested": false,
+  "built_image_digest": null,
+  "checkpoint": "Fixed profile and offline image preparation only",
+  "checks": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_profile.py",
+        "-q"
+      ],
+      "duration_seconds": 4.267173625063151,
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C23/profile/pytest.txt",
+      "sha256": "711f72be8794bcf604749945dc676e718d1d7d5874d9e5e79b927fc48f431788"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "orchestration/experiment_sandbox/profile.py",
+        "tests/test_experiment_sandbox_profile.py",
+        "sandbox/experiment/verify_image.py"
+      ],
+      "duration_seconds": 0.03747037495486438,
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C23/profile/ruff.txt",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  ],
+  "component": "C23",
+  "configuration_only": true,
+  "dispatch_eligible": false,
+  "files": {
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01",
+    "sandbox/experiment/.containerignore": "271dfde8f3eb7c18bf0908e123f21207e7d52d3c2a3b76f6e1e8b8968247656e",
+    "sandbox/experiment/Containerfile": "11491d936f04308e592ab553bfc994733f4835d96cdf10d75e2accdb08ba2df7",
+    "sandbox/experiment/README.md": "0a70d6a7c3b79ec97d84f69e455ae7b407843661fd0ee2c58f615ead02d83ff5",
+    "sandbox/experiment/build-materials.template.json": "7fce550a7f21b7c59b8572f7f3e0472d2de385dddc47572bdbe14e743f5c39e8",
+    "sandbox/experiment/image-readiness.json": "478308448084641f54f639e417d0afd8112a449b109d172f4bc7ba52bd83dccc",
+    "sandbox/experiment/requirements.lock.template": "24bb1e45bc946174c0813ededb0926ef31ef96b1e3ff02c820ade6421b2b8b34",
+    "sandbox/experiment/verify_image.py": "e7f1c315936cd72ba65fb4de8d759c71fba9bcd59b8137f07b25403d1de12b7a",
+    "tests/test_experiment_sandbox_profile.py": "c250728055020e22b059a9024e98d1a6e6ec3f636701f51cc5c60d31ac10780d"
+  },
+  "harness_sha256": "d2c5070c86ae72e4a2008815c2cd208d7e2cc02ea3b34fc7dbc439c7c402d73e",
+  "not_performed": [
+    "No downloads, installs, builds or runtime/container execution",
+    "No generated Python, real scientific data, cloud or provider operation"
+  ],
+  "recorded_at": "2026-10-21T09:34:20.467123+00:00",
+  "remaining_gates": [
+    "Compatible authorized Linux/gVisor target and complete pinned runtime installation",
+    "Verified scientific image/lock/wheels and authenticated immutable rootfs provenance",
+    "Actual identity/namespace/mapping/resource/tmpfs/log enforcement and containment acceptance",
+    "Race-free guest tmpfs output extraction and verified whole-job teardown",
+    "Repeated numerical fixtures under declared seeds and tolerances"
+  ],
+  "source_after": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01",
+    "sandbox/experiment/.containerignore": "271dfde8f3eb7c18bf0908e123f21207e7d52d3c2a3b76f6e1e8b8968247656e",
+    "sandbox/experiment/Containerfile": "11491d936f04308e592ab553bfc994733f4835d96cdf10d75e2accdb08ba2df7",
+    "sandbox/experiment/README.md": "0a70d6a7c3b79ec97d84f69e455ae7b407843661fd0ee2c58f615ead02d83ff5",
+    "sandbox/experiment/build-materials.template.json": "7fce550a7f21b7c59b8572f7f3e0472d2de385dddc47572bdbe14e743f5c39e8",
+    "sandbox/experiment/image-readiness.json": "478308448084641f54f639e417d0afd8112a449b109d172f4bc7ba52bd83dccc",
+    "sandbox/experiment/requirements.lock.template": "24bb1e45bc946174c0813ededb0926ef31ef96b1e3ff02c820ade6421b2b8b34",
+    "sandbox/experiment/verify_image.py": "e7f1c315936cd72ba65fb4de8d759c71fba9bcd59b8137f07b25403d1de12b7a",
+    "tests/test_experiment_sandbox_contracts.py": "6c92676ba694ba79cdf85eea64016b12dc820e45978f54e10be0857725ea2b25",
+    "tests/test_experiment_sandbox_profile.py": "c250728055020e22b059a9024e98d1a6e6ec3f636701f51cc5c60d31ac10780d"
+  },
+  "source_before": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01",
+    "sandbox/experiment/.containerignore": "271dfde8f3eb7c18bf0908e123f21207e7d52d3c2a3b76f6e1e8b8968247656e",
+    "sandbox/experiment/Containerfile": "11491d936f04308e592ab553bfc994733f4835d96cdf10d75e2accdb08ba2df7",
+    "sandbox/experiment/README.md": "0a70d6a7c3b79ec97d84f69e455ae7b407843661fd0ee2c58f615ead02d83ff5",
+    "sandbox/experiment/build-materials.template.json": "7fce550a7f21b7c59b8572f7f3e0472d2de385dddc47572bdbe14e743f5c39e8",
+    "sandbox/experiment/image-readiness.json": "478308448084641f54f639e417d0afd8112a449b109d172f4bc7ba52bd83dccc",
+    "sandbox/experiment/requirements.lock.template": "24bb1e45bc946174c0813ededb0926ef31ef96b1e3ff02c820ade6421b2b8b34",
+    "sandbox/experiment/verify_image.py": "e7f1c315936cd72ba65fb4de8d759c71fba9bcd59b8137f07b25403d1de12b7a",
+    "tests/test_experiment_sandbox_contracts.py": "6c92676ba694ba79cdf85eea64016b12dc820e45978f54e10be0857725ea2b25",
+    "tests/test_experiment_sandbox_profile.py": "c250728055020e22b059a9024e98d1a6e6ec3f636701f51cc5c60d31ac10780d"
+  },
+  "source_changed_during_run": [],
+  "success": true,
+  "tested_shared_sources": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "tests/test_experiment_sandbox_contracts.py": "6c92676ba694ba79cdf85eea64016b12dc820e45978f54e10be0857725ea2b25"
+  }
+}

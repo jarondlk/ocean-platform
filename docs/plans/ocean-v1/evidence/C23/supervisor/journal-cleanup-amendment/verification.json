@@ -1,0 +1,47 @@
+{
+  "changed_during_tests": [],
+  "component": "C23",
+  "evidence_files": {
+    "docs/plans/ocean-v1/evidence/C23/supervisor/journal-cleanup-amendment/ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C23/supervisor/journal-cleanup-amendment/targeted-tests.txt": "78193cb39b1f558ae9676729471668650a5966513fb738373c7a5f8d72b1b54c"
+  },
+  "passed": 6,
+  "previous_receipt": "docs/plans/ocean-v1/evidence/C23/supervisor/dto-amendment/verification.json",
+  "previous_receipt_sha256": "b29bd44c389c31ee5ff2b697db3256cace3bb6be469aae94081c34906c4a4604",
+  "qualification": "Prior46pass and DTO21pass receipts/logs/sourcepins remain immutable. Only six new targetedcases run; root combined acceptance must bind complete amendedsource. Current fence is still required; no guarantee is invented if require_current fails. Production independentwatchdog/durablejournal remain futuregates. No generatedPython/runtime/provider/VM/container/cloud execution.",
+  "recorded_at": "2026-10-21T09:33:06.379656+00:00",
+  "ruff_exit_code": 0,
+  "scope": "Ordinary journal append failure cannot suppress best-effort cleanup under a valid current fence; recording failure prevents retained output publication",
+  "source_after_amendment": {
+    "orchestration/experiment_sandbox/supervisor.py": "6bc18e679db9b666e5b896c1b0585becac2ea4577b9cd331a6e9ddb7b1fffa7d",
+    "tests/test_experiment_sandbox_supervisor.py": "a2333c8080786e907c5199e34147ca890591e95bd7448802ca716f81313e19c3"
+  },
+  "source_after_tests": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "a2e1d4883b17513bbe82b7de43f16ce47d86480bffb39a64a5b7bf65dc3440ca",
+    "orchestration/experiment_sandbox/supervisor.py": "6bc18e679db9b666e5b896c1b0585becac2ea4577b9cd331a6e9ddb7b1fffa7d",
+    "tests/test_experiment_sandbox_supervisor.py": "a2333c8080786e907c5199e34147ca890591e95bd7448802ca716f81313e19c3"
+  },
+  "source_before_amendment": {
+    "orchestration/experiment_sandbox/supervisor.py": "7b515315bb8bcbcf1b41def5676a3547a7e2107a5fd79970f96c2fd13e84c54b",
+    "tests/test_experiment_sandbox_supervisor.py": "74f968b2f4f54c0407712654ae0d3d7a3898dd248c9ca986842c71204ca6369c"
+  },
+  "source_before_tests": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "a2e1d4883b17513bbe82b7de43f16ce47d86480bffb39a64a5b7bf65dc3440ca",
+    "orchestration/experiment_sandbox/supervisor.py": "6bc18e679db9b666e5b896c1b0585becac2ea4577b9cd331a6e9ddb7b1fffa7d",
+    "tests/test_experiment_sandbox_supervisor.py": "a2333c8080786e907c5199e34147ca890591e95bd7448802ca716f81313e19c3"
+  },
+  "targeted_command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_experiment_sandbox_supervisor.py::test_journal_cleanup_write_failure_still_terminates_without_publication",
+    "tests/test_experiment_sandbox_supervisor.py::test_journal_limit_after_start_cannot_prevent_best_effort_cleanup",
+    "tests/test_experiment_sandbox_supervisor.py::test_journal_result_write_failure_discards_validated_manifest",
+    "tests/test_experiment_sandbox_supervisor.py::test_failed_journal_cleanup_record_does_not_override_lost_fence",
+    "tests/test_experiment_sandbox_supervisor.py::test_cancel_cleanup_continues_after_journal_write_failure",
+    "-q"
+  ],
+  "test_exit_code": 0
+}

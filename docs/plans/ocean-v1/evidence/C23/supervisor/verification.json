@@ -1,0 +1,34 @@
+{
+  "C22_capacity_released": false,
+  "component": "C23",
+  "evidence_files": {
+    "docs/plans/ocean-v1/evidence/C23/supervisor/attempt-01.json": "389f570ba54b4c6cdb8d515b3a5ddebf44a02f84e30dde87b4540657381b1228",
+    "docs/plans/ocean-v1/evidence/C23/supervisor/attempt-02.json": "cb5d5773659382a5ac1a24e86311fdf129d4e155e2d6ba9706a6a92535b1d690",
+    "docs/plans/ocean-v1/evidence/C23/supervisor/attempt-02.txt": "c4e0651c3959abf7c882e42966c4c741eb00536d287e4432a221069f0c4b4658",
+    "docs/plans/ocean-v1/evidence/C23/supervisor/attempt-03.json": "3fd5eb50a18a554c499c258e792cf1d2700f0159f120400b7d8543af6fb7e8cf",
+    "docs/plans/ocean-v1/evidence/C23/supervisor/attempt-03.txt": "c6289128a51e304251f4258a1b1a923fa4b8a6dbdc596d186deb48677dd92b1f",
+    "docs/plans/ocean-v1/evidence/C23/supervisor/ruff-final.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  "execution_performed": false,
+  "focused_result": "docs/plans/ocean-v1/evidence/C23/supervisor/attempt-03.json",
+  "lint_exit_code": 0,
+  "passed": 46,
+  "qualification": [
+    "Attempt01 failed during collection because pytest stringified huge adversarial integer IDs; bounded explicit IDs preserve the hostile values",
+    "Attempt02 preserved 14 failures/32 passes: strict directory alias rejection exposed unresolved test path; received startack/clock-failure distinction repaired",
+    "Attempt03 is final46case focused test; root integration and combined acceptance still required",
+    "Memory journal is explicitly non-durable and supplies no production lease or capacity-release authority",
+    "No subprocess, generatedPython, VM, container, network, provider, data transfer or cloud execution performed"
+  ],
+  "recorded_at": "2026-10-21T09:23:18.174397+00:00",
+  "scope": "Synthetic supervisor checkpoint only; no actual runtime/containment acceptance",
+  "simulation": true,
+  "source_changed_during_final_test": [],
+  "source_files": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "62cb50649340ada1b93623b53e4b5d77c721723a97fb870342b02f49017f8ce3",
+    "orchestration/experiment_sandbox/supervisor.py": "2e9d07a82378974ac0339d8e9fe3aa92aa2153695ead6f79f74335c1d52e43dc",
+    "tests/test_experiment_sandbox_supervisor.py": "3c52b45df4839889fe2d0400712ea9f2f565e621ec8b98029e6e95fe8b887cc2"
+  },
+  "state": "Focused implementation source frozen pending root integration/review"
+}

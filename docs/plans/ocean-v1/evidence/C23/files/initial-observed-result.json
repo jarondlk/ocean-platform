@@ -1,0 +1,15 @@
+{
+  "component": "C23",
+  "scope": "Historical focused terminal result observed before bounded-directory review amendment",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_experiment_sandbox_files.py",
+    "-q"
+  ],
+  "exit_code": 0,
+  "observed_summary": "93 passed in 3.29s",
+  "source_pins_recorded_at_run": false,
+  "qualification": "Original tool terminal output was not redirected. This records the observed result, not a final source-pinned acceptance. Subsequent source/test directory-enumeration amendment requires a new focused run. Initial Ruff found one unused pathlib.Path test import, subsequently removed; focused-01 captures later failed coverage startup and clean Ruff."
+}

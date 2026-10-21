@@ -1,0 +1,22 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_experiment_sandbox_supervisor.py",
+    "-q"
+  ],
+  "exit_code": 1,
+  "source_before": {
+    "orchestration/experiment_sandbox/supervisor.py": "41c74d2f68ac97610bc0a16382f16c39e6799d034577af13670d0a6f8617bc63",
+    "tests/test_experiment_sandbox_supervisor.py": "112097f36ce3bf9b8ec63df6bf9bd5509e9d73653cfc8975389cc45dd1c0f3db",
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "d94bd7afce69c48ee67241cb4221f13ab220b37bb484349e2d3bc5d34c3d54a0"
+  },
+  "source_after": {
+    "orchestration/experiment_sandbox/supervisor.py": "41c74d2f68ac97610bc0a16382f16c39e6799d034577af13670d0a6f8617bc63",
+    "tests/test_experiment_sandbox_supervisor.py": "112097f36ce3bf9b8ec63df6bf9bd5509e9d73653cfc8975389cc45dd1c0f3db",
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "d94bd7afce69c48ee67241cb4221f13ab220b37bb484349e2d3bc5d34c3d54a0"
+  }
+}

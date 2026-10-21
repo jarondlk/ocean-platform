@@ -1,0 +1,6 @@
+# Preparation only. This is intentionally not an installable lockfile.
+# Generate the complete transitive lock for an explicitly authorized target.
+# Every requirement must be exactly NAME==VERSION with verified sha256 wheel
+# hashes. No source distributions, URLs, editable packages, indexes, includes,
+# extras or conditional requirements are admitted by this fixed build profile.
+# No Python/package versions or hashes are inferred from the serving locks.
