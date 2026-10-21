@@ -128,6 +128,7 @@ def direct_request(browser):
 def test_policy_and_complete_response_stay_in_worker_with_cancellation_cleanup(tmp_path, monkeypatch, cancel):
     _, service, _, descriptors, _, _ = configured(tmp_path, count=1)
     entered, release, closed = threading.Event(), threading.Event(), threading.Event()
+    encoded = threading.Event()
     stages, delivered = [], []
 
     def blocked(user, descriptor):
@@ -146,6 +147,7 @@ def test_policy_and_complete_response_stay_in_worker_with_cancellation_cleanup(t
         def __init__(self, *args, **kwargs):
             stages.append(("response", threading.get_ident()))
             super().__init__(*args, **kwargs)
+            encoded.set()
 
     monkeypatch.setattr(routes, "JSONResponse", Encoded)
 
@@ -161,8 +163,7 @@ def test_policy_and_complete_response_stay_in_worker_with_cancellation_cleanup(t
         task = asyncio.create_task(invoke())
         try:
             with anyio.fail_after(5):
-                while not entered.is_set():
-                    await anyio.sleep(0)
+                assert await anyio.to_thread.run_sync(entered.wait, 5)
                 assert delivered == []
                 if cancel == "native":
                     task.cancel()
@@ -177,8 +178,8 @@ def test_policy_and_complete_response_stay_in_worker_with_cancellation_cleanup(t
         else:
             await task
         with anyio.fail_after(5):
-            while not closed.is_set() or not any(stage == "response" for stage, _ in stages):
-                await anyio.sleep(0)
+            assert await anyio.to_thread.run_sync(encoded.wait, 5)
+            assert closed.is_set()
         assert len({thread for _, thread in stages}) == 1 and stages[0][1] != loop_thread
         assert len(delivered) == (1 if cancel is None else 0)
 

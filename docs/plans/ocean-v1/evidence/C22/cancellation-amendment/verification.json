@@ -1,0 +1,82 @@
+{
+  "version": "c22-cancellation-test-only-amendment-v1",
+  "created_at_utc": "2026-10-21T03:32:41.814270+00:00",
+  "outcome": "Approved test-only deterministic handshake amendment verified; application source unchanged",
+  "reviewed_source_sha256": {
+    "tests/test_catalogue_browser_api.py": "4bcecf3a3dfe294b70557fdeea5e17a0adee075b31bab6483afa7bdbe098c50e",
+    "api/catalogue_browser_routes.py": "9d18f958deb532378ce40a49db1fc82febe92b6e58c56d17f5f1804faaec3738",
+    "orchestration/catalogue_browser.py": "68e9147231cb791df6c73eb79c196e2b971017d76ed54560a878f9e095abc308",
+    "orchestration/catalogue_service.py": "50b3d587ca0cb0f754b3d0f0a742c3bf184e687e147b52f60a5f51bfc9939a48"
+  },
+  "source_before_sha256": {
+    "tests/test_catalogue_browser_api.py": "4bcecf3a3dfe294b70557fdeea5e17a0adee075b31bab6483afa7bdbe098c50e",
+    "api/catalogue_browser_routes.py": "9d18f958deb532378ce40a49db1fc82febe92b6e58c56d17f5f1804faaec3738",
+    "orchestration/catalogue_browser.py": "68e9147231cb791df6c73eb79c196e2b971017d76ed54560a878f9e095abc308",
+    "orchestration/catalogue_service.py": "50b3d587ca0cb0f754b3d0f0a742c3bf184e687e147b52f60a5f51bfc9939a48"
+  },
+  "source_after_sha256": {
+    "tests/test_catalogue_browser_api.py": "4bcecf3a3dfe294b70557fdeea5e17a0adee075b31bab6483afa7bdbe098c50e",
+    "api/catalogue_browser_routes.py": "9d18f958deb532378ce40a49db1fc82febe92b6e58c56d17f5f1804faaec3738",
+    "orchestration/catalogue_browser.py": "68e9147231cb791df6c73eb79c196e2b971017d76ed54560a878f9e095abc308",
+    "orchestration/catalogue_service.py": "50b3d587ca0cb0f754b3d0f0a742c3bf184e687e147b52f60a5f51bfc9939a48"
+  },
+  "source_unchanged_during_verification": true,
+  "intentional_source_supersessions": {
+    "tests/test_catalogue_browser_api.py": {
+      "before_sha256": "88d135f7fe6b7f424f681090ca7cc1ee8d7a1f97fad344cac2e7434a36645504",
+      "after_sha256": "4bcecf3a3dfe294b70557fdeea5e17a0adee075b31bab6483afa7bdbe098c50e",
+      "reason": "Replace zero-delay polling with bounded cross-thread entry/encoded-completion handshakes and verify actual JSON encoding finishes"
+    }
+  },
+  "commands": [
+    {
+      "name": "actual_parametrized_cancellation_cases_with_application_coverage",
+      "command": ".venv/bin/python -m pytest tests/test_catalogue_browser_api.py::test_policy_and_complete_response_stay_in_worker_with_cancellation_cleanup -q --tb=short --cov=api --cov=config --cov=db --cov=preprocessing --cov=ingestion --cov=orchestration --cov=schema --cov=evaluation --cov-report= --cov-fail-under=0",
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C22/cancellation-amendment/actual-three-parameter-tests.txt",
+      "log_sha256": "cdc5dfcd72935fd9c91793fc13034f31537512e0d9b3dfe5d16bc0568cf93ba3",
+      "test_counts": {
+        "passed": 3,
+        "failed": 0,
+        "warnings": 1
+      }
+    },
+    {
+      "name": "ruff",
+      "command": ".venv/bin/ruff check tests/test_catalogue_browser_api.py",
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C22/cancellation-amendment/ruff.txt",
+      "log_sha256": "064da8612d4fa1c018e9461e5c9bc40576c868f126417b07634595a401245799"
+    }
+  ],
+  "test_counts": {
+    "passed": 3,
+    "failed": 0,
+    "warnings": 1
+  },
+  "checks": {
+    "exact_previously_approved_patch_applied": true,
+    "actual_function_matches_previously_exercised_in_memory_candidate": true,
+    "unchanged_two_five_second_fail_after_bounds": true,
+    "bounded_event_waits_each_five_seconds": true,
+    "all_original_explicit_assertions_and_native_cancel_guard_preserved": true,
+    "encoded_completion_assertion_strengthened": true,
+    "application_source_unchanged": true,
+    "no_other_app_or_test_source_edited_by_this_amendment": true
+  },
+  "preserved_evidence_sha256": {
+    "docs/plans/ocean-v1/evidence/C22/cancellation-diagnosis/diagnosis.json": "1fc3bebf56d5fad8a496a85713361b20483a133c15e178591b997a5191dbd1b8",
+    "docs/plans/ocean-v1/evidence/C22/cancellation-diagnosis/proposed-test-only.patch": "76a1a92f9214dabb844acecb7303d95137e11305b86dd7a06846e46e190f0317",
+    "docs/plans/ocean-v1/evidence/C22/cancellation-diagnosis/driver.py": "28ac6ee65ff47dbd7c3755a227838c00206faaea17479e2c16a660a02b76d784",
+    "docs/plans/ocean-v1/evidence/C22/cancellation-diagnosis/stress-01.json": "a3a6608013588708d80f1ae5638635dd4a2418da2c8d2d6540fffd0b75685848",
+    "docs/plans/ocean-v1/evidence/C22/cancellation-diagnosis/stress-01.txt": "2180dbf43c7327b5f5fbc118fdc052ec07577a62f8b399a7e24a69787a726e56",
+    "docs/plans/ocean-v1/evidence/C22/prior-metadata-backend-failure.txt": "9867aff5f1ccde8c92394acd74d9cedd30d4010fbd8a56c51c543e1ed8a0a9d5"
+  },
+  "qualifications": [
+    "Prior hosted metadata run39499040959 timeout was not reproduced locally; GIL starvation is not claimed as a proven incident root cause.",
+    "Existing read-only12-case comparison ran the exact in-memory candidate; all6 original and6 candidate cases passed. This amendment independently ran all3 actual pytest parameter cases on the saved new source.",
+    "Application coverage is enabled using an isolated COVERAGE_FILE. A focused3-case run cannot meet the repository-wide70% threshold, so --cov-fail-under=0 is explicit; full source-bound broad/hosted acceptance belongs to the parent.",
+    "The running broad local run began on the original test hash and must record this sole intentional test-source drift; no claim that its before/after full source maps are identical.",
+    "Exact new-source hosted CI is required after this amendment. No commit/push, application/workflow/dependency edit, deployment or external service was performed by this reviewer."
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "version": "c22-cancellation-read-only-diagnosis-v1",
+  "created_at_utc": "2026-10-21T03:30:17.649284+00:00",
+  "outcome": "No concrete application bug identified; hosted timeout not reproduced locally. Test coordination has an avoidable zero-delay polling dependency.",
+  "root_cause_status": "Coordination flakiness is a supported source-level explanation, not a proven reproduction of the hosted incident.",
+  "incident": {
+    "run_id": "39499040959",
+    "commit": "69123408c5bf9caaefe365ef0fc05905c70984c5",
+    "test": "tests/test_catalogue_browser_api.py::test_policy_and_complete_response_stay_in_worker_with_cancellation_cleanup[native]",
+    "failure": "Five-second fail_after expired in final anyio.sleep(0) polling loop after native cancellation; prior source frozen app/test hashes unchanged from C21 acceptance",
+    "original_log": "docs/plans/ocean-v1/evidence/C22/prior-metadata-backend-failure.txt",
+    "original_log_sha256": "9867aff5f1ccde8c92394acd74d9cedd30d4010fbd8a56c51c543e1ed8a0a9d5"
+  },
+  "source_observations": [
+    "Native task.cancel ends the route awaiter before the synchronous worker necessarily finishes. AnyIO cancellation is shielded until worker completion, so its branch waits differently.",
+    "Policy closed is set before actual CatalogueService.overview and JSON encoding. Final polling must therefore compete with all remaining worker computation and I/O.",
+    "Neither read-only actual route nor worker path contains an asynchronous cancellation checkpoint inside catalogue computation, and sanitized ordinary errors still build JSONResponse in that worker.",
+    "Zero-delay sleep keeps the event loop runnable; it is not an explicit cross-thread completion handshake.",
+    "Existing response stage is appended before JSONResponse.__init__, so original final condition proves encoding began on the worker, not that it completed. Proposed event is set after the actual constructor finishes."
+  ],
+  "scoped_experiment": {
+    "log": "docs/plans/ocean-v1/evidence/C22/cancellation-diagnosis/stress-01.txt",
+    "result": "docs/plans/ocean-v1/evidence/C22/cancellation-diagnosis/stress-01.json",
+    "original_cases_passed": 6,
+    "candidate_cases_passed": 6,
+    "original_failures": 0,
+    "candidate_failures": 0,
+    "application_coverage": true,
+    "thread_switch_interval_seconds": 0.05,
+    "worker_status_codes": [
+      200
+    ],
+    "local_worker_duration_seconds_range": [
+      0.013615458039566875,
+      0.019760207971557975
+    ],
+    "qualification": "Actual same route and configured sealed synthetic services. Candidate compiled only in memory. Enlarged switch interval deliberately stresses coordination; macOS local run does not establish exact Ubuntu CI scheduling cause."
+  },
+  "minimal_proposal": {
+    "patch": "docs/plans/ocean-v1/evidence/C22/cancellation-diagnosis/proposed-test-only.patch",
+    "changed_files_if_authorized": [
+      "tests/test_catalogue_browser_api.py"
+    ],
+    "changes": [
+      "Use bounded threading.Event.wait through anyio.to_thread.run_sync for policy entry",
+      "Set an encoded Event after actual JSONResponse construction and wait on it with unchanged five-second timeout",
+      "Preserve all cancellation/no-delivery/thread-affinity assertions and assert closed after final encoded completion"
+    ],
+    "timeouts_loosened": false,
+    "assertions_removed": false,
+    "application_source_change": false,
+    "applied": false
+  },
+  "reviewed_source_sha256": {
+    "tests/test_catalogue_browser_api.py": "88d135f7fe6b7f424f681090ca7cc1ee8d7a1f97fad344cac2e7434a36645504",
+    "api/catalogue_browser_routes.py": "9d18f958deb532378ce40a49db1fc82febe92b6e58c56d17f5f1804faaec3738",
+    "orchestration/catalogue_browser.py": "68e9147231cb791df6c73eb79c196e2b971017d76ed54560a878f9e095abc308",
+    "orchestration/catalogue_service.py": "50b3d587ca0cb0f754b3d0f0a742c3bf184e687e147b52f60a5f51bfc9939a48"
+  },
+  "source_unchanged": true,
+  "qualification": "Parent decides whether to amend accepted source and require exact new CI. This read-only diagnosis does not alter any source, workflow, receipt or acceptance result."
+}

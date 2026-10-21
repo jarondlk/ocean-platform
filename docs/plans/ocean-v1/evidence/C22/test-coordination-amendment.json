@@ -1,0 +1,111 @@
+{
+  "component": "C22",
+  "kind": "test-only-completion-coordination-amendment",
+  "recorded_at": "2026-10-21T03:33:39.862568+00:00",
+  "baseline_source_commit": "2213306acf9fbb369472cae9f7d9ca881dcd9afd",
+  "baseline_source_sha256": "c00c98a8cd78439ae751062209916a74fd370666efb17f0e108bf027f962cc2c",
+  "baseline_map_path": "docs/plans/ocean-v1/evidence/C22/accepted-source.json",
+  "baseline_map_sha256": "d84031e39da6d75fcef7dae23958038456ac83d479748d9cd4c4a22be0c7c0ee",
+  "final_source_files": {
+    ".github/workflows/tests.yml": "d328874ac87e45d9776e95a66a170ddf0a73350446d4500b3984c7c646385355",
+    "api/auth.py": "0e6fa6fad84ba4e02c86dd6a678d996eab293fb12c37460475fa53597d7c14dd",
+    "api/main.py": "c6719a5624b0527aa9a7426e110c723a3aecffdfcb0c9d4db6c13080447db3fd",
+    "api/rate_limit.py": "153093871398d94bbafd46cd7ed4013bb6a0eb8685a8eea23cf8eb9ecc0f5d58",
+    "api/research_experiment_routes.py": "1bb9f82c0d172a8b663b57abfa7d668c3e543f77d119e82c38d94d45ad10824d",
+    "config.py": "231008b62b23ddf83ccd1eb8fe7520ce4a724f776b8fb0c721195fdecbd9b533",
+    "db/app_models.py": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+    "migrations/versions/20261020_0020_research_experiments.py": "2f5eb82dfefdd6a02bafddb58a44936fa42197c8eb2ac70b726d83fc57f14dff",
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "orchestration/investigations.py": "dd9d733121d9f1587e3b59b31b67e60a75bc50976589886cc96705c94efa46de",
+    "orchestration/research_experiments.py": "bab02f05549655977e2f95ef7885a59d3a311c3ad64941b0846d79b94b0db2ee",
+    "schema/research_experiments.py": "3623b8ce0349316f5e28597752a798817acc1641d55e05d3614ebd61f0d87494",
+    "tests/integration/test_investigation_postgres.py": "57bf87b365ead1be954dfc0d4ce7d6f963223395709e3aa21dc5e78875c04270",
+    "tests/integration/test_research_evidence_postgres.py": "474980e4ec931ee19281c9317d45aa6c0cc9d1381257f83875ab2dc92fb3688b",
+    "tests/integration/test_research_experiments_postgres.py": "581e67d6a0eda2db87c40dfca6e635660bacf43f7b916a1543a4465c2ea2ff8f",
+    "tests/integration/test_research_runs_postgres.py": "bc5153115f00c211f93f610d7f5979eac8aa784f6252ed6e77882782db9b4153",
+    "tests/research_experiment_postgres_support.py": "08643b469b66ca2874a14838b81e003c0af9069c8b227bebe42619f6644c0e33",
+    "tests/research_experiment_support.py": "fb881711350462c9bf0c3efa8a4460741aa354a4d7269f72384aef7476e1e4c1",
+    "tests/test_bootstrap_database.py": "815f4e6de1bb2957350dc94ec745397350ea68a84dd47435a88c3f39fda2c12a",
+    "tests/test_catalogue_browser_api.py": "4bcecf3a3dfe294b70557fdeea5e17a0adee075b31bab6483afa7bdbe098c50e",
+    "tests/test_frozen_experiment_export.py": "b1cf8f14d5205333068712ffd97f60d7a8860f2b143be50b74fbc3fe332c6ddf",
+    "tests/test_research_experiment_api.py": "f7c65e360ff49799ddbb8d9333f433448e48cc0bbcd86faa582b4bc4238de5fa",
+    "tests/test_research_experiment_contracts.py": "31a0c011f38b5c040828cb8e495e42b8351957f9b3c22aa5ef3f2bc70b4584f7",
+    "tests/test_research_experiment_security.py": "21680b38f5fdb9650fca9055cb2341769178a3eeac5a80918602721f86884e4e",
+    "tests/test_research_experiments.py": "eb33fdfb5f435f047b44c104ca406efa09f55b4913312ac30ef2d47cd396a749"
+  },
+  "source_sha256": "62e7cb3a58e884ee5578f8c4fa27ce6e282e42366feeb7e9b16050ca8097ce97",
+  "intentional_source_supersessions": {
+    ".github/workflows/tests.yml": {
+      "prior": "eb0cdd3b8fe0af6a329ecd32645674f7fb0a101d7cac464c9c7c911ef7f9884f",
+      "current": "d328874ac87e45d9776e95a66a170ddf0a73350446d4500b3984c7c646385355"
+    },
+    "api/auth.py": {
+      "prior": "23e539f8a920c356ec2c86793af0ec2bed2d96f2c8fb39a7b17a8f1a301e5ea0",
+      "current": "0e6fa6fad84ba4e02c86dd6a678d996eab293fb12c37460475fa53597d7c14dd"
+    },
+    "api/main.py": {
+      "prior": "c0caaba49b6ac9cff7ac95f02db86bc177164d15ad08ce0bb767cc8a324d2938",
+      "current": "c6719a5624b0527aa9a7426e110c723a3aecffdfcb0c9d4db6c13080447db3fd"
+    },
+    "api/rate_limit.py": {
+      "prior": "9d1814438bd65e9091a3d019e820587583cfa588e75b0f390f476ec41e2a1f4e",
+      "current": "153093871398d94bbafd46cd7ed4013bb6a0eb8685a8eea23cf8eb9ecc0f5d58"
+    },
+    "config.py": {
+      "prior": "1002aed1b54e704e72d2a90beddedb31225132951f3618b29180a52fd080178d",
+      "current": "231008b62b23ddf83ccd1eb8fe7520ce4a724f776b8fb0c721195fdecbd9b533"
+    },
+    "db/app_models.py": {
+      "prior": "e8219674179b9de41ac0a817f306adccf11ca5cc50f1b4eb31f7da4d8fed8024",
+      "current": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3"
+    },
+    "orchestration/investigations.py": {
+      "prior": "9312f3ec4a788ceb1430052a2840a702100eb5bedf5cc284ca88f196c45537c7",
+      "current": "dd9d733121d9f1587e3b59b31b67e60a75bc50976589886cc96705c94efa46de"
+    },
+    "tests/integration/test_investigation_postgres.py": {
+      "prior": "469bb913920b29d13619a8019d5b631e6e8a0bbab23ec3f7c327bab31a589f23",
+      "current": "57bf87b365ead1be954dfc0d4ce7d6f963223395709e3aa21dc5e78875c04270"
+    },
+    "tests/integration/test_research_evidence_postgres.py": {
+      "prior": "2531591b5b50cee63b68625e762573782907dfc7cc4170615d8dd30d14ea370b",
+      "current": "474980e4ec931ee19281c9317d45aa6c0cc9d1381257f83875ab2dc92fb3688b"
+    },
+    "tests/integration/test_research_runs_postgres.py": {
+      "prior": "156fde18a6d1019c6f4943018cb94304ace557c7e7579beaf2d06a8676428fdb",
+      "current": "bc5153115f00c211f93f610d7f5979eac8aa784f6252ed6e77882782db9b4153"
+    },
+    "tests/test_bootstrap_database.py": {
+      "prior": "0e7f4c7550e1aa9e563510b69703011dabc6dae7a938d7e5722af74864862be9",
+      "current": "815f4e6de1bb2957350dc94ec745397350ea68a84dd47435a88c3f39fda2c12a"
+    },
+    "tests/test_catalogue_browser_api.py": {
+      "prior": "88d135f7fe6b7f424f681090ca7cc1ee8d7a1f97fad344cac2e7434a36645504",
+      "current": "4bcecf3a3dfe294b70557fdeea5e17a0adee075b31bab6483afa7bdbe098c50e"
+    }
+  },
+  "amended_paths": [
+    "tests/test_catalogue_browser_api.py"
+  ],
+  "evidence_files": {
+    "docs/plans/ocean-v1/evidence/C22/prior-metadata-backend-failure.txt": "9867aff5f1ccde8c92394acd74d9cedd30d4010fbd8a56c51c543e1ed8a0a9d5",
+    "docs/plans/ocean-v1/evidence/C22/cancellation-diagnosis/stress-01.txt": "2180dbf43c7327b5f5fbc118fdc052ec07577a62f8b399a7e24a69787a726e56",
+    "docs/plans/ocean-v1/evidence/C22/cancellation-diagnosis/stress-01.json": "a3a6608013588708d80f1ae5638635dd4a2418da2c8d2d6540fffd0b75685848",
+    "docs/plans/ocean-v1/evidence/C22/cancellation-diagnosis/proposed-test-only.patch": "76a1a92f9214dabb844acecb7303d95137e11305b86dd7a06846e46e190f0317",
+    "docs/plans/ocean-v1/evidence/C22/cancellation-diagnosis/driver.py": "28ac6ee65ff47dbd7c3755a227838c00206faaea17479e2c16a660a02b76d784",
+    "docs/plans/ocean-v1/evidence/C22/cancellation-diagnosis/diagnosis.json": "1fc3bebf56d5fad8a496a85713361b20483a133c15e178591b997a5191dbd1b8",
+    "docs/plans/ocean-v1/evidence/C22/cancellation-amendment/.coverage-scoped": "bb5515133304080d175d093ce7d10b04fd89d4c8689a9bff394ac2e9daf3f202",
+    "docs/plans/ocean-v1/evidence/C22/cancellation-amendment/ruff.txt": "064da8612d4fa1c018e9461e5c9bc40576c868f126417b07634595a401245799",
+    "docs/plans/ocean-v1/evidence/C22/cancellation-amendment/source-before.json": "2e01597a568493bd1c8bc2ad6584e5c76673c210a44226867364e9152b83799c",
+    "docs/plans/ocean-v1/evidence/C22/cancellation-amendment/source-after.json": "2e01597a568493bd1c8bc2ad6584e5c76673c210a44226867364e9152b83799c",
+    "docs/plans/ocean-v1/evidence/C22/cancellation-amendment/verification.json": "31eb14a83c2bbe81e73a8aa48d50dade74fd92033311492f56ef1033eb963272",
+    "docs/plans/ocean-v1/evidence/C22/cancellation-amendment/actual-three-parameter-tests.txt": "cdc5dfcd72935fd9c91793fc13034f31537512e0d9b3dfe5d16bc0568cf93ba3"
+  },
+  "targeted_receipt": "docs/plans/ocean-v1/evidence/C22/cancellation-amendment/verification.json",
+  "targeted_receipt_sha256": "31eb14a83c2bbe81e73a8aa48d50dade74fd92033311492f56ef1033eb963272",
+  "qualification": "An actual later C21 docs-only hosted run hit a5s native cancellation polling deadline. Local12scenario comparison did not reproduce it and establishes no application root cause. The test now waits on explicit bounded worker events and proves JSON encoding finished, preserving all original cancellation/thread assertions and5s bounds. All24 other frozen files remain unchanged.",
+  "tests_weakened": false,
+  "application_source_changed": false,
+  "superseded_hosted_run": 39538297418,
+  "hosted_acceptance": "A new final exact-source successful run is required; old running run is not accepted"
+}
