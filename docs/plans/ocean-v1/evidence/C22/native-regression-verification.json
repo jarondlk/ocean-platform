@@ -1,0 +1,23 @@
+{
+  "component": "C22",
+  "source_commit": "2213306acf9fbb369472cae9f7d9ca881dcd9afd",
+  "source_sha256": "c00c98a8cd78439ae751062209916a74fd370666efb17f0e108bf027f962cc2c",
+  "records": [
+    {
+      "path": "docs/plans/ocean-v1/evidence/C22/pg-c17-c20-regressions-01/postgres-result.json",
+      "sha256": "683f2c21ccf64a10f9c1bab525122970b5ddd388a940072e68d2655e7c35eadf",
+      "passed": 104
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C22/pg-c21-regressions-01/postgres-result.json",
+      "sha256": "0eef84678574add1389f1292afd0fd95b1b80c6f41d3a893ac6edeaf182edba8",
+      "passed": 23
+    }
+  ],
+  "total_regressions": 127,
+  "C22_scoped_native": 21,
+  "C22_native_receipt": "store-verification.json",
+  "all_owned_clusters_stopped": true,
+  "test_schemas_remaining": 0,
+  "current_source_paths": 24
+}

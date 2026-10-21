@@ -1,0 +1,487 @@
+﻿2026-10-21T03:23:28.7147812Z Current runner version: '2.338.0'
+2026-10-21T03:23:28.7172069Z ##[group]Runner Image Provisioner
+2026-10-21T03:23:28.7173017Z Hosted Compute Agent
+2026-10-21T03:23:28.7173635Z Version: 20261012.601
+2026-10-21T03:23:28.7174258Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-21T03:23:28.7175066Z Build Date: 2026-10-12T17:48:21Z
+2026-10-21T03:23:28.7175759Z Worker ID: {226cedae-aeea-42db-8215-0eb7a7682454}
+2026-10-21T03:23:28.7176559Z Region: westcentralus
+2026-10-21T03:23:28.7177198Z Cloud: Azure
+2026-10-21T03:23:28.7177726Z ##[endgroup]
+2026-10-21T03:23:28.7179492Z ##[group]Operating System
+2026-10-21T03:23:28.7180191Z Ubuntu
+2026-10-21T03:23:28.7180784Z 24.04.5
+2026-10-21T03:23:28.7181322Z LTS
+2026-10-21T03:23:28.7181839Z ##[endgroup]
+2026-10-21T03:23:28.7182445Z ##[group]Runner Image
+2026-10-21T03:23:28.7183062Z Image: ubuntu-24.04
+2026-10-21T03:23:28.7183979Z Version: 20261012.334.1
+2026-10-21T03:23:28.7185380Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-21T03:23:28.7187006Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-21T03:23:28.7188026Z ##[endgroup]
+2026-10-21T03:23:28.7189666Z ##[group]GITHUB_TOKEN Permissions
+2026-10-21T03:23:28.7191817Z Contents: read
+2026-10-21T03:23:28.7192500Z Metadata: read
+2026-10-21T03:23:28.7193123Z ##[endgroup]
+2026-10-21T03:23:28.7195135Z Secret source: Actions
+2026-10-21T03:23:28.7196163Z Cache mode: write
+2026-10-21T03:23:28.7196933Z Prepare workflow directory
+2026-10-21T03:23:28.7542746Z Prepare all required actions
+2026-10-21T03:23:28.7590195Z Getting action download info
+2026-10-21T03:23:29.0506175Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-21T03:23:29.1516850Z Download action repository 'actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97' (SHA:5fda3b95a4ea91299a34e894583c3862153e4b97)
+2026-10-21T03:23:29.3348040Z Complete job name: Backend tests and security boundary
+2026-10-21T03:23:29.4168262Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-21T03:23:29.4169715Z with:
+2026-10-21T03:23:29.4170341Z   persist-credentials: false
+2026-10-21T03:23:29.4171007Z   repository: jarondlk/ocean-platform
+2026-10-21T03:23:29.4175147Z   token: ***
+2026-10-21T03:23:29.4176016Z   ssh-strict: true
+2026-10-21T03:23:29.4176555Z   ssh-user: git
+2026-10-21T03:23:29.4177107Z   clean: true
+2026-10-21T03:23:29.4177663Z   sparse-checkout-cone-mode: true
+2026-10-21T03:23:29.4178320Z   fetch-depth: 1
+2026-10-21T03:23:29.4179109Z   fetch-tags: false
+2026-10-21T03:23:29.4179658Z   show-progress: true
+2026-10-21T03:23:29.4180183Z   lfs: false
+2026-10-21T03:23:29.4180752Z   submodules: false
+2026-10-21T03:23:29.4181330Z   set-safe-directory: true
+2026-10-21T03:23:29.4182006Z   allow-unsafe-pr-checkout: false
+2026-10-21T03:23:29.4182943Z ##[endgroup]
+2026-10-21T03:23:29.5164692Z Syncing repository: jarondlk/ocean-platform
+2026-10-21T03:23:29.5167301Z ##[group]Getting Git version info
+2026-10-21T03:23:29.5168865Z Working directory is '/home/runner/work/ocean-platform/ocean-platform'
+2026-10-21T03:23:29.5170614Z [command]/usr/bin/git version
+2026-10-21T03:23:29.5259846Z git version 2.55.0
+2026-10-21T03:23:29.5292361Z ##[endgroup]
+2026-10-21T03:23:29.5298136Z Temporarily overriding HOME='/home/runner/work/_temp/266e4dec-5043-4922-91d6-9831770dd420' before making global git config changes
+2026-10-21T03:23:29.5300619Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-21T03:23:29.5304376Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ocean-platform/ocean-platform
+2026-10-21T03:23:29.5356943Z Deleting the contents of '/home/runner/work/ocean-platform/ocean-platform'
+2026-10-21T03:23:29.5361123Z ##[group]Determining repository object format
+2026-10-21T03:23:29.5362660Z ##[endgroup]
+2026-10-21T03:23:29.5363403Z ##[group]Initializing the repository
+2026-10-21T03:23:29.5368385Z [command]/usr/bin/git init /home/runner/work/ocean-platform/ocean-platform
+2026-10-21T03:23:29.5495834Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-21T03:23:29.5497536Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-21T03:23:29.5499348Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-21T03:23:29.5500585Z hint: call:
+2026-10-21T03:23:29.5501253Z hint:
+2026-10-21T03:23:29.5502126Z hint: 	git config --global init.defaultBranch <name>
+2026-10-21T03:23:29.5503133Z hint:
+2026-10-21T03:23:29.5504045Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-21T03:23:29.5505538Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-21T03:23:29.5506797Z hint:
+2026-10-21T03:23:29.5507479Z hint: 	git branch -m <name>
+2026-10-21T03:23:29.5508222Z hint:
+2026-10-21T03:23:29.5509434Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-21T03:23:29.5511250Z Initialized empty Git repository in /home/runner/work/ocean-platform/ocean-platform/.git/
+2026-10-21T03:23:29.5514068Z [command]/usr/bin/git remote add origin https://github.com/jarondlk/ocean-platform
+2026-10-21T03:23:29.5578029Z ##[endgroup]
+2026-10-21T03:23:29.5579551Z ##[group]Disabling automatic garbage collection
+2026-10-21T03:23:29.5582961Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-21T03:23:29.5617707Z ##[endgroup]
+2026-10-21T03:23:29.5619511Z ##[group]Setting up auth
+2026-10-21T03:23:29.5620427Z Removing SSH command configuration
+2026-10-21T03:23:29.5623828Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-21T03:23:29.5666274Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-21T03:23:29.6056441Z Removing HTTP extra header
+2026-10-21T03:23:29.6062573Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-21T03:23:29.6098003Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-21T03:23:29.6312514Z Removing includeIf entries pointing to credentials config files
+2026-10-21T03:23:29.6317495Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-21T03:23:29.6354749Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-21T03:23:29.6579804Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-9255edc9-1270-4b05-96c3-594ef73931c4.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-21T03:23:29.6619174Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path /home/runner/work/_temp/git-credentials-9255edc9-1270-4b05-96c3-594ef73931c4.config
+2026-10-21T03:23:29.6652490Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-9255edc9-1270-4b05-96c3-594ef73931c4.config
+2026-10-21T03:23:29.6690545Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-9255edc9-1270-4b05-96c3-594ef73931c4.config
+2026-10-21T03:23:29.6724247Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-9255edc9-1270-4b05-96c3-594ef73931c4.config
+2026-10-21T03:23:29.6755302Z ##[endgroup]
+2026-10-21T03:23:29.6756056Z ##[group]Fetching the repository
+2026-10-21T03:23:29.6761848Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2213306acf9fbb369472cae9f7d9ca881dcd9afd:refs/remotes/origin/overhaul
+2026-10-21T03:23:32.3030670Z From https://github.com/jarondlk/ocean-platform
+2026-10-21T03:23:32.3032652Z  * [new ref]         2213306acf9fbb369472cae9f7d9ca881dcd9afd -> origin/overhaul
+2026-10-21T03:23:32.3042761Z [command]/usr/bin/git branch --list --remote origin/overhaul
+2026-10-21T03:23:32.3076223Z   origin/overhaul
+2026-10-21T03:23:32.3099811Z [command]/usr/bin/git rev-parse refs/remotes/origin/overhaul
+2026-10-21T03:23:32.3119011Z 2213306acf9fbb369472cae9f7d9ca881dcd9afd
+2026-10-21T03:23:32.3124060Z ##[endgroup]
+2026-10-21T03:23:32.3125532Z ##[group]Determining the checkout info
+2026-10-21T03:23:32.3126855Z ##[endgroup]
+2026-10-21T03:23:32.3130044Z [command]/usr/bin/git sparse-checkout disable
+2026-10-21T03:23:32.3197392Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-21T03:23:32.3235827Z ##[group]Checking out the ref
+2026-10-21T03:23:32.3240043Z [command]/usr/bin/git checkout --progress --force -B overhaul refs/remotes/origin/overhaul
+2026-10-21T03:23:32.7086447Z Switched to a new branch 'overhaul'
+2026-10-21T03:23:32.7109568Z branch 'overhaul' set up to track 'origin/overhaul'.
+2026-10-21T03:23:32.7113059Z ##[endgroup]
+2026-10-21T03:23:32.7164347Z [command]/usr/bin/git log -1 --format=%H
+2026-10-21T03:23:32.7192733Z 2213306acf9fbb369472cae9f7d9ca881dcd9afd
+2026-10-21T03:23:32.7205983Z ##[group]Removing auth
+2026-10-21T03:23:32.7206375Z Removing SSH command configuration
+2026-10-21T03:23:32.7206872Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-21T03:23:32.7240779Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-21T03:23:32.7467442Z Removing HTTP extra header
+2026-10-21T03:23:32.7468069Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-21T03:23:32.7504074Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-21T03:23:32.7725873Z Removing includeIf entries pointing to credentials config files
+2026-10-21T03:23:32.7730339Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-21T03:23:32.7764943Z includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path
+2026-10-21T03:23:32.7766421Z includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path
+2026-10-21T03:23:32.7767999Z includeif.gitdir:/github/workspace/.git.path
+2026-10-21T03:23:32.7769607Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-21T03:23:32.7775590Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path
+2026-10-21T03:23:32.7801963Z /home/runner/work/_temp/git-credentials-9255edc9-1270-4b05-96c3-594ef73931c4.config
+2026-10-21T03:23:32.7811260Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-9255edc9\-1270\-4b05\-96c3\-594ef73931c4\.config
+2026-10-21T03:23:32.7848251Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path
+2026-10-21T03:23:32.7878796Z /home/runner/work/_temp/git-credentials-9255edc9-1270-4b05-96c3-594ef73931c4.config
+2026-10-21T03:23:32.7887096Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/ocean-platform/ocean-platform/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-9255edc9\-1270\-4b05\-96c3\-594ef73931c4\.config
+2026-10-21T03:23:32.7925457Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-21T03:23:32.7951728Z /github/runner_temp/git-credentials-9255edc9-1270-4b05-96c3-594ef73931c4.config
+2026-10-21T03:23:32.7959364Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-9255edc9\-1270\-4b05\-96c3\-594ef73931c4\.config
+2026-10-21T03:23:32.7994024Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-21T03:23:32.8019122Z /github/runner_temp/git-credentials-9255edc9-1270-4b05-96c3-594ef73931c4.config
+2026-10-21T03:23:32.8027048Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-9255edc9\-1270\-4b05\-96c3\-594ef73931c4\.config
+2026-10-21T03:23:32.8062899Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-21T03:23:32.8280778Z Removing credentials config '/home/runner/work/_temp/git-credentials-9255edc9-1270-4b05-96c3-594ef73931c4.config'
+2026-10-21T03:23:32.8290255Z ##[endgroup]
+2026-10-21T03:23:32.8533664Z ##[group]Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+2026-10-21T03:23:32.8534149Z with:
+2026-10-21T03:23:32.8534402Z   python-version: 3.12
+2026-10-21T03:23:32.8534671Z   cache: pip
+2026-10-21T03:23:32.8535206Z   cache-dependency-path: requirements/runtime.in
+requirements/runtime.txt
+requirements/dev.in
+requirements/dev.txt
+
+2026-10-21T03:23:32.8535830Z   check-latest: false
+2026-10-21T03:23:32.8538845Z   token: ***
+2026-10-21T03:23:32.8539244Z   update-environment: true
+2026-10-21T03:23:32.8539734Z   allow-prereleases: false
+2026-10-21T03:23:32.8540161Z   freethreaded: false
+2026-10-21T03:23:32.8540535Z ##[endgroup]
+2026-10-21T03:23:32.9807836Z ##[group]Installed versions
+2026-10-21T03:23:32.9903615Z Successfully set up CPython (3.12.15)
+2026-10-21T03:23:32.9904694Z ##[endgroup]
+2026-10-21T03:23:33.0333906Z [command]/opt/hostedtoolcache/Python/3.12.15/x64/bin/pip cache dir
+2026-10-21T03:23:33.3756278Z /home/runner/.cache/pip
+2026-10-21T03:23:33.5876168Z Cache hit for: setup-python-Linux-x64-24.04-Ubuntu-python-3.12.15-pip-0678f5ee12b9d192f99f574742b01e3084dffe499bfe6bfc7f8e5a38fe435056
+2026-10-21T03:23:34.8105783Z Received 41943040 of 173091285 (24.2%), 40.0 MBs/sec
+2026-10-21T03:23:35.6632521Z Received 173091285 of 173091285 (100.0%), 89.1 MBs/sec
+2026-10-21T03:23:35.6633352Z Cache Size: ~165 MB (173091285 B)
+2026-10-21T03:23:35.6672839Z [command]/usr/bin/tar -xf /home/runner/work/_temp/795f0c49-1dca-4b40-a7f6-df76191041fb/cache.tzst -P -C /home/runner/work/ocean-platform/ocean-platform --use-compress-program unzstd
+2026-10-21T03:23:35.9024493Z Cache restored successfully
+2026-10-21T03:23:35.9142194Z Cache restored from key: setup-python-Linux-x64-24.04-Ubuntu-python-3.12.15-pip-0678f5ee12b9d192f99f574742b01e3084dffe499bfe6bfc7f8e5a38fe435056
+2026-10-21T03:23:35.9379596Z ##[group]Run python -m pip install --upgrade pip
+2026-10-21T03:23:35.9380087Z [36;1mpython -m pip install --upgrade pip[0m
+2026-10-21T03:23:35.9380552Z [36;1mpython -m pip install --require-hashes -r requirements/dev.txt[0m
+2026-10-21T03:23:35.9683903Z shell: /usr/bin/bash -e {0}
+2026-10-21T03:23:35.9684193Z env:
+2026-10-21T03:23:35.9684506Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:23:35.9684990Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-21T03:23:35.9685479Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:23:35.9685892Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:23:35.9686321Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:23:35.9686743Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-21T03:23:35.9687096Z ##[endgroup]
+2026-10-21T03:23:36.5347895Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages (26.2.1)
+2026-10-21T03:23:36.6777079Z Collecting pip
+2026-10-21T03:23:36.8158643Z   Downloading pip-26.2.2-py3-none-any.whl.metadata (4.6 kB)
+2026-10-21T03:23:36.8391737Z Downloading pip-26.2.2-py3-none-any.whl (1.8 MB)
+2026-10-21T03:23:36.9657139Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 21.5 MB/s  0:00:00
+2026-10-21T03:23:37.0155575Z Installing collected packages: pip
+2026-10-21T03:23:37.0157627Z   Attempting uninstall: pip
+2026-10-21T03:23:37.0174900Z     Found existing installation: pip 26.2.1
+2026-10-21T03:23:37.1078758Z     Uninstalling pip-26.2.1:
+2026-10-21T03:23:37.1144181Z       Successfully uninstalled pip-26.2.1
+2026-10-21T03:23:38.0528187Z Successfully installed pip-26.2.2
+2026-10-21T03:23:38.6186296Z Collecting alembic==1.20.0 (from -r requirements/dev.txt (line 7))
+2026-10-21T03:23:38.6199000Z   Using cached alembic-1.20.0-py3-none-any.whl (268 kB)
+2026-10-21T03:23:38.6458419Z Collecting annotated-doc==0.0.5 (from -r requirements/dev.txt (line 11))
+2026-10-21T03:23:38.6470870Z   Using cached annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+2026-10-21T03:23:38.6710923Z Collecting annotated-types==0.8.0 (from -r requirements/dev.txt (line 15))
+2026-10-21T03:23:38.6723332Z   Using cached annotated_types-0.8.0-py3-none-any.whl (13 kB)
+2026-10-21T03:23:38.7027739Z Collecting anyio==4.15.1 (from -r requirements/dev.txt (line 19))
+2026-10-21T03:23:38.7046787Z   Using cached anyio-4.15.1-py3-none-any.whl (132 kB)
+2026-10-21T03:23:38.7438126Z Collecting certifi==2026.7.22 (from -r requirements/dev.txt (line 27))
+2026-10-21T03:23:38.7450241Z   Using cached certifi-2026.7.22-py3-none-any.whl (136 kB)
+2026-10-21T03:23:38.8674961Z Collecting cffi==2.1.1 (from -r requirements/dev.txt (line 35))
+2026-10-21T03:23:38.8687470Z   Using cached cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+2026-10-21T03:23:38.9487737Z Collecting cftime==1.6.6 (from -r requirements/dev.txt (line 137))
+2026-10-21T03:23:38.9500565Z   Using cached cftime-1.6.6-cp311-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (1.7 MB)
+2026-10-21T03:23:39.0797771Z Collecting charset-normalizer==3.5.1 (from -r requirements/dev.txt (line 153))
+2026-10-21T03:23:39.0811068Z   Using cached charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (248 kB)
+2026-10-21T03:23:39.1137084Z Collecting click==8.5.0 (from -r requirements/dev.txt (line 327))
+2026-10-21T03:23:39.1148983Z   Using cached click-8.5.0-py3-none-any.whl (125 kB)
+2026-10-21T03:23:39.5084349Z Collecting coverage==7.16.2 (from -r requirements/dev.txt (line 331))
+2026-10-21T03:23:39.5100515Z   Using cached coverage-7.16.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (258 kB)
+2026-10-21T03:23:39.7026491Z Collecting cryptography==50.0.1 (from -r requirements/dev.txt (line 454))
+2026-10-21T03:23:39.7041623Z   Using cached cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl (4.7 MB)
+2026-10-21T03:23:39.7372196Z Collecting distro==1.9.0 (from -r requirements/dev.txt (line 502))
+2026-10-21T03:23:39.7386323Z   Using cached distro-1.9.0-py3-none-any.whl (20 kB)
+2026-10-21T03:23:39.7936817Z Collecting fastapi==0.141.1 (from -r requirements/dev.txt (line 506))
+2026-10-21T03:23:39.7949262Z   Using cached fastapi-0.141.1-py3-none-any.whl (131 kB)
+2026-10-21T03:23:39.8379189Z Collecting google-api-core==2.39.0 (from -r requirements/dev.txt (line 510))
+2026-10-21T03:23:39.8391364Z   Using cached google_api_core-2.39.0-py3-none-any.whl (214 kB)
+2026-10-21T03:23:39.8870721Z Collecting google-auth==2.59.0 (from -r requirements/dev.txt (line 516))
+2026-10-21T03:23:39.8882244Z   Using cached google_auth-2.59.0-py3-none-any.whl (262 kB)
+2026-10-21T03:23:39.9225339Z Collecting google-cloud-core==2.7.0 (from -r requirements/dev.txt (line 524))
+2026-10-21T03:23:39.9237244Z   Using cached google_cloud_core-2.7.0-py3-none-any.whl (31 kB)
+2026-10-21T03:23:39.9769002Z Collecting google-cloud-storage==3.15.0 (from -r requirements/dev.txt (line 528))
+2026-10-21T03:23:39.9781104Z   Using cached google_cloud_storage-3.15.0-py3-none-any.whl (343 kB)
+2026-10-21T03:23:40.0414016Z Collecting google-crc32c==1.9.0 (from -r requirements/dev.txt (line 532))
+2026-10-21T03:23:40.0426145Z   Using cached google_crc32c-1.9.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (36 kB)
+2026-10-21T03:23:40.0794907Z Collecting google-genai==2.25.0 (from -r requirements/dev.txt (line 567))
+2026-10-21T03:23:40.0807272Z   Using cached google_genai-2.25.0-py3-none-any.whl (1.2 MB)
+2026-10-21T03:23:40.1168029Z Collecting google-resumable-media==2.10.2 (from -r requirements/dev.txt (line 571))
+2026-10-21T03:23:40.1180110Z   Using cached google_resumable_media-2.10.2-py3-none-any.whl (81 kB)
+2026-10-21T03:23:40.1478042Z Collecting googleapis-common-protos==1.75.4 (from -r requirements/dev.txt (line 575))
+2026-10-21T03:23:40.1490394Z   Using cached googleapis_common_protos-1.75.4-py3-none-any.whl (307 kB)
+2026-10-21T03:23:40.2976913Z Collecting greenlet==3.5.6 (from -r requirements/dev.txt (line 579))
+2026-10-21T03:23:40.2991054Z   Using cached greenlet-3.5.6-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (621 kB)
+2026-10-21T03:23:40.3278227Z Collecting h11==0.16.0 (from -r requirements/dev.txt (line 662))
+2026-10-21T03:23:40.3290673Z   Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+2026-10-21T03:23:40.3576407Z Collecting httpcore==1.0.9 (from -r requirements/dev.txt (line 668))
+2026-10-21T03:23:40.3589708Z   Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+2026-10-21T03:23:40.4113839Z Collecting httptools==0.8.0 (from -r requirements/dev.txt (line 672))
+2026-10-21T03:23:40.4126689Z   Using cached httptools-0.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (523 kB)
+2026-10-21T03:23:40.4502794Z Collecting httpx==0.28.1 (from -r requirements/dev.txt (line 724))
+2026-10-21T03:23:40.4514980Z   Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+2026-10-21T03:23:40.4785660Z Collecting idna==3.20 (from -r requirements/dev.txt (line 730))
+2026-10-21T03:23:40.4798311Z   Using cached idna-3.20-py3-none-any.whl (69 kB)
+2026-10-21T03:23:40.5048011Z Collecting iniconfig==2.3.0 (from -r requirements/dev.txt (line 737))
+2026-10-21T03:23:40.5060222Z   Using cached iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+2026-10-21T03:23:40.5331601Z Collecting mako==1.4.3 (from -r requirements/dev.txt (line 741))
+2026-10-21T03:23:40.5344471Z   Using cached mako-1.4.3-py3-none-any.whl (80 kB)
+2026-10-21T03:23:40.6000151Z Collecting markupsafe==3.0.3 (from -r requirements/dev.txt (line 745))
+2026-10-21T03:23:40.6013304Z   Using cached markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+2026-10-21T03:23:40.6748677Z Collecting netcdf4==1.7.4 (from -r requirements/dev.txt (line 836))
+2026-10-21T03:23:40.6761611Z   Using cached netcdf4-1.7.4-cp311-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (10.1 MB)
+2026-10-21T03:23:40.9278929Z Collecting numpy==2.5.3 (from -r requirements/dev.txt (line 860))
+2026-10-21T03:23:40.9291895Z   Using cached numpy-2.5.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.7 MB)
+2026-10-21T03:23:40.9842322Z Collecting opentelemetry-api==1.45.0 (from -r requirements/dev.txt (line 934))
+2026-10-21T03:23:40.9854029Z   Using cached opentelemetry_api-1.45.0-py3-none-any.whl (60 kB)
+2026-10-21T03:23:41.0306263Z Collecting packaging==26.3 (from -r requirements/dev.txt (line 938))
+2026-10-21T03:23:41.0318544Z   Using cached packaging-26.3-py3-none-any.whl (129 kB)
+2026-10-21T03:23:41.1557856Z Collecting pandas==2.3.3 (from -r requirements/dev.txt (line 944))
+2026-10-21T03:23:41.1571224Z   Using cached pandas-2.3.3-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (12.4 MB)
+2026-10-21T03:23:41.2292613Z Collecting pgvector==0.5.0 (from -r requirements/dev.txt (line 1003))
+2026-10-21T03:23:41.2304445Z   Using cached pgvector-0.5.0-py3-none-any.whl (30 kB)
+2026-10-21T03:23:41.2575350Z Collecting pluggy==1.6.0 (from -r requirements/dev.txt (line 1007))
+2026-10-21T03:23:41.2587329Z   Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)
+2026-10-21T03:23:41.2882204Z Collecting proto-plus==1.28.4 (from -r requirements/dev.txt (line 1013))
+2026-10-21T03:23:41.2894359Z   Using cached proto_plus-1.28.4-py3-none-any.whl (50 kB)
+2026-10-21T03:23:41.4397983Z Collecting protobuf==7.36.0 (from -r requirements/dev.txt (line 1017))
+2026-10-21T03:23:41.4411350Z   Using cached protobuf-7.36.0-cp310-abi3-manylinux2014_x86_64.whl (340 kB)
+2026-10-21T03:23:41.5211366Z Collecting psycopg2-binary==2.9.13 (from -r requirements/dev.txt (line 1030))
+2026-10-21T03:23:41.5224037Z   Using cached psycopg2_binary-2.9.13-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.3 MB)
+2026-10-21T03:23:41.6216612Z Collecting pyarrow==23.0.1 (from -r requirements/dev.txt (line 1099))
+2026-10-21T03:23:41.6230651Z   Using cached pyarrow-23.0.1-cp312-cp312-manylinux_2_28_x86_64.whl (47.6 MB)
+2026-10-21T03:23:41.7375144Z Collecting pyasn1==0.6.4 (from -r requirements/dev.txt (line 1151))
+2026-10-21T03:23:41.7388200Z   Using cached pyasn1-0.6.4-py3-none-any.whl (84 kB)
+2026-10-21T03:23:41.7724542Z Collecting pyasn1-modules==0.4.2 (from -r requirements/dev.txt (line 1155))
+2026-10-21T03:23:41.7736806Z   Using cached pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
+2026-10-21T03:23:41.7994992Z Collecting pycparser==3.0 (from -r requirements/dev.txt (line 1159))
+2026-10-21T03:23:41.8007379Z   Using cached pycparser-3.0-py3-none-any.whl (48 kB)
+2026-10-21T03:23:41.9119476Z Collecting pydantic==2.13.5 (from -r requirements/dev.txt (line 1163))
+2026-10-21T03:23:41.9131098Z   Using cached pydantic-2.13.5-py3-none-any.whl (472 kB)
+2026-10-21T03:23:42.6347665Z Collecting pydantic-core==2.46.5 (from -r requirements/dev.txt (line 1169))
+2026-10-21T03:23:42.6362529Z   Using cached pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+2026-10-21T03:23:42.6696317Z Collecting pygments==2.21.0 (from -r requirements/dev.txt (line 1291))
+2026-10-21T03:23:42.6709084Z   Using cached pygments-2.21.0-py3-none-any.whl (1.3 MB)
+2026-10-21T03:23:42.7030774Z Collecting pyjwt==2.15.1 (from -r requirements/dev.txt (line 1295))
+2026-10-21T03:23:42.7042997Z   Using cached pyjwt-2.15.1-py3-none-any.whl (33 kB)
+2026-10-21T03:23:42.7416769Z Collecting pytest==9.1.1 (from -r requirements/dev.txt (line 1299))
+2026-10-21T03:23:42.7434245Z   Using cached pytest-9.1.1-py3-none-any.whl (386 kB)
+2026-10-21T03:23:42.7725952Z Collecting pytest-cov==7.1.0 (from -r requirements/dev.txt (line 1305))
+2026-10-21T03:23:42.7737980Z   Using cached pytest_cov-7.1.0-py3-none-any.whl (22 kB)
+2026-10-21T03:23:42.8016180Z Collecting python-dateutil==2.9.0.post0 (from -r requirements/dev.txt (line 1309))
+2026-10-21T03:23:42.8028419Z   Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+2026-10-21T03:23:42.8311640Z Collecting python-dotenv==1.2.3 (from -r requirements/dev.txt (line 1313))
+2026-10-21T03:23:42.8324433Z   Using cached python_dotenv-1.2.3-py3-none-any.whl (22 kB)
+2026-10-21T03:23:42.8796002Z Collecting pytz==2026.4 (from -r requirements/dev.txt (line 1317))
+2026-10-21T03:23:42.8807960Z   Using cached pytz-2026.4-py2.py3-none-any.whl (506 kB)
+2026-10-21T03:23:42.9324953Z Collecting pyyaml==6.0.3 (from -r requirements/dev.txt (line 1321))
+2026-10-21T03:23:42.9337945Z   Using cached pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+2026-10-21T03:23:42.9680277Z Collecting requests==2.34.2 (from -r requirements/dev.txt (line 1396))
+2026-10-21T03:23:42.9692389Z   Using cached requests-2.34.2-py3-none-any.whl (73 kB)
+2026-10-21T03:23:43.3015465Z Collecting ruff==0.16.9 (from -r requirements/dev.txt (line 1405))
+2026-10-21T03:23:43.3029748Z   Using cached ruff-0.16.9-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (10.4 MB)
+2026-10-21T03:23:43.4878972Z Collecting scipy==1.18.1 (from -r requirements/dev.txt (line 1425))
+2026-10-21T03:23:43.4892731Z   Using cached scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
+2026-10-21T03:23:43.5689249Z Collecting six==1.17.0 (from -r requirements/dev.txt (line 1488))
+2026-10-21T03:23:43.5701731Z   Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+2026-10-21T03:23:43.5946130Z Collecting sniffio==1.3.1 (from -r requirements/dev.txt (line 1492))
+2026-10-21T03:23:43.5957813Z   Using cached sniffio-1.3.1-py3-none-any.whl (10 kB)
+2026-10-21T03:23:43.6201142Z Collecting snowballstemmer==3.1.1 (from -r requirements/dev.txt (line 1496))
+2026-10-21T03:23:43.6212648Z   Using cached snowballstemmer-3.1.1-py3-none-any.whl (104 kB)
+2026-10-21T03:23:43.9204623Z Collecting sqlalchemy==2.0.52 (from -r requirements/dev.txt (line 1500))
+2026-10-21T03:23:43.9219080Z   Using cached sqlalchemy-2.0.52-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.4 MB)
+2026-10-21T03:23:43.9679915Z Collecting starlette==1.7.0 (from -r requirements/dev.txt (line 1556))
+2026-10-21T03:23:43.9691768Z   Using cached starlette-1.7.0-py3-none-any.whl (78 kB)
+2026-10-21T03:23:43.9988379Z Collecting tenacity==9.1.4 (from -r requirements/dev.txt (line 1562))
+2026-10-21T03:23:44.0001601Z   Using cached tenacity-9.1.4-py3-none-any.whl (28 kB)
+2026-10-21T03:23:44.0316863Z Collecting typing-extensions==4.16.0 (from -r requirements/dev.txt (line 1566))
+2026-10-21T03:23:44.0328812Z   Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-10-21T03:23:44.0580384Z Collecting typing-inspection==0.4.4 (from -r requirements/dev.txt (line 1580))
+2026-10-21T03:23:44.0591805Z   Using cached typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+2026-10-21T03:23:44.0869189Z Collecting tzdata==2026.4 (from -r requirements/dev.txt (line 1586))
+2026-10-21T03:23:44.0880905Z   Using cached tzdata-2026.4-py2.py3-none-any.whl (347 kB)
+2026-10-21T03:23:44.1222559Z Collecting urllib3==2.8.0 (from -r requirements/dev.txt (line 1590))
+2026-10-21T03:23:44.1235000Z   Using cached urllib3-2.8.0-py3-none-any.whl (135 kB)
+2026-10-21T03:23:44.1599246Z Collecting uvicorn==0.54.0 (from -r requirements/dev.txt (line 1596))
+2026-10-21T03:23:44.1611556Z   Using cached uvicorn-0.54.0-py3-none-any.whl (87 kB)
+2026-10-21T03:23:44.2129586Z Collecting uvloop==0.22.1 (from -r requirements/dev.txt (line 1600))
+2026-10-21T03:23:44.2141845Z   Using cached uvloop-0.22.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.4 MB)
+2026-10-21T03:23:44.3032141Z Collecting watchfiles==1.3.0 (from -r requirements/dev.txt (line 1651))
+2026-10-21T03:23:44.3044565Z   Using cached watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (458 kB)
+2026-10-21T03:23:44.4747684Z Collecting websockets==16.1.1 (from -r requirements/dev.txt (line 1686))
+2026-10-21T03:23:44.4762258Z   Using cached websockets-16.1.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (187 kB)
+2026-10-21T03:23:44.5112458Z Collecting xarray==2026.7.0 (from -r requirements/dev.txt (line 1799))
+2026-10-21T03:23:44.5124291Z   Using cached xarray-2026.7.0-py3-none-any.whl (1.4 MB)
+2026-10-21T03:23:44.8105034Z Installing collected packages: pytz, websockets, uvloop, urllib3, tzdata, typing-extensions, tenacity, snowballstemmer, sniffio, six, ruff, pyyaml, python-dotenv, pyjwt, pygments, pycparser, pyasn1, pyarrow, psycopg2-binary, protobuf, pluggy, pgvector, packaging, numpy, markupsafe, iniconfig, idna, httptools, h11, greenlet, google-crc32c, distro, coverage, click, charset-normalizer, certifi, annotated-types, annotated-doc, uvicorn, typing-inspection, sqlalchemy, scipy, requests, python-dateutil, pytest, pydantic-core, pyasn1-modules, proto-plus, opentelemetry-api, mako, httpcore, googleapis-common-protos, google-resumable-media, cftime, cffi, anyio, watchfiles, starlette, pytest-cov, pydantic, pandas, netcdf4, httpx, cryptography, alembic, xarray, google-auth, fastapi, google-api-core, google-genai, google-cloud-core, google-cloud-storage
+2026-10-21T03:24:05.2190129Z 
+2026-10-21T03:24:05.2252093Z Successfully installed alembic-1.20.0 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.15.1 certifi-2026.7.22 cffi-2.1.1 cftime-1.6.6 charset-normalizer-3.5.1 click-8.5.0 coverage-7.16.2 cryptography-50.0.1 distro-1.9.0 fastapi-0.141.1 google-api-core-2.39.0 google-auth-2.59.0 google-cloud-core-2.7.0 google-cloud-storage-3.15.0 google-crc32c-1.9.0 google-genai-2.25.0 google-resumable-media-2.10.2 googleapis-common-protos-1.75.4 greenlet-3.5.6 h11-0.16.0 httpcore-1.0.9 httptools-0.8.0 httpx-0.28.1 idna-3.20 iniconfig-2.3.0 mako-1.4.3 markupsafe-3.0.3 netcdf4-1.7.4 numpy-2.5.3 opentelemetry-api-1.45.0 packaging-26.3 pandas-2.3.3 pgvector-0.5.0 pluggy-1.6.0 proto-plus-1.28.4 protobuf-7.36.0 psycopg2-binary-2.9.13 pyarrow-23.0.1 pyasn1-0.6.4 pyasn1-modules-0.4.2 pycparser-3.0 pydantic-2.13.5 pydantic-core-2.46.5 pygments-2.21.0 pyjwt-2.15.1 pytest-9.1.1 pytest-cov-7.1.0 python-dateutil-2.9.0.post0 python-dotenv-1.2.3 pytz-2026.4 pyyaml-6.0.3 requests-2.34.2 ruff-0.16.9 scipy-1.18.1 six-1.17.0 sniffio-1.3.1 snowballstemmer-3.1.1 sqlalchemy-2.0.52 starlette-1.7.0 tenacity-9.1.4 typing-extensions-4.16.0 typing-inspection-0.4.4 tzdata-2026.4 urllib3-2.8.0 uvicorn-0.54.0 uvloop-0.22.1 watchfiles-1.3.0 websockets-16.1.1 xarray-2026.7.0
+2026-10-21T03:24:05.4329057Z ##[group]Run python -m ruff check \
+2026-10-21T03:24:05.4329436Z [36;1mpython -m ruff check \[0m
+2026-10-21T03:24:05.4329713Z [36;1m  api \[0m
+2026-10-21T03:24:05.4329928Z [36;1m  config.py \[0m
+2026-10-21T03:24:05.4330153Z [36;1m  db \[0m
+2026-10-21T03:24:05.4330367Z [36;1m  evaluation \[0m
+2026-10-21T03:24:05.4330596Z [36;1m  ingestion \[0m
+2026-10-21T03:24:05.4330823Z [36;1m  orchestration \[0m
+2026-10-21T03:24:05.4331065Z [36;1m  preprocessing \[0m
+2026-10-21T03:24:05.4331317Z [36;1m  retrieval \[0m
+2026-10-21T03:24:05.4331534Z [36;1m  schema \[0m
+2026-10-21T03:24:05.4331743Z [36;1m  scripts \[0m
+2026-10-21T03:24:05.4331951Z [36;1m  tests[0m
+2026-10-21T03:24:05.4399217Z shell: /usr/bin/bash -e {0}
+2026-10-21T03:24:05.4399590Z env:
+2026-10-21T03:24:05.4399871Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:05.4400324Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-21T03:24:05.4400809Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:05.4401218Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:05.4401620Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:05.4402008Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-21T03:24:05.4402336Z ##[endgroup]
+2026-10-21T03:24:05.5536688Z All checks passed!
+2026-10-21T03:24:05.5569786Z ##[group]Run python scripts/export_chat_scope.py --check
+2026-10-21T03:24:05.5570232Z [36;1mpython scripts/export_chat_scope.py --check[0m
+2026-10-21T03:24:05.5635600Z shell: /usr/bin/bash -e {0}
+2026-10-21T03:24:05.5635849Z env:
+2026-10-21T03:24:05.5636123Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:05.5636576Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-21T03:24:05.5637013Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:05.5637398Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:05.5637786Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:05.5638187Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-21T03:24:05.5638901Z ##[endgroup]
+2026-10-21T03:24:06.2045115Z ##[group]Run python docs/plans/ocean-v1/evidence/C21/frontend-export-contract.py --check
+2026-10-21T03:24:06.2045808Z [36;1mpython docs/plans/ocean-v1/evidence/C21/frontend-export-contract.py --check[0m
+2026-10-21T03:24:06.2109998Z shell: /usr/bin/bash -e {0}
+2026-10-21T03:24:06.2110251Z env:
+2026-10-21T03:24:06.2110527Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:06.2110995Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-21T03:24:06.2111447Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:06.2111846Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:06.2112231Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:06.2112630Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-21T03:24:06.2112960Z ##[endgroup]
+2026-10-21T03:24:07.4821853Z C21 browser schema/types are current
+2026-10-21T03:24:07.6231776Z ##[group]Run python scripts/export_context_catalogue.py --check
+2026-10-21T03:24:07.6232380Z [36;1mpython scripts/export_context_catalogue.py --check[0m
+2026-10-21T03:24:07.6232795Z [36;1mpython scripts/export_catalogue_examples.py --check[0m
+2026-10-21T03:24:07.6233211Z [36;1mpython scripts/export_catalogue_types.py --check[0m
+2026-10-21T03:24:07.6233602Z [36;1mpython scripts/export_catalogue_snapshot.py --check[0m
+2026-10-21T03:24:07.6297640Z shell: /usr/bin/bash -e {0}
+2026-10-21T03:24:07.6297905Z env:
+2026-10-21T03:24:07.6298183Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:07.6298931Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-21T03:24:07.6299386Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:07.6299791Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:07.6300192Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:07.6300651Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-21T03:24:07.6300999Z ##[endgroup]
+2026-10-21T03:24:08.6190838Z Context catalogue schema is current
+2026-10-21T03:24:09.7388557Z C08 shared examples are current
+2026-10-21T03:24:09.9016592Z Catalogue browser contract is current.
+2026-10-21T03:24:10.9286351Z C09 snapshot schema and synthetic byte examples are current
+2026-10-21T03:24:11.0775241Z ##[group]Run python -m pytest tests/ -q --tb=short \
+2026-10-21T03:24:11.0775689Z [36;1mpython -m pytest tests/ -q --tb=short \[0m
+2026-10-21T03:24:11.0776012Z [36;1m  --cov=api \[0m
+2026-10-21T03:24:11.0776259Z [36;1m  --cov=config \[0m
+2026-10-21T03:24:11.0776496Z [36;1m  --cov=db \[0m
+2026-10-21T03:24:11.0776738Z [36;1m  --cov=preprocessing \[0m
+2026-10-21T03:24:11.0777003Z [36;1m  --cov=ingestion \[0m
+2026-10-21T03:24:11.0777248Z [36;1m  --cov=orchestration \[0m
+2026-10-21T03:24:11.0777506Z [36;1m  --cov=schema \[0m
+2026-10-21T03:24:11.0777763Z [36;1m  --cov=evaluation \[0m
+2026-10-21T03:24:11.0778027Z [36;1m  --cov-report=term-missing \[0m
+2026-10-21T03:24:11.0778312Z [36;1m  --cov-fail-under=70[0m
+2026-10-21T03:24:11.0840371Z shell: /usr/bin/bash -e {0}
+2026-10-21T03:24:11.0840626Z env:
+2026-10-21T03:24:11.0840898Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:11.0841386Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-21T03:24:11.0841823Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:11.0842202Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:11.0842591Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-21T03:24:11.0842989Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-21T03:24:11.0843316Z   AUTH_MODE: disabled
+2026-10-21T03:24:11.0843532Z   DEPLOYMENT_ENV: test
+2026-10-21T03:24:11.0843760Z   ENABLE_MOCK_LOGIN: false
+2026-10-21T03:24:11.0843999Z   PERSIST_LOCAL_CHAT: false
+2026-10-21T03:24:11.0844235Z ##[endgroup]
+2026-10-21T03:24:30.6890665Z ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [  1%]
+2026-10-21T03:24:30.7564774Z ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [  2%]
+2026-10-21T03:24:30.8249286Z ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [  3%]
+2026-10-21T03:24:32.8664454Z sssssssssssssssssssssssssssssssssssssssssssssssssssssssssss............. [  5%]
+2026-10-21T03:24:49.5678598Z ........................................................................ [  6%]
+2026-10-21T03:25:01.3079724Z ........................................................................ [  7%]
+2026-10-21T03:25:36.1981563Z ........................................................................ [  9%]
+2026-10-21T03:25:44.0298743Z ........................................................................ [ 10%]
+2026-10-21T03:25:46.0242496Z ........................................................................ [ 11%]
+2026-10-21T03:25:51.6710694Z ........................................................................ [ 12%]
+2026-10-21T03:25:52.8067077Z ........................................................................ [ 14%]
+2026-10-21T03:25:53.8973925Z ........................................................................ [ 15%]
+2026-10-21T03:26:02.8620059Z ........................................................................ [ 16%]
+2026-10-21T03:26:18.0025086Z ........................................................................ [ 18%]
+2026-10-21T03:26:31.3182692Z ........................................................................ [ 19%]
+2026-10-21T03:28:00.6588952Z ........................................................................ [ 20%]
+2026-10-21T03:28:01.5329206Z ........................................................................ [ 22%]
+2026-10-21T03:28:02.4715455Z ........................................................................ [ 23%]
+2026-10-21T03:28:03.6170673Z ........................................................................ [ 24%]
+2026-10-21T03:28:08.9906085Z ........................................................................ [ 25%]
+2026-10-21T03:28:19.0564039Z ........................................................................ [ 27%]
+2026-10-21T03:28:19.1646117Z ........................................................................ [ 28%]
+2026-10-21T03:28:20.4405979Z ........................................................................ [ 29%]
+2026-10-21T03:28:53.7783314Z ........................................................................ [ 31%]
+2026-10-21T03:28:53.8847600Z ........................................................................ [ 32%]
+2026-10-21T03:28:54.0123327Z ........................................................................ [ 33%]
+2026-10-21T03:28:54.4115597Z ........................................................................ [ 35%]
+2026-10-21T03:28:58.2830250Z ........................................................................ [ 36%]
+2026-10-21T03:28:59.3847662Z ........................................................................ [ 37%]
+2026-10-21T03:29:00.5129357Z ........................................................................ [ 38%]
+2026-10-21T03:29:02.9024638Z ........................................................................ [ 40%]
+2026-10-21T03:29:04.1409150Z ........................................................................ [ 41%]
+2026-10-21T03:29:04.7089318Z ........................................................................ [ 42%]
+2026-10-21T03:29:20.8985609Z ........................................................................ [ 44%]
+2026-10-21T03:30:01.2323192Z ........................................................................ [ 45%]
+2026-10-21T03:32:24.2719203Z ........................................................................ [ 46%]
+2026-10-21T03:34:56.2719380Z ##[error]The operation was canceled.
+2026-10-21T03:34:56.2851109Z Post job cleanup.
+2026-10-21T03:34:56.3790227Z [command]/usr/bin/git version
+2026-10-21T03:34:56.3873803Z git version 2.55.0
+2026-10-21T03:34:56.3925488Z Temporarily overriding HOME='/home/runner/work/_temp/94d77478-fca0-4b3c-94d4-f8ab6fc47a71' before making global git config changes
+2026-10-21T03:34:56.3928657Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-21T03:34:56.3934454Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ocean-platform/ocean-platform
+2026-10-21T03:34:56.3983451Z Removing SSH command configuration
+2026-10-21T03:34:56.3993245Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-21T03:34:56.4042141Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-21T03:34:56.4369994Z Removing HTTP extra header
+2026-10-21T03:34:56.4371169Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-21T03:34:56.4401712Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-21T03:34:56.4726054Z Removing includeIf entries pointing to credentials config files
+2026-10-21T03:34:56.4734938Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-21T03:34:56.4779429Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-21T03:34:56.5207160Z Cleaning up orphan processes
+2026-10-21T03:34:56.5415431Z Terminate orphan process: pid (2608) (python)

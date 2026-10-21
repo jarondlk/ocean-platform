@@ -1,0 +1,69 @@
+{
+  "component": "C22",
+  "group": "backend",
+  "created_at": "2026-10-21T03:39:19.651886+00:00",
+  "commands": [
+    {
+      "name": "backend",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/",
+        "-q",
+        "--tb=short",
+        "--cov=api",
+        "--cov=config",
+        "--cov=db",
+        "--cov=preprocessing",
+        "--cov=ingestion",
+        "--cov=orchestration",
+        "--cov=schema",
+        "--cov=evaluation",
+        "--cov-report=term-missing",
+        "--cov-fail-under=70"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "seconds": 1071.09,
+      "log": "backend.txt",
+      "log_sha256": "0e286928ac23080706ce4fb7a1ec622383a4e6e36647ef8fb9c55beb477f4230"
+    }
+  ],
+  "source_changed_during_run": [
+    "tests/test_catalogue_browser_api.py"
+  ],
+  "preservation": {
+    "counts": {
+      "unrelated_files": 30,
+      "scientific_artifacts": 7,
+      "serving_files": 2,
+      "legacy_frontend_files": 106,
+      "prior_evidence_files": 1204
+    },
+    "changed": {
+      "unrelated_files": [],
+      "scientific_artifacts": [],
+      "serving_files": [],
+      "legacy_frontend_files": [],
+      "prior_evidence_files": []
+    }
+  },
+  "protected_before": {
+    "counts": {
+      "unrelated_files": 30,
+      "scientific_artifacts": 7,
+      "serving_files": 2,
+      "legacy_frontend_files": 106,
+      "prior_evidence_files": 1204
+    },
+    "changed": {
+      "unrelated_files": [],
+      "scientific_artifacts": [],
+      "serving_files": [],
+      "legacy_frontend_files": [],
+      "prior_evidence_files": []
+    }
+  },
+  "success": false
+}

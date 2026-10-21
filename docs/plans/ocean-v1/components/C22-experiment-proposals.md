@@ -1,6 +1,6 @@
 # C22 — Experiment proposals and frozen exports
 
-**Status:** In progress; selected after formal readiness on delivered C21. **Prerequisites:** C01, C07, C09, C17, C21.
+**Status:** In progress; all local gates reconciled on source66b4106, final exact-source hosted delivery pending. **Prerequisites:** C01, C07, C09, C17, C21.
 
 ## Revised delivery boundary
 
