@@ -60,7 +60,8 @@ def main():
     target_engine = create_engine(target)
     with source_engine.connect() as src, src.begin():
         src.exec_driver_sql("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY")
-        assert src.exec_driver_sql("SHOW transaction_read_only").scalar() == "on"
+        if src.exec_driver_sql("SHOW transaction_read_only").scalar() != "on":
+            raise ValueError("Source connection must enforce read-only transactions")
         source_heads = src.exec_driver_sql("SELECT version_num FROM alembic_version ORDER BY version_num").scalars().all()
         status = bootstrap_database()
         if not status["ready"] or source_heads != status["migration_current_heads"]:

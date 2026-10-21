@@ -10,6 +10,8 @@ pyarrow==23.0.1
 numpy==2.5.3
 scipy==1.18.1
 requests==2.34.2
+# GHSA-6q48-6c7w-9gw2: remove the compromised emSign trust root.
+certifi==2026.10.19
 # Security floor for response streaming and HTTPS proxy advisories.
 urllib3==2.8.0
 google-genai==2.25.0
