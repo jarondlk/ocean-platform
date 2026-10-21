@@ -2,21 +2,19 @@
   "checkpoint_date_jst": "2026-10-22",
   "branch": "cop17-demo",
   "production_base": "37383917024021c912491416b2fba0651381f79a",
-  "runtime_source": "966908718516f78b65380907c7fd7071075359e8",
-  "cloud_build_id": "30429321-7dcc-4c0b-98db-1bab0469a8fa",
   "images": {
     "api": "sha256:398e53b2dae64509263be64071af5f6cfaefd212b18a1c8e79f41c9c8c2797bb",
-    "frontend": "sha256:83dbc8ddf18071d4c02c97ca6c2438f3a49884252bb70dcf229e5845da53af23"
+    "frontend": "sha256:600e08c41146f160126f9acab9ed238d8b043312af99a24529b9d908102778bc"
   },
   "cloud_run": {
     "service": "ocean-cop17-demo",
-    "revision": "ocean-cop17-demo-00002-2b6",
+    "revision": "ocean-cop17-demo-00003-2h4",
     "region": "asia-northeast1",
     "application_auth_required": true,
     "public_invoker_grant": "allUsers:roles/run.invoker",
     "origin": "https://demo.oceaninfobio.com",
     "tls_control_plane_ready": true,
-    "https_browser_verified": false,
+    "https_browser_verified": true,
     "oauth_callback_registered": false,
     "https_certificate_verified_cli": true,
     "certificate_expires_utc": "2027-01-19T15:15:12Z",
@@ -538,5 +536,113 @@
     "signed_session_denied": 403,
     "execution": "ocean-cop17-data-qa-lpnjs"
   },
-  "completed_setup_and_qa_job_definitions_sealed": true
+  "completed_setup_and_qa_job_definitions_sealed": true,
+  "api_runtime_source": "966908718516f78b65380907c7fd7071075359e8",
+  "api_cloud_build_id": "30429321-7dcc-4c0b-98db-1bab0469a8fa",
+  "frontend_runtime_source": "a47b7a0b8c5d46df91328d0f864ee8461405f3ca",
+  "frontend_cloud_build_id": "6344a2b9-6cb3-4773-b92d-573dfbe00640",
+  "frontend_release": {
+    "primary_navigation": [
+      "/chat",
+      "/data"
+    ],
+    "default_landing": "/chat",
+    "data_default_view": "edna",
+    "data_primary_tabs": [
+      "edna",
+      "sst"
+    ],
+    "data_default_sst_dataset": "mur-miyagi-2020-2023",
+    "advanced_pages_hidden_from_navigation": true,
+    "authenticated_citation_deep_links_preserved": true,
+    "api_image_and_configuration_changed": false,
+    "previous_demo_revision": "ocean-cop17-demo-00002-2b6",
+    "previous_frontend_image": "sha256:83dbc8ddf18071d4c02c97ca6c2438f3a49884252bb70dcf229e5845da53af23",
+    "existing_frontend_tests_passed": 83,
+    "typescript": "passed",
+    "demo_production_build": "passed",
+    "loopback_fixture_layout_checks": [
+      {
+        "target": "http://127.0.0.1:3107/",
+        "actual": "http://localhost:3107/chat",
+        "navigation_links": 2,
+        "status": 200
+      },
+      {
+        "target": "http://127.0.0.1:3107/data",
+        "actual": "http://127.0.0.1:3107/data",
+        "navigation_links": 2,
+        "status": 200
+      },
+      {
+        "target": "http://127.0.0.1:3107/data?view=sst",
+        "actual": "http://127.0.0.1:3107/data?view=sst",
+        "navigation_links": 2,
+        "status": 200
+      }
+    ],
+    "loopback_browser_preview": {
+      "navigation_including_admin": "Chat and Data explorer only",
+      "default_data_view": "ANEMONE eDNA",
+      "language_controls": "EN/JA verified",
+      "sst_default_selection": "MUR v4.1 Miyagi 2020–2023",
+      "real_data_or_identity_used": false,
+      "temporary_preview_processes_stopped": true
+    },
+    "live_boundary_checks": [
+      {
+        "path": "/",
+        "status": 307,
+        "location": "https://demo.oceaninfobio.com/chat"
+      },
+      {
+        "path": "/chat",
+        "status": 307,
+        "location": "https://demo.oceaninfobio.com/login?returnTo=%2Fchat"
+      },
+      {
+        "path": "/data?view=sst",
+        "status": 307,
+        "location": "https://demo.oceaninfobio.com/login?returnTo=%2Fdata%3Fview%3Dsst"
+      },
+      {
+        "path": "/provenance?view=trace&doc_id=analysis_edna_9312a7e12211be66f58f17a1e57f2ce0f581da427d9074cada8787657af6d56b_ranking",
+        "status": 307,
+        "location": "https://demo.oceaninfobio.com/login?returnTo=%2Fprovenance%3Fview%3Dtrace%26doc_id%3Danalysis_edna_9312a7e12211be66f58f17a1e57f2ce0f581da427d9074cada8787657af6d56b_ranking"
+      },
+      {
+        "path": "/login",
+        "status": 200
+      },
+      {
+        "path": "/api/auth/providers",
+        "status": 200
+      },
+      {
+        "path": "/api/backend/chat/analysis-options",
+        "status": 401
+      },
+      {
+        "path": "/api/backend/provenance/manifest",
+        "status": 401
+      }
+    ],
+    "scan_review": {
+      "severity_counts": {
+        "LOW": 60,
+        "HIGH": 43,
+        "MEDIUM": 58,
+        "UNKNOWN": 1
+      },
+      "language_package_findings": 0,
+      "accepted": true
+    },
+    "runtime": {
+      "uid": 1000,
+      "node": "22.23.3",
+      "os_release": "PRETTY_NAME=\"Debian GNU/Linux 13 (trixie)\"\nNAME=\"Debian GNU/Linux\"\nVERSION_ID=\"13\"\nVERSION=\"13 (trixie)\"\nVERSION_CODENAME=trixie\nDEBIAN_VERSION_FULL=13.7\nID=debian\nHOME_URL=\"https://www.debian.org/\"\nSUPPORT_URL=\"https://www.debian.org/support\"\nBUG_REPORT_URL=\"https://bugs.debian.org/\"\n",
+      "installation_tools": "absent"
+    },
+    "reports": "gs://data-infra-infobio_cloudbuild/cop17-demo-frontend-qa/6344a2b9-6cb3-4773-b92d-573dfbe00640/"
+  }
 }
