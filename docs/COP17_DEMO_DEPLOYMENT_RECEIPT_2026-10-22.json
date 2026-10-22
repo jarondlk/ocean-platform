@@ -15,7 +15,7 @@
     "origin": "https://demo.oceaninfobio.com",
     "tls_control_plane_ready": true,
     "https_browser_verified": true,
-    "oauth_callback_registered": false,
+    "oauth_callback_registered": true,
     "https_certificate_verified_cli": true,
     "certificate_expires_utc": "2027-01-19T15:15:12Z",
     "unauthenticated_cloud_run_status": 200,
@@ -23,7 +23,8 @@
     "min_instances": 1,
     "max_instances": 2,
     "unauthenticated_application_api_status": 401,
-    "public_login_browser_render_verified": true
+    "public_login_browser_render_verified": true,
+    "normal_google_signin_verified": true
   },
   "scientific_database_snapshot": {
     "excluded_application_tables": [
@@ -443,7 +444,7 @@
         }
       }
     },
-    "browser_oauth_and_presenter_rehearsal": "pending_user_passkey_verification_and_oauth_callback_registration",
+    "browser_oauth_and_presenter_rehearsal": "operator_google_signin_and_nine_live_chat_cases_passed_presenter_first_signins_pending",
     "public_boundary_checks": [
       {
         "route": "/login",
@@ -484,7 +485,233 @@
         "final_url": "https://demo.oceaninfobio.com/login?returnTo=%2F",
         "seconds": 0.355
       }
-    ]
+    ],
+    "normal_browser_rehearsal": {
+      "date_jst": "2026-10-22",
+      "operator_google_signin": true,
+      "oauth_callback_registered": true,
+      "cases": [
+        {
+          "case": "fish-frequency-EN-preset",
+          "outcome": "answered",
+          "model_invoked": false,
+          "ranking_rows": 10,
+          "figures_visible": true
+        },
+        {
+          "case": "professor-E3-B-EN",
+          "outcome": "answered",
+          "visible_ranking_matches_preset": true
+        },
+        {
+          "case": "SST-comparison-EN-preset",
+          "outcome": "answered",
+          "model_invoked": false,
+          "contrast_rows": 10,
+          "figures_visible": true
+        },
+        {
+          "case": "professor-E4-B-EN",
+          "outcome": "answered",
+          "visible_contrast_matches_preset": true
+        },
+        {
+          "case": "SST-comparison-JA-preset",
+          "outcome": "answered",
+          "visible_contrast_matches_EN": true,
+          "figures_visible": true
+        },
+        {
+          "case": "free-text-EN",
+          "outcome": "answered",
+          "model_invoked": true,
+          "sample_id": "00144db778f30ca6787ecc1304e8ea1fd7d34ab95971922ca291e90ded593189",
+          "primary_sources": 2
+        },
+        {
+          "case": "free-text-JA",
+          "outcome": "answered",
+          "model_invoked": true,
+          "primary_sources": 2,
+          "sample_id": "00144db778f30ca6787ecc1304e8ea1fd7d34ab95971922ca291e90ded593189",
+          "citation_audit": {
+            "valid": 16,
+            "invalid": 0,
+            "warnings": 0
+          }
+        },
+        {
+          "case": "fish-frequency-JA-preset",
+          "outcome": "answered",
+          "model_invoked": false,
+          "ranking_rows": 10,
+          "visible_ranking_matches_EN": true
+        },
+        {
+          "case": "fish-frequency-EN-final-repeat",
+          "outcome": "answered",
+          "model_invoked": false
+        }
+      ],
+      "data_explorer": {
+        "primary_navigation": [
+          "Chat",
+          "Data explorer"
+        ],
+        "edna_source_records": 3498,
+        "edna_detections": 349638,
+        "sst_default_dataset": "mur-miyagi-2020-2023",
+        "sst_days": 1455,
+        "sst_chart_visible": true,
+        "languages": [
+          "en",
+          "ja"
+        ]
+      },
+      "citations": {
+        "evidence_panel_opened": true,
+        "provenance_deep_link_loaded": true,
+        "trace_doc_id": "edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_target"
+      },
+      "presenters": {
+        "kondoh": {
+          "role": "researcher",
+          "account_type": "research",
+          "invitation": "pending",
+          "valid_days": 7,
+          "expires_utc": "2026-10-29T07:11:51.650106Z"
+        },
+        "omori": {
+          "role": "researcher",
+          "account_type": "research",
+          "invitation": "pending",
+          "valid_days": 7,
+          "expires_utc": "2026-10-29T07:12:41.837725Z"
+        },
+        "no_invitation_email_sent": true
+      },
+      "cloud_run_http_requests": [
+        {
+          "httpRequest": {
+            "latency": "7.747162138s",
+            "status": 200
+          },
+          "timestamp": "2026-10-22T06:56:18.685974Z"
+        },
+        {
+          "httpRequest": {
+            "latency": "10.639010295s",
+            "status": 200
+          },
+          "timestamp": "2026-10-22T06:57:43.816305Z"
+        },
+        {
+          "httpRequest": {
+            "latency": "7.008841354s",
+            "status": 200
+          },
+          "timestamp": "2026-10-22T06:59:15.491710Z"
+        },
+        {
+          "httpRequest": {
+            "latency": "6.926941378s",
+            "status": 200
+          },
+          "timestamp": "2026-10-22T07:11:33.599782Z"
+        },
+        {
+          "httpRequest": {
+            "latency": "8.006149865s",
+            "status": 200
+          },
+          "timestamp": "2026-10-22T07:12:37.272830Z"
+        },
+        {
+          "httpRequest": {
+            "latency": "6.186531953s",
+            "status": 200
+          },
+          "timestamp": "2026-10-22T07:15:36.515553Z"
+        },
+        {
+          "httpRequest": {
+            "latency": "5.126073064s",
+            "status": 200
+          },
+          "timestamp": "2026-10-22T07:16:11.947778Z"
+        },
+        {
+          "httpRequest": {
+            "latency": "7.202644795s",
+            "status": 200
+          },
+          "timestamp": "2026-10-22T07:17:11.168192Z"
+        },
+        {
+          "httpRequest": {
+            "latency": "6.891729264s",
+            "status": 200
+          },
+          "timestamp": "2026-10-22T07:18:18.859515Z"
+        }
+      ],
+      "http_latency_summary": {
+        "request_count": 9,
+        "all_http_200": true,
+        "minimum_seconds": 5.126,
+        "maximum_seconds": 10.639,
+        "requests_over_10_seconds": 1,
+        "measurement": "Cloud Run httpRequest.latency for real browser POST /api/backend/chat; excludes operator thinking and rendering time",
+        "under_10_seconds_guaranteed": false
+      },
+      "screenshots": [
+        {
+          "file": "browser-chat-ready.png",
+          "sha256": "7c9f2696d5a072d7f6ac07d81cb8e61b35b8cfaa3a5082e0c7e6ed8a47424567",
+          "storage": "private local operations directory; not committed"
+        },
+        {
+          "file": "browser-chat-results.png",
+          "sha256": "b583e19e856dbec9d80bdef95647e189ba7ecc9e8b2a309e055867508160eded",
+          "storage": "private local operations directory; not committed"
+        },
+        {
+          "file": "browser-fish-ja-figures.png",
+          "sha256": "6faffe8e2ca2d9a9a5aa7ba72afb62993cd9471b180e09e3d760f18b63fb6e66",
+          "storage": "private local operations directory; not committed"
+        },
+        {
+          "file": "browser-free-text-en.png",
+          "sha256": "4290b2a94ce88da8f9e8cd7be44ccec35c773a1f4a6a4853314b5b4908b540e2",
+          "storage": "private local operations directory; not committed"
+        },
+        {
+          "file": "browser-free-text-ja.png",
+          "sha256": "2e973ba7635e6b616b0ce425ab08edfee3c2b72c18b9e5a8122f7b6297cb428a",
+          "storage": "private local operations directory; not committed"
+        },
+        {
+          "file": "browser-data-sst-ja.png",
+          "sha256": "bb960906cb04bfa9f0c02bcbae8d6294ae323781e264ec84fb5ab8c59e226ad5",
+          "storage": "private local operations directory; not committed"
+        },
+        {
+          "file": "browser-citation-trace.png",
+          "sha256": "58728f8ab356fde845c9a7b2154ca846fe5151a8ffba25e8bd32e143f415150d",
+          "storage": "private local operations directory; not committed"
+        },
+        {
+          "file": "presenter-invitations.png",
+          "sha256": "4bba1fe4bb2d3e21ac4744a09b531986dd4b2e3f5b6f16972f1583891425a0bc",
+          "storage": "private local operations directory; not committed"
+        },
+        {
+          "file": "oauth-registration-verified.png",
+          "sha256": "f9603531fdbef33980334a3fe0e25b5ada0d48bebabf30c646914f98832840be",
+          "storage": "private local operations directory; not committed"
+        }
+      ]
+    }
   },
   "local_validation": {
     "backend_passed": 1448,
@@ -528,7 +755,7 @@
       "percent": 100
     }
   ],
-  "demo_ready_for_public_rehearsal": false,
+  "demo_ready_for_public_rehearsal": true,
   "production_application_code_data_and_traffic_modified": false,
   "overhaul_checkout_modified": false,
   "disposable_qa_actor": {
@@ -644,5 +871,78 @@
       "installation_tools": "absent"
     },
     "reports": "gs://data-infra-infobio_cloudbuild/cop17-demo-frontend-qa/6344a2b9-6cb3-4773-b92d-573dfbe00640/"
+  },
+  "oauth_registration": {
+    "existing_production_entries_preserved": true,
+    "demo_origin": "https://demo.oceaninfobio.com",
+    "demo_callback": "https://demo.oceaninfobio.com/api/auth/callback/google",
+    "shared_client_secret_rotated": false
+  },
+  "remaining_launch_acceptance": [
+    "Kondoh-sensei and Omori-san complete their first Google sign-in with the confirmed invited accounts.",
+    "Rehearse the professor's forthcoming final presenter scenarios before the October 23 18:00 JST deadline."
+  ],
+  "final_infrastructure_readback": {
+    "production": {
+      "revision": "ocean-platform-conference1012",
+      "traffic": [
+        {
+          "revisionName": "ocean-platform-conference1012",
+          "percent": 100
+        }
+      ],
+      "min_instances": "0",
+      "max_instances": "1",
+      "containers": [
+        {
+          "name": "frontend",
+          "image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:e8cbfd2ea8d8aafd3b82cbbc1073f5981d2485390d2f4d7f129b8aca3f1795cc",
+          "flags": {
+            "AUTH_MODE": "required",
+            "SOURCE_COMMIT": "37383917024021c912491416b2fba0651381f79a"
+          }
+        },
+        {
+          "name": "api",
+          "image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:9085feb47d3ee5e5d84c9172b43f5b544330a8728c2a4659558ee09836aba8e7",
+          "flags": {
+            "AUTH_MODE": "required",
+            "SOURCE_COMMIT": "37383917024021c912491416b2fba0651381f79a"
+          }
+        }
+      ]
+    },
+    "demo": {
+      "revision": "ocean-cop17-demo-00003-2h4",
+      "traffic": [
+        {
+          "latestRevision": true,
+          "percent": 100,
+          "revisionName": "ocean-cop17-demo-00003-2h4"
+        }
+      ],
+      "min_instances": "1",
+      "max_instances": "2",
+      "containers": [
+        {
+          "name": "frontend",
+          "image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:600e08c41146f160126f9acab9ed238d8b043312af99a24529b9d908102778bc",
+          "flags": {
+            "AUTH_MODE": "required",
+            "SOURCE_COMMIT": "a47b7a0b8c5d46df91328d0f864ee8461405f3ca"
+          }
+        },
+        {
+          "name": "api",
+          "image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:398e53b2dae64509263be64071af5f6cfaefd212b18a1c8e79f41c9c8c2797bb",
+          "flags": {
+            "AUTH_MODE": "required",
+            "SOURCE_COMMIT": "966908718516f78b65380907c7fd7071075359e8",
+            "COP17_DEMO_ENABLED": "true"
+          }
+        }
+      ]
+    },
+    "production_secret_access_revoked": true
   }
 }
