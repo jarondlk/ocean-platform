@@ -169,6 +169,73 @@ def _inputs(connection, filters):
     }
 
 
+
+def _publication_heads(connection):
+    return {
+        row.channel: {
+            "generation_id": row.generation_id,
+            "manifest_sha256": row.manifest_sha256,
+        }
+        for row in connection.execute(
+            text(
+                "SELECT channel,generation_id,manifest_sha256 FROM corpus_publication "
+                "WHERE channel IN ('anemone-canonical','edna','edna-canonical')"
+            )
+        )
+    }
+
+
+def _reuse_location_aggregate(engine, filters, pointer):
+    # COP17 scientific tables are read-only and bound to these publication heads.
+    # Every cold result retains full source fingerprints. Reuse never substitutes
+    # current rows into historical evidence, and is disabled outside this demo.
+    with engine.connect() as connection:
+        connection.exec_driver_sql(
+            "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY"
+        )
+        connection.exec_driver_sql("SET LOCAL statement_timeout = '20s'")
+        publication = _publication_heads(connection)
+        _assert_publication(pointer, publication)
+        identities = connection.execute(
+            text(
+                "SELECT aggregate_id FROM edna_aggregate_evidence "
+                "WHERE algorithm_version=:algorithm "
+                "AND payload_json::jsonb->>'metric'='recorded_locations' "
+                "AND payload_json::jsonb->'filters'=CAST(:filters AS jsonb) "
+                "AND payload_json::jsonb->'publication'=CAST(:publication AS jsonb) "
+                "LIMIT 2"
+            ),
+            {
+                "algorithm": LOCATION_ALGORITHM,
+                "filters": canonical_bytes(filters).decode(),
+                "publication": canonical_bytes(publication).decode(),
+            },
+        ).scalars().all()
+        if not identities:
+            return None
+        if len(identities) != 1:
+            raise AggregateUnavailable("Conflicting retained location evidence")
+    bundle = load_aggregate(identities[0], engine=engine)
+    if (
+        bundle is None
+        or bundle["payload"].get("algorithm_version") != LOCATION_ALGORITHM
+        or bundle["payload"].get("metric") != "recorded_locations"
+        or bundle["payload"].get("filters") != filters
+        or bundle["payload"].get("group_by") != []
+        or bundle["payload"].get("publication") != publication
+        or bundle["payload"]["summary"].get("publication") != publication
+    ):
+        raise AggregateUnavailable("Retained location evidence scope mismatch")
+    # Recheck outside the repeatable-read snapshot before serving a retained result.
+    with engine.connect() as connection:
+        current_publication = _publication_heads(connection)
+    current_pointer = publication_pointer()
+    _assert_publication(current_pointer, current_publication)
+    if current_publication != publication or current_pointer != pointer:
+        raise AggregateUnavailable("Publication changed during aggregation; retry")
+    return bundle
+
+
 def build_aggregate(filters, group_by=(), *, engine=None, metric=None):
     engine = engine if engine is not None else get_engine()
     try:
@@ -207,6 +274,10 @@ def build_aggregate(filters, group_by=(), *, engine=None, metric=None):
         if set(filters) - allowed:
             raise AggregateUnavailable("Unsupported aggregate filter")
         pointer = publication_pointer()
+        if metric == "recorded_locations" and config.COP17_DEMO_ENABLED:
+            retained = _reuse_location_aggregate(engine, filters, pointer)
+            if retained is not None:
+                return retained
         with engine.connect() as connection:
             connection.exec_driver_sql(
                 "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY"
