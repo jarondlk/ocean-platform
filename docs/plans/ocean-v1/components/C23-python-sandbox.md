@@ -1,6 +1,6 @@
 # C23 — Isolated Python execution
 
-**Status:** In progress; local preparation checkpoint passes393 scoped cases and Ruff after C22 delivery/readiness. Real execution and mandatory acceptance remain gated. **Prerequisites:** C22.
+**Status:** In progress; local preparation passes393 scoped cases/Ruff and source-bound hosted CI. GCP setup is authorized; authentication, target/budget configuration and real runtime acceptance remain pending. **Prerequisites:** C22.
 
 ## Revised delivery boundary
 
@@ -15,6 +15,14 @@ prototype is not acceptance evidence for this component.
 Execute an approved, immutable Python analysis envelope with reproducible inputs and bounded outputs, while keeping generated code outside the serving application and production data boundary.
 
 Include sandbox/supervisor interfaces, pinned scientific environment, local synthetic fixtures, output validation, cancellation and containment checks. Exclude provisioning Linux workers, installing host runtimes without authorization, running actual user experiments, production credentials and cloud execution. Infrastructure configuration belongs to C24.
+
+**2026-10-23 scope amendment:** the user explicitly approved GCP use. Authorized
+C23 work now includes an isolated temporary Linux/gVisor test worker, runtime
+installation, scientific image preparation and synthetic cloud acceptance. This
+supersedes the earlier cloud-execution exclusion for that test environment.
+Authentication, target/billing and spending limits remain configuration inputs.
+[Worker plan](../C23_GCP_TEST_WORKER_PLAN.md). No legacy deployment or real-data
+operation is included, and C24's whole-site acceptance remains separate.
 
 ## Verified entry points and contracts
 
@@ -59,3 +67,14 @@ No production dispatch path or real runtime was built/activated. This checkpoint
 does not satisfy actual containment, durable runtime integration, safe extraction
 or numerical acceptance; C23 is not Complete. The user confirmed no host exists
 and real execution must remain gated. Scheduled continuation remains paused.
+
+## Hosted preparation and GCP authorization — 2026-10-23 JST
+
+Exact source `b8e929e` passes [hosted CI39578854643](https://github.com/jarondlk/ocean-platform/actions/runs/39578854643):
+5556 backend/275 gated skips/86.94% coverage,275 actual PostgreSQL cases,
+930 v1/132 legacy tests and all four required jobs. All17 preparation source
+paths match the accepted commit. [New hosted receipt](../evidence/C23/hosted-preparation.json)
+preserves the original pending receipt. This verifies local preparation software,
+not actual gVisor behavior. New GCP authorization is recorded separately in
+[the decision](../evidence/C23/gcp-authorization-2026-10-23/decision.json).
+C23 remains In progress; no worker or real execution has been created.

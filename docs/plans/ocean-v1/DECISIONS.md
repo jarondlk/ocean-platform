@@ -581,3 +581,26 @@ Original C16 and predecessor receipts remain immutable. C17 formal source readin
 may now be finalized under the user's sequential authorization. Its local work
 persists private conversation metadata/context; executable history remains C20/C21.
 Operational identity/scientific/transfer/capacity/cloud gates stay explicit.
+
+### C23 GCP authorization and preparation CI — 2026-10-23 JST
+
+The user explicitly said, “I see, then I approve all gcp use.” This authorizes
+isolated GCP setup, Linux/gVisor installation, image preparation and synthetic
+tests needed for C23. Earlier no-provisioning statements describe historical
+checkpoints; their missing authorization is resolved for this test environment.
+Preserve original receipts. No additional general GCP permission is needed.
+Legacy/main deployment, real-data transfer and scientific approval remain
+separate boundaries, and scheduled continuation remains PAUSED.
+
+The saved gcloud login needs reauthentication; project/billing discovery failed.
+Default project `data-infra-infobio` is legacy and must not be used implicitly.
+Working sign-in, isolated target/billing and initial/monthly spending limits
+remain configuration inputs. A concrete [temporary worker plan](C23_GCP_TEST_WORKER_PLAN.md)
+is prepared; no resources have been created. Historical legacy spending approval
+is not applied to the separate v1 project.
+
+C23 preparation sourceb8e929e passes exact-source CI39578854643:5556 backend,
+275 actual PostgreSQL,930 v1/132 legacy tests and all four required jobs.
+[Hosted receipt](evidence/C23/hosted-preparation.json) preserves original pending
+evidence and verifies17 unchanged preparation paths. C23 stays In progress;
+actual runtime, durability, extraction, containment and numerical gates remain.

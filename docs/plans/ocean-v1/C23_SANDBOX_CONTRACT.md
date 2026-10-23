@@ -4,6 +4,12 @@ Version: `c23-sandbox-contract-v1`. This is the local implementation checkpoint
 on `overhaul`, following delivered C22 source `66b4106`, CI `39539257759` and
 metadata checkpoint `f4f702c`. C23 is In progress. It is not accepted execution.
 
+Current scope amendment,2026-10-23: GCP setup/runtime installation/image builds
+and synthetic tests for an isolated C23 worker are now explicitly authorized.
+The no-provisioning statements below describe the earlier local checkpoint.
+See [worker plan](C23_GCP_TEST_WORKER_PLAN.md) for required authentication,
+target/budget configuration and unchanged real acceptance gates.
+
 The user confirmed there is no existing Linux/gVisor host and instructed that
 real execution remain gated. No scheduler was resumed. No host installation,
 VM start, scientific image build, generated Python execution, cloud resource
@@ -71,3 +77,14 @@ future work. Ordinary host Python, the default Podman runtime and unit mocks
 cannot clear those gates. C24 target configuration and provisioning/deployment
 authorization remain separate. C23 cannot be marked Complete, nor can its
 completion be inferred by later components, while these gates are outstanding.
+
+## Hosted preparation and later authorization
+
+Source `b8e929e` passes CI39578854643 (5556 backend,275 actual PostgreSQL,
+930 v1/132 legacy tests; all four required jobs). The separate
+[hosted receipt](evidence/C23/hosted-preparation.json) retains raw decoded logs
+and verifies all17 preparation source hashes. This is software preparation
+evidence; no runsc installation or real containment test occurred in those jobs.
+The user's later GCP approval removes the missing authorization for a temporary
+test worker. It does not satisfy any mandatory acceptance row above. No worker
+has been created and the scheduled continuation remains PAUSED.

@@ -1,0 +1,111 @@
+{
+  "C23_complete": false,
+  "automation": "PAUSED at user request",
+  "branch": "overhaul",
+  "checks": {
+    "backend": {
+      "passed": 5556,
+      "precise_coverage_percent": 86.94,
+      "skipped": 275
+    },
+    "frontend_legacy_passed": 132,
+    "frontend_v1_passed": 930,
+    "lint_generated_contracts_typechecks_builds_audits": "passed",
+    "migration_upsert_backup_restore": "passed",
+    "postgres_suites": [
+      82,
+      12,
+      12,
+      21,
+      60,
+      44,
+      23,
+      21
+    ],
+    "postgres_total": 275,
+    "required_jobs": "all four successful"
+  },
+  "cloud_resources_created": false,
+  "component": "C23",
+  "evidence": [
+    {
+      "path": "docs/plans/ocean-v1/evidence/C23/hosted-preparation-39578854643/job-119151264787.log",
+      "sha256": "7804ee5ce2bbba12f1771cf5a9287c3e230a35491703a51b3cb92cb2624e4064"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C23/hosted-preparation-39578854643/job-119151265293.log",
+      "sha256": "f51756404370840aa26671d15fa49080429c3a05c352f5d00ddd446cc02982c1"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C23/hosted-preparation-39578854643/job-119151265404.log",
+      "sha256": "a2f9ef17dee9b1dd523956936a9efd9191ef253a87aaf27606ac2ca5f0edd04c"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C23/hosted-preparation-39578854643/job-119151265420.log",
+      "sha256": "60710560dfad2a855213ba3b553ab23d20a5b5daaf6e02c82e997279b1cb01f4"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C23/hosted-preparation-39578854643/jobs.json",
+      "sha256": "40d0da2e7ae3b13d1518760e7b67232331cc7a6b49fa97fefc4bf99694e23e54"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C23/hosted-preparation-39578854643/run.json",
+      "sha256": "e598ef446ec4981e1cf2d89219a64fc3cab38adebdaa2778cd329548311b9a3c"
+    }
+  ],
+  "hosted_run": {
+    "conclusion": "success",
+    "created_at": "2026-10-21T09:41:02Z",
+    "event": "push",
+    "head_branch": "overhaul",
+    "head_sha": "b8e929e426ff9cd5c2b8feb58e7f5a7b31189ea8",
+    "html_url": "https://github.com/jarondlk/ocean-platform/actions/runs/39578854643",
+    "id": 39578854643,
+    "run_attempt": 1,
+    "status": "completed",
+    "updated_at": "2026-10-21T10:07:10Z"
+  },
+  "kind": "Hosted acceptance of local preparation; real runtime gates remain open",
+  "limitations": [
+    "Hosted Ubuntu unit tests do not exercise runsc or establish containment",
+    "Linux worker, pinned image/runtime, real adapter and durable journal remain",
+    "Resource/whole-job termination, safe output extraction and numerical gates remain",
+    "Only the 17 preparation source paths are compared to the current checkout",
+    "Unrelated local README, legacy deployment template, audits and benchmarks are preserved"
+  ],
+  "log_encoding": "GitHub decoded UTF-8 text, CRLF normalized to LF, one trailing newline",
+  "prior_pending_receipt": {
+    "path": "docs/plans/ocean-v1/evidence/C23/pushed-checkpoint.json",
+    "sha256": "dbcdb9bdfe8c3d736ccc31710a57450f68fe080f8af814bb26e57b97a12a99a6"
+  },
+  "real_execution_eligible": false,
+  "recorded_at": "2026-10-23T01:17:12.740377+00:00",
+  "recorder": {
+    "path": "docs/plans/ocean-v1/evidence/C23/record_hosted_preparation.py",
+    "sha256": "f888324a7267ef0fd6697bcb643b6e8bf40ed8435df131e386a753af3627848c"
+  },
+  "recorder_attempt_history": [
+    "First invocation stopped before writing a receipt: the recorder expected a non-existent step label 'Production dependency audit'",
+    "Corrected to the actual shared step prefix 'Audit production'; downloaded logs and source were unchanged"
+  ],
+  "source_commit": "b8e929e426ff9cd5c2b8feb58e7f5a7b31189ea8",
+  "unchanged_preparation_source_files": {
+    "orchestration/experiment_sandbox/__init__.py": "7fb5622ed5b1030cce038710f67f794f419dfc2bfa76a1d6c61232f2a982dc27",
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "a2e1d4883b17513bbe82b7de43f16ce47d86480bffb39a64a5b7bf65dc3440ca",
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01",
+    "orchestration/experiment_sandbox/supervisor.py": "6bc18e679db9b666e5b896c1b0585becac2ea4577b9cd331a6e9ddb7b1fffa7d",
+    "sandbox/experiment/.containerignore": "271dfde8f3eb7c18bf0908e123f21207e7d52d3c2a3b76f6e1e8b8968247656e",
+    "sandbox/experiment/Containerfile": "11491d936f04308e592ab553bfc994733f4835d96cdf10d75e2accdb08ba2df7",
+    "sandbox/experiment/README.md": "0a70d6a7c3b79ec97d84f69e455ae7b407843661fd0ee2c58f615ead02d83ff5",
+    "sandbox/experiment/build-materials.template.json": "7fce550a7f21b7c59b8572f7f3e0472d2de385dddc47572bdbe14e743f5c39e8",
+    "sandbox/experiment/image-readiness.json": "478308448084641f54f639e417d0afd8112a449b109d172f4bc7ba52bd83dccc",
+    "sandbox/experiment/requirements.lock.template": "24bb1e45bc946174c0813ededb0926ef31ef96b1e3ff02c820ade6421b2b8b34",
+    "sandbox/experiment/verify_image.py": "e7f1c315936cd72ba65fb4de8d759c71fba9bcd59b8137f07b25403d1de12b7a",
+    "tests/test_experiment_sandbox_contracts.py": "6c92676ba694ba79cdf85eea64016b12dc820e45978f54e10be0857725ea2b25",
+    "tests/test_experiment_sandbox_files.py": "99412b7f3bb3268c869040124fcf3e245cc83ece75b36630786c955bd95d38f7",
+    "tests/test_experiment_sandbox_integration.py": "6c4cd41346e224d8b0d2932f4792717fab9c4584399eab44a4e4683e6d2cee41",
+    "tests/test_experiment_sandbox_profile.py": "c250728055020e22b059a9024e98d1a6e6ec3f636701f51cc5c60d31ac10780d",
+    "tests/test_experiment_sandbox_supervisor.py": "a2333c8080786e907c5199e34147ca890591e95bd7448802ca716f81313e19c3"
+  }
+}

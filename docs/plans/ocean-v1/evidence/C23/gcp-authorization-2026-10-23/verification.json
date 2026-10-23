@@ -1,0 +1,38 @@
+{
+  "C23_complete": false,
+  "checks": {
+    "cloud_mutations": false,
+    "hosted_evidence_hashes": 6,
+    "original_pending_receipt": "preserved",
+    "receipt_recorder_ruff": "passed",
+    "source_tests_repeated": false,
+    "unchanged_preparation_source_paths": 17
+  },
+  "component": "C23",
+  "configuration_gates": [
+    "Working gcloud sign-in",
+    "Isolated project/billing selection",
+    "Initial/monthly spending limits and verified regional estimate"
+  ],
+  "files": {
+    "docs/plans/ocean-v1/C23_GCP_TEST_WORKER_PLAN.md": "f0ef8dcfbe7f146f6c00fe8e765470af9814e531e7d79ecfd451350f32520ed2",
+    "docs/plans/ocean-v1/C23_SANDBOX_CONTRACT.md": "be36210aadd8b2b2356fef6d0e40714ce69bd527de450b88937de2e013c60827",
+    "docs/plans/ocean-v1/DECISIONS.md": "473a189ce66b0e6b7bb684fa83144cd941acb8fdd9ab5bfc0bb818f245aa68ac",
+    "docs/plans/ocean-v1/STATUS.md": "2ffdf3b7f18f810d38e1a31fca37aa2d480ec3d9e0fc23aa736377e8b6325c3e",
+    "docs/plans/ocean-v1/components/C23-python-sandbox.md": "be9ce12e33ddd1d476507b96feafe72b18417aea7fbe29f2211bb124f2530075",
+    "docs/plans/ocean-v1/evidence/C23/gcp-authorization-2026-10-23/decision.json": "ab3e39e203c7edab70d26be7aba77a4ab6986b2d02183e296b093112b992f13b",
+    "docs/plans/ocean-v1/evidence/C23/hosted-preparation.json": "5a432e2f8a7edbe35cf0d96b93bb3aeaf89883d562aff006a5fc390253d6e5cf",
+    "docs/plans/ocean-v1/handoffs/C23.md": "89064d033f00678b1903b32b73b4bc7427528c498651e65e3f6f34b0fc20083d"
+  },
+  "kind": "Cloud authorization/configuration preparation checkpoint",
+  "real_execution_eligible": false,
+  "recorded_at": "2026-10-23T01:22:25.818425+00:00",
+  "review": {
+    "fixed": [
+      "Explicitly disable Compute Engine automatic restart and verify readback",
+      "Distinguish operator SSH public key from prohibited private/cloud credentials"
+    ],
+    "mode": "independent read-only subagent review of plan/decision and component status"
+  },
+  "scheduler": "PAUSED"
+}

@@ -1,0 +1,36 @@
+{
+  "component": "C23",
+  "date_jst": "2026-10-23",
+  "kind": "User cloud authorization and pending target configuration",
+  "user_statement": "I see, then I approve all gcp use",
+  "authorized_work": [
+    "Isolated OCEAN v1 GCP setup required for C23",
+    "Linux/gVisor runtime installation and scientific image preparation",
+    "Synthetic containment and numerical acceptance tests"
+  ],
+  "supersedes": "Earlier lack-of-cloud-authorization restriction for the C23 test environment; original receipts remain immutable",
+  "project_id": null,
+  "billing_account": null,
+  "initial_spending_limit": null,
+  "monthly_spending_limit": null,
+  "proposed_region": "asia-northeast1",
+  "legacy_default_project_excluded": "data-infra-infobio",
+  "authentication_observation": "Saved gcloud credentials require reauthentication; project and billing discovery failed before returning targets",
+  "user_inputs_pending": [
+    "Run gcloud auth login locally and report completion",
+    "Initial C23 setup/test and ongoing monthly spending limits"
+  ],
+  "plan": "docs/plans/ocean-v1/C23_GCP_TEST_WORKER_PLAN.md",
+  "cloud_mutations_performed": false,
+  "worker_created": false,
+  "real_execution_eligible": false,
+  "C23_complete": false,
+  "C24_complete": false,
+  "automation_status": "PAUSED; user has not requested restart",
+  "preserved_boundaries": [
+    "No legacy/main deployment or data mutation",
+    "No real-data acquisition or transfer without its own authority",
+    "No scientific approvals invented",
+    "Production experiment dispatch remains disabled until real acceptance"
+  ]
+}

@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-10-21 JST. **P00 and C01–C22 are Complete with source-bound hosted delivery; C23 is In progress; C24–C27 are Not started.**
+Updated: 2026-10-23 JST. **P00 and C01–C22 are Complete with source-bound hosted delivery; C23 is In progress; C24–C27 are Not started.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -14,6 +14,15 @@ See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md), [C08](handoffs/C08.md), [C09](handoffs/C09.md) and [C10](handoffs/C10.md) handoffs for current evidence.
 
 Latest local implementation checkpoint: **C23 — Isolated Python execution preparation**. All393 scoped cases pass (292 new and101 existing regressions), Ruff passes, all17 new source/recipe/test files remain steady and946 prior source/1334 prior evidence files are preserved. Strict C22 byte/hash verification, non-executing supervisor, safe staging/output validation and fixed profile/offline image preparation are implemented. C23 remains In progress: real runtime, durability, safe extraction, containment and numerical gates are unavailable. [Handoff](handoffs/C23.md), [local checkpoint](evidence/C23/checkpoint.json).
+
+**C23 preparation hosted checks now pass:** source `b8e929e`, run39578854643,
+5556 backend/275 gated skips/86.94% coverage,275 actual PostgreSQL,930 v1/132
+legacy tests and all four required jobs. [Hosted receipt](evidence/C23/hosted-preparation.json).
+On2026-10-23 the user approved GCP use for the missing test environment.
+[Temporary worker plan](C23_GCP_TEST_WORKER_PLAN.md) is prepared; saved CLI
+authentication needs sign-in, and isolated target/billing plus initial/monthly
+spending limits remain unset. No cloud resources were created. Real execution
+stays disabled pending actual acceptance. Scheduled continuation stays PAUSED.
 
 Latest delivered implementation: **C22 — Experiment proposals and frozen exports**. Source66b4106 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39539257759) passes5264 backend/275 gated skips/86.70% coverage,275 actual PostgreSQL cases,930 v1/132 legacy tests, both builds/typechecks/audits, generated contracts and backup/restore. [Delivery receipt](evidence/C22/delivery.json). C23 readiness follows the pushed delivery metadata checkpoint.
 
@@ -76,7 +85,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C20 — Durable research execution](components/C20-durable-execution.md) | Complete | Original checkpoints plus pagination amendment; sourcea149239 hosted delivery passes | Local 4847 backend/231 skips/85.64%, 104 actual PG, 805 v1; hosted 4838 backend/231 actual PG/805 v1/132 legacy | [C20](handoffs/C20.md) |
 | [C21 — Evidence and answer synthesis](components/C21-evidence-synthesis.md) | Complete | Source567684b exact-source hosted delivery passes; original receipts and workflow-only amendment retained | Hosted5031 backend/254 gated skips/86.48%;254 actual PG;930 v1/132 legacy, builds/typechecks/audits/generated contracts and backup/restore pass | [C21](handoffs/C21.md) |
 | [C22 — Experiment proposals and frozen exports](components/C22-experiment-proposals.md) | Complete | Source66b4106 exact-source hosted CI39539257759 and delivery receipt pass |5273 backend/275 gated skips/86.14%;148 actual PG, independent reviews, strict nine-action HTTP; original receipts/qualifications retained | [C22](handoffs/C22.md) |
-| [C23 — Isolated Python execution](components/C23-python-sandbox.md) | In progress | Sourceb8e929e pushed after C22 delivery/readiness; local checkpoint passes; CI39578854643 pending | 393 scoped cases/Ruff; no source drift; real Linux/gVisor execution and acceptance remain gated | [C23](handoffs/C23.md) |
+| [C23 — Isolated Python execution](components/C23-python-sandbox.md) | In progress | Sourceb8e929e / CI39578854643 pass; GCP setup authorized; sign-in, target/budget configuration pending | 393 scoped cases/Ruff; hosted5556 backend/275 actual PG/930 v1/132 legacy; real runtime gates remain | [C23](handoffs/C23.md) |
 | [C24 — Isolated GCP site and worker configuration](components/C24-gcp-worker-configuration.md) | Not started | None | Not run | Not created |
 | [C25 — Experimental Workspace interface](components/C25-experimental-workspace.md) | Not started | None | Not run | Not created |
 | [C26 — System acceptance and evaluation](components/C26-system-acceptance.md) | Not started | None | Not run | Not created |
@@ -173,3 +182,9 @@ amendment increases that job to30minutes with all13 application/test sources
 unchanged; the subsequent exact-source hosted run passes. [Amendment](evidence/C19/ci-budget-amendment/verification.json).
 
 Scheduled continuation is PAUSED at the user’s request on2026-10-21 JST. C23 was later manually selected after readiness; the user confirmed no existing Linux/gVisor host and real execution must remain gated.
+
+On2026-10-23, the user authorized GCP setup for C23. This supersedes the earlier
+no-provisioning authorization boundary for the isolated test worker; original
+receipts remain historical. It does not resume the scheduler or pass any real
+runtime/scientific gate. Working sign-in, target/billing and spending limits are
+required configuration before provisioning; see the worker plan above.
