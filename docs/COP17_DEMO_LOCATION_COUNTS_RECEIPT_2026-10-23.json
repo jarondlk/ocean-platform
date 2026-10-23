@@ -1,0 +1,653 @@
+{
+  "date_jst": "2026-10-24",
+  "branch": "cop17-demo",
+  "runtime_commit": "29960146d9158675857c036a7f5c4b5af636ab21",
+  "feature_commit": "311dff79118587f9f499e1b9dea9f32b16f7f61b",
+  "origin": "https://demo.oceaninfobio.com",
+  "revision": "ocean-cop17-demo-00007-6lx",
+  "build_id": "e113c017-614d-45af-8271-98a19800652b",
+  "api_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:c49ae17113ef232e18100f1d18d086d7f45f6c7f9ab5c8126f039d5eee0060ae",
+  "frontend_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:a19f0239be69dd9417d7f0e9f4143f6e2892e7449a0f25099e4dfbe3b8e0cd5a",
+  "frontend_unchanged": true,
+  "source": {
+    "commit": "29960146d9158675857c036a7f5c4b5af636ab21",
+    "source_archive_sha256": "2ccb7d3e4a594261853ea288607bb96ab1ff2864072087382e0a90344dbecb16",
+    "source_bytes": 2356167,
+    "excluded_scientific_data_and_operational_paths": 78,
+    "backend_suite_passed": 1533,
+    "optional_skips": 76,
+    "final_routing_tests_passed": 63,
+    "postgres_tests_passed": 71,
+    "lint": "passed",
+    "independent_review": "no blockers; nested checkout fix verified",
+    "feature_commit": "311dff79118587f9f499e1b9dea9f32b16f7f61b",
+    "security_patch": {
+      "package": "opentelemetry-api",
+      "from": "1.45.0",
+      "to": "1.45.1",
+      "all_other_versions_and_hash_blocks_unchanged": true
+    },
+    "initial_backend_suite_passed": 1531,
+    "patched_overlay_tests": "1533 passed,50 optional skips",
+    "reuse_tests_passed": 26,
+    "final_backend_tests": "1533 passed, 76 optional integration skips; 71 PostgreSQL checks passed separately"
+  },
+  "authentication_required": true,
+  "production": {
+    "spec_unchanged": true,
+    "active_traffic": [
+      {
+        "percent": 100,
+        "revisionName": "ocean-platform-conference1012",
+        "tag": "conference-production",
+        "url": "https://conference-production---ocean-platform-6jsvoc67ra-an.a.run.app"
+      }
+    ],
+    "frontend_unchanged": true,
+    "api_non_image_configuration_unchanged": true
+  },
+  "scan": {
+    "severity_counts": {
+      "LOW": 82,
+      "HIGH": 44,
+      "MEDIUM": 70,
+      "UNKNOWN": 1
+    },
+    "language_package_findings": [],
+    "accepted": true
+  },
+  "runtime_http_smoke": [
+    {
+      "url": "http://127.0.0.1:8000/health/live",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8000/chat/analysis-options",
+      "status": 401
+    },
+    {
+      "url": "http://127.0.0.1:8000/research-registry-reviews",
+      "status": 401
+    },
+    {
+      "url": "http://ocean-candidate-qa-frontend:3000/login",
+      "status": 200
+    },
+    {
+      "url": "http://ocean-candidate-qa-frontend:3000/api/auth/providers",
+      "status": 200
+    },
+    {
+      "url": "http://ocean-candidate-qa-frontend:3000/api/backend/chat/analysis-options",
+      "status": 401
+    }
+  ],
+  "schema_readiness": {
+    "migration_current_heads": [
+      "20261005_0016"
+    ],
+    "migration_expected_heads": [
+      "20261005_0016"
+    ],
+    "migrations_current": true,
+    "missing_columns": [],
+    "missing_tables": [],
+    "ready": true,
+    "table_count": 34,
+    "vector_extension": true
+  },
+  "tests": {
+    "final_backend_passed": 1533,
+    "optional_skipped": 76,
+    "real_postgres_checks_passed": 71,
+    "final_location_chat_tests_passed": 63,
+    "source_lint": "passed",
+    "independent_review": "no blockers; nested checkout fix verified",
+    "local_postgres_cleanup": {
+      "disposable_cluster_stopped": true,
+      "port": 6549,
+      "temporary_cluster_removed": true,
+      "real_postgres_tests_passed": 71,
+      "logs_preserved": [
+        "location-reuse-pg-init.log",
+        "location-reuse-pg-server.log"
+      ],
+      "existing_local_postgres_touched": false
+    },
+    "verified_immutable_reuse_tests_passed": 26
+  },
+  "real_demo_qa": {
+    "browser_or_http_authentication_test": false,
+    "cases": [
+      {
+        "aggregate_id": "6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4",
+        "count": 216,
+        "name": "alias-1"
+      },
+      {
+        "aggregate_id": "6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4",
+        "count": 216,
+        "name": "alias-2"
+      },
+      {
+        "aggregate_id": "6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4",
+        "count": 216,
+        "name": "alias-3"
+      },
+      {
+        "aggregate_id": "6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4",
+        "count": 216,
+        "name": "alias-4"
+      },
+      {
+        "count": 1,
+        "name": "sample-filter",
+        "reference_sql_match": true
+      },
+      {
+        "count": 55,
+        "name": "project-filter",
+        "reference_sql_match": true
+      },
+      {
+        "count": 7,
+        "name": "explicit-controls",
+        "reference_sql_match": true
+      },
+      {
+        "clarification": true,
+        "name": "edna-disabled"
+      },
+      {
+        "clarification": true,
+        "name": "physical-sites"
+      },
+      {
+        "clarification": true,
+        "name": "named-areas"
+      },
+      {
+        "clarification": true,
+        "name": "unsupported-place"
+      },
+      {
+        "clarification": true,
+        "name": "unsupported-date"
+      },
+      {
+        "clarification": true,
+        "name": "combined-sources"
+      }
+    ],
+    "historical_v1_and_location_v2_roundtrip": true,
+    "metadata_audit_count_match": true,
+    "passed": true,
+    "probe": "cop17-recorded-location-counts",
+    "reference_sql": {
+      "controls": 0,
+      "distinct_coordinate_pairs": 216,
+      "invalid_coordinate_occurrences": 0,
+      "missing_coordinate_occurrences": 1,
+      "source_occurrences": 3155,
+      "unknown_control_status": 3155,
+      "valid_coordinate_occurrences": 3154
+    },
+    "scientific_rows_modified": false,
+    "stale_publication_rejected": true,
+    "users_created_or_reactivated": false,
+    "execution": "ocean-cop17-location-qa-f8cl6"
+  },
+  "qa_job_sealed": {
+    "job": "ocean-cop17-location-qa",
+    "sealed": true,
+    "secrets_removed": true,
+    "cloud_sql_connector_removed": true,
+    "scientific_rows_modified": false,
+    "user_reactivation": false,
+    "executed_revision_commit": "29960146d9158675857c036a7f5c4b5af636ab21"
+  },
+  "live_browser": {
+    "passed": true,
+    "revision": "ocean-cop17-demo-00007-6lx",
+    "cases": [
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4",
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4",
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4",
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4",
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4",
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ],
+        "name": "original-default-two-sources",
+        "query": "how many sampling area available",
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nThe published ANEMONE catalogue matching the selected filters contains 216 distinct reported coordinate positions. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExact stored latitude/longitude pairs are counted once across repeated sampling dates, assays and assignment methods. Physical-site identities and named sampling areas remain unverified. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExplicitly classified controls are excluded. There are 3,155 matching source records: 3,154 with valid coordinates, 1 with missing coordinates and 0 with invalid coordinates. Missing/invalid positions are excluded. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nControl status is unknown for 3,155 records; they are not assumed to be confirmed environmental samples. Coordinate-precision record counts: provider_grid_unconfirmed=3,154. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nThis includes provider grid coordinates, which do not establish distinct physical sampling sites. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nApplied source filters: Provider=anemone. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nWas this answer useful?",
+        "outcome": "answered",
+        "count": 216,
+        "model_invoked": false,
+        "revision": "ocean-cop17-demo-00006-twn",
+        "unique_citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ],
+        "passed": true
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ],
+        "query": "How many sampling locations are available in ANEMONE eDNA?",
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nThe published ANEMONE catalogue matching the selected filters contains 216 distinct reported coordinate positions. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExact stored latitude/longitude pairs are counted once across repeated sampling dates, assays and assignment methods. Physical-site identities and named sampling areas remain unverified. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExplicitly classified controls are excluded. There are 3,155 matching source records: 3,154 with valid coordinates, 1 with missing coordinates and 0 with invalid coordinates. Missing/invalid positions are excluded. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nControl status is unknown for 3,155 records; they are not assumed to be confirmed environmental samples. Coordinate-precision record counts: provider_grid_unconfirmed=3,154. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nThis includes provider grid coordinates, which do not establish distinct physical sampling sites. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nApplied source filters: Provider=anemone. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nWas this answer useful?",
+        "name": "explicit-ANEMONE-two-sources",
+        "outcome": "answered",
+        "count": 216,
+        "model_invoked": false,
+        "revision": "ocean-cop17-demo-00006-twn",
+        "unique_citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ],
+        "passed": true
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ],
+        "query": "How many sampling areas are available?",
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nThe published ANEMONE catalogue matching the selected filters contains 216 distinct reported coordinate positions. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExact stored latitude/longitude pairs are counted once across repeated sampling dates, assays and assignment methods. Physical-site identities and named sampling areas remain unverified. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExplicitly classified controls are excluded. There are 3,155 matching source records: 3,154 with valid coordinates, 1 with missing coordinates and 0 with invalid coordinates. Missing/invalid positions are excluded. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nControl status is unknown for 3,155 records; they are not assumed to be confirmed environmental samples. Coordinate-precision record counts: provider_grid_unconfirmed=3,154. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nThis includes provider grid coordinates, which do not establish distinct physical sampling sites. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nApplied source filters: Provider=anemone. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nWas this answer useful?",
+        "name": "areas-ANEMONE-only",
+        "outcome": "answered",
+        "count": 216,
+        "model_invoked": false,
+        "revision": "ocean-cop17-demo-00006-twn",
+        "unique_citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ],
+        "passed": true
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ],
+        "query": "ANEMONEの採水地点はいくつありますか？",
+        "response": "応答\nOutcome\nAnswered\nModel run\nいいえ\n\n選択条件に一致する公表済みANEMONEデータには、異なる記録座標位置が216か所あります。\n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\n同じ緯度・経度における繰り返し採取や複数のアッセイ・解析手法は重複して数えません。物理的な採水地点や名称付き調査区域の種類数は未確認です。\n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\n明示的にコントロールと分類された記録を除外しています。対象のソース記録は3,155件、うち有効な座標が3,154件、座標欠損が1件、無効な座標が0件です。欠損・無効な座標は地点数に含みません。\n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nコントロール状態が不明な記録は3,155件あり、確認済みの環境サンプルとはみなしていません。座標精度の記録件数：provider_grid_unconfirmed=3,154。\n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nプロバイダーのグリッド座標を含みます。異なる座標位置の数は、厳密な物理的採水地点の数を保証しません。\n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\n適用条件：Provider=anemone。\n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nWas this answer useful?",
+        "name": "locations-Japanese",
+        "outcome": "answered",
+        "count": 216,
+        "model_invoked": false,
+        "revision": "ocean-cop17-demo-00006-twn",
+        "unique_citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ],
+        "passed": true
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26"
+        ],
+        "query": "How many sampling locations are available in ANEMONE eDNA?",
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nThe published ANEMONE catalogue matching the selected filters contains 1 distinct reported coordinate positions. \n[aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26]\n\nExact stored latitude/longitude pairs are counted once across repeated sampling dates, assays and assignment methods. Physical-site identities and named sampling areas remain unverified. \n[aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26]\n\nExplicitly classified controls are excluded. There are 1 matching source records: 1 with valid coordinates, 0 with missing coordinates and 0 with invalid coordinates. Missing/invalid positions are excluded. \n[aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26]\n\nControl status is unknown for 1 records; they are not assumed to be confirmed environmental samples. Coordinate-precision record counts: provider_grid_unconfirmed=1. \n[aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26]\n\nThis includes provider grid coordinates, which do not establish distinct physical sampling sites. \n[aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26]\n\nApplied source filters: Provider=anemone; Sample ID=00144db778f30ca6787ecc1304e8ea1fd7d34ab95971922ca291e90ded593189. \n[aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26]\n\nWas this answer useful?",
+        "name": "sample-filter",
+        "outcome": "answered",
+        "count": 1,
+        "model_invoked": false,
+        "revision": "ocean-cop17-demo-00006-twn",
+        "unique_citations": [
+          "Inspect citation aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26"
+        ],
+        "passed": true
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ],
+        "query": "how many sampling area available",
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nThe published ANEMONE catalogue matching the selected filters contains 216 distinct reported coordinate positions. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExact stored latitude/longitude pairs are counted once across repeated sampling dates, assays and assignment methods. Physical-site identities and named sampling areas remain unverified. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExplicitly classified controls are excluded. There are 3,155 matching source records: 3,154 with valid coordinates, 1 with missing coordinates and 0 with invalid coordinates. Missing/invalid positions are excluded. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nControl status is unknown for 3,155 records; they are not assumed to be confirmed environmental samples. Coordinate-precision record counts: provider_grid_unconfirmed=3,154. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nThis includes provider grid coordinates, which do not establish distinct physical sampling sites. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nApplied source filters: Provider=anemone. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nWas this answer useful?",
+        "name": "optimized_original_default_both_sources",
+        "revision": "ocean-cop17-demo-00007-6lx",
+        "ui_elapsed_ms": 2231,
+        "expected_count": 216,
+        "passed": true,
+        "unique_citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ]
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ],
+        "query": "How many sampling locations are available in ANEMONE eDNA?",
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nThe published ANEMONE catalogue matching the selected filters contains 216 distinct reported coordinate positions. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExact stored latitude/longitude pairs are counted once across repeated sampling dates, assays and assignment methods. Physical-site identities and named sampling areas remain unverified. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExplicitly classified controls are excluded. There are 3,155 matching source records: 3,154 with valid coordinates, 1 with missing coordinates and 0 with invalid coordinates. Missing/invalid positions are excluded. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nControl status is unknown for 3,155 records; they are not assumed to be confirmed environmental samples. Coordinate-precision record counts: provider_grid_unconfirmed=3,154. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nThis includes provider grid coordinates, which do not establish distinct physical sampling sites. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nApplied source filters: Provider=anemone. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nWas this answer useful?",
+        "name": "optimized_explicit_default_both_sources",
+        "revision": "ocean-cop17-demo-00007-6lx",
+        "ui_elapsed_ms": 639,
+        "expected_count": 216,
+        "passed": true,
+        "unique_citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ]
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ],
+        "query": "ANEMONEの採水地点はいくつありますか？",
+        "response": "応答\nOutcome\nAnswered\nModel run\nいいえ\n\n選択条件に一致する公表済みANEMONEデータには、異なる記録座標位置が216か所あります。\n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\n同じ緯度・経度における繰り返し採取や複数のアッセイ・解析手法は重複して数えません。物理的な採水地点や名称付き調査区域の種類数は未確認です。\n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\n明示的にコントロールと分類された記録を除外しています。対象のソース記録は3,155件、うち有効な座標が3,154件、座標欠損が1件、無効な座標が0件です。欠損・無効な座標は地点数に含みません。\n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nコントロール状態が不明な記録は3,155件あり、確認済みの環境サンプルとはみなしていません。座標精度の記録件数：provider_grid_unconfirmed=3,154。\n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nプロバイダーのグリッド座標を含みます。異なる座標位置の数は、厳密な物理的採水地点の数を保証しません。\n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\n適用条件：Provider=anemone。\n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nWas this answer useful?",
+        "name": "optimized_japanese_default_both_sources",
+        "revision": "ocean-cop17-demo-00007-6lx",
+        "ui_elapsed_ms": 632,
+        "expected_count": 216,
+        "passed": true,
+        "unique_citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ]
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ],
+        "query": "How many sampling areas are available?",
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nThe published ANEMONE catalogue matching the selected filters contains 216 distinct reported coordinate positions. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExact stored latitude/longitude pairs are counted once across repeated sampling dates, assays and assignment methods. Physical-site identities and named sampling areas remain unverified. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExplicitly classified controls are excluded. There are 3,155 matching source records: 3,154 with valid coordinates, 1 with missing coordinates and 0 with invalid coordinates. Missing/invalid positions are excluded. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nControl status is unknown for 3,155 records; they are not assumed to be confirmed environmental samples. Coordinate-precision record counts: provider_grid_unconfirmed=3,154. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nThis includes provider grid coordinates, which do not establish distinct physical sampling sites. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nApplied source filters: Provider=anemone. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nWas this answer useful?",
+        "name": "optimized_anemone_only",
+        "revision": "ocean-cop17-demo-00007-6lx",
+        "ui_elapsed_ms": 2974,
+        "expected_count": 216,
+        "passed": true,
+        "unique_citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ]
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26"
+        ],
+        "query": "How many sampling locations are available in ANEMONE eDNA?",
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nThe published ANEMONE catalogue matching the selected filters contains 1 distinct reported coordinate positions. \n[aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26]\n\nExact stored latitude/longitude pairs are counted once across repeated sampling dates, assays and assignment methods. Physical-site identities and named sampling areas remain unverified. \n[aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26]\n\nExplicitly classified controls are excluded. There are 1 matching source records: 1 with valid coordinates, 0 with missing coordinates and 0 with invalid coordinates. Missing/invalid positions are excluded. \n[aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26]\n\nControl status is unknown for 1 records; they are not assumed to be confirmed environmental samples. Coordinate-precision record counts: provider_grid_unconfirmed=1. \n[aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26]\n\nThis includes provider grid coordinates, which do not establish distinct physical sampling sites. \n[aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26]\n\nApplied source filters: Provider=anemone; Sample ID=00144db778f30ca6787ecc1304e8ea1fd7d34ab95971922ca291e90ded593189. \n[aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26]\n\nWas this answer useful?",
+        "name": "optimized_sample_filtered",
+        "revision": "ocean-cop17-demo-00007-6lx",
+        "ui_elapsed_ms": 517,
+        "expected_count": 1,
+        "passed": true,
+        "unique_citations": [
+          "Inspect citation aggregate_edna_8bbf30f796603d06c43b97059527c0d8c8e1a3fbe8035d793a1a835956c49b26"
+        ]
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ],
+        "query": "How many sampling locations are available in ANEMONE eDNA?",
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nThe published ANEMONE catalogue matching the selected filters contains 216 distinct reported coordinate positions. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExact stored latitude/longitude pairs are counted once across repeated sampling dates, assays and assignment methods. Physical-site identities and named sampling areas remain unverified. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExplicitly classified controls are excluded. There are 3,155 matching source records: 3,154 with valid coordinates, 1 with missing coordinates and 0 with invalid coordinates. Missing/invalid positions are excluded. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nControl status is unknown for 3,155 records; they are not assumed to be confirmed environmental samples. Coordinate-precision record counts: provider_grid_unconfirmed=3,154. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nThis includes provider grid coordinates, which do not establish distinct physical sampling sites. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nApplied source filters: Provider=anemone. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nWas this answer useful?",
+        "name": "optimized_settled_default_repeat",
+        "revision": "ocean-cop17-demo-00007-6lx",
+        "ui_elapsed_ms": 2913,
+        "expected_count": 216,
+        "passed": true
+      }
+    ],
+    "checks": [
+      {
+        "name": "physical_sites_clarifies",
+        "passed": true,
+        "response": "Response\nOutcome\nAbstained\nModel run\nNo\nReason\nExact count needs clarification\n\nVerified physical sites and named sampling areas are not yet curated. I can count distinct reported coordinate positions, with their coordinate-precision limitations.\n\nWas this answer useful?",
+        "revision": "ocean-cop17-demo-00006-twn"
+      },
+      {
+        "name": "disabled_source_clarifies",
+        "passed": true,
+        "response": "Response\nOutcome\nAbstained\nModel run\nNo\nReason\nExact count needs clarification\n\nEnable ANEMONE eDNA to count its reported coordinate positions. SST coverage is separate from field sampling locations.\n\nWas this answer useful?",
+        "revision": "ocean-cop17-demo-00006-twn"
+      },
+      {
+        "name": "fish_frequency_regression",
+        "passed": true,
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nResults from the selected published dataset and assay are shown below. Methods, full answer, and citations remain available.\n\nMiyagi regional analysis: Ranking\nAnalysis scope, methods and limitations\nTaxon\nAll taxa\nTridentiger trigonocephalus\nHexagrammos otakii\nTakifugu alboplumbeus\nEngraulis japonicus\nPseudoblennius cottoides\nParablennius yatabei\nErnogrammus hexagrammus\nPholis nebulosa\nGirella punctata\nDictyosoma burgeri\nResult table and denominators\nspecies\tposition\ttaxon_key\tDetected units\tEligible units (denominator)\tDetection frequency\tlow_support\tsampling_status\nTridentiger trigonocephalus\t1\tTridentiger trigonocephalus\t39\t39\t100.00%\tfalse\tsampled_detected\nHexagrammos otakii\t2\tHexagrammos otakii\t39\t39\t100.00%\tfalse\tsampled_detected\nTakifugu alboplumbeus\t3\tTakifugu alboplumbeus\t37\t39\t94.87%\tfalse\tsampled_detected\nEngraulis japonicus\t4\tEngraulis japonicus\t31\t39\t79.49%\tfalse\tsampled_detected\nPseudoblennius cottoides\t5\tPseudoblennius cottoides\t27\t39\t69.23%\tfalse\tsampled_detected\nParablennius yatabei\t6\tParablennius yatabei\t27\t39\t69.23%\tfalse\tsampled_detected\nErnogrammus hexagrammus\t7\tErnogrammus hexagrammus\t26\t39\t66.67%\tfalse\tsampled_detected\nPholis nebulosa\t8\tPholis nebulosa\t26\t39\t66.67%\tfalse\tsampled_detected\nGirella punctata\t9\tGirella punctata\t24\t39\t61.54%\tfalse\tsampled_detected\nDictyosoma burgeri\t10\tDictyosoma burgeri\t24\t39\t61.54%\tfalse\tsampled_detected\nPreviousNext\nMiyagi regional analysis: Series\nAnalysis scope, methods and limitations\nTaxon\nAll taxa\nTridentiger trigonocephalus\nHexagrammos otakii\nTakifugu alboplumbeus\nEngraulis japonicus\nPseudoblennius cottoides\nParablennius yatabei\nErnogrammus hexagrammus\nPholis nebulosa\nGire",
+        "revision": "ocean-cop17-demo-00006-twn"
+      },
+      {
+        "name": "fish_sst_regression",
+        "passed": true,
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nResults from the selected published dataset and assay are shown below. Methods, full answer, and citations remain available.\n\nMiyagi regional analysis: Temperature contrasts\nAnalysis scope, methods and limitations\nTaxon\nAll taxa\nTridentiger trigonocephalus\nHexagrammos otakii\nTakifugu alboplumbeus\nEngraulis japonicus\nPseudoblennius cottoides\nParablennius yatabei\nErnogrammus hexagrammus\nPholis nebulosa\nGirella punctata\nDictyosoma burgeri\nResult table and denominators\ntaxon_key\tlow_detected\tlow_eligible\thigh_detected\thigh_eligible\tsupported\tSupported area-season strata\trepresentative\tAggregate high − low (percentage points)\tMean supported-stratum difference (percentage points)\nTridentiger trigonocephalus\t13\t13\t11\t11\ttrue\t1\tfalse\t0\t0\nHexagrammos otakii\t13\t13\t11\t11\ttrue\t1\tfalse\t0\t0\nTakifugu alboplumbeus\t11\t13\t11\t11\ttrue\t1\tfalse\t15.3846\t20\nEngraulis japonicus\t10\t13\t11\t11\ttrue\t1\tfalse\t23.0769\t60\nPseudoblennius cottoides\t9\t13\t6\t11\ttrue\t1\tfalse\t-14.6853\t40\nParablennius yatabei\t8\t13\t6\t11\ttrue\t1\tfalse\t-6.993\t46.6667\nErnogrammus hexagrammus\t9\t13\t6\t11\ttrue\t1\ttrue\t-14.6853\t60\nPholis nebulosa\t9\t13\t8\t11\ttrue\t1\tfalse\t3.4965\t26.6667\nGirella punctata\t8\t13\t6\t11\ttrue\t1\tfalse\t-6.993\t-40\nDictyosoma burgeri\t8\t13\t6\t11\ttrue\t1\tfalse\t-6.993\t26.6667\nPreviousNext\nMiyagi regional analysis: Temperature bins\nAnalysis scope, methods and limitations\nTaxon\nAll taxa\nTridentiger trigonocephalus\nHexagrammos otakii\nTakifugu alboplumbeus\nEngraulis japonicus\nPseudoblennius cottoides\nParablennius yatabei\nErnogrammus hexagrammus\nPholis nebulosa\nGirella punctata\nDictyosoma burgeri\nResult table and denominators\nMiyagi regional analysis: Temperature series\nAnalysis scope, methods and limitations\nPeriod\nAll periods\nyear\nseason\nmonth\n\nCharts show loaded results, with separate protocol, species, area and period groups. Missing values break lines; orange outlines flag low sample support; point details include partial-period flags. Temperatures have a separate axis and matched ",
+        "charts": 6,
+        "revision": "ocean-cop17-demo-00006-twn"
+      },
+      {
+        "name": "aggregate_provenance",
+        "passed": true,
+        "citation": "aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4",
+        "revision": "ocean-cop17-demo-00006-twn"
+      },
+      {
+        "name": "free_text_vertex_regression",
+        "passed": true,
+        "response": "Response\nOutcome\nAnswered\nModel run\nYes\nANEMONE eDNA: 2 evidence documents supplied\n\nCounts describe retrieved or supplied evidence, not complete database coverage or verified scientific matches.\n\nApplied evidence scope excludes CTD, metagenome, and satellite remote sensing sources.\n\nRecorded Taxa\n\nFor sample 00144db778f30ca6787ecc1304e8ea1fd7d34ab95971922ca291e90ded593189, the highest-read detection records across assignment methods report the following taxa:\n\nAssignment Method QCauto (qcauto_target): Entomacrodus (genus), Takifugu alboplumbeus (species), Siganus (genus), Takifugu (genus), Apogon notatus (species), Sebastiscus marmoratus (species), Spratelloides gracilis (species), Sebastes (genus), Istiblennius (genus), and Pseudolabrus eoethinus (species) \n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_target]\n.\nAssignment Method QCauto 95%-3NN (qcauto_95pct_3nn_target): Entomacrodus stellifer stellifer (subspecies), Takifugu alboplumbeus (species), Siganus fuscescens (species), Apogon notatus (species), Sebastiscus marmoratus (species), Spratelloides gracilis (species), Sebastes (genus), Istiblennius enosimae (species), and Pseudolabrus eoethinus (species) \n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_95pct_3nn_target]\n.\nEvidence Limitations\nSequencing Read Metrics: Reported read counts represent sequencing counts, not biological abundance, organism counts, concentration, or biomass \n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_target]\n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_95pct_3nn_target]\n.\nBiological Presence and Method Agreement: A missing detection record does not establish biological absence, and agreement between alternative assignment methods does not provide independent validation \n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_target]\n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_95pct_3nn_target]\n.\nCalibration and Data Confidence: Calibration status is not established from the supplied records, and internal standard presence alone does not confirm calibrated abundance or contamination-free sample processing \n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_target]\n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_95pct_3nn_target]\n.\nSample and Spatial Context: Sample classification remains unknown, control status is unknown, and the reported coordinates reflect the provider's grid rather",
+        "revision": "ocean-cop17-demo-00006-twn"
+      },
+      {
+        "name": "optimized_free_text_vertex_regression",
+        "revision": "ocean-cop17-demo-00007-6lx",
+        "passed": true,
+        "response": "Response\nOutcome\nAnswered\nModel run\nYes\nANEMONE eDNA: 2 evidence documents supplied\n\nCounts describe retrieved or supplied evidence, not complete database coverage or verified scientific matches.\n\nThe requested active scope excludes CTD measurements, shotgun metagenome data, and satellite SST observations.\n\nRecorded Taxa Under assignment method QCauto (qcauto_target), the highest-read recorded taxa for sample 00144db778f30ca6787ecc1304e8ea1fd7d34ab95971922ca291e90ded593189 include Entomacrodus (genus), Takifugu alboplumbeus (species), Siganus (genus), Takifugu (genus), Apogon notatus (species), Sebastiscus marmoratus (species), Spratelloides gracilis (species), Sebastes (genus), Istiblennius (genus), and Pseudolabrus eoethinus (species) \n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_target]\n. Under assignment method QCauto 95%-3NN (qcauto_95pct_3nn_target), the highest-read recorded taxa are Entomacrodus stellifer stellifer (subspecies), Takifugu alboplumbeus (species), Siganus fuscescens (species), Apogon notatus (species), Sebastiscus marmoratus (species), Spratelloides gracilis (species), Sebastes (genus), Istiblennius enosimae (species), and Pseudolabrus eoethinus (species) \n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_95pct_3nn_target]\n.\n\nEvidence Limitations\n\nRead counts represent sequencing read counts, not organism abundance, biomass, concentration, or individual organism counts \n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_target]\n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_95pct_3nn_target]\n.\nCalibration status is not established by the supplied records, and standard presence alone does not establish calibrated abundance or contamination-free water \n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_target]\n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_95pct_3nn_target]\n.\nAgreement between assignment methods does not provide independent validation, and missing detection records do not establish biological absence \n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_target]\n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_95pct_3nn_target]\n.\nThe exact sampling position and spatial precision remain unconfirmed because reported coordinates follow the provider's grid \n[edna_cc7b3485574f1728e8900ded159a037c82e"
+      },
+      {
+        "name": "optimized_fish_frequency_regression",
+        "revision": "ocean-cop17-demo-00007-6lx",
+        "passed": true,
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nResults from the selected published dataset and assay are shown below. Methods, full answer, and citations remain available.\n\nMiyagi regional analysis: Ranking\nAnalysis scope, methods and limitations\nTaxon\nAll taxa\nTridentiger trigonocephalus\nHexagrammos otakii\nTakifugu alboplumbeus\nEngraulis japonicus\nPseudoblennius cottoides\nParablennius yatabei\nErnogrammus hexagrammus\nPholis nebulosa\nGirella punctata\nDictyosoma burgeri\nResult table and denominators\nspecies\tposition\ttaxon_key\tDetected units\tEligible units (denominator)\tDetection frequency\tlow_support\tsampling_status\nTridentiger trigonocephalus\t1\tTridentiger trigonocephalus\t39\t39\t100.00%\tfalse\tsampled_detected\nHexagrammos otakii\t2\tHexagrammos otakii\t39\t39\t100.00%\tfalse\tsampled_detected\nTakifugu alboplumbeus\t3\tTakifugu alboplumbeus\t37\t39\t94.87%\tfalse\tsampled_detected\nEngraulis japonicus\t4\tEngraulis japonicus\t31\t39\t79.49%\tfalse\tsampled_detected\nPseudoblennius cottoides\t5\tPseudoblennius cottoides\t27\t39\t69.23%\tfalse\tsampled_detected\nParablennius yatabei\t6\tParablennius yatabei\t27\t39\t69.23%\tfalse\tsampled_detected\nErnogrammus hexagrammus\t7\tErnogrammus hexagrammus\t26\t39\t66.67%\tfalse\tsampled_detected\nPholis nebulosa\t8\tPholis nebulosa\t26\t39\t66.67%\tfalse\tsampled_detected\nGirella punctata\t9\tGirella punctata\t24\t39\t61.54%\tfalse\tsampled_detected\nDictyosoma burgeri\t10\tDictyosoma burgeri\t24\t39\t61.54%\tfalse\tsampled_detected\nPreviousNext\nMiyagi regional analysis: Series\nAnalysis scope, methods and limitations\nTaxon\nAll taxa\nTridentiger trigonocephalus\nHexagrammos otakii\nTakifugu alboplumbeus\nEngraulis "
+      },
+      {
+        "name": "optimized_fish_sst_regression",
+        "revision": "ocean-cop17-demo-00007-6lx",
+        "passed": true,
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nResults from the selected published dataset and assay are shown below. Methods, full answer, and citations remain available.\n\nMiyagi regional analysis: Temperature contrasts\nAnalysis scope, methods and limitations\nTaxon\nAll taxa\nTridentiger trigonocephalus\nHexagrammos otakii\nTakifugu alboplumbeus\nEngraulis japonicus\nPseudoblennius cottoides\nParablennius yatabei\nErnogrammus hexagrammus\nPholis nebulosa\nGirella punctata\nDictyosoma burgeri\nResult table and denominators\ntaxon_key\tlow_detected\tlow_eligible\thigh_detected\thigh_eligible\tsupported\tSupported area-season strata\trepresentative\tAggregate high − low (percentage points)\tMean supported-stratum difference (percentage points)\nTridentiger trigonocephalus\t13\t13\t11\t11\ttrue\t1\tfalse\t0\t0\nHexagrammos otakii\t13\t13\t11\t11\ttrue\t1\tfalse\t0\t0\nTakifugu alboplumbeus\t11\t13\t11\t11\ttrue\t1\tfalse\t15.3846\t20\nEngraulis japonicus\t10\t13\t11\t11\ttrue\t1\tfalse\t23.0769\t60\nPseudoblennius cottoides\t9\t13\t6\t11\ttrue\t1\tfalse\t-14.6853\t40\nParablennius yatabei\t8\t13\t6\t11\ttrue\t1\tfalse\t-6.993\t46.6667\nErnogrammus hexagrammus\t9\t13\t6\t11\ttrue\t1\ttrue\t-14.6853\t60\nPholis nebulosa\t9\t13\t8\t11\ttrue\t1\tfalse\t3.4965\t26.6667\nGirella punctata\t8\t13\t6\t11\ttrue\t1\tfalse\t-6.993\t-40\nDictyosoma burgeri\t8\t13\t6\t11\ttrue\t1\tfalse\t-6.993\t26.6667\nPreviousNext\nMiyagi regional analysis: Temperature bins\nAnalysis scope, methods and limitations\nTaxon\nAll taxa\nTridentiger trigonocephalus\nHexagrammos otakii\nTakifugu alboplumbeus\nEngraulis japonicus\nPseudoblennius cottoides\nParablennius yatabei\nErnogrammus hexagrammus\nPholis nebulosa\nGirella punctata\nDictyosoma burgeri\nResult table and denominators\nMiyagi regional analysis: Temperature series\nAnalysis scope, method",
+        "charts": 6
+      },
+      {
+        "name": "optimized_physical_site_guard",
+        "revision": "ocean-cop17-demo-00007-6lx",
+        "passed": true,
+        "response": "Response\nOutcome\nAbstained\nModel run\nNo\nReason\nExact count needs clarification\n\nVerified physical sites and named sampling areas are not yet curated. I can count distinct reported coordinate positions, with their coordinate-precision limitations.\n\nWas this answer useful?"
+      },
+      {
+        "name": "optimized_disabled_source_guard",
+        "revision": "ocean-cop17-demo-00007-6lx",
+        "passed": true,
+        "response": "Response\nOutcome\nAbstained\nModel run\nNo\nReason\nExact count needs clarification\n\nEnable ANEMONE eDNA to count its reported coordinate positions. SST coverage is separate from field sampling locations.\n\nWas this answer useful?"
+      },
+      {
+        "name": "optimized_aggregate_provenance",
+        "revision": "ocean-cop17-demo-00007-6lx",
+        "passed": true
+      }
+    ],
+    "started_at": "2026-10-23T10:46:39.795Z",
+    "completed_at": "2026-10-23T17:34:47.903Z"
+  },
+  "live_request_latencies": [
+    {
+      "httpRequest": {
+        "latency": "1.971397438s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T17:28:36.472689Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "0.348097685s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T17:28:47.516761Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "0.360783383s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T17:28:48.517555Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "2.699121791s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T17:28:59.818063Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "0.317107556s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T17:29:26.798339Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "5.609208231s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T17:29:45.656118Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "9.549333104s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T17:30:24.886385Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "10.201472708s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T17:31:07.556054Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "0.095152200s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T17:31:18.689847Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "0.653465381s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T17:31:27.434773Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "12.811417397s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T17:31:28.623546Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "0.372641136s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T17:33:39.136936Z"
+    }
+  ],
+  "live_anonymous_boundaries": [
+    {
+      "path": "/chat",
+      "status": 307,
+      "expected": 307
+    },
+    {
+      "path": "/login",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "path": "/api/backend/chat/analysis-options",
+      "status": 401,
+      "expected": 401
+    },
+    {
+      "path": "/api/backend/provenance",
+      "status": 401,
+      "expected": 401
+    }
+  ],
+  "security_patch": {
+    "package": "opentelemetry-api",
+    "from": "1.45.0",
+    "to": "1.45.1",
+    "all_other_lock_versions_and_hash_blocks_unchanged": true,
+    "overhaul_environment_modified": false,
+    "advisory": "https://github.com/open-telemetry/opentelemetry-python/security/advisories/GHSA-xcq7-p3pf-p88h",
+    "rejected_build": "c97c9f1b-6ab9-4316-8328-2c18e5a333c0",
+    "rejected_build_deployed": false
+  },
+  "previous_revision": "ocean-cop17-demo-00006-twn",
+  "previous_api_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:accebff27313cfbe921db877d7d4fe69c015f4dd6d3b66558db7274fc0496665",
+  "rollback_note": "Revision ocean-cop17-demo-00006-twn retains the initial exact location-count implementation and the OpenTelemetry API 1.45.1 patch; it can be used for demo-only rollback. Its broad counts recompute full input fingerprints and may take longer.",
+  "latency_observation": "First five optimized exact-count requests took 0.317–2.699 seconds at the Cloud Run request boundary. A later default-count repeat took 12.811 seconds. Response times vary; no universal sub-ten-second guarantee is asserted.",
+  "verified_immutable_reuse": {
+    "scope": "COP17 recorded_locations metric with v2 immutable evidence only",
+    "lookup": "Exact normalized effective filters, including the default or explicit control policy; no grouping or wider-cohort substitution.",
+    "validation": [
+      "Metric recorded_locations and algorithm edna-catalogue-aggregate-v2 match.",
+      "All three publication channels (anemone-canonical, edna-canonical and edna) match exact generation IDs and manifest SHA-256 values.",
+      "The retained payload is rehashed and its content identity, metric, filters, group_by, top-level publication and summary publication are verified.",
+      "All publication heads and the ready GCS retrieval pointer are checked again outside the initial repeatable-read snapshot before return."
+    ],
+    "cold_result": "A new cohort still computes and retains the complete ordered input/source fingerprints before an answer is served.",
+    "scientific_immutability_contract": "The demo runtime has SELECT-only access to scientific tables. Scientific content remains immutable while publication heads are unchanged. Manual unpublished scientific edits invalidate this reuse assumption and require republishing before retained counts are served.",
+    "outside_demo": "Reuse is disabled when COP17_DEMO_ENABLED is false."
+  },
+  "initial_before_reuse_request_latencies": [
+    {
+      "httpRequest": {
+        "latency": "15.445105475s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T10:46:40.020118Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "12.627526284s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T10:48:01.038170Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "15.068485697s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T10:48:37.901423Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "18.945866473s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T10:48:53.518167Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "0.602306826s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T10:50:01.256330Z"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "location-count-live-success-en.png",
+      "sha256": "7a8e7228eff12dbdbbd6ba05f782fc1026bbc71b20fb0a88ccb6f642093ed931",
+      "storage": "private local operations directory; image bytes not committed"
+    },
+    {
+      "file": "location-count-live-success-ja.png",
+      "sha256": "aaa6d672e5b8036c0048bd4dbd21a2f40abddfe32b3abd2490ce36975f150aff",
+      "storage": "private local operations directory; image bytes not committed"
+    },
+    {
+      "file": "location-count-live-provenance.png",
+      "sha256": "b34ba032d99cafc186a2a345714a877cf17f4eced7666ff395b1da66d3f528ab",
+      "storage": "private local operations directory; image bytes not committed"
+    }
+  ]
+}

@@ -1,8 +1,11 @@
 # COP17 sampling-location counts: findings and implementation plan
 
-Status: planned only, October 23, 2026 JST. No application code, database,
+Status: implemented and verified on the COP17 demo; see
+`COP17_DEMO_LOCATION_COUNTS_RECEIPT_2026-10-23.json`.
+
+Original investigation (October 23, 2026 JST): no application code, database,
 permissions, running service or production/overhaul checkout was changed by
-this investigation. The current demo remains revision
+the initial investigation. The then-current demo was revision
 `ocean-cop17-demo-00005-5g5`.
 
 ## Live findings
