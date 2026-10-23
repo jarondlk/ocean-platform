@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import math
 from contextlib import contextmanager, nullcontext
 import re
 from typing import Any, Mapping
@@ -854,3 +855,47 @@ def edna_detection_detail(detection_id: str) -> dict[str, Any] | None:
                 ],
             ),
         }
+
+
+
+def edna_geography_summary(filters: Mapping[str, Any], *, connection=None) -> dict[str, Any]:
+    """Describe exact canonical coordinate coverage without inferring area names.
+
+    The separation uses the two actual latitude-extreme recorded positions,
+    with longitude as a stable tie-breaker; it is not a maximum-pairwise span
+    or a distance between invented corners of a bounding rectangle.
+    """
+    conditions, params = _sample_conditions(filters)
+    where = " AND ".join(conditions)
+    valid = "(s.lat IS NOT NULL AND s.lon IS NOT NULL AND s.lat BETWEEN -90 AND 90 AND s.lon BETWEEN -180 AND 180)"
+    with (nullcontext(connection) if connection is not None else _read_snapshot()) as connection:
+        locations = edna_location_summary(filters, connection=connection)
+        extent = connection.execute(text(
+            "SELECT min(s.lat) AS lat_min,max(s.lat) AS lat_max,"
+            "min(s.lon) AS lon_min,max(s.lon) AS lon_max "
+            "FROM edna_sample s WHERE " + where + " AND " + valid
+        ), params).mappings().one()
+        extremes = connection.execute(text(
+            "SELECT lat,lon FROM ((SELECT 0 AS boundary_order,s.lat,s.lon "
+            "FROM edna_sample s WHERE " + where + " AND " + valid
+            + " ORDER BY s.lat,s.lon LIMIT 1) UNION ALL "
+            "(SELECT 1 AS boundary_order,s.lat,s.lon FROM edna_sample s WHERE "
+            + where + " AND " + valid + " ORDER BY s.lat DESC,s.lon LIMIT 1)) "
+            "AS positions ORDER BY boundary_order"
+        ), params).mappings().all()
+    positions = [{"lat": float(row["lat"]), "lon": float(row["lon"])} for row in extremes]
+    separation = None
+    if positions:
+        lat1, lon1 = math.radians(positions[0]["lat"]), math.radians(positions[0]["lon"])
+        lat2, lon2 = math.radians(positions[1]["lat"]), math.radians(positions[1]["lon"])
+        haversine = math.sin((lat2-lat1)/2)**2 + math.cos(lat1)*math.cos(lat2)*math.sin((lon2-lon1)/2)**2
+        separation = round(6371.0088 * 2 * math.asin(math.sqrt(max(0.0, min(1.0, haversine)))), 3)
+    return {
+        "locations": locations,
+        "coordinate_extent": {key: float(value) if value is not None else None for key, value in extent.items()},
+        "latitude_extreme_positions": positions,
+        "latitude_extreme_separation_km": separation,
+        "named_area_status": "not_established_by_canonical_catalogue",
+        "named_area_count": None,
+        "named_area_definition": "No reviewed area-membership relation is provided by this canonical-catalogue aggregate; provider/project/sample labels are not bay boundaries.",
+    }

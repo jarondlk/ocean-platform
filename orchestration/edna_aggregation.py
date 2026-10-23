@@ -392,11 +392,11 @@ def evidence_document(bundle):
     identity, payload = bundle["aggregate_id"], bundle["payload"]
     return {
         "id": "aggregate_edna_" + identity,
-        "title": "Exact ANEMONE recorded-coordinate count" if payload.get("metric") == "recorded_locations" else "Exact ANEMONE catalogue summary",
+        "title": "Exact ANEMONE geographic coverage" if payload.get("metric") == "catalogue_geography" else "Exact ANEMONE recorded-coordinate count" if payload.get("metric") == "recorded_locations" else "Exact ANEMONE catalogue summary",
         "source_type": "analysis",
         "source_family": "edna_metabarcoding",
         "covered_source_types": ["edna_metabarcoding"],
-        "analysis_type": "edna_recorded_location_count" if payload.get("metric") == "recorded_locations" else "edna_catalogue_summary",
+        "analysis_type": "edna_catalogue_geography" if payload.get("metric") == "catalogue_geography" else "edna_recorded_location_count" if payload.get("metric") == "recorded_locations" else "edna_catalogue_summary",
         "aggregate_id": identity,
         "metadata": payload["filters"],
         "text": json.dumps({"filters": payload["filters"], "summary": payload["summary"],
@@ -417,6 +417,9 @@ def _asks_unknown_control_status(query):
 
 
 def render_answer(bundle, query=""):
+    if bundle["payload"].get("metric") == "catalogue_geography":
+        from orchestration.catalogue_geography import render_geography_answer
+        return render_geography_answer(bundle, query)
     if bundle["payload"].get("metric") == "recorded_locations":
         return render_location_answer(bundle, query)
     payload = bundle["payload"]

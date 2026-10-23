@@ -10,6 +10,7 @@ import config
 from api.edna_service import (
     edna_summary,
     edna_location_summary,
+    edna_geography_summary,
     _sample_conditions,
     _detection_conditions,
     _aggregate_assay_conditions,
@@ -20,6 +21,8 @@ from ingestion.provenance_snapshot import SnapshotError
 
 ALGORITHM = "edna-catalogue-aggregate-v1"
 LOCATION_ALGORITHM = "edna-catalogue-aggregate-v2"
+GEOGRAPHY_ALGORITHM = "edna-catalogue-aggregate-v3"
+SPATIAL_ALGORITHMS = {"recorded_locations": LOCATION_ALGORITHM, "catalogue_geography": GEOGRAPHY_ALGORITHM}
 MAX_ROWS = 1_000_000
 MAX_PAYLOAD_BYTES = 1024 * 1024
 
@@ -185,7 +188,7 @@ def _publication_heads(connection):
     }
 
 
-def _reuse_location_aggregate(engine, filters, pointer):
+def _reuse_spatial_aggregate(engine, filters, pointer, *, metric, algorithm):
     # COP17 scientific tables are read-only and bound to these publication heads.
     # Every cold result retains full source fingerprints. Reuse never substitutes
     # current rows into historical evidence, and is disabled outside this demo.
@@ -200,13 +203,14 @@ def _reuse_location_aggregate(engine, filters, pointer):
             text(
                 "SELECT aggregate_id FROM edna_aggregate_evidence "
                 "WHERE algorithm_version=:algorithm "
-                "AND payload_json::jsonb->>'metric'='recorded_locations' "
+                "AND payload_json::jsonb->>'metric'=:metric "
                 "AND payload_json::jsonb->'filters'=CAST(:filters AS jsonb) "
                 "AND payload_json::jsonb->'publication'=CAST(:publication AS jsonb) "
                 "LIMIT 2"
             ),
             {
-                "algorithm": LOCATION_ALGORITHM,
+                "algorithm": algorithm,
+                "metric": metric,
                 "filters": canonical_bytes(filters).decode(),
                 "publication": canonical_bytes(publication).decode(),
             },
@@ -218,8 +222,8 @@ def _reuse_location_aggregate(engine, filters, pointer):
     bundle = load_aggregate(identities[0], engine=engine)
     if (
         bundle is None
-        or bundle["payload"].get("algorithm_version") != LOCATION_ALGORITHM
-        or bundle["payload"].get("metric") != "recorded_locations"
+        or bundle["payload"].get("algorithm_version") != algorithm
+        or bundle["payload"].get("metric") != metric
         or bundle["payload"].get("filters") != filters
         or bundle["payload"].get("group_by") != []
         or bundle["payload"].get("publication") != publication
@@ -236,20 +240,57 @@ def _reuse_location_aggregate(engine, filters, pointer):
     return bundle
 
 
+def _reuse_location_aggregate(engine, filters, pointer):
+    # Keep the existing three-argument location wrapper for callers and tests.
+    return _reuse_spatial_aggregate(engine, filters, pointer,
+                                   metric="recorded_locations", algorithm=LOCATION_ALGORITHM)
+
+
+def _reuse_geography_aggregate(engine, filters, pointer):
+    return _reuse_spatial_aggregate(engine, filters, pointer,
+                                   metric="catalogue_geography", algorithm=GEOGRAPHY_ALGORITHM)
+
+
+def _validate_geography_contract(payload):
+    summary = payload.get("summary")
+    if not isinstance(summary, dict):
+        raise AggregateUnavailable("Geography aggregate contract is incomplete")
+    geography = summary.get("geography")
+    expected = {"locations", "coordinate_extent", "latitude_extreme_positions",
+                "latitude_extreme_separation_km", "named_area_status", "named_area_count",
+                "named_area_definition"}
+    if (payload.get("metric") != "catalogue_geography" or not isinstance(geography, dict)
+            or set(geography) != expected or not isinstance(geography["locations"], dict)
+            or geography["named_area_count"] is not None
+            or geography["named_area_status"] != "not_established_by_canonical_catalogue"
+            or not isinstance(geography["named_area_definition"], str)
+            or not geography["named_area_definition"]):
+        raise AggregateUnavailable("Geography aggregate contract is incomplete")
+    locations = geography["locations"]
+    if (locations.get("source_occurrences") != payload["summary"].get("source_occurrences")
+            or not {"definition", "control_policy", "distinct_coordinate_pairs",
+                    "valid_coordinate_occurrences", "missing_coordinate_occurrences",
+                    "invalid_coordinate_occurrences", "coordinate_precision"}.issubset(locations)
+            or not isinstance(geography["coordinate_extent"], dict)
+            or set(geography["coordinate_extent"]) != {"lat_min", "lat_max", "lon_min", "lon_max"}
+            or not isinstance(geography["latitude_extreme_positions"], list)):
+        raise AggregateUnavailable("Geography aggregate contract is incomplete")
+
+
 def build_aggregate(filters, group_by=(), *, engine=None, metric=None):
     engine = engine if engine is not None else get_engine()
     try:
-        if metric not in {None, "recorded_locations"}:
+        if metric is not None and metric not in SPATIAL_ALGORITHMS:
             raise AggregateUnavailable("Unsupported aggregate metric")
-        if metric == "recorded_locations":
+        if metric in SPATIAL_ALGORITHMS:
             filters = dict(filters)
             if group_by:
-                raise AggregateUnavailable("Location groups are unsupported")
+                raise AggregateUnavailable("Spatial aggregate groups are unsupported")
             if "is_control" not in filters and "sample_kind" not in filters:
                 filters["exclude_explicit_controls"] = True
-        if "exclude_explicit_controls" in filters and (metric != "recorded_locations" or filters["exclude_explicit_controls"] is not True or filters.get("is_control") is True):
+        if "exclude_explicit_controls" in filters and (metric not in SPATIAL_ALGORITHMS or filters["exclude_explicit_controls"] is not True or filters.get("is_control") is True):
             raise AggregateUnavailable("Invalid location control policy")
-        algorithm = LOCATION_ALGORITHM if metric == "recorded_locations" else ALGORITHM
+        algorithm = SPATIAL_ALGORITHMS.get(metric, ALGORITHM)
         allowed = {
             "exclude_explicit_controls",
             "provider",
@@ -274,8 +315,9 @@ def build_aggregate(filters, group_by=(), *, engine=None, metric=None):
         if set(filters) - allowed:
             raise AggregateUnavailable("Unsupported aggregate filter")
         pointer = publication_pointer()
-        if metric == "recorded_locations" and config.COP17_DEMO_ENABLED:
-            retained = _reuse_location_aggregate(engine, filters, pointer)
+        if metric in SPATIAL_ALGORITHMS and config.COP17_DEMO_ENABLED:
+            reuse = _reuse_location_aggregate if metric == "recorded_locations" else _reuse_geography_aggregate
+            retained = reuse(engine, filters, pointer)
             if retained is not None:
                 return retained
         with engine.connect() as connection:
@@ -288,6 +330,10 @@ def build_aggregate(filters, group_by=(), *, engine=None, metric=None):
                 summary["locations"] = edna_location_summary(filters, connection=connection)
                 if summary["locations"]["source_occurrences"] != summary["source_occurrences"]:
                     raise AggregateUnavailable("Location row accounting mismatch")
+            elif metric == "catalogue_geography":
+                summary["geography"] = edna_geography_summary(filters, connection=connection)
+                if summary["geography"]["locations"]["source_occurrences"] != summary["source_occurrences"]:
+                    raise AggregateUnavailable("Geography row accounting mismatch")
             _assert_publication(pointer, summary["publication"])
             inputs = _inputs(connection, filters)
             if (
@@ -320,6 +366,17 @@ def build_aggregate(filters, group_by=(), *, engine=None, metric=None):
             payload["metric"] = metric
             payload["query_contract"]["locations"] = summary["locations"]["definition"]
             payload["query_contract"]["location_controls"] = summary["locations"]["control_policy"]
+        elif metric == "catalogue_geography":
+            payload["metric"] = metric
+            payload["query_contract"]["geography"] = {
+                "locations": summary["geography"]["locations"]["definition"],
+                "location_controls": summary["geography"]["locations"]["control_policy"],
+                "coordinate_extent": "Minimum/maximum valid stored coordinates describe spatial extent, not continuous sampled coverage or a reviewed area boundary.",
+                "latitude_extreme_separation": "Great-circle distance in kilometres between the two displayed actual latitude-extreme recorded positions, with ascending longitude as tie-breaker; not maximum pairwise distance or distance between invented bounding-box corners.",
+                "named_areas": "Named-area count is not established by the canonical catalogue. No reviewed area-membership relation is provided by this aggregate; provider/project/sample labels are not area boundaries.",
+                "application_area_registries_consulted": False,
+            }
+            _validate_geography_contract(payload)
         data = canonical_bytes(payload)
         if len(data) > MAX_PAYLOAD_BYTES:
             raise AggregateUnavailable("Aggregate evidence exceeds byte budget")
@@ -365,10 +422,12 @@ def load_aggregate(identity, *, engine=None):
     if len(row.encode()) > MAX_PAYLOAD_BYTES:
         raise AggregateUnavailable("Aggregate evidence exceeds byte budget")
     payload = json.loads(row)
-    if digest(payload) != identity or payload.get("algorithm_version") not in {ALGORITHM, LOCATION_ALGORITHM}:
+    if digest(payload) != identity or payload.get("algorithm_version") not in {ALGORITHM, LOCATION_ALGORITHM, GEOGRAPHY_ALGORITHM}:
         raise AggregateUnavailable("Aggregate evidence integrity check failed")
     if payload["algorithm_version"] == LOCATION_ALGORITHM and (payload.get("metric") != "recorded_locations" or "locations" not in payload.get("summary", {})):
         raise AggregateUnavailable("Location aggregate contract is incomplete")
+    if payload["algorithm_version"] == GEOGRAPHY_ALGORITHM:
+        _validate_geography_contract(payload)
     return {"aggregate_id": identity, "payload": payload}
 
 

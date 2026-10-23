@@ -5657,6 +5657,11 @@ def _execute_chat(request: ChatRequest, user: CurrentUser, *, planning=None,
         if request.evidence_scope and not enabled_sources(request.evidence_scope.canonical()):
             return _chat_scope_abstention(request, user, model, interaction_id, started_at, response_options, "no_sources_selected", abstention_message("no_sources_selected"))
         if config.COP17_DEMO_ENABLED:
+            from orchestration.catalogue_geography import plan_catalogue_geography
+            geography_plan = plan_catalogue_geography(request.model_dump())
+            if geography_plan is not None:
+                return _aggregate_chat_response(request, geography_plan, user=user, model=model,
+                    interaction_id=interaction_id, started_at=started_at, options=response_options)
             from orchestration.edna_aggregation import plan_location_count
             location_plan = plan_location_count(request.model_dump())
             if location_plan is not None:
