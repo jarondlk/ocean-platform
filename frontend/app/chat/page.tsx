@@ -15,7 +15,7 @@ import type { AnswerAudit, ChatResponse, CitationAuditRecord, ContextDocument, M
 import { SourceTable } from "@/components/SourceTable";
 import { useAppPreferences } from "@/lib/preferences";
 
-import { ChatSourceSettings, filterLabels, type ChatPreset } from "@/components/ChatSourceSettings";
+import { ChatSourceSettings, Cop17ChatModes, filterLabels, type ChatPreset } from "@/components/ChatSourceSettings";
 import { ResearchResultCards } from "@/components/ResearchResultCards";
 import { SourceCoverage } from "@/components/SourceCoverage";
 import type { ResearchIntent } from "@/types";
@@ -280,6 +280,8 @@ export default function ChatPage() {
               </div>
             </div> : null}
             <article className="card">
+              {cop17Demo ? <Cop17ChatModes disabled={!ready || loading} analysisId={displayedAnalysisId}
+                researchIntent={displayedResearchIntent} onPresetChange={changeDemoPreset} /> : null}
               {demoExampleActive ? <div className="cop17-active-example" role="status">
                 <div><strong>{ui("Advanced analysis example")}</strong><span>{ui(demoExampleLabel)}</span></div>
                 <button className="button secondary-button" type="button" disabled={!ready || loading}

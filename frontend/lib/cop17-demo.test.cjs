@@ -54,7 +54,7 @@ for (const name of ['CsvExportButton', 'ChatFeedback', 'DataTable', 'EvidenceNav
 exports.formatCell = value => String(value);
 `);
 const {ChatIdentityProvider} = require(path.join(temp, 'identity.cjs'));
-const {defaultScope, defaultSettings, encodeSettings, settingsStorageKey} = require(path.join(temp, 'settings.cjs'));
+const {defaultScope, defaultSettings, encodeSettings, settingsStorageKey, fixedDemoSetup, cop17AnalysisId, cop17ProtocolId} = require(path.join(temp, 'settings.cjs'));
 const {ChatSourceSettings} = require(path.join(temp, 'sources.cjs'));
 const ChatPage = require(path.join(temp, 'page.cjs')).default;
 function storage() {
@@ -82,7 +82,7 @@ async function submit(renderer, query = 'CTD salinity') {
 
 
 function demoOptions() {
-  const analysis = 'a'.repeat(64), protocol = 'b'.repeat(64);
+  const analysis = cop17AnalysisId, protocol = cop17ProtocolId;
   return [{analysis_id: analysis, status: 'current', analysis_kind: 'regional_frequency',
     label: 'MUR v4.1 · Miyagi · 2020–2023', publication_id: 'accepted',
     assignment_methods: ['qcauto_95pct_3nn_target'], protocol_ids: [protocol],
@@ -98,9 +98,9 @@ function freshStorage() {
   }};
   return values;
 }
-function button(renderer, label) {return renderer.root.findAllByType('button').find(b => b.children.join('') === label);}
+function button(renderer, label) {return renderer.root.findAllByType('button').find(b => b.children.filter(c => typeof c === 'string').join('') === label);}
 
-test('two clicks select complete published setup; free-text clears analysis pins and preserves custom question', async () => {
+test('one click selects the fixed published setup; free-text clears pins and preserves a custom question', async () => {
   freshStorage(); global.autoAnalysisOptions = demoOptions();
   const requests = []; global.autoChatRequest = async request => {requests.push(request); return {answer: 'Verified', n_sources: 0, sources: []};};
   let renderer;
@@ -113,8 +113,8 @@ test('two clicks select complete published setup; free-text clears analysis pins
     await act(async () => renderer.root.findByType('form').props.onSubmit({preventDefault() {}}));
     assert.equal(requests.length, 1);
     assert.equal(requests[0].settings_mode, 'manual');
-    assert.deepEqual(requests[0].research_intent, {kind: 'temperature_comparison', protocol_id: 'b'.repeat(64)});
-    assert.equal(requests[0].evidence_scope.sources.edna_metabarcoding.analysis_id, 'a'.repeat(64));
+    assert.deepEqual(requests[0].research_intent, {kind: 'temperature_comparison', protocol_id: cop17ProtocolId});
+    assert.equal(requests[0].evidence_scope.sources.edna_metabarcoding.analysis_id, cop17AnalysisId);
     assert.equal(requests[0].evidence_scope.sources.remote_sensing.filters.dataset_id, 'mur-miyagi-2020-2023');
     assert.equal(requests[0].evidence_scope.sources.ctd.enabled, false);
     await act(async () => renderer.root.findByType('textarea').props.onChange({target: {value: 'My own ANEMONE question'}}));
@@ -126,41 +126,53 @@ test('two clicks select complete published setup; free-text clears analysis pins
   } finally {await act(async () => renderer?.unmount()); delete global.autoAnalysisOptions; delete global.autoChatRequest;}
 });
 
-test('preset refresh cannot silently replace a disappeared assay', async () => {
-  freshStorage(); global.autoAnalysisOptions = demoOptions();
+test('missing or incompatible fixed setup never substitutes another dataset or assay', async () => {
+  const good = demoOptions();
+  assert.equal(fixedDemoSetup(good).protocolId, cop17ProtocolId);
+  for (const patch of [
+    {analysis_id: 'c'.repeat(64)}, {status: 'stale'}, {assignment_methods: ['qcauto_target']},
+    {assignment_methods: ['qcauto_95pct_3nn_target', 'qcauto_target']}, {protocol_ids: ['d'.repeat(64)]},
+    {protocols: {[cop17ProtocolId]: {sequencing_method: 'NovaSeq', library_layout: 'paired'}}},
+  ]) assert.equal(fixedDemoSetup([{...good[0], ...patch}]), undefined);
+  assert.equal(fixedDemoSetup([...good, ...good]), undefined);
+  freshStorage(); global.autoAnalysisOptions = [{...good[0], protocol_ids: ['d'.repeat(64)]}];
+  const requests = []; global.autoChatRequest = async request => {requests.push(request); return {answer: 'Retrieved', n_sources: 0, sources: []};};
   let renderer;
   try {
     await act(async () => {renderer = create(tree('demo'));});
-    const select = renderer.root.findByProps({id: 'chat-demo-setup'});
-    await act(async () => select.props.onChange({target: {value: 'stale-assay'}}));
     assert(button(renderer, 'Fish detection frequency').props.disabled);
     assert(button(renderer, 'Fish and sea surface temperature').props.disabled);
-    assert.equal(renderer.root.findByProps({id: 'chat-demo-setup'}).props.value, 'stale-assay');
-  } finally {await act(async () => renderer?.unmount()); delete global.autoAnalysisOptions;}
+    assert.equal(button(renderer, 'Free-text search').props['aria-pressed'], true);
+    await submit(renderer, 'My own question');
+    assert.equal(requests[0].research_intent, undefined);
+    assert.equal(requests[0].evidence_scope.sources.edna_metabarcoding.analysis_id, undefined);
+  } finally {await act(async () => renderer?.unmount()); delete global.autoAnalysisOptions; delete global.autoChatRequest;}
 });
 
-
-test('opening advanced examples and choosing a setup leave free-text requests unpinned', async () => {
+test('all three modes appear above the question; default free text has no published pins or setup selector', async () => {
   freshStorage(); global.autoAnalysisOptions = demoOptions();
   const requests = []; global.autoChatRequest = async request => {requests.push(request); return {answer: 'Retrieved', n_sources: 0, sources: []};};
   let renderer;
   try {
     await act(async () => {renderer = create(tree('demo'));});
-    const examples = renderer.root.findByProps({className: 'cop17-examples'});
-    assert.equal(examples.props.open, false);
+    const card = renderer.root.findAllByType('article')[0];
+    const modes = card.findByProps({className: 'cop17-modes'});
+    assert.equal(modes.findAllByType('button').length, 3);
+    assert.equal(renderer.root.findAllByProps({id: 'chat-demo-setup'}).length, 0);
+    assert.equal(modes.findAllByType('details').length, 0);
+    assert.equal(button(renderer, 'Free-text search').props['aria-pressed'], true);
+    assert.equal(button(renderer, 'Fish detection frequency').props['aria-pressed'], false);
     await submit(renderer, 'My own ANEMONE question');
-    await act(async () => examples.props.onToggle({currentTarget: {open: true}}));
-    const select = renderer.root.findByProps({id: 'chat-demo-setup'});
-    await act(async () => select.props.onChange({target: {value: select.props.value}}));
+    assert.equal(requests[0].research_intent, undefined);
+    assert.equal(requests[0].evidence_scope.sources.edna_metabarcoding.analysis_id, undefined);
+    assert.deepEqual(requests[0].evidence_scope.sources.remote_sensing.filters, {});
+    await act(async () => button(renderer, 'Fish detection frequency').props.onClick());
+    assert.equal(button(renderer, 'Fish detection frequency').props['aria-pressed'], true);
+    assert.equal(button(renderer, 'Free-text search').props['aria-pressed'], false);
     await act(async () => renderer.root.findByType('form').props.onSubmit({preventDefault() {}}));
-    assert.equal(requests.length, 2);
-    for (const request of requests) {
-      assert.equal(request.research_intent, undefined);
-      assert.equal(request.evidence_scope.sources.edna_metabarcoding.analysis_id, undefined);
-      assert.deepEqual(request.evidence_scope.sources.remote_sensing.filters, {});
-      assert.equal(request.evidence_scope.sources.remote_sensing.enabled, true);
-      assert.equal(request.evidence_scope.sources.edna_metabarcoding.enabled, true);
-    }
+    assert.equal(requests[1].research_intent.protocol_id, cop17ProtocolId);
+    assert.equal(requests[1].evidence_scope.sources.edna_metabarcoding.analysis_id, cop17AnalysisId);
+    assert.equal(requests[1].evidence_scope.sources.remote_sensing.enabled, false);
   } finally {await act(async () => renderer?.unmount()); delete global.autoAnalysisOptions; delete global.autoChatRequest;}
 });
 
@@ -180,7 +192,7 @@ test('returning from an untouched example restores the free-text draft and scope
     assert.equal(requests[0].research_intent.kind, 'temperature_comparison');
     await act(async () => button(renderer, 'Return to free-text search').props.onClick());
     assert.equal(renderer.root.findByType('textarea').props.value, 'My original question');
-    assert.equal(renderer.root.findByProps({className: 'cop17-examples'}).props.open, false);
+    assert.equal(button(renderer, 'Free-text search').props['aria-pressed'], true);
     await act(async () => renderer.root.findByType('form').props.onSubmit({preventDefault() {}}));
     assert.deepEqual(requests[1].evidence_scope, freeScope);
     assert.equal(requests[1].research_intent, undefined);
@@ -195,16 +207,16 @@ test('returning from an untouched example restores the free-text draft and scope
   } finally {await act(async () => renderer?.unmount()); delete global.autoAnalysisOptions; delete global.autoChatRequest;}
 });
 
-test('an explicit analysis link opens advanced context until the visitor returns to free text', async () => {
+test('an explicit analysis link retains its context until the visitor returns to free text', async () => {
   freshStorage(); global.autoAnalysisOptions = demoOptions();
-  global.window.location.search = '?analysis_id=' + 'a'.repeat(64);
+  global.window.location.search = '?analysis_id=' + cop17AnalysisId;
   const requests = []; global.autoChatRequest = async request => {requests.push(request); return {answer: 'Published', n_sources: 0, sources: []};};
   let renderer;
   try {
     await act(async () => {renderer = create(tree('demo'));});
-    assert.equal(renderer.root.findByProps({className: 'cop17-examples'}).props.open, true);
+    assert.equal(button(renderer, 'Free-text search').props['aria-pressed'], false);
     await submit(renderer, 'Question for the linked analysis');
-    assert.equal(requests[0].evidence_scope.sources.edna_metabarcoding.analysis_id, 'a'.repeat(64));
+    assert.equal(requests[0].evidence_scope.sources.edna_metabarcoding.analysis_id, cop17AnalysisId);
     await act(async () => button(renderer, 'Return to free-text search').props.onClick());
     await submit(renderer, 'My own question');
     assert.equal(requests[1].evidence_scope.sources.edna_metabarcoding.analysis_id, undefined);

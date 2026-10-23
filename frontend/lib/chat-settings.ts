@@ -123,18 +123,16 @@ export type PublishedDemoOption = {
   protocols?: Record<string, {target_gene?: string; sequencing_method?: string; library_layout?: string}>;
   workflows: {kind: "fish_frequency" | "temperature_comparison" | "monthly_spatial" | "spatial_temperature" | "distribution_change" | "follow_through"; question: string}[];
 };
-export function demoSetups(options: PublishedDemoOption[]) {
-  return options.filter(option => option.status === "current" && ["regional_frequency", "detection_frequency"].includes(option.analysis_kind))
-    .flatMap(option => option.protocol_ids.map(protocolId => {
-      const protocol = option.protocols?.[protocolId];
-      const assay = protocol ? [protocol.target_gene, protocol.sequencing_method, protocol.library_layout].filter(Boolean).join(" · ") : option.protocol_labels?.[protocolId] || protocolId.slice(0, 8);
-      return {key: `${option.analysis_id}:${protocolId}`, option, protocolId,
-        label: `${option.label} · ${assay} · ${protocolId.slice(0, 8)}`};
-    }));
-}
-export function preferredDemoSetup(setups: ReturnType<typeof demoSetups>) {
-  const preferred = setups.filter(setup => setup.option.assignment_methods?.includes("qcauto_95pct_3nn_target")
-    && setup.option.protocols?.[setup.protocolId]?.sequencing_method?.toLowerCase() === "miseq"
-    && setup.option.protocols?.[setup.protocolId]?.library_layout?.toLowerCase() === "paired");
-  return preferred.length === 1 ? preferred[0].key : setups.length === 1 ? setups[0].key : "";
+// COP17 presenter examples are pinned to one accepted scientific publication and assay.
+// Never substitute another method/protocol when this setup is missing or stale.
+export const cop17AnalysisId = "9312a7e12211be66f58f17a1e57f2ce0f581da427d9074cada8787657af6d56b";
+export const cop17ProtocolId = "91e3ce341d150bdab5bc156775bd9257fa6a2833e3b53194841fc558c1dddfa6";
+export function fixedDemoSetup(options: PublishedDemoOption[]) {
+  const matches = options.filter(option => option.analysis_id === cop17AnalysisId
+    && option.status === "current" && ["regional_frequency", "detection_frequency"].includes(option.analysis_kind)
+    && option.assignment_methods?.length === 1 && option.assignment_methods[0] === "qcauto_95pct_3nn_target"
+    && option.protocol_ids.includes(cop17ProtocolId)
+    && option.protocols?.[cop17ProtocolId]?.sequencing_method?.toLowerCase() === "miseq"
+    && option.protocols?.[cop17ProtocolId]?.library_layout?.toLowerCase() === "paired");
+  return matches.length === 1 ? {option: matches[0], protocolId: cop17ProtocolId} : undefined;
 }

@@ -5,7 +5,7 @@ import { getChatFilterOptions, request } from "@/lib/api";
 import type { ResearchIntent } from "@/types";
 import type { ChatFilterOptions } from "@/lib/chat-filter-options";
 import { useAppPreferences } from "@/lib/preferences";
-import { cop17Demo, defaultScope, demoSetups, preferredDemoSetup, sourceLabels, scopeErrors, visibleSourceFamilies, type PublishedDemoOption, type SourceFamily } from "@/lib/chat-settings";
+import { cop17Demo, defaultScope, fixedDemoSetup, sourceLabels, scopeErrors, visibleSourceFamilies, type PublishedDemoOption, type SourceFamily } from "@/lib/chat-settings";
 import { evidenceScopeSchema, type EvidenceScope } from "@/lib/generated/chat-scope";
 
 export const filterLabels: Record<string, string> = {
@@ -34,22 +34,14 @@ export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChan
   const [retry, setRetry] = useState(0);
   const [analysisOptions, setAnalysisOptions] = useState<PublishedOption[]>([]);
   const [analysisError, setAnalysisError] = useState("");
-  const [analysisChoicesLoaded, setAnalysisChoicesLoaded] = useState(false);
-  const [setupKey, setSetupKey] = useState("");
-  const [examplesExpanded, setExamplesExpanded] = useState(false);
-  const exampleActive = !!(analysisId || researchIntent);
-  useEffect(() => { setExamplesExpanded(!!(analysisId || researchIntent)); }, [analysisId, researchIntent]);
-  const setups = demoSetups(analysisOptions);
-  const selectedSetupKey = setupKey || preferredDemoSetup(setups);
-  const setup = setups.find(item => item.key === selectedSetupKey);
   const selectedAnalysis = analysisOptions.find(option => option.analysis_id === analysisId);
   useEffect(() => {
-    if (disabled) return;
+    if (disabled || cop17Demo) return;
     let active = true;
     setAnalysisError("");
     request<{options: PublishedOption[]}>("/chat/analysis-options")
-      .then(value => { if (active) { setAnalysisOptions(value.options); setAnalysisChoicesLoaded(true); } })
-      .catch(() => { if (active) { setAnalysisError("Published analysis choices are unavailable. Your selection was retained."); setAnalysisChoicesLoaded(true); } });
+      .then(value => { if (active) { setAnalysisOptions(value.options); } })
+      .catch(() => { if (active) { setAnalysisError("Published analysis choices are unavailable. Your selection was retained."); } });
     return () => { active = false; };
   }, [disabled, retry]);
   const scopeJson = JSON.stringify(scope);
@@ -72,26 +64,7 @@ export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChan
     else filters[key] = kind === "number" ? Number(value) : kind === "boolean" ? value === "true" : value;
     onChange({...scope, sources: {...scope.sources, [family]: {...scope.sources[family], filters}}});
   }
-  function applyPreset(kind: "fish_frequency" | "temperature_comparison") {
-    if (!setup || !onPresetChange) return;
-    const workflow = setup.option.workflows.find(workflow => workflow.kind === kind);
-    if (!workflow || kind === "temperature_comparison" && !setup.option.sst_available) return;
-    const next = defaultScope();
-    next.sources.remote_sensing.enabled = kind === "temperature_comparison";
-    if (kind === "temperature_comparison" && setup.option.sst_dataset_id) next.sources.remote_sensing.filters = {dataset_id: setup.option.sst_dataset_id};
-    onPresetChange({scope: next, analysisId: setup.option.analysis_id,
-      intent: {kind, protocol_id: setup.protocolId}, question: ui(workflow.question)});
-  }
   return <>
-    {cop17Demo ? <section className="cop17-basic" aria-label={ui("Basic function")}>
-      <h4>{ui("Basic function")}</h4>
-      <button className={`button${exampleActive ? " secondary-button" : ""}`} type="button" disabled={disabled} aria-pressed={!exampleActive}
-        onClick={() => { if (exampleActive) onPresetChange?.({scope: defaultScope(), analysisId: ""}); }}>
-        {ui(exampleActive ? "Return to free-text search" : "Free-text search")}
-        {!exampleActive ? <span className="cop17-default-badge">{ui("Default")}</span> : null}
-      </button>
-      <p className="empty-state">{ui("Ask your own questions using ANEMONE eDNA and Satellite SST.")}</p>
-    </section> : null}
     <fieldset className="settings-section" disabled={disabled}><legend>{ui("Evidence sources")}</legend>
     <div className={`settings-pair${onAutoChange ? ' auto-settings-toolbar' : ''}`}>
       <button type="button" className="button secondary-button" onClick={() => onChange({...scope, sources: Object.fromEntries(Object.entries(scope.sources).map(([key, source]) => [key, {...source, enabled: visibleSourceFamilies.includes(key as SourceFamily)}])) as typeof scope.sources})}>{ui("Select all")}</button>
@@ -155,29 +128,65 @@ export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChan
       </section>;
     })}
     </fieldset>
-    {cop17Demo ? <details className="cop17-examples" open={examplesExpanded} onToggle={event => setExamplesExpanded(event.currentTarget.open)}>
-      <summary>{ui("Advanced analysis examples")}<small>{ui("Predefined datasets")}</small></summary>
-      <p className="empty-state">{ui("These examples use predefined datasets to demonstrate advanced analyses.")}</p>
-      <fieldset className="cop17-presets" disabled={disabled}>
-      <legend className="sr-only">{ui("Advanced analysis examples")}</legend>
-      <p className="empty-state">{ui("Choose a complete setup, then select an analysis. You can edit the question before asking.")}</p>
-      <label className="settings-field" htmlFor="chat-demo-setup"><span>{ui("Dataset and assay")}</span>
-        <select id="chat-demo-setup" className="field" value={selectedSetupKey} onChange={event => setSetupKey(event.target.value)}>
-          <option value="">{ui("Choose a dataset and assay")}</option>
-          {setupKey && !setup ? <option value={setupKey}>{ui("Selected setup is unavailable")}</option> : null}
-          {setups.map(item => <option key={item.key} value={item.key}>{item.label}</option>)}
-        </select>
-      </label>
-      <div className="cop17-preset-buttons">
-        <button className="button secondary-button" type="button" disabled={!setup?.option.workflows.some(w => w.kind === "fish_frequency")} onClick={() => applyPreset("fish_frequency")}>{ui("Fish detection frequency")}</button>
-        <button className="button secondary-button" type="button" disabled={!setup?.option.sst_available || !setup.option.workflows.some(w => w.kind === "temperature_comparison")} onClick={() => applyPreset("temperature_comparison")}>{ui("Fish and sea surface temperature")}</button>
-      </div>
-      <p className="empty-state">{ui("Presets replace source filters with the published setup. Published datasets are fixed; detection frequency is not abundance.")}</p>
-      {selectedAnalysis ? <p role="status">{ui("Selected analysis")}: {selectedAnalysis.label} · {ui(researchIntent?.kind === "temperature_comparison" ? "Fish and sea surface temperature" : researchIntent?.kind === "fish_frequency" ? "Fish detection frequency" : "Published eDNA analysis")}</p> : null}
-      {exampleActive && analysisChoicesLoaded && !selectedAnalysis ? <p role="status">{ui("Selected analysis is unavailable. Return to free-text search or choose another example.")}</p> : null}
-      {analysisError ? <><p role="status">{ui(analysisError)}</p><button className="button secondary-button" type="button" onClick={() => setRetry(value => value + 1)}>{ui("Retry loading choices")}</button></> : null}
-      </fieldset>
-    </details> : null}
-
   </>;
+}
+
+// Kept above the question rather than inside source settings, so every mode is visible.
+export function Cop17ChatModes({analysisId, researchIntent, disabled, onPresetChange}: {
+  analysisId: string; researchIntent?: ResearchIntent; disabled?: boolean;
+  onPresetChange: (preset: ChatPreset) => void;
+}) {
+  const {ui} = useAppPreferences();
+  const [options, setOptions] = useState<PublishedOption[]>([]);
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+  const [retry, setRetry] = useState(0);
+  const exampleActive = !!(analysisId || researchIntent);
+  const setup = !error ? fixedDemoSetup(options) : undefined;
+  useEffect(() => {
+    if (disabled) return;
+    let active = true;
+    setError(false); setLoaded(false);
+    request<{options: PublishedOption[]}>("/chat/analysis-options")
+      .then(value => {if (active) {setOptions(value.options); setLoaded(true);}})
+      .catch(() => {if (active) {setError(true); setLoaded(true);}});
+    return () => {active = false;};
+  }, [disabled, retry]);
+  function applyPreset(kind: "fish_frequency" | "temperature_comparison") {
+    if (!setup) return;
+    const workflow = setup.option.workflows.find(workflow => workflow.kind === kind);
+    if (!workflow || kind === "temperature_comparison" && !setup.option.sst_available) return;
+    const next = defaultScope();
+    next.sources.remote_sensing.enabled = kind === "temperature_comparison";
+    if (kind === "temperature_comparison" && setup.option.sst_dataset_id) next.sources.remote_sensing.filters = {dataset_id: setup.option.sst_dataset_id};
+    onPresetChange({scope: next, analysisId: setup.option.analysis_id,
+      intent: {kind, protocol_id: setup.protocolId}, question: ui(workflow.question)});
+  }
+  return <section className="cop17-modes" aria-label={ui("Search and analysis")}>
+    <div className="cop17-mode-grid">
+      <fieldset className="cop17-basic" disabled={disabled}>
+        <legend>{ui("Basic function")}</legend>
+        <button className={`button${exampleActive ? " secondary-button" : ""}`} type="button" aria-pressed={!exampleActive}
+          onClick={() => {if (exampleActive) onPresetChange({scope: defaultScope(), analysisId: ""});}}>
+          {ui("Free-text search")}<span className="cop17-default-badge">{ui("Default")}</span>
+        </button>
+      </fieldset>
+      <fieldset className="cop17-examples" disabled={disabled}>
+        <legend>{ui("Advanced analysis examples")}</legend>
+        <div className="cop17-preset-buttons">
+          <button className={`button${analysisId === setup?.option.analysis_id && researchIntent?.kind === "fish_frequency" ? "" : " secondary-button"}`}
+            type="button" aria-pressed={!!analysisId && analysisId === setup?.option.analysis_id && researchIntent?.kind === "fish_frequency"}
+            disabled={!loaded || !setup?.option.workflows.some(w => w.kind === "fish_frequency")} onClick={() => applyPreset("fish_frequency")}>{ui("Fish detection frequency")}</button>
+          <button className={`button${analysisId === setup?.option.analysis_id && researchIntent?.kind === "temperature_comparison" ? "" : " secondary-button"}`}
+            type="button" aria-pressed={!!analysisId && analysisId === setup?.option.analysis_id && researchIntent?.kind === "temperature_comparison"}
+            disabled={!loaded || !setup?.option.sst_available || !setup.option.sst_dataset_id || !setup.option.workflows.some(w => w.kind === "temperature_comparison")}
+            onClick={() => applyPreset("temperature_comparison")}>{ui("Fish and sea surface temperature")}</button>
+        </div>
+      </fieldset>
+    </div>
+    <p className="empty-state cop17-fixed-setup">{ui("Advanced examples use a fixed dataset and assay: Miyagi 2020–2023 · 3NN (95%) · MiSeq paired-end (12S rRNA) · MUR SST v4.1.")}</p>
+    {loaded && !setup ? <p role="status">{ui("The fixed 3NN + MiSeq setup is unavailable. Free-text search remains available.")}</p> : null}
+    {error ? <button className="button secondary-button" type="button" disabled={disabled} onClick={() => setRetry(value => value + 1)}>{ui("Retry loading choices")}</button> : null}
+    {exampleActive ? <p className="empty-state">{ui("Presets replace source filters with the published setup. Published datasets are fixed; detection frequency is not abundance.")}</p> : null}
+  </section>;
 }
