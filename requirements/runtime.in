@@ -16,6 +16,8 @@ certifi==2026.10.19
 urllib3==2.8.0
 google-genai==2.25.0
 google-cloud-storage==3.15.0
+# GHSA-xcq7-p3pf-p88h / CVE-2026-114603: patched OpenTelemetry API.
+opentelemetry-api==1.45.1
 sqlalchemy==2.0.52
 # SQLAlchemy requires greenlet on the Linux/x86_64 Cloud Build and Cloud Run
 # targets, but pip-compile omits that conditional dependency on Apple Silicon.
