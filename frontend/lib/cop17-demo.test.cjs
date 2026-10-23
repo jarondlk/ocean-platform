@@ -118,7 +118,7 @@ test('two clicks select complete published setup; free-text clears analysis pins
     assert.equal(requests[0].evidence_scope.sources.remote_sensing.filters.dataset_id, 'mur-miyagi-2020-2023');
     assert.equal(requests[0].evidence_scope.sources.ctd.enabled, false);
     await act(async () => renderer.root.findByType('textarea').props.onChange({target: {value: 'My own ANEMONE question'}}));
-    await act(async () => button(renderer, 'Free-text search').props.onClick());
+    await act(async () => button(renderer, 'Return to free-text search').props.onClick());
     await act(async () => renderer.root.findByType('form').props.onSubmit({preventDefault() {}}));
     assert.equal(requests[1].query, 'My own ANEMONE question');
     assert.equal(requests[1].research_intent, undefined);
@@ -137,4 +137,77 @@ test('preset refresh cannot silently replace a disappeared assay', async () => {
     assert(button(renderer, 'Fish and sea surface temperature').props.disabled);
     assert.equal(renderer.root.findByProps({id: 'chat-demo-setup'}).props.value, 'stale-assay');
   } finally {await act(async () => renderer?.unmount()); delete global.autoAnalysisOptions;}
+});
+
+
+test('opening advanced examples and choosing a setup leave free-text requests unpinned', async () => {
+  freshStorage(); global.autoAnalysisOptions = demoOptions();
+  const requests = []; global.autoChatRequest = async request => {requests.push(request); return {answer: 'Retrieved', n_sources: 0, sources: []};};
+  let renderer;
+  try {
+    await act(async () => {renderer = create(tree('demo'));});
+    const examples = renderer.root.findByProps({className: 'cop17-examples'});
+    assert.equal(examples.props.open, false);
+    await submit(renderer, 'My own ANEMONE question');
+    await act(async () => examples.props.onToggle({currentTarget: {open: true}}));
+    const select = renderer.root.findByProps({id: 'chat-demo-setup'});
+    await act(async () => select.props.onChange({target: {value: select.props.value}}));
+    await act(async () => renderer.root.findByType('form').props.onSubmit({preventDefault() {}}));
+    assert.equal(requests.length, 2);
+    for (const request of requests) {
+      assert.equal(request.research_intent, undefined);
+      assert.equal(request.evidence_scope.sources.edna_metabarcoding.analysis_id, undefined);
+      assert.deepEqual(request.evidence_scope.sources.remote_sensing.filters, {});
+      assert.equal(request.evidence_scope.sources.remote_sensing.enabled, true);
+      assert.equal(request.evidence_scope.sources.edna_metabarcoding.enabled, true);
+    }
+  } finally {await act(async () => renderer?.unmount()); delete global.autoAnalysisOptions; delete global.autoChatRequest;}
+});
+
+test('returning from an untouched example restores the free-text draft and scope without preset pins', async () => {
+  const values = freshStorage(); global.autoAnalysisOptions = demoOptions();
+  const freeScope = defaultScope();
+  freeScope.sources.remote_sensing.enabled = false;
+  freeScope.sources.edna_metabarcoding.filters = {sample_id: 'chosen-sample'};
+  values.set(settingsStorageKey('demo'), encodeSettings(defaultSettings, freeScope));
+  const requests = []; global.autoChatRequest = async request => {requests.push(request); return {answer: 'Retrieved', n_sources: 0, sources: []};};
+  let renderer;
+  try {
+    await act(async () => {renderer = create(tree('demo'));});
+    await act(async () => renderer.root.findByType('textarea').props.onChange({target: {value: 'My original question'}}));
+    await act(async () => button(renderer, 'Fish and sea surface temperature').props.onClick());
+    await act(async () => renderer.root.findByType('form').props.onSubmit({preventDefault() {}}));
+    assert.equal(requests[0].research_intent.kind, 'temperature_comparison');
+    await act(async () => button(renderer, 'Return to free-text search').props.onClick());
+    assert.equal(renderer.root.findByType('textarea').props.value, 'My original question');
+    assert.equal(renderer.root.findByProps({className: 'cop17-examples'}).props.open, false);
+    await act(async () => renderer.root.findByType('form').props.onSubmit({preventDefault() {}}));
+    assert.deepEqual(requests[1].evidence_scope, freeScope);
+    assert.equal(requests[1].research_intent, undefined);
+    // A later account must not inherit this draft, even while an example is active.
+    await act(async () => button(renderer, 'Fish detection frequency').props.onClick());
+    await act(async () => renderer.update(tree('other-account')));
+    assert.equal(renderer.root.findByType('textarea').props.value, '');
+    await submit(renderer, 'New account question');
+    assert.equal(requests[2].research_intent, undefined);
+    assert.equal(requests[2].evidence_scope.sources.edna_metabarcoding.analysis_id, undefined);
+    assert.deepEqual(requests[2].evidence_scope.sources.edna_metabarcoding.filters, {});
+  } finally {await act(async () => renderer?.unmount()); delete global.autoAnalysisOptions; delete global.autoChatRequest;}
+});
+
+test('an explicit analysis link opens advanced context until the visitor returns to free text', async () => {
+  freshStorage(); global.autoAnalysisOptions = demoOptions();
+  global.window.location.search = '?analysis_id=' + 'a'.repeat(64);
+  const requests = []; global.autoChatRequest = async request => {requests.push(request); return {answer: 'Published', n_sources: 0, sources: []};};
+  let renderer;
+  try {
+    await act(async () => {renderer = create(tree('demo'));});
+    assert.equal(renderer.root.findByProps({className: 'cop17-examples'}).props.open, true);
+    await submit(renderer, 'Question for the linked analysis');
+    assert.equal(requests[0].evidence_scope.sources.edna_metabarcoding.analysis_id, 'a'.repeat(64));
+    await act(async () => button(renderer, 'Return to free-text search').props.onClick());
+    await submit(renderer, 'My own question');
+    assert.equal(requests[1].evidence_scope.sources.edna_metabarcoding.analysis_id, undefined);
+    assert.equal(requests[1].research_intent, undefined);
+  } finally {await act(async () => renderer?.unmount()); delete global.autoAnalysisOptions; delete global.autoChatRequest;}
 });

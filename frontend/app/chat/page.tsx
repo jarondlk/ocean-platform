@@ -15,14 +15,14 @@ import type { AnswerAudit, ChatResponse, CitationAuditRecord, ContextDocument, M
 import { SourceTable } from "@/components/SourceTable";
 import { useAppPreferences } from "@/lib/preferences";
 
-import { ChatSourceSettings, filterLabels } from "@/components/ChatSourceSettings";
+import { ChatSourceSettings, filterLabels, type ChatPreset } from "@/components/ChatSourceSettings";
 import { ResearchResultCards } from "@/components/ResearchResultCards";
 import { SourceCoverage } from "@/components/SourceCoverage";
 import type { ResearchIntent } from "@/types";
 import { useChatSettings } from "@/lib/use-chat-settings";
 import { useChatIdentity } from "@/components/ChatIdentityProvider";
 import { effectiveChatSettings, readAutoPlan } from "@/lib/auto-settings";
-import { cop17Demo, sourceLabels, scopeErrors, settingsErrors, scopeForAnalysis, type SourceFamily, type ChatSettings } from "@/lib/chat-settings";
+import { cop17Demo, defaultScope, sourceLabels, scopeErrors, settingsErrors, scopeForAnalysis, type SourceFamily, type ChatSettings } from "@/lib/chat-settings";
 
 const quickQuestions = cop17Demo ? [] : [
   {
@@ -54,6 +54,8 @@ export default function ChatPage() {
   const [researchIntent, setResearchIntent] = useState<ResearchIntent | undefined>();
   const {settings, setSettings, scope, setScope, ready, blocked, storageNotice, reset} = useChatSettings(analysisId);
   const accountId = useChatIdentity();
+  const freeTextDraft = useRef<{account: string | null; query: string; scope: typeof scope} | null>(null);
+  const presetQuestion = useRef<string | null>(null);
   const currentAccount = useRef(accountId);
   currentAccount.current = accountId;
   const requestSequence = useRef(0);
@@ -81,6 +83,9 @@ export default function ChatPage() {
   const displayedScope = settings.autoSettings && autoPlan?.scope ? autoPlan.scope : submittedScope;
   const displayedAnalysisId = settings.autoSettings && autoPlan?.scope ? autoPlan.scope.sources.edna_metabarcoding.analysis_id || '' : analysisId;
   const displayedResearchIntent = settings.autoSettings && autoPlan?.scope ? autoPlan.researchIntent : researchIntent;
+  const demoExampleActive = cop17Demo && !!(displayedAnalysisId || displayedResearchIntent);
+  const demoExampleLabel = displayedResearchIntent?.kind === "fish_frequency" ? "Fish detection frequency"
+    : displayedResearchIntent?.kind === "temperature_comparison" ? "Fish and sea surface temperature" : "Published eDNA analysis";
   const displayedSettings = settings.autoSettings ? effectiveChatSettings(settings, response?.options) : settings;
   const [selectedCitation, setSelectedCitation] = useState<CitationTarget | null>(null);
   const [loading, setLoading] = useState(false);
@@ -91,6 +96,8 @@ export default function ChatPage() {
     requestSequence.current += 1;
     setResponseState(null); setAnalysisId(''); setResearchIntent(undefined);
     setLoading(false); setError(''); setModels(null); setCapabilities(null);
+    freeTextDraft.current = null; presetQuestion.current = null;
+    if (cop17Demo) setQuery("");
   }, [accountId]);
 
   useEffect(() => {
@@ -177,10 +184,33 @@ export default function ChatPage() {
     setSettings(current => ({...(current.autoSettings ? effectiveChatSettings(current, response?.options) : current), autoSettings: false}));
   }
 
+  function changeDemoPreset(preset: ChatPreset) {
+    let nextScope = preset.scope;
+    if (preset.analysisId) {
+      if (!analysisId && !researchIntent) freeTextDraft.current = {account: accountId, query, scope: scopeForAnalysis(scope, "")};
+      presetQuestion.current = preset.question ?? null;
+      if (preset.question !== undefined) setQuery(preset.question);
+    } else {
+      const draft = freeTextDraft.current?.account === accountId ? freeTextDraft.current : null;
+      nextScope = draft?.scope || preset.scope;
+      // Discard only an untouched preset prompt; keep questions the visitor edited.
+      if (query === presetQuestion.current) setQuery(draft?.query || "");
+      freeTextDraft.current = null; presetQuestion.current = null;
+    }
+    setSettings(current => ({...current, autoSettings: false}));
+    setScope(nextScope); setAnalysisId(preset.analysisId); setResearchIntent(preset.intent);
+    setResponse(null); setSelectedCitation(null); setError("");
+  }
+
   function resetControls() {
     setAnalysisId("");
     setResearchIntent(undefined);
     reset(models?.default_model || "");
+    if (cop17Demo) {
+      if (query === presetQuestion.current) setQuery(freeTextDraft.current?.account === accountId ? freeTextDraft.current.query : "");
+      freeTextDraft.current = null; presetQuestion.current = null;
+      setResponse(null); setSelectedCitation(null); setError("");
+    }
   }
 
   async function runQuestion(nextQuery: string) {
@@ -243,13 +273,18 @@ export default function ChatPage() {
         <div className="chat-layout">
           <section className="chat-main">
             {cop17Demo ? <div className="cop17-banner" role="region" aria-label={ui("COP17 demonstration")}>
-              <div><strong>{ui("COP17 demonstration")}</strong><p>{ui("Ask your own question, or choose a published analysis preset in Settings.")}</p></div>
+              <div><strong>{ui("Explore ocean data with your own questions.")}</strong><p>{ui("Free-text search is the default. Advanced examples use predefined datasets.")}</p></div>
               <div className="button-row" aria-label={ui("Language")}>
                 <button type="button" className="button secondary-button" aria-pressed={preferences?.locale === "en"} onClick={() => setPreference("locale", "en")}>English</button>
                 <button type="button" className="button secondary-button" aria-pressed={preferences?.locale === "ja"} onClick={() => setPreference("locale", "ja")}>日本語</button>
               </div>
             </div> : null}
             <article className="card">
+              {demoExampleActive ? <div className="cop17-active-example" role="status">
+                <div><strong>{ui("Advanced analysis example")}</strong><span>{ui(demoExampleLabel)}</span></div>
+                <button className="button secondary-button" type="button" disabled={!ready || loading}
+                  onClick={() => changeDemoPreset({scope: defaultScope(), analysisId: ""})}>{ui("Return to free-text search")}</button>
+              </div> : null}
               <label className="section-label" htmlFor="query-input" title={ui("User question sent to retrieval and the selected chat model.")}>
                 {ui("Question")}
               </label>
@@ -501,12 +536,7 @@ export default function ChatPage() {
             <ChatSourceSettings disabled={!ready || loading} scope={displayedScope} onChange={editSources}
               analysisId={displayedAnalysisId} onAnalysisChange={value => {materializeManual(); setAnalysisId(value);}}
               researchIntent={displayedResearchIntent} onResearchChange={(intent, question) => {materializeManual(); setResearchIntent(intent); if (question) setQuery(question);}}
-              onPresetChange={preset => {
-                setSettings(current => ({...current, autoSettings: false}));
-                setScope(preset.scope); setAnalysisId(preset.analysisId); setResearchIntent(preset.intent);
-                if (preset.question) setQuery(preset.question);
-                setResponse(null); setSelectedCitation(null);
-              }}
+              onPresetChange={changeDemoPreset}
               autoEnabled={settings.autoSettings} autoAvailable={autoAvailable}
               onAutoChange={enabled => setSettings(current => ({...current, autoSettings: enabled}))} />
             {settings.autoSettings && autoPlan?.scope ? <p className="empty-state">{ui("Settings shown apply to the last submitted question; AUTO will recompute them when you ask.")}</p> : null}
