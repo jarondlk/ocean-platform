@@ -1,0 +1,720 @@
+{
+  "date_jst": "2026-10-24",
+  "recorded_at_utc": "2026-10-23T18:14:34.604719+00:00",
+  "branch": "cop17-demo",
+  "origin": "https://demo.oceaninfobio.com",
+  "runtime_commit": "b67d164ed7a7804fbbd38f73236fca784158fd12",
+  "revision": "ocean-cop17-demo-00008-wd9",
+  "build_id": "74aaca41-1f3a-4c61-aa5f-a380a51eab1d",
+  "api_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:de9a3c125ace89e12013bf78dec8de74f99485c8ef1a4a07c7c9f318e1ac95b9",
+  "frontend_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:a19f0239be69dd9417d7f0e9f4143f6e2892e7449a0f25099e4dfbe3b8e0cd5a",
+  "frontend_unchanged": true,
+  "source": {
+    "commit": "b67d164ed7a7804fbbd38f73236fca784158fd12",
+    "branch": "cop17-demo",
+    "source_archive_sha256": "a33e841e334365271aa0b4d04020fcd0fbf4e1e9872a8309569c7a04cac779c8",
+    "source_bytes": 2380574,
+    "excluded_scientific_and_operational_paths": 78,
+    "backend_suite_passed": 1595,
+    "optional_integration_skips": 122,
+    "real_postgres_passed": 117,
+    "geography_and_location_routing_passed": 125,
+    "source_lint": "passed",
+    "independent_review": "no blockers",
+    "frontend_source_unchanged": true
+  },
+  "authentication_required": true,
+  "scan": {
+    "severity_counts": {
+      "LOW": 82,
+      "HIGH": 44,
+      "MEDIUM": 70,
+      "UNKNOWN": 1
+    },
+    "language_package_findings": [],
+    "accepted": true
+  },
+  "runtime_http_smoke": [
+    {
+      "url": "http://127.0.0.1:8000/health/live",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8000/chat/analysis-options",
+      "status": 401
+    },
+    {
+      "url": "http://127.0.0.1:8000/research-registry-reviews",
+      "status": 401
+    },
+    {
+      "url": "http://ocean-candidate-qa-frontend:3000/login",
+      "status": 200
+    },
+    {
+      "url": "http://ocean-candidate-qa-frontend:3000/api/auth/providers",
+      "status": 200
+    },
+    {
+      "url": "http://ocean-candidate-qa-frontend:3000/api/backend/chat/analysis-options",
+      "status": 401
+    }
+  ],
+  "schema_readiness": {
+    "migration_current_heads": [
+      "20261005_0016"
+    ],
+    "migration_expected_heads": [
+      "20261005_0016"
+    ],
+    "migrations_current": true,
+    "missing_columns": [],
+    "missing_tables": [],
+    "ready": true,
+    "table_count": 34,
+    "vector_extension": true
+  },
+  "demo_sql_acceptance": {
+    "browser_or_http_authentication_test": false,
+    "cases": [
+      {
+        "aggregate_id": "18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450",
+        "coordinate_count": 216,
+        "name": "alias-1",
+        "named_area_count": null,
+        "reference_sql_match": true
+      },
+      {
+        "aggregate_id": "18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450",
+        "coordinate_count": 216,
+        "name": "alias-2",
+        "named_area_count": null,
+        "reference_sql_match": true
+      },
+      {
+        "aggregate_id": "18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450",
+        "coordinate_count": 216,
+        "name": "alias-3",
+        "named_area_count": null,
+        "reference_sql_match": true
+      },
+      {
+        "aggregate_id": "18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450",
+        "coordinate_count": 216,
+        "name": "alias-4",
+        "named_area_count": null,
+        "reference_sql_match": true
+      },
+      {
+        "full_scan_repeated": false,
+        "name": "warm-reuse",
+        "same_aggregate_id": true
+      },
+      {
+        "aggregate_id": "78ba962e91ddb365b5a497c64c7385fcab546e9c52d1550904f5160ca38edbd3",
+        "coordinate_count": 1,
+        "name": "sample-filter",
+        "reference_sql": {
+          "coordinate_extent": {
+            "lat_max": 34.20833333,
+            "lat_min": 34.20833333,
+            "lon_max": 129.3125,
+            "lon_min": 129.3125
+          },
+          "latitude_extreme_positions": [
+            {
+              "lat": 34.20833333,
+              "lon": 129.3125
+            },
+            {
+              "lat": 34.20833333,
+              "lon": 129.3125
+            }
+          ],
+          "latitude_extreme_separation_km": 0,
+          "locations": {
+            "controls": 0,
+            "distinct_coordinate_pairs": 1,
+            "invalid_coordinate_occurrences": 0,
+            "missing_coordinate_occurrences": 0,
+            "source_occurrences": 1,
+            "unknown_control_status": 1,
+            "valid_coordinate_occurrences": 1
+          }
+        }
+      },
+      {
+        "aggregate_id": "6f34874f2a8b028170a8b2826542da6cd4216e4f2e26c2ad6526637ce6935561",
+        "coordinate_count": 55,
+        "name": "project-filter",
+        "reference_sql": {
+          "coordinate_extent": {
+            "lat_max": 45.04166667,
+            "lat_min": 24.45833333,
+            "lon_max": 144.8125,
+            "lon_min": 123.8125
+          },
+          "latitude_extreme_positions": [
+            {
+              "lat": 24.45833333,
+              "lon": 123.8125
+            },
+            {
+              "lat": 45.04166667,
+              "lon": 142.0625
+            }
+          ],
+          "latitude_extreme_separation_km": 2817.309,
+          "locations": {
+            "controls": 0,
+            "distinct_coordinate_pairs": 55,
+            "invalid_coordinate_occurrences": 0,
+            "missing_coordinate_occurrences": 0,
+            "source_occurrences": 636,
+            "unknown_control_status": 636,
+            "valid_coordinate_occurrences": 636
+          }
+        }
+      },
+      {
+        "aggregate_id": "032dff2467276e8df96c4c36e7a88e7a92df443bb61883b4227d7e0333c0f111",
+        "existing_receipt": true,
+        "load_and_trace_passed": true,
+        "name": "historical-v1"
+      },
+      {
+        "aggregate_id": "4566fa7f78d223578f115e74ead13da32a2e5ff7f926b2d5d0ccd5ed3deb5f2a",
+        "existing_receipt": true,
+        "load_and_trace_passed": true,
+        "name": "historical-v2"
+      },
+      {
+        "clarification": true,
+        "name": "edna-disabled"
+      },
+      {
+        "clarification": true,
+        "name": "pinned-analysis"
+      },
+      {
+        "clarification": true,
+        "name": "unsupported-place"
+      },
+      {
+        "clarification": true,
+        "name": "unsupported-date"
+      },
+      {
+        "clarification": true,
+        "name": "directional-qualifier"
+      }
+    ],
+    "cloud_resources_modified": false,
+    "coordinate_extent": {
+      "lat_max": 45.54166667,
+      "lat_min": 17.45833333,
+      "lon_max": 148.6875,
+      "lon_min": 123.8125
+    },
+    "historical_v1_v2_and_geography_v3_roundtrip": true,
+    "latitude_extreme_separation_km": 3184.838,
+    "passed": true,
+    "probe": "cop17-catalogue-geography",
+    "reference_sql": {
+      "coordinate_extent": {
+        "lat_max": 45.54166667,
+        "lat_min": 17.45833333,
+        "lon_max": 148.6875,
+        "lon_min": 123.8125
+      },
+      "latitude_extreme_positions": [
+        {
+          "lat": 17.45833333,
+          "lon": 148.6875
+        },
+        {
+          "lat": 45.54166667,
+          "lon": 141.9375
+        }
+      ],
+      "latitude_extreme_separation_km": 3184.838,
+      "locations": {
+        "controls": 0,
+        "distinct_coordinate_pairs": 216,
+        "invalid_coordinate_occurrences": 0,
+        "missing_coordinate_occurrences": 1,
+        "source_occurrences": 3155,
+        "unknown_control_status": 3155,
+        "valid_coordinate_occurrences": 3154
+      }
+    },
+    "scientific_rows_modified": false,
+    "stale_publication_rejected": true,
+    "users_created_or_reactivated": false,
+    "execution": "ocean-cop17-geography-qa-lwv8t"
+  },
+  "live_browser": {
+    "passed": true,
+    "revision": "ocean-cop17-demo-00008-wd9",
+    "started_at": "2026-10-23T18:08:13.976Z",
+    "cases": [
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450"
+        ],
+        "query": "how many named area are available",
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nThe number of named bays or coastal areas is not established by this published ANEMONE catalogue. This aggregate has no reviewed area boundaries or memberships, so recorded coordinate positions are not counted as bays. This does not mean there are zero geographic areas. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nThe data matching the selected filters contain 216 distinct reported coordinate positions, counted across the full matching catalogue rather than a few retrieved examples. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nStored coordinates range from latitude 17.458333 to 45.541667 degrees and longitude 123.812500 to 148.687500 degrees. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nThe northernmost and southernmost recorded positions are approximately 3,184.8 km apart. This is an approximate great-circle separation between two recorded positions, not the maximum distance between every pair or continuous sampled coverage. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nExplicitly classified controls are excluded. The scope contains 3,155 source records: 3,154 with valid coordinates, 1 with missing coordinates and 0 with invalid coordinates. Records without usable coordinates remain unlocated. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nThe bounding box describes the extent of recorded coordinates; its interior is not necessarily sampled. Provider grid coordinates do not establish precise physical sites or membership in named bays. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nControl status is unknown for 3,155 records; they are not assumed to be confirmed environmental samples. Coordinate-precision record counts: provider_grid_unconfirmed=3,154. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nApplied source filters: Provider=anemone. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nWas this answer useful?",
+        "name": "named-area-original-en",
+        "ui_elapsed_ms": 4243,
+        "passed": true
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450"
+        ],
+        "query": "Are all the sampling data from around the same area?",
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nThe data matching the selected filters contain 216 distinct reported coordinate positions, counted across the full matching catalogue rather than a few retrieved examples. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nStored coordinates range from latitude 17.458333 to 45.541667 degrees and longitude 123.812500 to 148.687500 degrees. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nThe northernmost and southernmost recorded positions are approximately 3,184.8 km apart. This is an approximate great-circle separation between two recorded positions, not the maximum distance between every pair or continuous sampled coverage. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nThe number of named bays or coastal areas is not established by this published ANEMONE catalogue. This aggregate has no reviewed area boundaries or memberships, so recorded coordinate positions are not counted as bays. This does not mean there are zero geographic areas. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nExplicitly classified controls are excluded. The scope contains 3,155 source records: 3,154 with valid coordinates, 1 with missing coordinates and 0 with invalid coordinates. Records without usable coordinates remain unlocated. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nThe bounding box describes the extent of recorded coordinates; its interior is not necessarily sampled. Provider grid coordinates do not establish precise physical sites or membership in named bays. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nControl status is unknown for 3,155 records; they are not assumed to be confirmed environmental samples. Coordinate-precision record counts: provider_grid_unconfirmed=3,154. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nApplied source filters: Provider=anemone. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nWas this answer useful?",
+        "name": "same-area-original-en",
+        "ui_elapsed_ms": 545,
+        "passed": true
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450"
+        ],
+        "query": "Which sampling areas have names?",
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nThe number of named bays or coastal areas is not established by this published ANEMONE catalogue. This aggregate has no reviewed area boundaries or memberships, so recorded coordinate positions are not counted as bays. This does not mean there are zero geographic areas. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nThe data matching the selected filters contain 216 distinct reported coordinate positions, counted across the full matching catalogue rather than a few retrieved examples. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nStored coordinates range from latitude 17.458333 to 45.541667 degrees and longitude 123.812500 to 148.687500 degrees. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nThe northernmost and southernmost recorded positions are approximately 3,184.8 km apart. This is an approximate great-circle separation between two recorded positions, not the maximum distance between every pair or continuous sampled coverage. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nExplicitly classified controls are excluded. The scope contains 3,155 source records: 3,154 with valid coordinates, 1 with missing coordinates and 0 with invalid coordinates. Records without usable coordinates remain unlocated. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nThe bounding box describes the extent of recorded coordinates; its interior is not necessarily sampled. Provider grid coordinates do not establish precise physical sites or membership in named bays. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nControl status is unknown for 3,155 records; they are not assumed to be confirmed environmental samples. Coordinate-precision record counts: provider_grid_unconfirmed=3,154. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nApplied source filters: Provider=anemone. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nWas this answer useful?",
+        "name": "named-area-reordered-en",
+        "passed": true
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450"
+        ],
+        "query": "名前のついた採水エリアはいくつありますか？",
+        "response": "応答\nOutcome\nAnswered\nModel run\nいいえ\n\n名称付きの湾・沿岸地域の数は、この公表済みANEMONEカタログでは確定していません。 この集計は地域境界や確認済みの所属関係を持たないため、記録座標の数を湾の数として数えません。これは地域数がゼロという意味ではありません。 \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\n選択条件に一致するデータには異なる記録座標位置が216か所あります。これは検索結果の一部ではなく、対象カタログ全体の集計です。 \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\n保存された座標の範囲は、緯度17.458333～45.541667度、経度123.812500～148.687500度です。 \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\n記録上の最北・最南の座標位置は約3,184.8 km離れています。この距離は実在する記録座標の2点間の概算であり、全地点間の最大距離や連続して採水した範囲ではありません。 \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\n明示的にコントロールと分類された記録は除外しています。対象ソース記録は3,155件、有効座標は3,154件、座標欠損は1件、無効座標は0件です。座標のない記録の場所は未確認です。 \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\n境界ボックスは座標の外接範囲を表し、その内部全体が調査済みという意味ではありません。プロバイダーのグリッド座標を含むため、厳密な採水地点の同一性や湾への所属は保証しません。 \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nコントロール状態が不明な記録は3,155件あり、確認済みの環境サンプルとはみなしていません。座標精度の記録件数：provider_grid_unconfirmed=3,154。\n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\n適用条件：Provider=anemone。\n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nWas this answer useful?",
+        "name": "named-area-ja",
+        "passed": true
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450"
+        ],
+        "query": "採水データはすべて同じ地域のものですか？",
+        "response": "応答\nOutcome\nAnswered\nModel run\nいいえ\n\n選択条件に一致するデータには異なる記録座標位置が216か所あります。これは検索結果の一部ではなく、対象カタログ全体の集計です。 \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\n保存された座標の範囲は、緯度17.458333～45.541667度、経度123.812500～148.687500度です。 \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\n記録上の最北・最南の座標位置は約3,184.8 km離れています。この距離は実在する記録座標の2点間の概算であり、全地点間の最大距離や連続して採水した範囲ではありません。 \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\n名称付きの湾・沿岸地域の数は、この公表済みANEMONEカタログでは確定していません。 この集計は地域境界や確認済みの所属関係を持たないため、記録座標の数を湾の数として数えません。これは地域数がゼロという意味ではありません。 \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\n明示的にコントロールと分類された記録は除外しています。対象ソース記録は3,155件、有効座標は3,154件、座標欠損は1件、無効座標は0件です。座標のない記録の場所は未確認です。 \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\n境界ボックスは座標の外接範囲を表し、その内部全体が調査済みという意味ではありません。プロバイダーのグリッド座標を含むため、厳密な採水地点の同一性や湾への所属は保証しません。 \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nコントロール状態が不明な記録は3,155件あり、確認済みの環境サンプルとはみなしていません。座標精度の記録件数：provider_grid_unconfirmed=3,154。\n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\n適用条件：Provider=anemone。\n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nWas this answer useful?",
+        "name": "same-area-ja",
+        "passed": true
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_78ba962e91ddb365b5a497c64c7385fcab546e9c52d1550904f5160ca38edbd3"
+        ],
+        "query": "Are all the sampling data from around the same area?",
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nThe data matching the selected filters contain 1 distinct reported coordinate positions, counted across the full matching catalogue rather than a few retrieved examples. \n[aggregate_edna_78ba962e91ddb365b5a497c64c7385fcab546e9c52d1550904f5160ca38edbd3]\n\nStored coordinates range from latitude 34.208333 to 34.208333 degrees and longitude 129.312500 to 129.312500 degrees. \n[aggregate_edna_78ba962e91ddb365b5a497c64c7385fcab546e9c52d1550904f5160ca38edbd3]\n\nAll matching records with usable coordinates share one stored position. That alone does not verify one physical site or bay. \n[aggregate_edna_78ba962e91ddb365b5a497c64c7385fcab546e9c52d1550904f5160ca38edbd3]\n\nThe number of named bays or coastal areas is not established by this published ANEMONE catalogue. This aggregate has no reviewed area boundaries or memberships, so recorded coordinate positions are not counted as bays. This does not mean there are zero geographic areas. \n[aggregate_edna_78ba962e91ddb365b5a497c64c7385fcab546e9c52d1550904f5160ca38edbd3]\n\nExplicitly classified controls are excluded. The scope contains 1 source records: 1 with valid coordinates, 0 with missing coordinates and 0 with invalid coordinates. Records without usable coordinates remain unlocated. \n[aggregate_edna_78ba962e91ddb365b5a497c64c7385fcab546e9c52d1550904f5160ca38edbd3]\n\nThe bounding box describes the extent of recorded coordinates; its interior is not necessarily sampled. Provider grid coordinates do not establish precise physical sites or membership in named bays. \n[aggregate_edna_78ba962e91ddb365b5a497c64c7385fcab546e9c52d1550904f5160ca38edbd3]\n\nControl status is unknown for 1 records; they are not assumed to be confirmed environmental samples. Coordinate-precision record counts: provider_grid_unconfirmed=1. \n[aggregate_edna_78ba962e91ddb365b5a497c64c7385fcab546e9c52d1550904f5160ca38edbd3]\n\nApplied source filters: Provider=anemone; Sample ID=00144db778f30ca6787ecc1304e8ea1fd7d34ab95971922ca291e90ded593189. \n[aggregate_edna_78ba962e91ddb365b5a497c64c7385fcab546e9c52d1550904f5160ca38edbd3]\n\nWas this answer useful?",
+        "name": "single-sample-filter",
+        "passed": true
+      },
+      {
+        "citations": [
+          "Inspect citation aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450"
+        ],
+        "query": "Are all the sampling data from around the same area?",
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nThe data matching the selected filters contain 216 distinct reported coordinate positions, counted across the full matching catalogue rather than a few retrieved examples. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nStored coordinates range from latitude 17.458333 to 45.541667 degrees and longitude 123.812500 to 148.687500 degrees. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nThe northernmost and southernmost recorded positions are approximately 3,184.8 km apart. This is an approximate great-circle separation between two recorded positions, not the maximum distance between every pair or continuous sampled coverage. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nThe number of named bays or coastal areas is not established by this published ANEMONE catalogue. This aggregate has no reviewed area boundaries or memberships, so recorded coordinate positions are not counted as bays. This does not mean there are zero geographic areas. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nExplicitly classified controls are excluded. The scope contains 3,155 source records: 3,154 with valid coordinates, 1 with missing coordinates and 0 with invalid coordinates. Records without usable coordinates remain unlocated. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nThe bounding box describes the extent of recorded coordinates; its interior is not necessarily sampled. Provider grid coordinates do not establish precise physical sites or membership in named bays. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nControl status is unknown for 3,155 records; they are not assumed to be confirmed environmental samples. Coordinate-precision record counts: provider_grid_unconfirmed=3,154. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nApplied source filters: Provider=anemone. \n[aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450]\n\nWas this answer useful?",
+        "name": "final-default-spread",
+        "passed": true
+      }
+    ],
+    "checks": [
+      {
+        "name": "ordinary_model_search",
+        "passed": true,
+        "response": "Response\nOutcome\nAnswered\nModel run\nYes\nANEMONE eDNA: 2 evidence documents supplied\n\nCounts describe retrieved or supplied evidence, not complete database coverage or verified scientific matches.\n\nApplied evidence scope excludes CTD, metagenome, and satellite remote sensing sources.\n\nTaxa Recorded for Sample 00144db778f30ca6787ecc1304e8ea1fd7d34ab95971922ca291e90ded593189\n\nUnder the QCauto (qcauto_target) assignment method, the highest-read recorded taxa include \n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_target]\n:\n\nEntomacrodus (genus)\nTakifugu alboplumbeus (species)\nSiganus (genus)\nTakifugu (genus)\nApogon notatus (species)\nSebastiscus marmoratus (species)\nSpratelloides gracilis (species)\nSebastes (genus)\nIstiblennius (genus)\nPseudolabrus eoethinus (species)\n\nUnder the QCauto 95%-3NN (qcauto_95pct_3nn_target) assignment method, the highest-read recorded taxa include \n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_95pct_3nn_target]\n:\n\nEntomacrodus stellifer stellifer (subspecies)\nTakifugu alboplumbeus (species)\nSiganus fuscescens (species)\nApogon notatus (species)\nSebastiscus marmoratus (species)\nSpratelloides gracilis (species)\nSebastes (genus)\nIstiblennius enosimae (species)\nPseudolabrus eoethinus (species)\n\n(Note: The retrieved records present featured high-read taxa examples and do not represent a complete catalogue of all taxa in the sample \n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_target]\n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_95pct_3nn_target]\n.)\n\nLimitations of the Evidence\nData Type Semantics: Reported read counts represent sequencing counts, not biological abundance, biomass, organism counts, or absolute concentration \n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_target]\n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_95pct_3nn_target]\n.\nDetection & Calibration: A missing detection record does not establish biological absence \n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_target]\n[edna_cc7b3485574f1728e8900ded159a037c82e178c380624bf6a164c48a8aee6340_qcauto_95pct_3nn_target]\n. Standard presence is recorded, but calibration status is not established from the supplied records, and internal standards alone do not establ"
+      },
+      {
+        "name": "disabled_source_guard_ja",
+        "passed": true,
+        "response": "応答\nOutcome\nAbstained\nModel run\nいいえ\n理由\nExact count needs clarification\n\n記録された座標位置の数を調べるには、ANEMONE環境DNAを有効にしてください。衛星SSTの範囲は採水地点とは別です。\n\nWas this answer useful?"
+      },
+      {
+        "name": "unresolved_directional_scope_guard",
+        "passed": true,
+        "response": "Response\nOutcome\nAbstained\nModel run\nNo\nReason\nExact count needs clarification\n\nI can describe the selected ANEMONE catalogue's recorded coordinate coverage and explain whether a named-area total is established. Place-name, date and ecological restrictions must be resolved in source filters; no wider-area result was substituted.\n\nWas this answer useful?"
+      },
+      {
+        "name": "published_analysis_pin_guard",
+        "passed": true,
+        "response": "Response\nOutcome\nAbstained\nModel run\nNo\nReason\nExact count needs clarification\n\nReturn to free-text search to count ANEMONE coordinate positions with source filters. The selected published analysis has its own fixed cohort.\n\nWas this answer useful?"
+      },
+      {
+        "name": "fish_frequency_regression",
+        "passed": true,
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nResults from the selected published dataset and assay are shown below. Methods, full answer, and citations remain available.\n\nMiyagi regional analysis: Ranking\nAnalysis scope, methods and limitations\nTaxon\nAll taxa\nTridentiger trigonocephalus\nHexagrammos otakii\nTakifugu alboplumbeus\nEngraulis japonicus\nPseudoblennius cottoides\nParablennius yatabei\nErnogrammus hexagrammus\nPholis nebulosa\nGirella punctata\nDictyosoma burgeri\nResult table and denominators\nspecies\tposition\ttaxon_key\tDetected units\tEligible units (denominator)\tDetection frequency\tlow_support\tsampling_status\nTridentiger trigonocephalus\t1\tTridentiger trigonocephalus\t39\t39\t100.00%\tfalse\tsampled_detected\nHexagrammos otakii\t2\tHexagrammos otakii\t39\t39\t100.00%\tfalse\tsampled_detected\nTakifugu alboplumbeus\t3\tTakifugu alboplumbeus\t37\t39\t94.87%\tfalse\tsampled_detected\nEngraulis japonicus\t4\tEngraulis japonicus\t31\t39\t79.49%\tfalse\tsampled_detected\nPseudoblennius cottoides\t5\tPseudoblennius cottoides\t27\t39\t69.23%\tfalse\tsampled_detected\nParablennius yatabei\t6\tParablennius yatabei\t27\t39\t69.23%\tfalse\tsampled_detected\nErnogrammus hexagrammus\t7\tErnogrammus hexagrammus\t26\t39\t66.67%\tfalse\tsampled_detected\nPholis nebulosa\t8\tPholis nebulosa\t26\t39\t66.67%\tfalse\tsampled_detected\nGirella punctata\t9\tGirella punctata\t24\t39\t61.54%\tfalse\tsampled_detected\nDictyosoma burgeri\t10\tDictyosoma burgeri\t24\t39\t61.54%\tfalse\tsampled_detected\nPreviousNext\nMiyagi regional analysis: Series\nAnalysis scope, methods and limitations\nTaxon\nAll taxa\nTridentiger trigonocephalus\nHexagrammos otakii\nTakifugu alboplumbeus\nEngraulis japonicus\nPseudoblennius cottoides\nParablennius yatabei\nErnogrammus hexagrammus\nPholis nebulosa\nGire"
+      },
+      {
+        "name": "fish_sst_regression",
+        "passed": true,
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nResults from the selected published dataset and assay are shown below. Methods, full answer, and citations remain available.\n\nMiyagi regional analysis: Temperature contrasts\nAnalysis scope, methods and limitations\nTaxon\nAll taxa\nTridentiger trigonocephalus\nHexagrammos otakii\nTakifugu alboplumbeus\nEngraulis japonicus\nPseudoblennius cottoides\nParablennius yatabei\nErnogrammus hexagrammus\nPholis nebulosa\nGirella punctata\nDictyosoma burgeri\nResult table and denominators\ntaxon_key\tlow_detected\tlow_eligible\thigh_detected\thigh_eligible\tsupported\tSupported area-season strata\trepresentative\tAggregate high − low (percentage points)\tMean supported-stratum difference (percentage points)\nTridentiger trigonocephalus\t13\t13\t11\t11\ttrue\t1\tfalse\t0\t0\nHexagrammos otakii\t13\t13\t11\t11\ttrue\t1\tfalse\t0\t0\nTakifugu alboplumbeus\t11\t13\t11\t11\ttrue\t1\tfalse\t15.3846\t20\nEngraulis japonicus\t10\t13\t11\t11\ttrue\t1\tfalse\t23.0769\t60\nPseudoblennius cottoides\t9\t13\t6\t11\ttrue\t1\tfalse\t-14.6853\t40\nParablennius yatabei\t8\t13\t6\t11\ttrue\t1\tfalse\t-6.993\t46.6667\nErnogrammus hexagrammus\t9\t13\t6\t11\ttrue\t1\ttrue\t-14.6853\t60\nPholis nebulosa\t9\t13\t8\t11\ttrue\t1\tfalse\t3.4965\t26.6667\nGirella punctata\t8\t13\t6\t11\ttrue\t1\tfalse\t-6.993\t-40\nDictyosoma burgeri\t8\t13\t6\t11\ttrue\t1\tfalse\t-6.993\t26.6667\nPreviousNext\nMiyagi regional analysis: Temperature bins\nAnalysis scope, methods and limitations\nTaxon\nAll taxa\nTridentiger trigonocephalus\nHexagrammos otakii\nTakifugu alboplumbeus\nEngraulis japonicus\nPseudoblennius cottoides\nParablennius yatabei\nErnogrammus hexagrammus\nPholis nebulosa\nGirella punctata\nDictyosoma burgeri\nResult table and denominators\nMiyagi regional analysis: Temperature series\nAnalysis scope, methods and limitations\nPeriod\nAll periods\nyear\nseason\nmonth\n\nCharts show loaded results, with separate protocol, species, area and period groups. Missing v",
+        "charts": 6
+      },
+      {
+        "name": "existing_v2_location_count",
+        "passed": true,
+        "response": "Response\nOutcome\nAnswered\nModel run\nNo\n\nThe published ANEMONE catalogue matching the selected filters contains 216 distinct reported coordinate positions. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExact stored latitude/longitude pairs are counted once across repeated sampling dates, assays and assignment methods. Physical-site identities and named sampling areas remain unverified. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nExplicitly classified controls are excluded. There are 3,155 matching source records: 3,154 with valid coordinates, 1 with missing coordinates and 0 with invalid coordinates. Missing/invalid positions are excluded. \n[aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4]\n\nControl status is unknown for 3,155 records; they are not assumed to be confirmed environme",
+        "citations": [
+          "Inspect citation aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ]
+      },
+      {
+        "name": "geography_evidence_drawer",
+        "passed": true,
+        "evidence_excerpt": "ption \"Aldrichetta\"\n        - option \"Aldrichetta forsteri\"\n        - option \"Alectis\"\n        - option \"Alectis ciliaris\"\n        - option \"Alectrias\"\n        - option \"Alopiidae\"\n        - option \"Alticus\"\n        - option \"Aluterus\"\n        - option \"Ambassidae\"\n        - option \"Ambassis\"\n        - option \"Ambassis buruensis\"\n        - option \"Amblychaeturichthys\"\n        - option \"Amblychaeturichthys hexanema\"\n        - option \"Amblychaeturichthys sciistius\"\n        - option \"Amblycipitidae\"\n        - option \"Amblycirrhitus\"\n        - option \"Amblyeleotris\"\n        - option \"Amblygaster\"\n        - option \"Amblygaster sirm\"\n        - option \"Amblyglyphidodon\"\n        - option \"Amblygobius\"\n        - option \"Amblygobius phalaena\"\n        - option \"Amblyopinae\"\n        - option \"Ammodytidae\"\n        - option \"Amphilophus\"\n        - option \"Amphiprion\"\n        - option \"Amphiprion clarkii\"\n        - option \"Anabantiformes\"\n        - option \"Anampses\"\n        - option \"Anampses caeruleopunctatus\"\n        - option \"Anampses twistii\"\n        - option \"Anarhichadidae\"\n        - option \"Anarhichas\"\n        - option \"Anarhichas orientalis\"\n        - option \"Anguilla\"\n        - option \"Anguilla anguilla\"\n      - status: Loading choices…\n      - generic: From\n      - textbox \"From\"\n      - generic: To\n      - textbox \"To\"\n  - 'region \"Evidence: aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450\"':\n    - heading \"Exact ANEMONE geographic coverage\" [level=3]\n    - button \"Close evidence\" [active]:\n    - generic: analysis\n    - navigation \"Full evidence pages\":\n      - link \"Aggregate provenance\":\n        - /url: /provenance?view=trace&doc_id=aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450\n        - text: Aggregate prov"
+      },
+      {
+        "name": "geography_provenance_trace",
+        "passed": true,
+        "citation": "Inspect citation aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450"
+      }
+    ],
+    "completed_at": "2026-10-23T18:13:39.009Z"
+  },
+  "live_request_latencies": [
+    {
+      "httpRequest": {
+        "latency": "2.259913886s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T18:08:15.775295Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "0.343842026s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T18:08:28.824499Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "1.212530458s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T18:08:29.558463Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "1.474694423s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T18:08:43.907455Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "0.836966536s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T18:08:45.607144Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "0.331208856s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T18:09:30.058752Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "9.865646708s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T18:09:42.526079Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "0.147362412s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T18:10:13.352441Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "0.228486132s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T18:10:14.411756Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "8.411778979s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T18:10:58.542535Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "9.945783241s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T18:11:07.445459Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "10.415255048s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T18:12:27.915086Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "0.345722586s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T18:12:39.196550Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "0.323694987s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T18:13:03.744836Z"
+    }
+  ],
+  "anonymous_boundaries": [
+    {
+      "path": "/chat",
+      "status": 307,
+      "expected": 307
+    },
+    {
+      "path": "/login",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "path": "/api/backend/chat/analysis-options",
+      "status": 401,
+      "expected": 401
+    },
+    {
+      "path": "/api/backend/provenance",
+      "status": 401,
+      "expected": 401
+    }
+  ],
+  "source_metadata_key_audit": {
+    "keys": {
+      "provider_note_json": {},
+      "raw_metadata_json": {
+        "collection_date": 3155,
+        "collection_date_local": 3155,
+        "collection_date_utc": 3155,
+        "correspondence": 3155,
+        "filter_prod_name": 3155,
+        "lat_lon": 3154,
+        "num_filter": 3155,
+        "project_name": 3155,
+        "salinity": 2129,
+        "samp_collec_device": 3155,
+        "samp_mat_process": 3155,
+        "samp_name": 3155,
+        "samp_size": 3155,
+        "samp_store_sol": 3155,
+        "samp_store_temp": 3155,
+        "samp_taxon_id": 3155,
+        "size_frac_low": 3155,
+        "temp": 2778,
+        "worldmesh": 3154
+      }
+    },
+    "probe": "cop17-geography-source-metadata-keys",
+    "scientific_rows_modified": false,
+    "source_occurrences": 3155,
+    "types": {
+      "provider_note_json": {
+        "NoneType": 3155
+      },
+      "raw_metadata_json": {
+        "dict": 3155
+      }
+    }
+  },
+  "complete_retrieval_artifact_audit": {
+    "date_jst": "2026-10-24",
+    "source": "complete verified published ANEMONE retrieval metadata; no inferred names, geocoding or external sources",
+    "artifact": {
+      "path": "/private/tmp/ocean-cop17-ops/location-audit-published-retrieval.parquet",
+      "sha256": "4d1d327f59efc5373ab0f6cf3ad7614faf39d720a7fc0147bacaf79418f20e94",
+      "retrieval_generation": "a01a472a74ea55ffbd2cee1e69822555af801a00dbcf8956414a942564011716",
+      "object_generation": 1792595576770433
+    },
+    "retrieval_documents": 6996,
+    "source_occurrences": 3498,
+    "non_control_policy": "exclude is_control IS TRUE; retain NULL/unknown classification and disclose it",
+    "non_control_source_occurrences": 3155,
+    "non_control_occurrences_with_valid_coordinates": 3154,
+    "non_control_occurrences_missing_coordinates": 1,
+    "distinct_recorded_coordinate_pairs": 216,
+    "extent": {
+      "lat_min": 17.45833333,
+      "lat_max": 45.54166667,
+      "lon_min": 123.8125,
+      "lon_max": 148.6875
+    },
+    "latitude_span_degrees": 28.08333334,
+    "longitude_span_degrees": 24.875,
+    "maximum_pairwise_great_circle_span": {
+      "kilometres": 3184.838,
+      "endpoint_a": {
+        "lat": 17.45833333,
+        "lon": 148.6875
+      },
+      "endpoint_b": {
+        "lat": 45.54166667,
+        "lon": 141.9375
+      },
+      "definition": "maximum haversine distance over all 216 distinct valid non-control recorded positions; mean spherical Earth radius 6371.0088 km; grid-position diagnostic, not surveyed site distance"
+    },
+    "coordinate_precision_valid_occurrences": {
+      "provider_grid_unconfirmed": 3154
+    },
+    "geographic_names": {
+      "bay_non_null_retrieval_documents": 0,
+      "station_non_null_retrieval_documents": 0,
+      "bay_distinct_available_values": [],
+      "station_distinct_available_values": [],
+      "metadata_geographic_name_keys": {},
+      "metadata_geographic_name_values": {},
+      "structured_geographic_name_labels_in_text": {
+        "Country": 0,
+        "Region": 0,
+        "Province": 0,
+        "Prefecture": 0,
+        "City": 0,
+        "Municipality": 0,
+        "Station": 0,
+        "Site": 0,
+        "Bay": 0,
+        "Area": 0,
+        "Location": 0,
+        "Geographic location": 0,
+        "geo_loc_name": 0
+      },
+      "verified_named_area_count": null,
+      "raw_source_metadata_included": false,
+      "interpretation": "The published retrieval artifact provides no populated authoritative bay/station fields or geographic-name metadata. It contains canonical source IDs, hashes and row references, but not full raw sample metadata. Provider project/run IDs and source sample labels must not be parsed into geographic area names. No named-area count can be established from this artifact."
+    },
+    "metadata_top_level_keys": [
+      "calibration_status",
+      "canonical_records",
+      "classification_basis",
+      "community_evidence",
+      "coordinate_precision",
+      "copies_per_ml_record_count",
+      "detection_count",
+      "detection_set_sha256",
+      "edna_retrieval_document_version",
+      "featured_detection_ids",
+      "featured_internal_standard_ids",
+      "internal_standard_count",
+      "internal_standard_set_sha256",
+      "internal_standards_supplied",
+      "physical_sample_id",
+      "provider_locus",
+      "provider_team",
+      "read_count_sum",
+      "source_family",
+      "source_file_ids",
+      "source_occurrence_id",
+      "source_snapshot_ids",
+      "target_status",
+      "taxon_terms"
+    ],
+    "longitude_10_degree_strips": [
+      {
+        "west_inclusive": 120,
+        "east_exclusive": 130,
+        "distinct_coordinate_pairs": 22
+      },
+      {
+        "west_inclusive": 130,
+        "east_exclusive": 140,
+        "distinct_coordinate_pairs": 129
+      },
+      {
+        "west_inclusive": 140,
+        "east_exclusive": 150,
+        "distinct_coordinate_pairs": 65
+      }
+    ],
+    "recommendations": {
+      "named_areas": "Answer that named-area metadata is not supplied in the published evidence. Report the 216 recorded grid-coordinate positions as a separate count with its definition; do not substitute it for a count of named areas. Exact source-provided geographic names would require inspecting retained raw/canonical source metadata separately.",
+      "same_area": "Use the exact geographic extent and approximate maximum separation to describe broad coverage of the complete catalogue; distinguish this from the fixed Miyagi example cohort. Do not invent bay, country or region names."
+    }
+  },
+  "qa_job_sealed": {
+    "job": "ocean-cop17-geography-qa",
+    "sealed": true,
+    "secrets_removed": true,
+    "cloud_sql_connector_removed": true,
+    "scientific_rows_modified": false,
+    "users_created_or_reactivated": false
+  },
+  "production": {
+    "spec_unchanged": true,
+    "active_traffic": [
+      {
+        "percent": 100,
+        "revisionName": "ocean-platform-conference1012",
+        "tag": "conference-production",
+        "url": "https://conference-production---ocean-platform-6jsvoc67ra-an.a.run.app"
+      }
+    ],
+    "frontend_unchanged": true,
+    "api_non_image_configuration_unchanged": true
+  },
+  "local_postgres_cleanup": {
+    "disposable_cluster_stopped": true,
+    "port": 6549,
+    "temporary_cluster_removed": true,
+    "logs_preserved": [
+      "geography-sql-test-init.log",
+      "geography-sql-test-server.log"
+    ],
+    "existing_local_postgres_touched": false
+  },
+  "previous_revision": "ocean-cop17-demo-00007-6lx",
+  "previous_api_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:c49ae17113ef232e18100f1d18d086d7f45f6c7f9ab5c8126f039d5eee0060ae",
+  "scientific_rows_modified": false,
+  "users_created_or_reactivated": false,
+  "new_iam_grants": false,
+  "geography_contract": {
+    "metric": "catalogue_geography",
+    "algorithm": "edna-catalogue-aggregate-v3",
+    "named_area_count": null,
+    "named_area_status": "not_established_by_canonical_catalogue",
+    "area_scope": "Canonical source aggregate only; no claim that no separate research registry or upstream area labels can exist.",
+    "distance": "Great-circle separation of the actual latitude-extreme positions, not a global maximum pairwise distance or continuous sampled coverage.",
+    "reuse": "Demo-only immutable scientific snapshot; exact filters, metric, v3, payload hash and all three publication heads with fresh heads/pointer rechecks. No mutable research-registry availability is represented.",
+    "model_invoked": false
+  },
+  "screenshots": [
+    {
+      "file": "geography-live-named-en.png",
+      "sha256": "f7720b256cb8ddc6ba44f03c93add6bb530a9515b2ba0617eaa3eaaf816672d5",
+      "storage": "private local operations directory; image bytes not committed"
+    },
+    {
+      "file": "geography-live-spread-en.png",
+      "sha256": "4a33022da55d70770f22611b6c9349e09b6326eb3fc1de2490032c3c25301237",
+      "storage": "private local operations directory; image bytes not committed"
+    },
+    {
+      "file": "geography-live-spread-ja.png",
+      "sha256": "2241adbf8189e95639397dc0e60755c60bee4f1820a76ead0ddc6f6489e75770",
+      "storage": "private local operations directory; image bytes not committed"
+    },
+    {
+      "file": "geography-live-provenance.png",
+      "sha256": "2c89fddc88a5335b1e695207b0f3819b4370954168f45873376e17add3556a04",
+      "storage": "private local operations directory; image bytes not committed"
+    }
+  ]
+}

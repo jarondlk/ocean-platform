@@ -1,7 +1,7 @@
 # COP17 catalogue geography answers
 
-Status: implemented and verified locally on `cop17-demo`. Live release acceptance
-is recorded separately after the API-only rollout. Production and the overhaul
+Status: deployed and verified on `cop17-demo` at revision `ocean-cop17-demo-00008-wd9`.
+Live release evidence: `COP17_DEMO_GEOGRAPHY_RECEIPT_2026-10-24.json`. Production and the overhaul
 checkout are outside this change.
 
 ## Visitor questions
@@ -88,7 +88,18 @@ extent or distances.
   rounded-distance and Japanese-clarification regressions were fixed.
 - Source lint and whitespace checks passed.
 
-Live release acceptance must additionally verify the accepted API image against
+Live release acceptance also verified the accepted API image against
 independent demo SQL, signed-in English/Japanese questions, filtered counts,
 provenance navigation and the existing free-text/fish/SST workflows. The frontend
-image remains unchanged. Temporary QA definitions are sealed after execution.
+image remains unchanged. The temporary QA definition is sealed after execution.
+
+## Live acceptance
+
+The accepted API-only build `74aaca41-1f3a-4c61-aa5f-a380a51eab1d` passed runtime, authentication,
+schema/backup/restore and reviewed image-scan gates. Independent demo SQL matched
+the count, coordinate extent and actual-endpoint distance. Scoped and historical
+evidence checks passed. Signed-in English/Japanese geography answers, source
+guards, filtered coverage, citation provenance and existing free-text/fish/SST
+workflows passed. The frontend image, production service and scientific snapshot
+remain unchanged. The QA definition is sealed without database secret or Cloud
+SQL references. All request timings are retained in the release receipt.
