@@ -64,6 +64,7 @@ class AggregatePlan:
     filters: dict
     group_by: tuple = ()
     clarification: str | None = None
+    metric: str | None = None
 
 
 SCOPE_MESSAGE = (
@@ -91,6 +92,115 @@ def freshness_question(request: dict) -> bool:
     query = request.get("query", "")
     return bool(TOPIC.search(query) and re.search(
         r"\b(arriv(?:e|ed|al|als)|newly|latest|freshness|recently (?:added|imported|updated))\b|新着|更新|追加|到着", query, re.I))
+
+
+LOCATION_NOUN = re.compile(
+    r"\b(?:(?:sampling|geographic|recorded)\s+)?(?:areas?|locations?|sites?|stations?|points?|positions?|coordinates?(?:\s+(?:pairs?|positions?))?)\b"
+    r"|(?:採水|採取|調査|観測)?(?:地点|場所)|サンプリング(?:地点|場所|エリア)|座標(?:位置|組)?", re.I)
+LOCATION_COUNT = re.compile(r"\b(?:how many|number of|counts?|totals?)\b|いくつ|何(?:地点|か所|箇所|ヶ所|カ所)|地点数|の(?:総)?数", re.I)
+LOCATION_WORDS = set("how many what is are the a an of in on from for do we have there and can could would you please tell me show give available currently recorded reported geographic sampling positions locations ocean platform anemone edna environmental dna mifish metabarcoding catalogue catalog database data dataset datasets count counts total totals number distinct unique selected filtered current project run taxon date time range period scope under by at".split())
+
+
+def plan_location_count(request: dict) -> AggregatePlan | None:
+    """COP17 coordinate coverage, never a count inferred from retrieved examples."""
+    query = request.get("query", "")
+    if not LOCATION_NOUN.search(query) or not LOCATION_COUNT.search(query):
+        return None
+    ja = bool(re.search(r"[ぁ-んァ-ン一-龯]", query))
+    envelope = request.get("evidence_scope")
+    selection = envelope["sources"]["edna_metabarcoding"] if envelope else None
+    filters = {key:value for key,value in (selection["filters"] if selection else request).items()
+               if key in FILTERS and value is not None}
+    filters.setdefault("provider", "anemone")
+    options = request.get("aggregation") or {}
+    filters.update({key:options[key] for key in ("provider_locus", "provider_team", "target_status", "assay_id") if options.get(key) is not None})
+    def clarify(en, jp):
+        return AggregatePlan(filters, clarification=jp if ja else en, metric="recorded_locations")
+    if selection is not None and not selection["enabled"] or not envelope and request.get("source_type") and request["source_type"] not in EDNA_ALIASES:
+        return clarify("Enable ANEMONE eDNA to count its reported coordinate positions. SST coverage is separate from field sampling locations.",
+                       "記録された座標位置の数を調べるには、ANEMONE環境DNAを有効にしてください。衛星SSTの範囲は採水地点とは別です。")
+    if request.get("analysis_id") or selection and selection.get("analysis_id") or request.get("research_intent"):
+        return clarify("Return to free-text search to count ANEMONE coordinate positions with source filters. The selected published analysis has its own fixed cohort.",
+                       "自由文検索に戻り、ソースのフィルターを指定してANEMONEの座標位置を数えてください。選択中の公表済み解析は固定の対象データを使用します。")
+    if filters["provider"] != "anemone" or request.get("bay") or options.get("group_by"):
+        return clarify("This count supports ANEMONE source filters without grouped totals. Review the provider and source filters before asking again.",
+                       "この集計はANEMONEのソースフィルターに対応します。グループ別集計には対応していません。プロバイダーとフィルターを確認してください。")
+    if len(mentioned_source_types(query)) > 1 or re.search(r"\bsst\b|satellite|sea surface temperature|衛星|海面水温", query, re.I):
+        return clarify("ANEMONE reported coordinate positions and SST coverage have different units. Ask for ANEMONE locations separately; SST pixels, dates and regions are not added to sampling positions.",
+                       "ANEMONEの記録座標位置とSSTの範囲は単位が異なります。ANEMONEの地点数を別に質問してください。SSTの画素・日付・領域は採水位置に加算しません。")
+    if re.search(r"\bdata\s+points?\b", query, re.I) or (re.search(r"\bpoints?\b", query, re.I) and not re.search(r"\b(sampling|geographic|recorded|coordinate)\b", query, re.I)):
+        return clarify("Please specify whether points means recorded sampling coordinate positions, source records or SST observations. These units have different totals; no coordinate count was substituted.",
+                       "ポイントが採水の記録座標位置・ソース記録・SST観測のどれを指すか指定してください。単位によって総数が異なるため、座標位置の数に置き換えていません。")
+    if re.search(r"\b(physical|named|verified|actual|precise)\b|物理|実際|名称|地名|名前|実地点|独立", query, re.I):
+        return clarify("Verified physical sites and named sampling areas are not yet curated. I can count distinct reported coordinate positions, with their coordinate-precision limitations.",
+                       "物理的な採水地点や名称付き調査区域の対応関係は未確認です。座標の精度上の制約を示して、記録された座標位置の種類数を集計できます。")
+    clean = re.sub(r"\benvironmental\s+dna\b", " edna ", query.casefold())
+    for value in filters.values():
+        if isinstance(value, str) and value:
+            clean = re.sub(r"(?<!\w)" + re.escape(value.casefold()) + r"(?!\w)", " ", clean)
+    for phrase, token in sorted({"環境dna":"edna", "利用可能な":"available", "利用できる":"available",
+                                "記録されている":"recorded", "記録された":"recorded", "データセット":"dataset",
+                                "データ":"data", "選択中の":"selected", "選択した":"selected", "教えてください":"please tell me", "示してください":"please show"}.items(), key=lambda item:-len(item[0])):
+        clean = clean.replace(phrase, " " + token + " ")
+    if re.search(r"\benvironmental\b|環境サンプル|環境試料", clean) and not (filters.get("sample_kind") == "environmental" and filters.get("is_control") is False):
+        return clarify("For confirmed environmental samples, set sample kind to environmental and control status to non-control. Unknown classifications are not assumed to be environmental; no wider location count was substituted.",
+                       "確認済みの環境サンプルを集計するには、ソースフィルターでサンプル種別をenvironmental、コントロール状態を非コントロールに指定してください。不明な分類を環境サンプルとみなした集計は行いません。")
+    clean = re.sub(r"(?:採水|採取|調査|観測)?地点数", " locations count ", clean)
+    clean = re.sub(r"の(?:総)?数", " count ", clean)
+    clean = LOCATION_COUNT.sub(" count ", clean)
+    clean = LOCATION_NOUN.sub(" locations ", clean)
+    clean = re.sub(r"には|では|の|は|が|を|に|ですか|ありますか|ある|あります|？|。", " ", clean)
+    words = re.findall(r"[\w]+(?:'[\w]+)?", clean)
+    unsupported = not words or any(word not in LOCATION_WORDS for word in words)
+    # Qualifiers must already have concrete source filters, not just filler words.
+    required = ((r"\bproject\b", ("provider_project_id",)), (r"\brun\b", ("provider_run_id",)),
+                (r"\btaxon\b", ("taxon",)), (r"\b(date|time|range|period)\b", ("time_from", "time_to")))
+    missing = any(re.search(pattern, clean) and not any(key in filters for key in keys) for pattern,keys in required)
+    if ("selected" in words or "filtered" in words or "current" in words) and set(filters) == {"provider"}:
+        missing = True
+    if unsupported or missing or re.search(r"[<>!=]|\b(by|per|each)\b", clean):
+        return clarify("I can count distinct reported ANEMONE coordinate positions. Set project, run, taxon, date or coordinate restrictions in the source filters; unsupported place names, thresholds and other qualifiers need clarification. No total was inferred from retrieved examples.",
+                       "ANEMONEに記録された座標位置の種類数を集計できます。プロジェクト・ラン・分類群・日付・座標範囲はソースのフィルターで指定してください。未対応の地名・閾値などは条件の確認が必要です。検索結果の一部から総数を推定していません。")
+    if "is_control" not in filters and "sample_kind" not in filters:
+        filters["exclude_explicit_controls"] = True
+    return AggregatePlan(filters, metric="recorded_locations")
+
+
+def render_location_answer(bundle, query=""):
+    payload = bundle["payload"]
+    value = payload["summary"]["locations"]
+    cite = "[aggregate_edna_" + bundle["aggregate_id"] + "]"
+    def label(v):
+        return re.sub(r"([\\`*{}\[\]()<>|])", r"\\\1", str(v).replace("\n", " ").replace("\r", " "))
+    count = value["distinct_coordinate_pairs"]
+    ja = bool(re.search(r"[ぁ-んァ-ン一-龯]", query))
+    excludes = value["control_policy"] == "exclude_explicit_controls"
+    fields = {"provider":"Provider", "sample_id":"Sample ID", "provider_project_id":"Project", "provider_run_id":"Run",
+              "assignment_method":"Assignment method", "taxon":"Taxon", "sample_kind":"Sample kind", "is_control":"Control status",
+              "time_from":"From", "time_to":"To", "lat_min":"Minimum latitude", "lat_max":"Maximum latitude",
+              "lon_min":"Minimum longitude", "lon_max":"Maximum longitude", "provider_locus":"Marker namespace",
+              "provider_team":"Team", "assay_id":"Assay", "target_status":"Target status"}
+    scope = "; ".join(f"{fields.get(key,key)}={label(v)}" for key,v in sorted(payload["filters"].items()) if key != "exclude_explicit_controls")
+    precision = "; ".join(f"{label(k)}={v:,}" for k,v in sorted(value["coordinate_precision"].items())) or ("なし" if ja else "none")
+    if ja:
+        lines = [f"選択条件に一致する公表済みANEMONEデータには、**異なる記録座標位置が{count:,}か所**あります。{cite}",
+                 f"同じ緯度・経度における繰り返し採取や複数のアッセイ・解析手法は重複して数えません。物理的な採水地点や名称付き調査区域の種類数は未確認です。{cite}",
+                 ("明示的にコントロールと分類された記録を除外しています。" if excludes else "コントロール・分類状態は指定したソースフィルターに従います。") +
+                 f"対象のソース記録は{value['source_occurrences']:,}件、うち有効な座標が{value['valid_coordinate_occurrences']:,}件、座標欠損が{value['missing_coordinate_occurrences']:,}件、無効な座標が{value['invalid_coordinate_occurrences']:,}件です。欠損・無効な座標は地点数に含みません。{cite}",
+                 f"コントロール状態が不明な記録は{value['unknown_control_status']:,}件あり、確認済みの環境サンプルとはみなしていません。座標精度の記録件数：{precision}。{cite}"]
+        if value["coordinate_precision"].get("provider_grid_unconfirmed"):
+            lines.append(f"プロバイダーのグリッド座標を含みます。異なる座標位置の数は、厳密な物理的採水地点の数を保証しません。{cite}")
+        lines.append(f"適用条件：{scope}。{cite}")
+    else:
+        lines = [f"The published ANEMONE catalogue matching the selected filters contains **{count:,} distinct reported coordinate positions**. {cite}",
+                 f"Exact stored latitude/longitude pairs are counted once across repeated sampling dates, assays and assignment methods. Physical-site identities and named sampling areas remain unverified. {cite}",
+                 ("Explicitly classified controls are excluded. " if excludes else "Control/classification scope follows the explicit source filters. ") +
+                 f"There are {value['source_occurrences']:,} matching source records: {value['valid_coordinate_occurrences']:,} with valid coordinates, {value['missing_coordinate_occurrences']:,} with missing coordinates and {value['invalid_coordinate_occurrences']:,} with invalid coordinates. Missing/invalid positions are excluded. {cite}",
+                 f"Control status is unknown for {value['unknown_control_status']:,} records; they are not assumed to be confirmed environmental samples. Coordinate-precision record counts: {precision}. {cite}"]
+        if value["coordinate_precision"].get("provider_grid_unconfirmed"):
+            lines.append(f"This includes provider grid coordinates, which do not establish distinct physical sampling sites. {cite}")
+        lines.append(f"Applied source filters: {scope}. {cite}")
+    return "\n\n".join(lines)
 
 
 def plan_aggregation(request: dict) -> AggregatePlan | None:
@@ -282,11 +392,11 @@ def evidence_document(bundle):
     identity, payload = bundle["aggregate_id"], bundle["payload"]
     return {
         "id": "aggregate_edna_" + identity,
-        "title": "Exact ANEMONE catalogue summary",
+        "title": "Exact ANEMONE recorded-coordinate count" if payload.get("metric") == "recorded_locations" else "Exact ANEMONE catalogue summary",
         "source_type": "analysis",
         "source_family": "edna_metabarcoding",
         "covered_source_types": ["edna_metabarcoding"],
-        "analysis_type": "edna_catalogue_summary",
+        "analysis_type": "edna_recorded_location_count" if payload.get("metric") == "recorded_locations" else "edna_catalogue_summary",
         "aggregate_id": identity,
         "metadata": payload["filters"],
         "text": json.dumps({"filters": payload["filters"], "summary": payload["summary"],
@@ -307,6 +417,8 @@ def _asks_unknown_control_status(query):
 
 
 def render_answer(bundle, query=""):
+    if bundle["payload"].get("metric") == "recorded_locations":
+        return render_location_answer(bundle, query)
     payload = bundle["payload"]
     summary = payload["summary"]
     cite = "[aggregate_edna_" + bundle["aggregate_id"] + "]"

@@ -9,6 +9,7 @@ from sqlalchemy.exc import SQLAlchemyError
 import config
 from api.edna_service import (
     edna_summary,
+    edna_location_summary,
     _sample_conditions,
     _detection_conditions,
     _aggregate_assay_conditions,
@@ -18,6 +19,7 @@ from ingestion.immutable_bundle import canonical_bytes, digest, validate_id
 from ingestion.provenance_snapshot import SnapshotError
 
 ALGORITHM = "edna-catalogue-aggregate-v1"
+LOCATION_ALGORITHM = "edna-catalogue-aggregate-v2"
 MAX_ROWS = 1_000_000
 MAX_PAYLOAD_BYTES = 1024 * 1024
 
@@ -167,10 +169,22 @@ def _inputs(connection, filters):
     }
 
 
-def build_aggregate(filters, group_by=(), *, engine=None):
+def build_aggregate(filters, group_by=(), *, engine=None, metric=None):
     engine = engine if engine is not None else get_engine()
     try:
+        if metric not in {None, "recorded_locations"}:
+            raise AggregateUnavailable("Unsupported aggregate metric")
+        if metric == "recorded_locations":
+            filters = dict(filters)
+            if group_by:
+                raise AggregateUnavailable("Location groups are unsupported")
+            if "is_control" not in filters and "sample_kind" not in filters:
+                filters["exclude_explicit_controls"] = True
+        if "exclude_explicit_controls" in filters and (metric != "recorded_locations" or filters["exclude_explicit_controls"] is not True or filters.get("is_control") is True):
+            raise AggregateUnavailable("Invalid location control policy")
+        algorithm = LOCATION_ALGORITHM if metric == "recorded_locations" else ALGORITHM
         allowed = {
+            "exclude_explicit_controls",
             "provider",
             "provider_locus",
             "provider_team",
@@ -199,6 +213,10 @@ def build_aggregate(filters, group_by=(), *, engine=None):
             )
             connection.exec_driver_sql("SET LOCAL statement_timeout = '20s'")
             summary = edna_summary(filters, connection=connection, group_by=group_by)
+            if metric == "recorded_locations":
+                summary["locations"] = edna_location_summary(filters, connection=connection)
+                if summary["locations"]["source_occurrences"] != summary["source_occurrences"]:
+                    raise AggregateUnavailable("Location row accounting mismatch")
             _assert_publication(pointer, summary["publication"])
             inputs = _inputs(connection, filters)
             if (
@@ -213,7 +231,7 @@ def build_aggregate(filters, group_by=(), *, engine=None):
         if pointer != publication_pointer():
             raise AggregateUnavailable("Publication changed during aggregation; retry")
         payload = {
-            "algorithm_version": ALGORITHM,
+            "algorithm_version": algorithm,
             "filters": filters,
             "group_by": list(group_by),
             "publication": summary["publication"],
@@ -227,6 +245,10 @@ def build_aggregate(filters, group_by=(), *, engine=None):
                 "groups": "source-occurrence counts, never physical-sample counts",
             },
         }
+        if metric == "recorded_locations":
+            payload["metric"] = metric
+            payload["query_contract"]["locations"] = summary["locations"]["definition"]
+            payload["query_contract"]["location_controls"] = summary["locations"]["control_policy"]
         data = canonical_bytes(payload)
         if len(data) > MAX_PAYLOAD_BYTES:
             raise AggregateUnavailable("Aggregate evidence exceeds byte budget")
@@ -238,7 +260,7 @@ def build_aggregate(filters, group_by=(), *, engine=None):
                 text(
                     "INSERT INTO edna_aggregate_evidence(aggregate_id,algorithm_version,payload_json) VALUES (:id,:algorithm,:payload) ON CONFLICT (aggregate_id) DO NOTHING"
                 ),
-                {"id": identity, "algorithm": ALGORITHM, "payload": data.decode()},
+                {"id": identity, "algorithm": algorithm, "payload": data.decode()},
             )
             stored = connection.execute(
                 text(
@@ -272,8 +294,10 @@ def load_aggregate(identity, *, engine=None):
     if len(row.encode()) > MAX_PAYLOAD_BYTES:
         raise AggregateUnavailable("Aggregate evidence exceeds byte budget")
     payload = json.loads(row)
-    if digest(payload) != identity or payload.get("algorithm_version") != ALGORITHM:
+    if digest(payload) != identity or payload.get("algorithm_version") not in {ALGORITHM, LOCATION_ALGORITHM}:
         raise AggregateUnavailable("Aggregate evidence integrity check failed")
+    if payload["algorithm_version"] == LOCATION_ALGORITHM and (payload.get("metric") != "recorded_locations" or "locations" not in payload.get("summary", {})):
+        raise AggregateUnavailable("Location aggregate contract is incomplete")
     return {"aggregate_id": identity, "payload": payload}
 
 

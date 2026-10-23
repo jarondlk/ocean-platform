@@ -223,6 +223,11 @@ def _sample_conditions(filters: Mapping[str, Any]) -> tuple[list[str], dict[str,
     if filters.get("is_control") is not None:
         conditions.append("s.is_control IS NOT DISTINCT FROM :is_control")
         params["is_control"] = filters["is_control"]
+    exclusion = filters.get("exclude_explicit_controls")
+    if exclusion is not None and type(exclusion) is not bool:
+        raise ValueError("exclude_explicit_controls must be a boolean")
+    if exclusion is True:
+        conditions.append("s.is_control IS NOT TRUE")
     if filters.get("assay_id") is not None:
         conditions.append(
             "EXISTS (SELECT 1 FROM edna_assay a WHERE a.sample_id = s.sample_id "
@@ -316,6 +321,11 @@ def _detection_conditions(filters: Mapping[str, Any]) -> tuple[list[str], dict[s
     if filters.get("is_control") is not None:
         conditions.append("s.is_control IS NOT DISTINCT FROM :is_control")
         params["is_control"] = filters["is_control"]
+    exclusion = filters.get("exclude_explicit_controls")
+    if exclusion is not None and type(exclusion) is not bool:
+        raise ValueError("exclude_explicit_controls must be a boolean")
+    if exclusion is True:
+        conditions.append("s.is_control IS NOT TRUE")
     taxon = filters.get("taxon")
     if taxon is not None:
         comparisons = " OR ".join(
@@ -357,6 +367,47 @@ def _aggregate_assay_conditions(filters):
             match = "(" + match + " OR EXISTS (SELECT 1 FROM jsonb_object_keys(COALESCE(a.community_availability_json,'{}')::jsonb) AS m(key) WHERE " + " AND ".join(available) + "))"
         conditions.append(match)
     return conditions, params
+
+def edna_location_summary(filters: Mapping[str, Any], *, connection=None) -> dict[str, Any]:
+    """Exact reported coordinate positions, counted on matching sample rows only.
+
+    PostgreSQL float comparisons reject NaN/infinities through the bounded
+    coordinate predicate. Missing and invalid coordinates are reported
+    separately; assay/detection filters use EXISTS and cannot multiply rows.
+    """
+    conditions, params = _sample_conditions(filters)
+    where = " AND ".join(conditions)
+    valid = "(s.lat IS NOT NULL AND s.lon IS NOT NULL AND s.lat BETWEEN -90 AND 90 AND s.lon BETWEEN -180 AND 180)"
+    missing = "(s.lat IS NULL OR s.lon IS NULL)"
+    with (nullcontext(connection) if connection is not None else _read_snapshot()) as connection:
+        counts = connection.execute(text(
+            "SELECT count(*) AS source_occurrences, "
+            "count(DISTINCT (s.lat,s.lon)) FILTER (WHERE " + valid + ") AS distinct_coordinate_pairs, "
+            "count(*) FILTER (WHERE " + valid + ") AS valid_coordinate_occurrences, "
+            "count(*) FILTER (WHERE " + missing + ") AS missing_coordinate_occurrences, "
+            "count(*) FILTER (WHERE NOT " + missing + " AND NOT " + valid + ") AS invalid_coordinate_occurrences, "
+            "count(*) FILTER (WHERE s.is_control IS TRUE) AS controls, "
+            "count(*) FILTER (WHERE s.is_control IS NULL) AS unknown_control_status, "
+            "count(*) FILTER (WHERE s.sample_kind='environmental' AND s.is_control IS FALSE) AS environmental_classified "
+            "FROM edna_sample s WHERE " + where
+        ), params).mappings().one()
+        kinds = connection.execute(text(
+            "SELECT s.sample_kind,count(*) AS n FROM edna_sample s WHERE " + where
+            + " GROUP BY s.sample_kind ORDER BY s.sample_kind"
+        ), params).mappings().all()
+        precision = connection.execute(text(
+            "SELECT COALESCE(NULLIF(s.coordinate_precision,''),'unspecified') AS precision,count(*) AS n "
+            "FROM edna_sample s WHERE " + where + " AND " + valid
+            + " GROUP BY COALESCE(NULLIF(s.coordinate_precision,''),'unspecified') ORDER BY precision"
+        ), params).mappings().all()
+    return {
+        **{key: int(value) for key, value in counts.items()},
+        "sample_kinds": {row["sample_kind"]: int(row["n"]) for row in kinds},
+        "coordinate_precision": {row["precision"]: int(row["n"]) for row in precision},
+        "definition": "distinct exact stored (lat, lon) pairs among active matching source occurrences with finite in-range coordinates; no rounding or assay joins",
+        "control_policy": "exclude_explicit_controls" if filters.get("exclude_explicit_controls") is True else "explicit_filters",
+    }
+
 
 def edna_summary(filters: Mapping[str, Any], *, connection=None, group_by=()) -> dict[str, Any]:
     """Exact whole-cohort SQL totals, with alternative methods kept separate."""

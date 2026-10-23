@@ -1,0 +1,44 @@
+# API-only COP17 release. Reuse the accepted frontend digest for runtime checks.
+# This builds/scans an image; Cloud Run deployment is a separate explicit step.
+steps:
+  - id: build-api
+    name: gcr.io/cloud-builders/docker
+    waitFor: ['-']
+    args: [build, -f, Containerfile.api, -t, ocean-candidate-api, -t, '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/api:candidate-${BUILD_ID}', .]
+  - id: reuse-accepted-frontend
+    name: gcr.io/cloud-builders/docker
+    waitFor: ['-']
+    entrypoint: bash
+    args:
+      - -ceu
+      - |
+        docker pull '${_FRONTEND_IMAGE}'
+        docker tag '${_FRONTEND_IMAGE}' ocean-candidate-frontend
+  - id: runtime-smoke
+    name: gcr.io/cloud-builders/docker
+    waitFor: [build-api, reuse-accepted-frontend]
+    entrypoint: bash
+    args: [scripts/verify_candidate_containers.sh]
+  - id: save-api
+    name: gcr.io/cloud-builders/docker
+    entrypoint: bash
+    args: [-ceu, 'docker save ocean-candidate-api -o /workspace/candidate-api.tar']
+  - id: scan-api
+    name: aquasec/trivy@sha256:7cced7cae583819fc7806d4cbc0dbbc7cad18b99f7d3e235192e6da8c091045c
+    args: [image, --scanners, vuln, --format, json, --timeout, 10m, --exit-code, '0', --input, /workspace/candidate-api.tar, --output, /workspace/candidate-reports/api-scan.json]
+# Exit 0 collects all findings; the complete report must be reviewed before deployment.
+images:
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/api:candidate-${BUILD_ID}'
+artifacts:
+  objects:
+    location: 'gs://${PROJECT_ID}_cloudbuild/${_QA_REPORT_PREFIX}/${BUILD_ID}/'
+    paths: [candidate-reports/*.json, candidate-reports/*.log]
+substitutions:
+  _REGION: asia-northeast1
+  _REPOSITORY: ocean-platform
+  _QA_REPORT_PREFIX: cop17-demo-api-qa
+  _FRONTEND_IMAGE: asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:a19f0239be69dd9417d7f0e9f4143f6e2892e7449a0f25099e4dfbe3b8e0cd5a
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: E2_HIGHCPU_8
+timeout: 2400s

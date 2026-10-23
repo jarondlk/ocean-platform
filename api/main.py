@@ -5432,7 +5432,7 @@ def _aggregate_chat_response(request, plan, *, user, model, interaction_id, star
     answer = plan.clarification
     if reason is None:
         try:
-            bundle = build_aggregate(plan.filters, plan.group_by)
+            bundle = build_aggregate(plan.filters, plan.group_by, **({"metric": plan.metric} if plan.metric else {}))
             documents = [evidence_document(bundle)]
             answer = render_answer(bundle, request.query)
         except AggregateUnavailable:
@@ -5440,9 +5440,9 @@ def _aggregate_chat_response(request, plan, *, user, model, interaction_id, star
             answer = "Exact catalogue counts are unavailable because the published data or immutable evidence could not be verified. Please retry after publication or database access is restored. No totals were inferred from retrieved examples."
             logger.warning("Exact eDNA aggregation unavailable", exc_info=True)
     if bundle:
-        options["context"]["aggregate_scope"] = {"filters": plan.filters, "group_by": list(plan.group_by)}
+        options["context"]["aggregate_scope"] = {"filters": plan.filters, "group_by": list(plan.group_by), **({"metric": plan.metric} if plan.metric else {})}
     contexts = [_context_document(row, "analysis") for row in documents]
-    diagnostics = {"backend": "structured_sql", "aggregate": True, "filters": plan.filters,
+    diagnostics = {"backend": "structured_sql", "aggregate": True, "filters": plan.filters, **({"metric": plan.metric} if plan.metric else {}),
                    "group_by": list(plan.group_by), "expected_source_types": ["edna_metabarcoding"],
                    "retrieved_source_types": ["edna_metabarcoding"] if documents else [],
                    "missing_source_types": [] if documents else ["edna_metabarcoding"],
@@ -5656,6 +5656,12 @@ def _execute_chat(request: ChatRequest, user: CurrentUser, *, planning=None,
         from orchestration.edna_aggregation import plan_aggregation
         if request.evidence_scope and not enabled_sources(request.evidence_scope.canonical()):
             return _chat_scope_abstention(request, user, model, interaction_id, started_at, response_options, "no_sources_selected", abstention_message("no_sources_selected"))
+        if config.COP17_DEMO_ENABLED:
+            from orchestration.edna_aggregation import plan_location_count
+            location_plan = plan_location_count(request.model_dump())
+            if location_plan is not None:
+                return _aggregate_chat_response(request, location_plan, user=user, model=model,
+                    interaction_id=interaction_id, started_at=started_at, options=response_options)
         published_result = None
         if planning and planning['route'] == 'sst_coverage':
             return _sst_coverage_chat_response(request, user, model, interaction_id, started_at, response_options)
