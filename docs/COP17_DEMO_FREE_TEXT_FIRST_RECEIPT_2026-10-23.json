@@ -1,0 +1,942 @@
+{
+  "date_jst": "2026-10-23",
+  "branch": "cop17-demo",
+  "ui_commit": "e21402e6f44092673054b22b784798694adecbb9",
+  "runtime_commit": "308191681dbe9c2724da2493a78870ec7c3b8268",
+  "build_id": "60e0d40c-cfe5-4cdc-a19b-e879049a31db",
+  "source": {
+    "commit": "308191681dbe9c2724da2493a78870ec7c3b8268",
+    "source_archive_sha256": "85c85afc64bc4810ca9df70842f4c47ffec5832aaf777cbd81917691919b2a4b",
+    "source_bytes": 22329660,
+    "next": "15.5.28",
+    "local_frontend_tests_passed": 86,
+    "typescript": "passed"
+  },
+  "origin": "https://demo.oceaninfobio.com",
+  "revision": "ocean-cop17-demo-00004-lkd",
+  "frontend_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:2331b2e1eea49bd512b7389bcaba72f8ecabfa8dcb9f7cbd5251be9c43895c6c",
+  "api_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:398e53b2dae64509263be64071af5f6cfaefd212b18a1c8e79f41c9c8c2797bb",
+  "api_configuration_unchanged": true,
+  "production": {
+    "spec_unchanged": true,
+    "active_traffic": [
+      {
+        "percent": 100,
+        "revisionName": "ocean-platform-conference1012",
+        "tag": "conference-production",
+        "url": "https://conference-production---ocean-platform-6jsvoc67ra-an.a.run.app"
+      }
+    ],
+    "api_unchanged": true
+  },
+  "authentication_required": true,
+  "next": "15.5.28",
+  "security_patch": [
+    {
+      "package": "node_modules/@next/env",
+      "old": "15.5.27",
+      "new": "15.5.28"
+    },
+    {
+      "package": "node_modules/@next/swc-darwin-arm64",
+      "old": "15.5.27",
+      "new": "15.5.28"
+    },
+    {
+      "package": "node_modules/@next/swc-darwin-x64",
+      "old": "15.5.27",
+      "new": "15.5.28"
+    },
+    {
+      "package": "node_modules/@next/swc-linux-arm64-gnu",
+      "old": "15.5.27",
+      "new": "15.5.28"
+    },
+    {
+      "package": "node_modules/@next/swc-linux-arm64-musl",
+      "old": "15.5.27",
+      "new": "15.5.28"
+    },
+    {
+      "package": "node_modules/@next/swc-linux-x64-gnu",
+      "old": "15.5.27",
+      "new": "15.5.28"
+    },
+    {
+      "package": "node_modules/@next/swc-linux-x64-musl",
+      "old": "15.5.27",
+      "new": "15.5.28"
+    },
+    {
+      "package": "node_modules/@next/swc-win32-arm64-msvc",
+      "old": "15.5.27",
+      "new": "15.5.28"
+    },
+    {
+      "package": "node_modules/@next/swc-win32-x64-msvc",
+      "old": "15.5.27",
+      "new": "15.5.28"
+    },
+    {
+      "package": "node_modules/next",
+      "old": "15.5.27",
+      "new": "15.5.28"
+    }
+  ],
+  "rejected_build": {
+    "id": "c95ec1d5-5d52-42d2-b077-2b1030bb6600",
+    "deployed": false,
+    "findings": [
+      "GHSA-2464-fhr4-w9xw",
+      "CVE-2026-94482"
+    ],
+    "upstream_release": "https://github.com/vercel/next.js/releases/tag/v15.5.28"
+  },
+  "scan": {
+    "severity_counts": {
+      "LOW": 60,
+      "HIGH": 43,
+      "MEDIUM": 58,
+      "UNKNOWN": 1
+    },
+    "language_package_findings": [],
+    "accepted": true
+  },
+  "runtime_http_smoke": [
+    {
+      "url": "http://127.0.0.1:8000/health/live",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8000/chat/analysis-options",
+      "status": 401
+    },
+    {
+      "url": "http://127.0.0.1:8000/research-registry-reviews",
+      "status": 401
+    },
+    {
+      "url": "http://ocean-candidate-qa-frontend:3000/login",
+      "status": 200
+    },
+    {
+      "url": "http://ocean-candidate-qa-frontend:3000/api/auth/providers",
+      "status": 200
+    },
+    {
+      "url": "http://ocean-candidate-qa-frontend:3000/api/backend/chat/analysis-options",
+      "status": 401
+    }
+  ],
+  "schema_readiness": {
+    "migration_current_heads": [
+      "20261005_0016"
+    ],
+    "migration_expected_heads": [
+      "20261005_0016"
+    ],
+    "migrations_current": true,
+    "missing_columns": [],
+    "missing_tables": [],
+    "ready": true,
+    "table_count": 34,
+    "vector_extension": true
+  },
+  "local_tests": {
+    "frontend_passed": 86,
+    "typescript": "passed",
+    "demo_build": "passed",
+    "overhaul_dependencies_modified": false
+  },
+  "responsive_fixture_checks": [
+    {
+      "advanced_open": true,
+      "case": "phone-JA-advanced-expanded",
+      "height": 844,
+      "page_width": 375,
+      "width": 390
+    },
+    {
+      "case": "phone-JA-active-example",
+      "page_width": 375,
+      "question": "高いSSTと低いSSTの条件で魚の検出頻度を比較し、代表的な時系列を示してください。",
+      "return_controls": [
+        {
+          "right": 347.203125,
+          "width": 138
+        },
+        {
+          "right": 344,
+          "width": 313
+        }
+      ],
+      "width": 390
+    },
+    {
+      "advanced_open": false,
+      "case": "phone-EN-free-text",
+      "height": 844,
+      "page_width": 375,
+      "width": 390
+    },
+    {
+      "advanced_open": false,
+      "case": "tablet-EN-free-text",
+      "height": 1024,
+      "page_width": 753,
+      "width": 768
+    }
+  ],
+  "live_boundaries": [
+    {
+      "path": "/",
+      "status": 307,
+      "seconds": 0.407,
+      "location": "https://demo.oceaninfobio.com/chat"
+    },
+    {
+      "path": "/chat",
+      "status": 307,
+      "seconds": 0.172,
+      "location": "https://demo.oceaninfobio.com/login?returnTo=%2Fchat"
+    },
+    {
+      "path": "/data?view=sst",
+      "status": 307,
+      "seconds": 0.234,
+      "location": "https://demo.oceaninfobio.com/login?returnTo=%2Fdata%3Fview%3Dsst"
+    },
+    {
+      "path": "/login",
+      "status": 200,
+      "seconds": 0.212
+    },
+    {
+      "path": "/api/auth/providers",
+      "status": 200,
+      "seconds": 0.18
+    },
+    {
+      "path": "/api/backend/chat/analysis-options",
+      "status": 401,
+      "seconds": 0.179
+    },
+    {
+      "path": "/api/backend/provenance/manifest",
+      "status": 401,
+      "seconds": 0.174
+    }
+  ],
+  "live_browser": {
+    "passed": true,
+    "normal_google_signin": true,
+    "chat_cases": [
+      {
+        "analysis_context_sections": 0,
+        "case": "free-text-EN",
+        "outcome": "answered",
+        "source_count": "2 primary | 0 linked",
+        "summary": "Outcome\nAnswered\nModel run\nYes",
+        "model_invoked": true,
+        "primary_sources": 2,
+        "citation_audit": {
+          "valid": 16,
+          "invalid": 0,
+          "warnings": 0
+        }
+      },
+      {
+        "case": "fish-frequency-EN-E3-B",
+        "first_table_rows": [
+          [
+            "Tridentiger trigonocephalus",
+            "1",
+            "Tridentiger trigonocephalus",
+            "39",
+            "39",
+            "100.00%",
+            "false",
+            "sampled_detected"
+          ],
+          [
+            "Hexagrammos otakii",
+            "2",
+            "Hexagrammos otakii",
+            "39",
+            "39",
+            "100.00%",
+            "false",
+            "sampled_detected"
+          ],
+          [
+            "Takifugu alboplumbeus",
+            "3",
+            "Takifugu alboplumbeus",
+            "37",
+            "39",
+            "94.87%",
+            "false",
+            "sampled_detected"
+          ],
+          [
+            "Engraulis japonicus",
+            "4",
+            "Engraulis japonicus",
+            "31",
+            "39",
+            "79.49%",
+            "false",
+            "sampled_detected"
+          ],
+          [
+            "Pseudoblennius cottoides",
+            "5",
+            "Pseudoblennius cottoides",
+            "27",
+            "39",
+            "69.23%",
+            "false",
+            "sampled_detected"
+          ],
+          [
+            "Parablennius yatabei",
+            "6",
+            "Parablennius yatabei",
+            "27",
+            "39",
+            "69.23%",
+            "false",
+            "sampled_detected"
+          ],
+          [
+            "Ernogrammus hexagrammus",
+            "7",
+            "Ernogrammus hexagrammus",
+            "26",
+            "39",
+            "66.67%",
+            "false",
+            "sampled_detected"
+          ],
+          [
+            "Pholis nebulosa",
+            "8",
+            "Pholis nebulosa",
+            "26",
+            "39",
+            "66.67%",
+            "false",
+            "sampled_detected"
+          ],
+          [
+            "Girella punctata",
+            "9",
+            "Girella punctata",
+            "24",
+            "39",
+            "61.54%",
+            "false",
+            "sampled_detected"
+          ],
+          [
+            "Dictyosoma burgeri",
+            "10",
+            "Dictyosoma burgeri",
+            "24",
+            "39",
+            "61.54%",
+            "false",
+            "sampled_detected"
+          ]
+        ],
+        "model_invoked": false,
+        "outcome": "answered",
+        "source_count_text": "0 primary | 0 linked",
+        "titles": [
+          "Miyagi regional analysis: Ranking",
+          "Miyagi regional analysis: Series",
+          "Miyagi regional analysis: Read ranking"
+        ],
+        "primary_sources": 0
+      },
+      {
+        "case": "SST-comparison-EN-E4-B",
+        "figures": 6,
+        "first_table_rows": [
+          [
+            "Tridentiger trigonocephalus",
+            "13",
+            "13",
+            "11",
+            "11",
+            "true",
+            "1",
+            "false",
+            "0",
+            "0"
+          ],
+          [
+            "Hexagrammos otakii",
+            "13",
+            "13",
+            "11",
+            "11",
+            "true",
+            "1",
+            "false",
+            "0",
+            "0"
+          ],
+          [
+            "Takifugu alboplumbeus",
+            "11",
+            "13",
+            "11",
+            "11",
+            "true",
+            "1",
+            "false",
+            "15.3846",
+            "20"
+          ],
+          [
+            "Engraulis japonicus",
+            "10",
+            "13",
+            "11",
+            "11",
+            "true",
+            "1",
+            "false",
+            "23.0769",
+            "60"
+          ],
+          [
+            "Pseudoblennius cottoides",
+            "9",
+            "13",
+            "6",
+            "11",
+            "true",
+            "1",
+            "false",
+            "-14.6853",
+            "40"
+          ],
+          [
+            "Parablennius yatabei",
+            "8",
+            "13",
+            "6",
+            "11",
+            "true",
+            "1",
+            "false",
+            "-6.993",
+            "46.6667"
+          ],
+          [
+            "Ernogrammus hexagrammus",
+            "9",
+            "13",
+            "6",
+            "11",
+            "true",
+            "1",
+            "true",
+            "-14.6853",
+            "60"
+          ],
+          [
+            "Pholis nebulosa",
+            "9",
+            "13",
+            "8",
+            "11",
+            "true",
+            "1",
+            "false",
+            "3.4965",
+            "26.6667"
+          ],
+          [
+            "Girella punctata",
+            "8",
+            "13",
+            "6",
+            "11",
+            "true",
+            "1",
+            "false",
+            "-6.993",
+            "-40"
+          ],
+          [
+            "Dictyosoma burgeri",
+            "8",
+            "13",
+            "6",
+            "11",
+            "true",
+            "1",
+            "false",
+            "-6.993",
+            "26.6667"
+          ]
+        ],
+        "model_invoked": false,
+        "outcome": "answered",
+        "source_count_text": "0 primary | 0 linked",
+        "titles": [
+          "Miyagi regional analysis: Temperature contrasts",
+          "Miyagi regional analysis: Temperature bins",
+          "Miyagi regional analysis: Temperature series",
+          "Miyagi regional analysis: Relative sst thresholds"
+        ],
+        "primary_sources": 0
+      },
+      {
+        "case": "fish-frequency-JA",
+        "figures": 6,
+        "first_table_rows": [
+          [
+            "Tridentiger trigonocephalus",
+            "1",
+            "Tridentiger trigonocephalus",
+            "39",
+            "39",
+            "100.00%",
+            "false",
+            "検出あり"
+          ],
+          [
+            "Hexagrammos otakii",
+            "2",
+            "Hexagrammos otakii",
+            "39",
+            "39",
+            "100.00%",
+            "false",
+            "検出あり"
+          ],
+          [
+            "Takifugu alboplumbeus",
+            "3",
+            "Takifugu alboplumbeus",
+            "37",
+            "39",
+            "94.87%",
+            "false",
+            "検出あり"
+          ],
+          [
+            "Engraulis japonicus",
+            "4",
+            "Engraulis japonicus",
+            "31",
+            "39",
+            "79.49%",
+            "false",
+            "検出あり"
+          ],
+          [
+            "Pseudoblennius cottoides",
+            "5",
+            "Pseudoblennius cottoides",
+            "27",
+            "39",
+            "69.23%",
+            "false",
+            "検出あり"
+          ],
+          [
+            "Parablennius yatabei",
+            "6",
+            "Parablennius yatabei",
+            "27",
+            "39",
+            "69.23%",
+            "false",
+            "検出あり"
+          ],
+          [
+            "Ernogrammus hexagrammus",
+            "7",
+            "Ernogrammus hexagrammus",
+            "26",
+            "39",
+            "66.67%",
+            "false",
+            "検出あり"
+          ],
+          [
+            "Pholis nebulosa",
+            "8",
+            "Pholis nebulosa",
+            "26",
+            "39",
+            "66.67%",
+            "false",
+            "検出あり"
+          ],
+          [
+            "Girella punctata",
+            "9",
+            "Girella punctata",
+            "24",
+            "39",
+            "61.54%",
+            "false",
+            "検出あり"
+          ],
+          [
+            "Dictyosoma burgeri",
+            "10",
+            "Dictyosoma burgeri",
+            "24",
+            "39",
+            "61.54%",
+            "false",
+            "検出あり"
+          ]
+        ],
+        "model_invoked": false,
+        "outcome": "answered",
+        "source_count_text": "0 主要 | 0 関連",
+        "titles": [
+          "宮城県の運用公表解析：検出頻度順位",
+          "宮城県の運用公表解析：年別・季節別系列",
+          "宮城県の運用公表解析：リード数順位（個体数ではありません）"
+        ],
+        "primary_sources": 0,
+        "scientific_row_parity_EN": true
+      },
+      {
+        "case": "SST-comparison-JA",
+        "figures": 6,
+        "first_table_rows": [
+          [
+            "Tridentiger trigonocephalus",
+            "13",
+            "13",
+            "11",
+            "11",
+            "true",
+            "1",
+            "false",
+            "0",
+            "0"
+          ],
+          [
+            "Hexagrammos otakii",
+            "13",
+            "13",
+            "11",
+            "11",
+            "true",
+            "1",
+            "false",
+            "0",
+            "0"
+          ],
+          [
+            "Takifugu alboplumbeus",
+            "11",
+            "13",
+            "11",
+            "11",
+            "true",
+            "1",
+            "false",
+            "15.3846",
+            "20"
+          ],
+          [
+            "Engraulis japonicus",
+            "10",
+            "13",
+            "11",
+            "11",
+            "true",
+            "1",
+            "false",
+            "23.0769",
+            "60"
+          ],
+          [
+            "Pseudoblennius cottoides",
+            "9",
+            "13",
+            "6",
+            "11",
+            "true",
+            "1",
+            "false",
+            "-14.6853",
+            "40"
+          ],
+          [
+            "Parablennius yatabei",
+            "8",
+            "13",
+            "6",
+            "11",
+            "true",
+            "1",
+            "false",
+            "-6.993",
+            "46.6667"
+          ],
+          [
+            "Ernogrammus hexagrammus",
+            "9",
+            "13",
+            "6",
+            "11",
+            "true",
+            "1",
+            "true",
+            "-14.6853",
+            "60"
+          ],
+          [
+            "Pholis nebulosa",
+            "9",
+            "13",
+            "8",
+            "11",
+            "true",
+            "1",
+            "false",
+            "3.4965",
+            "26.6667"
+          ],
+          [
+            "Girella punctata",
+            "8",
+            "13",
+            "6",
+            "11",
+            "true",
+            "1",
+            "false",
+            "-6.993",
+            "-40"
+          ],
+          [
+            "Dictyosoma burgeri",
+            "8",
+            "13",
+            "6",
+            "11",
+            "true",
+            "1",
+            "false",
+            "-6.993",
+            "26.6667"
+          ]
+        ],
+        "model_invoked": false,
+        "outcome": "answered",
+        "source_count_text": "0 主要 | 0 関連",
+        "titles": [
+          "宮城県の運用公表解析：SST条件別の検出頻度",
+          "宮城県の運用公表解析：SST条件の区分",
+          "宮城県の運用公表解析：SST背景値と検出頻度の系列",
+          "宮城県の運用公表解析：相対的SST境界値"
+        ],
+        "primary_sources": 0,
+        "scientific_row_parity_EN": true
+      },
+      {
+        "case": "free-text-JA",
+        "figures": 0,
+        "first_table_rows": [],
+        "model_invoked": true,
+        "outcome": "answered",
+        "source_count_text": "2 主要 | 0 関連",
+        "titles": [],
+        "primary_sources": 2,
+        "citation_audit": {
+          "valid": 16,
+          "invalid": 0,
+          "warnings": 0
+        }
+      }
+    ],
+    "mode_and_navigation_checks": [
+      {
+        "advanced_open": false,
+        "analysis_selector_visible": false,
+        "case": "Google-signin-and-default",
+        "default_free_text": true,
+        "question": "",
+        "signed_in": true
+      },
+      {
+        "advanced_open": false,
+        "case": "reset-defaults",
+        "sources": [
+          {
+            "enabled": true,
+            "label": "Satellite SST"
+          },
+          {
+            "enabled": true,
+            "label": "ANEMONE eDNA"
+          }
+        ]
+      },
+      {
+        "active_example": false,
+        "case": "opening-advanced-keeps-free-text",
+        "free_text": true,
+        "question": "What taxa are recorded in the ANEMONE eDNA evidence for sample 00144db778f30ca6787ecc1304e8ea1fd7d34ab95971922ca291e90ded593189. Explain the limitations of this evidence."
+      },
+      {
+        "advanced_open": false,
+        "case": "return-from-edited-example",
+        "free_text": true,
+        "question": "Which fish species were most frequently detected along the Miyagi coast from 2020 to 2023? Show the top 10, including the denominators and yearly changes.",
+        "result_cleared": true,
+        "sample_filter": "00144db778f30ca6787ecc1304e8ea1fd7d34ab95971922ca291e90ded593189",
+        "sst_dataset_filter": ""
+      },
+      {
+        "advanced_open": false,
+        "case": "return-from-untouched-example",
+        "free_text": true,
+        "question": "Compare fish eDNA detection frequencies under high and low sea surface temperatures in Miyagi. Show a representative time series and cite the datasets.",
+        "result_cleared": true,
+        "sample_filter": "00144db778f30ca6787ecc1304e8ea1fd7d34ab95971922ca291e90ded593189"
+      },
+      {
+        "case": "explicit-analysis-link",
+        "advanced_context_open": true
+      },
+      {
+        "case": "final-default-state",
+        "advanced_open": false,
+        "analysis_selector_visible": false,
+        "default_free_text": true,
+        "question": "",
+        "sources": [
+          true,
+          true
+        ]
+      }
+    ],
+    "citation_evidence_panel": true,
+    "citation_provenance_deep_link": true,
+    "final_state": {
+      "advanced_open": false,
+      "analysis_selector_visible": false,
+      "default_free_text": true,
+      "question": "",
+      "sources": [
+        true,
+        true
+      ]
+    }
+  },
+  "live_chat_request_latencies": [
+    {
+      "httpRequest": {
+        "latency": "6.730522607s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T03:36:29.976309Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "9.453880753s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T03:38:41.635187Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "8.354894063s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T03:39:48.798754Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "8.994645273s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T03:40:38.652193Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "9.021545622s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T03:41:13.546283Z"
+    },
+    {
+      "httpRequest": {
+        "latency": "4.694302957s",
+        "status": 200
+      },
+      "timestamp": "2026-10-23T03:41:53.146092Z"
+    }
+  ],
+  "previous_demo_revision": "ocean-cop17-demo-00003-2h4",
+  "previous_frontend_image": "sha256:600e08c41146f160126f9acab9ed238d8b043312af99a24529b9d908102778bc",
+  "previous_frontend_next": "15.5.27",
+  "preferred_rollback": "Rebuild the previous UI with Next.js 15.5.28; previous image still carries the newly detected Server Actions advisory.",
+  "remaining": "Presenter first sign-ins and the professor's final demonstration scenarios are separate rehearsal tasks.",
+  "screenshots": [
+    {
+      "file": "free-text-first-live-default-en.png",
+      "sha256": "ca0003ff250676a6f2519b76e0c9c80ceb39fec800e5de959a5bd2f4b3b20b60",
+      "storage": "private local operations directory; image bytes not committed"
+    },
+    {
+      "file": "free-text-first-live-default-ja.png",
+      "sha256": "e3d4ad05284faf8616bd57e2c8a45ab6f1e15efbbb7d65c0f78d737a0736932a",
+      "storage": "private local operations directory; image bytes not committed"
+    },
+    {
+      "file": "free-text-first-live-advanced-en.png",
+      "sha256": "5d477b698992c252e197048f958e9064f2eabf91f120d2d4c7d3780a08b4377e",
+      "storage": "private local operations directory; image bytes not committed"
+    },
+    {
+      "file": "free-text-first-live-free-ja.png",
+      "sha256": "2c885efef92b07286a63149baa59bc06d9438b7fa5a364f2931f5e6f0a365e72",
+      "storage": "private local operations directory; image bytes not committed"
+    },
+    {
+      "file": "free-text-first-phone-en.png",
+      "sha256": "db5c80092e7c981d469de55736a0de212e8ee32e35412e6dee2bfdf91fde1fd5",
+      "storage": "private local operations directory; image bytes not committed"
+    },
+    {
+      "file": "free-text-first-phone-ja.png",
+      "sha256": "0324e0ea0bac624a0127008ec3dc2aead0080abef7d187ebbaa399fe840e43a5",
+      "storage": "private local operations directory; image bytes not committed"
+    },
+    {
+      "file": "free-text-first-tablet-en.png",
+      "sha256": "5030c0d9068000f8c89175349e3378c5f6b1380fe3c2d10e2d31080a74fe9b15",
+      "storage": "private local operations directory; image bytes not committed"
+    }
+  ],
+  "final_isolation_guards": {
+    "revision": "ocean-cop17-demo-00004-lkd",
+    "temporary_production_secret_access_revoked": true,
+    "min_instances": 1,
+    "max_instances": 2
+  },
+  "live_http_latency_summary": {
+    "requests": 6,
+    "all_http_200": true,
+    "minimum_seconds": 4.694,
+    "maximum_seconds": 9.454,
+    "all_under_ten_seconds_in_this_rehearsal": true,
+    "guarantee_for_future_queries": false
+  }
+}
