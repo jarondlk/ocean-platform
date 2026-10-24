@@ -185,7 +185,7 @@ function renderBlock(block: Block, index: number, options: RenderOptions): React
             {block.rows.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {block.headers.map((_header, cellIndex) => (
-                  <td key={cellIndex}>{renderInline(row[cellIndex] || "", `td-${index}-${rowIndex}-${cellIndex}`, options)}</td>
+                  <td key={cellIndex} className={/^-?\d+(?:\.\d+)?$/.test(row[cellIndex] || "") ? "markdown-number" : undefined}>{renderInline(row[cellIndex] || "", `td-${index}-${rowIndex}-${cellIndex}`, options)}</td>
                 ))}
               </tr>
             ))}
