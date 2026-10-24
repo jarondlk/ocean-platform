@@ -1,0 +1,183 @@
+{
+  "verified_at_jst": "2026-10-24T21:47:49+09:00",
+  "branch": "cop17-demo",
+  "frontend_source": "32db2374b562187bc183882e87cc3a6f9925d490",
+  "build_id": "81a172f4-ceca-4ca3-8089-5bf691ba56d9",
+  "revision": "ocean-cop17-demo-00011-vgs",
+  "frontend_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:7ac02493ea6b33ab86929ad7c42517a4d707f704137ecc149b48f5e65b91da2f",
+  "api_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:6891359e52fc13136dcac3f1020ea50d8f3a7e556b7d8831f8a3080b47149bf2",
+  "api_unchanged": true,
+  "production_unchanged": true,
+  "source_archive_sha256": "2384c1da817f8ceb5f38681a1478928eaf677b32aca744170c1c57b670ec83a7",
+  "frontend_tests_passed": 86,
+  "typecheck_passed": true,
+  "build_runtime_auth_schema_passed": true,
+  "scan": {
+    "accepted": true,
+    "severity_counts": {
+      "LOW": 60,
+      "HIGH": 43,
+      "MEDIUM": 58,
+      "UNKNOWN": 1
+    },
+    "language_findings": [],
+    "http_auth_passed": true,
+    "schema_ready": true
+  },
+  "responsive_fixture_checks": {
+    "passed": true,
+    "fixture_only": true,
+    "checks": [
+      {
+        "name": "desktop-en",
+        "all_controls_in_settings": true,
+        "main_starts_with_question": true,
+        "question": {
+          "bottom": 261.5,
+          "height": 180,
+          "left": 242,
+          "right": 861,
+          "top": 81.5,
+          "width": 619,
+          "x": 242,
+          "y": 81.5
+        },
+        "scrollWidth": 1265,
+        "settings": {
+          "bottom": 899.7265625,
+          "height": 832.2265625,
+          "left": 883,
+          "right": 1243,
+          "top": 67.5,
+          "width": 360,
+          "x": 883,
+          "y": 67.5
+        },
+        "width": 1280
+      },
+      {
+        "name": "phone-ja",
+        "all_controls_in_settings": true,
+        "main_starts_with_question": true,
+        "question": {
+          "bottom": 469.0546875,
+          "height": 202.5546875,
+          "left": 14,
+          "right": 361,
+          "top": 266.5,
+          "width": 347,
+          "x": 14,
+          "y": 266.5
+        },
+        "scrollWidth": 375,
+        "settings": {
+          "bottom": 1895.96875,
+          "height": 938.2265625,
+          "left": 14,
+          "right": 361,
+          "top": 957.7421875,
+          "width": 347,
+          "x": 14,
+          "y": 957.7421875
+        },
+        "width": 390
+      },
+      {
+        "name": "tablet-ja",
+        "all_controls_in_settings": true,
+        "main_starts_with_question": true,
+        "question": {
+          "bottom": 309,
+          "height": 216,
+          "left": 242,
+          "right": 987,
+          "top": 93,
+          "width": 745,
+          "x": 242,
+          "y": 93
+        },
+        "scrollWidth": 1009,
+        "settings": {
+          "bottom": 1566.7265625,
+          "height": 829.6328125,
+          "left": 242,
+          "right": 987,
+          "top": 737.09375,
+          "width": 745,
+          "x": 242,
+          "y": 737.09375
+        },
+        "width": 1024
+      },
+      {
+        "name": "desktop-ja",
+        "all_controls_in_settings": true,
+        "main_starts_with_question": true,
+        "question": {
+          "bottom": 309,
+          "height": 216,
+          "left": 242,
+          "right": 987,
+          "top": 93,
+          "width": 745,
+          "x": 242,
+          "y": 93
+        },
+        "scrollWidth": 1009,
+        "settings": {
+          "bottom": 1566.7265625,
+          "height": 829.6328125,
+          "left": 242,
+          "right": 987,
+          "top": 737.09375,
+          "width": 745,
+          "x": 242,
+          "y": 737.09375
+        },
+        "width": 1024
+      }
+    ]
+  },
+  "live_checks_sha256": "bfb1a5cab5eabf608fe630f88810a07c7a4f8eeeacf03625bad63761b91e92d5",
+  "live_cases": [
+    {
+      "name": "live-sidebar-layout-english",
+      "passed": true
+    },
+    {
+      "name": "live-sidebar-language-japanese",
+      "passed": true
+    },
+    {
+      "name": "sidebar-modes-and-draft-restoration",
+      "passed": true
+    },
+    {
+      "name": "live-exact-216-position-count",
+      "passed": true
+    },
+    {
+      "name": "original-sample-search",
+      "passed": true
+    },
+    {
+      "name": "live-authentication-boundaries",
+      "passed": true
+    }
+  ],
+  "rollback_revision": "ocean-cop17-demo-00010-dq6",
+  "provider_observations": [
+    {
+      "name": "first-model-request",
+      "status": "failed",
+      "provider_status": 429,
+      "reason": "Vertex RESOURCE_EXHAUSTED",
+      "interaction_id": "a9651205-a444-4089-a2e0-17c2e58be515"
+    },
+    {
+      "name": "model-retry",
+      "status": "answered",
+      "scientific_evidence_verified": true
+    }
+  ]
+}
