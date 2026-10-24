@@ -149,14 +149,20 @@ test('missing or incompatible fixed setup never substitutes another dataset or a
   } finally {await act(async () => renderer?.unmount()); delete global.autoAnalysisOptions; delete global.autoChatRequest;}
 });
 
-test('all three modes appear above the question; default free text has no published pins or setup selector', async () => {
+test('settings contains demo controls while the question leads the main column; free text has no published pins', async () => {
   freshStorage(); global.autoAnalysisOptions = demoOptions();
   const requests = []; global.autoChatRequest = async request => {requests.push(request); return {answer: 'Retrieved', n_sources: 0, sources: []};};
   let renderer;
   try {
     await act(async () => {renderer = create(tree('demo'));});
     const card = renderer.root.findAllByType('article')[0];
-    const modes = card.findByProps({className: 'cop17-modes'});
+    const sidebar = renderer.root.findByType('aside');
+    const modes = sidebar.findByProps({className: 'cop17-modes'});
+    assert.equal(card.findAllByProps({className: 'cop17-modes'}).length, 0);
+    assert.equal(card.findAllByProps({className: 'cop17-banner'}).length, 0);
+    assert.equal(sidebar.findAllByProps({className: 'cop17-banner'}).length, 1);
+    assert.equal(sidebar.findAllByProps({'aria-label': 'Language'}).length, 1);
+    assert.equal(card.findByType('textarea').props.id, 'query-input');
     assert.equal(modes.findAllByType('button').length, 3);
     assert.equal(renderer.root.findAllByProps({id: 'chat-demo-setup'}).length, 0);
     assert.equal(modes.findAllByType('details').length, 0);

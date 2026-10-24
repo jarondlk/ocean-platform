@@ -272,27 +272,13 @@ export default function ChatPage() {
       <form className="chat-form" onSubmit={submit}>
         <div className="chat-layout">
           <section className="chat-main">
-            {cop17Demo ? <div className="cop17-banner" role="region" aria-label={ui("COP17 demonstration")}>
-              <div><strong>{ui("Explore ocean data with your own questions.")}</strong><p>{ui("Free-text search is the default. Advanced examples use predefined datasets.")}</p></div>
-              <div className="button-row" aria-label={ui("Language")}>
-                <button type="button" className="button secondary-button" aria-pressed={preferences?.locale === "en"} onClick={() => setPreference("locale", "en")}>English</button>
-                <button type="button" className="button secondary-button" aria-pressed={preferences?.locale === "ja"} onClick={() => setPreference("locale", "ja")}>日本語</button>
-              </div>
-            </div> : null}
             <article className="card">
-              {cop17Demo ? <Cop17ChatModes disabled={!ready || loading} analysisId={displayedAnalysisId}
-                researchIntent={displayedResearchIntent} onPresetChange={changeDemoPreset} /> : null}
-              {demoExampleActive ? <div className="cop17-active-example" role="status">
-                <div><strong>{ui("Advanced analysis example")}</strong><span>{ui(demoExampleLabel)}</span></div>
-                <button className="button secondary-button" type="button" disabled={!ready || loading}
-                  onClick={() => changeDemoPreset({scope: defaultScope(), analysisId: ""})}>{ui("Return to free-text search")}</button>
-              </div> : null}
               <label className="section-label" htmlFor="query-input" title={ui("User question sent to retrieval and the selected chat model.")}>
                 {ui("Question")}
               </label>
               <textarea
                 id="query-input"
-                className="textarea"
+                className={cop17Demo ? "textarea cop17-query-input" : "textarea"}
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 aria-label={ui("Question")}
@@ -534,6 +520,21 @@ export default function ChatPage() {
                 <RotateCcw size={15} aria-hidden="true" />
               </button>
             </div>
+
+            {cop17Demo ? <div className="cop17-banner" role="region" aria-label={ui("COP17 demonstration")}>
+              <div><strong>{ui("Explore ocean data with your own questions.")}</strong><p>{ui("Free-text search is the default. Advanced examples use predefined datasets.")}</p></div>
+              <div className="button-row" aria-label={ui("Language")}>
+                <button type="button" className="button secondary-button" aria-pressed={preferences?.locale === "en"} onClick={() => setPreference("locale", "en")}>English</button>
+                <button type="button" className="button secondary-button" aria-pressed={preferences?.locale === "ja"} onClick={() => setPreference("locale", "ja")}>日本語</button>
+              </div>
+            </div> : null}
+            {cop17Demo ? <Cop17ChatModes disabled={!ready || loading} analysisId={displayedAnalysisId}
+              researchIntent={displayedResearchIntent} onPresetChange={changeDemoPreset} /> : null}
+            {demoExampleActive ? <div className="cop17-active-example" role="status">
+              <div><strong>{ui("Advanced analysis example")}</strong><span>{ui(demoExampleLabel)}</span></div>
+              <button className="button secondary-button" type="button" disabled={!ready || loading}
+                onClick={() => changeDemoPreset({scope: defaultScope(), analysisId: ""})}>{ui("Return to free-text search")}</button>
+            </div> : null}
 
             <ChatSourceSettings disabled={!ready || loading} scope={displayedScope} onChange={editSources}
               analysisId={displayedAnalysisId} onAnalysisChange={value => {materializeManual(); setAnalysisId(value);}}

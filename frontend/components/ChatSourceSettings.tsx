@@ -131,7 +131,7 @@ export function ChatSourceSettings({ scope, onChange, analysisId, onAnalysisChan
   </>;
 }
 
-// Kept above the question rather than inside source settings, so every mode is visible.
+// Demo search modes share the Settings sidebar with language and source choices.
 export function Cop17ChatModes({analysisId, researchIntent, disabled, onPresetChange}: {
   analysisId: string; researchIntent?: ResearchIntent; disabled?: boolean;
   onPresetChange: (preset: ChatPreset) => void;

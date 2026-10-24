@@ -3449,3 +3449,14 @@ button.temporal-cell { cursor: pointer; }
 .cop17-active-example { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .8rem; padding: .8rem; margin-bottom: 1rem; border: 1px solid var(--line); border-radius: 8px; }
 .cop17-active-example strong, .cop17-active-example span { display: block; }
 .cop17-active-example span { margin-top: .3rem; }
+
+/* COP17 keeps the question first and groups demonstration controls in Settings. */
+.cop17-query-input { min-height: clamp(180px, 24vh, 260px); font-size: 1rem; }
+.chat-settings .cop17-banner { flex-direction: column; align-items: stretch; padding: .85rem; }
+.chat-settings .cop17-banner .button-row .button { flex: 1; }
+.chat-settings .cop17-modes { margin-bottom: 0; }
+.chat-settings .cop17-mode-grid,
+.chat-settings .cop17-preset-buttons { grid-template-columns: 1fr; }
+.chat-settings .cop17-modes .button { height: auto; }
+.chat-settings .cop17-active-example { margin-bottom: 0; }
+.chat-settings .cop17-active-example .button { width: 100%; }
