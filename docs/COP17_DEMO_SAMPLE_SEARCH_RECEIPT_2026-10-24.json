@@ -1,0 +1,224 @@
+{
+  "release": "COP17 ordinary sample-search routing and requested-detail bounds",
+  "verified_at_jst": "2026-10-24T21:26:37+09:00",
+  "branch": "cop17-demo",
+  "runtime_source_commit": "f7d033ffcdf980180eec12b7f51557f3c34e25c8",
+  "source_archive_sha256": "bc98fa7fbb3c7b765e0779e1e41761dfc10822a2da7ae14a7cca4ff18ebfb9ff",
+  "build_id": "1ebb1c55-96a5-4f4d-88fd-5760acef2765",
+  "service": "ocean-cop17-demo",
+  "region": "asia-northeast1",
+  "revision": "ocean-cop17-demo-00010-dq6",
+  "api_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:6891359e52fc13136dcac3f1020ea50d8f3a7e556b7d8831f8a3080b47149bf2",
+  "frontend_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:a19f0239be69dd9417d7f0e9f4143f6e2892e7449a0f25099e4dfbe3b8e0cd5a",
+  "frontend_unchanged": true,
+  "production_spec_and_traffic_unchanged": true,
+  "tests": {
+    "backend": "1637 passed, 122 skipped, 2581 warnings in 63.53s (0:01:03)",
+    "routing": "167 passed, 1 warning in 0.94s",
+    "synthetic_api_test_boundary": "Stubbed retrieval/model prove dispatch and supplied-evidence handling; not real scientific or LLM acceptance."
+  },
+  "candidate_runtime": {
+    "build_success": true,
+    "http_auth_boundary_passed": true,
+    "schema_ready": true,
+    "scan_severity_counts": {
+      "LOW": 82,
+      "HIGH": 44,
+      "MEDIUM": 70,
+      "UNKNOWN": 1
+    },
+    "language_package_findings": [],
+    "qa_execution": "ocean-cop17-sample-routing-qa-kjlq7",
+    "qa_probe": "cop17-catalogue-geography",
+    "independent_reference_coordinate_count": 216,
+    "scientific_rows_modified": false,
+    "users_created_or_reactivated": false,
+    "qa_job_sealed": true
+  },
+  "read_only_source_audit": {
+    "published_retrieval_sha256": "4d1d327f59efc5373ab0f6cf3ad7614faf39d720a7fc0147bacaf79418f20e94",
+    "canonical_detection_sha256": "e2460104dd19527e8847d67d797d5cf03486b1b5a4aa59235095fe213cafa416",
+    "canonical_manifest_verified": true,
+    "method_detection_set_sha256": "dbd2e9cd32a310d5dc1f0c5d73386dae3cde42c64cd15e9da23705a793c5998f",
+    "source_snapshot_id": "61e197db3160d7318c09766d08ba65d0c71dbac9dea83a9707fad2f81713fdb6",
+    "sample_id": "11b44f8f51558719453f222a15bff316111c78b8f29e864235f533aa6749af80",
+    "assay_id": "cb9ab028b14e7875ad94bd7d014c208e6d06ea612dcc47db4b94ea065d8de05b",
+    "assignment_method": "qcauto_95pct_3nn_target",
+    "citation_document_id": "edna_cb9ab028b14e7875ad94bd7d014c208e6d06ea612dcc47db4b94ea065d8de05b_qcauto_95pct_3nn_target",
+    "collection_date": "2020-08-17",
+    "provider_sample_label": "2020KibanSRUN01__20200817T0400-UTO-OtsuchiBay__MiFish",
+    "sequencing_method": "NextSeq 500",
+    "target_gene": "12S rRNA",
+    "reference_taxa": [
+      {
+        "name": "Engraulis japonicus",
+        "rank": "species"
+      },
+      {
+        "name": "Hexagrammos otakii",
+        "rank": "species"
+      },
+      {
+        "name": "Seriola quinqueradiata",
+        "rank": "species"
+      },
+      {
+        "name": "Scomber",
+        "rank": "genus"
+      },
+      {
+        "name": "Thunnus",
+        "rank": "genus"
+      }
+    ],
+    "bay_membership_status": "Provider label contains OtsuchiBay; structured bay membership is not curated.",
+    "coordinate_precision": "provider_grid_unconfirmed",
+    "classification": "unknown"
+  },
+  "live_browser": {
+    "passed": true,
+    "case_count": 10,
+    "original_exact_question": "Find one ANEMONE eDNA sample from Otsuchi Bay in 2020 and list five fish taxa detected in it. Distinguish species-level and genus-level identifications, and cite the source.",
+    "original_question_repeats": 3,
+    "cases": [
+      {
+        "name": "original-exact-default",
+        "outcome": "answered",
+        "model_invoked": true,
+        "response_sha256": "33afea89799be8f1f5739a87a840018692e8b3cb5064f0decd3f4bd3750dd9b6",
+        "citation_document_ids": [
+          "edna_cb9ab028b14e7875ad94bd7d014c208e6d06ea612dcc47db4b94ea065d8de05b_qcauto_95pct_3nn_target"
+        ],
+        "passed": true,
+        "scientific_evidence_verified": true,
+        "requested_details_only_verified": true
+      },
+      {
+        "name": "original-exact-edna-only",
+        "outcome": "answered",
+        "model_invoked": true,
+        "response_sha256": "546a082b60cc330e53dbf9dfe8ec9943e1073f7e142fa75486f0a1e8931f1ae4",
+        "citation_document_ids": [
+          "edna_cb9ab028b14e7875ad94bd7d014c208e6d06ea612dcc47db4b94ea065d8de05b_qcauto_95pct_3nn_target"
+        ],
+        "passed": true,
+        "scientific_evidence_verified": true,
+        "requested_details_only_verified": true
+      },
+      {
+        "name": "japanese-sample-search",
+        "outcome": "answered",
+        "model_invoked": true,
+        "response_sha256": "59c8969b5ad216fa0b4b825ec3a4d0c191659ef562ec5de00013734d101391b9",
+        "citation_document_ids": [
+          "edna_cb9ab028b14e7875ad94bd7d014c208e6d06ea612dcc47db4b94ea065d8de05b_qcauto_95pct_3nn_target"
+        ],
+        "passed": true,
+        "scientific_evidence_verified": true,
+        "requested_details_only_verified": true
+      },
+      {
+        "name": "location-count",
+        "outcome": "answered",
+        "model_invoked": false,
+        "response_sha256": "afd6bae611f4bcfcfe3e733497ce108e5cc3647694005c0d83690f03e7bd6c16",
+        "citation_document_ids": [
+          "aggregate_edna_6a1a0268beca633c46a3878ec9ce36ad1f25e4c1338c51a1bab514a597b2bea4"
+        ],
+        "passed": true,
+        "scientific_evidence_verified": true
+      },
+      {
+        "name": "named-area-count",
+        "outcome": "answered",
+        "model_invoked": false,
+        "response_sha256": "c0049487665c585fc8ec567780f0eb62b44e735c645a6dfb0ea4ba42b259699a",
+        "citation_document_ids": [
+          "aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450"
+        ],
+        "passed": true,
+        "scientific_evidence_verified": true
+      },
+      {
+        "name": "geographic-extent",
+        "outcome": "answered",
+        "model_invoked": false,
+        "response_sha256": "1982858a39bf8b32fb5eee90aae8cadb0db76e02250458fffe5bcfdd0af26543",
+        "citation_document_ids": [
+          "aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450"
+        ],
+        "passed": true,
+        "scientific_evidence_verified": true
+      },
+      {
+        "name": "japanese-geography",
+        "outcome": "answered",
+        "model_invoked": false,
+        "response_sha256": "19625f142a3e6cc748bd5b1a60f27d6f3bb945cceb8f31f5aed9ecbd23466e98",
+        "citation_document_ids": [
+          "aggregate_edna_18da70e322a69ed4d45f35cc930212b4221cfc8e167a8310458bf130bea89450"
+        ],
+        "passed": true,
+        "scientific_evidence_verified": true
+      },
+      {
+        "name": "fish-frequency",
+        "outcome": "answered",
+        "model_invoked": false,
+        "response_sha256": "4fe6d4207de9f4fd523291a28b67748251d0aed1048f78fa7abc7539c95a44d1",
+        "citation_document_ids": [],
+        "passed": true,
+        "scientific_evidence_verified": true
+      },
+      {
+        "name": "fish-sst",
+        "outcome": "answered",
+        "model_invoked": false,
+        "response_sha256": "2543af62169978b91be328328119d35a07502d94ba4f6175cba6a59d32ed19e5",
+        "citation_document_ids": [],
+        "passed": true,
+        "scientific_evidence_verified": true
+      },
+      {
+        "name": "original-exact-after-advanced",
+        "outcome": "answered",
+        "model_invoked": true,
+        "response_sha256": "7e69cbba3f2d7f0cb4755c6770317b8abc89b8c0116950303ae0f503cde88043",
+        "citation_document_ids": [
+          "edna_cb9ab028b14e7875ad94bd7d014c208e6d06ea612dcc47db4b94ea065d8de05b_qcauto_95pct_3nn_target"
+        ],
+        "passed": true,
+        "scientific_evidence_verified": true,
+        "requested_details_only_verified": true,
+        "mode_restoration_verified": true
+      }
+    ],
+    "checks": [
+      {
+        "name": "original-sample-provenance",
+        "passed": true,
+        "scientific_evidence_verified": true
+      },
+      {
+        "name": "original-sample-data-explorer-57-rows",
+        "passed": true,
+        "scientific_evidence_verified": true
+      },
+      {
+        "name": "public-authentication-boundaries",
+        "passed": true
+      }
+    ],
+    "private_proof_sha256": "14b5140d9dda53401495edb1e4b97b194730088241f6c680a928e745468cc9cd"
+  },
+  "earlier_revision": {
+    "revision": "ocean-cop17-demo-00009-zkg",
+    "api_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:0054c62c7b2992d7d9437a3d3e65f5004208b00115d440530e4101369baec31d",
+    "limitation": "Routing fixed, but an initial model response volunteered an unsupported read count. Superseded by generic requested-detail prompt bounds."
+  },
+  "scientific_scope_preserved": {
+    "recorded_positions": 216,
+    "named_area_count": null,
+    "advanced_examples": "Fixed Miyagi 2020-2023 / QCauto95%-3NN / MiSeq paired-end12S rRNA; MUR SSTv4.1."
+  }
+}
