@@ -178,4 +178,7 @@ def test_exact_professor_question_reaches_retrieval_and_cited_model_answer(
     assert result["answer_audit"]["invalid_citation_count"] == 0
     assert PROFESSOR_QUESTION in calls["model"][0]["prompt"]
     assert "Fixtureichthys alpha" in calls["model"][0]["prompt"]
+    assert "from one sample and one assignment method" in calls["model"][0]["prompt"]
+    assert "Do not add unrequested read counts" in calls["model"][0]["prompt"]
+    assert "highest-read examples do not establish full taxon totals" in calls["model"][0]["prompt"]
     assert len(calls["history"]) == 1
