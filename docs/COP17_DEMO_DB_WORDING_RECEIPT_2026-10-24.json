@@ -1,0 +1,83 @@
+{
+  "verified_at_jst": "2026-10-24T22:26:17+09:00",
+  "branch": "cop17-demo",
+  "runtime_source": "133d2210124ea0316bfd82dd73113af2b3524a0d",
+  "build_id": "51bfd8da-47ec-4b4e-9487-cc7a706b9adb",
+  "revision": "ocean-cop17-demo-00012-llq",
+  "api_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:eb6da9204aa447ba23041859fa9731426cc13e220f3a1931cf689773493c58a2",
+  "frontend_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:7ac02493ea6b33ab86929ad7c42517a4d707f704137ecc149b48f5e65b91da2f",
+  "frontend_unchanged": true,
+  "production_unchanged": true,
+  "tests": {
+    "backend": {
+      "path": "/private/tmp/ocean-cop17-ops/db-alias/backend-tests.log",
+      "sha256": "92d06678f30c1cb6dd6b5205a2e77cd0d94e67cf884a57c12659e6d618a99e0e",
+      "summary": "1654 passed, 122 skipped, 2581 warnings in 61.07s (0:01:01)"
+    },
+    "routing": {
+      "path": "/private/tmp/ocean-cop17-ops/db-alias/routing-tests.log",
+      "sha256": "4e6452a2e47255d68fbad23586075b66a09eac560ca1f58ad45b30b276aa2e4e",
+      "summary": "184 passed, 1 warning in 0.83s"
+    }
+  },
+  "scan": {
+    "severity_counts": {
+      "LOW": 82,
+      "HIGH": 44,
+      "MEDIUM": 70,
+      "UNKNOWN": 1
+    },
+    "language_package_findings": [],
+    "accepted": true,
+    "http_auth_boundary_passed": true,
+    "schema_ready": true
+  },
+  "qa_execution": "ocean-cop17-db-alias-qa-bxxdc",
+  "independent_coordinate_count": 216,
+  "qa_job_sealed": true,
+  "exact_question": "How many sampling locations are recorded in ANEMONE DB?",
+  "live_cases": [
+    {
+      "name": "exact-user-db-question",
+      "passed": true,
+      "response_sha256": "afd6bae611f4bcfcfe3e733497ce108e5cc3647694005c0d83690f03e7bd6c16"
+    },
+    {
+      "name": "lowercase-db",
+      "passed": true,
+      "response_sha256": "afd6bae611f4bcfcfe3e733497ce108e5cc3647694005c0d83690f03e7bd6c16"
+    },
+    {
+      "name": "named-area-db",
+      "passed": true,
+      "response_sha256": "c0049487665c585fc8ec567780f0eb62b44e735c645a6dfb0ea4ba42b259699a"
+    },
+    {
+      "name": "japanese-db",
+      "passed": true,
+      "response_sha256": "8420ed74daba386eea99a3e11dcdc74074d97b1dd1a099281c9aa4f7f93918fe"
+    },
+    {
+      "name": "db-unresolved-date-guard",
+      "passed": true,
+      "response_sha256": "c7777fa35cb21566ded304135ba193bf8864ea030722eee6fee544a4072b53a7"
+    },
+    {
+      "name": "original-otsuchi-sample-preserved",
+      "passed": true,
+      "response_sha256": "d44efe0211b12f0617efdecebe4d7633ec9049182989399232141448c9c80270"
+    },
+    {
+      "name": "exact-user-db-repeat",
+      "passed": true,
+      "response_sha256": "afd6bae611f4bcfcfe3e733497ce108e5cc3647694005c0d83690f03e7bd6c16"
+    },
+    {
+      "name": "public-authentication-boundaries",
+      "passed": true,
+      "response_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "live_proof_sha256": "5e43c85872690d1359fe1f95b7d652d700997a1736b3fed4b5f1392369fa104a",
+  "rollback_revision": "ocean-cop17-demo-00011-vgs"
+}
