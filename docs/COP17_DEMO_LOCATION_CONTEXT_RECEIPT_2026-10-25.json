@@ -1,0 +1,201 @@
+{
+  "verified_at_jst": "2026-10-25T02:53:26+09:00",
+  "branch": "cop17-demo",
+  "revision": "ocean-cop17-demo-00014-mg6",
+  "api_source": "4b612c3de8e3cff7299c2ceeddcf97fdc5d937fd",
+  "frontend_source": "51a862585655d06799be0124f61910c0bcb4f5c9",
+  "api_build": "f8ae5a4c-5430-484b-bb95-25de2740b213",
+  "frontend_build": "98e7d8a2-514f-4f18-ba2e-eabeea7dd43c",
+  "images": {
+    "frontend": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:aedd803508f8a3a8d67db88e15fd219e342d8b228dc761e88a8d25cea3ff5bfb",
+    "api": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:8909662d0d9ac54377f97979a3aecd0baae4415ade3d1d93e97692633f930221"
+  },
+  "production_unchanged": true,
+  "overhaul_working_files_not_modified": true,
+  "scientific_rows_modified": false,
+  "backend_tests_passed": 1689,
+  "optional_postgres_checks_skipped_locally": 133,
+  "focused_tests_passed": 219,
+  "postgres_tests_passed": 109,
+  "frontend_tests_passed": 86,
+  "typescript_and_production_build_passed": true,
+  "api_scan": {
+    "severity_counts": {
+      "LOW": 82,
+      "HIGH": 44,
+      "MEDIUM": 70,
+      "UNKNOWN": 1
+    },
+    "language_package_findings": [],
+    "accepted": true,
+    "http_auth_boundary_passed": true,
+    "schema_ready": true
+  },
+  "frontend_scan": {
+    "accepted": true,
+    "severity_counts": {
+      "LOW": 60,
+      "HIGH": 43,
+      "MEDIUM": 58,
+      "UNKNOWN": 1
+    },
+    "language_findings": [],
+    "http_auth_passed": true,
+    "schema_ready": true
+  },
+  "demo_qa_execution": "ocean-cop17-context-qa-rr8jc",
+  "qa_job_sealed": true,
+  "canonical_coordinate_positions": 216,
+  "generalized_map_context": {
+    "reference_name_groups": 87,
+    "mapped_positions": 96,
+    "unassigned_positions": 120,
+    "official_named_area_count": null,
+    "map_boundary_validation": false,
+    "registry_sha256": "caa32c9fe3dc7ba73f6087005bcac9f2405a0916367b65b5d0f24ec46a9ae4d2",
+    "retained_source": "gs://data-infra-infobio-ocean-cop17/provenance/map-context/geonames/c9a170e56a214eb4aadd64bca130ce996ed65da5c1f0f05d7d24648e007155bf/JP.zip#1792864233017947",
+    "source_archive_sha256": "c9a170e56a214eb4aadd64bca130ce996ed65da5c1f0f05d7d24648e007155bf",
+    "licence": "CC BY 4.0"
+  },
+  "historical_v1_v2_v3_and_v4_evidence_verified": true,
+  "count_only_answer_and_citation_identical_to_baseline": true,
+  "original_sample_question_answered_twice": true,
+  "professor_E3_B_and_E4_B_rows_identical_to_previous_release": true,
+  "data_explorer_totals_unchanged": true,
+  "new_citation_inspector_and_provenance_verified": true,
+  "coordinate_cells_readable_and_no_page_overflow": true,
+  "live_checks": [
+    {
+      "name": "exact-count-unchanged",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "afd6bae611f4bcfcfe3e733497ce108e5cc3647694005c0d83690f03e7bd6c16"
+    },
+    {
+      "name": "count-plus-ten",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "c1b2142959b6f13210429b1ed2180a05b0037a0713e7c85e7d2db854fc0a5be7"
+    },
+    {
+      "name": "generalized-named-areas",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "a9fc29b31e75ee9dcee10a5e0a485ac30ec2da24af6268b17a4df1e86a2f99cf"
+    },
+    {
+      "name": "geography-preserved",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "1982858a39bf8b32fb5eee90aae8cadb0db76e02250458fffe5bcfdd0af26543"
+    },
+    {
+      "name": "count-plus-five",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "504858d5740ec19ef4a4f0fc7c396aa1038c303910ccd88eb435d852de10f73e"
+    },
+    {
+      "name": "unresolved-date-guard",
+      "expected_outcome": "Abstained",
+      "passed": true,
+      "response_sha256": "c7777fa35cb21566ded304135ba193bf8864ea030722eee6fee544a4072b53a7"
+    },
+    {
+      "name": "japanese-count-preserved",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "11171ba8bf20428b884568d8cc3f8525e25e0e16451994b2b0e20164a09f048d"
+    },
+    {
+      "name": "japanese-ten-examples",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "3dab31a3cfc34be725249d181d8d18f4f1ceaed4cbb55620b13eb8e43cb68c3f"
+    },
+    {
+      "name": "japanese-named-areas",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "33b6d9136e69ed04450a0146724a257c0c34800998b9cd37de94158140b18742"
+    },
+    {
+      "name": "japanese-geography-preserved",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "6904a0bcee669bc587830a77006b45671638194c5ae5f4d3e02283bfca0892a3"
+    },
+    {
+      "name": "original-sample-search-first",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "ac73010318c60c3d4371f4bfd1295b67a28dd02a6393ee84b12ff09ee130797e"
+    },
+    {
+      "name": "fish-frequency-preserved",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "4fe6d4207de9f4fd523291a28b67748251d0aed1048f78fa7abc7539c95a44d1"
+    },
+    {
+      "name": "fish-sst-preserved",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "2543af62169978b91be328328119d35a07502d94ba4f6175cba6a59d32ed19e5"
+    },
+    {
+      "name": "professor-E4-B-preserved",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "2543af62169978b91be328328119d35a07502d94ba4f6175cba6a59d32ed19e5"
+    },
+    {
+      "name": "professor-E3-B-preserved",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "4fe6d4207de9f4fd523291a28b67748251d0aed1048f78fa7abc7539c95a44d1"
+    },
+    {
+      "name": "final-count-plus-ten",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "c1b2142959b6f13210429b1ed2180a05b0037a0713e7c85e7d2db854fc0a5be7"
+    },
+    {
+      "name": "original-sample-search-final",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "86b1a20ff7a806f26a043027f41f3f71b1f3215cf08e47995aa6a1f71a06ea4e"
+    },
+    {
+      "name": "final-count-only-unchanged",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "afd6bae611f4bcfcfe3e733497ce108e5cc3647694005c0d83690f03e7bd6c16"
+    },
+    {
+      "name": "final-japanese-ten-examples",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "3dab31a3cfc34be725249d181d8d18f4f1ceaed4cbb55620b13eb8e43cb68c3f"
+    },
+    {
+      "name": "final-presenter-example",
+      "expected_outcome": "Answered",
+      "passed": true,
+      "response_sha256": "c1b2142959b6f13210429b1ed2180a05b0037a0713e7c85e7d2db854fc0a5be7"
+    }
+  ],
+  "additional_observations": [
+    {
+      "query": "How does fish detection frequency differ between warmer and cooler SST conditions? Show a representative series.",
+      "outcome": "abstained",
+      "note": "Additional unvalidated SST wording remains unsupported by the unchanged predefined-workflow grammar. The previously accepted literal professor E4-B wording passed with exact row parity."
+    }
+  ],
+  "error_entries_on_new_revisions": 0,
+  "live_raw_proof_sha256": "a08beeaa20e8a85e7e2c56e125ab9505700b84adbcb6f08349956f4376676795",
+  "screenshot_sha256": "f1749c3d1e840cfde544808646232247470752b61873bf4101259379adcfb4e0",
+  "api_rollback_revision": "ocean-cop17-demo-00012-llq",
+  "frontend_only_rollback_revision": "ocean-cop17-demo-00013-rbt"
+}
