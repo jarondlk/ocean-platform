@@ -10,24 +10,19 @@ import re
 from orchestration.comparison_guard import mentioned_source_types
 from orchestration.edna_aggregation import plan_location_count
 
-NAMED = re.compile(
-    r"\bnamed\s+(?:sampling\s+)?(?:areas?|regions?|locations?|sites?)\b|\bbays?\b|\bcoastal\s+(?:areas?|regions?)\b|名前のある|名称付き|名前付き|湾",
-    re.I,
+# Geographic nouns alone are not intent: "Otsuchi Bay" is also a normal
+# sample-search qualifier. Match the requested unit and relationship first;
+# only then do the existing scope checks decide whether it is answerable.
+NAMED_TARGET = (
+    r"(?:named\s+(?:sampling\s+)?(?:areas?|regions?|locations?|sites?)"
+    r"|bays?|coastal\s+(?:areas?|regions?))"
 )
 AREA = re.compile(
-    r"\b(?:areas?|regions?|locations?|sites?|coordinates?|positions?)\b|地域|場所|地点|エリア|座標|湾",
+    r"\b(?:areas?|regions?|locations?|sites?|coordinates?|positions?|bays?)\b",
     re.I,
 )
 SAMPLING = re.compile(
     r"\bsampl(?:e|es|ing)\b|anemone|edna|\b(?:locations?|coordinates?|positions?)\b|採水|採取|サンプリング|座標|地点",
-    re.I,
-)
-SAME = re.compile(
-    r"\b(?:same|one|single)\b|\bclose\s+together\b|同じ|一つ|ひとつ|一か所|一箇所|近く",
-    re.I,
-)
-DISTRIBUTION = re.compile(
-    r"\b(?:where|cover|coverage|distributed|distribution|spread|extent|widely)\b|どこ|どの地域|分布|広が|範囲",
     re.I,
 )
 WORDS = set(
@@ -89,29 +84,91 @@ JP = {
 }
 
 
+def _intent_text(query):
+    """Normalize supported Japanese geography phrases for intent only."""
+    text = query.casefold()
+    for phrase, value in sorted(JP.items(), key=lambda item: -len(item[0])):
+        text = text.replace(phrase, value)
+    return " ".join(text.split())
+
+
 def _named_area_question(query):
-    return bool(
-        NAMED.search(query)
-        or (
-            re.search(r"\bnames?\b|名前|名称|地名", query, re.I)
-            and AREA.search(query)
-            and not re.search(
-                r"\b(?:fish|species|taxa|taxon|genes|proteins)\b|魚|種名|分類",
-                query,
-                re.I,
-            )
-        )
+    text = _intent_text(query)
+    # Count/list the *areas*, rather than samples or taxa mentioned near a bay.
+    if re.search(
+        r"\b(?:how many|number of|counts? of|totals? of)\s+" + NAMED_TARGET
+        + r"\b|\b(?:which|what)\s+(?:(?:are|is)\s+)?(?:the\s+)?"
+        + NAMED_TARGET + r"\b|\b(?:show|list|name)\s+(?:me\s+)?"
+        r"(?:all\s+)?(?:the\s+)?" + NAMED_TARGET + r"\b",
+        text,
+    ):
+        return True
+    # Japanese count questions place the quantity after the requested unit.
+    if re.search(NAMED_TARGET + r"\s+how many\b", text):
+        return True
+    if re.search(r"\b(?:fish|species|taxa|taxon|genes|proteins)\b|魚|種名|分類", query, re.I):
+        return False
+    return bool(re.search(
+        r"\b(?:what|which)\s+(?:are\s+)?(?:the\s+)?names?\s+of\s+"
+        r"(?:the\s+)?(?:sampling\s+)?(?:areas?|regions?|locations?|sites?)\b"
+        r"|\b(?:what|which)\s+(?:sampling\s+)?(?:areas?|regions?|locations?|sites?)"
+        r"\s+(?:have\s+names|are\s+named)\b",
+        text,
+    ))
+
+
+def _coverage_question(query):
+    text = _intent_text(query)
+    if not SAMPLING.search(query) or not AREA.search(text):
+        return False
+    relation = re.search(
+        r"\b(?:same|one|single)\s+(?:(?:sampling|coastal|geographic)\s+)?"
+        r"(?:area|region|location|site|bay|position)\b|\bclose together\b",
+        text,
     )
+    # "one sample" and "where was a sample collected" do not ask about
+    # collective coverage. Require a geographic relation and collective subject.
+    collective = re.search(
+        r"^(?:are|is|does|do)\s+(?:(?:all|the|these|those|our|anemone|edna)\s+)*"
+        r"(?:samples|sampling\s+(?:data|locations|sites|positions)|locations|coordinates)\b",
+        text,
+    )
+    collective_statement = re.search(
+        r"\b(?:all|these|those)\s+(?:(?:the|anemone|edna)\s+)*"
+        r"(?:samples|sampling\s+(?:data|locations|sites|positions)|locations|coordinates)\b"
+        r"|\b(?:sampling data|locations|coordinates)\s+all\b",
+        text,
+    )
+    if relation and (collective or collective_statement):
+        return True
+    # A collective place-membership question is geography, but a sample's
+    # suitability or fish detections are not. Require the spatial predicate,
+    # rather than treating every "samples from <bay>" phrase as coverage.
+    if collective and re.search(r"\ball\b", text) and re.search(
+        r"\b(?:in|from|around|across)\b[^?.!;\n]*"
+        r"\b(?:areas?|regions?|locations?|sites?|bays?)\s*[?.!]*$",
+        text,
+    ):
+        return True
+    if collective and re.search(
+        r"\bcover(?:age|s|ed|ing)?\b|\b(?:distributed|spread)\s+(?:across|over|throughout|around)\b",
+        text,
+    ):
+        return True
+    return bool(re.search(
+        r"\b(?:where|how widely|how far apart)\s+(?:are|is)\s+"
+        r"(?:(?:the|all|these|our|anemone|edna|sampling|recorded)\s+)*"
+        r"(?:locations|sites|coordinates|positions)\b"
+        r"|\b(?:geographic(?:al)?\s+(?:coverage|extent|distribution)|coordinate extent)\b"
+        r"|\b(?:sampling\s+)?(?:locations|sites|coordinates|positions)\s+"
+        r"(?:which regions\s+)?(?:distributed|spread|extent)\b",
+        text,
+    ))
 
 
 def plan_catalogue_geography(request):
     query = request.get("query", "")
-    if not (
-        _named_area_question(query)
-        or SAMPLING.search(query)
-        and AREA.search(query)
-        and (SAME.search(query) or DISTRIBUTION.search(query))
-    ):
+    if not (_named_area_question(query) or _coverage_question(query)):
         return None
     ja = bool(re.search(r"[ぁ-んァ-ン一-龯]", query))
     base = plan_location_count(
