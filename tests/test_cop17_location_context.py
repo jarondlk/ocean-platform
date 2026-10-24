@@ -207,7 +207,7 @@ def test_render_shows_at_most_requested_unique_rows_and_source_labels(count):
     )
     assert "[aggregate_edna_" in answer
     if count:
-        assert r"Source \| \[label\] \<script\>" in answer
+        assert r"Source ｜ \[label\] \<script\>" in answer
         assert "2020-08-17" in answer
 
 

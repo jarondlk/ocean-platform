@@ -83,7 +83,7 @@ def label(value):
     return re.sub(
         r"([\\`*{}\[\]()<>|])",
         r"\\\1",
-        str(value).replace("\n", " ").replace("\r", " "),
+        str(value).replace("\n", " ").replace("\r", " ").replace("|", "｜"),
     )
 
 
