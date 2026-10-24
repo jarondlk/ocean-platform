@@ -1,0 +1,70 @@
+{
+  "advisory_review": {
+    "GHSA-2464-fhr4-w9xw": {
+      "affected_15x_through": "15.5.27",
+      "existing_sharp_override": "0.35.5 already meets advisory workaround; package audit still requires patched Next identity",
+      "patched_15x": "15.5.28",
+      "severity": "critical"
+    },
+    "GHSA-p3m5-59mp-jv5r": {
+      "affected_15x_through": "15.5.27",
+      "patched_15x": "15.5.28",
+      "remediation": "upgrade; no workaround listed",
+      "severity": "high"
+    }
+  },
+  "automatic_audit_fix_used": false,
+  "deployment_performed": false,
+  "lock_review": {
+    "frontend": {
+      "all_non_next_lock_entries_unchanged": true,
+      "installed_next": "15.5.28",
+      "lock_entries_changed": [
+        "",
+        "node_modules/@next/env",
+        "node_modules/@next/swc-darwin-arm64",
+        "node_modules/@next/swc-darwin-x64",
+        "node_modules/@next/swc-linux-arm64-gnu",
+        "node_modules/@next/swc-linux-arm64-musl",
+        "node_modules/@next/swc-linux-x64-gnu",
+        "node_modules/@next/swc-linux-x64-musl",
+        "node_modules/@next/swc-win32-arm64-msvc",
+        "node_modules/@next/swc-win32-x64-msvc",
+        "node_modules/next"
+      ],
+      "lock_next": "15.5.28",
+      "manifest_next_spec": "^15.5.28",
+      "sharp_override": "0.35.5"
+    },
+    "frontend-v1": {
+      "all_non_next_lock_entries_unchanged": true,
+      "installed_next": "15.5.28",
+      "lock_entries_changed": [
+        "",
+        "node_modules/@next/env",
+        "node_modules/@next/swc-darwin-arm64",
+        "node_modules/@next/swc-darwin-x64",
+        "node_modules/@next/swc-linux-arm64-gnu",
+        "node_modules/@next/swc-linux-arm64-musl",
+        "node_modules/@next/swc-linux-x64-gnu",
+        "node_modules/@next/swc-linux-x64-musl",
+        "node_modules/@next/swc-win32-arm64-msvc",
+        "node_modules/@next/swc-win32-x64-msvc",
+        "node_modules/next"
+      ],
+      "lock_next": "15.5.28",
+      "manifest_next_spec": "15.5.28",
+      "sharp_override": "0.35.5"
+    }
+  },
+  "major_upgrade": false,
+  "reason": "Smallest patched Next.js 15.x release listed by both official advisories; preserve existing major/minor and each manifest pin style",
+  "recorded_at": "2026-10-24T06:20:33.797342+00:00",
+  "selected_version": "15.5.28",
+  "source_urls": [
+    "https://github.com/advisories/GHSA-2464-fhr4-w9xw",
+    "https://github.com/advisories/GHSA-p3m5-59mp-jv5r",
+    "https://github.com/vercel/next.js/releases/tag/v15.5.28",
+    "https://registry.npmjs.org/next/15.5.28"
+  ]
+}

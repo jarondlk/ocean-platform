@@ -1,0 +1,49 @@
+{
+  "recorded_at": "2026-10-24T06:18:20.342078+00:00",
+  "results": [
+    {
+      "command": [
+        "npm",
+        "audit",
+        "--package-lock-only",
+        "--omit=dev",
+        "--json",
+        "--cache",
+        "/private/tmp/ocean-c23-npm-cache"
+      ],
+      "error": null,
+      "exit_code": 1,
+      "project": "frontend",
+      "vulnerabilities": {
+        "critical": 1,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "total": 1
+      }
+    },
+    {
+      "command": [
+        "npm",
+        "audit",
+        "--package-lock-only",
+        "--omit=dev",
+        "--json",
+        "--cache",
+        "/private/tmp/ocean-c23-npm-cache"
+      ],
+      "error": null,
+      "exit_code": 1,
+      "project": "frontend-v1",
+      "vulnerabilities": {
+        "critical": 1,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "total": 1
+      }
+    }
+  ]
+}

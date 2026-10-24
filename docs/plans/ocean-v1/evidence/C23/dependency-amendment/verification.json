@@ -1,0 +1,101 @@
+{
+  "C23_complete": false,
+  "base_commit": "5531f4839aaeafc779822caf0bfc2098e6e78cb6",
+  "branch": "overhaul",
+  "checks": {
+    "frontend": {
+      "build": "passed",
+      "production_vulnerabilities": 0,
+      "tests_failed": 0,
+      "tests_passed": 132,
+      "tests_skipped": 0,
+      "typecheck": "passed"
+    },
+    "frontend-v1": {
+      "build": "passed",
+      "production_vulnerabilities": 0,
+      "tests_failed": 0,
+      "tests_passed": 930,
+      "tests_skipped": 0,
+      "typecheck": "passed"
+    }
+  },
+  "cloud_operations_performed": false,
+  "component": "C23",
+  "deployment_performed": false,
+  "evidence_files": {
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/README.md": "b6e3921d40a269316f505e1de77071179973d8cf8b0e65b0e8df07e8c2f99b8d",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/acceptance-start.json": "7e597b22680cc5e63b47212bb134745ad2aa81c55314e4e46aa214535207623b",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/acceptance.json": "e764a4b64af3d2955bcfc531b7bc7cf60f03f606c7a82cbf1cb96b717d4c4a80",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/baseline-audit-commands.json": "c5531467390276970b6ba04a722440b074472338ceab341f3e7ad4eebd0edc46",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/baseline.json": "9afac0acc7c7545e5162b32da436ab80b25052da11a39f50a272787e64eff54a",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-audit.command.json": "ab6a9d9f1cbe810ad8078f0a8376ba0b422872d836feb82abfce5648be99c202",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-audit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-audit.stdout.txt": "645689b41348050e14347254fe71d3e8d1a22fe0400e02cccfc98b95165fb48b",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-baseline-audit-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-baseline-audit.json": "fea59f79adc8d6308e2fd204d07330cb8370edf820b2bddc50b72b65b5701713",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-build.command.json": "05fed6a896f9505ef47ba57a169cfab9e1db990a827a3c0c787d3918bfe08422",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-build.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-build.stdout.txt": "5ac99d31a5a2e77718bbb1f2694da3c67ac1caee463d397b293389bd0f9e26f7",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-install-command.json": "b6b52131e21e3f5747b070d298f37e7809c47d08f62fdc5b97131b0cb3af18f8",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-install.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-install.stdout.txt": "27255ef91f0fefe0416e0f5dd456503c40b93ceaef2a84bca1fd7d3504c8f115",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-test.command.json": "e0fa6c03034fa9d4b3cd85b8fcf9d9219071b7448fb535cab08478776ab0a25f",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-test.stderr.txt": "3dd7fedf3650828f31bc4fb8fdb5fef5b09af9af69a1536d5b917e21d0260976",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-test.stdout.txt": "38a4fef910c79d8aaf0b4d6c484806a11638c7e07a513baf895ce2fce4173ea9",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-typecheck.command.json": "5329993138fbdfbcb27c006e2fec27436cb4ed2d8a72a287ba6983e4761917e7",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-typecheck.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-typecheck.stdout.txt": "0dfc7aeaa0fd983206afdbe50edc28855ed96b862749b8a2ab21f85666af4fa6",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-audit.command.json": "6e0a4a6df445a9ab664b4e16b118009243fc2f832177534b9492b1bebc758884",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-audit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-audit.stdout.txt": "1edfafa47b19e0370e6d56a342e61d4a7e05f3fc950dbbb9a217fdcb10dee904",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-baseline-audit-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-baseline-audit.json": "845fe8de7c2e6bf397a13bc0258ca4902fb9d5707a6c74334bb33a185ee823ee",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-build.command.json": "0ad24a5c77eeddfc4de0052212dffc3a9f0f7afa0afd575faeacbc2f0a9463a0",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-build.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-build.stdout.txt": "33c67b60840c79aca53fa17822bf00ab64769ad8cfca84da24eba34faccb4abd",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-install-command.json": "e635e387aa6eb774a02953bffe5c30d4a57581c1ed79b7b3f4dfc39807c30996",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-install.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-install.stdout.txt": "25a4523b48e974d21fd5535fe00e9ca7030376407c378a9f2a1d01d713081bce",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-test.command.json": "0ae995459f6ac2fb05d8fe1acb51879570ce7d4ca819df5eb13a8c3e39969669",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-test.stderr.txt": "3dd7fedf3650828f31bc4fb8fdb5fef5b09af9af69a1536d5b917e21d0260976",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-test.stdout.txt": "6b81f118e3d5e7f25de3472dc962e8b7a719aaa0749533046f2b9195917d3df6",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-typecheck.command.json": "19e69c856431acbf099950a29c23e28f9d566bd252f222616157a12819ba257f",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-typecheck.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/frontend-v1-typecheck.stdout.txt": "faaf7f0588d9ced4a69a09debc0c201d953e14d2372f2bfda761d17644936936",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/run_acceptance.py": "15fa6c46b7931395a8abce810975f26945ad005c589f2a99527ecc1dbd5f1ad1",
+    "docs/plans/ocean-v1/evidence/C23/dependency-amendment/selection.json": "73bdb6240cb379d4050df7742d4ad9392e1b0366b5b0519eee6f0c82a05819fc"
+  },
+  "failed_attempts": "Both baseline production audits intentionally returned1; all amended acceptance commands passed on first run",
+  "frontend_source_paths_steady": 201,
+  "hosted_acceptance": "pending source checkpoint and exact-source CI",
+  "intentional_source_supersessions": {
+    "frontend-v1/package-lock.json": {
+      "amended_sha256": "46b7bddd462c6b2eea159f9994d158ec958027f156314529d2ab6632f4e082f7",
+      "prior_sha256": "b2d90430d2ec3bedfd766d8693eb011dade7513a81083e5c9db105c3a3e83540"
+    },
+    "frontend-v1/package.json": {
+      "amended_sha256": "e2f2fa5422e5135fa80d2ea16963f62896b14bfe19b8f36ad62eed764d05e7c8",
+      "prior_sha256": "ef827ab5a0ee9f2350320bb784922a6b32d1e75d6c664e7f70446a35ee758dc2"
+    },
+    "frontend/package-lock.json": {
+      "amended_sha256": "9349366ef70d3bf748f42736d8af093e9acf886c29793b4d60609408db3d9696",
+      "prior_sha256": "dc3b572b46fc430fdf606f933530730db2863026234e4198f89ebf8ed4a231d2"
+    },
+    "frontend/package.json": {
+      "amended_sha256": "6585cc8b1f886bbed5b7e2d7a7a63fc339c585b1246c937528574acec137e479",
+      "prior_sha256": "eb18e2248cf6a7c929d110a66ec91b21238ccec13ded2ea122eac196eea6000c"
+    }
+  },
+  "kind": "Source-bound frontend dependency security amendment; not sandbox acceptance",
+  "original_receipts": "unchanged",
+  "recorded_at": "2026-10-24T06:21:16.427537+00:00",
+  "scientific_approval_claimed": false,
+  "selected_next_version": "15.5.28",
+  "source_files": {
+    "frontend-v1/package-lock.json": "46b7bddd462c6b2eea159f9994d158ec958027f156314529d2ab6632f4e082f7",
+    "frontend-v1/package.json": "e2f2fa5422e5135fa80d2ea16963f62896b14bfe19b8f36ad62eed764d05e7c8",
+    "frontend/package-lock.json": "9349366ef70d3bf748f42736d8af093e9acf886c29793b4d60609408db3d9696",
+    "frontend/package.json": "6585cc8b1f886bbed5b7e2d7a7a63fc339c585b1246c937528574acec137e479"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "npm",
+    "install",
+    "next@15.5.28",
+    "--save-prefix=^",
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund",
+    "--cache",
+    "/private/tmp/ocean-c23-npm-cache"
+  ],
+  "cwd": "frontend",
+  "exit_code": 0,
+  "recorded_at": "2026-10-24T06:19:11.393028+00:00"
+}

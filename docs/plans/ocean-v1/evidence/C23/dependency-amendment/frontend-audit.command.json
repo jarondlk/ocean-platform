@@ -1,0 +1,17 @@
+{
+  "check": "audit",
+  "command": [
+    "npm",
+    "audit",
+    "--omit=dev",
+    "--audit-level=moderate",
+    "--json",
+    "--cache",
+    "/private/tmp/ocean-c23-npm-cache"
+  ],
+  "cwd": "frontend",
+  "exit_code": 0,
+  "project": "frontend",
+  "seconds": 0.45,
+  "started_at": "2026-10-24T06:19:54.277554+00:00"
+}
