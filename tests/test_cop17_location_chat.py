@@ -12,6 +12,9 @@ from tests.test_edna_aggregation import bundle
 QUESTIONS = [
     "how many sampling area available",
     "How many sampling locations are available in ANEMONE eDNA?",
+    "How many sampling locations are recorded in ANEMONE DB?",
+    "How many sampling locations are recorded in ANEMONE db?",
+    "How many sampling locations are recorded in the ANEMONE database?",
     "How many sampling areas are available?",
     "How many sampling sites do we have?",
     "How many sampling points are available?",
@@ -67,6 +70,8 @@ def test_bilingual_variants_share_explicit_metric_and_control_policy(query, fami
         "How many points are available?",
         "How many locations in Japan?",
         "How many locations in 2020?",
+        "How many sampling locations are recorded in ANEMONE DB in 2020?",
+        "How many sampling locations are recorded in ANEMONE DB in Otsuchi Bay?",
         "How many physical sampling sites?",
         "How many named sampling areas?",
         "How many locations have more than 10 samples?",

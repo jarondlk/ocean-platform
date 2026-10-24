@@ -98,7 +98,7 @@ LOCATION_NOUN = re.compile(
     r"\b(?:(?:sampling|geographic|recorded)\s+)?(?:areas?|locations?|sites?|stations?|points?|positions?|coordinates?(?:\s+(?:pairs?|positions?))?)\b"
     r"|(?:採水|採取|調査|観測)?(?:地点|場所)|サンプリング(?:地点|場所|エリア)|座標(?:位置|組)?", re.I)
 LOCATION_COUNT = re.compile(r"\b(?:how many|number of|counts?|totals?)\b|いくつ|何(?:地点|か所|箇所|ヶ所|カ所)|地点数|の(?:総)?数", re.I)
-LOCATION_WORDS = set("how many what is are the a an of in on from for do we have there and can could would you please tell me show give available currently recorded reported geographic sampling positions locations ocean platform anemone edna environmental dna mifish metabarcoding catalogue catalog database data dataset datasets count counts total totals number distinct unique selected filtered current project run taxon date time range period scope under by at".split())
+LOCATION_WORDS = set("how many what is are the a an of in on from for do we have there and can could would you please tell me show give available currently recorded reported geographic sampling positions locations ocean platform anemone edna environmental dna mifish metabarcoding catalogue catalog database db data dataset datasets count counts total totals number distinct unique selected filtered current project run taxon date time range period scope under by at".split())
 
 
 def plan_location_count(request: dict) -> AggregatePlan | None:

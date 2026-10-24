@@ -34,6 +34,8 @@ QUESTIONS = [
     "What are the names of the sampling areas?",
     "名前のついた採水エリアはいくつありますか？",
     "名称がある採水エリアはいくつありますか？",
+    "How many named sampling areas are recorded in ANEMONE DB?",
+    "Are all the sampling data in ANEMONE database from the same area?",
 ]
 
 
@@ -83,6 +85,8 @@ def test_natural_coverage_variants_share_exact_geography_scope(query, families):
     [
         "How many named areas are available in Japan?",
         "How many bays have sampling data in 2020?",
+        "How many named sampling areas in ANEMONE DB in 2020?",
+        "How many named sampling areas in ANEMONE DB in Otsuchi Bay?",
         "Are all the sampling locations in Sendai Bay?",
         "Are the sampling locations in the selected project spread across areas?",
         "How many bays contain tuna?",
