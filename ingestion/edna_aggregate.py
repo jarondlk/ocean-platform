@@ -277,9 +277,16 @@ def _validate_geography_contract(payload):
         raise AggregateUnavailable("Geography aggregate contract is incomplete")
 
 
-def build_aggregate(filters, group_by=(), *, engine=None, metric=None):
+def build_aggregate(filters, group_by=(), *, engine=None, metric=None, context_options=None):
     engine = engine if engine is not None else get_engine()
     try:
+        if metric == "location_context":
+            if group_by:
+                raise AggregateUnavailable("Spatial aggregate groups are unsupported")
+            from ingestion.location_context import build
+            return build(filters, engine=engine, context_options=context_options)
+        if context_options is not None:
+            raise AggregateUnavailable("Context options require the location-context metric")
         if metric is not None and metric not in SPATIAL_ALGORITHMS:
             raise AggregateUnavailable("Unsupported aggregate metric")
         if metric in SPATIAL_ALGORITHMS:
@@ -422,12 +429,15 @@ def load_aggregate(identity, *, engine=None):
     if len(row.encode()) > MAX_PAYLOAD_BYTES:
         raise AggregateUnavailable("Aggregate evidence exceeds byte budget")
     payload = json.loads(row)
-    if digest(payload) != identity or payload.get("algorithm_version") not in {ALGORITHM, LOCATION_ALGORITHM, GEOGRAPHY_ALGORITHM}:
+    if digest(payload) != identity or payload.get("algorithm_version") not in {ALGORITHM, LOCATION_ALGORITHM, GEOGRAPHY_ALGORITHM, "edna-location-context-v4"}:
         raise AggregateUnavailable("Aggregate evidence integrity check failed")
     if payload["algorithm_version"] == LOCATION_ALGORITHM and (payload.get("metric") != "recorded_locations" or "locations" not in payload.get("summary", {})):
         raise AggregateUnavailable("Location aggregate contract is incomplete")
     if payload["algorithm_version"] == GEOGRAPHY_ALGORITHM:
         _validate_geography_contract(payload)
+    if payload["algorithm_version"] == "edna-location-context-v4":
+        from ingestion.location_context import validate
+        validate(payload)
     return {"aggregate_id": identity, "payload": payload}
 
 

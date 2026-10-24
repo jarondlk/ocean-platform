@@ -1,0 +1,2918 @@
+{
+  "schema_version": 1,
+  "version": "cop17-geonames-jp-2026-10-25-v1",
+  "method": "nearest BAY,COVE,INLT,CST,GULF,STRT and Japanese sea-channel name suido/seto within10km; selected major island reference within20km fallback; competing feature points <1km difference unassigned; obvious inland source labels unassigned. Distances are map-reference distances, never positional-accuracy or area-membership claims. Names are English transliterations from GeoNames asciiname. Source-alias matches of the same feature type within 20 km are grouped once; this is a reference-label grouping, not a complete inventory of disjoint named bays. Inland exclusions and ambiguous positions remain unassigned. Each coordinate receives at most one group.",
+  "review": "Distances, source aliases, all 96 proposed associations and exclusion reasons reviewed; reference-point proximity only, no map-boundary validation.",
+  "sources": [
+    {
+      "name": "GeoNames · Japan gazetteer · CC BY 4.0",
+      "url": "https://download.geonames.org/export/dump/readme.txt",
+      "download_url": "https://download.geonames.org/export/dump/JP.zip",
+      "retrieved_at": "2026-10-25",
+      "archive_sha256": "c9a170e56a214eb4aadd64bca130ce996ed65da5c1f0f05d7d24648e007155bf",
+      "licence_url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "alias_grouping": [
+    {
+      "a": "1863365",
+      "b": "1863954",
+      "shared_source_aliases": [
+        "fukuokawan"
+      ]
+    }
+  ],
+  "features": {
+    "10378269": {
+      "name": "Tsushimajima",
+      "type": "ISLS",
+      "source_url": "https://www.geonames.org/10378269/",
+      "references": [
+        {
+          "feature_id": "10378269",
+          "name": "Tsushimajima",
+          "lat": 34.33422,
+          "lon": 129.30565,
+          "modified": "2015-07-21",
+          "source_aliases": "Tsushima-jima,dui ma dao,tsushimajima,つしまじま,対馬島",
+          "source_url": "https://www.geonames.org/10378269/"
+        }
+      ]
+    },
+    "1848038": {
+      "name": "Yura Seto",
+      "type": "CHN",
+      "source_url": "https://www.geonames.org/1848038/",
+      "references": [
+        {
+          "feature_id": "1848038",
+          "name": "Yura Seto",
+          "lat": 34.28333,
+          "lon": 134.96667,
+          "modified": "2014-07-09",
+          "source_aliases": "Kitan-kaikyo,Kitan-kaikyō,Yura Seto,Yura-kaikyo,Yura-kaikyō,Yura-seto,you liang lai hu,由良瀬戸",
+          "source_url": "https://www.geonames.org/1848038/"
+        }
+      ]
+    },
+    "1848278": {
+      "name": "Yonabaru Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1848278/",
+      "references": [
+        {
+          "feature_id": "1848278",
+          "name": "Yonabaru Wan",
+          "lat": 26.2,
+          "lon": 127.8,
+          "modified": "2014-12-03",
+          "source_aliases": "Yonabaru Wan,Yonabaru-wan,yu na yuan wan,与那原湾",
+          "source_url": "https://www.geonames.org/1848278/"
+        }
+      ]
+    },
+    "1848557": {
+      "name": "Yanagino Seto",
+      "type": "CHN",
+      "source_url": "https://www.geonames.org/1848557/",
+      "references": [
+        {
+          "feature_id": "1848557",
+          "name": "Yanagino Seto",
+          "lat": 32.54283,
+          "lon": 130.43896,
+          "modified": "2016-10-08",
+          "source_aliases": "Yanagino Seto,Yanagino-seto,liuno lai hu,yanaginoseto,やなぎのせと,ヤナギノセト,柳ノ瀬戸",
+          "source_url": "https://www.geonames.org/1848557/"
+        }
+      ]
+    },
+    "1848754": {
+      "name": "Yakeshima-gata",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1848754/",
+      "references": [
+        {
+          "feature_id": "1848754",
+          "name": "Yakeshima-gata",
+          "lat": 37.93333,
+          "lon": 139.06667,
+          "modified": "2012-01-19",
+          "source_aliases": "Yakeshima-gata,Yaketori-gata",
+          "source_url": "https://www.geonames.org/1848754/"
+        }
+      ]
+    },
+    "1848908": {
+      "name": "Wani-ura",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1848908/",
+      "references": [
+        {
+          "feature_id": "1848908",
+          "name": "Wani-ura",
+          "lat": 34.7,
+          "lon": 129.43333,
+          "modified": "2012-01-19",
+          "source_aliases": "Wani-ura,Waniura Wan",
+          "source_url": "https://www.geonames.org/1848908/"
+        }
+      ]
+    },
+    "1848940": {
+      "name": "Wakaura Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1848940/",
+      "references": [
+        {
+          "feature_id": "1848940",
+          "name": "Wakaura Wan",
+          "lat": 34.16667,
+          "lon": 135.16667,
+          "modified": "2014-08-06",
+          "source_aliases": "Wakanoura-wan,Wakaura Wan,Wakaura-wan,he ge pu wan,和歌浦湾",
+          "source_url": "https://www.geonames.org/1848940/"
+        }
+      ]
+    },
+    "1849192": {
+      "name": "Urasoko-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1849192/",
+      "references": [
+        {
+          "feature_id": "1849192",
+          "name": "Urasoko-wan",
+          "lat": 35.74258,
+          "lon": 136.02902,
+          "modified": "2008-10-25",
+          "source_aliases": "Urazoko Wan",
+          "source_url": "https://www.geonames.org/1849192/"
+        }
+      ]
+    },
+    "1849199": {
+      "name": "Uranouchi-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1849199/",
+      "references": [
+        {
+          "feature_id": "1849199",
+          "name": "Uranouchi-wan",
+          "lat": 33.43333,
+          "lon": 133.4,
+          "modified": "2012-01-19",
+          "source_aliases": "Ura-no Uti,Urano Uchi,Uranouchi-wan,Yokonami-sanri",
+          "source_url": "https://www.geonames.org/1849199/"
+        }
+      ]
+    },
+    "1849224": {
+      "name": "Urado Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1849224/",
+      "references": [
+        {
+          "feature_id": "1849224",
+          "name": "Urado Wan",
+          "lat": 33.50126,
+          "lon": 133.55985,
+          "modified": "2013-11-10",
+          "source_aliases": "Kado-wan,Kochi-ko,Koti Ko,Kōchi-kō,Kōti Kō,Urado Ko,Urado Wan,Urado-wan,Urato-wan,pu hu wan,浦戸湾",
+          "source_url": "https://www.geonames.org/1849224/"
+        }
+      ]
+    },
+    "1849652": {
+      "name": "Tsukumo Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1849652/",
+      "references": [
+        {
+          "feature_id": "1849652",
+          "name": "Tsukumo Wan",
+          "lat": 37.30536,
+          "lon": 137.23642,
+          "modified": "2013-12-13",
+          "source_aliases": "Kujuku-wan,Kujūku-wan,Tsukumo Wan,Tsukumo-wan,Tukumo Wan,jiu shi jiu wan,九十九湾",
+          "source_url": "https://www.geonames.org/1849652/"
+        }
+      ]
+    },
+    "1850076": {
+      "name": "Tomiura Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1850076/",
+      "references": [
+        {
+          "feature_id": "1850076",
+          "name": "Tomiura Wan",
+          "lat": 35.05064,
+          "lon": 139.82214,
+          "modified": "2016-04-11",
+          "source_aliases": "Tomiura Wan,Tomiura-wan,fu pu wan,tomiurawan,とみうらわん,トミウラワン,富浦湾",
+          "source_url": "https://www.geonames.org/1850076/"
+        }
+      ]
+    },
+    "1850109": {
+      "name": "Tomie Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1850109/",
+      "references": [
+        {
+          "feature_id": "1850109",
+          "name": "Tomie Wan",
+          "lat": 32.62639,
+          "lon": 128.80417,
+          "modified": "2013-08-07",
+          "source_aliases": "Tomie Wan,Tomie-wan,Tomiye Wan,fu jiang wan,富江湾",
+          "source_url": "https://www.geonames.org/1850109/"
+        }
+      ]
+    },
+    "1850519": {
+      "name": "Tateyama Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1850519/",
+      "references": [
+        {
+          "feature_id": "1850519",
+          "name": "Tateyama Wan",
+          "lat": 35.01028,
+          "lon": 139.83472,
+          "modified": "2016-04-11",
+          "source_aliases": "Kagamiga-ura,Tateyama Bay,Tateyama Wan,Tateyama-wan,guan shan wan,tateyamawan,たてやまわん,タテヤマワン,館山湾",
+          "source_url": "https://www.geonames.org/1850519/"
+        }
+      ]
+    },
+    "1850635": {
+      "name": "Tanoura Seto",
+      "type": "STRT",
+      "source_url": "https://www.geonames.org/1850635/",
+      "references": [
+        {
+          "feature_id": "1850635",
+          "name": "Tanoura Seto",
+          "lat": 32.78433,
+          "lon": 128.82217,
+          "modified": "2013-08-07",
+          "source_aliases": "Tanoura Seto,Tanoura-seto,tianno pu lai hu,田ノ浦瀬戸",
+          "source_url": "https://www.geonames.org/1850635/"
+        }
+      ]
+    },
+    "1851145": {
+      "name": "Takahama-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1851145/",
+      "references": [
+        {
+          "feature_id": "1851145",
+          "name": "Takahama-wan",
+          "lat": 35.51235,
+          "lon": 135.54957,
+          "modified": "2014-04-30",
+          "source_aliases": "",
+          "source_url": "https://www.geonames.org/1851145/"
+        }
+      ]
+    },
+    "1851561": {
+      "name": "Sotoura Wan",
+      "type": "INLT",
+      "source_url": "https://www.geonames.org/1851561/",
+      "references": [
+        {
+          "feature_id": "1851561",
+          "name": "Sotoura Wan",
+          "lat": 34.67376,
+          "lon": 138.98395,
+          "modified": "2014-01-13",
+          "source_aliases": "Sotoura Wan,Sotoura-wan,wai pu wan,外浦湾",
+          "source_url": "https://www.geonames.org/1851561/"
+        }
+      ]
+    },
+    "1851704": {
+      "name": "Shodo Shima",
+      "type": "ISL",
+      "source_url": "https://www.geonames.org/1851704/",
+      "references": [
+        {
+          "feature_id": "1851704",
+          "name": "Shodo Shima",
+          "lat": 34.50784,
+          "lon": 134.26632,
+          "modified": "2023-05-31",
+          "source_aliases": "Shodo,Shodo Island,Shodo Shima,Shodo-shima,Shodoshima,Shozu-shima,Shōdo,Shōdo Island,Shōdo Shima,Shōdo-shima,Shōdoshima,Shōzu-shima,Syodo Sima,Syôdo Sima,xiao dou dao,小豆島",
+          "source_url": "https://www.geonames.org/1851704/"
+        }
+      ]
+    },
+    "1852082": {
+      "name": "Shinjuku-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1852082/",
+      "references": [
+        {
+          "feature_id": "1852082",
+          "name": "Shinjuku-wan",
+          "lat": 35.28996,
+          "lon": 139.56743,
+          "modified": "2014-03-08",
+          "source_aliases": "Shinjiku Wan,Shinjuku-wan,Sinzyuku Wan",
+          "source_url": "https://www.geonames.org/1852082/"
+        }
+      ]
+    },
+    "1852138": {
+      "name": "Shinagawa-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1852138/",
+      "references": [
+        {
+          "feature_id": "1852138",
+          "name": "Shinagawa-wan",
+          "lat": 35.61685,
+          "lon": 139.76298,
+          "modified": "2015-11-08",
+          "source_aliases": "Shinagawa-wan,Sinagawa Wan",
+          "source_url": "https://www.geonames.org/1852138/"
+        }
+      ]
+    },
+    "1852388": {
+      "name": "Hikitsu Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1852388/",
+      "references": [
+        {
+          "feature_id": "1852388",
+          "name": "Hikitsu Wan",
+          "lat": 33.56534,
+          "lon": 130.11951,
+          "modified": "2013-08-07",
+          "source_aliases": "Hikitsu Wan,Hikitsu-ura,Shimmachi-ura,Shinmachi ura,Sinmati Ura,yin jin wan,引津湾",
+          "source_url": "https://www.geonames.org/1852388/"
+        }
+      ]
+    },
+    "1852453": {
+      "name": "Shimajiri-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1852453/",
+      "references": [
+        {
+          "feature_id": "1852453",
+          "name": "Shimajiri-wan",
+          "lat": 26.31528,
+          "lon": 126.82583,
+          "modified": "2012-01-19",
+          "source_aliases": "Shimajiri-wan,Simaziri Wan",
+          "source_url": "https://www.geonames.org/1852453/"
+        }
+      ]
+    },
+    "1853000": {
+      "name": "Sangakuchi Seto",
+      "type": "CHN",
+      "source_url": "https://www.geonames.org/1853000/",
+      "references": [
+        {
+          "feature_id": "1853000",
+          "name": "Sangakuchi Seto",
+          "lat": 37.13732,
+          "lon": 136.903,
+          "modified": "2013-12-13",
+          "source_aliases": "Migakuchi-seto,Mitsu-ga-kuchi seto,Mitugakuti Seto,Sangaguchi-seto,Sangakuchi Seto,sanke kou lai hu,三ヶ口瀬戸",
+          "source_url": "https://www.geonames.org/1853000/"
+        }
+      ]
+    },
+    "1853082": {
+      "name": "Sakoshi Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1853082/",
+      "references": [
+        {
+          "feature_id": "1853082",
+          "name": "Sakoshi Wan",
+          "lat": 34.75768,
+          "lon": 134.441,
+          "modified": "2014-07-09",
+          "source_aliases": "Sakoshi Wan,Sakoshi-wan,Sakosi Wan,ban yue wan,坂越湾",
+          "source_url": "https://www.geonames.org/1853082/"
+        }
+      ]
+    },
+    "1853249": {
+      "name": "Saigo Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1853249/",
+      "references": [
+        {
+          "feature_id": "1853249",
+          "name": "Saigo Wan",
+          "lat": 36.2011,
+          "lon": 133.3383,
+          "modified": "2020-06-11",
+          "source_aliases": "Saigo Ko,Saigo Wan,Saigo-wan,Saigō Wan,Saigō-wan,xi xiang wan,西郷湾",
+          "source_url": "https://www.geonames.org/1853249/"
+        }
+      ]
+    },
+    "1853289": {
+      "name": "Sagami Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1853289/",
+      "references": [
+        {
+          "feature_id": "1853289",
+          "name": "Sagami Wan",
+          "lat": 35.25028,
+          "lon": 139.41694,
+          "modified": "2020-11-20",
+          "source_aliases": "Sagami Bay,Sagami Gulf,Sagami Wan,Sagami-wan,xiang mo wan,相模湾",
+          "source_url": "https://www.geonames.org/1853289/"
+        }
+      ]
+    },
+    "1853525": {
+      "name": "Oura Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1853525/",
+      "references": [
+        {
+          "feature_id": "1853525",
+          "name": "Oura Wan",
+          "lat": 26.53333,
+          "lon": 128.06667,
+          "modified": "2020-06-11",
+          "source_aliases": "Ora-wan,Oura Wan,Oura-ko,Oura-wan,Wora Wan,da pu wan,Ōra-wan,Ōura Wan,Ōura-kō,Ōura-wan,大浦湾",
+          "source_url": "https://www.geonames.org/1853525/"
+        }
+      ]
+    },
+    "1853550": {
+      "name": "Otsu Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1853550/",
+      "references": [
+        {
+          "feature_id": "1853550",
+          "name": "Otsu Wan",
+          "lat": 35.28333,
+          "lon": 139.71667,
+          "modified": "2016-02-07",
+          "source_aliases": "Otsu Wan,Otsu-wan,Otu Wan,da jin wan,ootsuwan,Ôtu Wan,Ōtsu Wan,Ōtsu-wan,おおつわん,オオツワン,大津湾",
+          "source_url": "https://www.geonames.org/1853550/"
+        }
+      ]
+    },
+    "1853721": {
+      "name": "Oshima-ura",
+      "type": "INLT",
+      "source_url": "https://www.geonames.org/1853721/",
+      "references": [
+        {
+          "feature_id": "1853721",
+          "name": "Oshima-ura",
+          "lat": 33.46304,
+          "lon": 135.80424,
+          "modified": "2014-01-13",
+          "source_aliases": "Oshima-ura,Ōshima-ura",
+          "source_url": "https://www.geonames.org/1853721/"
+        }
+      ]
+    },
+    "1853918": {
+      "name": "Oroshika Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1853918/",
+      "references": [
+        {
+          "feature_id": "1853918",
+          "name": "Oroshika Wan",
+          "lat": 34.40556,
+          "lon": 129.37944,
+          "modified": "2013-08-07",
+          "source_aliases": "Oroshiga-ura,Oroshika Wan,Oroshika-ura,Oroshika-wan,Yokoura Wan,da yu wan,大漁湾",
+          "source_url": "https://www.geonames.org/1853918/"
+        }
+      ]
+    },
+    "1853935": {
+      "name": "Orido Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1853935/",
+      "references": [
+        {
+          "feature_id": "1853935",
+          "name": "Orido Wan",
+          "lat": 34.99439,
+          "lon": 138.50536,
+          "modified": "2014-01-13",
+          "source_aliases": "Orido Wan,Orido-wan,Uchido-wan,zhe hu wan,折戸湾",
+          "source_url": "https://www.geonames.org/1853935/"
+        }
+      ]
+    },
+    "1853981": {
+      "name": "Ono Seto",
+      "type": "STRT",
+      "source_url": "https://www.geonames.org/1853981/",
+      "references": [
+        {
+          "feature_id": "1853981",
+          "name": "Ono Seto",
+          "lat": 34.28333,
+          "lon": 132.28333,
+          "modified": "2013-10-07",
+          "source_aliases": "Ono Seto,Ono-seto,Onono-seto,da ye lai hu,Ōno Seto,Ōno-seto,Ōnono-seto,大野瀬戸",
+          "source_url": "https://www.geonames.org/1853981/"
+        }
+      ]
+    },
+    "1854341": {
+      "name": "Okinoerabujima Island",
+      "type": "ISL",
+      "source_url": "https://www.geonames.org/1854341/",
+      "references": [
+        {
+          "feature_id": "1854341",
+          "name": "Okinoerabujima Island",
+          "lat": 27.38391,
+          "lon": 128.61062,
+          "modified": "2023-01-08",
+          "source_aliases": "Iraabu,OKE,Oki-erabu-shima,Oki-narabe-shima,Okino-erabu-shima,Okinoehrabudzima,Okinoeraba-shima,Okinoerabu Jima,Okinoerabujima,Okinoerabujima Island,Oukin Island,Yyerabu,chong yong liang bu dao,iirabu,irabu,okino-elabu seom,tsuierabu,Окиноэрабудзима,いぃらぶ,いラーブ,っイェラブ,沖永良部島,오키노에라부 섬",
+          "source_url": "https://www.geonames.org/1854341/"
+        }
+      ]
+    },
+    "1854346": {
+      "name": "Okinawa",
+      "type": "ISL",
+      "source_url": "https://www.geonames.org/1854346/",
+      "references": [
+        {
+          "feature_id": "1854346",
+          "name": "Okinawa",
+          "lat": 26.50687,
+          "lon": 127.94581,
+          "modified": "2025-04-06",
+          "source_aliases": "Great Liu Kiu,Great Nansei,Great Ryukyu,Okinawa,Okinawa Shima,Okinawa-jima,chong ying dao,沖縄島",
+          "source_url": "https://www.geonames.org/1854346/"
+        }
+      ]
+    },
+    "1854823": {
+      "name": "Obatake-seto",
+      "type": "STRT",
+      "source_url": "https://www.geonames.org/1854823/",
+      "references": [
+        {
+          "feature_id": "1854823",
+          "name": "Obatake-seto",
+          "lat": 33.9561,
+          "lon": 132.18197,
+          "modified": "2013-10-07",
+          "source_aliases": "Obatake-seto,Ōbatake-seto",
+          "source_url": "https://www.geonames.org/1854823/"
+        }
+      ]
+    },
+    "1855107": {
+      "name": "Nita Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1855107/",
+      "references": [
+        {
+          "feature_id": "1855107",
+          "name": "Nita Wan",
+          "lat": 34.54111,
+          "lon": 129.30944,
+          "modified": "2013-08-07",
+          "source_aliases": "Nita Uchi,Nita Wan,Nita-wan,ren tian wan,仁田湾",
+          "source_url": "https://www.geonames.org/1855107/"
+        }
+      ]
+    },
+    "1855524": {
+      "name": "Negishi Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1855524/",
+      "references": [
+        {
+          "feature_id": "1855524",
+          "name": "Negishi Wan",
+          "lat": 35.39761,
+          "lon": 139.65686,
+          "modified": "2022-12-14",
+          "source_aliases": "Mississippi Bay,Negishi Bay,Negishi Wan,Negishi-wan,Nigishi Bay,gen an wan,negishiwan,ねぎしわん,ネギシワン,根岸湾",
+          "source_url": "https://www.geonames.org/1855524/"
+        }
+      ]
+    },
+    "1855727": {
+      "name": "Nakayama-suido",
+      "type": "CHN",
+      "source_url": "https://www.geonames.org/1855727/",
+      "references": [
+        {
+          "feature_id": "1855727",
+          "name": "Nakayama-suido",
+          "lat": 34.65,
+          "lon": 137.03333,
+          "modified": "2013-10-07",
+          "source_aliases": "Nakayama-suido,Nakayama-suidō",
+          "source_url": "https://www.geonames.org/1855727/"
+        }
+      ]
+    },
+    "1856551": {
+      "name": "Morosaki-suido",
+      "type": "CHN",
+      "source_url": "https://www.geonames.org/1856551/",
+      "references": [
+        {
+          "feature_id": "1856551",
+          "name": "Morosaki-suido",
+          "lat": 34.68333,
+          "lon": 136.98333,
+          "modified": "2013-10-07",
+          "source_aliases": "Morosaki-suido,Morosaki-suidō",
+          "source_url": "https://www.geonames.org/1856551/"
+        }
+      ]
+    },
+    "1857071": {
+      "name": "Mine-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1857071/",
+      "references": [
+        {
+          "feature_id": "1857071",
+          "name": "Mine-wan",
+          "lat": 34.44694,
+          "lon": 129.27917,
+          "modified": "2001-04-18",
+          "source_aliases": "",
+          "source_url": "https://www.geonames.org/1857071/"
+        }
+      ]
+    },
+    "1857309": {
+      "name": "Miiraku Wan",
+      "type": "COVE",
+      "source_url": "https://www.geonames.org/1857309/",
+      "references": [
+        {
+          "feature_id": "1857309",
+          "name": "Miiraku Wan",
+          "lat": 32.7478,
+          "lon": 128.70161,
+          "modified": "2013-08-07",
+          "source_aliases": "Hama-no-kuro Wan,Hamakuro Wan,Hamanokuri-wan,Miiraku Wan,Miiraku-ko,Miiraku-kō,Miiraku-wan,Miraku-wan,san jing le wan,三井楽湾",
+          "source_url": "https://www.geonames.org/1857309/"
+        }
+      ]
+    },
+    "1857314": {
+      "name": "Mino Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1857314/",
+      "references": [
+        {
+          "feature_id": "1857314",
+          "name": "Mino Wan",
+          "lat": 35.5,
+          "lon": 133.33333,
+          "modified": "2020-11-20",
+          "source_aliases": "Miho Bay,Miho-wan,Mino Wan,mei bao wan,美保湾",
+          "source_url": "https://www.geonames.org/1857314/"
+        }
+      ]
+    },
+    "1857763": {
+      "name": "Maizuru-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1857763/",
+      "references": [
+        {
+          "feature_id": "1857763",
+          "name": "Maizuru-wan",
+          "lat": 35.49645,
+          "lon": 135.35945,
+          "modified": "2014-04-30",
+          "source_aliases": "",
+          "source_url": "https://www.geonames.org/1857763/"
+        }
+      ]
+    },
+    "1858302": {
+      "name": "Kurauchi Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1858302/",
+      "references": [
+        {
+          "feature_id": "1858302",
+          "name": "Kurauchi Wan",
+          "lat": 35.54311,
+          "lon": 132.97775,
+          "modified": "2013-10-07",
+          "source_aliases": "Kura Uchi,Kurauchi Wan,Kurauchi-wan,Kurauti Wan,cang nei wan,倉内湾",
+          "source_url": "https://www.geonames.org/1858302/"
+        }
+      ]
+    },
+    "1858642": {
+      "name": "Koura-ko",
+      "type": "COVE",
+      "source_url": "https://www.geonames.org/1858642/",
+      "references": [
+        {
+          "feature_id": "1858642",
+          "name": "Koura-ko",
+          "lat": 34.66667,
+          "lon": 138.78333,
+          "modified": "1994-02-05",
+          "source_aliases": "",
+          "source_url": "https://www.geonames.org/1858642/"
+        }
+      ]
+    },
+    "1858760": {
+      "name": "Koromoga-ura",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1858760/",
+      "references": [
+        {
+          "feature_id": "1858760",
+          "name": "Koromoga-ura",
+          "lat": 34.88333,
+          "lon": 136.96667,
+          "modified": "2012-01-19",
+          "source_aliases": "Koromoga-ura,Koromogaura-wan",
+          "source_url": "https://www.geonames.org/1858760/"
+        }
+      ]
+    },
+    "1860014": {
+      "name": "Kasado Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1860014/",
+      "references": [
+        {
+          "feature_id": "1860014",
+          "name": "Kasado Wan",
+          "lat": 33.98361,
+          "lon": 131.83361,
+          "modified": "2013-08-07",
+          "source_aliases": "Kasado Ura,Kasado Wan,Kasado-wan,Kasato Ura,li hu wan,笠戸湾",
+          "source_url": "https://www.geonames.org/1860014/"
+        }
+      ]
+    },
+    "1860222": {
+      "name": "Kaneda Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1860222/",
+      "references": [
+        {
+          "feature_id": "1860222",
+          "name": "Kaneda Wan",
+          "lat": 35.18861,
+          "lon": 139.68445,
+          "modified": "2022-05-20",
+          "source_aliases": "Kaneda Wan,Kaneda-wan,jin tian wan,kanedawan,かねだわん,カネダワン,金田湾",
+          "source_url": "https://www.geonames.org/1860222/"
+        }
+      ]
+    },
+    "1860245": {
+      "name": "Kanayama-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1860245/",
+      "references": [
+        {
+          "feature_id": "1860245",
+          "name": "Kanayama-wan",
+          "lat": 33.68581,
+          "lon": 135.3367,
+          "modified": "2014-01-13",
+          "source_aliases": "Kanayama-wan,Shirahama-ura",
+          "source_url": "https://www.geonames.org/1860245/"
+        }
+      ]
+    },
+    "1860914": {
+      "name": "Kaburako-suido",
+      "type": "STRT",
+      "source_url": "https://www.geonames.org/1860914/",
+      "references": [
+        {
+          "feature_id": "1860914",
+          "name": "Kaburako-suido",
+          "lat": 34.47654,
+          "lon": 136.88017,
+          "modified": "2013-10-07",
+          "source_aliases": "Kaburako-suido,Kaburako-suidō",
+          "source_url": "https://www.geonames.org/1860914/"
+        }
+      ]
+    },
+    "1860919": {
+      "name": "Kabira Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1860919/",
+      "references": [
+        {
+          "feature_id": "1860919",
+          "name": "Kabira Wan",
+          "lat": 24.44984,
+          "lon": 124.14356,
+          "modified": "2020-11-20",
+          "source_aliases": "Kabira Bay,Kabira O,Kabira Wan,Kabira Ō,Kabira-wan,Kahira-wan,Kawahira-wan,chuan ping wan,kabirawan,かびらわん,カビラワン,川平湾",
+          "source_url": "https://www.geonames.org/1860919/"
+        }
+      ]
+    },
+    "1861433": {
+      "name": "Ise-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1861433/",
+      "references": [
+        {
+          "feature_id": "1861433",
+          "name": "Ise-wan",
+          "lat": 34.71667,
+          "lon": 136.71667,
+          "modified": "2023-07-12",
+          "source_aliases": "Ise Bay,Ise Sea,Ise-kai,Ise-no Umi,Ise-wan,Owari Bay",
+          "source_url": "https://www.geonames.org/1861433/"
+        }
+      ]
+    },
+    "1861484": {
+      "name": "Iriomote Jima",
+      "type": "ISL",
+      "source_url": "https://www.geonames.org/1861484/",
+      "references": [
+        {
+          "feature_id": "1861484",
+          "name": "Iriomote Jima",
+          "lat": 24.33333,
+          "lon": 123.83333,
+          "modified": "2017-05-08",
+          "source_aliases": "Iriomote Jima,Iriomote Sima,Iriomote-jima,Iriomote-shima,Ku Kien San,Nisi-Omote Sima,iriomotejima,xi biao dao,いりおもてじま,イリオモテジマ,西表島",
+          "source_url": "https://www.geonames.org/1861484/"
+        }
+      ]
+    },
+    "1861857": {
+      "name": "Iida-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1861857/",
+      "references": [
+        {
+          "feature_id": "1861857",
+          "name": "Iida-wan",
+          "lat": 37.4,
+          "lon": 137.28333,
+          "modified": "1994-02-05",
+          "source_aliases": "",
+          "source_url": "https://www.geonames.org/1861857/"
+        }
+      ]
+    },
+    "1861907": {
+      "name": "Ie-suido",
+      "type": "CHN",
+      "source_url": "https://www.geonames.org/1861907/",
+      "references": [
+        {
+          "feature_id": "1861907",
+          "name": "Ie-suido",
+          "lat": 26.7,
+          "lon": 127.85,
+          "modified": "2020-06-11",
+          "source_aliases": "Ie-suido,Ie-suidō,Ii-suido,Ii-suidō,Iye suido",
+          "source_url": "https://www.geonames.org/1861907/"
+        }
+      ]
+    },
+    "1862542": {
+      "name": "Hirajo-ko",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1862542/",
+      "references": [
+        {
+          "feature_id": "1862542",
+          "name": "Hirajo-ko",
+          "lat": 32.96169,
+          "lon": 132.55001,
+          "modified": "2008-04-04",
+          "source_aliases": "Hirazyo Ko,Hirazyô Kô",
+          "source_url": "https://www.geonames.org/1862542/"
+        }
+      ]
+    },
+    "1863281": {
+      "name": "Hamana-ko",
+      "type": "INLT",
+      "source_url": "https://www.geonames.org/1863281/",
+      "references": [
+        {
+          "feature_id": "1863281",
+          "name": "Hamana-ko",
+          "lat": 34.75,
+          "lon": 137.56667,
+          "modified": "2020-12-07",
+          "source_aliases": "Hamana-ko,Hamano-ko,Lake Hamana,bang ming hu,浜名湖",
+          "source_url": "https://www.geonames.org/1863281/"
+        }
+      ]
+    },
+    "1863365": {
+      "name": "Hakata / Fukuoka Bay",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1863365/",
+      "references": [
+        {
+          "feature_id": "1863365",
+          "name": "Hakata Wan",
+          "lat": 33.63202,
+          "lon": 130.37344,
+          "modified": "2015-01-07",
+          "source_aliases": "Fukuoka-wan,Hakata Wan,Hakata-wan,bo duo wan,博多湾",
+          "source_url": "https://www.geonames.org/1863365/"
+        },
+        {
+          "feature_id": "1863954",
+          "name": "Fukuoka Wan",
+          "lat": 33.63333,
+          "lon": 130.33333,
+          "modified": "2015-01-07",
+          "source_aliases": "Fukuoka Wan,Fukuoka-wan,Hukuoka Wan,fu gang wan,福岡湾",
+          "source_url": "https://www.geonames.org/1863954/"
+        }
+      ]
+    },
+    "1863891": {
+      "name": "Funakawa-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1863891/",
+      "references": [
+        {
+          "feature_id": "1863891",
+          "name": "Funakawa-wan",
+          "lat": 39.86667,
+          "lon": 139.91667,
+          "modified": "2012-01-19",
+          "source_aliases": "Funagawa-wan,Funakawa-wan,Hunakawa Wan",
+          "source_url": "https://www.geonames.org/1863891/"
+        }
+      ]
+    },
+    "1864685": {
+      "name": "Borawazawa-hakuchi",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1864685/",
+      "references": [
+        {
+          "feature_id": "1864685",
+          "name": "Borawazawa-hakuchi",
+          "lat": 33.06667,
+          "lon": 139.85,
+          "modified": "2012-01-19",
+          "source_aliases": "Borawazawa Hakuti,Borawazawa-hakuchi,Horawazawa-hakuchi",
+          "source_url": "https://www.geonames.org/1864685/"
+        }
+      ]
+    },
+    "1864843": {
+      "name": "Azu Ura",
+      "type": "INLT",
+      "source_url": "https://www.geonames.org/1864843/",
+      "references": [
+        {
+          "feature_id": "1864843",
+          "name": "Azu Ura",
+          "lat": 34.21639,
+          "lon": 129.30083,
+          "modified": "2024-05-15",
+          "source_aliases": "Asu-ko,Asu-kō,Asu-ura,Azu Ura,Azu-ko,Azu-kō,Azu-ura,a xu pu,azuura,あずうら,アズウラ,阿須浦",
+          "source_url": "https://www.geonames.org/1864843/"
+        }
+      ]
+    },
+    "1864918": {
+      "name": "Atsumi-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1864918/",
+      "references": [
+        {
+          "feature_id": "1864918",
+          "name": "Atsumi-wan",
+          "lat": 34.73333,
+          "lon": 137.21667,
+          "modified": "2012-01-19",
+          "source_aliases": "Atsumi Bay,Atsumi-wan,Atumi Wan,Tsumi Wan",
+          "source_url": "https://www.geonames.org/1864918/"
+        }
+      ]
+    },
+    "1865054": {
+      "name": "Asakawa Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1865054/",
+      "references": [
+        {
+          "feature_id": "1865054",
+          "name": "Asakawa Wan",
+          "lat": 33.63333,
+          "lon": 134.38333,
+          "modified": "2013-11-10",
+          "source_aliases": "Asakawa Wan,Asakawa-wan,qian chuan wan,浅川湾",
+          "source_url": "https://www.geonames.org/1865054/"
+        }
+      ]
+    },
+    "1865482": {
+      "name": "Akashi Kaikyo",
+      "type": "STRT",
+      "source_url": "https://www.geonames.org/1865482/",
+      "references": [
+        {
+          "feature_id": "1865482",
+          "name": "Akashi Kaikyo",
+          "lat": 34.62488,
+          "lon": 135.0079,
+          "modified": "2020-11-21",
+          "source_aliases": "Akashi Kaikyo,Akashi Kaikyō,Akashi No Seto,Akashi Strait,Akashi-kaikyo,Akashi-kaikyō,Akashi-seto,Akasi Seto,Akasikaikyo,Akasikaikyô,ming shi hai xia,明石海峡",
+          "source_url": "https://www.geonames.org/1865482/"
+        }
+      ]
+    },
+    "1865681": {
+      "name": "Aikawa Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1865681/",
+      "references": [
+        {
+          "feature_id": "1865681",
+          "name": "Aikawa Wan",
+          "lat": 38.03333,
+          "lon": 138.23333,
+          "modified": "2014-03-08",
+          "source_aliases": "Aikawa Wan,Aikawa-wan,xiang chuan wan,相川湾",
+          "source_url": "https://www.geonames.org/1865681/"
+        }
+      ]
+    },
+    "1895986": {
+      "name": "Kita-suido",
+      "type": "CHN",
+      "source_url": "https://www.geonames.org/1895986/",
+      "references": [
+        {
+          "feature_id": "1895986",
+          "name": "Kita-suido",
+          "lat": 32.73333,
+          "lon": 128.81667,
+          "modified": "1996-03-27",
+          "source_aliases": "",
+          "source_url": "https://www.geonames.org/1895986/"
+        }
+      ]
+    },
+    "1918062": {
+      "name": "Tsutsu Ura",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/1918062/",
+      "references": [
+        {
+          "feature_id": "1918062",
+          "name": "Tsutsu Ura",
+          "lat": 34.1073,
+          "lon": 129.18682,
+          "modified": "2013-08-08",
+          "source_aliases": "Tsutsu Ura,Tsutsu-ko,Tsutsu-kō,Tsutsu-ura,dou suan pu,豆酸浦",
+          "source_url": "https://www.geonames.org/1918062/"
+        }
+      ]
+    },
+    "2110519": {
+      "name": "Yogasaki-suido",
+      "type": "CHN",
+      "source_url": "https://www.geonames.org/2110519/",
+      "references": [
+        {
+          "feature_id": "2110519",
+          "name": "Yogasaki-suido",
+          "lat": 38.31001,
+          "lon": 141.04088,
+          "modified": "2012-02-02",
+          "source_aliases": "",
+          "source_url": "https://www.geonames.org/2110519/"
+        }
+      ]
+    },
+    "2110737": {
+      "name": "Toni-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2110737/",
+      "references": [
+        {
+          "feature_id": "2110737",
+          "name": "Toni-wan",
+          "lat": 39.19425,
+          "lon": 141.89939,
+          "modified": "2014-04-06",
+          "source_aliases": "Toni-wan,Tōni-wan",
+          "source_url": "https://www.geonames.org/2110737/"
+        }
+      ]
+    },
+    "2110995": {
+      "name": "Shizugawa Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2110995/",
+      "references": [
+        {
+          "feature_id": "2110995",
+          "name": "Shizugawa Wan",
+          "lat": 38.66518,
+          "lon": 141.51047,
+          "modified": "2014-02-10",
+          "source_aliases": "Shizugawa Wan,Shizugawa-wan,Shizukawa-wan,Sizukawa Wan,zhi jin chuan wan,志津川湾",
+          "source_url": "https://www.geonames.org/2110995/"
+        }
+      ]
+    },
+    "2111508": {
+      "name": "Oginohama-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2111508/",
+      "references": [
+        {
+          "feature_id": "2111508",
+          "name": "Oginohama-wan",
+          "lat": 38.37361,
+          "lon": 141.4,
+          "modified": "2014-11-26",
+          "source_aliases": "Oginohama-wan,Orinohama-wan",
+          "source_url": "https://www.geonames.org/2111508/"
+        }
+      ]
+    },
+    "2111882": {
+      "name": "Miyako-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2111882/",
+      "references": [
+        {
+          "feature_id": "2111882",
+          "name": "Miyako-wan",
+          "lat": 39.65741,
+          "lon": 141.99231,
+          "modified": "2020-11-20",
+          "source_aliases": "Miyako Bay,Miyako-ko,Miyako-kō,Miyako-wan,gong gu wan,宮古湾",
+          "source_url": "https://www.geonames.org/2111882/"
+        }
+      ]
+    },
+    "2112573": {
+      "name": "Ishinomaki Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2112573/",
+      "references": [
+        {
+          "feature_id": "2112573",
+          "name": "Ishinomaki Wan",
+          "lat": 38.36667,
+          "lon": 141.31667,
+          "modified": "2012-06-06",
+          "source_aliases": "Ishinomaki Wan,Ishinomaki-wan,Isinomaki Wan,ishinomakiwan,shi juan wan,いしのまきわん,イシノマキワン,石巻湾",
+          "source_url": "https://www.geonames.org/2112573/"
+        }
+      ]
+    },
+    "2112595": {
+      "name": "Isatomae Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2112595/",
+      "references": [
+        {
+          "feature_id": "2112595",
+          "name": "Isatomae Wan",
+          "lat": 38.70916,
+          "lon": 141.53012,
+          "modified": "2014-02-10",
+          "source_aliases": "Isatomae Wan,Isatomae-wan,Isatomai Wan,yi li qian wan,伊里前湾",
+          "source_url": "https://www.geonames.org/2112595/"
+        }
+      ]
+    },
+    "2112809": {
+      "name": "Haragama-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2112809/",
+      "references": [
+        {
+          "feature_id": "2112809",
+          "name": "Haragama-wan",
+          "lat": 37.83333,
+          "lon": 140.98333,
+          "modified": "1994-02-05",
+          "source_aliases": "",
+          "source_url": "https://www.geonames.org/2112809/"
+        }
+      ]
+    },
+    "2113488": {
+      "name": "Okuzure Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2113488/",
+      "references": [
+        {
+          "feature_id": "2113488",
+          "name": "Okuzure Wan",
+          "lat": 26.6668,
+          "lon": 142.17034,
+          "modified": "2012-11-09",
+          "source_aliases": "Okuzure Wan,Okuzure-wan,da beng wan,ookuzurewan,Ōkuzure Wan,Ōkuzure-wan,おおくずれわん,オオクズレワン,大崩湾",
+          "source_url": "https://www.geonames.org/2113488/"
+        }
+      ]
+    },
+    "2127607": {
+      "name": "Uchiura-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2127607/",
+      "references": [
+        {
+          "feature_id": "2127607",
+          "name": "Uchiura-wan",
+          "lat": 42.33333,
+          "lon": 140.66667,
+          "modified": "2016-06-10",
+          "source_aliases": "Funka-wan,I Buri-wan,Ifuri-wan,Uchiura-wan,Utiura Bay,Utiura Wan,Volcano Bay",
+          "source_url": "https://www.geonames.org/2127607/"
+        }
+      ]
+    },
+    "2127703": {
+      "name": "Tomoshiri Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2127703/",
+      "references": [
+        {
+          "feature_id": "2127703",
+          "name": "Tomoshiri Wan",
+          "lat": 43.31494,
+          "lon": 145.63996,
+          "modified": "2017-03-04",
+          "source_aliases": "Tomoshiri Wan,Tomoshiri-wan,Tomosiri Wan,tomoshiriwan,you zhi wan,ともしりわん,トモシリワン,友知湾",
+          "source_url": "https://www.geonames.org/2127703/"
+        }
+      ]
+    },
+    "2127947": {
+      "name": "Suttsu-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2127947/",
+      "references": [
+        {
+          "feature_id": "2127947",
+          "name": "Suttsu-wan",
+          "lat": 42.8,
+          "lon": 140.26667,
+          "modified": "2012-01-19",
+          "source_aliases": "Sutsu Wan,Suttsu-wan,Sutu Wan",
+          "source_url": "https://www.geonames.org/2127947/"
+        }
+      ]
+    },
+    "2128246": {
+      "name": "Sawara-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2128246/",
+      "references": [
+        {
+          "feature_id": "2128246",
+          "name": "Sawara-wan",
+          "lat": 42.13294,
+          "lon": 140.68495,
+          "modified": "2014-02-10",
+          "source_aliases": "",
+          "source_url": "https://www.geonames.org/2128246/"
+        }
+      ]
+    },
+    "2129278": {
+      "name": "Matsumae Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2129278/",
+      "references": [
+        {
+          "feature_id": "2129278",
+          "name": "Matsumae Wan",
+          "lat": 41.4,
+          "lon": 140.13333,
+          "modified": "2018-03-07",
+          "source_aliases": "Fukuyama,Fukuyama-wan,Hukuyama Wan,Matsumae Wan,Matsumae-wan,matsumaewan,song qian wan,まつまえわん,マツマエワン,松前湾",
+          "source_url": "https://www.geonames.org/2129278/"
+        }
+      ]
+    },
+    "2130183": {
+      "name": "Hakodate-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2130183/",
+      "references": [
+        {
+          "feature_id": "2130183",
+          "name": "Hakodate-wan",
+          "lat": 41.78583,
+          "lon": 140.66944,
+          "modified": "2001-09-13",
+          "source_aliases": "",
+          "source_url": "https://www.geonames.org/2130183/"
+        }
+      ]
+    },
+    "2130653": {
+      "name": "Aomori Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2130653/",
+      "references": [
+        {
+          "feature_id": "2130653",
+          "name": "Aomori Wan",
+          "lat": 40.91667,
+          "lon": 140.78333,
+          "modified": "2012-09-07",
+          "source_aliases": "Aomori Wan,Aomori-wan,aomoriwan,qing sen wan,あおもりわん,アオモリワン,青森湾",
+          "source_url": "https://www.geonames.org/2130653/"
+        }
+      ]
+    },
+    "2130674": {
+      "name": "Akkeshi Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/2130674/",
+      "references": [
+        {
+          "feature_id": "2130674",
+          "name": "Akkeshi Wan",
+          "lat": 43.0,
+          "lon": 144.8,
+          "modified": "2017-03-05",
+          "source_aliases": "Akkeshi Wan,Akkeshi-wan,Akkesi Wan,Atsukeshi-wan,akkeshiwan,hou an wan,あっけしわん,アッケシワン,厚岸湾",
+          "source_url": "https://www.geonames.org/2130674/"
+        }
+      ]
+    },
+    "6421877": {
+      "name": "Tomiyama-wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/6421877/",
+      "references": [
+        {
+          "feature_id": "6421877",
+          "name": "Tomiyama-wan",
+          "lat": 35.08333,
+          "lon": 139.825,
+          "modified": "2007-03-19",
+          "source_aliases": "",
+          "source_url": "https://www.geonames.org/6421877/"
+        }
+      ]
+    },
+    "8599971": {
+      "name": "Nobu-aso Wan",
+      "type": "INLT",
+      "source_url": "https://www.geonames.org/8599971/",
+      "references": [
+        {
+          "feature_id": "8599971",
+          "name": "Nobu-aso Wan",
+          "lat": 34.34667,
+          "lon": 129.33159,
+          "modified": "2013-08-10",
+          "source_aliases": "Nobu-aso Wan,Nobu-asō Wan,nong bu qian mao wan,濃部浅茅湾",
+          "source_url": "https://www.geonames.org/8599971/"
+        }
+      ]
+    },
+    "9643588": {
+      "name": "Sokodo Wan",
+      "type": "BAY",
+      "source_url": "https://www.geonames.org/9643588/",
+      "references": [
+        {
+          "feature_id": "9643588",
+          "name": "Sokodo Wan",
+          "lat": 33.12143,
+          "lon": 139.82298,
+          "modified": "2014-10-04",
+          "source_aliases": "Sokodo Wan,di tu wan,底土湾",
+          "source_url": "https://www.geonames.org/9643588/"
+        }
+      ]
+    }
+  },
+  "positions": [
+    {
+      "lat": 17.45833333,
+      "lon": 148.6875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 24.45833333,
+      "lon": 123.8125,
+      "reason": "selected island reference point within20km",
+      "feature_id": "1861484",
+      "reference_feature_id": "1861484",
+      "distance_to_reference_km": 14.059
+    },
+    {
+      "lat": 24.45833333,
+      "lon": 124.1875,
+      "reason": "marine feature point within10km",
+      "feature_id": "1860919",
+      "reference_feature_id": "1860919",
+      "distance_to_reference_km": 4.547
+    },
+    {
+      "lat": 26.20833333,
+      "lon": 127.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1848278",
+      "reference_feature_id": "1848278",
+      "distance_to_reference_km": 1.554
+    },
+    {
+      "lat": 26.29166667,
+      "lon": 126.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1852453",
+      "reference_feature_id": "1852453",
+      "distance_to_reference_km": 2.943
+    },
+    {
+      "lat": 26.54166667,
+      "lon": 127.8125,
+      "reason": "selected island reference point within20km",
+      "feature_id": "1854346",
+      "reference_feature_id": "1854346",
+      "distance_to_reference_km": 13.816
+    },
+    {
+      "lat": 26.54166667,
+      "lon": 128.0625,
+      "reason": "marine feature point within10km",
+      "feature_id": "1853525",
+      "reference_feature_id": "1853525",
+      "distance_to_reference_km": 1.016
+    },
+    {
+      "lat": 26.70833333,
+      "lon": 127.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1861907",
+      "reference_feature_id": "1861907",
+      "distance_to_reference_km": 3.839
+    },
+    {
+      "lat": 26.70833333,
+      "lon": 127.9375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1861907",
+      "reference_feature_id": "1861907",
+      "distance_to_reference_km": 8.741
+    },
+    {
+      "lat": 26.70833333,
+      "lon": 142.1875,
+      "reason": "marine feature point within10km",
+      "feature_id": "2113488",
+      "reference_feature_id": "2113488",
+      "distance_to_reference_km": 4.923
+    },
+    {
+      "lat": 27.125,
+      "lon": 142.1875,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 27.375,
+      "lon": 128.5625,
+      "reason": "selected island reference point within20km",
+      "feature_id": "1854341",
+      "reference_feature_id": "1854341",
+      "distance_to_reference_km": 4.854
+    },
+    {
+      "lat": 27.70833333,
+      "lon": 146.0625,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 28.125,
+      "lon": 129.3125,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 31.125,
+      "lon": 145.0625,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 31.625,
+      "lon": 130.5625,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 32.375,
+      "lon": 131.1875,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 32.54166667,
+      "lon": 130.4375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1848557",
+      "reference_feature_id": "1848557",
+      "distance_to_reference_km": 0.188
+    },
+    {
+      "lat": 32.625,
+      "lon": 128.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1850109",
+      "reference_feature_id": "1850109",
+      "distance_to_reference_km": 0.795
+    },
+    {
+      "lat": 32.70833333,
+      "lon": 128.6875,
+      "reason": "marine feature point within10km",
+      "feature_id": "1857309",
+      "reference_feature_id": "1857309",
+      "distance_to_reference_km": 4.583
+    },
+    {
+      "lat": 32.70833333,
+      "lon": 128.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1895986",
+      "reference_feature_id": "1895986",
+      "distance_to_reference_km": 2.807
+    },
+    {
+      "lat": 32.79166667,
+      "lon": 128.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1850635",
+      "reference_feature_id": "1850635",
+      "distance_to_reference_km": 1.218
+    },
+    {
+      "lat": 32.95833333,
+      "lon": 130.4375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 33.04166667,
+      "lon": 130.4375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 33.04166667,
+      "lon": 132.5625,
+      "reason": "marine feature point within10km",
+      "feature_id": "1862542",
+      "reference_feature_id": "1862542",
+      "distance_to_reference_km": 8.969
+    },
+    {
+      "lat": 33.04166667,
+      "lon": 139.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1864685",
+      "reference_feature_id": "1864685",
+      "distance_to_reference_km": 4.466
+    },
+    {
+      "lat": 33.125,
+      "lon": 139.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "9643588",
+      "reference_feature_id": "9643588",
+      "distance_to_reference_km": 1.054
+    },
+    {
+      "lat": 33.45833333,
+      "lon": 133.4375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1849199",
+      "reference_feature_id": "1849199",
+      "distance_to_reference_km": 4.454
+    },
+    {
+      "lat": 33.45833333,
+      "lon": 135.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1853721",
+      "reference_feature_id": "1853721",
+      "distance_to_reference_km": 0.928
+    },
+    {
+      "lat": 33.54166667,
+      "lon": 130.0625,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 33.54166667,
+      "lon": 133.5625,
+      "reason": "marine feature point within10km",
+      "feature_id": "1849224",
+      "reference_feature_id": "1849224",
+      "distance_to_reference_km": 4.5
+    },
+    {
+      "lat": 33.54166667,
+      "lon": 134.3125,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 33.625,
+      "lon": 130.0625,
+      "reason": "marine feature point within10km",
+      "feature_id": "1852388",
+      "reference_feature_id": "1852388",
+      "distance_to_reference_km": 8.479
+    },
+    {
+      "lat": 33.625,
+      "lon": 130.3125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1863365",
+      "reference_feature_id": "1863954",
+      "distance_to_reference_km": 2.139
+    },
+    {
+      "lat": 33.625,
+      "lon": 130.4375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1863365",
+      "reference_feature_id": "1863365",
+      "distance_to_reference_km": 5.982
+    },
+    {
+      "lat": 33.625,
+      "lon": 130.5625,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 33.625,
+      "lon": 131.1875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 33.625,
+      "lon": 134.4375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1865054",
+      "reference_feature_id": "1865054",
+      "distance_to_reference_km": 5.1
+    },
+    {
+      "lat": 33.70833333,
+      "lon": 130.3125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1863365",
+      "reference_feature_id": "1863954",
+      "distance_to_reference_km": 8.56
+    },
+    {
+      "lat": 33.70833333,
+      "lon": 135.3125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1860245",
+      "reference_feature_id": "1860245",
+      "distance_to_reference_km": 3.359
+    },
+    {
+      "lat": 33.70833333,
+      "lon": 135.6875,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 33.79166667,
+      "lon": 132.6875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 33.95833333,
+      "lon": 131.1875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 33.95833333,
+      "lon": 131.3125,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 33.95833333,
+      "lon": 131.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1860014",
+      "reference_feature_id": "1860014",
+      "distance_to_reference_km": 3.419
+    },
+    {
+      "lat": 33.95833333,
+      "lon": 132.1875,
+      "reason": "marine feature point within10km",
+      "feature_id": "1854823",
+      "reference_feature_id": "1854823",
+      "distance_to_reference_km": 0.567
+    },
+    {
+      "lat": 34.04166667,
+      "lon": 130.8125,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 34.04166667,
+      "lon": 135.5625,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 34.125,
+      "lon": 129.1875,
+      "reason": "marine feature point within10km",
+      "feature_id": "1918062",
+      "reference_feature_id": "1918062",
+      "distance_to_reference_km": 1.969
+    },
+    {
+      "lat": 34.125,
+      "lon": 132.9375,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 34.20833333,
+      "lon": 129.1875,
+      "reason": "selected island reference point within20km",
+      "feature_id": "10378269",
+      "reference_feature_id": "10378269",
+      "distance_to_reference_km": 17.715
+    },
+    {
+      "lat": 34.20833333,
+      "lon": 129.3125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1864843",
+      "reference_feature_id": "1864843",
+      "distance_to_reference_km": 1.398
+    },
+    {
+      "lat": 34.20833333,
+      "lon": 135.1875,
+      "reason": "marine feature point within10km",
+      "feature_id": "1848940",
+      "reference_feature_id": "1848940",
+      "distance_to_reference_km": 5.013
+    },
+    {
+      "lat": 34.29166667,
+      "lon": 132.3125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1853981",
+      "reference_feature_id": "1853981",
+      "distance_to_reference_km": 2.836
+    },
+    {
+      "lat": 34.29166667,
+      "lon": 132.9375,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 34.29166667,
+      "lon": 134.9375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1848038",
+      "reference_feature_id": "1848038",
+      "distance_to_reference_km": 2.836
+    },
+    {
+      "lat": 34.29166667,
+      "lon": 135.1875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 34.29166667,
+      "lon": 136.8125,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 34.29166667,
+      "lon": 139.1875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 34.375,
+      "lon": 129.3125,
+      "reason": "marine feature point within10km",
+      "feature_id": "8599971",
+      "reference_feature_id": "8599971",
+      "distance_to_reference_km": 3.605
+    },
+    {
+      "lat": 34.375,
+      "lon": 129.4375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1853918",
+      "reference_feature_id": "1853918",
+      "distance_to_reference_km": 6.319
+    },
+    {
+      "lat": 34.375,
+      "lon": 134.0625,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 34.375,
+      "lon": 135.3125,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 34.45833333,
+      "lon": 129.3125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1857071",
+      "reference_feature_id": "1857071",
+      "distance_to_reference_km": 3.308
+    },
+    {
+      "lat": 34.45833333,
+      "lon": 134.3125,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 34.45833333,
+      "lon": 135.3125,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 34.45833333,
+      "lon": 136.9375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1860914",
+      "reference_feature_id": "1860914",
+      "distance_to_reference_km": 5.632
+    },
+    {
+      "lat": 34.45833333,
+      "lon": 137.3125,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 34.54166667,
+      "lon": 129.3125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1855107",
+      "reference_feature_id": "1855107",
+      "distance_to_reference_km": 0.287
+    },
+    {
+      "lat": 34.625,
+      "lon": 134.1875,
+      "reason": "selected island reference point within20km",
+      "feature_id": "1851704",
+      "reference_feature_id": "1851704",
+      "distance_to_reference_km": 14.893
+    },
+    {
+      "lat": 34.625,
+      "lon": 135.0625,
+      "reason": "marine feature point within10km",
+      "feature_id": "1865482",
+      "reference_feature_id": "1865482",
+      "distance_to_reference_km": 4.996
+    },
+    {
+      "lat": 34.625,
+      "lon": 135.4375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 34.625,
+      "lon": 137.0625,
+      "reason": "marine feature point within10km",
+      "feature_id": "1855727",
+      "reference_feature_id": "1855727",
+      "distance_to_reference_km": 3.854
+    },
+    {
+      "lat": 34.625,
+      "lon": 138.1875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 34.625,
+      "lon": 138.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1858642",
+      "reference_feature_id": "1858642",
+      "distance_to_reference_km": 5.347
+    },
+    {
+      "lat": 34.625,
+      "lon": 138.9375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1851561",
+      "reference_feature_id": "1851561",
+      "distance_to_reference_km": 6.888
+    },
+    {
+      "lat": 34.70833333,
+      "lon": 129.4375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1848908",
+      "reference_feature_id": "1848908",
+      "distance_to_reference_km": 1.002
+    },
+    {
+      "lat": 34.70833333,
+      "lon": 134.4375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1853082",
+      "reference_feature_id": "1853082",
+      "distance_to_reference_km": 5.496
+    },
+    {
+      "lat": 34.70833333,
+      "lon": 135.3125,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 34.70833333,
+      "lon": 136.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1861433",
+      "reference_feature_id": "1861433",
+      "distance_to_reference_km": 8.808
+    },
+    {
+      "lat": 34.70833333,
+      "lon": 136.9375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1856551",
+      "reference_feature_id": "1856551",
+      "distance_to_reference_km": 5.028
+    },
+    {
+      "lat": 34.70833333,
+      "lon": 137.5625,
+      "reason": "marine feature point within10km",
+      "feature_id": "1863281",
+      "reference_feature_id": "1863281",
+      "distance_to_reference_km": 4.649
+    },
+    {
+      "lat": 34.70833333,
+      "lon": 139.4375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 34.79166667,
+      "lon": 134.4375,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 34.79166667,
+      "lon": 136.8125,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 34.79166667,
+      "lon": 137.1875,
+      "reason": "marine feature point within10km",
+      "feature_id": "1864918",
+      "reference_feature_id": "1864918",
+      "distance_to_reference_km": 7.013
+    },
+    {
+      "lat": 34.875,
+      "lon": 136.9375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1858760",
+      "reference_feature_id": "1858760",
+      "distance_to_reference_km": 2.817
+    },
+    {
+      "lat": 34.875,
+      "lon": 138.8125,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 34.875,
+      "lon": 139.0625,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 34.875,
+      "lon": 139.9375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 34.95833333,
+      "lon": 136.6875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 34.95833333,
+      "lon": 138.4375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1853935",
+      "reference_feature_id": "1853935",
+      "distance_to_reference_km": 7.369
+    },
+    {
+      "lat": 34.95833333,
+      "lon": 138.5625,
+      "reason": "marine feature point within10km",
+      "feature_id": "1853935",
+      "reference_feature_id": "1853935",
+      "distance_to_reference_km": 6.571
+    },
+    {
+      "lat": 34.95833333,
+      "lon": 139.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1850519",
+      "reference_feature_id": "1850519",
+      "distance_to_reference_km": 6.121
+    },
+    {
+      "lat": 35.04166667,
+      "lon": 138.5625,
+      "reason": "marine feature point within10km",
+      "feature_id": "1853935",
+      "reference_feature_id": "1853935",
+      "distance_to_reference_km": 7.397
+    },
+    {
+      "lat": 35.04166667,
+      "lon": 138.8125,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 35.04166667,
+      "lon": 139.0625,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 35.04166667,
+      "lon": 139.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1850076",
+      "reference_feature_id": "1850076",
+      "distance_to_reference_km": 1.329
+    },
+    {
+      "lat": 35.125,
+      "lon": 139.1875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 35.125,
+      "lon": 139.5625,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 35.125,
+      "lon": 139.6875,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 35.125,
+      "lon": 139.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "6421877",
+      "reference_feature_id": "6421877",
+      "distance_to_reference_km": 4.771
+    },
+    {
+      "lat": 35.125,
+      "lon": 140.3125,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 35.20833333,
+      "lon": 139.1875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 35.20833333,
+      "lon": 139.5625,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 35.20833333,
+      "lon": 139.6875,
+      "reason": "marine feature point within10km",
+      "feature_id": "1860222",
+      "reference_feature_id": "1860222",
+      "distance_to_reference_km": 2.211
+    },
+    {
+      "lat": 35.29166667,
+      "lon": 135.6875,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 35.29166667,
+      "lon": 139.3125,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 35.29166667,
+      "lon": 139.4375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1853289",
+      "reference_feature_id": "1853289",
+      "distance_to_reference_km": 4.966
+    },
+    {
+      "lat": 35.29166667,
+      "lon": 139.5625,
+      "reason": "marine feature point within10km",
+      "feature_id": "1852082",
+      "reference_feature_id": "1852082",
+      "distance_to_reference_km": 0.486
+    },
+    {
+      "lat": 35.29166667,
+      "lon": 139.6875,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 35.29166667,
+      "lon": 139.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1853550",
+      "reference_feature_id": "1853550",
+      "distance_to_reference_km": 8.747
+    },
+    {
+      "lat": 35.375,
+      "lon": 135.3125,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 35.375,
+      "lon": 139.3125,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 35.375,
+      "lon": 139.4375,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 35.375,
+      "lon": 139.5625,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 35.375,
+      "lon": 139.6875,
+      "reason": "marine feature point within10km",
+      "feature_id": "1855524",
+      "reference_feature_id": "1855524",
+      "distance_to_reference_km": 3.746
+    },
+    {
+      "lat": 35.375,
+      "lon": 140.4375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 35.45833333,
+      "lon": 135.3125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1857763",
+      "reference_feature_id": "1857763",
+      "distance_to_reference_km": 6.003
+    },
+    {
+      "lat": 35.45833333,
+      "lon": 139.3125,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 35.45833333,
+      "lon": 139.4375,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 35.45833333,
+      "lon": 139.6875,
+      "reason": "marine feature point within10km",
+      "feature_id": "1855524",
+      "reference_feature_id": "1855524",
+      "distance_to_reference_km": 7.301
+    },
+    {
+      "lat": 35.45833333,
+      "lon": 139.9375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 35.54166667,
+      "lon": 132.9375,
+      "reason": "marine feature point within10km",
+      "feature_id": "1858302",
+      "reference_feature_id": "1858302",
+      "distance_to_reference_km": 3.645
+    },
+    {
+      "lat": 35.54166667,
+      "lon": 133.3125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1857314",
+      "reference_feature_id": "1857314",
+      "distance_to_reference_km": 5.002
+    },
+    {
+      "lat": 35.54166667,
+      "lon": 135.1875,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 35.54166667,
+      "lon": 135.5625,
+      "reason": "marine feature point within10km",
+      "feature_id": "1851145",
+      "reference_feature_id": "1851145",
+      "distance_to_reference_km": 3.464
+    },
+    {
+      "lat": 35.54166667,
+      "lon": 139.3125,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 35.54166667,
+      "lon": 139.4375,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 35.54166667,
+      "lon": 139.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1852138",
+      "reference_feature_id": "1852138",
+      "distance_to_reference_km": 9.484
+    },
+    {
+      "lat": 35.54166667,
+      "lon": 140.4375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 35.625,
+      "lon": 134.6875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 35.625,
+      "lon": 139.1875,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 35.625,
+      "lon": 139.3125,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 35.625,
+      "lon": 139.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1852138",
+      "reference_feature_id": "1852138",
+      "distance_to_reference_km": 4.567
+    },
+    {
+      "lat": 35.625,
+      "lon": 139.9375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 35.625,
+      "lon": 140.0625,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 35.70833333,
+      "lon": 135.4375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 35.70833333,
+      "lon": 139.9375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 35.79166667,
+      "lon": 136.0625,
+      "reason": "marine feature point within10km",
+      "feature_id": "1849192",
+      "reference_feature_id": "1849192",
+      "distance_to_reference_km": 6.238
+    },
+    {
+      "lat": 35.95833333,
+      "lon": 135.9375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 35.95833333,
+      "lon": 140.6875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 36.04166667,
+      "lon": 140.4375,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 36.20833333,
+      "lon": 133.3125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1853249",
+      "reference_feature_id": "1853249",
+      "distance_to_reference_km": 2.451
+    },
+    {
+      "lat": 36.20833333,
+      "lon": 143.8125,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 36.375,
+      "lon": 138.3125,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 36.375,
+      "lon": 140.5625,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 36.45833333,
+      "lon": 140.5625,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 36.54166667,
+      "lon": 138.1875,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 36.54166667,
+      "lon": 138.3125,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 36.79166667,
+      "lon": 137.0625,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 36.79166667,
+      "lon": 137.3125,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 37.04166667,
+      "lon": 140.9375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 37.125,
+      "lon": 136.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1853000",
+      "reference_feature_id": "1853000",
+      "distance_to_reference_km": 8.139
+    },
+    {
+      "lat": 37.125,
+      "lon": 137.9375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 37.20833333,
+      "lon": 138.1875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 37.29166667,
+      "lon": 137.1875,
+      "reason": "marine feature point within10km",
+      "feature_id": "1849652",
+      "reference_feature_id": "1849652",
+      "distance_to_reference_km": 4.587
+    },
+    {
+      "lat": 37.45833333,
+      "lon": 137.3125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1861857",
+      "reference_feature_id": "1861857",
+      "distance_to_reference_km": 6.979
+    },
+    {
+      "lat": 37.54166667,
+      "lon": 138.6875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 37.79166667,
+      "lon": 138.8125,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 37.79166667,
+      "lon": 140.9375,
+      "reason": "marine feature point within10km",
+      "feature_id": "2112809",
+      "reference_feature_id": "2112809",
+      "distance_to_reference_km": 6.138
+    },
+    {
+      "lat": 37.95833333,
+      "lon": 138.1875,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 37.95833333,
+      "lon": 139.0625,
+      "reason": "marine feature point within10km",
+      "feature_id": "1848754",
+      "reference_feature_id": "1848754",
+      "distance_to_reference_km": 2.804
+    },
+    {
+      "lat": 38.04166667,
+      "lon": 138.1875,
+      "reason": "marine feature point within10km",
+      "feature_id": "1865681",
+      "reference_feature_id": "1865681",
+      "distance_to_reference_km": 4.119
+    },
+    {
+      "lat": 38.20833333,
+      "lon": 140.9375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 38.29166667,
+      "lon": 141.0625,
+      "reason": "marine feature point within10km",
+      "feature_id": "2110519",
+      "reference_feature_id": "2110519",
+      "distance_to_reference_km": 2.778
+    },
+    {
+      "lat": 38.29166667,
+      "lon": 141.4375,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 38.375,
+      "lon": 139.4375,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 38.375,
+      "lon": 141.3125,
+      "reason": "marine feature point within10km",
+      "feature_id": "2112573",
+      "reference_feature_id": "2112573",
+      "distance_to_reference_km": 0.995
+    },
+    {
+      "lat": 38.375,
+      "lon": 141.4375,
+      "reason": "marine feature point within10km",
+      "feature_id": "2111508",
+      "reference_feature_id": "2111508",
+      "distance_to_reference_km": 3.273
+    },
+    {
+      "lat": 38.45833333,
+      "lon": 139.4375,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 38.625,
+      "lon": 141.4375,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 38.625,
+      "lon": 141.5625,
+      "reason": "marine feature point within10km",
+      "feature_id": "2110995",
+      "reference_feature_id": "2110995",
+      "distance_to_reference_km": 6.354
+    },
+    {
+      "lat": 38.70833333,
+      "lon": 141.4375,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 38.70833333,
+      "lon": 141.5625,
+      "reason": "marine feature point within10km",
+      "feature_id": "2112595",
+      "reference_feature_id": "2112595",
+      "distance_to_reference_km": 2.811
+    },
+    {
+      "lat": 39.20833333,
+      "lon": 141.9375,
+      "reason": "marine feature point within10km",
+      "feature_id": "2110737",
+      "reference_feature_id": "2110737",
+      "distance_to_reference_km": 3.638
+    },
+    {
+      "lat": 39.375,
+      "lon": 141.9375,
+      "reason": "ambiguous competing map-reference feature points within1km ofclosest",
+      "feature_id": null
+    },
+    {
+      "lat": 39.625,
+      "lon": 141.9375,
+      "reason": "marine feature point within10km",
+      "feature_id": "2111882",
+      "reference_feature_id": "2111882",
+      "distance_to_reference_km": 5.917
+    },
+    {
+      "lat": 39.875,
+      "lon": 139.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "1863891",
+      "reference_feature_id": "1863891",
+      "distance_to_reference_km": 8.938
+    },
+    {
+      "lat": 39.875,
+      "lon": 140.0625,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 40.54166667,
+      "lon": 141.5625,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 40.875,
+      "lon": 140.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "2130653",
+      "reference_feature_id": "2130653",
+      "distance_to_reference_km": 5.242
+    },
+    {
+      "lat": 41.375,
+      "lon": 140.1875,
+      "reason": "marine feature point within10km",
+      "feature_id": "2129278",
+      "reference_feature_id": "2129278",
+      "distance_to_reference_km": 5.306
+    },
+    {
+      "lat": 41.375,
+      "lon": 140.8125,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 41.375,
+      "lon": 141.1875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 41.79166667,
+      "lon": 140.1875,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 41.79166667,
+      "lon": 140.6875,
+      "reason": "marine feature point within10km",
+      "feature_id": "2130183",
+      "reference_feature_id": "2130183",
+      "distance_to_reference_km": 1.632
+    },
+    {
+      "lat": 41.95833333,
+      "lon": 143.1875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 41.95833333,
+      "lon": 143.3125,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 42.04166667,
+      "lon": 140.0625,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 42.125,
+      "lon": 140.6875,
+      "reason": "marine feature point within10km",
+      "feature_id": "2128246",
+      "reference_feature_id": "2128246",
+      "distance_to_reference_km": 0.908
+    },
+    {
+      "lat": 42.20833333,
+      "lon": 142.6875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 42.29166667,
+      "lon": 140.5625,
+      "reason": "marine feature point within10km",
+      "feature_id": "2127607",
+      "reference_feature_id": "2127607",
+      "distance_to_reference_km": 9.738
+    },
+    {
+      "lat": 42.375,
+      "lon": 141.0625,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 42.45833333,
+      "lon": 142.0625,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 42.70833333,
+      "lon": 141.5625,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 42.79166667,
+      "lon": 140.1875,
+      "reason": "marine feature point within10km",
+      "feature_id": "2127947",
+      "reference_feature_id": "2127947",
+      "distance_to_reference_km": 6.526
+    },
+    {
+      "lat": 42.79166667,
+      "lon": 140.3125,
+      "reason": "marine feature point within10km",
+      "feature_id": "2127947",
+      "reference_feature_id": "2127947",
+      "distance_to_reference_km": 3.852
+    },
+    {
+      "lat": 42.79166667,
+      "lon": 141.5625,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 42.79166667,
+      "lon": 141.6875,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 42.875,
+      "lon": 140.3125,
+      "reason": "marine feature point within10km",
+      "feature_id": "2127947",
+      "reference_feature_id": "2127947",
+      "distance_to_reference_km": 9.139
+    },
+    {
+      "lat": 42.875,
+      "lon": 141.6875,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 42.95833333,
+      "lon": 141.5625,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 43.04166667,
+      "lon": 144.8125,
+      "reason": "marine feature point within10km",
+      "feature_id": "2130674",
+      "reference_feature_id": "2130674",
+      "distance_to_reference_km": 4.743
+    },
+    {
+      "lat": 43.20833333,
+      "lon": 141.3125,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 43.29166667,
+      "lon": 143.5625,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 43.29166667,
+      "lon": 145.5625,
+      "reason": "marine feature point within10km",
+      "feature_id": "2127703",
+      "reference_feature_id": "2127703",
+      "distance_to_reference_km": 6.781
+    },
+    {
+      "lat": 43.375,
+      "lon": 144.6875,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 44.125,
+      "lon": 144.1875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 44.20833333,
+      "lon": 141.6875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 44.375,
+      "lon": 142.1875,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 44.45833333,
+      "lon": 143.1875,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 44.79166667,
+      "lon": 142.0625,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 44.95833333,
+      "lon": 142.5625,
+      "reason": "outside reference distance",
+      "feature_id": null
+    },
+    {
+      "lat": 45.04166667,
+      "lon": 142.0625,
+      "reason": "source label indicates inland river/lake context",
+      "feature_id": null
+    },
+    {
+      "lat": 45.54166667,
+      "lon": 141.9375,
+      "reason": "outside reference distance",
+      "feature_id": null
+    }
+  ]
+}

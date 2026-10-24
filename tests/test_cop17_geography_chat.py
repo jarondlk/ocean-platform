@@ -171,8 +171,15 @@ def test_chat_answers_named_area_availability_and_geographic_extent(
 ):
     calls = []
 
-    def build(filters, groups, *, metric):
+    from orchestration.location_context import plan_context
+    from tests.test_cop17_location_context import context_bundle
+    context = plan_context({"query": query})
+    expected_metric = "location_context" if context else "catalogue_geography"
+    def build(filters, groups, *, metric, context_options=None):
         calls.append((filters, groups, metric))
+        if context:
+            assert context_options == {"example_limit": 0, "area_groups": True}
+            return context_bundle(geography_bundle(), areas=True)
         return geography_bundle()
 
     monkeypatch.setattr(aggregates, "build_aggregate", build)
@@ -185,7 +192,7 @@ def test_chat_answers_named_area_availability_and_geographic_extent(
         },
     ).json()
     assert result["outcome"] == "answered" and result["model_invoked"] is False
-    assert result["retrieval_diagnostics"]["metric"] == "catalogue_geography"
+    assert result["retrieval_diagnostics"]["metric"] == expected_metric
     assert result["retrieval_diagnostics"]["top_k_applied"] is False
     assert result["answer_audit"]["invalid_citation_count"] == 0
     assert "216" in result["answer"] and "3,184.8" in result["answer"]
@@ -195,7 +202,7 @@ def test_chat_answers_named_area_availability_and_geographic_extent(
         (
             {"provider": "anemone", "exclude_explicit_controls": True},
             (),
-            "catalogue_geography",
+            expected_metric,
         )
     ]
     if "採水" in query:
