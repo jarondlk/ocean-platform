@@ -48,7 +48,7 @@ const quickQuestions = cop17Demo ? [] : [
 ];
 
 export default function ChatPage() {
-  const { ui, preferences, setPreference } = useAppPreferences();
+  const { ui } = useAppPreferences();
   const [query, setQuery] = useState("");
   const [analysisId, setAnalysisId] = useState("");
   const [researchIntent, setResearchIntent] = useState<ResearchIntent | undefined>();
@@ -523,10 +523,6 @@ export default function ChatPage() {
 
             {cop17Demo ? <div className="cop17-banner" role="region" aria-label={ui("COP17 demonstration")}>
               <div><strong>{ui("Explore ocean data with your own questions.")}</strong><p>{ui("Free-text search is the default. Advanced examples use predefined datasets.")}</p></div>
-              <div className="button-row" aria-label={ui("Language")}>
-                <button type="button" className="button secondary-button" aria-pressed={preferences?.locale === "en"} onClick={() => setPreference("locale", "en")}>English</button>
-                <button type="button" className="button secondary-button" aria-pressed={preferences?.locale === "ja"} onClick={() => setPreference("locale", "ja")}>日本語</button>
-              </div>
             </div> : null}
             {cop17Demo ? <Cop17ChatModes disabled={!ready || loading} analysisId={displayedAnalysisId}
               researchIntent={displayedResearchIntent} onPresetChange={changeDemoPreset} /> : null}
