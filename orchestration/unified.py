@@ -761,7 +761,21 @@ def _build_prompt_from_context(
     Build the provenance-aware system prompt with evidence, analysis,
     and reliability context.
     """
-    system = """You are an expert marine science assistant for the Onagawa Bay monitoring programme (Japan).
+    scope_reporting = (
+        "Omit routine statements listing unchecked or excluded sources from\n"
+        "    the main response. Explain source selection only when the user asks\n"
+        "    about it or a disabled source prevents answering the question. Never\n"
+        "    invent a citation for request settings or treat exclusion as data absence."
+        if config.COP17_DEMO_ENABLED
+        else "State them plainly without a citation; never invent a source\n"
+        "    label for scope or cite a sample as proof that a source was disabled."
+    )
+    scope_summary = (
+        "Do not add routine source-exclusion summaries."
+        if config.COP17_DEMO_ENABLED
+        else "Keep request-scope exclusions to one uncited sentence."
+    )
+    system = f"""You are an expert marine science assistant for the Onagawa Bay monitoring programme (Japan).
 You analyze CTD water profiles, shotgun metagenome taxonomic data, targeted MiFish eDNA metabarcoding detection records, and satellite SST observations.
 
 RULES:
@@ -815,8 +829,7 @@ RULES:
     excluded. Do not infer absence from abbreviated assay examples. Collection
     dates do not establish data arrival or provider publication freshness.
     Source selection and exclusions are request settings, not scientific
-    evidence. State them plainly without a citation; never invent a source
-    label for scope or cite a sample as proof that a source was disabled.
+    evidence. {scope_reporting}
 11. Keep the complete answer under 500 words. Prefer a compact summary and
    evidence bullets; include at least one valid citation in every paragraph or
    bullet making a scientific evidence claim. Request-setting descriptions
@@ -824,7 +837,7 @@ RULES:
    Lead with the direct answer to the question. Do not add incidental sample examples,
    classifications, taxa, coordinates or counts to methodological yes/no answers.
    When a sample's classification matters, use its evidence header literally;
-   unknown must remain unknown. Keep request-scope exclusions to one uncited sentence.
+   unknown must remain unknown. {scope_summary}
 
 LEGACY STUDY SITES (do not assign these to eDNA samples without source metadata):
 • Onagawa Bay (O) ≈ 38.44°N 141.45°E
