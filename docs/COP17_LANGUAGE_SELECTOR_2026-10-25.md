@@ -1,8 +1,8 @@
 # COP17 chat language selector
 
-Status: tested and ready; **not deployed and not scheduled**. The user cancelled
-scheduling while retaining the update for a later explicit rollout. Live demo
-revision remains `ocean-cop17-demo-00015-hh7` at 100% traffic.
+Status: **deployed and verified**, revision `ocean-cop17-demo-00016-wvf` at
+100% demo traffic. The user explicitly authorized immediate deployment after
+cancelling the earlier October 26 schedule. No scheduled task was used.
 
 Frontend source: `1ffa7d934e9a9ce2976867961eb28091be3e0e35`. Accepted candidate build:
 `66a08847-f324-4c6b-8c4f-91a438f73efd`. Candidate image:
@@ -30,10 +30,22 @@ Scheduling was stopped before any real deployment task was armed. The dedicated
 paused queue, unused release identity and custom role were deleted. Temporary
 Cloud Run, runtime-identity and repository-reader grants were removed, and the
 new Cloud Tasks API was returned to its original disabled state. No repository
-tag was created. Both live demo and production service specifications match the
-pre-change snapshots. Local preview services and tab were closed.
+tag was created. The subsequent explicitly authorized rollout changed only the demo frontend
+image and its source-commit metadata. The complete API container, remaining
+service configuration and production specification/traffic are unchanged. Local preview services and tab were closed.
 
-See `COP17_DEMO_LANGUAGE_SELECTOR_RECEIPT_2026-10-25.json` for immutable source,
-image and proof hashes. For any future deployment, request a new explicit rollout;
-the old scheduling scripts carry a cancellation guard and must not be reused as
-an armed task. No deployment is planned for October 26 at 07:00 JST.
+Live verification: the original Otsuchi Bay question returned the same August
+17, 2020 source sample and five supported taxa/ranks with citation. The 216-count,
+English/Japanese ten-example and named-area/map-context answers are identical to
+the prior release. Professor E3-B and E4-B top-ten rows match the preceding release;
+each displays six SVG plots. The selector is absent throughout these checks, and
+the page has no horizontal overflow. Protected API endpoints still require login.
+No new revision error logs were observed during rehearsal. Existing model wording
+can vary independently of this UI-only change.
+
+Deployment proof: `COP17_DEMO_LANGUAGE_SWITCH_DEPLOYMENT_2026-10-25.json`. The earlier
+`COP17_DEMO_LANGUAGE_SELECTOR_RECEIPT_2026-10-25.json` records the prepared
+candidate and cancelled scheduling history. The candidate was deployed without
+rebuilding or changing its accepted digest. Roll back the demo to
+`ocean-cop17-demo-00015-hh7` to restore the language controls with the same API.
+Local preview tabs/services and the temporary live QA tab were closed.

@@ -1,0 +1,147 @@
+{
+  "verified_at_jst": "2026-10-25T23:35:10+09:00",
+  "branch": "cop17-demo",
+  "status": "deployed_and_verified",
+  "revision": "ocean-cop17-demo-00016-wvf",
+  "frontend_source": "1ffa7d934e9a9ce2976867961eb28091be3e0e35",
+  "frontend_build": "66a08847-f324-4c6b-8c4f-91a438f73efd",
+  "frontend_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:439a6c83a5ebd4291b231e4b94e562c9a8310507fe71c6fefd396697f1771123",
+  "api_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:eea3e5a021cae2ceb6192f926bee741548b5b07c2922fb133af90aca30b74fd9",
+  "api_source": "610131be719ffe715297d7bd0dd267d24b229952",
+  "deployment_authorization": "User explicitly requested immediate frontend-only deployment after cancelling the earlier schedule.",
+  "scheduled": false,
+  "scheduled_task_used": false,
+  "previous_scheduling_cleanup_preserved": true,
+  "api_container_byte_identical": true,
+  "production_spec_and_traffic_unchanged": true,
+  "scientific_rows_changed": false,
+  "overhaul_working_files_modified": false,
+  "source_change": "Remove only the COP17 language button row, its unused bindings, and update the existing layout assertion.",
+  "chat_request_model_prompt_and_routing_unchanged": true,
+  "backend_answer_language_handling_changed": false,
+  "frontend_tests_passed": 86,
+  "typecheck_passed": true,
+  "build_runtime_auth_schema_passed": true,
+  "scan": {
+    "accepted": true,
+    "severity_counts": {
+      "LOW": 60,
+      "HIGH": 43,
+      "MEDIUM": 58,
+      "UNKNOWN": 1
+    },
+    "language_findings": [],
+    "http_auth_passed": true,
+    "schema_ready": true
+  },
+  "runtime": {
+    "passed": true,
+    "revision": "ocean-cop17-demo-00016-wvf",
+    "api_container_byte_identical": true,
+    "production_unchanged": true,
+    "auth_boundary_checks": [
+      {
+        "path": "/chat",
+        "status": 307
+      },
+      {
+        "path": "/login",
+        "status": 200
+      },
+      {
+        "path": "/api/backend/chat/analysis-options",
+        "status": 401
+      },
+      {
+        "path": "/api/backend/provenance",
+        "status": 401
+      }
+    ]
+  },
+  "live_verification": {
+    "passed": true,
+    "live_checks": 7,
+    "language_selector_absent": true,
+    "count_answer_identical": true,
+    "english_japanese_examples_and_map_context_answers_identical": true,
+    "original_otsuchi_sample_taxa_ranks_and_citation_correct": true,
+    "published_E3_B_E4_B_top_ten_rows_identical": true,
+    "published_six_svg_plots_each": true,
+    "no_horizontal_overflow": true
+  },
+  "live_cases": [
+    {
+      "name": "count-only",
+      "query": "How many sampling locations are recorded in ANEMONE DB?",
+      "answered": true,
+      "plots": 0,
+      "language_selector_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "original-otsuchi-sample",
+      "query": "Find one ANEMONE eDNA sample from Otsuchi Bay in 2020 and list five fish taxa detected in it. Distinguish species-level and genus-level identifications, and cite the source.",
+      "answered": true,
+      "plots": 0,
+      "language_selector_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "count-plus-ten",
+      "query": "How many sampling locations are recorded in ANEMONE DB? Please show me 10 example locations.",
+      "answered": true,
+      "plots": 0,
+      "language_selector_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "named-map-context",
+      "query": "How many named areas are available in ANEMONE DB?",
+      "answered": true,
+      "plots": 0,
+      "language_selector_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "japanese-count-ten",
+      "query": "ANEMONE DBの採水地点はいくつありますか？10か所の例を示してください。",
+      "answered": true,
+      "plots": 0,
+      "language_selector_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "fish-frequency-E3-B",
+      "query": "Which fish species were most frequently detected along the Miyagi coast from 2020 to 2023? Show the top 10, including the denominators and yearly changes.",
+      "answered": true,
+      "plots": 6,
+      "language_selector_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "fish-SST-E4-B",
+      "query": "Compare fish eDNA detection frequencies under high and low sea surface temperatures in Miyagi. Show a representative time series and cite the datasets.",
+      "answered": true,
+      "plots": 6,
+      "language_selector_count": 0,
+      "horizontal_overflow": false
+    }
+  ],
+  "new_revision_error_entries_observed": 0,
+  "rollback_revision": "ocean-cop17-demo-00015-hh7",
+  "rollback_frontend_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:aedd803508f8a3a8d67db88e15fd219e342d8b228dc761e88a8d25cea3ff5bfb",
+  "proof_sha256": {
+    "source.tar.gz": "a1e4ab8bd003206cda1916c30861e93c30fca9b8c355197537a97cd510719afd",
+    "frontend-tests.log": "7cbbfc0a4d884db33c1b52009b1fd3709c5bd84f46a40a96137be5fa920ee6a1",
+    "typecheck.log": "0dfc7aeaa0fd983206afdbe50edc28855ed96b862749b8a2ab21f85666af4fa6",
+    "immediate-live-cases.json": "1906fd4631fe00e57ea398b613afe94bb2251a229463dd8884b640922a0b3e0a",
+    "immediate-live-verification.json": "ded563cd9ab84c0bdba5bc83a2122febe9693702c9a3d77304f4ab3f100c7639",
+    "immediate-readback.json": "7b44a0bb1ed0b5cd6faa9e581c2798cec683c869b00e5e03eca4c22e72390251",
+    "immediate-error-logs.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "live-hidden-language.png": "bd3a72b67324dfdee4852a30d6fe5f986cfd028594930160e830fd7826c3b031"
+  },
+  "limitations": [
+    "Existing model wording can vary between requests; no backend/model/data changes are included.",
+    "CSV place aliases remain deferred and are not included."
+  ]
+}
