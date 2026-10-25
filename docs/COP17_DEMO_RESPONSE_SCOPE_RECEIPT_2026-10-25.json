@@ -1,0 +1,191 @@
+{
+  "verified_at_jst": "2026-10-25T14:41:30+09:00",
+  "branch": "cop17-demo",
+  "revision": "ocean-cop17-demo-00015-hh7",
+  "api_source": "610131be719ffe715297d7bd0dd267d24b229952",
+  "api_build": "dc19e3d5-799f-4aa8-8b2a-a132a1163ea4",
+  "images": {
+    "frontend": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:aedd803508f8a3a8d67db88e15fd219e342d8b228dc761e88a8d25cea3ff5bfb",
+    "api": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:eea3e5a021cae2ceb6192f926bee741548b5b07c2922fb133af90aca30b74fd9"
+  },
+  "traffic_percent": 100,
+  "api_rollback_revision": "ocean-cop17-demo-00014-mg6",
+  "production_unchanged": true,
+  "frontend_unchanged": true,
+  "overhaul_working_files_not_modified": true,
+  "scientific_rows_modified": false,
+  "sql_schema_or_dependency_changes": false,
+  "csv_aliases_included": false,
+  "backend_tests_passed": 1689,
+  "optional_postgres_checks_skipped_locally": 133,
+  "focused_tests_passed": 311,
+  "lint_and_diff_check_passed": true,
+  "prompt_contract": {
+    "passed": true,
+    "baseline_commit": "bcbe5a5c7266d5c9c26d7b8d430cea7b1d6eeb40",
+    "unified_sha256": "015c69a5c9f179954f021dc1cca881583b0532c70ab1891cf074211b189898c3",
+    "non_demo_prompt_byte_identical": true,
+    "demo_routine_exclusions_omitted": true,
+    "necessary_scope_explanations_retained": true,
+    "selected_scope_and_evidence_retained": true
+  },
+  "api_scan": {
+    "severity_counts": {
+      "LOW": 82,
+      "HIGH": 44,
+      "MEDIUM": 70,
+      "UNKNOWN": 1
+    },
+    "language_package_findings": [],
+    "accepted": true,
+    "http_auth_boundary_passed": true,
+    "schema_ready": true
+  },
+  "runtime_imports": {
+    "imports": "passed",
+    "numeric_fixture": "7/15",
+    "netcdf": "passed",
+    "installation_tools": "absent"
+  },
+  "schema_readiness": {
+    "migration_current_heads": [
+      "20261005_0016"
+    ],
+    "migration_expected_heads": [
+      "20261005_0016"
+    ],
+    "migrations_current": true,
+    "missing_columns": [],
+    "missing_tables": [],
+    "ready": true,
+    "table_count": 34,
+    "vector_extension": true
+  },
+  "public_auth_boundaries": {
+    "passed": true,
+    "checks": [
+      {
+        "path": "/chat",
+        "status": 307
+      },
+      {
+        "path": "/login",
+        "status": 200
+      },
+      {
+        "path": "/api/backend/chat/analysis-options",
+        "status": 401
+      },
+      {
+        "path": "/api/backend/provenance",
+        "status": 401
+      }
+    ]
+  },
+  "live_verification": {
+    "passed": true,
+    "live_checks": 10,
+    "original_question_clean_answers": 2,
+    "count_answer_byte_identical": true,
+    "ten_examples_in_english_and_japanese": true,
+    "generalized_map_context_unchanged": true,
+    "published_E3_B_E4_B_rows_identical_to_prior_release": true,
+    "six_svg_plots_per_workflow": true,
+    "no_page_overflow": true
+  },
+  "live_checks": [
+    {
+      "name": "baseline-count-only",
+      "query": "How many sampling locations are recorded in ANEMONE DB?",
+      "answered": true,
+      "svg_plots": 0,
+      "page_overflow": false
+    },
+    {
+      "name": "baseline-original-sample",
+      "query": "Find one ANEMONE eDNA sample from Otsuchi Bay in 2020 and list five fish taxa detected in it. Distinguish species-level and genus-level identifications, and cite the source.",
+      "answered": true,
+      "svg_plots": 0,
+      "page_overflow": false
+    },
+    {
+      "name": "sample-answer-clean-first",
+      "query": "Find one ANEMONE eDNA sample from Otsuchi Bay in 2020 and list five fish taxa detected in it. Distinguish species-level and genus-level identifications, and cite the source.",
+      "answered": true,
+      "svg_plots": 0,
+      "page_overflow": false
+    },
+    {
+      "name": "sample-answer-clean-repeat",
+      "query": "Find one ANEMONE eDNA sample from Otsuchi Bay in 2020 and list five fish taxa detected in it. Distinguish species-level and genus-level identifications, and cite the source.",
+      "answered": true,
+      "svg_plots": 0,
+      "page_overflow": false
+    },
+    {
+      "name": "count-only-unchanged",
+      "query": "How many sampling locations are recorded in ANEMONE DB?",
+      "answered": true,
+      "svg_plots": 0,
+      "page_overflow": false
+    },
+    {
+      "name": "count-plus-ten",
+      "query": "How many sampling locations are recorded in ANEMONE DB? Please show me 10 example locations.",
+      "answered": true,
+      "svg_plots": 0,
+      "page_overflow": false
+    },
+    {
+      "name": "named-map-context",
+      "query": "How many named areas are available in ANEMONE DB?",
+      "answered": true,
+      "svg_plots": 0,
+      "page_overflow": false
+    },
+    {
+      "name": "japanese-count-ten",
+      "query": "ANEMONE DBの採水地点はいくつありますか？10か所の例を示してください。",
+      "answered": true,
+      "svg_plots": 0,
+      "page_overflow": false
+    },
+    {
+      "name": "fish-frequency-E3-B",
+      "query": "Which fish species were most frequently detected along the Miyagi coast from 2020 to 2023? Show the top 10, including the denominators and yearly changes.",
+      "answered": true,
+      "svg_plots": 6,
+      "page_overflow": false
+    },
+    {
+      "name": "fish-SST-E4-B",
+      "query": "Compare fish eDNA detection frequencies under high and low sea surface temperatures in Miyagi. Show a representative time series and cite the datasets.",
+      "answered": true,
+      "svg_plots": 6,
+      "page_overflow": false
+    }
+  ],
+  "canonical_coordinate_positions": 216,
+  "generalized_map_context": {
+    "reference_name_groups": 87,
+    "mapped_positions": 96,
+    "unassigned_positions": 120,
+    "official_named_area_count": null
+  },
+  "new_revision_error_log_entries_observed": 0,
+  "proof_sha256": {
+    "live-cases-progress.json": "a190d7ab8355cf810bdee13da34cbcac72afa96db491fbcb9034bda0b9834760",
+    "clean-answer-first.png": "1b000f4ce449cdc0471528cf6cd698b0aa1faff48a0dc0e4363cdaafc698db11",
+    "prompt-contract-check.json": "68494f24913e46a6c1167c43a259b020aa4908b5c4d6096eb27577b94a56fc91",
+    "source.tar.gz": "823ea2f7276d544b2da2f121cd976cf5dbedb0b322a1de163f6e5f880411d09c",
+    "backend-tests.log": "1c8e199801fb7813bc9a8fc910e26638431e18134222d3382caefb124d01d240",
+    "focused.log": "895c02d0749e56c2f71c3032ed5217dc7360bdcf867d5cafe268065d4395321e",
+    "final-error-logs.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "limitations": [
+    "Prompt presentation guidance does not guarantee identical model phrasing on every future request.",
+    "Scientific scope and necessary source-selection explanations remain available.",
+    "Named map areas remain approximate; the CSV resolver is deferred.",
+    "Unchanged database SQL uses previously verified runtime evidence; no new restricted-database QA job was created."
+  ]
+}
