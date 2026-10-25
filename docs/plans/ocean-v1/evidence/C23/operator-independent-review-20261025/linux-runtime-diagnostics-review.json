@@ -1,0 +1,46 @@
+{
+  "C23_complete": false,
+  "additional_independent_observations": {
+    "actual_temp_files_only_no_runtime_effects": true,
+    "closing_does_not_fabricate_observed_EOF": true,
+    "repeated_same_stage_creates_separate_receipts_and_preserves_previous_bytes": true,
+    "symlink_diagnostics_directory_rejected_before_external_write": true,
+    "untrusted_binary_stdout_retained_only_as_data": true
+  },
+  "cloud_operations_performed": false,
+  "dispatch_eligible": false,
+  "focused_command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_experiment_sandbox_linux_runtime.py",
+    "-k",
+    "diagnostic or capture or control_command",
+    "-q",
+    "--tb=short"
+  ],
+  "focused_observation": "7 passed,71 deselected in3.42s",
+  "kind": "Independent read-only Linux adapter diagnostics amendment review",
+  "qualifications": [
+    "No actual runsc, cgroup, watchdog, generated code or Linux privileged operation executed by this review",
+    "Per-command byte caps do not imply aggregate retention limits across unlimited operator reconciliation retries",
+    "Actual resource, mount, UID/capability, cgroup membership/termination and numerical gates remain open"
+  ],
+  "recorded_at": "2026-10-25T04:08:46.798744+00:00",
+  "reservation_released": false,
+  "review_state": "Passed within host-safe operator-preparation scope",
+  "reviewed_boundaries": [
+    "Fixed job/stage paths and active journal lease before any diagnostic retention",
+    "Private0700 directories and create-only0400 bytes; UUID filenames do not overwrite an earlier stage receipt",
+    "Create transport stdout body omitted; hash/size retained without duplicating guest outputs",
+    "Other stdout and runtime stderr use fixed byte prefixes with captured and retained hashes/sizes and explicit truncation",
+    "Diagnostic write failure denies publication; delete failure still enters final whole-cgroup kill/empty readback",
+    "Watchdog/launcher scoped FDs, parent/cancel/deadline fences and liveness handshake are unchanged by diagnostics",
+    "Diagnostic bytes/hashes are private evidence, never execution or release authority"
+  ],
+  "reviewer": "/root/c23_runtime_design",
+  "source_files": {
+    "orchestration/experiment_sandbox/linux_runtime.py": "bb338bbd0cb39f5097b7d577ac84e113ecf66addf55953fbb416184cdadc9a16",
+    "tests/test_experiment_sandbox_linux_runtime.py": "478fdea08f0baabb68c8bc98f5a01e7902bdc8defaeaabdce4123685f65c5942"
+  }
+}

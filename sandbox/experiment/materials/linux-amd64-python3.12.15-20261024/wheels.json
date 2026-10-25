@@ -1,0 +1,1349 @@
+{
+  "active_dependency_edges": [
+    {
+      "name": "numpy",
+      "package": "contourpy",
+      "requirement": "numpy>=2.0",
+      "specifier": ">=2.0"
+    },
+    {
+      "name": "interface-meta",
+      "package": "formulaic",
+      "requirement": "interface-meta>=1.2.0",
+      "specifier": ">=1.2.0"
+    },
+    {
+      "name": "narwhals",
+      "package": "formulaic",
+      "requirement": "narwhals>=1.17",
+      "specifier": ">=1.17"
+    },
+    {
+      "name": "numpy",
+      "package": "formulaic",
+      "requirement": "numpy>=1.20.0",
+      "specifier": ">=1.20.0"
+    },
+    {
+      "name": "pandas",
+      "package": "formulaic",
+      "requirement": "pandas>=1.3",
+      "specifier": ">=1.3"
+    },
+    {
+      "name": "scipy",
+      "package": "formulaic",
+      "requirement": "scipy>=1.6",
+      "specifier": ">=1.6"
+    },
+    {
+      "name": "typing-extensions",
+      "package": "formulaic",
+      "requirement": "typing-extensions>=4.2.0",
+      "specifier": ">=4.2.0"
+    },
+    {
+      "name": "wrapt",
+      "package": "formulaic",
+      "requirement": "wrapt>=1.0; python_version < '3.13'",
+      "specifier": ">=1.0"
+    },
+    {
+      "name": "contourpy",
+      "package": "matplotlib",
+      "requirement": "contourpy>=1.0.1",
+      "specifier": ">=1.0.1"
+    },
+    {
+      "name": "cycler",
+      "package": "matplotlib",
+      "requirement": "cycler>=0.10",
+      "specifier": ">=0.10"
+    },
+    {
+      "name": "fonttools",
+      "package": "matplotlib",
+      "requirement": "fonttools>=4.28.2",
+      "specifier": ">=4.28.2"
+    },
+    {
+      "name": "kiwisolver",
+      "package": "matplotlib",
+      "requirement": "kiwisolver>=1.3.1",
+      "specifier": ">=1.3.1"
+    },
+    {
+      "name": "numpy",
+      "package": "matplotlib",
+      "requirement": "numpy>=1.25",
+      "specifier": ">=1.25"
+    },
+    {
+      "name": "packaging",
+      "package": "matplotlib",
+      "requirement": "packaging>=20.0",
+      "specifier": ">=20.0"
+    },
+    {
+      "name": "pillow",
+      "package": "matplotlib",
+      "requirement": "pillow>=9",
+      "specifier": ">=9"
+    },
+    {
+      "name": "pyparsing",
+      "package": "matplotlib",
+      "requirement": "pyparsing>=3",
+      "specifier": ">=3"
+    },
+    {
+      "name": "python-dateutil",
+      "package": "matplotlib",
+      "requirement": "python-dateutil>=2.7",
+      "specifier": ">=2.7"
+    },
+    {
+      "name": "numpy",
+      "package": "pandas",
+      "requirement": "numpy>=2.0.2; python_version < \"3.14\"",
+      "specifier": ">=2.0.2"
+    },
+    {
+      "name": "python-dateutil",
+      "package": "pandas",
+      "requirement": "python-dateutil>=2.9.0",
+      "specifier": ">=2.9.0"
+    },
+    {
+      "name": "numpy",
+      "package": "patsy",
+      "requirement": "numpy>=1.4",
+      "specifier": ">=1.4"
+    },
+    {
+      "name": "packaging",
+      "package": "patsy",
+      "requirement": "packaging",
+      "specifier": ""
+    },
+    {
+      "name": "six",
+      "package": "python-dateutil",
+      "requirement": "six>=1.6",
+      "specifier": ">=1.6"
+    },
+    {
+      "name": "tzdata",
+      "package": "python-dateutil",
+      "requirement": "tzdata",
+      "specifier": ""
+    },
+    {
+      "name": "numpy",
+      "package": "scipy",
+      "requirement": "numpy<2.8,>=2.0.0",
+      "specifier": "<2.8,>=2.0.0"
+    },
+    {
+      "name": "numpy",
+      "package": "statsmodels",
+      "requirement": "numpy<3,>=1.23.5",
+      "specifier": "<3,>=1.23.5"
+    },
+    {
+      "name": "scipy",
+      "package": "statsmodels",
+      "requirement": "scipy!=1.9.2,>=1.8",
+      "specifier": "!=1.9.2,>=1.8"
+    },
+    {
+      "name": "pandas",
+      "package": "statsmodels",
+      "requirement": "pandas!=2.1.0,>=1.4",
+      "specifier": "!=2.1.0,>=1.4"
+    },
+    {
+      "name": "patsy",
+      "package": "statsmodels",
+      "requirement": "patsy>=0.5.6",
+      "specifier": ">=0.5.6"
+    },
+    {
+      "name": "packaging",
+      "package": "statsmodels",
+      "requirement": "packaging>=21.3",
+      "specifier": ">=21.3"
+    },
+    {
+      "name": "formulaic",
+      "package": "statsmodels",
+      "requirement": "formulaic>=1.1.0",
+      "specifier": ">=1.1.0"
+    }
+  ],
+  "execution_performed": false,
+  "image_built": false,
+  "installation_performed": false,
+  "platform": "linux/amd64",
+  "python_version": "3.12.15",
+  "target_environment": {
+    "extra": "",
+    "implementation_name": "cpython",
+    "implementation_version": "3.12.15",
+    "os_name": "posix",
+    "platform_machine": "x86_64",
+    "platform_python_implementation": "CPython",
+    "platform_release": "",
+    "platform_system": "Linux",
+    "platform_version": "",
+    "python_full_version": "3.12.15",
+    "python_version": "3.12",
+    "sys_platform": "linux"
+  },
+  "total_wheel_bytes": 156205254,
+  "version": "c23-wheel-materials-v1",
+  "wheels": [
+    {
+      "filename": "contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "metadata_sha256": "40450acd747b288a5db999c435e1e921ffee0a38c7884a80cd46934c8004568f",
+      "name": "contourpy",
+      "pypi_release_api": "https://pypi.org/pypi/contourpy/1.4.0/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "40450acd747b288a5db999c435e1e921ffee0a38c7884a80cd46934c8004568f"
+        },
+        "digests": {
+          "blake2b_256": "78f9b6831508960d559581c448532ba4df312217072975486dbf2b24fcc5b76f",
+          "md5": "da7965c85554b62a925661c0b7c99cf4",
+          "sha256": "875f42444c9cf48d56f724f2637e60d0f73b3b12c9041e1484580a233edf9591"
+        },
+        "downloads": -1,
+        "filename": "contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "da7965c85554b62a925661c0b7c99cf4",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": ">=3.12",
+        "size": 383243,
+        "upload_time": "2026-09-11T19:02:58",
+        "upload_time_iso_8601": "2026-09-11T19:02:58.638468Z",
+        "url": "https://files.pythonhosted.org/packages/78/f9/b6831508960d559581c448532ba4df312217072975486dbf2b24fcc5b76f/contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "38b45f9f0cc556a4b2621ae474419bff5ffeb0d01e3582579206af5ff8a5bd3b",
+      "requires_dist": [
+        "numpy>=2.0",
+        "myst-parser; extra == \"docs\"",
+        "sphinx; extra == \"docs\"",
+        "sphinx-book-theme; extra == \"docs\"",
+        "sphinx-copybutton; extra == \"docs\"",
+        "bokeh; extra == \"bokeh\"",
+        "selenium; extra == \"bokeh\"",
+        "contourpy[bokeh,docs]; extra == \"mypy\"",
+        "bokeh; extra == \"mypy\"",
+        "docutils-stubs; extra == \"mypy\"",
+        "mypy==2.1.0; extra == \"mypy\"",
+        "types-Pillow; extra == \"mypy\"",
+        "contourpy[test-no-images]; extra == \"test\"",
+        "matplotlib; extra == \"test\"",
+        "pre-commit; extra == \"test\"",
+        "Pillow; extra == \"test\"",
+        "pytest; extra == \"test-no-images\"",
+        "pytest-cov; extra == \"test-no-images\"",
+        "pytest-rerunfailures<16; extra == \"test-no-images\"",
+        "pytest-xdist; extra == \"test-no-images\"",
+        "wurlitzer; extra == \"test-no-images\""
+      ],
+      "requires_python": ">=3.12",
+      "sha256": "875f42444c9cf48d56f724f2637e60d0f73b3b12c9041e1484580a233edf9591",
+      "size_bytes": 383243,
+      "upload_time_iso_8601": "2026-09-11T19:02:58.638468Z",
+      "url": "https://files.pythonhosted.org/packages/78/f9/b6831508960d559581c448532ba4df312217072975486dbf2b24fcc5b76f/contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "version": "1.4.0"
+    },
+    {
+      "filename": "cycler-0.12.1-py3-none-any.whl",
+      "metadata_sha256": "23289e19b76f1e01394227696e6af2b6cd1ce79e89731209bf9195148b18ed36",
+      "name": "cycler",
+      "pypi_release_api": "https://pypi.org/pypi/cycler/0.12.1/json",
+      "pypi_release_file": {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "23289e19b76f1e01394227696e6af2b6cd1ce79e89731209bf9195148b18ed36"
+        },
+        "digests": {
+          "blake2b_256": "e705c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6",
+          "md5": "8b445ed54410922fc3f0327a9af424fa",
+          "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30"
+        },
+        "downloads": -1,
+        "filename": "cycler-0.12.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "8b445ed54410922fc3f0327a9af424fa",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.8",
+        "size": 8321,
+        "upload_time": "2023-10-07T05:32:16",
+        "upload_time_iso_8601": "2023-10-07T05:32:16.783035Z",
+        "url": "https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "c4dc853a4b3611f48cfef3e363faeb85c70af63e3d49fe2c64dbe56ab5d688f0",
+      "requires_dist": [
+        "ipython ; extra == 'docs'",
+        "matplotlib ; extra == 'docs'",
+        "numpydoc ; extra == 'docs'",
+        "sphinx ; extra == 'docs'",
+        "pytest ; extra == 'tests'",
+        "pytest-cov ; extra == 'tests'",
+        "pytest-xdist ; extra == 'tests'"
+      ],
+      "requires_python": ">=3.8",
+      "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
+      "size_bytes": 8321,
+      "upload_time_iso_8601": "2023-10-07T05:32:16.783035Z",
+      "url": "https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl",
+      "version": "0.12.1"
+    },
+    {
+      "filename": "fonttools-4.67.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "metadata_sha256": "33dec14bec601b457a07a6550086cb6725b5aaedc3a881f9fa7a84d3841ddcfe",
+      "name": "fonttools",
+      "pypi_release_api": "https://pypi.org/pypi/fonttools/4.67.0/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "33dec14bec601b457a07a6550086cb6725b5aaedc3a881f9fa7a84d3841ddcfe"
+        },
+        "digests": {
+          "blake2b_256": "c1e0ec9e4cc868c514deb02233aa1047a6aeb9350d3ee012862f58eec10ef834",
+          "md5": "e0b708af8f71e689dfd5b7e3a46b5d89",
+          "sha256": "eb3c98cac93aac4b9f6e3ce2008325340b234cc9b0338ca6b513f31962a1e278"
+        },
+        "downloads": -1,
+        "filename": "fonttools-4.67.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "e0b708af8f71e689dfd5b7e3a46b5d89",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": ">=3.11",
+        "size": 5408233,
+        "upload_time": "2026-10-14T13:18:46",
+        "upload_time_iso_8601": "2026-10-14T13:18:46.616853Z",
+        "url": "https://files.pythonhosted.org/packages/c1/e0/ec9e4cc868c514deb02233aa1047a6aeb9350d3ee012862f58eec10ef834/fonttools-4.67.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "d1fbc08b439af8b15c880f5467ec5ad4946bc684c2984e401acf2102818edcf4",
+      "requires_dist": [
+        "lxml>=4.0; extra == \"lxml\"",
+        "brotli>=1.0.1; platform_python_implementation == \"CPython\" and extra == \"woff\"",
+        "brotlicffi>=0.8.0; platform_python_implementation != \"CPython\" and extra == \"woff\"",
+        "zopfli>=0.1.4; extra == \"woff\"",
+        "unicodedata2>=18.0.0; python_version <= \"3.15\" and extra == \"unicode\"",
+        "lz4>=1.7.4.2; extra == \"graphite\"",
+        "scipy; platform_python_implementation != \"PyPy\" and extra == \"interpolatable\"",
+        "munkres; platform_python_implementation == \"PyPy\" and extra == \"interpolatable\"",
+        "pycairo; extra == \"interpolatable\"",
+        "matplotlib; extra == \"plot\"",
+        "sympy; extra == \"symfont\"",
+        "xattr; sys_platform == \"darwin\" and extra == \"type1\"",
+        "skia-pathops>=0.5.0; extra == \"pathops\"",
+        "uharfbuzz>=0.45.0; extra == \"repacker\"",
+        "lxml>=4.0; extra == \"all\"",
+        "brotli>=1.0.1; platform_python_implementation == \"CPython\" and extra == \"all\"",
+        "brotlicffi>=0.8.0; platform_python_implementation != \"CPython\" and extra == \"all\"",
+        "zopfli>=0.1.4; extra == \"all\"",
+        "unicodedata2>=18.0.0; python_version <= \"3.15\" and extra == \"all\"",
+        "lz4>=1.7.4.2; extra == \"all\"",
+        "scipy; platform_python_implementation != \"PyPy\" and extra == \"all\"",
+        "munkres; platform_python_implementation == \"PyPy\" and extra == \"all\"",
+        "pycairo; extra == \"all\"",
+        "matplotlib; extra == \"all\"",
+        "sympy; extra == \"all\"",
+        "xattr; sys_platform == \"darwin\" and extra == \"all\"",
+        "skia-pathops>=0.5.0; extra == \"all\"",
+        "uharfbuzz>=0.45.0; extra == \"all\""
+      ],
+      "requires_python": ">=3.11",
+      "sha256": "eb3c98cac93aac4b9f6e3ce2008325340b234cc9b0338ca6b513f31962a1e278",
+      "size_bytes": 5408233,
+      "upload_time_iso_8601": "2026-10-14T13:18:46.616853Z",
+      "url": "https://files.pythonhosted.org/packages/c1/e0/ec9e4cc868c514deb02233aa1047a6aeb9350d3ee012862f58eec10ef834/fonttools-4.67.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "version": "4.67.0"
+    },
+    {
+      "filename": "formulaic-1.2.2-py3-none-any.whl",
+      "metadata_sha256": "abc2ce34c42d629b55aa1665550d8f1ba50fcacf874db97954f3b9f2890e0643",
+      "name": "formulaic",
+      "pypi_release_api": "https://pypi.org/pypi/formulaic/1.2.2/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "abc2ce34c42d629b55aa1665550d8f1ba50fcacf874db97954f3b9f2890e0643"
+        },
+        "digests": {
+          "blake2b_256": "fc750576b03f7889ad25b5385b4f6c69e0543713425a6f193b056c9b0a2e65ce",
+          "md5": "a1eca54d0fe31e9e13cd664868aeb1bb",
+          "sha256": "0f84ff49e3fc9dc0e68ab08a0a9427874021aa6c558e66b44dc634a35739b09b"
+        },
+        "downloads": -1,
+        "filename": "formulaic-1.2.2-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a1eca54d0fe31e9e13cd664868aeb1bb",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 118939,
+        "upload_time": "2026-06-02T18:24:41",
+        "upload_time_iso_8601": "2026-06-02T18:24:41.344304Z",
+        "url": "https://files.pythonhosted.org/packages/fc/75/0576b03f7889ad25b5385b4f6c69e0543713425a6f193b056c9b0a2e65ce/formulaic-1.2.2-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "8fb5341eb702c78c2ec5bea2b9b84122c176aa452e6838c638dfe8fb42f106aa",
+      "requires_dist": [
+        "interface-meta>=1.2.0",
+        "narwhals>=1.17",
+        "numpy>=1.20.0",
+        "pandas>=1.3",
+        "scipy>=1.6",
+        "typing-extensions>=4.2.0",
+        "wrapt>=1.0; python_version < '3.13'",
+        "wrapt>=1.17.0rc1; python_version >= '3.13'",
+        "pyarrow>=1; extra == 'arrow'",
+        "sympy!=1.10,>=1.3; extra == 'calculus'",
+        "polars>=1; extra == 'polars'"
+      ],
+      "requires_python": ">=3.9",
+      "sha256": "0f84ff49e3fc9dc0e68ab08a0a9427874021aa6c558e66b44dc634a35739b09b",
+      "size_bytes": 118939,
+      "upload_time_iso_8601": "2026-06-02T18:24:41.344304Z",
+      "url": "https://files.pythonhosted.org/packages/fc/75/0576b03f7889ad25b5385b4f6c69e0543713425a6f193b056c9b0a2e65ce/formulaic-1.2.2-py3-none-any.whl",
+      "version": "1.2.2"
+    },
+    {
+      "filename": "interface_meta-2.0.1-py3-none-any.whl",
+      "metadata_sha256": "e9f0a6845e13e5de8b4ee9419760ca1517ee3cdd2c41b1b205499122117f0222",
+      "name": "interface-meta",
+      "pypi_release_api": "https://pypi.org/pypi/interface-meta/2.0.1/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "e9f0a6845e13e5de8b4ee9419760ca1517ee3cdd2c41b1b205499122117f0222"
+        },
+        "digests": {
+          "blake2b_256": "a1d320a61a248feb1249cd81f83ce731f0bdf5170ed96a08a298f7081cda9e90",
+          "md5": "4170ef63388fd5a2e225459dffca5c1a",
+          "sha256": "f38016bef9a4429b6d0792d809be7b65e9781820c674bf7f463999086b6e6323"
+        },
+        "downloads": -1,
+        "filename": "interface_meta-2.0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "4170ef63388fd5a2e225459dffca5c1a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 15330,
+        "upload_time": "2026-04-30T22:35:35",
+        "upload_time_iso_8601": "2026-04-30T22:35:35.201492Z",
+        "url": "https://files.pythonhosted.org/packages/a1/d3/20a61a248feb1249cd81f83ce731f0bdf5170ed96a08a298f7081cda9e90/interface_meta-2.0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "bcb156761d0ae68cf5717376a6477b9b5bfae89f35803914e801e4c507f964cf",
+      "requires_dist": [],
+      "requires_python": ">=3.10",
+      "sha256": "f38016bef9a4429b6d0792d809be7b65e9781820c674bf7f463999086b6e6323",
+      "size_bytes": 15330,
+      "upload_time_iso_8601": "2026-04-30T22:35:35.201492Z",
+      "url": "https://files.pythonhosted.org/packages/a1/d3/20a61a248feb1249cd81f83ce731f0bdf5170ed96a08a298f7081cda9e90/interface_meta-2.0.1-py3-none-any.whl",
+      "version": "2.0.1"
+    },
+    {
+      "filename": "kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "metadata_sha256": "f07b7b6c0c9c2a624c8a31f931e16712f2cf3490e7dfd51643d68e9d42d4b2c9",
+      "name": "kiwisolver",
+      "pypi_release_api": "https://pypi.org/pypi/kiwisolver/1.5.1/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "f07b7b6c0c9c2a624c8a31f931e16712f2cf3490e7dfd51643d68e9d42d4b2c9"
+        },
+        "digests": {
+          "blake2b_256": "fcf4dadfec469313c7f428efa7e84b4aba9732f813c13ea7131a24b7b008ef57",
+          "md5": "c71d6178c07807e6b9c94d8d66ca348c",
+          "sha256": "34633ecf50d16187ab8e5528b7a2530f2feb4e23f300db4672538b51cfc5cd38"
+        },
+        "downloads": -1,
+        "filename": "kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "c71d6178c07807e6b9c94d8d66ca348c",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": ">=3.10",
+        "size": 1477929,
+        "upload_time": "2026-08-28T10:25:31",
+        "upload_time_iso_8601": "2026-08-28T10:25:31.495834Z",
+        "url": "https://files.pythonhosted.org/packages/fc/f4/dadfec469313c7f428efa7e84b4aba9732f813c13ea7131a24b7b008ef57/kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "9b4053c476b6cd0da61e905cc5cdf4a7309dc0ce17809475e615c5444ade86fe",
+      "requires_dist": [],
+      "requires_python": ">=3.10",
+      "sha256": "34633ecf50d16187ab8e5528b7a2530f2feb4e23f300db4672538b51cfc5cd38",
+      "size_bytes": 1477929,
+      "upload_time_iso_8601": "2026-08-28T10:25:31.495834Z",
+      "url": "https://files.pythonhosted.org/packages/fc/f4/dadfec469313c7f428efa7e84b4aba9732f813c13ea7131a24b7b008ef57/kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "version": "1.5.1"
+    },
+    {
+      "filename": "matplotlib-3.11.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "metadata_sha256": "e5f532226d1025af2dd15ff951df27391f66d46403b8244ea61e6b8eb3e4d806",
+      "name": "matplotlib",
+      "pypi_release_api": "https://pypi.org/pypi/matplotlib/3.11.2/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "e5f532226d1025af2dd15ff951df27391f66d46403b8244ea61e6b8eb3e4d806"
+        },
+        "digests": {
+          "blake2b_256": "b8902b3fd67ee273163faeda6d514be70b5596eaa0fd77b60ffc294ad0b34f5f",
+          "md5": "510b6e0e7cef0785fa6f4e4c12890e30",
+          "sha256": "df4f7784aca81a94f254c0a2767d592ee25f407e488f5fa7203e51093fb6ca27"
+        },
+        "downloads": -1,
+        "filename": "matplotlib-3.11.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "510b6e0e7cef0785fa6f4e4c12890e30",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": ">=3.11",
+        "size": 9860353,
+        "upload_time": "2026-09-11T19:03:25",
+        "upload_time_iso_8601": "2026-09-11T19:03:25.049420Z",
+        "url": "https://files.pythonhosted.org/packages/b8/90/2b3fd67ee273163faeda6d514be70b5596eaa0fd77b60ffc294ad0b34f5f/matplotlib-3.11.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "5f75d7e3ecb136a2b41d647188dd25f670558870661e0f870aedc76643d20606",
+      "requires_dist": [
+        "contourpy>=1.0.1",
+        "cycler>=0.10",
+        "fonttools>=4.28.2",
+        "kiwisolver>=1.3.1",
+        "numpy>=1.25",
+        "packaging>=20.0",
+        "pillow>=9",
+        "pyparsing>=3",
+        "python-dateutil>=2.7"
+      ],
+      "requires_python": ">=3.11",
+      "sha256": "df4f7784aca81a94f254c0a2767d592ee25f407e488f5fa7203e51093fb6ca27",
+      "size_bytes": 9860353,
+      "upload_time_iso_8601": "2026-09-11T19:03:25.049420Z",
+      "url": "https://files.pythonhosted.org/packages/b8/90/2b3fd67ee273163faeda6d514be70b5596eaa0fd77b60ffc294ad0b34f5f/matplotlib-3.11.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "version": "3.11.2"
+    },
+    {
+      "filename": "narwhals-2.27.1-py3-none-any.whl",
+      "metadata_sha256": "5962ef236f36fe34aff21a837a0698386dcb1f0de54462aa18b73698e6ef1a4f",
+      "name": "narwhals",
+      "pypi_release_api": "https://pypi.org/pypi/narwhals/2.27.1/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "5962ef236f36fe34aff21a837a0698386dcb1f0de54462aa18b73698e6ef1a4f"
+        },
+        "digests": {
+          "blake2b_256": "d1895d4c86da1130d9059681e5b6cd7645df5c10279a6a079c5c37dcb2cc6f3f",
+          "md5": "212c957fd9c07a4c50e2f9d52c5b479a",
+          "sha256": "d057df13f5852b8e157596e82eb5e955fad267425df5e420e0ee9863da483b31"
+        },
+        "downloads": -1,
+        "filename": "narwhals-2.27.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "212c957fd9c07a4c50e2f9d52c5b479a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.10",
+        "size": 483211,
+        "upload_time": "2026-10-10T06:52:16",
+        "upload_time_iso_8601": "2026-10-10T06:52:16.320353Z",
+        "url": "https://files.pythonhosted.org/packages/d1/89/5d4c86da1130d9059681e5b6cd7645df5c10279a6a079c5c37dcb2cc6f3f/narwhals-2.27.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "c09ad7c5a8b73b84e692c394babcab016fd286a56bf0116a0582fcb063dc02bd",
+      "requires_dist": [
+        "cudf-cu12>=24.10.0 ; sys_platform == 'linux' and extra == 'cudf'",
+        "dask[dataframe]>=2024.8 ; extra == 'dask'",
+        "duckdb>=1.1 ; extra == 'duckdb'",
+        "ibis-framework>=6.0.0 ; extra == 'ibis'",
+        "packaging>=21.3 ; extra == 'ibis'",
+        "pyarrow-hotfix>=0.7 ; extra == 'ibis'",
+        "modin>=0.22.0 ; extra == 'modin'",
+        "pandas>=1.3.4 ; extra == 'pandas'",
+        "polars>=0.20.4 ; extra == 'polars'",
+        "pyarrow>=13.0.0 ; extra == 'pyarrow'",
+        "pyspark>=3.5.0 ; extra == 'pyspark'",
+        "pyspark[connect]>=3.5.0 ; extra == 'pyspark-connect'",
+        "narwhals[duckdb] ; extra == 'sql'",
+        "sqlparse>=0.5.5 ; extra == 'sql'",
+        "sqlframe>=3.22.0,!=3.39.3 ; extra == 'sqlframe'"
+      ],
+      "requires_python": ">=3.10",
+      "sha256": "d057df13f5852b8e157596e82eb5e955fad267425df5e420e0ee9863da483b31",
+      "size_bytes": 483211,
+      "upload_time_iso_8601": "2026-10-10T06:52:16.320353Z",
+      "url": "https://files.pythonhosted.org/packages/d1/89/5d4c86da1130d9059681e5b6cd7645df5c10279a6a079c5c37dcb2cc6f3f/narwhals-2.27.1-py3-none-any.whl",
+      "version": "2.27.1"
+    },
+    {
+      "filename": "numpy-2.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "metadata_sha256": "e2b909d6a37d76c2bc130f528d7fed0c517322bce16dc7846b6a6df30e200403",
+      "name": "numpy",
+      "pypi_release_api": "https://pypi.org/pypi/numpy/2.5.4/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "e2b909d6a37d76c2bc130f528d7fed0c517322bce16dc7846b6a6df30e200403"
+        },
+        "digests": {
+          "blake2b_256": "43a3c799c62e19c337e6d3770b08e475887fb30ce8477d3c09efca6b2f0228a6",
+          "md5": "8e0adea90301d188aea79920463fd58d",
+          "sha256": "fbde6962867ee75b48b0ee29b2b9372ec5d617799dbaf38e82dc0596f2f7738a"
+        },
+        "downloads": -1,
+        "filename": "numpy-2.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "8e0adea90301d188aea79920463fd58d",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": ">=3.12",
+        "size": 16727283,
+        "upload_time": "2026-10-10T20:02:53",
+        "upload_time_iso_8601": "2026-10-10T20:02:53.186780Z",
+        "url": "https://files.pythonhosted.org/packages/43/a3/c799c62e19c337e6d3770b08e475887fb30ce8477d3c09efca6b2f0228a6/numpy-2.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "a42b40d53fac5388e974f21aa1f01d3b47440ad8181fc827b08023bf8ca3cc96",
+      "requires_dist": [],
+      "requires_python": ">=3.12",
+      "sha256": "fbde6962867ee75b48b0ee29b2b9372ec5d617799dbaf38e82dc0596f2f7738a",
+      "size_bytes": 16727283,
+      "upload_time_iso_8601": "2026-10-10T20:02:53.186780Z",
+      "url": "https://files.pythonhosted.org/packages/43/a3/c799c62e19c337e6d3770b08e475887fb30ce8477d3c09efca6b2f0228a6/numpy-2.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "version": "2.5.4"
+    },
+    {
+      "filename": "packaging-26.3-py3-none-any.whl",
+      "metadata_sha256": "70fdb89fc4d4a9a043bf7372b8972bcc883fddff34ab55e9cf80d73875384763",
+      "name": "packaging",
+      "pypi_release_api": "https://pypi.org/pypi/packaging/26.3/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "70fdb89fc4d4a9a043bf7372b8972bcc883fddff34ab55e9cf80d73875384763"
+        },
+        "digests": {
+          "blake2b_256": "6334ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527",
+          "md5": "e5b3bd8ce52e8a8fe1ab400079171a1e",
+          "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+        },
+        "downloads": -1,
+        "filename": "packaging-26.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "e5b3bd8ce52e8a8fe1ab400079171a1e",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 129956,
+        "upload_time": "2026-08-04T18:15:27",
+        "upload_time_iso_8601": "2026-08-04T18:15:27.159957Z",
+        "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "4f190d2f0b312b3086058cee64ab4333bf3ce67fb78b4c2bdb43899049b29f4d",
+      "requires_dist": [],
+      "requires_python": ">=3.9",
+      "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+      "size_bytes": 129956,
+      "upload_time_iso_8601": "2026-08-04T18:15:27.159957Z",
+      "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+      "version": "26.3"
+    },
+    {
+      "filename": "pandas-3.1.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+      "metadata_sha256": "b2b43910a5ef734a08be961df9c484f4664ad9ec2fa5a08294d0edfa08bcdd4b",
+      "name": "pandas",
+      "pypi_release_api": "https://pypi.org/pypi/pandas/3.1.0/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "b2b43910a5ef734a08be961df9c484f4664ad9ec2fa5a08294d0edfa08bcdd4b"
+        },
+        "digests": {
+          "blake2b_256": "c5a6dc89cdd95e12093bc813e9b814a09f1a056be3e1304edaef9bf9dbee108a",
+          "md5": "dc0b6388d40d213836bb4575c8d57741",
+          "sha256": "9433b5dc2f26ef9d9b56daaf4d41d078bf4372c5d88c42ed5b397a6eea80de16"
+        },
+        "downloads": -1,
+        "filename": "pandas-3.1.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "dc0b6388d40d213836bb4575c8d57741",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": ">=3.11",
+        "size": 12019688,
+        "upload_time": "2026-10-22T11:55:14",
+        "upload_time_iso_8601": "2026-10-22T11:55:14.246035Z",
+        "url": "https://files.pythonhosted.org/packages/c5/a6/dc89cdd95e12093bc813e9b814a09f1a056be3e1304edaef9bf9dbee108a/pandas-3.1.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "22fdd3bd46dfe287d02a70c640837ce39d81f95c453fb613f374c698b5d48129",
+      "requires_dist": [
+        "numpy>=2.0.2; python_version < \"3.14\"",
+        "numpy>=2.3.3; python_version >= \"3.14\"",
+        "python-dateutil>=2.9.0",
+        "tzdata; sys_platform == \"win32\"",
+        "tzdata; sys_platform == \"emscripten\"",
+        "pytest>=8.3.4; extra == \"test\"",
+        "pytest-xdist>=3.6.1; extra == \"test\"",
+        "pyarrow>=16.0.0; extra == \"pyarrow\"",
+        "bottleneck>=1.5.0; extra == \"performance\"",
+        "numba>=0.61.2; extra == \"performance\"",
+        "numexpr!=2.14.1,>=2.11.0; extra == \"performance\"",
+        "scipy>=1.16.1; extra == \"computation\"",
+        "xarray>=2025.7.1; extra == \"computation\"",
+        "fsspec>=2025.7.0; extra == \"fss\"",
+        "s3fs>=2025.7.0; extra == \"aws\"",
+        "gcsfs>=2025.7.0; extra == \"gcp\"",
+        "odfpy>=1.4.1; extra == \"excel\"",
+        "openpyxl>=3.1.5; extra == \"excel\"",
+        "python-calamine>=0.4.0; extra == \"excel\"",
+        "pyxlsb>=1.0.10; extra == \"excel\"",
+        "xlrd>=2.0.2; extra == \"excel\"",
+        "xlsxwriter>=3.2.5; extra == \"excel\"",
+        "pyarrow>=13.0.0; extra == \"parquet\"",
+        "pyarrow>=13.0.0; extra == \"feather\"",
+        "pyiceberg>=0.9.1; extra == \"iceberg\"",
+        "tables>=3.10.2; extra == \"hdf5\"",
+        "pyreadstat>=1.3.0; extra == \"spss\"",
+        "SQLAlchemy>=2.0.42; extra == \"postgresql\"",
+        "psycopg2>=2.9.10; extra == \"postgresql\"",
+        "adbc-driver-postgresql>=1.7.0; extra == \"postgresql\"",
+        "SQLAlchemy>=2.0.42; extra == \"mysql\"",
+        "pymysql>=1.1.1; extra == \"mysql\"",
+        "SQLAlchemy>=2.0.42; extra == \"sql-other\"",
+        "adbc-driver-postgresql>=1.7.0; extra == \"sql-other\"",
+        "adbc-driver-sqlite>=1.7.0; extra == \"sql-other\"",
+        "beautifulsoup4>=4.13.4; extra == \"html\"",
+        "html5lib>=1.1; extra == \"html\"",
+        "lxml>=6.0.0; extra == \"html\"",
+        "lxml>=6.0.0; extra == \"xml\"",
+        "matplotlib>=3.10.5; extra == \"plot\"",
+        "jinja2>=3.1.6; extra == \"output-formatting\"",
+        "tabulate>=0.9.0; extra == \"output-formatting\"",
+        "PyQt5>=5.15.11; extra == \"clipboard\"",
+        "qtpy>=2.4.3; extra == \"clipboard\"",
+        "zstandard>=0.23.0; extra == \"compression\"",
+        "pytz>=2020.1; extra == \"timezone\"",
+        "adbc-driver-postgresql>=1.7.0; extra == \"all\"",
+        "adbc-driver-sqlite>=1.7.0; extra == \"all\"",
+        "beautifulsoup4>=4.13.4; extra == \"all\"",
+        "bottleneck>=1.5.0; extra == \"all\"",
+        "fastparquet>=2024.11.0; extra == \"all\"",
+        "fsspec>=2025.7.0; extra == \"all\"",
+        "gcsfs>=2025.7.0; extra == \"all\"",
+        "html5lib>=1.1; extra == \"all\"",
+        "jinja2>=3.1.6; extra == \"all\"",
+        "lxml>=6.0.0; extra == \"all\"",
+        "matplotlib>=3.10.5; extra == \"all\"",
+        "numba>=0.61.2; extra == \"all\"",
+        "numexpr!=2.14.1,>=2.11.0; extra == \"all\"",
+        "odfpy>=1.4.1; extra == \"all\"",
+        "openpyxl>=3.1.5; extra == \"all\"",
+        "psycopg2>=2.9.10; extra == \"all\"",
+        "pyarrow>=16.0.0; extra == \"all\"",
+        "pyiceberg>=0.9.1; extra == \"all\"",
+        "pymysql>=1.1.1; extra == \"all\"",
+        "PyQt5>=5.15.11; extra == \"all\"",
+        "pyreadstat>=1.3.0; extra == \"all\"",
+        "pytest>=8.3.4; extra == \"all\"",
+        "pytest-xdist>=3.6.1; extra == \"all\"",
+        "python-calamine>=0.4.0; extra == \"all\"",
+        "pytz>=2020.1; extra == \"all\"",
+        "pyxlsb>=1.0.10; extra == \"all\"",
+        "qtpy>=2.4.3; extra == \"all\"",
+        "scipy>=1.16.1; extra == \"all\"",
+        "s3fs>=2025.7.0; extra == \"all\"",
+        "SQLAlchemy>=2.0.42; extra == \"all\"",
+        "tables>=3.10.2; extra == \"all\"",
+        "tabulate>=0.9.0; extra == \"all\"",
+        "xarray>=2025.7.1; extra == \"all\"",
+        "xlrd>=2.0.2; extra == \"all\"",
+        "xlsxwriter>=3.2.5; extra == \"all\"",
+        "zstandard>=0.23.0; extra == \"all\""
+      ],
+      "requires_python": ">=3.11",
+      "sha256": "9433b5dc2f26ef9d9b56daaf4d41d078bf4372c5d88c42ed5b397a6eea80de16",
+      "size_bytes": 12019688,
+      "upload_time_iso_8601": "2026-10-22T11:55:14.246035Z",
+      "url": "https://files.pythonhosted.org/packages/c5/a6/dc89cdd95e12093bc813e9b814a09f1a056be3e1304edaef9bf9dbee108a/pandas-3.1.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+      "version": "3.1.0"
+    },
+    {
+      "filename": "patsy-1.0.3-py2.py3-none-any.whl",
+      "metadata_sha256": "c9d8d1a6ebfdadd02c21b9f4d15b1c26716f181c4bb6bcccb1006c9d892da31f",
+      "name": "patsy",
+      "pypi_release_api": "https://pypi.org/pypi/patsy/1.0.3/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "c9d8d1a6ebfdadd02c21b9f4d15b1c26716f181c4bb6bcccb1006c9d892da31f"
+        },
+        "digests": {
+          "blake2b_256": "2070cd3cf5cff538323076a879edef02cce6f13f7d75e03d12f211b0a0dbd178",
+          "md5": "5e170b17f78872fc7e40affdec056bbd",
+          "sha256": "d3dbebe8fd5f46e29912d030b63c6268647b59bf788a99e2af28a30234cf357c"
+        },
+        "downloads": -1,
+        "filename": "patsy-1.0.3-py2.py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "5e170b17f78872fc7e40affdec056bbd",
+        "packagetype": "bdist_wheel",
+        "python_version": "py2.py3",
+        "requires_python": ">=3.6",
+        "size": 233318,
+        "upload_time": "2026-08-29T21:35:30",
+        "upload_time_iso_8601": "2026-08-29T21:35:30.913760Z",
+        "url": "https://files.pythonhosted.org/packages/20/70/cd3cf5cff538323076a879edef02cce6f13f7d75e03d12f211b0a0dbd178/patsy-1.0.3-py2.py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "908f8c0ae5d4e178b541f0c5bc3e548c9c6adcf12a7ea9cca58229134fcd5557",
+      "requires_dist": [
+        "numpy>=1.4",
+        "packaging",
+        "pytest; extra == \"test\"",
+        "pytest-cov; extra == \"test\"",
+        "scipy; extra == \"test\""
+      ],
+      "requires_python": ">=3.6",
+      "sha256": "d3dbebe8fd5f46e29912d030b63c6268647b59bf788a99e2af28a30234cf357c",
+      "size_bytes": 233318,
+      "upload_time_iso_8601": "2026-08-29T21:35:30.913760Z",
+      "url": "https://files.pythonhosted.org/packages/20/70/cd3cf5cff538323076a879edef02cce6f13f7d75e03d12f211b0a0dbd178/patsy-1.0.3-py2.py3-none-any.whl",
+      "version": "1.0.3"
+    },
+    {
+      "filename": "pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "metadata_sha256": "dba7fdfe24e302f46bae562f55d66cc367c0618abae9894a1ebec93dc8f0e511",
+      "name": "pillow",
+      "pypi_release_api": "https://pypi.org/pypi/pillow/13.0.0/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "dba7fdfe24e302f46bae562f55d66cc367c0618abae9894a1ebec93dc8f0e511"
+        },
+        "digests": {
+          "blake2b_256": "e699fdf65cc539e266ab93546c261bdf98411fe165c6e4e13f9dbf597097192b",
+          "md5": "9daf79c9e49491bade8d0b61a0616fac",
+          "sha256": "42d63be3af4f9b951b199b0a9d23365d37ab14687e6d77b74940432c8515c4ca"
+        },
+        "downloads": -1,
+        "filename": "pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "9daf79c9e49491bade8d0b61a0616fac",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": ">=3.11",
+        "size": 7144542,
+        "upload_time": "2026-10-16T22:15:50",
+        "upload_time_iso_8601": "2026-10-16T22:15:50.093577Z",
+        "url": "https://files.pythonhosted.org/packages/e6/99/fdf65cc539e266ab93546c261bdf98411fe165c6e4e13f9dbf597097192b/pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "183d4151cbc909acf39d4d5d48469d6bc66d5516e7f506854241839d0611b69e",
+      "requires_dist": [
+        "furo; extra == \"docs\"",
+        "olefile; extra == \"docs\"",
+        "sphinx>=8.2; extra == \"docs\"",
+        "sphinx-autobuild; extra == \"docs\"",
+        "sphinx-copybutton; extra == \"docs\"",
+        "sphinx-inline-tabs; extra == \"docs\"",
+        "sphinxext-opengraph; extra == \"docs\"",
+        "olefile; extra == \"fpx\"",
+        "olefile; extra == \"mic\"",
+        "arro3-compute; extra == \"test-arrow\"",
+        "arro3-core; extra == \"test-arrow\"",
+        "nanoarrow; extra == \"test-arrow\"",
+        "pyarrow; extra == \"test-arrow\"",
+        "coverage>=7.4.2; extra == \"tests\"",
+        "defusedxml; extra == \"tests\"",
+        "markdown2; extra == \"tests\"",
+        "olefile; extra == \"tests\"",
+        "packaging; extra == \"tests\"",
+        "psutil; (sys_platform == \"linux\" or sys_platform == \"darwin\") and extra == \"tests\"",
+        "pytest; extra == \"tests\"",
+        "pytest-cov; extra == \"tests\"",
+        "pytest-timeout; extra == \"tests\"",
+        "pytest-xdist; extra == \"tests\"",
+        "setuptools; extra == \"tests\"",
+        "trove-classifiers>=2024.10.12; extra == \"tests\"",
+        "defusedxml; extra == \"xmp\""
+      ],
+      "requires_python": ">=3.11",
+      "sha256": "42d63be3af4f9b951b199b0a9d23365d37ab14687e6d77b74940432c8515c4ca",
+      "size_bytes": 7144542,
+      "upload_time_iso_8601": "2026-10-16T22:15:50.093577Z",
+      "url": "https://files.pythonhosted.org/packages/e6/99/fdf65cc539e266ab93546c261bdf98411fe165c6e4e13f9dbf597097192b/pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "version": "13.0.0"
+    },
+    {
+      "filename": "pyarrow-26.0.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+      "metadata_sha256": "be4adabcb9b03f3a468f17bb0f42b48e7e17cdd58741ba15753f28610c2497fb",
+      "name": "pyarrow",
+      "pypi_release_api": "https://pypi.org/pypi/pyarrow/26.0.0/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "be4adabcb9b03f3a468f17bb0f42b48e7e17cdd58741ba15753f28610c2497fb"
+        },
+        "digests": {
+          "blake2b_256": "88e49cd356d906e71bd79b0c3fc5c9a54e01a0020dcf14c152ccfbcb503c7298",
+          "md5": "0b6903b0a2f459ad080a5659d843d9cb",
+          "sha256": "6a628922ba20705fa964ca73e4ef959c2fb2f14b9bbec5589a6a1e68e6257c85"
+        },
+        "downloads": -1,
+        "filename": "pyarrow-26.0.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "0b6903b0a2f459ad080a5659d843d9cb",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": ">=3.11",
+        "size": 53931932,
+        "upload_time": "2026-10-09T08:14:24",
+        "upload_time_iso_8601": "2026-10-09T08:14:24.051144Z",
+        "url": "https://files.pythonhosted.org/packages/88/e4/9cd356d906e71bd79b0c3fc5c9a54e01a0020dcf14c152ccfbcb503c7298/pyarrow-26.0.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "820e0086a99265aeb261219e687d72eae106dba6290a66683315b4fe85276be5",
+      "requires_dist": [],
+      "requires_python": ">=3.11",
+      "sha256": "6a628922ba20705fa964ca73e4ef959c2fb2f14b9bbec5589a6a1e68e6257c85",
+      "size_bytes": 53931932,
+      "upload_time_iso_8601": "2026-10-09T08:14:24.051144Z",
+      "url": "https://files.pythonhosted.org/packages/88/e4/9cd356d906e71bd79b0c3fc5c9a54e01a0020dcf14c152ccfbcb503c7298/pyarrow-26.0.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+      "version": "26.0.0"
+    },
+    {
+      "filename": "pyparsing-3.3.3-py3-none-any.whl",
+      "metadata_sha256": "f2ca34052d720622d300023472ef8ae94fe5b57d69acbb28a8667f6dd0e13497",
+      "name": "pyparsing",
+      "pypi_release_api": "https://pypi.org/pypi/pyparsing/3.3.3/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "f2ca34052d720622d300023472ef8ae94fe5b57d69acbb28a8667f6dd0e13497"
+        },
+        "digests": {
+          "blake2b_256": "38bbd215ee7c73b61497b28a5503f9f53523f294fcc936762b7caf90e0c1c2b5",
+          "md5": "a8c197f144f22a48080983a3723a3801",
+          "sha256": "ece8c00a69cf01b45d0b1dedabb469c90d8caf996d4fda40f147627a122849a4"
+        },
+        "downloads": -1,
+        "filename": "pyparsing-3.3.3-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "a8c197f144f22a48080983a3723a3801",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 126420,
+        "upload_time": "2026-09-20T20:59:04",
+        "upload_time_iso_8601": "2026-09-20T20:59:04.025856Z",
+        "url": "https://files.pythonhosted.org/packages/38/bb/d215ee7c73b61497b28a5503f9f53523f294fcc936762b7caf90e0c1c2b5/pyparsing-3.3.3-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "b851d5414eca50b38263f56c00a1fbec80383a26a3ad8e41a204b72cdeee5751",
+      "requires_dist": [
+        "railroad-diagrams ; extra == \"diagrams\"",
+        "jinja2 ; extra == \"diagrams\""
+      ],
+      "requires_python": ">=3.9",
+      "sha256": "ece8c00a69cf01b45d0b1dedabb469c90d8caf996d4fda40f147627a122849a4",
+      "size_bytes": 126420,
+      "upload_time_iso_8601": "2026-09-20T20:59:04.025856Z",
+      "url": "https://files.pythonhosted.org/packages/38/bb/d215ee7c73b61497b28a5503f9f53523f294fcc936762b7caf90e0c1c2b5/pyparsing-3.3.3-py3-none-any.whl",
+      "version": "3.3.3"
+    },
+    {
+      "filename": "python_dateutil-3.0.0-py2.py3-none-any.whl",
+      "metadata_sha256": "e10ead93598aed51bdb28aa30ef64ee5d6ccc871e88741d220e504e979af4695",
+      "name": "python-dateutil",
+      "pypi_release_api": "https://pypi.org/pypi/python-dateutil/3.0.0/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "e10ead93598aed51bdb28aa30ef64ee5d6ccc871e88741d220e504e979af4695"
+        },
+        "digests": {
+          "blake2b_256": "5a17cebee01d1c0c1441174cf0456ddc91b280d79acb65340c05e41d77866ee8",
+          "md5": "1a4a4ce957718256a0b34eafc78c3173",
+          "sha256": "3c79630202e4152c6add678446984236efe4f57e84d8e892aab0637bab82e9fd"
+        },
+        "downloads": -1,
+        "filename": "python_dateutil-3.0.0-py2.py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "1a4a4ce957718256a0b34eafc78c3173",
+        "packagetype": "bdist_wheel",
+        "python_version": "py2.py3",
+        "requires_python": "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7",
+        "size": 94659,
+        "upload_time": "2026-10-21T23:41:43",
+        "upload_time_iso_8601": "2026-10-21T23:41:43.431814Z",
+        "url": "https://files.pythonhosted.org/packages/5a/17/cebee01d1c0c1441174cf0456ddc91b280d79acb65340c05e41d77866ee8/python_dateutil-3.0.0-py2.py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "6e33ca795417ca662f2820675158d64500733c354a7f7b81184a5471886240a7",
+      "requires_dist": [
+        "six>=1.6",
+        "tzdata"
+      ],
+      "requires_python": "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7",
+      "sha256": "3c79630202e4152c6add678446984236efe4f57e84d8e892aab0637bab82e9fd",
+      "size_bytes": 94659,
+      "upload_time_iso_8601": "2026-10-21T23:41:43.431814Z",
+      "url": "https://files.pythonhosted.org/packages/5a/17/cebee01d1c0c1441174cf0456ddc91b280d79acb65340c05e41d77866ee8/python_dateutil-3.0.0-py2.py3-none-any.whl",
+      "version": "3.0.0"
+    },
+    {
+      "filename": "scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "metadata_sha256": "6d1ebfbce110009e25e8249fea05e21c0449735144e9bd8df1a52931f957c1ea",
+      "name": "scipy",
+      "pypi_release_api": "https://pypi.org/pypi/scipy/1.18.1/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "6d1ebfbce110009e25e8249fea05e21c0449735144e9bd8df1a52931f957c1ea"
+        },
+        "digests": {
+          "blake2b_256": "df64ff35eb9e54894cf471ff4716abd3c81eb0a0626869217ce3e6ba4ccf17d7",
+          "md5": "2ce281a73a4101b91d4bd72c1f4fa420",
+          "sha256": "f55fa87b6c612ecd6b058f167c53231b1d14e412efe361d3d6e38b3631c73218"
+        },
+        "downloads": -1,
+        "filename": "scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "2ce281a73a4101b91d4bd72c1f4fa420",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": ">=3.12",
+        "size": 35344199,
+        "upload_time": "2026-08-21T23:24:07",
+        "upload_time_iso_8601": "2026-08-21T23:24:07.844164Z",
+        "url": "https://files.pythonhosted.org/packages/df/64/ff35eb9e54894cf471ff4716abd3c81eb0a0626869217ce3e6ba4ccf17d7/scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "8fc6948fe40ecc069474738e18405af6cab47eefb2ddce5ac017bf342df5a470",
+      "requires_dist": [
+        "numpy<2.8,>=2.0.0",
+        "pytest>=8.0.0; extra == \"test\"",
+        "pytest-cov; extra == \"test\"",
+        "pytest-timeout; extra == \"test\"",
+        "pytest-xdist; extra == \"test\"",
+        "asv; extra == \"test\"",
+        "mpmath; extra == \"test\"",
+        "gmpy2; extra == \"test\"",
+        "threadpoolctl; extra == \"test\"",
+        "scikit-umfpack; extra == \"test\"",
+        "pooch; extra == \"test\"",
+        "hypothesis>=6.30; extra == \"test\"",
+        "array-api-strict>=2.3.1; extra == \"test\"",
+        "Cython; extra == \"test\"",
+        "meson; extra == \"test\"",
+        "ninja; sys_platform != \"emscripten\" and extra == \"test\"",
+        "scipy-doctest>=2.0.0; extra == \"test\"",
+        "sphinx<8.2.0,>=5.0.0; extra == \"doc\"",
+        "intersphinx_registry; extra == \"doc\"",
+        "pydata-sphinx-theme>=0.15.2; extra == \"doc\"",
+        "sphinx-copybutton; extra == \"doc\"",
+        "sphinx-design>=0.4.0; extra == \"doc\"",
+        "matplotlib>=3.5; extra == \"doc\"",
+        "numpydoc; extra == \"doc\"",
+        "jupytext; extra == \"doc\"",
+        "myst-nb>=1.2.0; extra == \"doc\"",
+        "pooch; extra == \"doc\"",
+        "jupyterlite-sphinx>=0.19.1; extra == \"doc\"",
+        "jupyterlite-pyodide-kernel; extra == \"doc\"",
+        "linkify-it-py; extra == \"doc\"",
+        "tabulate; extra == \"doc\"",
+        "click<8.3.0; extra == \"dev\"",
+        "spin; extra == \"dev\"",
+        "mypy==1.19.1; extra == \"dev\"",
+        "pyrefly==0.63.0; extra == \"dev\"",
+        "typing_extensions; extra == \"dev\"",
+        "types-psutil; extra == \"dev\"",
+        "pycodestyle; extra == \"dev\"",
+        "ruff>=0.12.0; extra == \"dev\"",
+        "cython-lint>=0.12.2; extra == \"dev\""
+      ],
+      "requires_python": ">=3.12",
+      "sha256": "f55fa87b6c612ecd6b058f167c53231b1d14e412efe361d3d6e38b3631c73218",
+      "size_bytes": 35344199,
+      "upload_time_iso_8601": "2026-08-21T23:24:07.844164Z",
+      "url": "https://files.pythonhosted.org/packages/df/64/ff35eb9e54894cf471ff4716abd3c81eb0a0626869217ce3e6ba4ccf17d7/scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "version": "1.18.1"
+    },
+    {
+      "filename": "six-1.17.0-py2.py3-none-any.whl",
+      "metadata_sha256": "562042078c2752549f6d8a7c86dbc5dd708088a7be6d80672ec7b07100b72468",
+      "name": "six",
+      "pypi_release_api": "https://pypi.org/pypi/six/1.17.0/json",
+      "pypi_release_file": {
+        "comment_text": "",
+        "core-metadata": {
+          "sha256": "562042078c2752549f6d8a7c86dbc5dd708088a7be6d80672ec7b07100b72468"
+        },
+        "digests": {
+          "blake2b_256": "b7ce149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e",
+          "md5": "090bac7d568f9c1f64b671de641ccdee",
+          "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274"
+        },
+        "downloads": -1,
+        "filename": "six-1.17.0-py2.py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "090bac7d568f9c1f64b671de641ccdee",
+        "packagetype": "bdist_wheel",
+        "python_version": "py2.py3",
+        "requires_python": "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7",
+        "size": 11050,
+        "upload_time": "2024-12-04T17:35:26",
+        "upload_time_iso_8601": "2024-12-04T17:35:26.475808Z",
+        "url": "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "d8de39dd52b73048d81a8fd78022ee2bc72f8b568bcf0d88e5d5069c302b1208",
+      "requires_dist": [],
+      "requires_python": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*",
+      "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+      "size_bytes": 11050,
+      "upload_time_iso_8601": "2024-12-04T17:35:26.475808Z",
+      "url": "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl",
+      "version": "1.17.0"
+    },
+    {
+      "filename": "statsmodels-0.15.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "metadata_sha256": "5c2b2bc90b451ec1d9d87529d25754011b4436f55f2a2956e0fabda34b82a826",
+      "name": "statsmodels",
+      "pypi_release_api": "https://pypi.org/pypi/statsmodels/0.15.0/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "5c2b2bc90b451ec1d9d87529d25754011b4436f55f2a2956e0fabda34b82a826"
+        },
+        "digests": {
+          "blake2b_256": "41c7aeadca282baf51d7b9c135674bac79ded91f4db79c69c188575d22234342",
+          "md5": "2a560047bf3916d5320b76748ce32320",
+          "sha256": "c6f2bd48915cc9b3b95c3c7f6ac363b6f8aaa38172962ba5f7f6885f0dfe57f2"
+        },
+        "downloads": -1,
+        "filename": "statsmodels-0.15.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "2a560047bf3916d5320b76748ce32320",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": ">=3.10",
+        "size": 12042643,
+        "upload_time": "2026-08-27T14:33:06",
+        "upload_time_iso_8601": "2026-08-27T14:33:06.022345Z",
+        "url": "https://files.pythonhosted.org/packages/41/c7/aeadca282baf51d7b9c135674bac79ded91f4db79c69c188575d22234342/statsmodels-0.15.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "f71901aea2e3d16c737674a82e5dd268472da3248d2a42ba6d9850b45fd3b245",
+      "requires_dist": [
+        "numpy<3,>=1.23.5",
+        "scipy!=1.9.2,>=1.8",
+        "pandas!=2.1.0,>=1.4",
+        "patsy>=0.5.6",
+        "packaging>=21.3",
+        "formulaic>=1.1.0",
+        "pytest<10,>=8.4.1; extra == \"test\"",
+        "pytest-randomly; extra == \"test\"",
+        "pytest-run-parallel; extra == \"test\"",
+        "pytest-xdist; extra == \"test\"",
+        "pytest-cov; extra == \"test\"",
+        "coverage[toml]; extra == \"test\"",
+        "meson; extra == \"test\"",
+        "ninja; sys_platform != \"emscripten\" and extra == \"test\"",
+        "sphinx; extra == \"doc\"",
+        "pandas!=2.1.0,>=2.2.2; extra == \"doc\"",
+        "pydata-sphinx-theme; extra == \"doc\"",
+        "jupyter; extra == \"doc\"",
+        "notebook; extra == \"doc\"",
+        "nbsphinx; extra == \"doc\"",
+        "nbconvert; extra == \"doc\"",
+        "pyyaml; extra == \"doc\"",
+        "pandas-datareader; extra == \"doc\"",
+        "simplegeneric; extra == \"doc\"",
+        "seaborn; extra == \"doc\"",
+        "numpydoc; extra == \"doc\"",
+        "pymc; os_name != \"nt\" and extra == \"doc\"",
+        "arviz; os_name != \"nt\" and extra == \"doc\"",
+        "jinja2; extra == \"doc\"",
+        "pickleshare; extra == \"doc\"",
+        "pytest<10,>=8.4.1; extra == \"doc\"",
+        "cython<4,>=3.0.10; extra == \"dev\"",
+        "setuptools_scm~=9.0; extra == \"dev\"",
+        "meson-python>=0.18.0; extra == \"dev\"",
+        "meson; extra == \"dev\"",
+        "ninja; extra == \"dev\"",
+        "matplotlib>=3; extra == \"dev\"",
+        "colorama; extra == \"dev\"",
+        "joblib; extra == \"dev\"",
+        "pywinpty; os_name == \"nt\" and extra == \"dev\"",
+        "ruff; extra == \"dev\"",
+        "polars>=1.0.0; extra == \"polars\""
+      ],
+      "requires_python": ">=3.10",
+      "sha256": "c6f2bd48915cc9b3b95c3c7f6ac363b6f8aaa38172962ba5f7f6885f0dfe57f2",
+      "size_bytes": 12042643,
+      "upload_time_iso_8601": "2026-08-27T14:33:06.022345Z",
+      "url": "https://files.pythonhosted.org/packages/41/c7/aeadca282baf51d7b9c135674bac79ded91f4db79c69c188575d22234342/statsmodels-0.15.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "version": "0.15.0"
+    },
+    {
+      "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+      "metadata_sha256": "b05084ca1d50879865178d9fff9fabeab61bdfb1f361bfbde95421ffc8f9be46",
+      "name": "typing-extensions",
+      "pypi_release_api": "https://pypi.org/pypi/typing-extensions/4.16.0/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "b05084ca1d50879865178d9fff9fabeab61bdfb1f361bfbde95421ffc8f9be46"
+        },
+        "digests": {
+          "blake2b_256": "49d3b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80",
+          "md5": "aaa249e7f620bbcecbcbf2b7b11fbd12",
+          "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+        },
+        "downloads": -1,
+        "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "aaa249e7f620bbcecbcbf2b7b11fbd12",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.9",
+        "size": 45571,
+        "upload_time": "2026-07-02T08:40:04",
+        "upload_time_iso_8601": "2026-07-02T08:40:04.659120Z",
+        "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "2140da00d62dde967f52d0be0ae28444f1d6a3fe603f52c83c23988c32122d5a",
+      "requires_dist": [],
+      "requires_python": ">=3.9",
+      "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+      "size_bytes": 45571,
+      "upload_time_iso_8601": "2026-07-02T08:40:04.659120Z",
+      "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+      "version": "4.16.0"
+    },
+    {
+      "filename": "tzdata-2026.5-py2.py3-none-any.whl",
+      "metadata_sha256": "e0780e8b6dc8882ce87e871a9d4589d59cb05a0c2d64f58b1ba62cde1ee91f6a",
+      "name": "tzdata",
+      "pypi_release_api": "https://pypi.org/pypi/tzdata/2026.5/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "e0780e8b6dc8882ce87e871a9d4589d59cb05a0c2d64f58b1ba62cde1ee91f6a"
+        },
+        "digests": {
+          "blake2b_256": "94211e5995a1c920cce14e4bffae20c665ec10e7ed03ab25e006cd741092b718",
+          "md5": "81bb8d8df7440eab17d70cbd902b8c51",
+          "sha256": "b683bd1b6659ddcd810ff02ad09ba821d4bf1065072805063eb35c49617905ac"
+        },
+        "downloads": -1,
+        "filename": "tzdata-2026.5-py2.py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "81bb8d8df7440eab17d70cbd902b8c51",
+        "packagetype": "bdist_wheel",
+        "python_version": "py2.py3",
+        "requires_python": ">=2",
+        "size": 347996,
+        "upload_time": "2026-10-03T09:23:12",
+        "upload_time_iso_8601": "2026-10-03T09:23:12.535688Z",
+        "url": "https://files.pythonhosted.org/packages/94/21/1e5995a1c920cce14e4bffae20c665ec10e7ed03ab25e006cd741092b718/tzdata-2026.5-py2.py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "27547051b51333cb7ba03f91b91fc7c92179937ccb62bb81ce46dc943c69873b",
+      "requires_dist": [],
+      "requires_python": ">=2",
+      "sha256": "b683bd1b6659ddcd810ff02ad09ba821d4bf1065072805063eb35c49617905ac",
+      "size_bytes": 347996,
+      "upload_time_iso_8601": "2026-10-03T09:23:12.535688Z",
+      "url": "https://files.pythonhosted.org/packages/94/21/1e5995a1c920cce14e4bffae20c665ec10e7ed03ab25e006cd741092b718/tzdata-2026.5-py2.py3-none-any.whl",
+      "version": "2026.5"
+    },
+    {
+      "filename": "wrapt-2.5.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+      "metadata_sha256": "166ca07d308c14c3e9dfe028c6389bf1a439027fe7b389d33eedb7d002e8bafb",
+      "name": "wrapt",
+      "pypi_release_api": "https://pypi.org/pypi/wrapt/2.5.1/json",
+      "pypi_release_file": {
+        "comment_text": null,
+        "core-metadata": {
+          "sha256": "166ca07d308c14c3e9dfe028c6389bf1a439027fe7b389d33eedb7d002e8bafb"
+        },
+        "digests": {
+          "blake2b_256": "4a5a2a34ba5a468e9d3d6e5b0733280e1ae3c850bfc5f1d681fc0e97f564d1f2",
+          "md5": "559761319a84bb671a1bf5f40d40a4c5",
+          "sha256": "bfaa998ceeea4d0aa72b40cdd0023d19409504e244b439ff2aa9f01729341c5f"
+        },
+        "downloads": -1,
+        "filename": "wrapt-2.5.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+        "has_sig": false,
+        "md5_digest": "559761319a84bb671a1bf5f40d40a4c5",
+        "packagetype": "bdist_wheel",
+        "python_version": "cp312",
+        "requires_python": ">=3.9",
+        "size": 250438,
+        "upload_time": "2026-10-14T00:37:21",
+        "upload_time_iso_8601": "2026-10-14T00:37:21.882318Z",
+        "url": "https://files.pythonhosted.org/packages/4a/5a/2a34ba5a468e9d3d6e5b0733280e1ae3c850bfc5f1d681fc0e97f564d1f2/wrapt-2.5.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      "pypi_release_response_sha256": "2330c47a6ddde4fef8284fd3c3c6ebec48f10778024bf65b82b120f4e4938bc8",
+      "requires_dist": [
+        "pytest; extra == \"dev\"",
+        "setuptools; extra == \"dev\""
+      ],
+      "requires_python": ">=3.9",
+      "sha256": "bfaa998ceeea4d0aa72b40cdd0023d19409504e244b439ff2aa9f01729341c5f",
+      "size_bytes": 250438,
+      "upload_time_iso_8601": "2026-10-14T00:37:21.882318Z",
+      "url": "https://files.pythonhosted.org/packages/4a/5a/2a34ba5a468e9d3d6e5b0733280e1ae3c850bfc5f1d681fc0e97f564d1f2/wrapt-2.5.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+      "version": "2.5.1"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "C23_complete": false,
+  "disposition": "Preserve exact tested/reviewed bytes and source-bound receipts; no cosmetic source supersession",
+  "files": {
+    "docs/plans/ocean-v1/evidence/C23/linux-runtime/run_local.py": "a6ff70d8a0cc872e7219bf97ba5aca919c9b8b43c9a7876644bc2c85f3a3d1a5",
+    "tests/test_experiment_sandbox_linux_runtime.py": "478fdea08f0baabb68c8bc98f5a01e7902bdc8defaeaabdce4123685f65c5942"
+  },
+  "kind": "Whitespace qualification for immutable reviewed operator checkpoint",
+  "observation": "git diff --cached --check reports new blank line at EOF for two files; no semantic or Ruff failure"
+}

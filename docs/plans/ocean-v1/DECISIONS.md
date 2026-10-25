@@ -604,3 +604,40 @@ C23 preparation sourceb8e929e passes exact-source CI39578854643:5556 backend,
 [Hosted receipt](evidence/C23/hosted-preparation.json) preserves original pending
 evidence and verifies17 unchanged preparation paths. C23 stays In progress;
 actual runtime, durability, extraction, containment and numerical gates remain.
+
+### C23 isolated preparation and manual resume — 2026-10-25 JST
+
+The user's later instruction, “No need to change billing, just use what you
+need to use,” resolves the earlier requested budget decision for required C23
+work using existing billing. Oct24 browser authentication succeeded. Project
+`ocean-v1-c23-20261024`, private network and one two-hour Linux worker were
+created; all commands explicitly target that project. No legacy resource or
+billing arrangement was changed. Exact worker/runtime/image identities and
+pricing are recorded in [the worker plan](C23_GCP_TEST_WORKER_PLAN.md) and its
+immutable cloud progress receipts. The initial scientific image was built and
+verified, but no actual containment/numerical acceptance was completed.
+
+The interruption crossed the worker's automatic STOP deadline. OnOct25 CLI
+reauthentication was required again; the user's request to open sign-in was
+executed. Current cloud state must be inspected after sign-in before restarting.
+Retain old receipts/images, record new source supersessions and remove trusted
+setup egress before untrusted tests. Never infer termination from an elapsed
+deadline alone. The recurring automation remains PAUSED; this is manual work.
+
+Source816c8c9 repairs two Next.js production advisories with15.5.28 and passes
+all four required jobs in hosted run40070175545. Its new receipt binds the four
+changed package files; it does not accept the later uncommitted C23 runtime
+source. The journal/real adapter/trusted guest init/harness are additive operator
+implementation. Synthetic approvals confer no real C22 reservation/release
+authority. C22 serving dispatch guards remain unchanged; actual C23 gates are
+required before completion or advancing to C24.
+
+At18:04 JST onOct25 authentication was restored. Readback verified the original
+worker TERMINATED and the automatic stop onOct24. Its original24 evidence files
+were exported, one-time bootstrap metadata retained/removed, and the same VM
+restarted with an actual20:04JST STOP deadline. No duplicate or legacy mutation
+was made. The additive operator checkpoint now passes388 combined local cases,
+Ruff and shell syntax with independent reviews; earlier363/79 receipts remain
+immutable and are superseded by mount-reconciliation/numerical-pin amendments.
+Only trusted offline image preparation is running at this point; actual runtime
+gates and C22 authority/release integration remain required. The schedule stays PAUSED.

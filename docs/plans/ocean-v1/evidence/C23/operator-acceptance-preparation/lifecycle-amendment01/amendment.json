@@ -1,0 +1,28 @@
+{
+  "C23_complete": false,
+  "development_observations": {
+    "pre_internal_only_flag_tests": "104 passed in 3.36s",
+    "ruff": "passed"
+  },
+  "intentional_changes": [
+    "Physical bind uncertainty starts before invocation; cleanup reads kernel mountinfo and original target/source inode identities rather than command acknowledgment flags.",
+    "Fixed internal-only mount/umount excludes filesystem helper delegation; subprocess.run reaps its direct command child on timeout, without claiming arbitrary descendant control.",
+    "Refuse cleanup claims on unknown/stacked/preexisting mounts or unavailable kernel observations; unmount acknowledgment is insufficient without actual target absence and identity restoration.",
+    "Numerical repetition requires same valid runtime, trusted-init, adapter pins and normalized init policy/resource settings; individual job-bound profile hashes may differ."
+  ],
+  "original_receipts_immutable": true,
+  "primary_references": [
+    "https://raw.githubusercontent.com/util-linux/util-linux/v2.39.3/sys-utils/mount.8.adoc",
+    "https://raw.githubusercontent.com/util-linux/util-linux/v2.39.3/sys-utils/umount.8.adoc",
+    "https://docs.python.org/3.12/library/subprocess.html#subprocess.run"
+  ],
+  "prior_source_snapshot": "Root retained original 9b85 source from its private archive01 in operator-local-20261025/prior-source; original test source snapshot was not separately retained here.",
+  "retained_C22_real_approval": false,
+  "runtime_acceptance_complete": false,
+  "scope": "Source-only operator harness lifecycle and repetition amendment; no actual sandbox execution or cloud actions",
+  "supersedes_source_files": {
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "9b85c7f482c6aa37e587f8d78fc8e6cbb88ea315f64de57f35e646c86b77b32a",
+    "tests/test_experiment_sandbox_operator_acceptance.py": "e5fb58f12aa618db20f11fd0d1a7eef8fab5aa8ab43995e6ca6725bde96040ec"
+  },
+  "worker_binary_option_verification_required": true
+}

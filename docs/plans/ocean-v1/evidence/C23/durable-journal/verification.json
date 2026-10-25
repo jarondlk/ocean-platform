@@ -1,0 +1,72 @@
+{
+  "C23_complete": false,
+  "checks": {
+    "AST": "passed",
+    "independent_focused_cases_passed": 4,
+    "independent_review": "passed for single-host record-only storage",
+    "pytest_seconds": 12.328,
+    "ruff": "passed",
+    "source_steady": true,
+    "unique_journal_cases_passed": 97
+  },
+  "cloud_operations_performed": false,
+  "component": "C23",
+  "evidence_files": {
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/README.md": "af5ccada3b6bb2876d1ef9b6e6b980245d768967e0f1c7e936c74e241e877861",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/acceptance-start.json": "bd36d3b3aaf7ffc931f7eab7e786558d174155a3ed4e072c0acf4417e93d63c9",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/acceptance.json": "3d043ca1e8c77210a3c06f4893386b1c328d5dedd34c31102a371b64849cb639",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/attempt-history.json": "40fd189128df7467672e7da54cd0bd93a8a90a1cbad27d8973bf68166cdff436",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/control-profile-review.json": "c6dd7b98df38f102defbce0438bcd057fdae9d63894498d6e3e0d955c4c6341e",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/development-history.json": "632fed0439c4e173d4ab18588fda5de3e2c7f692d4750dc946839a97afe3f21b",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/pytest.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/pytest.stdout.txt": "a3f760acb9a790c7db645e44ae78eedf810c002bfeb815b041c4d52e270ebc2b",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/review-amendment/acceptance-start.json": "cea8c15eabc7ba8256879925f9aa9150b5192a7f5a9896d3ac1636b27375a297",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/review-amendment/acceptance.json": "3f05e380dd92d945f1b8815f1ae4d9191626590b8b7367747550f5522dac7a79",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/review-amendment/pytest.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/review-amendment/pytest.stdout.txt": "b81189493d691c9adc4841614bb297abba227d0a544d066d5aa556356ab247a1",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/review-amendment/review-findings.json": "bd2e5abb4785f29387e4bcc742c5248c60a99dba2a8fa01988adee121abcc3c9",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/review-amendment/ruff.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/review-amendment/ruff.stdout.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/review-amendment/run_acceptance.py": "70fa4a33f9229628aeaadc3ff8f4a6148316fda4370d05b31711c5a3abc4dddf",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/ruff.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/ruff.stdout.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/plans/ocean-v1/evidence/C23/durable-journal/run_acceptance.py": "85591ed1c01730ca0b5b67f1061546e6b18073450f719b73c846a1b9443e0513",
+    "docs/plans/ocean-v1/evidence/C23/journal-independent-review/amended-focused-check.txt": "0c28f5a6e90f6e36698a50c2dc32daafec29d6399e69f53fa55e444ae1b492e3",
+    "docs/plans/ocean-v1/evidence/C23/journal-independent-review/amended-review.json": "07dd32e394bda1e7285532edeb535e6f89567a2ab26a114862040357cc3371bd",
+    "docs/plans/ocean-v1/evidence/C23/journal-independent-review/finding.json": "e372776179db784c37f09f3590fdbe95950d2f54e01aa29e854d4b9436c1aad5",
+    "docs/plans/ocean-v1/evidence/C23/journal-independent-review/fork-mutex-finding.json": "9123562f76b8f0692e51e61635c2db39725d2d8456f6bf36afe4fd2a565b5171"
+  },
+  "intentional_review_source_supersessions": {
+    "orchestration/experiment_sandbox/journal.py": {
+      "final_97_receipt_sha256": "6e128f8d15dc312c79f50aa35686bb8905aac4e02880d697c93e512705e37b7c",
+      "initial_93_receipt_sha256": "b56f07847eef9f480c1882b33b618211d07b56df24e186ba58776862bcbd24a7"
+    },
+    "tests/test_experiment_sandbox_journal.py": {
+      "final_97_receipt_sha256": "4c35bd93a71f9c14e624f2c78f3e992384703709dcea5f01b7c85bf1e4329174",
+      "initial_93_receipt_sha256": "c119820caac6acf2e0cdcd8b5d103c5e0c15621acba35fb4fe82d7b3eb9d5a0e"
+    }
+  },
+  "kind": "Corrected durable single-host journal local acceptance after independent safety review",
+  "limitations": [
+    "Local macOS process/storage acceptance, not Linux/gVisor runtime acceptance",
+    "Trusted private canonical single-host local filesystem and SQLite driver",
+    "No NFS/distributed lease or physical power-loss test",
+    "Caller must retain the live lease through every physical runtime effect",
+    "Snapshots, process death and missing state never prove sandbox termination",
+    "No production dispatch, C22 release authority or scientific approval"
+  ],
+  "original_93_test_receipt": "preserved; superseded for current acceptance after concrete review blockers",
+  "original_component_receipts_modified": false,
+  "recorded_at": "2026-10-24T07:16:35.558417+00:00",
+  "scope": [
+    "Actual local SQLite WAL/FULL transactions and process-crash reopen",
+    "Effect-scoped nonblocking flock, strict PID/live-handle/epoch binding",
+    "Immutable finite bounded hash-linked records and terminal result",
+    "Safe SQLite version query, trusted driver selection and no mixed live DB engines",
+    "Raw-DB-descriptor close and multithreaded-fork review regressions fixed"
+  ],
+  "source_files": {
+    "orchestration/experiment_sandbox/journal.py": "6e128f8d15dc312c79f50aa35686bb8905aac4e02880d697c93e512705e37b7c",
+    "tests/test_experiment_sandbox_journal.py": "4c35bd93a71f9c14e624f2c78f3e992384703709dcea5f01b7c85bf1e4329174"
+  }
+}

@@ -1,0 +1,21 @@
+ARG SCIENTIFIC_BASE
+FROM ${SCIENTIFIC_BASE} AS scientific-build
+ARG SCIENTIFIC_BASE
+COPY build-materials.json requirements.lock verify_image.py /opt/c23-build/
+COPY wheels/ /opt/c23-build/wheels/
+RUN python3 -I -B /opt/c23-build/verify_image.py --check-materials --manifest /opt/c23-build/build-materials.json --lock /opt/c23-build/requirements.lock --base-reference "${SCIENTIFIC_BASE}"
+RUN python3 -m pip install --no-index --find-links=/opt/c23-build/wheels --only-binary=:all: --require-hashes --no-deps --prefix=/scientific --requirement=/opt/c23-build/requirements.lock
+
+FROM ${SCIENTIFIC_BASE} AS scientific-runtime
+ARG SCIENTIFIC_BASE
+COPY --from=scientific-build /scientific/ /usr/local/
+COPY build-materials.json requirements.lock verify_image.py /opt/c23-build/
+COPY trusted_init.py /opt/c23/trusted_init.py
+RUN chmod 0444 /opt/c23/trusted_init.py
+RUN printf 'c23-scientific-image-build\n' > /opt/ocean-c23-image-build-only
+RUN OCEAN_C23_IMAGE_BUILD=1 python3 -I -B /opt/c23-build/verify_image.py --strip-installers --manifest /opt/c23-build/build-materials.json --lock /opt/c23-build/requirements.lock --base-reference "${SCIENTIFIC_BASE}"
+RUN python3 -I -B /opt/c23-build/verify_image.py --verify-installed --manifest /opt/c23-build/build-materials.json --lock /opt/c23-build/requirements.lock --base-reference "${SCIENTIFIC_BASE}"
+RUN rm -f /opt/c23-build/verify_image.py /opt/ocean-c23-image-build-only && mkdir -p /inputs /outputs /scratch && chown 65532:65532 /outputs /scratch && chmod 0700 /outputs /scratch
+USER 65532:65532
+WORKDIR /outputs
+ENTRYPOINT ["/usr/local/bin/python3", "-I", "-B"]

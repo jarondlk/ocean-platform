@@ -1,6 +1,6 @@
 # C23 — Isolated Python execution
 
-**Status:** In progress; local preparation passes393 scoped cases/Ruff and source-bound hosted CI. GCP setup is authorized; authentication, target/budget configuration and real runtime acceptance remain pending. **Prerequisites:** C22.
+**Status:** In progress; preparation/dependency repair pass hosted CI and additive operator source passes388 combined local cases. The isolated worker resumed onOct25 with a20:04JST stop deadline. Actual containment/numerical acceptance and the verified C22 operator bridge remain pending. **Prerequisites:** C22.
 
 ## Revised delivery boundary
 
@@ -20,7 +20,8 @@ Include sandbox/supervisor interfaces, pinned scientific environment, local synt
 C23 work now includes an isolated temporary Linux/gVisor test worker, runtime
 installation, scientific image preparation and synthetic cloud acceptance. This
 supersedes the earlier cloud-execution exclusion for that test environment.
-Authentication, target/billing and spending limits remain configuration inputs.
+The user subsequently authorized required C23 spending on existing billing;
+target/billing selection was resolved on2026-10-24. No new cap is required.
 [Worker plan](../C23_GCP_TEST_WORKER_PLAN.md). No legacy deployment or real-data
 operation is included, and C24's whole-site acceptance remains separate.
 
@@ -77,4 +78,21 @@ paths match the accepted commit. [New hosted receipt](../evidence/C23/hosted-pre
 preserves the original pending receipt. This verifies local preparation software,
 not actual gVisor behavior. New GCP authorization is recorded separately in
 [the decision](../evidence/C23/gcp-authorization-2026-10-23/decision.json).
-C23 remains In progress; no worker or real execution has been created.
+C23 remained In progress at that historical checkpoint.
+
+## Worker preparation and manual resume — 2026-10-25 JST
+
+The isolated project `ocean-v1-c23-20261024` and one `e2-standard-4` worker in
+`asia-northeast1-a` were created on2026-10-24. No service account is attached;
+SSH uses IAP/OS Login. gVisor `release-20261019.0` and all eight binaries are
+pinned; Python3.12.15 and22 hash-locked scientific packages were built offline
+and verified. The initial image is retained separately from the quota amendment
+being prepared. [Worker plan and actual record](../C23_GCP_TEST_WORKER_PLAN.md).
+
+The durable journal passes97 focused cases plus an independent four-case review.
+These results do not verify Linux containment. The real adapter/harness and
+trusted-init quota amendment are still being completed. Original receipts are
+immutable. C22 production dispatch/reservation-release guards remain closed;
+synthetic operator fixtures cannot count as real C22 approval consumption.
+The two-hour worker deadline elapsed during interruption; current cloud state
+must be read back after the browser login opened on2026-10-25 completes.

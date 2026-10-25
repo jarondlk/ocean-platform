@@ -1,0 +1,25 @@
+{
+  "C23_complete": false,
+  "files_edited": [],
+  "findings": "No additional material code defect identified in the inspected source; this is not real runtime acceptance",
+  "kind": "Independent read-only static review of sealed guest init and execution profile",
+  "mandatory_runtime_gates_not_cleared": [
+    "Actual installed gVisor marker/capability/UID behavior",
+    "Actual proc-FD/namespace/network/host containment",
+    "Descendant and outer-cgroup termination including failure/cancellation/recovery races",
+    "Output/extraction ordering and scientific numerical fixtures"
+  ],
+  "recorded_at": "2026-10-24T07:14:51.450592+00:00",
+  "reviewed_boundaries": [
+    "Fixed trusted PID1 hash and policy identity; profile stays configuration-only/ineligible",
+    "Separate non-root analysis UID, minimal retained init caps and empty child cap/group readback",
+    "Distinct analysis stdout/stderr pipes and bounded PID1-owned frame transport",
+    "Global guest kill/reap to ECHILD before nofollow bounded output extraction",
+    "Declared CPU/memory/namespace/mount controls and separate outer host/runtime cgroups"
+  ],
+  "scientific_approval_claimed": false,
+  "source_files": {
+    "orchestration/experiment_sandbox/profile_execution.py": "ecd9cbceae14a04a6c8fa299c88bb14ef01804e05161d7b11c9385a8c3d8a85a",
+    "sandbox/experiment/trusted_init.py": "7a2b4d4089d0911a8a678624bc02d70a90eea170e5fdb252271c9859c3fecf74"
+  }
+}

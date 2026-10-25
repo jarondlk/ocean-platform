@@ -1,0 +1,163 @@
+{
+  "currency": "USD",
+  "estimate": {
+    "assumptions": [
+      "One4vCPU16GiBVM",
+      "One50GiBbalancedPersistentDisk",
+      "Twohours thenexportevidenceanddeleteunneededdisk"
+    ],
+    "disk_50_gib_per_month": "6.50",
+    "e2_standard_4_per_hour": "0.17193144",
+    "excluded": [
+      "Tax",
+      "Temporary external IPv4 charges",
+      "Network transfer",
+      "Any subsequent session"
+    ],
+    "two_hour_compute_disk_using_744_hour_month": "0.3613359982795698924731182796"
+  },
+  "kind": "Official GCP billing catalog preflight; cost estimate not a hard cap",
+  "project_id": "ocean-v1-c23-20261024",
+  "recorded_date_jst": "2026-10-24",
+  "skus": [
+    {
+      "category": {
+        "resourceFamily": "Storage",
+        "resourceGroup": "SSD",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "Balanced PD Capacity in Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/6D8C-DF09-314D",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 1,
+          "effectiveTime": "2026-10-23T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By.s",
+            "baseUnitConversionFactor": 2875910101401600.0,
+            "baseUnitDescription": "byte second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "nanos": 130000000,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy.mo",
+            "usageUnitDescription": "gibibyte month"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "6D8C-DF09-314D"
+    },
+    {
+      "category": {
+        "resourceFamily": "Compute",
+        "resourceGroup": "RAM",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "E2 Instance Ram running in Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/CB4B-B875-93B4",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 1,
+          "effectiveTime": "2026-10-23T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "By.s",
+            "baseUnitConversionFactor": 3865470566400,
+            "baseUnitDescription": "byte second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "nanos": 3739110,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "GiBy.h",
+            "usageUnitDescription": "gibibyte hour"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "CB4B-B875-93B4"
+    },
+    {
+      "category": {
+        "resourceFamily": "Compute",
+        "resourceGroup": "CPU",
+        "serviceDisplayName": "Compute Engine",
+        "usageType": "OnDemand"
+      },
+      "description": "E2 Instance Core running in Japan",
+      "geoTaxonomy": {
+        "regions": [
+          "asia-northeast1"
+        ],
+        "type": "REGIONAL"
+      },
+      "name": "services/6F81-5844-456A/skus/EAED-8A05-843B",
+      "pricingInfo": [
+        {
+          "currencyConversionRate": 1,
+          "effectiveTime": "2026-10-23T07:00:00Z",
+          "pricingExpression": {
+            "baseUnit": "s",
+            "baseUnitConversionFactor": 3600,
+            "baseUnitDescription": "second",
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "nanos": 28026420,
+                  "units": "0"
+                }
+              }
+            ],
+            "usageUnit": "h",
+            "usageUnitDescription": "hour"
+          },
+          "summary": ""
+        }
+      ],
+      "serviceProviderName": "Google",
+      "serviceRegions": [
+        "asia-northeast1"
+      ],
+      "skuId": "EAED-8A05-843B"
+    }
+  ],
+  "source": "https://cloudbilling.googleapis.com/v1/services/6F81-5844-456A/skus?currencyCode=USD"
+}

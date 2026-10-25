@@ -1,0 +1,45 @@
+{
+  "C23_complete": false,
+  "actual_runtime_acceptance_performed": false,
+  "cloud_operations_performed": false,
+  "generated_analysis_execution_performed": false,
+  "passed": true,
+  "recorded_at": "2026-10-25T09:04:13.326520+00:00",
+  "results": [
+    {
+      "check": "pytest",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_operator_acceptance.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "seconds": 4.438
+    },
+    {
+      "check": "ruff",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/ruff",
+        "check",
+        "sandbox/experiment/gcp/run_operator_acceptance.py",
+        "tests/test_experiment_sandbox_operator_acceptance.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.016
+    }
+  ],
+  "retained_C22_real_approval": false,
+  "scope": "Pure fixture, target guard, network evidence and observation-contract tests only",
+  "source_files_after": {
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "f60c8bdb034d370067cd8121bfbdaf776ede7f558f7c6a82880413a2168cfb83",
+    "tests/test_experiment_sandbox_operator_acceptance.py": "d4f35c7919074100bea85f805b6e2d100ef80ebfc64bdc4dcdf0902dee1162f8"
+  },
+  "source_files_before": {
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "f60c8bdb034d370067cd8121bfbdaf776ede7f558f7c6a82880413a2168cfb83",
+    "tests/test_experiment_sandbox_operator_acceptance.py": "d4f35c7919074100bea85f805b6e2d100ef80ebfc64bdc4dcdf0902dee1162f8"
+  },
+  "source_steady": true
+}

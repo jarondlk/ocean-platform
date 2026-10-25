@@ -1,0 +1,17 @@
+{
+  "C23_complete": false,
+  "authentication_action": "gcloud auth login --force opened browser; user completion pending",
+  "billing_scope": "existing billing; required C23 spending authorized by user; no new cap decision requested",
+  "containment_accepted": false,
+  "current_vm_state": "unverified",
+  "instance_name": "c23-containment-01",
+  "legacy_mutations": false,
+  "observed_at_utc": "2026-10-25T03:56:42Z",
+  "previous_auto_stop_deadline_utc": "2026-10-24T08:33:32.313532Z",
+  "production_dispatch": false,
+  "project_id": "ocean-v1-c23-20261024",
+  "readback": "failed before resource result: CLI reauthentication required",
+  "scheduled_continuation": "PAUSED",
+  "version": "c23-cloud-manual-resume-v1",
+  "zone": "asia-northeast1-a"
+}

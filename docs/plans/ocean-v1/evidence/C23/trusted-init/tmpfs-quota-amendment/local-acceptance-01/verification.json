@@ -1,0 +1,75 @@
+{
+  "C23_complete": false,
+  "checks": [
+    {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_trusted_init.py",
+        "tests/test_experiment_sandbox_profile_execution.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C23/trusted-init/tmpfs-quota-amendment/local-acceptance-01/check-1.txt",
+      "log_sha256": "7c1468f98f0437ef50d1a7da05b3c1b681dac4ae404bf0b2a9645ba9a0e0a8d2"
+    },
+    {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "sandbox/experiment/trusted_init.py",
+        "orchestration/experiment_sandbox/profile_execution.py",
+        "tests/test_experiment_sandbox_trusted_init.py",
+        "tests/test_experiment_sandbox_profile_execution.py"
+      ],
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C23/trusted-init/tmpfs-quota-amendment/local-acceptance-01/check-2.txt",
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  ],
+  "component": "C23",
+  "design_sha256": "c4db4d363fac574980f7f5c3c2fd487696f8ae4163106372a75add5fe78b5463",
+  "development_runs": [
+    "98 passed in3.60s; Ruff passed",
+    "Additional negative owner/capability-ABI/readback cases:106 passed in3.72s; Ruff passed"
+  ],
+  "dispatch_eligible": false,
+  "initial_built_image_not_replaced_by_this_recorder": true,
+  "kind": "Trusted-init-v2/profile-v3 tmpfs quota LOCAL PREPARATION amendment",
+  "original_78_case_receipt_immutable": true,
+  "original_preparation_paths_unchanged": 17,
+  "passed": true,
+  "prior_source_snapshot_preserved": true,
+  "qualifications": [
+    "All mount/capability/UID/process effects in local tests are refused or replaced by safe fakes",
+    "Pinned source analysis is not actual quota/containment/termination evidence",
+    "New image digest/rootfs inventory and actual Linux ENOSPC/write-denial/capability probes remain required",
+    "Original C22 guard, public dispatch, source/access/revocation and reservation release remain unchanged"
+  ],
+  "real_runtime_tested": false,
+  "recorded_at": "2026-10-25T04:01:33.693403+00:00",
+  "recorder_sha256": "65dec0dc01e79052f48eb4e630be9515ed47488f584b6e033d9279fda9d3048a",
+  "reservation_released": false,
+  "source_files_after": {
+    "orchestration/experiment_sandbox/profile_execution.py": "9c7f881ff522b99a5867583c10d5937ae81aabb66d9103eafba79a3110f2f880",
+    "sandbox/experiment/trusted_init.py": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+    "tests/test_experiment_sandbox_profile_execution.py": "2dd04563a4364d50f721cfc5249b74c4cb80c63c72e5e37a9c8ac8807e7bce6f",
+    "tests/test_experiment_sandbox_trusted_init.py": "b58bbc6b43cb3202c8e10adbdbd5fd4c34c28d9cb6fdc81beb48afecb48441c5"
+  },
+  "source_files_before": {
+    "orchestration/experiment_sandbox/profile_execution.py": "9c7f881ff522b99a5867583c10d5937ae81aabb66d9103eafba79a3110f2f880",
+    "sandbox/experiment/trusted_init.py": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+    "tests/test_experiment_sandbox_profile_execution.py": "2dd04563a4364d50f721cfc5249b74c4cb80c63c72e5e37a9c8ac8807e7bce6f",
+    "tests/test_experiment_sandbox_trusted_init.py": "b58bbc6b43cb3202c8e10adbdbd5fd4c34c28d9cb6fdc81beb48afecb48441c5"
+  },
+  "supersedes_additive_source_hashes": {
+    "orchestration/experiment_sandbox/profile_execution.py": "ecd9cbceae14a04a6c8fa299c88bb14ef01804e05161d7b11c9385a8c3d8a85a",
+    "sandbox/experiment/trusted_init.py": "7a2b4d4089d0911a8a678624bc02d70a90eea170e5fdb252271c9859c3fecf74",
+    "tests/test_experiment_sandbox_profile_execution.py": "4dbc7a856abba1cbb781207f17e9398956dbb5d1b387b77c86233b8ac6c97146",
+    "tests/test_experiment_sandbox_trusted_init.py": "77e741f1659e709082209999895bfb9ac2e7bdf44a29c4bc08ae401c77cf9391"
+  }
+}

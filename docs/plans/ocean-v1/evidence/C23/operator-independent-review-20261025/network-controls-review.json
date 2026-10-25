@@ -1,0 +1,51 @@
+{
+  "C23_complete": false,
+  "actual_containment_verified": false,
+  "additional_independent_observations": {
+    "actual_macos_guard_refuses_prepare_host_controls_seal_network_isolation_and_run_before_reads_writes_socket_or_subprocess_effects": true,
+    "failed_mock_external_TCP_control_retains_no_positive_receipt": true,
+    "no_generated_analysis_or_cloud_effects_executed": true,
+    "successful_positive_control_receipt_created_only_after_mock_TCP_context_success": true
+  },
+  "cloud_operations_performed": false,
+  "dispatch_eligible": false,
+  "focused_command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_experiment_sandbox_operator_acceptance.py",
+    "-k",
+    "network or privileged_setup or guard or containment",
+    "-q",
+    "--tb=short"
+  ],
+  "focused_result": "45 passed,34 deselected in0.63s",
+  "generated_analysis_executed": false,
+  "kind": "Independent host-safe two-phase network controls and containment-source review",
+  "qualifications": [
+    "External TCP denial after VM egress removal is evidence of the combined VM/guest boundary; it is not solely attributable to gVisor",
+    "Live host metadata succeeds before the attempt and guest metadata denial is a differential control; actual guest execution still must occur",
+    "No-NAT completeness and API document read time are trusted operator provenance; worker monotonic timestamp records sealing time, not continuous cloud-state attestation",
+    "Fresh metadata at attempt setup does not lock later mutable cloud state",
+    "Actual runsc networking, mount/capability/UID semantics, termination, quotas and numerical acceptance remain open"
+  ],
+  "recorded_at": "2026-10-25T04:16:32.827850+00:00",
+  "reservation_released": false,
+  "review_state": "Passed within operator-preparation scope",
+  "reviewed_boundaries": [
+    "Trusted external TCP positive control precedes egress removal and is explicitly labeled as such",
+    "Immutable SHA/mode control receipts bind fixed target, instance ID and host boot with bounded monotonic freshness",
+    "Actual attempt reads live metadata NIC count and absent access configs; retained API resources bind exact project/zone/network/subnet and reject external IPv4/IPv6 configs, peering and target-network Cloud NAT",
+    "Malformed/falsy JSON collections and Boolean/integer identity aliases reject rather than establish network eligibility",
+    "Seal helper stamps and hashes operator-supplied API documents; it does not fabricate an API read or independently prove inventory completeness/read time",
+    "Stored containment analysis asserts only loopback interfaces and no non-loopback IPv4/IPv6 routes, denies metadata/external socket access, host file/socket access, temporary/root/input writes and trusted PID1 frame-FD access",
+    "Stored analysis verifies readonly /tmp and /dev/shm mount views and retains interface/route summary facts; generated analysis was reviewed as source only",
+    "Synthetic fixtures retain false real-C22-approval, dispatch, reservation-release and component-completion labels"
+  ],
+  "reviewer": "/root/c23_runtime_design",
+  "source_changes_by_reviewer": false,
+  "source_files": {
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "9b85c7f482c6aa37e587f8d78fc8e6cbb88ea315f64de57f35e646c86b77b32a",
+    "tests/test_experiment_sandbox_operator_acceptance.py": "e5fb58f12aa618db20f11fd0d1a7eef8fab5aa8ab43995e6ca6725bde96040ec"
+  }
+}

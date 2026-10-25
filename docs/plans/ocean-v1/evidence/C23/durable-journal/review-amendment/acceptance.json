@@ -1,0 +1,43 @@
+{
+  "C23_complete": false,
+  "linux_gvisor_execution_performed": false,
+  "passed": true,
+  "real_sqlite_flock_process_tests": true,
+  "recorded_at": "2026-10-24T07:12:25.989965+00:00",
+  "reservation_release_authority": false,
+  "results": [
+    {
+      "check": "pytest",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_journal.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "seconds": 12.328
+    },
+    {
+      "check": "ruff",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/ruff",
+        "check",
+        "orchestration/experiment_sandbox/journal.py",
+        "tests/test_experiment_sandbox_journal.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.012
+    }
+  ],
+  "source_files_after": {
+    "orchestration/experiment_sandbox/journal.py": "6e128f8d15dc312c79f50aa35686bb8905aac4e02880d697c93e512705e37b7c",
+    "tests/test_experiment_sandbox_journal.py": "4c35bd93a71f9c14e624f2c78f3e992384703709dcea5f01b7c85bf1e4329174"
+  },
+  "source_files_before": {
+    "orchestration/experiment_sandbox/journal.py": "6e128f8d15dc312c79f50aa35686bb8905aac4e02880d697c93e512705e37b7c",
+    "tests/test_experiment_sandbox_journal.py": "4c35bd93a71f9c14e624f2c78f3e992384703709dcea5f01b7c85bf1e4329174"
+  },
+  "source_steady": true
+}

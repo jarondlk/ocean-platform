@@ -1,0 +1,41 @@
+{
+  "component": "C23",
+  "kind": "Independent review of initial durable journal; amendment required",
+  "reviewed_source": {
+    "orchestration/experiment_sandbox/journal.py": "b56f07847eef9f480c1882b33b618211d07b56df24e186ba58776862bcbd24a7",
+    "tests/test_experiment_sandbox_journal.py": "c119820caac6acf2e0cdcd8b5d103c5e0c15621acba35fb4fe82d7b3eb9d5a0e"
+  },
+  "finding": "Closing the journal's separately opened raw database FD can cancel another same-process journal instance's active SQLite POSIX locks",
+  "reproduction": {
+    "environment": "Actual macOS local filesystem, CPython project venv, SQLite3.53.4",
+    "setup": "Two DurableExecutionJournal objects on one private temporary root; first retains BEGIN IMMEDIATE transaction while a subprocess probes SQLite SHAREDFIRST byte1073741826",
+    "before_second_journal_close": {"exclusive_shared_byte": "blocked", "errno": 35},
+    "after_second_journal_close": {"exclusive_shared_byte": "acquired"},
+    "transaction_active_at_both_probes": true,
+    "database_rows_written_by_probe": false,
+    "database_corruption_attempted_or_claimed": false,
+    "recording_qualification": "These observations transcribe the actual tool output; this is not a claim that a separate raw command-log file was captured"
+  },
+  "primary_sources": [
+    "https://sqlite.org/howtocorrupt.html#posix_advisory_locks_canceled_by_a_separate_thread_doing_close",
+    "https://sqlite.org/howtocorrupt.html#multiple_copies_of_sqlite_linked_into_the_same_application"
+  ],
+  "required_amendments": [
+    "Remove persistent raw database FD opening/closing while SQLite connections can exist; retain private-path and inode checks without bypassing SQLite's lock-aware descriptor lifecycle",
+    "Prevent live same-root journal instances from selecting different SQLite modules/C libraries in one process",
+    "Reset any new global driver-registry mutex/state safely in fork children without touching parent lock authority",
+    "Add actual concurrent journal-close OS-lock regression and driver-mixing/fork tests; preserve original93-case acceptance as historical"
+  ],
+  "other_review_observations": [
+    "Per-job flock and inode binding conservatively prevent a competing holder from claiming live effect scope",
+    "Reacquisition remains reconciliation-required, not automatic execution, termination or release authority",
+    "Private root, schema/chain readback, bounded SQL projections and transactional result/finish recording are explicit",
+    "The real orchestrator must hold the lease throughout physical effects and must not treat a returned snapshot as permanent authority"
+  ],
+  "owner_notified": true,
+  "owner_accepted_finding": true,
+  "reviewer_edits_to_journal_or_tests": false,
+  "review_state": "Blocked pending source amendment and focused verification",
+  "C23_complete": false,
+  "real_runtime_containment_verified_by_this_review": false
+}

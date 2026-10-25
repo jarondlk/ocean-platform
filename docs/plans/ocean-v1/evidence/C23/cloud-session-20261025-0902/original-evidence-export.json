@@ -1,0 +1,30 @@
+{
+  "actual_containment_accepted": false,
+  "archive_sha256": "cc4962bfa903cde938b1d8ced7c0c75f1b0a17ae570eba92d4970057e08dbb7e",
+  "files": {
+    "evidence/base-image-inspect.json": "600a74209afcf0fcf6f06547f6622d4459137a1676f2457280c000c33fbe3039",
+    "evidence/base-pull.stderr.txt": "7daa2550882f234f6c14a22de03b330c56344802edb7c31921e28822a706588a",
+    "evidence/base-pull.stdout.txt": "da124ed24b40fca59cb4ba4d4bf59a8dd1eef9346660ad78beeb3fe5e67a505c",
+    "evidence/bootstrap-complete.txt": "3441d202cbe6fd2dae02ec54d8fbbcbaeda7f68820bad707ddc137fb35614e35",
+    "evidence/cgroup-controllers.txt": "a1d3f9a7963cbedee1c50c26c826b35dfb1af3608d9c611731f8a21e56ea9bde",
+    "evidence/host-boot-id.txt": "5963740703561a70e0efa4c6dba44faabcb9c47c4e09d3a4ba5029fcdc51be28",
+    "evidence/host-kernel.txt": "15502bd6701a0d29d2644bfa48b7e3ea0dbdb1f41c8648ce8f137fa17cce4ba9",
+    "evidence/host-packages.txt": "f82b235d8267efd3a4362d1876e0d305b08090cc8fa78719d882407e961b6f69",
+    "evidence/image-build-complete.txt": "bcc3537d36f05181e2145fe3f2f50f1915bb20bd685e3e704c83550db50f3348",
+    "evidence/image-build.stderr.txt": "abd6f7249a473f07f501069dde0fe2436ada294e0816606ef6d35309752ff944",
+    "evidence/image-build.stdout.txt": "cd0a753ec40d50d26c110926cdbac54010b1943e082acf492acc30ae5f561829",
+    "evidence/installed-runtime.json": "305942f419cdfccf69c2d731039b0f3a9532bfba99616090b834dc817a52f4a6",
+    "evidence/oci-copy.stderr.txt": "c97d46c9d032630fab1625038ba4a56fc897ff5f0ba43bb81246227e3fb08bd4",
+    "evidence/oci-copy.stdout.txt": "12b50f3e66fbba7ba2b893b44aff5521227defa1c2287b19087df6d61142d225",
+    "evidence/operator-cgroup-parent.txt": "71e86362f5d5498e22faa5d851af0929065937ab0269fdb862dcaf34aea1638a",
+    "evidence/operator-install.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/operator-install.stdout.txt": "5b72ff3474c11b3611f6b12ae8c7368069102a563818ca0acc0ee74e6dcee663",
+    "evidence/operator-packages.txt": "f71b81a51b0db7de2f8078bd5847b744c40d8c3de5f97e983d97a080e13804d8",
+    "evidence/operator-sqlite.json": "1cec5f3268042cb990ecf15cd28d49c2fc5743ca3eda13cc716d5855c009ffff",
+    "evidence/runsc-flags.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/runsc-version.txt": "20ad667d017ca41ce9e4a8f326ae2f12a00fad41830aa444a26b5fa50b2925c8",
+    "evidence/scientific-image-inspect.json": "cf8cba18378c70a8fe89196931ecd6bf97db1b1706d1501238ddad4c9bff1bce",
+    "evidence/umoci-unpack.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/umoci-unpack.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

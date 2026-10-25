@@ -7,8 +7,12 @@ metadata checkpoint `f4f702c`. C23 is In progress. It is not accepted execution.
 Current scope amendment,2026-10-23: GCP setup/runtime installation/image builds
 and synthetic tests for an isolated C23 worker are now explicitly authorized.
 The no-provisioning statements below describe the earlier local checkpoint.
-See [worker plan](C23_GCP_TEST_WORKER_PLAN.md) for required authentication,
-target/budget configuration and unchanged real acceptance gates.
+See [worker plan](C23_GCP_TEST_WORKER_PLAN.md) for actual isolated worker
+configuration and unchanged real acceptance gates. Target/existing billing and
+required C23 spending were resolved by the user's later authorization. Oct25
+manual resume required browser reauthentication, restored at18:04JST. The same
+worker was verified stopped then restarted with20:04JST STOP deadline. Actual
+runtime gates remain.
 
 The user confirmed there is no existing Linux/gVisor host and instructed that
 real execution remain gated. No scheduler was resumed. No host installation,
@@ -87,4 +91,28 @@ and verifies all17 preparation source hashes. This is software preparation
 evidence; no runsc installation or real containment test occurred in those jobs.
 The user's later GCP approval removes the missing authorization for a temporary
 test worker. It does not satisfy any mandatory acceptance row above. No worker
-has been created and the scheduled continuation remains PAUSED.
+existed at that historical checkpoint. The worker/image were prepared onOct24;
+Oct25 browser reauthentication is pending. Scheduled continuation remains PAUSED.
+
+## Additive operator preparation — 2026-10-25 JST
+
+The durable journal is record-only and holds an exclusive per-job OS lock
+through physical effects. Crash/reboot/lease loss never proves termination.
+The separately pinned trusted init mounts only fixed guest output/scratch
+tmpfs filesystems, verifies byte/inode quotas, drops its transient mount
+capability before forking, drops all analysis capabilities and reaps descendants
+before bounded extraction. Explicit readonly temporary mounts suppress runsc's
+otherwise automatic writable `/tmp`. These are reviewed implementations;
+actual Linux enforcement remains a mandatory gate.
+
+The real adapter is reachable only through an explicit operator harness. The
+harness's generated synthetic fixture is not retained real C22 approval, has no
+C22 reservation consumption/release authority and cannot enable serving dispatch.
+Its host-positive controls and fresh target/boot-bound network-isolation records
+must establish no external IP/NAT before an actual test runs. Journal, profile,
+runtime, materialized rootfs, wrapper, input and output identities remain pinned.
+The initial image/receipts stay immutable when the quota amendment is rebuilt.
+
+The retained C22 bridge and narrow proof-backed release path remain design-only.
+They must be verified separately after containment; the operator synthetic
+fixture cannot clear the Durability reservation-release gate in the table.

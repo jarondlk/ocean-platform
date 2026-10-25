@@ -1,0 +1,67 @@
+{
+  "C23_complete": false,
+  "attempt_history": [
+    "Initial unrecorded run: 77 passed/1 failed because macOS os lacks setresuid and the negative-guard test tried monkeypatch with raising=True; no privileged operation ran",
+    "Initial Ruff identified one unused test import; removed, and negative guard spies use raising=False for absent Linux-only APIs",
+    "Subsequent 78-case runs passed; root review identified supervisor-owned input-directory incompatibility for root Linux hosts",
+    "New profile-v2 now validates application-owned0500 inputs independently and configures marker/outer cgroup; original v1 renderer remains unchanged",
+    "This final recorded run binds exact source before/after and retains the earlier findings without claiming actual guest execution"
+  ],
+  "checks": [
+    {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_trusted_init.py",
+        "tests/test_experiment_sandbox_profile_execution.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C23/trusted-init/local-acceptance-01/check-1.txt",
+      "log_sha256": "07a62c1a8e7db7f6f1e76b87aca5d1d881c9daab124f501761e871ab5cd52e0d"
+    },
+    {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "sandbox/experiment/trusted_init.py",
+        "orchestration/experiment_sandbox/profile_execution.py",
+        "tests/test_experiment_sandbox_trusted_init.py",
+        "tests/test_experiment_sandbox_profile_execution.py"
+      ],
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C23/trusted-init/local-acceptance-01/check-2.txt",
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  ],
+  "component": "C23",
+  "dispatch_eligible": false,
+  "kind": "Additive trusted PID1/profile-v2 LOCAL PREPARATION only",
+  "limitations": [
+    "Host tests refuse privileged guest operations; they do not test real fork, kill(-1), UID/cap transitions or runsc",
+    "Actual pinned-gVisor marker, capabilities, mapping/gofer readability and descendant cleanup remain required",
+    "Actual resource/pipe/control-frame isolation, outer-cgroup teardown, durability and numerical acceptance remain required",
+    "No C22 API, production dispatch, reservation release, scientific approval or accepted legacy profile/source is changed"
+  ],
+  "passed": true,
+  "prior_preparation_paths_unchanged": 17,
+  "real_runtime_tested": false,
+  "recorded_at": "2026-10-24T06:37:02.870480+00:00",
+  "recorder_sha256": "d65b190a9a84e208b2ceabebaee36616a43d689ea7065c4c102118b775e00713",
+  "source_files_after": {
+    "orchestration/experiment_sandbox/profile_execution.py": "ecd9cbceae14a04a6c8fa299c88bb14ef01804e05161d7b11c9385a8c3d8a85a",
+    "sandbox/experiment/trusted_init.py": "7a2b4d4089d0911a8a678624bc02d70a90eea170e5fdb252271c9859c3fecf74",
+    "tests/test_experiment_sandbox_profile_execution.py": "4dbc7a856abba1cbb781207f17e9398956dbb5d1b387b77c86233b8ac6c97146",
+    "tests/test_experiment_sandbox_trusted_init.py": "77e741f1659e709082209999895bfb9ac2e7bdf44a29c4bc08ae401c77cf9391"
+  },
+  "source_files_before": {
+    "orchestration/experiment_sandbox/profile_execution.py": "ecd9cbceae14a04a6c8fa299c88bb14ef01804e05161d7b11c9385a8c3d8a85a",
+    "sandbox/experiment/trusted_init.py": "7a2b4d4089d0911a8a678624bc02d70a90eea170e5fdb252271c9859c3fecf74",
+    "tests/test_experiment_sandbox_profile_execution.py": "4dbc7a856abba1cbb781207f17e9398956dbb5d1b387b77c86233b8ac6c97146",
+    "tests/test_experiment_sandbox_trusted_init.py": "77e741f1659e709082209999895bfb9ac2e7bdf44a29c4bc08ae401c77cf9391"
+  }
+}

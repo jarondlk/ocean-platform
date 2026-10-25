@@ -1,0 +1,32 @@
+{
+  "C23_complete": false,
+  "checks": [
+    "Actual macOS host refused before material reads or metadata",
+    "Actual local OCI retained/streaming hash and size checks pass for exact bytes",
+    "Both retained/streaming OCI paths reject tampering and mis-sized descriptors",
+    "Create-only receipt path rejects overwrite and preserves original bytes",
+    "Runtime absolute/traversal/unapproved well-formed releases reject before executable lookup"
+  ],
+  "cloud_operations_performed": false,
+  "development_attempt": "First system-Python import refused because sqlalchemy was unavailable before tests/effects; rerun used repository .venv",
+  "dispatch_eligible": false,
+  "disposition": "No remaining material blocker in preparation scope",
+  "kind": "Independent host-safe materialization/resume source review",
+  "qualifications": [
+    "No cloud scripts executed; no actual Linux cgroup/mount/runtime behavior tested",
+    "Resume guard refuses populated parent and does not infer old-job termination or release reservations",
+    "Materialization-to-OCI provenance relies on pinned trusted offline build and umoci invocation; rootfs inventory alone is not OCI derivation proof"
+  ],
+  "recorded_at": "2026-10-25T04:06:03.699830+00:00",
+  "shell_syntax": "bash -n build_quota_amendment.sh resume_worker.sh passed",
+  "source_after": {
+    "sandbox/experiment/gcp/build_quota_amendment.sh": "1c8c8deb9cbeffaa5b539d206d2b6a9705cf7c6137c2a66af3761efaccf68e66",
+    "sandbox/experiment/gcp/prepare_image_receipts.py": "4b3630f33ba447f44156a5b1c4b0566d7747358d9710b0b754eaa8c11fc9c494",
+    "sandbox/experiment/gcp/resume_worker.sh": "7620a0c7e1a2f5a7ed5d73529ad3572954d9445c727bba60455b5d4564595f3e"
+  },
+  "source_before": {
+    "sandbox/experiment/gcp/build_quota_amendment.sh": "1c8c8deb9cbeffaa5b539d206d2b6a9705cf7c6137c2a66af3761efaccf68e66",
+    "sandbox/experiment/gcp/prepare_image_receipts.py": "4b3630f33ba447f44156a5b1c4b0566d7747358d9710b0b754eaa8c11fc9c494",
+    "sandbox/experiment/gcp/resume_worker.sh": "7620a0c7e1a2f5a7ed5d73529ad3572954d9445c727bba60455b5d4564595f3e"
+  }
+}

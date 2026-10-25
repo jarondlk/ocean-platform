@@ -1,0 +1,114 @@
+{
+  "base": {
+    "base_reference": "docker.io/library/python@sha256:57d96f71de145a98e7ceca18ee4ade77bba4103a33a72dfaea026b23625c6bf0",
+    "config_digest": "sha256:3c4d812a6efe003770aafbdba65f9c1960ba8234ab23a133934205a70bdcda77",
+    "index_digest": "sha256:6a0e06f5ba0b373d051aabd3fffb9b873f27f9a2a3a14bcbe37dee6f0e3bbc70",
+    "layers": [
+      {
+        "digest": "sha256:11422d7ca1a44390a32bd8d8d9dc5946b4d053b3bbd9507d682e35584ba84a26",
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "size": 28247935
+      },
+      {
+        "digest": "sha256:fd4548892b7d74acf5f52391380b45441b4ec55f6c2e1506030c2af26fd3e3f6",
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "size": 3341049
+      },
+      {
+        "digest": "sha256:87463122edacdc60df8c7840549960acce4dfb91a2b2aa36f563f62e0cd991db",
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "size": 13678701
+      },
+      {
+        "digest": "sha256:b52d28f2ade3944bb78458d2d77f25816d73cb5566d86dd897c9b8829a853ad8",
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "size": 249
+      }
+    ],
+    "platform": {
+      "architecture": "amd64",
+      "os": "linux"
+    },
+    "python_version": "3.12.15",
+    "tag": "docker.io/library/python:3.12.15-slim-bookworm"
+  },
+  "base_layers_downloaded_or_materialized": false,
+  "binary_wheels_in_git": false,
+  "checks": {
+    "complete_active_linux_dependency_edges": 30,
+    "existing_strict_material_checker": "passed",
+    "official_pypi_selected_wheel_hashes_and_sizes": 22,
+    "offline_inert_fixture_context_files": 28,
+    "preparation_checks": 8,
+    "ruff": "passed",
+    "wheel_bytes": 156205254
+  },
+  "component": "C23",
+  "evidence_files": {
+    "docs/plans/ocean-v1/evidence/C23/materials/discovery-20261024/assembly-fixture-verification.json": "747679a696c3bac0dd3d53f8c18f397a30d857bba65713b9ccf644992329dd79",
+    "docs/plans/ocean-v1/evidence/C23/materials/discovery-20261024/attempt-history.json": "16787f5cd01d1dcd79ebfd9a3a40383154adc04f8bbe50707f194f1bad82c26c",
+    "docs/plans/ocean-v1/evidence/C23/materials/discovery-20261024/base-config.json": "3c4d812a6efe003770aafbdba65f9c1960ba8234ab23a133934205a70bdcda77",
+    "docs/plans/ocean-v1/evidence/C23/materials/discovery-20261024/base-index.json": "6a0e06f5ba0b373d051aabd3fffb9b873f27f9a2a3a14bcbe37dee6f0e3bbc70",
+    "docs/plans/ocean-v1/evidence/C23/materials/discovery-20261024/base-manifest.json": "57d96f71de145a98e7ceca18ee4ade77bba4103a33a72dfaea026b23625c6bf0",
+    "docs/plans/ocean-v1/evidence/C23/materials/discovery-20261024/base-summary.json": "0a3a150de478c453b68d8678010f59c1a5acf07785d8cf4d86b282337b97eef2",
+    "docs/plans/ocean-v1/evidence/C23/materials/discovery-20261024/checks.json": "067c564cc710866d59256d270b5cf93b57d3bbdbdbabe6abb794d8b451f75654",
+    "docs/plans/ocean-v1/evidence/C23/materials/discovery-20261024/pip-download.log": "87f3af55eb03dee1abe214cec52dd727537c84ae67ac9d66f4ad1e1f28cd277a",
+    "docs/plans/ocean-v1/evidence/C23/materials/discovery-20261024/resolver-command.json": "9332b40b8713cae284b684126406e91c8c726e0461d43818c1bc663b7a6609a4"
+  },
+  "image_built": false,
+  "kind": "Actual official-registry/PyPI material preparation; no build/runtime acceptance",
+  "lockfile_sha256": "dd8add33117ea76f317556b25c252a3e20d3b2328878ede7a45eed5fc3f06611",
+  "packages": {
+    "contourpy": "1.4.0",
+    "cycler": "0.12.1",
+    "fonttools": "4.67.0",
+    "formulaic": "1.2.2",
+    "interface-meta": "2.0.1",
+    "kiwisolver": "1.5.1",
+    "matplotlib": "3.11.2",
+    "narwhals": "2.27.1",
+    "numpy": "2.5.4",
+    "packaging": "26.3",
+    "pandas": "3.1.0",
+    "patsy": "1.0.3",
+    "pillow": "13.0.0",
+    "pyarrow": "26.0.0",
+    "pyparsing": "3.3.3",
+    "python-dateutil": "3.0.0",
+    "scipy": "1.18.1",
+    "six": "1.17.0",
+    "statsmodels": "0.15.0",
+    "typing-extensions": "4.16.0",
+    "tzdata": "2026.5",
+    "wrapt": "2.5.1"
+  },
+  "prepared_date_jst": "2026-10-24",
+  "preserved_recipe_files": {
+    "sandbox/experiment/.containerignore": "271dfde8f3eb7c18bf0908e123f21207e7d52d3c2a3b76f6e1e8b8968247656e",
+    "sandbox/experiment/Containerfile": "11491d936f04308e592ab553bfc994733f4835d96cdf10d75e2accdb08ba2df7",
+    "sandbox/experiment/verify_image.py": "e7f1c315936cd72ba65fb4de8d759c71fba9bcd59b8137f07b25403d1de12b7a"
+  },
+  "real_dispatch_eligible": false,
+  "recorded_at": "2026-10-24T06:27:25.581368+00:00",
+  "remaining_gates": [
+    "Frozen reviewed trusted_init source pin in actual context",
+    "Authorized offline build with preloaded verified base",
+    "Actual installed image/graph/wrapper/rootfs identity",
+    "Linux gVisor containment/resource/durable termination/output extraction",
+    "Repeated numerical fixtures with declared seeds/tolerances"
+  ],
+  "runtime_or_scientific_acceptance": false,
+  "source_files": {
+    "sandbox/experiment/materials/linux-amd64-python3.12.15-20261024/Containerfile.execution": "bde6408eca78c0097e36c75e584452bc6763cd9a6e3b9982d72d79e5f51c0831",
+    "sandbox/experiment/materials/linux-amd64-python3.12.15-20261024/README.md": "bdcf63b13f16adaa051fce2320a2a277405cbed5b086efa22c7262582cdf3dc2",
+    "sandbox/experiment/materials/linux-amd64-python3.12.15-20261024/assemble_context.py": "6ae39e1599a457ba10971d0aac3e272b77d717f2b3aad3a8b480a348a70a385e",
+    "sandbox/experiment/materials/linux-amd64-python3.12.15-20261024/build-materials.json": "5879b424c0787881da723a52ac9c771ea4093d2280b989976597ad5b35a53804",
+    "sandbox/experiment/materials/linux-amd64-python3.12.15-20261024/recipe-inputs.json": "c569f291da16c084a8f6cab2c6a835fafadaecf24856354cff1cd56fcc7df237",
+    "sandbox/experiment/materials/linux-amd64-python3.12.15-20261024/requirements.lock": "dd8add33117ea76f317556b25c252a3e20d3b2328878ede7a45eed5fc3f06611",
+    "sandbox/experiment/materials/linux-amd64-python3.12.15-20261024/verify_wheelhouse.py": "fa06d3010b935e34e0a82398f09834d5a60c65be0bdf3e632c9443044e91cbec",
+    "sandbox/experiment/materials/linux-amd64-python3.12.15-20261024/wheels.json": "76bdee4421d0fb7330c16e8a5c3586a06abf5f1d97a4e62e1045d04a1cf52e24"
+  },
+  "wheel_cache_location": "/private/tmp/ocean-c23-material-discovery-20261024/wheels",
+  "wheels_installed_or_imported": false,
+  "wrapper_status": "Final real trusted_init pin remains an independent owner/root input; fixture wrapper is not executable evidence"
+}

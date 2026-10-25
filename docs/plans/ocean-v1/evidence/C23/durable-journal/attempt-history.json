@@ -1,0 +1,7 @@
+{
+  "pre_acceptance_review": [
+    "Removed one unused test import reported by Ruff before the first pytest run",
+    "Added fsync of the persistent per-job lock and its directory before first durable claim acknowledgement"
+  ],
+  "runtime_execution_performed": false
+}

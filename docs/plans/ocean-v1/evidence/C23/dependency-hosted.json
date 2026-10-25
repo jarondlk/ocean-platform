@@ -1,0 +1,67 @@
+{
+  "C23_complete": false,
+  "checks": {
+    "actual_postgres_cases": 275,
+    "backend_coverage_percent": 86.94,
+    "backend_passed": 5556,
+    "backend_skipped": 275,
+    "both_production_dependency_audits": "zero vulnerabilities",
+    "frontend_legacy_passed": 132,
+    "frontend_v1_passed": 930,
+    "required_jobs": "all four successful",
+    "typechecks_builds_generated_contracts_migration_upsert_backup_restore": "passed"
+  },
+  "component": "C23",
+  "evidence": [
+    {
+      "path": "docs/plans/ocean-v1/evidence/C23/dependency-hosted-40070175545/job-120801712049.log",
+      "sha256": "289de70d8c88883ace724c066f575922bdab69f6c78423366836c8937c7e4483"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C23/dependency-hosted-40070175545/job-120801712253.log",
+      "sha256": "1175a2053ce04dfe27f2c1f3b8645cff2d726cd25c02dce8392ca76d6bff0bdc"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C23/dependency-hosted-40070175545/job-120801712263.log",
+      "sha256": "d3e7fbd8a7b911a570ae568f38d8ccf7f5728912d00f7d66e61dd46c6a753a8b"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C23/dependency-hosted-40070175545/job-120801712268.log",
+      "sha256": "17bb70ce2b1c5076dd5c22f9aaea4c217cbbca0e69ab3672ecfb5060a98d73ca"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C23/dependency-hosted-40070175545/jobs.json",
+      "sha256": "d1f3deeda1854647166e3793fde2591a4eeaa36efc42357b4639d51bc45f27ae"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C23/dependency-hosted-40070175545/run.json",
+      "sha256": "e10a0fd0619b877666770ca51bf316a03901eafd6f21f83a17b4f08c06a17f59"
+    }
+  ],
+  "hosted_run": {
+    "conclusion": "success",
+    "created_at": "2026-10-24T06:25:50Z",
+    "head_branch": "overhaul",
+    "head_sha": "816c8c91603f52c8475271f51323e0d24fe6c31c",
+    "html_url": "https://github.com/jarondlk/ocean-platform/actions/runs/40070175545",
+    "id": 40070175545,
+    "status": "completed",
+    "updated_at": "2026-10-24T07:12:29Z"
+  },
+  "kind": "Hosted delivery of dependency security amendment; not C23 runtime acceptance",
+  "local_amendment": {
+    "path": "docs/plans/ocean-v1/evidence/C23/dependency-amendment/verification.json",
+    "sha256": "abb91c0cf63a69ee113d7f842d9910e0ea0966e52a8d55c93148331d6c68c4f2"
+  },
+  "log_encoding": "Decoded GitHub UTF-8; CRLF normalized to LF and one trailing newline",
+  "qualification": "The later operator/runtime sources are untracked work and not included in this hosted source commit",
+  "real_execution_eligible": false,
+  "recorded_at": "2026-10-24T07:21:12.680128+00:00",
+  "source_commit": "816c8c91603f52c8475271f51323e0d24fe6c31c",
+  "source_files": {
+    "frontend-v1/package-lock.json": "46b7bddd462c6b2eea159f9994d158ec958027f156314529d2ab6632f4e082f7",
+    "frontend-v1/package.json": "e2f2fa5422e5135fa80d2ea16963f62896b14bfe19b8f36ad62eed764d05e7c8",
+    "frontend/package-lock.json": "9349366ef70d3bf748f42736d8af093e9acf886c29793b4d60609408db3d9696",
+    "frontend/package.json": "6585cc8b1f886bbed5b7e2d7a7a63fc339c585b1246c937528574acec137e479"
+  }
+}

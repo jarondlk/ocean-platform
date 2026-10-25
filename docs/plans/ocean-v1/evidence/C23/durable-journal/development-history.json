@@ -1,0 +1,18 @@
+{
+  "kind": "Development feedback before recorded final acceptance",
+  "iterations": [
+    {"tests_passed": 70, "seconds": 7.66, "scope": "Initial durable journal; actual process contention, SIGKILL rollback, fork fences, retained identity and immutable results"},
+    {"tests_passed": 89, "seconds": 8.32, "scope": "Added safe queried SQLite version gate and trusted explicit driver selection"},
+    {"tests_passed": 93, "seconds": 9.68, "scope": "Added bounded SQL projections for drivers without setlimit, corrupted oversized-row tests and escaped-JSON hash budgeting"}
+  ],
+  "qualification": "These earlier successful development runs were observed in tool output without before/after source hash receipts. They are not the final accepted source-bound result. The final recorder run closes that evidence gap.",
+  "non_test_review_changes": [
+    "Preserve fixed SandboxError limit reasons rather than catching them as generic ValueError",
+    "Sync initial lock inode and directory before durable claim acknowledgment",
+    "Reject SQLite WAL-reset affected runtimes using the actual SELECT sqlite_version() result",
+    "Preserve bounded readback for compatible pinned drivers without Connection.setlimit/getlimit",
+    "Account for escaped-payload overhead in the event hash envelope"
+  ],
+  "original_component_receipts_modified": false,
+  "actual_sandbox_execution_performed": false
+}

@@ -1,0 +1,25 @@
+{
+  "initial_93_test_receipt": "../acceptance.json",
+  "initial_acceptance_is_component_acceptance": false,
+  "review_findings": [
+    "Persistent raw database descriptors could cancel another same-process SQLite connection POSIX locks on close",
+    "Different SQLite driver copies must not operate the same live database in one process",
+    "Forked children could block on an RLock held by a vanished parent thread before reaching the PID guard"
+  ],
+  "corrections": [
+    "Use only lstat inode pins after closing first-create DB descriptor before any SQLite connection",
+    "Process-wide exact driver identity registry per live database, with a single child registry/mutex reset",
+    "Reset each journal mutex in the fork child before its fail-closed PID checks",
+    "Reject control-file hardlinks and live database inode aliases before raw open"
+  ],
+  "regressions": [
+    "Actual spawned POSIX byte-lock probes before/after independent journal close plus unlocked positive control",
+    "Live-driver alias and mutated-driver rejection",
+    "Bounded multithreaded fork test verifies inherited read/claim/close/lease handles deny without hanging"
+  ],
+  "development_feedback_after_first_fix": {
+    "passed": 96,
+    "seconds": 10.61
+  },
+  "original_evidence_preserved": true
+}

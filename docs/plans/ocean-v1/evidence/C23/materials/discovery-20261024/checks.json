@@ -1,0 +1,89 @@
+{
+  "actual_trusted_init_tested": false,
+  "checks": [
+    {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/sandbox/experiment/materials/linux-amd64-python3.12.15-20261024/assemble_context.py",
+        "--wheels",
+        "/private/tmp/ocean-c23-material-discovery-20261024/wheels",
+        "--output",
+        "/private/tmp/ocean-c23-material-discovery-20261024/assembly-fixture-NOT-FOR-BUILD",
+        "--trusted-init",
+        "/private/tmp/ocean-c23-material-discovery-20261024/trusted_init_CONTEXT_FIXTURE_ONLY.py",
+        "--trusted-init-sha256",
+        "8a88fcbf2f9916f437584a8d9c00474f3ea660a3b90187cbb8f1aaf3a8728218"
+      ],
+      "exit_code": 0,
+      "name": "assemble_exact_offline_context_with_inert_fixture",
+      "stderr": "",
+      "stdout": "{\"context_files\": 28, \"dispatch_eligible\": false, \"image_built\": false, \"total_wheel_bytes\": 156205254}\n"
+    },
+    {
+      "exit_code": 1,
+      "name": "refuse_existing_context",
+      "stderr": "Output context must not already exist\n",
+      "stdout": ""
+    },
+    {
+      "exit_code": 1,
+      "name": "refuse_wrong_wrapper_hash",
+      "stderr": "Trusted-init bytes do not match the supplied reviewed hash\n",
+      "stdout": ""
+    },
+    {
+      "exit_code": 1,
+      "name": "refuse_symlink_wrapper",
+      "stderr": "Expected a bounded regular file without links\n",
+      "stdout": ""
+    },
+    {
+      "exit_code": 1,
+      "name": "refuse_incomplete_wheel_set",
+      "stderr": "Wheel cache does not contain the exact pinned set\n",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/ruff",
+        "check",
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/sandbox/experiment/materials/linux-amd64-python3.12.15-20261024"
+      ],
+      "exit_code": 0,
+      "name": "ruff",
+      "stderr": "",
+      "stdout": "All checks passed!\n"
+    },
+    {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/sandbox/experiment/materials/linux-amd64-python3.12.15-20261024/verify_wheelhouse.py",
+        "--wheels",
+        "/private/tmp/ocean-c23-material-discovery-20261024/wheels"
+      ],
+      "exit_code": 0,
+      "name": "wheel_identity_and_linux_graph",
+      "stderr": "",
+      "stdout": "{\"active_linux_dependency_edges\": 30, \"target\": \"CPython3.12.15 Linux amd64\", \"total_wheel_bytes\": 156205254, \"wheel_files\": 22, \"wheel_import_install_or_execution\": false}\n"
+    },
+    {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/sandbox/experiment/verify_image.py",
+        "--check-materials",
+        "--manifest",
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/sandbox/experiment/materials/linux-amd64-python3.12.15-20261024/build-materials.json",
+        "--lock",
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/sandbox/experiment/materials/linux-amd64-python3.12.15-20261024/requirements.lock",
+        "--base-reference",
+        "docker.io/library/python@sha256:57d96f71de145a98e7ceca18ee4ade77bba4103a33a72dfaea026b23625c6bf0"
+      ],
+      "exit_code": 0,
+      "name": "existing_material_checker",
+      "stderr": "",
+      "stdout": "{\"materials\": \"verified\"}\n"
+    }
+  ],
+  "image_built": false,
+  "runtime_acceptance": false
+}

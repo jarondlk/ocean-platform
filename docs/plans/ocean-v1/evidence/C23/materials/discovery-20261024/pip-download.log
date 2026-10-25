@@ -1,0 +1,101 @@
+Collecting numpy
+  Downloading numpy-2.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+Collecting pandas
+  Downloading pandas-3.1.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (18 kB)
+Collecting pyarrow
+  Downloading pyarrow-26.0.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (3.0 kB)
+Collecting scipy
+  Downloading scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
+Collecting statsmodels
+  Downloading statsmodels-0.15.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.6 kB)
+Collecting matplotlib
+  Downloading matplotlib-3.11.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (80 kB)
+Collecting packaging
+  Using cached packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting python-dateutil>=2.9.0 (from pandas)
+  Downloading python_dateutil-3.0.0-py2.py3-none-any.whl.metadata (8.2 kB)
+Collecting patsy>=0.5.6 (from statsmodels)
+  Downloading patsy-1.0.3-py2.py3-none-any.whl.metadata (3.7 kB)
+Collecting formulaic>=1.1.0 (from statsmodels)
+  Downloading formulaic-1.2.2-py3-none-any.whl.metadata (7.0 kB)
+Collecting contourpy>=1.0.1 (from matplotlib)
+  Downloading contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)
+Collecting cycler>=0.10 (from matplotlib)
+  Using cached cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting fonttools>=4.28.2 (from matplotlib)
+  Downloading fonttools-4.67.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (137 kB)
+Collecting kiwisolver>=1.3.1 (from matplotlib)
+  Downloading kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (5.2 kB)
+Collecting pillow>=9 (from matplotlib)
+  Downloading pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.1 kB)
+Collecting pyparsing>=3 (from matplotlib)
+  Using cached pyparsing-3.3.3-py3-none-any.whl.metadata (5.9 kB)
+Collecting interface-meta>=1.2.0 (from formulaic>=1.1.0->statsmodels)
+  Downloading interface_meta-2.0.1-py3-none-any.whl.metadata (6.4 kB)
+Collecting narwhals>=1.17 (from formulaic>=1.1.0->statsmodels)
+  Downloading narwhals-2.27.1-py3-none-any.whl.metadata (15 kB)
+Collecting typing-extensions>=4.2.0 (from formulaic>=1.1.0->statsmodels)
+  Using cached typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting wrapt>=1.0 (from formulaic>=1.1.0->statsmodels)
+  Downloading wrapt-2.5.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (7.6 kB)
+Collecting six>=1.6 (from python-dateutil>=2.9.0->pandas)
+  Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting tzdata (from python-dateutil>=2.9.0->pandas)
+  Downloading tzdata-2026.5-py2.py3-none-any.whl.metadata (1.4 kB)
+Downloading numpy-2.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.7/16.7 MB 6.1 MB/s  0:00:02
+Downloading pandas-3.1.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (12.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.0/12.0 MB 8.7 MB/s  0:00:01
+Downloading pyarrow-26.0.0-cp312-cp312-manylinux_2_28_x86_64.whl (53.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.9/53.9 MB 8.9 MB/s  0:00:06
+Downloading scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.3/35.3 MB 8.8 MB/s  0:00:04
+Downloading statsmodels-0.15.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (12.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.0/12.0 MB 9.7 MB/s  0:00:01
+Downloading matplotlib-3.11.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (9.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.9/9.9 MB 9.6 MB/s  0:00:01
+Using cached packaging-26.3-py3-none-any.whl (129 kB)
+Downloading contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (383 kB)
+Using cached cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Downloading fonttools-4.67.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.4/5.4 MB 7.3 MB/s  0:00:00
+Downloading formulaic-1.2.2-py3-none-any.whl (118 kB)
+Downloading interface_meta-2.0.1-py3-none-any.whl (15 kB)
+Downloading kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (1.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 7.1 MB/s  0:00:00
+Downloading narwhals-2.27.1-py3-none-any.whl (483 kB)
+Downloading patsy-1.0.3-py2.py3-none-any.whl (233 kB)
+Downloading pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (7.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.1/7.1 MB 8.8 MB/s  0:00:00
+Using cached pyparsing-3.3.3-py3-none-any.whl (126 kB)
+Downloading python_dateutil-3.0.0-py2.py3-none-any.whl (94 kB)
+Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Downloading wrapt-2.5.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (250 kB)
+Downloading tzdata-2026.5-py2.py3-none-any.whl (347 kB)
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/numpy-2.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/pandas-3.1.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/pyarrow-26.0.0-cp312-cp312-manylinux_2_28_x86_64.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/statsmodels-0.15.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/matplotlib-3.11.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/packaging-26.3-py3-none-any.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/cycler-0.12.1-py3-none-any.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/fonttools-4.67.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/formulaic-1.2.2-py3-none-any.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/interface_meta-2.0.1-py3-none-any.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/narwhals-2.27.1-py3-none-any.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/patsy-1.0.3-py2.py3-none-any.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/pyparsing-3.3.3-py3-none-any.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/python_dateutil-3.0.0-py2.py3-none-any.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/six-1.17.0-py2.py3-none-any.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/typing_extensions-4.16.0-py3-none-any.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/wrapt-2.5.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl
+Saved /private/tmp/ocean-c23-material-discovery-20261024/wheels/tzdata-2026.5-py2.py3-none-any.whl
+Successfully downloaded numpy pandas pyarrow scipy statsmodels matplotlib packaging contourpy cycler fonttools formulaic interface-meta kiwisolver narwhals patsy pillow pyparsing python-dateutil six typing-extensions wrapt tzdata
+
+[notice] A new release of pip is available: 26.1.2 -> 26.2.2
+[notice] To update, run: /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python -m pip install --upgrade pip

@@ -1,0 +1,45 @@
+{
+  "C23_complete": false,
+  "development_note": "Initial recorder attempt assumed source archive contained unit tests; assertion terminated before receipt write. Operator archive intentionally excludes that test file. This receipt compares recovered production source AST only.",
+  "dispatch_eligible": false,
+  "disposition": "Prior network and containment-source review carries forward unchanged to final lifecycle-amended source",
+  "final_source_files": {
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "f60c8bdb034d370067cd8121bfbdaf776ede7f558f7c6a82880413a2168cfb83",
+    "tests/test_experiment_sandbox_operator_acceptance.py": "d4f35c7919074100bea85f805b6e2d100ef80ebfc64bdc4dcdf0902dee1162f8"
+  },
+  "guard_and_ordering": {
+    "network_gate_precedes_mount_effect": true,
+    "worker_guard_first_statement_after_docstring": true
+  },
+  "kind": "Source-supersession review preserving network review after lifecycle/comparator amendment",
+  "prior_review": "docs/plans/ocean-v1/evidence/C23/operator-independent-review-20261025/network-controls-review.json",
+  "prior_review_sha256": "c4804a989ce382a86b76fe965e8a7affb66334022e95c7bcc58d8bf316bd298e",
+  "prior_script_sha256": "9b85c7f482c6aa37e587f8d78fc8e6cbb88ea315f64de57f35e646c86b77b32a",
+  "prior_source_archive_sha256": "f4a26283c3d3c1a16a5e0551198edee87b3c7b6fa6f12c441c642ef1a5ded9af",
+  "reason_tests_not_repeated": "Reviewed network helper/program/gate ASTs are exactly unchanged; owner records104 safe full-suite cases on final source",
+  "recorded_at": "2026-10-25T09:06:15.021843+00:00",
+  "reservation_released": false,
+  "reviewer": "/root/c23_runtime_design",
+  "scope_excludes": [
+    "Independent lifecycle/mount reconciliation acceptance, reviewed separately",
+    "Actual cloud, networking, runsc, privileged mount or generated-analysis execution",
+    "C22 dispatch, reservation release or scientific approval"
+  ],
+  "tests_repeated": false,
+  "unchanged_network_AST_pins": {
+    "_NoRedirect": "1e22fe62e00cdb09d9093a0f3049c915c4c490495eddf9d441614aec4371c76e",
+    "_admission": "f560edb69c3cc0c0d035fce26f9b484b060c0d5681630412a80f42f705473814",
+    "_boot_id": "87ff25feceb6bbb36d89ed2fa36e1e202a4d4c09dcf7f977334f1129d34dfbbb",
+    "_control_output": "6949518aaefa67d9e0196dc36755551d6edd61e6a43cc83a2c744903878c073a",
+    "_immutable_document": "8a215dbf586be2648981f77af007d26e74db0508497219e1e08939f87a69bd13",
+    "_metadata": "c5500b7eb959031a9d3c1d6e99454dc800afcac4b4a7b862077ed8bf0020c4a3",
+    "_positive_controls": "8bc03bdd6d7f8f50c1f404f0af891f335f1710c28d62baf9af715d4713ffc4a6",
+    "containment_program": "5c04898d7a3bae161f36c50f21706f5f60d76801edad6cb0b17f0f77ccf2aad1",
+    "fixed_target_constants": "eda3eb0e101e3b46e4a0267e5790d3976c0d0319d5fa9ee028780fd7fc46d227",
+    "prepare_host_controls": "e313568882f28cd51caa9a88e2ca8cc16180a3902386d53813688a0203ff7c64",
+    "require_worker": "1e7e11a33bef409c86e0a4c562415fbf7eac082bee4b334ba98db54306f5a591",
+    "run_network_gate": "a1e05ccb6bfe424a86cebdf6d010c1d0664256156ddd0b3d0ca0f7c6efa3278a",
+    "seal_network_isolation": "5111139ec598816295d5368d8e01a3922b85f82ad8a810d301258c4bef695344",
+    "validate_network_controls": "1f7a9d94f9c39d8223349a839d26b22bb5d5a2e31eb6ed185ba0e6387ae22c28"
+  }
+}

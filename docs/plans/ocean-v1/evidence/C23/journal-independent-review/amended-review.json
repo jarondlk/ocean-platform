@@ -1,0 +1,44 @@
+{
+  "C23_complete": false,
+  "command": [
+    "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_experiment_sandbox_journal.py::test_closing_an_independent_journal_does_not_cancel_live_sqlite_posix_locks",
+    "tests/test_experiment_sandbox_journal.py::test_one_live_database_cannot_mix_independent_driver_modules",
+    "tests/test_experiment_sandbox_journal.py::test_mutating_the_trusted_driver_binding_cannot_replace_a_live_engine",
+    "tests/test_experiment_sandbox_journal.py::test_fork_from_multithreaded_controller_never_waits_on_parent_mutex",
+    "-q",
+    "--tb=short"
+  ],
+  "component": "C23",
+  "exit_code": 0,
+  "kind": "Independent read-only review of amended single-host durable journal",
+  "log_sha256": "0c28f5a6e90f6e36698a50c2dc32daafec29d6399e69f53fa55e444ae1b492e3",
+  "no_reviewer_source_changes": true,
+  "prior_findings": [
+    "finding.json",
+    "fork-mutex-finding.json"
+  ],
+  "qualifications": [
+    "Four focused amendment regressions only; owner records full97-case suite separately",
+    "Not a power-loss durability proof or network filesystem guarantee",
+    "Not runtime containment, execution eligibility, capacity release, or current permission evidence",
+    "Caller must keep lease held across physical effects; a detached snapshot grants no ongoing authority"
+  ],
+  "recorded_at": "2026-10-24T07:15:43.169419+00:00",
+  "resolved_findings": [
+    "Raw database FD closure cancelled active SQLite locks; no persistent raw FD remains",
+    "Mixed live same-root SQLite driver modules now rejected",
+    "Inherited per-journal mutex deadlock after multithreaded fork; child mutexes now reset"
+  ],
+  "review_state": "passed for single-host record-only storage",
+  "source_after": {
+    "orchestration/experiment_sandbox/journal.py": "6e128f8d15dc312c79f50aa35686bb8905aac4e02880d697c93e512705e37b7c",
+    "tests/test_experiment_sandbox_journal.py": "4c35bd93a71f9c14e624f2c78f3e992384703709dcea5f01b7c85bf1e4329174"
+  },
+  "source_before": {
+    "orchestration/experiment_sandbox/journal.py": "6e128f8d15dc312c79f50aa35686bb8905aac4e02880d697c93e512705e37b7c",
+    "tests/test_experiment_sandbox_journal.py": "4c35bd93a71f9c14e624f2c78f3e992384703709dcea5f01b7c85bf1e4329174"
+  }
+}

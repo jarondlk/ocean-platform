@@ -4,14 +4,59 @@ Prepared 2026-10-23 JST on `overhaul`. The user said, “I see, then I approve a
 gcp use.” This authorizes GCP setup, runtime installation, image preparation and
 synthetic tests needed for C23. Earlier statements that provisioning lacked
 authorization describe the older checkpoint and are superseded for this work.
-The recurring continuation stays PAUSED. No cloud resource has been created.
+The recurring continuation stays PAUSED. The plan was executed on2026-10-24;
+the actual worker record below supersedes historical unresolved inputs.
 
-The saved CLI login cannot refresh non-interactively; `gcloud auth login` is
-required. Project/billing discovery failed before returning targets. Initial
-and monthly spending limits have been requested. These are configuration inputs;
-no additional general GCP permission is needed.
+The user authorized using existing billing for required C23 work without a new
+budget decision. Authentication succeeded onOct24. OnOct25 the CLI again
+required reauthentication and browser sign-in was opened at the user's request.
+At18:04 JST authentication worked; actual stopped-state readback preceded a
+restart of the same worker. Its new read-back STOP deadline is20:04 JST
+(`2026-10-25T11:04:14.331914Z`). No duplicate was provisioned. Original24 evidence
+files were exported before trusted offline amendment preparation resumed.
 
-## Proposed resources
+## Actual preparation record — 2026-10-24/25 JST
+
+Project `ocean-v1-c23-20261024` (number1010914377085) is isolated under the
+existing organization and billing account. No billing arrangement was changed.
+Every cloud command names this project explicitly. One worker
+`c23-containment-01` (id7275994259687337942) was created in `asia-northeast1-a`
+with `e2-standard-4`, a50GiB auto-delete balanced boot disk and exact official
+image `ubuntu-os-cloud/ubuntu-2404-noble-amd64-v20261021`. Kernel observed was
+7.0.0-1014-gcp. Secure Boot/vTPM/integrity monitoring are enabled, with no
+attached service account. The new project's automatically created compute
+service account had its Editor binding removed.
+
+Custom network `c23-private`, subnet `c23-tokyo` (`10.77.23.0/24`) and firewall
+`c23-iap-ssh` allow only IAP-source TCP22. No NAT/peering or legacy link was
+created. Temporary external IPv4 was used for trusted preparation downloads;
+remove its `external-nat` access config before untrusted tests. OS Login and
+project SSH-key blocking are enabled; the authorized operator has project-local
+OS Admin Login. Private credentials remain on the Mac.
+
+gVisor `release-20261019.0`, all eight release binaries and its archive hash
+were installed and recorded. The offline initial image uses Python3.12.15 and
+22 complete hash-locked wheels. Its OCI manifest is
+`sha256:08d4f39e199c3e88d1d47db914e61aba4f1a0477f0ee8a160239655e2469d938`.
+The initial image contains the earlier wrapper; preserve it and its receipt
+when building the separately reviewed quota amendment. The operator interpreter
+uses a private verified SQLite3.54.1 library, without replacing the OS library.
+
+The VM had automaticRestart=false, maximum duration7200seconds and STOP deadline
+`2026-10-24T08:33:32.313532Z`. That deadline elapsed during interruption; it is
+not a current-state observation. No restart or new worker has been made onOct25.
+After authentication, inspect before restarting; retain a new deadline on each
+session. Export evidence before deleting the VM/disk. Stopped disks still cost
+money. Actual containment and numerical fixtures have not yet been accepted.
+
+The Oct24 authenticated official catalog gave Tokyo rates USD0.028026420 per
+E2 core-hour, USD0.003739110 per GiB RAM-hour and USD0.13 per balanced-disk
+GiB-month. Four cores/16GiB cost USD0.17193144 per hour. Two hours plus50GiB
+disk prorated over744hours is approximately USD0.36, excluding temporary IPv4,
+transfer and tax; a retained disk is USD6.50/month. This is an estimate, not a
+cap. [Exact pricing/preflight record](evidence/C23/cloud-worker-2026-10-24/pricing-preflight.json).
+
+## Original resource plan
 
 Use an existing isolated OCEAN v1 project if discovery proves its separation,
 or create one with an available ID such as `ocean-v1-c23-20261023`. Inspect parent,
@@ -35,7 +80,7 @@ do not use it, change the CLI default or copy legacy resources/credentials/data.
 
 E2 standard 4 has 4 vCPU/16 GB; standard 8 has 8 vCPU/32 GB. For two concurrent
 2 CPU/4 GiB sandboxes plus host overhead, record a temporary resize to standard 8
-within the configured spending limit. Sizing does not prove enforcement.
+within the authorized C23 scope. Sizing does not prove enforcement.
 [Machine sizes](https://docs.cloud.google.com/compute/docs/general-purpose-machines#e2_standard).
 gVisor documents `systrap` for VM environments; installed compatibility still
 requires verification. [Platforms](https://gvisor.dev/docs/user_guide/platforms/)
@@ -53,10 +98,10 @@ identity does not replace a real metadata-denial probe.
 1. After sign-in, discover projects, billing accounts, parent/folder and policies.
    Resolve an ambiguous billing target with the user; otherwise select the
    isolated target and record actual project ID/number.
-2. Fill initial/monthly limits. Record current Tokyo compute, disk, transfer and
+2. Record the authorized existing-billing scope and current Tokyo compute, disk, transfer and
    any preparation-network prices in a bounded-session estimate before creating
    billable resources. Historical JPY100,000/month approval was for legacy.
-3. Configure the project budget, one-worker capacity and lifetime. Create only
+3. Configure one-worker capacity and lifetime. Do not invent a budget amount. Create only
    project/network/IAP/VM resources required here. Retain actual IDs and cleanup
    commands. Read back VM identity, image, firewall, identity and stop deadline.
 4. Prepare verified base/wheels/runtime offline where possible. If trusted
@@ -76,9 +121,8 @@ identity does not replace a real metadata-denial probe.
 
 ## Costs and outstanding inputs
 
-Authentication, target/billing selection, spending limits and current regional
-prices remain unresolved. A current Tokyo numeric rate was not retrieved from
-the official pricing links; this document contains no cost quote.
+The actual record above resolves the historical target/billing/pricing inputs.
+Oct25 reauthentication and real runtime acceptance remain pending.
 [Official pricing](https://cloud.google.com/products/compute/pricing)
 
 VM lifetime limits do not prove the sandbox's ten-minute watchdog. Automatic

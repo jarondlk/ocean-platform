@@ -1,0 +1,21 @@
+{
+  "component": "C23",
+  "kind": "Independent review finding after raw-database-FD amendment",
+  "reviewed_journal_sha256": "1f44001335f894c77ae6aaabc32bfa815a796c814f2bfffc34eb32d72a747f8b",
+  "finding": "A fork child inherits a per-journal RLock that may be held by a parent thread which no longer exists in that child; public methods acquire it before PID guards",
+  "reproduction": {
+    "environment": "Actual macOS local journal and controlled os.fork while one parent helper thread holds journal._mutex",
+    "child_messages": "started\n",
+    "child_blocked_before_PID_guard": true,
+    "held_parent_mutex_thread_alive": true,
+    "child_timeout_seconds": 1.5,
+    "cleanup": "Only the test-owned child process was terminated after its bounded timeout; parent thread released and journal closed normally",
+    "recording_qualification": "Transcribed actual tool observations; source was inspected and hashed before the probe, without a separate before/after recorder"
+  },
+  "required_amendment": "Reset each journal object's mutex to a new threading.RLock in _after_fork, in addition to resetting the global driver registry mutex; add a bounded multithreaded-fork negative-authority regression",
+  "authority_bypass_claimed": false,
+  "runtime_or_C22_files_modified_by_reviewer": false,
+  "owner_notified": true,
+  "review_state": "Pending amendment and focused verification",
+  "C23_complete": false
+}

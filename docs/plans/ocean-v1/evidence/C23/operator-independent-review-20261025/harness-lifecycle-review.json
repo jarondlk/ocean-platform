@@ -1,0 +1,51 @@
+{
+  "C23_complete": false,
+  "cloud_actions_performed": false,
+  "component": "C23",
+  "harness_source_edited_by_reviewer": false,
+  "kind": "Independent read-only operator harness lifecycle review",
+  "owner_receipt": {
+    "path": "docs/plans/ocean-v1/evidence/C23/operator-acceptance-preparation/lifecycle-amendment01/preparation.json",
+    "sha256": "6634ba14a039942be76ea79c477891a95c59e226bdd04646830a2050a470ac34"
+  },
+  "post_check_source_steady": true,
+  "prior_receipts_observed_unchanged": {
+    "checkpoint.json": "c14a96af7e33b1f4a93ded44ff3a48f0d15f793e19a82f1be0a3c2f83d23a3e9",
+    "hosted-preparation.json": "5a432e2f8a7edbe35cf0d96b93bb3aeaf89883d562aff006a5fc390253d6e5cf",
+    "pushed-checkpoint.json": "dbcdb9bdfe8c3d736ccc31710a57450f68fe080f8af814bb26e57b97a12a99a6"
+  },
+  "qualification": [
+    "This is source/helper control review, not an actual host containment or scientific approval",
+    "Actual Linux mount/umount, UID/gofer readability, cgroup cleanup and case outcomes still need source-bound worker evidence",
+    "The20-case matrix alone does not establish separate controller-crash/recovery, late queued launch or all real tamper/image-mismatch gates",
+    "No-NAT/metadata helpers have a separate independent reviewer; this review does not re-claim their current cloud-state proof"
+  ],
+  "recorded_at": "2026-10-25T09:06:35.929848+00:00",
+  "remaining_source_blockers": [],
+  "resolved_finding": {
+    "issue": "First bind mount could take effect before subprocess/log-retention acknowledgement, leaving mounted=False and a false cleanup claim",
+    "original_source_sha256": "9b85c7f482c6aa37e587f8d78fc8e6cbb88ea315f64de57f35e646c86b77b32a",
+    "resolution": "MountIntent is retained before effects, attempted before invocation; trusted kernel mountinfo and source/target identities reconcile absence/unmount. Missing/stale/unowned/stacked observations fail closed. Internal-only util-linux arguments bound direct-child timeout reasoning."
+  },
+  "reviewed_boundaries": [
+    "stage_inputs copies exact approved bytes before application-owner chown; files0400/dir0500; rootjob0700",
+    "materialized rootfs and actual OCI blobs bound before per-job bind/remount readonly and profile construction",
+    "cgroup cleanup reacquires durable effect lock and requires retained create_intent device/inode before kill/populated0/removal",
+    "rootfs cleanup is physical mount reconciliation rather than a successful-command or mounted-flag assumption",
+    "unique create-only attempts preserve failed pipeline/log observations; raw-retention/pipeline failures force case failure",
+    "numerical repetition binds image/environment plus exact runtime/init/adapter pins and normalized policy/resources",
+    "operator synthetic fixtures explicitly deny real C22 reservation/approval, production dispatch, scientific approval and component completion"
+  ],
+  "reviewer": "c23_science_materials",
+  "runtime_acceptance_complete": false,
+  "source_files": {
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "f60c8bdb034d370067cd8121bfbdaf776ede7f558f7c6a82880413a2168cfb83",
+    "tests/test_experiment_sandbox_operator_acceptance.py": "d4f35c7919074100bea85f805b6e2d100ef80ebfc64bdc4dcdf0902dee1162f8"
+  },
+  "targeted_independent_check": {
+    "actual_mount_or_analysis_execution": false,
+    "command": ".venv/bin/python -m pytest tests/test_experiment_sandbox_operator_acceptance.py -q --tb=short -k 'bind_effect or unmount or mountinfo or numerical_repetition_requires'",
+    "new_or_changed_source_checks_only": true,
+    "result": "24 passed, 80 deselected in 4.62s"
+  }
+}
