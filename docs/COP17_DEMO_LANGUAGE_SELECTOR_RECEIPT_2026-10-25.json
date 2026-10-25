@@ -1,0 +1,67 @@
+{
+  "verified_at_jst": "2026-10-25T23:24:36+09:00",
+  "branch": "cop17-demo",
+  "status": "ready_not_deployed_scheduling_cancelled_by_user",
+  "frontend_source": "1ffa7d934e9a9ce2976867961eb28091be3e0e35",
+  "candidate_build": "66a08847-f324-4c6b-8c4f-91a438f73efd",
+  "candidate_frontend_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:439a6c83a5ebd4291b231e4b94e562c9a8310507fe71c6fefd396697f1771123",
+  "live_revision_unchanged": "ocean-cop17-demo-00015-hh7",
+  "scheduled": false,
+  "deployment_task_ever_armed": false,
+  "live_demo_spec_unchanged": true,
+  "production_spec_unchanged": true,
+  "api_unchanged": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:eea3e5a021cae2ceb6192f926bee741548b5b07c2922fb133af90aca30b74fd9",
+  "scientific_data_unchanged": true,
+  "frontend_tests_passed": 86,
+  "typecheck_passed": true,
+  "build_runtime_auth_schema_passed": true,
+  "scan": {
+    "accepted": true,
+    "severity_counts": {
+      "LOW": 60,
+      "HIGH": 43,
+      "MEDIUM": 58,
+      "UNKNOWN": 1
+    },
+    "language_findings": [],
+    "http_auth_passed": true,
+    "schema_ready": true
+  },
+  "local_ui_verification": {
+    "passed": true,
+    "scope": "local layout fixture only; no scientific or model execution",
+    "language_selector_present": false,
+    "main_question_present": true,
+    "horizontal_overflow": false,
+    "remembered_japanese_ui_preserved": true,
+    "frontend_tests_passed": 86,
+    "typecheck_passed": true,
+    "screenshot_sha256": "248dfa515b6cb98a9ea7a4943f3d71d2508f9375ec33f9f16d3d33680109c284"
+  },
+  "backend_answer_language_handling_changed": false,
+  "locale_sent_to_chat_api": false,
+  "saved_interface_preferences_preserved": true,
+  "cleanup": {
+    "dedicated_paused_queue_deleted": true,
+    "release_identity_deleted": true,
+    "unused_custom_role_deleted": true,
+    "temporary_update_act_as_and_reader_grants_removed": true,
+    "new_cloud_tasks_api_restored_to_disabled": true,
+    "repository_tag_not_created": true,
+    "future_task_tooling_guarded_by_cancellation_marker": true
+  },
+  "scheduling_observations": [
+    "Cloud Run validateOnly with the signed-in operator succeeded without changing the live service.",
+    "Scheduler dry runs failed at Artifact Registry image-read permission; no real patch was dispatched.",
+    "Artifact Registry rejected conditional repository IAM; the exact-name project condition also failed closed.",
+    "Automatic approval review required explicit approval for a repository-tag mechanism; the user chose to stop scheduling.",
+    "No tag mechanism was created. All temporary release grants were removed after cancellation."
+  ],
+  "proof_sha256": {
+    "frontend-tests.log": "7cbbfc0a4d884db33c1b52009b1fd3709c5bd84f46a40a96137be5fa920ee6a1",
+    "typecheck.log": "0dfc7aeaa0fd983206afdbe50edc28855ed96b862749b8a2ab21f85666af4fa6",
+    "local-preview.png": "248dfa515b6cb98a9ea7a4943f3d71d2508f9375ec33f9f16d3d33680109c284",
+    "source.tar.gz": "a1e4ab8bd003206cda1916c30861e93c30fca9b8c355197537a97cd510719afd",
+    "validate-only-user.json": "af7df1254dd301508b7b16e2c2cd0d55fab9ccf57d7c86e11f21e778ab3a9e98"
+  }
+}
