@@ -1,0 +1,160 @@
+{
+  "verified_at_jst": "2026-10-26T13:13:05+09:00",
+  "branch": "cop17-demo",
+  "status": "deployed_and_verified",
+  "revision": "ocean-cop17-demo-00017-lbr",
+  "frontend_source": "6d177e9aff1954e04d31101293e8c932d48921d7",
+  "frontend_build": "efe65db9-b654-4386-bf7c-c4a89c94d9be",
+  "frontend_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:0ebfb4bf5bafb698f36bfe88188a86895c408d615f6d4e0382ca9b7a4c93bcdd",
+  "api_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/api@sha256:eea3e5a021cae2ceb6192f926bee741548b5b07c2922fb133af90aca30b74fd9",
+  "api_source": "610131be719ffe715297d7bd0dd267d24b229952",
+  "source_change": "Remove only the COP17 introductory card and update the existing layout assertion.",
+  "api_container_byte_identical": true,
+  "production_spec_and_traffic_unchanged": true,
+  "chat_request_prompts_retrieval_routing_data_and_workflows_unchanged": true,
+  "source_contract": {
+    "passed": true,
+    "only_introductory_jsx_removed": true,
+    "remaining_chat_page_byte_identical": true,
+    "chat_requests_prompts_and_backend_unchanged": true,
+    "baseline_commit": "6a95e9c",
+    "source_commit": "6d177e9aff1954e04d31101293e8c932d48921d7",
+    "frontend_page_sha256": "7f8deb090f362d019f9b53d56e5f3076650299c94b03260ef69fef9e428ca273"
+  },
+  "scientific_rows_changed": false,
+  "overhaul_working_files_modified": false,
+  "frontend_tests_passed": 86,
+  "typecheck_passed": true,
+  "build_runtime_auth_schema_passed": true,
+  "scan": {
+    "accepted": true,
+    "severity_counts": {
+      "LOW": 60,
+      "HIGH": 43,
+      "MEDIUM": 58,
+      "UNKNOWN": 1
+    },
+    "language_findings": [],
+    "http_auth_passed": true,
+    "schema_ready": true
+  },
+  "runtime_checks": {
+    "passed": true,
+    "revision": "ocean-cop17-demo-00017-lbr",
+    "api_container_byte_identical": true,
+    "production_unchanged": true,
+    "auth_boundary_checks": [
+      {
+        "path": "/chat",
+        "status": 307
+      },
+      {
+        "path": "/login",
+        "status": 200
+      },
+      {
+        "path": "/api/backend/chat/analysis-options",
+        "status": 401
+      },
+      {
+        "path": "/api/backend/provenance",
+        "status": 401
+      }
+    ]
+  },
+  "live_verification": {
+    "passed": true,
+    "live_checks": 7,
+    "language_selector_absent": true,
+    "introductory_card_absent": true,
+    "count_answer_identical": true,
+    "english_japanese_examples_and_map_context_answers_identical": true,
+    "original_otsuchi_sample_taxa_ranks_and_citation_correct": true,
+    "published_E3_B_E4_B_top_ten_rows_identical": true,
+    "published_six_svg_plots_each": true,
+    "no_horizontal_overflow": true
+  },
+  "live_cases": [
+    {
+      "name": "count-only",
+      "query": "How many sampling locations are recorded in ANEMONE DB?",
+      "answered": true,
+      "plots": 0,
+      "introductory_card_count": 0,
+      "language_selector_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "original-otsuchi-sample",
+      "query": "Find one ANEMONE eDNA sample from Otsuchi Bay in 2020 and list five fish taxa detected in it. Distinguish species-level and genus-level identifications, and cite the source.",
+      "answered": true,
+      "plots": 0,
+      "introductory_card_count": 0,
+      "language_selector_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "count-plus-ten",
+      "query": "How many sampling locations are recorded in ANEMONE DB? Please show me 10 example locations.",
+      "answered": true,
+      "plots": 0,
+      "introductory_card_count": 0,
+      "language_selector_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "named-map-context",
+      "query": "How many named areas are available in ANEMONE DB?",
+      "answered": true,
+      "plots": 0,
+      "introductory_card_count": 0,
+      "language_selector_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "japanese-count-ten",
+      "query": "ANEMONE DBの採水地点はいくつありますか？10か所の例を示してください。",
+      "answered": true,
+      "plots": 0,
+      "introductory_card_count": 0,
+      "language_selector_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "fish-frequency-E3-B",
+      "query": "Which fish species were most frequently detected along the Miyagi coast from 2020 to 2023? Show the top 10, including the denominators and yearly changes.",
+      "answered": true,
+      "plots": 6,
+      "introductory_card_count": 0,
+      "language_selector_count": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "fish-SST-E4-B",
+      "query": "Compare fish eDNA detection frequencies under high and low sea surface temperatures in Miyagi. Show a representative time series and cite the datasets.",
+      "answered": true,
+      "plots": 6,
+      "introductory_card_count": 0,
+      "language_selector_count": 0,
+      "horizontal_overflow": false
+    }
+  ],
+  "new_revision_error_entries_observed": 0,
+  "rollback_revision": "ocean-cop17-demo-00016-wvf",
+  "rollback_frontend_image": "asia-northeast1-docker.pkg.dev/data-infra-infobio/ocean-platform/frontend@sha256:439a6c83a5ebd4291b231e4b94e562c9a8310507fe71c6fefd396697f1771123",
+  "proof_sha256": {
+    "source.tar.gz": "8dd2b3f2c08e9b448904bd4ae9d3289e07bc6e7e1b01b42877fc7fee53e0b564",
+    "frontend-tests.log": "41308f8228da21d1c6dc3b431ed4d7fe98e49f529ce11b1c1163d93d44d3017a",
+    "typecheck.log": "0dfc7aeaa0fd983206afdbe50edc28855ed96b862749b8a2ab21f85666af4fa6",
+    "baseline-live-cases.json": "a26e22e08279a83ca513c2f987a06cfe5b7b8d625210218bcc47ae0521ffee99",
+    "immediate-live-cases.json": "7fc59e56af14785fbc0dd07d317c37002339c93f1c672f7e17e6d32d193dbee3",
+    "immediate-live-verification.json": "156d3d764d5298420f67334629c41258ff90f0966fb892447f3cc95d0a3cb232",
+    "final-runtime.json": "cb71dccbbc2fc84601f187866942c70021702ddf6f3d8c7e44773a9473dfa1a0",
+    "source-contract.json": "7d85f4e04c51e603cbc9f50d531b868c5d177c6bda7154a1db367a73fb593ea2",
+    "live-intro-removed.png": "264a139f68b6a059a3c53dc195db1dbff7d33e22b6585c7839d2eb3a42e21163"
+  },
+  "limitations": [
+    "Existing model wording can vary independently of this presentation-only change.",
+    "CSV place aliases remain deferred."
+  ]
+}
