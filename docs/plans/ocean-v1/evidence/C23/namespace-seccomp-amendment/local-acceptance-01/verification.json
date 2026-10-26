@@ -1,0 +1,15 @@
+{
+  "C23_complete": false,
+  "actual_guest_probes_verified": false,
+  "prior_source_preserved": true,
+  "pytest_exit_code": 0,
+  "pytest_summary": "125 passed in 3.61s",
+  "ruff_exit_code": 0,
+  "source_files": {
+    "orchestration/experiment_sandbox/profile_execution.py": "a5d97c99c8c2bf90dcb48f2facc56a2bc3ed7a260bbcf8c70f457289469cc8a7",
+    "sandbox/experiment/trusted_init.py": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+    "tests/test_experiment_sandbox_profile_execution.py": "3b035484e0de4cf57d951290de2a99c10f96f4f4bfb5eb5f5fcc8065c6d21160"
+  },
+  "stdout_frame_routing": "debug=false; debug/panic logs use bounded existing stderr; actual observation pending",
+  "version": "c23-namespace-seccomp-local-v1"
+}

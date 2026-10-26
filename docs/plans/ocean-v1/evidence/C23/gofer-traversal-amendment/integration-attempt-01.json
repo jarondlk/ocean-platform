@@ -1,0 +1,12 @@
+{
+  "recorded_at": "2026-10-26T07:02:38.152357+00:00",
+  "source_state": "draft helper integration, not frozen",
+  "command": ".venv/bin/python -m pytest -o addopts= -q tests/test_experiment_sandbox_profile_execution.py tests/test_experiment_sandbox_linux_runtime.py",
+  "result": {
+    "failed": 23,
+    "passed": 31,
+    "errors": 62
+  },
+  "failure": "This macOS Python has no os.getxattr attribute; draft helper incorrectly required the Linux-specific API for plain0700 local preparation. No real runtime ran. Owner adding explicitly Darwin-only absent-API handling; Linux remains failclosed.",
+  "actual_containment_verified": false
+}

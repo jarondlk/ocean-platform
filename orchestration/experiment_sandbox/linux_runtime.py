@@ -142,6 +142,7 @@ from orchestration.experiment_sandbox.contracts import SandboxError, VerifiedEnv
 from orchestration.experiment_sandbox.files import ValidatedOutputs, validate_outputs
 from orchestration.experiment_sandbox.journal import DurableExecutionJournal
 from orchestration.experiment_sandbox.profile import RuntimePreparation
+from orchestration.experiment_sandbox.traversal import private_directory
 from orchestration.experiment_sandbox.profile_execution import (
     PreparedExecutionProfile, render_execution_profile,
 )
@@ -187,14 +188,11 @@ def _write_control(path, raw):
         os.close(descriptor)
 
 
-def _private(path):
-    path = Path(path)
-    info = path.lstat()
-    if (not path.is_absolute() or path != path.resolve(strict=True)
-            or not stat.S_ISDIR(info.st_mode) or info.st_uid != os.geteuid()
-            or stat.S_IMODE(info.st_mode) != 0o700):
+def _private(path, *, allow_search=False):
+    try:
+        return private_directory(path, allow_search=allow_search)
+    except (OSError, ValueError):
         raise SandboxError('sandbox_worker_integrity')
-    return path
 
 
 def _require_linux_host(journal, cgroup_root):
@@ -435,11 +433,11 @@ class LinuxExecutionAdapter:
 
     def _preflight(self, envelope, profile):
         _require_linux_host(self.journal, self.cgroup_root)
-        _private(self.worker_root)
+        _private(self.worker_root, allow_search=True)
         if type(envelope) is not VerifiedEnvelope or type(profile) is not PreparedExecutionProfile:
             raise SandboxError('sandbox_runtime_identity')
         document = profile.document
-        job = _private(self.worker_root / envelope.job_id)
+        job = _private(self.worker_root / envelope.job_id, allow_search=True)
         runtime = json.loads(self._runtime_json)
         if _hash_runtime_file(Path(__file__).resolve()) != self._helper_sha256:
             raise SandboxError('sandbox_host_helper_changed')
@@ -565,7 +563,7 @@ class LinuxExecutionAdapter:
         stage = next((value for value in argv[1:] if not value.startswith('--')), None)
         if stage not in {'create', 'state', 'start', 'wait', 'delete'}:
             raise SandboxError('sandbox_runtime_identity')
-        job = _private(self.worker_root / job_id)
+        job = _private(self.worker_root / job_id, allow_search=True)
         directory = job / 'diagnostics'
         if not directory.exists() and not directory.is_symlink():
             directory.mkdir(mode=0o700)

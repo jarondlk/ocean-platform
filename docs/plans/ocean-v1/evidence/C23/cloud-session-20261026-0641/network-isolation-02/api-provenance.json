@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-10-26T07:03:54.759873+00:00",
+  "project": "ocean-v1-c23-20261024",
+  "queries": "Complete gcloud compute instances describe, routers list unfiltered all regions, networks describe, networks subnets describe; fixed targets identical to network-isolation-01",
+  "received_files": {
+    "instance": {
+      "sha256": "5611dbcd71fd16cf4ce5dfd360755bff8403e946e0ce843200302547915a9c80",
+      "local_received_mtime_ns": 1792998163799586253
+    },
+    "routers": {
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "local_received_mtime_ns": 1792998161470729963
+    },
+    "network": {
+      "sha256": "5fefa1f6482ea5cfd4c93c37b9c70afdd576656c3a82cfb794878547c5ca0bba",
+      "local_received_mtime_ns": 1792998162557443742
+    },
+    "subnet": {
+      "sha256": "573ab015ac54a2753d0b094e03faa4cb51d772a9438fb19d9d447d5866b21819",
+      "local_received_mtime_ns": 1792998163524713956
+    }
+  },
+  "qualification": "Authenticated API observations were performed by root immediately before transfer; timestamps are local receipt observations, not cloud attestation."
+}

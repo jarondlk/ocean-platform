@@ -1,0 +1,63 @@
+{
+  "C23_complete": false,
+  "accepted_profile_unchanged": {
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01"
+  },
+  "actual_linux_copy_tested": false,
+  "checks": [
+    {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_normalize_rootfs.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C23/rootfs-normalization/local-acceptance-01/check-1.txt",
+      "log_sha256": "b7456fe1c73277ed8a41d0de67f445660ef54ae8186642ae68ec93519cc7ba5b"
+    },
+    {
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "sandbox/experiment/gcp/normalize_rootfs.py",
+        "tests/test_experiment_sandbox_normalize_rootfs.py"
+      ],
+      "exit_code": 0,
+      "log": "docs/plans/ocean-v1/evidence/C23/rootfs-normalization/local-acceptance-01/check-2.txt",
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  ],
+  "cloud_operations_performed": false,
+  "component": "C23",
+  "development_history": [
+    "Combined run initially33pass1failure: materialization fixture lacked exact final normalization target/schema; owner corrected fixture, peer independently reports34pass",
+    "No helper source edits after freeze9fd3533d; GNU cp is mocked in local pipeline tests and actual source/destination temp-tree facts are verified"
+  ],
+  "dispatch_eligible": false,
+  "kind": "Trusted hardlink normalization local preparation only",
+  "mechanism": "Host-guarded GNU cp -a --no-preserve=links --reflink=auto into a separate create-only rootfs; bounded nofollow source+destination semantic/inode inventories; original strict destination inventory",
+  "passed": true,
+  "qualifications": [
+    "No original OCI image/materialization or accepted profile/source guard is modified",
+    "Actual worker GNUcp copy and resulting rootfs/runtime/containment remain required",
+    "Regular source hardlinks must be wholly contained in source tree; all destination regular files must have nlink1",
+    "Semantic equivalence covers bytes,POSIX mode,UID/GID,directory structure and literal guest symlink targets; device/inode/link topology changes intentionally",
+    "Receipt bounded4MiB and creates exclusively; failed targets retained for reconciliation rather than overwritten",
+    "No C22 scientific approval, dispatch or reservation release is created"
+  ],
+  "recorded_at": "2026-10-25T09:25:46.538578+00:00",
+  "source_after": {
+    "sandbox/experiment/gcp/normalize_rootfs.py": "9fd3533d313cc3a1d720af3405e56366bbeed815f6ae31956dea0a8f41802b8c",
+    "tests/test_experiment_sandbox_normalize_rootfs.py": "ff2fef142c97f9b2d5af5c8c35efa8930cf4b022f3b908a7064d6c655ac30d2f"
+  },
+  "source_before": {
+    "sandbox/experiment/gcp/normalize_rootfs.py": "9fd3533d313cc3a1d720af3405e56366bbeed815f6ae31956dea0a8f41802b8c",
+    "tests/test_experiment_sandbox_normalize_rootfs.py": "ff2fef142c97f9b2d5af5c8c35efa8930cf4b022f3b908a7064d6c655ac30d2f"
+  },
+  "source_oci_binding": "Separate materialization/harness verification retains immutable OCI manifest and allblob hashes alongside normalization source identity; inventory alone does not prove OCI derivation"
+}

@@ -1,0 +1,34 @@
+{
+  "C23_complete": false,
+  "accepted_guards_unchanged": [
+    "orchestration/experiment_sandbox/profile.py"
+  ],
+  "actual_sandbox_acceptance_performed": false,
+  "baseline_commit": "299fe91",
+  "cloud_operations_performed": false,
+  "development_observations": [
+    "Own initial115/116/118 safe tests passed as bindings evolved.",
+    "Peer combined helper+materialization run caught one missing recorded_at field in the temporary synthetic proof after helper adopted exact receipt keys; the fixture was updated to the final strict schema. This was a test-fixture schema adjustment; no production guard relaxation.",
+    "After final helper strict schema and fixture update:118 passed in3.26s."
+  ],
+  "generated_analysis_execution_performed": false,
+  "intentional_changes": [
+    "Materialization reads a separate normalized rootfs; original OCI tree and original umoci rootfs remain preserved. Strict ImagePreparation schema and nlink1 inventory guards remain intact.",
+    "Both image preparation and each operator run require exact fixed-path immutable normalization receipt SHA, recompute current source/copy provenance through the frozen helper and bind its destination hash to strict ImagePreparation.",
+    "Materialization-v2 and each run explicitly retain source OCI manifest digest next to normalization receipt SHA/full provenance; source-to-OCI derivation continues to rely on trusted build/umoci observations.",
+    "Copied hardlink topology intentionally differs; contents, modes, ownership and guest-relative symlinks remain checked. No claim of byte-for-byte filesystem metadata equivalence.",
+    "Repeated numerics additionally require identical normalized rootfs inventory and normalization receipt hash alongside image/runtime/init/adapter pins and normalized resources/policy."
+  ],
+  "intentional_source_supersessions": {
+    "sandbox/experiment/gcp/prepare_image_receipts.py": "4b3630f33ba447f44156a5b1c4b0566d7747358d9710b0b754eaa8c11fc9c494",
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "f60c8bdb034d370067cd8121bfbdaf776ede7f558f7c6a82880413a2168cfb83",
+    "tests/test_experiment_sandbox_operator_acceptance.py": "d4f35c7919074100bea85f805b6e2d100ef80ebfc64bdc4dcdf0902dee1162f8"
+  },
+  "new_test_source": "tests/test_experiment_sandbox_image_materialization.py",
+  "normalization_helper_dependency": "sandbox/experiment/gcp/normalize_rootfs.py",
+  "original_evidence_immutable": true,
+  "real_materialization_performed": false,
+  "retained_C22_real_approval": false,
+  "scope": "Explicit hardlink normalization provenance binding for operator-only synthetic C23 runs",
+  "tests_scope": "Pure synthetic temporary trees, inert bytes and controlled wiring mocks; one integration case invokes the real read-only normalization verifier and proves old strict nlink2 rejection."
+}

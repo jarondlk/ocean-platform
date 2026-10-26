@@ -18,7 +18,7 @@ from orchestration.experiment_sandbox.profile import (
     ImagePreparation, RuntimePreparation, rootfs_inventory_sha256,
 )
 from sandbox.experiment.gcp.run_operator_acceptance import (
-    APP_GID, APP_UID, FIXED_ROOT, _create, _read, require_worker,
+    APP_GID, APP_UID, FIXED_ROOT, _create, _read, require_worker, verify_rootfs_normalization,
 )
 from sandbox.experiment.verify_image import validate_materials
 
@@ -64,7 +64,7 @@ def _blob(root, descriptor, maximum, *, retain=True):
     return None
 
 
-def record(label, wrapper_sha256):
+def record(label, wrapper_sha256, *, normalization_receipt, normalization_sha256):
     require_worker()
     if not re.fullmatch(r'quota-v[3-9][0-9]*', label):
         raise ValueError('fixed_amendment_label_required')
@@ -73,8 +73,9 @@ def record(label, wrapper_sha256):
     # Every amendment has separate context, OCI tree, rootfs and observations.
     context = FIXED_ROOT / ('build-context-' + label)
     oci = FIXED_ROOT / ('scientific-oci-' + label)
-    rootfs = FIXED_ROOT / ('scientific-bundle-' + label) / 'rootfs'
+    rootfs = FIXED_ROOT / ('scientific-normalized-' + label) / 'rootfs'
     evidence = FIXED_ROOT / 'evidence'
+    normalization = verify_rootfs_normalization(rootfs, normalization_receipt, normalization_sha256)
     materials_raw = _read(context / 'build-materials.json', 1024**2)
     lock = _read(context / 'requirements.lock', 4 * 1024**2)
     materials = json.loads(materials_raw)
@@ -133,9 +134,14 @@ def record(label, wrapper_sha256):
         'layer_sha256': [item['digest'][7:] for item in manifest['layers']],
         'rootfs_inventory_sha256': rootfs_inventory_sha256(rootfs),
     }).model_dump(mode='json')
-    document = {'version': 'c23-worker-materialization-v1', 'label': label,
+    if normalization['provenance']['destination_rootfs_inventory_sha256'] != image['rootfs_inventory_sha256']:
+        raise ValueError('normalized_rootfs_inventory_binding')
+    normalization['source_oci_manifest_digest'] = descriptor['digest']
+    document = {'version': 'c23-worker-materialization-v2', 'label': label,
                 'trusted_init_sha256': wrapper_sha256,
                 'image': image, 'runtime': runtime,
+                'rootfs_normalization': normalization,
+                'materialization_qualification': 'Original OCI image plus explicitly retained content/mode/owner-preserving hardlink normalization; copied topology differs, and trusted build/umoci provenance remains required.',
                 'containment_verified': False, 'dispatch_eligible': False,
                 'scientific_approval': 'not_independently_verified'}
     for name, value in ((f'image-preparation-{label}.json', image),
@@ -149,8 +155,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', required=True)
     parser.add_argument('--trusted-init-sha256', required=True)
+    parser.add_argument('--normalization-receipt', type=Path, required=True)
+    parser.add_argument('--normalization-sha256', required=True)
     args = parser.parse_args()
-    print(json.dumps(record(args.label, args.trusted_init_sha256), sort_keys=True))
+    print(json.dumps(record(args.label, args.trusted_init_sha256,
+        normalization_receipt=args.normalization_receipt,
+        normalization_sha256=args.normalization_sha256), sort_keys=True))
 
 
 if __name__ == '__main__':

@@ -1,0 +1,37 @@
+{
+  "C23_complete": false,
+  "actual_acl_mutations_performed_by_this_recorder": false,
+  "actual_runtime_acceptance_performed": false,
+  "cloud_operations_performed": false,
+  "development_observations": [
+    "Initialhostsafe4tests failed production95bytepathbound due pytestlongtemporarynames; fixturesmovedto shortcanonicalOS/tmp withoutchangingproductionguard.",
+    "HelperactualPathreturnAPI retained; mockedgrant testsupdatedtoreturnPath ratherthan preliminarydictassumption. ACLreadback testedindependentlywithcontrolledsystemcallmocks.",
+    "Finaldevelopment189passed3.49s plusRuff; no locallyappliedPOSIXACL or guestanalysis."
+  ],
+  "generated_analysis_execution_performed": false,
+  "intentional_changes": [
+    "Explicit allow_search only for trustedfixedroot/attempt ancestors delegates the frozen exact-accessACL validator. Default harnessprivate directory checks remain strict0700.",
+    "Originalstage_inputs finishes under freshworker/job0700 beforereadonlyrootfsbind. Onlythen grant_search receivesexact5paths fixedroot,attemptsroot,attempt,worker,job; journal/state/diagnostics/inputs descendants are not granted.",
+    "grant_search Pathreturn is followed by strict helper verification before/after actualrootUID0/GID0/mode0710/device/inode/accessACL readback. RawACLhex must equal exact44bytepolicy, defaultabsence checked byhelper. Each readback andaggregate persistedcreate-only.",
+    "A grant/retention failure records potentiallyaffectedpath andpriorcompletedobservations asuncertain, refusesaggregatecompletion andstopsbeforeadapterexecution. It doesnotclaimrollback.",
+    "No applicationUID100001searchgrant, read/writegrant, defaultACL, broadchmod, rootUIDmap or hostrootguestmap is introduced."
+  ],
+  "original_evidence_immutable": true,
+  "original_files_boundary_unchanged": {
+    "baseline_commit": "299fe91",
+    "path": "orchestration/experiment_sandbox/files.py",
+    "sha256": "a2e1d4883b17513bbe82b7de43f16ce47d86480bffb39a64a5b7bf65dc3440ca"
+  },
+  "primary_references": [
+    "https://man7.org/linux/man-pages/man5/acl.5.html",
+    "https://raw.githubusercontent.com/torvalds/linux/v6.8/include/uapi/linux/posix_acl_xattr.h",
+    "https://raw.githubusercontent.com/torvalds/linux/v6.8/include/uapi/linux/posix_acl.h"
+  ],
+  "prior_source_snapshots": "prior-source.json (exact e041/f896 receipt-accepted bytes preserved)",
+  "qualifications": [
+    "Searchbyknownname doesnotgrantdirectorylisting/read/write; separatelyprotecteddescendantmodes remainrequired. SharedfixedhostUID policy remains operator-only scope, not a multi-tenant productionauthorization claim.",
+    "ActualLinuxACLbehavior andgVisorgofer/inputreadability requireseparateworkerobservations. No unit/mockedcheck suppliesrealcontainment, executioneligibility, C22approval orscientificacceptance."
+  ],
+  "retained_C22_real_approval": false,
+  "scope": "Exact UID100000 search-only ACL integration on trusted Linux operator ancestors; no actual ACL or guest execution by these local checks"
+}

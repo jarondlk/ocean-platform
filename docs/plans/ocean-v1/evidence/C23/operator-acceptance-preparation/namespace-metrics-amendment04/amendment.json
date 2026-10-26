@@ -1,0 +1,32 @@
+{
+  "C23_complete": false,
+  "actual_counter_source": {
+    "observed_field": "core_sched.force_idle_usec 0",
+    "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/host-diagnostic-02.stdout.txt",
+    "sha256": "01bad537cc1aad8f3a21996e0db7aa3184cc87d6d804a555a08e6783cd096e0c"
+  },
+  "actual_runtime_acceptance_performed": false,
+  "cloud_operations_performed_by_this_recorder": false,
+  "development_observations": [
+    "First focusedrun175pass/2testfail because newAST-only tests parsed indented stored case bodies without textwrap.dedent. Those two tests were corrected; generated guestcode fixtureAST had already passed.",
+    "Final development focusedrun177passed3.71s plusRuff; final source-bound recorder follows."
+  ],
+  "generated_analysis_execution_performed": false,
+  "intentional_changes": [
+    "New namespaces case21 stores raw AMD64 Linux syscall probes: unshare0/every namespace bit/time and setns invalidfd requireEPERM; clone every7namespace bit requiresEPERM; validclone3 NEWUSER and invalidpointer/zerosize requireENOSYS38. Unexpectedclonechild exits immediately and parent reaps before assertion failure.",
+    "Untrusted guestUID/GID65532/groups[] and all5capsets0 precede direct tmpfs/bind/remount/umount probes expectingEPERM; ordinary guestfork/subprocess/thread compatibility controls follow risky clone calls. No probe is invoked onMac or host by preparation/tests.",
+    "Bounded dotted counter fields from newkernels are retained, knownrequired CPU/memory/pids/cgroup fields remain mandatory, values remain ASCIIunsigned64 andduplicates/malformedkeys rejected.",
+    "Current owned-cgroup raw observations are retained create-only before parsing, including failed parsing; resource observations do not establish containment/termination/release authority alone."
+  ],
+  "intentional_source_supersessions": {
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "585ba4bb850be29516a26993b2a32fad8a399348d9e76d9064f21b70da60b1b3",
+    "tests/test_experiment_sandbox_operator_acceptance.py": "603200694fc6d41f31b2563e7cbd66a69f7477300f187560c1016fff84845fdf"
+  },
+  "original_evidence_immutable": true,
+  "primary_abi_references": [
+    "https://raw.githubusercontent.com/torvalds/linux/v6.8/arch/x86/entry/syscalls/syscall_64.tbl",
+    "https://raw.githubusercontent.com/torvalds/linux/v6.8/include/uapi/linux/sched.h"
+  ],
+  "retained_C22_real_approval": false,
+  "scope": "Preparation for actual guest namespace/mount adversarial probes and strict evolving kernel metrics; no guest execution locally"
+}

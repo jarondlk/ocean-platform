@@ -28,6 +28,13 @@ layout = _profile_fixture
 _actual_arm_watchdog = runtime._arm_watchdog
 
 
+def test_bare_group_search_directory_is_denied_for_worker_and_diagnostics(tmp_path):
+    tmp_path.chmod(0o710)
+    for allow_search in (False, True):
+        with pytest.raises(SandboxError, match='sandbox_worker_integrity'):
+            runtime._private(tmp_path, allow_search=allow_search)
+
+
 class FakeJournal:
     host_boot_id = '11111111-1111-1111-1111-111111111111'
 

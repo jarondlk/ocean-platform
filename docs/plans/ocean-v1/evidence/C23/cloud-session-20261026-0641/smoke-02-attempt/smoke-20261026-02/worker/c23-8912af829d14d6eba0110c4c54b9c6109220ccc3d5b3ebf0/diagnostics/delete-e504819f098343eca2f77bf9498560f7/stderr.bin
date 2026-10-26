@@ -1,0 +1,13 @@
+W1026 07:09:40.107437    2694 maincli.go:40] Cannot find if container c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0 exists, checking if sandbox c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0 is running, err: getting container state (CID: "c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0"): connecting to control server at PID 2647: connection refused
+W1026 07:09:40.107461    2694 maincli.go:40] Sandbox isn't running anymore, marking container c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0 as stopped:
+I1026 07:09:40.107562    2694 cli.go:275] **************** gVisor ****************
+I1026 07:09:40.107590    2694 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 2694, PPID 2625, UID 0, GID 0
+I1026 07:09:40.107602    2694 cli.go:278] Args: [/opt/ocean-c23-runtime/release-20261019.0/runsc --root=/var/lib/ocean-c23/operator-acceptance/smoke-20261026-02/worker/runsc-state-c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0 --platform=systrap --rootless=false --network=none --gofer-network-namespace=new --directfs=false --overlay2=none --host-uds=none --host-fifo=none --character-device-policy=emulated-only --net-raw=false --ignore-cgroups=false --allow-flag-override=false --sidecar-release-enforcement-policy=ALWAYS --fdlimit=256 --gvisor-marker-file=true --oci-seccomp=true --debug=false --debug-log=/dev/stderr --panic-log=/dev/stderr delete --force c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0]
+I1026 07:09:40.107629    2694 config.go:631] Platform: systrap
+I1026 07:09:40.107648    2694 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/smoke-20261026-02/worker/runsc-state-c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0
+I1026 07:09:40.107654    2694 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1026 07:09:40.107662    2694 config.go:634] Network: none
+I1026 07:09:40.107669    2694 config.go:635] UseCPUNums: false
+W1026 07:09:40.107674    2694 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1026 07:09:40.107680    2694 cli.go:287] **************** gVisor ****************
+I1026 07:09:40.108016    2694 cli.go:316] Exiting with status: 0

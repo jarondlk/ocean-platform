@@ -1,0 +1,79 @@
+{
+  "C23_complete": false,
+  "cloud_actions_performed": false,
+  "component": "C23",
+  "dispatch_eligible": false,
+  "generated_analysis_executed": false,
+  "implementation_source_edited_by_reviewer": false,
+  "independent_check": {
+    "command": ".venv/bin/python -m pytest tests/test_experiment_sandbox_normalize_rootfs.py tests/test_experiment_sandbox_image_materialization.py -q --tb=short",
+    "exit_code": 0,
+    "result": "34 passed in 0.65s",
+    "scope": "Actual inert temporary-tree scans and provenance verification; trusted cp subprocess is mocked; no image or generated analysis execution"
+  },
+  "kind": "Independent read-only hardlink normalization and materialization-binding review",
+  "original_preparation_paths_preserved": {
+    "orchestration/experiment_sandbox/__init__.py": "7fb5622ed5b1030cce038710f67f794f419dfc2bfa76a1d6c61232f2a982dc27",
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "a2e1d4883b17513bbe82b7de43f16ce47d86480bffb39a64a5b7bf65dc3440ca",
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01",
+    "orchestration/experiment_sandbox/supervisor.py": "6bc18e679db9b666e5b896c1b0585becac2ea4577b9cd331a6e9ddb7b1fffa7d",
+    "sandbox/experiment/.containerignore": "271dfde8f3eb7c18bf0908e123f21207e7d52d3c2a3b76f6e1e8b8968247656e",
+    "sandbox/experiment/Containerfile": "11491d936f04308e592ab553bfc994733f4835d96cdf10d75e2accdb08ba2df7",
+    "sandbox/experiment/README.md": "0a70d6a7c3b79ec97d84f69e455ae7b407843661fd0ee2c58f615ead02d83ff5",
+    "sandbox/experiment/build-materials.template.json": "7fce550a7f21b7c59b8572f7f3e0472d2de385dddc47572bdbe14e743f5c39e8",
+    "sandbox/experiment/image-readiness.json": "478308448084641f54f639e417d0afd8112a449b109d172f4bc7ba52bd83dccc",
+    "sandbox/experiment/requirements.lock.template": "24bb1e45bc946174c0813ededb0926ef31ef96b1e3ff02c820ade6421b2b8b34",
+    "sandbox/experiment/verify_image.py": "e7f1c315936cd72ba65fb4de8d759c71fba9bcd59b8137f07b25403d1de12b7a",
+    "tests/test_experiment_sandbox_contracts.py": "6c92676ba694ba79cdf85eea64016b12dc820e45978f54e10be0857725ea2b25",
+    "tests/test_experiment_sandbox_files.py": "99412b7f3bb3268c869040124fcf3e245cc83ece75b36630786c955bd95d38f7",
+    "tests/test_experiment_sandbox_integration.py": "6c4cd41346e224d8b0d2932f4792717fab9c4584399eab44a4e4683e6d2cee41",
+    "tests/test_experiment_sandbox_profile.py": "c250728055020e22b059a9024e98d1a6e6ec3f636701f51cc5c60d31ac10780d",
+    "tests/test_experiment_sandbox_supervisor.py": "a2333c8080786e907c5199e34147ca890591e95bd7448802ca716f81313e19c3"
+  },
+  "owner_receipt": {
+    "path": "docs/plans/ocean-v1/evidence/C23/operator-acceptance-preparation/normalization-binding-amendment02/verification.json",
+    "sha256": "60e143ac1f338c7184bec389baabda46fc8c16906e89536f535472b9c7b218f9"
+  },
+  "primary_reference": {
+    "url": "https://www.gnu.org/s/coreutils/manual/html_node/cp-invocation.html",
+    "use": "Archive preserves symlinks and attributes; explicit no-preserve=links changes hardlink preservation. Actual installed GNU cp remains a worker test gate."
+  },
+  "prior_receipts_preserved": {
+    "docs/plans/ocean-v1/evidence/C23/checkpoint.json": "c14a96af7e33b1f4a93ded44ff3a48f0d15f793e19a82f1be0a3c2f83d23a3e9",
+    "docs/plans/ocean-v1/evidence/C23/hosted-preparation.json": "5a432e2f8a7edbe35cf0d96b93bb3aeaf89883d562aff006a5fc390253d6e5cf",
+    "docs/plans/ocean-v1/evidence/C23/materials/discovery-20261024/verification.json": "e24c63397a5fd502de5bea8f62b853d1177edfdd942f9012bc300cd5fe800302",
+    "docs/plans/ocean-v1/evidence/C23/operator-independent-review-20261025/harness-lifecycle-review.json": "0818f8b2baef20a005f15c3cc2c15abf8203aba2730d79c1738171805f12c44c",
+    "docs/plans/ocean-v1/evidence/C23/operator-independent-review-20261025/linux-runtime-diagnostics-review.json": "86a399373b7e626be537f1755536036da5a1d387f328dea30a176d2921600fbe",
+    "docs/plans/ocean-v1/evidence/C23/pushed-checkpoint.json": "dbcdb9bdfe8c3d736ccc31710a57450f68fe080f8af814bb26e57b97a12a99a6"
+  },
+  "qualifications": [
+    "This is source/preparation review, not real containment acceptance, scientific approval or a new OCI image digest",
+    "Actual GNU cp version/exit, source-unchanged snapshot and normalized tree receipt on the approved worker remain required",
+    "Filesystem semantic inventory covers bytes, mode, owner, directories and literal symlink targets; it does not assert xattr, ACL, timestamp or complete original inode-topology equivalence",
+    "Readonly sealing, runsc/cgroups, trusted guest initialization, runtime probes, controller death/recovery and release-guard gates still need source-bound actual evidence"
+  ],
+  "recorded_at": "2026-10-25T09:26:23.815298+00:00",
+  "remaining_source_blockers": [],
+  "reviewed_boundaries": [
+    "Dedicated Linux/root/worker guard precedes materialization path effects and cp; fixed source and separate create-only destination/receipt preserve original materialization",
+    "Bounded no-follow scanner binds content, mode, owner and literal guest symlink targets; inode snapshots exclude only atime and reject concurrent changes or regular hardlink aliases outside the source tree",
+    "Exact source before/after snapshots, semantic equality, destination regular nlink1 and unchanged strict rootfs inventory bind the intentional hardlink-topology transformation",
+    "Exact helper identity, command/target receipt schema, immutable fixed receipt path/hash and current source/destination verification precede per-job readonly mounts",
+    "OCI digest remains the original complete-blob image identity, with explicit trusted-build/unpack qualification and separately retained normalized-rootfs inventory/provenance",
+    "Materialization-v2 receipts and operator materials preserve full provenance; numerical comparison binds normalized rootfs inventory and normalization receipt hash",
+    "No original C23 profile guard, production dispatch or C22 reservation-release authority is weakened"
+  ],
+  "reviewer": "c23_science_materials",
+  "runtime_acceptance_complete": false,
+  "source_files": {
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01",
+    "sandbox/experiment/gcp/normalize_rootfs.py": "9fd3533d313cc3a1d720af3405e56366bbeed815f6ae31956dea0a8f41802b8c",
+    "sandbox/experiment/gcp/prepare_image_receipts.py": "b4f0317791d24edd12701e898e935e01bd9e5454c1e1589f75d34c24d1122301",
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "b69d14550d2bfe656214f87b948f525e005d9b6de805f4f472c6409dc1892f78",
+    "tests/test_experiment_sandbox_image_materialization.py": "fcbb36b4184f2990795879f7e12a32f3af8ca8ad28a07d5fd34796bee2c187f1",
+    "tests/test_experiment_sandbox_normalize_rootfs.py": "ff2fef142c97f9b2d5af5c8c35efa8930cf4b022f3b908a7064d6c655ac30d2f",
+    "tests/test_experiment_sandbox_operator_acceptance.py": "5ea0a095058870b818949460cdd0a11237d66eb2971372903aaef392fa14a973"
+  },
+  "source_steady_against_owner_freeze": true
+}

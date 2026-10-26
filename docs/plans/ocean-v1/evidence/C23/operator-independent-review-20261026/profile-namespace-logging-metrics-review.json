@@ -1,0 +1,96 @@
+{
+  "C23_complete": false,
+  "cloud_actions_performed": false,
+  "component": "C23",
+  "dispatch_eligible": false,
+  "generated_analysis_executed": false,
+  "implementation_source_edited_by_reviewer": false,
+  "independent_checks": [
+    {
+      "command": ".venv/bin/python -m pytest tests/test_experiment_sandbox_profile_execution.py -q --tb=short",
+      "exit_code": 0,
+      "result": "36 passed in 4.47s"
+    },
+    {
+      "command": ".venv/bin/python -m pytest tests/test_experiment_sandbox_operator_acceptance.py -q --tb=short -k 'namespace or cgroup_counter or metrics_retain or dotted_cpu'",
+      "exit_code": 0,
+      "result": "19 passed, 146 deselected in 0.59s"
+    }
+  ],
+  "kind": "Independent read-only profile-v4 namespace, bounded logging and outer-metrics review",
+  "original_preparation_paths_preserved": {
+    "orchestration/experiment_sandbox/__init__.py": "7fb5622ed5b1030cce038710f67f794f419dfc2bfa76a1d6c61232f2a982dc27",
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/files.py": "a2e1d4883b17513bbe82b7de43f16ce47d86480bffb39a64a5b7bf65dc3440ca",
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01",
+    "orchestration/experiment_sandbox/supervisor.py": "6bc18e679db9b666e5b896c1b0585becac2ea4577b9cd331a6e9ddb7b1fffa7d",
+    "sandbox/experiment/.containerignore": "271dfde8f3eb7c18bf0908e123f21207e7d52d3c2a3b76f6e1e8b8968247656e",
+    "sandbox/experiment/Containerfile": "11491d936f04308e592ab553bfc994733f4835d96cdf10d75e2accdb08ba2df7",
+    "sandbox/experiment/README.md": "0a70d6a7c3b79ec97d84f69e455ae7b407843661fd0ee2c58f615ead02d83ff5",
+    "sandbox/experiment/build-materials.template.json": "7fce550a7f21b7c59b8572f7f3e0472d2de385dddc47572bdbe14e743f5c39e8",
+    "sandbox/experiment/image-readiness.json": "478308448084641f54f639e417d0afd8112a449b109d172f4bc7ba52bd83dccc",
+    "sandbox/experiment/requirements.lock.template": "24bb1e45bc946174c0813ededb0926ef31ef96b1e3ff02c820ade6421b2b8b34",
+    "sandbox/experiment/verify_image.py": "e7f1c315936cd72ba65fb4de8d759c71fba9bcd59b8137f07b25403d1de12b7a",
+    "tests/test_experiment_sandbox_contracts.py": "6c92676ba694ba79cdf85eea64016b12dc820e45978f54e10be0857725ea2b25",
+    "tests/test_experiment_sandbox_files.py": "99412b7f3bb3268c869040124fcf3e245cc83ece75b36630786c955bd95d38f7",
+    "tests/test_experiment_sandbox_integration.py": "6c4cd41346e224d8b0d2932f4792717fab9c4584399eab44a4e4683e6d2cee41",
+    "tests/test_experiment_sandbox_profile.py": "c250728055020e22b059a9024e98d1a6e6ec3f636701f51cc5c60d31ac10780d",
+    "tests/test_experiment_sandbox_supervisor.py": "a2333c8080786e907c5199e34147ca890591e95bd7448802ca716f81313e19c3"
+  },
+  "owner_receipt": {
+    "path": "docs/plans/ocean-v1/evidence/C23/operator-acceptance-preparation/namespace-metrics-amendment04/verification.json",
+    "sha256": "51ec970e7265bbf69b7b8201245ca4003cfbdc7a35fe9a4f131773ace59fe265"
+  },
+  "primary_source": {
+    "commit": "760b80785dc53311d4c87bd2de167525a99709c1",
+    "logging_verification": "Separate logger/panic FD donation and internal-command stderr dup are independent of Debug; host log OpenFile accepts pipe paths without seeking. Actual routing is still untested on the worker.",
+    "official_release": "release-20261019.0",
+    "seccomp_verification": "Pinned boot builder skips guest policy unless OCISeccomp is enabled and appends the compiled program before guest execution.",
+    "tag_object": "c1ca7860d5fe42a3e0668cf682ddfa5097c4f40e",
+    "urls": [
+      "https://raw.githubusercontent.com/google/gvisor/760b80785dc53311d4c87bd2de167525a99709c1/runsc/config/flags.go",
+      "https://raw.githubusercontent.com/google/gvisor/760b80785dc53311d4c87bd2de167525a99709c1/runsc/sandbox/sandbox.go",
+      "https://raw.githubusercontent.com/google/gvisor/760b80785dc53311d4c87bd2de167525a99709c1/runsc/donation/donation.go",
+      "https://raw.githubusercontent.com/google/gvisor/760b80785dc53311d4c87bd2de167525a99709c1/runsc/specutils/specutils.go",
+      "https://raw.githubusercontent.com/google/gvisor/760b80785dc53311d4c87bd2de167525a99709c1/pkg/log/file.go",
+      "https://raw.githubusercontent.com/google/gvisor/760b80785dc53311d4c87bd2de167525a99709c1/runsc/cli/cli.go",
+      "https://raw.githubusercontent.com/google/gvisor/760b80785dc53311d4c87bd2de167525a99709c1/runsc/boot/seccomp.go"
+    ]
+  },
+  "prior_receipts_preserved": {
+    "docs/plans/ocean-v1/evidence/C23/checkpoint.json": "c14a96af7e33b1f4a93ded44ff3a48f0d15f793e19a82f1be0a3c2f83d23a3e9",
+    "docs/plans/ocean-v1/evidence/C23/hosted-preparation.json": "5a432e2f8a7edbe35cf0d96b93bb3aeaf89883d562aff006a5fc390253d6e5cf",
+    "docs/plans/ocean-v1/evidence/C23/materials/discovery-20261024/verification.json": "e24c63397a5fd502de5bea8f62b853d1177edfdd942f9012bc300cd5fe800302",
+    "docs/plans/ocean-v1/evidence/C23/operator-independent-review-20261025/rootfs-normalization-review.json": "a5d92fabfb6b396c512b6077ea83f687a1209c80e1ddca319b252bf6c279c748",
+    "docs/plans/ocean-v1/evidence/C23/pushed-checkpoint.json": "dbcdb9bdfe8c3d736ccc31710a57450f68fe080f8af814bb26e57b97a12a99a6"
+  },
+  "qualifications": [
+    "Only stored fixture AST/policy and safe temporary-file/control tests run locally; no raw guest syscall, generated analysis, runsc or cloud execution by this reviewer",
+    "Logging conclusion applies after trusted boot logging initialization; faults before that point may still need independent host/kernel diagnostics",
+    "The generic pre-start client-sync EOF cause is not established by source review; actual diagnostic attempt is required without speculative quota changes",
+    "Guest filter enforcement/inheritance, ordinary numerical threading, readonly sealing, resource containment, controller death/recovery and release gates remain open until actual source-bound evidence"
+  ],
+  "recorded_at": "2026-10-26T06:49:46.424632+00:00",
+  "remaining_source_blockers": [],
+  "reviewed_boundaries": [
+    "Guest OCI seccomp explicitly enabled; one masked clone rule per each of seven namespace bits prevents combined-mask holes; unshare/setns denied independently of arguments and clone3 returns ENOSYS",
+    "Trusted fixed mount/capability/identity operations and normal fork/thread syscalls remain admitted; raw guest compatibility and denial tests remain mandatory",
+    "Namespace fixture issues raw AMD64 calls only inside the future sandbox, checks zero capabilities, has immediate unexpected clone-child exit, distinguishes early denial from invalid-argument results, and includes ordinary fork/subprocess/thread controls",
+    "Exact fixed --debug=false, --debug-log=/dev/stderr and --panic-log=/dev/stderr route separate trusted boot diagnostics to existing bounded stderr without enabling debug stdout sharing",
+    "Existing adapter stderr capture is capped at1MiB, retained create-only with private diagnostics, and overflow/retention failure remains fail-closed with whole-cgroup cleanup; adapter source unchanged",
+    "Existing harness collector already reads outer cgroup independent of inner existence; actual kernel7 dotted CPU key is parsed with bounded keys/rows/uint64 and required-counter/duplicate rejection; raw per-job readbacks are retained before interpretation",
+    "No quota, original profile guard, C22 release, scientific approval or production-dispatch authority changes"
+  ],
+  "reviewer": "c23_science_materials",
+  "runtime_acceptance_complete": false,
+  "source_files": {
+    "orchestration/experiment_sandbox/linux_runtime.py": "bb338bbd0cb39f5097b7d577ac84e113ecf66addf55953fbb416184cdadc9a16",
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01",
+    "orchestration/experiment_sandbox/profile_execution.py": "a5d97c99c8c2bf90dcb48f2facc56a2bc3ed7a260bbcf8c70f457289469cc8a7",
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "e0419d95a0aad3a0aef2fe85a7d8e28215ad22c8713cbdd57bd56fb3e177a110",
+    "sandbox/experiment/trusted_init.py": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+    "tests/test_experiment_sandbox_operator_acceptance.py": "f896bb6c0e81c8e4dd2f5e1677f3f426172edcbc69cff64e522486ef8c58ade1",
+    "tests/test_experiment_sandbox_profile_execution.py": "3b035484e0de4cf57d951290de2a99c10f96f4f4bfb5eb5f5fcc8065c6d21160"
+  },
+  "source_steady_against_owner_freeze": true
+}

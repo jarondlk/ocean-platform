@@ -1,0 +1,5 @@
+{
+  "command": "sudo env LD_LIBRARY_PATH=/opt/ocean-c23-sqlite/lib PYTHONPATH=/var/lib/ocean-c23/operator-source-20261025-03 /var/lib/ocean-c23/operator-venv/bin/python -B -m sandbox.experiment.gcp.run_operator_acceptance run --case smoke --attempt-dir /var/lib/ocean-c23/operator-acceptance/smoke-20261025-01 --blueprint /var/lib/ocean-c23/operator-source-20261025-03/docs/plans/ocean-v1/evidence/C23/operator-acceptance-preparation/blueprint.json --blueprint-sha256 6d63c5b5a091330af6bcfbfcd9ec978cad860248500e0923d685859310bd6f5d --host-controls /var/lib/ocean-c23/evidence/host-positive-controls-20261025-01.json --host-controls-sha256 71c77053b818c2b05b08d4b9043731ea1bef79c0a33fecd781664105bf22df9f --network-isolation /var/lib/ocean-c23/evidence/network-isolation-20261025-01.json --network-isolation-sha256 6ff41f94d61b2c7affe15a87d8372e527885f37ca51b13b3cdc7c5f49b5cc9ee --normalization-receipt /var/lib/ocean-c23/evidence/rootfs-normalization-quota-v3.json --normalization-sha256 d75b965714e6335774af59eb6ab7616325b45ac3add38a5f2abf9a474a329824",
+  "purpose": "operator-owned synthetic acceptance",
+  "real_C22_approval": false
+}

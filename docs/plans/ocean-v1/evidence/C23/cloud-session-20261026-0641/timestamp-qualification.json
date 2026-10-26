@@ -1,0 +1,9 @@
+{
+  "recorded_at": "2026-10-26T06:45:55.162473+00:00",
+  "correction": "The manually supplied 06:47/06:48 timestamps in network-isolation-01/api-provenance.json and operator-hosted-299fe91-final.json are erroneous future estimates; they are not measured collection times. Authenticated API reads completed before the actual clock reading 2026-10-26T06:45:03Z, after worker start06:40:49Z. Use this conservative bounded interval and file/procedure evidence. No earlier source receipt is modified.",
+  "network_api_collection_interval_utc": [
+    "2026-10-26T06:40:49Z",
+    "2026-10-26T06:45:03Z"
+  ],
+  "hosted_result_observed_before": "2026-10-26T06:45:03Z"
+}

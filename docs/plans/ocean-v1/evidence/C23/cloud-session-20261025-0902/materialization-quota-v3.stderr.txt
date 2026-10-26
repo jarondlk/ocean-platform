@@ -1,0 +1,19 @@
+WARNING: 
+
+To increase the performance of the tunnel, consider installing NumPy. For instructions,
+please see https://cloud.google.com/iap/docs/using-tcp-forwarding#increasing_the_tcp_upload_bandwidth
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/var/lib/ocean-c23/operator-source-20261025-02/sandbox/experiment/gcp/prepare_image_receipts.py", line 157, in <module>
+    main()
+  File "/var/lib/ocean-c23/operator-source-20261025-02/sandbox/experiment/gcp/prepare_image_receipts.py", line 153, in main
+    print(json.dumps(record(args.label, args.trusted_init_sha256), sort_keys=True))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/lib/ocean-c23/operator-source-20261025-02/sandbox/experiment/gcp/prepare_image_receipts.py", line 134, in record
+    'rootfs_inventory_sha256': rootfs_inventory_sha256(rootfs),
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/lib/ocean-c23/operator-source-20261025-02/orchestration/experiment_sandbox/profile.py", line 232, in rootfs_inventory_sha256
+    raise SandboxError('sandbox_rootfs_integrity') from None
+orchestration.experiment_sandbox.contracts.SandboxError: sandbox_rootfs_integrity

@@ -1,0 +1,7 @@
+WARNING: 
+
+To increase the performance of the tunnel, consider installing NumPy. For instructions,
+please see https://cloud.google.com/iap/docs/using-tcp-forwarding#increasing_the_tcp_upload_bandwidth
+
+cat: /sys/fs/cgroup/memory.events: No such file or directory
+cat: /sys/fs/cgroup/pids.events: No such file or directory

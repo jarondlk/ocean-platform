@@ -44,6 +44,7 @@ APP_UID = APP_GID = 100001
 FIXED_ROOT = Path("/var/lib/ocean-c23")
 ATTEMPTS_ROOT = FIXED_ROOT / "operator-acceptance"
 MAX_FIXTURE = 4 * 1024 * 1024
+METADATA_EXTERNAL_IP = "instance/network-interfaces/0/access-configs/0/external-ip"
 
 
 class OperatorError(ValueError):
@@ -228,6 +229,7 @@ def _metadata(name):
         "instance/id",
         "instance/network-interfaces/",
         "instance/network-interfaces/0/access-configs/",
+        METADATA_EXTERNAL_IP,
     }:
         raise OperatorError("metadata_path")
     url = "http://169.254.169.254/computeMetadata/v1/" + name
@@ -237,7 +239,8 @@ def _metadata(name):
         with opener.open(request, timeout=3) as response:
             raw = response.read(257)
             if (
-                response.geturl() != url
+                response.status != 200
+                or response.geturl() != url
                 or response.headers.get("Metadata-Flavor") != "Google"
                 or len(raw) > 256
             ):
@@ -246,10 +249,18 @@ def _metadata(name):
         if (
             error.code == 404
             and name == "instance/network-interfaces/0/access-configs/"
+            and error.geturl() == url
+            and error.headers.get("Metadata-Flavor") == "Google"
         ):
             return ""
         raise
-    return raw.decode("ascii").strip()
+    # Only a verified terminal HTTP200 with an actually empty body proves this
+    # live address observation. A known config folder may persist without an IP.
+    return (
+        raw.decode("ascii")
+        if name == METADATA_EXTERNAL_IP
+        else raw.decode("ascii").strip()
+    )
 
 
 def _boot_id():
@@ -342,7 +353,16 @@ def seal_network_isolation(arguments):
 
 
 def validate_network_controls(
-    host, isolated, target, *, instance_id, boot_id, interfaces, access_configs, now_ns
+    host,
+    isolated,
+    target,
+    *,
+    instance_id,
+    boot_id,
+    interfaces,
+    access_configs,
+    external_ip,
+    now_ns,
 ):
     """Validate retained trusted observations plus live metadata; no cloud API."""
     if any(type(value) is not dict for value in (host, isolated, target)):
@@ -394,7 +414,10 @@ def validate_network_controls(
         or resource.get("zone")
         != GCP_API + "projects/" + PROJECT + "/zones/asia-northeast1-a"
         or interfaces != "0/"
-        or access_configs != ""
+        or type(access_configs) is not str
+        or access_configs not in {"", "0/"}
+        or type(external_ip) is not str
+        or external_ip != ""
     ):
         raise OperatorError("host_external_ip_not_absent")
     networks = set()
@@ -447,10 +470,12 @@ def validate_network_controls(
     return {
         "host_external_tcp_positive_before_egress_removal": True,
         "current_metadata_external_ip_absent": True,
+        "current_metadata_access_configs": access_configs,
+        "current_metadata_terminal_external_ip": external_ip,
         "retained_router_inventory_no_nat": True,
         "host_boot_id": boot_id,
         "instance_id": instance_id,
-        "qualification": "No-NAT is the target-bound complete trusted operator inventory snapshot; recency/completeness is operator provenance, the worker timestamp is sealing time. Live metadata rechecks access configs before this attempt, not continuous cloud-state attestation.",
+        "qualification": "No-NAT is the target-bound complete trusted operator inventory snapshot; recency/completeness is operator provenance, the worker timestamp is sealing time. Live metadata rechecks only NIC0 and the exact terminal external-IP with verified HTTP200/Metadata-Flavor and empty body; a known empty config folder may remain. This is not continuous cloud-state attestation.",
     }
 
 
@@ -565,6 +590,83 @@ def cases():
                            ['guest_interfaces',','.join(sorted(interface_names))],
                            ['ipv4_route_rows',len(ipv4_routes)],
                            ['ipv6_route_readback','present' if ipv6_routes is not None else 'not_exposed']])
+        """,
+        ),
+        OperatorCase(
+            "namespaces",
+            """
+            import ctypes, errno, os, signal, subprocess, threading
+            assert os.uname().machine == 'x86_64'
+            assert os.getuid() == 65532 and os.getgid() == 65532 and os.getgroups() == []
+            capabilities = {}
+            for line in open('/proc/self/status',encoding='ascii'):
+                name, _, value = line.partition(':')
+                if name in {'CapInh','CapPrm','CapEff','CapBnd','CapAmb'}:
+                    capabilities[name] = int(value.strip(),16)
+            assert len(capabilities) == 5 and all(value == 0 for value in capabilities.values())
+            libc = ctypes.CDLL(None,use_errno=True)
+            libc.syscall.restype = ctypes.c_long
+            namespace_bits = [0x00020000,0x02000000,0x04000000,0x08000000,
+                              0x10000000,0x20000000,0x40000000]
+            observations = []
+            def denied(name,number,*arguments,expected=errno.EPERM,clone_child=False):
+                ctypes.set_errno(0)
+                result = libc.syscall(ctypes.c_long(number),*arguments)
+                actual_errno = ctypes.get_errno()
+                if clone_child and result == 0:
+                    # An unexpected clone child must not continue any probe.
+                    os._exit(0)
+                if clone_child and result > 0:
+                    os.waitpid(result,0)
+                assert result == -1 and actual_errno == expected, (name,result,actual_errno,expected)
+                observations.append([name,actual_errno])
+            # AMD64 Linux syscall numbers; no host syscall is issued by setup.
+            # unshare(0) and setns(-1) errno distinguish early deny from ordinary
+            # success/FD validation; neither invalid clone3 input proves userns alone.
+            for bit in [0,*namespace_bits,0x80]:
+                denied('unshare_' + hex(bit),272,ctypes.c_ulong(bit))
+            denied('setns_invalid_fd',308,ctypes.c_long(-1),ctypes.c_ulong(0))
+            for bit in namespace_bits:
+                denied('clone_' + hex(bit),56,ctypes.c_ulong(bit|signal.SIGCHLD),
+                       ctypes.c_void_p(0),ctypes.c_void_p(0),ctypes.c_void_p(0),
+                       ctypes.c_ulong(0),clone_child=True)
+            clone_args = (ctypes.c_uint64*11)()
+            clone_args[0] = 0x10000000
+            clone_args[4] = signal.SIGCHLD
+            denied('clone3_newuser',435,ctypes.byref(clone_args),
+                   ctypes.c_size_t(ctypes.sizeof(clone_args)),expected=errno.ENOSYS,clone_child=True)
+            denied('clone3_invalid_pointer',435,ctypes.c_void_p(1),
+                   ctypes.c_size_t(ctypes.sizeof(clone_args)),expected=errno.ENOSYS,clone_child=True)
+            denied('clone3_zero_size',435,ctypes.c_void_p(0),ctypes.c_size_t(0),
+                   expected=errno.ENOSYS,clone_child=True)
+            os.mkdir('/scratch/ns-probe')
+            target = ctypes.c_char_p(b'/scratch/ns-probe')
+            denied('mount_tmpfs',165,ctypes.c_char_p(b'tmpfs'),target,
+                   ctypes.c_char_p(b'tmpfs'),ctypes.c_ulong(0),
+                   ctypes.c_char_p(b'size=4096,nr_inodes=4'))
+            denied('mount_bind',165,ctypes.c_char_p(b'/inputs'),target,
+                   ctypes.c_void_p(0),ctypes.c_ulong(4096),ctypes.c_void_p(0))
+            denied('mount_remount',165,ctypes.c_void_p(0),ctypes.c_char_p(b'/scratch'),
+                   ctypes.c_void_p(0),ctypes.c_ulong(32|1),ctypes.c_void_p(0))
+            denied('umount2',166,ctypes.c_char_p(b'/scratch'),ctypes.c_int(0))
+            os.rmdir('/scratch/ns-probe')
+            # Compatibility controls are deliberately after all risky clone calls
+            # so those calls run before this program creates any Python thread.
+            pid = os.fork()
+            if pid == 0:
+                os._exit(0)
+            waited,status = os.waitpid(pid,0)
+            assert waited == pid and os.waitstatus_to_exitcode(status) == 0
+            process = subprocess.run(['/usr/local/bin/python3','-I','-S','-B','-c',
+                'print("ordinary-child-ok")'],stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=3)
+            assert process.returncode == 0 and process.stdout == b'ordinary-child-ok\\n'
+            threaded = []
+            worker = threading.Thread(target=lambda: threaded.append('ordinary-thread-ok'))
+            worker.start()
+            worker.join(timeout=3)
+            assert not worker.is_alive() and threaded == ['ordinary-thread-ok']
+            write_summary(observations + [['uid',os.getuid()],['capabilities_zero',True],
+                ['ordinary_fork',True],['ordinary_subprocess',True],['ordinary_thread',True]])
         """,
         ),
         OperatorCase(
@@ -1049,7 +1151,50 @@ def _hash_file(path, maximum=8 * 1024**3):
         os.close(fd)
 
 
-def verify_materials(rootfs, oci_layout, image_receipt, runtime_manifest):
+def verify_rootfs_normalization(rootfs, receipt_path, receipt_sha256):
+    """Require explicit provenance for the separate hardlink-normalized copy.
+
+    The OCI digest still names the original image; this operator transformation
+    changes hardlink topology and is independently bound to its copied bytes.
+    Trusted build/unpack provenance remains an operator responsibility.
+    """
+    from sandbox.experiment.gcp.normalize_rootfs import verify_normalization_receipt
+
+    destination = Path(rootfs)
+    match = re.fullmatch(
+        r"scientific-normalized-(quota-v[3-9][0-9]*)", destination.parent.name
+    )
+    if (
+        match is None
+        or destination.name != "rootfs"
+        or destination.parent.parent != FIXED_ROOT
+    ):
+        raise OperatorError("operator_normalized_rootfs_path")
+    label = match[1]
+    source = FIXED_ROOT / ("scientific-bundle-" + label) / "rootfs"
+    expected_receipt = (
+        FIXED_ROOT / "evidence" / ("rootfs-normalization-" + label + ".json")
+    )
+    if Path(receipt_path) != expected_receipt or Path(receipt_path) != Path(
+        receipt_path
+    ).resolve(strict=True):
+        raise OperatorError("operator_normalization_receipt_path")
+    document = _immutable_document(receipt_path, receipt_sha256)
+    provenance = verify_normalization_receipt(
+        document, source=source, destination=destination
+    )
+    return {"receipt_sha256": receipt_sha256, "provenance": provenance}
+
+
+def verify_materials(
+    rootfs,
+    oci_layout,
+    image_receipt,
+    runtime_manifest,
+    *,
+    normalization_receipt,
+    normalization_sha256,
+):
     """Bind actual OCI blob bytes and materialized rootfs; perform no extraction."""
     from orchestration.experiment_sandbox.profile import (
         ImagePreparation,
@@ -1079,6 +1224,14 @@ def verify_materials(rootfs, oci_layout, image_receipt, runtime_manifest):
             raise OperatorError("operator_material_path")
     if rootfs_inventory_sha256(rootfs) != image["rootfs_inventory_sha256"]:
         raise OperatorError("materialized_rootfs_hash")
+    normalization = verify_rootfs_normalization(
+        rootfs, normalization_receipt, normalization_sha256
+    )
+    if (
+        normalization["provenance"]["destination_rootfs_inventory_sha256"]
+        != image["rootfs_inventory_sha256"]
+    ):
+        raise OperatorError("operator_normalization_inventory_binding")
     layout = json.loads(_read(Path(oci_layout) / "oci-layout", 4096))
     index = json.loads(_read(Path(oci_layout) / "index.json", 1024**2))
     if layout != {"imageLayoutVersion": "1.0.0"} or not any(
@@ -1107,18 +1260,25 @@ def verify_materials(rootfs, oci_layout, image_receipt, runtime_manifest):
         raise OperatorError("oci_config_platform")
     for entry in manifest["layers"]:
         blob(entry["digest"], 8 * 1024**3)
+    normalization["source_oci_manifest_digest"] = image["image_digest"]
     return {
         "image_preparation": image,
         "runtime_preparation": runtime,
         "oci_layers_verified": len(manifest["layers"]),
         "materialized_rootfs_inventory_sha256": image["rootfs_inventory_sha256"],
+        "rootfs_normalization": normalization,
+        "materialization_qualification": "Original OCI image plus explicit content/mode/owner-preserving hardlink normalization; copied topology differs and rootfs provenance relies on trusted build/unpack observations.",
     }
 
 
-def _private_directory(path, *, create=False):
+def _private_directory(path, *, create=False, allow_search=False):
     path = Path(path)
     if create:
         path.mkdir(mode=0o700)
+    if allow_search:
+        from orchestration.experiment_sandbox.traversal import private_directory
+
+        return private_directory(path, allow_search=True)
     if (
         not path.is_absolute()
         or path != path.resolve(strict=True)
@@ -1128,6 +1288,104 @@ def _private_directory(path, *, create=False):
     ):
         raise OperatorError("operator_private_directory")
     return path
+
+
+def _gofer_search_readback(path):
+    from orchestration.experiment_sandbox.traversal import (
+        ACCESS_ACL,
+        SEARCH_ACL,
+        private_directory,
+    )
+
+    private_directory(path, allow_search=True)
+    before = path.lstat()
+    access = os.getxattr(path, ACCESS_ACL, follow_symlinks=False)
+    if (
+        (before.st_uid, before.st_gid) != (0, 0)
+        or stat.S_IMODE(before.st_mode) != 0o710
+        or access != SEARCH_ACL
+    ):
+        raise OperatorError("operator_gofer_search_readback")
+    private_directory(path, allow_search=True)
+    after = path.lstat()
+    if (before.st_dev, before.st_ino, before.st_uid, before.st_gid, before.st_mode) != (
+        after.st_dev,
+        after.st_ino,
+        after.st_uid,
+        after.st_gid,
+        after.st_mode,
+    ):
+        raise OperatorError("operator_gofer_search_changed")
+    return {
+        "verified_path": str(path),
+        "device": before.st_dev,
+        "inode": before.st_ino,
+        "uid": before.st_uid,
+        "gid": before.st_gid,
+        "mode": "0710",
+        "access_acl_hex": access.hex(),
+        "default_acl_absent": True,
+        "search_uid": CONTROL_UID,
+        "read_or_write_granted": False,
+    }
+
+
+def _grant_gofer_traversal(attempt, worker, job):
+    """Grant only the mapped control UID search on five known ancestors.
+
+    Staging has already finished under the original strict0700 boundary. No
+    default ACL, application-UID grant, descendant change or read/write grant is
+    part of this operation. It must precede the adapter's physical execution.
+    """
+    from orchestration.experiment_sandbox.traversal import grant_search
+
+    attempt, worker, job = Path(attempt), Path(worker), Path(job)
+    check_attempt_path(attempt)
+    if (
+        worker != attempt / "worker"
+        or job.parent != worker
+        or not re.fullmatch(r"c23-[a-f0-9]{48}", job.name)
+    ):
+        raise OperatorError("operator_gofer_traversal_paths")
+    directories = (FIXED_ROOT, ATTEMPTS_ROOT, attempt, worker, job)
+    observations = []
+    for index, path in enumerate(directories):
+        try:
+            granted = grant_search(path)
+            if granted != path:
+                raise OperatorError("operator_gofer_traversal_returned_path")
+            readback = _gofer_search_readback(granted)
+            observation = {"path": str(path), "readback": readback}
+            _create(attempt / f"gofer-traversal-{index}.json", _canonical(observation))
+            observations.append(observation)
+        except Exception as error:
+            _create(
+                attempt / "gofer-traversal-failure.json",
+                _canonical(
+                    {
+                        "failed_or_uncertain_path": str(path),
+                        "recorded_directories": observations,
+                        "exception_type": type(error).__name__,
+                        "dispatch_eligible": False,
+                        "reservation_released": False,
+                    }
+                ),
+            )
+            raise
+    document = {
+        "version": "c23-operator-gofer-traversal-v1",
+        "purpose": PURPOSE,
+        "control_host_uid": CONTROL_UID,
+        "analysis_uid_granted": False,
+        "default_acl_granted": False,
+        "read_or_write_granted": False,
+        "directories": observations,
+        "dispatch_eligible": False,
+        "reservation_released": False,
+        "retained_C22_real_approval": False,
+    }
+    _create(attempt / "gofer-traversal.json", _canonical(document))
+    return document
 
 
 def check_attempt_path(path):
@@ -1185,7 +1443,45 @@ def _cgroup_identity(journal, envelope):
     return None
 
 
-def _collect_metrics(journal, envelope):
+_CGROUP_REQUIRED_COUNTERS = {
+    "cpu.stat": {
+        "usage_usec",
+        "user_usec",
+        "system_usec",
+        "nr_periods",
+        "nr_throttled",
+        "throttled_usec",
+    },
+    "memory.events": {"low", "high", "max", "oom", "oom_kill"},
+    "pids.events": {"max"},
+    "cgroup.events": {"populated", "frozen"},
+}
+
+
+def _parse_cgroup_counters(raw, name):
+    """Retain evolving kernel counter names without accepting malformed rows."""
+    fields = {}
+    for line in raw.decode("ascii").splitlines():
+        parts = line.split()
+        if len(parts) != 2:
+            raise OperatorError("operator_cgroup_measurement")
+        key, value = parts
+        if (
+            key in fields
+            or len(fields) >= 128
+            or len(key) > 128
+            or not re.fullmatch(r"[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)*", key)
+            or not re.fullmatch(r"[0-9]{1,20}", value)
+            or int(value) > 2**64 - 1
+        ):
+            raise OperatorError("operator_cgroup_measurement")
+        fields[key] = int(value)
+    if not _CGROUP_REQUIRED_COUNTERS[name] <= fields.keys():
+        raise OperatorError("operator_cgroup_measurement_missing_required")
+    return fields
+
+
+def _collect_metrics(journal, envelope, *, observation_dir=None):
     outer = Path("/sys/fs/cgroup/ocean-c23") / envelope.job_id
     identity = _cgroup_identity(journal, envelope)
     if identity is None or not outer.exists():
@@ -1198,19 +1494,20 @@ def _collect_metrics(journal, envelope):
     ):
         raise OperatorError("operator_cgroup_identity")
     result = {"available": True, "device": identity[0], "inode": identity[1]}
-    for name in ("cpu.stat", "memory.events", "pids.events", "cgroup.events"):
-        fields = {}
-        for line in _kernel_read(outer / name).decode("ascii").splitlines():
-            key, value = line.split()
-            if (
-                key in fields
-                or not re.fullmatch(r"[a-z_]+", key)
-                or not value.isdecimal()
-            ):
+    result["raw_cgroup_files"] = {}
+    for name in (*_CGROUP_REQUIRED_COUNTERS, "memory.peak"):
+        raw = _kernel_read(outer / name)
+        # Preserve actual readback before interpretation, including failed parses.
+        if observation_dir is not None:
+            _create(Path(observation_dir) / ("cgroup-" + name + ".raw.txt"), raw)
+        result["raw_cgroup_files"][name] = raw.decode("ascii")
+        if name == "memory.peak":
+            value = raw.decode("ascii").strip()
+            if not re.fullmatch(r"[0-9]{1,20}", value) or int(value) > 2**64 - 1:
                 raise OperatorError("operator_cgroup_measurement")
-            fields[key] = int(value)
-        result[name] = fields
-    result["memory.peak"] = int(_kernel_read(outer / "memory.peak").strip())
+            result[name] = int(value)
+        else:
+            result[name] = _parse_cgroup_counters(raw, name)
     return result
 
 
@@ -1544,12 +1841,12 @@ def run_case(arguments):
     from sandbox.experiment import trusted_init
 
     attempt = check_attempt_path(arguments.attempt_dir)
-    _private_directory(FIXED_ROOT)
+    _private_directory(FIXED_ROOT, allow_search=True)
     if not ATTEMPTS_ROOT.exists():
-        _private_directory(ATTEMPTS_ROOT, create=True)
+        _private_directory(ATTEMPTS_ROOT, create=True, allow_search=True)
     else:
-        _private_directory(ATTEMPTS_ROOT)
-    _private_directory(attempt, create=True)
+        _private_directory(ATTEMPTS_ROOT, allow_search=True)
+    _private_directory(attempt, create=True, allow_search=True)
     listener = None
     journal = envelope = None
     mount_intent = None
@@ -1586,7 +1883,12 @@ def run_case(arguments):
         image = json.loads(_read(arguments.image_receipt, MAX_FIXTURE))
         runtime = json.loads(_read(arguments.runtime_manifest, MAX_FIXTURE))
         receipt["materials"] = verify_materials(
-            arguments.rootfs, arguments.oci_layout, image, runtime
+            arguments.rootfs,
+            arguments.oci_layout,
+            image,
+            runtime,
+            normalization_receipt=arguments.normalization_receipt,
+            normalization_sha256=arguments.normalization_sha256,
         )
         host_controls = _immutable_document(
             arguments.host_controls, arguments.host_controls_sha256
@@ -1602,6 +1904,7 @@ def run_case(arguments):
             boot_id=_boot_id(),
             interfaces=_metadata("instance/network-interfaces/"),
             access_configs=_metadata("instance/network-interfaces/0/access-configs/"),
+            external_ip=_metadata(METADATA_EXTERNAL_IP),
             now_ns=time.monotonic_ns(),
         )
         receipt["network_controls_source_sha256"] = {
@@ -1638,6 +1941,9 @@ def run_case(arguments):
         rootfs_bind.mkdir(mode=0o755)
         mount_intent = MountIntent(Path(arguments.rootfs), rootfs_bind)
         _perform_mount(mount_intent, attempt)
+        receipt["gofer_traversal"] = _grant_gofer_traversal(
+            attempt, worker, worker / envelope.job_id
+        )
         init_sha = _hash_file(Path(trusted_init.__file__).resolve(), 65536)
         receipt["trusted_init_sha256"] = init_sha
         profile = render_execution_profile(
@@ -1652,6 +1958,10 @@ def run_case(arguments):
         _create(attempt / "profile.json", _canonical(profile.document))
         receipt["comparison_configuration"] = {
             "resources": dict(envelope.resources),
+            "rootfs_materialization": {
+                "rootfs_inventory_sha256": image["rootfs_inventory_sha256"],
+                "normalization_receipt_sha256": arguments.normalization_sha256,
+            },
             "normalized_init_policy": {
                 key: value
                 for key, value in profile.document["trusted_init"]["policy"].items()
@@ -1686,7 +1996,9 @@ def run_case(arguments):
         )
         receipt["elapsed_adapter_seconds"] = time.monotonic() - started
         receipt["adapter_result"] = result.document
-        receipt["metrics"] = _collect_metrics(journal, envelope)
+        receipt["metrics"] = _collect_metrics(
+            journal, envelope, observation_dir=attempt
+        )
         if result.outputs is not None:
             receipt["validated_manifest"] = result.outputs.manifest
             if "summary.json" in result.outputs.files:
@@ -1805,7 +2117,8 @@ def compare_numerics(first, second):
     configuration = first.get("comparison_configuration")
     if (
         type(configuration) is not dict
-        or set(configuration) != {"resources", "normalized_init_policy"}
+        or set(configuration)
+        != {"resources", "normalized_init_policy", "rootfs_materialization"}
         or any(type(value) is not dict or not value for value in configuration.values())
         or configuration != second.get("comparison_configuration")
     ):
@@ -1888,8 +2201,12 @@ def main(argv=None):
     run.add_argument("--host-controls-sha256", required=True)
     run.add_argument("--network-isolation", type=Path, required=True)
     run.add_argument("--network-isolation-sha256", required=True)
+    run.add_argument("--normalization-receipt", type=Path, required=True)
+    run.add_argument("--normalization-sha256", required=True)
     run.add_argument(
-        "--rootfs", type=Path, default=FIXED_ROOT / "scientific-bundle-quota-v3/rootfs"
+        "--rootfs",
+        type=Path,
+        default=FIXED_ROOT / "scientific-normalized-quota-v3/rootfs",
     )
     run.add_argument(
         "--oci-layout", type=Path, default=FIXED_ROOT / "scientific-oci-quota-v3"

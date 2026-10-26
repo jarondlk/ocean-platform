@@ -1,6 +1,6 @@
 # C23 — Isolated Python execution
 
-**Status:** In progress; preparation/dependency repair pass hosted CI and additive operator source passes388 combined local cases. The isolated worker resumed onOct25 with a20:04JST stop deadline. Actual containment/numerical acceptance and the verified C22 operator bridge remain pending. **Prerequisites:** C22.
+**Status:** In progress; pushed299fe91 passes all four required hosted jobs. Later reviewed image/network/namespace/traversal amendments pass558 combined local cases. The same isolated worker resumed Oct26 with17:40JST stop deadline; actual startup/containment, numerical acceptance and C22 operator bridge remain open. **Prerequisites:** C22.
 
 ## Revised delivery boundary
 

@@ -1,0 +1,25 @@
+{
+  "C23_complete": false,
+  "actual_runtime_acceptance_performed": false,
+  "cloud_operations_performed_by_this_recorder": false,
+  "development_observation": "158 safe tests passed in3.66s plusRuff after amendment; final source-bound run follows.",
+  "generated_analysis_execution_performed": false,
+  "intentional_changes": [
+    "Always query one allowlisted exact terminal instance/network-interfaces/0/access-configs/0/external-ip during each operator network preflight.",
+    "Require exact URL, HTTP200, Metadata-FlavorGoogle, bounded ASCII response and actually empty terminalbody. Whitespace is retained and denied; terminal404/redirect/missingheader/malformed/oversized responses fail closed.",
+    "Accept only known access-config directory shapes empty or0/ while still requiring terminalempty AND singleNIC0 plus retained API noexternalIPv4/IPv6, exactnetwork/subnet,nopeering/noNAT and fresh target/boot-bound snapshot.",
+    "Folder404 compatibility requires matching exact URL and Google flavor and never substitutes for terminalHTTP200 emptyproof."
+  ],
+  "intentional_source_supersessions": {
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "b69d14550d2bfe656214f87b948f525e005d9b6de805f4f472c6409dc1892f78",
+    "tests/test_experiment_sandbox_operator_acceptance.py": "5ea0a095058870b818949460cdd0a11237d66eb2971372903aaef392fa14a973"
+  },
+  "original_evidence_immutable": true,
+  "retained_C22_real_approval": false,
+  "root_retained_actual_observation_sources": {
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261025-0902/network-gate-diagnostic-01.stdout.json": "0a264da778ed9f1a259adb38f6dacc5665691ecc0ce14d4c6401ddf569bfabf1",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261025-0902/network-gate-diagnostic-02.stdout.json": "2671d6dbab1ba11648f264b13e06e4268e58e36b2a82bfdaf6efdb5b25dc9097"
+  },
+  "scope": "Narrow live GCE terminal external-IP verification; no-IP/API/no-NAT gates preserved",
+  "trigger": "Actual no-external-IP GCE VM retains known access-config folder0/; exact terminal external-IP responded HTTP200, Metadata-FlavorGoogle, actually emptybody. Original smoke refused before effects and remains preserved."
+}

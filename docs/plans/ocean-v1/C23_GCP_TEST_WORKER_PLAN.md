@@ -15,6 +15,29 @@ restart of the same worker. Its new read-back STOP deadline is20:04 JST
 (`2026-10-25T11:04:14.331914Z`). No duplicate was provisioned. Original24 evidence
 files were exported before trusted offline amendment preparation resumed.
 
+## Current session — 2026-10-26 JST
+
+GCP access works without another sign-in. The worker was read back TERMINATED
+(last stopOct25 11:06UTC) and the same VM restarted; no duplicate was created.
+Its actual deadline is2026-10-26T08:40:49.899002Z (17:40JST), with STOP,
+automaticRestart=false, no service account and no startup-script replay.
+Forty-six preparation evidence files were exported. Trusted host controls were
+renewed using temporary setup egress, which was removed before testing.
+Complete API network reads and worker same-boot seals are retained under
+cloud-session-20261026-0641. No external IP/NAT/peering is present.
+
+The normalized image passed preparation. The first actual diagnostic attempt
+identified gofer permission denial while traversing root0 private ancestors;
+no analysis ran, delete acknowledged, whole cgroup empty and rootfs unmounted.
+A reviewed exact named-UID100000 search-only ACL fixes only needed ancestors,
+with no read/write/group/other/default ACL or change to private descendants.
+A real temporary host permission probe confirms denials; its original cleanup
+assertion failure and separately verified correction remain retained. Actual
+gVisor startup, containment and numerical gates still require observations.
+558 host-safe combined cases pass on steady source; they do not replace those
+gates. Export evidence and verify actual stop/resource inventory before ending
+this session. Stopped50GiB disk charges remain until deletion.
+
 ## Actual preparation record — 2026-10-24/25 JST
 
 Project `ocean-v1-c23-20261024` (number1010914377085) is isolated under the

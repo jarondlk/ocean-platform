@@ -1,0 +1,56 @@
+{
+  "C23_complete": false,
+  "actual_runtime_acceptance_performed": false,
+  "cloud_operations_performed": false,
+  "generated_analysis_execution_performed": false,
+  "passed": true,
+  "recorded_at": "2026-10-25T09:37:31.802576+00:00",
+  "results": [
+    {
+      "check": "pytest",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_operator_acceptance.py",
+        "tests/test_experiment_sandbox_image_materialization.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "seconds": 3.884
+    },
+    {
+      "check": "ruff",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/ruff",
+        "check",
+        "sandbox/experiment/gcp/prepare_image_receipts.py",
+        "sandbox/experiment/gcp/run_operator_acceptance.py",
+        "tests/test_experiment_sandbox_operator_acceptance.py",
+        "tests/test_experiment_sandbox_image_materialization.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.011
+    }
+  ],
+  "retained_C22_real_approval": false,
+  "scope": "Host-safe metadata response, strict live terminal address and retained API no-IP/no-NAT guard tests plus unchanged materialization binding checks only",
+  "source_files_after": {
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01",
+    "sandbox/experiment/gcp/normalize_rootfs.py": "9fd3533d313cc3a1d720af3405e56366bbeed815f6ae31956dea0a8f41802b8c",
+    "sandbox/experiment/gcp/prepare_image_receipts.py": "b4f0317791d24edd12701e898e935e01bd9e5454c1e1589f75d34c24d1122301",
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "585ba4bb850be29516a26993b2a32fad8a399348d9e76d9064f21b70da60b1b3",
+    "tests/test_experiment_sandbox_image_materialization.py": "fcbb36b4184f2990795879f7e12a32f3af8ca8ad28a07d5fd34796bee2c187f1",
+    "tests/test_experiment_sandbox_operator_acceptance.py": "603200694fc6d41f31b2563e7cbd66a69f7477300f187560c1016fff84845fdf"
+  },
+  "source_files_before": {
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01",
+    "sandbox/experiment/gcp/normalize_rootfs.py": "9fd3533d313cc3a1d720af3405e56366bbeed815f6ae31956dea0a8f41802b8c",
+    "sandbox/experiment/gcp/prepare_image_receipts.py": "b4f0317791d24edd12701e898e935e01bd9e5454c1e1589f75d34c24d1122301",
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "585ba4bb850be29516a26993b2a32fad8a399348d9e76d9064f21b70da60b1b3",
+    "tests/test_experiment_sandbox_image_materialization.py": "fcbb36b4184f2990795879f7e12a32f3af8ca8ad28a07d5fd34796bee2c187f1",
+    "tests/test_experiment_sandbox_operator_acceptance.py": "603200694fc6d41f31b2563e7cbd66a69f7477300f187560c1016fff84845fdf"
+  },
+  "source_steady": true
+}

@@ -89,6 +89,13 @@ def test_policy_is_bound_to_approved_identity_and_unchanged_limits(layout):
     assert '--network=none' in prepared.runtime_args
     assert '--directfs=false' in prepared.runtime_args
     assert '--overlay2=none' in prepared.runtime_args
+    assert '--oci-seccomp=true' in prepared.runtime_args
+    # Detached Sentry boot failures use the existing bounded stderr capture.
+    # Enabling debug itself would alter stdio routing and threaten the frame.
+    assert '--debug=false' in prepared.runtime_args
+    assert '--debug-log=/dev/stderr' in prepared.runtime_args
+    assert '--panic-log=/dev/stderr' in prepared.runtime_args
+    assert '--debug=true' not in prepared.runtime_args
 
 
 @pytest.mark.parametrize('key,value', [
@@ -147,3 +154,78 @@ def test_returned_profiles_are_detached_and_root_input_arguments_unchanged(layou
     assert prepared.config['linux']['uidMappings'][0]['hostID'] != 0
     assert prepared.document['trusted_init']['policy']['wall_seconds'] <= 600
     assert options == before
+
+
+def seccomp_decision(policy, syscall, *arguments):
+    """Evaluate this small OCI policy subset without making any syscall.
+
+    This is a boundary-case oracle for serialized policy, not a gVisor proof.
+    Actual guest raw-syscall probes are mandatory independently.
+    """
+    for rule in policy['syscalls']:
+        if syscall not in rule['names']:
+            continue
+        if all((arguments[arg['index']] & arg['value']) == arg['valueTwo'] for arg in rule['args']):
+            return rule['action'], rule.get('errnoRet')
+    return policy['defaultAction'], None
+
+
+@pytest.mark.parametrize('namespace', [0x00020000, 0x02000000, 0x04000000, 0x08000000,
+                                       0x10000000, 0x20000000, 0x40000000])
+def test_each_namespace_clone_bit_is_denied_alone_and_with_ordinary_flags(layout, namespace):
+    envelope, options, _ = layout
+    profile = render_execution_profile(envelope, **options)
+    policy = profile.config['linux']['seccomp']
+    for flags in (namespace, namespace | 17, namespace | 0x100 | 17, namespace | 0x7e020000):
+        assert seccomp_decision(policy, 'clone', flags) == ('SCMP_ACT_ERRNO', 1)
+    assert profile.requirements['guest_syscall_guard']['actual_adversarial_verified'] is False
+
+
+@pytest.mark.parametrize('syscall,flags', [('fork', 0), ('vfork', 0), ('clone', 17),
+    ('clone', 0x100 | 0x200 | 0x400 | 0x800 | 0x10000), ('mount', 14),
+    ('capset', 0), ('setresuid', 65532), ('prctl', 38)])
+def test_normal_processes_threads_and_trusted_init_mount_capability_operations_remain_allowed(layout, syscall, flags):
+    envelope, options, _ = layout
+    policy = render_execution_profile(envelope, **options).config['linux']['seccomp']
+    assert seccomp_decision(policy, syscall, flags) == ('SCMP_ACT_ALLOW', None)
+
+
+@pytest.mark.parametrize('syscall,expected_errno', [('unshare', 1), ('setns', 1), ('clone3', 38)])
+def test_namespace_syscalls_and_pointer_based_clone3_are_denied_regardless_of_arguments(layout, syscall, expected_errno):
+    envelope, options, _ = layout
+    policy = render_execution_profile(envelope, **options).config['linux']['seccomp']
+    for arguments in ((0, 0), (0x10000000, 0x20000), (2**63 - 1, 2**63 - 1)):
+        assert seccomp_decision(policy, syscall, *arguments) == ('SCMP_ACT_ERRNO', expected_errno)
+
+
+def test_syscall_amendment_keeps_image_wrapper_and_all_runtime_acceptance_gates_unchanged(layout):
+    envelope, options, _ = layout
+    profile = render_execution_profile(envelope, **options)
+    document = profile.document
+    assert document['supersedes_execution_profile_version'] == 'c23-oci-execution-preparation-v4'
+    assert document['trusted_init']['sha256'] == options['trusted_init_sha256']
+    assert document['image_preparation'] == options['image_receipt']
+    architecture = options['runtime_manifest']['architecture']
+    assert profile.config['linux']['seccomp']['architectures'] == [
+        'SCMP_ARCH_X86_64' if architecture == 'amd64' else 'SCMP_ARCH_AARCH64']
+    assert profile.requirements['guest_syscall_guard']['mount_syscall_remains_allowed_for_trusted_init'] is True
+    assert profile.requirements['actual_linux_gvisor_verified'] is False
+    assert profile.dispatch_eligible is False
+
+
+def test_group_search_mode_without_exact_acl_is_not_private(layout):
+    envelope, options, _ = layout
+    options['job_root'].chmod(0o710)
+    with pytest.raises(SandboxError, match='sandbox_execution_profile_unavailable'):
+        render_execution_profile(envelope, **options)
+
+
+def test_gofer_search_mapping_cannot_use_an_unrelated_control_uid(layout, monkeypatch):
+    from orchestration.experiment_sandbox import profile_execution
+    envelope, options, _ = layout
+    options['job_root'].chmod(0o710)
+    # Isolate the mapping guard after the independently tested ACL validator.
+    monkeypatch.setattr(profile_execution, 'private_directory', lambda path, **_: Path(path))
+    assert options['control_host_uid'] != 100000
+    with pytest.raises(SandboxError, match='sandbox_execution_profile_unavailable'):
+        render_execution_profile(envelope, **options)

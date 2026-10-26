@@ -1,0 +1,16 @@
+WARNING: 
+
+To increase the performance of the tunnel, consider installing NumPy. For instructions,
+please see https://cloud.google.com/iap/docs/using-tcp-forwarding#increasing_the_tcp_upload_bandwidth
+
+usage: run_operator_acceptance.py seal-network-isolation [-h]
+                                                         --instance-resource
+                                                         INSTANCE_RESOURCE
+                                                         --routers ROUTERS
+                                                         --network-resource
+                                                         NETWORK_RESOURCE
+                                                         --subnetwork-resource
+                                                         SUBNETWORK_RESOURCE
+                                                         --complete-router-inventory
+                                                         --output OUTPUT
+run_operator_acceptance.py seal-network-isolation: error: the following arguments are required: --complete-router-inventory

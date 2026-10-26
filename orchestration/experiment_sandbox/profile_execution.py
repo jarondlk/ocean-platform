@@ -16,6 +16,7 @@ import stat
 
 from orchestration.experiment_sandbox.contracts import SandboxError, VerifiedEnvelope
 from orchestration.experiment_sandbox.files import validate_expected_outputs
+from orchestration.experiment_sandbox.traversal import private_directory
 from orchestration.experiment_sandbox.profile import (
     ImagePreparation, RuntimePreparation, rootfs_inventory_sha256,
 )
@@ -26,8 +27,28 @@ from sandbox.experiment.trusted_init import (
 from schema.context_catalogue import canonical_json
 from schema.research_experiments import EnvironmentDescriptor, ExperimentResources, content_sha256
 
-VERSION = 'c23-oci-execution-preparation-v3'
+VERSION = 'c23-oci-execution-preparation-v5'
 GUEST_INIT_PATH = '/opt/c23/trusted_init.py'
+# One rule per bit is essential: matching the combined mask would deny only
+# calls containing every namespace bit simultaneously.
+CLONE_NAMESPACE_BITS = (0x00020000, 0x02000000, 0x04000000, 0x08000000,
+                        0x10000000, 0x20000000, 0x40000000)
+
+
+def _guest_syscall_policy(architecture):
+    return {
+        'defaultAction': 'SCMP_ACT_ALLOW',
+        'architectures': ['SCMP_ARCH_X86_64' if architecture == 'amd64' else 'SCMP_ARCH_AARCH64'],
+        'syscalls': [
+            {'names': ['unshare', 'setns'], 'action': 'SCMP_ACT_ERRNO', 'errnoRet': 1, 'args': []},
+            # glibc falls back to clone for threads on ENOSYS. It may not do so
+            # for EPERM; argument pointers cannot be inspected by classic BPF.
+            {'names': ['clone3'], 'action': 'SCMP_ACT_ERRNO', 'errnoRet': 38, 'args': []},
+            *[{'names': ['clone'], 'action': 'SCMP_ACT_ERRNO', 'errnoRet': 1,
+               'args': [{'index': 0, 'value': bit, 'valueTwo': bit, 'op': 'SCMP_CMP_MASKED_EQ'}]}
+              for bit in CLONE_NAMESPACE_BITS],
+        ],
+    }
 
 
 def _directory(value, *, owner=None, mode=None):
@@ -62,8 +83,8 @@ def _base_document(envelope, *, job_root, image_receipt, runtime_manifest):
             or image.python_version != environment.python_version
             or image.packages != environment.packages or runtime.architecture != image.architecture):
         raise ValueError
-    job = _directory(job_root)
-    if job.name != envelope.job_id or job.stat().st_uid != os.geteuid() or job.stat().st_mode & 0o077:
+    job = private_directory(job_root, allow_search=True)
+    if job.name != envelope.job_id:
         raise ValueError
     inputs = _directory(job / 'inputs', owner=(runtime.input_host_uid, runtime.input_host_gid), mode=0o500)
     expected = {**envelope.files, 'analysis.py': envelope.code, 'manifest.json': envelope.manifest_bytes}
@@ -160,7 +181,9 @@ def _base_document(envelope, *, job_root, image_receipt, runtime_manifest):
             '--gofer-network-namespace=new', '--directfs=false', '--overlay2=none', '--host-uds=none',
             '--host-fifo=none', '--character-device-policy=emulated-only', '--net-raw=false',
             '--ignore-cgroups=false', '--allow-flag-override=false',
-            '--sidecar-release-enforcement-policy=ALWAYS', '--fdlimit=256', '--gvisor-marker-file=true']
+            '--sidecar-release-enforcement-policy=ALWAYS', '--fdlimit=256', '--gvisor-marker-file=true',
+            '--oci-seccomp=true', '--debug=false',
+            '--debug-log=/dev/stderr', '--panic-log=/dev/stderr']
     return {'evidence_class': 'configuration-only', 'dispatch_eligible': False,
         'job_id': envelope.job_id, 'envelope_sha256': envelope.envelope_sha256,
         'environment_sha256': content_sha256(envelope.environment), 'proposal_hashes': envelope.metadata['hashes'],
@@ -252,6 +275,9 @@ def render_execution_profile(envelope, *, job_root, image_receipt, runtime_manif
                                 (control_host_gid, runtime['input_host_gid'])):
             if type(value) is not int or not 1 <= value <= 2**32 - 2 or value == previous:
                 raise ValueError
+        search_acl_applied = stat.S_IMODE(Path(job_root).stat().st_mode) == 0o710
+        if search_acl_applied and control_host_uid != 100000:
+            raise ValueError
         _init_bytes(Path(job_root) / 'rootfs', trusted_init_sha256)
         expected = validate_expected_outputs(envelope.proposal['expected_outputs'])
         requirements = document['requirements']
@@ -278,11 +304,13 @@ def render_execution_profile(envelope, *, job_root, image_receipt, runtime_manif
         config['linux']['gidMappings'].insert(0, {'containerID': 0, 'hostID': control_host_gid, 'size': 1})
         outer_cgroup = '/ocean-c23/' + envelope.job_id
         config['linux']['cgroupsPath'] = outer_cgroup + '/sandbox'
+        config['linux']['seccomp'] = _guest_syscall_policy(runtime['architecture'])
         requirements['outer_cgroup_path'] = outer_cgroup
         requirements['host_control_cgroup_path'] = outer_cgroup + '/host'
         requirements['runtime_cgroup_path'] = outer_cgroup + '/sandbox'
         document['version'] = VERSION
         document['supersedes_configuration_only_profile_version'] = 'c23-oci-preparation-v1'
+        document['supersedes_execution_profile_version'] = 'c23-oci-execution-preparation-v4'
         document['trusted_init'] = {
             'version': INIT_VERSION, 'path': GUEST_INIT_PATH, 'sha256': trusted_init_sha256,
             'control_guest_uid': 0, 'analysis_guest_uid': 65532,
@@ -296,6 +324,19 @@ def render_execution_profile(envelope, *, job_root, image_receipt, runtime_manif
             {'path': '/scratch', 'max_bytes': policy['scratch_max_bytes'], 'max_inodes': SCRATCH_INODES},
         ]
         requirements['readonly_guest_temporary_paths'] = ['/tmp', '/dev/shm', '/run', '/var/tmp']
+        requirements['gofer_search_boundary'] = {
+            'evidence_class': 'configuration-only', 'actual_access_verified': False,
+            'named_host_uid': 100000, 'directory_permission': 'search-only',
+            'applied_to_job_directory': search_acl_applied,
+            'group_other_permissions': 'none', 'default_acl': False,
+            'private_descendants_unchanged': True,
+        }
+        requirements['guest_syscall_guard'] = {
+            'evidence_class': 'configuration-only', 'actual_adversarial_verified': False,
+            'oci_seccomp_explicitly_enabled': True,
+            'clone_namespace_bits': list(CLONE_NAMESPACE_BITS), 'clone3_errno': 38,
+            'mount_syscall_remains_allowed_for_trusted_init': True,
+        }
         requirements['lifecycle'] = [
             'create', 'verify-enforcement', 'fresh-admission', 'start-sealed-init',
             'fixed-guest-tmpfs-mounts-and-quota-readback', 'drop-current-and-bounding-SYS_ADMIN',
@@ -309,6 +350,7 @@ def render_execution_profile(envelope, *, job_root, image_receipt, runtime_manif
             'Unforgeable separate child pipes, bounded host frame decoder and outer watchdog within approved wall',
             'No additional exec process may be introduced into this single-init sandbox',
             'Actual /tmp,/dev/shm readonly views and /run,/var/tmp readonly-root write denials',
+            'Actual guest OCI seccomp namespace/clone3 denial, inheritance, direct child mount denial and ordinary fork/thread compatibility',
         ])
         value = object.__new__(PreparedExecutionProfile)
         object.__setattr__(value, '_json', canonical_json(document))

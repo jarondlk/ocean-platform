@@ -1,0 +1,33 @@
+{
+  "analysis_executed": false,
+  "cloud_nat_absent": true,
+  "commands": [
+    "gcloud compute instances describe c23-containment-01 --zone=asia-northeast1-a --project=ocean-v1-c23-20261024 --format=json",
+    "gcloud compute routers list --project=ocean-v1-c23-20261024 --format=json",
+    "gcloud compute networks describe c23-private --project=ocean-v1-c23-20261024 --format=json",
+    "gcloud compute networks subnets describe c23-tokyo --region=asia-northeast1 --project=ocean-v1-c23-20261024 --format=json"
+  ],
+  "complete_router_inventory": true,
+  "external_ip_absent": true,
+  "observed_at": "2026-10-25T09:19:18.390653+00:00",
+  "peering_absent": true,
+  "project": "ocean-v1-c23-20261024",
+  "results": {
+    "instance": {
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261025-0902/network-isolation-01/instance.json",
+      "sha256": "ab4c336554523ad1bcdb91a4367298ec88208c5e3c64c0af3e16114d27a39293"
+    },
+    "network": {
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261025-0902/network-isolation-01/network.json",
+      "sha256": "5fefa1f6482ea5cfd4c93c37b9c70afdd576656c3a82cfb794878547c5ca0bba"
+    },
+    "routers": {
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261025-0902/network-isolation-01/routers.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "subnet": {
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261025-0902/network-isolation-01/subnet.json",
+      "sha256": "573ab015ac54a2753d0b094e03faa4cb51d772a9438fb19d9d447d5866b21819"
+    }
+  }
+}

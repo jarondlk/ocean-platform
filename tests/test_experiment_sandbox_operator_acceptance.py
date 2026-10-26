@@ -7,7 +7,10 @@ import hashlib
 import os
 from pathlib import Path
 import subprocess
+import tempfile
+import textwrap
 from types import SimpleNamespace
+import urllib.error
 
 import pytest
 
@@ -100,7 +103,7 @@ def test_case_programs_are_ast_only_distinct_and_bound_to_image_and_exact_int64(
         identifiers.add(envelope.job_id)
         hashes.add(envelope.envelope_sha256)
         codes.add(envelope.metadata["hashes"]["code_sha256"])
-    assert len(identifiers) == 20
+    assert len(identifiers) == 21
     assert blueprint == original
 
 
@@ -189,6 +192,10 @@ def test_cli_run_refuses_on_mac_before_imports_or_privileged_effects(
                 str(tmp_path / "isolation"),
                 "--network-isolation-sha256",
                 "c" * 64,
+                "--normalization-receipt",
+                str(tmp_path / "normalization"),
+                "--normalization-sha256",
+                "d" * 64,
             ]
         )
     assert called == [] and not (tmp_path / "never-created").exists()
@@ -382,6 +389,10 @@ def numerical_attempt(name):
         },
         "comparison_configuration": {
             "resources": {"wall_seconds": 30, "memory_bytes": 512 * 1024**2},
+            "rootfs_materialization": {
+                "rootfs_inventory_sha256": "f" * 64,
+                "normalization_receipt_sha256": "1" * 64,
+            },
             "normalized_init_policy": {
                 "version": "test-only",
                 "max_output_bytes": 65536,
@@ -549,6 +560,7 @@ def network_receipts():
         "boot_id": boot,
         "interfaces": "0/",
         "access_configs": "",
+        "external_ip": "",
         "now_ns": 3000,
     }
     return host, isolated, target, observation
@@ -623,7 +635,7 @@ def test_network_gate_does_not_confuse_absent_host_egress_with_sandbox_containme
             deepcopy(isolated["instance_resource"]["networkInterfaces"][0])
         )
     elif change == "live_access_config":
-        observation["access_configs"] = "0/"
+        observation["access_configs"] = "0/\n1/"
     elif change == "live_extra_nic":
         observation["interfaces"] = "0/\n1/"
     else:
@@ -752,7 +764,9 @@ def test_numerical_repetition_requires_identical_valid_runtime_pins(field, chang
         operator.compare_numerics(first, second)
 
 
-@pytest.mark.parametrize("change", ["resources", "policy", "missing", "empty"])
+@pytest.mark.parametrize(
+    "change", ["resources", "policy", "rootfs", "normalization", "missing", "empty"]
+)
 def test_numerical_repetition_requires_same_normalized_resources_policy(change):
     first, second = numerical_attempt("numerics-a"), numerical_attempt("numerics-b")
     if change == "resources":
@@ -761,6 +775,14 @@ def test_numerical_repetition_requires_same_normalized_resources_policy(change):
         second["comparison_configuration"]["normalized_init_policy"][
             "max_output_bytes"
         ] += 1
+    elif change == "rootfs":
+        second["comparison_configuration"]["rootfs_materialization"][
+            "rootfs_inventory_sha256"
+        ] = "2" * 64
+    elif change == "normalization":
+        second["comparison_configuration"]["rootfs_materialization"][
+            "normalization_receipt_sha256"
+        ] = "3" * 64
     elif change == "empty":
         first["comparison_configuration"] = second["comparison_configuration"] = {}
     else:
@@ -942,3 +964,551 @@ def test_kernel_virtual_file_reads_until_eof_and_enforces_bound(monkeypatch, tmp
     chunks = iter([b"abc", b"de"])
     with pytest.raises(operator.OperatorError, match="limit"):
         operator._kernel_read(path, 4)
+
+
+@pytest.mark.parametrize("folder", ["", "0/"])
+def test_known_metadata_config_folder_still_requires_empty_terminal_ip(folder):
+    host, isolated, target, observed = network_receipts()
+    observed["access_configs"] = folder
+    result = operator.validate_network_controls(host, isolated, target, **observed)
+    assert result["current_metadata_external_ip_absent"] is True
+    assert result["current_metadata_access_configs"] == folder
+    assert result["current_metadata_terminal_external_ip"] == ""
+
+
+@pytest.mark.parametrize(
+    "terminal", ["203.0.113.1", "2001:db8::1", " ", "\n", None, False, [], {}]
+)
+@pytest.mark.parametrize("folder", ["", "0/"])
+def test_any_terminal_ip_or_unverified_shape_denies_even_known_folder(folder, terminal):
+    host, isolated, target, observed = network_receipts()
+    observed.update(access_configs=folder, external_ip=terminal)
+    with pytest.raises(operator.OperatorError, match="host_external_ip_not_absent"):
+        operator.validate_network_controls(host, isolated, target, **observed)
+
+
+@pytest.mark.parametrize(
+    "folder", ["/", "0", "1/", "0/\n1/", "00/", "0/\n", None, [], {}]
+)
+def test_unknown_metadata_folder_never_passes_with_empty_terminal(folder):
+    host, isolated, target, observed = network_receipts()
+    observed["access_configs"] = folder
+    with pytest.raises(operator.OperatorError, match="host_external_ip_not_absent"):
+        operator.validate_network_controls(host, isolated, target, **observed)
+
+
+@pytest.mark.parametrize("change", ["api_external_ip", "api_extra_nic", "nat", "stale"])
+def test_empty_terminal_does_not_override_api_or_snapshot_contradiction(change):
+    host, isolated, target, observed = network_receipts()
+    observed["access_configs"] = "0/"
+    if change == "api_external_ip":
+        isolated["instance_resource"]["networkInterfaces"][0]["accessConfigs"] = [
+            {"natIP": "203.0.113.1"}
+        ]
+    elif change == "api_extra_nic":
+        isolated["instance_resource"]["networkInterfaces"].append(
+            deepcopy(isolated["instance_resource"]["networkInterfaces"][0])
+        )
+    elif change == "nat":
+        isolated["routers"] = [
+            {"network": operator.NETWORK, "nats": [{"name": "forbidden"}]}
+        ]
+    else:
+        observed["now_ns"] = isolated["observed_monotonic_ns"] + 1801 * 10**9
+    with pytest.raises(operator.OperatorError):
+        operator.validate_network_controls(host, isolated, target, **observed)
+
+
+class MetadataResponse:
+    def __init__(
+        self, raw=b"", status=200, flavor="Google", suffix=operator.METADATA_EXTERNAL_IP
+    ):
+        self.raw = raw
+        self.status = status
+        self.headers = {"Metadata-Flavor": flavor} if flavor is not None else {}
+        self.url = "http://169.254.169.254/computeMetadata/v1/" + suffix
+
+    def geturl(self):
+        return self.url
+
+    def read(self, limit):
+        return self.raw[:limit]
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        return False
+
+
+def metadata_response(monkeypatch, response):
+    requests = []
+
+    def open_request(request, timeout):
+        requests.append((request, timeout))
+        if isinstance(response, Exception):
+            raise response
+        return response
+
+    monkeypatch.setattr(
+        operator.urllib.request,
+        "build_opener",
+        lambda *args: SimpleNamespace(open=open_request),
+    )
+    return requests
+
+
+def test_terminal_metadata_uses_exact_allowlisted_authenticated_empty_http200(
+    monkeypatch,
+):
+    requests = metadata_response(monkeypatch, MetadataResponse())
+    assert operator._metadata(operator.METADATA_EXTERNAL_IP) == ""
+    request, timeout = requests[0]
+    assert request.full_url.endswith("/" + operator.METADATA_EXTERNAL_IP)
+    assert request.get_header("Metadata-flavor") == "Google" and timeout == 3
+    with pytest.raises(operator.OperatorError, match="metadata_path"):
+        operator._metadata("instance/network-interfaces/1/access-configs/0/external-ip")
+    assert len(requests) == 1
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        "status",
+        "flavor",
+        "missing_flavor",
+        "url",
+        "oversized",
+        "malformed",
+        "whitespace",
+        "not_found",
+    ],
+)
+def test_terminal_metadata_refuses_unverified_empty_or_malformed_response(
+    monkeypatch, change
+):
+    response = MetadataResponse()
+    if change == "status":
+        response.status = 201
+    elif change == "flavor":
+        response.headers["Metadata-Flavor"] = "Other"
+    elif change == "missing_flavor":
+        response.headers = {}
+    elif change == "url":
+        response.url += "/different"
+    elif change == "oversized":
+        response.raw = b"x" * 257
+    elif change == "malformed":
+        response.raw = b"\xff"
+    elif change == "whitespace":
+        response.raw = b"\n"
+    else:
+        response = urllib.error.HTTPError(
+            response.url, 404, "Not Found", response.headers, None
+        )
+    metadata_response(monkeypatch, response)
+    if change == "whitespace":
+        # Whitespace is preserved so the exact-empty gate cannot treat it as absent.
+        assert operator._metadata(operator.METADATA_EXTERNAL_IP) == "\n"
+    else:
+        with pytest.raises(
+            (operator.OperatorError, UnicodeError, urllib.error.HTTPError)
+        ):
+            operator._metadata(operator.METADATA_EXTERNAL_IP)
+
+
+CPU_KERNEL7_FIXTURE = b"""usage_usec 31368660
+user_usec 17848319
+system_usec 13520341
+nice_usec 32891
+core_sched.force_idle_usec 0
+nr_periods 0
+nr_throttled 0
+throttled_usec 0
+nr_bursts 0
+burst_usec 0
+"""
+
+
+def test_actual_kernel7_dotted_cpu_counter_is_retained_without_losing_required_fields():
+    # Exact readback from the dedicated worker's retained host-diagnostic-02.
+    parsed = operator._parse_cgroup_counters(CPU_KERNEL7_FIXTURE, "cpu.stat")
+    assert parsed["core_sched.force_idle_usec"] == 0
+    assert parsed["usage_usec"] == 31368660 and len(parsed) == 10
+
+
+@pytest.mark.parametrize(
+    "row",
+    [
+        b"usage_usec 1",
+        b"bad..key 0",
+        b"bad. 0",
+        b".bad 0",
+        b"x -1",
+        b"x NaN",
+        b"x 18446744073709551616",
+        b"x 1 extra",
+        b"x",
+        b"\xff 1",
+    ],
+)
+def test_cgroup_counter_parser_rejects_duplicate_malformed_or_overflow_rows(row):
+    with pytest.raises((operator.OperatorError, UnicodeError)):
+        operator._parse_cgroup_counters(CPU_KERNEL7_FIXTURE + row + b"\n", "cpu.stat")
+
+
+@pytest.mark.parametrize(
+    "name,raw",
+    [
+        ("cpu.stat", b"usage_usec 0\n"),
+        ("memory.events", b"max 0\n"),
+        ("pids.events", b"other 0\n"),
+        ("cgroup.events", b"populated 0\n"),
+    ],
+)
+def test_cgroup_counter_files_cannot_omit_known_required_fields(name, raw):
+    with pytest.raises(operator.OperatorError, match="missing_required"):
+        operator._parse_cgroup_counters(raw, name)
+
+
+@pytest.mark.parametrize("malformed", [False, True])
+def test_metrics_retain_raw_owned_cgroup_readback_before_interpretation(
+    monkeypatch, tmp_path, malformed
+):
+    actual_path = Path
+    root = tmp_path / "groups"
+    outer = root / "job"
+    outer.mkdir(parents=True)
+    observation = tmp_path / "observations"
+    observation.mkdir()
+    raw_cpu = CPU_KERNEL7_FIXTURE + (b"broken row extra\n" if malformed else b"")
+    values = {
+        "cpu.stat": raw_cpu,
+        "memory.events": b"low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\n",
+        "pids.events": b"max 0\n",
+        "cgroup.events": b"populated 0\nfrozen 0\n",
+        "memory.peak": b"1024\n",
+    }
+    for name, raw in values.items():
+        (outer / name).write_bytes(raw)
+    info = outer.stat()
+    event = SimpleNamespace(
+        kind="create_intent", payload={"cgroup_identity": [info.st_dev, info.st_ino]}
+    )
+    journal = SimpleNamespace(read=lambda *args: SimpleNamespace(events=[event]))
+    envelope = SimpleNamespace(job_id="job", envelope_sha256="a" * 64)
+    monkeypatch.setattr(
+        operator,
+        "Path",
+        lambda value: (
+            root if str(value) == "/sys/fs/cgroup/ocean-c23" else actual_path(value)
+        ),
+    )
+    if malformed:
+        with pytest.raises(operator.OperatorError, match="operator_cgroup_measurement"):
+            operator._collect_metrics(journal, envelope, observation_dir=observation)
+    else:
+        measured = operator._collect_metrics(
+            journal, envelope, observation_dir=observation
+        )
+        assert measured["cpu.stat"]["core_sched.force_idle_usec"] == 0
+        assert measured["raw_cgroup_files"]["cpu.stat"] == raw_cpu.decode("ascii")
+        assert measured["memory.peak"] == 1024
+    assert (observation / "cgroup-cpu.stat.raw.txt").read_bytes() == raw_cpu
+
+
+def test_namespace_probe_matches_profile_bits_and_architecture_without_executing_program():
+    from orchestration.experiment_sandbox.profile_execution import CLONE_NAMESPACE_BITS
+
+    body = operator.cases()["namespaces"].body
+    tree = ast.parse(textwrap.dedent(body))
+    bits = next(
+        item.value
+        for item in tree.body
+        if isinstance(item, ast.Assign)
+        and any(
+            isinstance(target, ast.Name) and target.id == "namespace_bits"
+            for target in item.targets
+        )
+    )
+    assert tuple(ast.literal_eval(bits)) == CLONE_NAMESPACE_BITS
+    syscall_numbers = {
+        call.args[1].value
+        for call in ast.walk(tree)
+        if isinstance(call, ast.Call)
+        and isinstance(call.func, ast.Name)
+        and call.func.id == "denied"
+        and isinstance(call.args[1], ast.Constant)
+    }
+    assert syscall_numbers == {56, 165, 166, 272, 308, 435}
+    assert "os.uname().machine == 'x86_64'" in body
+    assert "ordinary-child-ok" in body and "ordinary-thread-ok" in body
+    assert "clone3_invalid_pointer" in body and "clone3_zero_size" in body
+    assert "ctypes.c_uint64*11" in body
+    # Analyze stored AST only. No syscall/ctypes/guest code is executed locally.
+
+
+def test_unexpected_namespace_clone_child_has_only_immediate_exit_before_other_actions():
+    tree = ast.parse(textwrap.dedent(operator.cases()["namespaces"].body))
+    helper = next(
+        node
+        for node in tree.body
+        if isinstance(node, ast.FunctionDef) and node.name == "denied"
+    )
+    child = next(
+        node
+        for node in helper.body
+        if isinstance(node, ast.If)
+        and ast.unparse(node.test) == "clone_child and result == 0"
+    )
+    assert len(child.body) == 1 and isinstance(child.body[0], ast.Expr)
+    assert ast.unparse(child.body[0]) == "os._exit(0)"
+    assert helper.body.index(child) < next(
+        index for index, node in enumerate(helper.body) if isinstance(node, ast.Assert)
+    )
+
+
+@pytest.fixture
+def short_gofer_tmp():
+    # Production's fixed paths fit its socket/path bound; pytest's long case
+    # directory names need a short local temporary root for the same check.
+    with tempfile.TemporaryDirectory(
+        prefix="c23-g-", dir=Path("/tmp").resolve()
+    ) as directory:
+        yield Path(directory)
+
+
+def gofer_layout(monkeypatch, tmp_path):
+    root = tmp_path / "root"
+    attempts = root / "operator-acceptance"
+    attempt = attempts / "synthetic-test"
+    worker = attempt / "worker"
+    job = worker / ("c23-" + "a" * 48)
+    for path in (root, attempts, attempt, worker):
+        path.mkdir(mode=0o700)
+    monkeypatch.setattr(operator, "FIXED_ROOT", root)
+    monkeypatch.setattr(operator, "ATTEMPTS_ROOT", attempts)
+    return root, attempts, attempt, worker, job
+
+
+def test_private_directory_search_exception_is_explicit_and_delegates_exact_helper(
+    monkeypatch, tmp_path
+):
+    from orchestration.experiment_sandbox import traversal
+
+    path = tmp_path / "directory"
+    assert operator._private_directory(path, create=True) == path
+    path.chmod(0o710)
+    with pytest.raises(operator.OperatorError, match="private_directory"):
+        operator._private_directory(path)
+    calls = []
+
+    def verified(candidate, *, allow_search=False):
+        calls.append((candidate, allow_search))
+        return candidate
+
+    monkeypatch.setattr(traversal, "private_directory", verified)
+    assert operator._private_directory(path, allow_search=True) == path
+    assert calls == [(path, True)]
+
+
+def test_traversal_grant_targets_only_five_exact_ancestors_and_retains_readbacks(
+    monkeypatch, short_gofer_tmp
+):
+    from orchestration.experiment_sandbox import traversal
+
+    root, attempts, attempt, worker, job = gofer_layout(monkeypatch, short_gofer_tmp)
+    job.mkdir(mode=0o700)
+    journal, state, diagnostics = (
+        attempt / "journal",
+        worker / "runsc-state-job",
+        job / "diagnostics",
+    )
+    for path in (journal, state, diagnostics):
+        path.mkdir(mode=0o700)
+    calls = []
+
+    def grant(path):
+        calls.append(path)
+        return path
+
+    monkeypatch.setattr(traversal, "grant_search", grant)
+    monkeypatch.setattr(
+        operator,
+        "_gofer_search_readback",
+        lambda path: {"controlled_mock": True, "path": str(path)},
+    )
+    result = operator._grant_gofer_traversal(attempt, worker, job)
+    assert calls == [root, attempts, attempt, worker, job]
+    assert result["control_host_uid"] == 100000
+    assert (
+        result["analysis_uid_granted"]
+        is result["default_acl_granted"]
+        is result["read_or_write_granted"]
+        is False
+    )
+    assert result["dispatch_eligible"] is result["reservation_released"] is False
+    assert [entry["path"] for entry in result["directories"]] == [
+        str(path) for path in calls
+    ]
+    assert (attempt / "gofer-traversal.json").exists()
+    for index, path in enumerate(calls):
+        assert str(path) in (attempt / f"gofer-traversal-{index}.json").read_text()
+    for path in (journal, state, diagnostics):
+        assert path.stat().st_mode & 0o777 == 0o700 and path not in calls
+
+
+@pytest.mark.parametrize("failure", ["grant", "readback_retention"])
+def test_partial_traversal_effect_is_retained_as_uncertain_and_never_complete(
+    monkeypatch, short_gofer_tmp, failure
+):
+    from orchestration.experiment_sandbox import traversal
+
+    root, attempts, attempt, worker, job = gofer_layout(monkeypatch, short_gofer_tmp)
+    job.mkdir(mode=0o700)
+    calls = []
+    actual_create = operator._create
+
+    def grant(path):
+        calls.append(path)
+        if path == attempt and failure == "grant":
+            raise OSError("uncertain ACL write acknowledgment")
+        return path
+
+    def create(path, raw):
+        if path.name == "gofer-traversal-2.json" and failure == "readback_retention":
+            raise OSError("readback retention failure after potential grant")
+        actual_create(path, raw)
+
+    monkeypatch.setattr(traversal, "grant_search", grant)
+    monkeypatch.setattr(
+        operator,
+        "_gofer_search_readback",
+        lambda path: {"controlled_mock": True, "path": str(path)},
+    )
+    monkeypatch.setattr(operator, "_create", create)
+    with pytest.raises(OSError):
+        operator._grant_gofer_traversal(attempt, worker, job)
+    assert calls == [root, attempts, attempt]
+    assert not (attempt / "gofer-traversal.json").exists()
+    record = __import__("json").loads(
+        (attempt / "gofer-traversal-failure.json").read_text()
+    )
+    assert record["failed_or_uncertain_path"] == str(attempt)
+    assert (
+        len(record["recorded_directories"]) == 2
+        and record["dispatch_eligible"] is False
+    )
+
+
+def test_original_input_staging_stays_strict_and_precedes_mocked_search_grants(
+    monkeypatch, short_gofer_tmp, blueprint, image
+):
+    from orchestration.experiment_sandbox import traversal
+    from orchestration.experiment_sandbox.files import stage_inputs
+
+    root, attempts, attempt, worker, _ = gofer_layout(monkeypatch, short_gofer_tmp)
+    envelope = operator.verify_operator_fixture(fixture(blueprint, image))
+    staged = stage_inputs(worker, envelope)
+    assert worker.stat().st_mode & 0o777 == staged.root.stat().st_mode & 0o777 == 0o700
+    assert staged.code_path.read_bytes() == envelope.code
+
+    def grant(path):
+        # Simulate only the observed mode transition, never an actual POSIX ACL.
+        path.chmod(0o710)
+        return path
+
+    monkeypatch.setattr(traversal, "grant_search", grant)
+    monkeypatch.setattr(
+        operator,
+        "_gofer_search_readback",
+        lambda path: {"controlled_mock": True, "path": str(path)},
+    )
+    operator._grant_gofer_traversal(attempt, worker, staged.root)
+    assert worker.stat().st_mode & 0o777 == 0o710
+    with pytest.raises(SandboxError, match="sandbox_private_directory"):
+        stage_inputs(worker, envelope)
+    assert staged.code_path.read_bytes() == envelope.code
+
+
+def test_actual_harness_orders_staging_and_sealing_before_search_and_render():
+    import inspect
+
+    tree = ast.parse(inspect.getsource(operator.run_case))
+    ordered = [
+        (node.lineno, ast.unparse(node.func))
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Call)
+    ]
+    positions = {
+        name: min(line for line, called in ordered if called == name)
+        for name in (
+            "stage_inputs",
+            "_perform_mount",
+            "_grant_gofer_traversal",
+            "render_execution_profile",
+            "adapter.run",
+        )
+    }
+    assert (
+        positions["stage_inputs"]
+        < positions["_perform_mount"]
+        < positions["_grant_gofer_traversal"]
+        < positions["render_execution_profile"]
+        < positions["adapter.run"]
+    )
+
+
+@pytest.mark.parametrize("change", [None, "owner", "group", "mode", "acl", "inode"])
+def test_gofer_readback_requires_actual_root_mode_exact_acl_and_stable_inode(
+    monkeypatch, change
+):
+    from orchestration.experiment_sandbox import traversal
+
+    checks, reads = [], []
+    info = SimpleNamespace(st_dev=7, st_ino=8, st_uid=0, st_gid=0, st_mode=0o40710)
+    if change == "owner":
+        info.st_uid = 100000
+    elif change == "group":
+        info.st_gid = 100000
+    elif change == "mode":
+        info.st_mode = 0o40711
+
+    class ControlledPath:
+        def __str__(self):
+            return "/controlled/readback"
+
+        def lstat(self):
+            if change == "inode" and reads:
+                return SimpleNamespace(
+                    st_dev=7, st_ino=9, st_uid=0, st_gid=0, st_mode=0o40710
+                )
+            return info
+
+    path = ControlledPath()
+
+    def private(candidate, *, allow_search=False):
+        assert candidate is path and allow_search is True
+        checks.append(True)
+        return candidate
+
+    def getxattr(candidate, name, *, follow_symlinks):
+        assert (
+            candidate is path
+            and name == traversal.ACCESS_ACL
+            and follow_symlinks is False
+        )
+        reads.append(True)
+        return b"incorrect" if change == "acl" else traversal.SEARCH_ACL
+
+    monkeypatch.setattr(traversal, "private_directory", private)
+    monkeypatch.setattr(operator.os, "getxattr", getxattr, raising=False)
+    if change is not None:
+        with pytest.raises(operator.OperatorError, match="operator_gofer_search"):
+            operator._gofer_search_readback(path)
+    else:
+        record = operator._gofer_search_readback(path)
+        assert record["access_acl_hex"] == traversal.SEARCH_ACL.hex()
+        assert record["uid"] == record["gid"] == 0 and record["mode"] == "0710"
+        assert record["device"] == 7 and record["inode"] == 8
+        assert record["default_acl_absent"] is True and len(checks) == 2

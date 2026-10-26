@@ -1,0 +1,48 @@
+{
+  "C23_complete": false,
+  "dispatch_eligible": false,
+  "focused_command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_experiment_sandbox_operator_acceptance.py",
+    "-k",
+    "metadata or network or privileged_setup",
+    "-q",
+    "--tb=short"
+  ],
+  "focused_result": "59 passed,87 deselected in0.76s",
+  "independent_safe_observations": {
+    "AST_terminal_query_unconditional_and_network_gate_before_mount": true,
+    "actual_macos_refusal_before_reads_writes_sockets_or_processes": true,
+    "cloud_calls": false,
+    "generated_analysis_executed": false,
+    "mocked_terminal_opener_verifies_proxy_redirect_header_timeout_byte_bound": true
+  },
+  "kind": "Independent narrow terminal external-IP metadata amendment review",
+  "prior_review_receipts_preserved": true,
+  "qualifications": [
+    "This review does not execute actual GCE metadata requests,runsc,mounts or analysis",
+    "Google metadata protocol-header checks are not a cryptographic attestation",
+    "Retained API inventory completeness/read time remains trusted operator provenance; metadata checks are per-attempt observations rather than continuous cloud-state proof",
+    "Actual runtime and containment acceptance remain separate gates"
+  ],
+  "recorded_at": "2026-10-25T09:39:05.240716+00:00",
+  "reservation_released": false,
+  "review_state": "Passed within local operator-preparation scope",
+  "reviewed_boundaries": [
+    "Only fixed allowlisted metadata NIC0/config0/external-ip terminal is added; no arbitrary metadata path",
+    "Terminal must have HTTP200,exact fixed URL,Metadata-Flavor Google,ASCII bytes and length<=256; errors,redirects,wrong headers/status,oversized bodies cannot establish absence",
+    "Terminal whitespace is preserved and rejected by exact-empty gate; folder forms allowed only empty or0/",
+    "Terminal query is an unconditional argument to validate_network_controls even when folder is empty",
+    "Live terminal absence does not override API external IPv4/IPv6/NIC contradictions, NAT,peering,target/boot identity or snapshot freshness gates",
+    "Worker guard remains first executable run statement; network gate precedes mount and generated execution",
+    "Metadata opener disables environment proxies and redirects and fixes request header,timeout and byte bound"
+  ],
+  "reviewer": "/root/c23_runtime_design",
+  "source_files": {
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "585ba4bb850be29516a26993b2a32fad8a399348d9e76d9064f21b70da60b1b3",
+    "tests/test_experiment_sandbox_operator_acceptance.py": "603200694fc6d41f31b2563e7cbd66a69f7477300f187560c1016fff84845fdf"
+  },
+  "supersession_reason": "Actual GCE metadata config folder may retain0/ after external-IP removal; only separately verified exact-empty terminal response permits that known folder form"
+}

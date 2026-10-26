@@ -1,0 +1,67 @@
+[1/2] STEP 1/6: FROM docker.io/library/python@sha256:57d96f71de145a98e7ceca18ee4ade77bba4103a33a72dfaea026b23625c6bf0 AS scientific-build
+[1/2] STEP 2/6: ARG SCIENTIFIC_BASE
+--> c5ad4e2c859b
+[1/2] STEP 3/6: COPY build-materials.json requirements.lock verify_image.py /opt/c23-build/
+--> a07abd34a7ef
+[1/2] STEP 4/6: COPY wheels/ /opt/c23-build/wheels/
+--> 1adbafd60daf
+[1/2] STEP 5/6: RUN python3 -I -B /opt/c23-build/verify_image.py --check-materials --manifest /opt/c23-build/build-materials.json --lock /opt/c23-build/requirements.lock --base-reference "${SCIENTIFIC_BASE}"
+{"materials": "verified"}
+--> 9260cdbd4576
+[1/2] STEP 6/6: RUN python3 -m pip install --no-index --find-links=/opt/c23-build/wheels --only-binary=:all: --require-hashes --no-deps --prefix=/scientific --requirement=/opt/c23-build/requirements.lock
+Looking in links: /opt/c23-build/wheels
+Processing /opt/c23-build/wheels/contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (from -r /opt/c23-build/requirements.lock (line 1))
+Processing /opt/c23-build/wheels/cycler-0.12.1-py3-none-any.whl (from -r /opt/c23-build/requirements.lock (line 2))
+Processing /opt/c23-build/wheels/fonttools-4.67.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /opt/c23-build/requirements.lock (line 3))
+Processing /opt/c23-build/wheels/formulaic-1.2.2-py3-none-any.whl (from -r /opt/c23-build/requirements.lock (line 4))
+Processing /opt/c23-build/wheels/interface_meta-2.0.1-py3-none-any.whl (from -r /opt/c23-build/requirements.lock (line 5))
+Processing /opt/c23-build/wheels/kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /opt/c23-build/requirements.lock (line 6))
+Processing /opt/c23-build/wheels/matplotlib-3.11.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /opt/c23-build/requirements.lock (line 7))
+Processing /opt/c23-build/wheels/narwhals-2.27.1-py3-none-any.whl (from -r /opt/c23-build/requirements.lock (line 8))
+Processing /opt/c23-build/wheels/numpy-2.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (from -r /opt/c23-build/requirements.lock (line 9))
+Processing /opt/c23-build/wheels/packaging-26.3-py3-none-any.whl (from -r /opt/c23-build/requirements.lock (line 10))
+Processing /opt/c23-build/wheels/pandas-3.1.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (from -r /opt/c23-build/requirements.lock (line 11))
+Processing /opt/c23-build/wheels/patsy-1.0.3-py2.py3-none-any.whl (from -r /opt/c23-build/requirements.lock (line 12))
+Processing /opt/c23-build/wheels/pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (from -r /opt/c23-build/requirements.lock (line 13))
+Processing /opt/c23-build/wheels/pyarrow-26.0.0-cp312-cp312-manylinux_2_28_x86_64.whl (from -r /opt/c23-build/requirements.lock (line 14))
+Processing /opt/c23-build/wheels/pyparsing-3.3.3-py3-none-any.whl (from -r /opt/c23-build/requirements.lock (line 15))
+Processing /opt/c23-build/wheels/python_dateutil-3.0.0-py2.py3-none-any.whl (from -r /opt/c23-build/requirements.lock (line 16))
+Processing /opt/c23-build/wheels/scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (from -r /opt/c23-build/requirements.lock (line 17))
+Processing /opt/c23-build/wheels/six-1.17.0-py2.py3-none-any.whl (from -r /opt/c23-build/requirements.lock (line 18))
+Processing /opt/c23-build/wheels/statsmodels-0.15.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (from -r /opt/c23-build/requirements.lock (line 19))
+Processing /opt/c23-build/wheels/typing_extensions-4.16.0-py3-none-any.whl (from -r /opt/c23-build/requirements.lock (line 20))
+Processing /opt/c23-build/wheels/tzdata-2026.5-py2.py3-none-any.whl (from -r /opt/c23-build/requirements.lock (line 21))
+Processing /opt/c23-build/wheels/wrapt-2.5.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (from -r /opt/c23-build/requirements.lock (line 22))
+Installing collected packages: wrapt, tzdata, typing-extensions, statsmodels, six, scipy, python-dateutil, pyparsing, pyarrow, pillow, patsy, pandas, packaging, numpy, narwhals, matplotlib, kiwisolver, interface-meta, formulaic, fonttools, cycler, contourpy
+Successfully installed contourpy-1.4.0 cycler-0.12.1 fonttools-4.67.0 formulaic-1.2.2 interface-meta-2.0.1 kiwisolver-1.5.1 matplotlib-3.11.2 narwhals-2.27.1 numpy-2.5.4 packaging-26.3 pandas-3.1.0 patsy-1.0.3 pillow-13.0.0 pyarrow-26.0.0 pyparsing-3.3.3 python-dateutil-3.0.0 scipy-1.18.1 six-1.17.0 statsmodels-0.15.0 typing-extensions-4.16.0 tzdata-2026.5 wrapt-2.5.1
+--> 29d6c42f3c40
+[2/2] STEP 1/13: FROM docker.io/library/python@sha256:57d96f71de145a98e7ceca18ee4ade77bba4103a33a72dfaea026b23625c6bf0 AS scientific-runtime
+[2/2] STEP 2/13: ARG SCIENTIFIC_BASE
+--> a85e37367143
+[2/2] STEP 3/13: COPY --from=scientific-build /scientific/ /usr/local/
+--> 6f09b29214da
+[2/2] STEP 4/13: COPY build-materials.json requirements.lock verify_image.py /opt/c23-build/
+--> dd351e8fb35e
+[2/2] STEP 5/13: COPY trusted_init.py /opt/c23/trusted_init.py
+--> ade7f331f7bb
+[2/2] STEP 6/13: RUN chmod 0444 /opt/c23/trusted_init.py
+--> 73baff2fddca
+[2/2] STEP 7/13: RUN printf 'c23-scientific-image-build\n' > /opt/ocean-c23-image-build-only
+--> ec0246811b9d
+[2/2] STEP 8/13: RUN OCEAN_C23_IMAGE_BUILD=1 python3 -I -B /opt/c23-build/verify_image.py --strip-installers --manifest /opt/c23-build/build-materials.json --lock /opt/c23-build/requirements.lock --base-reference "${SCIENTIFIC_BASE}"
+{"materials": "verified"}
+--> 14c0874dc0b0
+[2/2] STEP 9/13: RUN python3 -I -B /opt/c23-build/verify_image.py --verify-installed --manifest /opt/c23-build/build-materials.json --lock /opt/c23-build/requirements.lock --base-reference "${SCIENTIFIC_BASE}"
+{"dependency_graph": "verified", "packages": {"contourpy": "1.4.0", "cycler": "0.12.1", "fonttools": "4.67.0", "formulaic": "1.2.2", "interface-meta": "2.0.1", "kiwisolver": "1.5.1", "matplotlib": "3.11.2", "narwhals": "2.27.1", "numpy": "2.5.4", "packaging": "26.3", "pandas": "3.1.0", "patsy": "1.0.3", "pillow": "13.0.0", "pyarrow": "26.0.0", "pyparsing": "3.3.3", "python-dateutil": "3.0.0", "scipy": "1.18.1", "six": "1.17.0", "statsmodels": "0.15.0", "typing-extensions": "4.16.0", "tzdata": "2026.5", "wrapt": "2.5.1"}, "python_version": "3.12.15"}
+--> f636b68027ec
+[2/2] STEP 10/13: RUN rm -f /opt/c23-build/verify_image.py /opt/ocean-c23-image-build-only && mkdir -p /inputs /outputs /scratch && chown 65532:65532 /outputs /scratch && chmod 0700 /outputs /scratch
+--> c3d790f53964
+[2/2] STEP 11/13: USER 65532:65532
+--> 81cb4a1204b4
+[2/2] STEP 12/13: WORKDIR /outputs
+--> bdcc9d3fa852
+[2/2] STEP 13/13: ENTRYPOINT ["/usr/local/bin/python3", "-I", "-B"]
+[2/2] COMMIT localhost/ocean-c23:quota-v3
+--> da54d44a1218
+Successfully tagged localhost/ocean-c23:quota-v3
+da54d44a121853e88a3511b0f24458384cc5d61cc96c021db6362ff40e333dfc

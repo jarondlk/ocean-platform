@@ -1,0 +1,34 @@
+WARNING: 
+
+To increase the performance of the tunnel, consider installing NumPy. For instructions,
+please see https://cloud.google.com/iap/docs/using-tcp-forwarding#increasing_the_tcp_upload_bandwidth
+
+ERROR: [0] Error during local connection to [stdin]: Error while connecting [4003: 'failed to connect to backend']. (Failed to connect to port 22)
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/gcloud-cli/577.0.0/google-cloud-sdk/lib/googlecloudsdk/command_lib/compute/iap_tunnel.py", line 805, in RunReceiveLocalData
+    websocket_conn = self._InitiateConnection(
+        conn,
+    ...<4 lines>...
+        conn_id=conn_id,
+    )
+  File "/opt/homebrew/Caskroom/gcloud-cli/577.0.0/google-cloud-sdk/lib/googlecloudsdk/command_lib/compute/iap_tunnel.py", line 771, in _InitiateConnection
+    new_websocket.InitiateConnection()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Caskroom/gcloud-cli/577.0.0/google-cloud-sdk/lib/googlecloudsdk/api_lib/compute/iap_tunnel_websocket.py", line 149, in InitiateConnection
+    self._WaitForOpenOrRaiseError()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Caskroom/gcloud-cli/577.0.0/google-cloud-sdk/lib/googlecloudsdk/api_lib/compute/iap_tunnel_websocket.py", line 441, in _WaitForOpenOrRaiseError
+    raise ConnectionCreationError(error_msg)
+googlecloudsdk.api_lib.compute.iap_tunnel_websocket.ConnectionCreationError: Error while connecting [4003: 'failed to connect to backend']. (Failed to connect to port 22)
+Connection closed by UNKNOWN port 65535
+
+Recommendation: To check for possible causes of SSH connectivity issues and get
+recommendations, rerun the ssh command with the --troubleshoot option.
+
+gcloud compute ssh c23-containment-01 --project=ocean-v1-c23-20261024 --zone=asia-northeast1-a --ssh-key-file=/private/tmp/ocean-c23-20261024-ssh --troubleshoot
+
+Or, to investigate an IAP tunneling issue:
+
+gcloud compute ssh c23-containment-01 --project=ocean-v1-c23-20261024 --zone=asia-northeast1-a --ssh-key-file=/private/tmp/ocean-c23-20261024-ssh --troubleshoot --tunnel-through-iap
+
+ERROR: (gcloud.compute.ssh) [/usr/bin/ssh] exited with return code [255].

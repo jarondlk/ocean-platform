@@ -1,0 +1,126 @@
+{
+  "C23_complete": false,
+  "adapter_result": {
+    "adapter_source_sha256": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d",
+    "analysis_exit_code": 0,
+    "approved_hashes": {
+      "code_sha256": "101f0242101bcab22e6ee15ba4ca39243562669482967eaed7abe3200f54220a",
+      "environment_sha256": "1c3f049193cb5c2575eabeae312e1ce2272237011277f770d468ffcb805c6db0",
+      "input_manifest_sha256": "154986a6164697e3e6c161c596e7f2878459c68282382029423ff1d2fd87850f",
+      "proposal_sha256": "25dbf2495a804ad3fceed39825c66c903385b5864c6d3acc4996f65349ff4864",
+      "resources_sha256": "f3423b7074e11e1c917261289c772eba57e1ce6a4a2325da24f250ad44ac89eb"
+    },
+    "declared_seeds": {},
+    "dispatch_eligible": false,
+    "envelope_sha256": "071e3ab45854ba76229600c59d35d656f17f10e88c8351aaaf4144c3a6d5650a",
+    "execution_started": true,
+    "frame_sha256": "842597a6af0168e4e4bd54f0a6d632a4d8dba8899b8a485b4e7370160d249190",
+    "host_runtime_exit_status": 0,
+    "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+    "job_id": "c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0",
+    "outputs_manifest_sha256": "3d942363661a50ec7893c2b863a0f0d9f03c1a6cb6ca84804cf094b5a005a8e5",
+    "private_diagnostics_directory": "diagnostics",
+    "profile_sha256": "766fbcc7250e563d9409c16eb8dcd33a319709cd713aa632d3b2228d4550c583",
+    "reason": "completed",
+    "replayed": false,
+    "reservation_released": false,
+    "retained_logs": {
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      }
+    },
+    "runtime_acceptance_verified": false,
+    "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8",
+    "scientific_approval": "not_independently_verified",
+    "simulation": false,
+    "start_attempted": true,
+    "state": "completed",
+    "termination_proof": {
+      "cgroup_device": 30,
+      "cgroup_inode": 9089,
+      "cgroup_path": "/ocean-c23/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0",
+      "host_boot_id": "e779aea7-2e6c-4ec8-98b6-b12c491f93d4",
+      "populated": 0,
+      "runtime_delete_acknowledged": true,
+      "whole_host_subtree_empty": true
+    },
+    "total_output_bytes": 821,
+    "trusted_init_sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+    "version": "c23-linux-runsc-operator-v1"
+  },
+  "archive_sha256": "12d3b40b133544638b92892be24cab9e906398e2effc7a64830089c3881c18b1",
+  "attempt_sha256": "28733216dc177000bf6fda07fc85ff4c34888e10e7785a67001e54e10fd0a924",
+  "cleanup": {
+    "cgroup_empty": true,
+    "mount_reconciliation": {
+      "after": {
+        "entry": null,
+        "source_identity": [
+          2049,
+          559595
+        ],
+        "target_identity": [
+          2049,
+          1311187
+        ]
+      },
+      "argv": [
+        "/usr/bin/umount",
+        "--internal-only",
+        "--",
+        "/var/lib/ocean-c23/operator-acceptance/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/rootfs"
+      ],
+      "before": {
+        "entry": {
+          "line": "96 27 8:1 /var/lib/ocean-c23/scientific-normalized-quota-v3/rootfs /var/lib/ocean-c23/operator-acceptance/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/rootfs ro,nosuid,nodev,relatime shared:1 - ext4 /dev/root rw,discard,errors=remount-ro,commit=30",
+          "mount_id": "96",
+          "options": "ro,nosuid,nodev,relatime"
+        },
+        "source_identity": [
+          2049,
+          559595
+        ],
+        "target_identity": [
+          2049,
+          559595
+        ]
+      },
+      "exit_code": 0,
+      "rootfs_unmounted": true,
+      "stderr_base64": "",
+      "stdout_base64": ""
+    },
+    "removed_cgroups": [
+      "/sys/fs/cgroup/ocean-c23/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/host",
+      "/sys/fs/cgroup/ocean-c23/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0"
+    ],
+    "reservation_released": false,
+    "rootfs_unmounted": true
+  },
+  "evaluation": {
+    "C23_complete": false,
+    "case_assertions_passed": true,
+    "checks": {
+      "delete_acknowledged": true,
+      "execution_started": true,
+      "expected_terminal_state": true,
+      "no_dispatch_or_release": true,
+      "operator_pipeline_healthy": true,
+      "rootfs_cleanup": true,
+      "scientific_unverified": true,
+      "validated_outputs": true,
+      "whole_host_subtree_empty": true
+    },
+    "retained_C22_real_approval": false,
+    "runtime_acceptance_complete": false,
+    "scope": "operator synthetic fixture observations only"
+  },
+  "recorded_at": "2026-10-26T07:12:28.267054+00:00",
+  "scope": "Actual gVisor synthetic smoke only; containment/resources/numerical/C22authority gates remain open.",
+  "source_archive_sha256": "52dd389d4aff539b3d32aeb1932f4ca393c168341075652a22d9c0d97cc4bc01"
+}
