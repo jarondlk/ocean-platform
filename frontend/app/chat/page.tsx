@@ -521,9 +521,6 @@ export default function ChatPage() {
               </button>
             </div>
 
-            {cop17Demo ? <div className="cop17-banner" role="region" aria-label={ui("COP17 demonstration")}>
-              <div><strong>{ui("Explore ocean data with your own questions.")}</strong><p>{ui("Free-text search is the default. Advanced examples use predefined datasets.")}</p></div>
-            </div> : null}
             {cop17Demo ? <Cop17ChatModes disabled={!ready || loading} analysisId={displayedAnalysisId}
               researchIntent={displayedResearchIntent} onPresetChange={changeDemoPreset} /> : null}
             {demoExampleActive ? <div className="cop17-active-example" role="status">

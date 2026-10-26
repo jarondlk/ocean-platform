@@ -160,7 +160,7 @@ test('settings contains demo controls while the question leads the main column; 
     const modes = sidebar.findByProps({className: 'cop17-modes'});
     assert.equal(card.findAllByProps({className: 'cop17-modes'}).length, 0);
     assert.equal(card.findAllByProps({className: 'cop17-banner'}).length, 0);
-    assert.equal(sidebar.findAllByProps({className: 'cop17-banner'}).length, 1);
+    assert.equal(sidebar.findAllByProps({className: 'cop17-banner'}).length, 0);
     assert.equal(sidebar.findAllByProps({'aria-label': 'Language'}).length, 0);
     assert.equal(card.findByType('textarea').props.id, 'query-input');
     assert.equal(modes.findAllByType('button').length, 3);
