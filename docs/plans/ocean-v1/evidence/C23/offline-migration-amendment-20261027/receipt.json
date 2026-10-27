@@ -1,0 +1,23 @@
+{
+  "C23_complete": false,
+  "cluster_shutdown_verified": true,
+  "coverage_gate_unchanged": 70,
+  "full_backend_test_scope_unchanged": true,
+  "full_hosted_result": "pending",
+  "native_result": "2 passed; online/offline function and table equivalence; populated downgrade rollback",
+  "online_sql_changed": false,
+  "original_failure_and_receipts_preserved": true,
+  "parent_commit": "5a02f221f7ba8127fcbd6008949806e6b4c1ef04",
+  "runtime_or_proof_authority": false,
+  "schema_revision_unchanged": "20261027_0021",
+  "source_files": {
+    ".github/workflows/tests.yml": "75469ccc4f6507101a72d24eee13f5c168fbb26df4b8264c4aceba44d35070c6",
+    "migrations/versions/20261027_0021_experiment_execution.py": "69ea126213cd6a17c09a5363b928ae2b771cb9efaf06b4bc0a411cd99a73ac98",
+    "tests/integration/test_experiment_execution_offline_postgres.py": "2f62f0b0339847375ac100583a2c254ca78a34aafeb8120de3946ee4fc2ee0da",
+    "tests/test_experiment_execution_offline_migration.py": "d8bcb4068a58ecec6841207a231a1566d60e2b7c74577526e772ca82cfab0c47",
+    "tests/test_experiment_sandbox_execution_store.py": "610e374cf2790b36bda937494fca1d9a8de0de511c63ed04a106dcae617047b5",
+    "tests/test_migration_configuration.py": "2abd6f982209a6d291d409abffdf5a2b6a088169a057ad971531564a47859b6d"
+  },
+  "unit_result": "32 passed",
+  "version": "c23-offline-migration-repair-v1"
+}

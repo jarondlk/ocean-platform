@@ -1,0 +1,22 @@
+{
+  "files": {
+    ".github/workflows/tests.yml": {
+      "new_sha256": "75469ccc4f6507101a72d24eee13f5c168fbb26df4b8264c4aceba44d35070c6",
+      "previous_sha256": "1eed24f5eb8c7ef31de4988277d40dca626db848c589aa0a3030562bcfb33ef3"
+    },
+    "migrations/versions/20261027_0021_experiment_execution.py": {
+      "new_sha256": "69ea126213cd6a17c09a5363b928ae2b771cb9efaf06b4bc0a411cd99a73ac98",
+      "previous_sha256": "6030819273cedbd047d98ada9784b74f2fa126612d922253d177dedc5fcc5aa0"
+    },
+    "tests/test_experiment_sandbox_execution_store.py": {
+      "new_sha256": "610e374cf2790b36bda937494fca1d9a8de0de511c63ed04a106dcae617047b5",
+      "previous_sha256": "23099eac582e16564ae33dabbe346f3053fa118fc38629132b911609749505c6"
+    },
+    "tests/test_migration_configuration.py": {
+      "new_sha256": "2abd6f982209a6d291d409abffdf5a2b6a088169a057ad971531564a47859b6d",
+      "previous_sha256": "6c21ea9e159c1e98a3204c36aee760a2eb271334d8f1bb83ab4e58c6796c1524"
+    }
+  },
+  "qualification": "Preserve online DDL exactly; add offline server-time schema resolution and empty-downgrade checks. Distinct password sentinel avoids legitimate synthetic-software-test SQL collision; credential username/redaction checks retained. CI changes engine/diagnostics only, with unchanged full test scope and70percent threshold; adds2 real offline SQL cases.",
+  "version": "c23-offline-renderer-fix-supersession-v1"
+}

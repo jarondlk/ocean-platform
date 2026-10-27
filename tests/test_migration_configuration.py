@@ -8,7 +8,7 @@ import config
 
 
 def test_encoded_database_url_round_trips_without_interpolation_or_credential_output(monkeypatch):
-    url = 'postgresql://migration_user:synthetic%25password@localhost/ocean?host=%2Fcloudsql%2Ftest%3Aregion%3Ainstance'
+    url = 'postgresql://migration_user:credentialSentinel%25password@localhost/ocean?host=%2Fcloudsql%2Ftest%3Aregion%3Ainstance'
     monkeypatch.setattr(config, 'DATABASE_URL', url)
     output = io.StringIO()
     settings = Config('alembic.ini', output_buffer=output)
@@ -16,5 +16,6 @@ def test_encoded_database_url_round_trips_without_interpolation_or_credential_ou
     assert settings.get_main_option('sqlalchemy.url') == url
     assert settings.get_section(settings.config_ini_section)['sqlalchemy.url'] == url
     assert 'freshness_unavailable' in output.getvalue()
-    assert 'synthetic' not in output.getvalue()
+    assert 'credentialSentinel' not in output.getvalue()
+    assert 'migration_user' not in output.getvalue()
     assert 'postgresql://' not in output.getvalue()

@@ -1,0 +1,23 @@
+{
+  "C23_complete": false,
+  "checks": {
+    "pid_absent": true,
+    "pytest_exit": 0,
+    "socket_absent": true,
+    "status_exit": 3,
+    "stop_exit": 0,
+    "tcp_refused": true
+  },
+  "physical_authority": false,
+  "source_after": {
+    "migrations/versions/20261027_0021_experiment_execution.py": "69ea126213cd6a17c09a5363b928ae2b771cb9efaf06b4bc0a411cd99a73ac98",
+    "tests/integration/test_experiment_execution_offline_postgres.py": "2f62f0b0339847375ac100583a2c254ca78a34aafeb8120de3946ee4fc2ee0da",
+    "tests/test_experiment_execution_offline_migration.py": "d8bcb4068a58ecec6841207a231a1566d60e2b7c74577526e772ca82cfab0c47"
+  },
+  "source_before": {
+    "migrations/versions/20261027_0021_experiment_execution.py": "69ea126213cd6a17c09a5363b928ae2b771cb9efaf06b4bc0a411cd99a73ac98",
+    "tests/integration/test_experiment_execution_offline_postgres.py": "2f62f0b0339847375ac100583a2c254ca78a34aafeb8120de3946ee4fc2ee0da",
+    "tests/test_experiment_execution_offline_migration.py": "d8bcb4068a58ecec6841207a231a1566d60e2b7c74577526e772ca82cfab0c47"
+  },
+  "source_steady": true
+}

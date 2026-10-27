@@ -1,0 +1,34 @@
+........F................                                                [100%]
+=================================== FAILURES ===================================
+______________ test_populated_downgrade_refuses_without_dropping _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x119d7a210>
+
+    def test_populated_downgrade_refuses_without_dropping(monkeypatch):
+        module = migration()
+        calls = []
+        bind = SimpleNamespace(dialect=SimpleNamespace(identifier_preparer=SimpleNamespace(quote_schema=lambda x: x)),
+            exec_driver_sql=lambda sql: SimpleNamespace(scalar_one=lambda: 'c23_test' if 'current_schema' in sql else True))
+        monkeypatch.setattr(module, 'op', SimpleNamespace(get_bind=lambda: bind,
+            execute=lambda sql: calls.append(sql), drop_table=lambda table: calls.append('DROP ' + table)))
+        with pytest.raises(RuntimeError, match='populated C23'):
+>           module.downgrade()
+
+tests/test_experiment_sandbox_execution_store.py:148: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def downgrade():
+>       if op.get_context().as_sql:
+           ^^^^^^^^^^^^^^
+E       AttributeError: 'types.SimpleNamespace' object has no attribute 'get_context'
+
+migrations/versions/20261027_0021_experiment_execution.py:412: AttributeError
+=============================== warnings summary ===============================
+tests/test_migration_configuration.py::test_encoded_database_url_round_trips_without_interpolation_or_credential_output
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/alembic/config.py:604: DeprecationWarning: No path_separator found in configuration; falling back to legacy splitting on spaces, commas, and colons for prepend_sys_path.  Consider adding path_separator=os to Alembic config.
+    util.warn_deprecated(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_experiment_sandbox_execution_store.py::test_populated_downgrade_refuses_without_dropping
+1 failed, 24 passed, 1 warning in 0.66s

@@ -1,0 +1,29 @@
+........................................................................ [ 71%]
+.............................                                            [100%]
+=============================== warnings summary ===============================
+tests/test_experiment_sandbox_journal.py::test_fork_child_cannot_inherit_authority_or_unlock_parent
+  /private/tmp/ocean-c23-ci-5a02f22/tests/test_experiment_sandbox_journal.py:243: DeprecationWarning: This process (pid=85304) is multi-threaded, use of fork() may lead to deadlocks in the child.
+    pid = os.fork()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.12.7-final-0 _______________
+
+Name                                                      Stmts   Miss  Cover
+-----------------------------------------------------------------------------
+orchestration/experiment_sandbox/__init__.py                  0      0   100%
+orchestration/experiment_sandbox/contracts.py                99     42    58%
+orchestration/experiment_sandbox/execution_store.py         244    244     0%
+orchestration/experiment_sandbox/files.py                   481    481     0%
+orchestration/experiment_sandbox/journal.py                 729     93    87%
+orchestration/experiment_sandbox/linux_runtime.py           863    863     0%
+orchestration/experiment_sandbox/operator_inspection.py     175     76    57%
+orchestration/experiment_sandbox/profile.py                 244    244     0%
+orchestration/experiment_sandbox/profile_execution.py       179    179     0%
+orchestration/experiment_sandbox/proofs.py                  273    273     0%
+orchestration/experiment_sandbox/supervisor.py              453    453     0%
+orchestration/experiment_sandbox/traversal.py               107    107     0%
+-----------------------------------------------------------------------------
+TOTAL                                                      3847   3055    21%
+Coverage JSON written to file /private/tmp/c23-ci-5a02f22-sysmon01-coverage.json
+101 passed, 1 warning in 19.72s

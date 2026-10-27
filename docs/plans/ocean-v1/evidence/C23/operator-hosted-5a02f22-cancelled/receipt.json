@@ -1,0 +1,44 @@
+{
+  "artifacts_sha256": {
+    "backend.log": "18f0db9063eae92faf17165bc5d60de730a4dcc21efa69b1d535ffbe8342f7ec",
+    "jobs.json": "0fc2b7df7613e796ed0e42b0b0a5d03586438e9e434014433b61d26aab2be7bb",
+    "run.json": "aaa1876780c90746a7b7e90d1e5e998de888ae5f6e262134e0fa5bb8329eab9c"
+  },
+  "backend_qualification": "Reached60minute limit; one F marker appeared before cancellation. Exact source local run reproduced offline migration MockConnection failure after4116 passed/303 skips. Do not claim full backend success.",
+  "commit": "5a02f221f7ba8127fcbd6008949806e6b4c1ef04",
+  "conclusion": "cancelled",
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 121994916090,
+      "name": "PostgreSQL migration and metadata integration",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 121994916423,
+      "name": "OCEAN v1 prototype tests and build",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 121994916468,
+      "name": "Frontend typecheck and build",
+      "status": "completed"
+    },
+    {
+      "conclusion": "cancelled",
+      "id": 121994916537,
+      "name": "Backend tests and security boundary",
+      "status": "completed"
+    },
+    {
+      "conclusion": "skipped",
+      "id": 121994917690,
+      "name": "Dependency review",
+      "status": "completed"
+    }
+  ],
+  "run": 40445265579,
+  "version": "c23-hosted-incomplete-receipt-v1"
+}

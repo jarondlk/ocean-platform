@@ -1,0 +1,10 @@
+..                                                                       [100%]
+=============================== warnings summary ===============================
+tests/integration/test_experiment_execution_offline_postgres.py::test_offline_upgrade_matches_online_objects_and_empty_downgrade
+tests/integration/test_experiment_execution_offline_postgres.py::test_offline_upgrade_matches_online_objects_and_empty_downgrade
+tests/integration/test_experiment_execution_offline_postgres.py::test_offline_populated_downgrade_rolls_back_and_preserves_immutable_history
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/alembic/config.py:604: DeprecationWarning: No path_separator found in configuration; falling back to legacy splitting on spaces, commas, and colons for prepend_sys_path.  Consider adding path_separator=os to Alembic config.
+    util.warn_deprecated(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2 passed, 3 warnings in 5.29s

@@ -1,0 +1,12 @@
+ImportError while loading conftest '/private/tmp/ocean-c23-ci-5a02f22/tests/conftest.py'.
+tests/conftest.py:13: in <module>
+    import numpy as np
+/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/numpy/__init__.py:109: in <module>
+    from numpy.__config__ import show_config
+/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/numpy/__config__.py:4: in <module>
+    from numpy._core._multiarray_umath import (
+/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/numpy/_core/__init__.py:24: in <module>
+    from . import multiarray
+/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/numpy/_core/multiarray.py:11: in <module>
+    from . import _multiarray_umath, overrides
+E   ImportError: cannot load module more than once per process

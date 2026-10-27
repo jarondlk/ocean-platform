@@ -348,19 +348,17 @@ def _schema():
         op.get_bind().exec_driver_sql('SELECT current_schema()').scalar_one())
 
 
-def upgrade():
-    schema = _schema()
-    for ddl in TABLE_DDL:
-        op.execute(ddl)
+def _upgrade_statements(schema):
+    yield from TABLE_DDL
     for statement in FUNCTION_SQL:
-        op.execute(statement.replace('@S@', schema))
+        yield statement.replace('@S@', schema)
     for signature in FUNCTION_SIGNATURES:
-        op.execute(f'REVOKE ALL ON FUNCTION {schema}.{signature} FROM PUBLIC')
+        yield f'REVOKE ALL ON FUNCTION {schema}.{signature} FROM PUBLIC'
     for table in TABLES:
-        op.execute(f'REVOKE ALL ON TABLE {schema}.{table} FROM PUBLIC')
+        yield f'REVOKE ALL ON TABLE {schema}.{table} FROM PUBLIC'
         if table != 'research_experiment_execution_state':
-            op.execute(f'CREATE TRIGGER {table}_immutable BEFORE UPDATE OR DELETE ON {schema}.{table} FOR EACH ROW EXECUTE FUNCTION {schema}.ocean_context_revision_immutable()')
-        op.execute(f'CREATE TRIGGER {table}_no_truncate BEFORE TRUNCATE ON {schema}.{table} FOR EACH STATEMENT EXECUTE FUNCTION {schema}.ocean_context_revision_immutable()')
+            yield f'CREATE TRIGGER {table}_immutable BEFORE UPDATE OR DELETE ON {schema}.{table} FOR EACH ROW EXECUTE FUNCTION {schema}.ocean_context_revision_immutable()'
+        yield f'CREATE TRIGGER {table}_no_truncate BEFORE TRUNCATE ON {schema}.{table} FOR EACH STATEMENT EXECUTE FUNCTION {schema}.ocean_context_revision_immutable()'
     for table, name, timing in (
         ('research_experiment_execution','execution_insert_guard','INSERT'),
         ('research_experiment_outbox','outbox_insert_guard','INSERT'),
@@ -369,10 +367,58 @@ def upgrade():
         ('research_experiment_termination_proof','proof_insert_guard','INSERT'),
         ('research_experiment_release','release_insert_guard','INSERT'),
     ):
-        op.execute(f'CREATE TRIGGER c23_{name} BEFORE {timing} ON {schema}.{table} FOR EACH ROW EXECUTE FUNCTION {schema}.ocean_c23_{name}()')
+        yield f'CREATE TRIGGER c23_{name} BEFORE {timing} ON {schema}.{table} FOR EACH ROW EXECUTE FUNCTION {schema}.ocean_c23_{name}()'
+
+
+def _offline_block(statements, *, guard_empty=False):
+    """Resolve the target at SQL application time, without a generation DB.
+
+    Keep the same configured search-path semantics as the online migration.
+    DDL and identifiers are fixed migration data; quote_ident handles the
+    actual server schema. No credential/URL or guessed public schema is used.
+    """
+    lines = ['DO $c23_offline$', 'DECLARE target_schema text := current_schema();',
+             'has_rows boolean;', 'BEGIN',
+             "IF target_schema IS NULL THEN RAISE EXCEPTION 'C23 target schema unavailable'; END IF;"]
+
+    def emit(statement):
+        if '$c23_ddl$' in statement or '$c23_offline$' in statement:
+            raise ValueError('Conflicting fixed migration SQL delimiter')
+        lines.append("EXECUTE replace($c23_ddl$" + statement
+                     + "$c23_ddl$, '@S@', quote_ident(target_schema));")
+
+    if guard_empty:
+        for table in TABLES:
+            emit(f'LOCK TABLE @S@.{table} IN ACCESS EXCLUSIVE MODE')
+        for table in TABLES:
+            lines.extend(["EXECUTE replace($c23_ddl$SELECT EXISTS(SELECT 1 FROM @S@."
+                          + table + ")$c23_ddl$, '@S@', quote_ident(target_schema)) INTO has_rows;",
+                          "IF has_rows THEN RAISE EXCEPTION 'Cannot downgrade populated C23 execution history'; END IF;"])
+    for statement in statements:
+        emit(statement)
+    lines.append('END $c23_offline$')
+    return '\n'.join(lines)
+
+
+def upgrade():
+    if op.get_context().as_sql:
+        op.execute(_offline_block(_upgrade_statements('@S@')))
+        return
+    for statement in _upgrade_statements(_schema()):
+        op.execute(statement)
 
 
 def downgrade():
+    if op.get_context().as_sql:
+        statements = [OLD_RESERVATION_GUARD.replace('FUNCTION ocean_', 'FUNCTION @S@.ocean_', 1),
+                      'DROP TRIGGER c23_outbox_insert_guard ON @S@.research_experiment_outbox']
+        statements.extend('DROP TABLE @S@.' + table for table in (
+            'research_experiment_release', 'research_experiment_termination_proof',
+            'research_experiment_execution_state', 'research_experiment_execution_event',
+            'research_experiment_execution'))
+        statements.extend('DROP FUNCTION @S@.' + signature for signature in reversed(FUNCTION_SIGNATURES))
+        op.execute(_offline_block(statements, guard_empty=True))
+        return
     schema = _schema()
     for table in TABLES:
         # ACCESS EXCLUSIVE prevents a concurrent insertion after the emptiness

@@ -1,0 +1,269 @@
+........................................................................ [ 71%]
+.............................                                            [100%]
+=============================== warnings summary ===============================
+tests/test_experiment_sandbox_journal.py::test_fork_child_cannot_inherit_authority_or_unlock_parent
+  /private/tmp/ocean-c23-ci-5a02f22/tests/test_experiment_sandbox_journal.py:243: DeprecationWarning: This process (pid=83497) is multi-threaded, use of fork() may lead to deadlocks in the child.
+    pid = os.fork()
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_image_mismatch_and_hostil7/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_image_mismatch_and_hostil7/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_current_retained_hash_req4/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_current_retained_hash_req4/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_image_mismatch_and_hostil0/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_image_mismatch_and_hostil0/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_actual_journal_revocation0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/retained
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_actual_journal_revocation0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/retained'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_actual_journal_revocation0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_actual_journal_revocation0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_actual_journal_revocation0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_actual_journal_revocation0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_actual_journal_revocation0
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_actual_journal_revocation0'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_native_evidence_cap_count0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_native_evidence_cap_count0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_operator_mapping_and_wrap0/c23-0398164c3fa835e68093660f2e5d769b0abdf500d0761ec5/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_operator_mapping_and_wrap0/c23-0398164c3fa835e68093660f2e5d769b0abdf500d0761ec5/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_full_enforcement_readback0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_full_enforcement_readback0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_native_inventory_unknown_7/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_native_inventory_unknown_7/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_resource_mismatch_prevent1/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_resource_mismatch_prevent1/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_missing_old_group_never_p0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_missing_old_group_never_p0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_runtime_shortcuts_and_sup0/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_runtime_shortcuts_and_sup0/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_fixed_profile_is_determin0/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_fixed_profile_is_determin0/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_native_inventory_unknown_1/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_native_inventory_unknown_1/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_resource_mismatch_prevent0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_resource_mismatch_prevent0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_native_inventory_unknown_6/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_native_inventory_unknown_6/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_native_nofile_both_soft_a9/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_native_nofile_both_soft_a9/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_complete_runtime_release_5/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_complete_runtime_release_5/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_auxiliary_exception_never4/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_auxiliary_exception_never4/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_auxiliary_exception_never3/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_auxiliary_exception_never3/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_known_sidecar_helpers_req7/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_known_sidecar_helpers_req7/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_application_installer_and2/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_application_installer_and2/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_known_sidecar_helpers_req0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_known_sidecar_helpers_req0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_application_installer_and5/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_application_installer_and5/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_classified_systrap_child_5/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_classified_systrap_child_5/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_complete_runtime_release_4/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_complete_runtime_release_4/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_cancellation_before_start0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_cancellation_before_start0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_created_state_and_host_me4/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_created_state_and_host_me4/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_policy_is_bound_to_approv0/c23-0398164c3fa835e68093660f2e5d769b0abdf500d0761ec5/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_policy_is_bound_to_approv0/c23-0398164c3fa835e68093660f2e5d769b0abdf500d0761ec5/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_native_identity_and_raw_b0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_native_identity_and_raw_b0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_stage_preserves_private_i0/c23-883e7db8fc4ee0706cc2202b1b9dd736e3e323ac07062141/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_stage_preserves_private_i0/c23-883e7db8fc4ee0706cc2202b1b9dd736e3e323ac07062141/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_stage_preserves_private_i0/c23-883e7db8fc4ee0706cc2202b1b9dd736e3e323ac07062141
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_stage_preserves_private_i0/c23-883e7db8fc4ee0706cc2202b1b9dd736e3e323ac07062141'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_stage_preserves_private_i0
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_stage_preserves_private_i0'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_profile_must_keep_native_1/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_profile_must_keep_native_1/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_staging_tamper_and_privat4/c23-883e7db8fc4ee0706cc2202b1b9dd736e3e323ac07062141/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_staging_tamper_and_privat4/c23-883e7db8fc4ee0706cc2202b1b9dd736e3e323ac07062141/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_staging_tamper_and_privat4/c23-883e7db8fc4ee0706cc2202b1b9dd736e3e323ac07062141
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_staging_tamper_and_privat4/c23-883e7db8fc4ee0706cc2202b1b9dd736e3e323ac07062141'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_staging_tamper_and_privat4
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_staging_tamper_and_privat4'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_current_retained_hash_req1/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_current_retained_hash_req1/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_normal_processes_threads_7/c23-0398164c3fa835e68093660f2e5d769b0abdf500d0761ec5/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_normal_processes_threads_7/c23-0398164c3fa835e68093660f2e5d769b0abdf500d0761ec5/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_macos_guard_precedes_jour0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_macos_guard_precedes_jour0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_current_retained_hash_req0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_current_retained_hash_req0/c23-3c960e22dd30c65f8538501480e4112648ff69186a53bd3a/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_image_mismatch_and_hostil4/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_image_mismatch_and_hostil4/c23-8d07519d999edb52d9ad6a05eafe9339ca868b4cca273c9c/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_staging_tamper_and_privat2/c23-883e7db8fc4ee0706cc2202b1b9dd736e3e323ac07062141/inputs
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_staging_tamper_and_privat2/c23-883e7db8fc4ee0706cc2202b1b9dd736e3e323ac07062141/inputs'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_staging_tamper_and_privat2/c23-883e7db8fc4ee0706cc2202b1b9dd736e3e323ac07062141
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_staging_tamper_and_privat2/c23-883e7db8fc4ee0706cc2202b1b9dd736e3e323ac07062141'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_staging_tamper_and_privat2
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3/test_staging_tamper_and_privat2'
+    warnings.warn(
+
+../../../Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3
+  <class 'OSError'>: [Errno 66] Directory not empty: '/private/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/pytest-of-jaronchai/garbage-a6ba61bb-0a5f-4bb1-9e6a-4befda401ee3'
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.12.7-final-0 _______________
+
+Name                                                      Stmts   Miss  Cover
+-----------------------------------------------------------------------------
+orchestration/experiment_sandbox/__init__.py                  0      0   100%
+orchestration/experiment_sandbox/contracts.py                99     42    58%
+orchestration/experiment_sandbox/execution_store.py         244    244     0%
+orchestration/experiment_sandbox/files.py                   481    481     0%
+orchestration/experiment_sandbox/journal.py                 729     93    87%
+orchestration/experiment_sandbox/linux_runtime.py           863    863     0%
+orchestration/experiment_sandbox/operator_inspection.py     175     76    57%
+orchestration/experiment_sandbox/profile.py                 244    244     0%
+orchestration/experiment_sandbox/profile_execution.py       179    179     0%
+orchestration/experiment_sandbox/proofs.py                  273    273     0%
+orchestration/experiment_sandbox/supervisor.py              453    453     0%
+orchestration/experiment_sandbox/traversal.py               107    107     0%
+-----------------------------------------------------------------------------
+TOTAL                                                      3847   3055    21%
+Coverage JSON written to file /private/tmp/c23-ci-5a02f22-ctrace02-coverage.json
+101 passed, 49 warnings in 27.53s

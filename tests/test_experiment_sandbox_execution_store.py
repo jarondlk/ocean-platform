@@ -129,6 +129,7 @@ def test_downgrade_checks_all_tables_before_drop_and_restores_guard(monkeypatch)
     bind = SimpleNamespace(dialect=SimpleNamespace(identifier_preparer=SimpleNamespace(quote_schema=lambda x: '"' + x + '"')),
         exec_driver_sql=lambda sql: SimpleNamespace(scalar_one=lambda: 'c23_test' if 'current_schema' in sql else False))
     monkeypatch.setattr(module, 'op', SimpleNamespace(get_bind=lambda: bind,
+        get_context=lambda: SimpleNamespace(as_sql=False),
         execute=lambda sql: calls.append(sql), drop_table=lambda table: calls.append('DROP ' + table)))
     module.downgrade()
     assert sum('ACCESS EXCLUSIVE' in call for call in calls) == 5
@@ -142,6 +143,7 @@ def test_populated_downgrade_refuses_without_dropping(monkeypatch):
     bind = SimpleNamespace(dialect=SimpleNamespace(identifier_preparer=SimpleNamespace(quote_schema=lambda x: x)),
         exec_driver_sql=lambda sql: SimpleNamespace(scalar_one=lambda: 'c23_test' if 'current_schema' in sql else True))
     monkeypatch.setattr(module, 'op', SimpleNamespace(get_bind=lambda: bind,
+        get_context=lambda: SimpleNamespace(as_sql=False),
         execute=lambda sql: calls.append(sql), drop_table=lambda table: calls.append('DROP ' + table)))
     with pytest.raises(RuntimeError, match='populated C23'):
         module.downgrade()

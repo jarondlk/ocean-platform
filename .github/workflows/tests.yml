@@ -75,8 +75,9 @@ jobs:
           DEPLOYMENT_ENV: test
           ENABLE_MOCK_LOGIN: "false"
           PERSIST_LOCAL_CHAT: "false"
+          COVERAGE_CORE: sysmon
         run: |
-          python -m pytest tests/ -q --tb=short \
+          python -m pytest tests/ -x -vv --tb=short -o faulthandler_timeout=120 \
             --cov=api \
             --cov=config \
             --cov=db \
@@ -457,6 +458,7 @@ jobs:
           C23_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
         run: >-
           python -m pytest tests/integration/test_experiment_execution_postgres.py
+          tests/integration/test_experiment_execution_offline_postgres.py
           -q -s --tb=short
 
       - name: Verify database backup and isolated restore

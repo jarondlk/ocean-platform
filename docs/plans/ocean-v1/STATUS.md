@@ -32,8 +32,10 @@ process/endpoint checks verify the local cluster stopped.
 Current-head expectations in five existing test files are intentionally updated
 for0021, with88 bootstrap tests passing; original C22 serving/ORM/0020 bytes stay
 unchanged. Hosted CI will run the new dedicated C23 PostgreSQL database and all
-existing native suites at the new head. Latest delivered00abd95 remains green;
-new source checkpoint/hosted delivery is pending. C23 stays In progress: current
+existing native suites at the new head. Source5a02f221 is pushed; its PostgreSQL and both frontend jobs pass, but the
+backend job timed out with an offline migration failure. Latest fully green
+source remains00abd95. Offline renderer and coverage-engine CI repairs are
+locally verified; exact new-source hosted delivery is pending. C23 stays In progress: current
 C22 reserve/start/publication, held-lease physical signing and complete verified
 capacity release require implementation and actual end-to-end acceptance.
 No C24 advancement or scientific approval. Scheduling stays PAUSED. Older dated

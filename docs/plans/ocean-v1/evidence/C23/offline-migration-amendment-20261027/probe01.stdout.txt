@@ -1,0 +1,48 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_encoded_database_url_round_trips_without_interpolation_or_credential_output _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x110a063c0>
+
+    def test_encoded_database_url_round_trips_without_interpolation_or_credential_output(monkeypatch):
+        url = 'postgresql://migration_user:synthetic%25password@localhost/ocean?host=%2Fcloudsql%2Ftest%3Aregion%3Ainstance'
+        monkeypatch.setattr(config, 'DATABASE_URL', url)
+        output = io.StringIO()
+        settings = Config('alembic.ini', output_buffer=output)
+        command.upgrade(settings, '20260925_0013:head', sql=True)
+        assert settings.get_main_option('sqlalchemy.url') == url
+        assert settings.get_section(settings.config_ini_section)['sqlalchemy.url'] == url
+        assert 'freshness_unavailable' in output.getvalue()
+>       assert 'synthetic' not in output.getvalue()
+E       assert 'synthetic' not in "BEGIN;\n\n-...nCOMMIT;\n\n"
+E         
+E         'synthetic' is contained here:
+E           cope IN ('synthetic-software-test','retained-operator') AND length(issuer_id) BETWEEN 1 AND 96 AND length(key_id) BETWEEN 1 AND 96), 
+E         ?           +++++++++
+E               CONSTRAINT ck_c23_proof_envelope_sha256 CHECK (length(envelope_sha256) = 64 AND replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(envelope_sha256, '0', ''), '1', ''), '2', ''), '3', ''), '4', ''), '5', ''), '6', ''), '7', ''), '8', ''), '9', ''), 'a', ''), 'b', ''), 'c', ''), 'd', ''), 'e', ''), 'f', '') = ''), 
+E               CONS...
+E         
+E         ...Full output truncated (376 lines hidden), use '-vv' to show
+
+tests/test_migration_configuration.py:19: AssertionError
+----------------------------- Captured stderr call -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Generating static SQL
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 20260925_0013 -> 20261001_0014, Allow explicit source-selection and freshness abstentions in chat history.
+INFO  [alembic.runtime.migration] Running upgrade 20261001_0014 -> 20261004_0015, Add immutable sampling/product reviews without altering existing corpus rows.
+INFO  [alembic.runtime.migration] Running upgrade 20261004_0015 -> 20261005_0016, Retain explicit incomplete-comparison and unverified-overlap history.
+INFO  [alembic.runtime.migration] Running upgrade 20261005_0016 -> 20261018_0017, Add private v1 investigations and immutable context preparation history.
+INFO  [alembic.runtime.migration] Running upgrade 20261018_0017 -> 20261019_0018, Add private durable v1 research execution; no legacy lifecycle changes.
+INFO  [alembic.runtime.migration] Running upgrade 20261019_0018 -> 20261019_0019, Retain private v1 verified evidence and durable synthesis; no physical cleanup.
+INFO  [alembic.runtime.migration] Running upgrade 20261019_0019 -> 20261020_0020, C22 immutable private proposals and fake-only dispatch reservations.
+INFO  [alembic.runtime.migration] Running upgrade 20261020_0020 -> 20261027_0021, C23 opt-in retained execution identity and proof-correlated capacity release.
+=============================== warnings summary ===============================
+tests/test_migration_configuration.py::test_encoded_database_url_round_trips_without_interpolation_or_credential_output
+  /Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/lib/python3.12/site-packages/alembic/config.py:604: DeprecationWarning: No path_separator found in configuration; falling back to legacy splitting on spaces, commas, and colons for prepend_sys_path.  Consider adding path_separator=os to Alembic config.
+    util.warn_deprecated(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_migration_configuration.py::test_encoded_database_url_round_trips_without_interpolation_or_credential_output
+1 failed, 1 warning in 0.32s
