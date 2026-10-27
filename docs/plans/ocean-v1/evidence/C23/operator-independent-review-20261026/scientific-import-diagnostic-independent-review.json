@@ -1,0 +1,32 @@
+{
+  "C23_complete": false,
+  "actual_scientific_import_diagnostic_performed": false,
+  "checks": [
+    "Exactly one fixed case, no resource/material overrides; base guards/call paths preserved; registry restored on everyreturn/exception",
+    "Generatedprogram onlyASTparsed locally; actual imports occur solelyinsideguardedgVisorguest",
+    "Guest UID/GID/groups/capability checks precede observation; guest FD/RLIMIT scope explicitly distinguished from Sentry/gofer hostFDquotas",
+    "Fixed modulepaths and importordering, scalar/error/trace/chain/row/aggregate bounds; diagnostic-only and failednumericalreceipt-not-reclassified markers explicit"
+  ],
+  "cloud_operations_performed": false,
+  "disposition": "PASS in bounded diagnostic preparation scope",
+  "generated_analysis_execution_performed": false,
+  "material_blockers": [],
+  "qualifications": [
+    "Successful diagnostics do notsupersede failed numericalfixtures or establish scientific/numericalacceptance",
+    "Actual guestdiagnostic observations pending"
+  ],
+  "recorded_at": "2026-10-26T12:10:50.610469+00:00",
+  "retained_C22_real_approval": false,
+  "scope": "Independent source review and host-safe tests for bounded additive scientific-import guest observations",
+  "seconds": 0.645,
+  "source_after": {
+    "sandbox/experiment/gcp/run_scientific_import_diagnostic.py": "2f7a50020c1cd34c9ceaafe956d547decc7cf315bcdb23ce861d928470dc0a71",
+    "tests/test_experiment_sandbox_scientific_import_diagnostic.py": "9517b0f05fe9a3e502f3e2d16f0ef0c391e8e2395720073f3ba892c8c18659af"
+  },
+  "source_before": {
+    "sandbox/experiment/gcp/run_scientific_import_diagnostic.py": "2f7a50020c1cd34c9ceaafe956d547decc7cf315bcdb23ce861d928470dc0a71",
+    "tests/test_experiment_sandbox_scientific_import_diagnostic.py": "9517b0f05fe9a3e502f3e2d16f0ef0c391e8e2395720073f3ba892c8c18659af"
+  },
+  "source_steady": true,
+  "test_exit_code": 0
+}

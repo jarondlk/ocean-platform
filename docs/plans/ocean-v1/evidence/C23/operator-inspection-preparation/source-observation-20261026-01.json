@@ -1,0 +1,24 @@
+{
+  "base_commit": "00abd95e648cfb8674ab668c2bf209044ef36f31",
+  "branch": "overhaul",
+  "existing_c22_sources_unchanged_from_base": {
+    "db/app_models.py": true,
+    "orchestration/frozen_experiment_export.py": true,
+    "orchestration/investigations.py": true,
+    "orchestration/research_experiments.py": true,
+    "schema/research_experiments.py": true
+  },
+  "observed_at_utc": "2026-10-26T12:03:23.026628+00:00",
+  "source_sha256": {
+    "db/app_models.py": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+    "docs/plans/ocean-v1/C23_SANDBOX_CONTRACT.md": "cfbbba795597bfbc4b60801974f3be54e3b4a21988aeafd8cd07f7666f2b708f",
+    "docs/plans/ocean-v1/evidence/C23/operator-bridge-design/amendment-20261026.md": "e0b40aa6adcf95b700d922d022dc761bbb766d516d19a826ef52adce771f8d1c",
+    "docs/plans/ocean-v1/evidence/C23/operator-bridge-design/design.md": "eda8cabff67339b63f4dd23d70842bf4534be81c9ca98cafdb8979b1e1f4e91a",
+    "orchestration/experiment_sandbox/operator_inspection.py": "239bf69a9743f4c9adf165c27a4d319578e898c73c1335cd572947b9822e3b93",
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "orchestration/investigations.py": "dd9d733121d9f1587e3b59b31b67e60a75bc50976589886cc96705c94efa46de",
+    "orchestration/research_experiments.py": "bab02f05549655977e2f95ef7885a59d3a311c3ad64941b0846d79b94b0db2ee",
+    "schema/research_experiments.py": "3623b8ce0349316f5e28597752a798817acc1641d55e05d3614ebd61f0d87494",
+    "tests/test_experiment_sandbox_operator_inspection.py": "39fc05d54a1b2d81e9efcb750b91a89103b16ce9765915200e71b374a36ab8cc"
+  }
+}

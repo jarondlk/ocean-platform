@@ -1,0 +1,17 @@
+{
+  "command": "RUN_C23_POSTGRES_INTEGRATION=1 C23_TEST_DATABASE_URL=postgresql+psycopg2://c23_test_admin@127.0.0.1:51358/ocean_c23_acceptance_b2fa6cfd .venv/bin/python -m pytest tests/integration/test_experiment_execution_postgres.py -x -q",
+  "head": "00abd95e648cfb8674ab668c2bf209044ef36f31",
+  "kind": "synthetic-software-database-test-only",
+  "native_postgresql": "18.3",
+  "native_result": "23 passed in 69.76s",
+  "physical_authority": false,
+  "qualification": "Initial native source snapshot. Subsequent review requires amendment for monotonic recovery journal epoch and closed-event terminal sequence/head/result correlation. No real issuer or physical release acceptance.",
+  "source_sha256": {
+    "db/experiment_execution_models.py": "6be2bd2c4c3b78d82655c0ca39f119936fe9595acd91086bb15d3344f06d0c28",
+    "migrations/versions/20261027_0021_experiment_execution.py": "6808fe2c3897e5ece1a1e45fc463ca961e3d441390a3bfdf1908acfc1796d651",
+    "orchestration/experiment_sandbox/execution_store.py": "1c4c0fee8bcbb1f8fbbd14d2e92a9bd0584074ba45a633a8c5ba0bff0532609a",
+    "tests/experiment_execution_postgres_support.py": "6e77800ab92c68636c4cbf7a9724085687327a4db6f27844913f9a71b0781223",
+    "tests/integration/test_experiment_execution_postgres.py": "7b9305a721115e0c0dc7faf85300069ce287b221e31fae7c5be13325254e70b3",
+    "tests/test_experiment_sandbox_execution_store.py": "bb574f124ee9a7fcf50012e7f53dd5101607ade24d4c8818088c2b0512fa2afe"
+  }
+}

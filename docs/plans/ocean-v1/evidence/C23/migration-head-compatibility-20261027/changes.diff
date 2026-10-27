@@ -1,0 +1,115 @@
+diff --git a/tests/integration/test_investigation_postgres.py b/tests/integration/test_investigation_postgres.py
+index b41e6dd..cbaff62 100644
+--- a/tests/integration/test_investigation_postgres.py
++++ b/tests/integration/test_investigation_postgres.py
+@@ -228,11 +228,11 @@ def stored(isolated):
+ 
+ def test_fresh_full_alembic_head_and_repeat_upgrade_match_models(isolated):
+     alembic(isolated, "upgrade", "head")
+-    assert revision(isolated) == "20261020_0020"
++    assert revision(isolated) == "20261027_0021"
+     assert_schema_matches_models(isolated["engine"])
+     isolated.update(seed(isolated))
+     alembic(isolated, "upgrade", "head")
+-    assert revision(isolated) == "20261020_0020"
++    assert revision(isolated) == "20261027_0021"
+     with isolated["factory"]() as session:
+         assert session.get(ResearchContextRevision, isolated["revisions"][0]).payload_json == '{"synthetic":true}'
+ 
+@@ -247,7 +247,7 @@ def test_populated_0016_alembic_upgrade_preserves_prior_application_history(isol
+         session.add(ChatInteraction(id=chat, user_id=owner, status="completed", query="Synthetic prior query", answer="Preserved prior evidence", request_options={}, evidence_snapshot={"synthetic": True}, legal_hold=True))
+         session.add(AuditEvent(id=audit, actor_user_id=owner, action="synthetic.c17.preexisting", metadata_json={"preserved": True}))
+     alembic(isolated, "upgrade", "head")
+-    assert revision(isolated) == "20261020_0020"
++    assert revision(isolated) == "20261027_0021"
+     assert_schema_matches_models(isolated["engine"])
+     with factory() as session:
+         assert session.get(ChatInteraction, chat).evidence_snapshot == {"synthetic": True}
+@@ -269,7 +269,7 @@ def test_populated_alembic_downgrade_is_rejected_and_keeps_history(isolated):
+     isolated.update(seed(isolated))
+     result = alembic(isolated, "downgrade", "20261005_0016", succeeds=False)
+     assert "populated C17 storage cannot be downgraded" in result.stderr
+-    assert revision(isolated) == "20261020_0020"
++    assert revision(isolated) == "20261027_0021"
+     with isolated["factory"]() as session:
+         assert session.get(ResearchContextRevision, isolated["revisions"][0]).payload_json == '{"synthetic":true}'
+         assert session.get(ResearchConversation, isolated["conversation"])
+diff --git a/tests/integration/test_research_evidence_postgres.py b/tests/integration/test_research_evidence_postgres.py
+index e8b5037..eff626e 100644
+--- a/tests/integration/test_research_evidence_postgres.py
++++ b/tests/integration/test_research_evidence_postgres.py
+@@ -44,7 +44,7 @@ def retained(actual):
+ 
+ def test_migration_exact_schema_repeat_and_empty_downgrade(isolated):
+     pg.alembic(isolated, "upgrade", "head")
+-    assert pg.revision(isolated) == "20261020_0020"
++    assert pg.revision(isolated) == "20261027_0021"
+     reflected = inspect(isolated["engine"])
+     for model in NEW_MODELS:
+         table = model.__table__
+diff --git a/tests/integration/test_research_experiments_postgres.py b/tests/integration/test_research_experiments_postgres.py
+index af6f720..8e198c3 100644
+--- a/tests/integration/test_research_experiments_postgres.py
++++ b/tests/integration/test_research_experiments_postgres.py
+@@ -58,7 +58,7 @@ def concurrently(functions):
+ 
+ def test_migration_exact_model_schema_and_empty_roundtrip(isolated):
+     pg.alembic(isolated, 'upgrade', 'head')
+-    assert pg.revision(isolated) == '20261020_0020'
++    assert pg.revision(isolated) == '20261027_0021'
+     reflected = inspect(isolated['engine'])
+     for model in NEW_MODELS:
+         table = model.__table__
+diff --git a/tests/integration/test_research_runs_postgres.py b/tests/integration/test_research_runs_postgres.py
+index f0cae73..3a5a504 100644
+--- a/tests/integration/test_research_runs_postgres.py
++++ b/tests/integration/test_research_runs_postgres.py
+@@ -63,7 +63,7 @@ def assert_run_schema(engine):
+ 
+ def test_new_head_repeat_upgrade_and_empty_downgrade_match_all_run_models(isolated):
+     pg.alembic(isolated, "upgrade", "head")
+-    assert pg.revision(isolated) == "20261020_0020"
++    assert pg.revision(isolated) == "20261027_0021"
+     assert_run_schema(isolated["engine"])
+     pg.alembic(isolated, "upgrade", "head")
+     pg.alembic(isolated, "downgrade", "20261018_0017")
+@@ -362,5 +362,5 @@ def test_populated_downgrade_is_refused_with_history_intact(fixture, isolated):
+     run = fixture.submit()
+     result = pg.alembic(isolated, "downgrade", "20261018_0017", succeeds=False)
+     assert "populated C20 storage cannot be downgraded" in result.stderr
+-    assert pg.revision(isolated) == "20261020_0020"
++    assert pg.revision(isolated) == "20261027_0021"
+     assert fixture.service.invoke("status", fixture.address(run), fixture.user)["run"] == run
+diff --git a/tests/test_bootstrap_database.py b/tests/test_bootstrap_database.py
+index 6aae0a0..9856c6d 100644
+--- a/tests/test_bootstrap_database.py
++++ b/tests/test_bootstrap_database.py
+@@ -12,8 +12,8 @@ from db.models import CorpusBase
+ 
+ def _current_migrations(monkeypatch, *, current=True):
+     monkeypatch.setattr(bootstrap, "migration_status", lambda _: {
+-        "migration_current_heads": ["20261020_0020" if current else "20261005_0016"],
+-        "migration_expected_heads": ["20261020_0020"],
++        "migration_current_heads": ["20261027_0021" if current else "20261005_0016"],
++        "migration_expected_heads": ["20261027_0021"],
+         "migrations_current": current,
+     })
+ 
+@@ -217,7 +217,7 @@ def test_readiness_rejects_missing_research_tables_and_old_migrations(
+     assert status["migrations_current"] is current
+ 
+ 
+-@pytest.mark.parametrize("revision", [None, "20261004_0015", "20261005_0016", "20261018_0017", "20261019_0018", "20261019_0019", "20261020_0020"])
++@pytest.mark.parametrize("revision", [None, "20261004_0015", "20261005_0016", "20261018_0017", "20261019_0018", "20261019_0019", "20261020_0020", "20261027_0021"])
+ def test_migration_status_reads_actual_version_without_upgrading(revision):
+     from sqlalchemy import create_engine, text
+ 
+@@ -228,6 +228,6 @@ def test_migration_status_reads_actual_version_without_upgrading(revision):
+             connection.execute(text("INSERT INTO alembic_version VALUES (:revision)"), {"revision": revision})
+         status = bootstrap.migration_status(connection)
+         assert status["migration_current_heads"] == ([revision] if revision else [])
+-        assert status["migration_expected_heads"] == ["20261020_0020"]
+-        assert status["migrations_current"] is (revision == "20261020_0020")
++        assert status["migration_expected_heads"] == ["20261027_0021"]
++        assert status["migrations_current"] is (revision == "20261027_0021")
+     engine.dispose()

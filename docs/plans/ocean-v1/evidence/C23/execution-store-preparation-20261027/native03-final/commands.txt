@@ -1,0 +1,22 @@
+C23 low-level storage final verification, actual commands (no credentials).
+
+Local:
+.venv/bin/python -m pytest tests/test_experiment_sandbox_execution_store.py -q
+.venv/bin/python -m ruff check db/experiment_execution_models.py orchestration/experiment_sandbox/execution_store.py migrations/versions/20261027_0021_experiment_execution.py tests/experiment_execution_postgres_support.py tests/test_experiment_sandbox_execution_store.py tests/integration/test_experiment_execution_postgres.py
+
+Native, exact independently verified owned target:
+env -u C23_TEST_SERVER_ADDRESS RUN_C23_POSTGRES_INTEGRATION=1 C23_TEST_DATABASE_URL=postgresql+psycopg2://c23_test_admin@127.0.0.1:51358/ocean_c23_acceptance_b2fa6cfd .venv/bin/python -m pytest tests/integration/test_experiment_execution_postgres.py -x -q
+
+Status distinction, before final run:
+/opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /private/tmp/ocean-c23-postgres-20261027-d36c3d15f2d7/data status
+The default sandbox reported exit3, while the separately elevated command reported the exact owned server running with PID138. An attempted restart was safely refused; no pid file was removed. The native run reused only the matching owned live cluster after independently querying its data_directory/database/address/port and zero prior fixture schemas/roles. Preserved status/start outputs document the distinction.
+
+Identity/cleanup, before and after native tests:
+/opt/homebrew/opt/postgresql@18/bin/psql -h 127.0.0.1 -p 51358 -U c23_test_admin -d ocean_c23_acceptance_b2fa6cfd -X -A -t -c "SELECT json_build_object('database',current_database(),'data_directory',current_setting('data_directory'),'server_address',host(inet_server_addr()),'server_port',inet_server_port(),'version',current_setting('server_version'),'test_schemas_remaining',(SELECT count(*) FROM pg_namespace WHERE nspname LIKE 'c23_%'),'ephemeral_roles_remaining',(SELECT count(*) FROM pg_roles WHERE rolname LIKE 'c23_%' AND rolname <> 'c23_test_admin'));"
+
+Successful final stop:
+/opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /private/tmp/ocean-c23-postgres-20261027-d36c3d15f2d7/data -m fast -w stop
+/opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /private/tmp/ocean-c23-postgres-20261027-d36c3d15f2d7/data status
+The final status check used elevated process permissions and returned3. A bounded Python socket.create_connection(('127.0.0.1',51358),timeout=2) confirmed ECONNREFUSED; the exact private socket and owned postmaster.pid were absent.
+
+No existing database service was discovered or contacted. No packages were installed. Roles and credentials existed only as ephemeral test fixtures in this explicit isolated database; generated passwords/private keys and cluster data are excluded from this evidence directory.

@@ -1,0 +1,11 @@
+I1026 18:27:46.867911    2102 cli.go:275] **************** gVisor ****************
+I1026 18:27:46.867963    2102 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 2102, PPID 2064, UID 0, GID 0
+I1026 18:27:46.867983    2102 cli.go:278] Args: [/opt/ocean-c23-runtime/release-20261019.0/runsc --root=/var/lib/ocean-c23/operator-acceptance/numerics-a-20261027-03/worker/runsc-state-c23-12254eb13984aa33e57d9cbb1331463bb40bd59540995d75 --platform=systrap --rootless=false --network=none --gofer-network-namespace=new --directfs=false --overlay2=none --host-uds=none --host-fifo=none --character-device-policy=emulated-only --net-raw=false --ignore-cgroups=false --allow-flag-override=false --sidecar-release-enforcement-policy=ALWAYS --fdlimit=4096 --gvisor-marker-file=true --oci-seccomp=true --debug=false --debug-log=/dev/stderr --panic-log=/dev/stderr state c23-12254eb13984aa33e57d9cbb1331463bb40bd59540995d75]
+I1026 18:27:46.868034    2102 config.go:631] Platform: systrap
+I1026 18:27:46.868041    2102 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/numerics-a-20261027-03/worker/runsc-state-c23-12254eb13984aa33e57d9cbb1331463bb40bd59540995d75
+I1026 18:27:46.868046    2102 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1026 18:27:46.868055    2102 config.go:634] Network: none
+I1026 18:27:46.868061    2102 config.go:635] UseCPUNums: false
+W1026 18:27:46.868066    2102 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1026 18:27:46.868072    2102 cli.go:287] **************** gVisor ****************
+I1026 18:27:46.868133    2102 cli.go:316] Exiting with status: 0

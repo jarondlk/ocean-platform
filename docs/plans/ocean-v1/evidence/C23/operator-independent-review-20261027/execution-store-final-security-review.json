@@ -1,0 +1,188 @@
+{
+  "C23_complete": false,
+  "blocking_findings": [],
+  "checks": [
+    "Exact execution/reservation/owner/approval/envelope/material identities, immutable history/FKs and categorical ORM mutation rejection inspected.",
+    "One-use start and monotonic DB fences inspected. Exact old start event replay returns reconciliation data; no host start permit is supplied.",
+    "Start pins remain immutable across same-boot recovery; current closed binding uses closure epoch. Closed state has no outgoing transition.",
+    "Raw bounded canonical signed packet is reverified against retained DB binding and independent pinned issuer registry before recorder insertion; caller-created verified objects/Booleans are refused.",
+    "Proof guard joins current closed event and compares terminal sequence/head/result, full binding, packet checksum and all witness columns. PostgreSQL itself does not verify Ed25519.",
+    "Serving/controller/verifier are distinct restricted LOGIN roles; function owner is separate NOLOGIN with no role memberships. Session factory checks exact current_user and session_user, database and schema, not SECURITY DEFINER current_user as caller identity.",
+    "New SECURITY DEFINER functions are independently owned, schema-qualified, use fixed pg_catalog/schema/pg_temp search_path and have PUBLIC execution revoked. Controller gets reserve/event only; verifier gets closed-binding/proof/release only; serving gets no new function or write privilege.",
+    "Privilege checks reject unsafe direct C23 table/column writes, ownership, elevated role attributes and role memberships. Schema/database owners and restricted verifier credentials remain trusted boundaries.",
+    "Reserve and release share existing capacity singleton row lock; release additionally locks reservation/state and atomically inserts immutable ledger then changes only reservation state/updated_at. Native reserve-vs-release barrier and rollback cases inspected.",
+    "Fake/real insertion guards share reservation row lock. Existing owner/global capacity indexes remain unchanged; mixed channel races and one-owner/two-global cases inspected.",
+    "New release exception requires exact immutable execution/closed proof/ledger, actual retained Linux descriptor and no fake outbox; every other0020 guard branch remains unchanged. Old0020/AppBase/C22 serving bytes match review HEAD.",
+    "Empty downgrade restores exact old reservation guard; populated history refuses downgrade under ACCESS EXCLUSIVE locks; immutable UPDATE/DELETE/TRUNCATE/CASCADE test coverage inspected.",
+    "Dedicated CI database and explicit opt-in target inspected. Existing native suites upgrade to new head rather than being pinned to obsolete0020."
+  ],
+  "conclusion": "No remaining blocking defect found in the reviewed low-level persistence/security slice after the listed fixes. Full retained runtime/physical authority remains unavailable.",
+  "created_at": "2026-10-27T03:33:57.620344+00:00",
+  "integration_caveats": [
+    "Low-level store does not provide owner/source/context admission. A future retained bridge must repeat those checks and closing DB fence before reserve/start/publication.",
+    "FreshStartPermit must distinguish new consumption from exact event replay by locked pre-call reserved state in the same transaction, or a separately reviewed created/replayed return contract. Returned event ID alone grants no start.",
+    "Actual physical issuer remains unconditionally unavailable; temporary synthetic keys and successful native DB release fixtures authenticate software assertions only.",
+    "Consumed-start synchronous same-host path only. Reserved cancellation, independent pre-cleanup closing/cancel fences, boot change and power-loss proofs need separate designs.",
+    "Full hosted CI and existing C17/C20/C21/C22 native suites under0021 remain pending actual execution; this review does not infer they passed from the new28 cases."
+  ],
+  "intentional_current_head_test_supersessions": [
+    {
+      "after_sha256": "b84b1cb66ea833d721dcb6a8e78649c0495ac87ee163b2cd7709c9af1ebfbf0e",
+      "before_sha256": "57bf87b365ead1be954dfc0d4ce7d6f963223395709e3aa21dc5e78875c04270",
+      "minimal_diff": "diff --git a/tests/integration/test_investigation_postgres.py b/tests/integration/test_investigation_postgres.py\nindex b41e6dd..cbaff62 100644\n--- a/tests/integration/test_investigation_postgres.py\n+++ b/tests/integration/test_investigation_postgres.py\n@@ -228,11 +228,11 @@ def stored(isolated):\n \n def test_fresh_full_alembic_head_and_repeat_upgrade_match_models(isolated):\n     alembic(isolated, \"upgrade\", \"head\")\n-    assert revision(isolated) == \"20261020_0020\"\n+    assert revision(isolated) == \"20261027_0021\"\n     assert_schema_matches_models(isolated[\"engine\"])\n     isolated.update(seed(isolated))\n     alembic(isolated, \"upgrade\", \"head\")\n-    assert revision(isolated) == \"20261020_0020\"\n+    assert revision(isolated) == \"20261027_0021\"\n     with isolated[\"factory\"]() as session:\n         assert session.get(ResearchContextRevision, isolated[\"revisions\"][0]).payload_json == '{\"synthetic\":true}'\n \n@@ -247,7 +247,7 @@ def test_populated_0016_alembic_upgrade_preserves_prior_application_history(isol\n         session.add(ChatInteraction(id=chat, user_id=owner, status=\"completed\", query=\"Synthetic prior query\", answer=\"Preserved prior evidence\", request_options={}, evidence_snapshot={\"synthetic\": True}, legal_hold=True))\n         session.add(AuditEvent(id=audit, actor_user_id=owner, action=\"synthetic.c17.preexisting\", metadata_json={\"preserved\": True}))\n     alembic(isolated, \"upgrade\", \"head\")\n-    assert revision(isolated) == \"20261020_0020\"\n+    assert revision(isolated) == \"20261027_0021\"\n     assert_schema_matches_models(isolated[\"engine\"])\n     with factory() as session:\n         assert session.get(ChatInteraction, chat).evidence_snapshot == {\"synthetic\": True}\n@@ -269,7 +269,7 @@ def test_populated_alembic_downgrade_is_rejected_and_keeps_history(isolated):\n     isolated.update(seed(isolated))\n     result = alembic(isolated, \"downgrade\", \"20261005_0016\", succeeds=False)\n     assert \"populated C17 storage cannot be downgraded\" in result.stderr\n-    assert revision(isolated) == \"20261020_0020\"\n+    assert revision(isolated) == \"20261027_0021\"\n     with isolated[\"factory\"]() as session:\n         assert session.get(ResearchContextRevision, isolated[\"revisions\"][0]).payload_json == '{\"synthetic\":true}'\n         assert session.get(ResearchConversation, isolated[\"conversation\"])\n",
+      "path": "tests/integration/test_investigation_postgres.py",
+      "qualification": "Intentional current-head assertion supersession for additive0021; no prior receipt changed."
+    },
+    {
+      "after_sha256": "5d324d202f2935324540ce3d7e6f5214d8d4a67fb7c38b3453cc8c53622d7a6c",
+      "before_sha256": "bc5153115f00c211f93f610d7f5979eac8aa784f6252ed6e77882782db9b4153",
+      "minimal_diff": "diff --git a/tests/integration/test_research_runs_postgres.py b/tests/integration/test_research_runs_postgres.py\nindex f0cae73..3a5a504 100644\n--- a/tests/integration/test_research_runs_postgres.py\n+++ b/tests/integration/test_research_runs_postgres.py\n@@ -63,7 +63,7 @@ def assert_run_schema(engine):\n \n def test_new_head_repeat_upgrade_and_empty_downgrade_match_all_run_models(isolated):\n     pg.alembic(isolated, \"upgrade\", \"head\")\n-    assert pg.revision(isolated) == \"20261020_0020\"\n+    assert pg.revision(isolated) == \"20261027_0021\"\n     assert_run_schema(isolated[\"engine\"])\n     pg.alembic(isolated, \"upgrade\", \"head\")\n     pg.alembic(isolated, \"downgrade\", \"20261018_0017\")\n@@ -362,5 +362,5 @@ def test_populated_downgrade_is_refused_with_history_intact(fixture, isolated):\n     run = fixture.submit()\n     result = pg.alembic(isolated, \"downgrade\", \"20261018_0017\", succeeds=False)\n     assert \"populated C20 storage cannot be downgraded\" in result.stderr\n-    assert pg.revision(isolated) == \"20261020_0020\"\n+    assert pg.revision(isolated) == \"20261027_0021\"\n     assert fixture.service.invoke(\"status\", fixture.address(run), fixture.user)[\"run\"] == run\n",
+      "path": "tests/integration/test_research_runs_postgres.py",
+      "qualification": "Intentional current-head assertion supersession for additive0021; no prior receipt changed."
+    },
+    {
+      "after_sha256": "452d1b2a6ac54c67f5f312a0db4fae4f5db8ee20e6ae2db4b74bc5cfebb60e75",
+      "before_sha256": "474980e4ec931ee19281c9317d45aa6c0cc9d1381257f83875ab2dc92fb3688b",
+      "minimal_diff": "diff --git a/tests/integration/test_research_evidence_postgres.py b/tests/integration/test_research_evidence_postgres.py\nindex e8b5037..eff626e 100644\n--- a/tests/integration/test_research_evidence_postgres.py\n+++ b/tests/integration/test_research_evidence_postgres.py\n@@ -44,7 +44,7 @@ def retained(actual):\n \n def test_migration_exact_schema_repeat_and_empty_downgrade(isolated):\n     pg.alembic(isolated, \"upgrade\", \"head\")\n-    assert pg.revision(isolated) == \"20261020_0020\"\n+    assert pg.revision(isolated) == \"20261027_0021\"\n     reflected = inspect(isolated[\"engine\"])\n     for model in NEW_MODELS:\n         table = model.__table__\n",
+      "path": "tests/integration/test_research_evidence_postgres.py",
+      "qualification": "Intentional current-head assertion supersession for additive0021; no prior receipt changed."
+    },
+    {
+      "after_sha256": "16f6e0784fa9e5fe5fe422786b5355b5d5dd0e766ea5c6c21f14e93c0c94258c",
+      "before_sha256": "581e67d6a0eda2db87c40dfca6e635660bacf43f7b916a1543a4465c2ea2ff8f",
+      "minimal_diff": "diff --git a/tests/integration/test_research_experiments_postgres.py b/tests/integration/test_research_experiments_postgres.py\nindex af6f720..8e198c3 100644\n--- a/tests/integration/test_research_experiments_postgres.py\n+++ b/tests/integration/test_research_experiments_postgres.py\n@@ -58,7 +58,7 @@ def concurrently(functions):\n \n def test_migration_exact_model_schema_and_empty_roundtrip(isolated):\n     pg.alembic(isolated, 'upgrade', 'head')\n-    assert pg.revision(isolated) == '20261020_0020'\n+    assert pg.revision(isolated) == '20261027_0021'\n     reflected = inspect(isolated['engine'])\n     for model in NEW_MODELS:\n         table = model.__table__\n",
+      "path": "tests/integration/test_research_experiments_postgres.py",
+      "qualification": "Intentional current-head assertion supersession for additive0021; no prior receipt changed."
+    },
+    {
+      "after_sha256": "1786a59c4477f8ab5490922ef1e3fe35f47ea370ed1c3abe52061fc7f255684b",
+      "before_sha256": "815f4e6de1bb2957350dc94ec745397350ea68a84dd47435a88c3f39fda2c12a",
+      "minimal_diff": "diff --git a/tests/test_bootstrap_database.py b/tests/test_bootstrap_database.py\nindex 6aae0a0..9856c6d 100644\n--- a/tests/test_bootstrap_database.py\n+++ b/tests/test_bootstrap_database.py\n@@ -12,8 +12,8 @@ from db.models import CorpusBase\n \n def _current_migrations(monkeypatch, *, current=True):\n     monkeypatch.setattr(bootstrap, \"migration_status\", lambda _: {\n-        \"migration_current_heads\": [\"20261020_0020\" if current else \"20261005_0016\"],\n-        \"migration_expected_heads\": [\"20261020_0020\"],\n+        \"migration_current_heads\": [\"20261027_0021\" if current else \"20261005_0016\"],\n+        \"migration_expected_heads\": [\"20261027_0021\"],\n         \"migrations_current\": current,\n     })\n \n@@ -217,7 +217,7 @@ def test_readiness_rejects_missing_research_tables_and_old_migrations(\n     assert status[\"migrations_current\"] is current\n \n \n-@pytest.mark.parametrize(\"revision\", [None, \"20261004_0015\", \"20261005_0016\", \"20261018_0017\", \"20261019_0018\", \"20261019_0019\", \"20261020_0020\"])\n+@pytest.mark.parametrize(\"revision\", [None, \"20261004_0015\", \"20261005_0016\", \"20261018_0017\", \"20261019_0018\", \"20261019_0019\", \"20261020_0020\", \"20261027_0021\"])\n def test_migration_status_reads_actual_version_without_upgrading(revision):\n     from sqlalchemy import create_engine, text\n \n@@ -228,6 +228,6 @@ def test_migration_status_reads_actual_version_without_upgrading(revision):\n             connection.execute(text(\"INSERT INTO alembic_version VALUES (:revision)\"), {\"revision\": revision})\n         status = bootstrap.migration_status(connection)\n         assert status[\"migration_current_heads\"] == ([revision] if revision else [])\n-        assert status[\"migration_expected_heads\"] == [\"20261020_0020\"]\n-        assert status[\"migrations_current\"] is (revision == \"20261020_0020\")\n+        assert status[\"migration_expected_heads\"] == [\"20261027_0021\"]\n+        assert status[\"migrations_current\"] is (revision == \"20261027_0021\")\n     engine.dispose()\n",
+      "path": "tests/test_bootstrap_database.py",
+      "qualification": "Intentional current-head assertion supersession for additive0021; no prior receipt changed."
+    }
+  ],
+  "native_evidence": {
+    "artifacts_hash_verified": 34,
+    "cleanup_evidence_read": {
+      "ephemeral_roles_remaining": 0,
+      "stop_verification": {
+        "errno": 61,
+        "escalated_pg_ctl_status_exit": 3,
+        "port": 51358,
+        "postmaster_pid_absent": true,
+        "private_unix_socket_absent": true,
+        "tcp_address": "127.0.0.1",
+        "tcp_connection_refused": true
+      },
+      "test_schemas_remaining": 0
+    },
+    "cleanup_qualification": "Read and hash-verified owner-recorded native evidence; this review made no new database connection. Default sandbox status was explicitly qualified; final elevated status plus endpoint refusal/socket/pid absence was retained.",
+    "effective_restricted_LOGIN_roles_tested": true,
+    "local_result": "24 passed in 0.73s",
+    "native_result": "28 passed in 83.16s",
+    "receipt_path": "docs/plans/ocean-v1/evidence/C23/execution-store-preparation-20261027/native03-final/receipt.json",
+    "receipt_sha256": "0d00b949bfeb4f924b884b73d909cf0c8a98b0f2ce40ed78b1c2d5f2c6388290",
+    "ruff_result": "All checks passed!",
+    "six_sources_match_before_after_and_current": true
+  },
+  "next_manageable_slice": {
+    "constraints": [
+      "Use exact journal.require_current validation of PID/registered lease/lock/marker/root/database and complete chain.",
+      "Derive journal UUID from validated marker and terminal sequence/head/result from one validated finished snapshot; hash exact canonical result wrapper bytes, not record subdict.",
+      "Expose current journal boot and actual terminal event boot separately; never relabel old terminal evidence after reboot. Preserve terminal epoch on reacquisition.",
+      "Return private-constructor immutable detached scalars only, explicitly no launch/lease/kernel/physical issuer/release/scientific authority.",
+      "Preserve existing claim/effect/schema semantics and keep issue_termination_packet unavailable."
+    ],
+    "objective": "Guarded read-only journal identity and durable terminal reference under actual active DurableLease, before implementing retained reserve bridge."
+  },
+  "physical_issuer_authority": false,
+  "preserved_C22_sources": [
+    {
+      "byte_identical_to_review_HEAD": true,
+      "path": "migrations/versions/20261020_0020_research_experiments.py",
+      "sha256": "2f5eb82dfefdd6a02bafddb58a44936fa42197c8eb2ac70b726d83fc57f14dff"
+    },
+    {
+      "byte_identical_to_review_HEAD": true,
+      "path": "db/app_models.py",
+      "sha256": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3"
+    },
+    {
+      "byte_identical_to_review_HEAD": true,
+      "path": "orchestration/research_experiments.py",
+      "sha256": "bab02f05549655977e2f95ef7885a59d3a311c3ad64941b0846d79b94b0db2ee"
+    }
+  ],
+  "resolved_findings": [
+    {
+      "issue": "Recovery closure incorrectly pinned journal_epoch to original start epoch.",
+      "resolution": "Original start pins stay immutable. Later publication/closed epochs must be at least original and current event epochs, with exact boot/journal/profile/start ID and original pre-start head. Native test covers1->3->4 plus stale epoch and boot-change rejection."
+    },
+    {
+      "issue": "Closed event did not independently retain terminal journal reference.",
+      "resolution": "Closed requires terminal_sequence, terminal_head_sha256 and result_sha256 (durable terminal result). Proof insertion matches all three to current immutable closed event; three correctly signed mismatch cases are rejected natively."
+    },
+    {
+      "issue": "CI server identity required loopback although job-owned Docker server reports its private container address.",
+      "resolution": "Optional exact C23_TEST_SERVER_ADDRESS is independently supplied from the existing inspected job-service output. No pin permits only loopback; nonloopback pin requires GITHUB_ACTIONS=true and one RFC1918 IPv4 address. Wrong/public/linklocal/hostname/list/IPv6-private pins are refused. CI wiring parsed and inspected; actual hosted CI is pending."
+    }
+  ],
+  "retained_C22_bridge_complete": false,
+  "review_HEAD": "00abd95e648cfb8674ab668c2bf209044ef36f31",
+  "review_mode": "Independent read-only source, test, CI and immutable evidence review. This reviewer ran no database or cloud action.",
+  "reviewed_sources": [
+    {
+      "path": "db/experiment_execution_models.py",
+      "sha256": "c82b42092c200263fd497d434f1df1a7a54d68240eee06d8d6ceb38131f5f52a",
+      "size_bytes": 13104
+    },
+    {
+      "path": "migrations/versions/20261027_0021_experiment_execution.py",
+      "sha256": "6030819273cedbd047d98ada9784b74f2fa126612d922253d177dedc5fcc5aa0",
+      "size_bytes": 47492
+    },
+    {
+      "path": "orchestration/experiment_sandbox/execution_store.py",
+      "sha256": "539e7c7b638b759fc92ef6615e5b037ab9d9420cf09876bd39033a9d4e1fb13d",
+      "size_bytes": 24765
+    },
+    {
+      "path": "tests/experiment_execution_postgres_support.py",
+      "sha256": "364bae2bc0247f9124d8f51abce34487a93c701e46d14f44507041eee85cbb8e",
+      "size_bytes": 7319
+    },
+    {
+      "path": "tests/integration/test_experiment_execution_postgres.py",
+      "sha256": "1da0794fdfa062c88d25cf20392ef4a225cc18e5ae3e62effaab681a3d9cf547",
+      "size_bytes": 28026
+    },
+    {
+      "path": "tests/test_experiment_sandbox_execution_store.py",
+      "sha256": "23099eac582e16564ae33dabbe346f3053fa118fc38629132b911609749505c6",
+      "size_bytes": 10507
+    },
+    {
+      "path": ".github/workflows/tests.yml",
+      "sha256": "1eed24f5eb8c7ef31de4988277d40dca626db848c589aa0a3030562bcfb33ef3",
+      "size_bytes": 18297
+    },
+    {
+      "path": "orchestration/experiment_sandbox/proofs.py",
+      "sha256": "98b6f72c0d59dca21e78d9ebb93268769d41c18560e240b0ba8bf4622fc42ed4",
+      "size_bytes": 17058
+    },
+    {
+      "path": "schema/experiment_execution.py",
+      "sha256": "8932fdc90c2fe22035e7bf4a4c88eff4047b3fbc584c070e77041c3e285e8b00",
+      "size_bytes": 6806
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C23/operator-bridge-design/physical-issuer-runtime-hooks-amendment-20261027.md",
+      "sha256": "eb5606b61dd7307cdec9128af86cb8a045e216f3a3c9c3f53fbd2641e5367411",
+      "size_bytes": 22121
+    }
+  ],
+  "scientific_approval": "not_independently_verified",
+  "version": "c23-execution-store-independent-security-review-v1"
+}

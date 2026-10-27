@@ -1,0 +1,33 @@
+{
+  "C23_complete": false,
+  "actual_runtime_acceptance_performed": false,
+  "cloud_operations_performed": false,
+  "development_observations": [
+    "42passed3.27s then42passed3.12s after retaining failedcontroller rawcaptures; Ruffpassed."
+  ],
+  "episodes": [
+    "lost-create-ack",
+    "lost-start-ack",
+    "terminal-replay"
+  ],
+  "generated_analysis_execution_performed": false,
+  "implementation": [
+    "Stageonce exactsyntheticfixture/profile/readonlyrootfs/journal; eachcontroller isfreshPythonprocess; no os.fork afterhostnativeimports.",
+    "LostcreateACK barrier follows actual successful base_spawn/base_wait and precedes ACK handling; loststartACK barrier follows actual successful base_command and precedes started event.",
+    "Heldleaseepisodes launch secondsamejobprocess andrequireworkerbusy/no runtimecommands; coordinatorSIGKILLtargets onlyitsdirectPopen child, thenrequires exactownedcgroup populated0 before fresh cleanup-only recovery.",
+    "Terminaldeliverybarrier occurs afterbase.run returned/leaseclosed; no busycontender there. Replayrequires zero runtimecommands andidenticalterminaljournal/result/epoch/profile andretainedoutputs.",
+    "PhysicalACKs are neverfabricated: missingdeleteACK, missinggroupidentity or alteredsource remainsfailed/uncertain withcontext/rootfsmount retained; finalcleanup onlyfollows verifiedepisode proof.",
+    "Purposebuilt guestprogram stores UID checks/75secondboundedloop for crash episodes under90secondwallpolicy; code ASTparsed onlylocally and neverhostexecuted."
+  ],
+  "open_gates": [
+    "Actual threeworkerrecoveryepisodes",
+    "Queued-launch cancellation",
+    "Synthetic admission revocation phases",
+    "VM reboot/powerfailure",
+    "Real retainedC22reservation/approval/release bridge"
+  ],
+  "reservation_released": false,
+  "retained_C22_real_approval": false,
+  "scope": "NEW operator-only recovery driver preparation, no accepted-module mutation",
+  "tests": "42hostsafe cases includingreal SIGKILL of afixedinert freshPython sleep helper; generatedguestcode remainsASTonly andeffects forwarded throughinertdoubles forlocalprotocoltests."
+}

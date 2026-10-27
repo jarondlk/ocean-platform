@@ -1,0 +1,145 @@
+{
+  "authority": {
+    "actual_native_readback_verified": false,
+    "c23_complete": false,
+    "dispatch_eligible": false,
+    "numerical_acceptance": false,
+    "reservation_released": false,
+    "runtime_acceptance_verified": false,
+    "scientific_approval": "not_independently_verified"
+  },
+  "created_at": "2026-10-26T17:38:56.281608+00:00",
+  "development_findings": [
+    {
+      "cause": "Encoded raw kernel limits were decoded for evidence, then accidentally passed as str to the byte parser. Corrected by explicit ASCII re-encoding; no actual native execution had occurred.",
+      "result": "42 failed,93 passed",
+      "stage": "Initial new-suite run"
+    },
+    {
+      "cause": "Escaping-cap test fixture did not actually exceed48KiB. Added bounded tab padding to procstat fixture; final regression passes.",
+      "result": "1 failed,134 passed",
+      "stage": "Next new-suite run"
+    }
+  ],
+  "host_safe_cases_cover": [
+    "Successful actual temporary-file model for both process roles and full enforcement evidence",
+    "Both actors soft/hard mismatch, unlimited/duplicate/malformed rows",
+    "Foreign job/root/CG/role/executable, missing process and malformed/starttime/zombie data",
+    "Bounded128-PID discovery, unexpected child cgroup and inode mismatch",
+    "PID/starttime/cmdline/CG/limit/executable races and final inventory change",
+    "Oversized raw cmdline/limits and JSON-escaping aggregate cap",
+    "Lease/deadline/watchdog loss and whole-group cleanup without start"
+  ],
+  "immutable_prior_source": [
+    {
+      "bytes": 45769,
+      "path": "docs/plans/ocean-v1/evidence/C23/native-fd-amendment/prior-source/orchestration/experiment_sandbox/linux_runtime.py",
+      "sha256": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d"
+    },
+    {
+      "bytes": 20535,
+      "path": "docs/plans/ocean-v1/evidence/C23/native-fd-amendment/prior-source/orchestration/experiment_sandbox/profile_execution.py",
+      "sha256": "17caa52609bc88d7e3e504ba10dde0db47335e60d24de0d6d77f91896fcba496"
+    },
+    {
+      "bytes": 44701,
+      "path": "docs/plans/ocean-v1/evidence/C23/native-fd-amendment/prior-source/tests/test_experiment_sandbox_linux_runtime.py",
+      "sha256": "0b6f00619e7470322d4497b6d0802377b291a6d04d58da23ba4a1799bada21a0"
+    },
+    {
+      "bytes": 12405,
+      "path": "docs/plans/ocean-v1/evidence/C23/native-fd-amendment/prior-source/tests/test_experiment_sandbox_profile_execution.py",
+      "sha256": "d638fae8d7f640fe8e4ca674a28ee58af858798da8aec176d82ec951c2d40ff8"
+    }
+  ],
+  "implemented": [
+    "The retained create-intent outer cgroup identity is passed into _readback and checked before native PID discovery.",
+    "Only outer/host/sandbox owned cgroups are inventoried. Unexpected descendant directories, symlinks, malformed/duplicate PIDs, more than128 unique PIDs, nonempty outer domain or inode changes reject the readback.",
+    "Sentry state.pid must be in the owned inventory and have argv0 runsc-sandbox. Exactly one Gofer has argv0 runsc-gofer. Both require exact final job ID and exact retained runsc-state --root flag.",
+    "Each proc-directory FD is anchored to the opened process. PID/starttime are parsed before and after; cmdline/cgroup/limits/executable inode stamps are rechecked through that same directory FD. Missing or changed identity is an error.",
+    "Sentry executable identity must equal the verified runtime manifest gvisor-bin/gvisor_sentry; Gofer must equal verified runsc. File hashes, owner/mode/nlink and inode stamps are checked using the existing trusted runtime verifier.",
+    "Both native actors must report exactly one canonical Max open files row with soft=hard4096. Missing, unlimited, duplicate or different values reject before start. Requirement fields independently require native4096 and analysis256.",
+    "Core process observations repeat after discovery/runtime hashing; complete owned-cgroup inventory and directory identities must match again. Lease, deadline and watchdog remain current throughout.",
+    "Bounded raw limits/stat/cgroup/argv, SHA256 command identity, role executable identity and parsed limits are retained under enforcement_verified.readback.native_processes. Whole serialized enforcement payload must fit48KiB, below the durable journal64KiB cap.",
+    "Native verification failure follows existing whole-cgroup cleanup/watchdog path, emits no output, does not finish the uncertain job, and never grants C22 release or dispatch."
+  ],
+  "important_qualifications": [
+    "Temporary files and mocks model procfs/cgroups on macOS; they do not establish actual Linux procfd semantics, installed native4096, sidecar access, or runtime scientific compatibility.",
+    "A transient unrelated native helper exiting during exact inventory comparison can conservatively reject a valid job. Such a failure must be preserved and diagnosed; it cannot authorize execution or release.",
+    "Native limit observations are pre-start snapshots; they are not a claim about continuous FD usage maxima.",
+    "Actual reruns must retain the prior native256/numerical failure evidence, verify guest256 and all other readbacks, rerun NumPy-first numerical fixtures and compare repeated results."
+  ],
+  "owner": "c23_science_materials",
+  "scope": "Operator-only Linux native FD enforcement readback preparation; no real procfs/runtime/cloud/analysis execution in these checks.",
+  "source_frozen": true,
+  "source_supersession": {
+    "intentional": true,
+    "reason": "Before-start actual native Sentry/gofer soft+hard RLIMIT_NOFILE4096 verification, separate from OCI guest256. Existing resource quotas, image/init, network/isolation, durable lease/cleanup and no-dispatch/no-release controls remain intact.",
+    "runtime_after": "52d85388a8b52c76a2f54d84de62bd8e19b38601bf265150cf039590cf8e4c8c",
+    "runtime_before": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d"
+  },
+  "sources_verified_at_completion": [
+    {
+      "bytes": 58022,
+      "path": "orchestration/experiment_sandbox/linux_runtime.py",
+      "sha256": "52d85388a8b52c76a2f54d84de62bd8e19b38601bf265150cf039590cf8e4c8c"
+    },
+    {
+      "bytes": 58671,
+      "path": "tests/test_experiment_sandbox_linux_runtime.py",
+      "sha256": "5e5977aa55484b664afb63d7f486f8f24b8f59ca74f2c11885dff04a03fdb032"
+    },
+    {
+      "bytes": 20639,
+      "path": "orchestration/experiment_sandbox/profile_execution.py",
+      "sha256": "de9cd227f72c3a7cd7a18d667e3027115d6316467af32a397830e799fb41c4f5"
+    },
+    {
+      "bytes": 12845,
+      "path": "tests/test_experiment_sandbox_profile_execution.py",
+      "sha256": "328a2a7e3ced0b7d4d635f8282356220ab8d71d75fa6ac11556507ea0396253e"
+    },
+    {
+      "bytes": 44425,
+      "path": "orchestration/experiment_sandbox/journal.py",
+      "sha256": "6e128f8d15dc312c79f50aa35686bb8905aac4e02880d697c93e512705e37b7c"
+    },
+    {
+      "bytes": 24744,
+      "path": "sandbox/experiment/trusted_init.py",
+      "sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc"
+    }
+  ],
+  "verification": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_linux_runtime.py",
+        "-q",
+        "--tb=short"
+      ],
+      "elapsed_seconds": 6.21,
+      "exit_code": 0,
+      "observed_summary": "139 passed in 6.21s",
+      "passed": 139,
+      "qualification": "Final tool exit/result observed directly; sources held unchanged during this owned run.",
+      "raw_tool_output_saved": false
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "orchestration/experiment_sandbox/linux_runtime.py",
+        "tests/test_experiment_sandbox_linux_runtime.py"
+      ],
+      "exit_code": 0,
+      "observed_summary": "All checks passed!",
+      "raw_tool_output_saved": false
+    }
+  ],
+  "version": "c23-native-nofile-readback-preparation-v1"
+}

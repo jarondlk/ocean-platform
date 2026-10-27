@@ -1,0 +1,28 @@
+{
+  "C23_complete": false,
+  "actual_execution_performed": false,
+  "assessment": "No material source blocker in the narrow timeout amendment. Only bounded trusted coordinator waits changed:90s first crash/90s recovery/30s contender/150s first terminal. Contender wait remains below45s held-barrier deadline. Runtime resource wall remains90s and the original adapter watchdog still controls it. Forwarding, exact-child SIGKILL, owned-cgroup identity/populated proof and acceptance predicates are unchanged.",
+  "check": {
+    "command": ".venv/bin/python -m pytest tests/test_experiment_sandbox_recovery_acceptance.py -q --tb=short -k 'observation_budget or unknown_observation'",
+    "exit_code": 0,
+    "result": "11 passed,43 deselected in0.56s"
+  },
+  "dispatch_eligible": false,
+  "implementation_source_edited_by_reviewer": false,
+  "kind": "Independent additive recovery observation-budget review",
+  "owner_amendment": {
+    "path": "docs/plans/ocean-v1/evidence/C23/operator-recovery-preparation-20261026/observation-budget-amendment02/verification.json",
+    "sha256": "56c7b6cc3ae7edddf7abcb553211610cbde0c5204aa42e26104a8ebc8bd7111b"
+  },
+  "prior_review_preserved": {
+    "path": "docs/plans/ocean-v1/evidence/C23/operator-independent-review-20261026/recovery-driver-independent-review.json",
+    "sha256": "33e17c3bcc52b6a7209d3300b2efb2a615f1efb634d3dd571ddc4796f905b118"
+  },
+  "recorded_at": "2026-10-26T12:11:04.242686+00:00",
+  "reservation_released": false,
+  "scientific_approval": "not_independently_verified",
+  "source_files": {
+    "sandbox/experiment/gcp/run_recovery_acceptance.py": "ef0ea8bc1873abe7d372e42ca1197e59e77356b989383a4cefc6764a3e5a627a",
+    "tests/test_experiment_sandbox_recovery_acceptance.py": "e281d5cd1ec02097d081e5e6c998c25606e61a52486019a994b85a6b1ba898df"
+  }
+}

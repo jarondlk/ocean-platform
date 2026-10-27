@@ -1,0 +1,81 @@
+{
+  "actual_linux_execution": false,
+  "capacity_reserved": false,
+  "checks": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_proofs.py",
+        "-q",
+        "--tb=short"
+      ],
+      "returncode": 0,
+      "stderr": {
+        "path": "docs/plans/ocean-v1/evidence/C23/termination-protocol-preparation-20261027/pytest.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      "stdout": {
+        "path": "docs/plans/ocean-v1/evidence/C23/termination-protocol-preparation-20261027/pytest.stdout.txt",
+        "sha256": "b5c0aa2af4e06edfbc3d5e8bf0307770dc86683a46f84cbadbe82d5eec4e1b23",
+        "size_bytes": 180
+      }
+    },
+    {
+      "command": [
+        ".venv/bin/ruff",
+        "check",
+        "schema/experiment_execution.py",
+        "orchestration/experiment_sandbox/proofs.py",
+        "tests/test_experiment_sandbox_proofs.py"
+      ],
+      "returncode": 0,
+      "stderr": {
+        "path": "docs/plans/ocean-v1/evidence/C23/termination-protocol-preparation-20261027/ruff.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      "stdout": {
+        "path": "docs/plans/ocean-v1/evidence/C23/termination-protocol-preparation-20261027/ruff.stdout.txt",
+        "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+        "size_bytes": 19
+      }
+    }
+  ],
+  "created_at": "2026-10-26T17:44:28.863514+00:00",
+  "cryptography_version": "50.0.1",
+  "database_mutations": false,
+  "ephemeral_synthetic_keys_only": true,
+  "lease_kernel_terminal_issuance_verified": false,
+  "limitations": [
+    "Authenticated assertions are not independent physical termination proof.",
+    "Actual issuance is unconditionally unavailable until held-lease, durable-terminal and kernel hooks exist.",
+    "No real signing keys, DB bridge, migration, route or cloud resource was created or changed."
+  ],
+  "physical_issuer_implemented": false,
+  "python_version": "3.12.7",
+  "reservation_released": false,
+  "scientific_approval": "not_independently_verified",
+  "scope": "synthetic-software-test",
+  "serving_dispatch_enabled": false,
+  "source_files": [
+    {
+      "path": "schema/experiment_execution.py",
+      "sha256": "8932fdc90c2fe22035e7bf4a4c88eff4047b3fbc584c070e77041c3e285e8b00",
+      "size_bytes": 6806
+    },
+    {
+      "path": "orchestration/experiment_sandbox/proofs.py",
+      "sha256": "98b6f72c0d59dca21e78d9ebb93268769d41c18560e240b0ba8bf4622fc42ed4",
+      "size_bytes": 17058
+    },
+    {
+      "path": "tests/test_experiment_sandbox_proofs.py",
+      "sha256": "499389c6b47a5039837e06a450c95d6fa71080281a832b17649f2a18bb809388",
+      "size_bytes": 20846
+    }
+  ],
+  "version": "c23-termination-protocol-preparation-receipt-v1"
+}

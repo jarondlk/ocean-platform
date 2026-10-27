@@ -90,6 +90,13 @@ def test_policy_is_bound_to_approved_identity_and_unchanged_limits(layout):
     assert '--directfs=false' in prepared.runtime_args
     assert '--overlay2=none' in prepared.runtime_args
     assert '--oci-seccomp=true' in prepared.runtime_args
+    assert '--fdlimit=4096' in prepared.runtime_args
+    assert '--fdlimit=256' not in prepared.runtime_args
+    assert prepared.requirements['native_nofile_limit'] == 4096
+    assert prepared.requirements['analysis_nofile_limit'] == 256
+    assert next(value for value in prepared.config['process']['rlimits']
+                if value['type'] == 'RLIMIT_NOFILE') == {
+                    'type': 'RLIMIT_NOFILE', 'soft': 256, 'hard': 256}
     # Detached Sentry boot failures use the existing bounded stderr capture.
     # Enabling debug itself would alter stdio routing and threaten the frame.
     assert '--debug=false' in prepared.runtime_args
@@ -202,7 +209,7 @@ def test_syscall_amendment_keeps_image_wrapper_and_all_runtime_acceptance_gates_
     envelope, options, _ = layout
     profile = render_execution_profile(envelope, **options)
     document = profile.document
-    assert document['supersedes_execution_profile_version'] == 'c23-oci-execution-preparation-v4'
+    assert document['supersedes_execution_profile_version'] == 'c23-oci-execution-preparation-v5'
     assert document['trusted_init']['sha256'] == options['trusted_init_sha256']
     assert document['image_preparation'] == options['image_receipt']
     architecture = options['runtime_manifest']['architecture']

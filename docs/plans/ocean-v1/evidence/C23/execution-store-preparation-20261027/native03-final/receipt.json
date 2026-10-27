@@ -1,0 +1,102 @@
+{
+  "C23_complete": false,
+  "artifacts_sha256": {
+    "commands.txt": "9b33bd36917c0b316e6b46359956c7bb29803aed26a331d95832b9d7c15fb822",
+    "identity-after.json": "d270098f59dc1edf7d955d89184da8285f66704bb8a75694a082fb69003f6652",
+    "identity-before.json": "d270098f59dc1edf7d955d89184da8285f66704bb8a75694a082fb69003f6652",
+    "local-after-pin.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local-after-pin.stdout.txt": "5c9baa0a149aef651c2a6595268b5e3e3264092dc0e1275e2eacb3c56d1f2548",
+    "local.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "local.stdout.txt": "61ec84121d1b1f436e4d7dfe6c8b9453d1009e5eadfa736f23a6adafac5de0a3",
+    "native.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native.stdout.txt": "c7e840db3ef25bb40600e706412cfb7213169af6b752141634c364a689b851fe",
+    "ruff-after-pin.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ruff-after-pin.stdout.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "ruff.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ruff.stdout.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "source/db/experiment_execution_models.py": "c82b42092c200263fd497d434f1df1a7a54d68240eee06d8d6ceb38131f5f52a",
+    "source/migrations/versions/20261027_0021_experiment_execution.py": "6030819273cedbd047d98ada9784b74f2fa126612d922253d177dedc5fcc5aa0",
+    "source/orchestration/experiment_sandbox/execution_store.py": "539e7c7b638b759fc92ef6615e5b037ab9d9420cf09876bd39033a9d4e1fb13d",
+    "source/tests/experiment_execution_postgres_support.py": "364bae2bc0247f9124d8f51abce34487a93c701e46d14f44507041eee85cbb8e",
+    "source/tests/integration/test_experiment_execution_postgres.py": "1da0794fdfa062c88d25cf20392ef4a225cc18e5ae3e62effaab681a3d9cf547",
+    "source/tests/test_experiment_sandbox_execution_store.py": "23099eac582e16564ae33dabbe346f3053fa118fc38629132b911609749505c6",
+    "start.stderr.txt": "b912a1064609329e80feb4491b30d87f32f0a1e3ac2816dab8684fc280bcea87",
+    "start.stdout.txt": "acf6663bfb9ac711bf408caab8ba4de54161af5877454b1e1c4b3abca6050efd",
+    "status-after-escalated.exit.txt": "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2",
+    "status-after-escalated.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status-after-escalated.stdout.txt": "e138ccb54fdb08283c6eb21159c53207bbbbf07077246e2804e18d22efe6e250",
+    "status-before-escalated.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status-before-escalated.stdout.txt": "67c928cef4bbcf0e1ae7c25f74b0ae7aa987e0e0f3a37566ee1a905a671ea666",
+    "status-before-sandbox.exit.txt": "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2",
+    "status-before-sandbox.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status-before-sandbox.stdout.txt": "e138ccb54fdb08283c6eb21159c53207bbbbf07077246e2804e18d22efe6e250",
+    "stop-verification.json": "16ec5a30856e6870efbeedc3f2118e8329258c3869e415efa9b39f1d826a68e2",
+    "stop.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stop.stdout.txt": "e7b24f63c690806243625ca8cb53f81f1a71a030c6c34a3820e76021c6810564",
+    "verification-before-native.json": "4b171e37823b67a941f11a47b899a8862292c97ef1c0121ae836b8aa83ad5f1e",
+    "verification-start.json": "7c1d60dbdcd944ad121afd4d0dbbace0cb164ea73e1468a7df6478d1adaf90e0"
+  },
+  "cluster_stopped_verified": true,
+  "database_cryptographic_verification": false,
+  "effective_restricted_LOGIN_roles_tested": true,
+  "ephemeral_roles_remaining": 0,
+  "head": "00abd95e648cfb8674ab668c2bf209044ef36f31",
+  "local_result": "24 passed in 0.73s",
+  "native_result": "28 passed in 83.16s",
+  "original_native01_and_native02_recovered_preserved": true,
+  "physical_issuer_authority": false,
+  "postgresql_version": "18.3",
+  "preserved_C22_sources": {
+    "db/app_models.py": {
+      "byte_identical_to_HEAD": true,
+      "sha256": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3"
+    },
+    "migrations/versions/20261020_0020_research_experiments.py": {
+      "byte_identical_to_HEAD": true,
+      "sha256": "2f5eb82dfefdd6a02bafddb58a44936fa42197c8eb2ac70b726d83fc57f14dff"
+    },
+    "orchestration/research_experiments.py": {
+      "byte_identical_to_HEAD": true,
+      "sha256": "bab02f05549655977e2f95ef7885a59d3a311c3ad64941b0846d79b94b0db2ee"
+    }
+  },
+  "remaining_gates": [
+    "Actual held-lease physical issuer/runtime hooks and complete retained C22 bridge remain unavailable.",
+    "Future FreshStartPermit must distinguish new start consumption from replay using locked pre-call reserved state in the same transaction; low-level event ID is reconciliation data.",
+    "Consumed-start synchronous same-host path only; reserved cancellation, independent closing/cancel fence, reboot and power loss remain separate designs.",
+    "Existing C22 migration-head test supersession is owned by root; no existing C22 or CI file was changed by this task."
+  ],
+  "retained_owner_source_admission_provided_by_store": false,
+  "ruff_result": "All checks passed!",
+  "sandbox_status_qualification": "Default sandbox status3 before the run was false due restricted process visibility; elevated status confirmed owned live PID138. Final elevated status3 plus endpoint refusal/socket/pid absence confirms actual stop.",
+  "schema_role_cleanup_verified": true,
+  "source_sha256_after_native": {
+    "db/experiment_execution_models.py": "c82b42092c200263fd497d434f1df1a7a54d68240eee06d8d6ceb38131f5f52a",
+    "migrations/versions/20261027_0021_experiment_execution.py": "6030819273cedbd047d98ada9784b74f2fa126612d922253d177dedc5fcc5aa0",
+    "orchestration/experiment_sandbox/execution_store.py": "539e7c7b638b759fc92ef6615e5b037ab9d9420cf09876bd39033a9d4e1fb13d",
+    "tests/experiment_execution_postgres_support.py": "364bae2bc0247f9124d8f51abce34487a93c701e46d14f44507041eee85cbb8e",
+    "tests/integration/test_experiment_execution_postgres.py": "1da0794fdfa062c88d25cf20392ef4a225cc18e5ae3e62effaab681a3d9cf547",
+    "tests/test_experiment_sandbox_execution_store.py": "23099eac582e16564ae33dabbe346f3053fa118fc38629132b911609749505c6"
+  },
+  "source_sha256_before_native": {
+    "db/experiment_execution_models.py": "c82b42092c200263fd497d434f1df1a7a54d68240eee06d8d6ceb38131f5f52a",
+    "migrations/versions/20261027_0021_experiment_execution.py": "6030819273cedbd047d98ada9784b74f2fa126612d922253d177dedc5fcc5aa0",
+    "orchestration/experiment_sandbox/execution_store.py": "539e7c7b638b759fc92ef6615e5b037ab9d9420cf09876bd39033a9d4e1fb13d",
+    "tests/experiment_execution_postgres_support.py": "364bae2bc0247f9124d8f51abce34487a93c701e46d14f44507041eee85cbb8e",
+    "tests/integration/test_experiment_execution_postgres.py": "1da0794fdfa062c88d25cf20392ef4a225cc18e5ae3e62effaab681a3d9cf547",
+    "tests/test_experiment_sandbox_execution_store.py": "23099eac582e16564ae33dabbe346f3053fa118fc38629132b911609749505c6"
+  },
+  "source_unchanged_during_native_run": true,
+  "stop_verification": {
+    "errno": 61,
+    "escalated_pg_ctl_status_exit": 3,
+    "port": 51358,
+    "postmaster_pid_absent": true,
+    "private_unix_socket_absent": true,
+    "tcp_address": "127.0.0.1",
+    "tcp_connection_refused": true
+  },
+  "test_schemas_remaining": 0,
+  "trusted_recorder_is_authentication_boundary": true,
+  "version": "c23-native-final-freeze-v1"
+}

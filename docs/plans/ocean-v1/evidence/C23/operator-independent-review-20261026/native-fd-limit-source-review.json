@@ -1,0 +1,214 @@
+{
+  "actual_required_before_acceptance": [
+    "New source-pinned profile amendment and focused fail-closed tests; retain original256 profile and numerical failures.",
+    "Actual gVisor execution with the same immutable image/runtime/init and fresh reviewed admission; sample native Sentry/gofer /proc limits and descriptor counts while alive, with PID identity/cgroup binding.",
+    "Confirm guest RLIMIT_NOFILE remains soft=hard256, all outer/inner resource readbacks remain exact, whole-cgroup cleanup/populated0/delete acknowledgement/rootfs unmount remain proven.",
+    "Rerun the bounded diagnostic, then the original NumPy-first numerical fixtures and repeat/tolerance comparison. Direct datetime preloading success alone is not numerical acceptance.",
+    "If4096 still fails, retain that failure and collect actor-specific native pressure before any further finite adjustment; do not update packages or guest quotas blindly."
+  ],
+  "authority": {
+    "c23_complete": false,
+    "dispatch_eligible": false,
+    "numerical_acceptance": false,
+    "original_failed_attempt_reclassified": false,
+    "release_eligible": false,
+    "runtime_acceptance_granted": false,
+    "scientific_approval": false
+  },
+  "created_at": "2026-10-26T12:27:12.354813+00:00",
+  "inference": {
+    "not_proven": "The current samples do not identify whether Sentry or gofer hit256, do not mathematically bound the workload maximum, and do not prove1024 or4096 sufficient.",
+    "supported": "Current host256 is inconsistent with potentially1000 cached dentries per mount plus per-file native descriptor amplification; retained errno24 with low guest sampled counts strongly supports native runtime FD pressure."
+  },
+  "inputs": [
+    {
+      "bytes": 5163,
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-1146/scientific-diagnostic-summary01.stdout.json",
+      "sha256": "e95a287ab85c2004134f74d625cd5ef0f13a80b9b2e1f024fad0961dba522f1b"
+    },
+    {
+      "bytes": 5685,
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-1146/numerics-a01-diagnostic.stdout.txt",
+      "sha256": "c24c9dc780c3544d7a86f97ebfed22c2bb4659c0296202f38873b5294570f247"
+    },
+    {
+      "bytes": 13558,
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-1146/numerics-summary-01.json",
+      "sha256": "b4a12f7f3e0df3b77050a729c29997a7bd9993bf34a6f94cebc1e76db3d130f8"
+    },
+    {
+      "bytes": 20535,
+      "path": "orchestration/experiment_sandbox/profile_execution.py",
+      "sha256": "17caa52609bc88d7e3e504ba10dde0db47335e60d24de0d6d77f91896fcba496"
+    },
+    {
+      "bytes": 6151,
+      "path": "sandbox/experiment/gcp/run_scientific_import_diagnostic.py",
+      "sha256": "2f7a50020c1cd34c9ceaafe956d547decc7cf315bcdb23ce861d928470dc0a71"
+    },
+    {
+      "bytes": 4905,
+      "path": "tests/test_experiment_sandbox_scientific_import_diagnostic.py",
+      "sha256": "9517b0f05fe9a3e502f3e2d16f0ef0c391e8e2395720073f3ba892c8c18659af"
+    }
+  ],
+  "observed": {
+    "direct_datetime_succeeded": true,
+    "guest_fd_counts_sampled": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "guest_nofile_hard": [
+      256
+    ],
+    "guest_nofile_soft": [
+      256
+    ],
+    "interpretation_qualification": "Before/after guest counts do not exclude a transient guest FD peak. The exact host actor reaching its native limit has not been independently observed in these samples.",
+    "numpy_errno": 24,
+    "numpy_error": "[Errno 24] Too many open files: '/usr/local/lib/python3.12/site-packages/numpy/_core/multiarray.py'",
+    "numpy_import_succeeded": false
+  },
+  "primary_source": {
+    "commit": "760b80785dc53311d4c87bd2de167525a99709c1",
+    "files": [
+      {
+        "bytes": 32103,
+        "git_blob_sha1": "ad2c8046d6b68cc752f1f68aa5c08ce5a491c438",
+        "path": "runsc/config/flags.go",
+        "reviewed_lines": [
+          154,
+          155
+        ],
+        "url": "https://github.com/google/gvisor/blob/760b80785dc53311d4c87bd2de167525a99709c1/runsc/config/flags.go"
+      },
+      {
+        "bytes": 21890,
+        "git_blob_sha1": "9caee7f7598fd2f7411d16094e4c30db376d672b",
+        "path": "runsc/cmd/gofer.go",
+        "reviewed_lines": [
+          331,
+          346
+        ],
+        "url": "https://github.com/google/gvisor/blob/760b80785dc53311d4c87bd2de167525a99709c1/runsc/cmd/gofer.go"
+      },
+      {
+        "bytes": 35176,
+        "git_blob_sha1": "6dae72fd036ed1be8894fbbc0bd9578c17823213",
+        "path": "runsc/cmd/sentry/sentrycmd/boot.go",
+        "reviewed_lines": [
+          630,
+          648
+        ],
+        "url": "https://github.com/google/gvisor/blob/760b80785dc53311d4c87bd2de167525a99709c1/runsc/cmd/sentry/sentrycmd/boot.go"
+      },
+      {
+        "bytes": 4555,
+        "git_blob_sha1": "084fada343dd6cffb9b667c19bd2de8f2e6694a8",
+        "path": "runsc/boot/limits.go",
+        "reviewed_lines": [
+          84,
+          108,
+          119,
+          137
+        ],
+        "url": "https://github.com/google/gvisor/blob/760b80785dc53311d4c87bd2de167525a99709c1/runsc/boot/limits.go"
+      },
+      {
+        "bytes": 69112,
+        "git_blob_sha1": "54f7babed7277bc6be8731db07983bdafc4f4358",
+        "path": "runsc/boot/vfs.go",
+        "reviewed_lines": [
+          601,
+          602
+        ],
+        "url": "https://github.com/google/gvisor/blob/760b80785dc53311d4c87bd2de167525a99709c1/runsc/boot/vfs.go"
+      },
+      {
+        "bytes": 87446,
+        "git_blob_sha1": "e0af1e538b3f37e231e1576c8bdb80203a1d1615",
+        "path": "pkg/sentry/fsimpl/gofer/gofer.go",
+        "reviewed_lines": [
+          117,
+          170,
+          179,
+          531,
+          651,
+          655,
+          1755,
+          1890
+        ],
+        "url": "https://github.com/google/gvisor/blob/760b80785dc53311d4c87bd2de167525a99709c1/pkg/sentry/fsimpl/gofer/gofer.go"
+      },
+      {
+        "bytes": 26522,
+        "git_blob_sha1": "459cdd09a76e5bd1f4bda078139b6376e4644763",
+        "path": "pkg/sentry/fsimpl/gofer/lisafs_inode.go",
+        "reviewed_lines": [
+          340,
+          358
+        ],
+        "url": "https://github.com/google/gvisor/blob/760b80785dc53311d4c87bd2de167525a99709c1/pkg/sentry/fsimpl/gofer/lisafs_inode.go"
+      },
+      {
+        "bytes": 15211,
+        "git_blob_sha1": "4e2dc778d43cf91e6e942204aa64e14b426ab1df",
+        "path": "pkg/lisafs/client.go",
+        "reviewed_lines": [
+          31,
+          33,
+          283,
+          316
+        ],
+        "url": "https://github.com/google/gvisor/blob/760b80785dc53311d4c87bd2de167525a99709c1/pkg/lisafs/client.go"
+      }
+    ],
+    "method": "Official GitHub connector fetched exact raw commit paths and recursive Git tree; raw content lengths matched tree entries. Git blob identifiers below come from that immutable commit tree.",
+    "repository": "google/gvisor",
+    "tree_truncated": false
+  },
+  "proposed_amendment": {
+    "alternatives": {
+      "1024": "Reasonable candidate only with measured capacity or separately tuned cache; not established sufficient by these sources.",
+      "dcache": "Supported explicit finite global cache (for example64 or128) can later reduce unused-dentry pressure, but changes cache behavior and should be separately measured. It cannot replace the native hard FD cap.",
+      "unlimited": "Not proposed."
+    },
+    "candidate_only": true,
+    "dcache": "unchanged default -1 for the first single-variable differential",
+    "guest_oci_nofile_hard": 256,
+    "guest_oci_nofile_soft": 256,
+    "native_fdlimit": 4096,
+    "preserved": [
+      "Image digest and normalized rootfs identity",
+      "Trusted init bytes and guest privilege policy",
+      "Guest RLIMIT_NOFILE256",
+      "Guest and outer/inner CPU, memory, swap, PID, wall, input/output/scratch byte and inode limits",
+      "Network and syscall isolation",
+      "Immutable prior failure receipts",
+      "No C22 release, production dispatch or scientific approval"
+    ],
+    "rationale": "4096 is a finite bounded native allowance with headroom above1000-entry default per-mount caches, remote/control/mmap descriptor amplification and batched closes.1024 is closer to the cache count and therefore a less robust candidate without also reducing the cache. The exact value requires actual execution, not a source-derived sufficiency claim."
+  },
+  "reviewer": "c23_science_materials",
+  "scope": "Read-only primary-source and retained-diagnostic review. No code changes, native execution, cloud action or numerical acceptance in this review.",
+  "source_findings": [
+    "--fdlimit is a native host descriptor limit applied separately to Sentry and gofer; both Cur and Max are set to the requested finite value after re-exec. It is not the guest descriptor limit.",
+    "Both native setters warn rather than abort on EPERM. Therefore command-line intent does not establish that the requested native hard limit was installed; collect /proc/<bound native pid>/limits while that actor is alive.",
+    "Guest defaults consider host RLIMIT_NOFILE, then createLimitSet explicitly overwrites defaults from OCI process.rlimits. Keeping OCI RLIMIT_NOFILE soft=hard256 preserves the guest limit when the host limit changes.",
+    "The default --dcache=-1 uses per-mount gofer caches; the default per-mount maximum is1000 cached dentries. Nonnegative --dcache selects one global gofer dentry cache initialized during mount setup.",
+    "Cache tuning is coarse, not an absolute native FD ceiling: referenced and watch-pinned dentries may not be evictable; read/write/mmap/control descriptors and other runtime descriptors exist in addition to guest-visible descriptors.",
+    "lisafs inode destruction may defer remote closes; Client.CloseFD batches up to100 queued descriptors before flushing. This adds transient native descriptor pressure beyond live guest descriptors."
+  ],
+  "version": "c23-native-fd-limit-source-review-v1"
+}

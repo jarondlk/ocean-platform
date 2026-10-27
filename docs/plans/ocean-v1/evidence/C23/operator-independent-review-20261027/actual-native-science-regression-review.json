@@ -1,0 +1,1102 @@
+{
+  "accepted_observations": [
+    "All651 exported regular-file hashes and both exact tar member sets match their immutable manifests. All90 source07 archive/current source paths match, including runtime36eb9393, profile-v6de9cd227 and sealed init1c808a83.",
+    "Each of the seven current cases has actual native Sentry and Gofer soft=hard4096 retained in enforcement_verified before start_intent/started. Role-specific pinned executable hashes, positive auxiliary classification, proc parent/start/cgroup fields and unchanged exact cgroup identities correlate with whole-group cleanup.",
+    "The actual empty-cmdline systrap child remains separate from the one core Sentry, with the same executable/cgroup, direct Sentry parent and no earlier start. FD-parking/proc-umounter helpers retain their separate observed1024/1048576 values and explicit no4096-enforcement claim.",
+    "The scientific diagnostic imports NumPy2.5.4 successfully after direct datetime probes, with directly sampled guest soft/hard RLIMIT_NOFILE256 throughout. Every current profile also specifies guest256 and uses the same immutable sealed wrapper.",
+    "Both unchanged NumPy-first numerical fixture programs complete their pandas/Arrow/Parquet exact-int64 roundtrip, SciPy t-test and statsmodels OLS assertions. Their five finite scalar results independently match at relative/absolute1e-12; int64 maximum9223372036854775807 remains an exact integer.",
+    "The actual Matplotlib/Pillow raster output independently parses as64x64 noninterlaced8-bit RGBA PNG,1751bytes, with valid chunk CRCs, exact bounded decompressed length, valid filter bytes and no ancillary chunks.",
+    "The representative namespace case retains raw EPERM1 for21 namespace/mount/setns denial probes and ENOSYS38 for three clone3 variants, with guestUID65532/capabilities0 and ordinary fork/subprocess/thread compatibility.",
+    "The representative containment case reports lo-only networking/no IPv4 routes plus external/metadata/host-socket/write denial, absent pip and denied access to the sealed control-frame FD. Bound host-positive/no-egress metadata provenance is retained separately.",
+    "Cancellation is observed after start, returns cancelled/sandbox_cancelled, publishes no outputs or sealed completion frame, and retains native whole-cgroup populated0/delete acknowledgement plus reconciled rootfs unmount. Namespace/containment completed frames additionally report writers_reaped=true.",
+    "Both source06 scientific failures remain uncertain, blocked before start, without outputs/frame, and with retained cleanup evidence. They have not been relabelled as passing."
+  ],
+  "actual_review_commands": [
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-"
+      ],
+      "exit_code": 0,
+      "procedure": "Read and hash448 exported regular files and both scientific/source archive hashes; verify90 source archive members and current files; verify each passing case11-event SQLite chain/result read-only, full closed metadata/code/staged-input hashes, before-start cgroup/native enforcement, raw control frame decoding, retained files/logs/output manifest, cleanup and raw cgroup metrics; independently compare numerical scalar values and parse/CRC/decompress the bounded PNG. Preserve both source06 failed attempts.",
+      "result_sha256": "8fcc02042d3367f060bc1010e5473d22a948586bc2a247c17955970865932770",
+      "transport": "inline trusted Python audit via exec_command stdin"
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "/private/tmp/c23-native-regression-independent-audit-20261027.py"
+      ],
+      "exit_code": 0,
+      "result_sha256": "ad8c9ed33f2d971d1154c22f8b85accdd25dfbaf67ca106f3fe490f0597bb489",
+      "script_sha256": "e7441ca2c6adc569f588d87c1e467c3beace039d571912780a916ad999a4dbc0",
+      "script_utf8": "\"\"\"Trusted read-only receipt audit; never executes stored analysis programs.\"\"\"\nfrom pathlib import Path\nimport base64\nimport hashlib\nimport json\nimport sqlite3\nimport stat\nimport sys\n\nROOT = Path('/Users/jaronchai/Documents/GitHub/provenance-eco-rag')\nSESSION = ROOT / 'docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248'\nEXPORT = SESSION / 'native-regression-attempts-01'\n\n\ndef sha(raw):\n    return hashlib.sha256(raw).hexdigest()\n\n\ndef canonical(value):\n    return json.dumps(value, ensure_ascii=False, allow_nan=False,\n                      sort_keys=True, separators=(',', ':')).encode()\n\n\ndef load(path):\n    return json.loads(path.read_bytes())\n\n\ndef pin(path):\n    raw = path.read_bytes()\n    return {'path': str(path.relative_to(ROOT)), 'sha256': sha(raw), 'bytes': len(raw)}\n\n\nsource_path = SESSION / 'operator-source-20261027-07.json'\nsource = load(source_path)\nfor name, digest in source['source_files'].items():\n    assert sha((ROOT / name).read_bytes()) == digest, name\nsys.path.insert(0, str(ROOT))\nfrom sandbox.experiment.trusted_init import decode_frame\n\nmanifest_path = SESSION / 'native-regression-export01-manifest.json'\nmanifest = load(manifest_path)\nassert len(manifest['files']) == 203\nfor name, digest in manifest['files'].items():\n    path = EXPORT / name\n    assert not Path(name).is_absolute() and '..' not in Path(name).parts\n    assert stat.S_ISREG(path.lstat().st_mode) and not path.is_symlink()\n    assert path.resolve().is_relative_to(EXPORT.resolve())\n    assert sha(path.read_bytes()) == digest, name\nassert {str(p.relative_to(EXPORT)) for p in EXPORT.rglob('*') if p.is_file()} == set(manifest['files'])\narchive = Path('/private/tmp/c23-native-regression-20261027-01-evidence.tar')\nassert sha(archive.read_bytes()) == manifest['archive_sha256']\nreview = {'manifest': pin(manifest_path), 'archive_sha256': manifest['archive_sha256'],\n          'files_verified': 203, 'cases': {}}\nfor case in ('namespaces', 'containment', 'cancel'):\n    directory = EXPORT / 'operator-acceptance' / (case + '-native-20261027-01')\n    document = load(directory / 'attempt.json')\n    result = document['adapter_result']\n    profile = load(directory / 'profile.json')\n    fixture = load(directory / 'operator-fixture.json')\n    job = result['job_id']\n    worker = directory / 'worker' / job\n    assert document['case'] == case and document['evaluation']['case_assertions_passed'] is True\n    assert all(document['evaluation']['checks'].values())\n    assert 'operator_error' not in document and 'raw_observation_retention_error' not in document\n    for value in (document, result):\n        assert value['dispatch_eligible'] is False and value['reservation_released'] is False\n        assert value['scientific_approval'] == 'not_independently_verified'\n    assert document['C23_complete'] is False and document['retained_C22_real_approval'] is False\n    assert document['real_C22_reservation_consumption_verified'] is False\n    assert result['runtime_acceptance_verified'] is False and result['execution_started'] is True\n    assert result['adapter_source_sha256'] == source['source_files']['orchestration/experiment_sandbox/linux_runtime.py']\n    assert result['trusted_init_sha256'] == source['source_files']['sandbox/experiment/trusted_init.py']\n    assert sha(canonical(profile)) == result['profile_sha256']\n    assert profile['version'] == 'c23-oci-execution-preparation-v6'\n    assert sha(canonical(profile['runtime_preparation'])) == result['runtime_sha256']\n    assert profile['requirements']['native_nofile_limit'] == 4096\n    assert profile['requirements']['analysis_nofile_limit'] == 256\n    assert next(v for v in profile['config']['process']['rlimits'] if v['type'] == 'RLIMIT_NOFILE') == {\n        'type': 'RLIMIT_NOFILE', 'soft': 256, 'hard': 256}\n    metadata = fixture['metadata']\n    assert sha(canonical(metadata)) == fixture['operator_envelope_sha256'] == result['envelope_sha256']\n    assert job == 'c23-' + sha(canonical({'site': metadata['site_id'],\n        'reservation': metadata['reservation_id'], 'envelope': result['envelope_sha256']}))[:48]\n    assert sha((directory / 'operator-fixture.json').read_bytes()) == document['operator_fixture_sha256']\n    assert (worker / 'inputs/analysis.py').read_bytes() == metadata['proposal']['python_code'].encode()\n    assert sha(metadata['proposal']['python_code'].encode()) == result['approved_hashes']['code_sha256']\n    for name, encoded in fixture['files_base64'].items():\n        assert (worker / 'inputs' / name).read_bytes() == base64.b64decode(encoded, validate=True)\n    for name, digest in document['evidence_files'].items():\n        assert sha((directory / name).read_bytes()) == digest\n    connection = sqlite3.connect('file:' + str((directory / 'journal/journal.sqlite3').resolve())\n                                + '?mode=ro&immutable=1', uri=True)\n    connection.row_factory = sqlite3.Row\n    assert connection.execute('PRAGMA integrity_check').fetchone()[0] == 'ok'\n    events = [dict(row) for row in connection.execute(\n        'SELECT * FROM events WHERE job_id=? ORDER BY sequence', (job,))]\n    previous, clock = '0' * 64, -1\n    for index, event in enumerate(events, 1):\n        assert event['sequence'] == index and event['previous_sha256'] == previous\n        assert event['epoch'] == 1 and event['envelope_sha256'] == result['envelope_sha256']\n        assert event['host_boot_id'] == result['termination_proof']['host_boot_id']\n        assert event['monotonic_ns'] >= clock\n        assert sha(canonical({k: v for k, v in event.items() if k != 'sha256'})) == event['sha256']\n        previous, clock = event['sha256'], event['monotonic_ns']\n        event['payload'] = json.loads(event['payload_json'])\n    row = dict(connection.execute('SELECT * FROM results WHERE job_id=?', (job,)).fetchone())\n    head = dict(connection.execute('SELECT * FROM jobs WHERE job_id=?', (job,)).fetchone())\n    connection.close()\n    assert head['head_sha256'] == previous and head['sequence'] == len(events)\n    assert row['event_sha256'] == previous and row['event_sequence'] == len(events)\n    assert sha(row['document_json'].encode()) == row['sha256']\n    assert json.loads(row['document_json'])['record'] == result\n    assert events[-1]['kind'] == 'finished' and events[-1]['payload'] == {'result_sha256': row['sha256']}\n    kinds = [event['kind'] for event in events]\n    assert kinds[:8] == ['claimed', 'prepared', 'cgroup_intent', 'create_intent', 'watchdog_armed',\n                         'enforcement_verified', 'start_intent', 'started']\n    enforcement = events[5]['payload']['readback']\n    native = enforcement['native_processes']\n    assert len(canonical(events[5]['payload'])) <= 48 * 1024\n    assert native['version'] == 'c23-native-nofile-readback-v2'\n    assert native['native_nofile_limit'] == 4096 and native['analysis_nofile_limit'] == 256\n    for group in (job, 'sandbox'):\n        assert enforcement[group] == {k: str(v) for k, v in profile['requirements']['readback_before_start'].items()}\n    proof = result['termination_proof']\n    assert events[3]['payload']['cgroup_identity'] == native['inventory'][job]['identity'] == [\n        proof['cgroup_device'], proof['cgroup_inode']]\n    roles = native['roles']\n    assert set(roles) == {'sentry', 'gofer'}\n    for role, observed in roles.items():\n        assert observed['nofile'] == {'soft': 4096, 'hard': 4096}\n        assert next(line for line in observed['limits'].splitlines()\n                    if line.startswith('Max open files')).split()[3:5] == ['4096', '4096']\n        relative = 'gvisor-bin/gvisor_sentry' if role == 'sentry' else 'runsc'\n        assert observed['executable_relative_path'] == relative\n        assert observed['executable_sha256'] == profile['runtime_preparation']['files'][relative]\n        assert observed['argv'][0] == ('runsc-sandbox' if role == 'sentry' else 'runsc-gofer')\n        assert observed['argv'][-1] == job and observed['cmdline_empty'] is False\n    sentry = roles['sentry']\n    classes = {v['classification']: v for v in native['auxiliary_processes']}\n    assert len(native['auxiliary_processes']) == 3\n    assert set(classes) == {'authenticated-systrap-child', 'pinned-fd-parking-helper',\n                            'pinned-proc-umounter-helper'}\n    for observed in [*roles.values(), *native['auxiliary_processes']]:\n        for field in ('stat_before', 'stat_after'):\n            text = observed[field]\n            assert text.startswith(str(observed['pid']) + ' (')\n            fields = text[text.rfind(') ') + 2:].split()\n            assert int(fields[1]) == observed['parent_pid']\n            assert int(fields[19]) == observed['start_time_ticks']\n        assert observed['executable_sha256'] == profile['runtime_preparation']['files'][observed['executable_relative_path']]\n    child = classes['authenticated-systrap-child']\n    assert child['parent_pid'] == sentry['pid'] and child['cgroup'] == sentry['cgroup']\n    assert child['start_time_ticks'] >= sentry['start_time_ticks']\n    assert child['executable_identity'] == sentry['executable_identity']\n    assert child['argv'] in ([], sentry['argv']) and child['nofile'] == {'soft': 4096, 'hard': 4096}\n    for name in ('pinned-fd-parking-helper', 'pinned-proc-umounter-helper'):\n        observed = classes[name]\n        assert observed['native_nofile_enforced_by_this_gate'] is False and 'nofile' not in observed\n        assert next(line for line in observed['limits'].splitlines()\n                    if line.startswith('Max open files')).split()[3:5] == ['1024', '1048576']\n    assert proof['whole_host_subtree_empty'] is True and proof['populated'] == 0\n    assert proof['runtime_delete_acknowledged'] is True\n    assert document['metrics']['available'] is True and document['metrics']['cgroup.events']['populated'] == 0\n    assert [document['metrics']['device'], document['metrics']['inode']] == native['inventory'][job]['identity']\n    cleanup = document['cleanup']\n    assert cleanup['cgroup_empty'] is True and cleanup['rootfs_unmounted'] is True\n    assert cleanup['mount_reconciliation']['after']['entry'] is None\n    assert cleanup['mount_reconciliation']['exit_code'] == 0\n    for name, raw in document['metrics']['raw_cgroup_files'].items():\n        assert (directory / ('cgroup-' + name + '.raw.txt')).read_text() == raw\n    commands = [load(directory / f'command-{index}.json') for index in range(5)]\n    assert [next(v for v in item['argv'][1:] if not v.startswith('--')) for item in commands] == [\n        'create', 'state', 'start', 'wait', 'delete']\n    assert [item['returncode'] for item in commands] == ([0, 0, 0, -9, 0] if case == 'cancel' else [0] * 5)\n    record = {'attempt': pin(directory / 'attempt.json'), 'job_id': job,\n        'profile_sha256': result['profile_sha256'], 'envelope_sha256': result['envelope_sha256'],\n        'state': result['state'], 'journal_events': len(events), 'journal_head_sha256': previous,\n        'native_core_limits': {k: v['nofile'] for k, v in roles.items()},\n        'auxiliary_classes': sorted(classes), 'guest_oci_nofile': 256,\n        'whole_cgroup_cleanup_and_unmount': True,\n        'elapsed_adapter_seconds': document['elapsed_adapter_seconds']}\n    if case == 'cancel':\n        assert kinds[8:] == ['finished']\n        assert result['state'] == 'cancelled' and result['reason'] == 'sandbox_cancelled'\n        assert result['frame_sha256'] is None and result['outputs_manifest_sha256'] is None\n        assert result['analysis_exit_code'] is None and not (worker / 'retained').exists()\n        record['no_outputs_published'] = True\n        record['qualification'] = 'Host cancellation/whole-cgroup proof; no sealed guest completion frame or writers-reaped assertion.'\n    else:\n        assert kinds[8:] == ['cleanup_intent', 'termination_verified', 'finished']\n        assert result['state'] == 'completed' and result['analysis_exit_code'] == 0\n        frame = (directory / 'command-0.stdout.bin').read_bytes()\n        assert sha(frame) == result['frame_sha256'] == events[9]['payload']['frame_sha256']\n        init, decoded = decode_frame(frame, policy=profile['trusted_init']['policy'])\n        assert init['writers_reaped'] is True and init['outcome'] == 'completed'\n        for name, raw in decoded['files'].items():\n            assert (worker / 'retained/files' / name).read_bytes() == raw\n        for name, raw in decoded['logs'].items():\n            assert (worker / 'retained/logs' / name).read_bytes() == raw\n        raw = (worker / 'retained/manifest.json').read_bytes()\n        assert sha(raw) == result['outputs_manifest_sha256'] and json.loads(raw) == document['validated_manifest']\n        for item in document['validated_manifest']['files']:\n            assert sha(decoded['files'][item['name']]) == item['sha256']\n        table = json.loads(decoded['files']['summary.json'])\n        assert table == document['summary_table']\n        probes = dict(table['rows'])\n        if case == 'namespaces':\n            assert probes['uid'] == 65532 and probes['capabilities_zero'] is True\n            assert all(probes[name] is True for name in ('ordinary_fork', 'ordinary_subprocess', 'ordinary_thread'))\n            denied = {k: v for k, v in probes.items() if k.startswith(('unshare_', 'clone_', 'setns_', 'mount_', 'umount'))}\n            assert len(denied) == 21 and set(denied.values()) == {1}\n            assert {k: v for k, v in probes.items() if k.startswith('clone3_')} == {\n                'clone3_newuser': 38, 'clone3_invalid_pointer': 38, 'clone3_zero_size': 38}\n        else:\n            assert all(probes[name] is True for name in ('external_network_denied', 'metadata_denied',\n                'host_file_socket_denied', 'forbidden_writes_denied', 'pip_absent', 'trusted_frame_fd_denied'))\n            assert probes['guest_interfaces'] == 'lo' and probes['ipv4_route_rows'] == 0\n            controls = document['network_controls']\n            assert controls['current_metadata_external_ip_absent'] is True\n            assert controls['retained_router_inventory_no_nat'] is True\n            assert document['network_controls_source_sha256'] == {\n                'host_positive': '22130d14a7c720b4ce3be083821a60489fd680d77d53c0aaf8f7dc9c3525b995',\n                'isolation': 'bd5870180d6bfa7d1ed4c65ce82bafe0f7e6533846a5bfe0831c0870fb956ce3'}\n            record['network_causality_qualification'] = controls['qualification']\n        record['summary_table'] = table\n        record['frame_sha256'] = sha(frame)\n    review['cases'][case] = record\nfor name, digest in source['source_files'].items():\n    assert sha((ROOT / name).read_bytes()) == digest, name\nreview['source_files_verified_unchanged_at_completion'] = 90\noutput = Path('/private/tmp/c23-native-regression-independent-audit-20261027.json')\nwith output.open('x') as stream:\n    json.dump(review, stream, indent=2, sort_keys=True)\n    stream.write('\\n')\nprint(json.dumps({'output': str(output), 'sha256': sha(output.read_bytes()), 'files_verified': 203,\n                  'cases': {key: value['state'] for key, value in review['cases'].items()}}, indent=2))\n"
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-"
+      ],
+      "exit_code": 0,
+      "procedure": "Verify the exact448/203 regular tar member-name sets and all member-content SHA256 values against both raw export manifests; no archive extraction or stored-program execution.",
+      "transport": "inline trusted tarfile/hashlib audit via exec_command stdin"
+    }
+  ],
+  "additional_inputs": [
+    {
+      "bytes": 5898,
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-science-batch-02.command.sh",
+      "sha256": "662d721536f1743375430cd04fc4181b941c3bab604c921627472867f31c459a"
+    },
+    {
+      "bytes": 2704,
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-science-batch-02.stdout.txt",
+      "sha256": "8d53f0bf5cb54d799c02b715fa32a4de1e0478e232c2c237dc3fcf170109f4b3"
+    }
+  ],
+  "archive_member_audit": [
+    {
+      "archive": "c23-native-science-20261027-02-evidence.tar",
+      "archive_sha256": "c5ab1d2e5ace9aa35181da8ffe2caa4ff3f6704ae3454eaf42f4e190947ab307",
+      "manifest": "native-science-export02-manifest.json",
+      "regular_members_verified": 448
+    },
+    {
+      "archive": "c23-native-regression-20261027-01-evidence.tar",
+      "archive_sha256": "398e812ffb5a42e501efd61ebe0ac0739e7dfcfa9215dd7065a37b5b9fb36101",
+      "manifest": "native-regression-export01-manifest.json",
+      "regular_members_verified": 203
+    }
+  ],
+  "authority": {
+    "C23_complete": false,
+    "actual_authenticated_termination_issued": false,
+    "operator_synthetic_observations_reviewed": true,
+    "real_C22_reservation_consumption_verified": false,
+    "reservation_released": false,
+    "runtime_acceptance_complete": false,
+    "scientific_approval": "not_independently_verified",
+    "serving_dispatch_enabled": false
+  },
+  "created_at": "2026-10-27T03:32:38.123599+00:00",
+  "limitations": [
+    "This audit authenticates retained hashes/structure against source-bound worker observations; it is not hardware/cloud attestation or an authenticated physical termination packet, and it does not independently rebuild the OCI image or rematerialize the rootfs.",
+    "Native4096 is observed on the two core actors and the classified systrap child before start, not a universal per-process limit for all native helpers. Continuous FD high-water usage and the exact native actor that previously hit256 were not measured here; the earlier host-pressure diagnosis remains source-supported inference.",
+    "Guest256 is directly sampled by the diagnostic. The other cases bind the same explicit OCI/sealed-wrapper limit; this review does not claim independent continuous in-guest monitoring for every workload.",
+    "Network external/metadata failure alone cannot isolate gVisor causality because the worker also intentionally lacks external egress/NAT. lo-only guest interfaces/routes and host-access denials provide separate containment observations; trusted cloud inventory is a provenance snapshot, not continuous attestation.",
+    "This fresh namespace regression probes denials in its main guest process. Ordinary fork/subprocess/thread positives are not themselves repeated post-fork/post-exec denial proofs; the earlier separately retained namespace-inheritance case remains separate evidence.",
+    "The numerical checks demonstrate this bounded synthetic seeded fixture and its repeated tolerance agreement. They do not establish arbitrary workload correctness, real-data validation, scientific review/approval, publication readiness, or production performance.",
+    "The cancellation outcome has host cgroup termination evidence and no outputs; it intentionally has no sealed guest completion/writers-reaped frame. No capacity release is inferred from that absence or from any packet signature.",
+    "Earlier PID-exhaustion graceful-behavior failure, other external acceptance gates, real C22 reservation/fence/approval consumption and release transaction integration, real authenticated issuer integration and later components remain outside this scoped audit. No fullC23 completion is inferred.",
+    "Review code used readonly/immutable SQLite connections and standard bounded data/frame/PNG parsers; it performed no cloud operations, runtime launches, generated analysis execution, key issuance or database writes. VM stopping was handled by the parent and was not independently checked here."
+  ],
+  "raw_input_files_verified": 651,
+  "raw_input_manifests": [
+    {
+      "bytes": 77366,
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-science-export02-manifest.json",
+      "sha256": "5421b0b08b7efab64f0d436dc75db5622d803e8f3d208a11c3ab844ac023275b"
+    },
+    {
+      "bytes": 50531,
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-regression-export01-manifest.json",
+      "sha256": "1869006f199aac6a96f07ad7cfd8cc7ccfff9c0b769edb977b226b8303c5824c"
+    }
+  ],
+  "representative_regression_receipt_audit": {
+    "archive_sha256": "398e812ffb5a42e501efd61ebe0ac0739e7dfcfa9215dd7065a37b5b9fb36101",
+    "cases": {
+      "cancel": {
+        "attempt": {
+          "bytes": 17915,
+          "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-regression-attempts-01/operator-acceptance/cancel-native-20261027-01/attempt.json",
+          "sha256": "20121b986082cf1f61a9e85f241432b9019e803427a50223ac36fa586f3df9c2"
+        },
+        "auxiliary_classes": [
+          "authenticated-systrap-child",
+          "pinned-fd-parking-helper",
+          "pinned-proc-umounter-helper"
+        ],
+        "elapsed_adapter_seconds": 5.493845720000081,
+        "envelope_sha256": "f7c034af1c21797e7820230b30349c44ae42d95b01fa48bf74e8c73f2510cab6",
+        "guest_oci_nofile": 256,
+        "job_id": "c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378",
+        "journal_events": 9,
+        "journal_head_sha256": "ab1de739a59aaad655fdd6543d1bd1f9e1086073a3497471a4dfcc5159875cff",
+        "native_core_limits": {
+          "gofer": {
+            "hard": 4096,
+            "soft": 4096
+          },
+          "sentry": {
+            "hard": 4096,
+            "soft": 4096
+          }
+        },
+        "no_outputs_published": true,
+        "profile_sha256": "bed16d49573505d99d0925fa1c3016cb364fd5507ec7fbd13cbd445bc7848226",
+        "qualification": "Host cancellation/whole-cgroup proof; no sealed guest completion frame or writers-reaped assertion.",
+        "state": "cancelled",
+        "whole_cgroup_cleanup_and_unmount": true
+      },
+      "containment": {
+        "attempt": {
+          "bytes": 19318,
+          "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-regression-attempts-01/operator-acceptance/containment-native-20261027-01/attempt.json",
+          "sha256": "63f5fcf5f64ecd46c4153e98137e9a6eb6d7a394839aa49bcad176ea1e1d26b1"
+        },
+        "auxiliary_classes": [
+          "authenticated-systrap-child",
+          "pinned-fd-parking-helper",
+          "pinned-proc-umounter-helper"
+        ],
+        "elapsed_adapter_seconds": 5.7108921300000475,
+        "envelope_sha256": "73143a7357b1e22fc9e575a28fd9acdfa3cd35ba2edaff2ead35fa9ec28ad64b",
+        "frame_sha256": "319335c2986aabf11cc4406600077b6e29c9114cd24516971431930f12757b7c",
+        "guest_oci_nofile": 256,
+        "job_id": "c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96",
+        "journal_events": 11,
+        "journal_head_sha256": "63f66a7d84b97588399d135c46cced19de1fe4378463bc65418996c8ead60789",
+        "native_core_limits": {
+          "gofer": {
+            "hard": 4096,
+            "soft": 4096
+          },
+          "sentry": {
+            "hard": 4096,
+            "soft": 4096
+          }
+        },
+        "network_causality_qualification": "No-NAT is the target-bound complete trusted operator inventory snapshot; recency/completeness is operator provenance, the worker timestamp is sealing time. Live metadata rechecks only NIC0 and the exact terminal external-IP with verified HTTP200/Metadata-Flavor and empty body; a known empty config folder may remain. This is not continuous cloud-state attestation.",
+        "profile_sha256": "15b7b99bb9823dc934729f5fcb387e880f0fa12589e05f967f8b191717a8f3a4",
+        "state": "completed",
+        "summary_table": {
+          "columns": [
+            "probe",
+            "value"
+          ],
+          "rows": [
+            [
+              "external_network_denied",
+              true
+            ],
+            [
+              "metadata_denied",
+              true
+            ],
+            [
+              "host_file_socket_denied",
+              true
+            ],
+            [
+              "forbidden_writes_denied",
+              true
+            ],
+            [
+              "pip_absent",
+              true
+            ],
+            [
+              "trusted_frame_fd_denied",
+              true
+            ],
+            [
+              "guest_interfaces",
+              "lo"
+            ],
+            [
+              "ipv4_route_rows",
+              0
+            ],
+            [
+              "ipv6_route_readback",
+              "present"
+            ]
+          ]
+        },
+        "whole_cgroup_cleanup_and_unmount": true
+      },
+      "namespaces": {
+        "attempt": {
+          "bytes": 19697,
+          "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-regression-attempts-01/operator-acceptance/namespaces-native-20261027-01/attempt.json",
+          "sha256": "7978a2cf789da6ffab4e31c3c4538fc475de8bb1fda59cbdcc954cda95e0fcdb"
+        },
+        "auxiliary_classes": [
+          "authenticated-systrap-child",
+          "pinned-fd-parking-helper",
+          "pinned-proc-umounter-helper"
+        ],
+        "elapsed_adapter_seconds": 5.723962958999891,
+        "envelope_sha256": "f448c231c3805f78e46f7d31d66156dc2be4ffc875d62f013fad193d17be4eb1",
+        "frame_sha256": "feb6ba05407fcc4d4424fcd684d72ccc1022fd0a686ee601cf57299acf29e4b9",
+        "guest_oci_nofile": 256,
+        "job_id": "c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0",
+        "journal_events": 11,
+        "journal_head_sha256": "ce5fe48833163ca4ef7b5574262f2dbeadb546b162a598eecaba4fdff1bb40e5",
+        "native_core_limits": {
+          "gofer": {
+            "hard": 4096,
+            "soft": 4096
+          },
+          "sentry": {
+            "hard": 4096,
+            "soft": 4096
+          }
+        },
+        "profile_sha256": "413fbeee1390a93a340cd520dad8afbe1cbbaf050d89fdde8b51e991c5119842",
+        "state": "completed",
+        "summary_table": {
+          "columns": [
+            "probe",
+            "value"
+          ],
+          "rows": [
+            [
+              "unshare_0x0",
+              1
+            ],
+            [
+              "unshare_0x20000",
+              1
+            ],
+            [
+              "unshare_0x2000000",
+              1
+            ],
+            [
+              "unshare_0x4000000",
+              1
+            ],
+            [
+              "unshare_0x8000000",
+              1
+            ],
+            [
+              "unshare_0x10000000",
+              1
+            ],
+            [
+              "unshare_0x20000000",
+              1
+            ],
+            [
+              "unshare_0x40000000",
+              1
+            ],
+            [
+              "unshare_0x80",
+              1
+            ],
+            [
+              "setns_invalid_fd",
+              1
+            ],
+            [
+              "clone_0x20000",
+              1
+            ],
+            [
+              "clone_0x2000000",
+              1
+            ],
+            [
+              "clone_0x4000000",
+              1
+            ],
+            [
+              "clone_0x8000000",
+              1
+            ],
+            [
+              "clone_0x10000000",
+              1
+            ],
+            [
+              "clone_0x20000000",
+              1
+            ],
+            [
+              "clone_0x40000000",
+              1
+            ],
+            [
+              "clone3_newuser",
+              38
+            ],
+            [
+              "clone3_invalid_pointer",
+              38
+            ],
+            [
+              "clone3_zero_size",
+              38
+            ],
+            [
+              "mount_tmpfs",
+              1
+            ],
+            [
+              "mount_bind",
+              1
+            ],
+            [
+              "mount_remount",
+              1
+            ],
+            [
+              "umount2",
+              1
+            ],
+            [
+              "uid",
+              65532
+            ],
+            [
+              "capabilities_zero",
+              true
+            ],
+            [
+              "ordinary_fork",
+              true
+            ],
+            [
+              "ordinary_subprocess",
+              true
+            ],
+            [
+              "ordinary_thread",
+              true
+            ]
+          ]
+        },
+        "whole_cgroup_cleanup_and_unmount": true
+      }
+    },
+    "files_verified": 203,
+    "manifest": {
+      "bytes": 50531,
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-regression-export01-manifest.json",
+      "sha256": "1869006f199aac6a96f07ad7cfd8cc7ccfff9c0b769edb977b226b8303c5824c"
+    },
+    "source_files_verified_unchanged_at_completion": 90
+  },
+  "review_development_note": {
+    "first_regression_script_exit_code": 1,
+    "prior_audit_script_sha256": "6c4deb651f04c11812a0c48a9f78fc4c224ed2be6a7735c82970b8e578013126",
+    "reason": "The reviewer initially treated network_controls_source_sha256 as one string. The actual retained schema is an exact dictionary of host_positive and isolation hashes. Corrected the audit assertion to require both exact pinned entries; no worker/source/test/receipt data was changed."
+  },
+  "reviewer": "c23_science_materials",
+  "scientific_receipt_audit": {
+    "archive_sha256": "c5ab1d2e5ace9aa35181da8ffe2caa4ff3f6704ae3454eaf42f4e190947ab307",
+    "export_files_verified": 448,
+    "export_manifest": {
+      "bytes": 77366,
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-science-export02-manifest.json",
+      "sha256": "5421b0b08b7efab64f0d436dc75db5622d803e8f3d208a11c3ab844ac023275b"
+    },
+    "independent_numerical_comparison": {
+      "absolute_tolerance": 1e-12,
+      "comparisons": {
+        "mean": true,
+        "ols_intercept": true,
+        "ols_slope": true,
+        "p_value": true,
+        "t_statistic": true
+      },
+      "configuration_and_material_bindings_equal": true,
+      "exact_int64": 9223372036854775807,
+      "relative_tolerance": 1e-12,
+      "result": {
+        "bytes": 1584,
+        "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-science-attempts-02/evidence/numerical-comparison-20261027-03.json",
+        "sha256": "b7eff55306c6767323bd82dafc4d22df787ce207e0e694ec883efade91d75a15"
+      }
+    },
+    "passed_cases": {
+      "numerics-a": {
+        "attempt": {
+          "bytes": 19220,
+          "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-science-attempts-02/operator-acceptance/numerics-a-20261027-03/attempt.json",
+          "sha256": "e3eb16dd346690e7877051be4da0d1cb09365e16ca8ad09981fbad27a7ec06e7"
+        },
+        "auxiliary_classes": [
+          "authenticated-systrap-child",
+          "pinned-fd-parking-helper",
+          "pinned-proc-umounter-helper"
+        ],
+        "enforcement_payload_bytes": 15820,
+        "envelope_sha256": "b5885b4fff2c861de7ff69a17a75f321cdaad8a57720fae4cfadde4418d87133",
+        "frame_sha256": "c2c6964197dcec6203fdf133476ad0cd756e1af7fd251aa5ce42920d7ff6ebf5",
+        "guest_oci_nofile": 256,
+        "job_id": "c23-12254eb13984aa33e57d9cbb1331463bb40bd59540995d75",
+        "journal_events": 11,
+        "journal_head_sha256": "f2a607cc971ff88e2c60f9332dab2da8431996941ea1a3bd745dfcee45e9c510",
+        "native_core_limits": {
+          "gofer": {
+            "hard": 4096,
+            "soft": 4096
+          },
+          "sentry": {
+            "hard": 4096,
+            "soft": 4096
+          }
+        },
+        "outputs_manifest_sha256": "0e28260f59a7b6ec506038a1fb57013dcd19aa52a964fa7ea55966e55fdce79c",
+        "profile_sha256": "5ed0f8281caadabfcbcccfdb845a17027576008e68f7b119f54110689000be61",
+        "summary_table": {
+          "columns": [
+            "probe",
+            "value"
+          ],
+          "rows": [
+            [
+              "mean",
+              -0.15568523586365254
+            ],
+            [
+              "t_statistic",
+              -0.8549902455420993
+            ],
+            [
+              "p_value",
+              0.39911633397802315
+            ],
+            [
+              "ols_intercept",
+              0.9999999999999998
+            ],
+            [
+              "ols_slope",
+              2.0000000000000004
+            ],
+            [
+              "exact_int64",
+              9223372036854775807
+            ]
+          ]
+        },
+        "whole_cgroup_cleanup_and_unmount": true
+      },
+      "numerics-b": {
+        "attempt": {
+          "bytes": 19218,
+          "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-science-attempts-02/operator-acceptance/numerics-b-20261027-03/attempt.json",
+          "sha256": "6811151740a74d9ae92e3cf15640e5e94a257b0b8d742801f2c1a9bfbdac2d5f"
+        },
+        "auxiliary_classes": [
+          "authenticated-systrap-child",
+          "pinned-fd-parking-helper",
+          "pinned-proc-umounter-helper"
+        ],
+        "enforcement_payload_bytes": 15823,
+        "envelope_sha256": "2326126edc5a7c94cc3d68a323429ed589433c1cec7837c30c6c98deb2989009",
+        "frame_sha256": "6b55f8b40352e965d161e0711c12d82563dd43e810f84a0aaefd75edf1740a93",
+        "guest_oci_nofile": 256,
+        "job_id": "c23-00a36574b3b4c03f4fea1576ad0061d2144abe73f0d0f40f",
+        "journal_events": 11,
+        "journal_head_sha256": "b9dc48b537134d955a6ecbe94756feed12e4b29f6fe30bb6d5d137c15c6b40e0",
+        "native_core_limits": {
+          "gofer": {
+            "hard": 4096,
+            "soft": 4096
+          },
+          "sentry": {
+            "hard": 4096,
+            "soft": 4096
+          }
+        },
+        "outputs_manifest_sha256": "0e28260f59a7b6ec506038a1fb57013dcd19aa52a964fa7ea55966e55fdce79c",
+        "profile_sha256": "e9f7d7be543bce486e5305bf505a32f07e3a9d2c834e8965a4cbbf27762d99a3",
+        "summary_table": {
+          "columns": [
+            "probe",
+            "value"
+          ],
+          "rows": [
+            [
+              "mean",
+              -0.15568523586365254
+            ],
+            [
+              "t_statistic",
+              -0.8549902455420993
+            ],
+            [
+              "p_value",
+              0.39911633397802315
+            ],
+            [
+              "ols_intercept",
+              0.9999999999999998
+            ],
+            [
+              "ols_slope",
+              2.0000000000000004
+            ],
+            [
+              "exact_int64",
+              9223372036854775807
+            ]
+          ]
+        },
+        "whole_cgroup_cleanup_and_unmount": true
+      },
+      "raster": {
+        "attempt": {
+          "bytes": 19258,
+          "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-science-attempts-02/operator-acceptance/raster-20261027-03/attempt.json",
+          "sha256": "56df5ecc4cbf694ebefd4f5c8901e3e1a662ee4398336b995a38c1e667931e70"
+        },
+        "auxiliary_classes": [
+          "authenticated-systrap-child",
+          "pinned-fd-parking-helper",
+          "pinned-proc-umounter-helper"
+        ],
+        "enforcement_payload_bytes": 15811,
+        "envelope_sha256": "dd7dbc759340b1748fab9fe0b776ca28d487885639657695f31c40b87132b7ad",
+        "frame_sha256": "6ad50c591810ea993c4665ae631e1016350f1da01fbe27ea058f767a52ea1fc9",
+        "guest_oci_nofile": 256,
+        "independent_png_readback": {
+          "ancillary_chunks": false,
+          "bit_depth": 8,
+          "bytes": 1751,
+          "channels": 4,
+          "height": 64,
+          "noninterlaced": true,
+          "sha256": "b6078d72a44ae2823d9ae0869153b49dc58326325443bb4db831aa25b631af50",
+          "width": 64
+        },
+        "job_id": "c23-69a01919584a4a3c07d38c9b253857c6d417e354aac1bf87",
+        "journal_events": 11,
+        "journal_head_sha256": "d806f3cdea1093b6f77481742d52b65afe3f0fa7c3e0b2ea296d7524fea06e10",
+        "native_core_limits": {
+          "gofer": {
+            "hard": 4096,
+            "soft": 4096
+          },
+          "sentry": {
+            "hard": 4096,
+            "soft": 4096
+          }
+        },
+        "outputs_manifest_sha256": "797ecc50eb155e08b9050e5fdb00f206cfee0360f1b831cda432e5705ca45c27",
+        "profile_sha256": "ab3e962c93e730d5ec21c39b74ee72f4fd24a85c1df64474edc04827400633ac",
+        "summary_table": {
+          "columns": [
+            "probe",
+            "value"
+          ],
+          "rows": [
+            [
+              "width",
+              64
+            ],
+            [
+              "height",
+              64
+            ]
+          ]
+        },
+        "whole_cgroup_cleanup_and_unmount": true
+      },
+      "scientific-import-diagnostic": {
+        "actual_guest_nofile_samples": 26,
+        "actual_numpy_import_version": "2.5.4",
+        "attempt": {
+          "bytes": 23191,
+          "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-science-attempts-02/operator-acceptance/scientific-import-diagnostic-20261027-03/attempt.json",
+          "sha256": "70333248f06f9f33f4c1333d0f5191741574d2c4618c1d7cda7714df95ce5cae"
+        },
+        "auxiliary_classes": [
+          "authenticated-systrap-child",
+          "pinned-fd-parking-helper",
+          "pinned-proc-umounter-helper"
+        ],
+        "enforcement_payload_bytes": 15898,
+        "envelope_sha256": "52d4c4c874be2b93320aa867d12cd24b1907ccc0c6a6832d1b9aa6569e683277",
+        "frame_sha256": "98b7ed47b679a5eecab585dd2038a718ed9b4f354a5759581d811401c070a7ff",
+        "guest_oci_nofile": 256,
+        "job_id": "c23-af5d031b67babd3c3ed71ad47296507180775d8335e10a14",
+        "journal_events": 11,
+        "journal_head_sha256": "d25041b76c3c7b8c9e23534a27fce7ab23ece3a2ea69e00236fc55f1e591957a",
+        "native_core_limits": {
+          "gofer": {
+            "hard": 4096,
+            "soft": 4096
+          },
+          "sentry": {
+            "hard": 4096,
+            "soft": 4096
+          }
+        },
+        "outputs_manifest_sha256": "2a353f49c15ef156d1023faddcf5640275f3f95cd4cf6af264787460a36718a5",
+        "profile_sha256": "2f07e2cb7fe9055e5b502f00fa90501f952c1ac35ad87930869d6f338a60af3d",
+        "summary_table": {
+          "columns": [
+            "probe",
+            "value"
+          ],
+          "rows": [
+            [
+              "diagnostic_only",
+              true
+            ],
+            [
+              "numerical_acceptance",
+              false
+            ],
+            [
+              "uid",
+              65532
+            ],
+            [
+              "gid",
+              65532
+            ],
+            [
+              "python",
+              "3.12.15 (main, Oct 21 2026, 01:08:07) [GCC 12.2.0]"
+            ],
+            [
+              "fd_scope",
+              "guest process only; host Sentry/gofer FD quotas are separate"
+            ],
+            [
+              "import_order",
+              "_datetime,datetime,_pydatetime,numpy,_datetime retry,datetime retry"
+            ],
+            [
+              "baseline.rlimit_nofile_soft",
+              256
+            ],
+            [
+              "baseline.rlimit_nofile_hard",
+              256
+            ],
+            [
+              "baseline.guest_fd_count",
+              4
+            ],
+            [
+              "baseline.status.FDSize",
+              "512"
+            ],
+            [
+              "baseline.status.VmSize",
+              "25380 kB"
+            ],
+            [
+              "baseline.status.VmRSS",
+              "17360 kB"
+            ],
+            [
+              "baseline.status.Threads",
+              "1"
+            ],
+            [
+              "baseline.status.NoNewPrivs",
+              "1"
+            ],
+            [
+              "capabilities_zero",
+              true
+            ],
+            [
+              "environment.OMP_NUM_THREADS",
+              "2"
+            ],
+            [
+              "environment.OPENBLAS_NUM_THREADS",
+              "2"
+            ],
+            [
+              "module_path_0",
+              "/usr/local/lib/python3.12/datetime.py"
+            ],
+            [
+              "module_path_0.mode",
+              "0o644"
+            ],
+            [
+              "module_path_0.uid",
+              65534
+            ],
+            [
+              "module_path_0.gid",
+              65534
+            ],
+            [
+              "module_path_0.nlink",
+              1
+            ],
+            [
+              "module_path_0.size",
+              268
+            ],
+            [
+              "module_path_1",
+              "/usr/local/lib/python3.12/_pydatetime.py"
+            ],
+            [
+              "module_path_1.mode",
+              "0o644"
+            ],
+            [
+              "module_path_1.uid",
+              65534
+            ],
+            [
+              "module_path_1.gid",
+              65534
+            ],
+            [
+              "module_path_1.nlink",
+              1
+            ],
+            [
+              "module_path_1.size",
+              92087
+            ],
+            [
+              "module_path_2",
+              "/usr/local/lib/python3.12/lib-dynload/_datetime.cpython-312-x86_64-linux-gnu.so"
+            ],
+            [
+              "module_path_2.mode",
+              "0o755"
+            ],
+            [
+              "module_path_2.uid",
+              65534
+            ],
+            [
+              "module_path_2.gid",
+              65534
+            ],
+            [
+              "module_path_2.nlink",
+              1
+            ],
+            [
+              "module_path_2.size",
+              108920
+            ],
+            [
+              "_datetime_first.before.rlimit_nofile_soft",
+              256
+            ],
+            [
+              "_datetime_first.before.rlimit_nofile_hard",
+              256
+            ],
+            [
+              "_datetime_first.before.guest_fd_count",
+              4
+            ],
+            [
+              "_datetime_first.ok",
+              true
+            ],
+            [
+              "_datetime_first.file",
+              "/usr/local/lib/python3.12/lib-dynload/_datetime.cpython-312-x86_64-linux-gnu.so"
+            ],
+            [
+              "_datetime_first.version",
+              null
+            ],
+            [
+              "_datetime_first.after.rlimit_nofile_soft",
+              256
+            ],
+            [
+              "_datetime_first.after.rlimit_nofile_hard",
+              256
+            ],
+            [
+              "_datetime_first.after.guest_fd_count",
+              4
+            ],
+            [
+              "datetime_first.before.rlimit_nofile_soft",
+              256
+            ],
+            [
+              "datetime_first.before.rlimit_nofile_hard",
+              256
+            ],
+            [
+              "datetime_first.before.guest_fd_count",
+              4
+            ],
+            [
+              "datetime_first.ok",
+              true
+            ],
+            [
+              "datetime_first.file",
+              "/usr/local/lib/python3.12/datetime.py"
+            ],
+            [
+              "datetime_first.version",
+              null
+            ],
+            [
+              "datetime_first.after.rlimit_nofile_soft",
+              256
+            ],
+            [
+              "datetime_first.after.rlimit_nofile_hard",
+              256
+            ],
+            [
+              "datetime_first.after.guest_fd_count",
+              4
+            ],
+            [
+              "_pydatetime_first.before.rlimit_nofile_soft",
+              256
+            ],
+            [
+              "_pydatetime_first.before.rlimit_nofile_hard",
+              256
+            ],
+            [
+              "_pydatetime_first.before.guest_fd_count",
+              4
+            ],
+            [
+              "_pydatetime_first.ok",
+              true
+            ],
+            [
+              "_pydatetime_first.file",
+              "/usr/local/lib/python3.12/_pydatetime.py"
+            ],
+            [
+              "_pydatetime_first.version",
+              null
+            ],
+            [
+              "_pydatetime_first.after.rlimit_nofile_soft",
+              256
+            ],
+            [
+              "_pydatetime_first.after.rlimit_nofile_hard",
+              256
+            ],
+            [
+              "_pydatetime_first.after.guest_fd_count",
+              4
+            ],
+            [
+              "numpy.before.rlimit_nofile_soft",
+              256
+            ],
+            [
+              "numpy.before.rlimit_nofile_hard",
+              256
+            ],
+            [
+              "numpy.before.guest_fd_count",
+              4
+            ],
+            [
+              "numpy.ok",
+              true
+            ],
+            [
+              "numpy.file",
+              "/usr/local/lib/python3.12/site-packages/numpy/__init__.py"
+            ],
+            [
+              "numpy.version",
+              "2.5.4"
+            ],
+            [
+              "numpy.after.rlimit_nofile_soft",
+              256
+            ],
+            [
+              "numpy.after.rlimit_nofile_hard",
+              256
+            ],
+            [
+              "numpy.after.guest_fd_count",
+              4
+            ],
+            [
+              "_datetime_after_numpy.before.rlimit_nofile_soft",
+              256
+            ],
+            [
+              "_datetime_after_numpy.before.rlimit_nofile_hard",
+              256
+            ],
+            [
+              "_datetime_after_numpy.before.guest_fd_count",
+              4
+            ],
+            [
+              "_datetime_after_numpy.ok",
+              true
+            ],
+            [
+              "_datetime_after_numpy.file",
+              "/usr/local/lib/python3.12/lib-dynload/_datetime.cpython-312-x86_64-linux-gnu.so"
+            ],
+            [
+              "_datetime_after_numpy.version",
+              null
+            ],
+            [
+              "_datetime_after_numpy.after.rlimit_nofile_soft",
+              256
+            ],
+            [
+              "_datetime_after_numpy.after.rlimit_nofile_hard",
+              256
+            ],
+            [
+              "_datetime_after_numpy.after.guest_fd_count",
+              4
+            ],
+            [
+              "datetime_after_numpy.before.rlimit_nofile_soft",
+              256
+            ],
+            [
+              "datetime_after_numpy.before.rlimit_nofile_hard",
+              256
+            ],
+            [
+              "datetime_after_numpy.before.guest_fd_count",
+              4
+            ],
+            [
+              "datetime_after_numpy.ok",
+              true
+            ],
+            [
+              "datetime_after_numpy.file",
+              "/usr/local/lib/python3.12/datetime.py"
+            ],
+            [
+              "datetime_after_numpy.version",
+              null
+            ],
+            [
+              "datetime_after_numpy.after.rlimit_nofile_soft",
+              256
+            ],
+            [
+              "datetime_after_numpy.after.rlimit_nofile_hard",
+              256
+            ],
+            [
+              "datetime_after_numpy.after.guest_fd_count",
+              4
+            ],
+            [
+              "numpy_import_succeeded",
+              true
+            ],
+            [
+              "original_failed_numerical_case_reclassified",
+              false
+            ]
+          ]
+        },
+        "whole_cgroup_cleanup_and_unmount": true
+      }
+    },
+    "preserved_failed_cases": {
+      "numerics-a": {
+        "attempt": {
+          "bytes": 17388,
+          "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-science-attempts-02/operator-acceptance/numerics-a-20261027-02/attempt.json",
+          "sha256": "3e4efd746e6db7247cc06bd85f902730c4f2b2368f567a306a8cd826d0eb46bb"
+        },
+        "cleanup_verified": true,
+        "reason": "sandbox_native_process_identity",
+        "started": false,
+        "state": "uncertain"
+      },
+      "scientific-import-diagnostic": {
+        "attempt": {
+          "bytes": 17553,
+          "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-science-attempts-02/operator-acceptance/scientific-import-diagnostic-20261027-02/attempt.json",
+          "sha256": "b46805d2e1aa4fd4976b099838bf88998955ce3ae62719229c76b866362049a2"
+        },
+        "cleanup_verified": true,
+        "reason": "sandbox_native_process_identity",
+        "started": false,
+        "state": "uncertain"
+      }
+    },
+    "source_archive_sha256": "7c64c46ecfabb59858743c4f732c9f97e454b5eb0ad83aabb71b01d7091254d8",
+    "source_files_verified": 90,
+    "source_manifest": {
+      "bytes": 11133,
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/operator-source-20261027-07.json",
+      "sha256": "ab22ca2e3b5324ffba255fa8ce79b7214dcd1f765730856e9471608164c9b7d2"
+    }
+  },
+  "scope": "Read-only independent audit of source07 operator scientific/representative containment receipts. No tests, scientific programs, cloud commands, runtimes, C22 bridges or capacity actions were executed by this review.",
+  "source_archive_binding": {
+    "archive_members_hashed_and_current_checkout_matched": true,
+    "archive_sha256": "7c64c46ecfabb59858743c4f732c9f97e454b5eb0ad83aabb71b01d7091254d8",
+    "current_checkout_still_matched_at_receipt_creation": true,
+    "manifest": {
+      "bytes": 11133,
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/operator-source-20261027-07.json",
+      "sha256": "ab22ca2e3b5324ffba255fa8ce79b7214dcd1f765730856e9471608164c9b7d2"
+    },
+    "source_file_count": 90
+  },
+  "sources": [
+    {
+      "bytes": 61578,
+      "path": "orchestration/experiment_sandbox/linux_runtime.py",
+      "sha256": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d"
+    },
+    {
+      "bytes": 20639,
+      "path": "orchestration/experiment_sandbox/profile_execution.py",
+      "sha256": "de9cd227f72c3a7cd7a18d667e3027115d6316467af32a397830e799fb41c4f5"
+    },
+    {
+      "bytes": 44425,
+      "path": "orchestration/experiment_sandbox/journal.py",
+      "sha256": "6e128f8d15dc312c79f50aa35686bb8905aac4e02880d697c93e512705e37b7c"
+    },
+    {
+      "bytes": 24086,
+      "path": "orchestration/experiment_sandbox/files.py",
+      "sha256": "a2e1d4883b17513bbe82b7de43f16ce47d86480bffb39a64a5b7bf65dc3440ca"
+    },
+    {
+      "bytes": 24744,
+      "path": "sandbox/experiment/trusted_init.py",
+      "sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc"
+    },
+    {
+      "bytes": 91399,
+      "path": "sandbox/experiment/gcp/run_operator_acceptance.py",
+      "sha256": "65c40b26082b3dab0236ad9f37c9b47a97771a21fa4839369f04d85582ff7d04"
+    },
+    {
+      "bytes": 4929,
+      "path": "sandbox/experiment/gcp/run_namespace_inheritance.py",
+      "sha256": "60beafe9850d2aa20501a69efaf29798f372bf1f699d94fcb82761fdacc2f65d"
+    },
+    {
+      "bytes": 6169,
+      "path": "sandbox/experiment/gcp/run_scientific_import_diagnostic.py",
+      "sha256": "13de3d9da0581c4bc764a24883841d68b102f6c4f4efca5ec1778fdb1d89eb4d"
+    }
+  ],
+  "status": "pass_with_explicit_scope_limits",
+  "version": "c23-actual-native-science-regression-independent-review-v1"
+}

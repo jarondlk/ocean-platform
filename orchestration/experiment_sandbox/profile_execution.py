@@ -27,7 +27,7 @@ from sandbox.experiment.trusted_init import (
 from schema.context_catalogue import canonical_json
 from schema.research_experiments import EnvironmentDescriptor, ExperimentResources, content_sha256
 
-VERSION = 'c23-oci-execution-preparation-v5'
+VERSION = 'c23-oci-execution-preparation-v6'
 GUEST_INIT_PATH = '/opt/c23/trusted_init.py'
 # One rule per bit is essential: matching the combined mask would deny only
 # calls containing every namespace bit simultaneously.
@@ -181,7 +181,7 @@ def _base_document(envelope, *, job_root, image_receipt, runtime_manifest):
             '--gofer-network-namespace=new', '--directfs=false', '--overlay2=none', '--host-uds=none',
             '--host-fifo=none', '--character-device-policy=emulated-only', '--net-raw=false',
             '--ignore-cgroups=false', '--allow-flag-override=false',
-            '--sidecar-release-enforcement-policy=ALWAYS', '--fdlimit=256', '--gvisor-marker-file=true',
+            '--sidecar-release-enforcement-policy=ALWAYS', '--fdlimit=4096', '--gvisor-marker-file=true',
             '--oci-seccomp=true', '--debug=false',
             '--debug-log=/dev/stderr', '--panic-log=/dev/stderr']
     return {'evidence_class': 'configuration-only', 'dispatch_eligible': False,
@@ -310,7 +310,7 @@ def render_execution_profile(envelope, *, job_root, image_receipt, runtime_manif
         requirements['runtime_cgroup_path'] = outer_cgroup + '/sandbox'
         document['version'] = VERSION
         document['supersedes_configuration_only_profile_version'] = 'c23-oci-preparation-v1'
-        document['supersedes_execution_profile_version'] = 'c23-oci-execution-preparation-v4'
+        document['supersedes_execution_profile_version'] = 'c23-oci-execution-preparation-v5'
         document['trusted_init'] = {
             'version': INIT_VERSION, 'path': GUEST_INIT_PATH, 'sha256': trusted_init_sha256,
             'control_guest_uid': 0, 'analysis_guest_uid': 65532,
@@ -324,6 +324,8 @@ def render_execution_profile(envelope, *, job_root, image_receipt, runtime_manif
             {'path': '/scratch', 'max_bytes': policy['scratch_max_bytes'], 'max_inodes': SCRATCH_INODES},
         ]
         requirements['readonly_guest_temporary_paths'] = ['/tmp', '/dev/shm', '/run', '/var/tmp']
+        requirements['native_nofile_limit'] = 4096
+        requirements['analysis_nofile_limit'] = 256
         requirements['gofer_search_boundary'] = {
             'evidence_class': 'configuration-only', 'actual_access_verified': False,
             'named_host_uid': 100000, 'directory_permission': 'search-only',

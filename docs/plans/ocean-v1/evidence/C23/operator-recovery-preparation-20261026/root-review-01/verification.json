@@ -1,0 +1,14 @@
+{
+  "C23_complete": false,
+  "pytest_exit_code": 0,
+  "pytest_summary": "62 passed in 3.37s",
+  "recorded_at": "2026-10-26T12:13:31.494545+00:00",
+  "review": "Fresh exact child controllers; forwarding-only effects; immutable samejobcontext; contenderonlyheldlease; exactchildSIGKILL+watchdogempty; cleanup-onlyrecovery andzero-commandterminalreplay. Diagnosticfixedcase retainsbaseguards/numericalfailurelabels. Noactualresultclaimedfromlocaltests.",
+  "ruff_exit_code": 0,
+  "source_files": {
+    "sandbox/experiment/gcp/run_recovery_acceptance.py": "ef0ea8bc1873abe7d372e42ca1197e59e77356b989383a4cefc6764a3e5a627a",
+    "sandbox/experiment/gcp/run_scientific_import_diagnostic.py": "2f7a50020c1cd34c9ceaafe956d547decc7cf315bcdb23ce861d928470dc0a71",
+    "tests/test_experiment_sandbox_recovery_acceptance.py": "e281d5cd1ec02097d081e5e6c998c25606e61a52486019a994b85a6b1ba898df",
+    "tests/test_experiment_sandbox_scientific_import_diagnostic.py": "9517b0f05fe9a3e502f3e2d16f0ef0c391e8e2395720073f3ba892c8c18659af"
+  }
+}

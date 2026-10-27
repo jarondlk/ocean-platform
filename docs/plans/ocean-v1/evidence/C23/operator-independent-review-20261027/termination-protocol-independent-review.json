@@ -1,0 +1,79 @@
+{
+  "authority": {
+    "actual_physical_issuer_implemented": false,
+    "actual_termination_verified": false,
+    "c23_complete": false,
+    "protocol_only": true,
+    "reservation_released": false,
+    "runtime_acceptance_granted": false,
+    "scientific_approval": "not_independently_verified",
+    "serving_dispatch_enabled": false
+  },
+  "created_at": "2026-10-26T17:50:19.701339+00:00",
+  "finding": "No material blocker found within the protocol-only preparation scope.",
+  "focused_validation": {
+    "exit_code": 0,
+    "outputs": {
+      "stderr": {
+        "bytes": 0,
+        "path": "docs/plans/ocean-v1/evidence/C23/operator-independent-review-20261027/termination-protocol-review.pytest.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 114,
+        "path": "docs/plans/ocean-v1/evidence/C23/operator-independent-review-20261027/termination-protocol-review.pytest.stdout.txt",
+        "sha256": "4afbe257654a0c8d62faffa4118959d87a2a9fea79e550a381cb6b9bf86e31e7"
+      }
+    },
+    "source_unchanged_before_after": true,
+    "summary": "30 passed, 83 deselected in 0.52s"
+  },
+  "inputs": [
+    {
+      "bytes": 2184,
+      "path": "docs/plans/ocean-v1/evidence/C23/operator-independent-review-20261027/termination-protocol-review-check.json",
+      "sha256": "732ea92644c84d6c88b5ea567fc009267052cbee1899894b63941e9e32066754"
+    },
+    {
+      "bytes": 2923,
+      "path": "docs/plans/ocean-v1/evidence/C23/termination-protocol-preparation-20261027/receipt.json",
+      "sha256": "d9129318d05466446f0c7e16b00e54ef074d72b03165435d2c61948bfe47dbd2"
+    }
+  ],
+  "qualifications": [
+    "Signature validity is not independent proof of physical termination, current host boot, held durable lease, journal/kernel observations or reservation release.",
+    "Real issuer/key custody, current-lease/durable-terminal/kernel integration and capacity-release transaction semantics remain unimplemented acceptance gates.",
+    "Frozen Python objects and private tokens prevent ordinary API construction/mutation; they are not a security boundary against arbitrary privileged code already running inside the same Python process.",
+    "The independent focused run exercised30 selected synthetic authentication, canonical parsing, unavailable issuer and actual temporary-file receipt cases; the owner full113-test receipt remains separate and immutable.",
+    "Native runtime/profile sources were not edited or re-executed by this review. No cloud calls, keys with operational authority, DB mutations, real analysis or capacity actions occurred."
+  ],
+  "reviewed_boundaries": [
+    "Actual physical issuer is unconditionally unavailable: issue_termination_packet refuses before reading a lease, kernel witness or signing key, regardless of caller-shaped data.",
+    "Pure signing authenticates assertions only; synthetic tests use ephemeral keys and explicit synthetic-software-test scope. The verifier has an explicit default-off, bounded, independently configured pinned issuer/key/material registry and one trust scope.",
+    "Verification compares the entire independently retained ClosedExecutionBinding before domain-separated Ed25519 verification. The separate pinned issuer scope binds worker/material/source-policy identity; per-job profile, journal epoch and closed fence remain in the full binding.",
+    "All header/claim fields are signed. There is no packet-supplied public key, authorization bit, algorithm choice or implicit synthetic-to-operator promotion.",
+    "Wire input must be exact bytes of1\u201316384 bytes. Duplicate keys, non-ASCII or noncanonical serialization, floats/nonfinite constants, unknown fields, coercible bool/int ambiguity, invalid sequence/time order and correlated cleanup mismatches are rejected.",
+    "VerifiedTerminationPacket authenticates claims only. Its launch/release properties are alwaysfalse and science remains not_independently_verified. No controller fence closure, DB capacity release, route registration or process execution is implemented.",
+    "Receipt storage requires an existing absolute canonical private owner-controlled directory, anchored directory FD, regular private single-link file, stable path/inode identity and exact bytes. First create is O_EXCL; retries retain only identical execution+fence bytes; conflicts and unsafe symlink/hardlink/FIFO/public/oversize/partial targets are never replaced.",
+    "File and directory fsync precede a successful retention return. A crash leaving partial data causes an explicit fail-closed receipt conflict; the protocol does not silently reconstruct or overwrite it."
+  ],
+  "reviewer": "c23_science_materials",
+  "sources": [
+    {
+      "bytes": 6806,
+      "path": "schema/experiment_execution.py",
+      "sha256": "8932fdc90c2fe22035e7bf4a4c88eff4047b3fbc584c070e77041c3e285e8b00"
+    },
+    {
+      "bytes": 17058,
+      "path": "orchestration/experiment_sandbox/proofs.py",
+      "sha256": "98b6f72c0d59dca21e78d9ebb93268769d41c18560e240b0ba8bf4622fc42ed4"
+    },
+    {
+      "bytes": 20846,
+      "path": "tests/test_experiment_sandbox_proofs.py",
+      "sha256": "499389c6b47a5039837e06a450c95d6fa71080281a832b17649f2a18bb809388"
+    }
+  ],
+  "version": "c23-termination-protocol-independent-review-v1"
+}

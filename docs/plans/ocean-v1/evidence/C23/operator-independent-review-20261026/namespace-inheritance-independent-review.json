@@ -1,0 +1,28 @@
+{
+  "C23_complete": false,
+  "actual_namespace_inheritance_verified": false,
+  "checks": [
+    "Exactly one fixed registry extension; base guard/material/admission/runtime/cleanup functions preserved and registry restored in finally",
+    "Raw unshare0 requires EPERM and null/size0 clone3 requires ENOSYS in main/fork/exec/thread under UID/GID65532/no groups/allcapsets0",
+    "Fork occurs before Python thread creation; forkchild immediate bounded write and _exit; exec and thread paths bounded; thread exceptions cannot create false success",
+    "Stored programs inspected/ASTparsed only; actual Mac/host never executes guest fixture or runtime; privileged main retains base dedicated-worker refusal"
+  ],
+  "cloud_operations_performed": false,
+  "disposition": "PASS in additive operator preparation scope",
+  "generated_analysis_execution_performed": false,
+  "material_blockers": [],
+  "recorded_at": "2026-10-26T11:59:20.149083+00:00",
+  "retained_C22_real_approval": false,
+  "scope": "Independent read-only source review and host-safe tests for one additive namespace inheritance fixture",
+  "seconds": 0.655,
+  "source_after": {
+    "sandbox/experiment/gcp/run_namespace_inheritance.py": "db97f051ee2de52f6bbdb534f5ea0fabea044d51a28f67d8e25b1de15d6f7145",
+    "tests/test_experiment_sandbox_namespace_inheritance.py": "7fe62b4a8eadfbb0966bc58af515ebe2b017b781eea7801d205b03c852fc8822"
+  },
+  "source_before": {
+    "sandbox/experiment/gcp/run_namespace_inheritance.py": "db97f051ee2de52f6bbdb534f5ea0fabea044d51a28f67d8e25b1de15d6f7145",
+    "tests/test_experiment_sandbox_namespace_inheritance.py": "7fe62b4a8eadfbb0966bc58af515ebe2b017b781eea7801d205b03c852fc8822"
+  },
+  "source_steady": true,
+  "test_exit_code": 0
+}

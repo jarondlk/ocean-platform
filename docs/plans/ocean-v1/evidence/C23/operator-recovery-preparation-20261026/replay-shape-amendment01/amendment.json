@@ -1,0 +1,17 @@
+{
+  "C23_complete": false,
+  "actual_runtime_acceptance_performed": false,
+  "change": "Exclude only replayed from BOTH normal/replayed record comparisons, separately require originalfalse and recoveredtrue, and retain exactimmutablejournalresult/epoch checks. Testfixture nowmodels actualrecord shape and rejectsoriginalreplayedtrue.",
+  "cloud_operations_performed": false,
+  "development_observation": "43safe tests passed3.79s plusRuff; old42case receipts stayimmutable.",
+  "generated_analysis_execution_performed": false,
+  "intentional_source_supersessions": {
+    "sandbox/experiment/gcp/run_recovery_acceptance.py": "5cfd20c4f96eaab9838b5ab4cadb4685622c85fb39761dce9ca4b259f05c736a",
+    "tests/test_experiment_sandbox_recovery_acceptance.py": "1ff990a9df9127fa161aa6596b4cadd3a8647bce24c31752a1c4561bbb5a6f2c"
+  },
+  "original_evidence_immutable": true,
+  "reservation_released": false,
+  "retained_C22_real_approval": false,
+  "scope": "Conservative replay-assessment shape correction only; physicalcrash/recoveryeffect paths unchanged",
+  "trigger": "Final cross-check against real LinuxExecutionAdapter._record found replayed:false is present on original normalrecords. Initial assessment stripped it onlyfromreplayedrecord, causing a false-negative on actualterminalreplay."
+}

@@ -63,7 +63,7 @@ def assert_run_schema(engine):
 
 def test_new_head_repeat_upgrade_and_empty_downgrade_match_all_run_models(isolated):
     pg.alembic(isolated, "upgrade", "head")
-    assert pg.revision(isolated) == "20261020_0020"
+    assert pg.revision(isolated) == "20261027_0021"
     assert_run_schema(isolated["engine"])
     pg.alembic(isolated, "upgrade", "head")
     pg.alembic(isolated, "downgrade", "20261018_0017")
@@ -362,5 +362,5 @@ def test_populated_downgrade_is_refused_with_history_intact(fixture, isolated):
     run = fixture.submit()
     result = pg.alembic(isolated, "downgrade", "20261018_0017", succeeds=False)
     assert "populated C20 storage cannot be downgraded" in result.stderr
-    assert pg.revision(isolated) == "20261020_0020"
+    assert pg.revision(isolated) == "20261027_0021"
     assert fixture.service.invoke("status", fixture.address(run), fixture.user)["run"] == run

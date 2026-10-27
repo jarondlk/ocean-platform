@@ -696,7 +696,8 @@ def test_resource_mismatch_prevents_start(control, resource):
     with journal.claim(envelope.job_id, envelope.envelope_sha256):
         with pytest.raises(SandboxError, match='sandbox_resource_enforcement'):
             runtime.LinuxExecutionAdapter._readback(adapter, envelope, profile.document,
-                journal, ['inert-runsc'], deadline=1, side=None)
+                journal, ['inert-runsc'], deadline=1, side=None,
+                cgroup_identity=(outer.stat().st_dev, outer.stat().st_ino))
     assert 'start' not in adapter.calls
 
 
@@ -811,7 +812,7 @@ def _resource_fixture(adapter, envelope, profile):
 @pytest.mark.parametrize('mutation', ['foreign_id', 'running', 'boolean_pid', 'foreign_bundle', 'outside_cgroup'])
 def test_created_state_and_host_membership_bound_to_this_job(control, mutation, monkeypatch):
     adapter, envelope, profile, journal, _ = control
-    _resource_fixture(adapter, envelope, profile)
+    outer = _resource_fixture(adapter, envelope, profile)[0]
     state = {'id': envelope.job_id, 'status': 'created', 'pid': 1234,
              'bundle': str(adapter.worker_root / envelope.job_id)}
     if mutation == 'foreign_id':
@@ -833,12 +834,13 @@ def test_created_state_and_host_membership_bound_to_this_job(control, mutation, 
     with journal.claim(envelope.job_id, envelope.envelope_sha256):
         with pytest.raises(SandboxError):
             runtime.LinuxExecutionAdapter._readback(adapter, envelope, profile.document,
-                journal, ['inert'], deadline=1, side=None)
+                journal, ['inert'], deadline=1, side=None,
+                cgroup_identity=(outer.stat().st_dev, outer.stat().st_ino))
 
 
 def test_matching_readbacks_include_outer_and_inner_before_start(control, monkeypatch):
     adapter, envelope, profile, journal, _ = control
-    _resource_fixture(adapter, envelope, profile)
+    outer = _resource_fixture(adapter, envelope, profile)[0]
     state = {'id': envelope.job_id, 'status': 'created', 'pid': 1234,
              'bundle': str(adapter.worker_root / envelope.job_id)}
     monkeypatch.setattr(adapter, '_command', lambda *_args, **_kwargs:
@@ -847,11 +849,452 @@ def test_matching_readbacks_include_outer_and_inner_before_start(control, monkey
     monkeypatch.setattr(runtime, '_read', lambda path, maximum=runtime.MAX_COMMAND_BYTES:
         ('0::/ocean-c23/' + envelope.job_id + '/sandbox\n').encode()
         if str(path).startswith('/proc/') else original(path, maximum))
+    monkeypatch.setattr(adapter, '_native_nofile_readback', lambda *_args, **_kwargs:
+        {'mock': 'separately tested native process readback'})
     with journal.claim(envelope.job_id, envelope.envelope_sha256):
         readback = runtime.LinuxExecutionAdapter._readback(adapter, envelope, profile.document,
-            journal, ['inert'], deadline=1, side=None)
-    assert set(readback) == {envelope.job_id, 'sandbox'}
-    assert all(values['memory.swap.max'] == '0' for values in readback.values())
+            journal, ['inert'], deadline=1, side=None,
+            cgroup_identity=(outer.stat().st_dev, outer.stat().st_ino))
+    assert set(readback) == {envelope.job_id, 'sandbox', 'native_processes'}
+    assert all(readback[name]['memory.swap.max'] == '0' for name in (envelope.job_id, 'sandbox'))
+
+
+@pytest.fixture
+def native_processes(control, tmp_path, monkeypatch):
+    """Actual temporary files model procfs; no native PID/runtime is inspected."""
+    adapter, envelope, profile, journal, watchdog = control
+    outer, host, sandbox = _resource_fixture(adapter, envelope, profile)
+    (outer / 'cgroup.procs').write_bytes(b'')
+    (host / 'cgroup.procs').write_bytes(b'2345\n')
+    (sandbox / 'cgroup.procs').write_bytes(b'1234\n')
+    adapter.runtime_directory.mkdir(mode=0o700)
+    (adapter.runtime_directory / 'gvisor-bin').mkdir(mode=0o700)
+    manifest = json.loads(adapter._runtime_json)
+    for relative in ('runsc', 'gvisor-bin/gvisor_sentry'):
+        path = adapter.runtime_directory / relative
+        path.write_bytes(('inert test fixture ' + relative).encode())
+        path.chmod(0o500)
+        manifest['files'][relative] = hashlib.sha256(path.read_bytes()).hexdigest()
+    adapter._runtime_json = canonical_json(manifest)
+    proc = tmp_path / 'mock-proc-NOT-KERNEL'
+    proc.mkdir()
+    state_flag = '--root=' + str(adapter.worker_root / ('runsc-state-' + envelope.job_id))
+    for pid, name, leaf, relative in ((1234, 'runsc-sandbox', 'sandbox', 'gvisor-bin/gvisor_sentry'),
+                                     (2345, 'runsc-gofer', 'host', 'runsc')):
+        path = proc / str(pid)
+        path.mkdir()
+        fields = ['S'] + ['0'] * 49
+        fields[1] = '1'
+        fields[19] = str(pid * 10)
+        (path / 'stat').write_text(f'{pid} (runtime) with parens) ' + ' '.join(fields) + '\n')
+        (path / 'cmdline').write_bytes(b'\0'.join(value.encode() for value in
+            [name, state_flag, 'boot' if pid == 1234 else 'gofer', envelope.job_id]) + b'\0')
+        (path / 'cgroup').write_text('0::/ocean-c23/' + envelope.job_id + '/' + leaf + '\n')
+        (path / 'limits').write_text('Limit                     Soft Limit           Hard Limit           Units\n'
+            'Max open files            4096                 4096                 files\n')
+        (path / 'exe').symlink_to(adapter.runtime_directory / relative)
+    monkeypatch.setattr(runtime, '_open_process_directory', lambda pid:
+        os.open(proc / str(pid), os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW))
+    monkeypatch.setattr(adapter, 'clock', lambda: 1.0)
+    identity = (outer.stat().st_dev, outer.stat().st_ino)
+    def readback(**changes):
+        arguments = {'job_id': envelope.job_id, 'sentry_pid': 1234,
+            'requirements': profile.requirements, 'cgroup_identity': identity,
+            'lease': journal, 'deadline': 10.0, 'watchdog': watchdog}
+        arguments.update(changes)
+        with journal.claim(envelope.job_id, envelope.envelope_sha256):
+            return adapter._native_nofile_readback(**arguments)
+
+    def add_process(pid=3456, *, argv=None, parent=1234, start=12341, leaf='sandbox',
+                    executable='gvisor-bin/gvisor_sentry', limits=(4096, 4096)):
+        path = proc / str(pid)
+        path.mkdir()
+        fields = ['S'] + ['0'] * 49
+        fields[1], fields[19] = str(parent), str(start)
+        (path / 'stat').write_text(f'{pid} (authenticated fixture child) ' + ' '.join(fields) + '\n')
+        arguments = [] if argv is None else argv
+        command = b'\0'.join(value.encode() for value in arguments) + b'\0' if arguments else b''
+        (path / 'cmdline').write_bytes(command)
+        (path / 'cgroup').write_text('0::/ocean-c23/' + envelope.job_id + '/' + leaf + '\n')
+        (path / 'limits').write_text(f'Max open files {limits[0]} {limits[1]} files\n')
+        binary = adapter.runtime_directory / executable
+        if not binary.exists():
+            binary.write_bytes(('inert fixture ' + executable).encode())
+            binary.chmod(0o500)
+            current = json.loads(adapter._runtime_json)
+            current['files'][executable] = hashlib.sha256(binary.read_bytes()).hexdigest()
+            adapter._runtime_json = canonical_json(current)
+        (path / 'exe').symlink_to(binary)
+        group = host if leaf == 'host' else sandbox
+        with (group / 'cgroup.procs').open('ab') as file:
+            file.write(str(pid).encode() + b'\n')
+        return path
+
+    return SimpleNamespace(adapter=adapter, envelope=envelope, profile=profile, journal=journal,
+        outer=outer, host=host, sandbox=sandbox, proc=proc, readback=readback, identity=identity,
+        add_process=add_process)
+
+
+def test_actual_temporary_file_native_readback_binds_both_roles_and_separate_limits(native_processes):
+    fixture = native_processes
+    result = fixture.readback()
+    assert result['native_nofile_limit'] == 4096 and result['analysis_nofile_limit'] == 256
+    assert result['observed_before_start'] is True
+    sentry, gofer = result['roles']['sentry'], result['roles']['gofer']
+    assert sentry['pid'] == 1234 and gofer['pid'] == 2345
+    assert sentry['start_time_ticks'] == 12340
+    assert sentry['executable_relative_path'] == 'gvisor-bin/gvisor_sentry'
+    assert gofer['executable_relative_path'] == 'runsc'
+    assert all(role['nofile'] == {'soft': 4096, 'hard': 4096} for role in (sentry, gofer))
+    assert sentry['limits'] == (fixture.proc / '1234/limits').read_text()
+    assert sentry['cmdline_sha256'] == hashlib.sha256((fixture.proc / '1234/cmdline').read_bytes()).hexdigest()
+    assert len(canonical_json(result).encode()) <= runtime.MAX_ENFORCEMENT_BYTES
+    assert fixture.adapter.calls == []
+
+
+@pytest.mark.parametrize('inherited', [False, True])
+def test_only_authenticated_direct_systrap_child_may_have_empty_or_inherited_argv(native_processes, inherited):
+    f = native_processes
+    argv = (f.proc / '1234/cmdline').read_bytes()[:-1].decode().split('\0') if inherited else None
+    f.add_process(argv=argv)
+    result = f.readback()
+    assert set(result['roles']) == {'sentry', 'gofer'}
+    assert result['roles']['sentry']['pid'] == 1234
+    assert len(result['auxiliary_processes']) == 1
+    child = result['auxiliary_processes'][0]
+    assert child['classification'] == 'authenticated-systrap-child'
+    assert child['parent_pid'] == 1234 and child['start_time_ticks'] >= 12340
+    assert child['executable_identity'] == result['roles']['sentry']['executable_identity']
+    assert child['cgroup'] == result['roles']['sentry']['cgroup']
+    assert child['cmdline_empty'] is not inherited
+    assert child['nofile'] == {'soft': 4096, 'hard': 4096}
+
+
+def test_actual_five_process_shape_distinguishes_helpers_from_core_limits(native_processes, monkeypatch):
+    f = native_processes
+    (f.host / 'cgroup.procs').write_bytes(b'')
+    (f.sandbox / 'cgroup.procs').write_bytes(b'1234\n2345\n')
+    (f.proc / '2345/cgroup').write_bytes((f.proc / '1234/cgroup').read_bytes())
+    f.add_process(pid=1000)
+    relative = 'gvisor-bin/runsc-fd-parking'
+    f.add_process(pid=4567, argv=[str(f.adapter.runtime_directory / relative)], parent=1,
+                  leaf='host', executable=relative, limits=(1024, 1048576))
+    f.add_process(pid=5678, argv=['gvisor-proc-umounter', '/proc'],
+                  executable='gvisor-bin/gvisor-proc-umounter', limits=(1024, 1048576))
+    original, order = runtime._native_process_observation, []
+    def observe(pid):
+        order.append(pid)
+        return original(pid)
+    monkeypatch.setattr(runtime, '_native_process_observation', observe)
+    result = f.readback()
+    assert order[0] == 1234, 'Authenticate state.pid Sentry before classifying any lower PID'
+    assert len(result['auxiliary_processes']) == 3
+    auxiliaries = {value['classification']: value for value in result['auxiliary_processes']}
+    assert set(auxiliaries) == {'authenticated-systrap-child', 'pinned-fd-parking-helper',
+                                'pinned-proc-umounter-helper'}
+    for name in ('pinned-fd-parking-helper', 'pinned-proc-umounter-helper'):
+        observed = auxiliaries[name]
+        assert observed['native_nofile_enforced_by_this_gate'] is False
+        assert observed['limits'] == 'Max open files 1024 1048576 files\n'
+        assert 'nofile' not in observed
+    assert result['roles']['sentry']['nofile']['hard'] == result['roles']['gofer']['nofile']['hard'] == 4096
+
+
+@pytest.mark.parametrize('mutation', ['foreign_parent', 'ancestor_only', 'old_start', 'foreign_exe',
+    'different_cgroup', 'foreign_inherited_argv', 'unknown_empty', 'unknown_nonempty',
+    'core_empty', 'stub_limit_mismatch'])
+def test_auxiliary_exception_never_accepts_unknown_or_unrelated_core_lookalikes(native_processes, mutation):
+    f = native_processes
+    arguments = {}
+    if mutation == 'foreign_parent':
+        arguments['parent'] = 1
+    elif mutation == 'ancestor_only':
+        arguments['parent'] = 2345
+    elif mutation == 'old_start':
+        arguments['start'] = 12339
+    elif mutation == 'foreign_exe':
+        arguments['executable'] = 'runsc'
+    elif mutation == 'different_cgroup':
+        arguments['leaf'] = 'host'
+    elif mutation == 'foreign_inherited_argv':
+        argv = (f.proc / '1234/cmdline').read_bytes()[:-1].decode().split('\0')
+        argv.insert(1, '--unapproved-extra')
+        arguments['argv'] = argv
+    elif mutation == 'unknown_empty':
+        arguments['executable'] = 'gvisor-bin/unknown-empty-helper'
+    elif mutation == 'unknown_nonempty':
+        arguments['argv'] = ['unrecognized-runtime-helper']
+    elif mutation == 'core_empty':
+        (f.proc / '1234/cmdline').write_bytes(b'')
+    elif mutation == 'stub_limit_mismatch':
+        arguments['limits'] = (256, 256)
+    f.add_process(**arguments)
+    with pytest.raises(SandboxError):
+        f.readback()
+
+
+@pytest.mark.parametrize('mutation', ['parking_wrong_exe', 'parking_wrong_parent',
+    'parking_wrong_cgroup', 'parking_old_start', 'umounter_wrong_exe', 'umounter_wrong_parent',
+    'umounter_wrong_cgroup', 'umounter_wrong_argv'])
+def test_known_sidecar_helpers_require_exact_positive_identity(native_processes, mutation):
+    f = native_processes
+    parking = mutation.startswith('parking')
+    relative = 'gvisor-bin/runsc-fd-parking' if parking else 'gvisor-bin/gvisor-proc-umounter'
+    arguments = {'argv': [str(f.adapter.runtime_directory / relative)] if parking
+                 else ['gvisor-proc-umounter', '/proc'], 'parent': 1 if parking else 1234,
+                 'leaf': 'host' if parking else 'sandbox', 'executable': relative,
+                 'limits': (1024, 1048576)}
+    if mutation.endswith('wrong_exe'):
+        arguments['executable'] = 'runsc'
+    elif mutation.endswith('wrong_parent'):
+        arguments['parent'] = 2345
+    elif mutation.endswith('wrong_cgroup'):
+        arguments['leaf'] = 'sandbox' if parking else 'host'
+    elif mutation.endswith('old_start'):
+        arguments['start'] = 12339
+    elif mutation.endswith('wrong_argv'):
+        arguments['argv'] = ['gvisor-proc-umounter', '/unexpected-path']
+    f.add_process(**arguments)
+    with pytest.raises(SandboxError):
+        f.readback()
+
+
+@pytest.mark.parametrize('field', ['start_time_ticks', 'parent_pid', 'proc_directory_identity', 'argv',
+    'cmdline_empty', 'cmdline_bytes', 'cmdline_sha256', 'cgroup', 'limits', 'executable_identity'])
+def test_classified_systrap_child_must_remain_stable_on_second_observation(native_processes, monkeypatch, field):
+    native_processes.add_process()
+    original, calls = runtime._native_process_observation, {}
+    def observe(pid):
+        value = original(pid)
+        calls[pid] = calls.get(pid, 0) + 1
+        if pid == 3456 and calls[pid] == 2:
+            value[field] = 'child changed after initial authentication'
+        return value
+    monkeypatch.setattr(runtime, '_native_process_observation', observe)
+    with pytest.raises(SandboxError, match='sandbox_native_process_changed'):
+        native_processes.readback()
+
+
+def test_parent_reparenting_within_one_proc_directory_is_not_hidden(native_processes, monkeypatch):
+    native_processes.add_process()
+    original, calls = runtime._read_at, 0
+    def read(directory, name, maximum):
+        nonlocal calls
+        value = original(directory, name, maximum)
+        if name == 'stat' and value.startswith(b'3456 '):
+            calls += 1
+            if calls == 2:
+                value = value.replace(b') S 1234 ', b') S 1 ')
+        return value
+    monkeypatch.setattr(runtime, '_read_at', read)
+    with pytest.raises(SandboxError, match='sandbox_native_process_changed'):
+        native_processes.readback()
+
+
+def test_authenticated_auxiliary_raw_evidence_shares_the_aggregate_budget(native_processes):
+    f = native_processes
+    for pid in range(3456, 3496):
+        path = f.add_process(pid=pid)
+        (path / 'limits').write_bytes((path / 'limits').read_bytes() + b'\n' * 600)
+    with pytest.raises(SandboxError, match='sandbox_host_limit'):
+        f.readback()
+
+
+def test_full_enforcement_readback_retains_native_raw_evidence(native_processes, monkeypatch):
+    f = native_processes
+    state = {'id': f.envelope.job_id, 'status': 'created', 'pid': 1234,
+             'bundle': str(f.adapter.worker_root / f.envelope.job_id)}
+    monkeypatch.setattr(f.adapter, '_command', lambda *_args, **_kwargs:
+        (0, json.dumps(state).encode(), b''))
+    original = runtime._read
+    monkeypatch.setattr(runtime, '_read', lambda path, maximum=runtime.MAX_COMMAND_BYTES:
+        (f.proc / '1234/cgroup').read_bytes() if str(path) == '/proc/1234/cgroup'
+        else original(path, maximum))
+    with f.journal.claim(f.envelope.job_id, f.envelope.envelope_sha256):
+        observed = runtime.LinuxExecutionAdapter._readback(f.adapter, f.envelope,
+            f.profile.document, f.journal, ['inert'], deadline=10, side=None,
+            cgroup_identity=f.identity)
+    assert observed['native_processes']['roles']['gofer']['nofile']['hard'] == 4096
+    assert observed['sandbox']['pids.max'] == '128'
+    assert len(canonical_json({'readback': observed}).encode()) <= runtime.MAX_ENFORCEMENT_BYTES
+
+
+@pytest.mark.parametrize('guard', ['lost_fence', 'deadline', 'watchdog'])
+def test_native_readback_requires_live_fence_deadline_and_watchdog(native_processes, monkeypatch, guard):
+    f = native_processes
+    arguments = {}
+    if guard == 'lost_fence':
+        f.journal.lost = True
+    elif guard == 'deadline':
+        arguments['deadline'] = 0.5
+    else:
+        def dead():
+            raise SandboxError('sandbox_watchdog_unavailable')
+        monkeypatch.setattr(FakeWatchdog, 'require_alive', lambda _self: dead())
+    with pytest.raises(SandboxError):
+        f.readback(**arguments)
+
+
+@pytest.mark.parametrize('row', [
+    'Max open files 256 256 files\n', 'Max open files 4096 256 files\n',
+    'Max open files 256 4096 files\n', 'Max open files unlimited unlimited files\n',
+    'Max open files 04096 4096 files\n', 'Max open files -1 4096 files\n',
+    'Max open files 4096 4096 objects\n', 'Max open files 4096 4096 files trailing\n',
+    'Max open files 4096 4096 files\nMax open files 4096 4096 files\n',
+    'Limit Soft Hard Units\n',
+])
+@pytest.mark.parametrize('pid', [1234, 2345])
+def test_native_nofile_both_soft_and_hard_must_be_exact(native_processes, row, pid):
+    (native_processes.proc / str(pid) / 'limits').write_text(row)
+    with pytest.raises(SandboxError, match='sandbox_native_nofile_enforcement'):
+        native_processes.readback()
+
+
+@pytest.mark.parametrize('field,value', [('native_nofile_limit', 256), ('native_nofile_limit', True),
+    ('native_nofile_limit', None), ('analysis_nofile_limit', 4096), ('analysis_nofile_limit', True)])
+def test_profile_must_keep_native_and_analysis_limit_scopes_explicit(native_processes, field, value):
+    requirements = native_processes.profile.requirements
+    requirements[field] = value
+    with pytest.raises(SandboxError, match='sandbox_native_nofile_enforcement'):
+        native_processes.readback(requirements=requirements)
+
+
+@pytest.mark.parametrize('mutation', ['missing_gofer', 'missing_sentry', 'duplicate_pid', 'bad_pid',
+    'pid_cap', 'unexpected_child', 'wrong_outer_identity', 'wrong_state_pid'])
+def test_native_inventory_unknown_or_ambiguous_blocks_start(native_processes, mutation):
+    f = native_processes
+    arguments = {}
+    if mutation == 'missing_gofer':
+        (f.host / 'cgroup.procs').write_bytes(b'')
+    elif mutation == 'missing_sentry':
+        (f.sandbox / 'cgroup.procs').write_bytes(b'')
+    elif mutation == 'duplicate_pid':
+        (f.host / 'cgroup.procs').write_bytes(b'1234\n2345\n')
+    elif mutation == 'bad_pid':
+        (f.host / 'cgroup.procs').write_bytes(b'2345\n../1234\n')
+    elif mutation == 'pid_cap':
+        (f.host / 'cgroup.procs').write_text(''.join(str(pid) + '\n' for pid in range(2000, 2129)))
+    elif mutation == 'unexpected_child':
+        (f.sandbox / 'unowned-child').mkdir()
+    elif mutation == 'wrong_outer_identity':
+        arguments['cgroup_identity'] = (f.identity[0], f.identity[1] + 1)
+    elif mutation == 'wrong_state_pid':
+        arguments['sentry_pid'] = 2345
+    with pytest.raises(SandboxError):
+        f.readback(**arguments)
+    assert 'start' not in f.adapter.calls
+
+
+@pytest.mark.parametrize('mutation', ['foreign_job', 'foreign_root', 'wrong_exe', 'foreign_cgroup',
+    'missing_nul', 'non_ascii', 'missing_proc', 'zombie', 'malformed_stat', 'oversized_cmdline',
+    'oversized_limits', 'duplicated_gofer'])
+def test_native_identity_and_raw_bounds_fail_closed(native_processes, mutation):
+    f = native_processes
+    path = f.proc / '2345'
+    if mutation == 'foreign_job':
+        (path / 'cmdline').write_bytes((path / 'cmdline').read_bytes().replace(f.envelope.job_id.encode(),
+            ('c23-' + '0' * 48).encode()))
+    elif mutation == 'foreign_root':
+        (path / 'cmdline').write_bytes((path / 'cmdline').read_bytes().replace(b'--root=', b'--other='))
+    elif mutation == 'wrong_exe':
+        (path / 'exe').unlink()
+        (path / 'exe').symlink_to(f.adapter.runtime_directory / 'gvisor-bin/gvisor_sentry')
+    elif mutation == 'foreign_cgroup':
+        (path / 'cgroup').write_bytes(b'0::/outside\n')
+    elif mutation == 'missing_nul':
+        (path / 'cmdline').write_bytes(b'runsc-gofer')
+    elif mutation == 'non_ascii':
+        (path / 'cmdline').write_bytes(b'runsc-gofer\0\xff\0')
+    elif mutation == 'missing_proc':
+        (path / 'stat').unlink()
+    elif mutation == 'zombie':
+        (path / 'stat').write_text((path / 'stat').read_text().replace(' S ', ' Z '))
+    elif mutation == 'malformed_stat':
+        (path / 'stat').write_bytes(b'2345 (truncated) S 1 2 3\n')
+    elif mutation == 'oversized_cmdline':
+        (path / 'cmdline').write_bytes(b'x' * 8193)
+    elif mutation == 'oversized_limits':
+        (path / 'limits').write_bytes(b'x' * 8193)
+    elif mutation == 'duplicated_gofer':
+        (f.host / 'cgroup.procs').write_bytes(b'2345\n3456\n')
+        second = f.proc / '3456'
+        second.mkdir()
+        for name in ('stat', 'cmdline', 'cgroup', 'limits'):
+            raw = (path / name).read_bytes()
+            (second / name).write_bytes(raw.replace(b'2345 (', b'3456 ('))
+        (second / 'exe').symlink_to(f.adapter.runtime_directory / 'runsc')
+    with pytest.raises((SandboxError, OSError)):
+        f.readback()
+
+
+@pytest.mark.parametrize('field', ['start_time_ticks', 'proc_directory_identity', 'argv', 'cgroup',
+                                  'limits', 'executable_identity'])
+def test_second_core_observation_detects_pid_exec_and_limit_races(native_processes, monkeypatch, field):
+    original, calls = runtime._native_process_observation, {}
+    def observe(pid):
+        observed = original(pid)
+        calls[pid] = calls.get(pid, 0) + 1
+        if pid == 1234 and calls[pid] == 2:
+            observed[field] = 'changed between core observations'
+        return observed
+    monkeypatch.setattr(runtime, '_native_process_observation', observe)
+    with pytest.raises(SandboxError, match='sandbox_native_process_changed'):
+        native_processes.readback()
+
+
+def test_process_start_time_is_rechecked_within_one_open_proc_directory(native_processes, monkeypatch):
+    original, count = runtime._read_at, 0
+    def read(directory, name, maximum):
+        nonlocal count
+        raw = original(directory, name, maximum)
+        if name == 'stat':
+            count += 1
+            if count == 2:
+                raw = raw.replace(b'12340', b'12341')
+        return raw
+    monkeypatch.setattr(runtime, '_read_at', read)
+    with pytest.raises(SandboxError, match='sandbox_native_process_changed'):
+        native_processes.readback()
+
+
+def test_changed_final_inventory_does_not_attest_stale_process_set(native_processes, monkeypatch):
+    adapter = native_processes.adapter
+    original, calls = adapter._owned_process_inventory, 0
+    def inventory(*arguments):
+        nonlocal calls
+        observed = original(*arguments)
+        calls += 1
+        if calls == 2:
+            observed['groups']['host']['identity'][1] += 1
+        return observed
+    monkeypatch.setattr(adapter, '_owned_process_inventory', inventory)
+    with pytest.raises(SandboxError, match='sandbox_native_process_changed'):
+        native_processes.readback()
+
+
+def test_native_evidence_cap_counts_json_escaping(native_processes):
+    f = native_processes
+    for pid in (1234, 2345):
+        path = f.proc / str(pid)
+        (path / 'limits').write_bytes((path / 'limits').read_bytes() + b'\n' * 7800)
+        command = (path / 'cmdline').read_bytes().split(b'\0')
+        command.insert(1, b'--inert=' + b'x' * 7300)
+        (path / 'cmdline').write_bytes(b'\0'.join(command))
+        (path / 'stat').write_bytes((path / 'stat').read_bytes() + b'\t' * 1500)
+    with pytest.raises(SandboxError, match='sandbox_host_limit'):
+        f.readback()
+
+
+def test_native_readback_failure_still_kills_whole_group_and_never_starts(control, monkeypatch):
+    adapter, _, _, journal, watchdog = control
+    def readback(*_args, **_kwargs):
+        raise SandboxError('sandbox_native_nofile_enforcement')
+    monkeypatch.setattr(adapter, '_readback', readback)
+    result = execute(control)
+    assert result.state == 'uncertain' and result.document['reason'] == 'sandbox_native_nofile_enforcement'
+    assert 'cleanup' in adapter.calls and 'start' not in adapter.calls
+    assert result.outputs is None and journal.result is None and watchdog.stopped == [True]
+    assert result.document['dispatch_eligible'] is False and result.document['reservation_released'] is False
 
 
 def test_lost_fence_does_not_grant_cleanup_authority(control):

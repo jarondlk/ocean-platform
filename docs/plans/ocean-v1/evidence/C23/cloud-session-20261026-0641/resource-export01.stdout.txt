@@ -1,0 +1,294 @@
+W1026 07:18:50.866275    3918 maincli.go:40] Cannot find if container c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88 exists, checking if sandbox c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88 is running, err: getting container state (CID: "c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88"): connecting to control server at PID 3776: connection refused
+W1026 07:18:50.866289    3918 maincli.go:40] Sandbox isn't running anymore, marking container c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88 as stopped:
+I1026 07:18:50.866394    3918 cli.go:275] **************** gVisor ****************
+I1026 07:18:50.866422    3918 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 3918, PPID 3754, UID 0, GID 0
+I1026 07:18:50.866434    3918 cli.go:278] Args: [/opt/ocean-c23-runtime/release-20261019.0/runsc --root=/var/lib/ocean-c23/operator-acceptance/processes-20261026-01/worker/runsc-state-c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88 --platform=systrap --rootless=false --network=none --gofer-network-namespace=new --directfs=false --overlay2=none --host-uds=none --host-fifo=none --character-device-policy=emulated-only --net-raw=false --ignore-cgroups=false --allow-flag-override=false --sidecar-release-enforcement-policy=ALWAYS --fdlimit=256 --gvisor-marker-file=true --oci-seccomp=true --debug=false --debug-log=/dev/stderr --panic-log=/dev/stderr delete --force c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88]
+I1026 07:18:50.866474    3918 config.go:631] Platform: systrap
+I1026 07:18:50.866495    3918 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/processes-20261026-01/worker/runsc-state-c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88
+I1026 07:18:50.866501    3918 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1026 07:18:50.866510    3918 config.go:634] Network: none
+I1026 07:18:50.866517    3918 config.go:635] UseCPUNums: false
+W1026 07:18:50.866522    3918 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1026 07:18:50.866529    3918 cli.go:287] **************** gVisor ****************
+I1026 07:18:50.866889    3918 cli.go:316] Exiting with status: 0
+I1026 07:18:49.434140    3799 cli.go:275] **************** gVisor ****************
+I1026 07:18:49.434204    3799 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 3799, PPID 3754, UID 0, GID 0
+I1026 07:18:49.434218    3799 cli.go:278] Args: [/opt/ocean-c23-runtime/release-20261019.0/runsc --root=/var/lib/ocean-c23/operator-acceptance/processes-20261026-01/worker/runsc-state-c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88 --platform=systrap --rootless=false --network=none --gofer-network-namespace=new --directfs=false --overlay2=none --host-uds=none --host-fifo=none --character-device-policy=emulated-only --net-raw=false --ignore-cgroups=false --allow-flag-override=false --sidecar-release-enforcement-policy=ALWAYS --fdlimit=256 --gvisor-marker-file=true --oci-seccomp=true --debug=false --debug-log=/dev/stderr --panic-log=/dev/stderr start c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88]
+I1026 07:18:49.434256    3799 config.go:631] Platform: systrap
+I1026 07:18:49.434275    3799 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/processes-20261026-01/worker/runsc-state-c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88
+I1026 07:18:49.434280    3799 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1026 07:18:49.434290    3799 config.go:634] Network: none
+I1026 07:18:49.434297    3799 config.go:635] UseCPUNums: false
+W1026 07:18:49.434302    3799 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1026 07:18:49.434309    3799 cli.go:287] **************** gVisor ****************
+I1026 07:18:49.434503    3799 hostsettings.go:326] Host setting "/proc/sys/user/max_user_namespaces" is optimal
+I1026 07:18:49.434551    3799 hostsettings.go:326] Host setting "/proc/sys/kernel/unprivileged_userns_clone" is optimal
+I1026 07:18:49.434575    3799 hostsettings.go:326] Host setting "/proc/sys/kernel/unprivileged_userns_apparmor_policy" is optimal
+W1026 07:18:49.434581    3799 hostsettings.go:46] Host setting "/sys/kernel/mm/transparent_hugepage/shmem_enabled" (currently: "always within_size advise [never] deny force") is not optimal (turning on transparent hugepages support in shmem increases memory allocation performance); it is recommended to change it to "advise"
+W1026 07:18:49.434589    3799 hostsettings.go:46] Host setting "/sys/kernel/mm/transparent_hugepage/defrag" (currently: "always defer defer+madvise [madvise] never") is not optimal (disabling direct compaction improves page fault latency when hugepages are not immediately available); it is recommended to change it to "never"
+W1026 07:18:49.434596    3799 hostsettings.go:46] Host setting "/proc/sys/vm/max_map_count" (currently: "1048576") is not optimal (increasing max_map_count decreases the likelihood of host VMA exhaustion); it is recommended to change it to "4194304"
+I1026 07:18:49.434656    3799 network.go:55] Setting up network
+I1026 07:18:49.434662    3799 network.go:59] Network is disabled, create loopback interface only
+I1026 07:18:49.454310    3799 cli.go:316] Exiting with status: 0
+I1026 07:18:49.713571    3816 cli.go:275] **************** gVisor ****************
+I1026 07:18:49.713650    3816 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 3816, PPID 3754, UID 0, GID 0
+I1026 07:18:49.713673    3816 cli.go:278] Args: [/opt/ocean-c23-runtime/release-20261019.0/runsc --root=/var/lib/ocean-c23/operator-acceptance/processes-20261026-01/worker/runsc-state-c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88 --platform=systrap --rootless=false --network=none --gofer-network-namespace=new --directfs=false --overlay2=none --host-uds=none --host-fifo=none --character-device-policy=emulated-only --net-raw=false --ignore-cgroups=false --allow-flag-override=false --sidecar-release-enforcement-policy=ALWAYS --fdlimit=256 --gvisor-marker-file=true --oci-seccomp=true --debug=false --debug-log=/dev/stderr --panic-log=/dev/stderr wait c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88]
+I1026 07:18:49.713738    3816 config.go:631] Platform: systrap
+I1026 07:18:49.713769    3816 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/processes-20261026-01/worker/runsc-state-c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88
+I1026 07:18:49.713779    3816 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1026 07:18:49.713793    3816 config.go:634] Network: none
+I1026 07:18:49.713802    3816 config.go:635] UseCPUNums: false
+W1026 07:18:49.713811    3816 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1026 07:18:49.713820    3816 cli.go:287] **************** gVisor ****************
+W1026 07:18:50.622273    3816 sandbox.go:1712] Wait RPC to container "c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88" failed: urpc method "containerManager.Wait" failed: EOF. Will try waiting on the sandbox process instead.
+W1026 07:18:50.661248    3816 util.go:107] FATAL ERROR: waiting on container "c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88": sandbox no longer running and its exit status is unavailable
+waiting on container "c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88": sandbox no longer running and its exit status is unavailable
+r.go:261 +0x72 fp=0x30b4de1cdfc8 sp=0x30b4de1cdf60 pc=0x8a22d2
+gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).init.gowrap1()
+	pkg/sentry/ktime/sampled_timer.go:116 +0x17 fp=0x30b4de1cdfe0 sp=0x30b4de1cdfc8 pc=0x8ac8b7
+runtime.goexit({})
+	src/runtime/asm_amd64.s:1264 +0x1 fp=0x30b4de1cdfe8 sp=0x30b4de1cdfe0 pc=0x498441
+created by gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).init in goroutine 248
+	pkg/sentry/ktime/sampled_timer.go:116 +0x16d
+
+goroutine 249 gp=0x30b4de362b40 m=nil [chan receive]:
+runtime.gopark(0x0?, 0x0?, 0xd0?, 0x71?, 0x0?)
+	GOROOT/src/runtime/proc.go:474 +0xca fp=0x30b4de36bef8 sp=0x30b4de36bed8 pc=0x49050a
+runtime.chanrecv(0x30b4de1a29a0, 0x30b4de36bfc0, 0x1)
+	GOROOT/src/runtime/chan.go:667 +0x4ae fp=0x30b4de36bf70 sp=0x30b4de36bef8 pc=0x41c86e
+runtime.chanrecv2(0x30b4de3f8c00?, 0x25b76b8?)
+	GOROOT/src/runtime/chan.go:514 +0x12 fp=0x30b4de36bf98 sp=0x30b4de36bf70 pc=0x41c3b2
+gvisor.dev/gvisor/pkg/sentry/platform/systrap.newSubprocess.func1()
+	pkg/sentry/platform/systrap/subprocess.go:404 +0x54 fp=0x30b4de36bfe0 sp=0x30b4de36bf98 pc=0xf01e14
+runtime.goexit({})
+	src/runtime/asm_amd64.s:1264 +0x1 fp=0x30b4de36bfe8 sp=0x30b4de36bfe0 pc=0x498441
+created by gvisor.dev/gvisor/pkg/sentry/platform/systrap.newSubprocess in goroutine 70
+	pkg/sentry/platform/systrap/subprocess.go:401 +0x30b
+
+goroutine 250 gp=0x30b4de362d20 m=nil [select]:
+runtime.gopark(0x30b4de25a798?, 0x2?, 0xb9?, 0x4b?, 0x30b4de25a794?)
+	GOROOT/src/runtime/proc.go:474 +0xca fp=0x30b4de25a620 sp=0x30b4de25a600 pc=0x49050a
+runtime.selectgo(0x30b4de25a798, 0x30b4de25a790, 0x0?, 0x0, 0x1010101?, 0x1)
+	GOROOT/src/runtime/select.go:351 +0xa97 fp=0x30b4de25a760 sp=0x30b4de25a620 pc=0x4686d7
+gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).runGoroutine(0x30b4de1df050)
+	pkg/sentry/ktime/sampled_timer.go:261 +0x72 fp=0x30b4de25a7c8 sp=0x30b4de25a760 pc=0x8a22d2
+gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).init.gowrap1()
+	pkg/sentry/ktime/sampled_timer.go:116 +0x17 fp=0x30b4de25a7e0 sp=0x30b4de25a7c8 pc=0x8ac8b7
+runtime.goexit({})
+	src/runtime/asm_amd64.s:1264 +0x1 fp=0x30b4de25a7e8 sp=0x30b4de25a7e0 pc=0x498441
+created by gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).init in goroutine 70
+	pkg/sentry/ktime/sampled_timer.go:116 +0x16d
+
+goroutine 251 gp=0x30b4de362f00 m=nil [select]:
+runtime.gopark(0x30b4de2b5748?, 0x3?, 0x46?, 0x30?, 0x30b4de2b572a?)
+	GOROOT/src/runtime/proc.go:474 +0xca fp=0x30b4de2b55b0 sp=0x30b4de2b5590 pc=0x49050a
+runtime.selectgo(0x30b4de2b5748, 0x30b4de2b5724, 0x116e9e2?, 0x0, 0x7eb5efe1e000?, 0x1)
+	GOROOT/src/runtime/select.go:351 +0xa97 fp=0x30b4de2b56f0 sp=0x30b4de2b55b0 pc=0x4686d7
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).block(0x30b4de454d88, 0x0, 0x30b4de2c4380)
+	pkg/sentry/kernel/task_block.go:228 +0x145 fp=0x30b4de2b57a0 sp=0x30b4de2b56f0 pc=0xb38665
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).blockWithDeadlineFromSampledClock(0x30b4de454d88, 0x0, {0x26d1b70?, 0x30b4ddd2c780?}, {0x7f0538?})
+	pkg/sentry/kernel/task_block.go:128 +0x5b fp=0x30b4de2b57f0 sp=0x30b4de2b57a0 pc=0xb380db
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).BlockWithDeadlineFrom(0x30b4de454d88, 0x0, {0x78dd03f68000?, 0x30b4ddd2c780?}, 0xf8?, {0xdaf928?})
+	pkg/sentry/kernel/task_block.go:96 +0x1a6 fp=0x30b4de2b5888 sp=0x30b4de2b57f0 pc=0xb37f86
+gvisor.dev/gvisor/pkg/sentry/syscalls/linux.clockNanosleepUntil(0x30b4de454d88, {0x78dd03f68000, 0x30b4ddd2c780}, {0x9efd65?}, 0x0, 0x0)
+	pkg/sentry/syscalls/linux/sys_time.go:245 +0x54 fp=0x30b4de2b5908 sp=0x30b4de2b5888 pc=0xdab594
+gvisor.dev/gvisor/pkg/sentry/syscalls/linux.ClockNanosleep(0x30b4de454d88, 0x0?, {{0x1}, {0x1}, {0x7ef4670255f0}, {0x0}, {0x0}, {0x0}})
+	pkg/sentry/syscalls/linux/sys_time.go:233 +0x12b fp=0x30b4de2b5988 sp=0x30b4de2b5908 pc=0xdab42b
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).executeSyscall(0x30b4de454d88, 0xe6, {{0x1}, {0x1}, {0x7ef4670255f0}, {0x0}, {0x0}, {0x0}})
+	pkg/sentry/kernel/task_syscall.go:143 +0x675 fp=0x30b4de2b5cc8 sp=0x30b4de2b5988 pc=0xb5ad55
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).doSyscallInvoke(0x30b4de454d88, 0xe6, {{0x1}, {0x1}, {0x7ef4670255f0}, {0x0}, {0x0}, {0x0}})
+	pkg/sentry/kernel/task_syscall.go:327 +0x4b fp=0x30b4de2b5d20 sp=0x30b4de2b5cc8 pc=0xb5bdcb
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).doSyscallEnter(0x30b4de454d88, 0xe6, {{0x1}, {0x1}, {0x7ef4670255f0}, {0x0}, {0x0}, {0x0}})
+	pkg/sentry/kernel/task_syscall.go:287 +0x68 fp=0x30b4de2b5d70 sp=0x30b4de2b5d20 pc=0xb5bae8
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).doSyscall(0x30b4de454d88?)
+	pkg/sentry/kernel/task_syscall.go:262 +0x2ab fp=0x30b4de2b5e48 sp=0x30b4de2b5d70 pc=0xb5b7cb
+gvisor.dev/gvisor/pkg/sentry/kernel.(*runApp).execute(0x30b4ddf21b90?, 0x30b4de454d88)
+	pkg/sentry/kernel/task_run.go:258 +0xfde fp=0x30b4de2b5f30 sp=0x30b4de2b5e48 pc=0xb50bbe
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).run(0x30b4de454d88, 0x2f)
+	pkg/sentry/kernel/task_run.go:89 +0x1fb fp=0x30b4de2b5fc0 sp=0x30b4de2b5f30 pc=0xb4f89b
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).Start.gowrap1()
+	pkg/sentry/kernel/task_start.go:582 +0x1b fp=0x30b4de2b5fe0 sp=0x30b4de2b5fc0 pc=0xb821bb
+runtime.goexit({})
+	src/runtime/asm_amd64.s:1264 +0x1 fp=0x30b4de2b5fe8 sp=0x30b4de2b5fe0 pc=0x498441
+created by gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).Start in goroutine 70
+	pkg/sentry/kernel/task_start.go:582 +0xcb
+
+goroutine 257 gp=0x30b4de0bba40 m=nil [select]:
+runtime.gopark(0x30b4de389f98?, 0x2?, 0x0?, 0x8a?, 0x30b4de389f94?)
+	GOROOT/src/runtime/proc.go:474 +0xca fp=0x30b4de389e20 sp=0x30b4de389e00 pc=0x49050a
+runtime.selectgo(0x30b4de389f98, 0x30b4de389f90, 0x30b4ddf21b00?, 0x0, 0xb81340?, 0x1)
+	GOROOT/src/runtime/select.go:351 +0xa97 fp=0x30b4de389f60 sp=0x30b4de389e20 pc=0x4686d7
+gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).runGoroutine(0x30b4ddf21b90)
+	pkg/sentry/ktime/sampled_timer.go:261 +0x72 fp=0x30b4de389fc8 sp=0x30b4de389f60 pc=0x8a22d2
+gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).init.gowrap1()
+	pkg/sentry/ktime/sampled_timer.go:116 +0x17 fp=0x30b4de389fe0 sp=0x30b4de389fc8 pc=0x8ac8b7
+runtime.goexit({})
+	src/runtime/asm_amd64.s:1264 +0x1 fp=0x30b4de389fe8 sp=0x30b4de389fe0 pc=0x498441
+created by gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).init in goroutine 251
+	pkg/sentry/ktime/sampled_timer.go:116 +0x16d
+
+goroutine 258 gp=0x30b4de0bbc20 m=nil [chan receive]:
+runtime.gopark(0x0?, 0x0?, 0x40?, 0x8b?, 0x0?)
+	GOROOT/src/runtime/proc.go:474 +0xca fp=0x30b4dded4ef8 sp=0x30b4dded4ed8 pc=0x49050a
+runtime.chanrecv(0x30b4de2c4460, 0x30b4dded4fc0, 0x1)
+	GOROOT/src/runtime/chan.go:667 +0x4ae fp=0x30b4dded4f70 sp=0x30b4dded4ef8 pc=0x41c86e
+runtime.chanrecv2(0x30b4de0e6800?, 0x25b76b8?)
+	GOROOT/src/runtime/chan.go:514 +0x12 fp=0x30b4dded4f98 sp=0x30b4dded4f70 pc=0x41c3b2
+gvisor.dev/gvisor/pkg/sentry/platform/systrap.newSubprocess.func1()
+	pkg/sentry/platform/systrap/subprocess.go:404 +0x54 fp=0x30b4dded4fe0 sp=0x30b4dded4f98 pc=0xf01e14
+runtime.goexit({})
+	src/runtime/asm_amd64.s:1264 +0x1 fp=0x30b4dded4fe8 sp=0x30b4dded4fe0 pc=0x498441
+created by gvisor.dev/gvisor/pkg/sentry/platform/systrap.newSubprocess in goroutine 70
+	pkg/sentry/platform/systrap/subprocess.go:401 +0x30b
+
+goroutine 259 gp=0x30b4de3cc000 m=nil [select]:
+runtime.gopark(0x30b4de25af98?, 0x2?, 0xb9?, 0x4b?, 0x30b4de25af94?)
+	GOROOT/src/runtime/proc.go:474 +0xca fp=0x30b4de25ae20 sp=0x30b4de25ae00 pc=0x49050a
+runtime.selectgo(0x30b4de25af98, 0x30b4de25af90, 0x0?, 0x0, 0xb81301?, 0x1)
+	GOROOT/src/runtime/select.go:351 +0xa97 fp=0x30b4de25af60 sp=0x30b4de25ae20 pc=0x4686d7
+gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).runGoroutine(0x30b4ddf21cb0)
+	pkg/sentry/ktime/sampled_timer.go:261 +0x72 fp=0x30b4de25afc8 sp=0x30b4de25af60 pc=0x8a22d2
+gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).init.gowrap1()
+	pkg/sentry/ktime/sampled_timer.go:116 +0x17 fp=0x30b4de25afe0 sp=0x30b4de25afc8 pc=0x8ac8b7
+runtime.goexit({})
+	src/runtime/asm_amd64.s:1264 +0x1 fp=0x30b4de25afe8 sp=0x30b4de25afe0 pc=0x498441
+created by gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).init in goroutine 70
+	pkg/sentry/ktime/sampled_timer.go:116 +0x16d
+
+goroutine 260 gp=0x30b4de3cc1e0 m=nil [select]:
+runtime.gopark(0x30b4de4dd748?, 0x3?, 0xd7?, 0xcf?, 0x30b4de4dd72a?)
+	GOROOT/src/runtime/proc.go:474 +0xca fp=0x30b4de4dd5b0 sp=0x30b4de4dd590 pc=0x49050a
+runtime.selectgo(0x30b4de4dd748, 0x30b4de4dd724, 0x116e9e2?, 0x0, 0x7eb5efe1e000?, 0x1)
+	GOROOT/src/runtime/select.go:351 +0xa97 fp=0x30b4de4dd6f0 sp=0x30b4de4dd5b0 pc=0x4686d7
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).block(0x30b4de514008, 0x0, 0x30b4de1a2bd0)
+	pkg/sentry/kernel/task_block.go:228 +0x145 fp=0x30b4de4dd7a0 sp=0x30b4de4dd6f0 pc=0xb38665
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).blockWithDeadlineFromSampledClock(0x30b4de514008, 0x0, {0x26d1b70?, 0x30b4ddd2c780?}, {0x7f0538?})
+	pkg/sentry/kernel/task_block.go:128 +0x5b fp=0x30b4de4dd7f0 sp=0x30b4de4dd7a0 pc=0xb380db
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).BlockWithDeadlineFrom(0x30b4de514008, 0x0, {0x78dd03f68000?, 0x30b4ddd2c780?}, 0xf8?, {0xdaf928?})
+	pkg/sentry/kernel/task_block.go:96 +0x1a6 fp=0x30b4de4dd888 sp=0x30b4de4dd7f0 pc=0xb37f86
+gvisor.dev/gvisor/pkg/sentry/syscalls/linux.clockNanosleepUntil(0x30b4de514008, {0x78dd03f68000, 0x30b4ddd2c780}, {0x9efd65?}, 0x0, 0x0)
+	pkg/sentry/syscalls/linux/sys_time.go:245 +0x54 fp=0x30b4de4dd908 sp=0x30b4de4dd888 pc=0xdab594
+gvisor.dev/gvisor/pkg/sentry/syscalls/linux.ClockNanosleep(0x30b4de514008, 0x0?, {{0x1}, {0x1}, {0x7ef4670255f0}, {0x0}, {0x0}, {0x0}})
+	pkg/sentry/syscalls/linux/sys_time.go:233 +0x12b fp=0x30b4de4dd988 sp=0x30b4de4dd908 pc=0xdab42b
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).executeSyscall(0x30b4de514008, 0xe6, {{0x1}, {0x1}, {0x7ef4670255f0}, {0x0}, {0x0}, {0x0}})
+	pkg/sentry/kernel/task_syscall.go:143 +0x675 fp=0x30b4de4ddcc8 sp=0x30b4de4dd988 pc=0xb5ad55
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).doSyscallInvoke(0x30b4de514008, 0xe6, {{0x1}, {0x1}, {0x7ef4670255f0}, {0x0}, {0x0}, {0x0}})
+	pkg/sentry/kernel/task_syscall.go:327 +0x4b fp=0x30b4de4ddd20 sp=0x30b4de4ddcc8 pc=0xb5bdcb
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).doSyscallEnter(0x30b4de514008, 0xe6, {{0x1}, {0x1}, {0x7ef4670255f0}, {0x0}, {0x0}, {0x0}})
+	pkg/sentry/kernel/task_syscall.go:287 +0x68 fp=0x30b4de4ddd70 sp=0x30b4de4ddd20 pc=0xb5bae8
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).doSyscall(0x30b4de514008?)
+	pkg/sentry/kernel/task_syscall.go:262 +0x2ab fp=0x30b4de4dde48 sp=0x30b4de4ddd70 pc=0xb5b7cb
+gvisor.dev/gvisor/pkg/sentry/kernel.(*runApp).execute(0x30b4de1df0e0?, 0x30b4de514008)
+	pkg/sentry/kernel/task_run.go:258 +0xfde fp=0x30b4de4ddf30 sp=0x30b4de4dde48 pc=0xb50bbe
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).run(0x30b4de514008, 0x30)
+	pkg/sentry/kernel/task_run.go:89 +0x1fb fp=0x30b4de4ddfc0 sp=0x30b4de4ddf30 pc=0xb4f89b
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).Start.gowrap1()
+	pkg/sentry/kernel/task_start.go:582 +0x1b fp=0x30b4de4ddfe0 sp=0x30b4de4ddfc0 pc=0xb821bb
+runtime.goexit({})
+	src/runtime/asm_amd64.s:1264 +0x1 fp=0x30b4de4ddfe8 sp=0x30b4de4ddfe0 pc=0x498441
+created by gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).Start in goroutine 70
+	pkg/sentry/kernel/task_start.go:582 +0xcb
+
+goroutine 252 gp=0x30b4de3630e0 m=nil [select]:
+runtime.gopark(0x30b4de25b798?, 0x2?, 0x0?, 0x0?, 0x30b4de25b794?)
+	GOROOT/src/runtime/proc.go:474 +0xca fp=0x30b4de25b620 sp=0x30b4de25b600 pc=0x49050a
+runtime.selectgo(0x30b4de25b798, 0x30b4de25b790, 0x1010101?, 0x0, 0x0?, 0x1)
+	GOROOT/src/runtime/select.go:351 +0xa97 fp=0x30b4de25b760 sp=0x30b4de25b620 pc=0x4686d7
+gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).runGoroutine(0x30b4de1df0e0)
+	pkg/sentry/ktime/sampled_timer.go:261 +0x72 fp=0x30b4de25b7c8 sp=0x30b4de25b760 pc=0x8a22d2
+gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).init.gowrap1()
+	pkg/sentry/ktime/sampled_timer.go:116 +0x17 fp=0x30b4de25b7e0 sp=0x30b4de25b7c8 pc=0x8ac8b7
+runtime.goexit({})
+	src/runtime/asm_amd64.s:1264 +0x1 fp=0x30b4de25b7e8 sp=0x30b4de25b7e0 pc=0x498441
+created by gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).init in goroutine 260
+	pkg/sentry/ktime/sampled_timer.go:116 +0x16d
+
+goroutine 261 gp=0x30b4de3cc3c0 m=nil [chan receive]:
+runtime.gopark(0x0?, 0x0?, 0x10?, 0x8e?, 0x0?)
+	GOROOT/src/runtime/proc.go:474 +0xca fp=0x30b4dded5ef8 sp=0x30b4dded5ed8 pc=0x49050a
+runtime.chanrecv(0x30b4de2c4700, 0x30b4dded5fc0, 0x1)
+	GOROOT/src/runtime/chan.go:667 +0x4ae fp=0x30b4dded5f70 sp=0x30b4dded5ef8 pc=0x41c86e
+runtime.chanrecv2(0x30b4de0e6a00?, 0x25b76b8?)
+	GOROOT/src/runtime/chan.go:514 +0x12 fp=0x30b4dded5f98 sp=0x30b4dded5f70 pc=0x41c3b2
+gvisor.dev/gvisor/pkg/sentry/platform/systrap.newSubprocess.func1()
+	pkg/sentry/platform/systrap/subprocess.go:404 +0x54 fp=0x30b4dded5fe0 sp=0x30b4dded5f98 pc=0xf01e14
+runtime.goexit({})
+	src/runtime/asm_amd64.s:1264 +0x1 fp=0x30b4dded5fe8 sp=0x30b4dded5fe0 pc=0x498441
+created by gvisor.dev/gvisor/pkg/sentry/platform/systrap.newSubprocess in goroutine 70
+	pkg/sentry/platform/systrap/subprocess.go:401 +0x30b
+
+goroutine 262 gp=0x30b4de3cc5a0 m=nil [select]:
+runtime.gopark(0x30b4de55c798?, 0x2?, 0xb9?, 0x4b?, 0x30b4de55c794?)
+	GOROOT/src/runtime/proc.go:474 +0xca fp=0x30b4de55c620 sp=0x30b4de55c600 pc=0x49050a
+runtime.selectgo(0x30b4de55c798, 0x30b4de55c790, 0x0?, 0x0, 0x1?, 0x1)
+	GOROOT/src/runtime/select.go:351 +0xa97 fp=0x30b4de55c760 sp=0x30b4de55c620 pc=0x4686d7
+gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).runGoroutine(0x30b4ddf21dd0)
+	pkg/sentry/ktime/sampled_timer.go:261 +0x72 fp=0x30b4de55c7c8 sp=0x30b4de55c760 pc=0x8a22d2
+gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).init.gowrap1()
+	pkg/sentry/ktime/sampled_timer.go:116 +0x17 fp=0x30b4de55c7e0 sp=0x30b4de55c7c8 pc=0x8ac8b7
+runtime.goexit({})
+	src/runtime/asm_amd64.s:1264 +0x1 fp=0x30b4de55c7e8 sp=0x30b4de55c7e0 pc=0x498441
+created by gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).init in goroutine 70
+	pkg/sentry/ktime/sampled_timer.go:116 +0x16d
+
+goroutine 263 gp=0x30b4de3cc780 m=nil [select]:
+runtime.gopark(0x30b4de4df748?, 0x3?, 0x48?, 0x53?, 0x30b4de4df72a?)
+	GOROOT/src/runtime/proc.go:474 +0xca fp=0x30b4de4df5b0 sp=0x30b4de4df590 pc=0x49050a
+runtime.selectgo(0x30b4de4df748, 0x30b4de4df724, 0x116e9e2?, 0x0, 0x7eb5efe1e000?, 0x1)
+	GOROOT/src/runtime/select.go:351 +0xa97 fp=0x30b4de4df6f0 sp=0x30b4de4df5b0 pc=0x4686d7
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).block(0x30b4de514d88, 0x0, 0x30b4de1a2cb0)
+	pkg/sentry/kernel/task_block.go:228 +0x145 fp=0x30b4de4df7a0 sp=0x30b4de4df6f0 pc=0xb38665
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).blockWithDeadlineFromSampledClock(0x30b4de514d88, 0x0, {0x26d1b70?, 0x30b4ddd2c780?}, {0x7f0538?})
+	pkg/sentry/kernel/task_block.go:128 +0x5b fp=0x30b4de4df7f0 sp=0x30b4de4df7a0 pc=0xb380db
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).BlockWithDeadlineFrom(0x30b4de514d88, 0x0, {0x78dd03f68000?, 0x30b4ddd2c780?}, 0xf8?, {0xdaf928?})
+	pkg/sentry/kernel/task_block.go:96 +0x1a6 fp=0x30b4de4df888 sp=0x30b4de4df7f0 pc=0xb37f86
+gvisor.dev/gvisor/pkg/sentry/syscalls/linux.clockNanosleepUntil(0x30b4de514d88, {0x78dd03f68000, 0x30b4ddd2c780}, {0x9efd65?}, 0x0, 0x0)
+	pkg/sentry/syscalls/linux/sys_time.go:245 +0x54 fp=0x30b4de4df908 sp=0x30b4de4df888 pc=0xdab594
+gvisor.dev/gvisor/pkg/sentry/syscalls/linux.ClockNanosleep(0x30b4de514d88, 0x0?, {{0x1}, {0x1}, {0x7ef4670255f0}, {0x0}, {0x0}, {0x0}})
+	pkg/sentry/syscalls/linux/sys_time.go:233 +0x12b fp=0x30b4de4df988 sp=0x30b4de4df908 pc=0xdab42b
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).executeSyscall(0x30b4de514d88, 0xe6, {{0x1}, {0x1}, {0x7ef4670255f0}, {0x0}, {0x0}, {0x0}})
+	pkg/sentry/kernel/task_syscall.go:143 +0x675 fp=0x30b4de4dfcc8 sp=0x30b4de4df988 pc=0xb5ad55
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).doSyscallInvoke(0x30b4de514d88, 0xe6, {{0x1}, {0x1}, {0x7ef4670255f0}, {0x0}, {0x0}, {0x0}})
+	pkg/sentry/kernel/task_syscall.go:327 +0x4b fp=0x30b4de4dfd20 sp=0x30b4de4dfcc8 pc=0xb5bdcb
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).doSyscallEnter(0x30b4de514d88, 0xe6, {{0x1}, {0x1}, {0x7ef4670255f0}, {0x0}, {0x0}, {0x0}})
+	pkg/sentry/kernel/task_syscall.go:287 +0x68 fp=0x30b4de4dfd70 sp=0x30b4de4dfd20 pc=0xb5bae8
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).doSyscall(0x30b4de514d88?)
+	pkg/sentry/kernel/task_syscall.go:262 +0x2ab fp=0x30b4de4dfe48 sp=0x30b4de4dfd70 pc=0xb5b7cb
+gvisor.dev/gvisor/pkg/sentry/kernel.(*runApp).execute(0x30b4de1df170?, 0x30b4de514d88)
+	pkg/sentry/kernel/task_run.go:258 +0xfde fp=0x30b4de4dff30 sp=0x30b4de4dfe48 pc=0xb50bbe
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).run(0x30b4de514d88, 0x31)
+	pkg/sentry/kernel/task_run.go:89 +0x1fb fp=0x30b4de4dffc0 sp=0x30b4de4dff30 pc=0xb4f89b
+gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).Start.gowrap1()
+	pkg/sentry/kernel/task_start.go:582 +0x1b fp=0x30b4de4dffe0 sp=0x30b4de4dffc0 pc=0xb821bb
+runtime.goexit({})
+	src/runtime/asm_amd64.s:1264 +0x1 fp=0x30b4de4dffe8 sp=0x30b4de4dffe0 pc=0x498441
+created by gvisor.dev/gvisor/pkg/sentry/kernel.(*Task).Start in goroutine 70
+	pkg/sentry/kernel/task_start.go:582 +0xcb
+
+goroutine 253 gp=0x30b4de3632c0 m=nil [select]:
+runtime.gopark(0x30b4de00ff98?, 0x2?, 0x80?, 0x69?, 0x30b4de00ff94?)
+	GOROOT/src/runtime/proc.go:474 +0xca fp=0x30b4de00fe20 sp=0x30b4de00fe00 pc=0x49050a
+runtime.selectgo(0x30b4de00ff98, 0x30b4de00ff90, 0x30b4de1df0e0?, 0x0, 0xb81340?, 0x1)
+	GOROOT/src/runtime/select.go:351 +0xa97 fp=0x30b4de00ff60 sp=0x30b4de00fe20 pc=0x4686d7
+gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).runGoroutine(0x30b4de1df170)
+	pkg/sentry/ktime/sampled_timer.go:261 +0x72 fp=0x30b4de00ffc8 sp=0x30b4de00ff60 pc=0x8a22d2
+gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).init.gowrap1()
+	pkg/sentry/ktime/sampled_timer.go:116 +0x17 fp=0x30b4de00ffe0 sp=0x30b4de00ffc8 pc=0x8ac8b7
+runtime.goexit({})
+	src/runtime/asm_amd64.s:1264 +0x1 fp=0x30b4de00ffe8 sp=0x30b4de00ffe0 pc=0x498441
+created by gvisor.dev/gvisor/pkg/sentry/ktime.(*SampledTimer).init in goroutine 263
+	pkg/sentry/ktime/sampled_timer.go:116 +0x16d
+I1026 07:18:50.661778       1 gofer.go:509] All lisafs servers exited.
+I1026 07:18:50.661856       1 cli.go:316] Exiting with status: 0
+I1026 07:18:49.198169    3794 cli.go:275] **************** gVisor ****************
+I1026 07:18:49.198245    3794 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 3794, PPID 3754, UID 0, GID 0
+I1026 07:18:49.198259    3794 cli.go:278] Args: [/opt/ocean-c23-runtime/release-20261019.0/runsc --root=/var/lib/ocean-c23/operator-acceptance/processes-20261026-01/worker/runsc-state-c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88 --platform=systrap --rootless=false --network=none --gofer-network-namespace=new --directfs=false --overlay2=none --host-uds=none --host-fifo=none --character-device-policy=emulated-only --net-raw=false --ignore-cgroups=false --allow-flag-override=false --sidecar-release-enforcement-policy=ALWAYS --fdlimit=256 --gvisor-marker-file=true --oci-seccomp=true --debug=false --debug-log=/dev/stderr --panic-log=/dev/stderr state c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88]
+I1026 07:18:49.198301    3794 config.go:631] Platform: systrap
+I1026 07:18:49.198312    3794 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/processes-20261026-01/worker/runsc-state-c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88
+I1026 07:18:49.198318    3794 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1026 07:18:49.198336    3794 config.go:634] Network: none
+I1026 07:18:49.198343    3794 config.go:635] UseCPUNums: false
+W1026 07:18:49.198348    3794 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1026 07:18:49.198355    3794 cli.go:287] **************** gVisor ****************
+I1026 07:18:49.198426    3794 cli.go:316] Exiting with status: 0
+ee99ee697191e3b6738659ccd4a9524b0b6e38b7ef94d061d1b265f5aa185f31  /tmp/c23-resource-20261026-01-evidence.tar

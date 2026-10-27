@@ -1,0 +1,23 @@
+{
+  "recorded_at": "2026-10-26T11:51:15.730682+00:00",
+  "queries": "Complete explicitproject gcloud instance describe, routers list all regions unfiltered, network describe, subnet describe; samefixedtargets as priornetworkobservations",
+  "project": "ocean-v1-c23-20261024",
+  "files": {
+    "instance": {
+      "sha256": "9e84f3431253207f9c40058756e295f4786daf1aecb537a0b2693033c106b5d7",
+      "received_mtime_ns": 1793015436569596299
+    },
+    "routers": {
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "received_mtime_ns": 1793015436284853202
+    },
+    "network": {
+      "sha256": "5fefa1f6482ea5cfd4c93c37b9c70afdd576656c3a82cfb794878547c5ca0bba",
+      "received_mtime_ns": 1793015434036953172
+    },
+    "subnet": {
+      "sha256": "573ab015ac54a2753d0b094e03faa4cb51d772a9438fb19d9d447d5866b21819",
+      "received_mtime_ns": 1793015437757621062
+    }
+  }
+}

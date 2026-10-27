@@ -1,0 +1,17 @@
+{
+  "C23_complete": false,
+  "head": "00abd95e648cfb8674ab668c2bf209044ef36f31",
+  "original_native01_preserved": true,
+  "physical_issuer_authority": false,
+  "reported_result": "28 passed in 86.23s",
+  "source_qualification": "Delegate reported source-bound run before usage interruption. Root recovered raw stdout/stderr and current source snapshots; final delegate receipt and independent DB review were not completed. Current-source hashes here are recovery observations, not an invented pre-run hash record.",
+  "source_sha256_at_recovery": {
+    "db/experiment_execution_models.py": "c82b42092c200263fd497d434f1df1a7a54d68240eee06d8d6ceb38131f5f52a",
+    "migrations/versions/20261027_0021_experiment_execution.py": "6030819273cedbd047d98ada9784b74f2fa126612d922253d177dedc5fcc5aa0",
+    "orchestration/experiment_sandbox/execution_store.py": "539e7c7b638b759fc92ef6615e5b037ab9d9420cf09876bd39033a9d4e1fb13d",
+    "tests/experiment_execution_postgres_support.py": "6e77800ab92c68636c4cbf7a9724085687327a4db6f27844913f9a71b0781223",
+    "tests/integration/test_experiment_execution_postgres.py": "1da0794fdfa062c88d25cf20392ef4a225cc18e5ae3e62effaab681a3d9cf547",
+    "tests/test_experiment_sandbox_execution_store.py": "49c9c70bbddbaafef408abba021cc6075a3e9650fad855e10328e508555a0f28"
+  },
+  "version": "c23-interrupted-native-evidence-recovery-v1"
+}

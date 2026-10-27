@@ -1,0 +1,619 @@
+{
+  "C23_complete": false,
+  "audited_passed_cases": [
+    {
+      "attempt": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02",
+      "case": "smoke",
+      "frame_sha256": "842597a6af0168e4e4bd54f0a6d632a4d8dba8899b8a485b4e7370160d249190",
+      "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+      "job_id": "c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0",
+      "journal_chain_events_verified": 11,
+      "network_qualification": "No-NAT is the target-bound complete trusted operator inventory snapshot; recency/completeness is operator provenance, the worker timestamp is sealing time. Live metadata rechecks only NIC0 and the exact terminal external-IP with verified HTTP200/Metadata-Flavor and empty body; a known empty config folder may remain. This is not continuous cloud-state attestation.",
+      "profile_sha256": "766fbcc7250e563d9409c16eb8dcd33a319709cd713aa632d3b2228d4550c583",
+      "recorded_cleanup": {
+        "cgroup_empty": true,
+        "mount_reconciliation": {
+          "after": {
+            "entry": null,
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              1311187
+            ]
+          },
+          "argv": [
+            "/usr/bin/umount",
+            "--internal-only",
+            "--",
+            "/var/lib/ocean-c23/operator-acceptance/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/rootfs"
+          ],
+          "before": {
+            "entry": {
+              "line": "96 27 8:1 /var/lib/ocean-c23/scientific-normalized-quota-v3/rootfs /var/lib/ocean-c23/operator-acceptance/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/rootfs ro,nosuid,nodev,relatime shared:1 - ext4 /dev/root rw,discard,errors=remount-ro,commit=30",
+              "mount_id": "96",
+              "options": "ro,nosuid,nodev,relatime"
+            },
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              559595
+            ]
+          },
+          "exit_code": 0,
+          "rootfs_unmounted": true,
+          "stderr_base64": "",
+          "stdout_base64": ""
+        },
+        "removed_cgroups": [
+          "/sys/fs/cgroup/ocean-c23/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/host",
+          "/sys/fs/cgroup/ocean-c23/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0"
+        ],
+        "reservation_released": false,
+        "rootfs_unmounted": true
+      },
+      "summary": {
+        "columns": [
+          "probe",
+          "value"
+        ],
+        "rows": [
+          [
+            "uid",
+            65532
+          ],
+          [
+            "gid",
+            65532
+          ],
+          [
+            "capabilities_zero",
+            true
+          ],
+          [
+            "exact_int64",
+            9223372036854775807
+          ]
+        ]
+      }
+    },
+    {
+      "attempt": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01",
+      "case": "namespaces",
+      "frame_sha256": "7ca70e55622a9789b89ce96cfe918befa7a5ce2dcc1841bd010fc00ae1ca248f",
+      "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+      "job_id": "c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810",
+      "journal_chain_events_verified": 11,
+      "network_qualification": "No-NAT is the target-bound complete trusted operator inventory snapshot; recency/completeness is operator provenance, the worker timestamp is sealing time. Live metadata rechecks only NIC0 and the exact terminal external-IP with verified HTTP200/Metadata-Flavor and empty body; a known empty config folder may remain. This is not continuous cloud-state attestation.",
+      "profile_sha256": "9f6deb4b6c916aaaa3cd0829c6128db72f0d4f66dc5a514b57fab9542c5bc150",
+      "recorded_cleanup": {
+        "cgroup_empty": true,
+        "mount_reconciliation": {
+          "after": {
+            "entry": null,
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              1311273
+            ]
+          },
+          "argv": [
+            "/usr/bin/umount",
+            "--internal-only",
+            "--",
+            "/var/lib/ocean-c23/operator-acceptance/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/rootfs"
+          ],
+          "before": {
+            "entry": {
+              "line": "96 27 8:1 /var/lib/ocean-c23/scientific-normalized-quota-v3/rootfs /var/lib/ocean-c23/operator-acceptance/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/rootfs ro,nosuid,nodev,relatime shared:1 - ext4 /dev/root rw,discard,errors=remount-ro,commit=30",
+              "mount_id": "96",
+              "options": "ro,nosuid,nodev,relatime"
+            },
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              559595
+            ]
+          },
+          "exit_code": 0,
+          "rootfs_unmounted": true,
+          "stderr_base64": "",
+          "stdout_base64": ""
+        },
+        "removed_cgroups": [
+          "/sys/fs/cgroup/ocean-c23/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/host",
+          "/sys/fs/cgroup/ocean-c23/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810"
+        ],
+        "reservation_released": false,
+        "rootfs_unmounted": true
+      },
+      "summary": {
+        "columns": [
+          "probe",
+          "value"
+        ],
+        "rows": [
+          [
+            "unshare_0x0",
+            1
+          ],
+          [
+            "unshare_0x20000",
+            1
+          ],
+          [
+            "unshare_0x2000000",
+            1
+          ],
+          [
+            "unshare_0x4000000",
+            1
+          ],
+          [
+            "unshare_0x8000000",
+            1
+          ],
+          [
+            "unshare_0x10000000",
+            1
+          ],
+          [
+            "unshare_0x20000000",
+            1
+          ],
+          [
+            "unshare_0x40000000",
+            1
+          ],
+          [
+            "unshare_0x80",
+            1
+          ],
+          [
+            "setns_invalid_fd",
+            1
+          ],
+          [
+            "clone_0x20000",
+            1
+          ],
+          [
+            "clone_0x2000000",
+            1
+          ],
+          [
+            "clone_0x4000000",
+            1
+          ],
+          [
+            "clone_0x8000000",
+            1
+          ],
+          [
+            "clone_0x10000000",
+            1
+          ],
+          [
+            "clone_0x20000000",
+            1
+          ],
+          [
+            "clone_0x40000000",
+            1
+          ],
+          [
+            "clone3_newuser",
+            38
+          ],
+          [
+            "clone3_invalid_pointer",
+            38
+          ],
+          [
+            "clone3_zero_size",
+            38
+          ],
+          [
+            "mount_tmpfs",
+            1
+          ],
+          [
+            "mount_bind",
+            1
+          ],
+          [
+            "mount_remount",
+            1
+          ],
+          [
+            "umount2",
+            1
+          ],
+          [
+            "uid",
+            65532
+          ],
+          [
+            "capabilities_zero",
+            true
+          ],
+          [
+            "ordinary_fork",
+            true
+          ],
+          [
+            "ordinary_subprocess",
+            true
+          ],
+          [
+            "ordinary_thread",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "attempt": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01",
+      "case": "containment",
+      "frame_sha256": "44098e664ce786e129e65045d151e9f5d6897db650536f43f08705a06a980f36",
+      "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+      "job_id": "c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185",
+      "journal_chain_events_verified": 11,
+      "network_qualification": "No-NAT is the target-bound complete trusted operator inventory snapshot; recency/completeness is operator provenance, the worker timestamp is sealing time. Live metadata rechecks only NIC0 and the exact terminal external-IP with verified HTTP200/Metadata-Flavor and empty body; a known empty config folder may remain. This is not continuous cloud-state attestation.",
+      "profile_sha256": "c681dfebab53d1f82143bd55e7e75e5e889739e8d795458a6784dde9afb02434",
+      "recorded_cleanup": {
+        "cgroup_empty": true,
+        "mount_reconciliation": {
+          "after": {
+            "entry": null,
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              1311359
+            ]
+          },
+          "argv": [
+            "/usr/bin/umount",
+            "--internal-only",
+            "--",
+            "/var/lib/ocean-c23/operator-acceptance/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/rootfs"
+          ],
+          "before": {
+            "entry": {
+              "line": "96 27 8:1 /var/lib/ocean-c23/scientific-normalized-quota-v3/rootfs /var/lib/ocean-c23/operator-acceptance/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/rootfs ro,nosuid,nodev,relatime shared:1 - ext4 /dev/root rw,discard,errors=remount-ro,commit=30",
+              "mount_id": "96",
+              "options": "ro,nosuid,nodev,relatime"
+            },
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              559595
+            ]
+          },
+          "exit_code": 0,
+          "rootfs_unmounted": true,
+          "stderr_base64": "",
+          "stdout_base64": ""
+        },
+        "removed_cgroups": [
+          "/sys/fs/cgroup/ocean-c23/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/host",
+          "/sys/fs/cgroup/ocean-c23/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185"
+        ],
+        "reservation_released": false,
+        "rootfs_unmounted": true
+      },
+      "summary": {
+        "columns": [
+          "probe",
+          "value"
+        ],
+        "rows": [
+          [
+            "external_network_denied",
+            true
+          ],
+          [
+            "metadata_denied",
+            true
+          ],
+          [
+            "host_file_socket_denied",
+            true
+          ],
+          [
+            "forbidden_writes_denied",
+            true
+          ],
+          [
+            "pip_absent",
+            true
+          ],
+          [
+            "trusted_frame_fd_denied",
+            true
+          ],
+          [
+            "guest_interfaces",
+            "lo"
+          ],
+          [
+            "ipv4_route_rows",
+            0
+          ],
+          [
+            "ipv6_route_readback",
+            "present"
+          ]
+        ]
+      }
+    }
+  ],
+  "checks_performed": [
+    "Declared evidence-file hashes; structural synthetic envelope/code/input/manifest binding",
+    "Raw frame validation and retained files/logs/manifest hashes",
+    "Read-only immutable SQLite journal hash chains and terminal-result hashes/authority",
+    "Outer+inner pre-start limits and source-bound image/runtime/init/profile identities",
+    "Whole owned cgroup populated0, delete acknowledgment and reconciled rootfs unmount"
+  ],
+  "cloud_actions": false,
+  "dispatch_eligible": false,
+  "generated_analysis_executed_locally": false,
+  "kind": "Independent read-only initial actual gVisor receipt audit",
+  "open_actual_gates": [
+    "Raw namespace-denial inheritance after fork and exec (current child/subprocess probes only show compatibility)",
+    "Remaining measured resource/output/log/scratch/inode cases and repeated seeded numerical/raster fixtures",
+    "Actual tampered input/image mismatch pre-start rejection and adversarial late-writer extraction",
+    "Controller death/queued launch/lease loss/reboot reconciliation with actual runtime",
+    "Retained real C22 current admission and narrow verified-termination reservation-release bridge; operator fixtures cannot satisfy it"
+  ],
+  "process_failure_observation": {
+    "adapter_state": "uncertain",
+    "memory_oom_kill": 0,
+    "original_case_passed": false,
+    "outputs_published": false,
+    "panic_member_sha256": "adfa24f646570eb326466b802c0a720209b94612351469b3e66040fb56ec546b",
+    "pids_events_max": 1,
+    "qualification": "A separately labelled native whole-job PID bound is supported by128 pre-start limit/readback plus denied-clone event and cleanup. Underlying stub errno was discarded; exhaustion is supported inference. This does not establish graceful guest EAGAIN or128 usable guest tasks, and never revises the failed original case.",
+    "reservation_released": false,
+    "whole_host_subtree_empty": true
+  },
+  "qualifications": [
+    "Networking denial is observed with guest loopback/no routes and metadata/host-file/socket/package-manager/write probes. External TCP host positive precedes deliberate egress removal, so failed external TCP alone does not isolate gVisor causality; no-NAT is operator snapshot provenance, not continuous attestation.",
+    "Image/complete binaries/materialization checks are retained worker observations; this audit did not independently rebuild image or rerun binaries. Source-qualified sealed-init success implies its quota/capability/reaping checks completed; adversarial quota exhaustion is still separate.",
+    "Native UID search ACL probe and rootfs/input readability are distinct from full containment acceptance. No real C22 approval/admission/consumption/release or scientific approval was claimed."
+  ],
+  "raw_inputs_sha256": {
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/attempt-start.json": "6e7140c6e1889980caad7dc8808317dd2aaf72868439a5dc31ce827800880084",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/attempt.json": "531e7d5e6f442153dff53bc91688031e79159fce240ca51a24f55b3b6a8fc28c",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/cgroup-cgroup.events.raw.txt": "3b9e1e4502927976afbfdd8a423ef8803c2e3165ab4bfb0bae2d93f4b8b3977a",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/cgroup-cpu.stat.raw.txt": "a99837af660b9326037bfaa4a96fe32ba2f194039128e71267bdc9910430e3cb",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/cgroup-memory.events.raw.txt": "0a2d4e7982066cc7dc914627e7b195ccba88b82a5a996201809e529142d2f380",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/cgroup-memory.peak.raw.txt": "503c36ef3bc97d5feea47cc802d3aa22f0b99ad5e30a1bc31f7683c5c62c297b",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/cgroup-pids.events.raw.txt": "bd7ddfd0b90e9b54b8dcaae0b1dca9f5d4e08c3fab5013518b3edd3b45aecf50",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/command-0.json": "41df5d4794f810bb8e63089aab5cfad54dafdbb810704c94e1e04b9c3cae73d4",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/command-0.stderr.bin": "10b7d1c493db2fd73cae90a0d591f7c5f61c242bbc7d0c3b51a4866a6a974d35",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/command-0.stdout.bin": "44098e664ce786e129e65045d151e9f5d6897db650536f43f08705a06a980f36",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/command-1.json": "a47953f393681ae2e584a6037ce89dbd7117d0fec0aa56dc586030095d70a83e",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/command-1.stderr.bin": "e9693ab86916c217fcf859d746aa8c96ac03ff3a592855839e45b0089bd144af",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/command-1.stdout.bin": "e606aa07d1e388a6aa6c6b9ccc8a13866c873518edd3f9fe1a872519cf4e531a",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/command-2.json": "0e6f0fa09a4e0d93f7541defa3ede6e668a34a9939dcf2fa2a1a666180712793",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/command-2.stderr.bin": "40b97c82e62fa131251fc56b826b0e3a9dc86cfd286443b470673e8096a2a81f",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/command-2.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/command-3.json": "2ff7bf85dd654771e83106a27d00eeff0ff52064de2f56a4ffae808b3d32e6cc",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/command-3.stderr.bin": "38a1d1a6076c9e3f6e8619963a3e6063ff462506f0d6cd163866870adba77b0a",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/command-3.stdout.bin": "1091703c649409aec434d163a4e2e4a4ad3afbecd43c36766a44bcb6f27df896",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/command-4.json": "6a53882fe533f0079cdc761ed4c35c99705947cb839bce2895b35578b132a768",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/command-4.stderr.bin": "73d3bad6a37668516d43c448fe9b74809539858562e591911b9d55eefacfa230",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/command-4.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/gofer-traversal-0.json": "da63523ecb4a9b3451db2baf31b0a109a5cf12cd3a28db35823ff6f9a036407e",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/gofer-traversal-1.json": "14d11738d68e873b06cc26dfc37ed8ec7e907c773d1c6ef3714fc3b8ffc7001a",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/gofer-traversal-2.json": "da9c45e87d559692bfe2779b29185c329f12627aa9c79acbe4b8851aadaa4214",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/gofer-traversal-3.json": "a9b139927bacd7c5b1a0b11650b0b97fc822ae6a90cfcdd415d969bc9a0261c4",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/gofer-traversal-4.json": "1cac2fdfe71904275bfe2b53058f97e7ff7c99849835a83657347b757a5b4447",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/gofer-traversal.json": "9ad4b5237c52ee5288932605f178b72e0dcc053cc3955625a267dc5b6cfcb0c8",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/host-canary.txt": "06ba9f9d16f88854d849ce59d92064548aeab1d4c7a237fecf75e0c141078426",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/host-positive-controls.json": "f2aff41ce24f5b9bd2a8e0fdf30e18a8e2308aec73ca122b47f08a439365821b",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/journal/identity.json": "a26c4a63da674c992a347c01ca0dcd4adb99b37ef8aedaa440382b4437a21c82",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/journal/journal.sqlite3": "a1be2dc3f578382c7418d24b92955611b9af1c13103b641f650b425a155807c1",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/journal/locks/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/journal/schema.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/mount-0.intent.json": "95244dfe632320f038a1a2b38c60522a495bb1bf90170a1cfeea2fca8ab55a07",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/mount-0.observation.json": "413d8fa8700103929a662dd195748351ef76964377d38b6b7e1ea277e2ee488d",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/mount-0.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/mount-0.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/mount-1.intent.json": "025455390a9d00de37a155524428c28ca00b2134dc05dba12bbb378da2e8d8ae",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/mount-1.observation.json": "206de62ebcc5254da49a140a156befc903400bfde7d03a0e16ef883ee6c97aa5",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/mount-1.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/mount-1.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/mount-intent.json": "fc60c21fe8135e917cf5ef19f2e0a3463e7b6a6aad377f034fe23e03eba13f68",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/operator-fixture.json": "613acb7725e3a06ba5e3a99641552e13bbc34a91621cf5deb41891c346de7444",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/profile.json": "c681dfebab53d1f82143bd55e7e75e5e889739e8d795458a6784dde9afb02434",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/config.json": "79494a3bf2dcb12cafb55e7f07463a2ce0169ffba1e73b483200c53d789d4b70",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/diagnostics/create-80dcaacb9e354595b13b7d526633678f/metadata.json": "774574e6e4ae36d9acfb0fd0f8ff5432fa29b4e95d59e2521cfcbfad3d3f153f",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/diagnostics/create-80dcaacb9e354595b13b7d526633678f/stderr.bin": "10b7d1c493db2fd73cae90a0d591f7c5f61c242bbc7d0c3b51a4866a6a974d35",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/diagnostics/delete-5fffc8556b304fe4ab4c265a1dfabb30/metadata.json": "0148737a0abbf8f853a06f854b9f531171c1b0bdf50d038a134f73d7f0ea01ac",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/diagnostics/delete-5fffc8556b304fe4ab4c265a1dfabb30/stderr.bin": "73d3bad6a37668516d43c448fe9b74809539858562e591911b9d55eefacfa230",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/diagnostics/delete-5fffc8556b304fe4ab4c265a1dfabb30/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/diagnostics/start-7201596ba2844f0b9aaf7753cf3b8021/metadata.json": "cdcc5b29f4f1849a9181f833979970f06d7d4769cf7729654ce37033bc97dae7",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/diagnostics/start-7201596ba2844f0b9aaf7753cf3b8021/stderr.bin": "40b97c82e62fa131251fc56b826b0e3a9dc86cfd286443b470673e8096a2a81f",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/diagnostics/start-7201596ba2844f0b9aaf7753cf3b8021/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/diagnostics/state-1848397456ed4d7d9542c37c60bc4c67/metadata.json": "03d6618a867bfa223eeeaddbd073a2270f85ce88bfdcba1a1c029e163aab1cbe",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/diagnostics/state-1848397456ed4d7d9542c37c60bc4c67/stderr.bin": "e9693ab86916c217fcf859d746aa8c96ac03ff3a592855839e45b0089bd144af",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/diagnostics/state-1848397456ed4d7d9542c37c60bc4c67/stdout.bin": "e606aa07d1e388a6aa6c6b9ccc8a13866c873518edd3f9fe1a872519cf4e531a",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/diagnostics/wait-0d7bac100230461ea9a8cb1b73dd43aa/metadata.json": "23d199080f265b4b2b83a8e4a6371c163c11f8c98934637fb873e5ffb8219d8f",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/diagnostics/wait-0d7bac100230461ea9a8cb1b73dd43aa/stderr.bin": "38a1d1a6076c9e3f6e8619963a3e6063ff462506f0d6cd163866870adba77b0a",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/diagnostics/wait-0d7bac100230461ea9a8cb1b73dd43aa/stdout.bin": "1091703c649409aec434d163a4e2e4a4ad3afbecd43c36766a44bcb6f27df896",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/inputs/analysis.py": "6d37e14a99ab1402a37c24950140526bcb4253fc1bf759badd817c5a89aa14f6",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/inputs/exclusions.json": "6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/inputs/manifest.json": "3fbb1a88837feeeb10e97181e53d19e927fc71d8a4115c9f2ff43ad76a27b065",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/inputs/pairing.json": "fdb152ab5a7f50998d53df5b9bd96583b089543fa424ba1cc387f17261373875",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/inputs/table-01.json": "0e1ca9adf74895a55db700686f6c6c71fe357750ad227b0297634ca62ffbfa77",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/retained/files/summary.json": "667ec634728dcdf50eec10bb01f89bdbabdb2b2c5983206e1292afcfd4b7beaa",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/retained/logs/stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/retained/logs/stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/retained/manifest.json": "7348a25ff174403473d477d2d41c5f073f6f085090458891c2fcd834855b2380",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/attempt-start.json": "e5e184243e00003993cccb125d1201acc5bbd27a1acae2d4ca7a227a80ee76aa",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/attempt.json": "d4c469f38eebca57102b3976d465e7500832ef5e3c1a20c85a33cc529164577b",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/cgroup-cgroup.events.raw.txt": "3b9e1e4502927976afbfdd8a423ef8803c2e3165ab4bfb0bae2d93f4b8b3977a",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/cgroup-cpu.stat.raw.txt": "09e7f9e86e4dea5ffe3ec2d9a51fd05a56e605254e299a1980cdd563219e92d5",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/cgroup-memory.events.raw.txt": "0a2d4e7982066cc7dc914627e7b195ccba88b82a5a996201809e529142d2f380",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/cgroup-memory.peak.raw.txt": "576291af32b433fa4e844d52f8823b583e5c70493f61622d05823cb5c1c9483d",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/cgroup-pids.events.raw.txt": "bd7ddfd0b90e9b54b8dcaae0b1dca9f5d4e08c3fab5013518b3edd3b45aecf50",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/command-0.json": "af3f2963568ce1ecec806ee1c4942c508bb5c0e4ce96fa68ba7026e8d458e54b",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/command-0.stderr.bin": "ecf47aae103aad2656d316ee13989e44364cd904e3f483ca92d6d281940d7767",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/command-0.stdout.bin": "7ca70e55622a9789b89ce96cfe918befa7a5ce2dcc1841bd010fc00ae1ca248f",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/command-1.json": "8c508c8c7d7463c727991f5d849046df47b36bc226f9e4b0fe3adef2a91e6694",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/command-1.stderr.bin": "770b938ba341c0fda6630008b28a48380543e9c440a8720d0d7274d1ac0727c2",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/command-1.stdout.bin": "bde7a9e72c741feabf40ea21574008588a56ad2e73f0a4769407af5172cb8237",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/command-2.json": "833075a40932a8308b9956958e14668ba352aff80062310c8ee77cc3e889118a",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/command-2.stderr.bin": "2e8f6e2583eef401a0e34a55239957084e6c8d8665b7f644e9a8be32a9b29b55",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/command-2.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/command-3.json": "9ae5268bf383b3309b56b2d41822c72f3cb5edf06548a5057a12eba9260d80a9",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/command-3.stderr.bin": "f6ff6af6ba04eef0b491cfcf333f2a51ad3338988d55f32bb0024ec61887943b",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/command-3.stdout.bin": "8137e4b9d3b2a12b9624b0c48ae4aaec168b8367a0390650905892c7d7f841ff",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/command-4.json": "c8a3a810e926fefb5a7675853e0923124cb857d5f3f99cf77f4c223919c0130f",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/command-4.stderr.bin": "88d20efbe43fb885b3f0569e6217bccde197e83dc273b5b049cd95d23c06c984",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/command-4.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/gofer-traversal-0.json": "da63523ecb4a9b3451db2baf31b0a109a5cf12cd3a28db35823ff6f9a036407e",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/gofer-traversal-1.json": "14d11738d68e873b06cc26dfc37ed8ec7e907c773d1c6ef3714fc3b8ffc7001a",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/gofer-traversal-2.json": "d09bd98a05c5f38e0d802b566ede7d55b09dbc83ad43887d59fe1751c530e45f",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/gofer-traversal-3.json": "ed4cd1c867115ffaa4914a6f92f119571dd9418072f7d3078a7710a17e909cb1",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/gofer-traversal-4.json": "c3484e759c3dc689a51f332d491e2c66f267c9b383a6a6d345c738fdef924acf",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/gofer-traversal.json": "1e8d780bf496128053f190300e40967043a715f45e6a75f92f936d07ac7a8e74",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/host-canary.txt": "10a56c04a72cd7b2285a45760a8ea6254ef3060c699fc917f1f151b85f30f558",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/host-positive-controls.json": "91432a0c3e261f67476901239bba9b0717d12b7fb64dbbd4afd7bece7d8ee1ef",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/journal/identity.json": "928a4b981b0a1e4d8b467c0df736f96c8914b014a5135ae356a0abe91eee3be6",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/journal/journal.sqlite3": "77e0f69bb2db5620927a9b5450f775bf85ac30c2509fff487bfdb9b0ac222393",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/journal/locks/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/journal/schema.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/mount-0.intent.json": "ee74d2796086a3d599765fbe1d7296fbc274292c78d22d4c3968b97579bbc3d1",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/mount-0.observation.json": "6aad9be0afd47c0f5b3b1118901ad68c36175d10df9f13ab22be27d2886b89c1",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/mount-0.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/mount-0.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/mount-1.intent.json": "42eb46e4a8d9f4dd310e94cd9904f70486373b7743d9da48f5484f347bb071f5",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/mount-1.observation.json": "5836fbe9b097c3c596003f19d9539d957037607ae1d21e4f0373de497c2ccb28",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/mount-1.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/mount-1.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/mount-intent.json": "f2573c85c02d8129ebda205c8c09cad1aff4d062c4800b980791b38cba77af75",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/operator-fixture.json": "0ffb2c935e7cf16b17eba086e1c2fb4567ea4139a5e76b6c908a4b53bcb86cb8",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/profile.json": "9f6deb4b6c916aaaa3cd0829c6128db72f0d4f66dc5a514b57fab9542c5bc150",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/config.json": "0fee44118b6c813d94f1216daf331f2d8e6468746d6672f9454e4a33c5557885",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/diagnostics/create-42d3c37568514aa28312e899d07039f3/metadata.json": "b352a1e77d5e0b4d5e149a98f43ec1eb1caf0fb458c5be2910a9a3d07f924641",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/diagnostics/create-42d3c37568514aa28312e899d07039f3/stderr.bin": "ecf47aae103aad2656d316ee13989e44364cd904e3f483ca92d6d281940d7767",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/diagnostics/delete-3d3fe79d61bb43a389a816c831aca5c1/metadata.json": "4830fb4242fb57d653d86c211681700132f8e9c26d886eec1563f1d73444cc43",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/diagnostics/delete-3d3fe79d61bb43a389a816c831aca5c1/stderr.bin": "88d20efbe43fb885b3f0569e6217bccde197e83dc273b5b049cd95d23c06c984",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/diagnostics/delete-3d3fe79d61bb43a389a816c831aca5c1/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/diagnostics/start-d2a61f61a18247c4a272b29dc13e88e7/metadata.json": "45a689075cdee46f0fef9ea03511e00dd5ba45e3d27ab4c9bf80202677a4eedc",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/diagnostics/start-d2a61f61a18247c4a272b29dc13e88e7/stderr.bin": "2e8f6e2583eef401a0e34a55239957084e6c8d8665b7f644e9a8be32a9b29b55",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/diagnostics/start-d2a61f61a18247c4a272b29dc13e88e7/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/diagnostics/state-56ccd25d6a294ea78d0e27e0bff2a629/metadata.json": "1f2e33e4125a51503470ce41805dcb64b897240a2e29676d82a68599b6a54cc3",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/diagnostics/state-56ccd25d6a294ea78d0e27e0bff2a629/stderr.bin": "770b938ba341c0fda6630008b28a48380543e9c440a8720d0d7274d1ac0727c2",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/diagnostics/state-56ccd25d6a294ea78d0e27e0bff2a629/stdout.bin": "bde7a9e72c741feabf40ea21574008588a56ad2e73f0a4769407af5172cb8237",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/diagnostics/wait-f658263e2cfe4f8a9ae94c63e33f8f29/metadata.json": "0354f1a83a04c99ed6aaac56cd8cf21025bbf473307c5e63808f973140323453",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/diagnostics/wait-f658263e2cfe4f8a9ae94c63e33f8f29/stderr.bin": "f6ff6af6ba04eef0b491cfcf333f2a51ad3338988d55f32bb0024ec61887943b",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/diagnostics/wait-f658263e2cfe4f8a9ae94c63e33f8f29/stdout.bin": "8137e4b9d3b2a12b9624b0c48ae4aaec168b8367a0390650905892c7d7f841ff",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/inputs/analysis.py": "4fcc57f483c77e9dd93428ffe6295b855b99ecc1cdf890a700e400de8c8d2c74",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/inputs/exclusions.json": "6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/inputs/manifest.json": "9b27c1722d2262011fd71483491aa6a50e37d3185a9b5bca5161769b2ef9e4dd",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/inputs/pairing.json": "fdb152ab5a7f50998d53df5b9bd96583b089543fa424ba1cc387f17261373875",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/inputs/table-01.json": "0e1ca9adf74895a55db700686f6c6c71fe357750ad227b0297634ca62ffbfa77",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/retained/files/summary.json": "d5209ab9f511603034ae8d2d3b8ba8cac61da6e3e6761e9ced8618f9450fb01d",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/retained/logs/stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/retained/logs/stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/containment-attempts-01/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/retained/manifest.json": "db25dc3334ed751c8c5bf3108760f83791ea9d52b8a877ef4608fd98334686ac",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/operator-source-20261026-03.json": "c7864fd1423038ddb285bb4bcc8d080b12d49064e061c52a35dd98d6698d8519",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/processes-01-diagnostic.stdout.txt": "e4bb419d229d955f32ea7bc190dcdffd6feb5af41a56d6fc2138b14eddf408c6",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/attempt-start.json": "e899082f27053b8c2f5f70ae2c808ed9c8ad3637200662947b83608968290af5",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/attempt.json": "28733216dc177000bf6fda07fc85ff4c34888e10e7785a67001e54e10fd0a924",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/cgroup-cgroup.events.raw.txt": "3b9e1e4502927976afbfdd8a423ef8803c2e3165ab4bfb0bae2d93f4b8b3977a",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/cgroup-cpu.stat.raw.txt": "e13fe7fcca05e332fc96753ff54ff427f7f9f5cff3a24cb54f95cbabe3e7eddc",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/cgroup-memory.events.raw.txt": "0a2d4e7982066cc7dc914627e7b195ccba88b82a5a996201809e529142d2f380",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/cgroup-memory.peak.raw.txt": "e0241f3f91f8b525263f829b29f833009539c0ec67f894c45a5eabcda6d7f25c",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/cgroup-pids.events.raw.txt": "bd7ddfd0b90e9b54b8dcaae0b1dca9f5d4e08c3fab5013518b3edd3b45aecf50",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/command-0.json": "4601d11161ab37b9607c3dbe0bad1faa8196042da3f697f41e327ce2a06e339a",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/command-0.stderr.bin": "852f66e4d6c757b2fdc5067a29550af70d08123b2c5bbc77bb72b91f5a82282b",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/command-0.stdout.bin": "842597a6af0168e4e4bd54f0a6d632a4d8dba8899b8a485b4e7370160d249190",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/command-1.json": "6f60754cb1c56aeb232c3082398a4e29f9c96d777686d1cbe8b52e531fc9047b",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/command-1.stderr.bin": "9784a8100f80e8dbbaf4be0ee1ddae088641d7251b9875d0a8002d8cc4896ab8",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/command-1.stdout.bin": "e6e9a77596492710024e794fda3c400e8d43c67f1f49cd8ddabdf3b0a1f22951",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/command-2.json": "0af94d76cf4c1718722648263f5cc92a3a6d0e0bd9b2ad5ee830f45b8b7d9971",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/command-2.stderr.bin": "a2c8425a63d88b3c0a0204b8372fcd4ad67ff1eee6a43a71f538d52ca45f16bf",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/command-2.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/command-3.json": "7963c41c7557137346e8d29c6c32844c90e80950185410dbb61627a741a1a97d",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/command-3.stderr.bin": "3081486f1d3c04d65c913db4e33b722575946a2ccd05209560a64de04bcc0296",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/command-3.stdout.bin": "2673210473856b2fdd5724308e359a8486e18f7a9b9067ddac7f6e459580ab3c",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/command-4.json": "a54cf824f87e272150a501b47d0d65284ed7fdc0a5b00fb6b91e35f7511c5018",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/command-4.stderr.bin": "b3a32feca9de51ee5a32e9e93f4d2d07e77c4ad9113af3f15a45e4ce3c40f2c0",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/command-4.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/gofer-traversal-0.json": "da63523ecb4a9b3451db2baf31b0a109a5cf12cd3a28db35823ff6f9a036407e",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/gofer-traversal-1.json": "14d11738d68e873b06cc26dfc37ed8ec7e907c773d1c6ef3714fc3b8ffc7001a",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/gofer-traversal-2.json": "b1fdf195cc502484b8403c750312ddc73970504e97ca80d4aae211e8197c94b4",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/gofer-traversal-3.json": "bef8d09881b80d31049dd382df36d9c5a26cbce4234cb154af926d20eeaf5c45",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/gofer-traversal-4.json": "058db3d40799216226368781128f268fff010687bb29e17fc89b815e19498adc",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/gofer-traversal.json": "b21494ec32d5a25dd02bb4fc6465dd26e0f00289b30d3219f8c31733d774df91",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/host-canary.txt": "8177c692767e5691ebbb6ffa9917bbe06ec7291b1198dda9eac93a33b8b4b523",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/host-positive-controls.json": "f81bff3f9035e3627915718e59dde125eb23fbe01637eee868891559885c6521",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/journal/identity.json": "77d33eee696b3aeb303530a61af885f20141290084524ed92cb2070e08a7b58c",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/journal/journal.sqlite3": "10e7db9e077bcc796735a69d34cf787362effc68e0661f0504dfd670c2d46f42",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/journal/locks/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/journal/schema.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/mount-0.intent.json": "dfe3afe04e4ccd4395ca6e2c117b9298d89b88fc42cef225f9904b9c34bd49f6",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/mount-0.observation.json": "1ab9a34b1108e0c4f4e41b83478deb7fbb4b2c729480e8982f3c55bf75e96a2f",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/mount-0.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/mount-0.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/mount-1.intent.json": "9ba203c61e4c652f971e89e39c015937031e9a8e346621087ed9d758c75b700e",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/mount-1.observation.json": "f023a30b3499fdce5fd0789199196a87cda51329b58669e1eb1ee91a6cea5b63",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/mount-1.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/mount-1.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/mount-intent.json": "19359671a83e1358c95fd2dcf88759e72c66c542e5a757a7478ffc8bd677a7f3",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/operator-fixture.json": "127eaead6fbd60ffcf90e141e675e4cb2f087ebb289479c4430626d9935acd12",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/profile.json": "766fbcc7250e563d9409c16eb8dcd33a319709cd713aa632d3b2228d4550c583",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/config.json": "396c2bdd064344cba335e290b0a12d3b693e2fccf33a82477a92aa848a278f52",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/diagnostics/create-58ab0c912f694b07b35cf4c82bab129f/metadata.json": "0ba51c687e850ddccb892dbc0b0fd333ab7af764c808155be294e7f8783db1a9",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/diagnostics/create-58ab0c912f694b07b35cf4c82bab129f/stderr.bin": "852f66e4d6c757b2fdc5067a29550af70d08123b2c5bbc77bb72b91f5a82282b",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/diagnostics/delete-e504819f098343eca2f77bf9498560f7/metadata.json": "a9533185cfcea46f142319197ee9553b40b98bfb6cdc6cc8b124dc219573dd9f",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/diagnostics/delete-e504819f098343eca2f77bf9498560f7/stderr.bin": "b3a32feca9de51ee5a32e9e93f4d2d07e77c4ad9113af3f15a45e4ce3c40f2c0",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/diagnostics/delete-e504819f098343eca2f77bf9498560f7/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/diagnostics/start-28737a1924844f7f9a868e3e2bac11b7/metadata.json": "0f9060e0611af6441ceee11f39477a3c7edb69481db967e97eef571a23ce4db8",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/diagnostics/start-28737a1924844f7f9a868e3e2bac11b7/stderr.bin": "a2c8425a63d88b3c0a0204b8372fcd4ad67ff1eee6a43a71f538d52ca45f16bf",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/diagnostics/start-28737a1924844f7f9a868e3e2bac11b7/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/diagnostics/state-e97921e79923420c890cabda2cd464da/metadata.json": "be114245c0764941087c0a988ae3264cb6000008ae22c779331852cecf778a01",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/diagnostics/state-e97921e79923420c890cabda2cd464da/stderr.bin": "9784a8100f80e8dbbaf4be0ee1ddae088641d7251b9875d0a8002d8cc4896ab8",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/diagnostics/state-e97921e79923420c890cabda2cd464da/stdout.bin": "e6e9a77596492710024e794fda3c400e8d43c67f1f49cd8ddabdf3b0a1f22951",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/diagnostics/wait-a76adcd4a4e848029f9e6c7dc895986f/metadata.json": "390ff3015f30ab13744ccd94b993e94bf807ea77e386766804e8ec66629504cc",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/diagnostics/wait-a76adcd4a4e848029f9e6c7dc895986f/stderr.bin": "3081486f1d3c04d65c913db4e33b722575946a2ccd05209560a64de04bcc0296",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/diagnostics/wait-a76adcd4a4e848029f9e6c7dc895986f/stdout.bin": "2673210473856b2fdd5724308e359a8486e18f7a9b9067ddac7f6e459580ab3c",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/inputs/analysis.py": "101f0242101bcab22e6ee15ba4ca39243562669482967eaed7abe3200f54220a",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/inputs/exclusions.json": "6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/inputs/manifest.json": "154986a6164697e3e6c161c596e7f2878459c68282382029423ff1d2fd87850f",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/inputs/pairing.json": "fdb152ab5a7f50998d53df5b9bd96583b089543fa424ba1cc387f17261373875",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/inputs/table-01.json": "0e1ca9adf74895a55db700686f6c6c71fe357750ad227b0297634ca62ffbfa77",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/retained/files/summary.json": "2d8c65951d1e1f10e34e6ff97118985f3836273dc15a765024ed8c7ee055e547",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/retained/logs/stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/retained/logs/stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/plans/ocean-v1/evidence/C23/cloud-session-20261026-0641/smoke-02-attempt/smoke-20261026-02/worker/c23-8912af829d14d6eba0110c4c54b9c6109220ccc3d5b3ebf0/retained/manifest.json": "3d942363661a50ec7893c2b863a0f0d9f03c1a6cb6ca84804cf094b5a005a8e5",
+    "tar:ee99ee697191e3b6738659ccd4a9524b0b6e38b7ef94d061d1b265f5aa185f31!processes-20261026-01/command-0.stderr.bin": "adfa24f646570eb326466b802c0a720209b94612351469b3e66040fb56ec546b"
+  },
+  "recorded_at": "2026-10-26T11:49:13.890216+00:00",
+  "runtime_or_tests_rerun": false,
+  "scientific_approval": "not_independently_verified",
+  "source_archive_sha256": "52dd389d4aff539b3d32aeb1932f4ca393c168341075652a22d9c0d97cc4bc01",
+  "source_commit": "00abd95e648cfb8674ab668c2bf209044ef36f31"
+}

@@ -1,0 +1,50 @@
+{
+  "C23_complete": false,
+  "adapter_source_sha256": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d",
+  "adapter_state": "uncertain",
+  "archive_sha256": "ee99ee697191e3b6738659ccd4a9524b0b6e38b7ef94d061d1b265f5aa185f31",
+  "audit_mode": "Read-only tar and read-only/query-only SQLite on disposable scratch copies; archived bytes untouched. Initial in-memory deserialize could not open WAL-formatted image, so the complete journal image set was copied for read-only inspection. No runtime/test rerun, cloud action or generated code execution.",
+  "dispatch_eligible": false,
+  "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+  "interpretation": "The kernel whole-job PID limit was observed rejecting task creation while the fork workload ran; systrap clone-stub exhaustion is the supported causal inference. The discarded underlying errno prevents asserting an observed guest EAGAIN.",
+  "job_id": "c23-f10adc630e020f8736fb47d164a4e2c1c1b8fa0f2abe8d88",
+  "kind": "Qualified native PID-bound observation from preserved failed fixture",
+  "limits_of_claim": [
+    "Not a completed analysis, graceful process-limit fixture or guarantee of128 usable guest tasks",
+    "Original case remains false/uncertain and receipts immutable; no acceptance predicate changed",
+    "No output publication or C22 release; no terminal durable result",
+    "A hard job bound and runtime availability failure are separate; no remaining C23 acceptance gate waived"
+  ],
+  "observed": {
+    "durable_terminal_result_rows": 0,
+    "execution_started": true,
+    "frame_and_outputs_absent": true,
+    "job_local_pids_events_max": 1,
+    "journal_chain_events_verified": 9,
+    "memory_oom_kill": 0,
+    "outer_and_sandbox_pids_max_before_start": 128,
+    "reservation_released": false,
+    "rootfs_unmounted": true,
+    "runtime_delete_acknowledged": true,
+    "whole_owned_cgroup_populated": 0
+  },
+  "original_case_assertions_passed": false,
+  "profile_sha256": "a219a77920e7422d4db83568779f03bbfcae296568308c46f247cd72cb26914a",
+  "recorded_at": "2026-10-26T11:57:18.676041+00:00",
+  "reservation_released": false,
+  "retained_C22_real_approval": false,
+  "runtime_failure": "Sentry reported Unknown syscall56/createStub failed to get clone and lost container wait status",
+  "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8",
+  "scientific_approval": "not_independently_verified",
+  "source_commit": "00abd95e648cfb8674ab668c2bf209044ef36f31",
+  "tar_members_sha256": {
+    "processes-20261026-01/attempt.json": "e4bb419d229d955f32ea7bc190dcdffd6feb5af41a56d6fc2138b14eddf408c6",
+    "processes-20261026-01/cgroup-cgroup.events.raw.txt": "3b9e1e4502927976afbfdd8a423ef8803c2e3165ab4bfb0bae2d93f4b8b3977a",
+    "processes-20261026-01/cgroup-memory.events.raw.txt": "0a2d4e7982066cc7dc914627e7b195ccba88b82a5a996201809e529142d2f380",
+    "processes-20261026-01/cgroup-pids.events.raw.txt": "1de97ddf279e92a9937da9da50708d727229ad6071b819d3f6e3921265b58c55",
+    "processes-20261026-01/command-0.stderr.bin": "adfa24f646570eb326466b802c0a720209b94612351469b3e66040fb56ec546b",
+    "processes-20261026-01/command-3.stderr.bin": "021dbf31e66a2d90f5a15b6ddd20bde6bedc4f6f6f67edfc90d6b293a6cc9e9b",
+    "processes-20261026-01/journal/journal.sqlite3": "04c1284c7695e0f79bb3e36346c7a09f541fc9253abf10e55de83eb1554a5969",
+    "processes-20261026-01/profile.json": "a219a77920e7422d4db83568779f03bbfcae296568308c46f247cd72cb26914a"
+  }
+}

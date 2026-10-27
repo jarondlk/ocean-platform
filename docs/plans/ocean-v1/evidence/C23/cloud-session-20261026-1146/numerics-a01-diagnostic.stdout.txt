@@ -1,0 +1,40 @@
+{"adapter_result": {"adapter_source_sha256": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d", "analysis_exit_code": 1, "approved_hashes": {"code_sha256": "63d3e5943e68956d76dee7ba87bb91c2fbd13855d7562c67621f70ab725bc63b", "environment_sha256": "1c3f049193cb5c2575eabeae312e1ce2272237011277f770d468ffcb805c6db0", "input_manifest_sha256": "e35694bf7b80334dd9a2d0e616e4e72e2a6a7e84030e43de1b2c5adeb04433fb", "proposal_sha256": "5602309683853d443a9f9fafa8eb71b63b60ecb04d1caa3e676dd8dea72de5e9", "resources_sha256": "f3423b7074e11e1c917261289c772eba57e1ce6a4a2325da24f250ad44ac89eb"}, "declared_seeds": {"numpy": 20261024}, "dispatch_eligible": false, "envelope_sha256": "4560a1148708f10f1a5a8ea45f1209403db7c7a1a47b637388bad58810541842", "execution_started": true, "frame_sha256": "6a7e96c798a7e1602b8449af0ba24db843e04d5ea035fa0bf1aad428348b9ffc", "host_runtime_exit_status": 1, "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273", "job_id": "c23-b90e6d4b59815757c4744dbb71fed4cfca9d8fcf90aab608", "outputs_manifest_sha256": null, "private_diagnostics_directory": "diagnostics", "profile_sha256": "75523996d2c62f960f5792087010bdd8680aebefa33e62eec09bca7b5c1186a6", "reason": "analysis_nonzero", "replayed": false, "reservation_released": false, "retained_logs": {"stderr": {"sha256": "ed99da3abf07fb1d04ade5baac6b46c30972d6e49b7f6d5fd7c60ce60c36d9db", "size_bytes": 1535}, "stdout": {"sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "size_bytes": 0}}, "runtime_acceptance_verified": false, "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8", "scientific_approval": "not_independently_verified", "simulation": false, "start_attempted": true, "state": "failed", "termination_proof": {"cgroup_device": 30, "cgroup_inode": 7624, "cgroup_path": "/ocean-c23/c23-b90e6d4b59815757c4744dbb71fed4cfca9d8fcf90aab608", "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01", "populated": 0, "runtime_delete_acknowledged": true, "whole_host_subtree_empty": true}, "total_output_bytes": 0, "trusted_init_sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc", "version": "c23-linux-runsc-operator-v1"}, "cleanup": {"cgroup_empty": true, "mount_reconciliation": {"after": {"entry": null, "source_identity": [2049, 559595], "target_identity": [2049, 1311938]}, "argv": ["/usr/bin/umount", "--internal-only", "--", "/var/lib/ocean-c23/operator-acceptance/numerics-a-20261026-01/worker/c23-b90e6d4b59815757c4744dbb71fed4cfca9d8fcf90aab608/rootfs"], "before": {"entry": {"line": "98 27 8:1 /var/lib/ocean-c23/scientific-normalized-quota-v3/rootfs /var/lib/ocean-c23/operator-acceptance/numerics-a-20261026-01/worker/c23-b90e6d4b59815757c4744dbb71fed4cfca9d8fcf90aab608/rootfs ro,nosuid,nodev,relatime shared:1 - ext4 /dev/root rw,discard,errors=remount-ro,commit=30", "mount_id": "98", "options": "ro,nosuid,nodev,relatime"}, "source_identity": [2049, 559595], "target_identity": [2049, 559595]}, "exit_code": 0, "rootfs_unmounted": true, "stderr_base64": "", "stdout_base64": ""}, "removed_cgroups": ["/sys/fs/cgroup/ocean-c23/c23-b90e6d4b59815757c4744dbb71fed4cfca9d8fcf90aab608/host", "/sys/fs/cgroup/ocean-c23/c23-b90e6d4b59815757c4744dbb71fed4cfca9d8fcf90aab608"], "reservation_released": false, "rootfs_unmounted": true}, "evaluation": {"C23_complete": false, "case_assertions_passed": false, "checks": {"delete_acknowledged": true, "execution_started": true, "expected_terminal_state": false, "no_dispatch_or_release": true, "operator_pipeline_healthy": true, "rootfs_cleanup": true, "scientific_unverified": true, "validated_outputs": false, "whole_host_subtree_empty": true}, "retained_C22_real_approval": false, "runtime_acceptance_complete": false, "scope": "operator synthetic fixture observations only"}, "operator_error": null}
+/var/lib/ocean-c23/operator-acceptance/numerics-a-20261026-01/worker/c23-b90e6d4b59815757c4744dbb71fed4cfca9d8fcf90aab608/retained/logs/stderr Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/numpy/_core/__init__.py", line 24, in <module>
+  File "/usr/local/lib/python3.12/site-packages/numpy/_core/multiarray.py", line 11, in <module>
+ImportError: PyCapsule_Import could not import module "datetime"
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/inputs/analysis.py", line 10, in <module>
+  File "/usr/local/lib/python3.12/site-packages/numpy/__init__.py", line 109, in <module>
+  File "/usr/local/lib/python3.12/site-packages/numpy/__config__.py", line 4, in <module>
+  File "/usr/local/lib/python3.12/site-packages/numpy/_core/__init__.py", line 85, in <module>
+ImportError: 
+
+IMPORTANT: PLEASE READ THIS FOR ADVICE ON HOW TO SOLVE THIS ISSUE!
+
+Importing the numpy C-extensions failed. This error can happen for
+many reasons, often due to issues with your setup or how NumPy was
+installed.
+
+We have compiled some common reasons and troubleshooting tips at:
+
+    https://numpy.org/devdocs/user/troubleshooting-importerror.html
+
+Please note and check the following:
+
+  * The Python version is: Python 3.12 from "/usr/local/bin/python3"
+  * The NumPy version is: "2.5.4"
+
+and make sure that they are the versions you expect.
+
+Please carefully study the information and documentation linked above.
+This is unlikely to be a NumPy issue but will be caused by a bad install
+or environment on your machine.
+
+Original error was: PyCapsule_Import could not import module "datetime"
+
+
+/var/lib/ocean-c23/operator-acceptance/numerics-a-20261026-01/worker/c23-b90e6d4b59815757c4744dbb71fed4cfca9d8fcf90aab608/retained/logs/stdout 

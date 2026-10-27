@@ -1,0 +1,37 @@
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/numpy/_core/__init__.py", line 24, in <module>
+  File "/usr/local/lib/python3.12/site-packages/numpy/_core/multiarray.py", line 11, in <module>
+ImportError: PyCapsule_Import could not import module "datetime"
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/inputs/analysis.py", line 10, in <module>
+  File "/usr/local/lib/python3.12/site-packages/numpy/__init__.py", line 109, in <module>
+  File "/usr/local/lib/python3.12/site-packages/numpy/__config__.py", line 4, in <module>
+  File "/usr/local/lib/python3.12/site-packages/numpy/_core/__init__.py", line 85, in <module>
+ImportError: 
+
+IMPORTANT: PLEASE READ THIS FOR ADVICE ON HOW TO SOLVE THIS ISSUE!
+
+Importing the numpy C-extensions failed. This error can happen for
+many reasons, often due to issues with your setup or how NumPy was
+installed.
+
+We have compiled some common reasons and troubleshooting tips at:
+
+    https://numpy.org/devdocs/user/troubleshooting-importerror.html
+
+Please note and check the following:
+
+  * The Python version is: Python 3.12 from "/usr/local/bin/python3"
+  * The NumPy version is: "2.5.4"
+
+and make sure that they are the versions you expect.
+
+Please carefully study the information and documentation linked above.
+This is unlikely to be a NumPy issue but will be caused by a bad install
+or environment on your machine.
+
+Original error was: PyCapsule_Import could not import module "datetime"
+

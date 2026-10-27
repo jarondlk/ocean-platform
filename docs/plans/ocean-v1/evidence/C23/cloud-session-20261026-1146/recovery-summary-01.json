@@ -1,0 +1,1109 @@
+{
+  "C23_complete": false,
+  "archive_sha256": "f8c512566828bc190d1b51c09887ce8528bf3212949dbf0008d2b5afcdae036c",
+  "episodes": {
+    "lost-create-ack": {
+      "cleanup": {
+        "cgroup_empty": true,
+        "mount_reconciliation": {
+          "after": {
+            "entry": null,
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              1313173
+            ]
+          },
+          "argv": [
+            "/usr/bin/umount",
+            "--internal-only",
+            "--",
+            "/var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab/rootfs"
+          ],
+          "before": {
+            "entry": {
+              "line": "98 27 8:1 /var/lib/ocean-c23/scientific-normalized-quota-v3/rootfs /var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab/rootfs ro,nosuid,nodev,relatime shared:1 - ext4 /dev/root rw,discard,errors=remount-ro,commit=30",
+              "mount_id": "98",
+              "options": "ro,nosuid,nodev,relatime"
+            },
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              559595
+            ]
+          },
+          "exit_code": 0,
+          "rootfs_unmounted": true,
+          "stderr_base64": "",
+          "stdout_base64": ""
+        },
+        "removed_cgroups": [
+          "/sys/fs/cgroup/ocean-c23/c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab/host",
+          "/sys/fs/cgroup/ocean-c23/c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab"
+        ],
+        "reservation_released": false,
+        "rootfs_unmounted": true
+      },
+      "evaluation": {
+        "C23_complete": false,
+        "checks": {
+          "cleanup_only": true,
+          "contender_busy": true,
+          "expected_barrier": true,
+          "increased_epoch": true,
+          "live_before_kill": true,
+          "no_contender_commands": true,
+          "no_dispatch_or_release": true,
+          "no_recovered_outputs": true,
+          "no_reexecution": true,
+          "no_start": true,
+          "one_create": true,
+          "original_nonterminal": true,
+          "owned_empty_after_crash": true,
+          "same_job": true,
+          "same_profile": true,
+          "scientific_unverified": true,
+          "verified_cleanup": true
+        },
+        "episode_passed": true,
+        "open_gates": [
+          "VM reboot/power failure",
+          "queued-launch cancellation",
+          "synthetic admission revocation",
+          "real retained C22 bridge/release"
+        ],
+        "reservation_released": false,
+        "retained_C22_real_approval": false
+      },
+      "open_gates": [
+        "VM reboot/power failure",
+        "queued-launch cancellation",
+        "synthetic admission revocation",
+        "real retained C22 bridge/release"
+      ],
+      "receipt_sha256": "82ba4ef8ae7ab148391f831ae9f119839ec7fa436cf50fd7cab0603d77c2f40c",
+      "recovered_result": {
+        "has_outputs": false,
+        "journal": {
+          "envelope_sha256": "26a6986548341e0ae58c1d6f5856c5bf1b2b8c6eeda9b5cbccd57d0a9427c240",
+          "epoch": 2,
+          "events": [
+            {
+              "envelope_sha256": "26a6986548341e0ae58c1d6f5856c5bf1b2b8c6eeda9b5cbccd57d0a9427c240",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab",
+              "kind": "claimed",
+              "monotonic_ns": 1538750884708,
+              "payload": {
+                "previous_epoch": 0,
+                "reconciliation_required": false
+              },
+              "payload_json": "{\"previous_epoch\":0,\"reconciliation_required\":false}",
+              "previous_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "sequence": 1,
+              "sha256": "71507519270f6585247ad4a43a945dce06b2e499e4400318278833a6beecaf66"
+            },
+            {
+              "envelope_sha256": "26a6986548341e0ae58c1d6f5856c5bf1b2b8c6eeda9b5cbccd57d0a9427c240",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab",
+              "kind": "prepared",
+              "monotonic_ns": 1538767742422,
+              "payload": {
+                "profile_sha256": "2e35fb99e9da5fed75d1f03f4c7cd2e7f031c9d338529994600d45aeacfb3c76",
+                "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8"
+              },
+              "payload_json": "{\"profile_sha256\":\"2e35fb99e9da5fed75d1f03f4c7cd2e7f031c9d338529994600d45aeacfb3c76\",\"runtime_sha256\":\"1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8\"}",
+              "previous_sha256": "71507519270f6585247ad4a43a945dce06b2e499e4400318278833a6beecaf66",
+              "sequence": 2,
+              "sha256": "8a5beaf4dee4907a384ffdeb4c251095850b61c2a3ef0a4c57d7a959b24d8ab5"
+            },
+            {
+              "envelope_sha256": "26a6986548341e0ae58c1d6f5856c5bf1b2b8c6eeda9b5cbccd57d0a9427c240",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab",
+              "kind": "cgroup_intent",
+              "monotonic_ns": 1538785957484,
+              "payload": {
+                "path": "/ocean-c23/c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab"
+              },
+              "payload_json": "{\"path\":\"/ocean-c23/c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab\"}",
+              "previous_sha256": "8a5beaf4dee4907a384ffdeb4c251095850b61c2a3ef0a4c57d7a959b24d8ab5",
+              "sequence": 3,
+              "sha256": "3f3eabb4d0fb5d2f405ac2f5fd6163cb734fd03f825840ce7f74b0e99fd13990"
+            },
+            {
+              "envelope_sha256": "26a6986548341e0ae58c1d6f5856c5bf1b2b8c6eeda9b5cbccd57d0a9427c240",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab",
+              "kind": "create_intent",
+              "monotonic_ns": 1538798235685,
+              "payload": {
+                "cgroup_identity": [
+                  30,
+                  11576
+                ],
+                "profile_sha256": "2e35fb99e9da5fed75d1f03f4c7cd2e7f031c9d338529994600d45aeacfb3c76"
+              },
+              "payload_json": "{\"cgroup_identity\":[30,11576],\"profile_sha256\":\"2e35fb99e9da5fed75d1f03f4c7cd2e7f031c9d338529994600d45aeacfb3c76\"}",
+              "previous_sha256": "3f3eabb4d0fb5d2f405ac2f5fd6163cb734fd03f825840ce7f74b0e99fd13990",
+              "sequence": 4,
+              "sha256": "181793e25efe448728fc0cfc5a8f1a54bdea5b150560b4d643ba07a1f272e276"
+            },
+            {
+              "envelope_sha256": "26a6986548341e0ae58c1d6f5856c5bf1b2b8c6eeda9b5cbccd57d0a9427c240",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab",
+              "kind": "watchdog_armed",
+              "monotonic_ns": 1538886348379,
+              "payload": {
+                "deadline_monotonic": 1628.808354165,
+                "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+                "pid": 2970
+              },
+              "payload_json": "{\"deadline_monotonic\":1628.808354165,\"host_boot_id\":\"1726d7b4-f078-40dc-9184-f79ea53e8d01\",\"pid\":2970}",
+              "previous_sha256": "181793e25efe448728fc0cfc5a8f1a54bdea5b150560b4d643ba07a1f272e276",
+              "sequence": 5,
+              "sha256": "5cc5b15ccd2ec591ba07c2d6888c97189b20b73d2f0e4a710a7518a4d4637a04"
+            },
+            {
+              "envelope_sha256": "26a6986548341e0ae58c1d6f5856c5bf1b2b8c6eeda9b5cbccd57d0a9427c240",
+              "epoch": 2,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab",
+              "kind": "claimed",
+              "monotonic_ns": 1558791557396,
+              "payload": {
+                "previous_epoch": 1,
+                "reconciliation_required": true
+              },
+              "payload_json": "{\"previous_epoch\":1,\"reconciliation_required\":true}",
+              "previous_sha256": "5cc5b15ccd2ec591ba07c2d6888c97189b20b73d2f0e4a710a7518a4d4637a04",
+              "sequence": 6,
+              "sha256": "de2d71d8fb2fab6baf91a9648574d05da1674f4a2a62f1fb88a86a08da99d60b"
+            },
+            {
+              "envelope_sha256": "26a6986548341e0ae58c1d6f5856c5bf1b2b8c6eeda9b5cbccd57d0a9427c240",
+              "epoch": 2,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab",
+              "kind": "finished",
+              "monotonic_ns": 1559029831268,
+              "payload": {
+                "result_sha256": "a2dfb1d4240cdff43b977941eab04cb4d2cfb67618261ea5c7824b0701e9778a"
+              },
+              "payload_json": "{\"result_sha256\":\"a2dfb1d4240cdff43b977941eab04cb4d2cfb67618261ea5c7824b0701e9778a\"}",
+              "previous_sha256": "de2d71d8fb2fab6baf91a9648574d05da1674f4a2a62f1fb88a86a08da99d60b",
+              "sequence": 7,
+              "sha256": "cf34059a804cd0913057e1acc3a1d15d8497eedbefd91aa96bdc5546aa04cae9"
+            }
+          ],
+          "job_id": "c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab",
+          "reconciliation_required": false,
+          "result": {
+            "dispatch_eligible": false,
+            "envelope_sha256": "26a6986548341e0ae58c1d6f5856c5bf1b2b8c6eeda9b5cbccd57d0a9427c240",
+            "epoch": 2,
+            "job_id": "c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab",
+            "record": {
+              "adapter_source_sha256": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d",
+              "analysis_exit_code": null,
+              "approved_hashes": {
+                "code_sha256": "5b8d55a27be5b453c49a859f2b26689ad35c0094610c970bd95012e3d04e4157",
+                "environment_sha256": "1c3f049193cb5c2575eabeae312e1ce2272237011277f770d468ffcb805c6db0",
+                "input_manifest_sha256": "291e80c7a32ce9f631f9fdf7999ffabcc3f0177959916779fcf0c6ad764564fd",
+                "proposal_sha256": "17702234cd2804e04d90e4fa57539528fdd65b8b657c9559cf076b65f4dd82c0",
+                "resources_sha256": "0d94e9017530653f0fb10aa1629a5b75b6323934d466508b846c97ae7c1c9210"
+              },
+              "declared_seeds": {},
+              "dispatch_eligible": false,
+              "envelope_sha256": "26a6986548341e0ae58c1d6f5856c5bf1b2b8c6eeda9b5cbccd57d0a9427c240",
+              "execution_started": null,
+              "frame_sha256": null,
+              "host_runtime_exit_status": null,
+              "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+              "job_id": "c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab",
+              "outputs_manifest_sha256": null,
+              "private_diagnostics_directory": "diagnostics",
+              "profile_sha256": "2e35fb99e9da5fed75d1f03f4c7cd2e7f031c9d338529994600d45aeacfb3c76",
+              "reason": "reconciled_without_reexecution",
+              "replayed": false,
+              "reservation_released": false,
+              "retained_logs": {},
+              "runtime_acceptance_verified": false,
+              "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8",
+              "scientific_approval": "not_independently_verified",
+              "simulation": false,
+              "start_attempted": true,
+              "state": "interrupted",
+              "termination_proof": {
+                "cgroup_device": 30,
+                "cgroup_inode": 11576,
+                "cgroup_path": "/ocean-c23/c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab",
+                "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+                "populated": 0,
+                "runtime_delete_acknowledged": true,
+                "whole_host_subtree_empty": true
+              },
+              "total_output_bytes": 0,
+              "trusted_init_sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+              "version": "c23-linux-runsc-operator-v1"
+            },
+            "reservation_released": false,
+            "scientific_approval": "not_independently_verified",
+            "version": "c23-durable-control-result-v1"
+          },
+          "terminal": true
+        },
+        "output_files_sha256": {},
+        "result": {
+          "adapter_source_sha256": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d",
+          "analysis_exit_code": null,
+          "approved_hashes": {
+            "code_sha256": "5b8d55a27be5b453c49a859f2b26689ad35c0094610c970bd95012e3d04e4157",
+            "environment_sha256": "1c3f049193cb5c2575eabeae312e1ce2272237011277f770d468ffcb805c6db0",
+            "input_manifest_sha256": "291e80c7a32ce9f631f9fdf7999ffabcc3f0177959916779fcf0c6ad764564fd",
+            "proposal_sha256": "17702234cd2804e04d90e4fa57539528fdd65b8b657c9559cf076b65f4dd82c0",
+            "resources_sha256": "0d94e9017530653f0fb10aa1629a5b75b6323934d466508b846c97ae7c1c9210"
+          },
+          "declared_seeds": {},
+          "dispatch_eligible": false,
+          "envelope_sha256": "26a6986548341e0ae58c1d6f5856c5bf1b2b8c6eeda9b5cbccd57d0a9427c240",
+          "execution_started": null,
+          "frame_sha256": null,
+          "host_runtime_exit_status": null,
+          "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+          "job_id": "c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab",
+          "outputs_manifest_sha256": null,
+          "private_diagnostics_directory": "diagnostics",
+          "profile_sha256": "2e35fb99e9da5fed75d1f03f4c7cd2e7f031c9d338529994600d45aeacfb3c76",
+          "reason": "reconciled_without_reexecution",
+          "replayed": false,
+          "reservation_released": false,
+          "retained_logs": {},
+          "runtime_acceptance_verified": false,
+          "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8",
+          "scientific_approval": "not_independently_verified",
+          "simulation": false,
+          "start_attempted": true,
+          "state": "interrupted",
+          "termination_proof": {
+            "cgroup_device": 30,
+            "cgroup_inode": 11576,
+            "cgroup_path": "/ocean-c23/c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab",
+            "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+            "populated": 0,
+            "runtime_delete_acknowledged": true,
+            "whole_host_subtree_empty": true
+          },
+          "total_output_bytes": 0,
+          "trusted_init_sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+          "version": "c23-linux-runsc-operator-v1"
+        }
+      }
+    },
+    "lost-start-ack": {
+      "cleanup": {
+        "cgroup_empty": true,
+        "mount_reconciliation": {
+          "after": {
+            "entry": null,
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              1313244
+            ]
+          },
+          "argv": [
+            "/usr/bin/umount",
+            "--internal-only",
+            "--",
+            "/var/lib/ocean-c23/operator-acceptance/recovery-lost-start-ack-20261026-01/worker/c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0/rootfs"
+          ],
+          "before": {
+            "entry": {
+              "line": "98 27 8:1 /var/lib/ocean-c23/scientific-normalized-quota-v3/rootfs /var/lib/ocean-c23/operator-acceptance/recovery-lost-start-ack-20261026-01/worker/c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0/rootfs ro,nosuid,nodev,relatime shared:1 - ext4 /dev/root rw,discard,errors=remount-ro,commit=30",
+              "mount_id": "98",
+              "options": "ro,nosuid,nodev,relatime"
+            },
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              559595
+            ]
+          },
+          "exit_code": 0,
+          "rootfs_unmounted": true,
+          "stderr_base64": "",
+          "stdout_base64": ""
+        },
+        "removed_cgroups": [
+          "/sys/fs/cgroup/ocean-c23/c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0/host",
+          "/sys/fs/cgroup/ocean-c23/c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0"
+        ],
+        "reservation_released": false,
+        "rootfs_unmounted": true
+      },
+      "evaluation": {
+        "C23_complete": false,
+        "checks": {
+          "cleanup_only": true,
+          "contender_busy": true,
+          "expected_barrier": true,
+          "increased_epoch": true,
+          "live_before_kill": true,
+          "no_contender_commands": true,
+          "no_dispatch_or_release": true,
+          "no_recovered_outputs": true,
+          "no_reexecution": true,
+          "one_create": true,
+          "one_start": true,
+          "original_nonterminal": true,
+          "owned_empty_after_crash": true,
+          "same_job": true,
+          "same_profile": true,
+          "scientific_unverified": true,
+          "start_ack_not_journaled": true,
+          "verified_cleanup": true
+        },
+        "episode_passed": true,
+        "open_gates": [
+          "VM reboot/power failure",
+          "queued-launch cancellation",
+          "synthetic admission revocation",
+          "real retained C22 bridge/release"
+        ],
+        "reservation_released": false,
+        "retained_C22_real_approval": false
+      },
+      "open_gates": [
+        "VM reboot/power failure",
+        "queued-launch cancellation",
+        "synthetic admission revocation",
+        "real retained C22 bridge/release"
+      ],
+      "receipt_sha256": "f7d4f4a0d80633509e818033ab0901f65a82c42cb4ec551e1d5a00658c4c606c",
+      "recovered_result": {
+        "has_outputs": false,
+        "journal": {
+          "envelope_sha256": "bcf4d0f31377ac669e444e2e0e5aa71ef7fe35e1035c835eef46127c8b16bd83",
+          "epoch": 2,
+          "events": [
+            {
+              "envelope_sha256": "bcf4d0f31377ac669e444e2e0e5aa71ef7fe35e1035c835eef46127c8b16bd83",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0",
+              "kind": "claimed",
+              "monotonic_ns": 1593072924996,
+              "payload": {
+                "previous_epoch": 0,
+                "reconciliation_required": false
+              },
+              "payload_json": "{\"previous_epoch\":0,\"reconciliation_required\":false}",
+              "previous_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "sequence": 1,
+              "sha256": "2604a01cde91be1405c0c621491bf3f657c153146efa51544668640309d41926"
+            },
+            {
+              "envelope_sha256": "bcf4d0f31377ac669e444e2e0e5aa71ef7fe35e1035c835eef46127c8b16bd83",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0",
+              "kind": "prepared",
+              "monotonic_ns": 1593089175007,
+              "payload": {
+                "profile_sha256": "56055ce23d6ff674559fd00ef91164b2c7c2a4f28908c2db379948998221739c",
+                "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8"
+              },
+              "payload_json": "{\"profile_sha256\":\"56055ce23d6ff674559fd00ef91164b2c7c2a4f28908c2db379948998221739c\",\"runtime_sha256\":\"1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8\"}",
+              "previous_sha256": "2604a01cde91be1405c0c621491bf3f657c153146efa51544668640309d41926",
+              "sequence": 2,
+              "sha256": "fa05b881c69a998225f46e1e5f14eba56468d92497f67263bde7f5407e9add40"
+            },
+            {
+              "envelope_sha256": "bcf4d0f31377ac669e444e2e0e5aa71ef7fe35e1035c835eef46127c8b16bd83",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0",
+              "kind": "cgroup_intent",
+              "monotonic_ns": 1593107859141,
+              "payload": {
+                "path": "/ocean-c23/c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0"
+              },
+              "payload_json": "{\"path\":\"/ocean-c23/c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0\"}",
+              "previous_sha256": "fa05b881c69a998225f46e1e5f14eba56468d92497f67263bde7f5407e9add40",
+              "sequence": 3,
+              "sha256": "9445e36d8da7786adea1c2ce15249963cefc66de30ee2389c6ab73aab9dc29bc"
+            },
+            {
+              "envelope_sha256": "bcf4d0f31377ac669e444e2e0e5aa71ef7fe35e1035c835eef46127c8b16bd83",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0",
+              "kind": "create_intent",
+              "monotonic_ns": 1593120915955,
+              "payload": {
+                "cgroup_identity": [
+                  30,
+                  11837
+                ],
+                "profile_sha256": "56055ce23d6ff674559fd00ef91164b2c7c2a4f28908c2db379948998221739c"
+              },
+              "payload_json": "{\"cgroup_identity\":[30,11837],\"profile_sha256\":\"56055ce23d6ff674559fd00ef91164b2c7c2a4f28908c2db379948998221739c\"}",
+              "previous_sha256": "9445e36d8da7786adea1c2ce15249963cefc66de30ee2389c6ab73aab9dc29bc",
+              "sequence": 4,
+              "sha256": "8f8e717933a7273c7bbf2c0cbd2a312b5eae33f9db2f699eb9cea00479f9ea79"
+            },
+            {
+              "envelope_sha256": "bcf4d0f31377ac669e444e2e0e5aa71ef7fe35e1035c835eef46127c8b16bd83",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0",
+              "kind": "watchdog_armed",
+              "monotonic_ns": 1593212098325,
+              "payload": {
+                "deadline_monotonic": 1683.132739513,
+                "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+                "pid": 3029
+              },
+              "payload_json": "{\"deadline_monotonic\":1683.132739513,\"host_boot_id\":\"1726d7b4-f078-40dc-9184-f79ea53e8d01\",\"pid\":3029}",
+              "previous_sha256": "8f8e717933a7273c7bbf2c0cbd2a312b5eae33f9db2f699eb9cea00479f9ea79",
+              "sequence": 5,
+              "sha256": "bb8662d7b0549819c1f27f77f49cec1086e996800de83f2130b4405bfd37bbe0"
+            },
+            {
+              "envelope_sha256": "bcf4d0f31377ac669e444e2e0e5aa71ef7fe35e1035c835eef46127c8b16bd83",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0",
+              "kind": "enforcement_verified",
+              "monotonic_ns": 1593647353340,
+              "payload": {
+                "readback": {
+                  "c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0": {
+                    "cpu.max": "200000 100000",
+                    "memory.max": "4294967296",
+                    "memory.swap.max": "0",
+                    "pids.max": "128"
+                  },
+                  "sandbox": {
+                    "cpu.max": "200000 100000",
+                    "memory.max": "4294967296",
+                    "memory.swap.max": "0",
+                    "pids.max": "128"
+                  }
+                }
+              },
+              "payload_json": "{\"readback\":{\"c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0\":{\"cpu.max\":\"200000 100000\",\"memory.max\":\"4294967296\",\"memory.swap.max\":\"0\",\"pids.max\":\"128\"},\"sandbox\":{\"cpu.max\":\"200000 100000\",\"memory.max\":\"4294967296\",\"memory.swap.max\":\"0\",\"pids.max\":\"128\"}}}",
+              "previous_sha256": "bb8662d7b0549819c1f27f77f49cec1086e996800de83f2130b4405bfd37bbe0",
+              "sequence": 6,
+              "sha256": "3806240878e968d9cf55f8175702885517addc7016de12bbbf7c368edefb902a"
+            },
+            {
+              "envelope_sha256": "bcf4d0f31377ac669e444e2e0e5aa71ef7fe35e1035c835eef46127c8b16bd83",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0",
+              "kind": "start_intent",
+              "monotonic_ns": 1593671699617,
+              "payload": {
+                "envelope_sha256": "bcf4d0f31377ac669e444e2e0e5aa71ef7fe35e1035c835eef46127c8b16bd83"
+              },
+              "payload_json": "{\"envelope_sha256\":\"bcf4d0f31377ac669e444e2e0e5aa71ef7fe35e1035c835eef46127c8b16bd83\"}",
+              "previous_sha256": "3806240878e968d9cf55f8175702885517addc7016de12bbbf7c368edefb902a",
+              "sequence": 7,
+              "sha256": "0d08dfe990c1af98be967a4155de171b7d6f912ba44f06034d79441299802bab"
+            },
+            {
+              "envelope_sha256": "bcf4d0f31377ac669e444e2e0e5aa71ef7fe35e1035c835eef46127c8b16bd83",
+              "epoch": 2,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0",
+              "kind": "claimed",
+              "monotonic_ns": 1614250770380,
+              "payload": {
+                "previous_epoch": 1,
+                "reconciliation_required": true
+              },
+              "payload_json": "{\"previous_epoch\":1,\"reconciliation_required\":true}",
+              "previous_sha256": "0d08dfe990c1af98be967a4155de171b7d6f912ba44f06034d79441299802bab",
+              "sequence": 8,
+              "sha256": "07426a89ca67512040c5bbc255c191979d757838d7a59687c44fd90f8226f5aa"
+            },
+            {
+              "envelope_sha256": "bcf4d0f31377ac669e444e2e0e5aa71ef7fe35e1035c835eef46127c8b16bd83",
+              "epoch": 2,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0",
+              "kind": "finished",
+              "monotonic_ns": 1614490225128,
+              "payload": {
+                "result_sha256": "e952071c5f5fa6f26b4ce310e8e116461903cb4b88e93d069134f8f4e51008b5"
+              },
+              "payload_json": "{\"result_sha256\":\"e952071c5f5fa6f26b4ce310e8e116461903cb4b88e93d069134f8f4e51008b5\"}",
+              "previous_sha256": "07426a89ca67512040c5bbc255c191979d757838d7a59687c44fd90f8226f5aa",
+              "sequence": 9,
+              "sha256": "e7e21d7f71f3664173633a175c9b42d76b9c5eb59a6a9873868541bd52eaa44f"
+            }
+          ],
+          "job_id": "c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0",
+          "reconciliation_required": false,
+          "result": {
+            "dispatch_eligible": false,
+            "envelope_sha256": "bcf4d0f31377ac669e444e2e0e5aa71ef7fe35e1035c835eef46127c8b16bd83",
+            "epoch": 2,
+            "job_id": "c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0",
+            "record": {
+              "adapter_source_sha256": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d",
+              "analysis_exit_code": null,
+              "approved_hashes": {
+                "code_sha256": "de7430171218905ebd4ec48508fa0d82bf607a875bd157ef77ac7a33f7541dd9",
+                "environment_sha256": "1c3f049193cb5c2575eabeae312e1ce2272237011277f770d468ffcb805c6db0",
+                "input_manifest_sha256": "c07f28b7d015750330f2b42041cdb5252b19a1dbc4d5be536e95d27caf5530c0",
+                "proposal_sha256": "8acd04f510e4414765e186bc51567d278aa1387a582c50c3506adae6807b5053",
+                "resources_sha256": "0d94e9017530653f0fb10aa1629a5b75b6323934d466508b846c97ae7c1c9210"
+              },
+              "declared_seeds": {},
+              "dispatch_eligible": false,
+              "envelope_sha256": "bcf4d0f31377ac669e444e2e0e5aa71ef7fe35e1035c835eef46127c8b16bd83",
+              "execution_started": null,
+              "frame_sha256": null,
+              "host_runtime_exit_status": null,
+              "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+              "job_id": "c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0",
+              "outputs_manifest_sha256": null,
+              "private_diagnostics_directory": "diagnostics",
+              "profile_sha256": "56055ce23d6ff674559fd00ef91164b2c7c2a4f28908c2db379948998221739c",
+              "reason": "reconciled_without_reexecution",
+              "replayed": false,
+              "reservation_released": false,
+              "retained_logs": {},
+              "runtime_acceptance_verified": false,
+              "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8",
+              "scientific_approval": "not_independently_verified",
+              "simulation": false,
+              "start_attempted": true,
+              "state": "interrupted",
+              "termination_proof": {
+                "cgroup_device": 30,
+                "cgroup_inode": 11837,
+                "cgroup_path": "/ocean-c23/c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0",
+                "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+                "populated": 0,
+                "runtime_delete_acknowledged": true,
+                "whole_host_subtree_empty": true
+              },
+              "total_output_bytes": 0,
+              "trusted_init_sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+              "version": "c23-linux-runsc-operator-v1"
+            },
+            "reservation_released": false,
+            "scientific_approval": "not_independently_verified",
+            "version": "c23-durable-control-result-v1"
+          },
+          "terminal": true
+        },
+        "output_files_sha256": {},
+        "result": {
+          "adapter_source_sha256": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d",
+          "analysis_exit_code": null,
+          "approved_hashes": {
+            "code_sha256": "de7430171218905ebd4ec48508fa0d82bf607a875bd157ef77ac7a33f7541dd9",
+            "environment_sha256": "1c3f049193cb5c2575eabeae312e1ce2272237011277f770d468ffcb805c6db0",
+            "input_manifest_sha256": "c07f28b7d015750330f2b42041cdb5252b19a1dbc4d5be536e95d27caf5530c0",
+            "proposal_sha256": "8acd04f510e4414765e186bc51567d278aa1387a582c50c3506adae6807b5053",
+            "resources_sha256": "0d94e9017530653f0fb10aa1629a5b75b6323934d466508b846c97ae7c1c9210"
+          },
+          "declared_seeds": {},
+          "dispatch_eligible": false,
+          "envelope_sha256": "bcf4d0f31377ac669e444e2e0e5aa71ef7fe35e1035c835eef46127c8b16bd83",
+          "execution_started": null,
+          "frame_sha256": null,
+          "host_runtime_exit_status": null,
+          "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+          "job_id": "c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0",
+          "outputs_manifest_sha256": null,
+          "private_diagnostics_directory": "diagnostics",
+          "profile_sha256": "56055ce23d6ff674559fd00ef91164b2c7c2a4f28908c2db379948998221739c",
+          "reason": "reconciled_without_reexecution",
+          "replayed": false,
+          "reservation_released": false,
+          "retained_logs": {},
+          "runtime_acceptance_verified": false,
+          "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8",
+          "scientific_approval": "not_independently_verified",
+          "simulation": false,
+          "start_attempted": true,
+          "state": "interrupted",
+          "termination_proof": {
+            "cgroup_device": 30,
+            "cgroup_inode": 11837,
+            "cgroup_path": "/ocean-c23/c23-d8f086e2653d5c2b16c6007ecfab68bd6bac6cb7a4f476a0",
+            "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+            "populated": 0,
+            "runtime_delete_acknowledged": true,
+            "whole_host_subtree_empty": true
+          },
+          "total_output_bytes": 0,
+          "trusted_init_sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+          "version": "c23-linux-runsc-operator-v1"
+        }
+      }
+    },
+    "terminal-replay": {
+      "cleanup": {
+        "cgroup_empty": true,
+        "mount_reconciliation": {
+          "after": {
+            "entry": null,
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              1313331
+            ]
+          },
+          "argv": [
+            "/usr/bin/umount",
+            "--internal-only",
+            "--",
+            "/var/lib/ocean-c23/operator-acceptance/recovery-terminal-replay-20261026-01/worker/c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030/rootfs"
+          ],
+          "before": {
+            "entry": {
+              "line": "98 27 8:1 /var/lib/ocean-c23/scientific-normalized-quota-v3/rootfs /var/lib/ocean-c23/operator-acceptance/recovery-terminal-replay-20261026-01/worker/c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030/rootfs ro,nosuid,nodev,relatime shared:1 - ext4 /dev/root rw,discard,errors=remount-ro,commit=30",
+              "mount_id": "98",
+              "options": "ro,nosuid,nodev,relatime"
+            },
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              559595
+            ]
+          },
+          "exit_code": 0,
+          "rootfs_unmounted": true,
+          "stderr_base64": "",
+          "stdout_base64": ""
+        },
+        "removed_cgroups": [
+          "/sys/fs/cgroup/ocean-c23/c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030/host",
+          "/sys/fs/cgroup/ocean-c23/c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030"
+        ],
+        "reservation_released": false,
+        "rootfs_unmounted": true
+      },
+      "evaluation": {
+        "C23_complete": false,
+        "checks": {
+          "expected_barrier": true,
+          "immutable_terminal_journal": true,
+          "no_dispatch_or_release": true,
+          "one_create": true,
+          "original_was_first_execution": true,
+          "owned_empty_after_crash": true,
+          "replayed": true,
+          "retained_outputs": true,
+          "same_job": true,
+          "same_profile": true,
+          "same_terminal_record": true,
+          "scientific_unverified": true,
+          "terminal_before_crash": true,
+          "terminal_completed": true,
+          "verified_cleanup": true,
+          "zero_runtime_commands": true
+        },
+        "episode_passed": true,
+        "open_gates": [
+          "VM reboot/power failure",
+          "queued-launch cancellation",
+          "synthetic admission revocation",
+          "real retained C22 bridge/release"
+        ],
+        "reservation_released": false,
+        "retained_C22_real_approval": false
+      },
+      "open_gates": [
+        "VM reboot/power failure",
+        "queued-launch cancellation",
+        "synthetic admission revocation",
+        "real retained C22 bridge/release"
+      ],
+      "receipt_sha256": "1f09409309cae2347aa8a13bac3387408cb78b0f543a6c99e8f62f63ca585240",
+      "recovered_result": {
+        "has_outputs": true,
+        "journal": {
+          "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778",
+          "epoch": 1,
+          "events": [
+            {
+              "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+              "kind": "claimed",
+              "monotonic_ns": 1648556448726,
+              "payload": {
+                "previous_epoch": 0,
+                "reconciliation_required": false
+              },
+              "payload_json": "{\"previous_epoch\":0,\"reconciliation_required\":false}",
+              "previous_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "sequence": 1,
+              "sha256": "774bf4b21666018fae319268a4f4c8c76b56bee7094f28341c036781f0cd4d7c"
+            },
+            {
+              "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+              "kind": "prepared",
+              "monotonic_ns": 1648572140335,
+              "payload": {
+                "profile_sha256": "9d865205be769a16048775f4f1f33cb2e5606ebda8f71acfaa067aab5e49ea08",
+                "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8"
+              },
+              "payload_json": "{\"profile_sha256\":\"9d865205be769a16048775f4f1f33cb2e5606ebda8f71acfaa067aab5e49ea08\",\"runtime_sha256\":\"1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8\"}",
+              "previous_sha256": "774bf4b21666018fae319268a4f4c8c76b56bee7094f28341c036781f0cd4d7c",
+              "sequence": 2,
+              "sha256": "29276fa46aa758ac35227eccc20281ada3ec995eff0e2847fbe21f34fe377121"
+            },
+            {
+              "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+              "kind": "cgroup_intent",
+              "monotonic_ns": 1648589600989,
+              "payload": {
+                "path": "/ocean-c23/c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030"
+              },
+              "payload_json": "{\"path\":\"/ocean-c23/c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030\"}",
+              "previous_sha256": "29276fa46aa758ac35227eccc20281ada3ec995eff0e2847fbe21f34fe377121",
+              "sequence": 3,
+              "sha256": "662c6f600d8670d5412a48b468c9dd4e17cd2f704c7e35b50113ae9ca26f62db"
+            },
+            {
+              "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+              "kind": "create_intent",
+              "monotonic_ns": 1648603752244,
+              "payload": {
+                "cgroup_identity": [
+                  30,
+                  12098
+                ],
+                "profile_sha256": "9d865205be769a16048775f4f1f33cb2e5606ebda8f71acfaa067aab5e49ea08"
+              },
+              "payload_json": "{\"cgroup_identity\":[30,12098],\"profile_sha256\":\"9d865205be769a16048775f4f1f33cb2e5606ebda8f71acfaa067aab5e49ea08\"}",
+              "previous_sha256": "662c6f600d8670d5412a48b468c9dd4e17cd2f704c7e35b50113ae9ca26f62db",
+              "sequence": 4,
+              "sha256": "1a0589e4ff9b82f84027298173de5d7a029f1258f201bd41ae2c51f5d3816465"
+            },
+            {
+              "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+              "kind": "watchdog_armed",
+              "monotonic_ns": 1648697099366,
+              "payload": {
+                "deadline_monotonic": 1738.614761229,
+                "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+                "pid": 3118
+              },
+              "payload_json": "{\"deadline_monotonic\":1738.614761229,\"host_boot_id\":\"1726d7b4-f078-40dc-9184-f79ea53e8d01\",\"pid\":3118}",
+              "previous_sha256": "1a0589e4ff9b82f84027298173de5d7a029f1258f201bd41ae2c51f5d3816465",
+              "sequence": 5,
+              "sha256": "dd6db476dc780199f1999301995a37c11d447520601323d9b2e7a323b693d64f"
+            },
+            {
+              "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+              "kind": "enforcement_verified",
+              "monotonic_ns": 1649138580710,
+              "payload": {
+                "readback": {
+                  "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030": {
+                    "cpu.max": "200000 100000",
+                    "memory.max": "4294967296",
+                    "memory.swap.max": "0",
+                    "pids.max": "128"
+                  },
+                  "sandbox": {
+                    "cpu.max": "200000 100000",
+                    "memory.max": "4294967296",
+                    "memory.swap.max": "0",
+                    "pids.max": "128"
+                  }
+                }
+              },
+              "payload_json": "{\"readback\":{\"c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030\":{\"cpu.max\":\"200000 100000\",\"memory.max\":\"4294967296\",\"memory.swap.max\":\"0\",\"pids.max\":\"128\"},\"sandbox\":{\"cpu.max\":\"200000 100000\",\"memory.max\":\"4294967296\",\"memory.swap.max\":\"0\",\"pids.max\":\"128\"}}}",
+              "previous_sha256": "dd6db476dc780199f1999301995a37c11d447520601323d9b2e7a323b693d64f",
+              "sequence": 6,
+              "sha256": "c65c641f5b332bb423d826455676e02f6905b09b70ea415bb3470321ebfdca34"
+            },
+            {
+              "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+              "kind": "start_intent",
+              "monotonic_ns": 1649162886292,
+              "payload": {
+                "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778"
+              },
+              "payload_json": "{\"envelope_sha256\":\"fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778\"}",
+              "previous_sha256": "c65c641f5b332bb423d826455676e02f6905b09b70ea415bb3470321ebfdca34",
+              "sequence": 7,
+              "sha256": "04ec53da1ce4982ad9e466224204c4e08c8ac0852185a08d30a91277a5a6fbd9"
+            },
+            {
+              "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+              "kind": "started",
+              "monotonic_ns": 1649388743181,
+              "payload": {},
+              "payload_json": "{}",
+              "previous_sha256": "04ec53da1ce4982ad9e466224204c4e08c8ac0852185a08d30a91277a5a6fbd9",
+              "sequence": 8,
+              "sha256": "9da8ff38c8877c02fb8460f6e3812c1f3e5063c2d3148839416c3e7aa814fd72"
+            },
+            {
+              "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+              "kind": "cleanup_intent",
+              "monotonic_ns": 1650045129110,
+              "payload": {},
+              "payload_json": "{}",
+              "previous_sha256": "9da8ff38c8877c02fb8460f6e3812c1f3e5063c2d3148839416c3e7aa814fd72",
+              "sequence": 9,
+              "sha256": "c57d2ed9306dbcaae666263b1447a6a4b7d071cda5616a2f6a9228fb728927b5"
+            },
+            {
+              "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+              "kind": "termination_verified",
+              "monotonic_ns": 1650278044737,
+              "payload": {
+                "frame_sha256": "c480d1c81932d0277c637f53fd3c946883a82e6547fa1874fdfa1e221594dc3d",
+                "proof": {
+                  "cgroup_device": 30,
+                  "cgroup_inode": 12098,
+                  "cgroup_path": "/ocean-c23/c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+                  "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+                  "populated": 0,
+                  "runtime_delete_acknowledged": true,
+                  "whole_host_subtree_empty": true
+                }
+              },
+              "payload_json": "{\"frame_sha256\":\"c480d1c81932d0277c637f53fd3c946883a82e6547fa1874fdfa1e221594dc3d\",\"proof\":{\"cgroup_device\":30,\"cgroup_inode\":12098,\"cgroup_path\":\"/ocean-c23/c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030\",\"host_boot_id\":\"1726d7b4-f078-40dc-9184-f79ea53e8d01\",\"populated\":0,\"runtime_delete_acknowledged\":true,\"whole_host_subtree_empty\":true}}",
+              "previous_sha256": "c57d2ed9306dbcaae666263b1447a6a4b7d071cda5616a2f6a9228fb728927b5",
+              "sequence": 10,
+              "sha256": "1e4963a55ef0fac4ce2d7884f0ef7c2cfcca6f9e5fd6e47242e65e268a1723db"
+            },
+            {
+              "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778",
+              "epoch": 1,
+              "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+              "host_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b",
+              "job_id": "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+              "kind": "finished",
+              "monotonic_ns": 1650322476680,
+              "payload": {
+                "result_sha256": "a5eec300dda1f5fce675a001b57d3c54689a0f363cdd85ed746003b4dd633e78"
+              },
+              "payload_json": "{\"result_sha256\":\"a5eec300dda1f5fce675a001b57d3c54689a0f363cdd85ed746003b4dd633e78\"}",
+              "previous_sha256": "1e4963a55ef0fac4ce2d7884f0ef7c2cfcca6f9e5fd6e47242e65e268a1723db",
+              "sequence": 11,
+              "sha256": "499a55fa346e49d4c484803a40c24e7feba10299d64d7f351becacba1c06986a"
+            }
+          ],
+          "job_id": "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+          "reconciliation_required": false,
+          "result": {
+            "dispatch_eligible": false,
+            "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778",
+            "epoch": 1,
+            "job_id": "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+            "record": {
+              "adapter_source_sha256": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d",
+              "analysis_exit_code": 0,
+              "approved_hashes": {
+                "code_sha256": "a24691d11d8c59685f1456acfd73ce4772bbb9b7b46502ab8ccf3bfa91544821",
+                "environment_sha256": "1c3f049193cb5c2575eabeae312e1ce2272237011277f770d468ffcb805c6db0",
+                "input_manifest_sha256": "6204457b3ed207731803cde880d9d0a11f3a680c5154ab66dec5879c09e844f0",
+                "proposal_sha256": "8779864d500dd84cb34a36983074e466180e0efc2bb5045db0fd9f262895990b",
+                "resources_sha256": "0d94e9017530653f0fb10aa1629a5b75b6323934d466508b846c97ae7c1c9210"
+              },
+              "declared_seeds": {},
+              "dispatch_eligible": false,
+              "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778",
+              "execution_started": true,
+              "frame_sha256": "c480d1c81932d0277c637f53fd3c946883a82e6547fa1874fdfa1e221594dc3d",
+              "host_runtime_exit_status": 0,
+              "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+              "job_id": "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+              "outputs_manifest_sha256": "3976eb373e12cb9b939ec6e1faaddbe88adc4799adf0f08809a863cd199e3b61",
+              "private_diagnostics_directory": "diagnostics",
+              "profile_sha256": "9d865205be769a16048775f4f1f33cb2e5606ebda8f71acfaa067aab5e49ea08",
+              "reason": "completed",
+              "replayed": false,
+              "reservation_released": false,
+              "retained_logs": {
+                "stderr": {
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "size_bytes": 0
+                },
+                "stdout": {
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "size_bytes": 0
+                }
+              },
+              "runtime_acceptance_verified": false,
+              "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8",
+              "scientific_approval": "not_independently_verified",
+              "simulation": false,
+              "start_attempted": true,
+              "state": "completed",
+              "termination_proof": {
+                "cgroup_device": 30,
+                "cgroup_inode": 12098,
+                "cgroup_path": "/ocean-c23/c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+                "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+                "populated": 0,
+                "runtime_delete_acknowledged": true,
+                "whole_host_subtree_empty": true
+              },
+              "total_output_bytes": 794,
+              "trusted_init_sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+              "version": "c23-linux-runsc-operator-v1"
+            },
+            "reservation_released": false,
+            "scientific_approval": "not_independently_verified",
+            "version": "c23-durable-control-result-v1"
+          },
+          "terminal": true
+        },
+        "output_files_sha256": {
+          "summary.json": "97b95c63850e7424c3199bc65d166c49d329221aca7496f3b961d733f55d443c"
+        },
+        "result": {
+          "adapter_source_sha256": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d",
+          "analysis_exit_code": 0,
+          "approved_hashes": {
+            "code_sha256": "a24691d11d8c59685f1456acfd73ce4772bbb9b7b46502ab8ccf3bfa91544821",
+            "environment_sha256": "1c3f049193cb5c2575eabeae312e1ce2272237011277f770d468ffcb805c6db0",
+            "input_manifest_sha256": "6204457b3ed207731803cde880d9d0a11f3a680c5154ab66dec5879c09e844f0",
+            "proposal_sha256": "8779864d500dd84cb34a36983074e466180e0efc2bb5045db0fd9f262895990b",
+            "resources_sha256": "0d94e9017530653f0fb10aa1629a5b75b6323934d466508b846c97ae7c1c9210"
+          },
+          "declared_seeds": {},
+          "dispatch_eligible": false,
+          "envelope_sha256": "fa86921334c9058274f670ba9daae29fc03e819d75f00b9bab266670f5f06778",
+          "execution_started": true,
+          "frame_sha256": "c480d1c81932d0277c637f53fd3c946883a82e6547fa1874fdfa1e221594dc3d",
+          "host_runtime_exit_status": 0,
+          "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+          "job_id": "c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+          "outputs_manifest_sha256": "3976eb373e12cb9b939ec6e1faaddbe88adc4799adf0f08809a863cd199e3b61",
+          "private_diagnostics_directory": "diagnostics",
+          "profile_sha256": "9d865205be769a16048775f4f1f33cb2e5606ebda8f71acfaa067aab5e49ea08",
+          "reason": "completed",
+          "replayed": true,
+          "reservation_released": false,
+          "retained_logs": {
+            "stderr": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "size_bytes": 0
+            },
+            "stdout": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "size_bytes": 0
+            }
+          },
+          "runtime_acceptance_verified": false,
+          "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8",
+          "scientific_approval": "not_independently_verified",
+          "simulation": false,
+          "start_attempted": true,
+          "state": "completed",
+          "termination_proof": {
+            "cgroup_device": 30,
+            "cgroup_inode": 12098,
+            "cgroup_path": "/ocean-c23/c23-83e38d55fb705a66ce6a52f9c6ec6d8c0e92e350163b1030",
+            "host_boot_id": "1726d7b4-f078-40dc-9184-f79ea53e8d01",
+            "populated": 0,
+            "runtime_delete_acknowledged": true,
+            "whole_host_subtree_empty": true
+          },
+          "total_output_bytes": 794,
+          "trusted_init_sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+          "version": "c23-linux-runsc-operator-v1"
+        }
+      }
+    }
+  },
+  "qualification": "Actual samejobprocessSIGKILL/recovery/replayonly; noVMreboot, queuedlauncher/revocationorC22releaseauthority.",
+  "recorded_at": "2026-10-26T12:22:22.620687+00:00",
+  "source_archive_sha256": "4109df6ceba3c6f6ba3da3e1ee5fefd08aef8f54fade7f23d200b6b340fed530"
+}

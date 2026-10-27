@@ -1,0 +1,62 @@
+{
+  "C23_complete": false,
+  "checks": [
+    {
+      "command": ".venv/bin/python -m pytest tests/test_experiment_sandbox_recovery_acceptance.py -q --tb=short",
+      "exit_code": 0,
+      "result": "42 passed in3.48s",
+      "source_scope": "Original5cfd20c4/1ff990a9 draft"
+    },
+    {
+      "command": ".venv/bin/python -m pytest tests/test_experiment_sandbox_recovery_acceptance.py -q --tb=short -k 'terminal_replay or acceptance_never'",
+      "exit_code": 0,
+      "result": "10 passed,33 deselected in0.58s",
+      "source_scope": "Frozen6cf79941/1412265d replay-shape amendment"
+    }
+  ],
+  "dispatch_eligible": false,
+  "implementation_source_edited_by_reviewer": false,
+  "kind": "Independent read-only additive real-runtime recovery driver review",
+  "owner_receipt": {
+    "path": "docs/plans/ocean-v1/evidence/C23/operator-recovery-preparation-20261026/replay-shape-amendment01/verification.json",
+    "sha256": "e127a810e3242458d866cceb592ae2d77de66f569f35a9633fa6f7e42aa0ff47"
+  },
+  "preserved_prior_receipt": {
+    "path": "docs/plans/ocean-v1/evidence/C23/operator-recovery-preparation-20261026/verification.json",
+    "sha256": "7ff70c057d253172dc86a701b9c6abb51817b34a78edcdaebb7b2024ac9f667f"
+  },
+  "qualifications": [
+    "Local checks execute only safe fixtures/control doubles and one fixed trusted sleeping subprocess for exact-child SIGKILL; no generated analysis, runsc, cgroup, ACL or cloud operation",
+    "Driver is preparation only until exact-source Linux episodes and raw journal/frame/cleanup receipts pass",
+    "Terminal replay starts from an already empty completed job; its populated0 observation is not a causal watchdog-kill test",
+    "VM reboot/power failure, queued-launch cancellation, synthetic admission revocation and real C22 bridge/release stay explicit open gates"
+  ],
+  "recorded_at": "2026-10-26T12:05:52.641325+00:00",
+  "remaining_source_blockers": [],
+  "replay_shape_amendment": "Owner caught and fixed an actual-record false-negative before physical execution: symmetric comparison excludes only replayed while explicitly requiring originalfalse/resumedtrue. Prior source and42-case receipt preserved.",
+  "reservation_released": false,
+  "retained_C22_real_approval": false,
+  "reviewed_boundaries": [
+    "Fresh normal Popen controllers, no preexec or Python fork after scientific imports; worker guard precedes privileged paths/materials/effects",
+    "Only real base adapter calls are forwarded; lost create/start acknowledgment barriers follow actual successful return before parent adapter handles it, without inventing acknowledgments",
+    "Context/fixture/profile/image/runtime/source digests and fresh network/admission checks retain operator-only identity; stageonce/read-only mount/ACL ordering retains accepted source guards",
+    "Coordinator kills/reaps only its exact owned live Popen child and requires SIGKILL status; independent original watchdog then binds owned cgroup device/inode and populated0",
+    "Live contender must return worker-busy with zero runtime commands; recovered nonterminal epoch must increase and execute cleanup only, with no create/start/wait or outputs",
+    "Terminal cut occurs after adapter.run returns with lease closed and durable record committed; replay requires unchanged terminal journal/epoch, original replayed:false, resumed replayed:true, matching record except that one field, retained outputs and zero runtime commands",
+    "Every result/receipt denies real C22 approval, release and scientific approval; failure keeps context/cleanup deferred rather than assuming absence or availability"
+  ],
+  "scientific_approval": "not_independently_verified",
+  "source_files": {
+    "sandbox/experiment/gcp/run_recovery_acceptance.py": "6cf79941d1956b194bca2ac2e75f1a662fc2bb0f4c146c8bccf94edaa0738f25",
+    "tests/test_experiment_sandbox_recovery_acceptance.py": "1412265d238920bcd9a710e52f7766f75536a9dd10e9abbd5fe7fa2da077e862"
+  },
+  "unchanged_accepted_modules": {
+    "orchestration/experiment_sandbox/files.py": "a2e1d4883b17513bbe82b7de43f16ce47d86480bffb39a64a5b7bf65dc3440ca",
+    "orchestration/experiment_sandbox/journal.py": "6e128f8d15dc312c79f50aa35686bb8905aac4e02880d697c93e512705e37b7c",
+    "orchestration/experiment_sandbox/linux_runtime.py": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d",
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01",
+    "orchestration/experiment_sandbox/profile_execution.py": "17caa52609bc88d7e3e504ba10dde0db47335e60d24de0d6d77f91896fcba496",
+    "orchestration/experiment_sandbox/traversal.py": "c722c67c428b25cf7139ab00164827fdf713a59653dedcb8347b8acc697e5be3",
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "65c40b26082b3dab0236ad9f37c9b47a97771a21fa4839369f04d85582ff7d04"
+  }
+}

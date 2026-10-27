@@ -1,0 +1,13 @@
+W1026 07:16:34.504571    3465 maincli.go:40] Cannot find if container c23-823214424c8251d449ea1d913c2038e6667efb5e102deb1a exists, checking if sandbox c23-823214424c8251d449ea1d913c2038e6667efb5e102deb1a is running, err: getting container state (CID: "c23-823214424c8251d449ea1d913c2038e6667efb5e102deb1a"): connecting to control server at PID 3414: connection refused
+W1026 07:16:34.504583    3465 maincli.go:40] Sandbox isn't running anymore, marking container c23-823214424c8251d449ea1d913c2038e6667efb5e102deb1a as stopped:
+I1026 07:16:34.504705    3465 cli.go:275] **************** gVisor ****************
+I1026 07:16:34.504733    3465 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 3465, PPID 3337, UID 0, GID 0
+I1026 07:16:34.504746    3465 cli.go:278] Args: [/opt/ocean-c23-runtime/release-20261019.0/runsc --root=/var/lib/ocean-c23/operator-acceptance/descendants-20261026-01/worker/runsc-state-c23-823214424c8251d449ea1d913c2038e6667efb5e102deb1a --platform=systrap --rootless=false --network=none --gofer-network-namespace=new --directfs=false --overlay2=none --host-uds=none --host-fifo=none --character-device-policy=emulated-only --net-raw=false --ignore-cgroups=false --allow-flag-override=false --sidecar-release-enforcement-policy=ALWAYS --fdlimit=256 --gvisor-marker-file=true --oci-seccomp=true --debug=false --debug-log=/dev/stderr --panic-log=/dev/stderr delete --force c23-823214424c8251d449ea1d913c2038e6667efb5e102deb1a]
+I1026 07:16:34.504772    3465 config.go:631] Platform: systrap
+I1026 07:16:34.504784    3465 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/descendants-20261026-01/worker/runsc-state-c23-823214424c8251d449ea1d913c2038e6667efb5e102deb1a
+I1026 07:16:34.504789    3465 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1026 07:16:34.504799    3465 config.go:634] Network: none
+I1026 07:16:34.504815    3465 config.go:635] UseCPUNums: false
+W1026 07:16:34.504821    3465 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1026 07:16:34.504827    3465 cli.go:287] **************** gVisor ****************
+I1026 07:16:34.505203    3465 cli.go:316] Exiting with status: 0

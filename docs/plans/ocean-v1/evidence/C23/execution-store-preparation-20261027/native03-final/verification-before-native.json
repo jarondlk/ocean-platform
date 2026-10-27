@@ -1,0 +1,15 @@
+{
+  "changes_since_initial_check": [
+    "tests/experiment_execution_postgres_support.py",
+    "tests/test_experiment_sandbox_execution_store.py"
+  ],
+  "reason": "Explicit bounded CI server-address pin and focused local validation added; core model/store/migration/native test unchanged. Current source will be validated by a fresh full C23 native run.",
+  "source_sha256": {
+    "db/experiment_execution_models.py": "c82b42092c200263fd497d434f1df1a7a54d68240eee06d8d6ceb38131f5f52a",
+    "migrations/versions/20261027_0021_experiment_execution.py": "6030819273cedbd047d98ada9784b74f2fa126612d922253d177dedc5fcc5aa0",
+    "orchestration/experiment_sandbox/execution_store.py": "539e7c7b638b759fc92ef6615e5b037ab9d9420cf09876bd39033a9d4e1fb13d",
+    "tests/experiment_execution_postgres_support.py": "364bae2bc0247f9124d8f51abce34487a93c701e46d14f44507041eee85cbb8e",
+    "tests/integration/test_experiment_execution_postgres.py": "1da0794fdfa062c88d25cf20392ef4a225cc18e5ae3e62effaab681a3d9cf547",
+    "tests/test_experiment_sandbox_execution_store.py": "23099eac582e16564ae33dabbe346f3053fa118fc38629132b911609749505c6"
+  }
+}

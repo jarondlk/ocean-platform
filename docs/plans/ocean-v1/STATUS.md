@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-10-26 JST. **P00 and C01–C22 are Complete with source-bound hosted delivery; C23 is In progress; C24–C27 are Not started.**
+Updated: 2026-10-27 JST. **P00 and C01–C22 are Complete with source-bound hosted delivery; C23 is In progress; C24–C27 are Not started.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -13,19 +13,31 @@ P00 and C01–C13 local work is authorized; the user also authorizes subsequent 
 See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md), [C08](handoffs/C08.md), [C09](handoffs/C09.md) and [C10](handoffs/C10.md) handoffs for current evidence.
 
-Current C23 checkpoint (Oct26): GCP login works. Previous worker STOP was
-verified, then the same isolated VM restarted with deadline17:40JST
-(2026-10-26T08:40:49.899002Z). Setup egress was removed after renewed positive
-controls; same-boot complete network observations are retained. Source299fe91
-passes all four required hosted jobs in run40179682357. Later reviewed image
-normalization, terminal-IP, namespace policy, metric-parser and exact gofer
-search-only ACL amendments pass558 combined local cases, Ruff and shell syntax
-with42 source paths steady,963 prior source/1334 prior evidence checked and42
-protected paths unchanged. [Local receipt](evidence/C23/operator-local-20261026-amendment02/verification.json).
-Actual smoke diagnosed a private-parent path denial before analysis; the
-reviewed traversal fix then passed actual gVisor smoke/output/cleanup checks. No containment/numerical completion,
-C22 authority/release acceptance or C24 advancement is claimed. Scheduling
-remains PAUSED. Older dated worker/auth statements below are historical.
+Current C23 checkpoint (Oct27,12:35JST): CLI authentication is restored and the
+isolated worker is independently confirmed TERMINATED, with no service account
+or external IP. Frozen runtime/profile/inspection/protocol preparation passes
+891 scoped local cases, Ruff and shell syntax on53 unchanged source paths.
+[Local receipt](evidence/C23/operator-local-20261027-native02/verification.json).
+The independent actual audit passes seven science/native regression cases and
+651 raw export files: NumPy-first numerical pair and raster, plus namespace,
+containment and cancellation. Native Sentry/gofer4096 and guest256 are retained;
+repeated numerical results agree within1e-12 and preserve exact int64.
+[Independent review](evidence/C23/operator-independent-review-20261027/actual-native-science-regression-review.json).
+Three earlier same-boot process recovery episodes pass. Original process-load
+failure remains failed and separately qualified as host PID containment.
+The additive execution ledger/role layer passes24 local and28 actual PostgreSQL
+cases on unchanged source; random roles/schemas are cleared and privileged
+process/endpoint checks verify the local cluster stopped.
+[DB receipt](evidence/C23/execution-store-preparation-20261027/native03-final/receipt.json).
+Current-head expectations in five existing test files are intentionally updated
+for0021, with88 bootstrap tests passing; original C22 serving/ORM/0020 bytes stay
+unchanged. Hosted CI will run the new dedicated C23 PostgreSQL database and all
+existing native suites at the new head. Latest delivered00abd95 remains green;
+new source checkpoint/hosted delivery is pending. C23 stays In progress: current
+C22 reserve/start/publication, held-lease physical signing and complete verified
+capacity release require implementation and actual end-to-end acceptance.
+No C24 advancement or scientific approval. Scheduling stays PAUSED. Older dated
+worker/auth/acceptance statements below are historical.
 
 Original local implementation checkpoint: **C23 — Isolated Python execution preparation**. All393 scoped cases pass (292 new and101 existing regressions), Ruff passes, all17 new source/recipe/test files remain steady and946 prior source/1334 prior evidence files are preserved. Strict C22 byte/hash verification, non-executing supervisor, safe staging/output validation and fixed profile/offline image preparation are implemented. C23 remains In progress: actual runtime containment, durable integration, safe extraction and numerical acceptance remain pending. [Handoff](handoffs/C23.md), [original local checkpoint](evidence/C23/checkpoint.json).
 
@@ -115,7 +127,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C20 — Durable research execution](components/C20-durable-execution.md) | Complete | Original checkpoints plus pagination amendment; sourcea149239 hosted delivery passes | Local 4847 backend/231 skips/85.64%, 104 actual PG, 805 v1; hosted 4838 backend/231 actual PG/805 v1/132 legacy | [C20](handoffs/C20.md) |
 | [C21 — Evidence and answer synthesis](components/C21-evidence-synthesis.md) | Complete | Source567684b exact-source hosted delivery passes; original receipts and workflow-only amendment retained | Hosted5031 backend/254 gated skips/86.48%;254 actual PG;930 v1/132 legacy, builds/typechecks/audits/generated contracts and backup/restore pass | [C21](handoffs/C21.md) |
 | [C22 — Experiment proposals and frozen exports](components/C22-experiment-proposals.md) | Complete | Source66b4106 exact-source hosted CI39539257759 and delivery receipt pass |5273 backend/275 gated skips/86.14%;148 actual PG, independent reviews, strict nine-action HTTP; original receipts/qualifications retained | [C22](handoffs/C22.md) |
-| [C23 — Isolated Python execution](components/C23-python-sandbox.md) | In progress | 558 combined local cases pass; Oct26 isolated worker deadline17:40JST; actual startup verification underway | Original393 scoped/hosted preparation preserved; real containment, numerical and C22 bridge gates remain | [C23](handoffs/C23.md) |
+| [C23 — Isolated Python execution](components/C23-python-sandbox.md) | In progress | 891 scoped local cases; actual science and same-boot recovery pass;00abd95 hosted green | Native4096/guest256 and28 native DB cases verified; retained C22 execution/proof/release bridge and new-source hosted delivery remain | [C23](handoffs/C23.md) |
 | [C24 — Isolated GCP site and worker configuration](components/C24-gcp-worker-configuration.md) | Not started | None | Not run | Not created |
 | [C25 — Experimental Workspace interface](components/C25-experimental-workspace.md) | Not started | None | Not run | Not created |
 | [C26 — System acceptance and evaluation](components/C26-system-acceptance.md) | Not started | None | Not run | Not created |

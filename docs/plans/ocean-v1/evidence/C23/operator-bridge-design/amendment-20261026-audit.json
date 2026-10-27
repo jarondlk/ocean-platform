@@ -1,0 +1,33 @@
+{
+  "C23_complete": false,
+  "SQL_or_database_actions": false,
+  "accepted_C22_files": {
+    "db/app_models.py": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+    "docs/plans/ocean-v1/C22_EXPERIMENT_CONTRACT.md": "1b9264c930cf42e37b2de68e445a90d7a646c45d8090c79f06305fbb3d96eb01",
+    "docs/plans/ocean-v1/components/C22-experiment-proposals.md": "ebc87489fd86afc5601563962991b892587d691531603ced8d19d4f306bcdf68",
+    "docs/plans/ocean-v1/evidence/C22/delivery.json": "5d8caca651c6b2842f4a1708a491173cc71812942acadc2447a3c91aa9da6aa0",
+    "migrations/versions/20261020_0020_research_experiments.py": "2f5eb82dfefdd6a02bafddb58a44936fa42197c8eb2ac70b726d83fc57f14dff",
+    "orchestration/research_experiments.py": "bab02f05549655977e2f95ef7885a59d3a311c3ad64941b0846d79b94b0db2ee",
+    "tests/integration/test_research_experiments_postgres.py": "581e67d6a0eda2db87c40dfca6e635660bacf43f7b916a1543a4465c2ea2ff8f",
+    "tests/research_experiment_postgres_support.py": "08643b469b66ca2874a14838b81e003c0af9069c8b227bebe42619f6644c0e33",
+    "tests/test_research_experiments.py": "eb33fdfb5f435f047b44c104ca406efa09f55b4913312ac30ef2d47cd396a749"
+  },
+  "accepted_C22_source_differences": {},
+  "actual_runtime_receipts_independently_revalidated_by_this_audit": false,
+  "additional_sources": {
+    "docs/plans/ocean-v1/C23_SANDBOX_CONTRACT.md": "cfbbba795597bfbc4b60801974f3be54e3b4a21988aeafd8cd07f7666f2b708f",
+    "orchestration/experiment_sandbox/journal.py": "6e128f8d15dc312c79f50aa35686bb8905aac4e02880d697c93e512705e37b7c",
+    "orchestration/experiment_sandbox/linux_runtime.py": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d",
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "requirements/runtime.txt": "6b0bb8d53fde43edb0d23370f17f32ceb7243a0545071dc31bceaced55b19f81",
+    "tests/research_experiment_postgres_support.py": "08643b469b66ca2874a14838b81e003c0af9069c8b227bebe42619f6644c0e33"
+  },
+  "cloud_or_dispatch_actions": false,
+  "design_sha256": "e0b40aa6adcf95b700d922d022dc761bbb766d516d19a826ef52adce771f8d1c",
+  "dispatch_eligible": false,
+  "implementation_performed": false,
+  "kind": "Read-only retained-authority bridge implementation audit after root-reported core runtime tests",
+  "recorded_at": "2026-10-26T07:26:34.829362+00:00",
+  "reservation_released": false,
+  "root_reported_core_runtime_source": "00abd95"
+}

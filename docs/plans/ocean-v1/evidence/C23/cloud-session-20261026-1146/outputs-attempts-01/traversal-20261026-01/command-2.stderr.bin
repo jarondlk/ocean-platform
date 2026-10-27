@@ -1,0 +1,19 @@
+I1026 12:08:00.118920    2605 cli.go:275] **************** gVisor ****************
+I1026 12:08:00.118961    2605 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 2605, PPID 2562, UID 0, GID 0
+I1026 12:08:00.118975    2605 cli.go:278] Args: [/opt/ocean-c23-runtime/release-20261019.0/runsc --root=/var/lib/ocean-c23/operator-acceptance/traversal-20261026-01/worker/runsc-state-c23-40d4eb69516b8fa6deb332a59cc34ac34dd81b850e18938b --platform=systrap --rootless=false --network=none --gofer-network-namespace=new --directfs=false --overlay2=none --host-uds=none --host-fifo=none --character-device-policy=emulated-only --net-raw=false --ignore-cgroups=false --allow-flag-override=false --sidecar-release-enforcement-policy=ALWAYS --fdlimit=256 --gvisor-marker-file=true --oci-seccomp=true --debug=false --debug-log=/dev/stderr --panic-log=/dev/stderr start c23-40d4eb69516b8fa6deb332a59cc34ac34dd81b850e18938b]
+I1026 12:08:00.119015    2605 config.go:631] Platform: systrap
+I1026 12:08:00.119022    2605 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/traversal-20261026-01/worker/runsc-state-c23-40d4eb69516b8fa6deb332a59cc34ac34dd81b850e18938b
+I1026 12:08:00.119027    2605 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1026 12:08:00.119036    2605 config.go:634] Network: none
+I1026 12:08:00.119043    2605 config.go:635] UseCPUNums: false
+W1026 12:08:00.119048    2605 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1026 12:08:00.119056    2605 cli.go:287] **************** gVisor ****************
+I1026 12:08:00.119254    2605 hostsettings.go:326] Host setting "/proc/sys/user/max_user_namespaces" is optimal
+I1026 12:08:00.119283    2605 hostsettings.go:326] Host setting "/proc/sys/kernel/unprivileged_userns_clone" is optimal
+I1026 12:08:00.119311    2605 hostsettings.go:326] Host setting "/proc/sys/kernel/unprivileged_userns_apparmor_policy" is optimal
+W1026 12:08:00.119317    2605 hostsettings.go:46] Host setting "/sys/kernel/mm/transparent_hugepage/shmem_enabled" (currently: "always within_size advise [never] deny force") is not optimal (turning on transparent hugepages support in shmem increases memory allocation performance); it is recommended to change it to "advise"
+W1026 12:08:00.119325    2605 hostsettings.go:46] Host setting "/sys/kernel/mm/transparent_hugepage/defrag" (currently: "always defer defer+madvise [madvise] never") is not optimal (disabling direct compaction improves page fault latency when hugepages are not immediately available); it is recommended to change it to "never"
+W1026 12:08:00.119332    2605 hostsettings.go:46] Host setting "/proc/sys/vm/max_map_count" (currently: "1048576") is not optimal (increasing max_map_count decreases the likelihood of host VMA exhaustion); it is recommended to change it to "4194304"
+I1026 12:08:00.119444    2605 network.go:55] Setting up network
+I1026 12:08:00.119456    2605 network.go:59] Network is disabled, create loopback interface only
+I1026 12:08:00.137522    2605 cli.go:316] Exiting with status: 0

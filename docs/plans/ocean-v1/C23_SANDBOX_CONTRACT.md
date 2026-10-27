@@ -4,20 +4,32 @@ Version: `c23-sandbox-contract-v1`. This is the local implementation checkpoint
 on `overhaul`, following delivered C22 source `66b4106`, CI `39539257759` and
 metadata checkpoint `f4f702c`. C23 is In progress. It is not accepted execution.
 
-Current scope amendment,2026-10-23: GCP setup/runtime installation/image builds
-and synthetic tests for an isolated C23 worker are now explicitly authorized.
-The no-provisioning statements below describe the earlier local checkpoint.
-See [worker plan](C23_GCP_TEST_WORKER_PLAN.md) for actual isolated worker
-configuration and unchanged real acceptance gates. Target/existing billing and
-required C23 spending were resolved by the user's later authorization. Oct25
-manual resume required browser reauthentication, restored at18:04JST. The same
-worker was verified stopped then restarted with20:04JST STOP deadline. Actual
-runtime gates remain.
+Current scope amendment,2026-10-27: required isolated GCP synthetic acceptance
+is authorized on the existing billing account. The worker, pinned runtime and
+scientific image exist. GCP authentication works. Original no-host/no-cloud
+statements below describe the Oct21 preparation boundary and are historical.
+Scheduling remains PAUSED; manual continuation is authorized.
 
-The user confirmed there is no existing Linux/gVisor host and instructed that
-real execution remain gated. No scheduler was resumed. No host installation,
-VM start, scientific image build, generated Python execution, cloud resource
-change or real-data operation is part of this checkpoint.
+Actual operator evidence now covers containment/resource/output cases, three
+same-boot process crash/replay episodes and both numerical/raster fixtures.
+The native Sentry/gofer cap is4096 with pre-start exact identity/limit readback;
+the analysis guest remains256. Two unchanged NumPy-first runs agree at declared
+1e-12 tolerance and preserve int64. Original process-exhaustion failure remains
+failed; the qualified host PID-bound observation cannot imply graceful guest
+EAGAIN or successful execution. Neither synthetic operator fixtures nor pure
+signed-packet tests establish retained C22 reservation authority or scientific
+approval. The actual retained approval→reservation→execution→physical signed
+termination→verified capacity release bridge remains mandatory and incomplete.
+
+Latest scoped local acceptance:891 tests, Ruff and shell syntax;53 paths steady.
+[Receipt](evidence/C23/operator-local-20261027-native02/verification.json).
+[Raw scientific evidence](evidence/C23/cloud-session-20261027-0248/native-science-export02-manifest.json).
+That core receipt excludes low-level DB work. The separate native03-final
+receipt now verifies24 local and28 PostgreSQL storage/role cases, with independent
+physical authority still absent. Pushed
+00abd95 hosted CI is green; subsequent code needs new source-bound delivery.
+The following sections retain the original preparation guarantees/gates; see
+[handoff](handoffs/C23.md) for the latest implementation and actual gate status.
 
 ## Retained input and authority
 

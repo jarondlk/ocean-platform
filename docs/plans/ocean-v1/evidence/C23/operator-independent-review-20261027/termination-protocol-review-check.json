@@ -1,0 +1,62 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_experiment_sandbox_proofs.py",
+    "-q",
+    "--tb=short",
+    "-k",
+    "ephemeral_synthetic_signature or default_off_registry or signature_covers_domain or synthetic_registry_cannot or parsing_is_bounded or noncanonical_json or missing_physical_issuer or create_only_receipt or receipt_existing_unsafe or receipt_requires_existing"
+  ],
+  "created_at": "2026-10-26T17:49:17.918019+00:00",
+  "exit_code": 0,
+  "outputs": {
+    "stderr": {
+      "bytes": 0,
+      "path": "docs/plans/ocean-v1/evidence/C23/operator-independent-review-20261027/termination-protocol-review.pytest.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 114,
+      "path": "docs/plans/ocean-v1/evidence/C23/operator-independent-review-20261027/termination-protocol-review.pytest.stdout.txt",
+      "sha256": "4afbe257654a0c8d62faffa4118959d87a2a9fea79e550a381cb6b9bf86e31e7"
+    }
+  },
+  "sources_after": [
+    {
+      "bytes": 6806,
+      "path": "schema/experiment_execution.py",
+      "sha256": "8932fdc90c2fe22035e7bf4a4c88eff4047b3fbc584c070e77041c3e285e8b00"
+    },
+    {
+      "bytes": 17058,
+      "path": "orchestration/experiment_sandbox/proofs.py",
+      "sha256": "98b6f72c0d59dca21e78d9ebb93268769d41c18560e240b0ba8bf4622fc42ed4"
+    },
+    {
+      "bytes": 20846,
+      "path": "tests/test_experiment_sandbox_proofs.py",
+      "sha256": "499389c6b47a5039837e06a450c95d6fa71080281a832b17649f2a18bb809388"
+    }
+  ],
+  "sources_before": [
+    {
+      "bytes": 6806,
+      "path": "schema/experiment_execution.py",
+      "sha256": "8932fdc90c2fe22035e7bf4a4c88eff4047b3fbc584c070e77041c3e285e8b00"
+    },
+    {
+      "bytes": 17058,
+      "path": "orchestration/experiment_sandbox/proofs.py",
+      "sha256": "98b6f72c0d59dca21e78d9ebb93268769d41c18560e240b0ba8bf4622fc42ed4"
+    },
+    {
+      "bytes": 20846,
+      "path": "tests/test_experiment_sandbox_proofs.py",
+      "sha256": "499389c6b47a5039837e06a450c95d6fa71080281a832b17649f2a18bb809388"
+    }
+  ],
+  "summary": "30 passed, 83 deselected in 0.52s",
+  "unchanged": true
+}

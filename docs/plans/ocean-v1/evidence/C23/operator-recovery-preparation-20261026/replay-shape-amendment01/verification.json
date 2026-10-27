@@ -1,0 +1,61 @@
+{
+  "C23_complete": false,
+  "accepted_source_unchanged": true,
+  "actual_runtime_acceptance_performed": false,
+  "cloud_operations_performed": false,
+  "generated_analysis_execution_performed": false,
+  "passed": true,
+  "recorded_at": "2026-10-26T12:04:41.863764+00:00",
+  "reservation_released": false,
+  "results": [
+    {
+      "check": "pytest",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_recovery_acceptance.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "seconds": 4.23
+    },
+    {
+      "check": "ruff",
+      "command": [
+        "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/ruff",
+        "check",
+        "sandbox/experiment/gcp/run_recovery_acceptance.py",
+        "tests/test_experiment_sandbox_recovery_acceptance.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.011
+    }
+  ],
+  "retained_C22_real_approval": false,
+  "scope": "Host-safe synthetic fixture AST, exact forwarding barriers, conservativeassessment andfreshinerthelperSIGKILL only; no generatedguestanalysis/runsc/cgroup/mount/ACL/cloud effect",
+  "source_files_after": {
+    "orchestration/experiment_sandbox/files.py": "a2e1d4883b17513bbe82b7de43f16ce47d86480bffb39a64a5b7bf65dc3440ca",
+    "orchestration/experiment_sandbox/journal.py": "6e128f8d15dc312c79f50aa35686bb8905aac4e02880d697c93e512705e37b7c",
+    "orchestration/experiment_sandbox/linux_runtime.py": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d",
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01",
+    "orchestration/experiment_sandbox/profile_execution.py": "17caa52609bc88d7e3e504ba10dde0db47335e60d24de0d6d77f91896fcba496",
+    "orchestration/experiment_sandbox/traversal.py": "c722c67c428b25cf7139ab00164827fdf713a59653dedcb8347b8acc697e5be3",
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "65c40b26082b3dab0236ad9f37c9b47a97771a21fa4839369f04d85582ff7d04",
+    "sandbox/experiment/gcp/run_recovery_acceptance.py": "6cf79941d1956b194bca2ac2e75f1a662fc2bb0f4c146c8bccf94edaa0738f25",
+    "tests/test_experiment_sandbox_recovery_acceptance.py": "1412265d238920bcd9a710e52f7766f75536a9dd10e9abbd5fe7fa2da077e862"
+  },
+  "source_files_before": {
+    "orchestration/experiment_sandbox/files.py": "a2e1d4883b17513bbe82b7de43f16ce47d86480bffb39a64a5b7bf65dc3440ca",
+    "orchestration/experiment_sandbox/journal.py": "6e128f8d15dc312c79f50aa35686bb8905aac4e02880d697c93e512705e37b7c",
+    "orchestration/experiment_sandbox/linux_runtime.py": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d",
+    "orchestration/experiment_sandbox/profile.py": "82ee8dc3e3640dd3650aeb3c889d1996476d7ef3e4d3720d3c528f61a622ed01",
+    "orchestration/experiment_sandbox/profile_execution.py": "17caa52609bc88d7e3e504ba10dde0db47335e60d24de0d6d77f91896fcba496",
+    "orchestration/experiment_sandbox/traversal.py": "c722c67c428b25cf7139ab00164827fdf713a59653dedcb8347b8acc697e5be3",
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "65c40b26082b3dab0236ad9f37c9b47a97771a21fa4839369f04d85582ff7d04",
+    "sandbox/experiment/gcp/run_recovery_acceptance.py": "6cf79941d1956b194bca2ac2e75f1a662fc2bb0f4c146c8bccf94edaa0738f25",
+    "tests/test_experiment_sandbox_recovery_acceptance.py": "1412265d238920bcd9a710e52f7766f75536a9dd10e9abbd5fe7fa2da077e862"
+  },
+  "source_steady": true
+}

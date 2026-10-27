@@ -1,0 +1,36 @@
+{
+  "C23_complete": false,
+  "source_files": {
+    "tests/integration/test_investigation_postgres.py": {
+      "new_sha256": "b84b1cb66ea833d721dcb6a8e78649c0495ac87ee163b2cd7709c9af1ebfbf0e",
+      "previous_sha256": "57bf87b365ead1be954dfc0d4ce7d6f963223395709e3aa21dc5e78875c04270",
+      "reason": "Current Alembic head is0021; retain all original behavior/schema/history checks. Bootstrap keeps0020 as stale and adds0021 as current."
+    },
+    "tests/integration/test_research_evidence_postgres.py": {
+      "new_sha256": "452d1b2a6ac54c67f5f312a0db4fae4f5db8ee20e6ae2db4b74bc5cfebb60e75",
+      "previous_sha256": "474980e4ec931ee19281c9317d45aa6c0cc9d1381257f83875ab2dc92fb3688b",
+      "reason": "Current Alembic head is0021; retain all original behavior/schema/history checks. Bootstrap keeps0020 as stale and adds0021 as current."
+    },
+    "tests/integration/test_research_experiments_postgres.py": {
+      "new_sha256": "16f6e0784fa9e5fe5fe422786b5355b5d5dd0e766ea5c6c21f14e93c0c94258c",
+      "previous_sha256": "581e67d6a0eda2db87c40dfca6e635660bacf43f7b916a1543a4465c2ea2ff8f",
+      "reason": "Current Alembic head is0021; retain all original behavior/schema/history checks. Bootstrap keeps0020 as stale and adds0021 as current."
+    },
+    "tests/integration/test_research_runs_postgres.py": {
+      "new_sha256": "5d324d202f2935324540ce3d7e6f5214d8d4a67fb7c38b3453cc8c53622d7a6c",
+      "previous_sha256": "bc5153115f00c211f93f610d7f5979eac8aa784f6252ed6e77882782db9b4153",
+      "reason": "Current Alembic head is0021; retain all original behavior/schema/history checks. Bootstrap keeps0020 as stale and adds0021 as current."
+    },
+    "tests/test_bootstrap_database.py": {
+      "new_sha256": "1786a59c4477f8ab5490922ef1e3fe35f47ea370ed1c3abe52061fc7f255684b",
+      "previous_sha256": "815f4e6de1bb2957350dc94ec745397350ea68a84dd47435a88c3f39fda2c12a",
+      "reason": "Current Alembic head is0021; retain all original behavior/schema/history checks. Bootstrap keeps0020 as stale and adds0021 as current."
+    }
+  },
+  "unchanged_production_sources": [
+    "db/app_models.py",
+    "orchestration/research_experiments.py",
+    "migrations/versions/20261020_0020_research_experiments.py"
+  ],
+  "version": "c23-intentional-migration-head-expectation-supersession-v1"
+}

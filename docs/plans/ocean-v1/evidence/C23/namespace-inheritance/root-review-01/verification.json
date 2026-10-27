@@ -1,0 +1,15 @@
+{
+  "C23_complete": false,
+  "actual_inheritance_verified": false,
+  "pytest_exit_code": 0,
+  "pytest_summary": "186 passed in 3.45s",
+  "recorded_at": "2026-10-26T11:59:55.521967+00:00",
+  "review": "Only fixedcase registered; baseguards retained. UID/caps/rawerrno checkedmain/fork/exec/thread; forkbeforethreads; boundedchildJSON; finallyrestoresregistry. No localguestexecution.",
+  "ruff_exit_code": 0,
+  "source_files": {
+    "orchestration/experiment_sandbox/linux_runtime.py": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d",
+    "sandbox/experiment/gcp/run_namespace_inheritance.py": "db97f051ee2de52f6bbdb534f5ea0fabea044d51a28f67d8e25b1de15d6f7145",
+    "sandbox/experiment/gcp/run_operator_acceptance.py": "65c40b26082b3dab0236ad9f37c9b47a97771a21fa4839369f04d85582ff7d04",
+    "tests/test_experiment_sandbox_namespace_inheritance.py": "7fe62b4a8eadfbb0966bc58af515ebe2b017b781eea7801d205b03c852fc8822"
+  }
+}

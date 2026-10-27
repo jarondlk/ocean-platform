@@ -1,0 +1,120 @@
+{
+  "accepted_c22_sources_unchanged_from_base": {
+    "db/app_models.py": true,
+    "orchestration/frozen_experiment_export.py": true,
+    "orchestration/investigations.py": true,
+    "orchestration/research_experiments.py": true,
+    "schema/research_experiments.py": true
+  },
+  "actions": {
+    "cloud_or_sql_service_action": false,
+    "commit": false,
+    "install": false,
+    "push": false
+  },
+  "api": {
+    "candidate": "Immutable retained approval ID/request hash/bytes, exact five hashes, context/proposal/environment/manifest bytes, frozen file bytes and source hash",
+    "constructor": "C23OperatorInspection(service=explicit matching ResearchExperimentService, config=OperatorInspectionConfig(...))",
+    "deployment_isolation_note": "Operator-only unmounted store scope is an explicit trusted configuration declaration; this module does not inspect deployed routers",
+    "deployment_isolation_proven": false,
+    "labels": {
+      "authority": "experimental",
+      "capacity_reserved": false,
+      "execution_authorized": false,
+      "execution_performed": false,
+      "inspection_only": true,
+      "scientific_approval": "not_independently_verified"
+    },
+    "method": "inspect_approved(request, *, current_owner) -> ApprovedCandidate",
+    "request": "Exact current proposal version/revision, context binding and all five retained hashes; no approval Boolean, runtime or hash-only override",
+    "trusted_config": "Default-off callable flag, exact site/session factory/source object bindings, detached exact Linux environment registry, explicit isolated-unmounted-operator declaration"
+  },
+  "artifact_sha256": {
+    "pytest-final-20261026-01.txt": "e99c69cb50b17abcd8738186954411c737752cba70344e1b7e2169ef1c69a75d",
+    "pytest-final-20261026-02.txt": "818500516d556eff5e6f7c72681aa0364341782d0267675e2edee3bb9c3dd3f5",
+    "rebinding-regression-before-fix-20261026-01.txt": "f36f7940b975b06c52f79bc9f8f7ee512044431552466b66f94ae8eb1d7cf289",
+    "ruff-final-20261026-01.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "ruff-final-20261026-02.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "source-observation-20261026-01.json": "00210ffea3d354bfd430c6e2a02f4958fdffc4dff07d9fc08f326d42a27118f5",
+    "source-observation-20261026-02.json": "18edf7db88eb21e3db378fb7fd65b1ebe0a6a948237566486344f0e605de5d4d"
+  },
+  "authority_limits": {
+    "c23_complete": false,
+    "envelope_authority_implemented": false,
+    "future_external_policy_atomicity_claimed": false,
+    "launch_implemented": false,
+    "linux_runtime_acceptance_claimed": false,
+    "migration_created": false,
+    "native_postgresql_claimed": false,
+    "public_route_registered": false,
+    "release_implemented": false,
+    "reservation_implemented": false
+  },
+  "base_commit": "00abd95e648cfb8674ab668c2bf209044ef36f31",
+  "branch": "overhaul",
+  "composed_c22_checks": [
+    "_require_enabled",
+    "_actor",
+    "_owned",
+    "_revision(active=True)",
+    "_expected",
+    "_exported",
+    "_environment(dispatch=False)",
+    "_verify(full)",
+    "_verify(access_only=True)",
+    "_closing_gate(active=True)"
+  ],
+  "final_fence": "After final source/flag callbacks, recheck exact dependency bindings, expire cached DB rows, run closing authority fence and reread exact approval/frozen-byte/environment identity",
+  "recorded_at_utc": "2026-10-26T12:14:12.068998+00:00",
+  "review_regression": {
+    "after_fix": "Both regressions pass within final 109-case run",
+    "before_fix": "Both exporter/session_factory regressions failed with DID NOT RAISE; immutable red evidence retained",
+    "finding": "Final enable callback could rebind trusted service dependencies after the earlier binding check",
+    "fix": "Explicit post-callback _binding check before cache expiry and closing DB fence",
+    "superseded_run": "Run01 passed 107 cases before the review fix and is not the final-source qualification"
+  },
+  "scope": "Read-only retained C22 approval inspection candidate; not execution or reservation authority",
+  "source_sha256": {
+    "db/app_models.py": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+    "docs/plans/ocean-v1/C23_SANDBOX_CONTRACT.md": "cfbbba795597bfbc4b60801974f3be54e3b4a21988aeafd8cd07f7666f2b708f",
+    "docs/plans/ocean-v1/evidence/C23/operator-bridge-design/amendment-20261026.md": "e0b40aa6adcf95b700d922d022dc761bbb766d516d19a826ef52adce771f8d1c",
+    "docs/plans/ocean-v1/evidence/C23/operator-bridge-design/design.md": "eda8cabff67339b63f4dd23d70842bf4534be81c9ca98cafdb8979b1e1f4e91a",
+    "orchestration/experiment_sandbox/operator_inspection.py": "6186090794ee106c8fad3db2169e49018b13158f5ddb2c9ea0bba69d37ebb3b7",
+    "orchestration/frozen_experiment_export.py": "6edb1ab644d0c8af4900b0880de68163114bc76ba1262cc3309f323738071099",
+    "orchestration/investigations.py": "dd9d733121d9f1587e3b59b31b67e60a75bc50976589886cc96705c94efa46de",
+    "orchestration/research_experiments.py": "bab02f05549655977e2f95ef7885a59d3a311c3ad64941b0846d79b94b0db2ee",
+    "schema/research_experiments.py": "3623b8ce0349316f5e28597752a798817acc1641d55e05d3614ebd61f0d87494",
+    "tests/test_experiment_sandbox_operator_inspection.py": "01a6f4982fbb7bfafd96a5f732597623f4a156da4903cddef5b6099822ee18c7"
+  },
+  "source_unchanged_during_final_test_run": true,
+  "verification": {
+    "coverage": [
+      "Exact retained approval identity/hash/canonical bytes and five approved hashes",
+      "Detached immutable candidate bytes and explicit nonauthority",
+      "Default-off/configured exact store/source/environment binding",
+      "Other-owner/admin and non-CurrentUser rejection",
+      "Caller Boolean/new hash/changed context or proposal expectations rejected",
+      "Fake descriptors and retained fake approvals cannot be promoted",
+      "Missing/corrupt/recomputed-mismatched retained approval rejected",
+      "Full and final-access callback changes to owner, actual proposal/context heads, source/publication policy, flags, environment and frozen input bytes rejected",
+      "Final enable callback cannot replace equivalent exporter or same-DB session factory",
+      "C22 fake-only dispatch and reservation guards remain unchanged"
+    ],
+    "focused_inspection_cases": 52,
+    "no_write_evidence": "Successful and ordinary denied inspections compare complete SQLite dumps and record no DML/DDL statements; mutation callbacks intentionally modify fixture state",
+    "pytest_command": [
+      ".venv/bin/pytest",
+      "-q",
+      "tests/test_experiment_sandbox_operator_inspection.py",
+      "tests/test_research_experiments.py",
+      "tests/test_experiment_sandbox_contracts.py",
+      "tests/test_experiment_sandbox_integration.py"
+    ],
+    "pytest_result": "109 passed in 297.53s",
+    "python": "Python 3.12.7",
+    "ruff_result": "All checks passed!",
+    "store": "Actual synthetic C22 proposal/export/owner-approval flows over owned disposable SQLite with foreign keys enabled",
+    "whitespace": "Both new Python files end in newline and contain no trailing whitespace"
+  },
+  "version": "c23-operator-inspection-preparation-v1"
+}

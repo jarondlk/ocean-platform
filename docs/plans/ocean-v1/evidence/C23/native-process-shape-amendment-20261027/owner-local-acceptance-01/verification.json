@@ -1,0 +1,251 @@
+{
+  "actual_observer_facts": {
+    "coordinator_exit_code": 0,
+    "documents": 2,
+    "execution_start_requested": false,
+    "job_id": "c23-7b2d3f0a8e632afebd950c674f8a146582bace5a11a9343f",
+    "native_guard_bypassed": false,
+    "owned_cgroup_identity": {
+      "device": 30,
+      "inode": 8399,
+      "populated": 1,
+      "raw": "populated 1\nfrozen 0\n"
+    },
+    "processes": {
+      "1711": {
+        "argv0": "runsc-gofer",
+        "cgroup": "0::/ocean-c23/c23-7b2d3f0a8e632afebd950c674f8a146582bace5a11a9343f/sandbox\n",
+        "cmdline_empty": false,
+        "cmdline_sha256": "e9ee1f1dcef70fba0d3f874824f2997d20cea2795a902440e6e9116e18cf429c",
+        "exe_identity": [
+          2049,
+          525839,
+          33261,
+          0,
+          0,
+          18605915,
+          1,
+          946684800000000000,
+          1792823730737594077
+        ],
+        "exe_link": "/opt/ocean-c23-runtime/release-20261019.0/runsc",
+        "observed_nofile": {
+          "hard": 4096,
+          "soft": 4096
+        },
+        "parent_pid": 1,
+        "pid": 1711,
+        "start_time_ticks": 144395
+      },
+      "1716": {
+        "argv0": "runsc-sandbox",
+        "cgroup": "0::/ocean-c23/c23-7b2d3f0a8e632afebd950c674f8a146582bace5a11a9343f/sandbox\n",
+        "cmdline_empty": false,
+        "cmdline_sha256": "092aa908fe1dade65a23391e61e614fc8581f0ee5fec73285fd82f2f0ec92b88",
+        "exe_identity": [
+          2049,
+          525844,
+          33261,
+          0,
+          0,
+          52831883,
+          1,
+          946684800000000000,
+          1792823730737594077
+        ],
+        "exe_link": "/opt/ocean-c23-runtime/release-20261019.0/gvisor-bin/gvisor_sentry",
+        "observed_nofile": {
+          "hard": 4096,
+          "soft": 4096
+        },
+        "parent_pid": 1,
+        "pid": 1716,
+        "start_time_ticks": 144396
+      },
+      "1717": {
+        "argv0": "/opt/ocean-c23-runtime/release-20261019.0/gvisor-bin/runsc-fd-parking",
+        "cgroup": "0::/ocean-c23/c23-7b2d3f0a8e632afebd950c674f8a146582bace5a11a9343f/host\n",
+        "cmdline_empty": false,
+        "cmdline_sha256": "8afcd1b7996981d17ca727571eb375ff9ea118b5b27e808d7750f4208c26822b",
+        "exe_identity": [
+          2049,
+          525845,
+          33261,
+          0,
+          0,
+          1320,
+          1,
+          946684800000000000,
+          1792823730737594077
+        ],
+        "exe_link": "/opt/ocean-c23-runtime/release-20261019.0/gvisor-bin/runsc-fd-parking",
+        "observed_nofile": {
+          "hard": 1048576,
+          "soft": 1024
+        },
+        "parent_pid": 1,
+        "pid": 1717,
+        "start_time_ticks": 144396
+      },
+      "1724": {
+        "argv0": "gvisor-proc-umounter",
+        "cgroup": "0::/ocean-c23/c23-7b2d3f0a8e632afebd950c674f8a146582bace5a11a9343f/sandbox\n",
+        "cmdline_empty": false,
+        "cmdline_sha256": "d87a6dfbe6f8059557553234083aab67a7f745a4a54f15283a8d73ca05cf9bf6",
+        "exe_identity": [
+          2049,
+          525842,
+          33261,
+          0,
+          0,
+          1280,
+          1,
+          946684800000000000,
+          1792823730737594077
+        ],
+        "exe_link": "/opt/ocean-c23-runtime/release-20261019.0/gvisor-bin/gvisor-proc-umounter",
+        "observed_nofile": {
+          "hard": 1048576,
+          "soft": 1024
+        },
+        "parent_pid": 1716,
+        "pid": 1724,
+        "start_time_ticks": 144397
+      },
+      "1731": {
+        "argv0": null,
+        "cgroup": "0::/ocean-c23/c23-7b2d3f0a8e632afebd950c674f8a146582bace5a11a9343f/sandbox\n",
+        "cmdline_empty": true,
+        "cmdline_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exe_identity": [
+          2049,
+          525844,
+          33261,
+          0,
+          0,
+          52831883,
+          1,
+          946684800000000000,
+          1792823730737594077
+        ],
+        "exe_link": "/opt/ocean-c23-runtime/release-20261019.0/gvisor-bin/gvisor_sentry",
+        "observed_nofile": {
+          "hard": 4096,
+          "soft": 4096
+        },
+        "parent_pid": 1716,
+        "pid": 1731,
+        "start_time_ticks": 144400
+      }
+    },
+    "qualification": "Snapshot observations support the shape amendment. Observer coordinator exit0 alone is not an independent cleanup proof, and no new helper runtime acceptance is claimed by these local checks."
+  },
+  "actual_observer_input": {
+    "bytes": 25464,
+    "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-observer01.observations.jsonl",
+    "sha256": "8d33613741428dfe2e6a7fa6eb76790094fe5cf50defe798668841b0a0ecacad"
+  },
+  "authority": {
+    "actual_amended_native_readback_verified": false,
+    "c23_complete": false,
+    "dispatch_eligible": false,
+    "original_failed_attempt_reclassified": false,
+    "profile_policy_changed": false,
+    "reservation_released": false,
+    "scientific_approval": "not_independently_verified",
+    "scientific_rerun_passed": false
+  },
+  "created_at": "2026-10-26T18:23:23.667480+00:00",
+  "immutable_prior_source": [
+    {
+      "bytes": 58022,
+      "path": "docs/plans/ocean-v1/evidence/C23/native-process-shape-amendment-20261027/prior-source/orchestration/experiment_sandbox/linux_runtime.py",
+      "sha256": "52d85388a8b52c76a2f54d84de62bd8e19b38601bf265150cf039590cf8e4c8c"
+    },
+    {
+      "bytes": 58671,
+      "path": "docs/plans/ocean-v1/evidence/C23/native-process-shape-amendment-20261027/prior-source/tests/test_experiment_sandbox_linux_runtime.py",
+      "sha256": "5e5977aa55484b664afb63d7f486f8f24b8f59ca74f2c11885dff04a03fdb032"
+    }
+  ],
+  "implemented": [
+    "Authenticate the core Sentry from validated state.pid first, before enumerating any other PID as a possible role. Strict argv0/root flag/final job, pinned Sentry executable and actual native4096 remain mandatory.",
+    "Exactly one positive Gofer argv identity is accepted with pinned runsc executable, exact job/root and native4096; duplicate Gofer candidates still fail.",
+    "Raw proc observation can represent a truly empty cmdline as argv=[] plus explicit empty/byte-count/SHA fields. Malformed nonempty cmdline remains rejected.",
+    "An empty argv or inherited runsc-sandbox argv is accepted only for a direct child of that authenticated core Sentry, with the same pinned Sentry executable identity, same exact cgroup, start time at least its parent, and stable PID/start/parent/argv/exe/cgroup/limits. Inherited argv must equal the full core Sentry argv exactly. No arbitrary parent chain is accepted.",
+    "Native systrap children are recorded as authenticated-systrap-child, with their observed native4096 separately checked. They never replace the core Sentry or Gofer.",
+    "The two actual known sidecars require pinned manifest executable and exact argv. FD-parking must be in host leaf with parent1 and no earlier than Sentry; proc-umounter must be a direct Sentry child in the same cgroup with no earlier start. Their raw native limits are retained with native_nofile_enforced_by_this_gate=false; no4096 claim is made for them.",
+    "Unknown empty/nonempty helpers and Sentry-like argv mismatches reject. Every core and accepted auxiliary observation is repeated, including parent identity; pinned executable paths and final exact cgroup inventory are rechecked.",
+    "The same48KiB whole serialized enforcement budget includes all auxiliary raw fields; over-budget evidence rejects before start. Profile flags, image/init, guest256 and all other resource/containment/cleanup controls are unchanged."
+  ],
+  "intentional_supersession": {
+    "reason": "Actual native systrap child has empty argv after unmapping, not a missing core actor. Core identity remains strict while this child is separately authenticated.",
+    "runtime_after": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d",
+    "runtime_before": "52d85388a8b52c76a2f54d84de62bd8e19b38601bf265150cf039590cf8e4c8c",
+    "tests_before": "5e5977aa55484b664afb63d7f486f8f24b8f59ca74f2c11885dff04a03fdb032"
+  },
+  "new_case_coverage": [
+    "Actual five-TGID shape with empty Sentry child and distinct helper limits",
+    "Empty and full inherited-argv child success, Sentry authentication before numerically lower child PID",
+    "Unknown/foreign-parent/exe/cgroup/old-start/modified-inherited-argv rejection",
+    "Exact sidecar argv/exe/parent/cgroup/start checks",
+    "Repeated child start/parent/argv/exe/limits/cgroup identity races and reparenting within one proc-directory FD",
+    "All auxiliary raw evidence included in aggregate48KiB cap"
+  ],
+  "owner": "c23_science_materials",
+  "scope": "Narrow process-shape amendment grounded in retained actual Linux pre-start observer; local tests use temporary files and mocked runtime only.",
+  "source_frozen": true,
+  "sources": [
+    {
+      "bytes": 61578,
+      "path": "orchestration/experiment_sandbox/linux_runtime.py",
+      "sha256": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d"
+    },
+    {
+      "bytes": 67471,
+      "path": "tests/test_experiment_sandbox_linux_runtime.py",
+      "sha256": "ca8e5a3cd7355c1985271a61dfbb163de9f8b619ad8db15e1d9d51884ee514e3"
+    },
+    {
+      "bytes": 20639,
+      "path": "orchestration/experiment_sandbox/profile_execution.py",
+      "sha256": "de9cd227f72c3a7cd7a18d667e3027115d6316467af32a397830e799fb41c4f5"
+    },
+    {
+      "bytes": 24744,
+      "path": "sandbox/experiment/trusted_init.py",
+      "sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc"
+    }
+  ],
+  "verification": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_linux_runtime.py",
+        "-q",
+        "--tb=short"
+      ],
+      "elapsed_seconds": 5.87,
+      "exit_code": 0,
+      "passed": 172,
+      "qualification": "Observed directly from final tool result; owned source held unchanged during this run.",
+      "raw_tool_output_saved": false
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "orchestration/experiment_sandbox/linux_runtime.py",
+        "tests/test_experiment_sandbox_linux_runtime.py"
+      ],
+      "exit_code": 0,
+      "observed_summary": "All checks passed!",
+      "raw_tool_output_saved": false
+    }
+  ],
+  "version": "c23-native-process-shape-preparation-v1"
+}

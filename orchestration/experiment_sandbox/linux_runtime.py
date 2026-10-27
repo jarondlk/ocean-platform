@@ -153,6 +153,8 @@ from schema.research_experiments import content_sha256
 VERSION = 'c23-linux-runsc-operator-v1'
 MAX_COMMAND_BYTES = 64 * 1024
 MAX_RUNTIME_STDERR = 1024 * 1024
+MAX_ENFORCEMENT_BYTES = 48 * 1024
+MAX_NATIVE_PROCESSES = 128
 _SHA = re.compile(r'^[a-f0-9]{64}$')
 _JOB = re.compile(r'^c23-[a-f0-9]{48}$')
 
@@ -175,6 +177,110 @@ def _read(path, maximum=MAX_COMMAND_BYTES):
         if len(result) > maximum:
             raise SandboxError('sandbox_host_limit')
         return bytes(result)
+    finally:
+        os.close(descriptor)
+
+
+def _read_at(directory, name, maximum):
+    """Bounded procfs/cgroup read anchored to an already opened directory."""
+    descriptor = os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK | os.O_CLOEXEC,
+                         dir_fd=directory)
+    try:
+        if not stat.S_ISREG(os.fstat(descriptor).st_mode):
+            raise SandboxError('sandbox_native_process_identity')
+        result = bytearray()
+        while len(result) <= maximum:
+            value = os.read(descriptor, min(65536, maximum + 1 - len(result)))
+            if not value:
+                break
+            result.extend(value)
+        if len(result) > maximum:
+            raise SandboxError('sandbox_host_limit')
+        return bytes(result)
+    finally:
+        os.close(descriptor)
+
+
+def _open_process_directory(pid):
+    if type(pid) is not int or not 1 < pid < 2**31:
+        raise SandboxError('sandbox_native_process_identity')
+    return os.open(f'/proc/{pid}', os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW | os.O_CLOEXEC)
+
+
+def _kernel_ascii(raw):
+    if any(value < 32 and value not in (9, 10) or value > 126 for value in raw):
+        raise SandboxError('sandbox_native_process_identity')
+    return raw.decode('ascii')
+
+
+def _process_stat_identity(raw, pid):
+    text = _kernel_ascii(raw)
+    if not text.startswith(str(pid) + ' (') or ') ' not in text:
+        raise SandboxError('sandbox_native_process_identity')
+    fields = text[text.rfind(') ') + 2:].split()
+    if (not 50 <= len(fields) <= 128 or fields[0] not in {'R', 'S', 'D', 'T', 't', 'W', 'P', 'I'}
+            or not re.fullmatch(r'0|[1-9][0-9]{0,9}', fields[1]) or int(fields[1]) >= 2**31
+            or not re.fullmatch(r'[1-9][0-9]{0,19}', fields[19])
+            or int(fields[19]) >= 2**64):
+        raise SandboxError('sandbox_native_process_identity')
+    return int(fields[19]), int(fields[1])
+
+
+def _native_nofile(raw, expected):
+    text = _kernel_ascii(raw)
+    rows = [line for line in text.splitlines() if line.startswith('Max open files')]
+    if len(rows) != 1:
+        raise SandboxError('sandbox_native_nofile_enforcement')
+    match = re.fullmatch(r'Max open files\s+(0|[1-9][0-9]{0,9})\s+'
+                         r'(0|[1-9][0-9]{0,9})\s+files\s*', rows[0])
+    if (match is None or type(expected) is not int or expected != 4096
+            or tuple(map(int, match.groups())) != (expected, expected)):
+        raise SandboxError('sandbox_native_nofile_enforcement')
+    return {'soft': expected, 'hard': expected}
+
+
+def _native_process_observation(pid):
+    """Read through one proc-directory FD and reject reuse, exec or membership races.
+
+    The opened proc-directory inode stays bound to that process, not a future
+    reuse of its numeric PID. Missing files after exit are errors, never an
+    observation about a replacement process.
+    """
+    descriptor = _open_process_directory(pid)
+    try:
+        directory = os.fstat(descriptor)
+        if not stat.S_ISDIR(directory.st_mode):
+            raise SandboxError('sandbox_native_process_identity')
+        before = _read_at(descriptor, 'stat', 2048)
+        start, parent = _process_stat_identity(before, pid)
+        command = _read_at(descriptor, 'cmdline', 8192)
+        # Empty argv is only an observation here. Classification below accepts
+        # it solely for a positively bound child of the authenticated Sentry.
+        if command and (not command.endswith(b'\0') or not command[:-1]):
+            raise SandboxError('sandbox_native_process_identity')
+        arguments = command[:-1].split(b'\0') if command else []
+        if (len(arguments) > 256 or any(not item or any(c < 32 or c > 126 for c in item)
+                                      for item in arguments)):
+            raise SandboxError('sandbox_native_process_identity')
+        membership = _read_at(descriptor, 'cgroup', 1024)
+        limits = _read_at(descriptor, 'limits', 8192)
+        executable = os.stat('exe', dir_fd=descriptor)
+        after = _read_at(descriptor, 'stat', 2048)
+        if ((start, parent) != _process_stat_identity(after, pid)
+                or command != _read_at(descriptor, 'cmdline', 8192)
+                or membership != _read_at(descriptor, 'cgroup', 1024)
+                or limits != _read_at(descriptor, 'limits', 8192)
+                or _stamp(executable) != _stamp(os.stat('exe', dir_fd=descriptor))
+                or (directory.st_dev, directory.st_ino)
+                != (os.fstat(descriptor).st_dev, os.fstat(descriptor).st_ino)):
+            raise SandboxError('sandbox_native_process_changed')
+        return {'pid': pid, 'start_time_ticks': start, 'parent_pid': parent,
+            'proc_directory_identity': [directory.st_dev, directory.st_ino],
+            'argv': [item.decode('ascii') for item in arguments],
+            'cmdline_sha256': _sha(command), 'cmdline_empty': not command,
+            'cmdline_bytes': len(command), 'stat_before': _kernel_ascii(before),
+            'stat_after': _kernel_ascii(after), 'cgroup': _kernel_ascii(membership),
+            'limits': _kernel_ascii(limits), 'executable_identity': list(_stamp(executable))}
     finally:
         os.close(descriptor)
 
@@ -593,7 +699,177 @@ class LinuxExecutionAdapter:
             'reservation_released': False, 'scientific_approval': 'not_independently_verified'}
         _put(receipt_dir / 'metadata.json', (canonical_json(metadata) + '\n').encode())
 
-    def _readback(self, envelope, document, lease, argv, *, deadline, side, watchdog=None):
+    def _owned_process_inventory(self, job_id, cgroup_identity):
+        if (type(cgroup_identity) is not tuple or len(cgroup_identity) != 2
+                or any(type(value) is not int or value < 0 for value in cgroup_identity)):
+            raise SandboxError('sandbox_cgroup_identity')
+        outer, host, sandbox = self._paths(job_id)
+        result = {'groups': {}, 'processes': {}}
+        for path in (outer, host, sandbox):
+            descriptor = os.open(path, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW | os.O_CLOEXEC)
+            try:
+                info = os.fstat(descriptor)
+                identity = (info.st_dev, info.st_ino)
+                if (not stat.S_ISDIR(info.st_mode) or info.st_uid != os.geteuid()
+                        or info.st_mode & 0o022 or path != path.resolve(strict=True)
+                        or (path == outer and identity != cgroup_identity)):
+                    raise SandboxError('sandbox_cgroup_identity')
+                children = set()
+                with os.scandir(descriptor) as entries:
+                    for count, entry in enumerate(entries, 1):
+                        if count > 256 or entry.is_symlink():
+                            raise SandboxError('sandbox_cgroup_identity')
+                        if entry.is_dir(follow_symlinks=False):
+                            children.add(entry.name)
+                if children != ({'host', 'sandbox'} if path == outer else set()):
+                    raise SandboxError('sandbox_cgroup_identity')
+                raw = _read_at(descriptor, 'cgroup.procs', 4096)
+                lines = raw.decode('ascii').splitlines()
+                if len(lines) > MAX_NATIVE_PROCESSES:
+                    raise SandboxError('sandbox_native_process_identity')
+                pids = []
+                membership = '/ocean-c23/' + job_id + ('' if path == outer else '/' + path.name)
+                for line in lines:
+                    if not re.fullmatch(r'[1-9][0-9]{0,9}', line) or not 1 < int(line) < 2**31:
+                        raise SandboxError('sandbox_native_process_identity')
+                    pid = int(line)
+                    if pid in result['processes']:
+                        raise SandboxError('sandbox_native_process_identity')
+                    result['processes'][pid] = membership
+                    pids.append(pid)
+                if len(result['processes']) > MAX_NATIVE_PROCESSES or (path == outer and pids):
+                    raise SandboxError('sandbox_native_process_identity')
+                current = path.lstat()
+                if ((current.st_dev, current.st_ino, current.st_uid, current.st_gid, current.st_mode)
+                        != (info.st_dev, info.st_ino, info.st_uid, info.st_gid, info.st_mode)):
+                    raise SandboxError('sandbox_cgroup_identity')
+                result['groups'][path.name] = {'identity': list(identity), 'pids': sorted(pids)}
+            finally:
+                os.close(descriptor)
+        return result
+
+    def _native_nofile_readback(self, job_id, sentry_pid, requirements, *, cgroup_identity,
+                               lease, deadline, watchdog=None):
+        """Verify actual host limits before start; OCI guest limits stay separate."""
+        if (type(requirements.get('native_nofile_limit')) is not int
+                or requirements['native_nofile_limit'] != 4096
+                or type(requirements.get('analysis_nofile_limit')) is not int
+                or requirements['analysis_nofile_limit'] != 256):
+            raise SandboxError('sandbox_native_nofile_enforcement')
+        def current():
+            lease.require_current()
+            if self.clock() >= deadline:
+                raise SandboxError('sandbox_wall_limit')
+            if watchdog is not None:
+                watchdog.require_alive()
+        current()
+        inventory = self._owned_process_inventory(job_id, cgroup_identity)
+        if sentry_pid not in inventory['processes']:
+            raise SandboxError('sandbox_native_process_identity')
+        roles, auxiliary, pinned_executables = {}, [], {}
+        runtime = json.loads(self._runtime_json)
+        state_flag = '--root=' + str(self.worker_root / ('runsc-state-' + job_id))
+
+        def observe(pid):
+            current()
+            observed = _native_process_observation(pid)
+            if observed['cgroup'] != '0::' + inventory['processes'][pid] + '\n':
+                raise SandboxError('sandbox_host_subtree_identity')
+            return observed
+
+        def executable_identity(observed, relative):
+            executable = self.runtime_directory / relative
+            if relative not in pinned_executables:
+                if (relative not in runtime['files']
+                        or _hash_runtime_file(executable) != runtime['files'][relative]):
+                    raise SandboxError('sandbox_runtime_identity')
+                pinned_executables[relative] = list(_stamp(executable.lstat()))
+            if observed['executable_identity'] != pinned_executables[relative]:
+                raise SandboxError('sandbox_runtime_identity')
+            observed['executable_relative_path'] = relative
+            observed['executable_sha256'] = runtime['files'][relative]
+
+        def core(observed, role):
+            argv = observed['argv']
+            if (role in roles or not argv
+                    or argv[0] != ('runsc-sandbox' if role == 'sentry' else 'runsc-gofer')
+                    or argv[-1] != job_id or argv.count(state_flag) != 1):
+                raise SandboxError('sandbox_native_process_identity')
+            executable_identity(observed, 'gvisor-bin/gvisor_sentry' if role == 'sentry' else 'runsc')
+            observed['nofile'] = _native_nofile(observed['limits'].encode('ascii'),
+                                               requirements['native_nofile_limit'])
+            roles[role] = observed
+
+        # state.pid identifies the one core Sentry. Systrap forks native child
+        # TGIDs without exec and unmaps their argv memory; they must never be
+        # mistaken for another core or accepted merely because argv is empty.
+        sentry = observe(sentry_pid)
+        core(sentry, 'sentry')
+        for pid in sorted(inventory['processes']):
+            if pid == sentry_pid:
+                continue
+            observed = observe(pid)
+            argv = observed['argv']
+            if argv and argv[0] == 'runsc-gofer':
+                core(observed, 'gofer')
+                continue
+            if not argv or argv[0] == 'runsc-sandbox':
+                if (observed['parent_pid'] != sentry_pid
+                        or observed['start_time_ticks'] < sentry['start_time_ticks']
+                        or observed['cgroup'] != sentry['cgroup']
+                        or (argv and argv != sentry['argv'])):
+                    raise SandboxError('sandbox_native_process_identity')
+                executable_identity(observed, 'gvisor-bin/gvisor_sentry')
+                observed['nofile'] = _native_nofile(observed['limits'].encode('ascii'),
+                                                   requirements['native_nofile_limit'])
+                observed['classification'] = 'authenticated-systrap-child'
+            elif argv == [str(self.runtime_directory / 'gvisor-bin/runsc-fd-parking')]:
+                if (observed['cgroup'] != '0::/ocean-c23/' + job_id + '/host\n'
+                        or observed['parent_pid'] != 1
+                        or observed['start_time_ticks'] < sentry['start_time_ticks']):
+                    raise SandboxError('sandbox_native_process_identity')
+                executable_identity(observed, 'gvisor-bin/runsc-fd-parking')
+                observed['classification'] = 'pinned-fd-parking-helper'
+                observed['native_nofile_enforced_by_this_gate'] = False
+            elif argv == ['gvisor-proc-umounter', '/proc']:
+                if (observed['parent_pid'] != sentry_pid
+                        or observed['start_time_ticks'] < sentry['start_time_ticks']
+                        or observed['cgroup'] != sentry['cgroup']):
+                    raise SandboxError('sandbox_native_process_identity')
+                executable_identity(observed, 'gvisor-bin/gvisor-proc-umounter')
+                observed['classification'] = 'pinned-proc-umounter-helper'
+                observed['native_nofile_enforced_by_this_gate'] = False
+            else:
+                raise SandboxError('sandbox_native_process_identity')
+            auxiliary.append(observed)
+        if set(roles) != {'sentry', 'gofer'} or roles['sentry']['pid'] == roles['gofer']['pid']:
+            raise SandboxError('sandbox_native_process_identity')
+        # Re-read both cores and every authenticated auxiliary process. Parent,
+        # PID/exec/cgroup/limit races cannot hide behind a stable PID inventory.
+        for observed in [*roles.values(), *auxiliary]:
+            current()
+            again = _native_process_observation(observed['pid'])
+            for field in ('start_time_ticks', 'parent_pid', 'proc_directory_identity', 'argv',
+                          'cmdline_empty', 'cmdline_bytes', 'cmdline_sha256', 'cgroup',
+                          'limits', 'executable_identity'):
+                if again[field] != observed[field]:
+                    raise SandboxError('sandbox_native_process_changed')
+        for relative, identity in pinned_executables.items():
+            if list(_stamp((self.runtime_directory / relative).lstat())) != identity:
+                raise SandboxError('sandbox_runtime_identity')
+        if inventory != self._owned_process_inventory(job_id, cgroup_identity):
+            raise SandboxError('sandbox_native_process_changed')
+        current()
+        result = {'version': 'c23-native-nofile-readback-v2',
+            'native_nofile_limit': 4096, 'analysis_nofile_limit': 256,
+            'observed_before_start': True, 'inventory': inventory['groups'], 'roles': roles,
+            'auxiliary_processes': auxiliary}
+        if len(canonical_json(result).encode()) > MAX_ENFORCEMENT_BYTES:
+            raise SandboxError('sandbox_host_limit')
+        return result
+
+    def _readback(self, envelope, document, lease, argv, *, deadline, side, cgroup_identity,
+                  watchdog=None):
         outer, host, sandbox = self._paths(envelope.job_id)
         expected = document['requirements']['readback_before_start']
         readback = {}
@@ -616,6 +892,11 @@ class LinuxExecutionAdapter:
         expected_path = f'/ocean-c23/{envelope.job_id}/'
         if len(membership) != 1 or not membership[0].startswith('0::' + expected_path):
             raise SandboxError('sandbox_host_subtree_identity')
+        readback['native_processes'] = self._native_nofile_readback(envelope.job_id, state['pid'],
+            document['requirements'], cgroup_identity=cgroup_identity, lease=lease,
+            deadline=deadline, watchdog=watchdog)
+        if len(canonical_json({'readback': readback}).encode()) > MAX_ENFORCEMENT_BYTES:
+            raise SandboxError('sandbox_host_limit')
         return readback
 
     @staticmethod
@@ -827,7 +1108,7 @@ class LinuxExecutionAdapter:
                               cancelled=cancelled, require_eof=False, watchdog=watchdog) != 0:
                     raise SandboxError('sandbox_create_failed')
                 readback = self._readback(envelope, document, lease, argv,
-                    deadline=deadline, side=capture, watchdog=watchdog)
+                    deadline=deadline, side=capture, cgroup_identity=identity, watchdog=watchdog)
                 lease.append('enforcement_verified', {'readback': readback})
                 self._admit(lease, admission, envelope)
                 lease.append('start_intent', {'envelope_sha256': envelope.envelope_sha256})

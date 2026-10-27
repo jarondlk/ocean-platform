@@ -1,0 +1,420 @@
+{
+  "C23_complete": false,
+  "archive_sha256": "6577a52fa35aaf0a016a4d9e510d035be6c65d2200e4c2250d9d72c71f2cdf58",
+  "cases": {
+    "containment": {
+      "adapter_result": {
+        "adapter_source_sha256": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d",
+        "analysis_exit_code": 0,
+        "approved_hashes": {
+          "code_sha256": "6d37e14a99ab1402a37c24950140526bcb4253fc1bf759badd817c5a89aa14f6",
+          "environment_sha256": "1c3f049193cb5c2575eabeae312e1ce2272237011277f770d468ffcb805c6db0",
+          "input_manifest_sha256": "3fbb1a88837feeeb10e97181e53d19e927fc71d8a4115c9f2ff43ad76a27b065",
+          "proposal_sha256": "2a922253cafc6401551d24d58b354dfad83c71566f855a8d55366e9e4948fc2a",
+          "resources_sha256": "f3423b7074e11e1c917261289c772eba57e1ce6a4a2325da24f250ad44ac89eb"
+        },
+        "declared_seeds": {},
+        "dispatch_eligible": false,
+        "envelope_sha256": "9261b92226ef3c9bd403b49807cc1095608d93776268f6a4f573fdf48b3a2471",
+        "execution_started": true,
+        "frame_sha256": "44098e664ce786e129e65045d151e9f5d6897db650536f43f08705a06a980f36",
+        "host_runtime_exit_status": 0,
+        "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+        "job_id": "c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185",
+        "outputs_manifest_sha256": "7348a25ff174403473d477d2d41c5f073f6f085090458891c2fcd834855b2380",
+        "private_diagnostics_directory": "diagnostics",
+        "profile_sha256": "c681dfebab53d1f82143bd55e7e75e5e889739e8d795458a6784dde9afb02434",
+        "reason": "completed",
+        "replayed": false,
+        "reservation_released": false,
+        "retained_logs": {
+          "stderr": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "size_bytes": 0
+          },
+          "stdout": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "size_bytes": 0
+          }
+        },
+        "runtime_acceptance_verified": false,
+        "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8",
+        "scientific_approval": "not_independently_verified",
+        "simulation": false,
+        "start_attempted": true,
+        "state": "completed",
+        "termination_proof": {
+          "cgroup_device": 30,
+          "cgroup_inode": 10001,
+          "cgroup_path": "/ocean-c23/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185",
+          "host_boot_id": "e779aea7-2e6c-4ec8-98b6-b12c491f93d4",
+          "populated": 0,
+          "runtime_delete_acknowledged": true,
+          "whole_host_subtree_empty": true
+        },
+        "total_output_bytes": 989,
+        "trusted_init_sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+        "version": "c23-linux-runsc-operator-v1"
+      },
+      "attempt_sha256": "531e7d5e6f442153dff53bc91688031e79159fce240ca51a24f55b3b6a8fc28c",
+      "cleanup": {
+        "cgroup_empty": true,
+        "mount_reconciliation": {
+          "after": {
+            "entry": null,
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              1311359
+            ]
+          },
+          "argv": [
+            "/usr/bin/umount",
+            "--internal-only",
+            "--",
+            "/var/lib/ocean-c23/operator-acceptance/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/rootfs"
+          ],
+          "before": {
+            "entry": {
+              "line": "96 27 8:1 /var/lib/ocean-c23/scientific-normalized-quota-v3/rootfs /var/lib/ocean-c23/operator-acceptance/containment-20261026-01/worker/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/rootfs ro,nosuid,nodev,relatime shared:1 - ext4 /dev/root rw,discard,errors=remount-ro,commit=30",
+              "mount_id": "96",
+              "options": "ro,nosuid,nodev,relatime"
+            },
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              559595
+            ]
+          },
+          "exit_code": 0,
+          "rootfs_unmounted": true,
+          "stderr_base64": "",
+          "stdout_base64": ""
+        },
+        "removed_cgroups": [
+          "/sys/fs/cgroup/ocean-c23/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185/host",
+          "/sys/fs/cgroup/ocean-c23/c23-d22ec8739c231914cd37d121c18c304589bd25fa3d554185"
+        ],
+        "reservation_released": false,
+        "rootfs_unmounted": true
+      },
+      "evaluation": {
+        "C23_complete": false,
+        "case_assertions_passed": true,
+        "checks": {
+          "delete_acknowledged": true,
+          "execution_started": true,
+          "expected_terminal_state": true,
+          "no_dispatch_or_release": true,
+          "operator_pipeline_healthy": true,
+          "rootfs_cleanup": true,
+          "scientific_unverified": true,
+          "validated_outputs": true,
+          "whole_host_subtree_empty": true
+        },
+        "retained_C22_real_approval": false,
+        "runtime_acceptance_complete": false,
+        "scope": "operator synthetic fixture observations only"
+      },
+      "summary_table": {
+        "columns": [
+          "probe",
+          "value"
+        ],
+        "rows": [
+          [
+            "external_network_denied",
+            true
+          ],
+          [
+            "metadata_denied",
+            true
+          ],
+          [
+            "host_file_socket_denied",
+            true
+          ],
+          [
+            "forbidden_writes_denied",
+            true
+          ],
+          [
+            "pip_absent",
+            true
+          ],
+          [
+            "trusted_frame_fd_denied",
+            true
+          ],
+          [
+            "guest_interfaces",
+            "lo"
+          ],
+          [
+            "ipv4_route_rows",
+            0
+          ],
+          [
+            "ipv6_route_readback",
+            "present"
+          ]
+        ]
+      }
+    },
+    "namespaces": {
+      "adapter_result": {
+        "adapter_source_sha256": "daa95ec0324672caa07a14cda60b793609a1c1bb5904ed4c6d44428d9bc18e3d",
+        "analysis_exit_code": 0,
+        "approved_hashes": {
+          "code_sha256": "4fcc57f483c77e9dd93428ffe6295b855b99ecc1cdf890a700e400de8c8d2c74",
+          "environment_sha256": "1c3f049193cb5c2575eabeae312e1ce2272237011277f770d468ffcb805c6db0",
+          "input_manifest_sha256": "9b27c1722d2262011fd71483491aa6a50e37d3185a9b5bca5161769b2ef9e4dd",
+          "proposal_sha256": "11fae0cf8a4f28744ed12c1160c9fb393156a7e1c6081a21cb439953709b13c3",
+          "resources_sha256": "f3423b7074e11e1c917261289c772eba57e1ce6a4a2325da24f250ad44ac89eb"
+        },
+        "declared_seeds": {},
+        "dispatch_eligible": false,
+        "envelope_sha256": "25a823ecf4bfdd16faa0de4cc92be75e37537bb85d84a21db0b93217a650ab45",
+        "execution_started": true,
+        "frame_sha256": "7ca70e55622a9789b89ce96cfe918befa7a5ce2dcc1841bd010fc00ae1ca248f",
+        "host_runtime_exit_status": 0,
+        "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+        "job_id": "c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810",
+        "outputs_manifest_sha256": "db25dc3334ed751c8c5bf3108760f83791ea9d52b8a877ef4608fd98334686ac",
+        "private_diagnostics_directory": "diagnostics",
+        "profile_sha256": "9f6deb4b6c916aaaa3cd0829c6128db72f0d4f66dc5a514b57fab9542c5bc150",
+        "reason": "completed",
+        "replayed": false,
+        "reservation_released": false,
+        "retained_logs": {
+          "stderr": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "size_bytes": 0
+          },
+          "stdout": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "size_bytes": 0
+          }
+        },
+        "runtime_acceptance_verified": false,
+        "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8",
+        "scientific_approval": "not_independently_verified",
+        "simulation": false,
+        "start_attempted": true,
+        "state": "completed",
+        "termination_proof": {
+          "cgroup_device": 30,
+          "cgroup_inode": 9678,
+          "cgroup_path": "/ocean-c23/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810",
+          "host_boot_id": "e779aea7-2e6c-4ec8-98b6-b12c491f93d4",
+          "populated": 0,
+          "runtime_delete_acknowledged": true,
+          "whole_host_subtree_empty": true
+        },
+        "total_output_bytes": 1378,
+        "trusted_init_sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+        "version": "c23-linux-runsc-operator-v1"
+      },
+      "attempt_sha256": "d4c469f38eebca57102b3976d465e7500832ef5e3c1a20c85a33cc529164577b",
+      "cleanup": {
+        "cgroup_empty": true,
+        "mount_reconciliation": {
+          "after": {
+            "entry": null,
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              1311273
+            ]
+          },
+          "argv": [
+            "/usr/bin/umount",
+            "--internal-only",
+            "--",
+            "/var/lib/ocean-c23/operator-acceptance/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/rootfs"
+          ],
+          "before": {
+            "entry": {
+              "line": "96 27 8:1 /var/lib/ocean-c23/scientific-normalized-quota-v3/rootfs /var/lib/ocean-c23/operator-acceptance/namespaces-20261026-01/worker/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/rootfs ro,nosuid,nodev,relatime shared:1 - ext4 /dev/root rw,discard,errors=remount-ro,commit=30",
+              "mount_id": "96",
+              "options": "ro,nosuid,nodev,relatime"
+            },
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              559595
+            ]
+          },
+          "exit_code": 0,
+          "rootfs_unmounted": true,
+          "stderr_base64": "",
+          "stdout_base64": ""
+        },
+        "removed_cgroups": [
+          "/sys/fs/cgroup/ocean-c23/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810/host",
+          "/sys/fs/cgroup/ocean-c23/c23-5b63eb09dc3ac5c3d351927d4044b48f55ea947ae9af6810"
+        ],
+        "reservation_released": false,
+        "rootfs_unmounted": true
+      },
+      "evaluation": {
+        "C23_complete": false,
+        "case_assertions_passed": true,
+        "checks": {
+          "delete_acknowledged": true,
+          "execution_started": true,
+          "expected_terminal_state": true,
+          "no_dispatch_or_release": true,
+          "operator_pipeline_healthy": true,
+          "rootfs_cleanup": true,
+          "scientific_unverified": true,
+          "validated_outputs": true,
+          "whole_host_subtree_empty": true
+        },
+        "retained_C22_real_approval": false,
+        "runtime_acceptance_complete": false,
+        "scope": "operator synthetic fixture observations only"
+      },
+      "summary_table": {
+        "columns": [
+          "probe",
+          "value"
+        ],
+        "rows": [
+          [
+            "unshare_0x0",
+            1
+          ],
+          [
+            "unshare_0x20000",
+            1
+          ],
+          [
+            "unshare_0x2000000",
+            1
+          ],
+          [
+            "unshare_0x4000000",
+            1
+          ],
+          [
+            "unshare_0x8000000",
+            1
+          ],
+          [
+            "unshare_0x10000000",
+            1
+          ],
+          [
+            "unshare_0x20000000",
+            1
+          ],
+          [
+            "unshare_0x40000000",
+            1
+          ],
+          [
+            "unshare_0x80",
+            1
+          ],
+          [
+            "setns_invalid_fd",
+            1
+          ],
+          [
+            "clone_0x20000",
+            1
+          ],
+          [
+            "clone_0x2000000",
+            1
+          ],
+          [
+            "clone_0x4000000",
+            1
+          ],
+          [
+            "clone_0x8000000",
+            1
+          ],
+          [
+            "clone_0x10000000",
+            1
+          ],
+          [
+            "clone_0x20000000",
+            1
+          ],
+          [
+            "clone_0x40000000",
+            1
+          ],
+          [
+            "clone3_newuser",
+            38
+          ],
+          [
+            "clone3_invalid_pointer",
+            38
+          ],
+          [
+            "clone3_zero_size",
+            38
+          ],
+          [
+            "mount_tmpfs",
+            1
+          ],
+          [
+            "mount_bind",
+            1
+          ],
+          [
+            "mount_remount",
+            1
+          ],
+          [
+            "umount2",
+            1
+          ],
+          [
+            "uid",
+            65532
+          ],
+          [
+            "capabilities_zero",
+            true
+          ],
+          [
+            "ordinary_fork",
+            true
+          ],
+          [
+            "ordinary_subprocess",
+            true
+          ],
+          [
+            "ordinary_thread",
+            true
+          ]
+        ]
+      }
+    }
+  },
+  "recorded_at": "2026-10-26T07:17:58.391935+00:00",
+  "scope": "Actual operator synthetic namespace/network/filesystem denial only; no retainedC22authority or scientificapproval",
+  "source_archive_sha256": "52dd389d4aff539b3d32aeb1932f4ca393c168341075652a22d9c0d97cc4bc01",
+  "source_commit": "00abd95e648cfb8674ab668c2bf209044ef36f31"
+}

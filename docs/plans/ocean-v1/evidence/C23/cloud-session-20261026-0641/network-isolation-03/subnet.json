@@ -1,0 +1,17 @@
+{
+  "allowSubnetCidrRoutesOverlap": false,
+  "creationTimestamp": "2026-10-23T23:30:09.203-07:00",
+  "fingerprint": "qtTO4HrT5rQ=",
+  "gatewayAddress": "10.77.23.1",
+  "id": "1459523537675087518",
+  "ipCidrRange": "10.77.23.0/24",
+  "kind": "compute#subnetwork",
+  "name": "c23-tokyo",
+  "network": "https://www.googleapis.com/compute/v1/projects/ocean-v1-c23-20261024/global/networks/c23-private",
+  "privateIpGoogleAccess": false,
+  "privateIpv6GoogleAccess": "DISABLE_GOOGLE_ACCESS",
+  "purpose": "PRIVATE",
+  "region": "https://www.googleapis.com/compute/v1/projects/ocean-v1-c23-20261024/regions/asia-northeast1",
+  "selfLink": "https://www.googleapis.com/compute/v1/projects/ocean-v1-c23-20261024/regions/asia-northeast1/subnetworks/c23-tokyo",
+  "stackType": "IPV4_ONLY"
+}

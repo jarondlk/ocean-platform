@@ -1,0 +1,13 @@
+I1026 07:18:18.431510    3737 cli.go:275] **************** gVisor ****************
+I1026 07:18:18.431580    3737 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 3737, PPID 3677, UID 0, GID 0
+I1026 07:18:18.431602    3737 cli.go:278] Args: [/opt/ocean-c23-runtime/release-20261019.0/runsc --root=/var/lib/ocean-c23/operator-acceptance/memory-20261026-01/worker/runsc-state-c23-e0467a2e0ca40e96de295af05650e0aeb213a8747fe413d2 --platform=systrap --rootless=false --network=none --gofer-network-namespace=new --directfs=false --overlay2=none --host-uds=none --host-fifo=none --character-device-policy=emulated-only --net-raw=false --ignore-cgroups=false --allow-flag-override=false --sidecar-release-enforcement-policy=ALWAYS --fdlimit=256 --gvisor-marker-file=true --oci-seccomp=true --debug=false --debug-log=/dev/stderr --panic-log=/dev/stderr wait c23-e0467a2e0ca40e96de295af05650e0aeb213a8747fe413d2]
+I1026 07:18:18.431681    3737 config.go:631] Platform: systrap
+I1026 07:18:18.431696    3737 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/memory-20261026-01/worker/runsc-state-c23-e0467a2e0ca40e96de295af05650e0aeb213a8747fe413d2
+I1026 07:18:18.431705    3737 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1026 07:18:18.431718    3737 config.go:634] Network: none
+I1026 07:18:18.431729    3737 config.go:635] UseCPUNums: false
+W1026 07:18:18.431737    3737 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1026 07:18:18.431748    3737 cli.go:287] **************** gVisor ****************
+W1026 07:18:19.102349    3737 sandbox.go:1712] Wait RPC to container "c23-e0467a2e0ca40e96de295af05650e0aeb213a8747fe413d2" failed: urpc method "containerManager.Wait" failed: EOF. Will try waiting on the sandbox process instead.
+W1026 07:18:19.145381    3737 util.go:107] FATAL ERROR: waiting on container "c23-e0467a2e0ca40e96de295af05650e0aeb213a8747fe413d2": sandbox no longer running and its exit status is unavailable
+waiting on container "c23-e0467a2e0ca40e96de295af05650e0aeb213a8747fe413d2": sandbox no longer running and its exit status is unavailable

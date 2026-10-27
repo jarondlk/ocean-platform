@@ -1,0 +1,113 @@
+{
+  "authority": {
+    "actual_guest_execution": false,
+    "c23_complete": false,
+    "dispatch_eligible": false,
+    "failed_scientific_attempt_reclassified": false,
+    "native_runtime_changed": false,
+    "previous_namespace_actual_success_reclassified": false,
+    "reservation_released": false,
+    "scientific_approval": "not_independently_verified"
+  },
+  "checks": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_namespace_inheritance.py",
+        "tests/test_experiment_sandbox_scientific_import_diagnostic.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "outputs": {
+        "stderr": {
+          "bytes": 0,
+          "path": "docs/plans/ocean-v1/evidence/C23/operator-cli-exit-amendment-20261027/pytest.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 99,
+          "path": "docs/plans/ocean-v1/evidence/C23/operator-cli-exit-amendment-20261027/pytest.stdout.txt",
+          "sha256": "f6c3428a72259cde0f5f3829b656f4ac62e77102cc8c0127acfed6e353f210ee"
+        }
+      },
+      "summary": "21 passed in 0.07s"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "sandbox/experiment/gcp/run_namespace_inheritance.py",
+        "sandbox/experiment/gcp/run_scientific_import_diagnostic.py",
+        "tests/test_experiment_sandbox_namespace_inheritance.py",
+        "tests/test_experiment_sandbox_scientific_import_diagnostic.py"
+      ],
+      "exit_code": 0,
+      "outputs": {
+        "stderr": {
+          "bytes": 0,
+          "path": "docs/plans/ocean-v1/evidence/C23/operator-cli-exit-amendment-20261027/ruff.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 19,
+          "path": "docs/plans/ocean-v1/evidence/C23/operator-cli-exit-amendment-20261027/ruff.stdout.txt",
+          "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+        }
+      },
+      "summary": "All checks passed!"
+    }
+  ],
+  "created_at": "2026-10-26T18:07:20.154300+00:00",
+  "intentional_supersession": "Both trusted wrapper entrypoints now raise SystemExit(main()) so base harness failure codes reach the calling shell. Prior full source bytes preserved create-only in prior-source. Guest PROGRAM/EXEC_PROGRAM, case registries, worker/admission/material/resource/cleanup guards unchanged.",
+  "source_unchanged_during_verification": true,
+  "sources_after": [
+    {
+      "bytes": 4929,
+      "path": "sandbox/experiment/gcp/run_namespace_inheritance.py",
+      "sha256": "60beafe9850d2aa20501a69efaf29798f372bf1f699d94fcb82761fdacc2f65d"
+    },
+    {
+      "bytes": 6169,
+      "path": "sandbox/experiment/gcp/run_scientific_import_diagnostic.py",
+      "sha256": "13de3d9da0581c4bc764a24883841d68b102f6c4f4efca5ec1778fdb1d89eb4d"
+    },
+    {
+      "bytes": 6540,
+      "path": "tests/test_experiment_sandbox_namespace_inheritance.py",
+      "sha256": "76df30ca6964925a72947af6a83e367181a0b65526221cc5d61b03be54b03eac"
+    },
+    {
+      "bytes": 5889,
+      "path": "tests/test_experiment_sandbox_scientific_import_diagnostic.py",
+      "sha256": "b388f93636e16dabead3e377d27437b8dfd7197f8cdf5fbdad6f512a232567e7"
+    }
+  ],
+  "sources_before": [
+    {
+      "bytes": 4929,
+      "path": "sandbox/experiment/gcp/run_namespace_inheritance.py",
+      "sha256": "60beafe9850d2aa20501a69efaf29798f372bf1f699d94fcb82761fdacc2f65d"
+    },
+    {
+      "bytes": 6169,
+      "path": "sandbox/experiment/gcp/run_scientific_import_diagnostic.py",
+      "sha256": "13de3d9da0581c4bc764a24883841d68b102f6c4f4efca5ec1778fdb1d89eb4d"
+    },
+    {
+      "bytes": 6540,
+      "path": "tests/test_experiment_sandbox_namespace_inheritance.py",
+      "sha256": "76df30ca6964925a72947af6a83e367181a0b65526221cc5d61b03be54b03eac"
+    },
+    {
+      "bytes": 5889,
+      "path": "tests/test_experiment_sandbox_scientific_import_diagnostic.py",
+      "sha256": "b388f93636e16dabead3e377d27437b8dfd7197f8cdf5fbdad6f512a232567e7"
+    }
+  ],
+  "version": "c23-operator-cli-exit-preparation-v1"
+}

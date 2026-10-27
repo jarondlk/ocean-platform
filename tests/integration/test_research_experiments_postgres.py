@@ -58,7 +58,7 @@ def concurrently(functions):
 
 def test_migration_exact_model_schema_and_empty_roundtrip(isolated):
     pg.alembic(isolated, 'upgrade', 'head')
-    assert pg.revision(isolated) == '20261020_0020'
+    assert pg.revision(isolated) == '20261027_0021'
     reflected = inspect(isolated['engine'])
     for model in NEW_MODELS:
         table = model.__table__

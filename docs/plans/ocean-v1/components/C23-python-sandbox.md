@@ -1,6 +1,13 @@
 # C23 — Isolated Python execution
 
-**Status:** In progress; pushed299fe91 passes all four required hosted jobs. Later reviewed image/network/namespace/traversal amendments pass558 combined local cases. The same isolated worker resumed Oct26 with17:40JST stop deadline; actual startup/containment, numerical acceptance and C22 operator bridge remain open. **Prerequisites:** C22.
+**Status:** In progress. Source00abd95 passes all four required hosted jobs.
+Later frozen code passes891 scoped local tests; ledger preparation passes24
+local and28 actual PostgreSQL cases with source/cleanup verified. Actual containment/output,
+three same-boot recovery episodes and repeated scientific/raster fixtures are
+retained; native4096/guest256 descriptor verification resolves NumPy EMFILE.
+The retained C22 approval-to-execution, signed physical termination and narrow
+capacity-release bridge remains mandatory. New source delivery/hosted CI is
+pending; C24 has not started. **Prerequisites:** C22.
 
 ## Revised delivery boundary
 
@@ -96,3 +103,28 @@ immutable. C22 production dispatch/reservation-release guards remain closed;
 synthetic operator fixtures cannot count as real C22 approval consumption.
 The two-hour worker deadline elapsed during interruption; current cloud state
 must be read back after the browser login opened on2026-10-25 completes.
+
+## Actual operator checkpoint — 2026-10-27 JST
+
+The source07 synthetic scientific diagnostic, two unchanged NumPy-first
+numerical programs and Matplotlib raster program pass on the isolated worker.
+Repeated mean/t-test/OLS values agree at1e-12 absolute/relative tolerance;
+Parquet preserves int64 maximum. The only resource-policy amendment is the
+native Sentry/gofer descriptor cap256→4096; the guest remains256. Stable pinned
+Sentry/gofer identities and limits are read before start, with bounded explicitly
+classified auxiliary processes. Unknown identities still fail closed. Original
+failed attempts/receipts and image/init bytes remain immutable.
+
+Namespace, containment, whole-tree cleanup, CPU/memory/time/output/scratch/log
+and unsafe-output observations are retained under their exact source profiles.
+The original process-exhaustion case failed with Sentry clone panic; a separate
+qualified host PID-bound observation does not relabel it a successful guest.
+Three process-crash/replay episodes pass; VM reboot, queued cancellation and
+retained owner revocation are not thereby established. Read-only C22 inspection
+and strict termination packet validation are preparation, not reservation or
+physical issuer authority. New PostgreSQL persistence/roles are still a draft.
+The actual retained synthetic C22 approval→reserve→Linux run→signed termination
+proof→verified release path remains required before Complete. Scientific
+correctness, production dispatch and whole-site C24 deployment are not claimed.
+See [latest handoff](../handoffs/C23.md) and
+[local receipt](../evidence/C23/operator-local-20261027-native02/verification.json).

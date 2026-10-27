@@ -1,0 +1,69 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_final_enable_callback_cannot_rebind_equivalent_sources_or_store[exporter] _
+
+case = namespace(fixture=ExperimentFixture(retained=InvestigationFixture(service=<orchestration.investigations.InvestigationS...=None, lockfile_sha256=None, packages={}, description='Explicit C22 synthetic acceptance adapter; no Python runtime')))
+field = 'exporter'
+
+    @pytest.mark.parametrize('field', ['exporter', 'session_factory'])
+    def test_final_enable_callback_cannot_rebind_equivalent_sources_or_store(case, field):
+        service = case.fixture.service
+        original = getattr(service, field)
+        replacement = copy(service.exporter) if field == 'exporter' else sessionmaker(
+            bind=case.engine, expire_on_commit=False)
+        calls = 0
+    
+        def enabled():
+            nonlocal calls
+            calls += 1
+            if calls == 3:
+                # Equivalent source data and identical DB rows do not permit
+                # replacement of the explicitly configured service dependencies.
+                setattr(service, field, replacement)
+            return True
+    
+        bridge = C23OperatorInspection(service=service, config=config_for(case.fixture, enabled=enabled))
+        try:
+>           with no_writes(case), pytest.raises(ValueError, match='exact configured'):
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_experiment_sandbox_operator_inspection.py:226: Failed
+---------------------------- Captured stderr setup -----------------------------
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+_ test_final_enable_callback_cannot_rebind_equivalent_sources_or_store[session_factory] _
+
+case = namespace(fixture=ExperimentFixture(retained=InvestigationFixture(service=<orchestration.investigations.InvestigationS...=None, lockfile_sha256=None, packages={}, description='Explicit C22 synthetic acceptance adapter; no Python runtime')))
+field = 'session_factory'
+
+    @pytest.mark.parametrize('field', ['exporter', 'session_factory'])
+    def test_final_enable_callback_cannot_rebind_equivalent_sources_or_store(case, field):
+        service = case.fixture.service
+        original = getattr(service, field)
+        replacement = copy(service.exporter) if field == 'exporter' else sessionmaker(
+            bind=case.engine, expire_on_commit=False)
+        calls = 0
+    
+        def enabled():
+            nonlocal calls
+            calls += 1
+            if calls == 3:
+                # Equivalent source data and identical DB rows do not permit
+                # replacement of the explicitly configured service dependencies.
+                setattr(service, field, replacement)
+            return True
+    
+        bridge = C23OperatorInspection(service=service, config=config_for(case.fixture, enabled=enabled))
+        try:
+>           with no_writes(case), pytest.raises(ValueError, match='exact configured'):
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_experiment_sandbox_operator_inspection.py:226: Failed
+=========================== short test summary info ============================
+FAILED tests/test_experiment_sandbox_operator_inspection.py::test_final_enable_callback_cannot_rebind_equivalent_sources_or_store[exporter]
+FAILED tests/test_experiment_sandbox_operator_inspection.py::test_final_enable_callback_cannot_rebind_equivalent_sources_or_store[session_factory]
+2 failed, 50 deselected in 4.99s

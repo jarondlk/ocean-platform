@@ -1,0 +1,19 @@
+{
+  "autoCreateSubnetworks": false,
+  "creationTimestamp": "2026-10-23T23:28:51.904-07:00",
+  "id": "3528992897199369932",
+  "kind": "compute#network",
+  "name": "c23-private",
+  "networkFirewallPolicyEnforcementOrder": "AFTER_CLASSIC_FIREWALL",
+  "routingConfig": {
+    "bgpBestPathSelectionMode": "LEGACY",
+    "routingMode": "REGIONAL"
+  },
+  "selfLink": "https://www.googleapis.com/compute/v1/projects/ocean-v1-c23-20261024/global/networks/c23-private",
+  "selfLinkWithId": "https://www.googleapis.com/compute/v1/projects/ocean-v1-c23-20261024/global/networks/3528992897199369932",
+  "subnetworks": [
+    "https://www.googleapis.com/compute/v1/projects/ocean-v1-c23-20261024/regions/asia-northeast1/subnetworks/c23-tokyo"
+  ],
+  "x_gcloud_bgp_routing_mode": "REGIONAL",
+  "x_gcloud_subnet_mode": "CUSTOM"
+}

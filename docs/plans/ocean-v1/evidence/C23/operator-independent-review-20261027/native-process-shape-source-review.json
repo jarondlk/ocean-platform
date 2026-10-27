@@ -1,0 +1,92 @@
+{
+  "actual_required": [
+    "Capture bounded native PID/starttime/PPID/cgroup/executable/raw-cmdline data while the actual created container is held at the pre-readback lost-create-ack barrier.",
+    "Correlate the actual state.pid to the unique core Sentry and actual Gofer. Identify any auxiliary TGIDs and their relationship before considering a source-preserving amendment.",
+    "Keep both failed attempts false and before-start, preserve source06 and all raw receipts, and retain the exact whole-cgroup cleanup boundary."
+  ],
+  "authority": {
+    "actual_process_shape_verified": false,
+    "c23_complete": false,
+    "dispatch_eligible": false,
+    "guard_relaxed": false,
+    "native_runtime_changed": false,
+    "reservation_released": false,
+    "scientific_approval": "not_independently_verified",
+    "scientific_execution_started": false
+  },
+  "created_at": "2026-10-26T18:09:22.537272+00:00",
+  "hypothesis": "A legitimate auxiliary systrap TGID with empty cmdline or inherited runsc-sandbox argv could trigger the observed identity gate. This is a source-supported candidate, not an established actual process diagnosis.",
+  "inputs": [
+    {
+      "bytes": 7316,
+      "path": "docs/plans/ocean-v1/evidence/C23/cloud-session-20261027-0248/native-failed01-diagnostics.stdout.json",
+      "sha256": "217ff733f0321f1f33db856bce991e32effcaa6e6573bc152e0d47322c33fa22"
+    },
+    {
+      "bytes": 58022,
+      "path": "orchestration/experiment_sandbox/linux_runtime.py",
+      "sha256": "52d85388a8b52c76a2f54d84de62bd8e19b38601bf265150cf039590cf8e4c8c"
+    }
+  ],
+  "observations": {
+    "numerics-a-20261027-02": {
+      "adapter_source_sha256": "52d85388a8b52c76a2f54d84de62bd8e19b38601bf265150cf039590cf8e4c8c",
+      "case_assertions_passed": false,
+      "delete_acknowledged": true,
+      "envelope_sha256": "00a8041cf4d9af64e4a21ea2628206d6285aed4ae76942b9eed282fb1a0d5033",
+      "execution_started": false,
+      "job_id": "c23-7c5501e7c11ab8ecdf37a933ad4810af4c210d3184ed4453",
+      "profile_sha256": "c68e52c0b1bc619fd1a53eb7177dde2d88f56cd329770ad21cda4d8cb0be953b",
+      "reason": "sandbox_native_process_identity",
+      "rootfs_unmounted": true,
+      "start_attempted": false,
+      "state": "uncertain",
+      "validated_outputs": false,
+      "whole_cgroup_empty": true
+    },
+    "scientific-import-diagnostic-20261027-02": {
+      "adapter_source_sha256": "52d85388a8b52c76a2f54d84de62bd8e19b38601bf265150cf039590cf8e4c8c",
+      "case_assertions_passed": false,
+      "delete_acknowledged": true,
+      "envelope_sha256": "2a5cabf8c547757a905010273170255a3fc5873090ec634d73e0f5654295bdb0",
+      "execution_started": false,
+      "job_id": "c23-aa59ecbedbaa94016c530b522d1db2467e5bf01bcf4c2ecb",
+      "profile_sha256": "a250ce734b7bd939a6f4dbf7ce8e98ca28b37ae126a267807845de70b53a7fe7",
+      "reason": "sandbox_native_process_identity",
+      "rootfs_unmounted": true,
+      "start_attempted": false,
+      "state": "uncertain",
+      "validated_outputs": false,
+      "whole_cgroup_empty": true
+    }
+  },
+  "primary_source": [
+    {
+      "git_blob_sha1": "47159fce395cc63a4faae6be2671391158c67183",
+      "lines": [
+        174,
+        224
+      ],
+      "path": "pkg/sentry/platform/systrap/subprocess_linux.go",
+      "url": "https://github.com/google/gvisor/blob/760b80785dc53311d4c87bd2de167525a99709c1/pkg/sentry/platform/systrap/subprocess_linux.go"
+    },
+    {
+      "git_blob_sha1": "6a8b3ce0d887c918faabae5e5b7c7f1d4f0911d9",
+      "lines": [
+        412,
+        416,
+        510,
+        518
+      ],
+      "path": "pkg/sentry/platform/systrap/subprocess.go",
+      "url": "https://github.com/google/gvisor/blob/760b80785dc53311d4c87bd2de167525a99709c1/pkg/sentry/platform/systrap/subprocess.go"
+    }
+  ],
+  "scope": "Read-only failed-before-start observations and pinned systrap source audit. No runtime source edits or guard bypass.",
+  "source_facts": [
+    "forkStub invokes native SYS_CLONE without a new exec to create stub TGIDs; the parent subsequently unmaps high address ranges in the stub.",
+    "newSubprocess calls unmap; unmap removes non-stub address ranges. Thus a native systrap stub need not retain a usable original argv memory range.",
+    "The current C23 observer insists on nonempty NUL-terminated cmdline for every inventoried native PID before choosing the two core actors; it also classifies any runsc-sandbox argv0 as another Sentry and rejects duplicate core roles."
+  ],
+  "version": "c23-native-process-shape-source-review-v1"
+}

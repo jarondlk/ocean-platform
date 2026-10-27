@@ -1,0 +1,564 @@
+{
+  "C23_complete": false,
+  "archive_sha256": "398e812ffb5a42e501efd61ebe0ac0739e7dfcfa9215dd7065a37b5b9fb36101",
+  "case_summaries": {
+    "cancel": {
+      "adapter_result": {
+        "adapter_source_sha256": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d",
+        "analysis_exit_code": null,
+        "approved_hashes": {
+          "code_sha256": "bc39276c6fa8f93727fe2258cd48283b391d00cfdd5c32e59109dd7f1e4a2bbb",
+          "environment_sha256": "1c3f049193cb5c2575eabeae312e1ce2272237011277f770d468ffcb805c6db0",
+          "input_manifest_sha256": "1a07f3745b0504c819dda3b04dfab90e15af83f3ca0f8ffccba11b584b36558e",
+          "proposal_sha256": "fc11ff7d1ff188884f5541e2d056bb94b94794199dba662212dfc093170a63a9",
+          "resources_sha256": "cc1ab385c771d63b7816935e2ad9fbe531cf6848529b709b2afb836e3508428e"
+        },
+        "declared_seeds": {},
+        "dispatch_eligible": false,
+        "envelope_sha256": "f7c034af1c21797e7820230b30349c44ae42d95b01fa48bf74e8c73f2510cab6",
+        "execution_started": true,
+        "frame_sha256": null,
+        "host_runtime_exit_status": null,
+        "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+        "job_id": "c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378",
+        "outputs_manifest_sha256": null,
+        "private_diagnostics_directory": "diagnostics",
+        "profile_sha256": "bed16d49573505d99d0925fa1c3016cb364fd5507ec7fbd13cbd445bc7848226",
+        "reason": "sandbox_cancelled",
+        "replayed": false,
+        "reservation_released": false,
+        "retained_logs": {},
+        "runtime_acceptance_verified": false,
+        "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8",
+        "scientific_approval": "not_independently_verified",
+        "simulation": false,
+        "start_attempted": true,
+        "state": "cancelled",
+        "termination_proof": {
+          "cgroup_device": 30,
+          "cgroup_inode": 11320,
+          "cgroup_path": "/ocean-c23/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378",
+          "host_boot_id": "b2746b58-2682-4429-8309-dc1c650d173c",
+          "populated": 0,
+          "runtime_delete_acknowledged": true,
+          "whole_host_subtree_empty": true
+        },
+        "total_output_bytes": 0,
+        "trusted_init_sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+        "version": "c23-linux-runsc-operator-v1"
+      },
+      "cleanup": {
+        "cgroup_empty": true,
+        "mount_reconciliation": {
+          "after": {
+            "entry": null,
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              1314376
+            ]
+          },
+          "argv": [
+            "/usr/bin/umount",
+            "--internal-only",
+            "--",
+            "/var/lib/ocean-c23/operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/rootfs"
+          ],
+          "before": {
+            "entry": {
+              "line": "98 27 8:1 /var/lib/ocean-c23/scientific-normalized-quota-v3/rootfs /var/lib/ocean-c23/operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/rootfs ro,nosuid,nodev,relatime shared:1 - ext4 /dev/root rw,discard,errors=remount-ro,commit=30",
+              "mount_id": "98",
+              "options": "ro,nosuid,nodev,relatime"
+            },
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              559595
+            ]
+          },
+          "exit_code": 0,
+          "rootfs_unmounted": true,
+          "stderr_base64": "",
+          "stdout_base64": ""
+        },
+        "removed_cgroups": [
+          "/sys/fs/cgroup/ocean-c23/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/host",
+          "/sys/fs/cgroup/ocean-c23/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378"
+        ],
+        "reservation_released": false,
+        "rootfs_unmounted": true
+      },
+      "evaluation": {
+        "C23_complete": false,
+        "case_assertions_passed": true,
+        "checks": {
+          "delete_acknowledged": true,
+          "execution_started": true,
+          "expected_terminal_state": true,
+          "no_dispatch_or_release": true,
+          "no_outputs": true,
+          "operator_pipeline_healthy": true,
+          "rootfs_cleanup": true,
+          "scientific_unverified": true,
+          "whole_host_subtree_empty": true
+        },
+        "retained_C22_real_approval": false,
+        "runtime_acceptance_complete": false,
+        "scope": "operator synthetic fixture observations only"
+      }
+    },
+    "containment": {
+      "adapter_result": {
+        "adapter_source_sha256": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d",
+        "analysis_exit_code": 0,
+        "approved_hashes": {
+          "code_sha256": "e7491523d67149e661837233fa00ed4175d92ee08321310959f6e6fce3e3ecdd",
+          "environment_sha256": "1c3f049193cb5c2575eabeae312e1ce2272237011277f770d468ffcb805c6db0",
+          "input_manifest_sha256": "fa0c828531c4970049b9cb07748f664c47be999f26962c1f60c138856de83c69",
+          "proposal_sha256": "6622636f0f364e96f7bebfc4e7213672d21953e6c5ae332f72697393567fdc90",
+          "resources_sha256": "f3423b7074e11e1c917261289c772eba57e1ce6a4a2325da24f250ad44ac89eb"
+        },
+        "declared_seeds": {},
+        "dispatch_eligible": false,
+        "envelope_sha256": "73143a7357b1e22fc9e575a28fd9acdfa3cd35ba2edaff2ead35fa9ec28ad64b",
+        "execution_started": true,
+        "frame_sha256": "319335c2986aabf11cc4406600077b6e29c9114cd24516971431930f12757b7c",
+        "host_runtime_exit_status": 0,
+        "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+        "job_id": "c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96",
+        "outputs_manifest_sha256": "7348a25ff174403473d477d2d41c5f073f6f085090458891c2fcd834855b2380",
+        "private_diagnostics_directory": "diagnostics",
+        "profile_sha256": "15b7b99bb9823dc934729f5fcb387e880f0fa12589e05f967f8b191717a8f3a4",
+        "reason": "completed",
+        "replayed": false,
+        "reservation_released": false,
+        "retained_logs": {
+          "stderr": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "size_bytes": 0
+          },
+          "stdout": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "size_bytes": 0
+          }
+        },
+        "runtime_acceptance_verified": false,
+        "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8",
+        "scientific_approval": "not_independently_verified",
+        "simulation": false,
+        "start_attempted": true,
+        "state": "completed",
+        "termination_proof": {
+          "cgroup_device": 30,
+          "cgroup_inode": 11059,
+          "cgroup_path": "/ocean-c23/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96",
+          "host_boot_id": "b2746b58-2682-4429-8309-dc1c650d173c",
+          "populated": 0,
+          "runtime_delete_acknowledged": true,
+          "whole_host_subtree_empty": true
+        },
+        "total_output_bytes": 989,
+        "trusted_init_sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+        "version": "c23-linux-runsc-operator-v1"
+      },
+      "cleanup": {
+        "cgroup_empty": true,
+        "mount_reconciliation": {
+          "after": {
+            "entry": null,
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              1314290
+            ]
+          },
+          "argv": [
+            "/usr/bin/umount",
+            "--internal-only",
+            "--",
+            "/var/lib/ocean-c23/operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/rootfs"
+          ],
+          "before": {
+            "entry": {
+              "line": "98 27 8:1 /var/lib/ocean-c23/scientific-normalized-quota-v3/rootfs /var/lib/ocean-c23/operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/rootfs ro,nosuid,nodev,relatime shared:1 - ext4 /dev/root rw,discard,errors=remount-ro,commit=30",
+              "mount_id": "98",
+              "options": "ro,nosuid,nodev,relatime"
+            },
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              559595
+            ]
+          },
+          "exit_code": 0,
+          "rootfs_unmounted": true,
+          "stderr_base64": "",
+          "stdout_base64": ""
+        },
+        "removed_cgroups": [
+          "/sys/fs/cgroup/ocean-c23/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/host",
+          "/sys/fs/cgroup/ocean-c23/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96"
+        ],
+        "reservation_released": false,
+        "rootfs_unmounted": true
+      },
+      "evaluation": {
+        "C23_complete": false,
+        "case_assertions_passed": true,
+        "checks": {
+          "delete_acknowledged": true,
+          "execution_started": true,
+          "expected_terminal_state": true,
+          "no_dispatch_or_release": true,
+          "operator_pipeline_healthy": true,
+          "rootfs_cleanup": true,
+          "scientific_unverified": true,
+          "validated_outputs": true,
+          "whole_host_subtree_empty": true
+        },
+        "retained_C22_real_approval": false,
+        "runtime_acceptance_complete": false,
+        "scope": "operator synthetic fixture observations only"
+      }
+    },
+    "namespaces": {
+      "adapter_result": {
+        "adapter_source_sha256": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d",
+        "analysis_exit_code": 0,
+        "approved_hashes": {
+          "code_sha256": "33075d90746701491ca1722f8d3ba63308cd22a2b0aee8dfc35220fd1510a9e2",
+          "environment_sha256": "1c3f049193cb5c2575eabeae312e1ce2272237011277f770d468ffcb805c6db0",
+          "input_manifest_sha256": "a3375cb4c91114cf7c63a91e461f0ebd5cfaf9a354511579d3b92b3246cf8c5c",
+          "proposal_sha256": "07cf44c8d28f9a38df55b769db387deb66be1d6061844fe93655bb4dcadc35b1",
+          "resources_sha256": "f3423b7074e11e1c917261289c772eba57e1ce6a4a2325da24f250ad44ac89eb"
+        },
+        "declared_seeds": {},
+        "dispatch_eligible": false,
+        "envelope_sha256": "f448c231c3805f78e46f7d31d66156dc2be4ffc875d62f013fad193d17be4eb1",
+        "execution_started": true,
+        "frame_sha256": "feb6ba05407fcc4d4424fcd684d72ccc1022fd0a686ee601cf57299acf29e4b9",
+        "host_runtime_exit_status": 0,
+        "image_digest": "sha256:e7b0b54ec17933d8503a1975e2d831b5983b644147602c7dbfd0bae2b6f14273",
+        "job_id": "c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0",
+        "outputs_manifest_sha256": "db25dc3334ed751c8c5bf3108760f83791ea9d52b8a877ef4608fd98334686ac",
+        "private_diagnostics_directory": "diagnostics",
+        "profile_sha256": "413fbeee1390a93a340cd520dad8afbe1cbbaf050d89fdde8b51e991c5119842",
+        "reason": "completed",
+        "replayed": false,
+        "reservation_released": false,
+        "retained_logs": {
+          "stderr": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "size_bytes": 0
+          },
+          "stdout": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "size_bytes": 0
+          }
+        },
+        "runtime_acceptance_verified": false,
+        "runtime_sha256": "1b10570c27200ad99d306f4c202898cbe4c11ae14101ea71f1e4545d1de830e8",
+        "scientific_approval": "not_independently_verified",
+        "simulation": false,
+        "start_attempted": true,
+        "state": "completed",
+        "termination_proof": {
+          "cgroup_device": 30,
+          "cgroup_inode": 10798,
+          "cgroup_path": "/ocean-c23/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0",
+          "host_boot_id": "b2746b58-2682-4429-8309-dc1c650d173c",
+          "populated": 0,
+          "runtime_delete_acknowledged": true,
+          "whole_host_subtree_empty": true
+        },
+        "total_output_bytes": 1378,
+        "trusted_init_sha256": "1c808a836d4837b30c6a665222640f589bd9eb5f50cf60d71a764bec41273bbc",
+        "version": "c23-linux-runsc-operator-v1"
+      },
+      "cleanup": {
+        "cgroup_empty": true,
+        "mount_reconciliation": {
+          "after": {
+            "entry": null,
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              1314204
+            ]
+          },
+          "argv": [
+            "/usr/bin/umount",
+            "--internal-only",
+            "--",
+            "/var/lib/ocean-c23/operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/rootfs"
+          ],
+          "before": {
+            "entry": {
+              "line": "98 27 8:1 /var/lib/ocean-c23/scientific-normalized-quota-v3/rootfs /var/lib/ocean-c23/operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/rootfs ro,nosuid,nodev,relatime shared:1 - ext4 /dev/root rw,discard,errors=remount-ro,commit=30",
+              "mount_id": "98",
+              "options": "ro,nosuid,nodev,relatime"
+            },
+            "source_identity": [
+              2049,
+              559595
+            ],
+            "target_identity": [
+              2049,
+              559595
+            ]
+          },
+          "exit_code": 0,
+          "rootfs_unmounted": true,
+          "stderr_base64": "",
+          "stdout_base64": ""
+        },
+        "removed_cgroups": [
+          "/sys/fs/cgroup/ocean-c23/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/host",
+          "/sys/fs/cgroup/ocean-c23/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0"
+        ],
+        "reservation_released": false,
+        "rootfs_unmounted": true
+      },
+      "evaluation": {
+        "C23_complete": false,
+        "case_assertions_passed": true,
+        "checks": {
+          "delete_acknowledged": true,
+          "execution_started": true,
+          "expected_terminal_state": true,
+          "no_dispatch_or_release": true,
+          "operator_pipeline_healthy": true,
+          "rootfs_cleanup": true,
+          "scientific_unverified": true,
+          "validated_outputs": true,
+          "whole_host_subtree_empty": true
+        },
+        "retained_C22_real_approval": false,
+        "runtime_acceptance_complete": false,
+        "scope": "operator synthetic fixture observations only"
+      }
+    }
+  },
+  "files": {
+    "operator-acceptance/cancel-native-20261027-01/attempt-start.json": "cdfaf3c69e16f6a578ab13f3196deb4dc608bbbf68fae211b42aeb9f52a61ce5",
+    "operator-acceptance/cancel-native-20261027-01/attempt.json": "20121b986082cf1f61a9e85f241432b9019e803427a50223ac36fa586f3df9c2",
+    "operator-acceptance/cancel-native-20261027-01/cgroup-cgroup.events.raw.txt": "3b9e1e4502927976afbfdd8a423ef8803c2e3165ab4bfb0bae2d93f4b8b3977a",
+    "operator-acceptance/cancel-native-20261027-01/cgroup-cpu.stat.raw.txt": "83ff31a62b7a8efc4b1125b536c649e2aa77c3e41d64437bbeb2355261d1ec59",
+    "operator-acceptance/cancel-native-20261027-01/cgroup-memory.events.raw.txt": "0a2d4e7982066cc7dc914627e7b195ccba88b82a5a996201809e529142d2f380",
+    "operator-acceptance/cancel-native-20261027-01/cgroup-memory.peak.raw.txt": "b01c03abf6fc173ec9d5eb9a0279fa6eaacf25c2b533810ae2d19f7b6fcf30bd",
+    "operator-acceptance/cancel-native-20261027-01/cgroup-pids.events.raw.txt": "bd7ddfd0b90e9b54b8dcaae0b1dca9f5d4e08c3fab5013518b3edd3b45aecf50",
+    "operator-acceptance/cancel-native-20261027-01/command-0.json": "938c25215d1087d462065d490166cdca8012ee9a06204f4ddd5778aef5381a25",
+    "operator-acceptance/cancel-native-20261027-01/command-0.stderr.bin": "0cc150e5b9e95d6f6d63d492dac7961c87acce861cef213d8a69a3ff5fa9daae",
+    "operator-acceptance/cancel-native-20261027-01/command-0.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/cancel-native-20261027-01/command-1.json": "1e422e86d0f181669d258dd18faee2097a99390358090fd05276b69b19ff9538",
+    "operator-acceptance/cancel-native-20261027-01/command-1.stderr.bin": "801d16f58175e432fc4502dc57453999e9fdb3c68bc131ae387423d698fc660c",
+    "operator-acceptance/cancel-native-20261027-01/command-1.stdout.bin": "b1db4d5df19aa6af36dc6b330ee1e33e56c3925635216cbca3b1941d77aa2041",
+    "operator-acceptance/cancel-native-20261027-01/command-2.json": "29fe1c03cc093f907dffbca3fb0a598589475dfe005d370232597a4799c2f92d",
+    "operator-acceptance/cancel-native-20261027-01/command-2.stderr.bin": "d98a9a1e4768499ec9accac61f1a0950ed9f63746f58a90f73b1d378acfe2ab3",
+    "operator-acceptance/cancel-native-20261027-01/command-2.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/cancel-native-20261027-01/command-3.json": "6447ff673faf89a54c89eeef309e1cfd9707c51fca906488b9caa3d37980afd5",
+    "operator-acceptance/cancel-native-20261027-01/command-3.stderr.bin": "6766eb75d0b23afb544aa66ef3eb7bfec8e9273dc034ac229db2ad4348474def",
+    "operator-acceptance/cancel-native-20261027-01/command-3.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/cancel-native-20261027-01/command-4.json": "ee13ca47aa53bc172319133db3afe8600b1dce2bdd5498f874d2d7a3b9c9b0a2",
+    "operator-acceptance/cancel-native-20261027-01/command-4.stderr.bin": "4df276bcf3876b2d9f81d39dc822def099439a62e0f7f69b467622391bac1f2b",
+    "operator-acceptance/cancel-native-20261027-01/command-4.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/cancel-native-20261027-01/gofer-traversal-0.json": "da63523ecb4a9b3451db2baf31b0a109a5cf12cd3a28db35823ff6f9a036407e",
+    "operator-acceptance/cancel-native-20261027-01/gofer-traversal-1.json": "14d11738d68e873b06cc26dfc37ed8ec7e907c773d1c6ef3714fc3b8ffc7001a",
+    "operator-acceptance/cancel-native-20261027-01/gofer-traversal-2.json": "4f04f8c5336acc36ea5dcf98685847388f8df2ca9f32d2118bb95e273d353c52",
+    "operator-acceptance/cancel-native-20261027-01/gofer-traversal-3.json": "312cbebf6de8c23d97211e0afcb94241781c3011b309ac977765ab4fcd933fc1",
+    "operator-acceptance/cancel-native-20261027-01/gofer-traversal-4.json": "d0fcd21408233eb554812e40268bc60565f20fe40ee8522ead83b2ba9d2c52c8",
+    "operator-acceptance/cancel-native-20261027-01/gofer-traversal.json": "91c103f9fa94f2ffc0494f4811fce4d0e1cede0baaf8f97951d8aaa181d60a1f",
+    "operator-acceptance/cancel-native-20261027-01/host-canary.txt": "36f554344d80123c673c47635390b1115dbe4b3162b56da61bf76f68bab73af1",
+    "operator-acceptance/cancel-native-20261027-01/host-positive-controls.json": "bc321d88736f42ecb96f444d03d199dacf2c58cab3c24e71e7c5575a70828064",
+    "operator-acceptance/cancel-native-20261027-01/journal/identity.json": "0980167c2e8f351686b6c7584e60651a1295db9561f450ffe6ee019d590fe8f5",
+    "operator-acceptance/cancel-native-20261027-01/journal/journal.sqlite3": "d560925025b84610dd570bea91f3c94f991213aee2419109395274e853031390",
+    "operator-acceptance/cancel-native-20261027-01/journal/locks/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/cancel-native-20261027-01/journal/schema.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/cancel-native-20261027-01/mount-0.intent.json": "fc09d934b04f1cd34806cf906544a7800b8dd96f176908846ba1a8d47984dc7e",
+    "operator-acceptance/cancel-native-20261027-01/mount-0.observation.json": "c339ff9450fd9daa5fb41783cb2f348c9963d5cc589c9a335bcb213aaab86490",
+    "operator-acceptance/cancel-native-20261027-01/mount-0.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/cancel-native-20261027-01/mount-0.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/cancel-native-20261027-01/mount-1.intent.json": "ed81a16b20255cdc3bc4cc7be722dba8482b9c2ef9b85bf0e65bb033b2109a74",
+    "operator-acceptance/cancel-native-20261027-01/mount-1.observation.json": "4cd5be2690e55ab0a5082cc16a6bb9ca26847981f905ad5808144e60dabf4cb5",
+    "operator-acceptance/cancel-native-20261027-01/mount-1.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/cancel-native-20261027-01/mount-1.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/cancel-native-20261027-01/mount-intent.json": "7101b110be8ce58c2eafe4daed87b764cce1b267373f6aeb7100815e9804a789",
+    "operator-acceptance/cancel-native-20261027-01/operator-fixture.json": "954f0bdf79a58388958e4959403495cb92832893a4f5a8d60d83338d0752e175",
+    "operator-acceptance/cancel-native-20261027-01/profile.json": "bed16d49573505d99d0925fa1c3016cb364fd5507ec7fbd13cbd445bc7848226",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/config.json": "f18ca40a115d02e397060cd0795cad1e7a223ba9e8092e6dfebef26aec806dd2",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/diagnostics/create-fa02c4fb430945fbbf582dcd40891080/metadata.json": "b0c83137848502a816a1dbf9bc5119254fc5e23c391af0225f2d5f6c819be7b9",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/diagnostics/create-fa02c4fb430945fbbf582dcd40891080/stderr.bin": "0cc150e5b9e95d6f6d63d492dac7961c87acce861cef213d8a69a3ff5fa9daae",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/diagnostics/delete-8b4d7089a24e47a4b37c5b36e0cc1d53/metadata.json": "c463ea49de04abc823c214d623a2e605927fbe2da204baa311429b213793954d",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/diagnostics/delete-8b4d7089a24e47a4b37c5b36e0cc1d53/stderr.bin": "4df276bcf3876b2d9f81d39dc822def099439a62e0f7f69b467622391bac1f2b",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/diagnostics/delete-8b4d7089a24e47a4b37c5b36e0cc1d53/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/diagnostics/start-ecf8116b4cc24f7db39ad0c34bd02f26/metadata.json": "ffa41a04208cfb016c3191739aa9be0e892e1753343419cb1e68cb0358536153",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/diagnostics/start-ecf8116b4cc24f7db39ad0c34bd02f26/stderr.bin": "d98a9a1e4768499ec9accac61f1a0950ed9f63746f58a90f73b1d378acfe2ab3",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/diagnostics/start-ecf8116b4cc24f7db39ad0c34bd02f26/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/diagnostics/state-197045eccc98474aa3b5339720de74fd/metadata.json": "9cef11b9a975de4da6b29a1e0a8a68d13d0787650d9f1b1f866d1fcc013a44cf",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/diagnostics/state-197045eccc98474aa3b5339720de74fd/stderr.bin": "801d16f58175e432fc4502dc57453999e9fdb3c68bc131ae387423d698fc660c",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/diagnostics/state-197045eccc98474aa3b5339720de74fd/stdout.bin": "b1db4d5df19aa6af36dc6b330ee1e33e56c3925635216cbca3b1941d77aa2041",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/diagnostics/wait-9a7e98aadf6e49518a955fc2985a14c3/metadata.json": "35234743efc986d71f96b4e6ddc7ef08276a0eda620f29ea68147d6786866ceb",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/diagnostics/wait-9a7e98aadf6e49518a955fc2985a14c3/stderr.bin": "6766eb75d0b23afb544aa66ef3eb7bfec8e9273dc034ac229db2ad4348474def",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/diagnostics/wait-9a7e98aadf6e49518a955fc2985a14c3/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/inputs/analysis.py": "bc39276c6fa8f93727fe2258cd48283b391d00cfdd5c32e59109dd7f1e4a2bbb",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/inputs/exclusions.json": "6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/inputs/manifest.json": "1a07f3745b0504c819dda3b04dfab90e15af83f3ca0f8ffccba11b584b36558e",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/inputs/pairing.json": "fdb152ab5a7f50998d53df5b9bd96583b089543fa424ba1cc387f17261373875",
+    "operator-acceptance/cancel-native-20261027-01/worker/c23-06a20a2de67be6e3d4b1ed51ab1ab3be02b8136d89ff9378/inputs/table-01.json": "0e1ca9adf74895a55db700686f6c6c71fe357750ad227b0297634ca62ffbfa77",
+    "operator-acceptance/containment-native-20261027-01/attempt-start.json": "36b3b1b9325d5777ecf2b5d7dadf03d6996a706e6a22b8f8752788a9e86c55ce",
+    "operator-acceptance/containment-native-20261027-01/attempt.json": "63f5fcf5f64ecd46c4153e98137e9a6eb6d7a394839aa49bcad176ea1e1d26b1",
+    "operator-acceptance/containment-native-20261027-01/cgroup-cgroup.events.raw.txt": "3b9e1e4502927976afbfdd8a423ef8803c2e3165ab4bfb0bae2d93f4b8b3977a",
+    "operator-acceptance/containment-native-20261027-01/cgroup-cpu.stat.raw.txt": "58ed5830eea21c91662dc0d6816bc86c28896dd0d86f12de6bbc45cb3bc7949e",
+    "operator-acceptance/containment-native-20261027-01/cgroup-memory.events.raw.txt": "0a2d4e7982066cc7dc914627e7b195ccba88b82a5a996201809e529142d2f380",
+    "operator-acceptance/containment-native-20261027-01/cgroup-memory.peak.raw.txt": "68dca65aec853b1c421a0c22f5b714122bc9a24f5d9d9c9a91772368995954c2",
+    "operator-acceptance/containment-native-20261027-01/cgroup-pids.events.raw.txt": "bd7ddfd0b90e9b54b8dcaae0b1dca9f5d4e08c3fab5013518b3edd3b45aecf50",
+    "operator-acceptance/containment-native-20261027-01/command-0.json": "a963b0e36df71f6dab2c21a2a64d90ee22d2371220ce70eb66254f6a6b1702a0",
+    "operator-acceptance/containment-native-20261027-01/command-0.stderr.bin": "b0dadc6f64f882b29c3983cd17201fdc8e554acf425516960879db8c13088973",
+    "operator-acceptance/containment-native-20261027-01/command-0.stdout.bin": "319335c2986aabf11cc4406600077b6e29c9114cd24516971431930f12757b7c",
+    "operator-acceptance/containment-native-20261027-01/command-1.json": "1ef7ed1c5fd77fd81d9c8ff548dc4a8b7ea498c3513465c2e157cde28b46054e",
+    "operator-acceptance/containment-native-20261027-01/command-1.stderr.bin": "beb1d7a47bcc2a59b18c33b7aa6af52ad90af35e92061a9430851438300258e8",
+    "operator-acceptance/containment-native-20261027-01/command-1.stdout.bin": "a1368d039772d7bfb6f68385bc89ebff2237ea678dcce6fc008b80bf1827c57b",
+    "operator-acceptance/containment-native-20261027-01/command-2.json": "5381d6dd82aa7c6e0cb55a8d5b4ce9e406bcd70a731777f0a2421e1ab170556c",
+    "operator-acceptance/containment-native-20261027-01/command-2.stderr.bin": "a370d19a28db309da99e8fa9d7f624899787931a71c97c88bd43d0e7106eb2af",
+    "operator-acceptance/containment-native-20261027-01/command-2.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/containment-native-20261027-01/command-3.json": "a0fc22f7ad4c0306a88a763c3d4aea229eabc572865ddc36ae89641befb7fc31",
+    "operator-acceptance/containment-native-20261027-01/command-3.stderr.bin": "9abb52a29c3d871712b26b1cea9863158a26456198c5807e6b72b1e41c4d9c73",
+    "operator-acceptance/containment-native-20261027-01/command-3.stdout.bin": "0c8e44bae5953ca948941a5890deb57e9f57cd90f5f4075048ed12d74b17f1cb",
+    "operator-acceptance/containment-native-20261027-01/command-4.json": "56328425f62d693e3ba5c28c2d0c6d4e1ebe26a49a6857d787150f6d79a5ff2d",
+    "operator-acceptance/containment-native-20261027-01/command-4.stderr.bin": "8fbead793616d05ebd7f4d5baf4494d9e0df0caaf5c5e0ecea9cff38886847f9",
+    "operator-acceptance/containment-native-20261027-01/command-4.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/containment-native-20261027-01/gofer-traversal-0.json": "da63523ecb4a9b3451db2baf31b0a109a5cf12cd3a28db35823ff6f9a036407e",
+    "operator-acceptance/containment-native-20261027-01/gofer-traversal-1.json": "14d11738d68e873b06cc26dfc37ed8ec7e907c773d1c6ef3714fc3b8ffc7001a",
+    "operator-acceptance/containment-native-20261027-01/gofer-traversal-2.json": "274ad14eee3e4d6c7648a885eb245f64d9bb0f979ca4e2ab5fce5753be01d30e",
+    "operator-acceptance/containment-native-20261027-01/gofer-traversal-3.json": "b8ad4f77040d63858abae8e9e0855ab9529abae47bae3a8e1650459a7167e695",
+    "operator-acceptance/containment-native-20261027-01/gofer-traversal-4.json": "ffcac5b984eec23ba17e7699331fe5e7287176537619c937a2740e1a4d11a9e5",
+    "operator-acceptance/containment-native-20261027-01/gofer-traversal.json": "3a57e67943158d3976309cd0f67b8eaac863b7becbea8e00059fe423abf74d0d",
+    "operator-acceptance/containment-native-20261027-01/host-canary.txt": "ba455508569e59a11bba9d4553c6255e0c2536c560dcb98060935d2520df36a2",
+    "operator-acceptance/containment-native-20261027-01/host-positive-controls.json": "56245d68694aa8cf9b7dc15039ef1962b5c1cdbe35d2ddda591c199145eb1279",
+    "operator-acceptance/containment-native-20261027-01/journal/identity.json": "3f61089e49e21326a9fa7506aa5f13f156c0cab1de056fee1e2b851dc06ca066",
+    "operator-acceptance/containment-native-20261027-01/journal/journal.sqlite3": "0d064439a616453280ca3e46daf6a57823f4829661bb2da5a66883cf3b3cff97",
+    "operator-acceptance/containment-native-20261027-01/journal/locks/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/containment-native-20261027-01/journal/schema.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/containment-native-20261027-01/mount-0.intent.json": "f94b90c55ea6f5e54901a0a8af820851129536d32a62b191c3772d3609e17db4",
+    "operator-acceptance/containment-native-20261027-01/mount-0.observation.json": "c2317deb25f33b663c60710b7e879db9e68addb01d359387266c49ac40903f54",
+    "operator-acceptance/containment-native-20261027-01/mount-0.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/containment-native-20261027-01/mount-0.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/containment-native-20261027-01/mount-1.intent.json": "bf946b8eac626a73d8fe4cabf2b552c016cfa34e0bf8bacee8db0f07a3f04804",
+    "operator-acceptance/containment-native-20261027-01/mount-1.observation.json": "efd1347f2452a8abbf482daccee3bde05f9e73dc679b8239f4a0980223211c7a",
+    "operator-acceptance/containment-native-20261027-01/mount-1.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/containment-native-20261027-01/mount-1.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/containment-native-20261027-01/mount-intent.json": "28382331f1de9f1ddcdf1e1e2eb5ac95860ca2a435ec4c0f7cc191f28b26d30d",
+    "operator-acceptance/containment-native-20261027-01/operator-fixture.json": "6cc1124b65efa937b2cc8dadeec825d4ea65e1edcb17c5495d27d18eea1bef71",
+    "operator-acceptance/containment-native-20261027-01/profile.json": "15b7b99bb9823dc934729f5fcb387e880f0fa12589e05f967f8b191717a8f3a4",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/config.json": "c17a679f46c918cea721a545cf21ff675c0cec882f2306b15a05492b61a9aa96",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/diagnostics/create-27350054e1564d508d8a98db17ba66ac/metadata.json": "33f0b4e52d522d3ea1fa17e9f0309a08f5491bab22b5980fab123b17613efa67",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/diagnostics/create-27350054e1564d508d8a98db17ba66ac/stderr.bin": "b0dadc6f64f882b29c3983cd17201fdc8e554acf425516960879db8c13088973",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/diagnostics/delete-950d4bd443c848a8967dc6f56f5e85c6/metadata.json": "127e399df3c12d77c11d9f20b33f09e85170d27c3e309ce9f7f5d4d335599a5d",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/diagnostics/delete-950d4bd443c848a8967dc6f56f5e85c6/stderr.bin": "8fbead793616d05ebd7f4d5baf4494d9e0df0caaf5c5e0ecea9cff38886847f9",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/diagnostics/delete-950d4bd443c848a8967dc6f56f5e85c6/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/diagnostics/start-ac5999f943594c809f257fec09544507/metadata.json": "2b60df4a9cc7f7cc4099a535cb77c399f2addea092dd864537a6aa92507f05f7",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/diagnostics/start-ac5999f943594c809f257fec09544507/stderr.bin": "a370d19a28db309da99e8fa9d7f624899787931a71c97c88bd43d0e7106eb2af",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/diagnostics/start-ac5999f943594c809f257fec09544507/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/diagnostics/state-f3e3ab6d0c15478691b197d91166a256/metadata.json": "cee899efebb049116bc7359c1f636955c0544361edbda6b66cdb20773bc8a647",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/diagnostics/state-f3e3ab6d0c15478691b197d91166a256/stderr.bin": "beb1d7a47bcc2a59b18c33b7aa6af52ad90af35e92061a9430851438300258e8",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/diagnostics/state-f3e3ab6d0c15478691b197d91166a256/stdout.bin": "a1368d039772d7bfb6f68385bc89ebff2237ea678dcce6fc008b80bf1827c57b",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/diagnostics/wait-00318d91841c4dff8f5c2ec7dbb35ba9/metadata.json": "2f1b3053ebc468dfccd76b202fa0d107bf74c1265c1f0b9e75e42f9d0bad35d8",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/diagnostics/wait-00318d91841c4dff8f5c2ec7dbb35ba9/stderr.bin": "9abb52a29c3d871712b26b1cea9863158a26456198c5807e6b72b1e41c4d9c73",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/diagnostics/wait-00318d91841c4dff8f5c2ec7dbb35ba9/stdout.bin": "0c8e44bae5953ca948941a5890deb57e9f57cd90f5f4075048ed12d74b17f1cb",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/inputs/analysis.py": "e7491523d67149e661837233fa00ed4175d92ee08321310959f6e6fce3e3ecdd",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/inputs/exclusions.json": "6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/inputs/manifest.json": "fa0c828531c4970049b9cb07748f664c47be999f26962c1f60c138856de83c69",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/inputs/pairing.json": "fdb152ab5a7f50998d53df5b9bd96583b089543fa424ba1cc387f17261373875",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/inputs/table-01.json": "0e1ca9adf74895a55db700686f6c6c71fe357750ad227b0297634ca62ffbfa77",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/retained/files/summary.json": "667ec634728dcdf50eec10bb01f89bdbabdb2b2c5983206e1292afcfd4b7beaa",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/retained/logs/stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/retained/logs/stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/containment-native-20261027-01/worker/c23-58384bfcebf857e513c4a0e2c74b89dd5047239907205e96/retained/manifest.json": "7348a25ff174403473d477d2d41c5f073f6f085090458891c2fcd834855b2380",
+    "operator-acceptance/namespaces-native-20261027-01/attempt-start.json": "825ad609d468cb67093ed0d81ac1222e908e0dc184469f53eab6ef3c58a30f09",
+    "operator-acceptance/namespaces-native-20261027-01/attempt.json": "7978a2cf789da6ffab4e31c3c4538fc475de8bb1fda59cbdcc954cda95e0fcdb",
+    "operator-acceptance/namespaces-native-20261027-01/cgroup-cgroup.events.raw.txt": "3b9e1e4502927976afbfdd8a423ef8803c2e3165ab4bfb0bae2d93f4b8b3977a",
+    "operator-acceptance/namespaces-native-20261027-01/cgroup-cpu.stat.raw.txt": "eca5f1ca4cf48c99d209f7d4baacb2983b092a1f15ba34d616ee1af9d1a09b67",
+    "operator-acceptance/namespaces-native-20261027-01/cgroup-memory.events.raw.txt": "0a2d4e7982066cc7dc914627e7b195ccba88b82a5a996201809e529142d2f380",
+    "operator-acceptance/namespaces-native-20261027-01/cgroup-memory.peak.raw.txt": "11dfcca989bd7321b4932ff2a71fc502b90b29c8b28b9ea52d01172a37f0d6ee",
+    "operator-acceptance/namespaces-native-20261027-01/cgroup-pids.events.raw.txt": "bd7ddfd0b90e9b54b8dcaae0b1dca9f5d4e08c3fab5013518b3edd3b45aecf50",
+    "operator-acceptance/namespaces-native-20261027-01/command-0.json": "51935b6639681a04717a4fef315aa611245c122095f9f4e9f640449d9a94c1f6",
+    "operator-acceptance/namespaces-native-20261027-01/command-0.stderr.bin": "de74a1776a43103c8fb2668b3e5f9ccdb773ead9cf4b929f42d3b20dec4c397e",
+    "operator-acceptance/namespaces-native-20261027-01/command-0.stdout.bin": "feb6ba05407fcc4d4424fcd684d72ccc1022fd0a686ee601cf57299acf29e4b9",
+    "operator-acceptance/namespaces-native-20261027-01/command-1.json": "2f6ba0ed0f1d2ae2f2564e105847621be4ba5b720992b64d30571d281e585daf",
+    "operator-acceptance/namespaces-native-20261027-01/command-1.stderr.bin": "ecff76f21171a294c253b9171affd8cc135aeac41ba70468ae05272f6fc35da3",
+    "operator-acceptance/namespaces-native-20261027-01/command-1.stdout.bin": "592296e98773a914e947abe81a82564c3be86804d4ba281c2971b2217402b1ac",
+    "operator-acceptance/namespaces-native-20261027-01/command-2.json": "72c9f4876afcaeb1233c5629675d345c115036675bfcca30e09beb9bc0d5afdb",
+    "operator-acceptance/namespaces-native-20261027-01/command-2.stderr.bin": "71331a288f9536659f8c5b75618d03ff914330e68dd7a21e3cb475d0603fd646",
+    "operator-acceptance/namespaces-native-20261027-01/command-2.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/namespaces-native-20261027-01/command-3.json": "8941c767d238662ea7f48728e5456f7ea09fde38b73ba1c5f25d597def291bae",
+    "operator-acceptance/namespaces-native-20261027-01/command-3.stderr.bin": "b2791854ec4c6765b404689ad29779f9a86771a078955fae6e0edb9f813ce99f",
+    "operator-acceptance/namespaces-native-20261027-01/command-3.stdout.bin": "2494a2cfca8b0f93b17ce1d2c286dca1d5f16b1419bc9a77410e122d0991045f",
+    "operator-acceptance/namespaces-native-20261027-01/command-4.json": "4e553fecbf9745431d4526c8edf1a674f827fd25f43685d959ee8f14d3721a16",
+    "operator-acceptance/namespaces-native-20261027-01/command-4.stderr.bin": "55733b9297f4e70d184a04e1dc6a9d3261903af8505295ae6ec26fc052e912eb",
+    "operator-acceptance/namespaces-native-20261027-01/command-4.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/namespaces-native-20261027-01/gofer-traversal-0.json": "da63523ecb4a9b3451db2baf31b0a109a5cf12cd3a28db35823ff6f9a036407e",
+    "operator-acceptance/namespaces-native-20261027-01/gofer-traversal-1.json": "14d11738d68e873b06cc26dfc37ed8ec7e907c773d1c6ef3714fc3b8ffc7001a",
+    "operator-acceptance/namespaces-native-20261027-01/gofer-traversal-2.json": "91b3a31869d79e1dc4a6e507ad1d9160f3da5c8ad00ed34761553641c3bd3fe4",
+    "operator-acceptance/namespaces-native-20261027-01/gofer-traversal-3.json": "cb40599ff87701f57197e517fa7a644f27eccf91794afa55e5b449fbed1dc314",
+    "operator-acceptance/namespaces-native-20261027-01/gofer-traversal-4.json": "37cec9d086be5ef954445c865ca55eeb37142120d82d8b08bb54b445ea08b6e1",
+    "operator-acceptance/namespaces-native-20261027-01/gofer-traversal.json": "a8ec29a5236e1f05b84ec87a0399d94c8f2fb8726921b0a008ca4d1f0c716c69",
+    "operator-acceptance/namespaces-native-20261027-01/host-canary.txt": "07b4da3a4563a189ede66c37498b1d42845fe0681bf8846888e843dcb7875c95",
+    "operator-acceptance/namespaces-native-20261027-01/host-positive-controls.json": "0551615570df8fe314a0a9e2ea12f90bd4921687f633d56307873fe0a10f5847",
+    "operator-acceptance/namespaces-native-20261027-01/journal/identity.json": "073c50eb6b8f1edd24293cb90a8af3ccfac8e6f791101d0909f8007e19d97b80",
+    "operator-acceptance/namespaces-native-20261027-01/journal/journal.sqlite3": "79ab680b8c6dc8b2bfee9b8bad44d7a2274360f7aaaadb3b0de58cdf86b0ba71",
+    "operator-acceptance/namespaces-native-20261027-01/journal/locks/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/namespaces-native-20261027-01/journal/schema.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/namespaces-native-20261027-01/mount-0.intent.json": "9040a4358283a2fb2ad5792c7c78e6993234f45aac4c90cf2837ae55204d291f",
+    "operator-acceptance/namespaces-native-20261027-01/mount-0.observation.json": "300bf6aa4750ac3b790f1e2be1598c84b2d4477be73e625810585e97a08c6a45",
+    "operator-acceptance/namespaces-native-20261027-01/mount-0.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/namespaces-native-20261027-01/mount-0.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/namespaces-native-20261027-01/mount-1.intent.json": "512c756582d37b2e11a2571d5432965b5ed61ecb80c27d8faca8c84b055f3194",
+    "operator-acceptance/namespaces-native-20261027-01/mount-1.observation.json": "d7eb47e9dc696c1f245bd158512991310b2a54adc32daba782b91ec3273f43fb",
+    "operator-acceptance/namespaces-native-20261027-01/mount-1.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/namespaces-native-20261027-01/mount-1.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/namespaces-native-20261027-01/mount-intent.json": "5e4a2daf4cc8aab14aa580660ab7dabc96b042c5f438aa89e39cba9b4e658745",
+    "operator-acceptance/namespaces-native-20261027-01/operator-fixture.json": "18cc907252f6023b83f80fde6622f32900942d0305fadae047cbcde6eb7d68f8",
+    "operator-acceptance/namespaces-native-20261027-01/profile.json": "413fbeee1390a93a340cd520dad8afbe1cbbaf050d89fdde8b51e991c5119842",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/config.json": "e1b3158d93eb8989ed5e8b9d8246baf8f4c3da2d1ffb50b4a7f753ae57a42a85",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/diagnostics/create-325291a69fc045c8a36e2d6b54862776/metadata.json": "9e07e1f0d69069865bf9504cbbb55e75fb47ffdb87a7f8a8d7c6f15acb0139ed",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/diagnostics/create-325291a69fc045c8a36e2d6b54862776/stderr.bin": "de74a1776a43103c8fb2668b3e5f9ccdb773ead9cf4b929f42d3b20dec4c397e",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/diagnostics/delete-9fb2bbe0c33c414984a4f37843161430/metadata.json": "2e772ffd15681800ab6ee58acbd09c09af2f3e7aafc7fc63a3dbf17f5d0b0228",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/diagnostics/delete-9fb2bbe0c33c414984a4f37843161430/stderr.bin": "55733b9297f4e70d184a04e1dc6a9d3261903af8505295ae6ec26fc052e912eb",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/diagnostics/delete-9fb2bbe0c33c414984a4f37843161430/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/diagnostics/start-ca31aef1c96d48248860d8f088347e53/metadata.json": "32d7ebbed56bd9ac1b25a9f43c8fdee9d0b13048a7e213a0860d3a03c8c676d0",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/diagnostics/start-ca31aef1c96d48248860d8f088347e53/stderr.bin": "71331a288f9536659f8c5b75618d03ff914330e68dd7a21e3cb475d0603fd646",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/diagnostics/start-ca31aef1c96d48248860d8f088347e53/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/diagnostics/state-2defb04abb1d463092dbabad834fdde9/metadata.json": "97a14ada52610fcbf8ff7ef14969e9b8021782f8d7bc6ed8b37e32e95fa9c6c0",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/diagnostics/state-2defb04abb1d463092dbabad834fdde9/stderr.bin": "ecff76f21171a294c253b9171affd8cc135aeac41ba70468ae05272f6fc35da3",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/diagnostics/state-2defb04abb1d463092dbabad834fdde9/stdout.bin": "592296e98773a914e947abe81a82564c3be86804d4ba281c2971b2217402b1ac",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/diagnostics/wait-92b4d65785e94bf9a5fe2e6bd2618454/metadata.json": "3831052f58d84d20e8432deb31b09ac33b0e406dd902e9034180e9a0aefe4db0",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/diagnostics/wait-92b4d65785e94bf9a5fe2e6bd2618454/stderr.bin": "b2791854ec4c6765b404689ad29779f9a86771a078955fae6e0edb9f813ce99f",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/diagnostics/wait-92b4d65785e94bf9a5fe2e6bd2618454/stdout.bin": "2494a2cfca8b0f93b17ce1d2c286dca1d5f16b1419bc9a77410e122d0991045f",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/inputs/analysis.py": "33075d90746701491ca1722f8d3ba63308cd22a2b0aee8dfc35220fd1510a9e2",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/inputs/exclusions.json": "6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/inputs/manifest.json": "a3375cb4c91114cf7c63a91e461f0ebd5cfaf9a354511579d3b92b3246cf8c5c",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/inputs/pairing.json": "fdb152ab5a7f50998d53df5b9bd96583b089543fa424ba1cc387f17261373875",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/inputs/table-01.json": "0e1ca9adf74895a55db700686f6c6c71fe357750ad227b0297634ca62ffbfa77",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/retained/files/summary.json": "d5209ab9f511603034ae8d2d3b8ba8cac61da6e3e6761e9ced8618f9450fb01d",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/retained/logs/stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/retained/logs/stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "operator-acceptance/namespaces-native-20261027-01/worker/c23-2a106571f9119118a4740bb7f9ba784831e0ac9f4b3284f0/retained/manifest.json": "db25dc3334ed751c8c5bf3108760f83791ea9d52b8a877ef4608fd98334686ac"
+  },
+  "retained_C22_real_approval": false,
+  "version": "c23-native-regression-export-v1"
+}

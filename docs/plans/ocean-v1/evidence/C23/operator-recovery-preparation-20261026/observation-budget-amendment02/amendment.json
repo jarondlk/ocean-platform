@@ -1,0 +1,17 @@
+{
+  "C23_complete": false,
+  "actual_runtime_acceptance_performed": false,
+  "change": "Pureepisode/phase selection: crashfirst90s, terminalfirst150s, recover90s, contender30s belowheldbarrier45s. _wait_barrier has noimplicit default. No guest/resource/admission/journal/cleanup behavior altered.",
+  "cloud_operations_performed": false,
+  "development_observation": "54safe cases passed3.50s plusRuff, including11newpurebudgetselection/invalidphase cases; no actualsleep innewtests.",
+  "generated_analysis_execution_performed": false,
+  "intentional_source_supersessions": {
+    "sandbox/experiment/gcp/run_recovery_acceptance.py": "6cf79941d1956b194bca2ac2e75f1a662fc2bb0f4c146c8bccf94edaa0738f25",
+    "tests/test_experiment_sandbox_recovery_acceptance.py": "1412265d238920bcd9a710e52f7766f75536a9dd10e9abbd5fe7fa2da077e862"
+  },
+  "original_evidence_immutable": true,
+  "reason": "Make bounded trustedpreflight/metadata/materialobservation margins explicit; initial40s coordinatorbarrierwait was unnecessarily narrow. Terminalguest remains immediate;75s program applies onlycrash episodes.",
+  "reservation_released": false,
+  "retained_C22_real_approval": false,
+  "scope": "Coordinator observation budgets only; actualguest/runtime wall90 andphysicalforwarding paths unchanged"
+}

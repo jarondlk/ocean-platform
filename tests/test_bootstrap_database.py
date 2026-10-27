@@ -12,8 +12,8 @@ from db.models import CorpusBase
 
 def _current_migrations(monkeypatch, *, current=True):
     monkeypatch.setattr(bootstrap, "migration_status", lambda _: {
-        "migration_current_heads": ["20261020_0020" if current else "20261005_0016"],
-        "migration_expected_heads": ["20261020_0020"],
+        "migration_current_heads": ["20261027_0021" if current else "20261005_0016"],
+        "migration_expected_heads": ["20261027_0021"],
         "migrations_current": current,
     })
 
@@ -217,7 +217,7 @@ def test_readiness_rejects_missing_research_tables_and_old_migrations(
     assert status["migrations_current"] is current
 
 
-@pytest.mark.parametrize("revision", [None, "20261004_0015", "20261005_0016", "20261018_0017", "20261019_0018", "20261019_0019", "20261020_0020"])
+@pytest.mark.parametrize("revision", [None, "20261004_0015", "20261005_0016", "20261018_0017", "20261019_0018", "20261019_0019", "20261020_0020", "20261027_0021"])
 def test_migration_status_reads_actual_version_without_upgrading(revision):
     from sqlalchemy import create_engine, text
 
@@ -228,6 +228,6 @@ def test_migration_status_reads_actual_version_without_upgrading(revision):
             connection.execute(text("INSERT INTO alembic_version VALUES (:revision)"), {"revision": revision})
         status = bootstrap.migration_status(connection)
         assert status["migration_current_heads"] == ([revision] if revision else [])
-        assert status["migration_expected_heads"] == ["20261020_0020"]
-        assert status["migrations_current"] is (revision == "20261020_0020")
+        assert status["migration_expected_heads"] == ["20261027_0021"]
+        assert status["migrations_current"] is (revision == "20261027_0021")
     engine.dispose()

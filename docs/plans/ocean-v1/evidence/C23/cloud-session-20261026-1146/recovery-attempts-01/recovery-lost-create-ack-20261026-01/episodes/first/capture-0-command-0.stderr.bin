@@ -1,0 +1,82 @@
+I1026 12:14:03.528472    2971 cli.go:275] **************** gVisor ****************
+I1026 12:14:03.528526    2971 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 2971, PPID 2965, UID 0, GID 0
+I1026 12:14:03.528549    2971 cli.go:278] Args: [/opt/ocean-c23-runtime/release-20261019.0/runsc --root=/var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/runsc-state-c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab --platform=systrap --rootless=false --network=none --gofer-network-namespace=new --directfs=false --overlay2=none --host-uds=none --host-fifo=none --character-device-policy=emulated-only --net-raw=false --ignore-cgroups=false --allow-flag-override=false --sidecar-release-enforcement-policy=ALWAYS --fdlimit=256 --gvisor-marker-file=true --oci-seccomp=true --debug=false --debug-log=/dev/stderr --panic-log=/dev/stderr create --bundle=/var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab]
+I1026 12:14:03.528608    2971 config.go:631] Platform: systrap
+I1026 12:14:03.528618    2971 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/runsc-state-c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab
+I1026 12:14:03.528627    2971 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1026 12:14:03.528641    2971 config.go:634] Network: none
+I1026 12:14:03.528652    2971 config.go:635] UseCPUNums: false
+W1026 12:14:03.528662    2971 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1026 12:14:03.528674    2971 cli.go:287] **************** gVisor ****************
+I1026 12:14:03.534904    2971 namespace.go:201] Mapping host uid 100000 to container uid 0 (size=1)
+I1026 12:14:03.534946    2971 namespace.go:201] Mapping host uid 100001 to container uid 65532 (size=1)
+I1026 12:14:03.534951    2971 namespace.go:209] Mapping host gid 100000 to container gid 0 (size=1)
+I1026 12:14:03.534973    2971 namespace.go:209] Mapping host gid 100001 to container gid 65532 (size=1)
+I1026 12:14:03.535000    2971 container.go:1785] Starting gofer with command: [runsc-gofer --debug=false --panic-log=/dev/stderr --overlay2=none --host-fifo=none --network=none --gofer-network-namespace=new --ignore-cgroups=false --character-device-policy=emulated-only --net-raw=false --rootless=false --oci-seccomp=true --debug-log=/dev/stderr --host-uds=none --sidecar-release-enforcement-policy=ALWAYS --allow-flag-override=false --fdlimit=256 --directfs=false --gvisor-marker-file=true --root=/var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/runsc-state-c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab --platform=systrap --debug-log-fd=3 gofer --bundle /var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab --gofer-mount-confs=lisafs:none,lisafs:none --spec-fd=4 --mounts-fd=5 --rpc-fd=6 --io-fds=7 --io-fds=8 --sync-chroot-fd=9 c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab]
+I1026 12:14:03.537432    2971 container.go:1794] Gofer started, PID: 2979
+I1026 12:14:03.537896    2971 sandbox.go:1088] Sidecar "gvisor_sentry" found: booting sandbox with /opt/ocean-c23-runtime/release-20261019.0/gvisor-bin/gvisor_sentry
+I1026 12:14:03.537940    2971 sandbox.go:1100] Sidecar "gvisor-sentry-prewarmer" found: prepending Sentry boot command with /opt/ocean-c23-runtime/release-20261019.0/gvisor-bin/gvisor-sentry-prewarmer
+I1026 12:14:03.538465    2971 sandbox.go:1174] Control socket path: "/var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/runsc-state-c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab/runsc-c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab.sock"
+I1026 12:14:03.538542    2971 sandbox.go:1243] Sandbox will be started in new mount, IPC and UTS namespaces
+I1026 12:14:03.538563    2971 sandbox.go:1268] Sandbox will be started in new network namespace
+I1026 12:14:03.538665    2971 sandbox.go:1342] Sandbox will be started in new user namespace
+I1026 12:14:03.542347    2971 sandbox.go:1547] Sandbox started, PID: 2984
+I1026 12:14:03.542510    2971 gvisorbinaries.go:347] sidecar "runsc-fd-parking": executing /opt/ocean-c23-runtime/release-20261019.0/gvisor-bin/runsc-fd-parking ([])
+I1026 12:14:03.542835       1 cli.go:275] **************** gVisor ****************
+I1026 12:14:03.542882       1 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 1, PPID 0, UID 0, GID 0
+I1026 12:14:03.542906       1 cli.go:278] Args: [runsc-gofer --debug=false --panic-log=/dev/stderr --overlay2=none --host-fifo=none --network=none --gofer-network-namespace=new --ignore-cgroups=false --character-device-policy=emulated-only --net-raw=false --rootless=false --oci-seccomp=true --debug-log=/dev/stderr --host-uds=none --sidecar-release-enforcement-policy=ALWAYS --allow-flag-override=false --fdlimit=256 --directfs=false --gvisor-marker-file=true --root=/var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/runsc-state-c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab --platform=systrap --debug-log-fd=3 gofer --bundle /var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab --gofer-mount-confs=lisafs:none,lisafs:none --spec-fd=4 --mounts-fd=5 --rpc-fd=6 --io-fds=7 --io-fds=8 --sync-chroot-fd=9 c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab]
+I1026 12:14:03.542964       1 config.go:631] Platform: systrap
+I1026 12:14:03.542975       1 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/runsc-state-c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab
+I1026 12:14:03.542988       1 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1026 12:14:03.543002       1 config.go:634] Network: none
+I1026 12:14:03.543013       1 config.go:635] UseCPUNums: false
+W1026 12:14:03.543023       1 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1026 12:14:03.543035       1 cli.go:287] **************** gVisor ****************
+I1026 12:14:03.545020    2971 sandbox.go:1601] FD parking sidecar started, PID: 2985
+I1026 12:14:03.545042       1 gofer_mount.go:395] Mounting src: "/var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab/inputs", dst: "/proc/fs/root/inputs", flags: 0x500f, idMapped: false
+I1026 12:14:03.545176       1 gofer_mount.go:267] Remounting root as readonly: "/proc/fs/root"
+I1026 12:14:03.551843       1 caps_unsafe.go:163] Capabilities applied to all threads: bounding=0x4001f effective=0x4001f permitted=0x4001f inheritable=0x4001f ambient=0x4001f
+I1026 12:14:03.551900       1 gofer.go:355] Process chroot'd to "/root"
+I1026 12:14:03.552368       1 gofer.go:406] Serving "/" mapped to "/root" on FD 7 (ro: true)
+I1026 12:14:03.552427       1 gofer.go:437] Serving "/inputs" mapped on FD 8 (ro: true)
+I1026 12:14:03.554968       1 cli.go:275] **************** gVisor ****************
+I1026 12:14:03.555044       1 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 1, PPID 0, UID 65534, GID 65534
+I1026 12:14:03.555064       1 cli.go:278] Args: [runsc-sandbox --debug=false --debug-log=/dev/stderr --network=none --sidecar-release-enforcement-policy=ALWAYS --directfs=false --gvisor-marker-file=true --panic-log=/dev/stderr --host-uds=none --host-fifo=none --net-raw=false --rootless=false --allow-flag-override=false --overlay2=none --gofer-network-namespace=new --platform=systrap --fdlimit=256 --root=/var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/runsc-state-c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab --character-device-policy=emulated-only --oci-seccomp=true --ignore-cgroups=false --debug-log-fd=4 --panic-log-fd=5 boot --bundle=/var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab --gofer-mount-confs=lisafs:none,lisafs:none --setup-root --total-host-memory 16762122240 --cpu-num 2 --cpu-quota 200000 --cpu-period 100000 --total-memory 4294967296 --io-fds=6 --io-fds=7 --dev-io-fd=-1 --mounts-fd=8 --start-sync-fd=9 --pin-ring-fd=10 --controller-fd=11 --spec-fd=12 --proc-umounter-fd=13 --stdio-fds=14 --stdio-fds=15 --stdio-fds=16 c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab]
+I1026 12:14:03.555132       1 config.go:631] Platform: systrap
+I1026 12:14:03.555141       1 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/runsc-state-c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab
+I1026 12:14:03.555157       1 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1026 12:14:03.555169       1 config.go:634] Network: none
+I1026 12:14:03.555179       1 config.go:635] UseCPUNums: false
+W1026 12:14:03.555187       1 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1026 12:14:03.555196       1 cli.go:287] **************** gVisor ****************
+I1026 12:14:03.555222       1 gvisorbinaries.go:172] [Sidecar release match check] Build label "release-20261019.0" matches the expected release in sidecar "gvisor_sentry".
+I1026 12:14:03.555236       1 timing.go:439] Timer for runsc boot: Starting.
+I1026 12:14:03.556376       1 boot.go:393] Setting product_name: "Google Compute Engine"
+I1026 12:14:03.556595       1 boot.go:404] Setting host-thp-shmem-enabled: "never"
+I1026 12:14:03.556688       1 boot.go:414] Setting host-thp-defrag: "madvise"
+I1026 12:14:03.558275       1 chroot.go:142] Setting up sandbox chroot in "/tmp"
+I1026 12:14:03.558601       1 chroot.go:41] Mounting "proc" at "/tmp/proc/sandbox-proc"
+I1026 12:14:03.560282       1 caps.go:70] Capabilities applied: { effective="empty" permitted="empty" inheritable="empty" bounding="empty" }
+I1026 12:14:03.560301       1 process.go:75] Execve "/proc/self/exe" again, bye!
+I1026 12:14:03.569078       1 cli.go:275] **************** gVisor ****************
+I1026 12:14:03.569120       1 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 1, PPID 0, UID 65534, GID 65534
+I1026 12:14:03.569133       1 cli.go:278] Args: [runsc-sandbox --debug=false --debug-log=/dev/stderr --network=none --sidecar-release-enforcement-policy=ALWAYS --directfs=false --gvisor-marker-file=true --panic-log=/dev/stderr --host-uds=none --host-fifo=none --net-raw=false --rootless=false --allow-flag-override=false --overlay2=none --gofer-network-namespace=new --platform=systrap --fdlimit=256 --root=/var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/runsc-state-c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab --character-device-policy=emulated-only --oci-seccomp=true --ignore-cgroups=false --debug-log-fd=4 --panic-log-fd=5 boot --bundle=/var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab --controller-fd=11 --cpu-num=2 --cpu-period=100000 --cpu-quota=200000 --dev-io-fd=-1 --gofer-mount-confs=lisafs:none,lisafs:none --io-fds=6,7 --mounts-fd=8 --pin-ring-fd=10 --proc-umounter-fd=-1 --setup-root=false --spec-fd=12 --start-sync-fd=9 --stdio-fds=14,15,16 --total-host-memory=16762122240 --total-memory=4294967296 --product-name=Google Compute Engine --host-thp-shmem-enabled=never --host-thp-defrag=madvise --proc-mount-sync-fd=22 c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab]
+I1026 12:14:03.569183       1 config.go:631] Platform: systrap
+I1026 12:14:03.569190       1 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/recovery-lost-create-ack-20261026-01/worker/runsc-state-c23-ef9f7d49665fbf04b8953d99d7e53739b6ba0a073c68ceab
+I1026 12:14:03.569195       1 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1026 12:14:03.569202       1 config.go:634] Network: none
+I1026 12:14:03.569209       1 config.go:635] UseCPUNums: false
+W1026 12:14:03.569215       1 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1026 12:14:03.569221       1 cli.go:287] **************** gVisor ****************
+I1026 12:14:03.569236       1 gvisorbinaries.go:172] [Sidecar release match check] Build label "release-20261019.0" matches the expected release in sidecar "gvisor_sentry".
+I1026 12:14:03.569245       1 timing.go:439] Timer for runsc boot: Starting.
+I1026 12:14:03.577576       1 loader.go:710] CPUs: 2
+I1026 12:14:03.577687       1 loader.go:762] Remapped stdio FDs to [253, 255] in 21.241µs
+I1026 12:14:03.577723       1 loader.go:1202] Platform: systrap
+I1026 12:14:03.586831       1 loader.go:1249] Disabling application huge pages: host shmem_enabled is "never"
+I1026 12:14:03.587674       1 loader.go:870] Setting total memory to 4.00 GB
+I1026 12:14:03.588081       1 loader.go:944] Packet logging disabled
+I1026 12:14:03.588124       1 watchdog.go:195] Watchdog waiting 30s for startup
+W1026 12:14:03.588194       1 limits.go:104] Host limit is lower than recommended, resource: "RLIMIT_NOFILE", host: 256, recommended: 1048576
+I1026 12:14:03.588213       1 limits.go:107] Setting limit from host, resource: "RLIMIT_NOFILE" {soft: 256, hard: 256}
+I1026 12:14:03.590067    2971 cli.go:316] Exiting with status: 0
