@@ -1,6 +1,10 @@
 # OCEAN v1.0.0 Planning Hub
 
-**P00 and C01–C22 are Complete with hosted delivery; C23 is In progress; C24–C27 are Not started.**
+**P00 and C01–C23 are Complete with hosted delivery; C24–C27 are Not started.**
+C24 development preparation is ready for the proposed `beta.oceaninfobio.com`
+site; see [readiness and plan](C24_READINESS_AUDIT_2026-10-28.md). DNS, hosting
+and deployment have not been configured. Current implementation status always
+comes from [STATUS.md](STATUS.md); dated checkpoints below remain historical.
 This folder is the portable source of truth for the accepted architecture,
 component prompts and resumable progress. Start here in a fresh chat.
 

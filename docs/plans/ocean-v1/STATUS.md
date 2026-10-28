@@ -31,6 +31,17 @@ roles cleared after verified export. No legacy/real-data/scientific-approval or
 production-dispatch claim. C24 is ready for its configuration-only prerequisite
 audit and is Not started. Scheduling stays PAUSED. [Handoff](handoffs/C23.md).
 
+C24 preparation (2026-10-28 JST): the user proposed
+`https://beta.oceaninfobio.com` for the independent overhaul site. The read-only
+readiness audit reconciles 169 C20 source entries (19 intentional accepted
+supersessions) and 236 C23 worker entries, with 370 distinct current source paths
+matching accepted `f6f823b`. All 5,006 prior tracked evidence files and 42 unrelated
+paths are preserved. [Readiness and development plan](C24_READINESS_AUDIT_2026-10-28.md)
+is ready; implementation remains Not started. Independent session/OAuth/origin
+checks, explicit v1 resources and offline renderer/runbook are planned. Real
+auth hosting, Cloud Tasks adapter and live beta gates remain explicit. No DNS,
+GCP or application-runtime change occurred. [C24 handoff](handoffs/C24.md).
+
 Original local implementation checkpoint: **C23 — Isolated Python execution preparation**. All393 scoped cases pass (292 new and101 existing regressions), Ruff passes, all17 new source/recipe/test files remain steady and946 prior source/1334 prior evidence files are preserved. Strict C22 byte/hash verification, non-executing supervisor, safe staging/output validation and fixed profile/offline image preparation are implemented. C23 remains In progress: actual runtime containment, durable integration, safe extraction and numerical acceptance remain pending. [Handoff](handoffs/C23.md), [original local checkpoint](evidence/C23/checkpoint.json).
 
 **C23 preparation hosted checks now pass:** source `b8e929e`, run39578854643,
@@ -120,7 +131,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C21 — Evidence and answer synthesis](components/C21-evidence-synthesis.md) | Complete | Source567684b exact-source hosted delivery passes; original receipts and workflow-only amendment retained | Hosted5031 backend/254 gated skips/86.48%;254 actual PG;930 v1/132 legacy, builds/typechecks/audits/generated contracts and backup/restore pass | [C21](handoffs/C21.md) |
 | [C22 — Experiment proposals and frozen exports](components/C22-experiment-proposals.md) | Complete | Source66b4106 exact-source hosted CI39539257759 and delivery receipt pass |5273 backend/275 gated skips/86.14%;148 actual PG, independent reviews, strict nine-action HTTP; original receipts/qualifications retained | [C22](handoffs/C22.md) |
 | [C23 — Isolated Python execution](components/C23-python-sandbox.md) | Complete | Both actual retained Linux cases and raw audit pass; f6f823b hosted green: 6481 backend, 315 PostgreSQL, 930 v1, 132 legacy | Owner suspension denies publication; physical proofs release capacity; resources stopped. Unsupported crash/reboot/queued cases retain capacity; scientific approval and production dispatch remain separate | [C23](handoffs/C23.md) |
-| [C24 — Isolated GCP site and worker configuration](components/C24-gcp-worker-configuration.md) | Not started | None | Not run | Not created |
+| [C24 — Isolated GCP site and worker configuration](components/C24-gcp-worker-configuration.md) | Not started | Beta hostname proposed; development plan and prerequisite source audit prepared | 370 source paths reconciled; renderer/application/live acceptance not run | [C24](handoffs/C24.md) |
 | [C25 — Experimental Workspace interface](components/C25-experimental-workspace.md) | Not started | None | Not run | Not created |
 | [C26 — System acceptance and evaluation](components/C26-system-acceptance.md) | Not started | None | Not run | Not created |
 | [C27 — Release preparation and rollback](components/C27-release-readiness.md) | Not started | None | Not run | Not created |

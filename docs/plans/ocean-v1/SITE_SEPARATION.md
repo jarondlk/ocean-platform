@@ -1,6 +1,6 @@
 # Separate OCEAN v1 site
 
-Updated: 2026-10-13 JST. Accepted direction: a second site with fully isolated
+Updated: 2026-10-28 JST. Accepted direction: a second site with fully isolated
 infrastructure; explicitly copy approved data when needed. This document is a
 plan, not authorization to provision, copy production data or deploy.
 
@@ -11,7 +11,17 @@ process. OCEAN v1 is developed on the overhaul branch and will have its own
 deployment. Do not switch the existing site's default experience, redirect its
 traffic or migrate its database as part of this plan. The repository records
 the legacy origin as oceaninfobio.com; verify the actual origin before any future
-hosting action. The new hostname has not been selected.
+hosting action. On 2026-10-28, the user proposed `beta.oceaninfobio.com` for the
+overhaul site. Use `https://beta.oceaninfobio.com` as the working v1 origin while
+preparing C24. DNS ownership/records, TLS and hosting are not yet verified or
+configured. This proposal does not change the main site's origin or traffic.
+See [C24 readiness and development plan](C24_READINESS_AUDIT_2026-10-28.md).
+
+Keep beta login and sessions independent even though both hosts share a parent
+domain. Require host-only v1 cookies, independent OAuth/signing secrets, exact
+origin/CSRF validation and a fresh browser isolation check before launch. Do not
+scope cookies to `.oceaninfobio.com` or allow wildcard subdomain CORS. Current
+live legacy cookie scope has not been inspected in this preparation.
 
 Use a separate GCP project as the planned resource boundary for v1. It may remain
 under the same organization/billing administration, but receives independent
@@ -108,7 +118,11 @@ targets cannot accidentally resolve to legacy resources. Exercise failed v1
 startup/rollback without a production fallback. Local checks do not prove live
 IAM/network isolation; record the live gate separately.
 
-Later operator inputs: v1 project/region and budget, hostname, OAuth enrollment,
+Later operator inputs: v1 project/region and budget, confirmation of the proposed
+beta hostname and DNS control, OAuth enrollment,
 data-transfer scope/authority, backup/retention policy and withdrawal workflow.
 Choose these before provisioning or real data import. None is needed to review
-the synthetic local UI. No cloud resources or data copies have been created.
+the synthetic local UI or offline C24 configuration work. The separately
+authorized C23 synthetic test worker has completed acceptance and was stopped;
+it is not a whole-site beta deployment or a source of full-site defaults. No
+real-data copies or beta site resources were created by this plan.

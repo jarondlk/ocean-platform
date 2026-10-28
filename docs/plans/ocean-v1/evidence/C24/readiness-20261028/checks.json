@@ -1,0 +1,30 @@
+{
+  "application_tests": "not run; preparation only",
+  "artifact_sha256": {
+    "audit.py": "18d35899befc8e144ee74d6a28472b1d14ddc7692861530ce40f5b83de94f316",
+    "baseline.json": "d430949b326dd29237398149e5eee41ca7b05d73532fede6c79cfb2acf221899",
+    "verification.json": "b2a651ba681189ceb40ce1a45e2a90332ae069b2763e6fd37b7fb74a9d417d78"
+  },
+  "checks": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "docs/plans/ocean-v1/evidence/C24/readiness-20261028/audit.py",
+        "--verify-only"
+      ],
+      "exit_code": 0,
+      "name": "repeat-audit"
+    },
+    {
+      "command": [
+        ".venv/bin/ruff",
+        "check",
+        "docs/plans/ocean-v1/evidence/C24/readiness-20261028/audit.py"
+      ],
+      "exit_code": 0,
+      "name": "audit-lint"
+    }
+  ],
+  "cloud_and_DNS_operations": "none",
+  "version": "c24-planning-checks-v1"
+}

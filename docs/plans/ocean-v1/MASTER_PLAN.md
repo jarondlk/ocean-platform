@@ -271,6 +271,11 @@ affects v1 only and preserves its investigations/evidence. The legacy deployment
 main-domain traffic, database and storage remain untouched. C24 prepares isolated
 site/worker configuration; actual provisioning and launch require later authorization.
 
+On 2026-10-28 the user proposed `beta.oceaninfobio.com` as the working hostname
+for this separate site. C24 preparation binds the proposed HTTPS origin with
+independent sessions/OAuth and explicit resource targets; DNS/TLS/hosting are
+still unconfigured. See [the readiness plan](C24_READINESS_AUDIT_2026-10-28.md).
+
 P00 acceptance requires locally working journeys and recorded user review, not a
 claim of backend capability. C26 separately verifies real-service integration,
 full infrastructure separation and synthetic approved-data transfer contracts.

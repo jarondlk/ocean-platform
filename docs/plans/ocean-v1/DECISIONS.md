@@ -46,6 +46,7 @@ and identify affected components instead of silently drifting.
 | D36 | A second GCP site with fully isolated infrastructure: database, storage, credentials, queues and deployment targets. Copy approved data explicitly when needed; no live connection to legacy data. | User selected, 2026-10-13 |
 | D37 | Build and refine a synthetic local UI/UX prototype first (P00), then implement backend/integration components individually. | User selected, 2026-10-13 |
 | D38 | Prioritize understandable, forgiving UX: plain language, progressive disclosure, recoverable actions and repeated user review before backend integration. | User selected, 2026-10-13 |
+| D39 | Use `https://beta.oceaninfobio.com` as the proposed working origin for the separate overhaul site. Prepare C24 configuration with independent sessions and resources; DNS/TLS/hosting are not yet configured or verified. | User proposal and preparation request, 2026-10-28 |
 
 ## Changes
 
@@ -641,3 +642,22 @@ Ruff and shell syntax with independent reviews; earlier363/79 receipts remain
 immutable and are superseded by mount-reconciliation/numerical-pin amendments.
 Only trusted offline image preparation is running at this point; actual runtime
 gates and C22 authority/release integration remain required. The schedule stays PAUSED.
+
+### C23 completion and proposed beta origin — 2026-10-28 JST
+
+C23 subsequently completed actual isolated retained Linux execution, physical
+termination signing and independently verified capacity release. Accepted source
+`f6f823b` passes all four hosted jobs in run `40652395233`; the completion/evidence
+checkpoint `838b424` is pushed. [Completion](evidence/C23/completion-20261028.json)
+retains original receipts and unsupported recovery qualifications. Test resources
+were verified stopped; this is not a deployed v1 site.
+
+The user proposed `beta.oceaninfobio.com` and requested preparation for C24 dev.
+D39 records it as a working hostname, with no DNS/TLS/hosting verification or
+write implied. Keep the main site unchanged and use independent beta sessions,
+OAuth, services and mutable stores. C24 readiness reconciles current accepted
+C20/C23 source and receipts; its implementation remains Not started. The
+[development plan](C24_READINESS_AUDIT_2026-10-28.md) defines offline checkpoints
+and names missing production host/Cloud Tasks adapters and live acceptance gates.
+This affects C24 configuration and C25–C27 integration/release evidence. The
+scheduled continuation remains PAUSED.

@@ -109,5 +109,6 @@ ready to deploy**; that is not a v1 production acceptance claim.
 | D36 | SITE_SEPARATION, C09–C13, C17, C20, C24, C26, C27 |
 | D37 | P00, UI_UX_BRIEF, component dependencies, C08, C15, C16, C18, C25 |
 | D38 | P00, UI_UX_BRIEF, C15, C16, C18, C21, C25, C26 |
+| D39 | SITE_SEPARATION, C24, C25–C27; proposed beta origin, independent sessions and later live DNS/TLS/origin validation |
 
 No decision in this table is evidence that its implementation exists.

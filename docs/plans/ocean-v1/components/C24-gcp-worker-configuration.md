@@ -2,6 +2,13 @@
 
 **Status:** Not started. **Prerequisites:** C20, C23.
 
+Development preparation completed 2026-10-28 JST: C20/C23 accepted receipts and
+current source reconcile. The user proposed `https://beta.oceaninfobio.com` as
+the working v1 origin. [Readiness and implementation plan](../C24_READINESS_AUDIT_2026-10-28.md)
+records its independent session/origin boundary, checkpoints and pending live
+inputs. No application implementation, DNS change or beta deployment has begun.
+[Preparation handoff](../handoffs/C24.md).
+
 ## Revised delivery boundary
 
 Work on overhaul for the separate v1 system described in
@@ -32,6 +39,12 @@ legacy environment files or insert legacy resource identifiers as defaults.
 Document separate capacity, budget, backup/retention, deployment and rollback
 inputs. A missing v1 target fails closed. No v1 runtime identity receives legacy
 resource access; a later approved transfer uses a separate temporary identity.
+
+Bind the proposed beta hostname explicitly. Use independent OAuth credentials,
+host-only v1 sessions, exact-origin/CSRF checks and no parent-domain cookie or
+wildcard CORS scope. The static frontend preview and fake C20 queue are not a
+production host or Cloud Tasks adapter; preserve those runtime integration gates
+in configuration/runbooks rather than implying templates implement them.
 
 Offline acceptance must reject legacy targets and accidental shared sessions or
 mutable stores, and identify inherited IAM review and real network checks still
