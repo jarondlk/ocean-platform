@@ -1,0 +1,56 @@
+{
+  "actual_physical_acceptance": false,
+  "production_minimum_or_verifier_changed": false,
+  "results": [
+    {
+      "actual_sqlite_runtime": "3.53.4",
+      "check": "supported-runtime",
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_sqlite_gates.py",
+        "tests/test_experiment_sandbox_physical_termination.py",
+        "tests/test_experiment_sandbox_retained_context.py",
+        "tests/test_experiment_sandbox_retained_runner.py",
+        "tests/test_experiment_sandbox_retained_admission.py",
+        "tests/test_experiment_sandbox_journal.py::test_known_fixed_sqlite_release_gate",
+        "tests/test_experiment_sandbox_journal.py::test_unsafe_queried_sqlite_version_denied_before_creating_control_files",
+        "--basetemp=/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/c23-sqlite-gates-supported-runtime-uzik_hjk",
+        "-q",
+        "--tb=short"
+      ],
+      "elapsed_seconds": 45.383,
+      "fixture_gate_advertised_version": "3.53.4",
+      "returncode": 0,
+      "simulation_only": false
+    },
+    {
+      "actual_sqlite_runtime": "3.53.4",
+      "check": "simulated-ubuntu-old-runtime-gate",
+      "command": [
+        ".venv/bin/python",
+        "-c",
+        "import sqlite3,sys,pytest; sqlite3.sqlite_version_info=(3,45,1); sys.exit(pytest.main(['tests/test_experiment_sandbox_sqlite_gates.py', 'tests/test_experiment_sandbox_physical_termination.py', 'tests/test_experiment_sandbox_retained_context.py', 'tests/test_experiment_sandbox_retained_runner.py', 'tests/test_experiment_sandbox_retained_admission.py', 'tests/test_experiment_sandbox_journal.py::test_known_fixed_sqlite_release_gate', 'tests/test_experiment_sandbox_journal.py::test_unsafe_queried_sqlite_version_denied_before_creating_control_files', '--basetemp=/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/c23-sqlite-gates-simulated-ubuntu-old-runtime-gate-gqpnnb65', '-q', '--tb=short']))"
+      ],
+      "elapsed_seconds": 14.192,
+      "fixture_gate_advertised_version": "3.45.1",
+      "returncode": 0,
+      "simulation_only": true
+    },
+    {
+      "check": "ruff",
+      "command": [
+        ".venv/bin/ruff",
+        "check",
+        "tests/test_experiment_sandbox_physical_termination.py",
+        "tests/retained_admission_support.py",
+        "tests/integration/test_retained_admission_postgres.py",
+        "tests/test_experiment_sandbox_sqlite_gates.py"
+      ],
+      "returncode": 0
+    }
+  ],
+  "service_or_cloud_started": false,
+  "source_unchanged": true
+}

@@ -4,14 +4,16 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import sqlite3
 from types import SimpleNamespace
 
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+import pytest
 
 from orchestration.experiment_sandbox import physical_termination as physical
 from orchestration.experiment_sandbox.contracts import verify_execution_envelope
 from orchestration.experiment_sandbox.execution_store import C23ExecutionStore
-from orchestration.experiment_sandbox.journal import DurableExecutionJournal
+from orchestration.experiment_sandbox.journal import DurableExecutionJournal, _safe_sqlite_version
 from orchestration.experiment_sandbox.linux_runtime import LinuxExecutionAdapter
 from orchestration.experiment_sandbox.profile import rootfs_inventory_sha256
 from orchestration.experiment_sandbox.profile_execution import render_execution_profile
@@ -62,6 +64,8 @@ def source_policy(directory, *, environment, runtime, worker_id=HOST):
 
 def configured_native(retained,directory,monkeypatch):
     """Real approved C22/reservation/PG roles + inert profile/journal fixture."""
+    if not _safe_sqlite_version(sqlite3.sqlite_version_info):
+        pytest.skip('Actual retained-admission journal tests require SQLite with the WAL-reset fix')
     native=retained
     runtime=runtime_preparation()
     policy=source_policy(directory/'protected-source',environment=native.fixture.environment.model_dump(mode='json'),

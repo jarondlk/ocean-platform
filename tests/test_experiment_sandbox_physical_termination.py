@@ -10,6 +10,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import sqlite3
 import sys
 import time
 from types import ModuleType, SimpleNamespace
@@ -23,7 +24,7 @@ from orchestration.experiment_sandbox.contracts import SandboxError
 from orchestration.experiment_sandbox.execution_store import (
     C23ExecutionStore, ExecutionRolePolicy, ExecutionStoreConfig,
 )
-from orchestration.experiment_sandbox.journal import DurableExecutionJournal, DurableLease
+from orchestration.experiment_sandbox.journal import DurableExecutionJournal, DurableLease, _safe_sqlite_version
 from orchestration.experiment_sandbox.linux_runtime import LinuxExecutionAdapter
 from orchestration.experiment_sandbox.physical_termination import (
     HostTerminationObservation, LinuxTerminationIssuer, OriginalCgroupHandle, PhysicalIssuerConfig,
@@ -132,6 +133,8 @@ def _json(value):
 
 @pytest.fixture
 def physical(layout, tmp_path, monkeypatch):
+    if not _safe_sqlite_version(sqlite3.sqlite_version_info):
+        pytest.skip('Actual physical-observation tests require SQLite with the WAL-reset fix')
     envelope, options, _ = layout
     profile = render_execution_profile(envelope, **options)
     control = tmp_path / 'actual-journal'

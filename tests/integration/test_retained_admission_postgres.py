@@ -7,11 +7,13 @@ from contextlib import contextmanager
 import hashlib
 import json
 import os
+import sqlite3
 
 import pytest
 from sqlalchemy import text
 
 from orchestration.experiment_sandbox.contracts import SandboxError
+from orchestration.experiment_sandbox.journal import _safe_sqlite_version
 from orchestration.experiment_sandbox.proofs import canonical_packet_bytes, sign_termination_claims
 from orchestration.research_experiments import ResearchExperimentError
 from schema.experiment_execution import TerminationClaims
@@ -27,8 +29,10 @@ retained = reserve_tests.retained
 
 
 @pytest.fixture
-def case(retained, tmp_path, monkeypatch):
-    value = configured_native(retained, tmp_path, monkeypatch)
+def case(tmp_path, monkeypatch, request):
+    if not _safe_sqlite_version(sqlite3.sqlite_version_info):
+        pytest.skip('Actual retained-admission journal tests require SQLite with the WAL-reset fix')
+    value = configured_native(request.getfixturevalue('retained'), tmp_path, monkeypatch)
     try:
         yield value
     finally:

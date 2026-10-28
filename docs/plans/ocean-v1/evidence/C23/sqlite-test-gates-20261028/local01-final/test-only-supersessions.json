@@ -1,0 +1,20 @@
+{
+  "base_commit": "501c80b7e5ee07f0990539baea3d8243f71d184a",
+  "files": {
+    "tests/integration/test_retained_admission_postgres.py": {
+      "new_sha256": "e9b01530c35c2b4e351d391a7162317378048152dc49e02deed87425c09e9361",
+      "old_sha256": "ef62afeaae2c7776948eff01a98b1109b16982180ff1bd2bf4904dadfc548c7b"
+    },
+    "tests/retained_admission_support.py": {
+      "new_sha256": "af19bd92f948585af570fd18d20a62eea1d030a74208fdb30af121169c220580",
+      "old_sha256": "c6da7702635336f76f792258e733d4c1317df57ddc8528935aa03f7ec4052e2e"
+    },
+    "tests/test_experiment_sandbox_physical_termination.py": {
+      "new_sha256": "50051f543c0587ea372dc9d734f05ec55f3a7a544be092d9cb9d80f5e01ff0b6",
+      "old_sha256": "3b72ed66a7a1c1643c82c21b4161e3244c1d046105de1a877d557d62f4cfaeac"
+    }
+  },
+  "native_test_bodies_unchanged": true,
+  "new_file": "tests/test_experiment_sandbox_sqlite_gates.py",
+  "production_files_edited": false
+}

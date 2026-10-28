@@ -1,0 +1,10 @@
+{
+  "commit": "501c80b7e5ee07f0990539baea3d8243f71d184a",
+  "error": "sandbox_journal_sqlite_version",
+  "job_id": 122644463860,
+  "location": "tests/test_experiment_sandbox_physical_termination.py physical fixture constructs DurableExecutionJournal without existing supported-SQLite fixture gate",
+  "platform": "Ubuntu Python3.12 bundled older SQLite",
+  "production_refusal_expected": true,
+  "result": "2784 passed,451 skipped,then fixture error",
+  "source": "Coordinator-provided CI diagnosis; not independently downloaded in this test-only fix."
+}
