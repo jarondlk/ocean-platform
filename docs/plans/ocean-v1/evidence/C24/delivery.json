@@ -1,0 +1,91 @@
+{
+  "backend": {
+    "coverage_percent": 83.34,
+    "gated_skipped": 622,
+    "passed": 6601,
+    "pytest_seconds": 2742.76
+  },
+  "branch": "overhaul",
+  "cloud_DNS_OAuth_or_data_operations": "none",
+  "component": "C24",
+  "dispatch_enabled": false,
+  "frontends": {
+    "legacy-frontend": 132,
+    "v1-frontend": 930
+  },
+  "hosted_run": "https://github.com/jarondlk/ocean-platform/actions/runs/40663077852",
+  "independent_software_review_sha256": "e6f31f40ae6b4facf6f7478d94885581b960c45f374dd4f900f1ba53443ec317",
+  "live_gates": [
+    "whole_site_target_and_live_action_authorization",
+    "authenticated_v1_host_proxy_and_bootstrap",
+    "real_cloud_tasks_adapter_outbox_and_private_invocation",
+    "production_experiment_supervisor_health_and_drain",
+    "worker_boot_image_unique_id_and_disk_sourceImageId",
+    "DNS_TLS_Host_OAuth_cookie_and_cross_origin_validation",
+    "inherited_IAM_and_network_legacy_access_denials",
+    "two_simultaneous_sandboxes_and_measured_host_capacity",
+    "crash_reboot_uncertain_ACK_recovery_and_physical_proof_release",
+    "independent_backup_restore_retention_budget_and_alert_readbacks",
+    "C26_C27_integrated_acceptance_and_release_promotion"
+  ],
+  "local_cases": 160,
+  "log_metadata_sha256": {
+    "backend-log.json": "ddae6016170ef8abe5707eb603ce07bfe2e005a6a82f671670414d0c6463892b",
+    "legacy-frontend-log.json": "6d1f510d859e94ad485d72aba252619906d74d5f411b4fcc0f6664e6f688d857",
+    "postgres-log.json": "cdc59acb67b99d69d7bac622018a9329a7ec5b51da5f52af0f19c705a83ecf71",
+    "v1-frontend-log.json": "83e6ca990a7f4d29527a43264c428966217e3d97e02fb014ce8578064e6770c3"
+  },
+  "postgres": {
+    "actual_passed": 315,
+    "groups": [
+      82,
+      12,
+      12,
+      21,
+      60,
+      44,
+      23,
+      21,
+      40
+    ],
+    "qualification": "Journal host-capability skips remain explicit in raw log; backup/restore job step passes"
+  },
+  "predecessor_source370_preserved": true,
+  "provider_schema_validated": false,
+  "qualifications": [
+    "Native service/queue/worker body shapes and custom storage/IAM/network/supervisor policy contracts are configuration-only; no provider plan/apply or live access is attested.",
+    "Actual authenticated v1 hosting, Cloud Tasks/outbox adapter and production experiment supervisor remain unavailable gates.",
+    "Whole-site DNS/TLS/IAM/network/session/concurrency/recovery/backup/release evidence remains pending.",
+    "C23 original receipts and capacity-held unsupported queued/reboot/prepacket reconstruction cases retain their qualifications."
+  ],
+  "recorded_at": "2026-10-28T10:10:38.630601+00:00",
+  "rendered_manifest_sha256": "1a097d2ca748bae2270197098ebfa90e79c3fc4efb49ae1c2c6061b9837f0718",
+  "required_job_results": {
+    "Backend tests and security boundary": "success",
+    "Frontend typecheck and build": "success",
+    "OCEAN v1 prototype tests and build": "success",
+    "PostgreSQL migration and metadata integration": "success"
+  },
+  "scheduler": "PAUSED",
+  "source_commit": "eeec2e159e10ae3da509c478ff712a1e20c8e91e",
+  "source_files": {
+    "deploy/gcp-v1/ISOLATION.md": "d18d922813a88dd5883f3314e7e24c7932565d65628a06fd697fab17e64a6834",
+    "deploy/gcp-v1/OPERATIONS.md": "e4d1a251d06812d5ed41728d5332885d3e14ec4caa09921d0b8751feab07e80c",
+    "deploy/gcp-v1/README.md": "108710d2eaad94697ab593a38897d61fea26142105fe77c212caf4089e8dd56e",
+    "deploy/gcp-v1/examples/site.operator.pending.json": "d37a6c7929e92bd019e8bab822b3f4091a8432e6791206d9c60a1482c8aaa942",
+    "deploy/gcp-v1/examples/site.synthetic.json": "e73b29f879f83c56aafd8d43d0a13031c9913afa93f0aaf69a8141c41142b682",
+    "deploy/gcp-v1/site.schema.json": "34ca6b3089862ff8d89b3f06920f38c010fa795fe63d178f283f9e51a8629be1",
+    "deploy/gcp-v1/templates/controller.json": "6ff4df227a5da80784bbc01831ba4bc9d497ccc05fd8feb015e333a541c4a038",
+    "deploy/gcp-v1/templates/identity.json": "a39aec4a4e7ecc94d7703274358043b5c8f322a70e93f08826331f5256a3c4e4",
+    "deploy/gcp-v1/templates/queue.json": "32e6e3b44fc990dddca56e5f3820ed3a447a8926ceb2acfcd5b8374bdd5d36d1",
+    "deploy/gcp-v1/templates/serving.json": "21f36e7827bc0876522b1654efc25ed85a3cb2d1383aeaf5b5c45ef8182b8314",
+    "deploy/gcp-v1/templates/site-policy.json": "8201cb117ec1ba537a4ee6a31c00e2f525ab230cb8ced4f293d65bf598440df4",
+    "deploy/gcp-v1/templates/storage-database.json": "7fd73a78da8de0a011617d6a22878a680e0796ae770d4b31785e838c1a27ad40",
+    "deploy/gcp-v1/templates/worker.json": "0af4c0a74993374322b72310867727d7406208260885088aea0908d728fa9bb6",
+    "scripts/render_gcp_v1.py": "7c33abd77461e245113d8d8df48cf8457986ab2ca2289b075881851da50ffdf6",
+    "tests/test_render_gcp_v1.py": "a1fe3b10cc19e2184aadd824abff9f33a2067583b76d314fbd48f45540a05664"
+  },
+  "state": "Complete for offline configuration and operator preparation",
+  "unrelated_paths42_preserved": true,
+  "version": "c24-source-bound-delivery-v1"
+}

@@ -670,3 +670,15 @@ operator instructions on `overhaul`. No DNS, cloud provisioning, deployment,
 real-data or provider/live acceptance is inferred. The scheduler remains PAUSED.
 Local acceptance and required exact-source hosted delivery are recorded in
 [the C24 handoff](handoffs/C24.md); later components remain unselected here.
+
+### C24 configuration delivery — 2026-10-28 JST
+
+C24 source `eeec2e1` passes all four required jobs in hosted run `40663077852`:
+6,601 backend tests/83.34% coverage, 315 actual PostgreSQL cases, 930 v1 and
+132 legacy frontend tests, both builds/typechecks/audits, generated contracts
+and backup/restore. All 160 scoped local cases, Ruff, schema/example checks and
+independent software review pass. [Delivery](evidence/C24/delivery.json) records
+configuration-only completion and preserved source/evidence/unrelated work.
+No provider validation, DNS/cloud/OAuth/data operation or beta deployment occurred.
+Actual hosting/queue/supervisor implementations and live acceptance remain gates;
+dispatch disabled, scheduler PAUSED, C25 Not started.

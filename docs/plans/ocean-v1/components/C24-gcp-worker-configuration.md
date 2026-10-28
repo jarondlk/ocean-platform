@@ -1,15 +1,16 @@
 # C24 — Isolated GCP site and worker configuration
 
-**Status:** In progress; offline implementation and local acceptance pass,
-source checkpoint/hosted delivery pending. **Prerequisites:** C20, C23.
+**Status:** Complete for configuration/local validation and operator preparation.
+**Prerequisites:** C20, C23. Source `eeec2e1` passes all four required hosted
+jobs in run 40663077852: 6601 backend/83.34%, 315 actual PostgreSQL,
+930 v1/132 legacy frontend. All 160 scoped local cases, Ruff, schema/example
+checks and independent software review pass. See [delivery](../evidence/C24/delivery.json).
 
-Selected by the user on 2026-10-28 JST. Strict explicit inputs/schema, seven
-configuration templates, synthetic/pending operator examples, scoped permission
-and network/capacity/session contracts, isolation matrix and operator runbook
-are implemented in `deploy/gcp-v1/` with `scripts/render_gcp_v1.py`.
-160 scoped C24/legacy-renderer/security cases, Ruff, schema/example checks and
-prerequisite source reconciliation pass. No provider/live validation, DNS/cloud
-operation or deployment is claimed. All live gates and dispatch remain closed.
+Independent v1 schema/renderer/templates, resource/session/network/material/
+capacity/identity contracts, isolation matrix and operator runbook are delivered.
+All provider/live/DNS/TLS/hosting/queue/supervisor/IAM/network/recovery/backup and
+release gates remain explicit; dispatch is disabled and no beta deployment is
+claimed. The previous preparation record below is historical.
 
 Development preparation completed 2026-10-28 JST: C20/C23 accepted receipts and
 current source reconcile. The user proposed `https://beta.oceaninfobio.com` as
