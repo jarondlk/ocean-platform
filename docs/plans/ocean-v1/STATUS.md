@@ -56,6 +56,16 @@ Cloud Tasks/outbox and supervisor implementations plus all live acceptance gates
 remain pending. Dispatch disabled; scheduler PAUSED. C25 Not started.
 [Configuration](../../../deploy/gcp-v1/README.md), [handoff](handoffs/C24.md).
 
+C25 readiness (2026-10-28 JST): ready to begin local proposal review/approval
+work; implementation remains Not started. P00/C18/C22/C23/C24 receipts reconcile
+335 entries / 322 distinct current paths with accepted source `eeec2e1`; 42
+unrelated paths remain unchanged. Fresh baseline passes 234 backend/930 frontend
+cases, typecheck/build and audit Ruff. Current C22 public semantics remain
+non-executing with no cancel/execution-result/artifact API; a bounded C22/C23
+public-contract amendment is required before later C25 service parity. Live
+hosting/queue/supervisor and deployment gates stay separate and closed.
+[Audit](C25_READINESS_AUDIT_2026-10-28.md), [handoff](handoffs/C25.md).
+
 Original local implementation checkpoint: **C23 — Isolated Python execution preparation**. All393 scoped cases pass (292 new and101 existing regressions), Ruff passes, all17 new source/recipe/test files remain steady and946 prior source/1334 prior evidence files are preserved. Strict C22 byte/hash verification, non-executing supervisor, safe staging/output validation and fixed profile/offline image preparation are implemented. C23 remains In progress: actual runtime containment, durable integration, safe extraction and numerical acceptance remain pending. [Handoff](handoffs/C23.md), [original local checkpoint](evidence/C23/checkpoint.json).
 
 **C23 preparation hosted checks now pass:** source `b8e929e`, run39578854643,
@@ -146,7 +156,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C22 — Experiment proposals and frozen exports](components/C22-experiment-proposals.md) | Complete | Source66b4106 exact-source hosted CI39539257759 and delivery receipt pass |5273 backend/275 gated skips/86.14%;148 actual PG, independent reviews, strict nine-action HTTP; original receipts/qualifications retained | [C22](handoffs/C22.md) |
 | [C23 — Isolated Python execution](components/C23-python-sandbox.md) | Complete | Both actual retained Linux cases and raw audit pass; f6f823b hosted green: 6481 backend, 315 PostgreSQL, 930 v1, 132 legacy | Owner suspension denies publication; physical proofs release capacity; resources stopped. Unsupported crash/reboot/queued cases retain capacity; scientific approval and production dispatch remain separate | [C23](handoffs/C23.md) |
 | [C24 — Isolated GCP site and worker configuration](components/C24-gcp-worker-configuration.md) | Complete | Independent offline schema/renderer/templates, isolation matrix and operator runbook | 160 scoped local cases; eeec2e1 all four hosted jobs pass; provider/live deployment gates remain closed | [C24](handoffs/C24.md) |
-| [C25 — Experimental Workspace interface](components/C25-experimental-workspace.md) | Not started | None | Not run | Not created |
+| [C25 — Experimental Workspace interface](components/C25-experimental-workspace.md) | Not started | Ready for local review/approval checkpoint; later execution/results public contract amendment required | 335 receipt entries/322 current paths reconciled; 234 backend, 930 frontend, typecheck/build pass | [C25](handoffs/C25.md) |
 | [C26 — System acceptance and evaluation](components/C26-system-acceptance.md) | Not started | None | Not run | Not created |
 | [C27 — Release preparation and rollback](components/C27-release-readiness.md) | Not started | None | Not run | Not created |
 

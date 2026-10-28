@@ -2,6 +2,15 @@
 
 **Status:** Not started. **Prerequisites:** P00, C18, C22, C23, C24.
 
+Readiness audited 2026-10-28 JST: **ready to begin the local proposal-review and
+approval checkpoint**. All five prerequisite receipts/current source reconcile;
+234 focused backend and 930 frontend baseline cases plus typecheck/build pass.
+The C22 public contract explicitly reports non-execution and has no cancellation,
+execution/result/artifact retrieval API. A bounded C22/C23 public-contract amendment
+is required before later checkpoints claim actual service parity; fixture UI
+does not satisfy that gate. [Readiness audit](../C25_READINESS_AUDIT_2026-10-28.md),
+[handoff](../handoffs/C25.md). C25 implementation has not been selected here.
+
 ## Revised delivery boundary
 
 Work on overhaul for the separate v1 system described in

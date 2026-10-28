@@ -3,6 +3,10 @@
 **P00 and C01–C24 are Complete within their documented boundaries with hosted delivery; C25–C27 are Not started.**
 C24 is delivered for offline configuration and operator preparation; provider/live
 beta deployment gates remain pending. See [C24 handoff](handoffs/C24.md).
+C25 readiness passes for starting local proposal review/approval work. Later
+execution/result service acceptance needs the explicit public-contract amendment
+identified in [the readiness audit](C25_READINESS_AUDIT_2026-10-28.md).
+C25 remains Not started.
 C24 development preparation is ready for the proposed `beta.oceaninfobio.com`
 site; see [readiness and plan](C24_READINESS_AUDIT_2026-10-28.md). DNS, hosting
 and deployment have not been configured. Current implementation status always

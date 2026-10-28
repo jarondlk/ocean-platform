@@ -1,0 +1,15 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_research_experiment_contracts.py",
+    "tests/test_research_experiment_api.py",
+    "tests/test_research_experiment_security.py",
+    "tests/test_research_experiments.py",
+    "tests/test_experiment_sandbox_operator_inspection.py",
+    "-q",
+    "--tb=short"
+  ],
+  "exit_code": 0
+}

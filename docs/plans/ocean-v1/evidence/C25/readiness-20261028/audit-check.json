@@ -1,0 +1,12 @@
+{
+  "audit_sha256": "d439de08c353ea3764054d6abb2f378ee1873c6ef79697ca7fec82683fb60774",
+  "command": [
+    "PYTHONPATH=.",
+    ".venv/bin/python",
+    "docs/plans/ocean-v1/evidence/C25/readiness-20261028/audit.py",
+    "--verify-only"
+  ],
+  "exit_code": 0,
+  "original_verification_sha256": "43155097910224b75b4bf3fae7987977d76a11b19cc7523302e3f90b06081816",
+  "version": "c25-readiness-repeat-verification-v1"
+}

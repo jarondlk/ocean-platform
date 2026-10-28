@@ -682,3 +682,18 @@ configuration-only completion and preserved source/evidence/unrelated work.
 No provider validation, DNS/cloud/OAuth/data operation or beta deployment occurred.
 Actual hosting/queue/supervisor implementations and live acceptance remain gates;
 dispatch disabled, scheduler PAUSED, C25 Not started.
+
+### C25 readiness and public-contract dependency — 2026-10-28 JST
+
+The user requested C25 readiness, not implementation. All five formal
+prerequisites are delivered and 335 source entries/322 current paths reconcile.
+Fresh 234 backend/930 frontend tests, typecheck/build and audit Ruff pass.
+C25 can start local proposal review/approval work. Its later real-service
+execution/cancellation/results/artifact acceptance needs a bounded C22/C23 public
+contract amendment; existing research-experiments-v1 requires non-execution and
+has no such public actions. Preserve its version/authority semantics. The
+[readiness report](C25_READINESS_AUDIT_2026-10-28.md) names the gap and next action.
+Actual beta hosting, Cloud Tasks and production supervisor integration remains
+a separate proposed checkpoint before C26 live acceptance. No deployment or
+new integration implementation is selected here. C25 stays Not started;
+C24 completion remains configuration-only and the scheduler stays PAUSED.
