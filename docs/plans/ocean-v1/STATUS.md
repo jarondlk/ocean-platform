@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-10-28 JST. **P00 and C01–C22 are Complete with source-bound hosted delivery; C23 is In progress; C24–C27 are Not started.**
+Updated: 2026-10-28 JST. **P00 and C01–C23 are Complete with source-bound hosted delivery; C24–C27 are Not started.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -8,25 +8,28 @@ C02 was explicitly selected on 2026-10-14 JST and passed its software/synthetic
 checks. C03 passed its local transaction-ordering and actual disposable PostgreSQL
 acceptance. C04 now passes concurrent responsiveness, worker-lifetime, security
 and cancellation acceptance. C05 passes embedding isolation, metagenome fidelity
-and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11 passes frozen SST product/coverage acceptance; C12 passes frozen canonical eDNA adapter acceptance; C13 passes scientific catalogue acceptance; C14 passes authenticated catalogue service acceptance; C15 passes local application-shell acceptance; C16 passes local catalogue-browser acceptance; C17 passes local investigation-persistence acceptance; C18 passes local interface acceptance and hosted delivery; C19 passes local controller acceptance and hosted delivery; C20 passes amended local acceptance and hosted delivery; C21 passes local acceptance and exact-source hosted delivery; C22 passes local acceptance and exact-source hosted delivery; C23 is In progress; C24–C27 remain Not started.
+and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11 passes frozen SST product/coverage acceptance; C12 passes frozen canonical eDNA adapter acceptance; C13 passes scientific catalogue acceptance; C14 passes authenticated catalogue service acceptance; C15 passes local application-shell acceptance; C16 passes local catalogue-browser acceptance; C17 passes local investigation-persistence acceptance; C18 passes local interface acceptance and hosted delivery; C19 passes local controller acceptance and hosted delivery; C20 passes amended local acceptance and hosted delivery; C21 passes local acceptance and exact-source hosted delivery; C22 passes local acceptance and exact-source hosted delivery; C23 passes actual retained Linux/signature/release acceptance and exact-source hosted delivery; C24–C27 remain Not started.
 P00 and C01–C13 local work is authorized; the user also authorizes subsequent CXX local implementation after each readiness audit passes.
 See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md), [C08](handoffs/C08.md), [C09](handoffs/C09.md) and [C10](handoffs/C10.md) handoffs for current evidence.
 
-Current C23 checkpoint (Oct28 JST): both actual retained synthetic C22 approval
--> reservation -> Linux scientific execution -> physical signed termination ->
-independent proof-backed release cases PASS. Actual post-terminal owner
-suspension denies publication while cleanup/release succeed. All167 exported
-worker files and independent DB snapshots pass raw chain/signature/material/
-output/ledger audit; numeric pair agrees at1e-12 and preserves exact int64.
-[Final raw audit](evidence/C23/retained-final-audit-20261028/final-receipt.json).
-VM is verified TERMINATED; private PostgreSQL schemas/roles cleared and servers
-stopped with privileged process/endpoint checks; no reverse tunnel remains.
-Source501c80b and test-only SQLite-capability repairf6f823b are pushed; all236
-actual worker source pins are unchanged. Corrected hosted40652395233 has both
-frontends green, with backend/PostgreSQL pending. C23 remains In progress solely
-for final hosted delivery and completion metadata/checkpoint. C24 has not started,
-scientific approval is unverified and scheduling stays PAUSED. [Handoff](handoffs/C23.md).
+Current C23 delivery (Oct28 JST): **Complete.** Both actual retained synthetic
+C22 approval -> reservation -> Linux scientific execution -> physical termination
+signature -> independent capacity release cases pass. Actual owner suspension
+after terminal denies publication while cleanup/release succeed. All 167 raw
+worker members and independent DB snapshots pass full chain/wrapper/signature/
+material/output/ledger audit; numeric pair agrees at 1e-12 and preserves int64.
+[Completion](evidence/C23/completion-20261028.json). Accepted source f6f823b passes
+[all four hosted jobs 40652395233](https://github.com/jarondlk/ocean-platform/actions/runs/40652395233):
+6481 backend/622 gated skips/83.34%,315 actual PostgreSQL/16 expected
+journal-host skips,930 v1/132 legacy frontend, both builds/typechecks/audits,
+generated contracts and backup/restore. Full supported-runtime local/native and
+actual Linux receipts remain distinct from hosted SQLite-capability skips.
+All 236 actual worker source pins equal hosted/current source. VM, both private
+PostgreSQL clusters and reverse tunnel are verified stopped; synthetic schemas/
+roles cleared after verified export. No legacy/real-data/scientific-approval or
+production-dispatch claim. C24 is ready for its configuration-only prerequisite
+audit and is Not started. Scheduling stays PAUSED. [Handoff](handoffs/C23.md).
 
 Original local implementation checkpoint: **C23 — Isolated Python execution preparation**. All393 scoped cases pass (292 new and101 existing regressions), Ruff passes, all17 new source/recipe/test files remain steady and946 prior source/1334 prior evidence files are preserved. Strict C22 byte/hash verification, non-executing supervisor, safe staging/output validation and fixed profile/offline image preparation are implemented. C23 remains In progress: actual runtime containment, durable integration, safe extraction and numerical acceptance remain pending. [Handoff](handoffs/C23.md), [original local checkpoint](evidence/C23/checkpoint.json).
 
@@ -55,7 +58,7 @@ the preserved preexisting deployment-template edit are explicitly recorded.
 No actual containment or numerical acceptance
 is claimed, and C22 dispatch/release remains gated. Scheduled continuation stays PAUSED.
 
-Latest delivered implementation: **C22 — Experiment proposals and frozen exports**. Source66b4106 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39539257759) passes5264 backend/275 gated skips/86.70% coverage,275 actual PostgreSQL cases,930 v1/132 legacy tests, both builds/typechecks/audits, generated contracts and backup/restore. [Delivery receipt](evidence/C22/delivery.json). C23 readiness follows the pushed delivery metadata checkpoint.
+Previous delivered implementation: **C22 — Experiment proposals and frozen exports**. Source66b4106 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39539257759) passes5264 backend/275 gated skips/86.70% coverage,275 actual PostgreSQL cases,930 v1/132 legacy tests, both builds/typechecks/audits, generated contracts and backup/restore. [Delivery receipt](evidence/C22/delivery.json). C23 readiness followed that pushed delivery metadata checkpoint; its completed delivery is recorded above.
 
 Previous delivered implementation: **C19 — Agent exploration controller**. Source4618188 is committed/pushed; [exact-source hosted CI](https://github.com/jarondlk/ocean-platform/actions/runs/39154765984) passes:4561 backend/187 gated skips/86.08%,187 actual PostgreSQL,673 v1/132 legacy frontend, both builds/typechecks/audits, generated checks, migration/idempotence and isolated backup/restore. [Handoff](handoffs/C19.md), [contract](C19_AGENT_CONTROLLER_CONTRACT.md), [delivery receipt](evidence/C19/delivery.json). C20 readiness follows delivery.
 
@@ -116,7 +119,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C20 — Durable research execution](components/C20-durable-execution.md) | Complete | Original checkpoints plus pagination amendment; sourcea149239 hosted delivery passes | Local 4847 backend/231 skips/85.64%, 104 actual PG, 805 v1; hosted 4838 backend/231 actual PG/805 v1/132 legacy | [C20](handoffs/C20.md) |
 | [C21 — Evidence and answer synthesis](components/C21-evidence-synthesis.md) | Complete | Source567684b exact-source hosted delivery passes; original receipts and workflow-only amendment retained | Hosted5031 backend/254 gated skips/86.48%;254 actual PG;930 v1/132 legacy, builds/typechecks/audits/generated contracts and backup/restore pass | [C21](handoffs/C21.md) |
 | [C22 — Experiment proposals and frozen exports](components/C22-experiment-proposals.md) | Complete | Source66b4106 exact-source hosted CI39539257759 and delivery receipt pass |5273 backend/275 gated skips/86.14%;148 actual PG, independent reviews, strict nine-action HTTP; original receipts/qualifications retained | [C22](handoffs/C22.md) |
-| [C23 — Isolated Python execution](components/C23-python-sandbox.md) | In progress | 891 scoped local cases; actual science and same-boot recovery pass;00abd95 hosted green | Native4096/guest256 and28 native DB cases verified; retained C22 execution/proof/release bridge and new-source hosted delivery remain | [C23](handoffs/C23.md) |
+| [C23 — Isolated Python execution](components/C23-python-sandbox.md) | Complete | Both actual retained Linux cases and raw audit pass; f6f823b hosted green: 6481 backend, 315 PostgreSQL, 930 v1, 132 legacy | Owner suspension denies publication; physical proofs release capacity; resources stopped. Unsupported crash/reboot/queued cases retain capacity; scientific approval and production dispatch remain separate | [C23](handoffs/C23.md) |
 | [C24 — Isolated GCP site and worker configuration](components/C24-gcp-worker-configuration.md) | Not started | None | Not run | Not created |
 | [C25 — Experimental Workspace interface](components/C25-experimental-workspace.md) | Not started | None | Not run | Not created |
 | [C26 — System acceptance and evaluation](components/C26-system-acceptance.md) | Not started | None | Not run | Not created |

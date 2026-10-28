@@ -1,14 +1,17 @@
 # C23 — Isolated Python execution
 
-**Status:** In progress for final hosted delivery. Both actual retained C22
-approval/reserve/Linux execution/physical signing/independent capacity release
-cases pass; actual post-terminal owner suspension denies publication and still
-allows verified cleanup/release. All167 raw worker files plus independent DB
-snapshots pass canonical-chain, signature, material, output and ledger audit.
-VM/tunnel/private PostgreSQL shutdown is verified. Source501c80b and test-only
-repairf6f823b are pushed; all236 worker source pins remain unchanged. Corrected
-hosted40652395233 has both frontends green; backend/PostgreSQL pending.
-C24 is not started. **Prerequisites:** C22. [Audit](../evidence/C23/retained-final-audit-20261028/final-receipt.json).
+**Status:** Complete for isolated synthetic operator execution. Both actual
+retained C22 approval/reserve/Linux scientific execution/native signing/
+independent capacity release cases pass; post-terminal owner suspension denies
+publication while cleanup/release succeed. Raw chain/signature/material/output/
+ledger audit verifies 167 files and independent DB snapshots. VM/tunnel/private
+PostgreSQL shutdown is verified. Accepted source f6f823b passes all four required
+hosted jobs 40652395233: 6481 backend/83.34%,315 actual PostgreSQL,930 v1/132
+legacy frontend, both builds/typechecks/audits and backup/restore. All 236 worker
+source pins match actual and hosted code. Unsupported queued/reboot/prepacket
+reconstruction cases remain capacity-held; scientific approval and production
+dispatch are not inferred. **Prerequisites:** C22. C24 is Not started.
+[Completion](../evidence/C23/completion-20261028.json).
 
 ## Revised delivery boundary
 

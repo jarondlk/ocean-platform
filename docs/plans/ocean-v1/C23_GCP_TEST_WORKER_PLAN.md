@@ -15,6 +15,38 @@ restart of the same worker. Its new read-back STOP deadline is20:04 JST
 (`2026-10-25T11:04:14.331914Z`). No duplicate was provisioned. Original24 evidence
 files were exported before trusted offline amendment preparation resumed.
 
+## Final retained session — 2026-10-28 JST
+
+The same isolated worker ran both source08 retained synthetic C22 cases and
+passed actual execution/native signing/independent proof-backed release. Actual
+owner suspension after terminal denied publication with feature still enabled;
+cleanup/close/sign/record/release passed. Source archive e2213494… has 236 paths;
+image/rootfs/init and underlying runtime/profile retain their accepted identities.
+No new cloud project, database service, NAT, service account or deployment was
+created. All cloud commands explicitly selected ocean-v1-c23-20261024.
+
+Original run boot 5f6a30d5-9277-4fd9-bee5-0b4285c294a4 had actual automatic STOP
+at 07:13:13.837753UTC; both jobs completed before that limit. After automatic stop,
+a distinct export-only boot 71ffcde0-8252-48b7-92e6-64920add2b09 copied 167 immutable
+receipt files. No analysis, signing or release ran on that new boot; this is not
+VM-reboot recovery acceptance. Complete export hashes and independent DB/key/
+chain/ledger/output audit pass. The export-only worker was explicitly stopped
+and independently verified TERMINATED. No reverse tunnel remains.
+
+Two private Mac PostgreSQL18.3 SCRAM loopback clusters supplied separate
+synthetic application/controller/verifier roles. No bootstrap admin/GCP credential
+reached the worker; config/seed files were root-private, outside source/material/
+guest/export trees. Secret scans found no DSN or private seed in the export.
+After verified export, both schemas/roles were removed and actual postmasters
+stopped, with privileged status3, TCP refusal and absent socket/pid verified.
+The 50 GiB stopped software/image disk is retained for reproducibility. Corrected
+hosted CI 40652395233 passes all four required jobs; component completion is
+recorded in evidence/C23/completion-20261028.json. Scheduling
+stays PAUSED; no legacy, real-data or whole-site deployment action occurred.
+
+[Raw audit](evidence/C23/retained-final-audit-20261028/final-receipt.json),
+[session/shutdown records](evidence/C23/cloud-session-20261028-retained/worker-final-stopped.json).
+
 ## Current session — 2026-10-26 JST
 
 GCP access works without another sign-in. The worker was read back TERMINATED

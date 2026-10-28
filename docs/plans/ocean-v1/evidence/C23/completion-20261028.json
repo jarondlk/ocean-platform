@@ -1,0 +1,62 @@
+{
+  "VM": "TERMINATED",
+  "accepted_source_commit": "f6f823b5ee9a93d68a9498c4037bce82d3c44954",
+  "actual_retained_cases": {
+    "publication-revoked": {
+      "execution_id": "24529704-5b0b-5ee0-9296-5ed5ea5535d5",
+      "passed": true,
+      "proof_id": "eb0e75fd-6e9f-5402-b689-ff1e7f0a3ae5",
+      "release_id": "116aede9-5807-54d8-9b1d-684e328a4274"
+    },
+    "scientific": {
+      "execution_id": "80ea160e-fb7d-5fac-98be-2718b339f144",
+      "passed": true,
+      "proof_id": "9f97df9f-b306-5a35-9bee-fab3ea4b6154",
+      "release_id": "b078f9c6-6da9-50c7-88bc-9930699818a2"
+    }
+  },
+  "actual_run_source_commit": "501c80b7e5ee07f0990539baea3d8243f71d184a",
+  "actual_source_archive_sha256": "e2213494733a96e278b3733204277db2d25941f2558128dd715719a3c08d7bbe",
+  "automation": "PAUSED",
+  "branch": "overhaul",
+  "component": "C23",
+  "hosted_run": "https://github.com/jarondlk/ocean-platform/actions/runs/40652395233",
+  "legacy_deployment_or_data_mutation": false,
+  "original_evidence1334_preserved": true,
+  "production_dispatch": "disabled/unmounted",
+  "qualifications": [
+    "Original process-exhaustion Sentry panic remains failed; separately qualified host PID bound is not graceful128-task guest acceptance.",
+    "Raw control-frame bodies are intentionally unretained; digest/EOF/outcome, frozen decoder path and validated output bytes are audited without claiming an absent-body reparse.",
+    "C23 accepts isolated synthetic operator runtime; whole-site deployment, production dispatch, real-data and scientific approvals remain separate.",
+    "Stopped50GiB software/image disk retained for reproducibility; no worker/database/tunnel is running."
+  ],
+  "real_data_acquisition_or_transfer": false,
+  "receipt_sha256": {
+    "cloud-session-20261028-retained/database-final-cleanup-publication-revoked.json": "6ae06451a1cdaaec2dd8ac659b3d4192c5c38f7d6dfd3727711298abad8b2a4e",
+    "cloud-session-20261028-retained/database-final-cleanup-scientific.json": "0a6eac4739a16c0ab77f0ba81a385e8d24d4be72f1cbfef61f08bd7b1fb44ec4",
+    "cloud-session-20261028-retained/local-export-verification.json": "429fed332ed0e12ad99572da59306128adecd8093113440719c2740f7585b64b",
+    "cloud-session-20261028-retained/tunnel-final.json": "1cd17d9149d43f2833e7ef19b8d64b145ab85a94d49d7f6d3bc4d76adffd2194",
+    "cloud-session-20261028-retained/worker-final-stopped.json": "9fe03c70262c3bf1633751ba021121c07c87f31b59e43b1e46fb3e869cf7827b",
+    "operator-hosted-f6f823b/receipt.json": "9ff8af3ad95cbab3c2c468f622b7a0dc2f3d0428cc99f5fb60448638e1bed9ab",
+    "operator-independent-review-20261027/actual-native-science-regression-review.json": "622add948f4b744b69b0df5b4edfad50424f2c7194db84bd201411526cdcffea",
+    "operator-independent-review-20261027/retained-acceptance-harness-final-review.json": "4be56c8a330f4f9992bdfd0136d1bbd34c801b948b05c6a5f0532a57b69c8028",
+    "retained-final-audit-20261028/final-receipt.json": "1a1494fff0346b845e8d5e812e393b1f75e87ce53826cd2b4b1a51a1eaeea809",
+    "retained-final-audit-20261028/verify-only-source.json": "2449079375d630e0b90cec31d22f2ab87fd6dfe0a74bf50bb452171496246d4c"
+  },
+  "recorded_at": "2026-10-28T08:36:26.261205+00:00",
+  "remaining_capacity_held_limitations": [
+    "queued/pre-start cancellation",
+    "VM reboot/power loss",
+    "process loss before packet retention",
+    "terminal native observation reconstruction"
+  ],
+  "required_CI_complete": true,
+  "reverse_SSH_tunnels": "none",
+  "runtime_evidence_checkpoint": "8fdc8524c23d8397df9d5338e172fdd03ace8db8",
+  "scientific_approval": "not_independently_verified",
+  "source236_current_and_hosted_equal": true,
+  "status": "Complete",
+  "two_private_PostgreSQL_clusters": "schemas/roles cleared, stopped and physically verified",
+  "unrelated_paths42_preserved": true,
+  "version": "c23-component-completion-v1"
+}

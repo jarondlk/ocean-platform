@@ -2,6 +2,7 @@
 
 from pathlib import Path
 from datetime import datetime, timezone
+import argparse
 import hashlib
 import json
 import math
@@ -20,6 +21,13 @@ ROOT = Path(__file__).resolve().parents[6]
 BASE = ROOT / "docs/plans/ocean-v1/evidence/C23/cloud-session-20261028-retained"
 EXPORT = BASE / "actual-export01"
 OUT = Path(__file__).resolve().parent
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument(
+    "--verify-only",
+    action="store_true",
+    help="Check immutable receipts without creating or changing a receipt",
+)
+options = parser.parse_args()
 
 
 def raw(path):
@@ -584,9 +592,10 @@ receipt = {
     ],
     "qualification": "Read-only independent source/DB/canonical-chain/public-key/native/output cross-check; no signing, runtime, fabricated review or authority mutation. Prior containment/resource/science/recovery receipts remain separately qualified.",
 }
-with (OUT / "final-receipt.json").open("x") as stream:
-    json.dump(receipt, stream, indent=2, sort_keys=True)
-    stream.write("\n")
+if not options.verify_only:
+    with (OUT / "final-receipt.json").open("x") as stream:
+        json.dump(receipt, stream, indent=2, sort_keys=True)
+        stream.write("\n")
 print(
     json.dumps(
         {

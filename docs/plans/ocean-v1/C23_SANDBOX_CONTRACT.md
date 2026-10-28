@@ -1,6 +1,17 @@
 # C23 local sandbox preparation contract
 
-Version: `c23-sandbox-contract-v1`. This is the local implementation checkpoint
+Current component state,2026-10-28: **Complete** for isolated synthetic operator
+execution. Both actual retained approval/execution/physical-proof/release cases,
+owner-suspension denial, raw audit and shutdown pass. Accepted source f6f823b has
+all four hosted jobs green in40652395233 (6481 backend/83.34%,315 native PG,
+930 v1/132 legacy frontend). [Completion](evidence/C23/completion-20261028.json).
+Original receipts and the dated outstanding lists below remain historical.
+Unsupported crash/reboot/queued capacity-held cases, raw-frame retention limits,
+scientific approval and separate production/deployment boundaries retain their
+explicit qualifications; completion enables no serving route or feature flag.
+
+Original local checkpoint, version `c23-sandbox-contract-v1`: the paragraphs
+below describe the earlier local implementation checkpoint
 on `overhaul`, following delivered C22 source `66b4106`, CI `39539257759` and
 metadata checkpoint `f4f702c`. C23 is In progress. It is not accepted execution.
 
@@ -76,7 +87,7 @@ engine, download an image or establish eligibility. Rendered limits, namespaces
 and deny-network flags are not proof of enforcement. A recipe, fabricated digest
 or structural test receipt cannot become an accepted scientific environment.
 
-## Mandatory outstanding acceptance
+## Acceptance gates (historical outstanding list)
 
 | Gate | Required evidence before C23 completion |
 |---|---|
@@ -88,11 +99,11 @@ or structural test receipt cannot become an accepted scientific environment.
 | Durability | Real journal/worker reconciliation and narrow verified-termination reservation-release integration; memory fakes do not establish either |
 | Science | Repeated numerical fixtures under the exact image, explicit seeds and declared tolerances; execution success is separate from scientific correctness |
 
-Actual runtime adapters and separately marked Linux/gVisor acceptance remain
-future work. Ordinary host Python, the default Podman runtime and unit mocks
-cannot clear those gates. C24 target configuration and provisioning/deployment
-authorization remain separate. C23 cannot be marked Complete, nor can its
-completion be inferred by later components, while these gates are outstanding.
+At that earlier checkpoint, actual runtime adapters and separately marked
+Linux/gVisor acceptance remained future work. Ordinary host Python, the default
+Podman runtime and unit mocks cannot clear those gates. C24 target configuration
+and provisioning/deployment authorization remain separate. C23 completion now
+rests on the actual acceptance and source-bound delivery recorded above.
 
 ## Hosted preparation and later authorization
 
