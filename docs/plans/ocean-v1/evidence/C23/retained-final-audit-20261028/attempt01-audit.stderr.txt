@@ -1,0 +1,16 @@
+/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/evidence/C23/retained-final-audit-20261028/audit.py:56: PydanticDeprecatedSince211: Accessing the 'model_fields' attribute on the instance is deprecated. Instead, you should access this attribute from the model class. Deprecated in Pydantic V2.11 to be removed in V3.0.
+  checks['current_implementation_source']=check(all(execution[n]==getattr(scope,n) for n in scope.model_fields),'scope from independent public pins')
+Traceback (most recent call last):
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/evidence/C23/retained-final-audit-20261028/audit.py", line 102, in <module>
+    create=one([p for p in diagnostic_dirs if doc(p/'metadata.json')['stage']=='create']);frame=raw(create/'stdout.bin')
+                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/evidence/C23/retained-final-audit-20261028/audit.py", line 20, in raw
+    def raw(path): return path.read_bytes()
+                          ^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/jaronchai/Documents/GitHub/provenance-eco-rag/docs/plans/ocean-v1/evidence/C23/cloud-session-20261028-retained/actual-export01/operator-acceptance/retained-scientific-20261028-01/worker/c23-16be68d95e18c0e3b35cf04f87ddfa47ff9de5a4e033e5fb/diagnostics/create-9766d654d8eb44b78ba5c737f16eb54b/stdout.bin'

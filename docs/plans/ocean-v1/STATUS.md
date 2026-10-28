@@ -13,19 +13,20 @@ P00 and C01–C13 local work is authorized; the user also authorizes subsequent 
 See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md), [C08](handoffs/C08.md), [C09](handoffs/C09.md) and [C10](handoffs/C10.md) handoffs for current evidence.
 
-Current C23 checkpoint (Oct28 JST): retained core290 tests and current
-admission/harness65 software cases pass; reserve/lifecycle/edge/harness helpers26
-actual PostgreSQL cases pass under their source-bound scopes. Physical639 and
-runner/context83 software checks pass, with independent reviews. Source08
-contains236 pinned first-party/synthetic fixture paths. Actual retained C22
-approval -> Linux execution -> physical signature -> independent verified release
-and owner-revocation acceptance are the remaining runtime gates. [Current handoff](handoffs/C23.md).
-Prior actual science/containment/recovery receipts stay immutable. Pushed91ebe81
-has6392 backend passes/388 gated skips/85.61percent coverage and both frontends
-green; its PG job hit15min. New source keeps all gates and gives the expanded
-PG suite45min. New exact-source hosted delivery remains required. C23 stays
-In progress; C24 has not started, scientific approval is unverified and
-scheduling stays PAUSED.
+Current C23 checkpoint (Oct28 JST): both actual retained synthetic C22 approval
+-> reservation -> Linux scientific execution -> physical signed termination ->
+independent proof-backed release cases PASS. Actual post-terminal owner
+suspension denies publication while cleanup/release succeed. All167 exported
+worker files and independent DB snapshots pass raw chain/signature/material/
+output/ledger audit; numeric pair agrees at1e-12 and preserves exact int64.
+[Final raw audit](evidence/C23/retained-final-audit-20261028/final-receipt.json).
+VM is verified TERMINATED; private PostgreSQL schemas/roles cleared and servers
+stopped with privileged process/endpoint checks; no reverse tunnel remains.
+Source501c80b and test-only SQLite-capability repairf6f823b are pushed; all236
+actual worker source pins are unchanged. Corrected hosted40652395233 has both
+frontends green, with backend/PostgreSQL pending. C23 remains In progress solely
+for final hosted delivery and completion metadata/checkpoint. C24 has not started,
+scientific approval is unverified and scheduling stays PAUSED. [Handoff](handoffs/C23.md).
 
 Original local implementation checkpoint: **C23 — Isolated Python execution preparation**. All393 scoped cases pass (292 new and101 existing regressions), Ruff passes, all17 new source/recipe/test files remain steady and946 prior source/1334 prior evidence files are preserved. Strict C22 byte/hash verification, non-executing supervisor, safe staging/output validation and fixed profile/offline image preparation are implemented. C23 remains In progress: actual runtime containment, durable integration, safe extraction and numerical acceptance remain pending. [Handoff](handoffs/C23.md), [original local checkpoint](evidence/C23/checkpoint.json).
 

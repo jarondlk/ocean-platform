@@ -1,0 +1,94 @@
+{
+  "C23_complete": false,
+  "absolute_and_relative_tolerance": 1e-12,
+  "actual_retained_acceptance_passed": true,
+  "actual_run_source": "501c80b7e5ee07f0990539baea3d8243f71d184a",
+  "all167_export_members_verified": true,
+  "all236_current_source_pins_match": true,
+  "frame_validation_qualification": "Raw control-frame body is intentionally not retained. Independent audit verifies captured digest, EOF/outcome and validated files; guarded source performed frame grammar and writer-reaped checks. No independent reparse of unavailable body is claimed.",
+  "qualification": "Read-only independent source/DB/canonical-chain/public-key/native/output cross-check; no signing, runtime, fabricated review or authority mutation. Prior containment/resource/science/recovery receipts remain separately qualified.",
+  "raw_frame_body_retained": false,
+  "recorded_at": "2026-10-28T07:56:00.866021+00:00",
+  "remaining_gates": [
+    "verified resource shutdown",
+    "successful exact-source hosted CI",
+    "delivery metadata/checkpoint"
+  ],
+  "repeated_numerics": {
+    "publication-revoked": {
+      "exact_int64": 9223372036854775807,
+      "mean": -0.15568523586365254,
+      "ols_intercept": 0.9999999999999998,
+      "ols_slope": 2.0000000000000004,
+      "p_value": 0.39911633397802315,
+      "t_statistic": -0.8549902455420993
+    },
+    "scientific": {
+      "exact_int64": 9223372036854775807,
+      "mean": -0.15568523586365254,
+      "ols_intercept": 0.9999999999999998,
+      "ols_slope": 2.0000000000000004,
+      "p_value": 0.39911633397802315,
+      "t_statistic": -0.8549902455420993
+    }
+  },
+  "results": {
+    "publication-revoked": {
+      "analysis_state": "completed",
+      "checks": {
+        "approval_revision_envelope": true,
+        "cleanup_and_outputs": true,
+        "current_implementation_source": true,
+        "five_approved_hashes": true,
+        "immutable_terminal_wrapper": true,
+        "independent_signature_and_ledger": true,
+        "original_cgroup_native_cleanup": true,
+        "prestart_enforcement": true,
+        "proof_backed_release": true,
+        "publication_or_owner_denial": true,
+        "single_fresh_start": true,
+        "staged_input_files": true
+      },
+      "closed_fence": 3,
+      "execution_id": "24529704-5b0b-5ee0-9296-5ed5ea5535d5",
+      "job_id": "c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be",
+      "journal_events": 11,
+      "packet_sha256": "cd989e3419222639eff0de52c3562049047028cd5a73143f8ca31e6b1f5be47d",
+      "passed": true,
+      "proof_id": "eb0e75fd-6e9f-5402-b689-ff1e7f0a3ae5",
+      "publication_events": 0,
+      "release_id": "116aede9-5807-54d8-9b1d-684e328a4274",
+      "scientific_approval": "not_independently_verified",
+      "terminal_wrapper_sha256": "bf429dd52211ea17a6d1294bc0208a470a7e49b0d1d0f30b3ed0954744615063"
+    },
+    "scientific": {
+      "analysis_state": "completed",
+      "checks": {
+        "approval_revision_envelope": true,
+        "cleanup_and_outputs": true,
+        "current_implementation_source": true,
+        "five_approved_hashes": true,
+        "immutable_terminal_wrapper": true,
+        "independent_signature_and_ledger": true,
+        "original_cgroup_native_cleanup": true,
+        "prestart_enforcement": true,
+        "proof_backed_release": true,
+        "publication_or_owner_denial": true,
+        "single_fresh_start": true,
+        "staged_input_files": true
+      },
+      "closed_fence": 4,
+      "execution_id": "80ea160e-fb7d-5fac-98be-2718b339f144",
+      "job_id": "c23-16be68d95e18c0e3b35cf04f87ddfa47ff9de5a4e033e5fb",
+      "journal_events": 11,
+      "packet_sha256": "1b31819e1e4eb9b85662f17cd00f6948ece13c3d5a73677055e014cfd64f4444",
+      "passed": true,
+      "proof_id": "9f97df9f-b306-5a35-9bee-fab3ea4b6154",
+      "publication_events": 1,
+      "release_id": "b078f9c6-6da9-50c7-88bc-9930699818a2",
+      "scientific_approval": "not_independently_verified",
+      "terminal_wrapper_sha256": "3995cae90b529f49cfb6007ed1239a63f1ba5410fe79ba908e912a5137ef6f04"
+    }
+  },
+  "version": "c23-retained-independent-raw-audit-v1"
+}

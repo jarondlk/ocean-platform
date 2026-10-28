@@ -1,14 +1,14 @@
 # C23 — Isolated Python execution
 
-**Status:** In progress. Retained C22 reserve/start/publication, held runtime
-context, native cleanup/physical issuer and lifecycle runner are implemented
-locally. Physical software gates pass639 cases; retained reserve/lifecycle/edge
-checks pass26 actual PostgreSQL cases with shutdown verified. These are inert
-runtime/software-signature tests. Actual retained Linux execution, physical
-proof and independent capacity release remain mandatory; the guarded synthetic
-GCP harness is being prepared. Pushed91ebe81 backend6392/85.61percent and both frontends pass; PostgreSQL
-timed out at15minutes. Exact new-source hosted delivery remains
-required. C24 has not started. **Prerequisites:** C22.
+**Status:** In progress for final hosted delivery. Both actual retained C22
+approval/reserve/Linux execution/physical signing/independent capacity release
+cases pass; actual post-terminal owner suspension denies publication and still
+allows verified cleanup/release. All167 raw worker files plus independent DB
+snapshots pass canonical-chain, signature, material, output and ledger audit.
+VM/tunnel/private PostgreSQL shutdown is verified. Source501c80b and test-only
+repairf6f823b are pushed; all236 worker source pins remain unchanged. Corrected
+hosted40652395233 has both frontends green; backend/PostgreSQL pending.
+C24 is not started. **Prerequisites:** C22. [Audit](../evidence/C23/retained-final-audit-20261028/final-receipt.json).
 
 ## Revised delivery boundary
 

@@ -1,0 +1,189 @@
+I1028 05:28:13.472997    2482 cli.go:275] **************** gVisor ****************
+I1028 05:28:13.473034    2482 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 2482, PPID 2468, UID 0, GID 0
+I1028 05:28:13.473048    2482 cli.go:278] Args: [/opt/ocean-c23-runtime/release-20261019.0/runsc --root=/var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/runsc-state-c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be --platform=systrap --rootless=false --network=none --gofer-network-namespace=new --directfs=false --overlay2=none --host-uds=none --host-fifo=none --character-device-policy=emulated-only --net-raw=false --ignore-cgroups=false --allow-flag-override=false --sidecar-release-enforcement-policy=ALWAYS --fdlimit=4096 --gvisor-marker-file=true --oci-seccomp=true --debug=false --debug-log=/dev/stderr --panic-log=/dev/stderr create --bundle=/var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be]
+I1028 05:28:13.473071    2482 config.go:631] Platform: systrap
+I1028 05:28:13.473078    2482 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/runsc-state-c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be
+I1028 05:28:13.473083    2482 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1028 05:28:13.473091    2482 config.go:634] Network: none
+I1028 05:28:13.473098    2482 config.go:635] UseCPUNums: false
+W1028 05:28:13.473103    2482 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1028 05:28:13.473109    2482 cli.go:287] **************** gVisor ****************
+I1028 05:28:13.474426    2482 namespace.go:201] Mapping host uid 100000 to container uid 0 (size=1)
+I1028 05:28:13.474449    2482 namespace.go:201] Mapping host uid 100001 to container uid 65532 (size=1)
+I1028 05:28:13.474456    2482 namespace.go:209] Mapping host gid 100000 to container gid 0 (size=1)
+I1028 05:28:13.474471    2482 namespace.go:209] Mapping host gid 100001 to container gid 65532 (size=1)
+I1028 05:28:13.474529    2482 container.go:1785] Starting gofer with command: [runsc-gofer --fdlimit=4096 --directfs=false --root=/var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/runsc-state-c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be --host-fifo=none --network=none --allow-flag-override=false --oci-seccomp=true --gvisor-marker-file=true --overlay2=none --host-uds=none --character-device-policy=emulated-only --gofer-network-namespace=new --rootless=false --debug=false --debug-log=/dev/stderr --net-raw=false --platform=systrap --sidecar-release-enforcement-policy=ALWAYS --ignore-cgroups=false --panic-log=/dev/stderr --debug-log-fd=3 gofer --bundle /var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be --gofer-mount-confs=lisafs:none,lisafs:none --spec-fd=4 --mounts-fd=5 --rpc-fd=6 --io-fds=7 --io-fds=8 --sync-chroot-fd=9 c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be]
+I1028 05:28:13.477274    2482 container.go:1794] Gofer started, PID: 2490
+I1028 05:28:13.477648    2482 sandbox.go:1088] Sidecar "gvisor_sentry" found: booting sandbox with /opt/ocean-c23-runtime/release-20261019.0/gvisor-bin/gvisor_sentry
+I1028 05:28:13.477696    2482 sandbox.go:1100] Sidecar "gvisor-sentry-prewarmer" found: prepending Sentry boot command with /opt/ocean-c23-runtime/release-20261019.0/gvisor-bin/gvisor-sentry-prewarmer
+I1028 05:28:13.478230    2482 sandbox.go:1174] Control socket path: "/var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/runsc-state-c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be/runsc-c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be.sock"
+I1028 05:28:13.478315    2482 sandbox.go:1243] Sandbox will be started in new mount, IPC and UTS namespaces
+I1028 05:28:13.478350    2482 sandbox.go:1268] Sandbox will be started in new network namespace
+I1028 05:28:13.478525    2482 sandbox.go:1342] Sandbox will be started in new user namespace
+I1028 05:28:13.481693    2482 sandbox.go:1547] Sandbox started, PID: 2495
+I1028 05:28:13.481819    2482 gvisorbinaries.go:347] sidecar "runsc-fd-parking": executing /opt/ocean-c23-runtime/release-20261019.0/gvisor-bin/runsc-fd-parking ([])
+I1028 05:28:13.482737    2482 sandbox.go:1601] FD parking sidecar started, PID: 2496
+I1028 05:28:13.483613       1 cli.go:275] **************** gVisor ****************
+I1028 05:28:13.483679       1 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 1, PPID 0, UID 0, GID 0
+I1028 05:28:13.483702       1 cli.go:278] Args: [runsc-gofer --fdlimit=4096 --directfs=false --root=/var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/runsc-state-c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be --host-fifo=none --network=none --allow-flag-override=false --oci-seccomp=true --gvisor-marker-file=true --overlay2=none --host-uds=none --character-device-policy=emulated-only --gofer-network-namespace=new --rootless=false --debug=false --debug-log=/dev/stderr --net-raw=false --platform=systrap --sidecar-release-enforcement-policy=ALWAYS --ignore-cgroups=false --panic-log=/dev/stderr --debug-log-fd=3 gofer --bundle /var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be --gofer-mount-confs=lisafs:none,lisafs:none --spec-fd=4 --mounts-fd=5 --rpc-fd=6 --io-fds=7 --io-fds=8 --sync-chroot-fd=9 c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be]
+I1028 05:28:13.483756       1 config.go:631] Platform: systrap
+I1028 05:28:13.483770       1 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/runsc-state-c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be
+I1028 05:28:13.483783       1 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1028 05:28:13.483802       1 config.go:634] Network: none
+I1028 05:28:13.483816       1 config.go:635] UseCPUNums: false
+W1028 05:28:13.483829       1 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1028 05:28:13.483844       1 cli.go:287] **************** gVisor ****************
+I1028 05:28:13.485862       1 gofer_mount.go:395] Mounting src: "/var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be/inputs", dst: "/proc/fs/root/inputs", flags: 0x500f, idMapped: false
+I1028 05:28:13.486005       1 gofer_mount.go:267] Remounting root as readonly: "/proc/fs/root"
+I1028 05:28:13.494714       1 cli.go:275] **************** gVisor ****************
+I1028 05:28:13.494775       1 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 1, PPID 0, UID 65534, GID 65534
+I1028 05:28:13.494803       1 cli.go:278] Args: [runsc-sandbox --debug=false --host-uds=none --gofer-network-namespace=new --platform=systrap --sidecar-release-enforcement-policy=ALWAYS --allow-flag-override=false --directfs=false --gvisor-marker-file=true --debug-log=/dev/stderr --panic-log=/dev/stderr --ignore-cgroups=false --root=/var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/runsc-state-c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be --overlay2=none --character-device-policy=emulated-only --rootless=false --host-fifo=none --network=none --net-raw=false --oci-seccomp=true --fdlimit=4096 --debug-log-fd=4 --panic-log-fd=5 boot --bundle=/var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be --gofer-mount-confs=lisafs:none,lisafs:none --setup-root --total-host-memory 16762118144 --cpu-num 2 --cpu-quota 200000 --cpu-period 100000 --total-memory 4294967296 --io-fds=6 --io-fds=7 --dev-io-fd=-1 --mounts-fd=8 --start-sync-fd=9 --pin-ring-fd=10 --controller-fd=11 --spec-fd=12 --proc-umounter-fd=13 --stdio-fds=14 --stdio-fds=15 --stdio-fds=16 c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be]
+I1028 05:28:13.494872       1 config.go:631] Platform: systrap
+I1028 05:28:13.494884       1 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/runsc-state-c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be
+I1028 05:28:13.494901       1 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1028 05:28:13.494917       1 config.go:634] Network: none
+I1028 05:28:13.494930       1 config.go:635] UseCPUNums: false
+W1028 05:28:13.494942       1 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1028 05:28:13.494956       1 cli.go:287] **************** gVisor ****************
+I1028 05:28:13.494986       1 gvisorbinaries.go:172] [Sidecar release match check] Build label "release-20261019.0" matches the expected release in sidecar "gvisor_sentry".
+I1028 05:28:13.495008       1 timing.go:439] Timer for runsc boot: Starting.
+I1028 05:28:13.495310       1 caps_unsafe.go:163] Capabilities applied to all threads: bounding=0x4001f effective=0x4001f permitted=0x4001f inheritable=0x4001f ambient=0x4001f
+I1028 05:28:13.495367       1 gofer.go:355] Process chroot'd to "/root"
+I1028 05:28:13.496000       1 gofer.go:406] Serving "/" mapped to "/root" on FD 7 (ro: true)
+I1028 05:28:13.496049       1 gofer.go:437] Serving "/inputs" mapped on FD 8 (ro: true)
+I1028 05:28:13.496103       1 boot.go:393] Setting product_name: "Google Compute Engine"
+I1028 05:28:13.496263       1 boot.go:404] Setting host-thp-shmem-enabled: "never"
+I1028 05:28:13.496309       1 boot.go:414] Setting host-thp-defrag: "madvise"
+I1028 05:28:13.497637       1 chroot.go:142] Setting up sandbox chroot in "/tmp"
+I1028 05:28:13.497936       1 chroot.go:41] Mounting "proc" at "/tmp/proc/sandbox-proc"
+I1028 05:28:13.499678       1 caps.go:70] Capabilities applied: { effective="empty" permitted="empty" inheritable="empty" bounding="empty" }
+I1028 05:28:13.499704       1 process.go:75] Execve "/proc/self/exe" again, bye!
+I1028 05:28:13.511337       1 cli.go:275] **************** gVisor ****************
+I1028 05:28:13.511374       1 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 1, PPID 0, UID 65534, GID 65534
+I1028 05:28:13.511387       1 cli.go:278] Args: [runsc-sandbox --debug=false --host-uds=none --gofer-network-namespace=new --platform=systrap --sidecar-release-enforcement-policy=ALWAYS --allow-flag-override=false --directfs=false --gvisor-marker-file=true --debug-log=/dev/stderr --panic-log=/dev/stderr --ignore-cgroups=false --root=/var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/runsc-state-c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be --overlay2=none --character-device-policy=emulated-only --rootless=false --host-fifo=none --network=none --net-raw=false --oci-seccomp=true --fdlimit=4096 --debug-log-fd=4 --panic-log-fd=5 boot --bundle=/var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be --controller-fd=11 --cpu-num=2 --cpu-period=100000 --cpu-quota=200000 --dev-io-fd=-1 --gofer-mount-confs=lisafs:none,lisafs:none --io-fds=6,7 --mounts-fd=8 --pin-ring-fd=10 --proc-umounter-fd=-1 --setup-root=false --spec-fd=12 --start-sync-fd=9 --stdio-fds=14,15,16 --total-host-memory=16762118144 --total-memory=4294967296 --host-thp-defrag=madvise --proc-mount-sync-fd=22 --product-name=Google Compute Engine --host-thp-shmem-enabled=never c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be]
+I1028 05:28:13.511423       1 config.go:631] Platform: systrap
+I1028 05:28:13.511429       1 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/runsc-state-c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be
+I1028 05:28:13.511472       1 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1028 05:28:13.511487       1 config.go:634] Network: none
+I1028 05:28:13.511498       1 config.go:635] UseCPUNums: false
+W1028 05:28:13.511505       1 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1028 05:28:13.511535       1 cli.go:287] **************** gVisor ****************
+I1028 05:28:13.511566       1 gvisorbinaries.go:172] [Sidecar release match check] Build label "release-20261019.0" matches the expected release in sidecar "gvisor_sentry".
+I1028 05:28:13.511576       1 timing.go:439] Timer for runsc boot: Starting.
+I1028 05:28:13.522105       1 loader.go:710] CPUs: 2
+I1028 05:28:13.522240       1 loader.go:762] Remapped stdio FDs to [253, 255] in 22.875µs
+I1028 05:28:13.522321       1 loader.go:1202] Platform: systrap
+I1028 05:28:13.535111       1 loader.go:1249] Disabling application huge pages: host shmem_enabled is "never"
+I1028 05:28:13.535808       1 loader.go:870] Setting total memory to 4.00 GB
+I1028 05:28:13.536181       1 loader.go:944] Packet logging disabled
+I1028 05:28:13.536231       1 watchdog.go:195] Watchdog waiting 30s for startup
+W1028 05:28:13.536283       1 limits.go:104] Host limit is lower than recommended, resource: "RLIMIT_NOFILE", host: 4096, recommended: 1048576
+I1028 05:28:13.536294       1 limits.go:107] Setting limit from host, resource: "RLIMIT_NOFILE" {soft: 4096, hard: 4096}
+I1028 05:28:13.537726    2482 cli.go:316] Exiting with status: 0
+I1028 05:28:14.536089       1 calibrated_clock.go:82] CalibratedClock(Monotonic): ready
+I1028 05:28:14.536415       1 calibrated_clock.go:82] CalibratedClock(Realtime): ready
+I1028 05:28:30.639414       1 network.go:142] Enabling loopback interface "lo" with id 1 on addresses [127.0.0.1/8 ::1/128]
+I1028 05:28:30.639660       1 network.go:393] Setting routes [127.0.0.0/8 nic 1 ::1/128 nic 1]
+I1028 05:28:30.641019       1 vfs.go:1527] Setting cgroupfs cpu defaults: quota=200000, period=100000 (raw quota=200000, raw period=100000)
+I1028 05:28:30.641224       1 vfs.go:1534] Setting cgroupfs memory defaults: limit=4294967296 bytes (4.00 GB)
+I1028 05:28:30.641272       1 vfs.go:1560] created cgroup mounts for controllers [cpu cpuacct cpuset devices job memory pids]
+I1028 05:28:30.641294       1 vfs.go:542] Configuring container's file system
+I1028 05:28:30.641312       1 vfs.go:638] Mounting root with 9p, ioFD: 6
+I1028 05:28:30.643037       1 vfs.go:1040] Mounted "" to "/sys" type: sysfs, internal-options: ""
+I1028 05:28:30.643420       1 vfs.go:1040] Mounted "" to "/dev" type: dev, internal-options: ""
+W1028 05:28:30.643453       1 vfs.go:1190] ignoring unknown mount option "nodev"
+I1028 05:28:30.643567       1 vfs.go:1040] Mounted "/var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be/tmpfs" to "/tmp" type: tmpfs, internal-options: "size=4096,uid=0,gid=0,mode=0555"
+W1028 05:28:30.643619       1 vfs.go:1190] ignoring unknown mount option "nodev"
+I1028 05:28:30.644933       1 checkpoint.go:42] Setting up checkpoint files under [procfs]/gvisor
+I1028 05:28:30.645229       1 vfs.go:1040] Mounted "/var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be/proc" to "/proc" type: proc, internal-options: ""
+W1028 05:28:30.645264       1 vfs.go:1190] ignoring unknown mount option "nodev"
+W1028 05:28:30.645272       1 vfs.go:1190] ignoring unknown mount option "private"
+I1028 05:28:30.646567       1 vfs.go:1040] Mounted "/var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be/inputs" to "/inputs" type: bind, internal-options: "trans=fd,rfdno=7,wfdno=7,cache=remote_revalidating,disable_fifo_open"
+I1028 05:28:30.646677       1 vfs.go:1040] Mounted "" to "/dev/pts" type: devpts, internal-options: "ptmxmode=0666"
+W1028 05:28:30.646725       1 vfs.go:1190] ignoring unknown mount option "nodev"
+I1028 05:28:30.646756       1 vfs.go:1040] Mounted "/var/lib/ocean-c23/operator-acceptance/retained-owner-revoked-20261028-01/worker/c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be/tmpfs" to "/dev/shm" type: tmpfs, internal-options: "size=4096,uid=0,gid=0,mode=0555"
+I1028 05:28:30.646806       1 kernel.go:1429] EXEC: []string{"/usr/local/bin/python3", "-I", "-B", "/opt/c23/trusted_init.py", "--policy", "{\"envelope_sha256\":\"6a17b99f6c50cb8eb26a0ffd87c0c17e81ef56f0bc4953f43241e5630db74159\",\"expected_names\":[\"summary.json\"],\"job_id\":\"c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be\",\"max_output_bytes\":52428800,\"output_file_budget_bytes\":49283072,\"scratch_max_bytes\":268435456,\"stderr_max_bytes\":1048576,\"stdout_max_bytes\":1048576,\"version\":\"c23-trusted-init-v2\",\"wall_seconds\":600}"}
+I1028 05:28:30.658630       1 loader.go:1497] Process should have started...
+I1028 05:28:30.658675       1 watchdog.go:220] Starting watchdog, period: 45s, timeout: 3m0s, action: logWarning
+I1028 05:28:30.658765       1 timing.go:549] Timer for runsc boot: Ended.
+I1028 05:28:30.659216       1 timing.go:866] ---- runsc boot timing information ----
+[05:28:13.492752]	                     	╭─ runsc boot                       
+[05:28:13.510809]	 +0.018s             	├─ re-exec: 0.018s                  
+[05:28:13.511583]	 +0.000s             	├─ boot subcommand dispatched: 0.000s
+[05:28:13.512674]	 +0.001s             	├─ CPUID initialized: 0.001s        
+[05:28:13.512677]	 +0.000s             	├─ ring0 initialized: 0.000s        
+[05:28:13.512722]	 +0.000s             	├─ host info read: 0.000s           
+[05:28:13.513854]	 +0.001s             	├─ spec read: 0.001s                
+[05:28:13.513863]	 +0.000s             	├─ FD limit applied: 0.000s         
+[05:28:13.513893]	 +0.000s             	├─ resolved mounts read: 0.000s     
+[05:28:13.521952]	 +0.008s             	├─ seccheck initialized: 0.008s     
+[05:28:13.521954]	 +0.000s             	├─ RNG initialized: 0.000s          
+[05:28:13.522069]	 +0.000s             	├─ memory usage initialized: 0.000s 
+[05:28:13.522209]	 +0.000s             	├─ GOMAXPROCS set: 0.000s           
+[05:28:13.522319]	 +0.000s             	├─ donated FDs ingested: 0.000s     
+[05:28:13.522603]	 +0.000s             	├─ systrap memory file created: 0.000s
+[05:28:13.525219]	 +0.002s             	├─ systrap stub initialized: 0.002s 
+[05:28:13.534995]	 +0.009s             	├─ systrap source process created: 0.009s
+[05:28:13.535033]	 +0.000s             	├─ waiting for membarrier: 0.000s   
+[05:28:13.535052]	 +0.000s             	├─ host membarrier probed: 0.000s   
+[05:28:13.535072]	 +0.000s             	├─ platform created: 0.000s         
+[05:28:13.535194]	 +0.000s             	├─ memory file created: 0.000s      
+[05:28:13.535254]	 +0.000s             	├─ VDSO prepared: 0.000s            
+[05:28:13.535307]	 +0.000s             	├─ timekeeper configured: 0.000s    
+[05:28:13.535723]	 +0.000s             	├─ network stack created: 0.000s    
+[05:28:13.536170]	 +0.000s             	├─ kernel initialized: 0.000s       
+[05:28:13.536181]	 +0.000s             	├─ filesystems registered: 0.000s   
+[05:28:13.536315]	 +0.000s             	├─ process args created: 0.000s     
+[05:28:13.536318]	 +0.000s             	├─ compat logs initialized: 0.000s  
+[05:28:13.536318]	 +0.000s             	├─ mount hints parsed: 0.000s       
+[05:28:13.536323]	 +0.000s             	├─ host FS mount created: 0.000s    
+[05:28:13.536788]	 +0.000s             	├─ control server started: 0.000s   
+[05:28:13.536792]	 +0.000s             	├─ loader created: 0.000s           
+[05:28:13.536811]	 +0.000s             	├─ metrics initialized: 0.000s      
+[05:28:13.536811]	 +0.000s             	├─ notifying parent: 0.000s         
+[05:28:30.639406]	+17.102s ▉▉▉▉▉▉▉▉▉▉▉▉	├─ start signal received: 17.102s   
+[05:28:30.639691]	 +0.000s             	├─ network configured: 0.000s       
+[05:28:30.640038]	 +0.000s             	├─ open FDs validated: 0.000s       
+[05:28:30.640382]	 +0.000s             	├─ pre-seccomp callback done: 0.000s
+[05:28:30.640483]	 +0.000s             	├─ precompiled seccomp program rendered: 0.000s
+[05:28:30.640813]	 +0.000s             	├─ seccomp filters installed: 0.000s
+[05:28:30.640813]	 +0.000s             	├─ forked: 0.000s                   	╭─ root container
+[05:28:30.641004]	 +0.000s             	│ ... 0.000s ...                    	├─ FD table created: 0.000s
+[05:28:30.641285]	 +0.000s             	│ ... 0.000s ...                    	├─ cgroups mounted: 0.000s
+[05:28:30.642757]	 +0.001s             	│ ... 0.001s ...                    	├─ rootfs mounted: 0.001s
+[05:28:30.642773]	 +0.000s             	│ ... 0.001s ...                    	├─ submounts prepared: 0.000s
+[05:28:30.643068]	 +0.000s             	│ ... 0.002s ...                    	├─ mounted "/sys": 0.000s
+[05:28:30.643447]	 +0.000s             	│ ... 0.002s ...                    	├─ mounted "/dev": 0.000s
+[05:28:30.643616]	 +0.000s             	│ ... 0.002s ...                    	├─ mounted "/tmp": 0.000s
+[05:28:30.645253]	 +0.001s             	│ ... 0.004s ...                    	├─ mounted "/proc": 0.001s
+[05:28:30.646628]	 +0.001s             	│ ... 0.005s ...                    	├─ mounted "/inputs": 0.001s
+[05:28:30.646719]	 +0.000s             	│ ... 0.005s ...                    	├─ mounted "/dev/pts": 0.000s
+[05:28:30.646773]	 +0.000s             	│ ... 0.005s ...                    	├─ mounted "/dev/shm": 0.000s
+[05:28:30.646799]	 +0.000s             	│ ... 0.005s ...                    	├─ submounts mounted: 0.000s
+[05:28:30.646801]	 +0.000s             	│ ... 0.005s ...                    	├─ device files created: 0.000s
+[05:28:30.646803]	 +0.000s             	│ ... 0.005s ...                    	├─ executable path resolved: 0.000s
+[05:28:30.646805]	 +0.000s             	│ ... 0.005s ...                    	├─ exec user home resolved: 0.000s
+[05:28:30.646851]	 +0.000s             	│ ... 0.006s ...                    	├─ FS context created: 0.000s
+[05:28:30.649145]	 +0.002s             	│ ... 0.008s ...                    	├─ memory manager created: 0.002s
+[05:28:30.651296]	 +0.002s             	│ ... 0.010s ...                    	├─ executable loaded: 0.002s
+[05:28:30.651314]	 +0.000s             	│ ... 0.010s ...                    	├─ VDSO mapped: 0.000s
+[05:28:30.651319]	 +0.000s             	│ ... 0.010s ...                    	├─ stack allocated: 0.000s
+[05:28:30.651470]	 +0.000s             	│ ... 0.010s ...                    	├─ stack contents loaded: 0.000s
+[05:28:30.651536]	 +0.000s             	│ ... 0.010s ...                    	├─ task image loaded: 0.000s
+[05:28:30.652579]	 +0.001s             	│ ... 0.011s ...                    	├─ init task created: 0.001s
+[05:28:30.657657]	 +0.005s             	│ ... 0.016s ...                    	├─ OCI seccomp filters applied: 0.005s
+[05:28:30.657660]	 +0.000s             	├─ root container created: 0.016s   	│ ... 0.000s ...
+[05:28:30.658629]	 +0.000s             	├─ signal forwarding started: 0.000s	│ ... 0.000s ...
+[05:28:30.658761]	 +0.000s             	├─ kernel started: 0.000s           	│ ... 0.001s ...
+[05:28:30.658761]	 +0.000s             	│ ... 0.000s ...                    	╰─ END 0.001s, total 0.017s
+[05:28:30.658765]	 +0.000s             	╰─ END 0.000s, total 17.166s        
+---- End of runsc boot timing information ----
+
+I1028 05:28:30.670723       1 compat.go:130] Unsupported syscall rseq(0x7ebf9f8c94a0,0x20,0x0,0x53053053,0x0,0x0). It is likely that you can safely ignore this message and that this is not the cause of any error. Please, refer to https://gvisor.dev/c/linux/amd64/rseq for more information.
+I1028 05:28:40.328260       1 loader.go:1820] Gofer socket disconnected, killing container "c23-970f1e5a3f21e3fb5c30ded90516f9f9fae8d42ab8a167be"
+I1028 05:28:40.328757       1 boot.go:826] application exiting with exit status 0
+I1028 05:28:40.328850       1 watchdog.go:240] Stopping watchdog
+I1028 05:28:40.328867       1 watchdog.go:244] Watchdog stopped
+I1028 05:28:40.329184       1 cli.go:316] Exiting with status: 0
+I1028 05:28:40.337191       1 gofer.go:509] All lisafs servers exited.
+I1028 05:28:40.337277       1 cli.go:316] Exiting with status: 0

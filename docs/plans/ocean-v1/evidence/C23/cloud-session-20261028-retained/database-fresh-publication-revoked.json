@@ -1,0 +1,66 @@
+{
+  "auth_rules": [
+    {
+      "address": null,
+      "auth_method": "scram-sha-256",
+      "error": null,
+      "netmask": null,
+      "type": "local"
+    },
+    {
+      "address": "127.0.0.1",
+      "auth_method": "scram-sha-256",
+      "error": null,
+      "netmask": "255.255.255.255",
+      "type": "host"
+    },
+    {
+      "address": "::1",
+      "auth_method": "scram-sha-256",
+      "error": null,
+      "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+      "type": "host"
+    },
+    {
+      "address": null,
+      "auth_method": "scram-sha-256",
+      "error": null,
+      "netmask": null,
+      "type": "local"
+    },
+    {
+      "address": "127.0.0.1",
+      "auth_method": "scram-sha-256",
+      "error": null,
+      "netmask": "255.255.255.255",
+      "type": "host"
+    },
+    {
+      "address": "::1",
+      "auth_method": "scram-sha-256",
+      "error": null,
+      "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+      "type": "host"
+    }
+  ],
+  "case": "publication-revoked",
+  "counts": {
+    "app_user": 0,
+    "research_experiment_execution": 0,
+    "research_experiment_outbox": 0,
+    "research_experiment_reservation": 0
+  },
+  "credentials_exported": false,
+  "database_name": "ocean_c23_retained_28fb9f64c7b04c33",
+  "gcloud_credentials_present": false,
+  "observed_identity": [
+    "ocean_c23_retained_28fb9f64c7b04c33",
+    "c23_control_admin",
+    "c23_control_admin",
+    "127.0.0.1",
+    "PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit",
+    "scram-sha-256"
+  ],
+  "schema": "c23_retained_28fb9f64c7b04c33",
+  "version": "c23-retained-database-fresh-preflight-v1"
+}

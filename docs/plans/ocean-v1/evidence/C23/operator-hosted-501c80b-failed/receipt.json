@@ -1,0 +1,11 @@
+{
+  "backend_job_id": 122644463860,
+  "backend_raw_sha256": "ed0cf78de8fb49475a00cf9df668da5de83b7123e9e98a1928b68b9913a36ada",
+  "decoded_bytes": 2317897,
+  "head_sha": "501c80b7e5ee07f0990539baea3d8243f71d184a",
+  "outcome": "failure",
+  "qualification": "Original failure remains failed. The f6f823b repair changes only test prerequisite gating/lazy fixture construction, tested226 supported and55pass171skip simulated-old cases. No production SQLite minimum, worker archive or real acceptance source changed.",
+  "reason": "New real-journal fixture did not gate unsupported bundled SQLite; production correctly refused it. 2784 pass451 gated skips then fixture setup error.",
+  "run_id": 40636466800,
+  "version": "c23-501c80b-original-hosted-failure-v1"
+}

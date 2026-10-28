@@ -1,0 +1,77 @@
+{
+  "complete_router_inventory": true,
+  "no_external_IP": true,
+  "no_peerings": true,
+  "no_routers_or_NAT": true,
+  "no_service_accounts": true,
+  "reads": [
+    {
+      "command": [
+        "/opt/homebrew/bin/gcloud",
+        "compute",
+        "instances",
+        "describe",
+        "c23-containment-01",
+        "--zone=asia-northeast1-a",
+        "--project=ocean-v1-c23-20261024",
+        "--format=json"
+      ],
+      "exit_code": 0,
+      "finished_at": "2026-10-28T05:18:22.132620+00:00",
+      "resource": "instance",
+      "sha256": "e2379df30401f7a9fd21646104cea10af5eff1f2fe2d7caa9dd61b2899cfaf35",
+      "started_at": "2026-10-28T05:18:21.131221+00:00"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/gcloud",
+        "compute",
+        "routers",
+        "list",
+        "--project=ocean-v1-c23-20261024",
+        "--format=json"
+      ],
+      "exit_code": 0,
+      "finished_at": "2026-10-28T05:18:23.436491+00:00",
+      "resource": "routers",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "started_at": "2026-10-28T05:18:22.133145+00:00"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/gcloud",
+        "compute",
+        "networks",
+        "describe",
+        "c23-private",
+        "--project=ocean-v1-c23-20261024",
+        "--format=json"
+      ],
+      "exit_code": 0,
+      "finished_at": "2026-10-28T05:18:24.700845+00:00",
+      "resource": "network",
+      "sha256": "5fefa1f6482ea5cfd4c93c37b9c70afdd576656c3a82cfb794878547c5ca0bba",
+      "started_at": "2026-10-28T05:18:23.436928+00:00"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/gcloud",
+        "compute",
+        "networks",
+        "subnets",
+        "describe",
+        "c23-tokyo",
+        "--region=asia-northeast1",
+        "--project=ocean-v1-c23-20261024",
+        "--format=json"
+      ],
+      "exit_code": 0,
+      "finished_at": "2026-10-28T05:18:25.585503+00:00",
+      "resource": "subnet",
+      "sha256": "573ab015ac54a2753d0b094e03faa4cb51d772a9438fb19d9d447d5866b21819",
+      "started_at": "2026-10-28T05:18:24.701190+00:00"
+    }
+  ],
+  "source_commit": "501c80b7e5ee07f0990539baea3d8243f71d184a",
+  "version": "c23-complete-network-api-provenance-v1"
+}

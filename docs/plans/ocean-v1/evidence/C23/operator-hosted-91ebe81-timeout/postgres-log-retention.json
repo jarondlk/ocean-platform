@@ -1,0 +1,8 @@
+{
+  "compressed_file": "postgres.log.gz",
+  "compressed_sha256": "19367e7c738c2474276d730cc76563399e5980eaf0e393efa4822a01cf539764",
+  "decoded_bytes": 259528,
+  "original_raw_sha256": "68eaafa356dadc89e913e4df89737aa59c524ce42439d6ce2671757996b98ccd",
+  "qualification": "Exact original decoded GitHub PG log retained gzip without newline/whitespace changes. Plain .log matches existing .gitignore, so compressed bytes are included in the next evidence-only checkpoint.",
+  "version": "c23-hosted-postgres-raw-log-retention-v1"
+}

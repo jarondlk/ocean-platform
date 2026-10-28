@@ -1,0 +1,58 @@
+{
+  "boot_id": "5f6a30d5-9277-4fd9-bee5-0b4285c294a4",
+  "cases": {
+    "publication-revoked": {
+      "config_sha256": "942970477ee51d5f5e4a368749362068d6721cbb59cda29f1a89bb96c37f49bd",
+      "database_name": "ocean_c23_retained_28fb9f64c7b04c33",
+      "issuer_id": "c23-retained-operator-20261028",
+      "issuer_public_key_hex": "ad00fd441dbb9a8e9b8215d1840968d8a7622fa0aabfd218a89f089b20b8f8c8",
+      "key_id": "c23-publication-revoked-20261028",
+      "private_key_material_in_export": false,
+      "roles": {
+        "controller_role": "c23_controller_28fb9f64c7b04c33",
+        "function_owner_role": "c23_owner_28fb9f64c7b04c33",
+        "serving_role": "c23_serving_28fb9f64c7b04c33",
+        "verifier_role": "c23_verifier_28fb9f64c7b04c33"
+      },
+      "schema": "c23_retained_28fb9f64c7b04c33",
+      "worker_control_port": 55424
+    },
+    "scientific": {
+      "config_sha256": "7e74ab44e748d3b79e2837f306fed9f24dad79078c0edbde9b1101c8a26ca37b",
+      "database_name": "ocean_c23_retained_ef58d3cc1b0849de",
+      "issuer_id": "c23-retained-operator-20261028",
+      "issuer_public_key_hex": "44e071fe0d6fce51b6421a8df79944e45523afe79216995ab5e441562db5f28c",
+      "key_id": "c23-scientific-20261028",
+      "private_key_material_in_export": false,
+      "roles": {
+        "controller_role": "c23_controller_ef58d3cc1b0849de",
+        "function_owner_role": "c23_owner_ef58d3cc1b0849de",
+        "serving_role": "c23_serving_ef58d3cc1b0849de",
+        "verifier_role": "c23_verifier_ef58d3cc1b0849de"
+      },
+      "schema": "c23_retained_ef58d3cc1b0849de",
+      "worker_control_port": 55423
+    }
+  },
+  "materials": {
+    "image_receipt": "/var/lib/ocean-c23/evidence/image-preparation-quota-v3.json",
+    "image_receipt_sha256": "cfa05d6ca112e95ac1a27c69e508d80a654820429025895e96a52a81a7aeadbb",
+    "normalization_receipt": "/var/lib/ocean-c23/evidence/rootfs-normalization-quota-v3.json",
+    "normalization_sha256": "d75b965714e6335774af59eb6ab7616325b45ac3add38a5f2abf9a474a329824",
+    "oci_layout": "/var/lib/ocean-c23/scientific-oci-quota-v3",
+    "rootfs": "/var/lib/ocean-c23/scientific-normalized-quota-v3/rootfs",
+    "runtime_directory": "/opt/ocean-c23-runtime/release-20261019.0",
+    "runtime_manifest": "/var/lib/ocean-c23/evidence/runtime-preparation-quota-v3.json",
+    "runtime_manifest_sha256": "3bf90990a2c037fed3dc72fadface76a66247f595bce5a22588a1153970d4fa8"
+  },
+  "network": {
+    "host_controls": "/var/lib/ocean-c23/evidence/host-positive-retained-20261028.json",
+    "host_controls_sha256": "48bde7eb22b7516eb4926e92e6652a9876dfda84c66d2d770b53c0ddd3682c3d",
+    "network_isolation": "/var/lib/ocean-c23/evidence/network-isolation-retained-20261028.json",
+    "network_isolation_sha256": "d26efafdb027b30864194cdfa46b745138cbce789888c522d008afbcc8dba3f4"
+  },
+  "no_admin_or_GCP_credentials_transferred": true,
+  "source_commit": "501c80b7e5ee07f0990539baea3d8243f71d184a",
+  "version": "c23-retained-operator-public-control-pins-v1",
+  "worker_id": "347e1c74787c78b9358b44727992ab6b68eefa456ee3a1702afe35ef0e78111b"
+}

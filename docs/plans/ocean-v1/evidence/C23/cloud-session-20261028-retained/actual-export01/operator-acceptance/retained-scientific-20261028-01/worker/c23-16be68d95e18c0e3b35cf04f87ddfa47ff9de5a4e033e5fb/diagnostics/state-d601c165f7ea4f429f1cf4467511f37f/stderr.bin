@@ -1,0 +1,11 @@
+I1028 05:24:48.314719    2253 cli.go:275] **************** gVisor ****************
+I1028 05:24:48.314788    2253 cli.go:276] Version release-20261019.0, go1.27.2, amd64, 4 CPUs, linux, PID 2253, PPID 2199, UID 0, GID 0
+I1028 05:24:48.314812    2253 cli.go:278] Args: [/opt/ocean-c23-runtime/release-20261019.0/runsc --root=/var/lib/ocean-c23/operator-acceptance/retained-scientific-20261028-01/worker/runsc-state-c23-16be68d95e18c0e3b35cf04f87ddfa47ff9de5a4e033e5fb --platform=systrap --rootless=false --network=none --gofer-network-namespace=new --directfs=false --overlay2=none --host-uds=none --host-fifo=none --character-device-policy=emulated-only --net-raw=false --ignore-cgroups=false --allow-flag-override=false --sidecar-release-enforcement-policy=ALWAYS --fdlimit=4096 --gvisor-marker-file=true --oci-seccomp=true --debug=false --debug-log=/dev/stderr --panic-log=/dev/stderr state c23-16be68d95e18c0e3b35cf04f87ddfa47ff9de5a4e033e5fb]
+I1028 05:24:48.314864    2253 config.go:631] Platform: systrap
+I1028 05:24:48.314870    2253 config.go:632] RootDir: /var/lib/ocean-c23/operator-acceptance/retained-scientific-20261028-01/worker/runsc-state-c23-16be68d95e18c0e3b35cf04f87ddfa47ff9de5a4e033e5fb
+I1028 05:24:48.314882    2253 config.go:633] FileAccess: exclusive / Directfs: false / Overlay: none
+I1028 05:24:48.314892    2253 config.go:634] Network: none
+I1028 05:24:48.314898    2253 config.go:635] UseCPUNums: false
+W1028 05:24:48.314904    2253 config.go:640] --allow-suid is disabled, SUID/SGID bits on executables will be ignored.
+I1028 05:24:48.314910    2253 cli.go:287] **************** gVisor ****************
+I1028 05:24:48.314964    2253 cli.go:316] Exiting with status: 0

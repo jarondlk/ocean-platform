@@ -146,3 +146,21 @@ An uncertain start acknowledgement grants no permit or automatic new UUID retry.
 Queued cancellation, reboot and restart before retained physical observation
 remain fail-closed: no fabricated start, physical claim or capacity release.
 No dispatch route or automatic worker registration is introduced.
+
+
+## Actual retained acceptance — 2026-10-28 JST
+
+Both source08 retained synthetic C22 cases pass actual Linux execution, native
+cleanup, durable terminal, guarded physical issuance and independent ledger
+release. Actual owner suspension after terminal denies publication with feature
+still enabled; cleanup/close/sign/record/release remain valid. Independent raw
+audit verifies167 files, DB approval/execution/events/proof/release, canonical
+full chains/wrapper hashes, independent public pins/signatures and validated
+outputs. Private control-frame bodies remain intentionally unretained; digest,
+EOF/outcome and source-path validation are explicit, not a fabricated reparse.
+All resources are stopped and private DB schemas/roles cleared after verified
+export. The mandatory retained runtime bridge is now accepted for this isolated
+synthetic operator scope. Source-bound hosted delivery remains pending. Existing
+PID-exhaustion failure/qualified host bound and unsupported crash/reboot/queued
+capacity-held cases retain their original qualifications. No serving dispatch,
+whole-site deployment, real-data operation or scientific approval is inferred.
