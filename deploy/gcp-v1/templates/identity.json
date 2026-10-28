@@ -1,0 +1,55 @@
+{
+  "version": "c24-config-artifact-v1",
+  "evidence_class": "configuration-only",
+  "kind": "resource-scoped-identity-policy-contract",
+  "provider_schema_validated": false,
+  "apply_allowed": false,
+  "body": {
+    "project": {
+      "$value": "project"
+    },
+    "identities": {
+      "$value": "identities"
+    },
+    "secret_versions": {
+      "$value": "secrets"
+    },
+    "stores": {
+      "$value": "stores"
+    },
+    "queue": {
+      "$value": "queue_name"
+    },
+    "controller": {
+      "$value": "controller_name"
+    },
+    "project_wide_roles": [],
+    "legacy_resource_grants": [],
+    "public_worker_invokers": [],
+    "intended_grants": {
+      "serving": [
+        "own auth/internal/oauth/database secret access",
+        "read own snapshots and permitted retained results"
+      ],
+      "controller": [
+        "own research-controller and verifier database secret access",
+        "enqueue own research queue",
+        "actAs only own task-invoker identity"
+      ],
+      "task_invoker": [
+        "run.invoker on own research controller only"
+      ],
+      "supervisor": [
+        "own sandbox-controller database and termination seed secret access",
+        "read own designated inputs",
+        "create retained validated results in own results bucket"
+      ]
+    },
+    "managed_cloud_tasks_agent": "Review token-creation grant on the exact task-invoker identity and no broader target. Separate deployment identity is not a runtime identity.",
+    "actual_secret_contents_and_database_grants_verified": false,
+    "scoped_permission_intents": {
+      "$value": "scoped_grants"
+    },
+    "permission_intents_are_applied_IAM_bindings": false
+  }
+}

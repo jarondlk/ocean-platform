@@ -1,0 +1,107 @@
+{
+  "version": "c24-site-input-v1",
+  "input_class": "operator-values",
+  "target": {
+    "project_id": null,
+    "project_number": null,
+    "region": null,
+    "zone": null,
+    "public_origin": "https://beta.oceaninfobio.com",
+    "registry": null,
+    "network": null,
+    "subnet": null,
+    "subnet_cidr": null,
+    "sql_private_cidr": null
+  },
+  "services": {
+    "serving": null,
+    "controller": null,
+    "serving_image": null,
+    "api_image": null,
+    "controller_image": null
+  },
+  "identities": {
+    "serving": null,
+    "controller": null,
+    "supervisor": null,
+    "task_invoker": null
+  },
+  "browser": {
+    "oauth_client_id": null,
+    "oauth_callback": "https://beta.oceaninfobio.com/api/auth/callback/google",
+    "session_cookie": "__Host-ocean-v1-session",
+    "cookie_secure": true,
+    "cookie_http_only": true,
+    "cookie_path": "/",
+    "cookie_domain": null,
+    "same_site": "lax",
+    "csrf_origin": "https://beta.oceaninfobio.com",
+    "cors_origins": [
+      "https://beta.oceaninfobio.com"
+    ],
+    "internal_issuer": "ocean-v1-frontend",
+    "internal_audience": "ocean-v1-api"
+  },
+  "secrets": {
+    "auth": null,
+    "internal": null,
+    "oauth": null,
+    "serving_database": null,
+    "controller_database": null,
+    "supervisor_database": null,
+    "verifier_database": null,
+    "termination_seed": null
+  },
+  "stores": {
+    "database_instance": null,
+    "database_name": null,
+    "database_tier": null,
+    "database_disk_gib": null,
+    "database_disk_limit_gib": null,
+    "snapshots_bucket": null,
+    "results_bucket": null,
+    "quarantine_bucket": null,
+    "backups_bucket": null
+  },
+  "queue": {
+    "name": null,
+    "controller_uri": null,
+    "oidc_audience": null,
+    "max_concurrent_dispatches": null,
+    "max_dispatches_per_second": null,
+    "max_attempts": null
+  },
+  "worker": {
+    "name": null,
+    "machine_type": null,
+    "boot_image": null,
+    "boot_disk_gib": null,
+    "supervisor_cpu_reserve": null,
+    "supervisor_memory_reserve_mib": null,
+    "supervisor_host_pid_reserve": null,
+    "aggregate_host_pid_budget": null,
+    "runtime_release": null,
+    "runtime_files": null,
+    "scientific_image_digest": null,
+    "scientific_lock_sha256": null,
+    "normalized_rootfs_sha256": null,
+    "trusted_init_sha256": null,
+    "supervisor_source_sha256": null,
+    "boot_image_id": null
+  },
+  "operations": {
+    "currency": null,
+    "initial_test_spend_limit": null,
+    "monthly_spend_limit": null,
+    "log_retention_days": null,
+    "backup_retention_days": null,
+    "result_retention_days": null,
+    "recovery_point_minutes": null,
+    "recovery_time_minutes": null,
+    "max_job_log_bytes": null
+  },
+  "flags": {
+    "research_dispatch": false,
+    "experiment_dispatch": false
+  }
+}

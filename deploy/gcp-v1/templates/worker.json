@@ -1,0 +1,52 @@
+{
+  "version": "c24-config-artifact-v1",
+  "evidence_class": "configuration-only",
+  "kind": "compute-v1-instance-body",
+  "provider_schema_validated": false,
+  "apply_allowed": false,
+  "body": {
+    "name": {
+      "$value": "worker_name"
+    },
+    "machineType": {
+      "$value": "machine_type"
+    },
+    "canIpForward": false,
+    "deletionProtection": true,
+    "disks": {
+      "$value": "boot_disk"
+    },
+    "networkInterfaces": {
+      "$value": "worker_network"
+    },
+    "serviceAccounts": {
+      "$value": "worker_identities"
+    },
+    "scheduling": {
+      "automaticRestart": false,
+      "onHostMaintenance": "TERMINATE"
+    },
+    "metadata": {
+      "items": [
+        {
+          "key": "enable-oslogin",
+          "value": "TRUE"
+        },
+        {
+          "key": "block-project-ssh-keys",
+          "value": "TRUE"
+        },
+        {
+          "key": "disable-legacy-endpoints",
+          "value": "TRUE"
+        }
+      ]
+    },
+    "shieldedInstanceConfig": {
+      "enableSecureBoot": true,
+      "enableVtpm": true,
+      "enableIntegrityMonitoring": true
+    }
+  },
+  "startup": "No startup script or supervisor is installed by rendering. Materialization, host preflight and real supervisor lifecycle are live gates."
+}

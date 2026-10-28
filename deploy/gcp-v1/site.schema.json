@@ -1,0 +1,645 @@
+{
+  "$defs": {
+    "Browser": {
+      "additionalProperties": false,
+      "properties": {
+        "cookie_domain": {
+          "title": "Cookie Domain",
+          "type": "null"
+        },
+        "cookie_http_only": {
+          "title": "Cookie Http Only",
+          "type": "boolean"
+        },
+        "cookie_path": {
+          "const": "/",
+          "title": "Cookie Path",
+          "type": "string"
+        },
+        "cookie_secure": {
+          "title": "Cookie Secure",
+          "type": "boolean"
+        },
+        "cors_origins": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "title": "Cors Origins",
+          "type": "array"
+        },
+        "csrf_origin": {
+          "title": "Csrf Origin",
+          "type": "string"
+        },
+        "internal_audience": {
+          "pattern": "^ocean-v1-[a-z0-9-]+$",
+          "title": "Internal Audience",
+          "type": "string"
+        },
+        "internal_issuer": {
+          "pattern": "^ocean-v1-[a-z0-9-]+$",
+          "title": "Internal Issuer",
+          "type": "string"
+        },
+        "oauth_callback": {
+          "title": "Oauth Callback",
+          "type": "string"
+        },
+        "oauth_client_id": {
+          "pattern": "^[A-Za-z0-9-]+\\.apps\\.googleusercontent\\.com$",
+          "title": "Oauth Client Id",
+          "type": "string"
+        },
+        "same_site": {
+          "const": "lax",
+          "title": "Same Site",
+          "type": "string"
+        },
+        "session_cookie": {
+          "pattern": "^__Host-ocean-v1-[a-z-]+$",
+          "title": "Session Cookie",
+          "type": "string"
+        }
+      },
+      "required": [
+        "oauth_client_id",
+        "oauth_callback",
+        "session_cookie",
+        "cookie_secure",
+        "cookie_http_only",
+        "cookie_path",
+        "cookie_domain",
+        "same_site",
+        "csrf_origin",
+        "cors_origins",
+        "internal_issuer",
+        "internal_audience"
+      ],
+      "title": "Browser",
+      "type": "object"
+    },
+    "Flags": {
+      "additionalProperties": false,
+      "properties": {
+        "experiment_dispatch": {
+          "title": "Experiment Dispatch",
+          "type": "boolean"
+        },
+        "research_dispatch": {
+          "title": "Research Dispatch",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "research_dispatch",
+        "experiment_dispatch"
+      ],
+      "title": "Flags",
+      "type": "object"
+    },
+    "Identities": {
+      "additionalProperties": false,
+      "properties": {
+        "controller": {
+          "title": "Controller",
+          "type": "string"
+        },
+        "serving": {
+          "title": "Serving",
+          "type": "string"
+        },
+        "supervisor": {
+          "title": "Supervisor",
+          "type": "string"
+        },
+        "task_invoker": {
+          "title": "Task Invoker",
+          "type": "string"
+        }
+      },
+      "required": [
+        "serving",
+        "controller",
+        "task_invoker",
+        "supervisor"
+      ],
+      "title": "Identities",
+      "type": "object"
+    },
+    "Operations": {
+      "additionalProperties": false,
+      "properties": {
+        "backup_retention_days": {
+          "maximum": 365,
+          "minimum": 7,
+          "title": "Backup Retention Days",
+          "type": "integer"
+        },
+        "currency": {
+          "enum": [
+            "JPY",
+            "USD",
+            "EUR"
+          ],
+          "title": "Currency",
+          "type": "string"
+        },
+        "initial_test_spend_limit": {
+          "maximum": 1000000000000,
+          "minimum": 1,
+          "title": "Initial Test Spend Limit",
+          "type": "integer"
+        },
+        "log_retention_days": {
+          "maximum": 365,
+          "minimum": 7,
+          "title": "Log Retention Days",
+          "type": "integer"
+        },
+        "max_job_log_bytes": {
+          "maximum": 1048576,
+          "minimum": 1024,
+          "title": "Max Job Log Bytes",
+          "type": "integer"
+        },
+        "monthly_spend_limit": {
+          "maximum": 1000000000000,
+          "minimum": 1,
+          "title": "Monthly Spend Limit",
+          "type": "integer"
+        },
+        "recovery_point_minutes": {
+          "maximum": 1440,
+          "minimum": 1,
+          "title": "Recovery Point Minutes",
+          "type": "integer"
+        },
+        "recovery_time_minutes": {
+          "maximum": 10080,
+          "minimum": 1,
+          "title": "Recovery Time Minutes",
+          "type": "integer"
+        },
+        "result_retention_days": {
+          "maximum": 3650,
+          "minimum": 30,
+          "title": "Result Retention Days",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "currency",
+        "initial_test_spend_limit",
+        "monthly_spend_limit",
+        "log_retention_days",
+        "backup_retention_days",
+        "result_retention_days",
+        "recovery_point_minutes",
+        "recovery_time_minutes",
+        "max_job_log_bytes"
+      ],
+      "title": "Operations",
+      "type": "object"
+    },
+    "Queue": {
+      "additionalProperties": false,
+      "properties": {
+        "controller_uri": {
+          "title": "Controller Uri",
+          "type": "string"
+        },
+        "max_attempts": {
+          "maximum": 10,
+          "minimum": 1,
+          "title": "Max Attempts",
+          "type": "integer"
+        },
+        "max_concurrent_dispatches": {
+          "maximum": 2,
+          "minimum": 1,
+          "title": "Max Concurrent Dispatches",
+          "type": "integer"
+        },
+        "max_dispatches_per_second": {
+          "maximum": 2,
+          "minimum": 1,
+          "title": "Max Dispatches Per Second",
+          "type": "integer"
+        },
+        "name": {
+          "pattern": "^ocean-v1-[a-z0-9][a-z0-9-]{0,34}[a-z0-9]$",
+          "title": "Name",
+          "type": "string"
+        },
+        "oidc_audience": {
+          "title": "Oidc Audience",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "controller_uri",
+        "oidc_audience",
+        "max_concurrent_dispatches",
+        "max_dispatches_per_second",
+        "max_attempts"
+      ],
+      "title": "Queue",
+      "type": "object"
+    },
+    "Secrets": {
+      "additionalProperties": false,
+      "properties": {
+        "auth": {
+          "title": "Auth",
+          "type": "string"
+        },
+        "controller_database": {
+          "title": "Controller Database",
+          "type": "string"
+        },
+        "internal": {
+          "title": "Internal",
+          "type": "string"
+        },
+        "oauth": {
+          "title": "Oauth",
+          "type": "string"
+        },
+        "serving_database": {
+          "title": "Serving Database",
+          "type": "string"
+        },
+        "supervisor_database": {
+          "title": "Supervisor Database",
+          "type": "string"
+        },
+        "termination_seed": {
+          "title": "Termination Seed",
+          "type": "string"
+        },
+        "verifier_database": {
+          "title": "Verifier Database",
+          "type": "string"
+        }
+      },
+      "required": [
+        "auth",
+        "internal",
+        "oauth",
+        "serving_database",
+        "controller_database",
+        "supervisor_database",
+        "verifier_database",
+        "termination_seed"
+      ],
+      "title": "Secrets",
+      "type": "object"
+    },
+    "Services": {
+      "additionalProperties": false,
+      "properties": {
+        "api_image": {
+          "title": "Api Image",
+          "type": "string"
+        },
+        "controller": {
+          "pattern": "^ocean-v1-[a-z0-9][a-z0-9-]{0,34}[a-z0-9]$",
+          "title": "Controller",
+          "type": "string"
+        },
+        "controller_image": {
+          "title": "Controller Image",
+          "type": "string"
+        },
+        "serving": {
+          "pattern": "^ocean-v1-[a-z0-9][a-z0-9-]{0,34}[a-z0-9]$",
+          "title": "Serving",
+          "type": "string"
+        },
+        "serving_image": {
+          "title": "Serving Image",
+          "type": "string"
+        }
+      },
+      "required": [
+        "serving",
+        "controller",
+        "serving_image",
+        "api_image",
+        "controller_image"
+      ],
+      "title": "Services",
+      "type": "object"
+    },
+    "Stores": {
+      "additionalProperties": false,
+      "properties": {
+        "backups_bucket": {
+          "pattern": "^ocean-v1-[a-z0-9][a-z0-9-]{0,34}[a-z0-9]$",
+          "title": "Backups Bucket",
+          "type": "string"
+        },
+        "database_disk_gib": {
+          "maximum": 1024,
+          "minimum": 20,
+          "title": "Database Disk Gib",
+          "type": "integer"
+        },
+        "database_disk_limit_gib": {
+          "maximum": 2048,
+          "minimum": 20,
+          "title": "Database Disk Limit Gib",
+          "type": "integer"
+        },
+        "database_instance": {
+          "pattern": "^ocean-v1-[a-z0-9][a-z0-9-]{0,34}[a-z0-9]$",
+          "title": "Database Instance",
+          "type": "string"
+        },
+        "database_name": {
+          "pattern": "^ocean_v1_[a-z0-9_]+$",
+          "title": "Database Name",
+          "type": "string"
+        },
+        "database_tier": {
+          "pattern": "^db-custom-[0-9]+-[0-9]+$",
+          "title": "Database Tier",
+          "type": "string"
+        },
+        "quarantine_bucket": {
+          "pattern": "^ocean-v1-[a-z0-9][a-z0-9-]{0,34}[a-z0-9]$",
+          "title": "Quarantine Bucket",
+          "type": "string"
+        },
+        "results_bucket": {
+          "pattern": "^ocean-v1-[a-z0-9][a-z0-9-]{0,34}[a-z0-9]$",
+          "title": "Results Bucket",
+          "type": "string"
+        },
+        "snapshots_bucket": {
+          "pattern": "^ocean-v1-[a-z0-9][a-z0-9-]{0,34}[a-z0-9]$",
+          "title": "Snapshots Bucket",
+          "type": "string"
+        }
+      },
+      "required": [
+        "database_instance",
+        "database_name",
+        "database_tier",
+        "database_disk_gib",
+        "database_disk_limit_gib",
+        "snapshots_bucket",
+        "results_bucket",
+        "quarantine_bucket",
+        "backups_bucket"
+      ],
+      "title": "Stores",
+      "type": "object"
+    },
+    "Target": {
+      "additionalProperties": false,
+      "properties": {
+        "network": {
+          "pattern": "^ocean-v1-[a-z0-9][a-z0-9-]{0,34}[a-z0-9]$",
+          "title": "Network",
+          "type": "string"
+        },
+        "project_id": {
+          "pattern": "^ocean-v1-[a-z0-9-]{1,20}[a-z0-9]$",
+          "title": "Project Id",
+          "type": "string"
+        },
+        "project_number": {
+          "pattern": "^[1-9][0-9]{5,14}$",
+          "title": "Project Number",
+          "type": "string"
+        },
+        "public_origin": {
+          "title": "Public Origin",
+          "type": "string"
+        },
+        "region": {
+          "pattern": "^[a-z]+-[a-z]+[0-9]$",
+          "title": "Region",
+          "type": "string"
+        },
+        "registry": {
+          "pattern": "^ocean-v1-[a-z0-9][a-z0-9-]{0,34}[a-z0-9]$",
+          "title": "Registry",
+          "type": "string"
+        },
+        "sql_private_cidr": {
+          "title": "Sql Private Cidr",
+          "type": "string"
+        },
+        "subnet": {
+          "pattern": "^ocean-v1-[a-z0-9][a-z0-9-]{0,34}[a-z0-9]$",
+          "title": "Subnet",
+          "type": "string"
+        },
+        "subnet_cidr": {
+          "title": "Subnet Cidr",
+          "type": "string"
+        },
+        "zone": {
+          "title": "Zone",
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id",
+        "project_number",
+        "region",
+        "zone",
+        "public_origin",
+        "registry",
+        "network",
+        "subnet",
+        "subnet_cidr",
+        "sql_private_cidr"
+      ],
+      "title": "Target",
+      "type": "object"
+    },
+    "Worker": {
+      "additionalProperties": false,
+      "properties": {
+        "aggregate_host_pid_budget": {
+          "maximum": 4096,
+          "minimum": 384,
+          "title": "Aggregate Host Pid Budget",
+          "type": "integer"
+        },
+        "boot_disk_gib": {
+          "maximum": 500,
+          "minimum": 50,
+          "title": "Boot Disk Gib",
+          "type": "integer"
+        },
+        "boot_image": {
+          "title": "Boot Image",
+          "type": "string"
+        },
+        "boot_image_id": {
+          "pattern": "^[1-9][0-9]{0,19}$",
+          "title": "Boot Image Id",
+          "type": "string"
+        },
+        "machine_type": {
+          "enum": [
+            "e2-standard-8",
+            "e2-standard-16"
+          ],
+          "title": "Machine Type",
+          "type": "string"
+        },
+        "name": {
+          "pattern": "^ocean-v1-[a-z0-9][a-z0-9-]{0,34}[a-z0-9]$",
+          "title": "Name",
+          "type": "string"
+        },
+        "normalized_rootfs_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Normalized Rootfs Sha256",
+          "type": "string"
+        },
+        "runtime_files": {
+          "additionalProperties": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "title": "Runtime Files",
+          "type": "object"
+        },
+        "runtime_release": {
+          "pattern": "^release-[0-9]{8}\\.[0-9]+$",
+          "title": "Runtime Release",
+          "type": "string"
+        },
+        "scientific_image_digest": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "title": "Scientific Image Digest",
+          "type": "string"
+        },
+        "scientific_lock_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Scientific Lock Sha256",
+          "type": "string"
+        },
+        "supervisor_cpu_reserve": {
+          "maximum": 8,
+          "minimum": 2,
+          "title": "Supervisor Cpu Reserve",
+          "type": "integer"
+        },
+        "supervisor_host_pid_reserve": {
+          "maximum": 1024,
+          "minimum": 128,
+          "title": "Supervisor Host Pid Reserve",
+          "type": "integer"
+        },
+        "supervisor_memory_reserve_mib": {
+          "maximum": 32768,
+          "minimum": 4096,
+          "title": "Supervisor Memory Reserve Mib",
+          "type": "integer"
+        },
+        "supervisor_source_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Supervisor Source Sha256",
+          "type": "string"
+        },
+        "trusted_init_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Trusted Init Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "machine_type",
+        "boot_image",
+        "boot_image_id",
+        "boot_disk_gib",
+        "supervisor_cpu_reserve",
+        "supervisor_memory_reserve_mib",
+        "supervisor_host_pid_reserve",
+        "aggregate_host_pid_budget",
+        "runtime_release",
+        "runtime_files",
+        "scientific_image_digest",
+        "scientific_lock_sha256",
+        "normalized_rootfs_sha256",
+        "trusted_init_sha256",
+        "supervisor_source_sha256"
+      ],
+      "title": "Worker",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "browser": {
+      "$ref": "#/$defs/Browser"
+    },
+    "flags": {
+      "$ref": "#/$defs/Flags"
+    },
+    "identities": {
+      "$ref": "#/$defs/Identities"
+    },
+    "input_class": {
+      "enum": [
+        "synthetic",
+        "operator-values"
+      ],
+      "title": "Input Class",
+      "type": "string"
+    },
+    "operations": {
+      "$ref": "#/$defs/Operations"
+    },
+    "queue": {
+      "$ref": "#/$defs/Queue"
+    },
+    "secrets": {
+      "$ref": "#/$defs/Secrets"
+    },
+    "services": {
+      "$ref": "#/$defs/Services"
+    },
+    "stores": {
+      "$ref": "#/$defs/Stores"
+    },
+    "target": {
+      "$ref": "#/$defs/Target"
+    },
+    "version": {
+      "const": "c24-site-input-v1",
+      "title": "Version",
+      "type": "string"
+    },
+    "worker": {
+      "$ref": "#/$defs/Worker"
+    }
+  },
+  "required": [
+    "version",
+    "input_class",
+    "target",
+    "services",
+    "identities",
+    "browser",
+    "secrets",
+    "stores",
+    "queue",
+    "worker",
+    "operations",
+    "flags"
+  ],
+  "title": "Site",
+  "type": "object"
+}

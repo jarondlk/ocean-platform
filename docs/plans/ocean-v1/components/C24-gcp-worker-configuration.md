@@ -1,12 +1,22 @@
 # C24 — Isolated GCP site and worker configuration
 
-**Status:** Not started. **Prerequisites:** C20, C23.
+**Status:** In progress; offline implementation and local acceptance pass,
+source checkpoint/hosted delivery pending. **Prerequisites:** C20, C23.
+
+Selected by the user on 2026-10-28 JST. Strict explicit inputs/schema, seven
+configuration templates, synthetic/pending operator examples, scoped permission
+and network/capacity/session contracts, isolation matrix and operator runbook
+are implemented in `deploy/gcp-v1/` with `scripts/render_gcp_v1.py`.
+160 scoped C24/legacy-renderer/security cases, Ruff, schema/example checks and
+prerequisite source reconciliation pass. No provider/live validation, DNS/cloud
+operation or deployment is claimed. All live gates and dispatch remain closed.
 
 Development preparation completed 2026-10-28 JST: C20/C23 accepted receipts and
 current source reconcile. The user proposed `https://beta.oceaninfobio.com` as
 the working v1 origin. [Readiness and implementation plan](../C24_READINESS_AUDIT_2026-10-28.md)
 records its independent session/origin boundary, checkpoints and pending live
-inputs. No application implementation, DNS change or beta deployment has begun.
+inputs. That earlier preparation did not start application implementation, DNS
+changes or beta deployment; the current local C24 implementation is recorded above.
 [Preparation handoff](../handoffs/C24.md).
 
 ## Revised delivery boundary

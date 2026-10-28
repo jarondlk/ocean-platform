@@ -1,0 +1,33 @@
+{
+  "version": "c24-config-artifact-v1",
+  "evidence_class": "configuration-only",
+  "kind": "cloud-run-v2-service-body",
+  "provider_schema_validated": false,
+  "apply_allowed": false,
+  "body": {
+    "name": {
+      "$value": "serving_name"
+    },
+    "ingress": "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER",
+    "invokerIamDisabled": true,
+    "defaultUriDisabled": true,
+    "template": {
+      "serviceAccount": {
+        "$value": "serving_identity"
+      },
+      "scaling": {
+        "minInstanceCount": 0,
+        "maxInstanceCount": 1
+      },
+      "timeout": "240s",
+      "maxInstanceRequestConcurrency": 4,
+      "containers": {
+        "$value": "containers"
+      },
+      "vpcAccess": {
+        "$value": "vpc"
+      }
+    }
+  },
+  "invocation_boundary": "Public frontend through owned load balancer; application session auth required; API sidecar is not an independent public endpoint."
+}

@@ -1,0 +1,24 @@
+{
+  "activation": "Creation does not pause a queue. A separately authorized operator must pause and read back before any producer is enabled. Dispatch remains disabled in every consumer/producer.",
+  "apply_allowed": false,
+  "body": {
+    "name": "projects/ocean-v1-fixture-20261028/locations/asia-northeast1/queues/ocean-v1-research",
+    "rateLimits": {
+      "maxConcurrentDispatches": 2,
+      "maxDispatchesPerSecond": 1
+    },
+    "retryConfig": {
+      "maxAttempts": 5,
+      "maxBackoff": "300s",
+      "maxDoublings": 4,
+      "minBackoff": "10s"
+    },
+    "stackdriverLoggingConfig": {
+      "samplingRatio": 0.1
+    }
+  },
+  "evidence_class": "configuration-only",
+  "kind": "cloud-tasks-v2-queue-body",
+  "provider_schema_validated": false,
+  "version": "c24-config-artifact-v1"
+}

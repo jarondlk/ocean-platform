@@ -1,0 +1,57 @@
+{
+  "apply_allowed": false,
+  "body": {
+    "automatic_results_deletion": false,
+    "buckets": {
+      "public_access_prevention": "enforced",
+      "public_grants": [],
+      "uniform_bucket_level_access": true,
+      "versioning": true
+    },
+    "database": {
+      "automatic_backups": true,
+      "deletion_protection": true,
+      "point_in_time_recovery": true,
+      "private_ip_only": true,
+      "public_authorized_networks": [],
+      "roles": [
+        "ocean_v1_serving",
+        "ocean_v1_research_controller",
+        "ocean_v1_sandbox_controller",
+        "ocean_v1_sandbox_verifier"
+      ],
+      "ssl_mode": "ENCRYPTED_ONLY",
+      "supervisor_database_role_is_bootstrap_admin": false,
+      "version": "POSTGRES_16"
+    },
+    "project": "ocean-v1-fixture-20261028",
+    "region": "asia-northeast1",
+    "retention": {
+      "backup_retention_days": 30,
+      "currency": "JPY",
+      "initial_test_spend_limit": 1000,
+      "log_retention_days": 30,
+      "max_job_log_bytes": 65536,
+      "monthly_spend_limit": 10000,
+      "recovery_point_minutes": 60,
+      "recovery_time_minutes": 240,
+      "result_retention_days": 365
+    },
+    "retention_authority": "Retention policies must respect holds/receipts; no destructive TTL is emitted for inputs, evidence or results.",
+    "targets": {
+      "backups_bucket": "ocean-v1-fixture-20261028-backups",
+      "database_disk_gib": 20,
+      "database_disk_limit_gib": 50,
+      "database_instance": "ocean-v1-postgres",
+      "database_name": "ocean_v1_app",
+      "database_tier": "db-custom-2-7680",
+      "quarantine_bucket": "ocean-v1-fixture-20261028-quarantine",
+      "results_bucket": "ocean-v1-fixture-20261028-results",
+      "snapshots_bucket": "ocean-v1-fixture-20261028-snapshots"
+    }
+  },
+  "evidence_class": "configuration-only",
+  "kind": "storage-database-policy-contract",
+  "provider_schema_validated": false,
+  "version": "c24-config-artifact-v1"
+}

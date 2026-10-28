@@ -1,0 +1,30 @@
+{
+  "apply_allowed": false,
+  "evidence_class": "configuration-only",
+  "files": {
+    "controller.json": "0c6cc923e21d098b587361fabee0c5e7adb483c68bbd3cc132b5d058819dfe19",
+    "identity.json": "de22b8fd8971a241f4c4f4a72b192c3eeb2c333b6d230d9bb7d7e47e1c7eb2f2",
+    "queue.json": "e5471fc39dafaf21efe39ec6e79145b49c80703919bb3df3587bda3ac3f5518c",
+    "serving.json": "1d0d1166c801292b3ca9ba1663514274469b163af9c0dde8bf0c7903be018687",
+    "site-policy.json": "65e9bd7ba5b799d4e3b3a3f2be61bf3cac389a74c9322fd7ff68f924b94fc4b2",
+    "storage-database.json": "6bc5054dc61f68e82f0a78fb2629d0bcb097ce8badb00227bd4961b92d60f80d",
+    "worker.json": "7aa0c9bfea8e6d337c048000d7d9a08cab364718924350946a72838258b18fe9"
+  },
+  "input_class": "synthetic",
+  "input_sha256": "14ef435b1143eef379128dec3f6454be4142694a9567e196a9b5211066b22e66",
+  "live_gates": [
+    "whole_site_target_and_live_action_authorization",
+    "authenticated_v1_host_proxy_and_bootstrap",
+    "real_cloud_tasks_adapter_outbox_and_private_invocation",
+    "production_experiment_supervisor_health_and_drain",
+    "worker_boot_image_unique_id_and_disk_sourceImageId",
+    "DNS_TLS_Host_OAuth_cookie_and_cross_origin_validation",
+    "inherited_IAM_and_network_legacy_access_denials",
+    "two_simultaneous_sandboxes_and_measured_host_capacity",
+    "crash_reboot_uncertain_ACK_recovery_and_physical_proof_release",
+    "independent_backup_restore_retention_budget_and_alert_readbacks",
+    "C26_C27_integrated_acceptance_and_release_promotion"
+  ],
+  "provider_schema_validated": false,
+  "version": "c24-rendered-bundle-v1"
+}

@@ -1,0 +1,22 @@
+{
+  "version": "c24-config-artifact-v1",
+  "evidence_class": "configuration-only",
+  "kind": "cloud-tasks-v2-queue-body",
+  "provider_schema_validated": false,
+  "apply_allowed": false,
+  "body": {
+    "name": {
+      "$value": "queue_name"
+    },
+    "rateLimits": {
+      "$value": "queue_rate"
+    },
+    "retryConfig": {
+      "$value": "queue_retry"
+    },
+    "stackdriverLoggingConfig": {
+      "samplingRatio": 0.1
+    }
+  },
+  "activation": "Creation does not pause a queue. A separately authorized operator must pause and read back before any producer is enabled. Dispatch remains disabled in every consumer/producer."
+}

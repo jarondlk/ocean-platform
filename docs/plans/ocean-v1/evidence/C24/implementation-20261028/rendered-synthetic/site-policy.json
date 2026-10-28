@@ -1,0 +1,194 @@
+{
+  "activation": {
+    "authenticated_v1_host": "unavailable",
+    "experiment_dispatch": false,
+    "production_experiment_supervisor": "unavailable",
+    "real_Cloud_Tasks_adapter": "unavailable",
+    "research_dispatch": false
+  },
+  "apply_allowed": false,
+  "browser": {
+    "cookie_domain": null,
+    "cookie_http_only": true,
+    "cookie_path": "/",
+    "cookie_secure": true,
+    "cors_origins": [
+      "https://beta.example.invalid"
+    ],
+    "csrf_origin": "https://beta.example.invalid",
+    "internal_audience": "ocean-v1-api",
+    "internal_issuer": "ocean-v1-frontend",
+    "oauth_callback": "https://beta.example.invalid/api/auth/callback/google",
+    "oauth_client_id": "synthetic-c24.apps.googleusercontent.com",
+    "same_site": "lax",
+    "session_cookie": "__Host-ocean-v1-session"
+  },
+  "capacity": {
+    "authority": "C22 PostgreSQL reservation locks",
+    "global": 2,
+    "per_user": 1,
+    "queue_concurrency_is_capacity_authority": false
+  },
+  "evidence_class": "configuration-only",
+  "gates": [
+    {
+      "gate": "whole_site_target_and_live_action_authorization",
+      "status": "not_run"
+    },
+    {
+      "gate": "authenticated_v1_host_proxy_and_bootstrap",
+      "status": "not_run"
+    },
+    {
+      "gate": "real_cloud_tasks_adapter_outbox_and_private_invocation",
+      "status": "not_run"
+    },
+    {
+      "gate": "production_experiment_supervisor_health_and_drain",
+      "status": "not_run"
+    },
+    {
+      "gate": "worker_boot_image_unique_id_and_disk_sourceImageId",
+      "status": "not_run"
+    },
+    {
+      "gate": "DNS_TLS_Host_OAuth_cookie_and_cross_origin_validation",
+      "status": "not_run"
+    },
+    {
+      "gate": "inherited_IAM_and_network_legacy_access_denials",
+      "status": "not_run"
+    },
+    {
+      "gate": "two_simultaneous_sandboxes_and_measured_host_capacity",
+      "status": "not_run"
+    },
+    {
+      "gate": "crash_reboot_uncertain_ACK_recovery_and_physical_proof_release",
+      "status": "not_run"
+    },
+    {
+      "gate": "independent_backup_restore_retention_budget_and_alert_readbacks",
+      "status": "not_run"
+    },
+    {
+      "gate": "C26_C27_integrated_acceptance_and_release_promotion",
+      "status": "not_run"
+    }
+  ],
+  "guest_credentials": [],
+  "guest_metadata": false,
+  "guest_network": "none",
+  "ingress": {
+    "DNS_TLS_LB_provider_configuration": "not_run",
+    "canonical_host_only": true,
+    "design": "owned global external Application Load Balancer, serverless serving backend and managed TLS",
+    "legacy_DNS_changes": false,
+    "overwrite_untrusted_forwarded_headers": true,
+    "public_controller_or_worker": false,
+    "same_origin_authenticated_API": true
+  },
+  "input_class": "synthetic",
+  "kind": "v1-site-and-supervisor-policy-contract",
+  "limits": {
+    "cpus": 2,
+    "guest_nofile": 256,
+    "host_pids_per_job": 128,
+    "max_input_bytes": 268435456,
+    "max_output_bytes": 52428800,
+    "memory_bytes": 4294967296,
+    "native_nofile": 4096,
+    "wall_seconds": 600
+  },
+  "live_dispatch_enabled": false,
+  "network": {
+    "external_worker_IP": false,
+    "guest_egress": "none",
+    "legacy_peering_or_routes": [],
+    "network": "ocean-v1-private",
+    "private_google_access": true,
+    "project": "ocean-v1-fixture-20261028",
+    "sql_private_service_access_cidr": "10.71.0.0/24",
+    "subnet": "ocean-v1-private",
+    "subnet_cidr": "10.70.0.0/24",
+    "trusted_host_egress": "reviewed Google API and OAuth endpoints only; actual DNS/firewall/proxy behavior remains not_run",
+    "worker_inbound": "deny except separately reviewed private control/IAP operator path"
+  },
+  "operations": {
+    "backup_retention_days": 30,
+    "currency": "JPY",
+    "initial_test_spend_limit": 1000,
+    "log_retention_days": 30,
+    "max_job_log_bytes": 65536,
+    "monthly_spend_limit": 10000,
+    "recovery_point_minutes": 60,
+    "recovery_time_minutes": 240,
+    "result_retention_days": 365
+  },
+  "provider_schema_validated": false,
+  "public_origin": "https://beta.example.invalid",
+  "queue_delivery": {
+    "controller_uri": "https://ocean-v1-controller-123456789012.asia-northeast1.run.app/internal/research/deliver",
+    "max_attempts": 5,
+    "max_concurrent_dispatches": 2,
+    "max_dispatches_per_second": 1,
+    "name": "ocean-v1-research",
+    "oidc_audience": "https://ocean-v1-controller-123456789012.asia-northeast1.run.app"
+  },
+  "research": {
+    "active_seconds": 180,
+    "experiment_queue_is_research_queue": false,
+    "malformed_repairs": 1,
+    "tool_actions": 12
+  },
+  "supervisor": {
+    "boot_lease_and_journal_bound": true,
+    "cleanup_before_output_decode": true,
+    "health_fields": [
+      "boot_id",
+      "source_digest",
+      "runtime_material_digest",
+      "lease_epoch",
+      "journal_head",
+      "active_reservations",
+      "draining"
+    ],
+    "lease_expiry_releases_capacity": false,
+    "log_content": "bounded operational identifiers only; no questions, input bytes, secrets or scientific output",
+    "pre_start_cgroup_and_resource_readback_required": true,
+    "private_state_and_material_roots_required": true,
+    "production_daemon_or_dispatch_adapter_available": false,
+    "release_authority": "C22 verified physical termination packet and independent durable proof",
+    "source": "orchestration.experiment_sandbox.retained_runner",
+    "unsupported_queued_reboot_prepacket_reconstruction": "retain capacity; operator reconciliation required"
+  },
+  "version": "c24-config-artifact-v1",
+  "worker_material": {
+    "aggregate_host_pid_budget": 384,
+    "boot_disk_gib": 50,
+    "boot_image": "projects/ocean-v1-fixture-20261028/global/images/ocean-v1-worker-synthetic",
+    "boot_image_id": "1234567890123456789",
+    "machine_type": "e2-standard-8",
+    "name": "ocean-v1-worker",
+    "normalized_rootfs_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "runtime_files": {
+      "containerd-shim-runsc-v1": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "gvisor-bin/checkpointgofer": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "gvisor-bin/gvisor-proc-umounter": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "gvisor-bin/gvisor-sentry-prewarmer": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "gvisor-bin/gvisor_sentry": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "gvisor-bin/runsc-fd-parking": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "gvisor-bin/runsc-metric-server": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "runsc": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "runtime_release": "release-20261019.0",
+    "scientific_image_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "scientific_lock_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "supervisor_cpu_reserve": 2,
+    "supervisor_host_pid_reserve": 128,
+    "supervisor_memory_reserve_mib": 8192,
+    "supervisor_source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "trusted_init_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+  },
+  "writable_host_mounts": []
+}

@@ -1,0 +1,116 @@
+{
+  "version": "c24-site-input-v1",
+  "input_class": "synthetic",
+  "target": {
+    "project_id": "ocean-v1-fixture-20261028",
+    "project_number": "123456789012",
+    "region": "asia-northeast1",
+    "zone": "asia-northeast1-a",
+    "public_origin": "https://beta.example.invalid",
+    "registry": "ocean-v1-images",
+    "network": "ocean-v1-private",
+    "subnet": "ocean-v1-private",
+    "subnet_cidr": "10.70.0.0/24",
+    "sql_private_cidr": "10.71.0.0/24"
+  },
+  "services": {
+    "serving": "ocean-v1-serving",
+    "controller": "ocean-v1-controller",
+    "serving_image": "asia-northeast1-docker.pkg.dev/ocean-v1-fixture-20261028/ocean-v1-images/frontend-host@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "api_image": "asia-northeast1-docker.pkg.dev/ocean-v1-fixture-20261028/ocean-v1-images/api@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "controller_image": "asia-northeast1-docker.pkg.dev/ocean-v1-fixture-20261028/ocean-v1-images/controller@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "identities": {
+    "serving": "ocean-v1-serving@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+    "controller": "ocean-v1-controller@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+    "supervisor": "ocean-v1-supervisor@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+    "task_invoker": "ocean-v1-task-invoker@ocean-v1-fixture-20261028.iam.gserviceaccount.com"
+  },
+  "browser": {
+    "oauth_client_id": "synthetic-c24.apps.googleusercontent.com",
+    "oauth_callback": "https://beta.example.invalid/api/auth/callback/google",
+    "session_cookie": "__Host-ocean-v1-session",
+    "cookie_secure": true,
+    "cookie_http_only": true,
+    "cookie_path": "/",
+    "cookie_domain": null,
+    "same_site": "lax",
+    "csrf_origin": "https://beta.example.invalid",
+    "cors_origins": [
+      "https://beta.example.invalid"
+    ],
+    "internal_issuer": "ocean-v1-frontend",
+    "internal_audience": "ocean-v1-api"
+  },
+  "secrets": {
+    "auth": "projects/123456789012/secrets/ocean-v1-auth/versions/1",
+    "internal": "projects/123456789012/secrets/ocean-v1-internal/versions/1",
+    "oauth": "projects/123456789012/secrets/ocean-v1-oauth/versions/1",
+    "serving_database": "projects/123456789012/secrets/ocean-v1-serving-database/versions/1",
+    "controller_database": "projects/123456789012/secrets/ocean-v1-controller-database/versions/1",
+    "supervisor_database": "projects/123456789012/secrets/ocean-v1-supervisor-database/versions/1",
+    "verifier_database": "projects/123456789012/secrets/ocean-v1-verifier-database/versions/1",
+    "termination_seed": "projects/123456789012/secrets/ocean-v1-termination-seed/versions/1"
+  },
+  "stores": {
+    "database_instance": "ocean-v1-postgres",
+    "database_name": "ocean_v1_app",
+    "database_tier": "db-custom-2-7680",
+    "database_disk_gib": 20,
+    "database_disk_limit_gib": 50,
+    "snapshots_bucket": "ocean-v1-fixture-20261028-snapshots",
+    "results_bucket": "ocean-v1-fixture-20261028-results",
+    "quarantine_bucket": "ocean-v1-fixture-20261028-quarantine",
+    "backups_bucket": "ocean-v1-fixture-20261028-backups"
+  },
+  "queue": {
+    "name": "ocean-v1-research",
+    "controller_uri": "https://ocean-v1-controller-123456789012.asia-northeast1.run.app/internal/research/deliver",
+    "oidc_audience": "https://ocean-v1-controller-123456789012.asia-northeast1.run.app",
+    "max_concurrent_dispatches": 2,
+    "max_dispatches_per_second": 1,
+    "max_attempts": 5
+  },
+  "worker": {
+    "name": "ocean-v1-worker",
+    "machine_type": "e2-standard-8",
+    "boot_image": "projects/ocean-v1-fixture-20261028/global/images/ocean-v1-worker-synthetic",
+    "boot_disk_gib": 50,
+    "supervisor_cpu_reserve": 2,
+    "supervisor_memory_reserve_mib": 8192,
+    "supervisor_host_pid_reserve": 128,
+    "aggregate_host_pid_budget": 384,
+    "runtime_release": "release-20261019.0",
+    "runtime_files": {
+      "runsc": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "containerd-shim-runsc-v1": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "gvisor-bin/checkpointgofer": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "gvisor-bin/gvisor-proc-umounter": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "gvisor-bin/gvisor-sentry-prewarmer": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "gvisor-bin/gvisor_sentry": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "gvisor-bin/runsc-fd-parking": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "gvisor-bin/runsc-metric-server": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "scientific_image_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "scientific_lock_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "normalized_rootfs_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "trusted_init_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "supervisor_source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "boot_image_id": "1234567890123456789"
+  },
+  "operations": {
+    "currency": "JPY",
+    "initial_test_spend_limit": 1000,
+    "monthly_spend_limit": 10000,
+    "log_retention_days": 30,
+    "backup_retention_days": 30,
+    "result_retention_days": 365,
+    "recovery_point_minutes": 60,
+    "recovery_time_minutes": 240,
+    "max_job_log_bytes": 65536
+  },
+  "flags": {
+    "research_dispatch": false,
+    "experiment_dispatch": false
+  }
+}

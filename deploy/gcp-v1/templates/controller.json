@@ -1,0 +1,32 @@
+{
+  "version": "c24-config-artifact-v1",
+  "evidence_class": "configuration-only",
+  "kind": "cloud-run-v2-service-body",
+  "provider_schema_validated": false,
+  "apply_allowed": false,
+  "body": {
+    "name": {
+      "$value": "controller_name"
+    },
+    "ingress": "INGRESS_TRAFFIC_INTERNAL_ONLY",
+    "invokerIamDisabled": false,
+    "defaultUriDisabled": false,
+    "template": {
+      "serviceAccount": {
+        "$value": "controller_identity"
+      },
+      "scaling": {
+        "minInstanceCount": 0,
+        "maxInstanceCount": 1
+      },
+      "timeout": "240s",
+      "maxInstanceRequestConcurrency": 1,
+      "containers": {
+        "$value": "controller_containers"
+      },
+      "vpcAccess": {
+        "$value": "vpc"
+      }
+    }
+  }
+}

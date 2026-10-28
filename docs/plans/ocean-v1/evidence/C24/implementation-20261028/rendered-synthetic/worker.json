@@ -1,0 +1,64 @@
+{
+  "apply_allowed": false,
+  "body": {
+    "canIpForward": false,
+    "deletionProtection": true,
+    "disks": [
+      {
+        "autoDelete": false,
+        "boot": true,
+        "initializeParams": {
+          "diskSizeGb": "50",
+          "diskType": "zones/asia-northeast1-a/diskTypes/pd-balanced",
+          "sourceImage": "projects/ocean-v1-fixture-20261028/global/images/ocean-v1-worker-synthetic"
+        }
+      }
+    ],
+    "machineType": "zones/asia-northeast1-a/machineTypes/e2-standard-8",
+    "metadata": {
+      "items": [
+        {
+          "key": "enable-oslogin",
+          "value": "TRUE"
+        },
+        {
+          "key": "block-project-ssh-keys",
+          "value": "TRUE"
+        },
+        {
+          "key": "disable-legacy-endpoints",
+          "value": "TRUE"
+        }
+      ]
+    },
+    "name": "ocean-v1-worker",
+    "networkInterfaces": [
+      {
+        "accessConfigs": [],
+        "subnetwork": "projects/ocean-v1-fixture-20261028/regions/asia-northeast1/subnetworks/ocean-v1-private"
+      }
+    ],
+    "scheduling": {
+      "automaticRestart": false,
+      "onHostMaintenance": "TERMINATE"
+    },
+    "serviceAccounts": [
+      {
+        "email": "ocean-v1-supervisor@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ]
+      }
+    ],
+    "shieldedInstanceConfig": {
+      "enableIntegrityMonitoring": true,
+      "enableSecureBoot": true,
+      "enableVtpm": true
+    }
+  },
+  "evidence_class": "configuration-only",
+  "kind": "compute-v1-instance-body",
+  "provider_schema_validated": false,
+  "startup": "No startup script or supervisor is installed by rendering. Materialization, host preflight and real supervisor lifecycle are live gates.",
+  "version": "c24-config-artifact-v1"
+}

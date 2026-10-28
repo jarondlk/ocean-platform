@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-10-28 JST. **P00 and C01–C23 are Complete with source-bound hosted delivery; C24–C27 are Not started.**
+Updated: 2026-10-28 JST. **P00 and C01–C23 are Complete with source-bound hosted delivery; C24 is In progress; C25–C27 are Not started.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -41,6 +41,16 @@ is ready; implementation remains Not started. Independent session/OAuth/origin
 checks, explicit v1 resources and offline renderer/runbook are planned. Real
 auth hosting, Cloud Tasks adapter and live beta gates remain explicit. No DNS,
 GCP or application-runtime change occurred. [C24 handoff](handoffs/C24.md).
+
+Current C24 implementation (2026-10-28 JST): explicitly selected by the user.
+The independent `deploy/gcp-v1/` schema, seven render-only artifacts, examples,
+isolation matrix and operator runbook pass 160 scoped configuration/legacy/security
+cases, Ruff, schema/example checks and current prerequisite source reconciliation.
+Renderer accepts no ambient legacy configuration and cannot apply resources.
+Source checkpoint and hosted delivery remain pending. Provider validation, actual
+host/auth/Cloud Tasks/supervisor adapters, DNS/TLS/IAM/network/two-job/recovery/
+backup and release gates remain not_run; dispatch and scheduler remain off.
+C25 has not started. [Local receipt](evidence/C24/implementation-20261028/verification.json).
 
 Original local implementation checkpoint: **C23 — Isolated Python execution preparation**. All393 scoped cases pass (292 new and101 existing regressions), Ruff passes, all17 new source/recipe/test files remain steady and946 prior source/1334 prior evidence files are preserved. Strict C22 byte/hash verification, non-executing supervisor, safe staging/output validation and fixed profile/offline image preparation are implemented. C23 remains In progress: actual runtime containment, durable integration, safe extraction and numerical acceptance remain pending. [Handoff](handoffs/C23.md), [original local checkpoint](evidence/C23/checkpoint.json).
 
@@ -131,7 +141,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C21 — Evidence and answer synthesis](components/C21-evidence-synthesis.md) | Complete | Source567684b exact-source hosted delivery passes; original receipts and workflow-only amendment retained | Hosted5031 backend/254 gated skips/86.48%;254 actual PG;930 v1/132 legacy, builds/typechecks/audits/generated contracts and backup/restore pass | [C21](handoffs/C21.md) |
 | [C22 — Experiment proposals and frozen exports](components/C22-experiment-proposals.md) | Complete | Source66b4106 exact-source hosted CI39539257759 and delivery receipt pass |5273 backend/275 gated skips/86.14%;148 actual PG, independent reviews, strict nine-action HTTP; original receipts/qualifications retained | [C22](handoffs/C22.md) |
 | [C23 — Isolated Python execution](components/C23-python-sandbox.md) | Complete | Both actual retained Linux cases and raw audit pass; f6f823b hosted green: 6481 backend, 315 PostgreSQL, 930 v1, 132 legacy | Owner suspension denies publication; physical proofs release capacity; resources stopped. Unsupported crash/reboot/queued cases retain capacity; scientific approval and production dispatch remain separate | [C23](handoffs/C23.md) |
-| [C24 — Isolated GCP site and worker configuration](components/C24-gcp-worker-configuration.md) | Not started | Beta hostname proposed; development plan and prerequisite source audit prepared | 370 source paths reconciled; renderer/application/live acceptance not run | [C24](handoffs/C24.md) |
+| [C24 — Isolated GCP site and worker configuration](components/C24-gcp-worker-configuration.md) | In progress | Explicit v1 schema/renderer/templates, isolation matrix and operator runbook implemented | 160 scoped cases/Ruff/schema/example pass; source/hosted delivery pending; live gates closed | [C24](handoffs/C24.md) |
 | [C25 — Experimental Workspace interface](components/C25-experimental-workspace.md) | Not started | None | Not run | Not created |
 | [C26 — System acceptance and evaluation](components/C26-system-acceptance.md) | Not started | None | Not run | Not created |
 | [C27 — Release preparation and rollback](components/C27-release-readiness.md) | Not started | None | Not run | Not created |

@@ -1,0 +1,81 @@
+{
+  "base_commit": "a8261da1d4c75c2c3dddcb5997f140ee3ac4d0bf",
+  "commands": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_render_gcp_v1.py",
+        "tests/test_render_gcp_templates.py",
+        "tests/test_security_config.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "name": "scoped-tests"
+    },
+    {
+      "command": [
+        ".venv/bin/ruff",
+        "check",
+        "scripts/render_gcp_v1.py",
+        "tests/test_render_gcp_v1.py"
+      ],
+      "exit_code": 0,
+      "name": "lint"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/render_gcp_v1.py",
+        "--check-schema"
+      ],
+      "exit_code": 0,
+      "name": "schema"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/render_gcp_v1.py",
+        "--config",
+        "deploy/gcp-v1/examples/site.synthetic.json",
+        "--check"
+      ],
+      "exit_code": 0,
+      "name": "example"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "docs/plans/ocean-v1/evidence/C24/readiness-20261028/audit.py",
+        "--verify-only"
+      ],
+      "exit_code": 0,
+      "name": "prerequisites"
+    }
+  ],
+  "gates": "All actual provider/runtime/hosting/queue/DNS/TLS/IAM/network/recovery/backup/release gates remain not_run",
+  "no_cloud_or_DNS_operations": true,
+  "no_provider_schema_or_live_validation_claimed": true,
+  "scheduler": "PAUSED",
+  "source_files": {
+    "deploy/gcp-v1/ISOLATION.md": "d18d922813a88dd5883f3314e7e24c7932565d65628a06fd697fab17e64a6834",
+    "deploy/gcp-v1/OPERATIONS.md": "e4d1a251d06812d5ed41728d5332885d3e14ec4caa09921d0b8751feab07e80c",
+    "deploy/gcp-v1/README.md": "108710d2eaad94697ab593a38897d61fea26142105fe77c212caf4089e8dd56e",
+    "deploy/gcp-v1/examples/site.operator.pending.json": "d37a6c7929e92bd019e8bab822b3f4091a8432e6791206d9c60a1482c8aaa942",
+    "deploy/gcp-v1/examples/site.synthetic.json": "e73b29f879f83c56aafd8d43d0a13031c9913afa93f0aaf69a8141c41142b682",
+    "deploy/gcp-v1/site.schema.json": "34ca6b3089862ff8d89b3f06920f38c010fa795fe63d178f283f9e51a8629be1",
+    "deploy/gcp-v1/templates/controller.json": "6ff4df227a5da80784bbc01831ba4bc9d497ccc05fd8feb015e333a541c4a038",
+    "deploy/gcp-v1/templates/identity.json": "a39aec4a4e7ecc94d7703274358043b5c8f322a70e93f08826331f5256a3c4e4",
+    "deploy/gcp-v1/templates/queue.json": "32e6e3b44fc990dddca56e5f3820ed3a447a8926ceb2acfcd5b8374bdd5d36d1",
+    "deploy/gcp-v1/templates/serving.json": "21f36e7827bc0876522b1654efc25ed85a3cb2d1383aeaf5b5c45ef8182b8314",
+    "deploy/gcp-v1/templates/site-policy.json": "8201cb117ec1ba537a4ee6a31c00e2f525ab230cb8ced4f293d65bf598440df4",
+    "deploy/gcp-v1/templates/storage-database.json": "7fd73a78da8de0a011617d6a22878a680e0796ae770d4b31785e838c1a27ad40",
+    "deploy/gcp-v1/templates/worker.json": "0af4c0a74993374322b72310867727d7406208260885088aea0908d728fa9bb6",
+    "scripts/render_gcp_v1.py": "7c33abd77461e245113d8d8df48cf8457986ab2ca2289b075881851da50ffdf6",
+    "tests/test_render_gcp_v1.py": "a1fe3b10cc19e2184aadd824abff9f33a2067583b76d314fbd48f45540a05664"
+  },
+  "state": "Local acceptance passed; source checkpoint and hosted delivery pending",
+  "version": "c24-local-config-acceptance-v1"
+}

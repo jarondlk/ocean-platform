@@ -1,0 +1,85 @@
+{
+  "version": "c24-config-artifact-v1",
+  "evidence_class": "configuration-only",
+  "kind": "v1-site-and-supervisor-policy-contract",
+  "provider_schema_validated": false,
+  "apply_allowed": false,
+  "input_class": {
+    "$value": "input_class"
+  },
+  "public_origin": {
+    "$value": "origin"
+  },
+  "browser": {
+    "$value": "browser"
+  },
+  "queue_delivery": {
+    "$value": "queue_delivery"
+  },
+  "worker_material": {
+    "$value": "worker_policy"
+  },
+  "limits": {
+    "$value": "limits"
+  },
+  "capacity": {
+    "$value": "capacity"
+  },
+  "operations": {
+    "$value": "operations"
+  },
+  "live_dispatch_enabled": false,
+  "guest_network": "none",
+  "guest_metadata": false,
+  "guest_credentials": [],
+  "writable_host_mounts": [],
+  "gates": {
+    "$value": "gates"
+  },
+  "ingress": {
+    "design": "owned global external Application Load Balancer, serverless serving backend and managed TLS",
+    "canonical_host_only": true,
+    "overwrite_untrusted_forwarded_headers": true,
+    "legacy_DNS_changes": false,
+    "public_controller_or_worker": false,
+    "same_origin_authenticated_API": true,
+    "DNS_TLS_LB_provider_configuration": "not_run"
+  },
+  "research": {
+    "active_seconds": 180,
+    "tool_actions": 12,
+    "malformed_repairs": 1,
+    "experiment_queue_is_research_queue": false
+  },
+  "supervisor": {
+    "source": "orchestration.experiment_sandbox.retained_runner",
+    "production_daemon_or_dispatch_adapter_available": false,
+    "private_state_and_material_roots_required": true,
+    "boot_lease_and_journal_bound": true,
+    "pre_start_cgroup_and_resource_readback_required": true,
+    "cleanup_before_output_decode": true,
+    "release_authority": "C22 verified physical termination packet and independent durable proof",
+    "lease_expiry_releases_capacity": false,
+    "unsupported_queued_reboot_prepacket_reconstruction": "retain capacity; operator reconciliation required",
+    "health_fields": [
+      "boot_id",
+      "source_digest",
+      "runtime_material_digest",
+      "lease_epoch",
+      "journal_head",
+      "active_reservations",
+      "draining"
+    ],
+    "log_content": "bounded operational identifiers only; no questions, input bytes, secrets or scientific output"
+  },
+  "activation": {
+    "authenticated_v1_host": "unavailable",
+    "real_Cloud_Tasks_adapter": "unavailable",
+    "production_experiment_supervisor": "unavailable",
+    "research_dispatch": false,
+    "experiment_dispatch": false
+  },
+  "network": {
+    "$value": "network_policy"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "version": "c24-config-artifact-v1",
+  "evidence_class": "configuration-only",
+  "kind": "storage-database-policy-contract",
+  "provider_schema_validated": false,
+  "apply_allowed": false,
+  "body": {
+    "project": {
+      "$value": "project"
+    },
+    "region": {
+      "$value": "region"
+    },
+    "targets": {
+      "$value": "stores"
+    },
+    "database": {
+      "version": "POSTGRES_16",
+      "private_ip_only": true,
+      "ssl_mode": "ENCRYPTED_ONLY",
+      "deletion_protection": true,
+      "point_in_time_recovery": true,
+      "automatic_backups": true,
+      "public_authorized_networks": [],
+      "roles": [
+        "ocean_v1_serving",
+        "ocean_v1_research_controller",
+        "ocean_v1_sandbox_controller",
+        "ocean_v1_sandbox_verifier"
+      ],
+      "supervisor_database_role_is_bootstrap_admin": false
+    },
+    "buckets": {
+      "public_access_prevention": "enforced",
+      "uniform_bucket_level_access": true,
+      "versioning": true,
+      "public_grants": []
+    },
+    "retention": {
+      "$value": "operations"
+    },
+    "automatic_results_deletion": false,
+    "retention_authority": "Retention policies must respect holds/receipts; no destructive TTL is emitted for inputs, evidence or results."
+  }
+}

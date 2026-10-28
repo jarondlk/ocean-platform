@@ -1,0 +1,212 @@
+{
+  "apply_allowed": false,
+  "body": {
+    "actual_secret_contents_and_database_grants_verified": false,
+    "controller": "projects/ocean-v1-fixture-20261028/locations/asia-northeast1/services/ocean-v1-controller",
+    "identities": {
+      "controller": "ocean-v1-controller@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+      "serving": "ocean-v1-serving@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+      "supervisor": "ocean-v1-supervisor@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+      "task_invoker": "ocean-v1-task-invoker@ocean-v1-fixture-20261028.iam.gserviceaccount.com"
+    },
+    "intended_grants": {
+      "controller": [
+        "own research-controller and verifier database secret access",
+        "enqueue own research queue",
+        "actAs only own task-invoker identity"
+      ],
+      "serving": [
+        "own auth/internal/oauth/database secret access",
+        "read own snapshots and permitted retained results"
+      ],
+      "supervisor": [
+        "own sandbox-controller database and termination seed secret access",
+        "read own designated inputs",
+        "create retained validated results in own results bucket"
+      ],
+      "task_invoker": [
+        "run.invoker on own research controller only"
+      ]
+    },
+    "legacy_resource_grants": [],
+    "managed_cloud_tasks_agent": "Review token-creation grant on the exact task-invoker identity and no broader target. Separate deployment identity is not a runtime identity.",
+    "permission_intents_are_applied_IAM_bindings": false,
+    "project": "ocean-v1-fixture-20261028",
+    "project_wide_roles": [],
+    "public_worker_invokers": [],
+    "queue": "projects/ocean-v1-fixture-20261028/locations/asia-northeast1/queues/ocean-v1-research",
+    "scoped_permission_intents": [
+      {
+        "permissions": [
+          "secretmanager.versions.access"
+        ],
+        "principal": "ocean-v1-serving@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "projects/123456789012/secrets/ocean-v1-auth"
+      },
+      {
+        "permissions": [
+          "secretmanager.versions.access"
+        ],
+        "principal": "ocean-v1-serving@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "projects/123456789012/secrets/ocean-v1-internal"
+      },
+      {
+        "permissions": [
+          "secretmanager.versions.access"
+        ],
+        "principal": "ocean-v1-serving@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "projects/123456789012/secrets/ocean-v1-oauth"
+      },
+      {
+        "permissions": [
+          "secretmanager.versions.access"
+        ],
+        "principal": "ocean-v1-serving@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "projects/123456789012/secrets/ocean-v1-serving-database"
+      },
+      {
+        "permissions": [
+          "secretmanager.versions.access"
+        ],
+        "principal": "ocean-v1-controller@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "projects/123456789012/secrets/ocean-v1-controller-database"
+      },
+      {
+        "permissions": [
+          "secretmanager.versions.access"
+        ],
+        "principal": "ocean-v1-controller@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "projects/123456789012/secrets/ocean-v1-verifier-database"
+      },
+      {
+        "permissions": [
+          "secretmanager.versions.access"
+        ],
+        "principal": "ocean-v1-supervisor@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "projects/123456789012/secrets/ocean-v1-supervisor-database"
+      },
+      {
+        "permissions": [
+          "secretmanager.versions.access"
+        ],
+        "principal": "ocean-v1-supervisor@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "projects/123456789012/secrets/ocean-v1-termination-seed"
+      },
+      {
+        "permissions": [
+          "cloudsql.instances.connect",
+          "cloudsql.instances.get"
+        ],
+        "principal": "ocean-v1-serving@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "//sqladmin.googleapis.com/projects/ocean-v1-fixture-20261028/instances/ocean-v1-postgres"
+      },
+      {
+        "permissions": [
+          "storage.objects.get",
+          "storage.objects.list"
+        ],
+        "principal": "ocean-v1-serving@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "//storage.googleapis.com/ocean-v1-fixture-20261028-snapshots"
+      },
+      {
+        "permissions": [
+          "cloudsql.instances.connect",
+          "cloudsql.instances.get"
+        ],
+        "principal": "ocean-v1-controller@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "//sqladmin.googleapis.com/projects/ocean-v1-fixture-20261028/instances/ocean-v1-postgres"
+      },
+      {
+        "permissions": [
+          "storage.objects.get",
+          "storage.objects.list"
+        ],
+        "principal": "ocean-v1-controller@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "//storage.googleapis.com/ocean-v1-fixture-20261028-snapshots"
+      },
+      {
+        "permissions": [
+          "cloudsql.instances.connect",
+          "cloudsql.instances.get"
+        ],
+        "principal": "ocean-v1-supervisor@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "//sqladmin.googleapis.com/projects/ocean-v1-fixture-20261028/instances/ocean-v1-postgres"
+      },
+      {
+        "permissions": [
+          "storage.objects.get",
+          "storage.objects.list"
+        ],
+        "principal": "ocean-v1-supervisor@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "//storage.googleapis.com/ocean-v1-fixture-20261028-snapshots"
+      },
+      {
+        "permissions": [
+          "storage.objects.get"
+        ],
+        "principal": "ocean-v1-serving@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "//storage.googleapis.com/ocean-v1-fixture-20261028-results"
+      },
+      {
+        "permissions": [
+          "storage.objects.create"
+        ],
+        "principal": "ocean-v1-supervisor@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "//storage.googleapis.com/ocean-v1-fixture-20261028-results"
+      },
+      {
+        "permissions": [
+          "cloudtasks.tasks.create"
+        ],
+        "principal": "ocean-v1-controller@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "projects/ocean-v1-fixture-20261028/locations/asia-northeast1/queues/ocean-v1-research"
+      },
+      {
+        "permissions": [
+          "iam.serviceAccounts.actAs"
+        ],
+        "principal": "ocean-v1-controller@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "projects/ocean-v1-fixture-20261028/serviceAccounts/ocean-v1-task-invoker@ocean-v1-fixture-20261028.iam.gserviceaccount.com"
+      },
+      {
+        "permissions": [
+          "run.routes.invoke"
+        ],
+        "principal": "ocean-v1-task-invoker@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+        "resource": "projects/ocean-v1-fixture-20261028/locations/asia-northeast1/services/ocean-v1-controller"
+      },
+      {
+        "permissions": [
+          "iam.serviceAccounts.getOpenIdToken"
+        ],
+        "principal": "service-123456789012@gcp-sa-cloudtasks.iam.gserviceaccount.com",
+        "resource": "projects/ocean-v1-fixture-20261028/serviceAccounts/ocean-v1-task-invoker@ocean-v1-fixture-20261028.iam.gserviceaccount.com"
+      }
+    ],
+    "secret_versions": {
+      "auth": "projects/123456789012/secrets/ocean-v1-auth/versions/1",
+      "controller_database": "projects/123456789012/secrets/ocean-v1-controller-database/versions/1",
+      "internal": "projects/123456789012/secrets/ocean-v1-internal/versions/1",
+      "oauth": "projects/123456789012/secrets/ocean-v1-oauth/versions/1",
+      "serving_database": "projects/123456789012/secrets/ocean-v1-serving-database/versions/1",
+      "supervisor_database": "projects/123456789012/secrets/ocean-v1-supervisor-database/versions/1",
+      "termination_seed": "projects/123456789012/secrets/ocean-v1-termination-seed/versions/1",
+      "verifier_database": "projects/123456789012/secrets/ocean-v1-verifier-database/versions/1"
+    },
+    "stores": {
+      "backups_bucket": "ocean-v1-fixture-20261028-backups",
+      "database_disk_gib": 20,
+      "database_disk_limit_gib": 50,
+      "database_instance": "ocean-v1-postgres",
+      "database_name": "ocean_v1_app",
+      "database_tier": "db-custom-2-7680",
+      "quarantine_bucket": "ocean-v1-fixture-20261028-quarantine",
+      "results_bucket": "ocean-v1-fixture-20261028-results",
+      "snapshots_bucket": "ocean-v1-fixture-20261028-snapshots"
+    }
+  },
+  "evidence_class": "configuration-only",
+  "kind": "resource-scoped-identity-policy-contract",
+  "provider_schema_validated": false,
+  "version": "c24-config-artifact-v1"
+}

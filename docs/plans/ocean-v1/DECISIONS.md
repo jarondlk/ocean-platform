@@ -661,3 +661,12 @@ C20/C23 source and receipts; its implementation remains Not started. The
 and names missing production host/Cloud Tasks adapters and live acceptance gates.
 This affects C24 configuration and C25–C27 integration/release evidence. The
 scheduled continuation remains PAUSED.
+
+### C24 implementation selection — 2026-10-28 JST
+
+The user said “please start C24” after the beta-origin preparation checkpoint
+`a8261da`. Implement independent offline configuration/templates/validation and
+operator instructions on `overhaul`. No DNS, cloud provisioning, deployment,
+real-data or provider/live acceptance is inferred. The scheduler remains PAUSED.
+Local acceptance and required exact-source hosted delivery are recorded in
+[the C24 handoff](handoffs/C24.md); later components remain unselected here.

@@ -1,0 +1,17 @@
+{
+  "agent": "/root/c24_contract_review",
+  "qualification": "No provider/live/runtime/scientific acceptance or cloud action claimed",
+  "remaining_required_fixes": [],
+  "reviewed_and_fixed_findings": [
+    "template binding",
+    "DNS labels/controller URL length",
+    "unique boot image ID and pre-boot sourceImageId gate"
+  ],
+  "scope": "15 C24 source/config/docs files; software configuration review only",
+  "scoped_tests": 160,
+  "source_sha256": {
+    "scripts/render_gcp_v1.py": "7c33abd77461e245113d8d8df48cf8457986ab2ca2289b075881851da50ffdf6",
+    "tests/test_render_gcp_v1.py": "a1fe3b10cc19e2184aadd824abff9f33a2067583b76d314fbd48f45540a05664"
+  },
+  "version": "c24-independent-software-review-v1"
+}

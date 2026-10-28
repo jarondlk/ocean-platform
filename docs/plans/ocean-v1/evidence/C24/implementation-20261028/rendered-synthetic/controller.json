@@ -1,0 +1,95 @@
+{
+  "apply_allowed": false,
+  "body": {
+    "defaultUriDisabled": false,
+    "ingress": "INGRESS_TRAFFIC_INTERNAL_ONLY",
+    "invokerIamDisabled": false,
+    "name": "projects/ocean-v1-fixture-20261028/locations/asia-northeast1/services/ocean-v1-controller",
+    "template": {
+      "containers": [
+        {
+          "env": [
+            {
+              "name": "AUTH_MODE",
+              "value": "required"
+            },
+            {
+              "name": "DEPLOYMENT_ENV",
+              "value": "production"
+            },
+            {
+              "name": "ENABLE_MOCK_LOGIN",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_EXPERIMENT_DISPATCH",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_RESEARCH_CONTROLLER",
+              "value": "false"
+            },
+            {
+              "name": "ENABLE_V1_RESEARCH_DISPATCH",
+              "value": "false"
+            },
+            {
+              "name": "INTERNAL_AUTH_AUDIENCE",
+              "value": "ocean-v1-api"
+            },
+            {
+              "name": "INTERNAL_AUTH_ISSUER",
+              "value": "ocean-v1-frontend"
+            },
+            {
+              "name": "JOB_EXECUTION_MODE",
+              "value": "external"
+            },
+            {
+              "name": "DATABASE_URL",
+              "valueSource": {
+                "secretKeyRef": {
+                  "secret": "projects/123456789012/secrets/ocean-v1-controller-database",
+                  "version": "1"
+                }
+              }
+            }
+          ],
+          "image": "asia-northeast1-docker.pkg.dev/ocean-v1-fixture-20261028/ocean-v1-images/controller@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "name": "controller",
+          "ports": [
+            {
+              "containerPort": 8080
+            }
+          ],
+          "resources": {
+            "limits": {
+              "cpu": "2",
+              "memory": "2Gi"
+            }
+          }
+        }
+      ],
+      "maxInstanceRequestConcurrency": 1,
+      "scaling": {
+        "maxInstanceCount": 1,
+        "minInstanceCount": 0
+      },
+      "serviceAccount": "ocean-v1-controller@ocean-v1-fixture-20261028.iam.gserviceaccount.com",
+      "timeout": "240s",
+      "vpcAccess": {
+        "egress": "ALL_TRAFFIC",
+        "networkInterfaces": [
+          {
+            "network": "ocean-v1-private",
+            "subnetwork": "ocean-v1-private"
+          }
+        ]
+      }
+    }
+  },
+  "evidence_class": "configuration-only",
+  "kind": "cloud-run-v2-service-body",
+  "provider_schema_validated": false,
+  "version": "c24-config-artifact-v1"
+}
