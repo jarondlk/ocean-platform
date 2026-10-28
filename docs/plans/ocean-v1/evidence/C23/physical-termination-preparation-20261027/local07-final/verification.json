@@ -1,0 +1,38 @@
+{
+  "actual_physical_acceptance": false,
+  "results": [
+    {
+      "check": "pytest",
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_physical_termination.py",
+        "tests/test_experiment_sandbox_proofs.py",
+        "tests/test_experiment_sandbox_retained_context.py",
+        "tests/test_experiment_sandbox_journal_references.py",
+        "tests/test_experiment_sandbox_journal.py",
+        "tests/test_experiment_sandbox_linux_runtime.py",
+        "tests/test_experiment_sandbox_supervisor.py",
+        "--basetemp=/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/c23-physical-unit-local07-5yhr37ta",
+        "-q",
+        "--tb=short"
+      ],
+      "elapsed_seconds": 55.27,
+      "returncode": 0
+    },
+    {
+      "check": "ruff",
+      "command": [
+        ".venv/bin/ruff",
+        "check",
+        "orchestration/experiment_sandbox/physical_termination.py",
+        "tests/test_experiment_sandbox_physical_termination.py"
+      ],
+      "elapsed_seconds": 0.039,
+      "returncode": 0
+    }
+  ],
+  "scope": "Host-safe simulations only; native/kernel/DB/material-source issuance boundaries explicitly mocked in new tests.",
+  "source_unchanged": true
+}

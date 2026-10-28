@@ -1,0 +1,33 @@
+{
+  "application_database_accessed": false,
+  "cloud_actions": false,
+  "created_at": "2026-10-27T05:58:24.532030+00:00",
+  "data_directory": "/private/tmp/ocean-c23-retained-reserve-20261027-2c2s4i54/data",
+  "database": "ocean_c23_retained_c18eba8fc43a",
+  "loopback_port_connect_errno": 61,
+  "other_database_sessions_before_stop": 0,
+  "owned_root": "/private/tmp/ocean-c23-retained-reserve-20261027-2c2s4i54",
+  "postmaster_pid_file_absent": true,
+  "real_data_accessed": false,
+  "recorded_server_pid": 44597,
+  "remaining_test_roles": [],
+  "remaining_test_schemas": [],
+  "retained_private_data_directory_for_audit": true,
+  "server_address": "127.0.0.1",
+  "server_port": 63959,
+  "server_stopped": true,
+  "server_version": "18.3 (Homebrew)",
+  "status_exit_code": 3,
+  "stop_command": [
+    "/opt/homebrew/opt/postgresql@18/bin/pg_ctl",
+    "-D",
+    "/private/tmp/ocean-c23-retained-reserve-20261027-2c2s4i54/data",
+    "-m",
+    "fast",
+    "-w",
+    "stop"
+  ],
+  "stop_exit_code": 0,
+  "stop_stdout": "waiting for server to shut down.... done\nserver stopped\n",
+  "version": "c23-owned-reserve-pg-cleanup-v1"
+}

@@ -1,0 +1,26 @@
+{
+  "C23_complete": false,
+  "accepted_existing_native_cases": 4,
+  "additional_native_cases_passed": 10,
+  "additional_pass_qualification": "8 passed at native-edges01 source pin; copied terminal fixture constructor was rejected before admission. Native-edges02 corrected only fixture branch and passed that case plus remaining missing-intent case. Core admission/store source unchanged across all runs.",
+  "inputs": {
+    "docs/plans/ocean-v1/evidence/C23/retained-admission-preparation-20261027/native-edges01/checks.json": "24c18837ba0db1360f61682031448d77bca6b2609f8906c402072287d0b25bd6",
+    "docs/plans/ocean-v1/evidence/C23/retained-admission-preparation-20261027/native-edges01/pytest.stdout.txt": "34483a49dacb6c2aba78bfa24319b4bd5cd696d5ddddf2cda74cd6060308a585",
+    "docs/plans/ocean-v1/evidence/C23/retained-admission-preparation-20261027/native-edges02/checks.json": "0209ef8cba47a99992f0a1d0d47de95b44752cf78a0b8b23276b91187d8844f7",
+    "docs/plans/ocean-v1/evidence/C23/retained-admission-preparation-20261027/native-edges02/pytest.stdout.txt": "f397f2ac8ec44d1a69202a3776852d94c1de04374781d6f8f844a5ae37b0c7d2",
+    "docs/plans/ocean-v1/evidence/C23/retained-integration-root-recovery-20261027/native02/checks.json": "b40a7b40789edaad5c85aecd242a4e0721fd0941dd375674134d885a0b0134ac",
+    "docs/plans/ocean-v1/evidence/C23/retained-integration-root-recovery-20261027/native02/pytest.stdout.txt": "93d28aeb69e75af41e3d6555e4f5da1cb4bc4c11360a130c1ed24f810b8f7992"
+  },
+  "physical_acceptance": false,
+  "review": {
+    "cleanup": "original start and exact journal intent required; owner/launch revocation does not prevent close/proof/release",
+    "cleanup_proofs": "both new owned clusters stopped, PID/socket absent/TCP refused; no test schemas/roles/other sessions",
+    "fresh_start": "new internal UUID, native reserved/fence1 CAS, collision/replay denial, acknowledged exact postread, one-use permit, no late external enable callback",
+    "publication": "actual terminal reference and private output bytes revalidated; changed hash/file/terminal denied",
+    "role_fix": "explicit EXECUTE restored only for validated existing NOLOGIN function owner; missing nested authority denied at session guard",
+    "source_policy": "canonical aggregate worker/profile hashes, exact adapter/init hashes; source bytes rehashed before and within current fence; actual retained-operator full loaded-module provenance amendment remains next"
+  },
+  "scientific_approval": "not_independently_verified",
+  "scope": "restricted native PostgreSQL CAS/role/owner composition and actual held software journal; no Linux execution or physical proof",
+  "version": "c23-retained-admission-software-edge-review-v1"
+}

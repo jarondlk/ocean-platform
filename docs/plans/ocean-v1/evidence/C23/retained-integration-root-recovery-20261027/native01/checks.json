@@ -1,0 +1,33 @@
+{
+  "C23_complete": false,
+  "checks": {
+    "pid_absent": true,
+    "pytest_exit": 1,
+    "socket_absent": true,
+    "status_exit": 3,
+    "stop_exit": 0,
+    "tcp_refused": true
+  },
+  "physical_authority": false,
+  "source_after": {
+    "orchestration/experiment_sandbox/execution_store.py": "c7cf292e3b6bf2ac1c1babb63d4c09f934450802c9d393f0f20e4e2652c301cd",
+    "orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "orchestration/experiment_sandbox/physical_termination.py": "9b9f48f3f9b856074d0b1a25b622a488ef9bfda4db5cba7f074c39e29aca0655",
+    "orchestration/experiment_sandbox/retained_admission.py": "c7b059cb27259aef2969e59f0a4a5706233234f2c8892948882286dd854b8acc",
+    "orchestration/experiment_sandbox/retained_bridge.py": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd",
+    "orchestration/experiment_sandbox/retained_context.py": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5",
+    "tests/integration/test_retained_admission_postgres.py": "81bcda2e0e1312302561a0c7e4d058a29f0218ccf1a5f31212231d608900e718",
+    "tests/retained_admission_support.py": "c6da7702635336f76f792258e733d4c1317df57ddc8528935aa03f7ec4052e2e"
+  },
+  "source_before": {
+    "orchestration/experiment_sandbox/execution_store.py": "c7cf292e3b6bf2ac1c1babb63d4c09f934450802c9d393f0f20e4e2652c301cd",
+    "orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "orchestration/experiment_sandbox/physical_termination.py": "9b9f48f3f9b856074d0b1a25b622a488ef9bfda4db5cba7f074c39e29aca0655",
+    "orchestration/experiment_sandbox/retained_admission.py": "c7b059cb27259aef2969e59f0a4a5706233234f2c8892948882286dd854b8acc",
+    "orchestration/experiment_sandbox/retained_bridge.py": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd",
+    "orchestration/experiment_sandbox/retained_context.py": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5",
+    "tests/integration/test_retained_admission_postgres.py": "81bcda2e0e1312302561a0c7e4d058a29f0218ccf1a5f31212231d608900e718",
+    "tests/retained_admission_support.py": "c6da7702635336f76f792258e733d4c1317df57ddc8528935aa03f7ec4052e2e"
+  },
+  "source_steady": true
+}

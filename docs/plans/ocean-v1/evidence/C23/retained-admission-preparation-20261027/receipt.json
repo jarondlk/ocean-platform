@@ -1,0 +1,41 @@
+{
+  "C23_complete": false,
+  "actual_retained_GCP_acceptance": false,
+  "next": "Root-owned two actual retained GCP cases and independent raw evidence/cleanup audit; see HANDOFF.md",
+  "production_dispatch": false,
+  "receipts": {
+    "docs/plans/ocean-v1/evidence/C23/operator-bridge-design/retained-acceptance-transport-addendum-20261027.md": "1a3b8abb7d761a40b51129d9a6e2c647a3da263377b52fa9ecfa4943b788e8bd",
+    "docs/plans/ocean-v1/evidence/C23/operator-independent-review-20261027/retained-acceptance-harness-final-review.json": "4be56c8a330f4f9992bdfd0136d1bbd34c801b948b05c6a5f0532a57b69c8028",
+    "docs/plans/ocean-v1/evidence/C23/retained-admission-preparation-20261027/HANDOFF.md": "485e179f8116886b5aaddec9f3787e433649dcd9c107da84f110b4982334cc00",
+    "docs/plans/ocean-v1/evidence/C23/retained-admission-preparation-20261027/edge-checks-and-role-review01.json": "88df94b5d1807b61f6324ece6510a52a013a9ea4a2da6e033c5eb76964eb5412",
+    "docs/plans/ocean-v1/evidence/C23/retained-admission-preparation-20261027/final-software01/verification.json": "0e1a669072a7b8c50ef08c3d1c3cd7d688e532d8d5272f6c0509756b51e59201",
+    "docs/plans/ocean-v1/evidence/C23/retained-admission-preparation-20261027/native-harness-helpers01/checks.json": "2eb69c7eb8c45cc8f47d9a689fced073daee671aefa962fc74f7eecb23442970",
+    "docs/plans/ocean-v1/evidence/C23/retained-admission-preparation-20261027/native-harness-helpers01/pytest.stdout.txt": "fff8373b15fadf1e4140552ed8dcf56ce7aa010cde937cb45e0dba309f188c3d"
+  },
+  "recorded_unix_ns": 1793104866056215000,
+  "scientific_approval": "not_independently_verified",
+  "source_sha256": {
+    "orchestration/experiment_sandbox/execution_store.py": "072eba89ce0877d1a182a9f9cbd9c923b1b79a37e2605d65da37fe87b012bac2",
+    "orchestration/experiment_sandbox/retained_admission.py": "b216e28831f8a93113d0bbc6e40c104485f15dc9ef860ebc5749589670e501d3",
+    "sandbox/experiment/gcp/run_retained_acceptance.py": "a04ef5a64ef37dda30f020b8027a087214547fb9aefa5fd572699fb5c1afff58",
+    "tests/integration/test_retained_acceptance_helpers_postgres.py": "2ad2c6bb1789afb7d8f29935f0919c135c996b14370dcadfbec5459218aa2b19",
+    "tests/integration/test_retained_admission_edges_postgres.py": "bfbb25ddf0827e4a219f75d090a268b45d6f56380ba70475b36da24477a8d827",
+    "tests/retained_admission_support.py": "c6da7702635336f76f792258e733d4c1317df57ddc8528935aa03f7ec4052e2e",
+    "tests/test_experiment_sandbox_retained_acceptance.py": "e84ff179c1513815ffbc1c6685996e2ae74c63d590a8900453f26a7f31ee1f61",
+    "tests/test_experiment_sandbox_retained_admission.py": "406d66f110a5ac9c34a23a9a1d3ea7c7dec1c289bd65f9818a564a50534da244"
+  },
+  "supersessions": [
+    "admission c7b059cb replaced by b216e288 solely for full loaded-source provenance delegation; prior bytes and native receipts preserved",
+    "native-edges01 private terminal constructor test fixture failed before admission; copied-reference fixture corrected and targeted remaining two cases accepted at native-edges02",
+    "original root native01 nested function-owner EXECUTE failure preserved; native02 source role restoration accepted separately"
+  ],
+  "validation": {
+    "Ruff": "passed",
+    "accepted_existing_native_cases": 4,
+    "additional_native_edge_cases": 10,
+    "current_host_safe_cases": 65,
+    "local_clusters": "three new owned clusters verified stopped with empty roles/schema/sessions and endpoint/process evidence",
+    "new_actual_native_harness_helpers": 2
+  },
+  "version": "c23-retained-admission-owner-checkpoint-v1"
+}

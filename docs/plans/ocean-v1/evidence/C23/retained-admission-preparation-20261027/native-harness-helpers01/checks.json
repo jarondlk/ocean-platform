@@ -1,0 +1,52 @@
+{
+  "C23_complete": false,
+  "checks": {
+    "after_status_exit": 3,
+    "before_status_exit": 3,
+    "createdb_exit": 0,
+    "initdb_exit": 0,
+    "other_sessions": [],
+    "pid_absent": true,
+    "pytest_exit": 0,
+    "remaining_test_roles": [],
+    "remaining_test_schemas": [],
+    "socket_absent": true,
+    "start_exit": 0,
+    "stop_exit": 0,
+    "tcp_refused": true
+  },
+  "finished_unix_ns": 1793104753213751000,
+  "physical_authority": false,
+  "retained_source_and_private_server_logs": "/private/tmp/ocean-c23-admission-edges-20261027-hdm_i3qz",
+  "source_after": {
+    "migrations/versions/20261027_0021_experiment_execution.py": "69ea126213cd6a17c09a5363b928ae2b771cb9efaf06b4bc0a411cd99a73ac98",
+    "orchestration/experiment_sandbox/execution_store.py": "072eba89ce0877d1a182a9f9cbd9c923b1b79a37e2605d65da37fe87b012bac2",
+    "orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "orchestration/experiment_sandbox/physical_termination.py": "f1350b89ac1ecad6df68ef2f74a1751e32a1c29200dbd18727112a5364fac798",
+    "orchestration/experiment_sandbox/retained_admission.py": "b216e28831f8a93113d0bbc6e40c104485f15dc9ef860ebc5749589670e501d3",
+    "orchestration/experiment_sandbox/retained_bridge.py": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd",
+    "orchestration/experiment_sandbox/retained_context.py": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5",
+    "sandbox/experiment/gcp/run_retained_acceptance.py": "a04ef5a64ef37dda30f020b8027a087214547fb9aefa5fd572699fb5c1afff58",
+    "tests/integration/test_retained_acceptance_helpers_postgres.py": "2ad2c6bb1789afb7d8f29935f0919c135c996b14370dcadfbec5459218aa2b19",
+    "tests/integration/test_retained_admission_edges_postgres.py": "bfbb25ddf0827e4a219f75d090a268b45d6f56380ba70475b36da24477a8d827",
+    "tests/integration/test_retained_admission_postgres.py": "ef62afeaae2c7776948eff01a98b1109b16982180ff1bd2bf4904dadfc548c7b",
+    "tests/retained_admission_support.py": "c6da7702635336f76f792258e733d4c1317df57ddc8528935aa03f7ec4052e2e",
+    "tests/test_experiment_sandbox_retained_admission.py": "406d66f110a5ac9c34a23a9a1d3ea7c7dec1c289bd65f9818a564a50534da244"
+  },
+  "source_before": {
+    "migrations/versions/20261027_0021_experiment_execution.py": "69ea126213cd6a17c09a5363b928ae2b771cb9efaf06b4bc0a411cd99a73ac98",
+    "orchestration/experiment_sandbox/execution_store.py": "072eba89ce0877d1a182a9f9cbd9c923b1b79a37e2605d65da37fe87b012bac2",
+    "orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "orchestration/experiment_sandbox/physical_termination.py": "f1350b89ac1ecad6df68ef2f74a1751e32a1c29200dbd18727112a5364fac798",
+    "orchestration/experiment_sandbox/retained_admission.py": "b216e28831f8a93113d0bbc6e40c104485f15dc9ef860ebc5749589670e501d3",
+    "orchestration/experiment_sandbox/retained_bridge.py": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd",
+    "orchestration/experiment_sandbox/retained_context.py": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5",
+    "sandbox/experiment/gcp/run_retained_acceptance.py": "a04ef5a64ef37dda30f020b8027a087214547fb9aefa5fd572699fb5c1afff58",
+    "tests/integration/test_retained_acceptance_helpers_postgres.py": "2ad2c6bb1789afb7d8f29935f0919c135c996b14370dcadfbec5459218aa2b19",
+    "tests/integration/test_retained_admission_edges_postgres.py": "bfbb25ddf0827e4a219f75d090a268b45d6f56380ba70475b36da24477a8d827",
+    "tests/integration/test_retained_admission_postgres.py": "ef62afeaae2c7776948eff01a98b1109b16982180ff1bd2bf4904dadfc548c7b",
+    "tests/retained_admission_support.py": "c6da7702635336f76f792258e733d4c1317df57ddc8528935aa03f7ec4052e2e",
+    "tests/test_experiment_sandbox_retained_admission.py": "406d66f110a5ac9c34a23a9a1d3ea7c7dec1c289bd65f9818a564a50534da244"
+  },
+  "source_steady": true
+}

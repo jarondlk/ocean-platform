@@ -1,13 +1,14 @@
 # C23 — Isolated Python execution
 
-**Status:** In progress. Source00abd95 passes all four required hosted jobs.
-Later frozen code passes891 scoped local tests; ledger preparation passes24
-local and28 actual PostgreSQL cases with source/cleanup verified. Actual containment/output,
-three same-boot recovery episodes and repeated scientific/raster fixtures are
-retained; native4096/guest256 descriptor verification resolves NumPy EMFILE.
-The retained C22 approval-to-execution, signed physical termination and narrow
-capacity-release bridge remains mandatory. New source delivery/hosted CI is
-pending; C24 has not started. **Prerequisites:** C22.
+**Status:** In progress. Retained C22 reserve/start/publication, held runtime
+context, native cleanup/physical issuer and lifecycle runner are implemented
+locally. Physical software gates pass639 cases; retained reserve/lifecycle/edge
+checks pass26 actual PostgreSQL cases with shutdown verified. These are inert
+runtime/software-signature tests. Actual retained Linux execution, physical
+proof and independent capacity release remain mandatory; the guarded synthetic
+GCP harness is being prepared. Pushed91ebe81 backend6392/85.61percent and both frontends pass; PostgreSQL
+timed out at15minutes. Exact new-source hosted delivery remains
+required. C24 has not started. **Prerequisites:** C22.
 
 ## Revised delivery boundary
 

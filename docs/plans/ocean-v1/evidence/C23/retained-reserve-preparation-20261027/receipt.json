@@ -1,0 +1,420 @@
+{
+  "authority": {
+    "C23_complete": false,
+    "application_approval_fixture_retained": true,
+    "capacity_reserved_in_disposable_native_tests": true,
+    "physical_issuer_implemented_by_this_slice": false,
+    "reservation_release_authorized": false,
+    "runtime_execution_performed": false,
+    "scientific_approval": "not_independently_verified",
+    "serving_dispatch_enabled": false
+  },
+  "checks": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_retained_bridge.py",
+        "tests/test_experiment_sandbox_execution_store.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "outputs": {
+        "stderr": {
+          "bytes": 0,
+          "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/final01/unit.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 100,
+          "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/final01/unit.stdout.txt",
+          "sha256": "d454d74894edb227e7f71acb7865966a7309391364c47d166941c2b4af3a2682"
+        }
+      },
+      "summary": "37 passed in 31.01s"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "tests/integration/test_retained_reserve_postgres.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "outputs": {
+        "stderr": {
+          "bytes": 0,
+          "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/final01/native.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 100,
+          "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/final01/native.stdout.txt",
+          "sha256": "a73b37861e487a87c097aae672ff32626a3994f2ebae6bea886b14a0b8d4ac31"
+        }
+      },
+      "summary": "10 passed in 38.00s"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "ruff",
+        "check",
+        "orchestration/experiment_sandbox/retained_bridge.py",
+        "orchestration/experiment_sandbox/execution_store.py",
+        "tests/retained_reserve_support.py",
+        "tests/test_experiment_sandbox_retained_bridge.py",
+        "tests/integration/test_retained_reserve_postgres.py"
+      ],
+      "exit_code": 0,
+      "outputs": {
+        "stderr": {
+          "bytes": 0,
+          "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/final01/ruff.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 19,
+          "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/final01/ruff.stdout.txt",
+          "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+        }
+      },
+      "summary": "All checks passed!"
+    }
+  ],
+  "created_at": "2026-10-27T06:00:01.598485+00:00",
+  "development_failures": [
+    {
+      "evidence": "native01/pytest.stdout.txt",
+      "finding": "Test URL initially selected unavailable psycopg3; failure occurred before database connection. Switched only the explicit test URL to already installed pinned psycopg2; no dependency or serving configuration changes."
+    },
+    {
+      "finding": "Initial software stub used SQLite EXISTS integer instead of PostgreSQL bool; corrected the mock only. Native bool enforcement remains strict."
+    }
+  ],
+  "grant_decision": {
+    "important": "UPDATE(id) is a real PK-write privilege, not lock-only. No new role-specific DML-denying trigger is claimed. Other C22 column updates and direct C23 writes are denied; serving/verifier receive no new bootstrap grants. Native fixture serving-role C22 writer privileges are separately scoped test setup, not bridge credentials.",
+    "principal": "configured independently trusted controller LOGIN only",
+    "setup_scope": "explicit configured owned isolated operator schema; no role/credential/database discovery",
+    "table_column_privileges": [
+      {
+        "select_columns": [
+          "id",
+          "auth_provider",
+          "auth_subject",
+          "email",
+          "display_name",
+          "role",
+          "account_type",
+          "status",
+          "invited_by_user_id",
+          "created_at",
+          "updated_at",
+          "last_login_at"
+        ],
+        "table": "app_user",
+        "update_columns": [
+          "id"
+        ]
+      },
+      {
+        "select_columns": [
+          "id",
+          "user_id",
+          "name",
+          "metadata_version",
+          "status",
+          "head_revision_id",
+          "predecessor_investigation_id",
+          "predecessor_revision_id",
+          "legal_hold",
+          "created_at",
+          "updated_at",
+          "retired_at"
+        ],
+        "table": "research_investigation",
+        "update_columns": [
+          "id"
+        ]
+      },
+      {
+        "select_columns": [
+          "id",
+          "user_id",
+          "investigation_id",
+          "conversation_id",
+          "head_revision_id",
+          "version",
+          "event_cursor",
+          "created_at",
+          "updated_at"
+        ],
+        "table": "research_experiment",
+        "update_columns": [
+          "id"
+        ]
+      },
+      {
+        "select_columns": [
+          "id",
+          "investigation_id",
+          "sequence",
+          "predecessor_revision_id",
+          "snapshot_id",
+          "payload_json",
+          "payload_sha256",
+          "created_by_user_id",
+          "created_at"
+        ],
+        "table": "research_context_revision",
+        "update_columns": []
+      },
+      {
+        "select_columns": [
+          "id",
+          "investigation_id",
+          "name",
+          "metadata_version",
+          "created_at",
+          "updated_at"
+        ],
+        "table": "research_conversation",
+        "update_columns": []
+      },
+      {
+        "select_columns": [
+          "id",
+          "experiment_id",
+          "user_id",
+          "investigation_id",
+          "conversation_id",
+          "context_revision_id",
+          "snapshot_id",
+          "payload_sha256",
+          "sequence",
+          "context_json",
+          "proposal_json",
+          "environment_json",
+          "manifest_json",
+          "proposal_sha256",
+          "code_sha256",
+          "input_manifest_sha256",
+          "environment_sha256",
+          "resources_sha256",
+          "source_sha256",
+          "total_bytes",
+          "created_at"
+        ],
+        "table": "research_experiment_revision",
+        "update_columns": []
+      },
+      {
+        "select_columns": [
+          "id",
+          "experiment_id",
+          "revision_id",
+          "user_id",
+          "request_json",
+          "request_sha256",
+          "created_at"
+        ],
+        "table": "research_experiment_approval",
+        "update_columns": []
+      },
+      {
+        "select_columns": [
+          "revision_id",
+          "name",
+          "experiment_id",
+          "user_id",
+          "sha256",
+          "size_bytes"
+        ],
+        "table": "research_experiment_revision_file",
+        "update_columns": []
+      },
+      {
+        "select_columns": [
+          "user_id",
+          "sha256",
+          "content",
+          "size_bytes",
+          "created_at"
+        ],
+        "table": "research_experiment_input_blob",
+        "update_columns": []
+      }
+    ]
+  },
+  "immutable_prior_source": {
+    "bytes": 24765,
+    "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/prior-source/orchestration/experiment_sandbox/execution_store.py",
+    "sha256": "539e7c7b638b759fc92ef6615e5b037ab9d9420cf09876bd39033a9d4e1fb13d"
+  },
+  "implementation": [
+    "New default-off C23RetainedBridge binds exact site, service/source objects, restricted controller session factory and pinned material policy; source inspection does not itself authorize reservation.",
+    "Full C22 inspection/source verification precedes the final mutation transaction. The final transaction repeats retained C22 actor/owner/context/candidate checks. The store validates its controller session/enablement and immutable canonical parameters before invoking the trusted bridge closure.",
+    "Inside that closure, remaining bridge flags precede the final fresh access/source callback; then expire_all, unchanged C22 closing DB gate and fresh retained byte comparison run. The already prepared native reserve SQL executes immediately afterward, without further external callbacks.",
+    "The reserve operation preserves native capacity locks/indexes, immutable identity, exact canonical request/envelope hashes, deterministic operation/job IDs and no-fake-outbox channel guards.",
+    "RetainedExecutionIdentity is private, detached and minted only after acknowledged transaction commit. capacity_reserved_at_commit is explicitly a snapshot, including false for a historical released replay; execution/publication/release/scientific authority remains false/unverified.",
+    "Explicit bootstrap reuses the existing C23 role boundary, then grants exactly nine current model column SELECT sets and UPDATE(id) on three C22 locked heads, after revoking old direct table/column privileges on those nine targets.",
+    "Existing low-level reserve semantics, C22 service/ORM, inspection source and migrations0020/0021 remain unchanged. No route, native runner, start/publication API or fake delivery is registered."
+  ],
+  "limitations": [
+    "The controller is an independently trusted current-admission principal with documented C22 id-update permission. The unchanged native C22 immutability/FK guards may restrict actual PK changes; this review does not claim a new general read-only trigger.",
+    "External flag/source callbacks are point-in-time admission reads, while the closing DB fence atomically protects retained owner/context/approval/bytes and reserve mutation. No cross-system continuous or distributed atomic revocation guarantee is claimed.",
+    "Native fixtures use explicit preparation-only Linux descriptors and synthetic material hashes; application approval is genuine retained C22 authorization for synthetic data, not runtime image acceptance or scientific approval.",
+    "Unchanged C22 approve checks existing fake-capable enablement even for application approval. The test writer enables that check only to invoke approve, never dispatch; fake dispatch is disabled for the distinct C23 reader, and outbox/delivery counts remain zero.",
+    "No actual held-lease start consumption, runtime execution, validated output publication, physical authenticated issuer, capacity release or fullC23 acceptance is established. Those remain separate reviewed phases.",
+    "Owned PostgreSQL18.3 was stopped after test schemas/roles were absent. Its private stopped data/log directory is retained for audit; no application database, existing service, GCP resource or real data was accessed."
+  ],
+  "native_case_coverage": [
+    "Actual nonadmin serving-role C22 create/approve over sealed synthetic catalogue/export services, followed by a distinct actual restricted controller reader/reserve factory",
+    "Exact retained approval/envelope bytes, deterministic idempotent and concurrent replay, conflicting retry",
+    "Rollback after actual named native reserve leaves no capacity or execution row",
+    "Same-owner single-capacity and global two-slot limits",
+    "Admin factory substitution refused by native current_user/session_user role checks",
+    "Late factory mutation cannot pass closing fence",
+    "Caller owner/approval-hash injection refused",
+    "Other C22 column writes and all sampled C23 direct mutation denied, while UPDATE(id)=id demonstrates the documented real privilege",
+    "No fake outbox or FakeExecutor delivery; no stored proposal program execution"
+  ],
+  "native_target_and_cleanup": {
+    "application_database_accessed": false,
+    "cloud_actions": false,
+    "created_at": "2026-10-27T05:58:24.532030+00:00",
+    "data_directory": "/private/tmp/ocean-c23-retained-reserve-20261027-2c2s4i54/data",
+    "database": "ocean_c23_retained_c18eba8fc43a",
+    "loopback_port_connect_errno": 61,
+    "other_database_sessions_before_stop": 0,
+    "owned_root": "/private/tmp/ocean-c23-retained-reserve-20261027-2c2s4i54",
+    "postmaster_pid_file_absent": true,
+    "real_data_accessed": false,
+    "recorded_server_pid": 44597,
+    "remaining_test_roles": [],
+    "remaining_test_schemas": [],
+    "retained_private_data_directory_for_audit": true,
+    "server_address": "127.0.0.1",
+    "server_port": 63959,
+    "server_stopped": true,
+    "server_version": "18.3 (Homebrew)",
+    "status_exit_code": 3,
+    "stop_command": [
+      "/opt/homebrew/opt/postgresql@18/bin/pg_ctl",
+      "-D",
+      "/private/tmp/ocean-c23-retained-reserve-20261027-2c2s4i54/data",
+      "-m",
+      "fast",
+      "-w",
+      "stop"
+    ],
+    "stop_exit_code": 0,
+    "stop_stdout": "waiting for server to shut down.... done\nserver stopped\n",
+    "version": "c23-owned-reserve-pg-cleanup-v1"
+  },
+  "scope": "Reserve-only preparation over actual retained synthetic C22 application approvals, using exact independently restricted controller factories on a newly owned loopback disposable PostgreSQL cluster. No runtime/start/publication/physical proof/release is provided.",
+  "software_case_coverage": [
+    "Default off/site/factory/material mismatch",
+    "Detached private no-start receipt",
+    "Last store-enable callback changes owner/context/proposal/approval/factory/flag/source: no native reserve call",
+    "Exact store method order controller-enable/role check, trusted closing callback, then SQL with no later enable call",
+    "Existing24 store preparation tests remain passing"
+  ],
+  "source_frozen": true,
+  "source_hashes_steady_before_after": true,
+  "sources": [
+    {
+      "bytes": 11029,
+      "path": "orchestration/experiment_sandbox/retained_bridge.py",
+      "sha256": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd"
+    },
+    {
+      "bytes": 28245,
+      "path": "orchestration/experiment_sandbox/execution_store.py",
+      "sha256": "5957e4692f2c9c86fa23243af03238c461dc67679cc92cbbe6ae1fdac8833c06"
+    },
+    {
+      "bytes": 2776,
+      "path": "tests/retained_reserve_support.py",
+      "sha256": "c88e3b259632af96485066f2c2105242f7d62740e23953bde00c8712be43b697"
+    },
+    {
+      "bytes": 8332,
+      "path": "tests/test_experiment_sandbox_retained_bridge.py",
+      "sha256": "178870f289b552f2f16cd0b50311eb01542b141a78a394efb9b983af389c25a3"
+    },
+    {
+      "bytes": 10683,
+      "path": "tests/integration/test_retained_reserve_postgres.py",
+      "sha256": "fdfac58dab472351e8fc7d32499275fd632dbd87741703a419b72c5c0cc80368"
+    }
+  ],
+  "unchanged_accepted_sources": [
+    {
+      "path": "orchestration/research_experiments.py",
+      "sha256": "bab02f05549655977e2f95ef7885a59d3a311c3ad64941b0846d79b94b0db2ee",
+      "unchanged_from_checkpoint": "5a02f221f7ba8127fcbd6008949806e6b4c1ef04"
+    },
+    {
+      "path": "orchestration/experiment_sandbox/operator_inspection.py",
+      "sha256": "6186090794ee106c8fad3db2169e49018b13158f5ddb2c9ea0bba69d37ebb3b7",
+      "unchanged_from_checkpoint": "5a02f221f7ba8127fcbd6008949806e6b4c1ef04"
+    },
+    {
+      "path": "db/app_models.py",
+      "sha256": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+      "unchanged_from_checkpoint": "5a02f221f7ba8127fcbd6008949806e6b4c1ef04"
+    },
+    {
+      "path": "migrations/versions/20261020_0020_research_experiments.py",
+      "sha256": "2f5eb82dfefdd6a02bafddb58a44936fa42197c8eb2ac70b726d83fc57f14dff",
+      "unchanged_from_checkpoint": "5a02f221f7ba8127fcbd6008949806e6b4c1ef04"
+    },
+    {
+      "path": "migrations/versions/20261027_0021_experiment_execution.py",
+      "sha256": "6030819273cedbd047d98ada9784b74f2fa126612d922253d177dedc5fcc5aa0",
+      "unchanged_from_checkpoint": "5a02f221f7ba8127fcbd6008949806e6b4c1ef04"
+    }
+  ],
+  "verification_inputs": [
+    {
+      "bytes": 6548,
+      "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/final01/checks.json",
+      "sha256": "d7e8112a91a523cbe489eb057c97afd24cdb7827cf70b47738978713b12a2686"
+    },
+    {
+      "bytes": 1127,
+      "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/final01/cleanup.json",
+      "sha256": "de092bd360cec73d161d19018a707e8490ae0a3e65d8f486caf798830188237a"
+    },
+    {
+      "bytes": 1173,
+      "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/native01/pytest.stdout.txt",
+      "sha256": "d607c93728bdd881ee9e14dccf6dde073085d3fcc91912e26056d0618bbcdd38"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/native01/pytest.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 99,
+      "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/native02/pytest.stdout.txt",
+      "sha256": "ed3fd1cad45914655628cef5207aca6230f6fbf6c0f883aa39784e6b26f268ba"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/native02/pytest.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "version": "c23-retained-reserve-preparation-v1"
+}

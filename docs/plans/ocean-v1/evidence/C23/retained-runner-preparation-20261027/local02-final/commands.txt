@@ -1,0 +1,5 @@
+.venv/bin/python -m ruff check orchestration/experiment_sandbox/retained_runner.py tests/test_experiment_sandbox_retained_runner.py
+
+.venv/bin/python -m pytest tests/test_experiment_sandbox_retained_runner.py tests/test_experiment_sandbox_retained_context.py -q
+
+Host-safe scope only. Exact adapter/hook/issuer classes and actual SQLite/flock/context/FreshStartPermit consumption are used, with native preflight/runsc/cgroups/watchdog/physical observation/DB admission explicitly mocked. Real private output retention/validation and synthetic Ed25519 signing/pinned verification are exercised. No generated analysis, real physical proof, DB service, cloud action or commit occurs. Existing core/native tests owned by root are not duplicated here.

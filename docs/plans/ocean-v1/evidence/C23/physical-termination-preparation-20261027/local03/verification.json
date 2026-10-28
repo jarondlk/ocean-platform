@@ -1,0 +1,35 @@
+{
+  "actual_physical_acceptance": false,
+  "results": [
+    {
+      "check": "pytest",
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_physical_termination.py",
+        "tests/test_experiment_sandbox_proofs.py",
+        "tests/test_experiment_sandbox_retained_context.py",
+        "tests/test_experiment_sandbox_journal_references.py",
+        "tests/test_experiment_sandbox_journal.py",
+        "tests/test_experiment_sandbox_linux_runtime.py",
+        "tests/test_experiment_sandbox_supervisor.py",
+        "-q",
+        "--tb=short"
+      ],
+      "returncode": 0
+    },
+    {
+      "check": "ruff",
+      "command": [
+        ".venv/bin/ruff",
+        "check",
+        "orchestration/experiment_sandbox/physical_termination.py",
+        "tests/test_experiment_sandbox_physical_termination.py"
+      ],
+      "returncode": 0
+    }
+  ],
+  "scope": "Host-safe simulations only; actual native/kernel/DB/material-source boundaries explicitly mocked in new tests.",
+  "source_unchanged": true
+}

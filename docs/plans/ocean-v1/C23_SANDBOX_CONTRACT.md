@@ -128,3 +128,21 @@ The initial image/receipts stay immutable when the quota amendment is rebuilt.
 The retained C22 bridge and narrow proof-backed release path remain design-only.
 They must be verified separately after containment; the operator synthetic
 fixture cannot clear the Durability reservation-release gate in the table.
+
+
+## Retained implementation update — 2026-10-27 21:25JST
+
+The earlier design-only retained bridge statements above are historical.
+Default-off reserve/start/publication hooks, private held context, original
+cgroup handle/cleanup observations, guarded physical issuer and lifecycle runner
+are now implemented locally. All required loaded host modules must originate
+in the exact readonly pinned source root. Source files copied after imports
+cannot supply physical provenance. Actual restricted PostgreSQL/inert-journal
+integration and host-safe checks pass; synthetic signatures are not physical
+termination. Actual retained GCP synthetic acceptance and exact-source hosted
+CI remain outstanding. Cleanup/close/sign/record/release are independent of
+current owner/launch enable state; start/publication repeat current authority.
+An uncertain start acknowledgement grants no permit or automatic new UUID retry.
+Queued cancellation, reboot and restart before retained physical observation
+remain fail-closed: no fabricated start, physical claim or capacity release.
+No dispatch route or automatic worker registration is introduced.

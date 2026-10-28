@@ -1,0 +1,94 @@
+{
+  "C23_complete": false,
+  "actual_physical_acceptance": false,
+  "existing_code_modified": false,
+  "historical_native02": {
+    "capture_validation": {
+      "orchestration/experiment_sandbox/execution_store.py": {
+        "captured_sha256": "072eba89ce0877d1a182a9f9cbd9c923b1b79a37e2605d65da37fe87b012bac2",
+        "expected_sha256": "072eba89ce0877d1a182a9f9cbd9c923b1b79a37e2605d65da37fe87b012bac2",
+        "match": true
+      },
+      "orchestration/experiment_sandbox/journal.py": {
+        "captured_sha256": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+        "expected_sha256": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+        "match": true
+      },
+      "orchestration/experiment_sandbox/physical_termination.py": {
+        "captured_sha256": "9b9f48f3f9b856074d0b1a25b622a488ef9bfda4db5cba7f074c39e29aca0655",
+        "expected_sha256": "9b9f48f3f9b856074d0b1a25b622a488ef9bfda4db5cba7f074c39e29aca0655",
+        "match": true
+      },
+      "orchestration/experiment_sandbox/retained_admission.py": {
+        "captured_sha256": "c7b059cb27259aef2969e59f0a4a5706233234f2c8892948882286dd854b8acc",
+        "expected_sha256": "c7b059cb27259aef2969e59f0a4a5706233234f2c8892948882286dd854b8acc",
+        "match": true
+      },
+      "orchestration/experiment_sandbox/retained_bridge.py": {
+        "captured_sha256": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd",
+        "expected_sha256": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd",
+        "match": true
+      },
+      "orchestration/experiment_sandbox/retained_context.py": {
+        "captured_sha256": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5",
+        "expected_sha256": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5",
+        "match": true
+      },
+      "tests/integration/test_retained_admission_postgres.py": {
+        "captured_sha256": "ef62afeaae2c7776948eff01a98b1109b16982180ff1bd2bf4904dadfc548c7b",
+        "expected_sha256": "ef62afeaae2c7776948eff01a98b1109b16982180ff1bd2bf4904dadfc548c7b",
+        "match": true
+      },
+      "tests/retained_admission_support.py": {
+        "captured_sha256": "c6da7702635336f76f792258e733d4c1317df57ddc8528935aa03f7ec4052e2e",
+        "expected_sha256": "c6da7702635336f76f792258e733d4c1317df57ddc8528935aa03f7ec4052e2e",
+        "match": true
+      }
+    },
+    "checks_sha256": "b40a7b40789edaad5c85aecd242a4e0721fd0941dd375674134d885a0b0134ac",
+    "historical_not_current_final_source": true,
+    "pytest_stdout_sha256": "93d28aeb69e75af41e3d6555e4f5da1cb4bc4c11360a130c1ed24f810b8f7992",
+    "result": "....                                                                     [100%]\n4 passed in 18.70s",
+    "scope": "Real restricted PostgreSQL admission/signature/release control flow with inert runtime; not physical termination or retained Linux end-to-end acceptance."
+  },
+  "inert_native_test_controls": [
+    "Fixture sets LinuxExecutionAdapter._preflight and _spawn to functions that fail before Linux effects. No generated Python or physical issuer is called.",
+    "Outputs are fixed literal bytes retained through reviewed helpers; key generation is ephemeral and packet trust_scope is synthetic-software-test. Claimed kernel scalars are explicitly software assertions used only for authentication/DB guard control flow.",
+    "Native cases cover ordinary publication/release, current-owner revocation with independent close/release, committed start ACK loss without permit/retry and missing function-owner EXEC denial.",
+    "Root-captured source-before/source-after hashes agree for all8 files; independent recovered bytes match all8 historical hashes. Subsequent physical/admission source hardening needs its own final source-bound evidence and is not retroactively attributed to native02."
+  ],
+  "method": "Read-only source/control-flow review and historical source-capture hash verification. No tests, DB connections, runtime commands, service or cloud actions performed in this review.",
+  "physical_final_receipt": {
+    "path": "docs/plans/ocean-v1/evidence/C23/physical-termination-preparation-20261027/local07-final/receipt.json",
+    "sha256": "063f0b57921cf665bc15daced9516a81db4b5e4306373bb341c6141e36ac1cfd"
+  },
+  "remaining_actual_acceptance_gates": [
+    "SC retained-operator admission and physical issuer must use the shared loaded-origin helper; current admission source contains that call.",
+    "All17 required host modules must already be imported from the complete frozen root-owned readonly0700 source root; extra loaded configured Python archive members must resolve there. The full operator archive must cover all trusted imported repository dependencies beyond the required minimum. Copying files after importing a workspace does not satisfy provenance.",
+    "Actual Linux UID0/current kernel boot/machine identity, genuine original cgroup2 FD and journal identity, fresh kernel populated0, direct pinned runsc delete code0/EOF, sealed image/runtime/init/profile readback, actual closed restricted-DB rows, signed retained packet and independent atomic capacity release still require separate GCP acceptance.",
+    "Restart after process loss before packet retention cannot reconstruct/re-sign from saved native JSON or a frozen issuance intent. Same-process exact retry needs the original registered live observation/handle/held lease; otherwise retain capacity. An already retained authenticated packet may be delivered separately through normal verifier exact retry."
+  ],
+  "reviewed_invariants": [
+    "Original exact native cgroup handle is kept open through physical issuer, independent packet recording and capacity release; runner never unmounts rootfs. Operator caller must retain the sealed mount through issuance.",
+    "Physical cleanup and pipe completion precede guest frame decode/private byte retention. Full canonical durable terminal wrapper is finished and read back before optional current publication, independent DB close and signing.",
+    "Current publication denial and sanitized diagnostic failures do not suppress independent close/sign/record/release after physical cleanup and durable finish.",
+    "Missing private native observation, retained journal start intent, durable finish, closed fence or signed verified proof cannot produce a release acknowledgement. Legacy cleanup JSON is discarded as proof.",
+    "Retained start payload exactly correlates execution/reservation/start and event UUIDs/fence/worker/job/envelope/profile/journal UUID/start epoch/boot/original preceding journal head with the physical issuer and DB immutable start row.",
+    "Same-boot nonterminal recovery performs cleanup without reexecution; physical journal checks preserve original start epoch and actual closure epoch. Boot change and terminal replay perform no runtime commands or signing.",
+    "Fresh opaque start permit is consumed once before the durable start intent and one native start attempt. No owner/source/user callback lies between that intent and the attempt.",
+    "Packet and closed/release metadata are excluded from the finished journal result; signatures refer to the immutable terminal head/result without a journal/packet cycle.",
+    "Report carries bounded status/reference data and validated publication fields, excludes private retained output bytes, and reports release unknown unless actual release acknowledgement returns."
+  ],
+  "runner_findings": [],
+  "source_sha256": {
+    "orchestration/experiment_sandbox/physical_termination.py": "f1350b89ac1ecad6df68ef2f74a1751e32a1c29200dbd18727112a5364fac798",
+    "orchestration/experiment_sandbox/proofs.py": "98b6f72c0d59dca21e78d9ebb93268769d41c18560e240b0ba8bf4622fc42ed4",
+    "orchestration/experiment_sandbox/retained_admission.py": "b216e28831f8a93113d0bbc6e40c104485f15dc9ef860ebc5749589670e501d3",
+    "orchestration/experiment_sandbox/retained_runner.py": "683e5032c722410a54049f18ebf8cfb10faf63c52138ac76d931c5ff8a5071f1",
+    "schema/experiment_execution.py": "8932fdc90c2fe22035e7bf4a4c88eff4047b3fbc584c070e77041c3e285e8b00",
+    "tests/integration/test_retained_admission_postgres.py": "ef62afeaae2c7776948eff01a98b1109b16982180ff1bd2bf4904dadfc548c7b",
+    "tests/retained_admission_support.py": "c6da7702635336f76f792258e733d4c1317df57ddc8528935aa03f7ec4052e2e",
+    "tests/test_experiment_sandbox_retained_runner.py": "607d70f0cf89d1632e1dd80270dfe2a6df4a22037e5397868020e9b30fa6f411"
+  },
+  "version": "c23-independent-native-inert-runner-review-v1"
+}

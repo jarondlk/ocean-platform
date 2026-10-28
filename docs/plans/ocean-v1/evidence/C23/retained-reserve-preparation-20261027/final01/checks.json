@@ -1,0 +1,190 @@
+{
+  "checks": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_retained_bridge.py",
+        "tests/test_experiment_sandbox_execution_store.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "outputs": {
+        "stderr": {
+          "bytes": 0,
+          "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/final01/unit.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 100,
+          "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/final01/unit.stdout.txt",
+          "sha256": "d454d74894edb227e7f71acb7865966a7309391364c47d166941c2b4af3a2682"
+        }
+      },
+      "summary": "37 passed in 31.01s"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "tests/integration/test_retained_reserve_postgres.py",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0,
+      "outputs": {
+        "stderr": {
+          "bytes": 0,
+          "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/final01/native.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 100,
+          "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/final01/native.stdout.txt",
+          "sha256": "a73b37861e487a87c097aae672ff32626a3994f2ebae6bea886b14a0b8d4ac31"
+        }
+      },
+      "summary": "10 passed in 38.00s"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "ruff",
+        "check",
+        "orchestration/experiment_sandbox/retained_bridge.py",
+        "orchestration/experiment_sandbox/execution_store.py",
+        "tests/retained_reserve_support.py",
+        "tests/test_experiment_sandbox_retained_bridge.py",
+        "tests/integration/test_retained_reserve_postgres.py"
+      ],
+      "exit_code": 0,
+      "outputs": {
+        "stderr": {
+          "bytes": 0,
+          "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/final01/ruff.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 19,
+          "path": "docs/plans/ocean-v1/evidence/C23/retained-reserve-preparation-20261027/final01/ruff.stdout.txt",
+          "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+        }
+      },
+      "summary": "All checks passed!"
+    }
+  ],
+  "created_at": "2026-10-27T05:57:15.402985+00:00",
+  "sources_after": [
+    {
+      "bytes": 11029,
+      "path": "orchestration/experiment_sandbox/retained_bridge.py",
+      "sha256": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd"
+    },
+    {
+      "bytes": 28245,
+      "path": "orchestration/experiment_sandbox/execution_store.py",
+      "sha256": "5957e4692f2c9c86fa23243af03238c461dc67679cc92cbbe6ae1fdac8833c06"
+    },
+    {
+      "bytes": 2776,
+      "path": "tests/retained_reserve_support.py",
+      "sha256": "c88e3b259632af96485066f2c2105242f7d62740e23953bde00c8712be43b697"
+    },
+    {
+      "bytes": 8332,
+      "path": "tests/test_experiment_sandbox_retained_bridge.py",
+      "sha256": "178870f289b552f2f16cd0b50311eb01542b141a78a394efb9b983af389c25a3"
+    },
+    {
+      "bytes": 10683,
+      "path": "tests/integration/test_retained_reserve_postgres.py",
+      "sha256": "fdfac58dab472351e8fc7d32499275fd632dbd87741703a419b72c5c0cc80368"
+    },
+    {
+      "bytes": 53034,
+      "path": "orchestration/research_experiments.py",
+      "sha256": "bab02f05549655977e2f95ef7885a59d3a311c3ad64941b0846d79b94b0db2ee"
+    },
+    {
+      "bytes": 12433,
+      "path": "orchestration/experiment_sandbox/operator_inspection.py",
+      "sha256": "6186090794ee106c8fad3db2169e49018b13158f5ddb2c9ea0bba69d37ebb3b7"
+    },
+    {
+      "bytes": 85030,
+      "path": "db/app_models.py",
+      "sha256": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3"
+    },
+    {
+      "bytes": 25620,
+      "path": "migrations/versions/20261020_0020_research_experiments.py",
+      "sha256": "2f5eb82dfefdd6a02bafddb58a44936fa42197c8eb2ac70b726d83fc57f14dff"
+    },
+    {
+      "bytes": 47492,
+      "path": "migrations/versions/20261027_0021_experiment_execution.py",
+      "sha256": "6030819273cedbd047d98ada9784b74f2fa126612d922253d177dedc5fcc5aa0"
+    }
+  ],
+  "sources_before": [
+    {
+      "bytes": 11029,
+      "path": "orchestration/experiment_sandbox/retained_bridge.py",
+      "sha256": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd"
+    },
+    {
+      "bytes": 28245,
+      "path": "orchestration/experiment_sandbox/execution_store.py",
+      "sha256": "5957e4692f2c9c86fa23243af03238c461dc67679cc92cbbe6ae1fdac8833c06"
+    },
+    {
+      "bytes": 2776,
+      "path": "tests/retained_reserve_support.py",
+      "sha256": "c88e3b259632af96485066f2c2105242f7d62740e23953bde00c8712be43b697"
+    },
+    {
+      "bytes": 8332,
+      "path": "tests/test_experiment_sandbox_retained_bridge.py",
+      "sha256": "178870f289b552f2f16cd0b50311eb01542b141a78a394efb9b983af389c25a3"
+    },
+    {
+      "bytes": 10683,
+      "path": "tests/integration/test_retained_reserve_postgres.py",
+      "sha256": "fdfac58dab472351e8fc7d32499275fd632dbd87741703a419b72c5c0cc80368"
+    },
+    {
+      "bytes": 53034,
+      "path": "orchestration/research_experiments.py",
+      "sha256": "bab02f05549655977e2f95ef7885a59d3a311c3ad64941b0846d79b94b0db2ee"
+    },
+    {
+      "bytes": 12433,
+      "path": "orchestration/experiment_sandbox/operator_inspection.py",
+      "sha256": "6186090794ee106c8fad3db2169e49018b13158f5ddb2c9ea0bba69d37ebb3b7"
+    },
+    {
+      "bytes": 85030,
+      "path": "db/app_models.py",
+      "sha256": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3"
+    },
+    {
+      "bytes": 25620,
+      "path": "migrations/versions/20261020_0020_research_experiments.py",
+      "sha256": "2f5eb82dfefdd6a02bafddb58a44936fa42197c8eb2ac70b726d83fc57f14dff"
+    },
+    {
+      "bytes": 47492,
+      "path": "migrations/versions/20261027_0021_experiment_execution.py",
+      "sha256": "6030819273cedbd047d98ada9784b74f2fa126612d922253d177dedc5fcc5aa0"
+    }
+  ],
+  "sources_unchanged": true,
+  "version": "c23-retained-reserve-final-checks-v1"
+}

@@ -1,0 +1,43 @@
+{
+  "actual_C23_complete": false,
+  "edits_by_reviewer": false,
+  "fixed_findings": [
+    "Proposal resource field now uses the accepted ExperimentResources defaults before C22 create/approval, rather than invalid cpu_cores.",
+    "Evaluation uses frozen runner publication statuses acknowledged / denied_or_uncertain and checks expected publication event count.",
+    "Protected complete source hashes, harness origin and required host + four synthetic helper imports are checked before first DB/fixture work.",
+    "Root-private config and seed parents/files are checked and disjoint from current attempt/export, source, rootfs, OCI and runtime trees before effects.",
+    "C22 post-run reservation/outbox observations use a separate serving/application LOGIN in an explicit read-only transaction, without expanding controller privileges."
+  ],
+  "head": "91ebe81dbf5a8f7ca963b5b4aa7e3df594458ea6",
+  "host_safe_validation": "Root/owner reported 34 host-safe tests and Ruff pass on these frozen sources. This reviewer did not repeat those tests or execute SCIENCE_CODE.",
+  "limitations": [
+    "This is source review, not actual Linux/GCP/C22-approval-to-release acceptance. Actual two cases and raw row/journal/packet/cleanup receipts must pass separately.",
+    "Synthetic owner review remains experimental and scientifically unverified; it is no real scientific approval or deployed route authorization.",
+    "Existing unsupported queued cancellation, reboot/power-loss, terminal replay reconstruction and process-loss-before-packet signing gates remain explicit.",
+    "Schema/host operators remain trusted. Private config is an explicit operator input; no legacy target or credentials are discovered."
+  ],
+  "result": "No source-level blocker found in the reviewed frozen harness after coordinated fixes.",
+  "review_type": "Independent read-only source review; no cloud, DB or duplicate test execution.",
+  "reviewed_properties": {
+    "DB_snapshot_scoped_to_execution_and_application_reservation_reference_with_one_start_proof_release_zero_fake_outbox": true,
+    "actual_C22_create_then_owner_approval_for_unchanged_pinned_Linux_environment_and_code": true,
+    "actual_private_seed_matches_out_of_band_public_pin_and_guest_mounts_exclude_control_secrets": true,
+    "exact_base_LinuxExecutionAdapter_and_retained_runner_no_subclass_or_native_mocks": true,
+    "explicit_distinct_role_DSNs_loopback_dedicated_database_schema_no_admin_credential": true,
+    "exported_documents_do_not_include_DSNs_or_private_seed_bytes": true,
+    "no_fake_dispatch_or_outbox_creation": true,
+    "original_native_handle_and_sealed_rootfs_survive_through_signing_and_packet_retention": true,
+    "post_terminal_application_role_owner_status_suspension_commit_plus_fresh_readback_feature_stays_enabled": true,
+    "publication_denial_does_not_remove_runner_independent_cleanup_finish_close_sign_record_release": true,
+    "retained_envelope_loaded_from_DB_verified_against_reservation_hash_then_staged_without_rehash_promotion": true,
+    "rootfs_unmount_and_group_removal_happen_only_in_final_operator_cleanup_after_runner_returns": true,
+    "signed_packet_verified_and_retained_by_physical_issuer_and_reverified_again_by_restricted_recorder": true,
+    "suspension_callback_runs_at_candidate_gate_before_publication_C22_owner_locks": true,
+    "worker_guard_precedes_config_DB_and_effects": true
+  },
+  "source_sha256": {
+    "sandbox/experiment/gcp/run_retained_acceptance.py": "a04ef5a64ef37dda30f020b8027a087214547fb9aefa5fd572699fb5c1afff58",
+    "tests/test_experiment_sandbox_retained_acceptance.py": "e84ff179c1513815ffbc1c6685996e2ae74c63d590a8900453f26a7f31ee1f61"
+  },
+  "version": "c23-retained-acceptance-harness-independent-review-v1"
+}

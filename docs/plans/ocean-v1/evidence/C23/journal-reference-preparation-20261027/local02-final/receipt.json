@@ -1,0 +1,67 @@
+{
+  "artifacts_sha256": {
+    "commands.txt": "60ecd1c58dc4947983fb3011e2f7776a62544909a8e1aaf79788745334c90240",
+    "pytest.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pytest.stdout.txt": "5592a76f83affffdd21742213b78470bee22d2418658d2760781b301018403a7",
+    "ruff.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ruff.stdout.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "source/orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "source/tests/test_experiment_sandbox_journal_references.py": "ab206fbb7846002d537954d468b6c887e411e41f02ef44966200c45b59be1abf",
+    "unchanged-original-ast.json": "cffeb1d787288d34b4021120014ee74252508dc840b19f6e9c0ec8418b1a41d4",
+    "verification-before.json": "246686dbe9e2246f246c481d0472882624dd0616e6c40ee94360b5e2183f0331"
+  },
+  "capacity_release_authority": false,
+  "checkpoint": "5a02f221f7ba8127fcbd6008949806e6b4c1ef04",
+  "current_C22_admission_authority": false,
+  "evidence_only": true,
+  "head_at_receipt": "5a02f221f7ba8127fcbd6008949806e6b4c1ef04",
+  "issuer_authentication": false,
+  "lease_guard": "Existing exact registered DurableLease object/PID/current epoch/original open lock identity/full bounded chain, under one mutex/read connection with marker/metadata checks.",
+  "marker_hardening": "Read UUID from exact validated canonical marker bytes; reject a divergent mutable marker cache and noncanonical UUID.",
+  "new_API": [
+    "DurableExecutionJournal.identity_reference(actual_held_lease)",
+    "DurableExecutionJournal.terminal_reference(actual_held_lease)"
+  ],
+  "old_receipts_preserved": [
+    "journal-reference-preparation-20261027/local01 preliminary source/results",
+    "all existing C23 runtime/store/protocol receipts"
+  ],
+  "original_AST_unchanged_except_additions": true,
+  "physical_termination_authority": false,
+  "prior_journal_sha256": "6e128f8d15dc312c79f50aa35686bb8905aac4e02880d697c93e512705e37b7c",
+  "regression_dependencies_unchanged": true,
+  "regression_dependency_sha256_after": {
+    "orchestration/experiment_sandbox/linux_runtime.py": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d",
+    "orchestration/experiment_sandbox/supervisor.py": "6bc18e679db9b666e5b896c1b0585becac2ea4577b9cd331a6e9ddb7b1fffa7d",
+    "tests/test_experiment_sandbox_journal.py": "4c35bd93a71f9c14e624f2c78f3e992384703709dcea5f01b7c85bf1e4329174",
+    "tests/test_experiment_sandbox_linux_runtime.py": "ca8e5a3cd7355c1985271a61dfbb163de9f8b619ad8db15e1d9d51884ee514e3",
+    "tests/test_experiment_sandbox_supervisor.py": "a2333c8080786e907c5199e34147ca890591e95bd7448802ca716f81313e19c3"
+  },
+  "regression_dependency_sha256_before": {
+    "orchestration/experiment_sandbox/linux_runtime.py": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d",
+    "orchestration/experiment_sandbox/supervisor.py": "6bc18e679db9b666e5b896c1b0585becac2ea4577b9cd331a6e9ddb7b1fffa7d",
+    "tests/test_experiment_sandbox_journal.py": "4c35bd93a71f9c14e624f2c78f3e992384703709dcea5f01b7c85bf1e4329174",
+    "tests/test_experiment_sandbox_linux_runtime.py": "ca8e5a3cd7355c1985271a61dfbb163de9f8b619ad8db15e1d9d51884ee514e3",
+    "tests/test_experiment_sandbox_supervisor.py": "a2333c8080786e907c5199e34147ca890591e95bd7448802ca716f81313e19c3"
+  },
+  "remaining_gates": [
+    "Independent review before root-owned commit.",
+    "References are detached read evidence and may not be substituted for a fresh actual held lease or physical issuer checks.",
+    "Retained runtime hooks, actual physical issuer and full C22 admission/reservation bridge remain separate work."
+  ],
+  "result": "379 passed in 22.18s",
+  "ruff": "All checks passed!",
+  "runtime_execution_authority": false,
+  "same_boot_terminal_gate": "Every event in the validated chain must match the configured canonical boot. Prior/mixed-boot history remains readable/claimable through unchanged legacy APIs.",
+  "source_sha256_after": {
+    "orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "tests/test_experiment_sandbox_journal_references.py": "ab206fbb7846002d537954d468b6c887e411e41f02ef44966200c45b59be1abf"
+  },
+  "source_sha256_before": {
+    "orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "tests/test_experiment_sandbox_journal_references.py": "ab206fbb7846002d537954d468b6c887e411e41f02ef44966200c45b59be1abf"
+  },
+  "source_unchanged_during_verification": true,
+  "terminal_hash_definition": "SHA256 of exact stored canonical control-result wrapper UTF-8, including record and existing identity/authority fields, never only record.",
+  "version": "c23-guarded-journal-references-final-v1"
+}

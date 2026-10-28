@@ -174,7 +174,7 @@ jobs:
   postgres-integration:
     name: PostgreSQL migration and metadata integration
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 45
 
     services:
       postgres:
@@ -459,7 +459,11 @@ jobs:
         run: >-
           python -m pytest tests/integration/test_experiment_execution_postgres.py
           tests/integration/test_experiment_execution_offline_postgres.py
-          -q -s --tb=short
+          tests/integration/test_retained_reserve_postgres.py
+          tests/integration/test_retained_admission_postgres.py
+          tests/integration/test_retained_admission_edges_postgres.py
+          tests/integration/test_retained_acceptance_helpers_postgres.py
+          -x -vv -s --tb=short -o faulthandler_timeout=120
 
       - name: Verify database backup and isolated restore
         env:

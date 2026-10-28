@@ -1,0 +1,13 @@
+{
+  "original_code_AST_unchanged_after_removing_two_new_classes_and_three_new_methods": true,
+  "removed_classes": [
+    "DurableJournalIdentityReference",
+    "DurableTerminalReference"
+  ],
+  "removed_methods": [
+    "_reference_identity",
+    "identity_reference",
+    "terminal_reference"
+  ],
+  "schema_write_claim_read_lease_behavior_unchanged": true
+}

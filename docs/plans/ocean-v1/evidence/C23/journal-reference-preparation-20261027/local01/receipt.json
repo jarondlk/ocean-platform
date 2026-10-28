@@ -1,0 +1,11 @@
+{
+  "final": false,
+  "physical_authority": false,
+  "qualification": "Initial new read-reference source. Before final acceptance, read helper will be amended to derive UUID from exact validated canonical marker bytes and reject in-memory marker-cache substitution.",
+  "result": "377 passed in 22.46s",
+  "source_sha256": {
+    "orchestration/experiment_sandbox/journal.py": "83460b65844755aa3048afe8fb1f12984a5e3182bc0d68eb8b553f3494a55d84",
+    "tests/test_experiment_sandbox_journal_references.py": "bfcb75f0b373d61e52caffd0312bdea3f5cfb006a3ade643bb305d62551cc0dd"
+  },
+  "version": "c23-journal-reference-preliminary-v1"
+}

@@ -1,0 +1,3275 @@
+{
+  "C23_complete": false,
+  "actual_linux_execution": false,
+  "admin_credentials_transferred": false,
+  "database_name": "ocean_c23_retained_ef58d3cc1b0849de",
+  "identities": [
+    [
+      "ocean_c23_retained_ef58d3cc1b0849de",
+      "c23_retained_ef58d3cc1b0849de",
+      "c23_serving_ef58d3cc1b0849de",
+      "c23_serving_ef58d3cc1b0849de",
+      "127.0.0.1"
+    ],
+    [
+      "ocean_c23_retained_ef58d3cc1b0849de",
+      "c23_retained_ef58d3cc1b0849de",
+      "c23_controller_ef58d3cc1b0849de",
+      "c23_controller_ef58d3cc1b0849de",
+      "127.0.0.1"
+    ],
+    [
+      "ocean_c23_retained_ef58d3cc1b0849de",
+      "c23_retained_ef58d3cc1b0849de",
+      "c23_verifier_ef58d3cc1b0849de",
+      "c23_verifier_ef58d3cc1b0849de",
+      "127.0.0.1"
+    ]
+  ],
+  "local_host_auth": "scram-sha-256",
+  "port": 56103,
+  "private_socket_mode": "0700",
+  "roles": [
+    {
+      "rolbypassrls": false,
+      "rolcanlogin": true,
+      "rolcreatedb": false,
+      "rolcreaterole": false,
+      "rolname": "c23_controller_ef58d3cc1b0849de",
+      "rolreplication": false,
+      "rolsuper": false
+    },
+    {
+      "rolbypassrls": false,
+      "rolcanlogin": false,
+      "rolcreatedb": false,
+      "rolcreaterole": false,
+      "rolname": "c23_owner_ef58d3cc1b0849de",
+      "rolreplication": false,
+      "rolsuper": false
+    },
+    {
+      "rolbypassrls": false,
+      "rolcanlogin": true,
+      "rolcreatedb": false,
+      "rolcreaterole": false,
+      "rolname": "c23_serving_ef58d3cc1b0849de",
+      "rolreplication": false,
+      "rolsuper": false
+    },
+    {
+      "rolbypassrls": false,
+      "rolcanlogin": true,
+      "rolcreatedb": false,
+      "rolcreaterole": false,
+      "rolname": "c23_verifier_ef58d3cc1b0849de",
+      "rolreplication": false,
+      "rolsuper": false
+    }
+  ],
+  "schema": "c23_retained_ef58d3cc1b0849de",
+  "setup_registry_scope": "synthetic-software-test, setup type validation only; not runtime authority",
+  "table_grants": [
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "alembic_version"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "alembic_version"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "alembic_version"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "alembic_version"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "alembic_version"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "alembic_version"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "alembic_version"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "app_user"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "app_user"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "app_user"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "app_user"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "app_user"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "app_user"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "app_user"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "audit_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "audit_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "audit_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "audit_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "audit_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "audit_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "audit_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "chat_feedback"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "chat_feedback"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "chat_feedback"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "chat_feedback"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "chat_feedback"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "chat_feedback"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "chat_feedback"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "chat_interaction"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "chat_interaction"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "chat_interaction"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "chat_interaction"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "chat_interaction"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "chat_interaction"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "chat_interaction"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "classification_application"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "classification_application"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "classification_application"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "classification_application"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "classification_application"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "classification_application"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "classification_application"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "classification_application_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "classification_application_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "classification_application_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "classification_application_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "classification_application_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "classification_application_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "classification_application_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "classification_review"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "classification_review"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "classification_review"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "classification_review"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "classification_review"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "classification_review"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "classification_review"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "classification_review_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "classification_review_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "classification_review_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "classification_review_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "classification_review_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "classification_review_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "classification_review_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "corpus_publication"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "corpus_publication"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "corpus_publication"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "corpus_publication"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "corpus_publication"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "corpus_publication"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "corpus_publication"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "edna_aggregate_evidence"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "edna_aggregate_evidence"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "edna_aggregate_evidence"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "edna_aggregate_evidence"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "edna_aggregate_evidence"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "edna_aggregate_evidence"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "edna_aggregate_evidence"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "edna_assay"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "edna_assay"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "edna_assay"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "edna_assay"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "edna_assay"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "edna_assay"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "edna_assay"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "edna_detection"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "edna_detection"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "edna_detection"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "edna_detection"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "edna_detection"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "edna_detection"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "edna_detection"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "edna_internal_standard"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "edna_internal_standard"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "edna_internal_standard"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "edna_internal_standard"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "edna_internal_standard"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "edna_internal_standard"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "edna_internal_standard"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "edna_sample"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "edna_sample"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "edna_sample"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "edna_sample"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "edna_sample"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "edna_sample"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "edna_sample"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "external_source_file"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "external_source_file"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "external_source_file"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "external_source_file"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "external_source_file"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "external_source_file"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "external_source_file"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "external_source_snapshot"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "external_source_snapshot"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "external_source_snapshot"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "external_source_snapshot"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "external_source_snapshot"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "external_source_snapshot"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "external_source_snapshot"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "rate_limit_bucket"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "rate_limit_bucket"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "rate_limit_bucket"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "rate_limit_bucket"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "rate_limit_bucket"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "rate_limit_bucket"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "rate_limit_bucket"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_answer"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_answer"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_answer"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_answer"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_answer_attempt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer_attempt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_answer_attempt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer_attempt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_answer_attempt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_answer_attempt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer_attempt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_answer_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_answer_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_answer_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_answer_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_answer_input_history"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer_input_history"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_answer_input_history"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer_input_history"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_answer_input_history"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_answer_input_history"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer_input_history"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_answer_job"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer_job"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_answer_job"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer_job"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_answer_job"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_answer_job"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer_job"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_answer_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_answer_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_answer_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_answer_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_answer_payload"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer_payload"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_answer_payload"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer_payload"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_answer_payload"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_answer_payload"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer_payload"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_answer_step"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer_step"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_answer_step"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer_step"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_answer_step"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_answer_step"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer_step"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_area_definition"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_area_definition"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_area_definition"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_area_definition"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_area_definition"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_area_definition"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_area_definition"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_context_operation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_context_operation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_context_operation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_context_operation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_context_operation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_context_operation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_context_operation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_context_revision"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_context_revision"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_context_revision"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_context_revision"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_context_revision"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_context_revision"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_context_revision"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_conversation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_conversation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_conversation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_conversation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_conversation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_conversation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_conversation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_evidence_blob"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_evidence_blob"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_evidence_blob"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_evidence_blob"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_evidence_blob"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_evidence_blob"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_evidence_blob"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_evidence_context_dependency"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_evidence_context_dependency"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_evidence_context_dependency"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_evidence_context_dependency"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_evidence_context_dependency"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_evidence_context_dependency"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_evidence_context_dependency"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_evidence_dependency"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_evidence_dependency"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_evidence_dependency"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_evidence_dependency"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_evidence_dependency"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_evidence_dependency"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_evidence_dependency"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_evidence_protection"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_evidence_protection"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_evidence_protection"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_evidence_protection"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_evidence_protection"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_evidence_protection"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_evidence_protection"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_evidence_receipt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_evidence_receipt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_evidence_receipt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_evidence_receipt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_evidence_receipt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_evidence_receipt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_evidence_receipt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_experiment"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_experiment"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_experiment"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_experiment"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_experiment_approval"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_approval"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_experiment_approval"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_approval"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_experiment_approval"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_experiment_approval"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_approval"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_experiment_capacity"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_capacity"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_experiment_capacity"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_capacity"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_experiment_capacity"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_experiment_capacity"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_capacity"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_experiment_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_experiment_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_experiment_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_experiment_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_experiment_execution"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_execution"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_experiment_execution"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_execution"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_experiment_execution"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_experiment_execution"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_execution"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_experiment_execution_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_execution_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_experiment_execution_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_execution_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_experiment_execution_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_experiment_execution_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_execution_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_experiment_execution_state"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_execution_state"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_experiment_execution_state"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_execution_state"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_experiment_execution_state"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_experiment_execution_state"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_execution_state"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_experiment_input_blob"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_input_blob"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_experiment_input_blob"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_input_blob"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_experiment_input_blob"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_experiment_input_blob"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_input_blob"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_experiment_operation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_operation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_experiment_operation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_operation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_experiment_operation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_experiment_operation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_operation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_experiment_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_experiment_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_experiment_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_experiment_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_experiment_release"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_release"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_experiment_release"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_release"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_experiment_release"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_experiment_release"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_release"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_experiment_reservation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_reservation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_experiment_reservation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_reservation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_experiment_reservation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_experiment_reservation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_reservation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_experiment_revision"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_revision"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_experiment_revision"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_revision"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_experiment_revision"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_experiment_revision"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_revision"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_experiment_revision_file"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_revision_file"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_experiment_revision_file"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_revision_file"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_experiment_revision_file"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_experiment_revision_file"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_revision_file"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_experiment_termination_proof"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_termination_proof"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_experiment_termination_proof"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_termination_proof"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_experiment_termination_proof"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_experiment_termination_proof"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_termination_proof"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_investigation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_investigation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_investigation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_investigation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_investigation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_investigation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_investigation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_physical_membership"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_physical_membership"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_physical_membership"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_physical_membership"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_physical_membership"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_physical_membership"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_physical_membership"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_registry_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_registry_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_registry_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_registry_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_registry_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_registry_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_registry_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_registry_head"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_registry_head"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_registry_head"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_registry_head"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_registry_head"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_registry_head"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_registry_head"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_registry_review"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_registry_review"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_registry_review"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_registry_review"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_registry_review"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_registry_review"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_registry_review"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_registry_version"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_registry_version"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_registry_version"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_registry_version"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_registry_version"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_registry_version"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_registry_version"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_run"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_run"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_run"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_run"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_run"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_run"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_run_attempt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_run_attempt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_run_attempt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_run_attempt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_run_attempt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_run_attempt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run_attempt"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_run_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_run_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_run_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_run_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_run_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_run_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run_event"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_run_input_history"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_run_input_history"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_run_input_history"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_run_input_history"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_run_input_history"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_run_input_history"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run_input_history"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_run_manifest"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_run_manifest"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_run_manifest"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_run_manifest"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_run_manifest"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_run_manifest"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run_manifest"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_run_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_run_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_run_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_run_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_run_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_run_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run_outbox"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_run_payload"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_run_payload"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_run_payload"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_run_payload"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_run_payload"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_run_payload"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run_payload"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "research_run_step"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "research_run_step"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "research_run_step"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "research_run_step"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "research_run_step"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "research_run_step"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run_step"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "DELETE",
+      "table_name": "user_invitation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "INSERT",
+      "table_name": "user_invitation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "REFERENCES",
+      "table_name": "user_invitation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "SELECT",
+      "table_name": "user_invitation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRIGGER",
+      "table_name": "user_invitation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "TRUNCATE",
+      "table_name": "user_invitation"
+    },
+    {
+      "grantee": "c23_control_admin",
+      "privilege_type": "UPDATE",
+      "table_name": "user_invitation"
+    },
+    {
+      "grantee": "c23_controller_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_execution"
+    },
+    {
+      "grantee": "c23_controller_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_execution_event"
+    },
+    {
+      "grantee": "c23_controller_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_execution_state"
+    },
+    {
+      "grantee": "c23_controller_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_release"
+    },
+    {
+      "grantee": "c23_controller_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_termination_proof"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_approval"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_capacity"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_execution"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_execution"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_execution_event"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_execution_event"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_execution_state"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_execution_state"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_execution_state"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_outbox"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_release"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_release"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_reservation"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_reservation"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_revision"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_termination_proof"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_termination_proof"
+    },
+    {
+      "grantee": "c23_owner_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_investigation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "app_user"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "app_user"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "app_user"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "audit_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "audit_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "audit_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "chat_feedback"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "chat_feedback"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "chat_feedback"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "chat_interaction"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "chat_interaction"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "chat_interaction"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "classification_application"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "classification_application"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "classification_application"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "classification_application_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "classification_application_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "classification_application_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "classification_review"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "classification_review"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "classification_review"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "classification_review_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "classification_review_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "classification_review_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "edna_aggregate_evidence"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "edna_aggregate_evidence"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "edna_aggregate_evidence"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "rate_limit_bucket"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "rate_limit_bucket"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "rate_limit_bucket"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer_attempt"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer_attempt"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer_attempt"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer_input_history"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer_input_history"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer_input_history"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer_job"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer_job"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer_job"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer_outbox"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer_outbox"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer_outbox"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer_payload"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer_payload"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer_payload"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_answer_step"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_answer_step"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_answer_step"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_area_definition"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_area_definition"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_area_definition"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_context_operation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_context_operation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_context_operation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_context_revision"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_context_revision"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_context_revision"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_conversation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_conversation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_conversation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_evidence_blob"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_evidence_blob"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_evidence_blob"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_evidence_context_dependency"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_evidence_context_dependency"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_evidence_context_dependency"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_evidence_dependency"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_evidence_dependency"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_evidence_dependency"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_evidence_protection"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_evidence_protection"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_evidence_protection"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_evidence_receipt"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_evidence_receipt"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_evidence_receipt"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_approval"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_approval"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_approval"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_capacity"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_capacity"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_capacity"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_input_blob"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_input_blob"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_input_blob"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_operation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_operation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_operation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_outbox"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_outbox"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_outbox"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_reservation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_reservation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_reservation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_revision"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_revision"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_revision"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_experiment_revision_file"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_revision_file"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_experiment_revision_file"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_investigation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_investigation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_investigation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_physical_membership"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_physical_membership"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_physical_membership"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_registry_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_registry_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_registry_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_registry_head"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_registry_head"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_registry_head"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_registry_review"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_registry_review"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_registry_review"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_registry_version"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_registry_version"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_registry_version"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_run"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_run"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_run_attempt"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_run_attempt"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run_attempt"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_run_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_run_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run_event"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_run_input_history"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_run_input_history"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run_input_history"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_run_manifest"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_run_manifest"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run_manifest"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_run_outbox"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_run_outbox"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run_outbox"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_run_payload"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_run_payload"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run_payload"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "research_run_step"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_run_step"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "research_run_step"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "INSERT",
+      "table_name": "user_invitation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "user_invitation"
+    },
+    {
+      "grantee": "c23_serving_ef58d3cc1b0849de",
+      "privilege_type": "UPDATE",
+      "table_name": "user_invitation"
+    },
+    {
+      "grantee": "c23_verifier_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_execution"
+    },
+    {
+      "grantee": "c23_verifier_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_execution_event"
+    },
+    {
+      "grantee": "c23_verifier_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_execution_state"
+    },
+    {
+      "grantee": "c23_verifier_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_release"
+    },
+    {
+      "grantee": "c23_verifier_ef58d3cc1b0849de",
+      "privilege_type": "SELECT",
+      "table_name": "research_experiment_termination_proof"
+    }
+  ],
+  "version": "c23-retained-native-database-setup-v1"
+}

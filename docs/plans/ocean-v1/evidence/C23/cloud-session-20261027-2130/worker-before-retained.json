@@ -1,0 +1,27 @@
+{
+  "id": "7275994259687337942",
+  "lastStopTimestamp": "2026-10-26T11:43:47.982-07:00",
+  "networkInterfaces": [
+    {
+      "fingerprint": "lddNVKmZBbU=",
+      "kind": "compute#networkInterface",
+      "name": "nic0",
+      "network": "https://www.googleapis.com/compute/v1/projects/ocean-v1-c23-20261024/global/networks/c23-private",
+      "networkIP": "10.77.23.2",
+      "stackType": "IPV4_ONLY",
+      "subnetwork": "https://www.googleapis.com/compute/v1/projects/ocean-v1-c23-20261024/regions/asia-northeast1/subnetworks/c23-tokyo"
+    }
+  ],
+  "scheduling": {
+    "automaticRestart": false,
+    "instanceTerminationAction": "STOP",
+    "maxRunDuration": {
+      "nanos": 0,
+      "seconds": "7200"
+    },
+    "onHostMaintenance": "MIGRATE",
+    "preemptible": false,
+    "provisioningModel": "STANDARD"
+  },
+  "status": "TERMINATED"
+}

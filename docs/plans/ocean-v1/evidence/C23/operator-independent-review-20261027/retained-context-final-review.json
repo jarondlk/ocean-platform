@@ -1,0 +1,43 @@
+{
+  "blocking_findings": [],
+  "capacity_release_authority": false,
+  "created_at": "2026-10-27T06:07:50.375067+00:00",
+  "dependency_sha256": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "orchestration/experiment_sandbox/linux_runtime.py": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d",
+    "orchestration/experiment_sandbox/profile_execution.py": "de9cd227f72c3a7cd7a18d667e3027115d6316467af32a397830e799fb41c4f5",
+    "orchestration/experiment_sandbox/retained_bridge.py": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd"
+  },
+  "integration_caveats": [
+    "Readonly object getters validate live scope only; callers must invoke require_current immediately before/after each trusted effect.",
+    "No real Linux preflight, owner/source admission, fresh start permit, physical issuer or capacity release is supplied. Root retained runner must add those separate gates.",
+    "Context registry does not authenticate a DB reservation or source policy; private retained identity remains detached data."
+  ],
+  "mode": "Read-only source/test/receipt review; no Linux, DB, service or cloud effect.",
+  "owner_recorded_checks": {
+    "new_context_cases": 53,
+    "pytest": "187 passed in 19.76s",
+    "ruff": "All checks passed!"
+  },
+  "physical_termination_authority": false,
+  "receipt": {
+    "artifacts_verified": 8,
+    "path": "docs/plans/ocean-v1/evidence/C23/retained-context-preparation-20261027/local01-final/receipt.json",
+    "sha256": "d3ad6296bf63922186faa7c658fb7238002490710cc34a7606ed5c71d215623b"
+  },
+  "reviewed": [
+    "Base DurableExecutionJournal.claim/current/identity_reference used on exact adapter journal; supplied fake claim callbacks and external leases are not borrowed.",
+    "Registry/PID/exact object identity checks precede mutex use; frozen captured adapter/runtime/path/clock/envelope/profile/retained identity pins are rechecked.",
+    "Input files require actual immutable MappingProxyType and bytes, captured before pure retained-envelope revalidation; verification grants no fresh authority.",
+    "require_current checks actual registered lease/full journal under journal mutex plus optional current head and stable journal UUID.",
+    "Context invalidated before claim exit on exceptions; separate held-job latch is removed afterward. Old contexts/copies/subclasses remain invalid on terminal reacquisition.",
+    "Fork resets only context registries/mutex and delegates inherited descriptor safety to journal, never unlocks parent."
+  ],
+  "source_sha256": {
+    "orchestration/experiment_sandbox/retained_context.py": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5",
+    "tests/test_experiment_sandbox_retained_context.py": "31061919046408762049753191058fdf77d46cb85c62219e9ca329a1b347a50c"
+  },
+  "start_authority": false,
+  "version": "c23-held-context-independent-review-v1"
+}

@@ -276,6 +276,53 @@ class DurableJobSnapshot:
         return self._result_json is not None
 
 
+@dataclass(frozen=True, init=False, slots=True)
+class DurableJournalIdentityReference:
+    """Detached scalar read evidence, never a lease or execution authority.
+
+    The configured boot and latest event boot are separate observations. This
+    reference may describe earlier-boot history; it grants no termination fact.
+    Reuse after the actual lease closes supplies no current-lock guarantee.
+    """
+    journal_id: str
+    job_id: str
+    envelope_sha256: str
+    epoch: int
+    host_id: str
+    configured_host_boot_id: str
+    event_host_boot_id: str
+    sequence: int
+    head_sha256: str
+    monotonic_ns: int
+
+    def __init__(self, *args, **kwargs):
+        raise TypeError('Use DurableExecutionJournal.identity_reference with an actual held lease')
+
+
+@dataclass(frozen=True, init=False, slots=True)
+class DurableTerminalReference:
+    """Detached validated journal finish evidence, not physical termination.
+
+    The result hash covers the entire stored canonical control-result wrapper,
+    including its identity and authority fields. No runtime observation, issuer
+    authentication, C22 admission or capacity-release capability is supplied.
+    """
+    journal_id: str
+    job_id: str
+    envelope_sha256: str
+    epoch: int
+    host_id: str
+    configured_host_boot_id: str
+    event_host_boot_id: str
+    terminal_sequence: int
+    terminal_head_sha256: str
+    terminal_result_sha256: str
+    terminal_recorded_monotonic_ns: int
+
+    def __init__(self, *args, **kwargs):
+        raise TypeError('Use DurableExecutionJournal.terminal_reference with an actual held lease')
+
+
 class DurableLease:
     """Internal, PID-bound handle; keep its context open around runtime effects."""
     __slots__ = ('_journal', '_pid', '_fd', '_file_id', '_job', '_envelope', '_epoch', '_closed')
@@ -872,6 +919,69 @@ class DurableExecutionJournal:
     def require_current(self, lease):
         with self._mutex, self._connection() as connection:
             return self._lease(lease, connection)
+
+
+    def _reference_identity(self, snapshot):
+        # _connection has checked the on-disk marker and matching immutable DB
+        # metadata; _lease has checked the actual registered PID/lock and full
+        # chain in that same transaction. Never take a journal UUID from input.
+        marker = _decode(self._marker_encoded, 4096)
+        if _encode(self._marker, 4096) != self._marker_encoded:
+            _error('sandbox_journal_integrity')
+        journal_id = marker.get('journal_id')
+        try:
+            if type(journal_id) is not str or str(uuid.UUID(journal_id)) != journal_id:
+                raise ValueError
+        except (ValueError, AttributeError):
+            _error('sandbox_journal_integrity')
+        event = snapshot.events[-1]
+        return {'journal_id': journal_id, 'job_id': snapshot.job_id,
+                'envelope_sha256': snapshot.envelope_sha256, 'epoch': snapshot.epoch,
+                'host_id': event.host_id, 'configured_host_boot_id': _boot(self.host_boot_id),
+                'event_host_boot_id': event.host_boot_id}
+
+    def identity_reference(self, lease):
+        """Read identity/head only through the exact current registered lease.
+
+        Validation, marker identity and detached scalars share one read
+        transaction under the journal mutex. This does not mint runtime or
+        termination authority and does not mutate history or refresh the epoch.
+        """
+        with self._mutex, self._connection() as connection:
+            snapshot = self._lease(lease, connection)
+            event = snapshot.events[-1]
+            fields = self._reference_identity(snapshot)
+            fields.update(sequence=event.sequence, head_sha256=event.sha256,
+                          monotonic_ns=event.monotonic_ns)
+            reference = object.__new__(DurableJournalIdentityReference)
+            for name, value in fields.items():
+                object.__setattr__(reference, name, value)
+            return reference
+
+    def terminal_reference(self, lease):
+        """Read an exact finished wrapper/head on the configured same-boot path.
+
+        Earlier/mixed-boot history remains readable through existing APIs but
+        cannot yield this reference. A canonical journal finish is a retained
+        control record; it is not evidence that any physical process stopped.
+        """
+        with self._mutex, self._connection() as connection:
+            snapshot = self._lease(lease, connection)
+            if not snapshot.terminal:
+                _error('sandbox_journal_not_terminal')
+            event = snapshot.events[-1]
+            fields = self._reference_identity(snapshot)
+            if any(item.host_boot_id != fields['configured_host_boot_id'] for item in snapshot.events):
+                _error('sandbox_journal_boot_continuity')
+            checksum = _sha(snapshot._result_json.encode('utf-8'))
+            if event.kind != 'finished' or event.payload != {'result_sha256': checksum}:
+                _error('sandbox_journal_integrity')
+            fields.update(terminal_sequence=event.sequence, terminal_head_sha256=event.sha256,
+                          terminal_result_sha256=checksum, terminal_recorded_monotonic_ns=event.monotonic_ns)
+            reference = object.__new__(DurableTerminalReference)
+            for name, value in fields.items():
+                object.__setattr__(reference, name, value)
+            return reference
 
     def read(self, job_id, envelope_sha256):
         """A detached consistent snapshot, never effect or termination authority."""

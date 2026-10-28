@@ -1,0 +1,73 @@
+{
+  "actual_journal_claim_and_flock_tested": true,
+  "api": "_hold_runtime_context(adapter,envelope,profile,execution_identity) -> scoped HeldRuntimeContext; context.require_current(expected_head_sha256=None) -> DurableJobSnapshot",
+  "artifacts_sha256": {
+    "commands.txt": "8154e0656c0520ec697037d810cfdb67c0754652d6d4e8c2c14df23e48b820fb",
+    "pytest.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pytest.stdout.txt": "ef3ff9d6c4a0ba56b5b843fbd1e2dab60809666b1939f82fcefc607fadec130d",
+    "ruff.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ruff.stdout.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "source/orchestration/experiment_sandbox/retained_context.py": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5",
+    "source/tests/test_experiment_sandbox_retained_context.py": "31061919046408762049753191058fdf77d46cb85c62219e9ca329a1b347a50c",
+    "verification-before.json": "e5a71d2aa7288668b3e3f3812da960c0eb5aefce01412520a2a93ba853e012a0"
+  },
+  "authority": {
+    "Linux_preflight_performed": false,
+    "actual_retained_DB_reservation": false,
+    "capacity_release": false,
+    "current_owner_source_admission": false,
+    "fresh_start_permit": false,
+    "issuer_authentication": false,
+    "physical_termination": false
+  },
+  "capture": "Actual adapter/journal/lease objects; exact canonical execution/envelope/profile bytes; immutable input file bytes; job/owner/reservation/execution bindings; worker/runtime/cgroup paths; runtime JSON/helper hash; clock identity; journal host/boot/UUID.",
+  "dependencies_unchanged_during_verification": true,
+  "dependency_sha256_after": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "orchestration/experiment_sandbox/linux_runtime.py": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d",
+    "orchestration/experiment_sandbox/profile_execution.py": "de9cd227f72c3a7cd7a18d667e3027115d6316467af32a397830e799fb41c4f5",
+    "orchestration/experiment_sandbox/retained_bridge.py": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd"
+  },
+  "dependency_sha256_before": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "orchestration/experiment_sandbox/linux_runtime.py": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d",
+    "orchestration/experiment_sandbox/profile_execution.py": "de9cd227f72c3a7cd7a18d667e3027115d6316467af32a397830e799fb41c4f5",
+    "orchestration/experiment_sandbox/retained_bridge.py": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd"
+  },
+  "exact_registered_context_PID_and_lease_tested": true,
+  "fork_registry_reset_without_parent_unlock_tested": true,
+  "guards": [
+    "Private frozen slotted context and exact registered identity; copies/subclasses/forgeries/foreign lease/PID changes denied.",
+    "Only exact adapter/envelope/profile/retained identity classes; JSON/duck/ApprovedCandidate/external lease refused.",
+    "Actual DurableExecutionJournal base claim/current guard/identity reference; instance fake claim callback ignored.",
+    "Frozen adapter/config/input/identity/profile pins and optional exact current journal head.",
+    "Closed scope deactivated before lease exits; stale/closed/lost/replaced lock and tampered journal marker/chain denied.",
+    "Fork resets only context mutex/registry, delegates FD safety to journal, never unlocks parent lease.",
+    "Terminal reacquisition may create a new valid context; old context remains invalid and neither authorizes a new start."
+  ],
+  "head": "5a02f221f7ba8127fcbd6008949806e6b4c1ef04",
+  "new_context_cases": 53,
+  "pre_cut_observation": {
+    "qualification": "Previous tool result before usage interruption. No pre-run hash receipt existed; this final run freezes current amended sources explicitly.",
+    "result": "47 passed in 6.96s"
+  },
+  "remaining_gates": [
+    "Independent review and root-owned commit.",
+    "Root retained runner must perform actual base Linux preflight before holding context and fresh phase authority separately.",
+    "Actual physical issuer/runtime integration and full retained approval-to-release acceptance remain separate work."
+  ],
+  "result": "187 passed in 19.76s",
+  "ruff_result": "All checks passed!",
+  "source_sha256_after": {
+    "orchestration/experiment_sandbox/retained_context.py": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5",
+    "tests/test_experiment_sandbox_retained_context.py": "31061919046408762049753191058fdf77d46cb85c62219e9ca329a1b347a50c"
+  },
+  "source_sha256_before": {
+    "orchestration/experiment_sandbox/retained_context.py": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5",
+    "tests/test_experiment_sandbox_retained_context.py": "31061919046408762049753191058fdf77d46cb85c62219e9ca329a1b347a50c"
+  },
+  "source_unchanged_during_verification": true,
+  "version": "c23-held-runtime-context-host-safe-v1"
+}

@@ -1,0 +1,16 @@
+{
+  "Mac_ports": {
+    "publication-revoked": 56225,
+    "scientific": 56103
+  },
+  "automation": "PAUSED",
+  "captured_after_setup": true,
+  "qualification": "Final two cleanup-only evidence changes were made after scientific DB setup; prepare/shutdown functions used for setup are unchanged. Revised cleanup will run from this frozen source. No bootstrap password, DSN or private seed is copied into evidence. Both private SCRAM clusters are currently running for the authorized acceptance session.",
+  "source": "docs/plans/ocean-v1/evidence/C23/retained-core-checkpoint-20261027-2130/database-control-source.py",
+  "source_sha256": "5434ef7d48e805aed61ba178ad6b2df42fc2520bbd17bd50b89e6416aa178223",
+  "version": "c23-retained-control-source-v1",
+  "worker_ports": {
+    "publication-revoked": 55424,
+    "scientific": 55423
+  }
+}

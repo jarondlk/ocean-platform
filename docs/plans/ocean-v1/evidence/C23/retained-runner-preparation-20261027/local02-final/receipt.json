@@ -1,0 +1,86 @@
+{
+  "actual_acceptance": {
+    "C22_retained_Linux_approval_DB_flow": false,
+    "GCP": false,
+    "Linux_gVisor": false,
+    "physical_termination_issuance": false,
+    "scientific_review": false
+  },
+  "api": "run_retained(adapter,execution_identity,envelope,profile,*,hooks,issuer,cancelled=lambda:False) -> private RetainedRunReport.document only",
+  "artifacts_sha256": {
+    "commands.txt": "465d95496777be41bda5c36e023f4eed4b472b5a4095dd487a15dc4476424fe2",
+    "pytest.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pytest.stdout.txt": "30abf4bc395fc6af6f15fca888accd8fa1063ad399c9a98a370f64674605365f",
+    "ruff.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ruff.stdout.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "source/orchestration/experiment_sandbox/retained_runner.py": "683e5032c722410a54049f18ebf8cfb10faf63c52138ac76d931c5ff8a5071f1",
+    "source/tests/test_experiment_sandbox_retained_runner.py": "607d70f0cf89d1632e1dd80270dfe2a6df4a22037e5397868020e9b30fa6f411",
+    "verification-before.json": "06378d23ec7bc81f2f293a6a926961be57186579347f48df34cd896f4cce12fc"
+  },
+  "context_cases": 53,
+  "dependencies_unchanged_during_verification": true,
+  "dependency_sha256_after": {
+    "orchestration/experiment_sandbox/execution_store.py": "072eba89ce0877d1a182a9f9cbd9c923b1b79a37e2605d65da37fe87b012bac2",
+    "orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "orchestration/experiment_sandbox/linux_runtime.py": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d",
+    "orchestration/experiment_sandbox/physical_termination.py": "f1350b89ac1ecad6df68ef2f74a1751e32a1c29200dbd18727112a5364fac798",
+    "orchestration/experiment_sandbox/retained_admission.py": "b216e28831f8a93113d0bbc6e40c104485f15dc9ef860ebc5749589670e501d3",
+    "orchestration/experiment_sandbox/retained_bridge.py": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd",
+    "orchestration/experiment_sandbox/retained_context.py": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5"
+  },
+  "dependency_sha256_before": {
+    "orchestration/experiment_sandbox/execution_store.py": "072eba89ce0877d1a182a9f9cbd9c923b1b79a37e2605d65da37fe87b012bac2",
+    "orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "orchestration/experiment_sandbox/linux_runtime.py": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d",
+    "orchestration/experiment_sandbox/physical_termination.py": "f1350b89ac1ecad6df68ef2f74a1751e32a1c29200dbd18727112a5364fac798",
+    "orchestration/experiment_sandbox/retained_admission.py": "b216e28831f8a93113d0bbc6e40c104485f15dc9ef860ebc5749589670e501d3",
+    "orchestration/experiment_sandbox/retained_bridge.py": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd",
+    "orchestration/experiment_sandbox/retained_context.py": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5"
+  },
+  "head": "91ebe81dbf5a8f7ca963b5b4aa7e3df594458ea6",
+  "lifecycle": [
+    "Exact-type checks and actual base Linux/material preflight before journal claim.",
+    "Fresh owner/source preparation; durable configuration/cgroup/create intent; original handle kept; watchdog before create; enforcement readback.",
+    "One-use bound FreshStartPermit consumed; exact retained start intent appended; single start command with no external admission callback between.",
+    "Independent native cleanup/delete acknowledgement and termination journal event before guest frame decode/output retention.",
+    "Bounded machine result plus full-wrapper durable finish/readback before publication; no packet/fence/publication/proof/release cycle.",
+    "Optional publication guarded separately; denial does not skip independent close/issuer/record/release.",
+    "Finally containment fallback if needed (never proof), capture close/watchdog stop, original handle close only after issuer path; no rootfs unmount."
+  ],
+  "new_runner_cases": 30,
+  "prior_preliminary_observation_preserved": true,
+  "remaining_gates": [
+    "Independent read review before root-owned commit.",
+    "Actual isolated retained C22 Linux approval/reservation -> held runtime -> authenticated native proof -> atomic release with full loaded source scope.",
+    "Queued/pre-start cancellation release, reboot/power loss and process-loss-after-issuance-intent-before-packet remain unsupported; capacity retained.",
+    "Terminal replay has no existing-packet/DB replay hook in this ABI; it reports reconciliation_required without inventing observations or a new start."
+  ],
+  "reports": {
+    "publication_reference_requires_acknowledged_typed_bound_receipt": true,
+    "raw_outputs_exposed": false,
+    "release_state_None_otherwise_including_terminal_replay": true,
+    "release_state_true_only_on_acknowledgement": true,
+    "scientific_approval": "not_independently_verified"
+  },
+  "result": "83 passed in 19.37s",
+  "ruff_result": "All checks passed!",
+  "source_sha256_after": {
+    "orchestration/experiment_sandbox/retained_runner.py": "683e5032c722410a54049f18ebf8cfb10faf63c52138ac76d931c5ff8a5071f1",
+    "tests/test_experiment_sandbox_retained_runner.py": "607d70f0cf89d1632e1dd80270dfe2a6df4a22037e5397868020e9b30fa6f411"
+  },
+  "source_sha256_before": {
+    "orchestration/experiment_sandbox/retained_runner.py": "683e5032c722410a54049f18ebf8cfb10faf63c52138ac76d931c5ff8a5071f1",
+    "tests/test_experiment_sandbox_retained_runner.py": "607d70f0cf89d1632e1dd80270dfe2a6df4a22037e5397868020e9b30fa6f411"
+  },
+  "source_unchanged_during_verification": true,
+  "tested_boundaries": [
+    "Normal lifecycle ordering and private bytes absent from detached report.",
+    "Publication denial/invalid receipt, malformed/failed guest outputs, diagnostic failure, timeout/cancel/wait error, start ACK loss, durable finish failure.",
+    "Native observation failure: legacy fallback JSON never becomes proof/release; unexpected BaseException still attempts containment.",
+    "Nonterminal reconciliation never restarts; original create/profile and existing retained start required to close; missing start/identity retains capacity.",
+    "Terminal replay and changed boot issue zero runtime commands/re-signing; pre-start cancellation never invents a start.",
+    "Postfinish close/issuer/record/release errors retain terminal history; unknown release acknowledgement is not falsely projected as False.",
+    "Arbitrary exception messages filtered to bounded safe reasons."
+  ],
+  "version": "c23-retained-runner-host-safe-freeze-v1"
+}

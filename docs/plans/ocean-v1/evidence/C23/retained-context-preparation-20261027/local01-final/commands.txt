@@ -1,0 +1,5 @@
+.venv/bin/python -m ruff check orchestration/experiment_sandbox/retained_context.py tests/test_experiment_sandbox_retained_context.py
+
+.venv/bin/python -m pytest tests/test_experiment_sandbox_retained_context.py tests/test_experiment_sandbox_journal_references.py tests/test_experiment_sandbox_journal.py -q
+
+The context fixtures use the exact LinuxExecutionAdapter constructor and actual durable SQLite journal/job flock, but deliberately forbid Linux preflight. Their envelope/profile/retained identity are explicit structural software fixtures, not actual installed-image acceptance, retained Linux DB commit, current owner/source admission, runtime execution, physical proof or release. No runsc, kernel cgroup, guest analysis, database service, cloud action or commit occurs.

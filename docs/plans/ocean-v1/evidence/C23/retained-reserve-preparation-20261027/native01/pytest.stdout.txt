@@ -1,0 +1,19 @@
+E
+==================================== ERRORS ====================================
+_ ERROR at setup of test_actual_restricted_controller_reserves_exact_real_approval_and_replays _
+tests/experiment_execution_postgres_support.py:88: in disposable_database
+    engine = create_engine(url, pool_pre_ping=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/util/deprecations.py:281: in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py:617: in create_engine
+    dbapi = dbapi_meth(**dbapi_args)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/psycopg.py:495: in import_dbapi
+    import psycopg
+E   ModuleNotFoundError: No module named 'psycopg'
+=========================== short test summary info ============================
+ERROR tests/integration/test_retained_reserve_postgres.py::test_actual_restricted_controller_reserves_exact_real_approval_and_replays
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 error in 0.54s

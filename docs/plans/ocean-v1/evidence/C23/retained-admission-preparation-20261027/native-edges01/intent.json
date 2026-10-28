@@ -1,0 +1,22 @@
+{
+  "C23_complete": false,
+  "admin": "ocean_c23_edge_admin",
+  "cluster": "/private/tmp/ocean-c23-admission-edges-20261027-70c2c53t",
+  "database": "ocean_c23_admission_edges_4765616742b6",
+  "physical_authority": false,
+  "port": 51920,
+  "scope": "new owned disposable software-only PostgreSQL",
+  "source": {
+    "migrations/versions/20261027_0021_experiment_execution.py": "69ea126213cd6a17c09a5363b928ae2b771cb9efaf06b4bc0a411cd99a73ac98",
+    "orchestration/experiment_sandbox/execution_store.py": "072eba89ce0877d1a182a9f9cbd9c923b1b79a37e2605d65da37fe87b012bac2",
+    "orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "orchestration/experiment_sandbox/physical_termination.py": "9b9f48f3f9b856074d0b1a25b622a488ef9bfda4db5cba7f074c39e29aca0655",
+    "orchestration/experiment_sandbox/retained_admission.py": "c7b059cb27259aef2969e59f0a4a5706233234f2c8892948882286dd854b8acc",
+    "orchestration/experiment_sandbox/retained_bridge.py": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd",
+    "orchestration/experiment_sandbox/retained_context.py": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5",
+    "tests/integration/test_retained_admission_edges_postgres.py": "2b71871c7ec0aa26f171789433b2b8dffc39725f97480b4f671a3e344a6f51a8",
+    "tests/integration/test_retained_admission_postgres.py": "ef62afeaae2c7776948eff01a98b1109b16982180ff1bd2bf4904dadfc548c7b",
+    "tests/retained_admission_support.py": "c6da7702635336f76f792258e733d4c1317df57ddc8528935aa03f7ec4052e2e",
+    "tests/test_experiment_sandbox_retained_admission.py": "7f647444fce772391f1fb0b441dafefe840aa10cbf07c26be84c82c81d3d7d16"
+  }
+}

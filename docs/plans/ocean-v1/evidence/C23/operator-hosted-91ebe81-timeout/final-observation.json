@@ -1,0 +1,23 @@
+{
+  "backend": {
+    "coverage_percent": 85.61,
+    "gated_skips": 388,
+    "gzip_log_sha256": "ac57679cd1dc5e24d478b379a3ed2795690a865df2d866c9a4b8c93040992411",
+    "passed": 6392,
+    "pytest_seconds": 2457.52,
+    "raw_log_sha256": "23f21f363d0325f01225de3b614e3e629a93ff8cbc08209b4a9b0888a221afb0"
+  },
+  "head_sha": "91ebe81dbf5a8f7ca963b5b4aa7e3df594458ea6",
+  "qualification": "Both frontends and full backend pass at91ebe81. Expanded PG job timed out during C23 tests; no failed assertion reported before cancellation. New source retains all gates, adds retained native cases and raises PG job timeout to45min; it needs its own exact-source hosted CI.",
+  "recorded_at": "2026-10-28T05:08:56.288752+00:00",
+  "required_CI_complete": false,
+  "required_jobs": {
+    "backend": "success",
+    "legacy_frontend": "success",
+    "postgres": "cancelled_at_15_minute_limit",
+    "v1_frontend": "success"
+  },
+  "run_id": 40499699283,
+  "run_url": "https://github.com/jarondlk/ocean-platform/actions/runs/40499699283",
+  "version": "c23-hosted-ci91-final-observation-v1"
+}

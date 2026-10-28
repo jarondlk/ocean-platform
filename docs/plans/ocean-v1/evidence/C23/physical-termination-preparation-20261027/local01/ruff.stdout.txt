@@ -1,0 +1,19 @@
+F401 [*] `os` imported but unused
+  --> tests/test_experiment_sandbox_physical_termination.py:11:8
+   |
+ 9 | import hashlib
+10 | import json
+11 | import os
+   |        ^^
+12 | from pathlib import Path
+13 | from types import SimpleNamespace
+   |
+help: Remove unused import: `os`
+   |
+10 | import json
+   - import os
+11 | from pathlib import Path
+   |
+
+Found 1 error.
+[*] 1 fixable with the `--fix` option.

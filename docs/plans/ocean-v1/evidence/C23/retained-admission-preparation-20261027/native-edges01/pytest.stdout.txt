@@ -1,0 +1,16 @@
+........F
+=================================== FAILURES ===================================
+_ test_publication_revalidates_actual_terminal_and_private_retained_output_bytes[terminal] _
+tests/integration/test_retained_admission_edges_postgres.py:135: in test_publication_revalidates_actual_terminal_and_private_retained_output_bytes
+    terminal=replace(terminal,terminal_result_sha256='0'*64)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.7/Frameworks/Python.framework/Versions/3.12/lib/python3.12/dataclasses.py:1588: in replace
+    return obj.__class__(**changes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/experiment_sandbox/journal.py:323: in __init__
+    raise TypeError('Use DurableExecutionJournal.terminal_reference with an actual held lease')
+E   TypeError: Use DurableExecutionJournal.terminal_reference with an actual held lease
+=========================== short test summary info ============================
+FAILED tests/integration/test_retained_admission_edges_postgres.py::test_publication_revalidates_actual_terminal_and_private_retained_output_bytes[terminal]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 8 passed in 42.54s

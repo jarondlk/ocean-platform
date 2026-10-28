@@ -1,0 +1,9 @@
+Checkpoint: 5a02f221f7ba8127fcbd6008949806e6b4c1ef04
+
+.venv/bin/python -m ruff check orchestration/experiment_sandbox/journal.py tests/test_experiment_sandbox_journal_references.py
+
+git diff --check -- orchestration/experiment_sandbox/journal.py
+
+.venv/bin/python -m pytest tests/test_experiment_sandbox_journal_references.py tests/test_experiment_sandbox_journal.py tests/test_experiment_sandbox_linux_runtime.py tests/test_experiment_sandbox_supervisor.py -q
+
+The tests exercise actual local SQLite/flock and process/fork guards only. They do not run gVisor/Linux scientific execution, establish host termination, authenticate an issuer, invoke C22 current-owner/source admission, or release database capacity.

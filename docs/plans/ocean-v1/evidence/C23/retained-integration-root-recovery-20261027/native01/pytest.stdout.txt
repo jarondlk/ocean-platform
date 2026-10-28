@@ -1,0 +1,231 @@
+F
+=================================== FAILURES ===================================
+_ test_actual_admission_publication_or_revocation_then_independent_close_and_release[False] _
+
+self = <sqlalchemy.engine.base.Connection object at 0x11d22bdd0>
+dialect = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x11d1e1640>
+context = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x11ddbfbc0>
+statement = <sqlalchemy.dialects.postgresql.base.PGCompiler object at 0x11ddbd9d0>
+parameters = [{'p': '{"binding_json":"{\\"adapter_source_sha256\\":\\"36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb2...a657bb1537aa8e5226","verification_policy_sha256":"db5f54125e711c0db262f027a3470382b04378996167560b7593691e1194703d"}'}]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x11d1e1640>
+cursor = <cursor object at 0x11daff1f0; closed: -1>
+statement = 'SELECT c23_252bd5359a1541eeaf320ce67631ff6e.ocean_c23_record_proof(CAST(%(p)s AS jsonb))'
+parameters = {'p': '{"binding_json":"{\\"adapter_source_sha256\\":\\"36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb29...ba657bb1537aa8e5226","verification_policy_sha256":"db5f54125e711c0db262f027a3470382b04378996167560b7593691e1194703d"}'}
+context = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x11ddbfbc0>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       psycopg2.errors.InsufficientPrivilege: permission denied for function ocean_c23_closed_binding
+E       CONTEXT:  PL/pgSQL function ocean_c23_proof_insert_guard() line 6 at assignment
+E       SQL statement "INSERT INTO c23_252bd5359a1541eeaf320ce67631ff6e.research_experiment_termination_proof SELECT proof.*"
+E       PL/pgSQL function ocean_c23_record_proof(jsonb) line 13 at SQL statement
+
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: InsufficientPrivilege
+
+The above exception was the direct cause of the following exception:
+
+case = namespace(native=namespace(database={'engine': Engine(postgresql+psycopg2://c23_test_admin@127.0.0.1:51358/ocean_c23_a...db8e90ebcca33be76b0d7fffe513e1abc6e7f4290046be58'), hold=<function configured_native.<locals>.<lambda> at 0x11da72660>)
+revoked = False
+
+    @pytest.mark.parametrize('revoked', [False, True])
+    def test_actual_admission_publication_or_revocation_then_independent_close_and_release(case, revoked):
+        with case.hold() as context:
+            payload = start(case, context)
+            assert payload['start_fence'] == 2 and payload['start_id'] == payload['start_event_id']
+            terminal, outputs, cleanup, termination = finish(case, context)
+            if revoked:
+                case.native.fixture.state['enabled'] = False
+                with case.native.fixture.factory.begin() as session:
+                    session.execute(text("UPDATE app_user SET status='suspended' WHERE id=:id"),
+                        {'id': case.native.fixture.user.id})
+                with pytest.raises((ResearchExperimentError, SandboxError)):
+                    case.hooks.admit_publication(context, terminal, hashlib.sha256(outputs.manifest_bytes).hexdigest())
+            else:
+                publication = case.hooks.admit_publication(context, terminal, hashlib.sha256(outputs.manifest_bytes).hexdigest())
+                assert publication.document['publication_retained'] is True
+            closed = case.hooks.close_execution(context, terminal)
+            assert case.hooks.close_execution(context, terminal) == closed
+            packet = synthetic_packet(case, context, closed, terminal, cleanup, termination)
+>           proof = case.hooks.record_termination(context, packet)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/integration/test_retained_admission_postgres.py:107: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+orchestration/experiment_sandbox/retained_admission.py:499: in record_termination
+    result = self._store.record_verified_termination(execution_id=context.execution_id,packet_bytes=packet_bytes)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/experiment_sandbox/execution_store.py:492: in record_verified_termination
+    return self._call(session, 'ocean_c23_record_proof(CAST(:p AS jsonb))', {'p': _canonical(p)})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+orchestration/experiment_sandbox/execution_store.py:341: in _call
+    return str(session.scalar(text(f'SELECT {self.config.schema}.{expression}'), parameters))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2421: in scalar
+    return self._execute_internal(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2266: in _execute_internal
+    return conn.scalar(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1310: in scalar
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:544: in _execute_on_scalar
+    return self._execute_on_connection(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x11d1e1640>
+cursor = <cursor object at 0x11daff1f0; closed: -1>
+statement = 'SELECT c23_252bd5359a1541eeaf320ce67631ff6e.ocean_c23_record_proof(CAST(%(p)s AS jsonb))'
+parameters = {'p': '{"binding_json":"{\\"adapter_source_sha256\\":\\"36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb29...ba657bb1537aa8e5226","verification_policy_sha256":"db5f54125e711c0db262f027a3470382b04378996167560b7593691e1194703d"}'}
+context = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x11ddbfbc0>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       sqlalchemy.exc.ProgrammingError: (psycopg2.errors.InsufficientPrivilege) permission denied for function ocean_c23_closed_binding
+E       CONTEXT:  PL/pgSQL function ocean_c23_proof_insert_guard() line 6 at assignment
+E       SQL statement "INSERT INTO c23_252bd5359a1541eeaf320ce67631ff6e.research_experiment_termination_proof SELECT proof.*"
+E       PL/pgSQL function ocean_c23_record_proof(jsonb) line 13 at SQL statement
+E       
+E       [SQL: SELECT c23_252bd5359a1541eeaf320ce67631ff6e.ocean_c23_record_proof(CAST(%(p)s AS jsonb))]
+E       [parameters: {'p': '{"binding_json":"{\\"adapter_source_sha256\\":\\"36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d\\",\\"approval_id\\":\\"bc3c36f2-1f ... (11214 characters truncated) ... b54669725f7833bc5052d34e90fc2368ba657bb1537aa8e5226","verification_policy_sha256":"db5f54125e711c0db262f027a3470382b04378996167560b7593691e1194703d"}'}]
+E       (Background on this error at: https://sqlalche.me/e/20/f405)
+
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: ProgrammingError
+=========================== short test summary info ============================
+FAILED tests/integration/test_retained_admission_postgres.py::test_actual_admission_publication_or_revocation_then_independent_close_and_release[False]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed in 6.32s

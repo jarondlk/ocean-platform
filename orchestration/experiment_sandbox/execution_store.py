@@ -158,6 +158,41 @@ _FUNCTIONS = ('ocean_c23_execution_insert_guard()', 'ocean_c23_outbox_insert_gua
               'ocean_c23_release(uuid,uuid,bigint,uuid)')
 
 
+def bootstrap_retained_controller_reads(connection, *, config):
+    """Explicit setup for one owned isolated schema, never a bridge factory.
+
+    UPDATE(id) is a real PK-write privilege granted to the independently trusted
+    controller so unchanged C22 SELECT FOR UPDATE statements work. No claim of
+    lock-only privilege or DML-denying trigger is made. Other roles get nothing.
+    """
+    if type(config) is not ExecutionStoreConfig or connection.dialect.name != 'postgresql':
+        raise ValueError('Explicit isolated PostgreSQL configuration required')
+    schema = config.schema
+    row = connection.execute(text('SELECT current_database(),current_user,session_user,'
+        '(SELECT r.rolname FROM pg_namespace n JOIN pg_roles r ON r.oid=n.nspowner WHERE n.nspname=:schema)'),
+        {'schema': schema}).one()
+    if row[0] != config.database_name or row[1] != row[2] or row[1] != row[3]:
+        raise ValueError('Setup must own the exact isolated operator schema')
+    # Reuse the complete existing restricted-principal/bootstrap validation.
+    bootstrap_execution_roles(connection, schema=schema, policy=config.roles)
+    from db.app_models import (AppUser, ResearchInvestigation, ResearchExperiment,
+        ResearchContextRevision, ResearchConversation, ResearchExperimentRevision,
+        ResearchExperimentApproval, ResearchExperimentRevisionFile, ResearchExperimentInputBlob)
+    models = (AppUser, ResearchInvestigation, ResearchExperiment, ResearchContextRevision,
+        ResearchConversation, ResearchExperimentRevision, ResearchExperimentApproval,
+        ResearchExperimentRevisionFile, ResearchExperimentInputBlob)
+    controller = config.roles.controller_role
+    for model in models:
+        table = _identifier(model.__tablename__)
+        connection.exec_driver_sql(f'REVOKE ALL ON TABLE {schema}.{table} FROM {controller}')
+        columns = ','.join(_identifier(column.name) for column in model.__table__.columns)
+        for privilege in ('SELECT', 'INSERT', 'UPDATE', 'REFERENCES'):
+            connection.exec_driver_sql(f'REVOKE {privilege} ({columns}) ON TABLE {schema}.{table} FROM {controller}')
+        connection.exec_driver_sql(f'GRANT SELECT ({columns}) ON TABLE {schema}.{table} TO {controller}')
+    for table in ('app_user', 'research_investigation', 'research_experiment'):
+        connection.exec_driver_sql(f'GRANT UPDATE(id) ON TABLE {schema}.{table} TO {controller}')
+
+
 def bootstrap_execution_roles(connection, *, schema, policy):
     """Explicit admin-only grants to existing roles; creates no role/credential.
 
@@ -211,6 +246,11 @@ def bootstrap_execution_roles(connection, *, schema, policy):
     connection.exec_driver_sql(f'GRANT CREATE ON SCHEMA {schema} TO {owner}')
     for signature in _FUNCTIONS:
         connection.exec_driver_sql(f'ALTER FUNCTION {schema}.{signature} OWNER TO {owner}')
+        # A repeated bootstrap revoked this owner's explicit ACL above. Keeping
+        # the same owner does not recreate EXECUTE, which nested definer calls
+        # (notably proof -> closed binding) still require. This NOLOGIN role
+        # regains its original owner rights; client-role grants remain separate.
+        connection.exec_driver_sql(f'GRANT EXECUTE ON FUNCTION {schema}.{signature} TO {owner}')
     connection.exec_driver_sql(f'REVOKE CREATE ON SCHEMA {schema} FROM {owner}')
     for signature in ('ocean_c23_reserve(jsonb)', 'ocean_c23_record_event(jsonb,bigint)'):
         connection.exec_driver_sql(f'GRANT EXECUTE ON FUNCTION {schema}.{signature} TO {controller}')
@@ -245,20 +285,23 @@ class C23ExecutionStore:
         checks = session.execute(text('SELECT p.proname,p.prosecdef,r.rolname,p.proconfig,'
             'has_function_privilege(:serving,p.oid,\'EXECUTE\'),'
             'has_function_privilege(:controller,p.oid,\'EXECUTE\'),'
-            'has_function_privilege(:verifier,p.oid,\'EXECUTE\') FROM pg_proc p '
+            'has_function_privilege(:verifier,p.oid,\'EXECUTE\'),'
+            'has_function_privilege(:function_owner,p.oid,\'EXECUTE\') FROM pg_proc p '
             'JOIN pg_namespace n ON n.oid=p.pronamespace JOIN pg_roles r ON r.oid=p.proowner '
             "WHERE n.nspname=:schema AND p.proname LIKE 'ocean_c23_%'"),
             {'serving': policy.serving_role, 'controller': policy.controller_role,
-             'verifier': policy.verifier_role, 'schema': self.config.schema}).all()
+             'verifier': policy.verifier_role, 'function_owner': policy.function_owner_role,
+             'schema': self.config.schema}).all()
         expected_functions = {signature.split('(', 1)[0] for signature in _FUNCTIONS}
         if len(checks) != len(expected_functions) or {entry[0] for entry in checks} != expected_functions:
             raise SandboxError('sandbox_execution_role_boundary')
         expected_path = ['pg_catalog', self.config.schema, 'pg_temp']
-        for name, security_definer, owner, settings, serving_execute, controller_execute, verifier_execute in checks:
+        for name, security_definer, owner, settings, serving_execute, controller_execute, verifier_execute, owner_execute in checks:
             paths = [value.split('=', 1)[1] for value in (settings or []) if value.startswith('search_path=')]
             expected_controller = name in {'ocean_c23_reserve', 'ocean_c23_record_event'}
             expected_verifier = name in {'ocean_c23_closed_binding', 'ocean_c23_record_proof', 'ocean_c23_release'}
-            if (security_definer is not True or owner != policy.function_owner_role or serving_execute is not False
+            if (security_definer is not True or owner != policy.function_owner_role or owner_execute is not True
+                    or serving_execute is not False
                     or controller_execute != expected_controller or verifier_execute != expected_verifier
                     or len(paths) != 1 or [part.strip().strip(chr(34)) for part in paths[0].split(',')] != expected_path):
                 raise SandboxError('sandbox_execution_role_boundary')
@@ -313,6 +356,24 @@ class C23ExecutionStore:
         binding = ExecutionReservationBinding.model_validate(binding.model_dump(mode='python'))
         return self._call(session, 'ocean_c23_reserve(CAST(:p AS jsonb))', {'p': _canonical(binding.model_dump())})
 
+    def reserve_after_fence_in_transaction(self, session, binding, *, final_fence):
+        """Trusted bridge closure runs after every host callback, before SQL.
+
+        This low-level composition point accepts no request-supplied callback.
+        Its caller is the independently configured controller bridge. Prepare
+        all immutable parameters before the closure; never re-run enablement
+        or source/access callbacks after the closing authority fence.
+        """
+        self._controller(session)
+        if (type(binding) is not ExecutionReservationBinding
+                or binding.site_id != self.config.site_id or not callable(final_fence)):
+            raise SandboxError('sandbox_execution_binding')
+        binding = ExecutionReservationBinding.model_validate(binding.model_dump(mode='python'))
+        statement = text(f'SELECT {self.config.schema}.ocean_c23_reserve(CAST(:p AS jsonb))')
+        parameters = {'p': _canonical(binding.model_dump())}
+        final_fence()
+        return str(session.scalar(statement, parameters))
+
     def record_event_in_transaction(self, session, *, execution_id, expected_fence,
                                     event_id, kind, start_id, host_boot_id, journal_id,
                                     journal_epoch, profile_sha256, preceding_journal_sha256,
@@ -339,6 +400,55 @@ class C23ExecutionStore:
              'preceding_journal_sha256': preceding_journal_sha256, 'result_sha256': result_sha256,
              'terminal_sequence': terminal_sequence, 'terminal_head_sha256': terminal_head_sha256}
         return self._call(session, 'ocean_c23_record_event(CAST(:p AS jsonb),:f)', {'p': _canonical(p), 'f': expected_fence})
+
+    def event_after_fence_in_transaction(self, session, *, execution_id, expected_fence,
+            event_id, kind, start_id, host_boot_id, journal_id, journal_epoch,
+            profile_sha256, preceding_journal_sha256, final_fence,
+            result_sha256=None, terminal_sequence=None, terminal_head_sha256=None):
+        """Prepare exact event parameters, then trusted fence and immediate SQL.
+
+        No current-owner or host authority is supplied by this low-level method.
+        Closed events retain the role/transaction boundary but skip launch flags.
+        """
+        self._controller(session, cleanup=kind == 'closed')
+        if (kind not in {'start_consumed', 'publication_retained', 'closed'}
+                or type(expected_fence) is not int or not 1 <= expected_fence < 2**63 - 1
+                or type(journal_epoch) is not int or not 1 <= journal_epoch < 2**63
+                or not callable(final_fence)):
+            raise SandboxError('sandbox_execution_event')
+        for value in (execution_id, event_id, start_id, host_boot_id, journal_id):
+            try:
+                canonical = type(value) is str and str(uuid.UUID(value)) == value
+            except (ValueError, TypeError, AttributeError):
+                canonical = False
+            if not canonical:
+                raise SandboxError('sandbox_execution_event')
+        for value in (profile_sha256, preceding_journal_sha256):
+            if type(value) is not str or not re.fullmatch(r'[a-f0-9]{64}', value):
+                raise SandboxError('sandbox_execution_event')
+        for value in (result_sha256, terminal_head_sha256):
+            if value is not None and (type(value) is not str or not re.fullmatch(r'[a-f0-9]{64}', value)):
+                raise SandboxError('sandbox_execution_event')
+        if ((kind == 'start_consumed' and (event_id != start_id or result_sha256 is not None))
+                or (kind == 'publication_retained' and result_sha256 is None)
+                or (kind == 'closed' and (result_sha256 is None or terminal_head_sha256 is None
+                    or type(terminal_sequence) is not int or not 1 <= terminal_sequence <= 4096))
+                or (kind != 'closed' and (terminal_sequence is not None or terminal_head_sha256 is not None))):
+            raise SandboxError('sandbox_execution_event')
+        row = session.execute(text(f'SELECT reservation_id,owner_user_id,envelope_sha256 FROM '
+            f'{self.config.schema}.research_experiment_execution WHERE execution_id=CAST(:id AS uuid) AND site_id=:site'),
+            {'id': execution_id, 'site': self.config.site_id}).one()
+        payload = {'id': event_id, 'execution_id': execution_id, 'reservation_id': str(row[0]),
+            'owner_user_id': str(row[1]), 'envelope_sha256': row[2], 'fence': expected_fence + 1,
+            'kind': kind, 'start_id': start_id, 'host_boot_id': host_boot_id,
+            'journal_id': journal_id, 'journal_epoch': journal_epoch,
+            'profile_sha256': profile_sha256, 'preceding_journal_sha256': preceding_journal_sha256,
+            'result_sha256': result_sha256, 'terminal_sequence': terminal_sequence,
+            'terminal_head_sha256': terminal_head_sha256}
+        statement = text(f'SELECT {self.config.schema}.ocean_c23_record_event(CAST(:p AS jsonb),:f)')
+        parameters = {'p': _canonical(payload), 'f': expected_fence}
+        final_fence()
+        return str(session.scalar(statement, parameters))
 
     @contextmanager
     def _recorder_transaction(self):

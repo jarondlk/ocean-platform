@@ -1,0 +1,20 @@
+{
+  "dependency_sha256_before": {
+    "orchestration/experiment_sandbox/contracts.py": "03240fe35973d772c28ad5ac0c7da58467c41c20cdae793799ff361f292cab51",
+    "orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "orchestration/experiment_sandbox/linux_runtime.py": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d",
+    "orchestration/experiment_sandbox/profile_execution.py": "de9cd227f72c3a7cd7a18d667e3027115d6316467af32a397830e799fb41c4f5",
+    "orchestration/experiment_sandbox/retained_bridge.py": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd"
+  },
+  "head": "5a02f221f7ba8127fcbd6008949806e6b4c1ef04",
+  "physical_authority": false,
+  "pre_cut_observation": {
+    "qualification": "Previous tool result before usage interruption. No pre-run hash receipt existed; this final run freezes current amended sources explicitly.",
+    "result": "47 passed in 6.96s"
+  },
+  "source_sha256_before": {
+    "orchestration/experiment_sandbox/retained_context.py": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5",
+    "tests/test_experiment_sandbox_retained_context.py": "31061919046408762049753191058fdf77d46cb85c62219e9ca329a1b347a50c"
+  },
+  "version": "c23-held-context-verification-start-v1"
+}

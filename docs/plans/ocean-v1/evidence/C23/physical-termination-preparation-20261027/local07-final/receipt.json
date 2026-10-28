@@ -1,0 +1,75 @@
+{
+  "C23_complete": false,
+  "actual_physical_acceptance": false,
+  "artifacts": {
+    "pytest.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pytest.stdout.txt": "61a59182cb7f10fa4cf8f8064dcb313660635463342ce350d0106d44b1079353",
+    "ruff.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ruff.stdout.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "source-after.json": "f00d3b3630003e60822720d7dcad3386eadd3457cca62f8d4982efad1d20abe8",
+    "source-before.json": "f00d3b3630003e60822720d7dcad3386eadd3457cca62f8d4982efad1d20abe8",
+    "source/orchestration/experiment_sandbox/physical_termination.py": "f1350b89ac1ecad6df68ef2f74a1751e32a1c29200dbd18727112a5364fac798",
+    "source/tests/test_experiment_sandbox_physical_termination.py": "3b72ed66a7a1c1643c82c21b4161e3244c1d046105de1a877d557d62f4cfaeac",
+    "test-temp-before.json": "32aff6ec32aa6a9cf165b79ed8400884815458ac91f594117f40cf32041904cd",
+    "test-temp-cleanup.json": "00eb5fa70864cc90697c3658367b4d0b629e1d5a210d91d2dba89875678b8b82",
+    "verification.json": "4d84158b9c55e9d2e67bab21c8dfd5db705884c066de94b6612e9834877659ea"
+  },
+  "checks": [
+    {
+      "check": "pytest",
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_experiment_sandbox_physical_termination.py",
+        "tests/test_experiment_sandbox_proofs.py",
+        "tests/test_experiment_sandbox_retained_context.py",
+        "tests/test_experiment_sandbox_journal_references.py",
+        "tests/test_experiment_sandbox_journal.py",
+        "tests/test_experiment_sandbox_linux_runtime.py",
+        "tests/test_experiment_sandbox_supervisor.py",
+        "--basetemp=/var/folders/m3/t697fcxs4h9062q_kmbgyplr0000gn/T/c23-physical-unit-local07-5yhr37ta",
+        "-q",
+        "--tb=short"
+      ],
+      "elapsed_seconds": 55.27,
+      "returncode": 0
+    },
+    {
+      "check": "ruff",
+      "command": [
+        ".venv/bin/ruff",
+        "check",
+        "orchestration/experiment_sandbox/physical_termination.py",
+        "tests/test_experiment_sandbox_physical_termination.py"
+      ],
+      "elapsed_seconds": 0.039,
+      "returncode": 0
+    }
+  ],
+  "pytest_result": "639 passed in 54.25s",
+  "qualifications": [
+    "Native/kernel/material-source/DB issuance boundaries in physical unit tests are explicitly mocked; SQLite/flock/journal and Ed25519 primitives are real.",
+    "Loaded-source helper tests substitute literal ModuleType fixtures without importing or executing their synthetic source bytes; actual retained-operator imports must originate in the complete frozen readonly source root from process start.",
+    "Prior local01 Ruff failure, local05 GID0 setup rejection, local06 cleanup retries and every earlier passed source candidate are preserved.",
+    "No process-restart reconstruction or re-signing authority is supported after process loss before packet retention; frozen issuance-intent retries require the original live observation and held lease.",
+    "The global generic termination issuer remains unavailable. Actual GCP native cleanup, source-root, material, restricted DB, signing, verification and release acceptance has not run in this slice.",
+    "No cloud, service, database, real signing key, production data, commit or push was used; generated owned test temp tree removed."
+  ],
+  "ruff_result": "All checks passed!",
+  "source_manifest": {
+    "orchestration/experiment_sandbox/execution_store.py": "072eba89ce0877d1a182a9f9cbd9c923b1b79a37e2605d65da37fe87b012bac2",
+    "orchestration/experiment_sandbox/journal.py": "ab480183c7fbeb6b0dfac2e055f6c19df2aa28f2b523b8cb13664dd62982a01b",
+    "orchestration/experiment_sandbox/linux_runtime.py": "36eb939311cda52789ad2f56d52a6a52d4ae144254bb02a315bf9de0e3eb294d",
+    "orchestration/experiment_sandbox/physical_termination.py": "f1350b89ac1ecad6df68ef2f74a1751e32a1c29200dbd18727112a5364fac798",
+    "orchestration/experiment_sandbox/proofs.py": "98b6f72c0d59dca21e78d9ebb93268769d41c18560e240b0ba8bf4622fc42ed4",
+    "orchestration/experiment_sandbox/retained_bridge.py": "bebff736f9a94abc8faf8800ed6098c5f5dc380fdc15e3ee22b9cc524e6fd2fd",
+    "orchestration/experiment_sandbox/retained_context.py": "0c69f84047e81801be0d023b95a4e17aca202895301d48c8e4eb49203eb50ca5",
+    "orchestration/experiment_sandbox/retained_runner.py": "683e5032c722410a54049f18ebf8cfb10faf63c52138ac76d931c5ff8a5071f1",
+    "schema/experiment_execution.py": "8932fdc90c2fe22035e7bf4a4c88eff4047b3fbc584c070e77041c3e285e8b00",
+    "tests/test_experiment_sandbox_physical_termination.py": "3b72ed66a7a1c1643c82c21b4161e3244c1d046105de1a877d557d62f4cfaeac"
+  },
+  "source_unchanged": true,
+  "status": "passed-final-owned-source",
+  "version": "c23-physical-termination-software-validation-v1"
+}

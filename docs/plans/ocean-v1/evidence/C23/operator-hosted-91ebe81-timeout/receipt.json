@@ -1,0 +1,12 @@
+{
+  "backend_conclusion": null,
+  "head_sha": "91ebe81dbf5a8f7ca963b5b4aa7e3df594458ea6",
+  "planned_supersession": "Increase only PostgreSQL job timeout from 15 to 45 minutes, keep all original tests, and add source-bound retained reserve/admission native cases.",
+  "postgres_conclusion": "cancelled",
+  "qualification": "The 15 minute PostgreSQL job timeout elapsed during C23 tests; no failed assertion reported in preserved pytest log before cancellation. Backend is still running, both frontends passed. The new retained source remains local and is not certified by this run.",
+  "required_ci_complete": false,
+  "run_id": 40499699283,
+  "run_url": "https://github.com/jarondlk/ocean-platform/actions/runs/40499699283",
+  "status_at_observation": "in_progress",
+  "version": "c23-hosted-intermediate-timeout-v1"
+}
