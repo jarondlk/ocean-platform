@@ -174,13 +174,13 @@ class ResearchRunService:
                         raise ValueError("Investigation is no longer active")
                 current = self.investigations.load_for_submission(
                     investigation_id=str(run.investigation_id), conversation_id=str(run.conversation_id),
-                    revision_id=str(run.revision_id), user=actor)
+                    revision_id=str(run.revision_id), user=actor, session=session)
                 if current != frozen:
                     raise ValueError("Changed frozen context")
             else:
-                context = self.investigations.invoke("context/get", {
+                context = self.investigations._read("context/get", {
                     "investigation_id": str(run.investigation_id), "revision_id": str(run.revision_id),
-                }, actor)["context"]
+                }, actor, session=session)["context"]
                 if (context["snapshot_id"] != run.snapshot_id or context["payload_sha256"] != run.payload_sha256
                         or any(entry["status"] != "available" for entry in context["resolution"])):
                     raise ValueError("Context access changed")
@@ -273,7 +273,7 @@ class ResearchRunService:
                         self._dispatch_required()
                         frozen = self.investigations.load_for_submission(
                             investigation_id=data["investigation_id"], conversation_id=data["conversation_id"],
-                            revision_id=data["revision_id"], user=actor,
+                            revision_id=data["revision_id"], user=actor, session=session,
                         )
                         if frozen["snapshot_id"] != data["expected_snapshot_id"] or frozen["payload_sha256"] != data["expected_payload_sha256"]:
                             raise ResearchRunError("conflict", 409)

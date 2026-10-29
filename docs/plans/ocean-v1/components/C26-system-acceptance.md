@@ -1,8 +1,8 @@
 # C26 — System acceptance and evaluation
 
-**Status:** Not started. **Prerequisites:** P00, C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25.
+**Status:** In progress. **Prerequisites:** P00, C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25.
 
-Readiness audited 2026-10-29 JST: **ready to begin local deterministic acceptance preparation**. P00/C01–C25 receipts/current source reconcile and exact-source C25 hosted delivery passes. Implementation remains Not started. Live beta/release acceptance remains gated by hosting/auth, real queue/worker integration, explicit target configuration and real-world validation. [Readiness audit](../C26_READINESS_AUDIT_2026-10-29.md), [handoff](../handoffs/C26.md).
+Readiness audited 2026-10-29 JST: **ready to begin local deterministic acceptance preparation**. P00/C01–C25 receipts/current source reconcile and exact-source C25 hosted delivery passes. User selected local implementation on 2026-10-29 JST. Live beta/release acceptance remains gated by hosting/auth, real queue/worker integration, explicit target configuration and real-world validation. [Readiness audit](../C26_READINESS_AUDIT_2026-10-29.md), [handoff](../handoffs/C26.md).
 
 ## Revised delivery boundary
 
@@ -17,6 +17,8 @@ prototype is not acceptance evidence for this component.
 Establish whether the complete research experience satisfies the accepted architecture using traceable, repeatable acceptance evidence. Evaluate the actual agent controller alongside the catalogue, UI and execution boundaries; retriever metrics alone cannot demonstrate whole-system correctness.
 
 Include integrated synthetic fixtures, regression checks, local failure/permission testing, acceptance reporting and a separately executable live-evaluation protocol. Exclude automatic bug-fixing across predecessor components, deployment, production mutation and paid/live model runs. Route discovered defects to their owning component with a reproducible case.
+
+User-approved scope amendments on 2026-10-29 JST: repair the reproduced C17/C20/C21/C22/C25 retained-experimental-artifact integration (including same-session PostgreSQL resolution and current-authority reopening), and investigate/optimize C14 catalogue materialization after the 100,000-object lab exceeded its predeclared memory budget. These are bounded owning-component repairs, explicitly selected by the user after concrete failed observations. Preserve the original failures and source qualifications; the amendments authorize no live operations or scientific approval.
 
 ## Verified entry points and contracts
 

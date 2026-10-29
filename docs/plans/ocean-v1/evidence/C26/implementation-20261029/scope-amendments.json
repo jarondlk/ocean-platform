@@ -1,0 +1,28 @@
+{
+  "version": "c26-user-approved-source-amendments-v1",
+  "date": "2026-10-29 JST",
+  "original_spec_boundary": "Exclude automatic bug-fixing across predecessor components",
+  "approvals": [
+    {
+      "observed_failure": "Validated C25 experimental artifact attachment returns HTTP503 when C21 evidence protection is installed",
+      "user_answer": "Repair owning integration (Recommended)",
+      "owners": [
+        "C17",
+        "C20",
+        "C21",
+        "C22",
+        "C25"
+      ],
+      "bounded_work": "Explicit durable foreign-artifact retention capability, same-session owner/site fences, safe immutable exact-byte/current-authority checks and scientific-label preservation"
+    },
+    {
+      "observed_failure": "100000-object complete traversal/count/access passed; predeclared3072MiB lab budget exceeded at3849.64MiB with one-viewcache",
+      "user_answer": "Investigate and optimize C14",
+      "owners": [
+        "C14"
+      ],
+      "bounded_work": "Reduce complete-view materialization/caching memory while preserving full validation, metadata, inventory, authorization and unchanged lab thresholds"
+    }
+  ],
+  "live_cloud_provider_model_data_or_release_operations_authorized_by_this_amendment": false
+}

@@ -26,6 +26,7 @@ from db.app_models import (
 from orchestration.catalogue_service import FrozenCatalogueResolver, catalogue_access_binding
 from orchestration.investigations import InvestigationService, RetainedArtifactBinding
 from orchestration.research_evidence_projection import project_retained_run
+from orchestration.retained_artifacts import RetainedArtifactProvider, SessionAttachmentResolver
 from orchestration.research_runs import ResearchRunError, ResearchRunService
 from retrieval.source_scope import EvidenceScope
 from schema.research_controller import (
@@ -99,7 +100,7 @@ def _payload_rows(payload):
 
 class ResearchEvidenceService:
     def __init__(self, *, session_factory, site_id, investigations, runs,
-                 enabled=None, documentary_provider=None):
+                 enabled=None, documentary_provider=None, external_artifact_providers=()):
         if (not isinstance(investigations, InvestigationService)
                 or not isinstance(runs, ResearchRunService)
                 or runs.investigations is not investigations
@@ -119,6 +120,13 @@ class ResearchEvidenceService:
         self.catalogue, self.store = investigations.catalogue, investigations.store
         self.enabled = enabled if enabled is not None else config.v1_evidence_enabled
         self.documentary_provider = documentary_provider
+        if (not isinstance(external_artifact_providers, tuple)
+                or len({id(provider) for provider in external_artifact_providers}) != len(external_artifact_providers)
+                or any(not isinstance(provider, RetainedArtifactProvider)
+                    or provider.investigations is not investigations or provider.site_id != site_id
+                    or provider.session_factory is not session_factory for provider in external_artifact_providers)):
+            raise ValueError("Explicit same-site retained artifact providers required")
+        self.external_artifact_providers = external_artifact_providers
 
     @contextmanager
     def _transaction(self):
@@ -152,6 +160,18 @@ class ResearchEvidenceService:
                 raise ValueError("Source authorization epoch changed")
             self._policy(run.snapshot_id, actor, manifest["catalogue_policy_revision"])
             self.investigations._snapshot(run.snapshot_id, frozen["context"]["scope"], actor)
+            # Reopening an already retained receipt must still close authority
+            # over its experimental context. Native C21 receipt dependencies
+            # are traversed separately by _read_receipt; never recurse through
+            # those IDs here or promote a foreign output to scientific evidence.
+            for reference in [*frozen["context"]["attachments"], *frozen["context"]["pins"]]:
+                if reference["kind"] != "artifact" or reference["id"].startswith("c21:receipt:"):
+                    continue
+                expected = frozen["context"].get("artifact_bindings", {}).get(canonical_hash(reference))
+                provider, binding = self._external_artifact(session, actor, reference)
+                if binding.sha256 != expected:
+                    raise ValueError("Retained experimental context changed")
+                provider.verify_context(session, run.revision_id, reference, expected, actor)
         except Exception:
             raise ResearchEvidenceError("access_denied", 403) from None
         return frozen
@@ -258,16 +278,24 @@ class ResearchEvidenceService:
             cancellation_requested=run.cancellation_requested)
         if any(getattr(result.budget, key) > getattr(budget, key) for key in ("tool_actions", "model_calls", "malformed_repairs")):
             raise ResearchEvidenceError()
-        attached, attached_payloads = [], {}
-        for reference in frozen["context"]["attachments"]:
+        attached, attached_payloads, external_qualifications = [], {}, []
+        for reference in [*frozen["context"]["attachments"], *frozen["context"]["pins"]]:
             if reference["kind"] == "artifact":
-                receipt, attached_payload, _ = self._read_receipt(session, reference["id"], actor)
                 key = canonical_hash(reference)
                 expected = frozen["context"].get("artifact_bindings", {}).get(key)
-                if reference != receipt.attachment_reference.model_dump(mode="json") or expected != receipt.sha256:
-                    raise ResearchEvidenceError("access_denied", 403)
-                attached.append(receipt)
-                attached_payloads[receipt.id] = attached_payload
+                if reference["id"].startswith("c21:receipt:"):
+                    receipt, attached_payload, _ = self._read_receipt(session, reference["id"], actor)
+                    if reference != receipt.attachment_reference.model_dump(mode="json") or expected != receipt.sha256:
+                        raise ResearchEvidenceError("access_denied", 403)
+                    if reference in frozen["context"]["attachments"] and receipt.id not in attached_payloads:
+                        attached.append(receipt)
+                        attached_payloads[receipt.id] = attached_payload
+                else:
+                    provider, binding = self._external_artifact(session, actor, reference)
+                    if binding.sha256 != expected:
+                        raise ResearchEvidenceError("access_denied", 403)
+                    provider.verify_context(session, run.revision_id, reference, expected, actor)
+                    external_qualifications.append("Attached experimental context is retained but is not independently verified scientific evidence: " + reference["id"])
         anchor = RunEvidenceAnchor(run_id=str(run.id), input_version=input_version, owner_id=str(actor.id),
             binding=result.binding, effective_question=run.effective_question,
             effective_question_sha256=hashlib.sha256(run.effective_question.encode("utf-8")).hexdigest(),
@@ -313,7 +341,7 @@ class ResearchEvidenceService:
             receipts.append(receipt)
             payloads[receipt.id], inputs[receipt.id] = payload, _payload_inputs(payload)
             by_payload[observation.full_payload_ref] = receipt.id
-        unresolved = tuple(dict.fromkeys([*(fact.reason for fact in result.completion.facts if fact.state != "supported" and fact.reason), *result.completion.unresolved_cohorts]))
+        unresolved = tuple(dict.fromkeys([*(fact.reason for fact in result.completion.facts if fact.state != "supported" and fact.reason), *result.completion.unresolved_cohorts, *external_qualifications]))
         return VerifiedEvidenceSet(anchor=anchor, receipts=tuple(receipts), full_payloads_by_receipt=payloads,
             input_manifests_by_receipt=inputs, attached_receipts=tuple(attached),
             attached_full_payloads_by_receipt=attached_payloads, unresolved_work=unresolved)
@@ -456,19 +484,52 @@ class ResearchEvidenceService:
         memo[identity] = (receipt, payload, inputs)
         return memo[identity]
 
+    def _external_artifact(self, session, user, reference):
+        matches = []
+        for provider in self.external_artifact_providers:
+            if (not isinstance(provider, RetainedArtifactProvider)
+                    or provider.investigations is not self.investigations
+                    or provider.site_id != self.site_id or provider.session_factory is not self.session_factory):
+                raise ResearchEvidenceError()
+            binding = provider.resolve(session, user, reference)
+            if binding is not None:
+                if (not isinstance(binding, RetainedArtifactBinding) or binding.owner_user_id != user.id
+                        or binding.id != reference["id"] or binding.snapshot_id != reference["snapshot_id"]
+                        or len(binding.sha256) != 64 or any(c not in "0123456789abcdef" for c in binding.sha256)):
+                    raise ResearchEvidenceError()
+                matches.append((provider, binding))
+        # Unknown, unavailable and ambiguous ownership fail closed. A C21
+        # namespace always follows native receipt verification, never providers.
+        if len(matches) != 1:
+            raise ResearchEvidenceError()
+        return matches[0]
+
+    def authorize_attachment_owner(self, session, user):
+        for provider in self.external_artifact_providers:
+            if provider.investigations is not self.investigations or provider.session_factory is not self.session_factory or provider.site_id != self.site_id:
+                raise ResearchEvidenceError()
+            provider.authorize_owner(session, user)
+
+    def attachment_resolver(self):
+        return SessionAttachmentResolver(self)
+
+    def resolve_attachment_in_session(self, session, user, reference):
+        if not self.enabled():
+            raise ResearchEvidenceError()
+        self.investigations._actor(session, user)
+        if reference["id"].startswith("c21:receipt:"):
+            receipt, _, _ = self._read_receipt(session, reference["id"], user)
+            if receipt.attachment_reference.model_dump(mode="json") != reference:
+                raise ResearchEvidenceError("access_denied", 403)
+            return RetainedArtifactBinding(id=receipt.id, snapshot_id=receipt.binding.snapshot_id,
+                sha256=receipt.sha256, owner_user_id=user.id)
+        return self._external_artifact(session, user, reference)[1]
+
     def resolve_attachment(self, user, reference):
-        """Read-only: safe inside a C17 transaction holding its own target lock."""
+        """Read-only callable form for a host outside an application transaction."""
         try:
             with self._transaction() as session:
-                # No owner row lock here: C17 already owns transaction ordering.
-                if not self.enabled():
-                    return None
-                self.investigations._actor(session, user)
-                receipt, _, _ = self._read_receipt(session, reference["id"], user)
-                if receipt.attachment_reference.model_dump(mode="json") != reference:
-                    return None
-                return RetainedArtifactBinding(id=receipt.id, snapshot_id=receipt.binding.snapshot_id,
-                    sha256=receipt.sha256, owner_user_id=user.id)
+                return self.resolve_attachment_in_session(session, user, reference)
         except Exception:
             return None
 
@@ -476,8 +537,12 @@ class ResearchEvidenceService:
         for reference in [*candidate["attachments"], *candidate["pins"]]:
             if reference["kind"] != "artifact":
                 continue
+            if not reference["id"].startswith("c21:receipt:"):
+                provider, _ = self._external_artifact(session, user, reference)
+                provider.prepare_context(session, operation, candidate, reference, user)
+                continue
             receipt, _, _ = self._read_receipt(session, reference["id"], user)
-            if receipt.attachment_reference.model_dump(mode="json") != reference:
+            if reference != receipt.attachment_reference.model_dump(mode="json"):
                 raise ResearchEvidenceError("access_denied", 403)
             if session.get(ResearchEvidenceContextDependency, (operation.id, receipt.id)) is None:
                 session.add(ResearchEvidenceContextDependency(operation_id=operation.id, receipt_id=receipt.id,
@@ -485,6 +550,10 @@ class ResearchEvidenceService:
 
     def activate_context(self, session, operation, candidate, user):
         self.prepare_context(session, operation, candidate, user)
+        for reference in [*candidate["attachments"], *candidate["pins"]]:
+            if reference["kind"] == "artifact" and not reference["id"].startswith("c21:receipt:"):
+                provider, _ = self._external_artifact(session, user, reference)
+                provider.activate_context(session, operation, candidate, reference, user)
         dependencies = session.scalars(select(ResearchEvidenceContextDependency).where(
             ResearchEvidenceContextDependency.operation_id == operation.id)).all()
         for item in dependencies:

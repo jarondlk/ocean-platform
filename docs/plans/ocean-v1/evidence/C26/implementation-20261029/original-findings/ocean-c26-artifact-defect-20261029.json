@@ -1,0 +1,100 @@
+{
+  "id": "C26-D01-artifact-retention-composition",
+  "status": "open; owning amendment explicitly authorized, not repaired by acceptance fixture",
+  "observed_utc": "2026-10-29",
+  "original_evidence": {
+    "path": "/private/tmp/ocean-c26-shared-first-20261029.json",
+    "sha256": "ebeeb082128feb195d93f080d32cecc0ace16c4c3d1c7bcfd8f4c9cb7c39b406"
+  },
+  "expected": "A currently authorized, hash/snapshot-bound C25 artifact accepted by configured C17 resolver can attach to shared investigation and reopen as experimental supplementary evidence while C21 receipt retention protections remain enforced.",
+  "actual": {
+    "id": "research-and-experiment-attachment-composition",
+    "owner_components": [
+      "C17",
+      "C21",
+      "C25"
+    ],
+    "expected": {
+      "attachment": {
+        "kind": "artifact",
+        "id": "synthetic:aa28747c-b688-4cc1-b6ce-83572293ea39:8eb89c5872b56466",
+        "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+      },
+      "available": true
+    },
+    "observed": {
+      "http_status": 503,
+      "response": {
+        "error": {
+          "code": "investigations_unavailable",
+          "message": "Investigations are unavailable"
+        }
+      },
+      "available": false
+    },
+    "evidence": {
+      "artifact_id": "synthetic:aa28747c-b688-4cc1-b6ce-83572293ea39:8eb89c5872b56466",
+      "resolver_validates": true,
+      "protection": "ResearchEvidenceService",
+      "public_path": "/research/investigations/context/change",
+      "public_request": {
+        "investigation_id": "58257005-eb2e-4759-ad31-9056ad20e744",
+        "expected_revision_id": "0a7602e2-4b88-4259-82ee-465df0aa21fb",
+        "idempotency_key": "86591896-4c2f-408e-99eb-c263d2819a47",
+        "change": {
+          "op": "attach",
+          "reference": {
+            "kind": "artifact",
+            "id": "synthetic:aa28747c-b688-4cc1-b6ce-83572293ea39:8eb89c5872b56466",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+          }
+        }
+      },
+      "http_status": 503,
+      "public_response": {
+        "error": {
+          "code": "investigations_unavailable",
+          "message": "Investigations are unavailable"
+        }
+      },
+      "source": {
+        "path": "orchestration/research_evidence.py",
+        "method": "ResearchEvidenceService.prepare_context",
+        "line": 475
+      }
+    },
+    "status": "failed"
+  },
+  "owners": [
+    "C17 artifact/retention composition",
+    "C21 ResearchEvidenceService.prepare_context/activate_context and frozen-anchor artifact loop",
+    "C25 trusted durable artifact/protection provider"
+  ],
+  "source_locations": [
+    {
+      "path": "orchestration/research_evidence.py",
+      "line": 263,
+      "problem": "Retained anchor assumes every artifact attachment is a C21 receipt."
+    },
+    {
+      "path": "orchestration/research_evidence.py",
+      "line": 475,
+      "problem": "Context prepare assumes every artifact attachment is a C21 receipt."
+    },
+    {
+      "path": "orchestration/investigations.py",
+      "line": 435,
+      "problem": "Single configured evidence_protection receives complete artifact candidate."
+    }
+  ],
+  "minimal_owning_repair": "Introduce explicit typed artifact-origin resolution/retention composition. Retain C21 dependency guards for actual C21 receipts; delegate foreign C25 artifact validation to trusted durable owner/hash/snapshot-bound provider and persist/verify protection identity. Verify foreign frozen artifacts through retained bytes/binding without converting them into scientific C21 receipts or weakening source/owner checks. No implicit fixture/default provider or execution/release authority.",
+  "required_repair_checks": [
+    "Actual shared C17+C20+C21+C22+C25 attachment returns successful context and reopenable reference.",
+    "C21 receipt attachments continue retaining dependency protection.",
+    "Unknown/missing/mismatched foreign provider fails closed; no production synthetic fallback.",
+    "Owner/role/source/hash/snapshot revocation prevents new/reopened attachment/answer publication.",
+    "Retained context/receipt/proposal hashes stay immutable; no forged physical execution or scientific approval.",
+    "Repeat exact original failed public request shape and retain separate new-source success receipt."
+  ],
+  "boundary": "Original failed evidence immutable; no predecessor product edits in C26 fixture. Production worker/cloud/live isolation remain unrun."
+}

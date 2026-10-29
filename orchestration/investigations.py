@@ -7,7 +7,7 @@ reference writes; failed/uncertain operations never compensate by releasing data
 """
 from __future__ import annotations
 
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 import hashlib
@@ -80,7 +80,7 @@ def _stamp(value):
 
 @dataclass(frozen=True)
 class RetainedArtifactBinding:
-    """A trusted C21 adapter may supply a freshly authorized immutable binding."""
+    """A trusted retained-artifact adapter supplies a current immutable binding."""
 
     id: str
     snapshot_id: str
@@ -223,7 +223,12 @@ class InvestigationService:
             self.site_id, str(investigation_id), snapshot_id, identity,
         ]))} for identity in (snapshot_id, *registration.child_snapshot_ids)]
 
-    def _resolve(self, payload, user):
+    def _artifact_actor(self, session, user):
+        authorize = getattr(self.artifact_resolver, "authorize_in_session", None)
+        if callable(authorize):
+            authorize(session, user)
+
+    def _resolve(self, payload, user, session=None):
         self._snapshot(payload["snapshot_id"], payload["scope"], user)
         artifact_keys = {_key(reference) for reference in [*payload["attachments"], *payload["pins"]] if reference["kind"] == "artifact"}
         resolution, artifact_bindings = [], {key: value for key, value in payload.get("artifact_bindings", {}).items() if key in artifact_keys}
@@ -247,7 +252,8 @@ class InvestigationService:
                 status = "artifact_capability_unavailable"
             else:
                 try:
-                    binding = self.artifact_resolver(user, dict(reference))
+                    in_session = getattr(self.artifact_resolver, "resolve_in_session", None)
+                    binding = in_session(session, user, dict(reference)) if session is not None and callable(in_session) else self.artifact_resolver(user, dict(reference))
                 except PermissionError:
                     binding = None
                 except Exception:
@@ -264,8 +270,8 @@ class InvestigationService:
             resolution.append({"reference": reference, "status": status})
         return resolution, artifact_bindings
 
-    def _context(self, revision, payload, user):
-        resolution, _ = self._resolve(payload, user)
+    def _context(self, revision, payload, user, session=None):
+        resolution, _ = self._resolve(payload, user, session)
         return {
             "id": str(revision.id), "investigation_id": str(revision.investigation_id),
             "sequence": revision.sequence, "predecessor_revision_id": str(revision.predecessor_revision_id) if revision.predecessor_revision_id else None,
@@ -307,8 +313,8 @@ class InvestigationService:
         except SQLAlchemyError:
             raise _error("operation_pending") from None
 
-    def _read(self, name, data, user):
-        with self._transaction() as session:
+    def _read(self, name, data, user, session=None):
+        with self._transaction() if session is None else nullcontext(session) as session:
             self._actor(session, user)
             if name == "operations/get":
                 op = session.scalar(select(ResearchContextOperation).where(
@@ -331,10 +337,10 @@ class InvestigationService:
             item = self._owned(session, data["investigation_id"], user)
             revision, context = self._revision(session, item, uuid.UUID(data["revision_id"]) if data.get("revision_id") else None)
             if name == "context/get":
-                return {"context": self._context(revision, context, user)}
+                return {"context": self._context(revision, context, user, session)}
             self._snapshot(revision.snapshot_id, context["scope"], user)
             if name == "get":
-                return {"investigation": self._metadata(item), "context": self._context(revision, context, user), "legacy_history_import": "unavailable"}
+                return {"investigation": self._metadata(item), "context": self._context(revision, context, user, session), "legacy_history_import": "unavailable"}
             query = select(ResearchConversation).where(ResearchConversation.investigation_id == item.id)
             if name == "conversations/get":
                 conversation = session.scalar(query.where(ResearchConversation.id == uuid.UUID(data["conversation_id"])))
@@ -363,8 +369,9 @@ class InvestigationService:
     def _prepare(self, name, data, user):
         with self._transaction() as session:
             self._actor(session, user)
+            self._artifact_actor(session, user)
             # Preparation and retirement share one lock before investigation
-            # locks. The read-only artifact resolver acquires no source locks.
+            # locks. Session-aware artifact providers reuse this transaction.
             self._retention_lock(session)
             existing, request = self._existing_operation(session, user, data, name)
             if existing is not None:
@@ -411,7 +418,7 @@ class InvestigationService:
                         candidate[field] = [entries[key] for key in sorted(entries)]
                     if any(len(candidate[field]) > MAX_CONTEXT_REFERENCES for field in ("attachments", "pins")):
                         raise _error("invalid_request")
-            resolution, artifacts = self._resolve(candidate, user)
+            resolution, artifacts = self._resolve(candidate, user, session)
             if name == "context/change" and data["change"]["op"] in ("attach", "pin"):
                 added = data["change"]["reference"]
                 unresolved = next(entry for entry in resolution if entry["reference"] == added)
@@ -442,6 +449,7 @@ class InvestigationService:
         try:
             with self._transaction() as session:
                 self._actor(session, user)
+                self._artifact_actor(session, user)
                 self._retention_lock(session)
                 op = session.scalar(select(ResearchContextOperation).where(
                     ResearchContextOperation.id == identity,
@@ -468,7 +476,7 @@ class InvestigationService:
             references = json.loads(op.references_json)
             if references != self._bindings(candidate["snapshot_id"], op.investigation_id):
                 raise _error("unavailable")
-            self._resolve(candidate, user)
+            self._resolve(candidate, user, session)
         try:
             for binding in references:
                 self.store.add_reference(binding["snapshot_id"], binding["reference"])
@@ -479,6 +487,7 @@ class InvestigationService:
         try:
             with self._transaction() as session:
                 self._actor(session, user)
+                self._artifact_actor(session, user)
                 self._retention_lock(session)
                 op = session.scalar(select(ResearchContextOperation).where(
                     ResearchContextOperation.id == identity, ResearchContextOperation.user_id == user.id,
@@ -493,12 +502,12 @@ class InvestigationService:
                     if op.state != "committed":
                         raise _error("unavailable")
                     existing, persisted = self._revision(session, item, op.candidate_revision_id)
-                    return {"operation": self._operation(op), "investigation": self._metadata(item), "context": self._context(existing, persisted, user)}
+                    return {"operation": self._operation(op), "investigation": self._metadata(item), "context": self._context(existing, persisted, user, session)}
                 if item.head_revision_id != op.expected_head_id or op.state == "conflict" or (op.kind == "context/change" and item.status != "active"):
                     op.state, op.error_code, conflict = "conflict", "stale_context_head", True
                     self._audit(session, user, "context_conflict", item.id, {"operation_id": str(op.id)})
                 else:
-                    self._resolve(candidate, user)
+                    self._resolve(candidate, user, session)
                     lifecycle = self.store.lifecycle()
                     for binding in references:
                         entry = lifecycle["snapshots"].get(binding["snapshot_id"])
@@ -525,7 +534,7 @@ class InvestigationService:
                         "operation_id": str(op.id), "revision_id": str(revision.id),
                         "payload_sha256": revision.payload_sha256,
                     })
-                    result = {"operation": self._operation(op), "investigation": self._metadata(item), "context": self._context(revision, candidate, user)}
+                    result = {"operation": self._operation(op), "investigation": self._metadata(item), "context": self._context(revision, candidate, user, session)}
         except InvestigationError:
             raise
         except SQLAlchemyError:
@@ -589,9 +598,9 @@ class InvestigationService:
             self._audit(session, user, name.replace("/", "_"), item.id, {"operation_id": str(op.id)})
             return {"operation": self._operation(op), **result}
 
-    def load_for_submission(self, *, investigation_id, conversation_id, revision_id, user):
+    def load_for_submission(self, *, investigation_id, conversation_id, revision_id, user, session=None):
         """Freeze one explicit revision; C20 owns requests/events/execution later."""
-        with self._transaction() as session:
+        with self._transaction() if session is None else nullcontext(session) as session:
             self._actor(session, user)
             item = self._owned(session, investigation_id, user)
             if item.status != "active":
@@ -602,7 +611,7 @@ class InvestigationService:
             if conversation is None:
                 raise _error("not_found")
             revision, payload = self._revision(session, item, uuid.UUID(str(revision_id)))
-            resolution, _ = self._resolve(payload, user)
+            resolution, _ = self._resolve(payload, user, session)
             if any(entry["status"] != "available" for entry in resolution):
                 raise _error("unresolved_context")
             return {"investigation_id": str(item.id), "conversation_id": str(conversation.id),
@@ -659,6 +668,17 @@ class InvestigationService:
                 protected = any(session.scalar(select(model).where(model.investigation_id == item.id).limit(1)) is not None
                     for model in (ResearchAnswerJob, ResearchEvidenceContextDependency, ResearchEvidenceReceipt,
                                   ResearchExperiment, ResearchExperimentOperation))
+                # Immutable historical context references retain foreign artifacts
+                # independently of today's provider wiring or feature flags.
+                for revision in session.scalars(select(ResearchContextRevision).where(
+                        ResearchContextRevision.investigation_id == item.id)):
+                    try:
+                        payload = json.loads(revision.payload_json)
+                        if _hash(revision.payload_json) != revision.payload_sha256 or any(
+                                entry["kind"] == "artifact" for entry in [*payload["attachments"], *payload["pins"]]):
+                            protected = True
+                    except (ValueError, KeyError, TypeError):
+                        protected = True
                 if pending is None and descendants is None and not protected and not self._held_ancestor(session, item):
                     eligible.append(item)
             if not dry_run:

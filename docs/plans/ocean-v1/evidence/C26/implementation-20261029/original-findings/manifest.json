@@ -1,0 +1,22 @@
+{
+  "version": "c26-original-negative-observations-v1",
+  "observations": [
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/original-findings/ocean-c26-shared-first-20261029.json",
+      "sha256": "ebeeb082128feb195d93f080d32cecc0ace16c4c3d1c7bcfd8f4c9cb7c39b406"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/original-findings/ocean-c26-artifact-defect-20261029.json",
+      "sha256": "78fd459028b31c5c3698a4b0c58ef9e05bda1ee111afe6be81e6799b23eaa02f"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/original-findings/ocean-c26-scale-first.json",
+      "sha256": "1bda7a21197c876351bcad501992d4490f73b47d3e8bb64cab1fc84a1b573aad"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/original-findings/ocean-c26-scale-cache1-20261029.json",
+      "sha256": "3b4813d8edaec71e2091017300523111aa65bdfe3c2253ec8b91397939ab0438"
+    }
+  ],
+  "qualification": "Original exploratory failures preserved byte-for-byte; final accepted evidence requires the later frozen runner source manifest. Initial memory captures lack a complete helper source manifest and are not accepted performance proof."
+}

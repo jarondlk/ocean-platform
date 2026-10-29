@@ -215,7 +215,7 @@ class ResearchExperimentService:
             raise ResearchExperimentError('conflict', 409)
         payload = json.loads(revision.payload_json)
         try:
-            resolution, _ = self.investigations._resolve(payload, actor)
+            resolution, _ = self.investigations._resolve(payload, actor, session)
         except InvestigationError as exc:
             raise ResearchExperimentError('access_denied' if exc.status_code in {403, 404} else 'experiments_unavailable',
                 403 if exc.status_code in {403, 404} else 503) from None

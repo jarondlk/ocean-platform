@@ -239,7 +239,7 @@ class ExperimentWorkspaceService:
             if not checks:
                 raise ExperimentWorkspaceError('integrity_error', 409)
 
-    def _snapshot(self, access, user, execution_id=None):
+    def _snapshot(self, access, user, execution_id=None, *, resolve_attachments=True):
         result = self._port_call('status', access, execution_id)
         if result is None:
             return None
@@ -259,7 +259,7 @@ class ExperimentWorkspaceService:
         # Attachment availability requires the actual configured C17 resolver.
         for item in execution['artifacts']:
             reference = item['attachment_reference']
-            if reference is not None:
+            if reference is not None and resolve_attachments:
                 try:
                     resolver = self.investigations.artifact_resolver
                     binding = resolver(user, reference) if callable(resolver) else None

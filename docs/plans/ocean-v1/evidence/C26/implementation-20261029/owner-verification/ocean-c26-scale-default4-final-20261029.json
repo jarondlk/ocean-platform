@@ -1,0 +1,109 @@
+{
+  "version": "c26-scale-observations-v1",
+  "fixture": {
+    "classification": "synthetic-local-actual-services",
+    "snapshot_id": "9f70ea5121bbdd968cfc1a6413191ebaa873b0efeed6c99b1d281563def209f1",
+    "population": 100000,
+    "excluded_canonical_id": "synthetic:dataset:001234",
+    "context_qualification": "Explicit synthetic frozen loader; not C17 scientific snapshot capacity",
+    "maximum_cached_views": 4,
+    "live_calls_performed": false
+  },
+  "checks": [
+    {
+      "id": "catalogue-full-scale-parity",
+      "status": "passed",
+      "owner_components": [
+        "C08",
+        "C14",
+        "C16",
+        "C19",
+        "C26"
+      ],
+      "expected": {
+        "members": 99999,
+        "pages": 200,
+        "human_agent_equal": true,
+        "all_members_equal": true,
+        "whole_scope_totals": true,
+        "controller_counts": [
+          {
+            "outcome": "completed",
+            "count": 99999,
+            "model_calls": 0,
+            "tool_actions": 1
+          },
+          {
+            "outcome": "completed",
+            "count": 99999,
+            "model_calls": 0,
+            "tool_actions": 1
+          }
+        ],
+        "late_targets": [
+          "synthetic:dataset:000025",
+          "synthetic:dataset:000501",
+          "synthetic:dataset:099999"
+        ],
+        "cross_owner_cursor": 409,
+        "stale_policy_cursor": 409
+      },
+      "observed": {
+        "members": 99999,
+        "pages": 200,
+        "human_agent_equal": true,
+        "all_members_equal": true,
+        "whole_scope_totals": true,
+        "controller_counts": [
+          {
+            "outcome": "completed",
+            "count": 99999,
+            "model_calls": 0,
+            "tool_actions": 1
+          },
+          {
+            "outcome": "completed",
+            "count": 99999,
+            "model_calls": 0,
+            "tool_actions": 1
+          }
+        ],
+        "late_targets": [
+          "synthetic:dataset:000025",
+          "synthetic:dataset:000501",
+          "synthetic:dataset:099999"
+        ],
+        "cross_owner_cursor": 409,
+        "stale_policy_cursor": 409
+      },
+      "evidence": {
+        "inventory_sha256": "8444d37db3a00a89cfe16b228374948021a2c9ada0f69898b590ca257f617a89",
+        "expected_inventory_sha256": "8444d37db3a00a89cfe16b228374948021a2c9ada0f69898b590ca257f617a89"
+      }
+    },
+    {
+      "id": "catalogue-scale-lab-budget",
+      "status": "passed",
+      "owner_components": [
+        "C14",
+        "C26"
+      ],
+      "expected": {
+        "wall_seconds_max": 180,
+        "isolated_process_peak_rss_mib_max": 3072
+      },
+      "observed": {
+        "wall_seconds": 28.622715124860406,
+        "isolated_process_peak_rss_mib": 2671.859375
+      },
+      "evidence": {
+        "classification": "isolated-process synthetic lab measurement; no production capacity claim"
+      }
+    }
+  ],
+  "configuration_variant": {
+    "qualification": "Same actual full100k helper, with service constructed using unchanged default maximum_cached_views=4; no source/scientific fixture/threshold reduction",
+    "catalogue_service_sha256": "9b29032a9dd604bf7694cf7373f79bf71a967bed4634bb0f4f1f12f64aacec2a",
+    "source_unchanged": true
+  }
+}

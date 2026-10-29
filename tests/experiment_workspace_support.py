@@ -6,6 +6,7 @@ it owns no C23 reservation, physical proof or capacity-release authority.
 """
 from contextlib import contextmanager
 from copy import deepcopy
+from dataclasses import asdict
 import hashlib
 import json
 from pathlib import Path
@@ -15,12 +16,13 @@ import uuid
 import zlib
 
 from orchestration.experiment_workspace import ExperimentExecutionPort, ExperimentWorkspaceError
+from orchestration.experiment_artifacts import ContextArtifactPin, ExecutionArtifactLocator, RetainedExecutionArtifactPort
 from orchestration.investigations import RetainedArtifactBinding
 from schema.context_catalogue import canonical_json
 from schema.experiment_workspace import ExecutionSnapshot
 
 
-class DurableSyntheticExecutionPort(ExperimentExecutionPort):
+class DurableSyntheticExecutionPort(ExperimentExecutionPort, RetainedExecutionArtifactPort):
     def __init__(self, *, experiments, path):
         super().__init__(experiments=experiments, source='synthetic-fixture')
         self.path = Path(path)
@@ -36,6 +38,33 @@ class DurableSyntheticExecutionPort(ExperimentExecutionPort):
                     id TEXT PRIMARY KEY, execution_id TEXT NOT NULL, owner TEXT NOT NULL,
                     access_sha256 TEXT NOT NULL, snapshot_id TEXT NOT NULL, sha256 TEXT NOT NULL,
                     bytes BLOB NOT NULL);
+                CREATE TABLE IF NOT EXISTS artifact_locators (
+                    id TEXT PRIMARY KEY, locator_json TEXT NOT NULL);
+                CREATE TABLE IF NOT EXISTS artifact_context_pins (
+                    id TEXT PRIMARY KEY, artifact_id TEXT NOT NULL, execution_id TEXT NOT NULL,
+                    pin_json TEXT NOT NULL, state TEXT NOT NULL CHECK(state IN ('prepared','committed')));
+                CREATE TRIGGER IF NOT EXISTS pinned_artifact_update BEFORE UPDATE ON artifacts
+                    WHEN EXISTS (SELECT 1 FROM artifact_context_pins WHERE artifact_id=OLD.id)
+                    BEGIN SELECT RAISE(ABORT, 'retained context artifact is immutable'); END;
+                CREATE TRIGGER IF NOT EXISTS pinned_artifact_delete BEFORE DELETE ON artifacts
+                    WHEN EXISTS (SELECT 1 FROM artifact_context_pins WHERE artifact_id=OLD.id)
+                    BEGIN SELECT RAISE(ABORT, 'retained context artifact cannot be deleted'); END;
+                CREATE TRIGGER IF NOT EXISTS pinned_locator_update BEFORE UPDATE ON artifact_locators
+                    WHEN EXISTS (SELECT 1 FROM artifact_context_pins WHERE artifact_id=OLD.id)
+                    BEGIN SELECT RAISE(ABORT, 'retained artifact locator is immutable'); END;
+                CREATE TRIGGER IF NOT EXISTS pinned_locator_delete BEFORE DELETE ON artifact_locators
+                    WHEN EXISTS (SELECT 1 FROM artifact_context_pins WHERE artifact_id=OLD.id)
+                    BEGIN SELECT RAISE(ABORT, 'retained artifact locator cannot be deleted'); END;
+                CREATE TRIGGER IF NOT EXISTS pinned_execution_delete BEFORE DELETE ON executions
+                    WHEN EXISTS (SELECT 1 FROM artifact_context_pins WHERE execution_id=OLD.id)
+                    BEGIN SELECT RAISE(ABORT, 'retained artifact execution cannot be deleted'); END;
+                CREATE TRIGGER IF NOT EXISTS context_pin_delete BEFORE DELETE ON artifact_context_pins
+                    BEGIN SELECT RAISE(ABORT, 'context retention cannot be released'); END;
+                CREATE TRIGGER IF NOT EXISTS context_pin_update BEFORE UPDATE ON artifact_context_pins
+                    WHEN NEW.id != OLD.id OR NEW.artifact_id != OLD.artifact_id
+                        OR NEW.execution_id != OLD.execution_id OR NEW.pin_json != OLD.pin_json
+                        OR (OLD.state='committed' AND NEW.state!='committed')
+                    BEGIN SELECT RAISE(ABORT, 'context retention identity is immutable'); END;
                 CREATE TABLE IF NOT EXISTS cancellations (
                     owner TEXT NOT NULL, key TEXT NOT NULL, access_sha256 TEXT NOT NULL,
                     execution_id TEXT NOT NULL, acknowledgement TEXT NOT NULL,
@@ -76,6 +105,13 @@ class DurableSyntheticExecutionPort(ExperimentExecutionPort):
                     'authority': 'experimental', 'scientific_approval': 'not_independently_verified'})
                 connection.execute('INSERT INTO artifacts VALUES (?,?,?,?,?,?,?)',
                     (artifact_id, execution_id, access.owner_user_id, access.sha256, snapshot_id, digest, raw))
+                locator = ExecutionArtifactLocator(owner_user_id=access.owner_user_id,
+                    site_id=access.site_id, experiment_id=access.experiment_id,
+                    proposal_revision_id=access.proposal_revision_id, execution_id=execution_id,
+                    artifact_id=artifact_id, snapshot_id=snapshot_id, artifact_sha256=digest,
+                    access_sha256=access.sha256)
+                connection.execute('INSERT INTO artifact_locators VALUES (?,?)',
+                    (artifact_id, canonical_json(asdict(locator))))
             snapshot = ExecutionSnapshot.model_validate({'id': execution_id, 'state': state,
                 'state_revision': 1, 'source': 'synthetic-fixture', 'execution_performed': False,
                 'termination_verified': False, 'termination_proof_sha256': None,
@@ -147,6 +183,60 @@ class DurableSyntheticExecutionPort(ExperimentExecutionPort):
             if row is None:
                 raise ExperimentWorkspaceError('not_found', 404)
             return row['bytes']
+
+    def artifact_locator(self, owner_user_id, reference):
+        with self._connection() as connection:
+            row = connection.execute('SELECT locator_json FROM artifact_locators WHERE id=?',
+                (reference['id'],)).fetchone()
+            if row is None:
+                return None
+            locator = ExecutionArtifactLocator(**json.loads(row['locator_json']))
+            if locator.owner_user_id != owner_user_id:
+                return None
+            return locator
+
+    @staticmethod
+    def _pin_artifact(connection, pin):
+        reference = json.loads(pin.reference_json)
+        row = connection.execute('SELECT * FROM artifacts WHERE id=? AND owner=? AND execution_id=? AND access_sha256=?',
+            (reference['id'], pin.owner_user_id, pin.execution_id, pin.access_sha256)).fetchone()
+        locator_row = connection.execute('SELECT locator_json FROM artifact_locators WHERE id=?',
+            (reference['id'],)).fetchone()
+        if row is None or locator_row is None:
+            raise ExperimentWorkspaceError('not_found', 404)
+        locator = ExecutionArtifactLocator(**json.loads(locator_row['locator_json']))
+        if (reference != {'kind': 'artifact', 'id': row['id'], 'snapshot_id': row['snapshot_id']}
+                or row['sha256'] != pin.artifact_sha256 or hashlib.sha256(row['bytes']).hexdigest() != pin.artifact_sha256
+                or locator.owner_user_id != pin.owner_user_id or locator.site_id != pin.site_id
+                or locator.artifact_id != row['id'] or locator.execution_id != pin.execution_id
+                or locator.snapshot_id != row['snapshot_id'] or locator.artifact_sha256 != pin.artifact_sha256
+                or locator.access_sha256 != pin.access_sha256):
+            raise ExperimentWorkspaceError('integrity_error', 409)
+        return row
+
+    def retain_artifact(self, pin, *, committed, closing_authorize):
+        if not isinstance(pin, ContextArtifactPin) or type(committed) is not bool:
+            raise ExperimentWorkspaceError('integrity_error', 409)
+        with self._connection() as connection:
+            connection.execute('BEGIN IMMEDIATE')
+            row = self._pin_artifact(connection, pin)
+            saved = connection.execute('SELECT * FROM artifact_context_pins WHERE id=?', (pin.identity,)).fetchone()
+            payload = canonical_json(asdict(pin))
+            if saved is not None:
+                if saved['pin_json'] != payload or saved['artifact_id'] != row['id'] or saved['execution_id'] != pin.execution_id:
+                    raise ExperimentWorkspaceError('conflict', 409)
+                if committed and saved['state'] == 'prepared':
+                    connection.execute("UPDATE artifact_context_pins SET state='committed' WHERE id=?", (pin.identity,))
+            else:
+                connection.execute('INSERT INTO artifact_context_pins VALUES (?,?,?,?,?)',
+                    (pin.identity, row['id'], pin.execution_id, payload, 'committed' if committed else 'prepared'))
+            closing_authorize()  # Immediately before durable cross-store pin commit.
+
+    def verify_artifact_retention(self, pin):
+        with self._connection() as connection:
+            self._pin_artifact(connection, pin)
+            row = connection.execute('SELECT * FROM artifact_context_pins WHERE id=?', (pin.identity,)).fetchone()
+            return row is not None and row['state'] == 'committed' and row['pin_json'] == canonical_json(asdict(pin))
 
     def resolve_artifact(self, user, reference):
         with self.experiments._transaction() as session:

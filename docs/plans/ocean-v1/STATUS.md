@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-10-29 JST. **P00 and C01–C25 are Complete within their documented boundaries with source-bound hosted delivery; C26–C27 are Not started.**
+Updated: 2026-10-29 JST. **P00 and C01–C25 are Complete within their documented boundaries with source-bound hosted delivery; C26 is In progress; C27 is Not started.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -151,7 +151,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C23 — Isolated Python execution](components/C23-python-sandbox.md) | Complete | Both actual retained Linux cases and raw audit pass; f6f823b hosted green: 6481 backend, 315 PostgreSQL, 930 v1, 132 legacy | Owner suspension denies publication; physical proofs release capacity; resources stopped. Unsupported crash/reboot/queued cases retain capacity; scientific approval and production dispatch remain separate | [C23](handoffs/C23.md) |
 | [C24 — Isolated GCP site and worker configuration](components/C24-gcp-worker-configuration.md) | Complete | Independent offline schema/renderer/templates, isolation matrix and operator runbook | 160 scoped local cases; eeec2e1 all four hosted jobs pass; provider/live deployment gates remain closed | [C24](handoffs/C24.md) |
 | [C25 — Experimental Workspace interface](components/C25-experimental-workspace.md) | Complete | d882532 exact-source hosted delivery; local review/progress/results and historical-read acceptance | 6628 backend/623 skips/83.38%;316 actual PG;1051 v1/132 legacy;354 source pins; live gates explicit | [C25](handoffs/C25.md) |
-| [C26 — System acceptance and evaluation](components/C26-system-acceptance.md) | Not started | Ready for local deterministic preparation; live acceptance gated |26 prerequisites;2,604 entries/819 current paths;C25 hosted baseline reused;C26 integrated checks not run | [C26](handoffs/C26.md) |
+| [C26 — System acceptance and evaluation](components/C26-system-acceptance.md) | In progress | Local deterministic acceptance implementation selected; live acceptance gated |26 prerequisites;2,604 entries/819 current paths;C25 hosted baseline reused;C26 integrated checks not run | [C26](handoffs/C26.md) |
 | [C27 — Release preparation and rollback](components/C27-release-readiness.md) | Not started | None | Not run | Not created |
 
 ## Updating this ledger

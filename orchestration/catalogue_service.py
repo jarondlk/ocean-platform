@@ -16,7 +16,7 @@ from orchestration.frozen_catalogue import AdapterAccess, AdapterAccessDenied, F
 from orchestration.frozen_edna_catalogue import EDNAAccess, FrozenEDNACatalogueAdapter
 from orchestration.frozen_scientific_catalogue import FrozenScientificCatalogueAdapter, ScientificAccess
 from orchestration.frozen_sst_catalogue import FrozenSSTCatalogueAdapter, SSTAccess
-from retrieval.source_scope import FAMILIES
+from retrieval.source_scope import EvidenceScope, FAMILIES
 from schema.catalogue_service import REQUEST_MODELS
 from schema.context_catalogue import (
     CatalogueFilters, CatalogueListing, CatalogueNode, Identifier, ListingRequest,
@@ -400,13 +400,19 @@ class CatalogueService:
             base = self._bases.get(base_key) if base_key is not None else None
             if base is not None:
                 self._bases.move_to_end(base_key)
+            elif base_key is not None:
+                # A filtered view shares its base's node graph. Evict both
+                # together, before allocating the next full graph, so bounded
+                # base caching cannot retain an extra graph through _cache.
+                while len(self._bases) >= self.maximum_cached_views:
+                    self._evict_base()
         if base is None:
             base = self._materialize(request, resolved)
             if base_key is not None:
                 with self._lock:
                     self._bases[base_key] = base
                     while len(self._bases) > self.maximum_cached_views:
-                        self._bases.popitem(last=False)
+                        self._evict_base()
         nodes, paths = base.nodes, base.paths
         if request.parent_id is not None and request.parent_id not in nodes:
             raise _error("not_found")
@@ -433,16 +439,41 @@ class CatalogueService:
                     self._cache.popitem(last=False)
         return view
 
+    def _evict_base(self):
+        """Caller holds _lock; active requests retain their own valid graph."""
+        _, base = self._bases.popitem(last=False)
+        for key in [key for key, view in self._cache.items() if view.nodes is base.nodes]:
+            del self._cache[key]
+
     def _materialize(self, request, resolved):
         try:
+            retained_scope = EvidenceScope.model_validate(request.scope.model_dump(mode="json"))
             supplied = resolved.backend.view(request)
             if not isinstance(supplied, Mapping) or len(supplied) > MAX_NAVIGATION_OBJECTS:
                 raise ValueError("Bounded complete permitted node map required")
-            nodes = {}
+            nodes, metadata = {}, {}
             for identity, node in supplied.items():
                 node = CatalogueNode.model_validate(node.model_dump(mode="json") if hasattr(node, "model_dump") else node)
-                if node.id != identity or node.snapshot_id != request.snapshot_id or node.scope != request.scope or node.membership != "global":
+                if node.id != identity or node.snapshot_id != request.snapshot_id or node.scope != retained_scope or node.membership != "global":
                     raise ValueError("Catalogue view context mismatch")
+                # Every node has just passed full wire validation and exact scope
+                # equality. Keep the one private request scope instead of a full
+                # nested scope graph per node. Responses are serialized copies;
+                # neither the backend nor the caller receives this cached graph.
+                node.scope = retained_scope
+                # Repeated small scientific descriptors/lifecycle qualifiers are
+                # also private validated values. Sharing their equal graph keeps
+                # full inventories bounded without dropping any metadata. The
+                # pool itself is bounded even when every description differs.
+                for field in ("purpose", "availability", "lifecycle", "descriptor", "operations", "sections"):
+                    value = getattr(node, field)
+                    wire = self._json(value)
+                    key = (field, canonical_json(wire))
+                    retained = metadata.get(key)
+                    if retained is not None:
+                        setattr(node, field, retained)
+                    elif len(metadata) < 1024:
+                        metadata[key] = value
                 nodes[identity] = node
             for node in nodes.values():
                 node.related_ids = [key for key in node.related_ids if key in nodes]

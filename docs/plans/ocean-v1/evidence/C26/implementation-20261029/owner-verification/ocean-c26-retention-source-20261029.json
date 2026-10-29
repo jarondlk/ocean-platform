@@ -1,0 +1,119 @@
+{
+  "classification": "local synthetic software integration; native PostgreSQL application journal with explicit synthetic retained-output port; no physical or production execution",
+  "source_files": {
+    "orchestration/retained_artifacts.py": "03c2a36fb3b96195226fb8da27e2a2ce0db9bfa442ea30d2df0f6120de32fc1e",
+    "orchestration/experiment_artifacts.py": "216ce2207d8a2b9733020e39f49650a0861cfcbdfc916c528e9c2b687e5fbabc",
+    "orchestration/investigations.py": "6a2238fa6f3ef654cf5f71d43a4820cfd883f43f364b43bbfe271dc11f7b7aa2",
+    "orchestration/research_runs.py": "0d8e652684005489612eee5e56d53d5a80559c0a62ca34484aef157dc65d89e4",
+    "orchestration/research_evidence.py": "f513a861dc4284dce6af084be4a9bdf954228035d4d7bcd7037061d2e14c492a",
+    "orchestration/research_experiments.py": "ef7e1aa14e0a0f362a866e88cff694e9367613a50a5daf00f5746ac9884f31b6",
+    "orchestration/experiment_workspace.py": "48bc16715557da6580f251e13d56eee411d93a2ca685362b821acbc442eb2f24",
+    "tests/experiment_workspace_support.py": "bd96544e49e9a638cd64f60dd6d0b421b63143b9a5a76bc159ff5e36a137139d",
+    "tests/test_experimental_artifact_integration.py": "7c7e68f4b9adc4589d892b06e7d21114b54ecfe264193bb5ccd026e45b870556",
+    "tests/integration/test_experimental_artifact_postgres.py": "d3ee0e36e91cb2eec62151208a60f8e7be82d10d06e0c89f9f3bbcb478574b03"
+  },
+  "native_postgres": {
+    "database": "ocean_c23_acceptance_b2fa6cfd",
+    "data_directory": "/private/tmp/ocean-c23-postgres-20261027-d36c3d15f2d7/data",
+    "address": "127.0.0.1",
+    "port": 51358,
+    "version": "18.3 (Homebrew)",
+    "pre_test_schemas": 0,
+    "post_test_schemas": 0,
+    "pre_test_ephemeral_roles": 0,
+    "post_test_ephemeral_roles": 0,
+    "stopped_after_tests": true,
+    "pg_ctl_final_exit": 3,
+    "tcp_refused_after_stop": true,
+    "pidfile_absent_after_stop": true
+  },
+  "native_result": {
+    "passed": 1,
+    "seconds": 118.04,
+    "log": "/private/tmp/ocean-c26-retention-native-final-20261029.log",
+    "junit": "/private/tmp/ocean-c26-retention-native-final-20261029.xml"
+  },
+  "remaining_gates": [
+    "No production RetainedExecutionArtifactPort adapter is provided",
+    "Prepared or committed foreign context pins have no automatic release; uncertain application commits preserve retention",
+    "Actual containment evidence retains its original host and source qualification"
+  ],
+  "focused_result": {
+    "passed": 11,
+    "seconds": 237.5,
+    "log": "/private/tmp/ocean-c26-retention-final-20261029.log",
+    "junit": "/private/tmp/ocean-c26-retention-final-20261029.xml"
+  },
+  "final_assertion_result": {
+    "passed": 1,
+    "seconds": 57.86,
+    "log": "/private/tmp/ocean-c26-retention-reopen-final-20261029.log",
+    "junit": "/private/tmp/ocean-c26-retention-reopen-final-20261029.xml",
+    "qualification": "Current explicit ResearchEvidenceError assertion rerun after test-only import tightening; production bytes unchanged from full focused suite"
+  },
+  "predecessor_result": {
+    "passed": 176,
+    "seconds": 438.76,
+    "warnings": 1,
+    "warning": "Existing Starlette TestClient httpx deprecation",
+    "log": "/private/tmp/ocean-c26-retention-predecessor-20261029.log",
+    "junit": "/private/tmp/ocean-c26-retention-predecessor-20261029.xml",
+    "files": [
+      "tests/test_investigations.py",
+      "tests/test_research_runs.py",
+      "tests/test_research_evidence_store.py",
+      "tests/test_research_evidence_runtime.py",
+      "tests/test_research_evidence_api.py",
+      "tests/test_research_answers.py",
+      "tests/test_research_experiments.py",
+      "tests/test_experiment_workspace.py"
+    ]
+  },
+  "owned_source_unchanged_after_all_checks": true,
+  "artifacts": {
+    "ocean-c26-retention-final-20261029.log": {
+      "sha256": "860dcfb169e798eb2df53564d3e692292b65748f5951de88d95dfa00f7efbcc3",
+      "gzip": "/private/tmp/ocean-c26-retention-final-20261029.log.gz",
+      "gzip_sha256": "bd4d80b10d981166a6a304a9987f452daad7edf29f22ab2b42ff8495f28c0e36"
+    },
+    "ocean-c26-retention-final-20261029.xml": {
+      "sha256": "301a0091c241d98563008ef07748d6eff49a980899b5a23a306892644890d247",
+      "gzip": "/private/tmp/ocean-c26-retention-final-20261029.xml.gz",
+      "gzip_sha256": "e9f3f99f6f938fab7c9f574c418f5e1096f0dba9f2ea76c325b908f03ebaea59",
+      "actual_passed_cases": 11
+    },
+    "ocean-c26-retention-native-final-20261029.log": {
+      "sha256": "556630e83ee44b571be66cf366ed10868b3cd9f1592be953a6fa4a266cc8ea85",
+      "gzip": "/private/tmp/ocean-c26-retention-native-final-20261029.log.gz",
+      "gzip_sha256": "0769a57317cbef26d81242b617ab71929d6355e6ec1420c19a0ab496cf6372bb"
+    },
+    "ocean-c26-retention-native-final-20261029.xml": {
+      "sha256": "d3a02f5863bfcc7a87c0a277dbceb753e36bde761269ec43033c684774eae7b6",
+      "gzip": "/private/tmp/ocean-c26-retention-native-final-20261029.xml.gz",
+      "gzip_sha256": "127d839325b78cbeea7fd128c063ca5be91db63b8d05f7157cf3347144c34575",
+      "actual_passed_cases": 1
+    },
+    "ocean-c26-retention-reopen-final-20261029.log": {
+      "sha256": "eed925d37882693fa68d1e3a4fd0c0047a460a600cda04fefbdca96062b32487",
+      "gzip": "/private/tmp/ocean-c26-retention-reopen-final-20261029.log.gz",
+      "gzip_sha256": "c201c6a536db844f3fc4966177c6ca05bb031ba9c29e645f371089c24c91e4e9"
+    },
+    "ocean-c26-retention-reopen-final-20261029.xml": {
+      "sha256": "11282a7d6df10ef2d5707c93fbce2111efa6564a70ce0eb7a217b449226824e3",
+      "gzip": "/private/tmp/ocean-c26-retention-reopen-final-20261029.xml.gz",
+      "gzip_sha256": "2c5d3bb703db551afaa061726b525f34e15024e38f8b131e2704f91c17628483",
+      "actual_passed_cases": 1
+    },
+    "ocean-c26-retention-predecessor-20261029.log": {
+      "sha256": "ae0964aa081f0035f6ed34da2b82697abf6989bc67d3bc2e174eda155adc320f",
+      "gzip": "/private/tmp/ocean-c26-retention-predecessor-20261029.log.gz",
+      "gzip_sha256": "eece6601327940a11374ee191e501e6af2b6ec9cd6d3b4ae3dcb6c7c46215eeb"
+    },
+    "ocean-c26-retention-predecessor-20261029.xml": {
+      "sha256": "425721b9ce156fc12d27e9e17b2068376411b3ab9ac508b8db1b3b219a8c4912",
+      "gzip": "/private/tmp/ocean-c26-retention-predecessor-20261029.xml.gz",
+      "gzip_sha256": "bee48eba21993b1c740f2ca165c904854e0365b583be30b61afb7b915054fb73",
+      "actual_passed_cases": 176
+    }
+  }
+}

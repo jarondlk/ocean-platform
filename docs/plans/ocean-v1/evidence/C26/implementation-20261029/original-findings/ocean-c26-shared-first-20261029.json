@@ -1,0 +1,1204 @@
+{
+  "version": "c26-integrated-observations-v1",
+  "fixture": {
+    "classification": "synthetic-local-actual-services",
+    "site_id": "v1:c17-synthetic",
+    "snapshot_ids": [
+      "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+      "f6b0a6c4b56d402054e071be7f9d37c4d32db2ff02cd024179d9b1a39a1ace03"
+    ],
+    "input_manifest_sha256": "0e00d046659387c0f1063b5c4beeecb59446faba83bd6e9929b71c1b1b37aec5",
+    "live_calls_performed": false,
+    "source_revision": "sha256:0583126952e853d65fe27d0e05990d26b4dc83f3c721c5c8ecb5b85b9c85513f",
+    "source_files": {
+      "orchestration/catalogue_service.py": "50b3d587ca0cb0f754b3d0f0a742c3bf184e687e147b52f60a5f51bfc9939a48",
+      "orchestration/investigations.py": "dd9d733121d9f1587e3b59b31b67e60a75bc50976589886cc96705c94efa46de",
+      "orchestration/research_controller.py": "3b612ccec487ea771357c04b89c9bf90f51a78314242d61fec8b0e1f2abbc2d0",
+      "orchestration/research_runs.py": "de66c4c917686656fe9449a4d3e884a175ed6a94ec4a686f9953ba71474dc4d2",
+      "orchestration/research_evidence.py": "cd721ffec16372b4685725e3082c2d0745a1e5586f6fc9963e822b24adbb42fc",
+      "orchestration/research_answers.py": "99847661a24236f172107b7aa1c132bb74c09673691e0ce2e2ba51f5d4e988c6",
+      "orchestration/research_experiments.py": "466d45002963786d6613edfbb2b4dd45946831a4ae987e971975756e2fd67076",
+      "orchestration/experiment_workspace.py": "59f09b90a0abbd53aaef22c4aaa1be8b3aea8ac69a78ba1d5b00032d466afebc",
+      "tests/system_acceptance_support.py": "942e6bc5db2c9210ff5c827759caa39f0734d1689babce583ab412b82e35f3a2"
+    }
+  },
+  "checks": [
+    {
+      "id": "shared-context-inventory-answer",
+      "owner_components": [
+        "C14",
+        "C17",
+        "C19",
+        "C20",
+        "C21"
+      ],
+      "expected": {
+        "inventory_ids": [
+          "synthetic:ctd:campaign-a",
+          "synthetic:edna:project-a",
+          "synthetic:metagenome:collection-a",
+          "synthetic:sst:mur-final"
+        ],
+        "datasets": 4,
+        "model_used": false,
+        "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+      },
+      "observed": {
+        "inventory_ids": [
+          "synthetic:ctd:campaign-a",
+          "synthetic:edna:project-a",
+          "synthetic:metagenome:collection-a",
+          "synthetic:sst:mur-final"
+        ],
+        "datasets": 4,
+        "model_used": false,
+        "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+      },
+      "evidence": {
+        "run_id": "a4fe8fd3-0206-4a85-a5c5-9baad547a792",
+        "answer_id": "8d0f1d24-2a9f-51c7-a4b8-d7bc119b6d1c",
+        "receipt_id": "c21:receipt:d449233a1a31e0ed8ec6b9cfdc31e79d922171451a8574dd15b2efcd33e46823",
+        "sha256": "d449233a1a31e0ed8ec6b9cfdc31e79d922171451a8574dd15b2efcd33e46823"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "experimental-bytes-and-approval",
+      "owner_components": [
+        "C22",
+        "C25"
+      ],
+      "expected": {
+        "approval_status": "current",
+        "execution_performed": false,
+        "termination_verified": false,
+        "sha256": "8eb89c5872b56466491194725ad29868281214cf56516ec81c7e58383f50138c",
+        "display_int64": "9223372036854775807",
+        "scientific_approval": "not_independently_verified"
+      },
+      "observed": {
+        "approval_status": "current",
+        "execution_performed": false,
+        "termination_verified": false,
+        "sha256": "8eb89c5872b56466491194725ad29868281214cf56516ec81c7e58383f50138c",
+        "display_int64": "9223372036854775807",
+        "scientific_approval": "not_independently_verified"
+      },
+      "evidence": {
+        "experiment_id": "a39eb2c3-e071-4714-a019-76fe273819da",
+        "artifact_id": "synthetic:aa28747c-b688-4cc1-b6ce-83572293ea39:8eb89c5872b56466",
+        "sha256": "8eb89c5872b56466491194725ad29868281214cf56516ec81c7e58383f50138c"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "research-and-experiment-attachment-composition",
+      "owner_components": [
+        "C17",
+        "C21",
+        "C25"
+      ],
+      "expected": {
+        "attachment": {
+          "kind": "artifact",
+          "id": "synthetic:aa28747c-b688-4cc1-b6ce-83572293ea39:8eb89c5872b56466",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+        },
+        "available": true
+      },
+      "observed": {
+        "http_status": 503,
+        "response": {
+          "error": {
+            "code": "investigations_unavailable",
+            "message": "Investigations are unavailable"
+          }
+        },
+        "available": false
+      },
+      "evidence": {
+        "artifact_id": "synthetic:aa28747c-b688-4cc1-b6ce-83572293ea39:8eb89c5872b56466",
+        "resolver_validates": true,
+        "protection": "ResearchEvidenceService",
+        "public_path": "/research/investigations/context/change",
+        "public_request": {
+          "investigation_id": "58257005-eb2e-4759-ad31-9056ad20e744",
+          "expected_revision_id": "0a7602e2-4b88-4259-82ee-465df0aa21fb",
+          "idempotency_key": "86591896-4c2f-408e-99eb-c263d2819a47",
+          "change": {
+            "op": "attach",
+            "reference": {
+              "kind": "artifact",
+              "id": "synthetic:aa28747c-b688-4cc1-b6ce-83572293ea39:8eb89c5872b56466",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            }
+          }
+        },
+        "http_status": 503,
+        "public_response": {
+          "error": {
+            "code": "investigations_unavailable",
+            "message": "Investigations are unavailable"
+          }
+        },
+        "source": {
+          "path": "orchestration/research_evidence.py",
+          "method": "ResearchEvidenceService.prepare_context",
+          "line": 475
+        }
+      },
+      "status": "failed"
+    }
+  ],
+  "browser_seed": {
+    "binding": {
+      "investigation_id": "58257005-eb2e-4759-ad31-9056ad20e744",
+      "conversation_id": "82d3826c-138b-41e0-be85-70c8d2fb529e",
+      "context_revision_id": "0a7602e2-4b88-4259-82ee-465df0aa21fb",
+      "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+      "context_payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+    },
+    "context": {
+      "version": "investigations-v1",
+      "operation": {
+        "id": "f83ef1ce-3b1f-4418-92db-900cc6b70555",
+        "investigation_id": "58257005-eb2e-4759-ad31-9056ad20e744",
+        "kind": "create",
+        "state": "committed",
+        "error_code": null,
+        "candidate_revision_id": "0a7602e2-4b88-4259-82ee-465df0aa21fb"
+      },
+      "investigation": {
+        "id": "58257005-eb2e-4759-ad31-9056ad20e744",
+        "name": "C26 integrated synthetic investigation",
+        "metadata_version": 2,
+        "status": "active",
+        "head_revision_id": "0a7602e2-4b88-4259-82ee-465df0aa21fb",
+        "predecessor_investigation_id": null,
+        "predecessor_revision_id": null,
+        "legal_hold": false,
+        "created_at": "2026-10-29T06:29:50",
+        "updated_at": "2026-10-29T06:29:50"
+      },
+      "context": {
+        "id": "0a7602e2-4b88-4259-82ee-465df0aa21fb",
+        "investigation_id": "58257005-eb2e-4759-ad31-9056ad20e744",
+        "sequence": 1,
+        "predecessor_revision_id": null,
+        "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+        "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+        "scope": {
+          "sources": {
+            "ctd": {
+              "enabled": true,
+              "filters": {}
+            },
+            "edna_metabarcoding": {
+              "enabled": true,
+              "filters": {}
+            },
+            "metagenome": {
+              "enabled": true,
+              "filters": {}
+            },
+            "remote_sensing": {
+              "enabled": true,
+              "filters": {}
+            }
+          },
+          "version": 1
+        },
+        "attachments": [],
+        "pins": [],
+        "resolution": [],
+        "refresh_unresolved": [],
+        "created_by_user_id": "6f5ead14-5858-530d-9615-e6cd99d33100",
+        "created_at": "2026-10-29T06:29:50",
+        "artifact_capability": "configured"
+      },
+      "conversations": [
+        {
+          "id": "82d3826c-138b-41e0-be85-70c8d2fb529e",
+          "investigation_id": "58257005-eb2e-4759-ad31-9056ad20e744",
+          "name": "C26 shared research and experiment",
+          "metadata_version": 1,
+          "created_at": "2026-10-29T06:29:51",
+          "updated_at": "2026-10-29T06:29:51",
+          "history_status": "unavailable_until_c20_c21"
+        },
+        {
+          "id": "297fdbc5-dd87-4c41-a2bb-802938e574b0",
+          "investigation_id": "58257005-eb2e-4759-ad31-9056ad20e744",
+          "name": "C26 independent conversation",
+          "metadata_version": 1,
+          "created_at": "2026-10-29T06:29:51",
+          "updated_at": "2026-10-29T06:29:51",
+          "history_status": "unavailable_until_c20_c21"
+        }
+      ]
+    },
+    "run": {
+      "id": "a4fe8fd3-0206-4a85-a5c5-9baad547a792",
+      "context": {
+        "binding": {
+          "investigation_id": "58257005-eb2e-4759-ad31-9056ad20e744",
+          "conversation_id": "82d3826c-138b-41e0-be85-70c8d2fb529e",
+          "revision_id": "0a7602e2-4b88-4259-82ee-465df0aa21fb",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+        },
+        "scope": {
+          "sources": {
+            "ctd": {
+              "enabled": true,
+              "filters": {}
+            },
+            "edna_metabarcoding": {
+              "enabled": true,
+              "filters": {}
+            },
+            "metagenome": {
+              "enabled": true,
+              "filters": {}
+            },
+            "remote_sensing": {
+              "enabled": true,
+              "filters": {}
+            }
+          },
+          "version": 1
+        },
+        "attachments": [],
+        "pins": []
+      },
+      "question": "Count all datasets",
+      "status": "completed",
+      "active_elapsed_ms": 685,
+      "event_cursor": 0,
+      "latest_event_cursor": 4,
+      "activity": [],
+      "continuation_of": null,
+      "clarification": null,
+      "clarification_id": null,
+      "result": null,
+      "error": null,
+      "synthetic": false
+    },
+    "answer_job": {
+      "id": "38a71fbd-b1d6-469c-8458-49ebb4fd38bd",
+      "run_id": "a4fe8fd3-0206-4a85-a5c5-9baad547a792",
+      "input_version": 1,
+      "binding": {
+        "investigation_id": "58257005-eb2e-4759-ad31-9056ad20e744",
+        "conversation_id": "82d3826c-138b-41e0-be85-70c8d2fb529e",
+        "revision_id": "0a7602e2-4b88-4259-82ee-465df0aa21fb",
+        "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+        "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+      },
+      "locale": "en",
+      "status": "completed",
+      "active_elapsed_ms": 686,
+      "budget": {
+        "active_elapsed_seconds": 0.686,
+        "tool_actions": 1,
+        "model_calls": 0,
+        "malformed_repairs": 0,
+        "cancellation_requested": false
+      },
+      "event_cursor": 0,
+      "latest_event_cursor": 3,
+      "activity": [],
+      "answer": {
+        "id": "8d0f1d24-2a9f-51c7-a4b8-d7bc119b6d1c",
+        "locale": "en",
+        "completion": "complete",
+        "blocks": [
+          {
+            "id": "c21:block:1",
+            "kind": "fact",
+            "text": "Descriptive result: datasets: 4 (Distinct permitted canonical input datasets across complete matching descendants and cross-root links).",
+            "receipt_ids": [
+              "c21:receipt:d449233a1a31e0ed8ec6b9cfdc31e79d922171451a8574dd15b2efcd33e46823"
+            ],
+            "fact_id": "requested:1",
+            "data": {
+              "value": {
+                "basis": "complete_scope",
+                "denominator": "Distinct permitted canonical input datasets across complete matching descendants and cross-root links",
+                "entity": "datasets",
+                "reason": null,
+                "state": "known",
+                "value": 4
+              },
+              "authorities": [
+                "descriptive"
+              ],
+              "operation_outputs": []
+            }
+          },
+          {
+            "id": "c21:block:2",
+            "kind": "limitation",
+            "text": "Structured evidence selection is traceability, not independent scientific verification.\nThe CTD source family is an immutable index storage carrier only; it does not assert CTD measurements, a raw dataset, or scientific source eligibility.\nDescriptive operations do not execute experiments or grant scientific approval; current access applies to every frozen input\n{\"columns.0.key\":\"entity\"}\n{\"columns.0.title.en\":\"entity\"}\n{\"columns.0.title.ja\":\"entity\"}\n{\"columns.0.unit\":null}\n{\"columns.1.key\":\"count\"}\n{\"columns.1.title.en\":\"count\"}\n{\"columns.1.title.ja\":\"count\"}\n{\"columns.1.unit\":null}\n{\"columns.2.key\":\"denominator\"}\n{\"columns.2.title.en\":\"denominator\"}\n{\"columns.2.title.ja\":\"denominator\"}\n{\"columns.2.unit\":null}\n{\"scope_compatibility\":null}",
+            "receipt_ids": [],
+            "fact_id": null,
+            "data": null
+          }
+        ],
+        "receipt_ids": [
+          "c21:receipt:d449233a1a31e0ed8ec6b9cfdc31e79d922171451a8574dd15b2efcd33e46823"
+        ],
+        "qualifications": [
+          "Structured evidence selection is traceability, not independent scientific verification.",
+          "The CTD source family is an immutable index storage carrier only; it does not assert CTD measurements, a raw dataset, or scientific source eligibility.",
+          "Descriptive operations do not execute experiments or grant scientific approval; current access applies to every frozen input",
+          "{\"columns.0.key\":\"entity\"}",
+          "{\"columns.0.title.en\":\"entity\"}",
+          "{\"columns.0.title.ja\":\"entity\"}",
+          "{\"columns.0.unit\":null}",
+          "{\"columns.1.key\":\"count\"}",
+          "{\"columns.1.title.en\":\"count\"}",
+          "{\"columns.1.title.ja\":\"count\"}",
+          "{\"columns.1.unit\":null}",
+          "{\"columns.2.key\":\"denominator\"}",
+          "{\"columns.2.title.en\":\"denominator\"}",
+          "{\"columns.2.title.ja\":\"denominator\"}",
+          "{\"columns.2.unit\":null}",
+          "{\"scope_compatibility\":null}"
+        ],
+        "pack_sha256": "86584fa065fc4667b95bdb9b001960252e865879a49752a7db71ef1513c36beb",
+        "model_used": false,
+        "scientific_verification": "not_independently_verified"
+      },
+      "error": null,
+      "synthetic": false
+    },
+    "receipts": [
+      {
+        "id": "c21:receipt:d449233a1a31e0ed8ec6b9cfdc31e79d922171451a8574dd15b2efcd33e46823",
+        "sha256": "d449233a1a31e0ed8ec6b9cfdc31e79d922171451a8574dd15b2efcd33e46823",
+        "run_id": "a4fe8fd3-0206-4a85-a5c5-9baad547a792",
+        "input_version": 1,
+        "binding": {
+          "investigation_id": "58257005-eb2e-4759-ad31-9056ad20e744",
+          "conversation_id": "82d3826c-138b-41e0-be85-70c8d2fb529e",
+          "revision_id": "0a7602e2-4b88-4259-82ee-465df0aa21fb",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+        },
+        "observation_id": "c19:observation:1:9ceec7936825c1b7",
+        "kind": "scientific",
+        "authority": "descriptive",
+        "operation_id": "c13.inventory",
+        "operation_version": "c13-v1",
+        "parameters": {
+          "schema_version": "context-catalogue-v1",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "scope": {
+            "version": 1,
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {}
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {}
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {}
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {}
+              }
+            }
+          },
+          "operation_id": "c13.inventory",
+          "operation_version": "c13-v1",
+          "input_ids": [
+            "root:data"
+          ],
+          "parameters": {
+            "limit": 1
+          }
+        },
+        "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "scope": {
+          "version": 1,
+          "sources": {
+            "ctd": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "bay": null,
+                "station": null,
+                "sample_id": null
+              }
+            },
+            "metagenome": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "bay": null,
+                "station": null,
+                "sample_id": null
+              }
+            },
+            "remote_sensing": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "lat_min": null,
+                "lat_max": null,
+                "lon_min": null,
+                "lon_max": null,
+                "dataset_id": null
+              }
+            },
+            "edna_metabarcoding": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "lat_min": null,
+                "lat_max": null,
+                "lon_min": null,
+                "lon_max": null,
+                "sample_id": null,
+                "provider": null,
+                "provider_project_id": null,
+                "provider_run_id": null,
+                "assignment_method": null,
+                "taxon": null,
+                "sample_kind": null,
+                "is_control": null
+              },
+              "analysis_id": null
+            }
+          }
+        },
+        "input_count": 5,
+        "input_sha256": "734687488d09edd7308b1b0bceee6553321932e993534b32d4a9e4329fb89f0c",
+        "payload_sha256": "9ceec7936825c1b76255c5e9446f2cecd6e39f8dbe9d0faa3cfe88666ba9430d",
+        "result_content_sha256": "6cc56cb9921bafbcc636217524b751e39d5886c1974de657df9d0085e3f10a8d",
+        "availability": "available",
+        "source_completeness": "complete",
+        "query_completion": "complete",
+        "counts": [
+          {
+            "state": "known",
+            "entity": "datasets",
+            "denominator": "Distinct permitted canonical input datasets across complete matching descendants and cross-root links",
+            "value": 4,
+            "reason": null,
+            "basis": "complete_scope"
+          }
+        ],
+        "total_rows": {
+          "state": "known",
+          "value": 1,
+          "reason": null
+        },
+        "returned_count": 1,
+        "offset": 0,
+        "next_offset": null,
+        "preview_rows": [
+          {
+            "count": 4,
+            "denominator": "Distinct permitted canonical input datasets across complete matching descendants and cross-root links",
+            "entity": "datasets"
+          }
+        ],
+        "preview_truncated": false,
+        "columns": [
+          {
+            "key": "entity",
+            "title": {
+              "en": "entity",
+              "ja": "entity"
+            },
+            "unit": null
+          },
+          {
+            "key": "count",
+            "title": {
+              "en": "count",
+              "ja": "count"
+            },
+            "unit": null
+          },
+          {
+            "key": "denominator",
+            "title": {
+              "en": "denominator",
+              "ja": "denominator"
+            },
+            "unit": null
+          }
+        ],
+        "qualifications": [
+          "The CTD source family is an immutable index storage carrier only; it does not assert CTD measurements, a raw dataset, or scientific source eligibility.",
+          "Descriptive operations do not execute experiments or grant scientific approval; current access applies to every frozen input",
+          "{\"columns.0.key\":\"entity\"}",
+          "{\"columns.0.title.en\":\"entity\"}",
+          "{\"columns.0.title.ja\":\"entity\"}",
+          "{\"columns.0.unit\":null}",
+          "{\"columns.1.key\":\"count\"}",
+          "{\"columns.1.title.en\":\"count\"}",
+          "{\"columns.1.title.ja\":\"count\"}",
+          "{\"columns.1.unit\":null}",
+          "{\"columns.2.key\":\"denominator\"}",
+          "{\"columns.2.title.en\":\"denominator\"}",
+          "{\"columns.2.title.ja\":\"denominator\"}",
+          "{\"columns.2.unit\":null}",
+          "{\"scope_compatibility\":null}"
+        ],
+        "origin_receipt_ids": [],
+        "attachment_reference": {
+          "kind": "artifact",
+          "id": "c21:receipt:d449233a1a31e0ed8ec6b9cfdc31e79d922171451a8574dd15b2efcd33e46823",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+        }
+      }
+    ],
+    "experiment": {
+      "id": "a39eb2c3-e071-4714-a019-76fe273819da",
+      "binding": {
+        "investigation_id": "58257005-eb2e-4759-ad31-9056ad20e744",
+        "conversation_id": "82d3826c-138b-41e0-be85-70c8d2fb529e",
+        "context_revision_id": "0a7602e2-4b88-4259-82ee-465df0aa21fb",
+        "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+        "context_payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+      },
+      "version": 1,
+      "proposal_revision_id": "7af7335d-7653-469c-a308-9a93c5234578",
+      "proposal": {
+        "question": "Inspect the same frozen synthetic CTD cohort",
+        "cohort": {
+          "version": "c22-cohort-v1",
+          "selections": [
+            {
+              "kind": "dataset",
+              "target_id": "synthetic:ctd:campaign-a",
+              "table": "casts",
+              "columns": [
+                "cast_id"
+              ]
+            }
+          ],
+          "pairing": {
+            "mode": "independent",
+            "relationship_ids": []
+          },
+          "exclusions": []
+        },
+        "method": "Retained synthetic identity review only",
+        "assumptions": [
+          "Synthetic source; no independent scientific approval"
+        ],
+        "python_code": "# Retained review only; this fixture never executes Python.\nprint(\"C26\")\n",
+        "expected_outputs": [
+          {
+            "name": "summary.json",
+            "kind": "table",
+            "description": "Synthetic result display"
+          }
+        ],
+        "environment_id": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+        "limitations": [
+          "No live execution or scientific publication"
+        ],
+        "seeds": {
+          "numpy": 7
+        },
+        "resources": {
+          "cpus": 2,
+          "memory_bytes": 4294967296,
+          "wall_seconds": 600,
+          "max_input_bytes": 268435456,
+          "max_output_bytes": 52428800
+        }
+      },
+      "hashes": {
+        "proposal_sha256": "e4e277a4f9ee6e539d4090a3aaf60c5c05939065aba41f519ac8c40e630a014f",
+        "code_sha256": "067ae3dd6358f130fa5aefd89e7370778d5b2ac0b658b9779ac4fec68688bd11",
+        "input_manifest_sha256": "7c0628759a3a0a3e854e2e95ee7a0ad6c9000338cca6cdedf006941366871b42",
+        "environment_sha256": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+        "resources_sha256": "af6d9b83267e87da95dd7a3406268d3821f0060f46c7771c7e99580fa77559a7"
+      },
+      "manifest": {
+        "actor_binding": "d8ccd5c856d08de36c16bd101605711d17180bb0c0862d0a81f6329dbdf22466",
+        "attachment_use": "supplementary_only; no implicit scientific inputs",
+        "attachments": [],
+        "authority": "experimental",
+        "binding": {
+          "conversation_id": "82d3826c-138b-41e0-be85-70c8d2fb529e",
+          "investigation_id": "58257005-eb2e-4759-ad31-9056ad20e744",
+          "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+          "revision_id": "0a7602e2-4b88-4259-82ee-465df0aa21fb",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+        },
+        "catalogue_policy_revision": "c14:1c38231ee7e26818f422b7a5fbce128fb6f62dd5bebc79f9da7c7e2fe652a410",
+        "cohort": {
+          "exclusions": [],
+          "pairing": {
+            "mode": "independent",
+            "relationship_ids": []
+          },
+          "selections": [
+            {
+              "columns": [
+                "cast_id"
+              ],
+              "kind": "dataset",
+              "table": "casts",
+              "target_id": "synthetic:ctd:campaign-a"
+            }
+          ],
+          "version": "c22-cohort-v1"
+        },
+        "execution_performed": false,
+        "files": [
+          {
+            "kind": "scientific_sidecar",
+            "name": "exclusions.json",
+            "sha256": "6307153f4a9362059967ef62e669e8d06e95b5a91144c135b2408e92cbd38056",
+            "size_bytes": 55
+          },
+          {
+            "kind": "scientific_sidecar",
+            "name": "pairing.json",
+            "sha256": "fdb152ab5a7f50998d53df5b9bd96583b089543fa424ba1cc387f17261373875",
+            "size_bytes": 115
+          },
+          {
+            "kind": "machine_table",
+            "name": "table-01.json",
+            "sha256": "38ffeef98e5d9daa4bacf2dc7b27525aa5ae203a48c6cc1938f849d621c41086",
+            "size_bytes": 611
+          }
+        ],
+        "independent_scientific_approval": false,
+        "max_input_bytes": 268435456,
+        "pin_limitations": [],
+        "pin_witnesses": [],
+        "pins": [],
+        "proposal_sha256": "e4e277a4f9ee6e539d4090a3aaf60c5c05939065aba41f519ac8c40e630a014f",
+        "question": "Inspect the same frozen synthetic CTD cohort",
+        "question_interpretation": "explicit_typed_cohort; published_tables_require_C01_exact_question",
+        "scope": {
+          "sources": {
+            "ctd": {
+              "enabled": true,
+              "filters": {}
+            },
+            "edna_metabarcoding": {
+              "enabled": true,
+              "filters": {}
+            },
+            "metagenome": {
+              "enabled": true,
+              "filters": {}
+            },
+            "remote_sensing": {
+              "enabled": true,
+              "filters": {}
+            }
+          },
+          "version": 1
+        },
+        "snapshot_ids": [
+          "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0"
+        ],
+        "source_sha256": "6a5068cff25c533cc62009abea4ef4e816f6d420599342be7dbb150d1404dfea",
+        "sources": {
+          "datasets": [
+            {
+              "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+              "dataset_id": "synthetic:ctd:campaign-a",
+              "object_provenance": [
+                {
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "object_id": "synthetic:ctd:campaign-a:metadata",
+                  "operation_id": "c10:ctd:dataset_metadata",
+                  "operation_version": "c10-v1",
+                  "provenance": {
+                    "content_sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                    "origin": null,
+                    "references": [
+                      "Synthetic local acceptance only; not scientific publication"
+                    ],
+                    "source_generation": "synthetic-generation-1"
+                  },
+                  "role": "dataset_metadata",
+                  "schema_version": "catalogue-dataset-v1",
+                  "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                  "size_bytes": 2650,
+                  "source_family": "ctd",
+                  "source_id": "synthetic-ctd"
+                },
+                {
+                  "dataset_id": "synthetic:ctd:campaign-a",
+                  "object_id": "synthetic:ctd:campaign-a:table:casts",
+                  "operation_id": "c10:ctd:casts",
+                  "operation_version": "c10-v1",
+                  "provenance": {
+                    "content_sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                    "origin": null,
+                    "references": [
+                      "Synthetic local acceptance only; not scientific publication"
+                    ],
+                    "source_generation": "synthetic-generation-1"
+                  },
+                  "role": "casts",
+                  "schema_version": "catalogue-parquet-v1",
+                  "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                  "size_bytes": 1471,
+                  "source_family": "ctd",
+                  "source_id": "synthetic-ctd"
+                }
+              ],
+              "objects": [
+                {
+                  "object_id": "synthetic:ctd:campaign-a:metadata",
+                  "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                  "size_bytes": 2650
+                },
+                {
+                  "object_id": "synthetic:ctd:campaign-a:table:casts",
+                  "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                  "size_bytes": 1471
+                }
+              ],
+              "publication": {
+                "child_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+                "dataset_id": "synthetic:ctd:campaign-a",
+                "decision_reference": "C22 explicitly synthetic local publication-policy fixture; no scientific approval",
+                "eligible": true,
+                "independent_scientific_approval": false,
+                "objects": [
+                  {
+                    "object_id": "synthetic:ctd:campaign-a:metadata",
+                    "sha256": "e53a380924f170ba907e5ca063965fdd20c4784e107ee9aaefe3ea7db56d15e1",
+                    "size_bytes": 2650
+                  },
+                  {
+                    "object_id": "synthetic:ctd:campaign-a:table:casts",
+                    "sha256": "55873477196538405fca6d9b78eb58e0afa2b04bb557fafc978d8ab40844b94f",
+                    "size_bytes": 1471
+                  }
+                ],
+                "policy_id": "c22:synthetic:publication",
+                "policy_revision": "synthetic-policy-1",
+                "publication_generation": "synthetic-generation-1",
+                "source_id": "synthetic-ctd",
+                "test_only": true
+              },
+              "source_capture": {
+                "capture_method": "synthetic-c10-frozen-parquet-v1",
+                "classification_generation": "no-scientific-approval-v1",
+                "operation_generation": "c10-v1",
+                "publication_generation": "synthetic-generation-1",
+                "qualifiers": [
+                  "Synthetic local acceptance only; not scientific publication"
+                ],
+                "relationship_generation": "no-unified-samples-v1",
+                "source_family": "ctd",
+                "source_generation": "synthetic-generation-1",
+                "source_id": "synthetic-ctd"
+              },
+              "source_family": "ctd",
+              "source_id": "synthetic-ctd"
+            }
+          ],
+          "index_objects": [
+            {
+              "object_id": "scientific:registry",
+              "sha256": "5b7568cf9fb1e8aac8a0d29f6abac23831af30ec4c845b865067d3ec5072848a",
+              "size_bytes": 13782
+            }
+          ],
+          "index_snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+        },
+        "tables": [
+          {
+            "column_schema": [
+              {
+                "arrow_type": "string",
+                "name": "cast_id",
+                "nullable": false
+              },
+              {
+                "arrow_type": "string",
+                "name": "sample_id",
+                "nullable": false
+              },
+              {
+                "arrow_type": "string",
+                "name": "collection_date",
+                "nullable": true
+              },
+              {
+                "arrow_type": "string",
+                "name": "bay",
+                "nullable": true
+              },
+              {
+                "arrow_type": "string",
+                "name": "station",
+                "nullable": true
+              }
+            ],
+            "effective_columns": [
+              "cast_id",
+              "sample_id",
+              "collection_date",
+              "bay",
+              "station"
+            ],
+            "entity": "casts",
+            "file": "table-01.json",
+            "kind": "dataset",
+            "machine_encoding": "c22-lossless-machine-table-v1",
+            "requested_columns": [
+              "cast_id"
+            ],
+            "restrictions": {},
+            "row_count": 4,
+            "scientific_metadata": {
+              "collection_date_precision": "day",
+              "collection_id": "synthetic:ctd:campaign-a:collection",
+              "dataset_id": "synthetic:ctd:campaign-a",
+              "depth_convention": "positive_down",
+              "descriptor": {
+                "depth_unit": "m",
+                "family": "ctd",
+                "measurement": "temperature",
+                "observation_entity": "cast",
+                "sampling_contract": "Observed campaign casts only; no expected sampling schedule",
+                "unit": "degC"
+              },
+              "entity": "casts",
+              "family": "ctd",
+              "methods": [
+                "Distinct source-owned casts and depth observations; no inferred expected casts"
+              ],
+              "purpose": {
+                "en": "Frozen cast and depth acceptance",
+                "ja": "観測と深度の検証"
+              },
+              "qualification": "Synthetic local acceptance only; not scientific publication",
+              "schema_version": "catalogue-dataset-v1",
+              "source_id": "synthetic-ctd",
+              "table": {
+                "abundance_denominator": null,
+                "availability": {
+                  "reason": null,
+                  "status": "available"
+                },
+                "columns": [
+                  {
+                    "description": "Synthetic source-owned cast_id",
+                    "dtype": "string",
+                    "name": "cast_id",
+                    "nullable": false,
+                    "unit": null
+                  },
+                  {
+                    "description": "Synthetic source-owned sample_id",
+                    "dtype": "string",
+                    "name": "sample_id",
+                    "nullable": false,
+                    "unit": null
+                  },
+                  {
+                    "description": "Synthetic source-owned collection_date",
+                    "dtype": "string",
+                    "name": "collection_date",
+                    "nullable": true,
+                    "unit": null
+                  },
+                  {
+                    "description": "Synthetic source-owned bay",
+                    "dtype": "string",
+                    "name": "bay",
+                    "nullable": true,
+                    "unit": null
+                  },
+                  {
+                    "description": "Synthetic source-owned station",
+                    "dtype": "string",
+                    "name": "station",
+                    "nullable": true,
+                    "unit": null
+                  }
+                ],
+                "completeness": "complete",
+                "denominator": "All retained matching casts records in this source dataset",
+                "entity": "casts",
+                "method": null,
+                "name": "casts",
+                "object_id": "synthetic:ctd:campaign-a:table:casts",
+                "row_count": 4,
+                "taxonomic_rank": null
+              },
+              "title": {
+                "en": "Synthetic CTD campaign",
+                "ja": "合成CTD観測"
+              }
+            },
+            "scope": {
+              "sources": {
+                "ctd": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "edna_metabarcoding": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "metagenome": {
+                  "enabled": true,
+                  "filters": {}
+                },
+                "remote_sensing": {
+                  "enabled": true,
+                  "filters": {}
+                }
+              },
+              "version": 1
+            },
+            "source_object_id": "synthetic:ctd:campaign-a:table:casts",
+            "source_snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+            "table": "casts",
+            "target_id": "synthetic:ctd:campaign-a"
+          }
+        ],
+        "version": "c22-frozen-experiment-export-v1"
+      },
+      "environment": {
+        "kind": "c22-fake",
+        "test_only": true,
+        "python_version": "not-executed",
+        "image_digest": null,
+        "lockfile_sha256": null,
+        "packages": {},
+        "description": "Explicit C22 synthetic acceptance adapter; no Python runtime"
+      },
+      "approval": {
+        "status": "current",
+        "proposal_revision_id": "7af7335d-7653-469c-a308-9a93c5234578",
+        "approved_at": "2026-10-29T06:29:55"
+      },
+      "dispatch": {
+        "eligible": true,
+        "reason": null,
+        "reservation_id": null,
+        "status": "ready"
+      },
+      "event_cursor": 0,
+      "latest_event_cursor": 2,
+      "authority": "experimental",
+      "scientific_approval": "not_independently_verified",
+      "execution_performed": false
+    },
+    "execution_request": {
+      "investigation_id": "58257005-eb2e-4759-ad31-9056ad20e744",
+      "conversation_id": "82d3826c-138b-41e0-be85-70c8d2fb529e",
+      "context_revision_id": "0a7602e2-4b88-4259-82ee-465df0aa21fb",
+      "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+      "context_payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3",
+      "experiment_id": "a39eb2c3-e071-4714-a019-76fe273819da",
+      "expected_version": 1,
+      "expected_proposal_revision_id": "7af7335d-7653-469c-a308-9a93c5234578",
+      "expected_hashes": {
+        "proposal_sha256": "e4e277a4f9ee6e539d4090a3aaf60c5c05939065aba41f519ac8c40e630a014f",
+        "code_sha256": "067ae3dd6358f130fa5aefd89e7370778d5b2ac0b658b9779ac4fec68688bd11",
+        "input_manifest_sha256": "7c0628759a3a0a3e854e2e95ee7a0ad6c9000338cca6cdedf006941366871b42",
+        "environment_sha256": "b907f589b80f584caf5a639436a4b876e1fdac35adbb825bf93194ba7ebaf6ef",
+        "resources_sha256": "af6d9b83267e87da95dd7a3406268d3821f0060f46c7771c7e99580fa77559a7"
+      }
+    },
+    "execution": {
+      "id": "aa28747c-b688-4cc1-b6ce-83572293ea39",
+      "state": "completed",
+      "state_revision": 1,
+      "source": "synthetic-fixture",
+      "execution_performed": false,
+      "termination_verified": false,
+      "termination_proof_sha256": null,
+      "cancel_requested": false,
+      "event_cursor": 0,
+      "latest_event_cursor": 1,
+      "outputs_manifest_sha256": "61635766f30947b1603b5f96a704d93cf480c85f004d00623d8456637d9632bf",
+      "artifacts": [
+        {
+          "id": "synthetic:aa28747c-b688-4cc1-b6ce-83572293ea39:8eb89c5872b56466",
+          "name": "summary.json",
+          "kind": "table",
+          "media_type": "application/json",
+          "sha256": "8eb89c5872b56466491194725ad29868281214cf56516ec81c7e58383f50138c",
+          "size_bytes": 67,
+          "attachment_reference": {
+            "kind": "artifact",
+            "id": "synthetic:aa28747c-b688-4cc1-b6ce-83572293ea39:8eb89c5872b56466",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+          },
+          "authority": "experimental",
+          "scientific_approval": "not_independently_verified"
+        }
+      ],
+      "authority": "experimental",
+      "scientific_approval": "not_independently_verified"
+    }
+  },
+  "comparison_observations": [
+    {
+      "version": "system-controller-observation-v1",
+      "controller": "v1",
+      "input": {
+        "question_id": "count-all-four-frozen-datasets",
+        "question": "Count all datasets",
+        "permissions": [
+          "chat:use",
+          "classification:decide",
+          "classification:read",
+          "data:export",
+          "data:read",
+          "evaluation:read",
+          "evaluation:run",
+          "evidence:search",
+          "feedback:write",
+          "overview:read",
+          "profile:read",
+          "provenance:read"
+        ],
+        "scope": {
+          "version": 1,
+          "sources": {
+            "ctd": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "bay": null,
+                "station": null,
+                "sample_id": null
+              }
+            },
+            "metagenome": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "bay": null,
+                "station": null,
+                "sample_id": null
+              }
+            },
+            "remote_sensing": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "lat_min": null,
+                "lat_max": null,
+                "lon_min": null,
+                "lon_max": null,
+                "dataset_id": null
+              }
+            },
+            "edna_metabarcoding": {
+              "enabled": true,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "lat_min": null,
+                "lat_max": null,
+                "lon_min": null,
+                "lon_max": null,
+                "sample_id": null,
+                "provider": null,
+                "provider_project_id": null,
+                "provider_run_id": null,
+                "assignment_method": null,
+                "taxon": null,
+                "sample_kind": null,
+                "is_control": null
+              },
+              "analysis_id": null
+            }
+          }
+        },
+        "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+        "source_revision": "sha256:0583126952e853d65fe27d0e05990d26b4dc83f3c721c5c8ecb5b85b9c85513f",
+        "fixture_id": "c26-four-source-shared-services",
+        "fixture_sha256": "0e00d046659387c0f1063b5c4beeecb59446faba83bd6e9929b71c1b1b37aec5",
+        "provider": {
+          "mode": "not_invoked",
+          "provider": null,
+          "model": null,
+          "configuration": {}
+        }
+      },
+      "evidence_kind": "actual-service-synthetic",
+      "inventory_state": "complete",
+      "inventory_ids": [
+        "synthetic:ctd:campaign-a",
+        "synthetic:edna:project-a",
+        "synthetic:metagenome:collection-a",
+        "synthetic:sst:mur-final"
+      ],
+      "numbers": {
+        "datasets": "4"
+      },
+      "claims": [
+        "dataset-inventory-count"
+      ],
+      "claims_complete": true,
+      "completed_tasks": [
+        "count-all-datasets"
+      ],
+      "cited_ids": [
+        "c21:receipt:d449233a1a31e0ed8ec6b9cfdc31e79d922171451a8574dd15b2efcd33e46823"
+      ],
+      "outcome": "completed",
+      "telemetry": {
+        "timing": {
+          "basis": "fixture",
+          "value": 0.685
+        },
+        "tool_calls": {
+          "basis": "measured",
+          "value": 1
+        },
+        "input_tokens": {
+          "basis": "unknown",
+          "value": null
+        },
+        "output_tokens": {
+          "basis": "unknown",
+          "value": null
+        },
+        "cost": {
+          "basis": "unknown",
+          "value": null
+        }
+      },
+      "evidence": [
+        {
+          "id": "c21:receipt:d449233a1a31e0ed8ec6b9cfdc31e79d922171451a8574dd15b2efcd33e46823",
+          "sha256": "d449233a1a31e0ed8ec6b9cfdc31e79d922171451a8574dd15b2efcd33e46823",
+          "source_revision": "sha256:0583126952e853d65fe27d0e05990d26b4dc83f3c721c5c8ecb5b85b9c85513f",
+          "kind": "retained-count-receipt"
+        }
+      ]
+    }
+  ]
+}

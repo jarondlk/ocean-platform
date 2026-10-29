@@ -69,6 +69,13 @@ jobs:
           python scripts/export_catalogue_types.py --check
           python scripts/export_catalogue_snapshot.py --check
 
+      - name: Run isolated C26 complete 100000-object traversal and lab budget
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_C26_SCALE_ACCEPTANCE: "1"
+        run: python -m pytest tests/test_system_acceptance_scale.py -q --tb=short
+
       - name: Run tests with coverage
         env:
           AUTH_MODE: disabled
@@ -459,6 +466,7 @@ jobs:
         run: >-
           python -m pytest tests/integration/test_experiment_execution_postgres.py
           tests/integration/test_experiment_workspace_postgres.py
+          tests/integration/test_experimental_artifact_postgres.py
           tests/integration/test_experiment_execution_offline_postgres.py
           tests/integration/test_retained_reserve_postgres.py
           tests/integration/test_retained_admission_postgres.py
