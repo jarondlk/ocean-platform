@@ -136,7 +136,7 @@ test("execution merges discard older revisions and reject terminal regression, i
   assert.equal(mergeExecution(running, cancelling), cancelling); assert.equal(mergeExecution(cancelling, running), cancelling);
   for (const mutate of [
     (value: any) => { value.execution = null; }, (value: any) => { value.execution.id = key; },
-    (value: any) => { value.proposal_revision_id = key; }, (value: any) => { value.proposal_version++; },
+    (value: any) => { value.proposal_revision_id = key; },
     (value: any) => { value.binding.context_revision_id = key; },
     (value: any) => { value.execution.state_revision++; value.execution.state = "running"; },
     (value: any) => { value.execution.state_revision++; value.execution.latest_event_cursor = 0; },
@@ -269,4 +269,28 @@ test("cancellation slots are bounded without evicting an uncertain request, and 
   assert.throws(() => session.remember({ binding: fixture.response.binding, request: fixture.request }));
   const first = { ...fixture.response.binding, conversation_id: "00000000-0000-4000-8000-000000000001", context_revision_id: key };
   assert.equal(session.get(first)!.request.context_revision_id, fixture.request.context_revision_id);
+});
+
+
+test("historical execution survives a newer C22 head token for the same frozen revision", () => {
+  for (const previous of [status(), complete()]) {
+    const next = structuredClone(previous); next.proposal_version++;
+    assert.equal(mergeExecution(previous, next), next);
+    assert.equal(next.proposal_revision_id, previous.proposal_revision_id);
+    assert.deepEqual(next.execution, previous.execution);
+    assert.throws(() => mergeExecution(next, previous), ExperimentClientError);
+  }
+});
+
+test("a newer C22 read token cannot transfer revision identity or weaken execution immutability", () => {
+  for (const mutate of [
+    (value: any) => { value.proposal_revision_id = key; },
+    (value: any) => { value.binding.context_revision_id = key; },
+    (value: any) => { value.hashes.code_sha256 = "f".repeat(64); },
+    (value: any) => { value.execution.id = key; },
+    (value: any) => { value.execution.state_revision++; value.execution.latest_event_cursor++; },
+  ]) {
+    const previous = complete(), next = structuredClone(previous); next.proposal_version++; mutate(next);
+    assert.throws(() => mergeExecution(previous, next), ExperimentClientError);
+  }
 });

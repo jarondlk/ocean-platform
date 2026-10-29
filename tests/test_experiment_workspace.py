@@ -157,6 +157,88 @@ def test_exact_revision_context_hash_and_owner_checks(actual):
         invoke(actual, 'cancel', {**changed, 'execution_id': initial['id'], 'idempotency_key': str(uuid.uuid4())})
 
 
+@pytest.mark.parametrize('state', ['running', 'completed'])
+def test_historical_execution_reopens_after_proposal_revision_without_identity_drift(actual, monkeypatch, state):
+    """A head concurrency version changes; the approved execution identity does not."""
+    fixture, port, workspace = actual
+    raw = b'{"columns":["int64"],"rows":[[9223372036854775807]]}' if state == 'completed' else None
+    approved, old_request, old_access, original_execution = prepared(actual, state=state, raw=raw)
+    revision = {**approved['binding'], 'experiment_id': approved['id'],
+        'expected_version': approved['version'], 'expected_proposal_revision_id': approved['proposal_revision_id'],
+        'proposal': {**approved['proposal'], 'method': 'New revision B needs a separate approval'},
+        'idempotency_key': str(uuid.uuid4())}
+    changed = fixture.service.invoke('revise', revision, fixture.user)['experiment']
+    historical = fixture.service.invoke('get', {'experiment_id': approved['id'],
+        'proposal_revision_id': approved['proposal_revision_id']}, fixture.user)['experiment']
+    assert historical['version'] == changed['version'] == approved['version'] + 1
+    assert historical['proposal_revision_id'] == approved['proposal_revision_id']
+    assert historical['proposal'] == approved['proposal'] and historical['hashes'] == approved['hashes']
+    request = fixture.decision(historical)
+    request.pop('idempotency_key')
+    current_access = workspace._access(request, fixture.user)
+    assert current_access.proposal_version != old_access.proposal_version
+    assert current_access.sha256 == old_access.sha256
+    assert current_access.approval_id == old_access.approval_id
+    assert current_access.approval_request_sha256 == old_access.approval_request_sha256
+    status = invoke(actual, 'status', request)
+    assert status['proposal_version'] == historical['version']
+    assert status['execution'] == original_execution
+    events = invoke(actual, 'events', {**request, 'execution_id': original_execution['id']})
+    assert events['items'][0]['cursor'] == 1 and events['latest_event_cursor'] == 1
+    if state == 'completed':
+        item = original_execution['artifacts'][0]
+        artifact_request = {**request, 'execution_id': original_execution['id'],
+            'artifact_id': item['id'], 'expected_sha256': item['sha256']}
+        artifact = invoke(actual, 'artifact', artifact_request)
+        assert base64.b64decode(artifact['content_base64']) == raw
+        assert artifact['preview']['rows'] == [['9223372036854775807']]
+        assert artifact['artifact'] == item
+        attached = fixture.investigations.invoke('context/change', {
+            'investigation_id': request['investigation_id'], 'expected_revision_id': request['context_revision_id'],
+            'idempotency_key': str(uuid.uuid4()), 'change': {'op': 'attach',
+                'reference': item['attachment_reference']}}, fixture.user)
+        assert attached['context']['attachments'] == [item['attachment_reference']]
+        assert attached['context']['resolution'][0]['status'] == 'available'
+        assert invoke(actual, 'artifact', artifact_request) == artifact
+    cancelled = invoke(actual, 'cancel', {**request, 'execution_id': original_execution['id'],
+        'idempotency_key': str(uuid.uuid4())})
+    assert cancelled['cancellation']['termination_confirmed'] is False
+    if state == 'completed':
+        assert cancelled['cancellation']['status'] == 'already_terminal'
+        assert cancelled['execution'] == original_execution
+    else:
+        assert cancelled['cancellation']['status'] == 'requested'
+        assert cancelled['execution']['state'] == 'cancelling'
+        assert cancelled['execution']['termination_verified'] is False
+    with pytest.raises(ResearchExperimentError) as stale:
+        invoke(actual, 'status', old_request)
+    assert stale.value.status_code == 409
+    with pytest.raises(ResearchExperimentError) as hidden:
+        workspace.invoke('status', request, fixture.other)
+    assert hidden.value.status_code == 404
+
+    # An outward read cannot close authority using the earlier head version.
+    original_status = port.status
+    def racing_status(*args, **kwargs):
+        value = original_status(*args, **kwargs)
+        next_revision = {**changed['binding'], 'experiment_id': changed['id'],
+            'expected_version': changed['version'], 'expected_proposal_revision_id': changed['proposal_revision_id'],
+            'proposal': {**changed['proposal'], 'method': 'Concurrent revision C'},
+            'idempotency_key': str(uuid.uuid4())}
+        # Context attachment changed the active context in the completed case;
+        # the historical binding remains readable, but revising requires the
+        # currently active context binding.
+        if state == 'completed':
+            context = attached['context']
+            next_revision.update(context_revision_id=context['id'], context_payload_sha256=context['payload_sha256'])
+        fixture.service.invoke('revise', next_revision, fixture.user)
+        return value
+    monkeypatch.setattr(port, 'status', racing_status)
+    with pytest.raises(ResearchExperimentError) as raced:
+        invoke(actual, 'status', request)
+    assert raced.value.status_code == 409
+
+
 @pytest.mark.parametrize('operation', ['status', 'artifact'])
 def test_revoked_during_outward_read_cannot_receive_projection(actual, monkeypatch, operation):
     fixture, port, _ = actual

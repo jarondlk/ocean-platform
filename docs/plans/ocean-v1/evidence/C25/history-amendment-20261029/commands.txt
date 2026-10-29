@@ -1,0 +1,6 @@
+npm --prefix frontend-v1 test
+npm --prefix frontend-v1 run typecheck
+npm --prefix frontend-v1 run build
+# The appended backend history cases are actual C17/C22/C25 service regressions; see backend-history-review.json.
+PYTHONPATH=. .venv/bin/python docs/plans/ocean-v1/evidence/C25/history-amendment-20261029/audit.py
+PYTHONPATH=. .venv/bin/python docs/plans/ocean-v1/evidence/C25/history-amendment-20261029/audit.py --verify-only

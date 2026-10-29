@@ -1,0 +1,27 @@
+{
+  "scope": "C25 historical approved revision access regression amendment",
+  "product_change": "none; existing ExecutionAccess.sha256 already excludes mutable proposal_version",
+  "test_cases": 2,
+  "result": "passed",
+  "duration_seconds": 21.48,
+  "ruff": "passed",
+  "source_sha256": {
+    "tests/test_experiment_workspace.py": "575f403ba452cdb5e6fb79020268748acdbb416eabbcef767d1e5e34e460e4cc",
+    "orchestration/experiment_workspace.py": "59f09b90a0abbd53aaef22c4aaa1be8b3aea8ac69a78ba1d5b00032d466afebc",
+    "schema/experiment_workspace.py": "7101217dd94b935c29f30c5d1043503750cebcbaeb7db175bf68a9357d2e8b8a",
+    "orchestration/research_experiments.py": "466d45002963786d6613edfbb2b4dd45946831a4ae987e971975756e2fd67076"
+  },
+  "raw_log": {
+    "path": "/private/tmp/ocean-c25-history-amendment-20261029.log",
+    "sha256": "0f02cde57403b8bbb164ea8c270b48f64c1a28d3a6dbd5764e06e6a92b7d2749"
+  },
+  "scenarios": [
+    "running/completed approved revision A durable observations reopen after revision B advances head version",
+    "identical frozen approval identity, hashes, artifact bytes and int64 display",
+    "C17 artifact attachment from historical revision remains available",
+    "historical running cancellation retains intent without physical termination; historical completed cancellation remains already_terminal and immutable",
+    "stale head version and cross-owner access rejected",
+    "outward status callback changes head to C; final fresh authority rejects409"
+  ],
+  "original_receipts_changed": false
+}

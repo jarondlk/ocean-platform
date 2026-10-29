@@ -110,7 +110,9 @@ export function decodeArtifactChunk(value: string): Uint8Array {
 export async function digestBytes(bytes: Uint8Array) { return [...new Uint8Array(await crypto.subtle.digest("SHA-256", bytes.slice().buffer))].map(v => v.toString(16).padStart(2, "0")).join(""); }
 export function mergeExecution(previous: ExecutionResponse | null, next: ExecutionResponse): ExecutionResponse {
   if (!previous) return next;
-  if (previous.experiment_id !== next.experiment_id || previous.proposal_revision_id !== next.proposal_revision_id || previous.proposal_version !== next.proposal_version
+  // C22 version is the current head concurrency token, including for historical revisions.
+  // It may advance while the frozen revision and retained execution remain identical.
+  if (previous.experiment_id !== next.experiment_id || previous.proposal_revision_id !== next.proposal_revision_id || next.proposal_version < previous.proposal_version
     || !sameExecutionBinding(previous.binding, next.binding) || experimentCanonical(previous.hashes) !== experimentCanonical(next.hashes)) return invalid();
   if (!previous.execution) return next;
   if (!next.execution || previous.execution.id !== next.execution.id || previous.execution.source !== next.execution.source) return invalid();

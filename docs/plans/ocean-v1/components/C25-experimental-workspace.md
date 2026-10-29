@@ -2,7 +2,7 @@
 
 **Status:** In progress — local implementation verified; exact-source hosted delivery pending. **Prerequisites:** P00, C18, C22, C23, C24.
 
-C25 now integrates the proposal-review/approval flow and an explicit separate execution projection contract into the existing v1 Workspace. The source-bound checkpoint covers local real-service synthetic acceptance, not production hosting or live worker availability. See the [current handoff](../handoffs/C25.md) and [local evidence](../evidence/C25/implementation-20261028/). The original [readiness audit](../C25_READINESS_AUDIT_2026-10-28.md) remains historical and immutable; C25 records its intentional source supersessions.
+C25 now integrates the proposal-review/approval flow and an explicit separate execution projection contract into the existing v1 Workspace. The source-bound checkpoint covers local real-service synthetic acceptance, not production hosting or live worker availability. See the [current handoff](../handoffs/C25.md) and [amended local evidence](../evidence/C25/history-amendment-20261029/). The original [readiness audit](../C25_READINESS_AUDIT_2026-10-28.md) remains historical and immutable; C25 records its intentional source supersessions.
 
 ## Revised delivery boundary
 
