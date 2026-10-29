@@ -1,0 +1,712 @@
+{
+  "version": "c26-readiness-preparation-only-v1",
+  "recorded_utc": "2026-10-29T01:23:01.033861+00:00",
+  "scope": "Read-only receipt/source-pointer reconciliation; not C26 implementation, readiness approval or live acceptance. Only this private/tmp report is written.",
+  "current_C25": {
+    "source_commit": "d8825322dd700247313d4a926e365430d8aea8e1",
+    "state": "Amended local acceptance verified; exact-source hosted CI40799302862/delivery pending",
+    "amended_receipt": {
+      "path": "docs/plans/ocean-v1/evidence/C25/history-amendment-20261029/receipt.json",
+      "sha256": "0cf9788dedffee6d80010af8b21f697ff469f9bd68e4b6ddfc1650470722b3eb"
+    },
+    "source_pin_count": 354,
+    "hosted_run": "https://github.com/jarondlk/ocean-platform/actions/runs/40799302862",
+    "conclusion": "CI not inspected by this pointer task; C26 readiness cannot pass before delivery closes."
+  },
+  "predecessors": {
+    "P00": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "c7ea5f4c4243d1c1a0657a0a01c075f5f738219d",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/mockups/p00/source-revision.json",
+        "sha256": "0b8d355f6f75c0f67fa8648b285daaedc4b69d987f2a1bc5ad05f2d97db0f205"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/mockups/p00/source-revision.json",
+        "sha256": "0b8d355f6f75c0f67fa8648b285daaedc4b69d987f2a1bc5ad05f2d97db0f205"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/P00.md",
+        "sha256": "cd6c6d6ce73cca664b0bfa1a8e95bcac04cf0d1bd4917beefd7674cb2dd0c34b"
+      },
+      "qualifications": [
+        "Accepted iteration4 synthetic UX only. C25 readiness records14 intentionally superseded prototype paths from accepted shell/catalogue/research work; prototype screenshots do not establish real-service acceptance."
+      ],
+      "recorded_source_aggregate_sha256": "1b666844066d31d82f915502291b506f45e6e8989612c3b4071af12c08a0bb21",
+      "reused_C25_readiness_audit": {
+        "receipt": "docs/plans/ocean-v1/evidence/C25/readiness-20261028/verification.json",
+        "source_entries": 36,
+        "prior_intentional_supersession_paths": [
+          "frontend-v1/README.md",
+          "frontend-v1/app/about/page.tsx",
+          "frontend-v1/app/admin/page.tsx",
+          "frontend-v1/app/feedback/page.tsx",
+          "frontend-v1/app/layout.tsx",
+          "frontend-v1/app/page.tsx",
+          "frontend-v1/package-lock.json",
+          "frontend-v1/package.json",
+          "frontend-v1/scripts/preview.mjs",
+          "frontend-v1/src/admin-model.ts",
+          "frontend-v1/src/exports.ts",
+          "frontend-v1/src/research-app.tsx",
+          "frontend-v1/tests/admin-model.test.ts",
+          "frontend-v1/tests/feedback-exports.test.ts"
+        ]
+      },
+      "C25_software_supersession_paths": []
+    },
+    "C01": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "516b08675460b7de7b02ecafeec0e2f359d38747",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json",
+        "sha256": "88dfc7825558695d23a7a586386da80ca23ceb9dbdd0a3c003628c4e08dd1bb6"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C01/verification.json",
+        "sha256": "c50ec89fc9c696573cb568c7b90221a3891113e7e711ff258fe50b921194f109"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C01.md",
+        "sha256": "1418cd16a7af69486f90330878a1654aee16534414b6ef5e4ecb3a73bb7072da"
+      },
+      "qualifications": [
+        "Original local receipt is historical. Shared C01/C02 delivery audit intentionally corrects nullable instrument metadata, derived/API unavailability and CI. Pending-merge wording is historical: merge516b086 and C04 readiness record delivery; no dedicated per-component hosted-delivery receipt."
+      ],
+      "recorded_source_aggregate_sha256": "227b42ea16112374b61b0650287092599f950133c87466860e8062f643901f37",
+      "feature_branch_source_commit": "3f05bd4232e1716d1ddcd3f7fbce4f9bbf5a5760",
+      "delivery_reconciliation": {
+        "path": "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/verification.json",
+        "sha256": "f3d3c6921fc52c600b6cba2a18f48f9162564c0dc99aa7e9b97f05612a2b4345"
+      }
+    },
+    "C02": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "516b08675460b7de7b02ecafeec0e2f359d38747",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/delivery-2026-10-14/verification.json",
+        "sha256": "88dfc7825558695d23a7a586386da80ca23ceb9dbdd0a3c003628c4e08dd1bb6"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C02/verification.json",
+        "sha256": "2b82da6eddc5a85db22982e17c89f03e274dff8bb52b737ae1ea1b88fb2ef77e"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C02.md",
+        "sha256": "7e1f04c096c67061241b79204664ae16f3a4a5518e61fbcab9518b25af232d09"
+      },
+      "qualifications": [
+        "Original local receipt is historical. Shared C01/C02 delivery audit intentionally corrects nullable instrument metadata, derived/API unavailability and CI. Pending-merge wording is historical: merge516b086 and C04 readiness record delivery; no dedicated per-component hosted-delivery receipt."
+      ],
+      "recorded_source_aggregate_sha256": "227b42ea16112374b61b0650287092599f950133c87466860e8062f643901f37",
+      "feature_branch_source_commit": "3f05bd4232e1716d1ddcd3f7fbce4f9bbf5a5760",
+      "delivery_reconciliation": {
+        "path": "docs/plans/ocean-v1/evidence/c04-readiness-2026-10-14/verification.json",
+        "sha256": "f3d3c6921fc52c600b6cba2a18f48f9162564c0dc99aa7e9b97f05612a2b4345"
+      }
+    },
+    "C03": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "276540f8a57bf9c7f7fb0be9735465a3d2c6c251",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/verification.json",
+        "sha256": "408d9b9d502eaa37028f8059ceb5fde58c2b9a004b758de28010c5dd0a039ff5"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C03/verification.json",
+        "sha256": "4fe79931c252a672964b9549af855c1868757ec55f698cdb49fa069e67066510"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C03.md",
+        "sha256": "ea0aa66af9deb4ee993ee87a93e3267b38177b1dc2d0cb3322a5175bf0ca8eae"
+      },
+      "qualifications": [
+        "Original local source superseded by hosted276540f workflow/native-fixture identity amendment. Feature9a2d225 remains distinct. Exact Docker-inspected peer/owned-database guard retained. No production cleanup authority."
+      ],
+      "recorded_source_aggregate_sha256": "f0722020710fb5041c8a5f91576525b444ca779df227ed1f39145b956ce55e0a",
+      "feature_source_commit": "9a2d225513a4d6c4a87ced00535457e7cb1c3bb0"
+    },
+    "C04": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "276540f8a57bf9c7f7fb0be9735465a3d2c6c251",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/c05-readiness-2026-10-15/verification.json",
+        "sha256": "408d9b9d502eaa37028f8059ceb5fde58c2b9a004b758de28010c5dd0a039ff5"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C04/verification.json",
+        "sha256": "a03f39b682573b2d7d7e8cb9db6a6c0bda7c7aa9f494bd514d60c7490d1deaaf"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C04.md",
+        "sha256": "234dfec3a4b0dded5fddce10dd6ef7b0a271f759605fce797f8fdea49e3e9aee"
+      },
+      "qualifications": [
+        "Feature6587069 precedes hosted276540f CI-identity amendment. c05-readiness receipt records successful exact-source hosted jobs; original local metadata remains historical."
+      ],
+      "recorded_source_aggregate_sha256": "f0722020710fb5041c8a5f91576525b444ca779df227ed1f39145b956ce55e0a",
+      "feature_source_commit": "65870694d4b0aaa5ef453e4ba734eb4b9fed54ca"
+    },
+    "C05": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "fd8f5203cba4d57ade85018d639a54696616635a",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/c06-readiness-2026-10-15/verification.json",
+        "sha256": "195f233a0b0702d33282199dc146a19e7ea28127238bfc007028e55038ed4f2c"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C05/verification.json",
+        "sha256": "6575878bcdc75d794c7b52f6794ca018e8c7725eda48eb274da2895b851744ee"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C05.md",
+        "sha256": "d9f446c874cf6b39abbcf7726fd1435ee2b08f452ce6b2ba58d8ac42ec482c20"
+      },
+      "qualifications": [
+        "fd8f520 delivery is in C06 readiness receipt. Real corpus regeneration/reindex/paid embeddings remain deferred; nine unrelated local benchmark cases explain local/hosted difference."
+      ],
+      "recorded_source_aggregate_sha256": "a219369e0175a4cdafd4992b0f3901eb33db17767b4e6e8f33df9917bcc4ab72"
+    },
+    "C06": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "27d76c96aa093e4e77853496c826780a26a5f66a",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C06/delivery.json",
+        "sha256": "4f425667c2567663797e8bf82afa36520ea8e197a3fe65558898cedb44992cc7"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C06/verification.json",
+        "sha256": "02f25ec13e6076feb5f95a5ce25c1258dd738af8716e9896d8311a7b1ff2e489"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C06.md",
+        "sha256": "2eb2c94e0f035edf3c5ecbcba6c1f5bbed573cda322af932c18bfc74a5e591ac"
+      },
+      "qualifications": [],
+      "recorded_source_aggregate_sha256": "234edbd8d0eee475d5424ec9c2f91655da46cea7f236762e7da78f28fda94cbe"
+    },
+    "C07": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "119579646919da83a2a53159a599a66c488ff607",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C07/delivery.json",
+        "sha256": "528dc48e587cd588ae3946e2d2f623a3b58f353b34a731229d911abd572e0c14"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C07/verification.json",
+        "sha256": "99b78a6cefac34b9dc98fc67d9b6fc8a572355ca04fb84644a6ba14341fadc69"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C07.md",
+        "sha256": "e111ee4dfb99dfa974aba23866ab957f221e54baea7bf191c131826a3d46562b"
+      },
+      "qualifications": [],
+      "recorded_source_aggregate_sha256": "17e9f36fa8b78f585ab6c8c1fc706ffb6d08433e90a17b443b469c66c13b3a2c"
+    },
+    "C08": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "6d20a75ef74770346a80c815c234b50348ae650a",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C08/delivery.json",
+        "sha256": "13c0e2a9c4e0553c048f5da4d75ab84d24ee71be611eaa14fe0022e873f3c53d"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C08/verification.json",
+        "sha256": "acfee7a36ecc76cf66d5ad9edeec9711c8d12a95400702e940c1ea263090df14"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C08.md",
+        "sha256": "fb0c6467bd54548620ae4e949bce4665fc6181f6f5d3cf1a65de7b0a2b1d066a"
+      },
+      "qualifications": [],
+      "recorded_source_aggregate_sha256": "6934486ee263d812b6bb28796c6e8f36f1ec42953eb7ef5e4dc294a6be1f3d7c"
+    },
+    "C09": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "9214bbe7aac1087b97a6ade8c7e90521a4c98c3f",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C09/delivery.json",
+        "sha256": "a6298eeeae50a15a2df2370ba0d95a69b8e4e549670ba191d5f7c0699f37f97c"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C09/verification.json",
+        "sha256": "4f19b638fdd2a5c553cb194beaef0151a6112156fc0a4f531fbc7ae4a58f5fe8"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C09.md",
+        "sha256": "1b2df8e73a703da119dfba1e4df54fa3b15a6607301e1413085e225f35ea3a7e"
+      },
+      "qualifications": [],
+      "recorded_source_aggregate_sha256": "1ac7696db2df5bca973728b4e3fd8142e825ca2fc903b0547430993927786c4c"
+    },
+    "C10": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "c3d5b8b188bfea325fbc3ccb3c0ac420a428ee9d",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C10/delivery.json",
+        "sha256": "e6ce9c0e123d03349b50ea29c317ff595013000934e84fcc19f573436a6c60f2"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C10/verification.json",
+        "sha256": "1ad775aef53e9835ec9a8ff121e41f61c483cf95d15dd6fc966bf2d381246df7"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C10.md",
+        "sha256": "e3c8578c74a096f27cfcc80fe18e7ff8efea96da3e41b8fd5f714c3c836b2724"
+      },
+      "qualifications": [],
+      "recorded_source_aggregate_sha256": "82ddb6ef674009b9cc46b4bbe522e1f3b80f93c07430a234948bac87d849f923"
+    },
+    "C11": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "41cd8769c1d7025ffca22e420518f90a1e47bb86",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C11/delivery.json",
+        "sha256": "a993e9d4963ff26e8a61969695a1e0cb93199ac30e0a18ff43f19779f2e5e41a"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C11/verification.json",
+        "sha256": "8235fb75a6db284cd8e21fadad8ee79771293a3c856335fb74ce533ad19673ce"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C11.md",
+        "sha256": "a7e2877635cc5322502891a2876aa09215b89a08f9151a43588f39fda3796aa0"
+      },
+      "qualifications": [],
+      "recorded_source_aggregate_sha256": "e0b75757b76f72db8967f652e598b392a813c51c072d4a01e24ae249671db509"
+    },
+    "C12": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "d3ef6992e97c46ca3f7ff4f554ecc4e60e05bef9",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C12/delivery.json",
+        "sha256": "61356704004ba9741f4de603c8bb3dd1b4eddacaf02de1cb244afea210c301a0"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C12/verification.json",
+        "sha256": "46f7ce515be051c2dbf539015d103786808a977484a334d172e2484db2447078"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C12.md",
+        "sha256": "0e390a4c20170bb17b46a5b52f82dec7a285c22bd71c4378795cbaa96f27ef2f"
+      },
+      "qualifications": [],
+      "recorded_source_aggregate_sha256": "e26d32b6f1d58a7164b7137caa9984476cdf89086719db3ad7ce5a0de980e9e3"
+    },
+    "C13": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "98c2769402cb83602f515348651aca668f21d0dd",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C13/delivery.json",
+        "sha256": "9d351027f6d31a735b0fba717c88ca84c8106eecd93a7ca17acc9d22cee758d4"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C13/verification.json",
+        "sha256": "83a94476d9a5c830142853b5e29fdd38f1710258c09ac1abaa1448be52f810ca"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C13.md",
+        "sha256": "ab0abc3ac46bae5b0545b3d981cc680ccd342d380d7a4d55e243cac5fa47e37f"
+      },
+      "qualifications": [
+        "Final98c2769 method-alias amendment supersedes original7bfeec7 scientific_catalogue_inputs and its tests. Final amendment/delivery govern; original local receipt alone is insufficient."
+      ],
+      "recorded_source_aggregate_sha256": "6b51bb15ae88835d1e0c1dc2a08609362969bad27fcf180a606be0e25df355ee",
+      "original_source_commit": "7bfeec738a3c17a9479dd007bfdeec5e8850b6da",
+      "same_component_supersession_paths": [
+        "ingestion/scientific_catalogue_inputs.py",
+        "tests/test_scientific_catalogue_inputs.py"
+      ],
+      "final_amendment_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C13/method-alias-amendment/verification.json",
+        "sha256": "8a8486f8d9f96f2fdb378c55f0606ae7739e58764089768164251ad38795af95"
+      }
+    },
+    "C14": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "19ba9110206dacb061c23f8e6dd7422be4b2adb1",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C14/delivery.json",
+        "sha256": "f2797710a58f584af03f434dce31e29f30def5f02f87918cdde202c0dc260cd0"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C14/verification.json",
+        "sha256": "ebcc52e7193fe09276d142930220705b6454831bca261011b80c7c5e19322d3e"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C14.md",
+        "sha256": "14219685dbcaa49d02709a386212a2f95299f6a86e346326975fc7317e6c1fb3"
+      },
+      "qualifications": [
+        "Delivery records additive auth/main/config supersessions. Shared paths are intentionally superseded again by accepted later integrations; retain all original receipts."
+      ],
+      "recorded_source_aggregate_sha256": "460a215e57aa22290a30dec9373c4e2fdc813ec846e0f8232794fea7f0573b89",
+      "same_component_supersession_paths": [
+        "api/auth.py",
+        "api/main.py",
+        "config.py"
+      ]
+    },
+    "C15": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "7b1659c2c563eab86beb8180eac0e71ed7401df6",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C15/delivery.json",
+        "sha256": "076a03a0c3ecb33d7a32daee5da80e0e0f120f70aed429dd8481a07826904460"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C15/verification.json",
+        "sha256": "a199b5357aa5b31e721ad59e97a8b5bbb3b7bba1e76d4029a4ae6d4291517b46"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C15.md",
+        "sha256": "6083c095807070df7c15558b9f8b263adcac646169168ea9569ae10e37b60742"
+      },
+      "qualifications": [],
+      "recorded_source_aggregate_sha256": "a2b818a0b9eabd181c91f49e8b412ab87b7d2d7dc8b9d719cf1a4d48e8c3db0c"
+    },
+    "C16": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "4981642f7f2a9807732d11a1d88b3674fd02d832",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C16/delivery.json",
+        "sha256": "fbf4ed0276f4b6c711fc10e75fe09006a1e1759a237a32970ccdc74a6bf6846b"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C16/verification.json",
+        "sha256": "3d08bf93659366a59816cb84579dada932bae3a542374a350fde554d5d741f0d"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C16.md",
+        "sha256": "26162a5b94235d81773cb30ae17a40166d0fab17e9d0d37b9d67944876306920"
+      },
+      "qualifications": [],
+      "recorded_source_aggregate_sha256": "9ef4b3065cadf638c281989728eefd6bf4e85101c57a8f47123fdf2dfd47ffec"
+    },
+    "C17": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "39bb811d1053c9dfb4b700f8524162800092aa44",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C17/delivery.json",
+        "sha256": "bafa0d83dd7ebacf399cfbb9fb8f445967bdd9aeba5bbbbe1821e3758cfcae5b"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C17/verification.json",
+        "sha256": "a59bba711e76ad62dd952135e2db374235d3fa7cfdb01cd2cd2d3a76983da3d7"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C17.md",
+        "sha256": "10dbb6c355797b90c97c1b762a15b0c9aa97b2823bb4954b64dda892d0a5e35e"
+      },
+      "qualifications": [],
+      "recorded_source_aggregate_sha256": "1a1f3d3ff413c8ba71da1e9a9dbc67823bde23801e5ad1385ae9fe57676d570f"
+    },
+    "C18": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "596d8715bc5b28fb14e80675219bc1f47c2c8647",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C18/delivery.json",
+        "sha256": "5964a08ec006b32885b16b2dc9980c03520d5cbd905a28b4ba1555b4150454d8"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C18/verification.json",
+        "sha256": "04e31268121a2c79af6ea337a8b5300b2d26a5bee9e11d58a6a278af05d5134c"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C18.md",
+        "sha256": "bdc095c06be4ad483b7f1655f9a88b9f12d5a65ba31e898c3c7c4683b82eda35"
+      },
+      "qualifications": [
+        "C25 intentionally supersedes these predecessor source pins. Original receipts remain immutable; amended C25 hosted delivery remains pending."
+      ],
+      "recorded_source_aggregate_sha256": "31c0499323ac3cd24d02ba516048948a98577f27dccff1340a90e8d942afc8ec",
+      "reused_C25_readiness_audit": {
+        "receipt": "docs/plans/ocean-v1/evidence/C25/readiness-20261028/verification.json",
+        "source_entries": 23,
+        "prior_intentional_supersession_paths": [
+          "api/v1_runtime_routes.py",
+          "frontend-v1/src/research-activity.tsx",
+          "frontend-v1/src/research-run-contract.ts",
+          "frontend-v1/src/research-state.ts",
+          "frontend-v1/src/research-workspace.tsx",
+          "frontend-v1/src/runtime-app.tsx",
+          "frontend-v1/src/runtime.ts",
+          "frontend-v1/tests/research-run-contract.test.ts",
+          "frontend-v1/tests/research-state.test.ts",
+          "frontend-v1/tests/runtime.test.ts"
+        ]
+      },
+      "C25_software_supersession_paths": [
+        "api/v1_runtime_routes.py",
+        "frontend-v1/src/research-workspace.tsx",
+        "frontend-v1/src/runtime-app.tsx",
+        "frontend-v1/src/runtime.ts",
+        "frontend-v1/tests/runtime.test.ts"
+      ]
+    },
+    "C19": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "4618188f589b6b6e3d50dee0bdf3343be0ec3484",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C19/delivery.json",
+        "sha256": "85a4cc6f288fb9078c99f4002f6d2f24cf480594801b6c5f0d0f24af7d6c89fb"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C19/verification.json",
+        "sha256": "7f0236c1f73ff670f17863c94c87f3bacf31165619a4b081052674f34dc0b1ee"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C19.md",
+        "sha256": "423fb2aef8d66296848840c2d9e9c1c9ef5a42cd30728fae85b7918247821505"
+      },
+      "qualifications": [
+        "Final4618188 workflow-only20-to30minute budget amendment changes source aggregate. Original timed-out hosted attempt remains incomplete; feature sources unchanged."
+      ],
+      "recorded_source_aggregate_sha256": "6dd22f34563b4349efba7c03ae70ec79393c7d8840086c8e6a9b13bdd3d4002b",
+      "original_feature_source_commit": "a38b181cb7ac6472095a2b279e3c0aacbabb8e5c"
+    },
+    "C20": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "a149239795722c65e8a860dd651131f1f20bc529",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C20/delivery.json",
+        "sha256": "585ec62d1083892ac69c2462204f24a145f9e9674d0d5ccc489aff644ab635a8"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C20/verification.json",
+        "sha256": "ab3765b873ba37b5ab14ad1c921d597123ff7de27ce826b3372080b7fef06a94"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C20.md",
+        "sha256": "6bf73d3e61005b18835b89d3208c376d52982493b716ab9e4efcb012984bea4d"
+      },
+      "qualifications": [
+        "Finala149239 pagination/history amendment supersedes originalfc46da3 and two frontend paths. Actual Cloud Tasks/private worker remains an integration gate."
+      ],
+      "recorded_source_aggregate_sha256": "6f4276f73136ab289563e4b3de3ec2e222cc58536fe10113598e15903e84a856",
+      "original_source_commit": "fc46da36aa27c203357a1b5874a02378ae089847",
+      "same_component_supersession_paths": [
+        "frontend-v1/src/research-state.ts",
+        "frontend-v1/src/research-workspace.tsx"
+      ]
+    },
+    "C21": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "567684b6649ed8a31ed4f89f1a0e223a677f2fe8",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C21/delivery.json",
+        "sha256": "da134bc6ea10cbdf8157e904722bcd7ef4463c633b74d13502831ecc03925a1d"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C21/verification.json",
+        "sha256": "451d73a53019c77166498d56c7a0837621646de70d62ce575e2eaf44816b1534"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C21.md",
+        "sha256": "e136010df1c238af2cd2ae957d5fb13c0cfa6ebc2f4ba007f253499f9381ed71"
+      },
+      "qualifications": [
+        "Final567684b delivery follows retained-evidence/history and workflow-budget amendments. Delivery local/hosted pointers and supersessions govern, not original0ab726a receipt alone."
+      ],
+      "recorded_source_aggregate_sha256": "38d6c13e28574cfbebece3f22f674f99e76fd77afc6debae6381553739ed200f",
+      "same_component_supersession_paths": [
+        ".github/workflows/tests.yml",
+        "api/auth.py",
+        "api/main.py",
+        "api/rate_limit.py",
+        "api/v1_runtime_routes.py",
+        "config.py",
+        "db/app_models.py",
+        "frontend-v1/src/research-state.ts",
+        "frontend-v1/src/research-workspace.tsx",
+        "frontend-v1/src/runtime-app.tsx",
+        "frontend-v1/src/runtime.ts",
+        "orchestration/catalogue_service.py",
+        "orchestration/investigations.py",
+        "orchestration/research_runs.py",
+        "tests/integration/test_investigation_postgres.py",
+        "tests/integration/test_research_runs_postgres.py",
+        "tests/test_bootstrap_database.py"
+      ]
+    },
+    "C22": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "66b41063a77561ad959b27eed3e9920747fd6563",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C22/delivery.json",
+        "sha256": "5d8caca651c6b2842f4a1708a491173cc71812942acadc2447a3c91aa9da6aa0"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C22/verification.json",
+        "sha256": "52ea0c6d7b8e02e62b9585ca07331597bbd1feb50277df5fbeb3d0e26bddd906"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C22.md",
+        "sha256": "90b6f60c19db4ddf31a92cc478a51953ef847a00ddf22842a00effd410e44a7d"
+      },
+      "qualifications": [
+        "Nine-action research-experiments-v1 remains non-executing. C25 adds a separate projection contract and released-reservation read fix. Approval is not physical execution/scientific approval.",
+        "C25 intentionally supersedes these predecessor source pins. Original receipts remain immutable; amended C25 hosted delivery remains pending."
+      ],
+      "recorded_source_aggregate_sha256": "62e7cb3a58e884ee5578f8c4fa27ce6e282e42366feeb7e9b16050ca8097ce97",
+      "same_component_supersession_paths": [
+        ".github/workflows/tests.yml",
+        "api/auth.py",
+        "api/main.py",
+        "api/rate_limit.py",
+        "config.py",
+        "db/app_models.py",
+        "orchestration/investigations.py",
+        "tests/integration/test_investigation_postgres.py",
+        "tests/integration/test_research_evidence_postgres.py",
+        "tests/integration/test_research_runs_postgres.py",
+        "tests/test_bootstrap_database.py",
+        "tests/test_catalogue_browser_api.py"
+      ],
+      "reused_C25_readiness_audit": {
+        "receipt": "docs/plans/ocean-v1/evidence/C25/readiness-20261028/verification.json",
+        "source_entries": 25,
+        "prior_intentional_supersession_paths": [
+          ".github/workflows/tests.yml",
+          "tests/integration/test_investigation_postgres.py",
+          "tests/integration/test_research_evidence_postgres.py",
+          "tests/integration/test_research_experiments_postgres.py",
+          "tests/integration/test_research_runs_postgres.py",
+          "tests/test_bootstrap_database.py"
+        ]
+      },
+      "C25_software_supersession_paths": [
+        ".github/workflows/tests.yml",
+        "api/auth.py",
+        "api/main.py",
+        "api/rate_limit.py",
+        "config.py",
+        "orchestration/research_experiments.py"
+      ]
+    },
+    "C23": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "f6f823b5ee9a93d68a9498c4037bce82d3c44954",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C23/completion-20261028.json",
+        "sha256": "4f19178dcf13555d0a360903ca6c8dd3b4325cb85e6c6ace2d0b4d32a412bc58"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C23/operator-hosted-f6f823b/receipt.json",
+        "sha256": "9ff8af3ad95cbab3c2c468f622b7a0dc2f3d0428cc99f5fb60448638e1bed9ab"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C23.md",
+        "sha256": "fc43d22a80b5c4c9dcd42f93a348e1fe25e2babfd9016e9f6bd2a28b81ae62d4"
+      },
+      "qualifications": [
+        "Actual retained Linux/signature/release cases bind source08/501c80b and236 pins accepted atf6f823b. C25 supersedes6 serving/C22 pins; no claim all236 current pins were physically rerun. Queued/reboot/power-loss/prepacket reconstruction unsupported and capacity-held; production dispatch unavailable; test resources stopped.",
+        "C25 intentionally supersedes these predecessor source pins. Original receipts remain immutable; amended C25 hosted delivery remains pending."
+      ],
+      "actual_run_source_commit": "501c80b7e5ee07f0990539baea3d8243f71d184a",
+      "supporting_receipts": [
+        {
+          "path": "docs/plans/ocean-v1/evidence/C23/operator-hosted-f6f823b/receipt.json",
+          "sha256": "9ff8af3ad95cbab3c2c468f622b7a0dc2f3d0428cc99f5fb60448638e1bed9ab"
+        },
+        {
+          "path": "docs/plans/ocean-v1/evidence/C23/retained-final-audit-20261028/final-receipt.json",
+          "sha256": "1a1494fff0346b845e8d5e812e393b1f75e87ce53826cd2b4b1a51a1eaeea809"
+        }
+      ],
+      "reused_C25_readiness_audit": {
+        "receipt": "docs/plans/ocean-v1/evidence/C25/readiness-20261028/verification.json",
+        "source_entries": 236,
+        "prior_intentional_supersession_paths": []
+      },
+      "C25_software_supersession_paths": [
+        "api/auth.py",
+        "api/main.py",
+        "api/rate_limit.py",
+        "api/v1_runtime_routes.py",
+        "config.py",
+        "orchestration/research_experiments.py"
+      ]
+    },
+    "C24": {
+      "state": "Complete within documented component boundary",
+      "accepted_source_commit": "eeec2e159e10ae3da509c478ff712a1e20c8e91e",
+      "accepted_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C24/delivery.json",
+        "sha256": "65c2b19a09a7e4c16ad37828e507295ae779f05093d7e769d62e662702b0db07"
+      },
+      "local_or_supporting_receipt": {
+        "path": "docs/plans/ocean-v1/evidence/C24/implementation-20261028/verification.json",
+        "sha256": "8b7cac5a2ac7d122d9dd9cf315c3e9b175a4f6833ebc0698de652462524ebb47"
+      },
+      "handoff": {
+        "path": "docs/plans/ocean-v1/handoffs/C24.md",
+        "sha256": "10afa39a3eea8c4aa71d2a4499da87334f86a91a1774e925dd15803a79c38035"
+      },
+      "qualifications": [
+        "Complete only for offline configuration/operator runbook. Live provider/DNS/OAuth/IAM/network/session/two-job/recovery/backup/release gates remain not_run, apply_allowed=false and dispatch off. Null operator worksheet inputs/proposed beta origin are not hosting evidence."
+      ],
+      "reused_C25_readiness_audit": {
+        "receipt": "docs/plans/ocean-v1/evidence/C25/readiness-20261028/verification.json",
+        "source_entries": 15,
+        "prior_intentional_supersession_paths": []
+      },
+      "C25_software_supersession_paths": []
+    }
+  },
+  "reused_authorities": [
+    {
+      "path": "docs/plans/ocean-v1/STATUS.md",
+      "sha256": "1a1c40695d9cb55ee1796bb40336a63469f565fdea5afd0217cc9a5678445061"
+    },
+    {
+      "path": "docs/plans/ocean-v1/MASTER_PLAN.md",
+      "sha256": "54d18f65e837e71d8890413f8b68917ceb70ca57e4b83ccf92fcbb15cc15687f"
+    },
+    {
+      "path": "docs/plans/ocean-v1/SITE_SEPARATION.md",
+      "sha256": "485a968faabcd28c856d2d6b33ec0a8cb69d4d89edbc0295e73bbd3874e5bb6d"
+    },
+    {
+      "path": "docs/plans/ocean-v1/components/C26-system-acceptance.md",
+      "sha256": "2f01aa527ad2cf2ed5a4b93e3c7c20a710394791e628342ef5754f9861a78213"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C25/readiness-20261028/verification.json",
+      "sha256": "43155097910224b75b4bf3fae7987977d76a11b19cc7523302e3f90b06081816"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C24/readiness-20261028/verification.json",
+      "sha256": "b2a651ba681189ceb40ce1a45e2a90332ae069b2763e6fd37b7fb74a9d417d78"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C25/implementation-20261028/local-receipt.json",
+      "sha256": "772a00b1dbba77be49c7d80a7d184c54b1a396129d4ad5b998dc2386d8487176"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C25/history-amendment-20261029/receipt.json",
+      "sha256": "0cf9788dedffee6d80010af8b21f697ff469f9bd68e4b6ddfc1650470722b3eb"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C25/source-checkpoint-d882532.json",
+      "sha256": "3e3d51ec2679e5f47dfeaa3e0584aca7a9fa89aef71c2c1048d3c52a52fb63f3"
+    }
+  ],
+  "missing_pointer_files": [],
+  "remaining_readiness_work": [
+    "Finish amended C25 exact-source hosted CI/delivery without rewriting original94ca receipt.",
+    "Reconcile all-predecessor current effective source union/intentional supersessions using accepted audits. This report does not repeat immutable whole-source checks or claim C25's354 pins exhaust every predecessor.",
+    "Map C26 requirements to actual integrated fixture/check/owner and passed/failed/blocked/not_run results. No C26 handoff exists yet."
+  ],
+  "local_vs_live": {
+    "local_preparation": "After C25 delivery/formal audit: deterministic synthetic fixtures, numerical/accounting parity, scientific adversarial and owner/revocation/snapshot cases, real-service UI checks, defect register and live protocol can be delivered while live gates remain pending.",
+    "live_acceptance": "Not ready: authenticated beta host, Cloud Tasks/outbox/private invocation, production retained-worker port/supervisor; explicit independent target/configuration and actual isolation/session/capacity/recovery/backup evidence remain gates.",
+    "release": "C27 candidate/rollback manifest and separate promotion decision required. No main/legacy change, real-data transfer or cloud provisioning implied."
+  },
+  "limitations": [
+    "Receipt hashes identify bytes read now; no tests were repeated.",
+    "Historical base_head fields are not substituted for accepted source commits.",
+    "Early components without dedicated delivery.json name actual authoritative later audits and feature/merge commits.",
+    "No repository edit, cloud/provider access, task creation, new test or component implementation occurred."
+  ]
+}
