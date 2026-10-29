@@ -1,15 +1,8 @@
 # C25 — Experimental Workspace interface
 
-**Status:** Not started. **Prerequisites:** P00, C18, C22, C23, C24.
+**Status:** In progress — local implementation verified; exact-source hosted delivery pending. **Prerequisites:** P00, C18, C22, C23, C24.
 
-Readiness audited 2026-10-28 JST: **ready to begin the local proposal-review and
-approval checkpoint**. All five prerequisite receipts/current source reconcile;
-234 focused backend and 930 frontend baseline cases plus typecheck/build pass.
-The C22 public contract explicitly reports non-execution and has no cancellation,
-execution/result/artifact retrieval API. A bounded C22/C23 public-contract amendment
-is required before later checkpoints claim actual service parity; fixture UI
-does not satisfy that gate. [Readiness audit](../C25_READINESS_AUDIT_2026-10-28.md),
-[handoff](../handoffs/C25.md). C25 implementation has not been selected here.
+C25 now integrates the proposal-review/approval flow and an explicit separate execution projection contract into the existing v1 Workspace. The source-bound checkpoint covers local real-service synthetic acceptance, not production hosting or live worker availability. See the [current handoff](../handoffs/C25.md) and [local evidence](../evidence/C25/implementation-20261028/). The original [readiness audit](../C25_READINESS_AUDIT_2026-10-28.md) remains historical and immutable; C25 records its intentional source supersessions.
 
 ## Revised delivery boundary
 

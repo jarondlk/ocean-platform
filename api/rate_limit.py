@@ -29,6 +29,12 @@ class RateLimitPolicy:
 
 def policy_for_request(method: str, path: str) -> Optional[RateLimitPolicy]:
     method = method.upper()
+    if method == 'POST' and path == '/research/experiment-executions/cancel':
+        return RateLimitPolicy('experiment_cancel', 30)
+    if method == 'POST' and path == '/research/experiment-executions/artifact':
+        return RateLimitPolicy('experiment_artifact', 30)
+    if method == 'POST' and path in {'/research/experiment-executions/capability', '/research/experiment-executions/status', '/research/experiment-executions/events'}:
+        return RateLimitPolicy('experiment_execution_history', 120)
     if method == "POST" and path in {
         "/research/experiments/create", "/research/experiments/revise", "/research/experiments/approve",
         "/research/experiments/dispatch", "/research/experiments/retry",

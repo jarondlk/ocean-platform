@@ -1,0 +1,18 @@
+[
+  {
+    "case": "approval",
+    "observed": "Dialog focus starts on Close; Escape returns to Review approval; confirmation disabled until checkbox. Lost acknowledgement recovered with retained request. Revision invalidated prior approval; concurrent revision approval rejected with review-needed alert."
+  },
+  {
+    "case": "cancel-recovery",
+    "observed": "Lost cancel acknowledgement retained. Retried same request after selecting completed plan; completed plan stayed displayed and cancellation acknowledgement did not claim terminal completion."
+  },
+  {
+    "case": "outputs-and-layout",
+    "observed": "Exact int64 9223372036854775807 and null shown safely. Hash verified labelled bundle includes scope/proposal/manifest/environment. PNG preview rendered. Japanese 390x844 light layout has document width390; ArrowRight/Left changes Workspace tabs with canonical URL and preserves experiment selection. Reload restores completed execution."
+  },
+  {
+    "case": "context-attachment-and-access",
+    "observed": "Fresh artifact authorization produced one C17 context attachment; frozen proposal showed earlier-context warning. Other account could not open owner investigation and private results were removed. Suspended principal rendered access-restricted boundary with no proposals/previews."
+  }
+]

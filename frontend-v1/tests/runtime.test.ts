@@ -223,3 +223,37 @@ test("navigation URL helpers ignore forged authorization and preview queries", (
   assert.equal(destinationFromLocation("/admin", "?view=research"), "administration");
   assert.equal(destinationFromPath("/legacy/admin"), "research");
 });
+
+const experimentCapability = () => ({ version: "research-experiments-v1", proposal_transport: "http-v1", approval_enabled: true, execution_version: "research-experiment-executions-v1", execution_transport: "http-v1", execution_source: "synthetic-fixture", start_enabled: false, cancel_enabled: true, artifacts_enabled: true, reason: null as string | null });
+const experimentsBootstrap = () => { const input = bootstrap(); input.identity.permissions.push("data:export"); return { ...input, research_experiments: experimentCapability() }; };
+test("experiment runtime discovery is optional, explicit and copied", () => {
+  assert.equal(parseRuntimeBootstrap(bootstrap()).research_experiments, undefined);
+  const input = experimentsBootstrap(), parsed = parseRuntimeBootstrap(input);
+  assert.deepEqual(parsed.research_experiments, input.research_experiments);
+  assert.notEqual(parsed.research_experiments, input.research_experiments);
+  input.research_experiments.approval_enabled = false; assert.equal(parsed.research_experiments!.approval_enabled, true);
+});
+test("proposal review remains available when execution is explicitly unavailable", () => {
+  const input = experimentsBootstrap(); Object.assign(input.research_experiments, { execution_transport: "unavailable", execution_source: "unavailable", cancel_enabled: false, artifacts_enabled: false, reason: "No trusted worker projection" });
+  assert.equal(parseRuntimeBootstrap(input).research_experiments!.proposal_transport, "http-v1");
+  Object.assign(input.research_experiments, { proposal_transport: "unavailable", approval_enabled: false });
+  assert.equal(parseRuntimeBootstrap(input).research_experiments!.proposal_transport, "unavailable");
+});
+for (const [name, change] of [
+  ["execution version", (v: any) => { v.execution_version = "old"; }],
+  ["review version", (v: any) => { v.version = "old"; }],
+  ["implicit execution", (v: any) => { delete v.execution_transport; }],
+  ["unknown source", (v: any) => { v.execution_source = "cloud-ready"; }],
+  ["start authority", (v: any) => { v.start_enabled = true; }],
+  ["endpoint injection", (v: any) => { v.endpoint = "https://foreign.invalid"; }],
+  ["unavailable with cancel", (v: any) => { v.execution_transport = "unavailable"; v.execution_source = "unavailable"; v.reason = "Unavailable"; }],
+  ["unavailable without reason", (v: any) => { v.execution_transport = "unavailable"; v.execution_source = "unavailable"; v.cancel_enabled = false; v.artifacts_enabled = false; }],
+  ["HTTP unavailable source", (v: any) => { v.execution_source = "unavailable"; }],
+  ["approval without proposals", (v: any) => { v.proposal_transport = "unavailable"; }],
+  ["nonboolean approval", (v: any) => { v.approval_enabled = 1; }],
+] as const) test(`experiment discovery rejects ${name}`, () => {
+  const input = experimentsBootstrap(); change(input.research_experiments); assert.throws(() => parseRuntimeBootstrap(input), RuntimeContractError);
+});
+test("experiment runtime cannot restore any missing research/export permission", () => {
+  for (const permission of ["chat:use", "data:read", "data:export"]) { const input = experimentsBootstrap(); input.identity.permissions = input.identity.permissions.filter(p => p !== permission); assert.throws(() => parseRuntimeBootstrap(input), RuntimeContractError); }
+});

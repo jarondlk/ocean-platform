@@ -21,11 +21,18 @@ export type RuntimeCapability = {
 };
 export type ResearchRunCapability = { version: "research-runs-v1"; transport: "http-v1" | "unavailable"; submit_enabled: boolean; dispatch_enabled: boolean; synthesis: "unavailable"; reason: string | null };
 export type ResearchEvidenceCapability = { version: "research-evidence-v1"; transport: "http-v1" | "unavailable"; synthesis: "http-v1" | "unavailable"; submit_enabled: boolean; reason: string | null };
+export type ResearchExperimentsCapability = {
+  version: "research-experiments-v1"; proposal_transport: "http-v1" | "unavailable"; approval_enabled: boolean;
+  execution_version: "research-experiment-executions-v1"; execution_transport: "http-v1" | "unavailable";
+  execution_source: "unavailable" | "synthetic-fixture" | "retained-operator"; start_enabled: false;
+  cancel_enabled: boolean; artifacts_enabled: boolean; reason: string | null;
+};
 export type RuntimeBootstrap = {
   version: typeof RUNTIME_VERSION; deployment: "v1"; identity: RuntimeIdentity;
   permission_revision: string; capabilities: Record<RuntimeDestination, RuntimeCapability>;
   research_runs?: ResearchRunCapability;
   research_evidence?: ResearchEvidenceCapability;
+  research_experiments?: ResearchExperimentsCapability;
 };
 export type RuntimeState = { status: "loading" } | { status: "ready"; bootstrap: RuntimeBootstrap }
   | { status: "unauthorized" | "forbidden" | "unavailable" | "error"; message: string; retryable: boolean };
@@ -58,7 +65,7 @@ function permissions(value: unknown): string[] {
 
 /** Validate then copy every accepted field; identity never comes from preferences. */
 export function parseRuntimeBootstrap(value: unknown): RuntimeBootstrap {
-  const root = exact(value, ["version", "deployment", "identity", "permission_revision", "capabilities", ...["research_runs", "research_evidence"].filter(key => record(value) && Object.hasOwn(value, key))]);
+  const root = exact(value, ["version", "deployment", "identity", "permission_revision", "capabilities", ...["research_runs", "research_evidence", "research_experiments"].filter(key => record(value) && Object.hasOwn(value, key))]);
   if (root.version !== RUNTIME_VERSION || root.deployment !== "v1" || typeof root.permission_revision !== "string" || !identifier.test(root.permission_revision)) return fail();
   const identity = exact(root.identity, ["id", "display_name", "role", "account_type", "status", "permissions"]);
   if (typeof identity.id !== "string" || !/^[a-f\d]{8}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{12}$/i.test(identity.id)
@@ -102,11 +109,26 @@ export function parseRuntimeBootstrap(value: unknown): RuntimeBootstrap {
     if (evidence.transport === "http-v1" && REQUIRED_PERMISSIONS.research.some(p => !actualPermissions.includes(p))) return fail();
     researchEvidence = { version: "research-evidence-v1", transport: evidence.transport as ResearchEvidenceCapability["transport"], synthesis: evidence.synthesis as ResearchEvidenceCapability["synthesis"], submit_enabled: evidence.submit_enabled, reason };
   }
+  let researchExperiments: ResearchExperimentsCapability | undefined;
+  if (Object.hasOwn(root, "research_experiments")) {
+    const experiments = exact(root.research_experiments, ["version", "proposal_transport", "approval_enabled", "execution_version", "execution_transport", "execution_source", "start_enabled", "cancel_enabled", "artifacts_enabled", "reason"]);
+    if (experiments.version !== "research-experiments-v1" || experiments.execution_version !== "research-experiment-executions-v1"
+      || !["http-v1", "unavailable"].includes(experiments.proposal_transport as string) || !["http-v1", "unavailable"].includes(experiments.execution_transport as string)
+      || !["unavailable", "synthetic-fixture", "retained-operator"].includes(experiments.execution_source as string) || experiments.start_enabled !== false
+      || typeof experiments.approval_enabled !== "boolean" || typeof experiments.cancel_enabled !== "boolean" || typeof experiments.artifacts_enabled !== "boolean") return fail();
+    const reason = boundedText(experiments.reason, 1000, true);
+    if (experiments.proposal_transport === "unavailable" && (experiments.approval_enabled || experiments.execution_transport !== "unavailable")
+      || experiments.execution_transport === "unavailable" && (experiments.execution_source !== "unavailable" || experiments.cancel_enabled || experiments.artifacts_enabled || !reason?.trim())
+      || experiments.execution_transport === "http-v1" && (experiments.execution_source === "unavailable" || reason !== null)
+      || experiments.proposal_transport === "http-v1" && ["chat:use", "data:read", "data:export"].some(p => !actualPermissions.includes(p))) return fail();
+    researchExperiments = { ...experiments, reason } as ResearchExperimentsCapability;
+  }
   return {
     version: RUNTIME_VERSION, deployment: "v1", permission_revision: root.permission_revision,
     identity: { id: identity.id, display_name: displayName, role: identity.role as RuntimeIdentity["role"],
       account_type: identity.account_type as RuntimeIdentity["account_type"], status: "active", permissions: actualPermissions },
     capabilities, ...(researchRuns === undefined ? {} : { research_runs: researchRuns }), ...(researchEvidence === undefined ? {} : { research_evidence: researchEvidence }),
+    ...(researchExperiments === undefined ? {} : { research_experiments: researchExperiments }),
   };
 }
 

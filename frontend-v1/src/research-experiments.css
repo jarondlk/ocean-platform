@@ -1,0 +1,35 @@
+.re-workspace { padding: 16px; font-size: 12px; line-height: 1.65; min-width: 0; }
+.re-workspace h3 { font-size: 16px; margin: 10px 0; overflow-wrap: anywhere; }
+.re-workspace h4 { font-size: 13px; margin: 18px 0 7px; }
+.re-toolbar, .re-heading, .re-pager { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.re-toolbar { justify-content: space-between; }
+.re-badge { display: inline-block; padding: 3px 9px; border: 1px solid var(--control-line); border-radius: 20px; background: var(--blue-wash); color: var(--blue-ink); font-size: 11px; }
+.re-list { list-style: none; padding: 0; margin: 12px 0; }
+.re-list li { border-bottom: 1px solid var(--line); padding: 5px 0; }
+.re-list button { text-align: left; width: 100%; border: 0; background: transparent; color: var(--text); padding: 9px; font: inherit; overflow-wrap: anywhere; border-radius: 6px; }
+.re-list button[aria-current] { background: var(--selected); box-shadow: inset 3px 0 var(--accent); }
+.re-list small { display: block; color: var(--muted); }
+.re-review { border-top: 1px solid var(--line); padding-top: 15px; margin-top: 18px; }
+.re-qualification { border-left: 3px solid var(--accent); padding: 9px 12px; background: var(--blue-wash); }
+.re-review details, .re-execution details { margin: 12px 0; }
+.re-review summary, .re-execution summary { cursor: pointer; font-weight: 600; }
+.re-review pre, .re-execution pre { max-height: 360px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; padding: 12px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); font-size: 11px; }
+.re-cohort { padding-left: 18px; }
+.re-cohort li { margin: 9px 0; overflow-wrap: anywhere; }
+.re-cohort span { display: block; color: var(--muted); }
+.re-limits { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 15px; }
+.re-limits div { padding: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.re-limits dt, .re-identities dt { color: var(--muted); font-size: 11px; }
+.re-limits dd, .re-identities dd { margin: 2px 0 8px; overflow-wrap: anywhere; }
+.re-identities dd { font-family: monospace; font-size: 10px; }
+.re-wrap { overflow-wrap: anywhere; display: block; }
+.re-revise { border: 1px solid var(--control-line); border-radius: 8px; padding: 12px; margin-top: 15px; }
+.re-code-editor { font-family: monospace !important; min-height: 160px; }
+.re-execution { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 12px; }
+.re-events { padding-left: 20px; }
+.re-events li { padding: 6px 0; border-bottom: 1px solid var(--line); }
+.re-table-wrap { overflow: auto; max-height: 360px; }
+.re-table-wrap table { border-collapse: collapse; min-width: 100%; font-size: 11px; }
+.re-table-wrap th, .re-table-wrap td { border: 1px solid var(--line); padding: 7px; text-align: left; white-space: pre-wrap; }
+.re-artifact-image { display: block; max-width: 100%; max-height: 480px; object-fit: contain; }
+@media (max-width: 560px) { .re-workspace { padding: 12px; } .re-limits { grid-template-columns: 1fr; } .re-pager > .button { flex: 1; } }

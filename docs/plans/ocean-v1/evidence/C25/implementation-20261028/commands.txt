@@ -1,0 +1,14 @@
+# C25 implementation from 98743cca910b06b7e00e2f61530fabbde28eaf30, overhaul.
+# No provider/model, GCP/DNS/deployment or real-data acquisition/transfer.
+npm --prefix frontend-v1 test
+npm --prefix frontend-v1 run typecheck
+npm --prefix frontend-v1 run build
+.venv/bin/python scripts/export_experiment_contract.py --check
+.venv/bin/python -m pytest tests/test_experiment_workspace.py -q
+.venv/bin/python -m pytest tests/test_experiment_browser_contract.py -q
+# Detailed native owned-PG invocation/identity/stop and prior regression qualification are retained in backend-verification.json and its indexed logs.
+DEPLOYMENT_ENV=test AUTH_MODE=disabled .venv/bin/python docs/plans/ocean-v1/evidence/C25/serve_experiments_qa.py --state-file /private/tmp/ocean-c25-ui-state.json --observations /private/tmp/ocean-c25-ui-final-observations.json
+node frontend-v1/node_modules/next/dist/bin/next dev frontend-v1/development/c25 --hostname 127.0.0.1 --port 3100
+# Actual browser actions through CUA; synthetic state controls, ledger and concurrent API revision are retained separately.
+PYTHONPATH=. .venv/bin/python docs/plans/ocean-v1/evidence/C25/implementation-20261028/audit.py
+PYTHONPATH=. .venv/bin/python docs/plans/ocean-v1/evidence/C25/implementation-20261028/audit.py --verify-only

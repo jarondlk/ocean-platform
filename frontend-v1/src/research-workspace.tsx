@@ -10,6 +10,10 @@ import { ResearchDraftStore, parseResearchLocation, researchLocationUrl, updateR
 import { ResearchActivity, ResearchResults, ResearchEvidence } from "./research-activity";
 import { useResearchAnswers } from "./research-answers";
 import type { AnswerClient, EvidenceClient } from "./research-evidence-service";
+import { ResearchExperiments } from "./research-experiments";
+import { ExperimentSession, reconcileExperimentSelection } from "./experiment-state";
+import { ExecutionSession, type ExperimentExecutionClient } from "./experiment-execution-service";
+import type { ExperimentClient } from "./experiment-service";
 import { ResearchHistoryScheduler } from "./research-history-scheduler";
 import { loadResearchRunHistory } from "./research-history";
 import { executeRunMutation, freezeRunContext, isRunActive, mergeRunEvents, mergeRunSnapshot, researchRunAddress, sameRunBinding, type ResearchRun, type ResearchRunTransport, type RunEvidence, type RunContextBinding, type RunMutationIntent } from "./research-run-contract";
@@ -23,8 +27,8 @@ const families = ["ctd", "metagenome", "remote_sensing", "edna_metabarcoding"] a
 const familyNames = ["CTD", "Metagenome", "SST", "eDNA"];
 type Active = { investigation: Investigation; context: InvestigationContext };
 /** Kept by the shell across ordinary navigation/revalidation, never persisted. */
-export type ResearchSession = { drafts: ResearchDraftStore; runs: Map<string, ResearchRun[]> };
-export function createResearchSession(): ResearchSession { return { drafts: new ResearchDraftStore(), runs: new Map() }; }
+export type ResearchSession = { drafts: ResearchDraftStore; runs: Map<string, ResearchRun[]>; experiments: ExperimentSession; executions: ExecutionSession };
+export function createResearchSession(): ResearchSession { return { drafts: new ResearchDraftStore(), runs: new Map(), experiments: new ExperimentSession(), executions: new ExecutionSession() }; }
 export type ResearchWorkspaceProps = {
   locale: Locale; accessKey: string; session: ResearchSession;
   preferences: PresentationPreferences; onPreferences: (patch: Partial<PresentationPreferences>) => void;
@@ -33,6 +37,7 @@ export type ResearchWorkspaceProps = {
   runTransport?: ResearchRunTransport;
   runSource?: "service" | "development-fixture";
   runSubmitEnabled?: boolean;
+  experimentClient?: ExperimentClient; executionClient?: ExperimentExecutionClient; experimentApprovalEnabled?: boolean;
   answerClient?: AnswerClient; evidenceClient?: EvidenceClient; answerSubmitEnabled?: boolean; canExport?: boolean;
 };
 function currentLocation(): ResearchLocation { return parseResearchLocation(window.location.search); }
@@ -41,7 +46,7 @@ class ContextReviewRequired extends Error {}
 function requestKey() { return crypto.randomUUID(); }
 function refKey(value: ContextReference) { return `${value.kind}:${value.id}:${value.snapshot_id}`; }
 
-export function ResearchWorkspace({ locale, accessKey, session, preferences, onPreferences, onAccessLost, client: suppliedClient, catalogueClient: suppliedCatalogue, runTransport, runSource = "development-fixture", runSubmitEnabled = true, answerClient, evidenceClient, answerSubmitEnabled = false, canExport = false }: ResearchWorkspaceProps) {
+export function ResearchWorkspace({ locale, accessKey, session, preferences, onPreferences, onAccessLost, client: suppliedClient, catalogueClient: suppliedCatalogue, runTransport, runSource = "development-fixture", runSubmitEnabled = true, answerClient, evidenceClient, answerSubmitEnabled = false, canExport = false, experimentClient, executionClient, experimentApprovalEnabled = false }: ResearchWorkspaceProps) {
   const client = useMemo(() => suppliedClient ?? createInvestigationClient(), [suppliedClient]);
   const catalogue = useMemo(() => suppliedCatalogue ?? createCatalogueClient(), [suppliedCatalogue]);
   const [location, setLocation] = useState<ResearchLocation>(() => parseResearchLocation(""));
@@ -92,7 +97,7 @@ export function ResearchWorkspace({ locale, accessKey, session, preferences, onP
     if (status === 401 || status === 403) {
       ++selectionEpoch.current; guard.current = `denied:${selectionEpoch.current}`;
       selectionAbort.current?.abort(); mutationAbort.current?.abort(); runAbort.current?.abort(); historyScheduler.current?.dispose(); ++historyEpoch.current;
-      session.drafts.clear(); session.runs.clear(); setActive(null); setConversations([]); setInvestigations([]); setConversation(null); setDraft(""); setRuns([]); setEvidence(null); onAccessLost();
+      session.drafts.clear(); session.runs.clear(); session.experiments.clear(); session.executions.clear(); setActive(null); setConversations([]); setInvestigations([]); setConversation(null); setDraft(""); setRuns([]); setEvidence(null); onAccessLost();
     }
   }, [onAccessLost, session]);
   const transition = useCallback((next: ResearchLocation) => {
@@ -109,7 +114,9 @@ export function ResearchWorkspace({ locale, accessKey, session, preferences, onP
   }, [accessKey]);
   const navigate = useCallback((patch: Partial<ResearchLocation>, replace = false) => {
     const next = updateResearchLocation(locationRef.current, patch);
-    window.history[replace ? "replaceState" : "pushState"](null, "", researchLocationUrl(next)); transition(next);
+    const target = new URL(researchLocationUrl(next), window.location.origin);
+    const url = target.pathname + reconcileExperimentSelection(window.location.search, target.search);
+    window.history[replace ? "replaceState" : "pushState"](null, "", url); transition(next);
   }, [transition]);
   useEffect(() => {
     mounted.current = true;
@@ -307,7 +314,7 @@ export function ResearchWorkspace({ locale, accessKey, session, preferences, onP
     </nav></details><div className="rw-main">{!location.investigationId && <div className="rw-empty"><Layers3 size={30} /><h2>{say(locale, "Start with an investigation", "調査から始めましょう")}</h2><p>{say(locale, "Choose a private investigation or create one with an explicit snapshot.", "非公開の調査を選ぶか、スナップショットを指定して作成してください。")}</p></div>}<ShellSplitPanels locale={locale} width={preferences.workspaceWidth} open={preferences.workspaceOpen} active={location.mobilePane === "workspace" ? "secondary" : "primary"} onWidth={workspaceWidth => onPreferences({ workspaceWidth })} onOpen={workspaceOpen => onPreferences({ workspaceOpen })} onActive={pane => navigate({ mobilePane: pane === "secondary" ? "workspace" : "chat" })} primaryLabel={say(locale, "Chat", "チャット")} secondaryLabel={say(locale, "Workspace", "ワークスペース")} primary={chatPanel} secondary={<ShellTabs label={say(locale, "Workspace sections", "ワークスペースの項目")} active={location.workspaceTab} onChange={workspaceTab => navigate({ workspaceTab: workspaceTab as ResearchLocation["workspaceTab"] })} tabs={[
       { id: "context", label: say(locale, "Context", "コンテキスト"), content: contextPanel },
       { id: "results", label: say(locale, "Results", "結果"), content: answerClient || evidenceClient ? answers.controls : <ResearchResults locale={locale} runs={runs} onOpenEvidence={openEvidence} /> },
-      { id: "experiments", label: say(locale, "Experiments", "実験"), content: <p>{say(locale, "Experiments are unavailable until proposal and execution services are connected.", "提案・実行サービスの接続後に実験を利用できます。")}</p> },
+      { id: "experiments", label: say(locale, "Experiments", "実験"), content: <ResearchExperiments locale={locale} accessKey={accessKey} active={location.workspaceTab === "experiments"} binding={active && conversation ? { investigation_id: active.investigation.id, conversation_id: conversation.id, context_revision_id: active.context.id, snapshot_id: active.context.snapshot_id, context_payload_sha256: active.context.payload_sha256 } : null} client={experimentClient} executionClient={executionClient} session={session.experiments} executionSession={session.executions} canApprove={experimentApprovalEnabled && !archived && !checking && !unresolved} canRevise={experimentApprovalEnabled && !archived && !checking && !unresolved} canCancel={!archived && !checking} canAttach={!archived && !checking && !unresolved} canExport={canExport} externalBusy={blocked} onAccessLost={() => fail({ status_code: 403 })} onAttach={reference => changeContext({ op: "attach", reference })} /> },
       { id: "evidence", label: say(locale, "Evidence", "根拠"), content: evidenceClient ? answers.evidencePanel : <ResearchEvidence locale={locale} evidence={evidence} /> },
     ]} />} /></div></div>
   </section>;

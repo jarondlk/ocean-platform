@@ -449,7 +449,7 @@ jobs:
           engine.dispose()
           PY
 
-      - name: Verify C23 execution fences and restricted proof release ledger
+      - name: Verify C23 execution fences, restricted proof release and C25 public read compatibility
         env:
           AUTH_MODE: disabled
           DEPLOYMENT_ENV: test
@@ -458,6 +458,7 @@ jobs:
           C23_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
         run: >-
           python -m pytest tests/integration/test_experiment_execution_postgres.py
+          tests/integration/test_experiment_workspace_postgres.py
           tests/integration/test_experiment_execution_offline_postgres.py
           tests/integration/test_retained_reserve_postgres.py
           tests/integration/test_retained_admission_postgres.py

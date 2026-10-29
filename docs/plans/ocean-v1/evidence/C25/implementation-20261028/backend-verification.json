@@ -1,0 +1,56 @@
+{
+  "scope": "C25 local backend final verification",
+  "results": {
+    "workspace_tests": 24,
+    "prior_C22_API_runtime_tests": 92,
+    "browser_contract_tests": 1,
+    "native_postgres_compatibility_tests": 1,
+    "ruff": "passed"
+  },
+  "qualifications": [
+    "C22/API/runtime prior run predates the final runtime dispatch-gated capability amendment; final workspace suite explicitly verifies that amended gate.",
+    "Native proof is explicitly synthetic software test material. It does not replace actual Linux/gVisor containment receipts or qualify a production execution adapter.",
+    "Owned local PostgreSQL identity independently verified before/after; zero ephemeral schemas/roles and stopped PID/socket/refused TCP verified.",
+    "One failed prior final unit attempt exposed only shared synthetic test fixture capacity cleanup; corrected in final02.",
+    "Original C23 receipts remained immutable; C22 released-reservation projection is an intentional source supersession.",
+    "Production execution adapter and launch authority remain unavailable; start_enabled=false."
+  ],
+  "files": {
+    "final_workspace": {
+      "path": "/private/tmp/ocean-c25-backend-final02-20261029.log",
+      "sha256": "0ace5c4cff783d1ee11c4bf6c56f0578b0fa7107ff12735be9f34a4271dd4e3a"
+    },
+    "ruff": {
+      "path": "/private/tmp/ocean-c25-backend-ruff-final02-20261029.log",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "prior_C22_API_runtime": {
+      "path": "/private/tmp/ocean-c25-backend-prior-regression-20261029.txt",
+      "sha256": "214f6b9b832edcefa990a3ace66707473f1e5b9595746ea13a020dbcc0ed852d"
+    },
+    "browser_contract": {
+      "path": "/private/tmp/ocean-c25-browser-contract-20261029.log",
+      "sha256": "ec3c61992e3bb1a5aac88c5f3c5619a6eccaa445b8e776896e3c8c676f9f6278"
+    },
+    "native_compatibility": {
+      "path": "/private/tmp/ocean-c25-native-pg-test-20261029.log",
+      "sha256": "d05f6fcad6b148bb8b073440065adcc3eea6be9bdd2b48e09030a3e3f8a90a25"
+    },
+    "native_identity_before": {
+      "path": "/private/tmp/ocean-c25-native-pg-identity-before-20261029.json",
+      "sha256": "bf1a3bdc088a4ccab8aecff86e38c12e5346328fc7cda233e3d9aef6a7a1ec77"
+    },
+    "native_identity_after": {
+      "path": "/private/tmp/ocean-c25-native-pg-identity-after-20261029.json",
+      "sha256": "bf1a3bdc088a4ccab8aecff86e38c12e5346328fc7cda233e3d9aef6a7a1ec77"
+    },
+    "native_stop": {
+      "path": "/private/tmp/ocean-c25-native-pg-stop-20261029.json",
+      "sha256": "2e1e662d6cf4a5d905000a6d1e9a5d566c3db106393a4901d96a2e09753822a6"
+    },
+    "source_review": {
+      "path": "/private/tmp/ocean-c25-backend-source-review-20261029.json",
+      "sha256": "79bd742fbe0856d048088f5337c91b084ef20198ed430315b1399f6892b8d2b9"
+    }
+  }
+}

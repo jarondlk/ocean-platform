@@ -1,0 +1,34 @@
+{
+  "actual_request_count": 1941,
+  "status_counts": {
+    "200": 1922,
+    "404": 9,
+    "503": 2,
+    "409": 1,
+    "403": 7
+  },
+  "route_counts": {
+    "/v1/runtime": 6,
+    "/research/investigations/list": 229,
+    "/research/investigations/get": 231,
+    "/research/investigations/conversations/get": 230,
+    "/research/investigations/conversations/list": 230,
+    "/catalogue/snapshots": 229,
+    "/research/experiments/list": 165,
+    "/research/experiments/get": 156,
+    "/research/experiments/events": 155,
+    "/research/experiment-executions/status": 155,
+    "/research/experiments/approve": 3,
+    "/research/experiments/revise": 2,
+    "/research/experiment-executions/events": 140,
+    "/research/experiment-executions/cancel": 2,
+    "/research/experiment-executions/artifact": 7,
+    "/research/investigations/context/change": 1
+  },
+  "same_approval_retry_key_and_body": true,
+  "same_cancel_retry_key_and_body": true,
+  "stale_approval_rejected": true,
+  "context_attachment_confirmed": true,
+  "no_dispatch_or_catalogue_mutation": true,
+  "server_stopped": true
+}

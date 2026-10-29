@@ -223,6 +223,7 @@ ENABLE_V1_EVIDENCE = os.environ.get("ENABLE_V1_EVIDENCE", "false")
 ENABLE_V1_SYNTHESIS = os.environ.get("ENABLE_V1_SYNTHESIS", "false")
 ENABLE_V1_EXPERIMENTS = os.environ.get("ENABLE_V1_EXPERIMENTS", "false")
 ENABLE_V1_EXPERIMENT_DISPATCH = os.environ.get("ENABLE_V1_EXPERIMENT_DISPATCH", "false")
+ENABLE_V1_EXPERIMENT_WORKSPACE = os.environ.get("ENABLE_V1_EXPERIMENT_WORKSPACE", "false")
 INTERNAL_AUTH_AUDIENCE = os.environ.get(
     "INTERNAL_AUTH_AUDIENCE",
     "ocean-platform-api",
@@ -347,6 +348,11 @@ def v1_experiments_enabled(environ: Optional[Mapping[str, str]] = None) -> bool:
 def v1_experiment_dispatch_enabled(environ: Optional[Mapping[str, str]] = None) -> bool:
     env = os.environ if environ is None else environ
     return _security_flag(str(env.get("ENABLE_V1_EXPERIMENT_DISPATCH", ENABLE_V1_EXPERIMENT_DISPATCH)), "ENABLE_V1_EXPERIMENT_DISPATCH")
+
+
+def v1_experiment_workspace_enabled(environ: Optional[Mapping[str, str]] = None) -> bool:
+    env = os.environ if environ is None else environ
+    return _security_flag(str(env.get("ENABLE_V1_EXPERIMENT_WORKSPACE", ENABLE_V1_EXPERIMENT_WORKSPACE)), "ENABLE_V1_EXPERIMENT_WORKSPACE")
 
 
 def _placeholder_secret(value: str) -> bool:

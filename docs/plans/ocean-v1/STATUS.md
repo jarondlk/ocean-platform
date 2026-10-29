@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-10-28 JST. **P00 and C01–C24 are Complete within their documented boundaries with source-bound hosted delivery; C25–C27 are Not started.**
+Updated: 2026-10-29 JST. **P00 and C01–C24 are Complete within their documented boundaries with source-bound hosted delivery; C25 is In progress (local verification passed; hosted delivery pending); C26–C27 are Not started.**
 The latest plan adds local UI/UX work first and a fully isolated second GCP site.
 P00 is accepted; C01 local validation was explicitly selected and completed on
 2026-10-14 JST.
@@ -8,7 +8,7 @@ C02 was explicitly selected on 2026-10-14 JST and passed its software/synthetic
 checks. C03 passed its local transaction-ordering and actual disposable PostgreSQL
 acceptance. C04 now passes concurrent responsiveness, worker-lifetime, security
 and cancellation acceptance. C05 passes embedding isolation, metagenome fidelity
-and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11 passes frozen SST product/coverage acceptance; C12 passes frozen canonical eDNA adapter acceptance; C13 passes scientific catalogue acceptance; C14 passes authenticated catalogue service acceptance; C15 passes local application-shell acceptance; C16 passes local catalogue-browser acceptance; C17 passes local investigation-persistence acceptance; C18 passes local interface acceptance and hosted delivery; C19 passes local controller acceptance and hosted delivery; C20 passes amended local acceptance and hosted delivery; C21 passes local acceptance and exact-source hosted delivery; C22 passes local acceptance and exact-source hosted delivery; C23 passes actual retained Linux/signature/release acceptance and exact-source hosted delivery; C24 passes offline configuration acceptance and exact-source hosted delivery; C25–C27 remain Not started.
+and deterministic replacement-history acceptance. C06 passes strict generation/consumer acceptance. C07 passes CSV presentation/consumer acceptance; C08 passes catalogue contract/fixture acceptance; C09 is Complete for local snapshot/capture acceptance; C10 passes frozen CTD/metagenome adapter acceptance; C11 passes frozen SST product/coverage acceptance; C12 passes frozen canonical eDNA adapter acceptance; C13 passes scientific catalogue acceptance; C14 passes authenticated catalogue service acceptance; C15 passes local application-shell acceptance; C16 passes local catalogue-browser acceptance; C17 passes local investigation-persistence acceptance; C18 passes local interface acceptance and hosted delivery; C19 passes local controller acceptance and hosted delivery; C20 passes amended local acceptance and hosted delivery; C21 passes local acceptance and exact-source hosted delivery; C22 passes local acceptance and exact-source hosted delivery; C23 passes actual retained Linux/signature/release acceptance and exact-source hosted delivery; C24 passes offline configuration acceptance and exact-source hosted delivery; C25 local implementation is verified and hosted delivery is pending; C26–C27 remain Not started.
 P00 and C01–C13 local work is authorized; the user also authorizes subsequent CXX local implementation after each readiness audit passes.
 See [P00](handoffs/P00.md), [C01](handoffs/C01.md), [C02](handoffs/C02.md),
 [C03](handoffs/C03.md), [C04](handoffs/C04.md), [C05](handoffs/C05.md), [C06](handoffs/C06.md), [C07](handoffs/C07.md), [C08](handoffs/C08.md), [C09](handoffs/C09.md) and [C10](handoffs/C10.md) handoffs for current evidence.
@@ -53,18 +53,10 @@ unrelated paths are preserved. [Delivery](evidence/C24/delivery.json).
 The beta origin is a proposed configuration target. No DNS/cloud/OAuth/provider
 validation, live adapter/deployment or data action occurred. Actual host/auth,
 Cloud Tasks/outbox and supervisor implementations plus all live acceptance gates
-remain pending. Dispatch disabled; scheduler PAUSED. C25 Not started.
+remain pending. Production dispatch disabled; scheduler PAUSED. C25 local implementation is now verified; see the current checkpoint below.
 [Configuration](../../../deploy/gcp-v1/README.md), [handoff](handoffs/C24.md).
 
-C25 readiness (2026-10-28 JST): ready to begin local proposal review/approval
-work; implementation remains Not started. P00/C18/C22/C23/C24 receipts reconcile
-335 entries / 322 distinct current paths with accepted source `eeec2e1`; 42
-unrelated paths remain unchanged. Fresh baseline passes 234 backend/930 frontend
-cases, typecheck/build and audit Ruff. Current C22 public semantics remain
-non-executing with no cancel/execution-result/artifact API; a bounded C22/C23
-public-contract amendment is required before later C25 service parity. Live
-hosting/queue/supervisor and deployment gates stay separate and closed.
-[Audit](C25_READINESS_AUDIT_2026-10-28.md), [handoff](handoffs/C25.md).
+Current C25 checkpoint (2026-10-29 JST): **local implementation verified; exact-source hosted delivery pending.** Proposal review/revision/approval, durable execution projections, cancellation requests, validated table/PNG inspection, scope-bearing result bundles and C17 attachment are integrated in the existing Workspace. C22's nine-action non-executing v1 contract is preserved; a separate five-action version supplies explicit host-bound execution projections with no launch authority or production fixture fallback. Local checks: 1049 frontend, typecheck/build;24 backend Workspace cases;1 generated drift;1 actual owned PostgreSQL compatibility. Actual HTTP/browser checks cover stale approval, lost acknowledgements, safe results, reload, attachment, account revocation and Japanese390px layout. Forty-two unrelated paths and original prerequisite receipts are preserved; C25 source supersessions are recorded with the original C23 physical-source qualification. No GCP/DNS/deployment/provider/model/real-data action occurred. Hosting/auth, queue and production worker integration plus live acceptance remain separate gates before C26. [Handoff](handoffs/C25.md), [local receipt](evidence/C25/implementation-20261028/local-receipt.json).
 
 Original local implementation checkpoint: **C23 — Isolated Python execution preparation**. All393 scoped cases pass (292 new and101 existing regressions), Ruff passes, all17 new source/recipe/test files remain steady and946 prior source/1334 prior evidence files are preserved. Strict C22 byte/hash verification, non-executing supervisor, safe staging/output validation and fixed profile/offline image preparation are implemented. C23 remains In progress: actual runtime containment, durable integration, safe extraction and numerical acceptance remain pending. [Handoff](handoffs/C23.md), [original local checkpoint](evidence/C23/checkpoint.json).
 
@@ -156,7 +148,7 @@ production unchanged. See [site separation](SITE_SEPARATION.md) and
 | [C22 — Experiment proposals and frozen exports](components/C22-experiment-proposals.md) | Complete | Source66b4106 exact-source hosted CI39539257759 and delivery receipt pass |5273 backend/275 gated skips/86.14%;148 actual PG, independent reviews, strict nine-action HTTP; original receipts/qualifications retained | [C22](handoffs/C22.md) |
 | [C23 — Isolated Python execution](components/C23-python-sandbox.md) | Complete | Both actual retained Linux cases and raw audit pass; f6f823b hosted green: 6481 backend, 315 PostgreSQL, 930 v1, 132 legacy | Owner suspension denies publication; physical proofs release capacity; resources stopped. Unsupported crash/reboot/queued cases retain capacity; scientific approval and production dispatch remain separate | [C23](handoffs/C23.md) |
 | [C24 — Isolated GCP site and worker configuration](components/C24-gcp-worker-configuration.md) | Complete | Independent offline schema/renderer/templates, isolation matrix and operator runbook | 160 scoped local cases; eeec2e1 all four hosted jobs pass; provider/live deployment gates remain closed | [C24](handoffs/C24.md) |
-| [C25 — Experimental Workspace interface](components/C25-experimental-workspace.md) | Not started | Ready for local review/approval checkpoint; later execution/results public contract amendment required | 335 receipt entries/322 current paths reconciled; 234 backend, 930 frontend, typecheck/build pass | [C25](handoffs/C25.md) |
+| [C25 — Experimental Workspace interface](components/C25-experimental-workspace.md) | In progress | Local UI/service acceptance verified; exact-source hosted delivery pending | 1049 frontend;24 Workspace backend;1 drift;1 actual PG compatibility; actual HTTP/browser gates and353 source pins | [C25](handoffs/C25.md) |
 | [C26 — System acceptance and evaluation](components/C26-system-acceptance.md) | Not started | None | Not run | Not created |
 | [C27 — Release preparation and rollback](components/C27-release-readiness.md) | Not started | None | Not run | Not created |
 

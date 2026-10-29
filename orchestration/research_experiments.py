@@ -357,7 +357,8 @@ class ResearchExperimentService:
         status = 'unavailable'
         if reservation is not None:
             status = reservation.state if reservation.state in {'reserved', 'accepted', 'uncertain'} else 'unavailable'
-            reason = 'Retained fake delivery; Python was not executed'
+            reason = ('Retained reservation has ended; no new dispatch is offered' if reservation.state == 'released'
+                else 'Retained fake delivery; Python was not executed')
         elif approval['status'] == 'current':
             try:
                 self._require_enabled(dispatch=True)
@@ -379,7 +380,8 @@ class ResearchExperimentService:
             'proposal_revision_id': str(revision.id), 'proposal': proposal,
             'hashes': {key: getattr(revision, key) for key in HASH_FIELDS}, 'manifest': exported.manifest,
             'environment': environment, 'approval': approval,
-            'dispatch': {'eligible': eligible, 'reason': reason, 'reservation_id': str(reservation.id) if reservation else None, 'status': status},
+            'dispatch': {'eligible': eligible, 'reason': reason,
+                'reservation_id': str(reservation.id) if reservation is not None and status != 'unavailable' else None, 'status': status},
             'event_cursor': 0, 'latest_event_cursor': head.event_cursor, 'authority': 'experimental',
             'scientific_approval': 'not_independently_verified', 'execution_performed': False}
 

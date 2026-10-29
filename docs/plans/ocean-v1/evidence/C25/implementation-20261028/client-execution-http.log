@@ -1,0 +1,280 @@
+TAP version 13
+# Subtest: all five execution routes preserve actual Python HTTP request/reply bytes with explicit synthetic observations
+ok 1 - all five execution routes preserve actual Python HTTP request/reply bytes with explicit synthetic observations
+  ---
+  duration_ms: 15.808417
+  ...
+# Subtest: captured execution addresses bind actual parsed C22 proposals, not fabricated review snapshots
+ok 2 - captured execution addresses bind actual parsed C22 proposals, not fabricated review snapshots
+  ---
+  duration_ms: 2.747
+  ...
+# Subtest: execution parser rejects launch authority
+ok 3 - execution parser rejects launch authority
+  ---
+  duration_ms: 0.267292
+  ...
+# Subtest: execution parser rejects coerced launch
+ok 4 - execution parser rejects coerced launch
+  ---
+  duration_ms: 0.105417
+  ...
+# Subtest: execution parser rejects unavailable transport with enabled actions
+ok 5 - execution parser rejects unavailable transport with enabled actions
+  ---
+  duration_ms: 0.172042
+  ...
+# Subtest: execution parser rejects configured unavailable source
+ok 6 - execution parser rejects configured unavailable source
+  ---
+  duration_ms: 0.121708
+  ...
+# Subtest: execution parser rejects synthetic Python execution
+ok 7 - execution parser rejects synthetic Python execution
+  ---
+  duration_ms: 0.134042
+  ...
+# Subtest: execution parser rejects synthetic physical termination
+ok 8 - execution parser rejects synthetic physical termination
+  ---
+  duration_ms: 0.12625
+  ...
+# Subtest: execution parser rejects invented authority
+ok 9 - execution parser rejects invented authority
+  ---
+  duration_ms: 0.211584
+  ...
+# Subtest: execution parser rejects invented scientific approval
+ok 10 - execution parser rejects invented scientific approval
+  ---
+  duration_ms: 0.29775
+  ...
+# Subtest: execution parser rejects status consuming events
+ok 11 - execution parser rejects status consuming events
+  ---
+  duration_ms: 0.131125
+  ...
+# Subtest: execution parser rejects cancelling without request
+ok 12 - execution parser rejects cancelling without request
+  ---
+  duration_ms: 0.117084
+  ...
+# Subtest: execution parser rejects source substitution
+ok 13 - execution parser rejects source substitution
+  ---
+  duration_ms: 0.105459
+  ...
+# Subtest: retained operator terminal states require a separate termination proof and completed execution observation
+ok 14 - retained operator terminal states require a separate termination proof and completed execution observation
+  ---
+  duration_ms: 1.029083
+  ...
+# Subtest: all response binding fields and explicit execution address must match the request
+ok 15 - all response binding fields and explicit execution address must match the request
+  ---
+  duration_ms: 3.0035
+  ...
+# Subtest: event pages retain requested cursor, count, consecutive history and current projection high-water
+ok 16 - event pages retain requested cursor, count, consecutive history and current projection high-water
+  ---
+  duration_ms: 2.138209
+  ...
+# Subtest: cancellation acknowledgement keeps the same key, retained intent and separate unconfirmed termination
+ok 17 - cancellation acknowledgement keeps the same key, retained intent and separate unconfirmed termination
+  ---
+  duration_ms: 1.403167
+  ...
+# Subtest: execution merges discard older revisions and reject terminal regression, identity replacement and event loss
+ok 18 - execution merges discard older revisions and reject terminal regression, identity replacement and event loss
+  ---
+  duration_ms: 0.695417
+  ...
+# Subtest: only bounded table/PNG artifacts preserve experimental attachment authority
+ok 19 - only bounded table/PNG artifacts preserve experimental attachment authority
+  ---
+  duration_ms: 0.071916
+  ...
+# Subtest: only bounded table/PNG artifacts preserve experimental attachment authority
+ok 20 - only bounded table/PNG artifacts preserve experimental attachment authority
+  ---
+  duration_ms: 0.049041
+  ...
+# Subtest: only bounded table/PNG artifacts preserve experimental attachment authority
+ok 21 - only bounded table/PNG artifacts preserve experimental attachment authority
+  ---
+  duration_ms: 0.0515
+  ...
+# Subtest: only bounded table/PNG artifacts preserve experimental attachment authority
+ok 22 - only bounded table/PNG artifacts preserve experimental attachment authority
+  ---
+  duration_ms: 0.064625
+  ...
+# Subtest: only bounded table/PNG artifacts preserve experimental attachment authority
+ok 23 - only bounded table/PNG artifacts preserve experimental attachment authority
+  ---
+  duration_ms: 0.043958
+  ...
+# Subtest: total output bytes, duplicate artifact identities, incomplete states and mismatched attachment snapshots fail
+ok 24 - total output bytes, duplicate artifact identities, incomplete states and mismatched attachment snapshots fail
+  ---
+  duration_ms: 0.76725
+  ...
+# Subtest: canonical base64, chunk bounds, retained manifest and full-byte SHA are verified
+ok 25 - canonical base64, chunk bounds, retained manifest and full-byte SHA are verified
+  ---
+  duration_ms: 8.443791
+  ...
+# Subtest: Python's valid empty EOF page remains supported at the exact retained file length
+ok 26 - Python's valid empty EOF page remains supported at the exact retained file length
+  ---
+  duration_ms: 0.3855
+  ...
+# Subtest: preview is only an initial table display and never parses exact machine int64 bytes into JS numbers
+ok 27 - preview is only an initial table display and never parses exact machine int64 bytes into JS numbers
+  ---
+  duration_ms: 2.001208
+  ...
+# Subtest: large collection uses bounded chunks then a fresh authorized one-byte request before exposure
+ok 28 - large collection uses bounded chunks then a fresh authorized one-byte request before exposure
+  ---
+  duration_ms: 40.260833
+  ...
+# Subtest: collection refuses mid-chunk revocation, stale final authorization and a changed final execution
+ok 29 - collection refuses mid-chunk revocation, stale final authorization and a changed final execution
+  ---
+  duration_ms: 146.223917
+  ...
+# Subtest: a late or callback-aborted chunk cannot publish progress or an assembled artifact
+ok 30 - a late or callback-aborted chunk cannot publish progress or an assembled artifact
+  ---
+  duration_ms: 33.189458
+  ...
+# Subtest: pending cancellation is exact, immutable, non-overwritable and cleared by account/permission generation changes
+ok 31 - pending cancellation is exact, immutable, non-overwritable and cleared by account/permission generation changes
+  ---
+  duration_ms: 0.794625
+  ...
+# Subtest: cancellation slots are bounded without evicting an uncertain request, and original contexts remain distinguishable
+ok 32 - cancellation slots are bounded without evicting an uncertain request, and original contexts remain distinguishable
+  ---
+  duration_ms: 1.837709
+  ...
+# Subtest: both protocol families permit only their exact fixed same-origin routes
+ok 33 - both protocol families permit only their exact fixed same-origin routes
+  ---
+  duration_ms: 10.54925
+  ...
+# Subtest: HTTP 401 maps to a safe status without leaking server bodies
+ok 34 - HTTP 401 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.437791
+  ...
+# Subtest: HTTP 403 maps to a safe status without leaking server bodies
+ok 35 - HTTP 403 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.107833
+  ...
+# Subtest: HTTP 404 maps to a safe status without leaking server bodies
+ok 36 - HTTP 404 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.094917
+  ...
+# Subtest: HTTP 409 maps to a safe status without leaking server bodies
+ok 37 - HTTP 409 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.254333
+  ...
+# Subtest: HTTP 422 maps to a safe status without leaking server bodies
+ok 38 - HTTP 422 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.115792
+  ...
+# Subtest: HTTP 429 maps to a safe status without leaking server bodies
+ok 39 - HTTP 429 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.141416
+  ...
+# Subtest: HTTP 500 maps to a safe status without leaking server bodies
+ok 40 - HTTP 500 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.41325
+  ...
+# Subtest: HTTP 503 maps to a safe status without leaking server bodies
+ok 41 - HTTP 503 maps to a safe status without leaking server bodies
+  ---
+  duration_ms: 0.224625
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":1,"value":2}
+ok 42 - ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":1,"value":2}
+  ---
+  duration_ms: 0.398042
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":NaN}
+ok 43 - ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":NaN}
+  ---
+  duration_ms: 0.137041
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":9223372036854775807}
+ok 44 - ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":9223372036854775807}
+  ---
+  duration_ms: 0.216792
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":"\\ud800"}
+ok 45 - ambiguous/nonfinite/unsafe/malformed response is rejected: {"value":"\\ud800"}
+  ---
+  duration_ms: 0.175834
+  ...
+# Subtest: ambiguous/nonfinite/unsafe/malformed response is rejected: <html>private</html>
+ok 46 - ambiguous/nonfinite/unsafe/malformed response is rejected: <html>private</html>
+  ---
+  duration_ms: 0.118334
+  ...
+# Subtest: stream bytes are bounded even when Content-Length is absent or lies
+ok 47 - stream bytes are bounded even when Content-Length is absent or lies
+  ---
+  duration_ms: 0.554167
+  ...
+# Subtest: oversized declared responses and requests fail before parsing/untrusted work
+ok 48 - oversized declared responses and requests fail before parsing/untrusted work
+  ---
+  duration_ms: 0.342209
+  ...
+# Subtest: invalid UTF-8, getter/prototype/cycle/unsafe numeric inputs never become requests
+ok 49 - invalid UTF-8, getter/prototype/cycle/unsafe numeric inputs never become requests
+  ---
+  duration_ms: 0.297208
+  ...
+# Subtest: abort while a token or fetch is unresolved stops waiting and discards a late response
+ok 50 - abort while a token or fetch is unresolved stops waiting and discards a late response
+  ---
+  duration_ms: 4.019834
+  ...
+# Subtest: bounded deadline ends stalled token/fetch/body waits and reports mutation uncertainty
+ok 51 - bounded deadline ends stalled token/fetch/body waits and reports mutation uncertainty
+  ---
+  duration_ms: 43.233083
+  ...
+# Subtest: tokens are explicit and malformed tokens do not reach fetch
+ok 52 - tokens are explicit and malformed tokens do not reach fetch
+  ---
+  duration_ms: 0.421209
+  ...
+# Subtest: response/deadline bound options cannot silently widen limits
+ok 53 - response/deadline bound options cannot silently widen limits
+  ---
+  duration_ms: 0.074083
+  ...
+# Subtest: malicious or stalled body cancellation cannot hold an invalid oversized reply open
+ok 54 - malicious or stalled body cancellation cannot hold an invalid oversized reply open
+  ---
+  duration_ms: 0.264542
+  ...
+1..54
+# tests 54
+# suites 0
+# pass 54
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 358.68575

@@ -1,0 +1,22 @@
+{
+  "scope": "current backend/support source after local native compatibility and during final unit verification",
+  "sha256": {
+    "api/auth.py": "63afb340c13e514d571b30cbee98c1509daf9b424229c374f0d2d1a6a183660b",
+    "api/main.py": "54ac486e714feef57e6cba04f9a5eb849417554134b4d8f9ace220845bf7d9af",
+    "api/rate_limit.py": "b4981ca3578e3e5a249d8aa557554840d71a094bb5008954d5669c226b758ce3",
+    "api/v1_runtime_routes.py": "e944453a55c96258f73bfa0cfacfce0e8458de704c0b0e081e9f49c3933e5c32",
+    "config.py": "0d524644a410f5137c77fcf5900b4002c0ed87fb9cde4900c2761522841d405a",
+    "api/experiment_workspace_routes.py": "e1c07cb76bde3280298e35ca484a5466374b759749f6438ca70a5597b4f282ea",
+    "schema/experiment_workspace.py": "7101217dd94b935c29f30c5d1043503750cebcbaeb7db175bf68a9357d2e8b8a",
+    "orchestration/experiment_workspace.py": "59f09b90a0abbd53aaef22c4aaa1be8b3aea8ac69a78ba1d5b00032d466afebc",
+    "orchestration/research_experiments.py": "466d45002963786d6613edfbb2b4dd45946831a4ae987e971975756e2fd67076",
+    "tests/experiment_workspace_support.py": "3e97306596b55aa17cb5698fedb0678262a3419ad1ce824f28bb487184e9eeef",
+    "tests/test_experiment_workspace.py": "e29190fe9051a88d50fd40249cf99cd7c4366f2168d7fbff2b8839bd6d445e56",
+    "tests/integration/test_experiment_workspace_postgres.py": "63f1503af46deb231baf798be431193450408165967d8800488ba0dcfffd7287",
+    "docs/plans/ocean-v1/evidence/C25/serve_experiments_qa.py": "36dc4f8b9cc1cfcf73235d6bbffcbeabe871b9648f6ee18ec6a8717a1522248c"
+  },
+  "immutable_C23_receipts_modified": false,
+  "production_execution_port_implemented": false,
+  "launch_enabled": false,
+  "cloud_calls_performed": false
+}

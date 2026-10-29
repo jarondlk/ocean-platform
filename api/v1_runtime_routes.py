@@ -23,6 +23,8 @@ from orchestration.catalogue_browser import CatalogueBrowser
 from orchestration.catalogue_service import CatalogueService
 from orchestration.investigations import InvestigationService
 from orchestration.research_runs import ResearchRunService
+from orchestration.research_experiments import ResearchExperimentService
+from orchestration.experiment_workspace import ExperimentWorkspaceService
 from schema.context_catalogue import Identifier, canonical_json
 
 VERSION = "ocean-v1-runtime-v1"
@@ -154,8 +156,52 @@ def _research_evidence(user, research_status, investigations, evidence, answers)
     return capability
 
 
+def _research_experiments(configuration, user, research_status, investigations, experiments, workspace):
+    """Discovery is configured by the host and closes current DB authority."""
+    capability = {
+        'version': 'research-experiments-v1', 'proposal_transport': 'unavailable', 'approval_enabled': False,
+        'execution_version': 'research-experiment-executions-v1', 'execution_transport': 'unavailable',
+        'execution_source': 'unavailable', 'start_enabled': False, 'cancel_enabled': False, 'artifacts_enabled': False,
+        'reason': 'Experiment services are unavailable.',
+    }
+    if (research_status != 'ready' or user.role not in {'researcher', 'admin'}
+            or not {'chat:use', 'data:read', 'data:export'} <= user.permissions
+            or not isinstance(experiments, ResearchExperimentService)
+            or experiments.investigations is not investigations or experiments.site_id != configuration.site_id
+            or experiments.session_factory is not investigations.session_factory):
+        return capability
+    try:
+        with experiments._transaction() as session:
+            experiments._actor(session, user=user)
+        approval = False
+        try:
+            # The retained C22 decision path currently closes both its review
+            # and fake-dispatch preflights even for an approval. Discovery must
+            # reflect that actual contract; this never enables a C25 start.
+            experiments._require_enabled(dispatch=True)
+            approval = True
+        except Exception:
+            pass
+        capability.update(proposal_transport='http-v1', approval_enabled=approval,
+            reason='Proposal review is available; execution is unavailable.')
+        if (isinstance(workspace, ExperimentWorkspaceService) and workspace.experiments is experiments
+                and workspace.site_id == configuration.site_id and workspace.session_factory is experiments.session_factory):
+            current = workspace.capability(user)['capability']
+            capability.update(execution_transport=current['transport'], execution_source=current['source'],
+                cancel_enabled=current['cancel_enabled'], artifacts_enabled=current['artifacts_enabled'],
+                reason=current['reason']['en'] if current['reason'] else None)
+        with experiments._transaction() as session:
+            experiments._actor(session, user=user)
+        return capability
+    except Exception:
+        return {**capability, 'proposal_transport': 'unavailable', 'approval_enabled': False,
+            'execution_transport': 'unavailable', 'execution_source': 'unavailable',
+            'cancel_enabled': False, 'artifacts_enabled': False, 'reason': 'Experiment services are unavailable.'}
+
+
 def runtime_response(user, configured, catalogue_service=None, catalogue_browser=None, investigation_service=None,
-                     research_run_service=None, research_evidence_service=None, research_answer_service=None):
+                     research_run_service=None, research_evidence_service=None, research_answer_service=None,
+                     research_experiment_service=None, experiment_workspace_service=None):
     """Own configuration callback lifetime and serialization in the same worker."""
     if not isinstance(user, CurrentUser):
         return _error(401, "authentication_required", "Authentication is required")
@@ -198,6 +244,9 @@ def runtime_response(user, configured, catalogue_service=None, catalogue_browser
         if research_evidence_service is not None or research_answer_service is not None:
             extra['research_evidence'] = _research_evidence(user, capabilities['research']['status'],
                 investigation_service, research_evidence_service, research_answer_service)
+        if research_experiment_service is not None or experiment_workspace_service is not None:
+            extra['research_experiments'] = _research_experiments(configuration, user, capabilities['research']['status'],
+                investigation_service, research_experiment_service, experiment_workspace_service)
         revision = hashlib.sha256(canonical_json({
             "identity": identity, "site_id": configuration.site_id,
             "configuration_revision": configuration.revision, "capabilities": capabilities,
@@ -230,6 +279,8 @@ async def runtime(request: Request):
         getattr(request.app.state, "research_run_service", None),
         getattr(request.app.state, "research_evidence_service", None),
         getattr(request.app.state, "research_answer_service", None),
+        getattr(request.app.state, "research_experiment_service", None),
+        getattr(request.app.state, "experiment_workspace_service", None),
     )
     await checkpoint()
     return response
