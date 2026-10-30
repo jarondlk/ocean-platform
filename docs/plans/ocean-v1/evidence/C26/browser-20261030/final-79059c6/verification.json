@@ -1,0 +1,47 @@
+{
+  "version": "c26-browser-artifact-verification-v1",
+  "source_revision": "sha256:79059c699828bb4e15767eef13e735370ed3ebe32e6f488bbe3e846186ce976f",
+  "source_pins_match_current": true,
+  "source_files": 204,
+  "actual_requests": 707,
+  "original_oct29_artifact_count": 39,
+  "all_original_oct29_artifacts_unchanged": true,
+  "artifacts": {
+    "README.md": "84405929f895471d40573bd4330cd8aa7cf127818f694a5608806869ef45e4c2",
+    "actual-http.json.gz": "076c5ec7ebb43c6028241287b739da96f51240a918f7954fa584237a140377b2",
+    "browser-observations.json": "1b89c3f3952c037eb3e7034a232590a3eed032b0afbce3193928861214b64c29",
+    "catalogue-deeplink-reload-dom.txt": "78c0e5db10995a54b0c316efd9d117631e674cffa6bcbd7998a074d929cc0685",
+    "cleanup.json": "0239711ea5659dcc34f462448b55a8d1beb8999d0982a5a6783b71703ef18ca4",
+    "experimental-output-dom.txt": "1b36a20076f650a8c7cd34e36a1e7995f2a2cc7b07b5d00554c05f75fb621734",
+    "initial-history-selection-pending-dom.txt": "f2f3f023e8ebafbc7fe3fc7e9da6787f667702f5f850826e1a62b9ac0aa53b78",
+    "interaction-observations.json": "0d6cb24954f20d334972f99c6af4881c7b20586b43aa7e951a44d786b7c81678",
+    "japanese-narrow-inspector.png": "47b29123b66cde30ce45da5310e3deb8d5b605046875f41f91ccdb0875fa8696",
+    "keyboard-inspector-dom.txt": "1053d4c10810a87cc5c02c5881eb1c785444041eef1071faa89e64f2f193164f",
+    "mixed-answer-binding-budget-dom.txt": "01824ca81d191539d726278d7bcf95bd38961beb37b7f6937632dac78c5f3a1d",
+    "mixed-context-independent-conversation-dom.txt": "f406607ee8b8e3baed7c59c85e85dd817b48a39c37f751b806b4e10029bd6604",
+    "mixed-evidence-history-loaded-dom.txt": "f2d02c0bbeb8f3e4fcdfac3a3f9f6169e5dfa43c541c108b2a693c84fc45e8dc",
+    "mixed-prepared-answer-dom.txt": "9afeb2d2c84baa15b26b69db865e4271c3712300f6d9e6f2f6a39041a0086fe7",
+    "mixed-prepared-answer-reloaded-dom.txt": "05cae1cdaf4766fe06f756cf9161854e8449770b619825b56cc2cdef82618eb2",
+    "mixed-prepared-answer-reloaded.png": "6039be4525a3e66b96a8195d6be31258d8ba91522181717d4f9c241591908f09",
+    "mixed-prepared-answer.png": "a5d05980158d5a69292beb1aeb18ba0e968e97ebf10e57b6d4dec33f9c1acf1a",
+    "mixed-run-submitted-dom.txt": "3c9b9f64e4f953d34e590e0f7f03c90cac6febad3f86e396f97b249edd9afcf9",
+    "native-first-attachment-dom.txt": "e85fc2834dcb2364d3176d193dcf9c86c526f6aab580293503bca4d85b34187d",
+    "native-first-experimental-second-dom.txt": "ae92826feff978d3d641d27d143cf8b09aeda5ebbc68c328f817753429f75457",
+    "other-account-denial-dom.txt": "9a0fb6b09979427cb705982c0b6e0b1723b92ad411c497e03e43f4082cbf6ff1",
+    "other-account-denial.png": "cdb547643f2ca5e8e3500cd6940d180889de0d1abf8554d935ac4860e0efb2d3",
+    "prepared-answer-first-hydration-notice-dom.txt": "9d2193deda3ce3e5d02ceec27916ff568198bf4b2915f1b3d0646cb0e1f9a1e4",
+    "revoked-account-dom.txt": "922ff107e8cc5f5891f80a0e6d30bc2148f70e26b70f33b4359e3f1913606028",
+    "revoked-account.png": "fdd6784f39314129d6aed1c5d22b2a630a3fb17f50d83cc5163b4847f8f4a6d8",
+    "select-without-mutation-dom.txt": "69400c087bb2f5376ae33bcfbe1b9f022cfbb81e810757b608052c61213954d3",
+    "shared-pin-independent-chat-dom.txt": "2273b3676187e332c5fdc0c0b3c9ab54f0825eb12a72f1f790b8e03efe5ab55e"
+  },
+  "functional_checks": {
+    "browser-catalogue": "passed",
+    "browser-research": "passed",
+    "browser-experiments": "passed",
+    "browser-accessibility": "passed"
+  },
+  "open_findings": [
+    "c26-active-worker-history-deadline"
+  ]
+}

@@ -1,0 +1,134 @@
+- complementary "Development controls":
+  - strong: Local C26 acceptance · synthetic TEST accounts and observations · no live models or Python execution
+- link "コンテンツへ移動":
+  - /url: "#main-content"
+- banner:
+  - button "ナビゲーションを開く":
+  - button "OCEAN Platform":
+    - text: OCEAN
+    - generic: Platform
+  - navigation "メインナビゲーション":
+    - link "リサーチ":
+      - /url: /?view=research
+      - generic: リサーチ
+    - link "コンテキストカタログ":
+      - /url: /?view=catalogue
+      - generic: コンテキストカタログ
+    - link "ツール":
+      - /url: /?view=tools
+      - generic: ツール
+  - 'button "アカウント: 内部アカウント, 研究者"':
+    - strong: 内部アカウント
+    - text: 研究者
+  - button "言語を切り替え":
+  - button "ライトテーマ":
+  - button "アクセス権を再確認":
+- main:
+  - region "コンテキストカタログ":
+    - generic: OCEAN / v1
+    - heading "コンテキストカタログ" [level=1]
+    - paragraph: データとコンテキストを閲覧します。調査の設定は変わりません。
+    - generic: スナップショット
+    - combobox "カタログのスナップショット":
+      - option "スナップショットを選択" [disabled]
+      - option "C26合成スナップショット1" [selected]
+      - option "C26合成スナップショット2"
+    - generic: アクセス可能なすべてのカタログ項目を検索
+    - textbox "アクセス可能なすべてのカタログ項目を検索":
+      - /placeholder: 名前・識別情報・パスで検索
+      - text: synthetic:sst:mur-final
+    - button "検索"
+    - text: ソース
+    - combobox "ソース":
+      - option "すべてのソース" [selected]
+      - option "CTD"
+      - option "Metagenome"
+      - option "SST"
+      - option "eDNA"
+    - text: 種類
+    - combobox "種類":
+      - option "すべての種類" [selected]
+      - option "ディレクトリ"
+      - option "データセット"
+      - option "テーブル"
+      - option "解析"
+      - option "ワークフロー"
+      - option "統計"
+      - option "メタデータ"
+      - option "関連性"
+      - option "参照"
+    - text: 位置付け
+    - combobox "位置付け":
+      - option "すべての位置付け" [selected]
+      - option "記述的"
+      - option "公開済み"
+      - option "実験的"
+    - button "絞り込みを解除":
+      - text: 絞り込みを解除
+    - generic "適用された絞り込み":
+      - generic: "検索: synthetic:sst:mur-final"
+    - text: 1ページの項目数
+    - combobox "1ページの項目数":
+      - option "25"
+      - option "100" [selected]
+      - option "500"
+    - button "ディレクトリ":
+      - text: ディレクトリ
+    - button "インスペクター" [expanded]:
+      - text: インスペクター
+    - navigation "カタログのパス":
+      - button "概要"
+      - button "data"
+      - button "海面水温プロダクト"
+      - button "mur 04.1 (final)"
+      - button "synthetic:sst:mur-final:collection"
+      - button "合成MUR海面水温"
+    - heading "検索結果" [level=2]
+    - generic: 3 一致する項目
+    - list:
+      - button "合成MUR海面水温 データセット · SST synthetic:sst:mur-final" [pressed]:
+        - strong: 合成MUR海面水温
+        - generic: データセット · SST
+        - code: synthetic:sst:mur-final
+      - button "synthetic:sst:mur-final:collection ディレクトリ · SST synthetic:sst:mur-final:collection":
+        - strong: synthetic:sst:mur-final:collection
+        - generic: ディレクトリ · SST
+        - code: synthetic:sst:mur-final:collection
+      - button "観測 テーブル · SST synthetic:sst:mur-final:table:observations":
+        - strong: 観測
+        - generic: テーブル · SST
+        - code: synthetic:sst:mur-final:table:observations
+    - generic: 3 表示 / 3
+    - generic: "ソースの完全性: complete · クエリ: complete"
+    - generic "適用された対象範囲と完全性"
+    - button "最初のページ" [disabled]:
+      - text: 最初のページ
+    - button "前へ" [disabled]
+    - button "次のページ" [disabled]:
+      - text: 次のページ
+    - complementary "項目のインスペクター":
+      - heading "インスペクター" [level=2]
+      - button "インスペクターを閉じる":
+      - article:
+        - generic: データセット
+        - heading "合成MUR海面水温" [level=2]
+        - code: synthetic:sst:mur-final
+        - button "内容を閲覧":
+          - text: 内容を閲覧
+        - tablist "確認するセクション":
+          - tab "概要"
+          - tab "テーブル"
+          - tab "カバレッジ"
+          - tab "手法"
+          - tab "来歴" [active] [selected]
+          - tab "関連"
+        - tabpanel "来歴":
+          - term: スナップショット
+          - definition:
+            - code: 14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37
+          - generic "カタログ閲覧の対象範囲"
+          - generic "保持された来歴の参照"
+          - generic: "{ \"dataset_id\": \"synthetic:sst:mur-final\", \"source_family\": \"remote_sensing\", \"source_id\": \"synthetic-sst\", \"snapshot_id\": \"a5f02b96c2c90fc74b777c2c4144c035b64c7a381dd5a1a3b9693b11593b8203\" }"
+          - paragraph: この確認ではプレビューからソースの完全性を推測しません。
+- button "Open Next.js Dev Tools":
+- alert: OCEAN · コンテキストカタログ

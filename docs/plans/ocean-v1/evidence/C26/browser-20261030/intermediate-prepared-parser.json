@@ -1,0 +1,260 @@
+{
+  "version": "c26-mixed-answer-parser-diagnostic-v1",
+  "input": "/private/tmp/ocean-c26-mixed-prepared-answer-contract-20261030.json",
+  "source_revision": "sha256:1f26e0784774128929d8d0c88dc7844ce83a5fb75c2795bf57b4f9a3a8af02db",
+  "observations": [
+    {
+      "id": "initial-context:answers-list",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "run_id": "75b0fc49-962c-40cd-bbcb-04614789f0a1",
+        "items": 1
+      },
+      "client": {
+        "status": "passed",
+        "run_id": "75b0fc49-962c-40cd-bbcb-04614789f0a1",
+        "items": 1
+      }
+    },
+    {
+      "id": "initial-context:answers-events",
+      "api_status": 200,
+      "schema": {
+        "status": "passed"
+      },
+      "client": {
+        "status": "passed"
+      }
+    },
+    {
+      "id": "initial-context:evidence-list",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "run_id": "75b0fc49-962c-40cd-bbcb-04614789f0a1",
+        "items": 1
+      },
+      "client": {
+        "status": "passed",
+        "run_id": "75b0fc49-962c-40cd-bbcb-04614789f0a1",
+        "items": 1
+      }
+    },
+    {
+      "id": "initial-context:evidence-open:0",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:20ff97500822e09925b4fbfa403bf9ae315011e42b380711a219e2fec87a4d1b"
+      },
+      "client": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:20ff97500822e09925b4fbfa403bf9ae315011e42b380711a219e2fec87a4d1b"
+      }
+    },
+    {
+      "id": "initial-context:evidence-page:0",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:20ff97500822e09925b4fbfa403bf9ae315011e42b380711a219e2fec87a4d1b"
+      },
+      "client": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:20ff97500822e09925b4fbfa403bf9ae315011e42b380711a219e2fec87a4d1b"
+      }
+    },
+    {
+      "id": "mixed-native-experimental-context:answers-list",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "run_id": "f9e93e32-ec88-429e-a64f-10afa878c76c",
+        "items": 0
+      },
+      "client": {
+        "status": "passed",
+        "run_id": "f9e93e32-ec88-429e-a64f-10afa878c76c",
+        "items": 0
+      }
+    },
+    {
+      "id": "mixed-native-experimental-context:evidence-list",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "run_id": "f9e93e32-ec88-429e-a64f-10afa878c76c",
+        "items": 2
+      },
+      "client": {
+        "status": "passed",
+        "run_id": "f9e93e32-ec88-429e-a64f-10afa878c76c",
+        "items": 2
+      }
+    },
+    {
+      "id": "mixed-native-experimental-context:evidence-open:0",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:07ac3841259876a8a253067dadfbd7b47114752eb716c2fd0e1675ce27fd4f1c"
+      },
+      "client": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:07ac3841259876a8a253067dadfbd7b47114752eb716c2fd0e1675ce27fd4f1c"
+      }
+    },
+    {
+      "id": "mixed-native-experimental-context:evidence-page:0",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:07ac3841259876a8a253067dadfbd7b47114752eb716c2fd0e1675ce27fd4f1c"
+      },
+      "client": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:07ac3841259876a8a253067dadfbd7b47114752eb716c2fd0e1675ce27fd4f1c"
+      }
+    },
+    {
+      "id": "mixed-native-experimental-context:evidence-open:1",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:20ff97500822e09925b4fbfa403bf9ae315011e42b380711a219e2fec87a4d1b"
+      },
+      "client": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:20ff97500822e09925b4fbfa403bf9ae315011e42b380711a219e2fec87a4d1b"
+      }
+    },
+    {
+      "id": "mixed-native-experimental-context:evidence-page:1",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:20ff97500822e09925b4fbfa403bf9ae315011e42b380711a219e2fec87a4d1b"
+      },
+      "client": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:20ff97500822e09925b4fbfa403bf9ae315011e42b380711a219e2fec87a4d1b"
+      }
+    },
+    {
+      "id": "mixed-native-experimental-prepared-answer:answers-list",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "run_id": "f9e93e32-ec88-429e-a64f-10afa878c76c",
+        "items": 1
+      },
+      "client": {
+        "status": "passed",
+        "run_id": "f9e93e32-ec88-429e-a64f-10afa878c76c",
+        "items": 1
+      }
+    },
+    {
+      "id": "mixed-native-experimental-prepared-answer:answers-events",
+      "api_status": 200,
+      "schema": {
+        "status": "passed"
+      },
+      "client": {
+        "status": "passed"
+      }
+    },
+    {
+      "id": "mixed-native-experimental-prepared-answer:evidence-list",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "run_id": "f9e93e32-ec88-429e-a64f-10afa878c76c",
+        "items": 2
+      },
+      "client": {
+        "status": "passed",
+        "run_id": "f9e93e32-ec88-429e-a64f-10afa878c76c",
+        "items": 2
+      }
+    },
+    {
+      "id": "mixed-native-experimental-prepared-answer:evidence-open:0",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:07ac3841259876a8a253067dadfbd7b47114752eb716c2fd0e1675ce27fd4f1c"
+      },
+      "client": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:07ac3841259876a8a253067dadfbd7b47114752eb716c2fd0e1675ce27fd4f1c"
+      }
+    },
+    {
+      "id": "mixed-native-experimental-prepared-answer:evidence-page:0",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:07ac3841259876a8a253067dadfbd7b47114752eb716c2fd0e1675ce27fd4f1c"
+      },
+      "client": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:07ac3841259876a8a253067dadfbd7b47114752eb716c2fd0e1675ce27fd4f1c"
+      }
+    },
+    {
+      "id": "mixed-native-experimental-prepared-answer:evidence-open:1",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:20ff97500822e09925b4fbfa403bf9ae315011e42b380711a219e2fec87a4d1b"
+      },
+      "client": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:20ff97500822e09925b4fbfa403bf9ae315011e42b380711a219e2fec87a4d1b"
+      }
+    },
+    {
+      "id": "mixed-native-experimental-prepared-answer:evidence-page:1",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:20ff97500822e09925b4fbfa403bf9ae315011e42b380711a219e2fec87a4d1b"
+      },
+      "client": {
+        "status": "passed",
+        "receipt_id": "c21:receipt:20ff97500822e09925b4fbfa403bf9ae315011e42b380711a219e2fec87a4d1b"
+      }
+    }
+  ],
+  "hydration": {
+    "status": "passed",
+    "views": 0,
+    "receipts": [
+      "c21:receipt:07ac3841259876a8a253067dadfbd7b47114752eb716c2fd0e1675ce27fd4f1c",
+      "c21:receipt:20ff97500822e09925b4fbfa403bf9ae315011e42b380711a219e2fec87a4d1b"
+    ],
+    "run_id": "f9e93e32-ec88-429e-a64f-10afa878c76c"
+  },
+  "hydrations": {
+    "mixed-native-experimental-context": {
+      "status": "passed",
+      "views": 0,
+      "receipts": [
+        "c21:receipt:07ac3841259876a8a253067dadfbd7b47114752eb716c2fd0e1675ce27fd4f1c",
+        "c21:receipt:20ff97500822e09925b4fbfa403bf9ae315011e42b380711a219e2fec87a4d1b"
+      ],
+      "run_id": "f9e93e32-ec88-429e-a64f-10afa878c76c"
+    },
+    "mixed-native-experimental-prepared-answer": {
+      "status": "passed",
+      "views": 1,
+      "receipts": [
+        "c21:receipt:07ac3841259876a8a253067dadfbd7b47114752eb716c2fd0e1675ce27fd4f1c",
+        "c21:receipt:20ff97500822e09925b4fbfa403bf9ae315011e42b380711a219e2fec87a4d1b"
+      ],
+      "run_id": "f9e93e32-ec88-429e-a64f-10afa878c76c"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "version": "c26-authorized-owning-repair-continuation-v1",
+  "date": "2026-10-30 JST",
+  "user_instructions": [
+    "Please continue, I approve",
+    "please continue, I approve",
+    "I authorize"
+  ],
+  "scope": "Continue previously approved C21/C25 artifact interoperability repair and C26 acceptance/delivery",
+  "concrete_c21_amendment": "Bound ResearchAnswerEvent SELECT to captured job.event_cursor after actual worker interleaving reproduced HTTP503; consistent older prefix remains reachable and next poll consumes later events",
+  "retention_performance_amendment": "Consolidate duplicated exact artifact lookup/pin verification with current closing authority and multi-provider callback guards; no authorization cache or deadline increase",
+  "negative_proof": "owner-verification-20261030 artifacts retain deterministic event-race negative and original performance profiles",
+  "cloud_or_paid_provider_operations": false
+}

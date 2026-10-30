@@ -51,6 +51,7 @@ AUTHORIZED_SUPERSESSIONS = {
     'orchestration/investigations.py': 'User-approved C17 foreign retained-artifact composition and same-session resolution',
     'orchestration/research_evidence.py': 'User-approved C21 foreign retained-artifact durable protection/current authority',
     'orchestration/research_runs.py': 'User-approved C20 same-session artifact context resolution',
+    'orchestration/research_answers.py': 'User-approved C21 mixed-artifact workflow repair: bound event pages to their captured high-water cursor',
     'orchestration/research_experiments.py': 'User-approved C22 same-session artifact context resolution',
     'orchestration/experiment_workspace.py': 'User-approved C25 exact artifact resolution without recursive availability lookup',
     'tests/experiment_workspace_support.py': 'Explicit synthetic durable retention-port reference journal',
@@ -180,7 +181,10 @@ def main():
             raise ValueError('Missing requested actual regression file: ' + name)
     command = [sys.executable, '-m', 'pytest', *['tests/' + name for name in paths],
         '-q', '--tb=short', '--junitxml=' + str(args.output / 'regressions.xml')]
-    environment = {**os.environ, 'C26_INTEGRATED_CAPTURE': str(integrated), 'PYTEST_ADDOPTS': ''}
+    # Test cases enable their own explicit services. Do not leak the runner's
+    # enabled integration settings into default-disabled/security regressions.
+    environment = {key: value for key, value in os.environ.items() if not key.startswith('ENABLE_V1_')}
+    environment.update(C26_INTEGRATED_CAPTURE=str(integrated), PYTEST_ADDOPTS='')
     with (args.output / 'regressions.txt').open('x') as stream:
         completed = subprocess.run(command, cwd=ROOT, env=environment, stdout=stream, stderr=subprocess.STDOUT, timeout=1800, check=False)
     regression_checks = junit_checks(args.output / 'regressions.xml')
@@ -204,8 +208,9 @@ def main():
             checks[item['id']] = {**item, 'sha256': sha(integrated), 'source_revision': revision}
     capture('isolation.json', run_isolation_acceptance(args.output / 'isolation-fixture'))
     scale = args.output / 'scale.json'
+    scale_environment = {**environment, 'ENABLE_V1_CATALOGUE': 'true', 'ENABLE_V1_RESEARCH_CONTROLLER': 'true'}
     subprocess.run([sys.executable, '-m', 'tests.system_acceptance_scale_support', '--output', str(scale)],
-        cwd=ROOT, env=environment, check=True, timeout=240)
+        cwd=ROOT, env=scale_environment, check=True, timeout=240)
     for item in parse_acceptance_json(scale.read_bytes())['checks']:
         checks[item['id']] = {**item, 'sha256': sha(scale), 'source_revision': revision}
     comparison = run_publication_comparison(args.output / 'comparison-fixture', source_revision=revision)

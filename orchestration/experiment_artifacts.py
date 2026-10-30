@@ -118,7 +118,7 @@ class ExperimentArtifactProvider(RetainedArtifactProvider):
         if self._access(session, user, locator) != expected:
             raise ExperimentWorkspaceError('access_denied', 403)
 
-    def _resolved(self, session, user, reference):
+    def _resolved(self, session, user, reference, *, close=True):
         self._ready()
         locator = self.port.artifact_locator(str(user.id), reference)
         if locator is None:
@@ -136,7 +136,8 @@ class ExperimentArtifactProvider(RetainedArtifactProvider):
             'expected_sha256': locator.artifact_sha256, 'offset': 0, 'limit': 1})
         if result['artifact']['attachment_reference'] != reference:
             raise ExperimentWorkspaceError('integrity_error', 409)
-        self._close(session, user, locator, access)
+        if close:
+            self._close(session, user, locator, access)
         return locator, access, RetainedArtifactBinding(id=locator.artifact_id,
             snapshot_id=locator.snapshot_id, sha256=locator.artifact_sha256, owner_user_id=user.id)
 
@@ -179,8 +180,13 @@ class ExperimentArtifactProvider(RetainedArtifactProvider):
         self._retain(session, operation, candidate, reference, user, committed=True)
 
     def verify_context(self, session, revision_id, reference, expected_sha256, user):
-        result = self._resolved(session, user, reference)
-        if result is None or result[2].sha256 != expected_sha256:
+        # One safe lookup serves both resolution and context verification. The
+        # closing fence runs after the durable-pin callback below, rather than
+        # repeating full authorization and byte validation in a second lookup.
+        result = self._resolved(session, user, reference, close=False)
+        if result is None:
+            return None
+        if result[2].sha256 != expected_sha256:
             raise ExperimentWorkspaceError('access_denied', 403)
         locator, access, _ = result
         revision = session.get(ResearchContextRevision, uuid.UUID(str(revision_id)))
@@ -196,3 +202,4 @@ class ExperimentArtifactProvider(RetainedArtifactProvider):
         if self.port.verify_artifact_retention(pin) is not True:
             raise ExperimentWorkspaceError('integrity_error', 409)
         self._close(session, user, locator, access)
+        return result[2]

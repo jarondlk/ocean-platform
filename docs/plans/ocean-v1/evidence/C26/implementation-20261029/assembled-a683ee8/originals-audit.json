@@ -1,0 +1,63 @@
+{
+  "checks": [
+    {
+      "id": "planning-and-original-receipts",
+      "status": "passed",
+      "reason": null,
+      "expected": {
+        "protected_paths": 42,
+        "original_evidence_unchanged": true,
+        "source_supersessions_explicitly_authorized": true
+      },
+      "observed": {
+        "protected_mismatches": [],
+        "original_evidence_checked": 5141,
+        "original_evidence_mismatches": [],
+        "unauthorized_changes": []
+      },
+      "source_supersessions": {
+        ".github/workflows/tests.yml": {
+          "original": "2095e2766986b08d94552823593351c598883968adb79242f3b098ba8ad56dd3",
+          "current": "baab0f5b33778a9723f850a12330afaa1b2a8f2e69c233bb04e20c122262c99b",
+          "authorization": "C26 isolated scale and native retained-artifact CI selection"
+        },
+        "orchestration/catalogue_service.py": {
+          "original": "50b3d587ca0cb0f754b3d0f0a742c3bf184e687e147b52f60a5f51bfc9939a48",
+          "current": "9b29032a9dd604bf7694cf7373f79bf71a967bed4634bb0f4f1f12f64aacec2a",
+          "authorization": "User-approved C14 memory optimization preserving complete membership/authorization"
+        },
+        "orchestration/experiment_workspace.py": {
+          "original": "59f09b90a0abbd53aaef22c4aaa1be8b3aea8ac69a78ba1d5b00032d466afebc",
+          "current": "48bc16715557da6580f251e13d56eee411d93a2ca685362b821acbc442eb2f24",
+          "authorization": "User-approved C25 exact artifact resolution without recursive availability lookup"
+        },
+        "orchestration/investigations.py": {
+          "original": "dd9d733121d9f1587e3b59b31b67e60a75bc50976589886cc96705c94efa46de",
+          "current": "6a2238fa6f3ef654cf5f71d43a4820cfd883f43f364b43bbfe271dc11f7b7aa2",
+          "authorization": "User-approved C17 foreign retained-artifact composition and same-session resolution"
+        },
+        "orchestration/research_evidence.py": {
+          "original": "cd721ffec16372b4685725e3082c2d0745a1e5586f6fc9963e822b24adbb42fc",
+          "current": "f513a861dc4284dce6af084be4a9bdf954228035d4d7bcd7037061d2e14c492a",
+          "authorization": "User-approved C21 foreign retained-artifact durable protection/current authority"
+        },
+        "orchestration/research_experiments.py": {
+          "original": "466d45002963786d6613edfbb2b4dd45946831a4ae987e971975756e2fd67076",
+          "current": "ef7e1aa14e0a0f362a866e88cff694e9367613a50a5daf00f5746ac9884f31b6",
+          "authorization": "User-approved C22 same-session artifact context resolution"
+        },
+        "orchestration/research_runs.py": {
+          "original": "de66c4c917686656fe9449a4d3e884a175ed6a94ec4a686f9953ba71474dc4d2",
+          "current": "0d8e652684005489612eee5e56d53d5a80559c0a62ca34484aef157dc65d89e4",
+          "authorization": "User-approved C20 same-session artifact context resolution"
+        },
+        "tests/experiment_workspace_support.py": {
+          "original": "3e97306596b55aa17cb5698fedb0678262a3419ad1ce824f28bb487184e9eeef",
+          "current": "bd96544e49e9a638cd64f60dd6d0b421b63143b9a5a76bc159ff5e36a137139d",
+          "authorization": "Explicit synthetic durable retention-port reference journal"
+        }
+      },
+      "original_tree": "e731b300f4fcd6bee55a9d43478d898aca8c9f61"
+    }
+  ]
+}

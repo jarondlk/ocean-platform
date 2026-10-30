@@ -1,0 +1,169 @@
+{
+  "version": "c26-isolation-observations-v1",
+  "fixture": {
+    "classification": "synthetic-local-actual-services",
+    "source_snapshot_id": "837b4fa9411d89ebc51d1ba7165ccf6b4c7142a17dfdf428a4ae0eeee7a60303",
+    "copy_snapshot_id": "35f3746980e868f9ce34d15f940bad7adfacb6540b08a781f3aa7babe56e02fa",
+    "destination": "ocean-v1-fixture-20261028",
+    "input_manifest_sha256": "6065ad1555ed7d3a0e9d2f99f389b57c9b34b0f43db3eda323bb39d54cacaa5e",
+    "live_calls_performed": false
+  },
+  "checks": [
+    {
+      "id": "transfer-independent",
+      "status": "passed",
+      "owner_components": [
+        "C09",
+        "C24",
+        "C26"
+      ],
+      "expected": {
+        "objects": 8,
+        "independent": true,
+        "exact_bytes": true,
+        "latest": [
+          null,
+          0
+        ],
+        "live_dependency": false,
+        "origin_retained": true
+      },
+      "observed": {
+        "objects": 8,
+        "independent": true,
+        "exact_bytes": true,
+        "latest": [
+          null,
+          0
+        ],
+        "live_dependency": false,
+        "origin_retained": true
+      },
+      "reason": null,
+      "evidence": {
+        "sha256": "5d667c11cd0cb5218947afc1cdbfe8e562ca30a9d66f9a276dea64c9d459daee",
+        "kind": "actual-service-synthetic",
+        "fixture_sha256": "9add1cc1d7abc04a0b0415c4c0f81a3f6d0ff46c0e6a357c0c2c4248c9254e1f"
+      }
+    },
+    {
+      "id": "transfer-rejections",
+      "status": "passed",
+      "owner_components": [
+        "C09",
+        "C26"
+      ],
+      "expected": [
+        "wrong-destination",
+        "source-bytes",
+        "authorization",
+        "eligibility"
+      ],
+      "observed": [
+        "wrong-destination",
+        "source-bytes",
+        "authorization",
+        "eligibility"
+      ],
+      "reason": null,
+      "evidence": {
+        "sha256": "ad32411ab5533773fb8e92fda3b3bdb46c53d619756e4bbd78b524bab175c26a",
+        "kind": "actual-service-synthetic",
+        "fixture_sha256": "9add1cc1d7abc04a0b0415c4c0f81a3f6d0ff46c0e6a357c0c2c4248c9254e1f"
+      }
+    },
+    {
+      "id": "transfer-withdrawal",
+      "status": "passed",
+      "owner_components": [
+        "C09",
+        "C24",
+        "C26"
+      ],
+      "expected": {
+        "origin_change_is_not_auto_sync": true,
+        "explicit_withdrawal_denies": true
+      },
+      "observed": {
+        "origin_change_is_not_auto_sync": true,
+        "explicit_withdrawal_denies": true
+      },
+      "reason": null,
+      "evidence": {
+        "sha256": "4676b754c0126ab07d0f84335762b8827be6c9117778ed8c1868a4a12422035a",
+        "kind": "actual-service-synthetic",
+        "fixture_sha256": "9add1cc1d7abc04a0b0415c4c0f81a3f6d0ff46c0e6a357c0c2c4248c9254e1f"
+      }
+    },
+    {
+      "id": "isolation-offline-contract",
+      "status": "passed",
+      "owner_components": [
+        "C24",
+        "C26"
+      ],
+      "expected": {
+        "artifacts": 7,
+        "apply_allowed": false,
+        "provider_schema_validated": false,
+        "unrun_live_gates": 11,
+        "same_origin_only": true,
+        "guest_network": "none"
+      },
+      "observed": {
+        "artifacts": 7,
+        "apply_allowed": false,
+        "provider_schema_validated": false,
+        "unrun_live_gates": 11,
+        "same_origin_only": true,
+        "guest_network": "none"
+      },
+      "reason": null,
+      "evidence": {
+        "sha256": "24917ef03d930928a6fbd23fe6af56bc04a4ffabbc4049405d101d1b6f343a76",
+        "kind": "actual-service-synthetic",
+        "fixture_sha256": "9add1cc1d7abc04a0b0415c4c0f81a3f6d0ff46c0e6a357c0c2c4248c9254e1f"
+      }
+    },
+    {
+      "id": "isolation-legacy-denial",
+      "status": "passed",
+      "owner_components": [
+        "C24",
+        "C26"
+      ],
+      "expected": [
+        "project_id",
+        "public_origin"
+      ],
+      "observed": [
+        "project_id",
+        "public_origin"
+      ],
+      "reason": null,
+      "evidence": {
+        "sha256": "87c8b1a23db3be07d1baaa1da3ee48b3cff6dd06514e587266d02237cf33ce42",
+        "kind": "actual-service-synthetic",
+        "fixture_sha256": "9add1cc1d7abc04a0b0415c4c0f81a3f6d0ff46c0e6a357c0c2c4248c9254e1f"
+      }
+    },
+    {
+      "id": "live-site-isolation",
+      "status": "not_run",
+      "owner_components": [
+        "C24",
+        "C26"
+      ],
+      "expected": {
+        "live_IAM_network_sessions": "actual observations required"
+      },
+      "observed": null,
+      "reason": "No concrete live target or authorization/configuration in this local fixture; no cloud operation performed",
+      "evidence": {
+        "sha256": "57abf3116b1984b6cfbf02683a3bfb4274feeb6b30e2079d87c1c2176db6623b",
+        "kind": "actual-service-synthetic",
+        "fixture_sha256": "9add1cc1d7abc04a0b0415c4c0f81a3f6d0ff46c0e6a357c0c2c4248c9254e1f"
+      }
+    }
+  ]
+}

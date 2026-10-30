@@ -11,6 +11,7 @@ import uuid
 import pytest
 
 from api.investigation_routes import investigation_response
+from api.research_evidence_routes import research_evidence_response
 from tests import experiment_execution_postgres_support as pg
 from tests.experiment_workspace_support import DurableSyntheticExecutionPort
 from tests.system_acceptance_support import make_system_acceptance_fixture
@@ -102,3 +103,34 @@ def test_native_pg_foreign_attachment_run_answer_revision_and_historical_reopen(
     assert evidence['sha256'] == receipt.sha256
     assert actual.workspace.capability(actual.user)['capability']['start_enabled'] is False
     assert not actual.experiments.executor.deliveries
+
+
+def test_native_pg_native_first_foreign_second_then_new_run_and_answer(actual, monkeypatch):
+    monkeypatch.setenv('ENABLE_V1_EVIDENCE', 'true')
+    context = actual.context()
+    _, _, execution, _ = actual.experiment(context, completed=True)
+    _, original_run = actual.finish_run(context)
+    original = actual.evidence.ensure_retained(original_run['id'], 1, actual.user).receipts[0]
+    for reference in (original.attachment_reference.model_dump(mode='json'),
+            execution['artifacts'][0]['attachment_reference']):
+        changed = actual.retained.service.invoke('context/change', {
+            'investigation_id': context['investigation']['id'],
+            'expected_revision_id': context['context']['id'], 'idempotency_key': str(uuid.uuid4()),
+            'change': {'op': 'attach', 'reference': reference}}, actual.user)
+        context = {**context, **changed}
+    _, current_run = actual.finish_run(context)
+    listing = research_evidence_response(actual.user, actual.evidence, actual.answers,
+        actual.retained.service, 'evidence', 'list', {**actual.runs.address(current_run), 'input_version': 1})
+    assert listing.status_code == 200, listing.body
+    receipts = json.loads(listing.body)['items']
+    assert len(receipts) == 2
+    assert next(row for row in receipts if row['id'] == original.id) == original.model_dump(mode='json')
+    current = next(row for row in receipts if row['run_id'] == current_run['id'])
+    assert current['binding']['revision_id'] == context['context']['id']
+    assert current['counts'][0]['value'] == 4
+    answer = actual.answer(current_run)['answer']
+    assert current['id'] in answer['receipt_ids']
+    assert set(answer['receipt_ids']) <= {row['id'] for row in receipts}
+    assert answer['scientific_verification'] == 'not_independently_verified'
+    assert any('not independently verified scientific evidence' in item for item in answer['qualifications'])
+    assert execution['artifacts'][0]['id'] not in answer['receipt_ids']

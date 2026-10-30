@@ -1,0 +1,266 @@
+- complementary "Development controls":
+  - strong: Local C26 acceptance · synthetic TEST accounts and observations · no live models or Python execution
+- link "Skip to content":
+  - /url: "#main-content"
+- banner:
+  - button "OCEAN Platform":
+    - text: OCEAN
+    - generic: Platform
+  - navigation "Primary navigation":
+    - link "Research":
+      - /url: /?view=research
+      - generic: Research
+    - link "Context Catalog":
+      - /url: /?view=catalogue
+      - generic: Context Catalog
+    - link "Tools":
+      - /url: /?view=tools
+      - generic: Tools
+  - 'button "Account: Internal account, Researcher"':
+    - strong: Internal account
+    - text: Researcher
+  - button "Switch language":
+    - generic: EN
+  - button "Dark theme":
+  - button "Refresh access":
+- complementary "Application navigation":
+  - generic: OCEAN / v1
+  - navigation "Destinations":
+    - link "Research":
+      - /url: /?view=research
+      - generic: Research
+    - link "Context Catalog":
+      - /url: /?view=catalogue
+      - generic: Context Catalog
+    - link "Tools":
+      - /url: /?view=tools
+      - generic: Tools
+  - paragraph: Your access is checked by the v1 service.
+  - navigation "Account and support":
+    - link "Settings":
+      - /url: /?view=settings
+      - generic: Settings
+    - link "About":
+      - /url: /about
+      - generic: About
+    - link "Feedback":
+      - /url: /feedback
+      - generic: Feedback
+- main:
+  - generic: OCEAN / v1
+  - heading "Research" [level=1]
+  - paragraph: Private investigations · shared context · separate conversations
+  - navigation "Investigations and conversations":
+    - heading "Investigations" [level=2]
+    - list:
+      - button "C26 integrated synthetic investigation": C26 integrated synthetic investigation
+    - generic "New investigation":
+      - text: New investigation
+    - option "Choose snapshot" [selected]
+    - option "C26 synthetic snapshot 1"
+    - option "C26 synthetic snapshot 2"
+    - heading "Conversations" [level=3]
+    - list:
+      - button "C26 independent conversation" [active]
+      - button "C26 shared research and experiment"
+    - text: New conversation name
+    - textbox "New conversation name"
+    - button "New conversation" [disabled]:
+      - text: New conversation
+    - generic "Manage investigation"
+  - generic: Chat
+  - button "Close Workspace" [expanded]:
+  - region "Chat":
+    - heading "C26 independent conversation" [level=2]
+    - strong: Context for the next question
+    - generic: CTD · Metagenome · SST · eDNA
+    - generic: 0 attachments · 1 pinned restrictions
+    - generic "Snapshot and revision"
+    - region "Conversation activity":
+      - heading "No submitted activity" [level=3]
+      - paragraph: Review the snapshot, attachments and restrictions before a future submission. No result has been generated.
+    - button "Review answers and retained evidence"
+    - generic: Your question
+    - textbox "Your question":
+      - /placeholder: Ask about the selected data…
+    - button "Submit question" [disabled]:
+      - text: Submit question
+    - generic "Rename conversation"
+  - separator "Resize Workspace"
+  - region "Workspace":
+    - heading "Workspace" [level=2]
+    - button "Close Workspace":
+    - tablist "Workspace sections":
+      - tab "Context" [selected]
+      - tab "Results"
+      - tab "Experiments"
+      - tab "Evidence"
+    - tabpanel "Context":
+      - strong: Context for the next question
+      - generic: CTD · Metagenome · SST · eDNA
+      - generic: 0 attachments · 1 pinned restrictions
+      - generic "Snapshot and revision"
+      - paragraph: Attachments add context. Pins restrict the investigation. Chats share these settings, not each other’s narrative.
+      - heading "Attached context" [level=3]
+      - paragraph: None selected
+      - list
+      - heading "Pinned restrictions" [level=3]
+      - list:
+        - code: synthetic:sst:mur-final
+        - generic: available
+        - button "Remove"
+      - button "Close catalogue":
+        - text: Close catalogue
+      - region "Context Catalog":
+        - generic: OCEAN / v1
+        - heading "Context Catalog" [level=1]
+        - paragraph: Browse data and context. Your investigation is unchanged.
+        - generic: Investigation snapshot
+        - combobox "Catalogue snapshot" [disabled]:
+          - option "Select snapshot" [disabled]
+          - option "C26 synthetic snapshot 1" [selected]
+          - option "C26 synthetic snapshot 2"
+        - generic: Search every permitted catalogue object
+        - textbox "Search every permitted catalogue object":
+          - /placeholder: Search names, identities or paths
+          - text: synthetic:sst:mur-final
+        - button "Search"
+        - text: Source
+        - combobox "Source":
+          - option "All sources" [selected]
+          - option "CTD"
+          - option "Metagenome"
+          - option "SST"
+          - option "eDNA"
+        - text: Kind
+        - combobox "Kind":
+          - option "All kinds" [selected]
+          - option "Directory"
+          - option "Dataset"
+          - option "Table"
+          - option "Analysis"
+          - option "Workflow"
+          - option "Statistic"
+          - option "Metadata"
+          - option "Relationship"
+          - option "Reference"
+        - text: Authority
+        - combobox "Authority":
+          - option "All authorities" [selected]
+          - option "Descriptive"
+          - option "Published"
+          - option "Experimental"
+        - button "Clear filters":
+          - text: Clear filters
+        - generic "Applied filters":
+          - generic: "Search: synthetic:sst:mur-final"
+        - text: Objects per page
+        - combobox "Objects per page":
+          - option "25"
+          - option "100" [selected]
+          - option "500"
+        - complementary "Catalogue directories":
+          - heading "Directories" [level=2]
+          - button "Catalogue overview":
+            - text: Catalogue overview
+          - tree "Catalogue directory tree":
+            - treeitem "Expand directory Data" [level=1]:
+              - button "Expand directory":
+              - generic: Data
+            - treeitem "Expand directory Analyses" [level=1]:
+              - button "Expand directory":
+              - generic: Analyses
+            - treeitem "Expand directory Statistics" [level=1]:
+              - button "Expand directory":
+              - generic: Statistics
+            - treeitem "Expand directory Metadata" [level=1]:
+              - button "Expand directory":
+              - generic: Metadata
+            - treeitem "Expand directory Relationships" [level=1]:
+              - button "Expand directory":
+              - generic: Relationships
+        - navigation "Catalogue path":
+          - button "Overview"
+          - button "data"
+          - button "SST products"
+          - button "mur 04.1 (final)"
+          - button "synthetic:sst:mur-final:collection"
+          - button "Synthetic MUR SST"
+        - heading "Search results" [level=2]
+        - generic: 3 matching objects
+        - list:
+          - button "Synthetic MUR SST Dataset · SST synthetic:sst:mur-final" [pressed]:
+            - strong: Synthetic MUR SST
+            - generic: Dataset · SST
+            - code: synthetic:sst:mur-final
+          - button "synthetic:sst:mur-final:collection Directory · SST synthetic:sst:mur-final:collection":
+            - strong: synthetic:sst:mur-final:collection
+            - generic: Directory · SST
+            - code: synthetic:sst:mur-final:collection
+          - button "Observations Table · SST synthetic:sst:mur-final:table:observations":
+            - strong: Observations
+            - generic: Table · SST
+            - code: synthetic:sst:mur-final:table:observations
+        - generic: 3 shown / 3
+        - generic: "Source completeness: complete · Query: complete"
+        - generic "Applied scope and completeness"
+        - button "First page" [disabled]:
+          - text: First page
+        - button "Previous" [disabled]
+        - button "Next page" [disabled]:
+          - text: Next page
+        - complementary "Object inspector":
+          - heading "Inspector" [level=2]
+          - article:
+            - generic: Dataset
+            - heading "Synthetic MUR SST" [level=2]
+            - code: synthetic:sst:mur-final
+            - button "Browse contents":
+              - text: Browse contents
+            - tablist "Inspection sections":
+              - tab "Overview" [selected]
+              - tab "Tables"
+              - tab "Coverage"
+              - tab "Methods"
+              - tab "Provenance"
+              - tab "Related"
+            - tabpanel "Overview":
+              - paragraph: Frozen SST semantics acceptance
+              - term: Authority
+              - definition: descriptive
+              - term: Publication
+              - definition: unpublished
+              - term: Scientific approval
+              - definition: not_reviewed
+              - term: Availability
+              - definition: available
+              - paragraph: Published, descriptive and experimental results have different authority. Publication does not establish independent approval.
+              - generic "Retained overview"
+            - button "Select this object"
+            - paragraph: Selection is passed to the host. It does not attach data or pin a scope.
+      - generic "Edit source scope"
+      - option "Any" [selected]
+      - option "O"
+      - option "I"
+      - option "M"
+      - option "Any" [selected]
+      - option "O"
+      - option "I"
+      - option "M"
+      - option "Any" [selected]
+      - option "environmental"
+      - option "negative_control"
+      - option "positive_control"
+      - option "mock_community"
+      - option "unknown"
+      - option "Any" [selected]
+      - option "qcauto_target"
+      - option "qcauto_95pct_3nn_target"
+      - option "Any" [selected]
+      - option "true"
+      - option "false"
+      - generic "Refresh into a new branch"
+      - option "Choose snapshot" [selected]
+      - option "C26 synthetic snapshot 2"
+- button "Open Next.js Dev Tools":
+- alert

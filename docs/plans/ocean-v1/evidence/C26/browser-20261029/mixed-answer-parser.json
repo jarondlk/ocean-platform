@@ -1,0 +1,35 @@
+{
+  "version": "c26-mixed-answer-parser-diagnostic-v1",
+  "input": "/private/tmp/ocean-c26-mixed-answer-contract-20261029.json",
+  "source_revision": "sha256:828e4238ddfb3fca1b083f5827dde2c0e8c289af824271a737d33a8b1c93472f",
+  "observations": [
+    {
+      "id": "initial-context",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "run_id": "634d70c6-cb33-4172-8123-543f7203b5e8",
+        "items": 1
+      },
+      "client": {
+        "status": "passed",
+        "run_id": "634d70c6-cb33-4172-8123-543f7203b5e8",
+        "items": 1
+      }
+    },
+    {
+      "id": "mixed-native-experimental-context",
+      "api_status": 200,
+      "schema": {
+        "status": "passed",
+        "run_id": "68bbf81f-6f41-4709-8c5d-b5a574aa642c",
+        "items": 0
+      },
+      "client": {
+        "status": "passed",
+        "run_id": "68bbf81f-6f41-4709-8c5d-b5a574aa642c",
+        "items": 0
+      }
+    }
+  ]
+}

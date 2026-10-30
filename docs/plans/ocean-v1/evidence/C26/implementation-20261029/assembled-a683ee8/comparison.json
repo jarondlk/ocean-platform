@@ -1,0 +1,1680 @@
+{
+  "comparison": {
+    "version": "system-controller-comparison-v1",
+    "status": "passed",
+    "reason": null,
+    "input_sha256": "6f0543382238efd0a8c8a4f6127ba44cca2229e753a51731135e2363102346d8",
+    "oracle_sha256": "256c94b8011e0eb1376fea3280a473dd573ee99c4854bb2e47301e979be3b88c",
+    "legacy_observation_sha256": "b346669e1322d364649b306a41707184eb26d7c830ecb7309b3dc3a0ac849786",
+    "v1_observation_sha256": "668717f8b5a3c2f3af4e5a09acf62ab6ca6e9eea5ae68d180f71230700f1e273",
+    "legacy": {
+      "controller": "legacy",
+      "inventory": {
+        "status": "passed",
+        "reason": null,
+        "details": {
+          "expected_count": 4,
+          "observed_count": 4,
+          "matched_count": 4,
+          "missing_count": 0,
+          "unexpected_count": 0,
+          "state": "complete",
+          "missing_preview": [],
+          "unexpected_preview": [],
+          "diagnostics_truncated": false
+        }
+      },
+      "numerical": {
+        "status": "passed",
+        "reason": null,
+        "details": {
+          "expected_count": 4,
+          "mismatched_keys": [],
+          "missing_keys": [],
+          "unexpected_keys": [],
+          "unknown_reference_keys": []
+        }
+      },
+      "unsupported_claims": {
+        "status": "passed",
+        "reason": null,
+        "details": {
+          "unsupported_count": 0,
+          "unsupported_claim_ids": [],
+          "structured_claim_audit_complete": true,
+          "scientific_approval_established": false
+        }
+      },
+      "completion": {
+        "status": "passed",
+        "reason": null,
+        "details": {
+          "expected_outcome": "completed",
+          "observed_outcome": "completed",
+          "missing_tasks": []
+        }
+      },
+      "citations": {
+        "status": "passed",
+        "reason": null,
+        "details": {
+          "cited_count": 2,
+          "valid_count": 2,
+          "invalid_ids": [],
+          "validity_fraction": 1.0
+        }
+      },
+      "telemetry": {
+        "timing": {
+          "basis": "measured",
+          "value": 0.0039745839312672615
+        },
+        "tool_calls": {
+          "basis": "measured",
+          "value": 0
+        },
+        "input_tokens": {
+          "basis": "unknown",
+          "value": null
+        },
+        "output_tokens": {
+          "basis": "unknown",
+          "value": null
+        },
+        "cost": {
+          "basis": "unknown",
+          "value": null
+        }
+      }
+    },
+    "v1": {
+      "controller": "v1",
+      "inventory": {
+        "status": "passed",
+        "reason": null,
+        "details": {
+          "expected_count": 4,
+          "observed_count": 4,
+          "matched_count": 4,
+          "missing_count": 0,
+          "unexpected_count": 0,
+          "state": "complete",
+          "missing_preview": [],
+          "unexpected_preview": [],
+          "diagnostics_truncated": false
+        }
+      },
+      "numerical": {
+        "status": "passed",
+        "reason": null,
+        "details": {
+          "expected_count": 4,
+          "mismatched_keys": [],
+          "missing_keys": [],
+          "unexpected_keys": [],
+          "unknown_reference_keys": []
+        }
+      },
+      "unsupported_claims": {
+        "status": "passed",
+        "reason": null,
+        "details": {
+          "unsupported_count": 0,
+          "unsupported_claim_ids": [],
+          "structured_claim_audit_complete": true,
+          "scientific_approval_established": false
+        }
+      },
+      "completion": {
+        "status": "passed",
+        "reason": null,
+        "details": {
+          "expected_outcome": "completed",
+          "observed_outcome": "completed",
+          "missing_tasks": []
+        }
+      },
+      "citations": {
+        "status": "passed",
+        "reason": null,
+        "details": {
+          "cited_count": 6,
+          "valid_count": 6,
+          "invalid_ids": [],
+          "validity_fraction": 1.0
+        }
+      },
+      "telemetry": {
+        "timing": {
+          "basis": "measured",
+          "value": 6.383336207829416
+        },
+        "tool_calls": {
+          "basis": "measured",
+          "value": 6
+        },
+        "input_tokens": {
+          "basis": "unknown",
+          "value": null
+        },
+        "output_tokens": {
+          "basis": "unknown",
+          "value": null
+        },
+        "cost": {
+          "basis": "unknown",
+          "value": null
+        }
+      }
+    },
+    "live_quality_established": false
+  },
+  "expected": {
+    "inventory_ids": [
+      "ranking:A",
+      "ranking:B",
+      "series:A",
+      "series:B"
+    ],
+    "numbers": {
+      "ranking:A": "1",
+      "ranking:B": "2",
+      "series:A": "1",
+      "series:B": "2"
+    },
+    "supported_claims": [
+      "value:ranking:A:1",
+      "value:ranking:B:2",
+      "value:series:A:1",
+      "value:series:B:2"
+    ],
+    "required_tasks": [
+      "read-ranking",
+      "read-series"
+    ],
+    "valid_citation_ids": [
+      "analysis_edna_e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0_ranking",
+      "analysis_edna_e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0_series",
+      "c19:evidence:7a672be5c0cd317ed8da64acb12004809c6fe831ab1082f2b2d5d9cccc039f28",
+      "c19:evidence:f66b62c073727365fc9c2730c6413db48926156d6e1e9fdce5f959ac6cee4d5b",
+      "c19:evidence:dce174f3e3c957140bef1c89cf2b606e642490880e53ad4a07773fb6455b8246",
+      "c19:evidence:60494b3f00ae9d5649f099cc2e6a6c3e77049041c62e6890e6f160917ca34537",
+      "c19:evidence:c25445b903484715b2310690d07e2d65e3429ff14853cba38fc904616f07202c",
+      "c19:evidence:c40ac61931ce3dd5ecbe98a8cddc1f37e734634a08454d9c0311f65caa44089c"
+    ],
+    "outcome": "completed"
+  },
+  "observations": [
+    {
+      "version": "system-controller-observation-v1",
+      "controller": "legacy",
+      "input": {
+        "question_id": "published-fish-frequency",
+        "question": "Show the top 10 fish by detection frequency, with yearly and seasonal changes",
+        "permissions": [
+          "chat:use",
+          "classification:decide",
+          "classification:read",
+          "data:export",
+          "data:read",
+          "evaluation:read",
+          "evaluation:run",
+          "evidence:search",
+          "feedback:write",
+          "overview:read",
+          "profile:read",
+          "provenance:read"
+        ],
+        "scope": {
+          "version": 1,
+          "sources": {
+            "ctd": {
+              "enabled": false,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "bay": null,
+                "station": null,
+                "sample_id": null
+              }
+            },
+            "metagenome": {
+              "enabled": false,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "bay": null,
+                "station": null,
+                "sample_id": null
+              }
+            },
+            "remote_sensing": {
+              "enabled": false,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "lat_min": null,
+                "lat_max": null,
+                "lon_min": null,
+                "lon_max": null,
+                "dataset_id": null
+              }
+            },
+            "edna_metabarcoding": {
+              "enabled": true,
+              "filters": {
+                "time_from": "2020-01-01",
+                "time_to": "2023-12-31",
+                "lat_min": null,
+                "lat_max": null,
+                "lon_min": null,
+                "lon_max": null,
+                "sample_id": null,
+                "provider": null,
+                "provider_project_id": null,
+                "provider_run_id": null,
+                "assignment_method": "qcauto_target",
+                "taxon": null,
+                "sample_kind": "environmental",
+                "is_control": false
+              },
+              "analysis_id": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0"
+            }
+          }
+        },
+        "snapshot_id": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+        "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+        "fixture_id": "c26-shared-publication",
+        "fixture_sha256": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+        "provider": {
+          "mode": "fixture",
+          "provider": "synthetic",
+          "model": "c19-fake",
+          "configuration": {
+            "scripted_actions_sha256": "e2a9f4b8f533507d42c4f325c524b0237527092bfe87e00854e6e2a1f9cdaea7"
+          }
+        }
+      },
+      "evidence_kind": "actual-service-synthetic",
+      "inventory_state": "complete",
+      "inventory_ids": [
+        "ranking:A",
+        "ranking:B",
+        "series:A",
+        "series:B"
+      ],
+      "numbers": {
+        "ranking:A": "1",
+        "ranking:B": "2",
+        "series:A": "1",
+        "series:B": "2"
+      },
+      "claims": [
+        "value:ranking:A:1",
+        "value:ranking:B:2",
+        "value:series:A:1",
+        "value:series:B:2"
+      ],
+      "claims_complete": true,
+      "completed_tasks": [
+        "read-ranking",
+        "read-series"
+      ],
+      "cited_ids": [
+        "analysis_edna_e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0_ranking",
+        "analysis_edna_e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0_series"
+      ],
+      "outcome": "completed",
+      "telemetry": {
+        "timing": {
+          "basis": "measured",
+          "value": 0.0039745839312672615
+        },
+        "tool_calls": {
+          "basis": "measured",
+          "value": 0
+        },
+        "input_tokens": {
+          "basis": "unknown",
+          "value": null
+        },
+        "output_tokens": {
+          "basis": "unknown",
+          "value": null
+        },
+        "cost": {
+          "basis": "unknown",
+          "value": null
+        }
+      },
+      "evidence": [
+        {
+          "id": "c26:publication:legacy",
+          "sha256": "e6c1461e793ac05fb12339fa201491dc59e55e5dceea963f29a83dc62891ca1c",
+          "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+          "kind": "actual-service-synthetic"
+        }
+      ]
+    },
+    {
+      "version": "system-controller-observation-v1",
+      "controller": "v1",
+      "input": {
+        "question_id": "published-fish-frequency",
+        "question": "Show the top 10 fish by detection frequency, with yearly and seasonal changes",
+        "permissions": [
+          "chat:use",
+          "classification:decide",
+          "classification:read",
+          "data:export",
+          "data:read",
+          "evaluation:read",
+          "evaluation:run",
+          "evidence:search",
+          "feedback:write",
+          "overview:read",
+          "profile:read",
+          "provenance:read"
+        ],
+        "scope": {
+          "version": 1,
+          "sources": {
+            "ctd": {
+              "enabled": false,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "bay": null,
+                "station": null,
+                "sample_id": null
+              }
+            },
+            "metagenome": {
+              "enabled": false,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "bay": null,
+                "station": null,
+                "sample_id": null
+              }
+            },
+            "remote_sensing": {
+              "enabled": false,
+              "filters": {
+                "time_from": null,
+                "time_to": null,
+                "lat_min": null,
+                "lat_max": null,
+                "lon_min": null,
+                "lon_max": null,
+                "dataset_id": null
+              }
+            },
+            "edna_metabarcoding": {
+              "enabled": true,
+              "filters": {
+                "time_from": "2020-01-01",
+                "time_to": "2023-12-31",
+                "lat_min": null,
+                "lat_max": null,
+                "lon_min": null,
+                "lon_max": null,
+                "sample_id": null,
+                "provider": null,
+                "provider_project_id": null,
+                "provider_run_id": null,
+                "assignment_method": "qcauto_target",
+                "taxon": null,
+                "sample_kind": "environmental",
+                "is_control": false
+              },
+              "analysis_id": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0"
+            }
+          }
+        },
+        "snapshot_id": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+        "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+        "fixture_id": "c26-shared-publication",
+        "fixture_sha256": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+        "provider": {
+          "mode": "fixture",
+          "provider": "synthetic",
+          "model": "c19-fake",
+          "configuration": {
+            "scripted_actions_sha256": "e2a9f4b8f533507d42c4f325c524b0237527092bfe87e00854e6e2a1f9cdaea7"
+          }
+        }
+      },
+      "evidence_kind": "actual-service-synthetic",
+      "inventory_state": "complete",
+      "inventory_ids": [
+        "ranking:A",
+        "ranking:B",
+        "series:A",
+        "series:B"
+      ],
+      "numbers": {
+        "ranking:A": "1",
+        "ranking:B": "2",
+        "series:A": "1",
+        "series:B": "2"
+      },
+      "claims": [
+        "value:ranking:A:1",
+        "value:ranking:B:2",
+        "value:series:A:1",
+        "value:series:B:2"
+      ],
+      "claims_complete": true,
+      "completed_tasks": [
+        "read-ranking",
+        "read-series"
+      ],
+      "cited_ids": [
+        "c19:evidence:7a672be5c0cd317ed8da64acb12004809c6fe831ab1082f2b2d5d9cccc039f28",
+        "c19:evidence:f66b62c073727365fc9c2730c6413db48926156d6e1e9fdce5f959ac6cee4d5b",
+        "c19:evidence:dce174f3e3c957140bef1c89cf2b606e642490880e53ad4a07773fb6455b8246",
+        "c19:evidence:60494b3f00ae9d5649f099cc2e6a6c3e77049041c62e6890e6f160917ca34537",
+        "c19:evidence:c25445b903484715b2310690d07e2d65e3429ff14853cba38fc904616f07202c",
+        "c19:evidence:c40ac61931ce3dd5ecbe98a8cddc1f37e734634a08454d9c0311f65caa44089c"
+      ],
+      "outcome": "completed",
+      "telemetry": {
+        "timing": {
+          "basis": "measured",
+          "value": 6.383336207829416
+        },
+        "tool_calls": {
+          "basis": "measured",
+          "value": 6
+        },
+        "input_tokens": {
+          "basis": "unknown",
+          "value": null
+        },
+        "output_tokens": {
+          "basis": "unknown",
+          "value": null
+        },
+        "cost": {
+          "basis": "unknown",
+          "value": null
+        }
+      },
+      "evidence": [
+        {
+          "id": "c26:publication:v1",
+          "sha256": "bc8f490d50e933e1c1206b163815ce07caa7c9991cfab0a44cc75de19660bcf5",
+          "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+          "kind": "actual-service-synthetic"
+        }
+      ]
+    }
+  ],
+  "captures": {
+    "legacy": {
+      "answer": "Published detection-frequency analysis for miyagi-regional-demo, 2020-01-01–2023-12-31 (Asia/Tokyo); one assay protocol.\n\nFrequency = detected / eligible physical samples. An unsampled group has no rate. Low-support and partial periods retain their flags. These descriptive differences do not establish abundance, occupancy or causation.\n\nAssay protocol: 12S · synthetic-amplicon-sequencing · PAIRED. The result cards retain the complete primer/PCR identity under “Instrument, primer and PCR definition”.\n\nRanking (2 published rows; first 2 previewed):\n\n| species | period |\n| --- | --- |\n| Synthetic fish A | 2020 |\n| Synthetic fish B | 2023 |\n\n[analysis_edna_e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0_ranking]\n\nSeries (2 published rows; first 2 previewed):\n\n| species | period |\n| --- | --- |\n| Synthetic fish A | 2020 |\n| Synthetic fish B | 2023-MAM |\n\nIncluded periods: 2020, 2023-MAM\n\n[analysis_edna_e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0_series]",
+      "documents": [
+        {
+          "id": "analysis_edna_e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0_ranking",
+          "title": "Ranking",
+          "analysis_id": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+          "table": "ranking",
+          "analysis_type": "detection_frequency",
+          "source_family": "edna_metabarcoding",
+          "covered_source_types": [
+            "edna_metabarcoding"
+          ],
+          "result_ids": [
+            "ranking:A",
+            "ranking:B"
+          ],
+          "result_rows": [
+            {
+              "result_id": "ranking:A",
+              "species": "Synthetic fish A",
+              "value": 1,
+              "period_kind": "year",
+              "period": "2020"
+            },
+            {
+              "result_id": "ranking:B",
+              "species": "Synthetic fish B",
+              "value": 2,
+              "period_kind": "year",
+              "period": "2023"
+            }
+          ],
+          "plot_areas": [],
+          "analysis_recipe": {
+            "assignment_method": "qcauto_target",
+            "calendar": "Asia/Tokyo",
+            "fish_classes": [
+              "Actinopteri"
+            ],
+            "rank": "species",
+            "region_id": "miyagi-regional-demo",
+            "time_from": "2020-01-01",
+            "time_to": "2023-12-31"
+          },
+          "protocol_definition": {
+            "target_gene": "12S",
+            "primer_set": "Synthetic-MiFish",
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "library_layout": "PAIRED",
+            "pcr": {}
+          },
+          "limitations": [
+            "Hand-authored synthetic fixture, no real scientific review, approval or model quality"
+          ],
+          "publication_status": {
+            "operationally_accepted": false,
+            "provisional": false,
+            "scientific_approval": null
+          },
+          "plot_taxa": [],
+          "total_rows": 2,
+          "rows_truncated": false,
+          "text": "[{\"period\": \"2020\", \"period_kind\": \"year\", \"result_id\": \"ranking:A\", \"species\": \"Synthetic fish A\", \"value\": 1}, {\"period\": \"2023\", \"period_kind\": \"year\", \"result_id\": \"ranking:B\", \"species\": \"Synthetic fish B\", \"value\": 2}]",
+          "interpretation_limits": "Frequency = detected / eligible physical samples. An unsampled group has no rate. Low-support and partial periods retain their flags. These descriptive differences do not establish abundance, occupancy or causation.",
+          "display_language": "en"
+        },
+        {
+          "id": "analysis_edna_e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0_series",
+          "title": "Series",
+          "analysis_id": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+          "table": "series",
+          "analysis_type": "detection_frequency",
+          "source_family": "edna_metabarcoding",
+          "covered_source_types": [
+            "edna_metabarcoding"
+          ],
+          "result_ids": [
+            "series:A",
+            "series:B"
+          ],
+          "result_rows": [
+            {
+              "result_id": "series:A",
+              "species": "Synthetic fish A",
+              "value": 1,
+              "period_kind": "year",
+              "period": "2020"
+            },
+            {
+              "result_id": "series:B",
+              "species": "Synthetic fish B",
+              "value": 2,
+              "period_kind": "season",
+              "period": "2023-MAM"
+            }
+          ],
+          "plot_areas": [],
+          "analysis_recipe": {
+            "assignment_method": "qcauto_target",
+            "calendar": "Asia/Tokyo",
+            "fish_classes": [
+              "Actinopteri"
+            ],
+            "rank": "species",
+            "region_id": "miyagi-regional-demo",
+            "time_from": "2020-01-01",
+            "time_to": "2023-12-31"
+          },
+          "protocol_definition": {
+            "target_gene": "12S",
+            "primer_set": "Synthetic-MiFish",
+            "sequencing_method": "synthetic-amplicon-sequencing",
+            "library_layout": "PAIRED",
+            "pcr": {}
+          },
+          "limitations": [
+            "Hand-authored synthetic fixture, no real scientific review, approval or model quality"
+          ],
+          "publication_status": {
+            "operationally_accepted": false,
+            "provisional": false,
+            "scientific_approval": null
+          },
+          "plot_taxa": [],
+          "total_rows": 2,
+          "rows_truncated": false,
+          "text": "[{\"period\": \"2020\", \"period_kind\": \"year\", \"result_id\": \"series:A\", \"species\": \"Synthetic fish A\", \"value\": 1}, {\"period\": \"2023-MAM\", \"period_kind\": \"season\", \"result_id\": \"series:B\", \"species\": \"Synthetic fish B\", \"value\": 2}]",
+          "interpretation_limits": "Frequency = detected / eligible physical samples. An unsampled group has no rate. Low-support and partial periods retain their flags. These descriptive differences do not establish abundance, occupancy or causation.",
+          "display_language": "en"
+        }
+      ],
+      "reason": null,
+      "diagnostics": {
+        "research": true,
+        "scope_compatibility": {
+          "outcome": "compatible",
+          "reason": "All explicit qualifiers match the registered publication.",
+          "workflow": "fish_frequency",
+          "analysis_id": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+          "evidence": [
+            {
+              "field": "rank",
+              "outcome": "compatible",
+              "requested": "species",
+              "registered": "species",
+              "quote": null,
+              "source": "publication",
+              "reason": "The requested rank matches the registered publication."
+            },
+            {
+              "field": "workflow",
+              "outcome": "compatible",
+              "requested": "fish_frequency",
+              "registered": "fish_frequency",
+              "quote": "Show the top 10 fish by detection frequency, with yearly and seasonal changes",
+              "source": "question",
+              "reason": "The requested workflow matches the registered publication."
+            },
+            {
+              "field": "protocol_id",
+              "outcome": "compatible",
+              "requested": "302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495",
+              "registered": "302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495",
+              "quote": null,
+              "source": "selection",
+              "reason": "The requested protocol_id matches the registered publication."
+            },
+            {
+              "field": "analysis_id",
+              "outcome": "compatible",
+              "requested": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+              "registered": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+              "quote": null,
+              "source": "selection",
+              "reason": "The requested analysis_id matches the registered publication."
+            },
+            {
+              "field": "time_from",
+              "outcome": "compatible",
+              "requested": "2020-01-01",
+              "registered": "2020-01-01",
+              "quote": null,
+              "source": "selection",
+              "reason": "The requested time_from matches the registered publication."
+            },
+            {
+              "field": "time_to",
+              "outcome": "compatible",
+              "requested": "2023-12-31",
+              "registered": "2023-12-31",
+              "quote": null,
+              "source": "selection",
+              "reason": "The requested time_to matches the registered publication."
+            },
+            {
+              "field": "assignment_method",
+              "outcome": "compatible",
+              "requested": "qcauto_target",
+              "registered": "qcauto_target",
+              "quote": null,
+              "source": "selection",
+              "reason": "The requested assignment_method matches the registered publication."
+            },
+            {
+              "field": "sample_kind",
+              "outcome": "compatible",
+              "requested": "environmental",
+              "registered": "environmental",
+              "quote": null,
+              "source": "selection",
+              "reason": "The requested sample_kind matches the registered publication."
+            },
+            {
+              "field": "is_control",
+              "outcome": "compatible",
+              "requested": "False",
+              "registered": "False",
+              "quote": null,
+              "source": "selection",
+              "reason": "The requested is_control matches the registered publication."
+            }
+          ],
+          "version": "publication-scope-v1"
+        },
+        "backend": "immutable_research_bundle",
+        "model_invoked": false,
+        "top_k_applied": false,
+        "analysis_id": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+        "research_intent": {
+          "kind": "fish_frequency",
+          "protocol_id": "302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495"
+        },
+        "expected_source_types": [
+          "edna_metabarcoding"
+        ],
+        "retrieved_source_types": [
+          "edna_metabarcoding"
+        ],
+        "missing_source_types": [],
+        "result_rows_verified": true,
+        "operational_publication": null,
+        "display_row_limit_per_table": 500
+      }
+    },
+    "v1": {
+      "binding": {
+        "investigation_id": "28b174bd-9d1a-4433-828c-4e67fdc0f615",
+        "conversation_id": "29b77174-5b13-43ab-af4b-0c648a9b3502",
+        "revision_id": "e1bad6e9-2c45-4e0e-a707-333af2f2febe",
+        "snapshot_id": "a18f3f5f115b5731fdeef1dfe7f0ecbae2f52ebb0771e382525ab5f366443b34",
+        "payload_sha256": "88f2fcc5c4a09dbcfbbf68432d1a69bbf95184b8f37f241833a96405021cfa94"
+      },
+      "outcome": "completed",
+      "budget": {
+        "active_elapsed_seconds": 6.383187334053218,
+        "tool_actions": 6,
+        "model_calls": 4,
+        "malformed_repairs": 0,
+        "cancellation_requested": false
+      },
+      "completion": {
+        "complete": true,
+        "facts": [
+          {
+            "fact_id": "requested:1",
+            "required": true,
+            "state": "supported",
+            "observation_ids": [
+              "c19:observation:3:dce174f3e3c95714",
+              "c19:observation:4:60494b3f00ae9d56",
+              "c19:observation:5:c25445b903484715",
+              "c19:observation:6:c40ac61931ce3dd5"
+            ],
+            "value_json": null,
+            "reason": null
+          }
+        ],
+        "unresolved_cohorts": []
+      },
+      "observations": [
+        {
+          "observation_id": "c19:observation:1:7a672be5c0cd317e",
+          "binding": {
+            "investigation_id": "28b174bd-9d1a-4433-828c-4e67fdc0f615",
+            "conversation_id": "29b77174-5b13-43ab-af4b-0c648a9b3502",
+            "revision_id": "e1bad6e9-2c45-4e0e-a707-333af2f2febe",
+            "snapshot_id": "a18f3f5f115b5731fdeef1dfe7f0ecbae2f52ebb0771e382525ab5f366443b34",
+            "payload_sha256": "88f2fcc5c4a09dbcfbbf68432d1a69bbf95184b8f37f241833a96405021cfa94"
+          },
+          "tool": "catalogue.open",
+          "scope_json": "{\"sources\":{\"ctd\":{\"enabled\":false,\"filters\":{}},\"edna_metabarcoding\":{\"analysis_id\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\",\"enabled\":true,\"filters\":{\"assignment_method\":\"qcauto_target\",\"is_control\":false,\"sample_kind\":\"environmental\",\"time_from\":\"2020-01-01\",\"time_to\":\"2023-12-31\"}},\"metagenome\":{\"enabled\":false,\"filters\":{}},\"remote_sensing\":{\"enabled\":false,\"filters\":{}}},\"version\":1}",
+          "full_payload_ref": "c19:evidence:7a672be5c0cd317ed8da64acb12004809c6fe831ab1082f2b2d5d9cccc039f28",
+          "full_payload_sha256": "7a672be5c0cd317ed8da64acb12004809c6fe831ab1082f2b2d5d9cccc039f28",
+          "operation_id": null,
+          "operation_version": null,
+          "parameters_sha256": null,
+          "target_ids": [
+            "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0"
+          ],
+          "input_count": 0,
+          "input_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "availability": "available",
+          "source_completeness": "unknown",
+          "query_completion": "complete",
+          "qualifications": [
+            "{\"node.purpose.en\":\"Immutable test publication\"}",
+            "{\"node.purpose.ja\":\"合成された公開解析\"}",
+            "{\"node.authority\":\"published\"}",
+            "{\"node.lifecycle.ingestion\":\"complete\"}",
+            "{\"node.lifecycle.publication\":\"published\"}",
+            "{\"node.lifecycle.scientific_approval\":\"not_reviewed\"}",
+            "{\"node.lifecycle.query_readiness\":\"ready\"}",
+            "{\"node.lifecycle.embedding_readiness\":\"unknown\"}",
+            "not_reviewed",
+            "{\"node.descriptor\":null}",
+            "explicit_user_accepted_operational_publication",
+            "{\"columns.0.key\":\"result_id\"}",
+            "{\"columns.0.title.en\":\"result_id\"}",
+            "{\"columns.0.title.ja\":\"result_id\"}",
+            "{\"columns.0.unit\":null}",
+            "{\"columns.1.key\":\"species\"}",
+            "{\"columns.1.title.en\":\"species\"}",
+            "{\"columns.1.title.ja\":\"species\"}",
+            "{\"columns.1.unit\":null}",
+            "{\"columns.2.key\":\"value\"}",
+            "{\"columns.2.title.en\":\"value\"}",
+            "{\"columns.2.title.ja\":\"value\"}",
+            "{\"columns.2.unit\":null}",
+            "{\"columns.3.key\":\"period_kind\"}",
+            "{\"columns.3.title.en\":\"period_kind\"}",
+            "{\"columns.3.title.ja\":\"period_kind\"}",
+            "{\"columns.3.unit\":null}",
+            "{\"columns.4.key\":\"period\"}",
+            "{\"columns.4.title.en\":\"period\"}",
+            "{\"columns.4.title.ja\":\"period\"}",
+            "{\"columns.4.unit\":null}",
+            "Hand-authored synthetic fixture, no real scientific review, approval or model quality"
+          ],
+          "counts": [],
+          "objects": [
+            {
+              "object_id": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+              "exact_names": [
+                "Fish frequency",
+                "魚の頻度"
+              ]
+            }
+          ],
+          "known_fields": [],
+          "output_fields": [],
+          "analysis_id": null,
+          "workflow_kind": null,
+          "protocol_id": null,
+          "table_names": [],
+          "question_compatibility_sha256": null,
+          "authority": "descriptive",
+          "result_content_sha256": null,
+          "page_offset": 0,
+          "page_returned_count": 0,
+          "page_total_rows": null,
+          "next_offset": null,
+          "preview_truncated": false,
+          "preview_json": "[{\"authority\":\"published\",\"availability\":{\"reason\":null,\"status\":\"available\"},\"descriptor\":null,\"id\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\",\"kind\":\"analysis\",\"lifecycle\":{\"embedding_readiness\":\"unknown\",\"ingestion\":\"complete\",\"publication\":\"published\",\"query_readiness\":\"ready\",\"scientific_approval\":\"not_reviewed\"},\"membership\":\"global\",\"operations\":[{\"availability\":{\"reason\":null,\"status\":\"available\"},\"id\":\"c13.table\",\"kind\":\"descriptive\",\"required_permission\":\"catalogue.read\",\"version\":\"c13-v1\"}],\"owner_id\":null,\"parent_id\":\"root:analyses\",\"provenance\":{\"content_sha256\":null,\"origin\":null,\"references\":[\"c26-shared-publication:sha256:e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\",\"Original immutable registry: 266edbe82bff6bc2ca56244e15c4d4c9b87f565bac3487930848da7077480577\"],\"source_generation\":null},\"purpose\":{\"en\":\"Immutable test publication\",\"ja\":\"合成された公開解析\"},\"related_ids\":[\"synthetic:edna:project-a\"],\"root\":\"analyses\",\"schema_version\":\"context-catalogue-v1\",\"scope\":{\"sources\":{\"ctd\":{\"enabled\":false,\"filters\":{\"bay\":null,\"sample_id\":null,\"station\":null,\"time_from\":null,\"time_to\":null}},\"edna_metabarcoding\":{\"analysis_id\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\",\"enabled\":true,\"filters\":{\"assignment_method\":\"qcauto_target\",\"is_control\":false,\"lat_max\":null,\"lat_min\":null,\"lon_max\":null,\"lon_min\":null,\"provider\":null,\"provider_project_id\":null,\"provider_run_id\":null,\"sample_id\":null,\"sample_kind\":\"environmental\",\"taxon\":null,\"time_from\":\"2020-01-01\",\"time_to\":\"2023-12-31\"}},\"metagenome\":{\"enabled\":false,\"filters\":{\"bay\":null,\"sample_id\":null,\"station\":null,\"time_from\":null,\"time_to\":null}},\"remote_sensing\":{\"enabled\":false,\"filters\":{\"dataset_id\":null,\"lat_max\":null,\"lat_min\":null,\"lon_max\":null,\"lon_min\":null,\"time_from\":null,\"time_to\":null}}},\"version\":1},\"sections\":[],\"snapshot_id\":\"a18f3f5f115b5731fdeef1dfe7f0ecbae2f52ebb0771e382525ab5f366443b34\",\"source_family\":null,\"title\":{\"en\":\"Fish frequency\",\"ja\":\"魚の頻度\"}}]"
+        },
+        {
+          "observation_id": "c19:observation:2:f66b62c073727365",
+          "binding": {
+            "investigation_id": "28b174bd-9d1a-4433-828c-4e67fdc0f615",
+            "conversation_id": "29b77174-5b13-43ab-af4b-0c648a9b3502",
+            "revision_id": "e1bad6e9-2c45-4e0e-a707-333af2f2febe",
+            "snapshot_id": "a18f3f5f115b5731fdeef1dfe7f0ecbae2f52ebb0771e382525ab5f366443b34",
+            "payload_sha256": "88f2fcc5c4a09dbcfbbf68432d1a69bbf95184b8f37f241833a96405021cfa94"
+          },
+          "tool": "catalogue.query",
+          "scope_json": "{\"sources\":{\"ctd\":{\"enabled\":false,\"filters\":{}},\"edna_metabarcoding\":{\"analysis_id\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\",\"enabled\":true,\"filters\":{\"assignment_method\":\"qcauto_target\",\"is_control\":false,\"sample_kind\":\"environmental\",\"time_from\":\"2020-01-01\",\"time_to\":\"2023-12-31\"}},\"metagenome\":{\"enabled\":false,\"filters\":{}},\"remote_sensing\":{\"enabled\":false,\"filters\":{}}},\"version\":1}",
+          "full_payload_ref": "c19:evidence:f66b62c073727365fc9c2730c6413db48926156d6e1e9fdce5f959ac6cee4d5b",
+          "full_payload_sha256": "f66b62c073727365fc9c2730c6413db48926156d6e1e9fdce5f959ac6cee4d5b",
+          "operation_id": "c13.inventory",
+          "operation_version": "c13-v1",
+          "parameters_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "target_ids": [
+            "synthetic:edna:project-a"
+          ],
+          "input_count": 2,
+          "input_sha256": "262003839fef184737db6be95e3ffea1bc20d2443a74d9294989b9f9d244b8cd",
+          "availability": "available",
+          "source_completeness": "complete",
+          "query_completion": "complete",
+          "qualifications": [
+            "The CTD source family is an immutable index storage carrier only; it does not assert CTD measurements, a raw dataset, or scientific source eligibility.",
+            "Descriptive operations do not execute experiments or grant scientific approval; current access applies to every frozen input",
+            "{\"columns.0.key\":\"entity\"}",
+            "{\"columns.0.title.en\":\"entity\"}",
+            "{\"columns.0.title.ja\":\"entity\"}",
+            "{\"columns.0.unit\":null}",
+            "{\"columns.1.key\":\"count\"}",
+            "{\"columns.1.title.en\":\"count\"}",
+            "{\"columns.1.title.ja\":\"count\"}",
+            "{\"columns.1.unit\":null}",
+            "{\"columns.2.key\":\"denominator\"}",
+            "{\"columns.2.title.en\":\"denominator\"}",
+            "{\"columns.2.title.ja\":\"denominator\"}",
+            "{\"columns.2.unit\":null}",
+            "{\"scope_compatibility\":null}"
+          ],
+          "counts": [
+            {
+              "state": "known",
+              "entity": "datasets",
+              "denominator": "Distinct permitted canonical input datasets across complete matching descendants and cross-root links",
+              "value": 1,
+              "reason": null,
+              "basis": "complete_scope"
+            }
+          ],
+          "objects": [],
+          "known_fields": [
+            "count",
+            "denominator",
+            "entity"
+          ],
+          "output_fields": [
+            "entity",
+            "count",
+            "denominator"
+          ],
+          "analysis_id": null,
+          "workflow_kind": null,
+          "protocol_id": null,
+          "table_names": [],
+          "question_compatibility_sha256": null,
+          "authority": "descriptive",
+          "result_content_sha256": "8d7040da152eaad9530e9c06428b8a926cfe0653dd41eeb38a1c979db03ccab3",
+          "page_offset": 0,
+          "page_returned_count": 1,
+          "page_total_rows": 1,
+          "next_offset": null,
+          "preview_truncated": false,
+          "preview_json": "[{\"count\":1,\"denominator\":\"Distinct permitted canonical input datasets across complete matching descendants and cross-root links\",\"entity\":\"datasets\"}]"
+        },
+        {
+          "observation_id": "c19:observation:3:dce174f3e3c95714",
+          "binding": {
+            "investigation_id": "28b174bd-9d1a-4433-828c-4e67fdc0f615",
+            "conversation_id": "29b77174-5b13-43ab-af4b-0c648a9b3502",
+            "revision_id": "e1bad6e9-2c45-4e0e-a707-333af2f2febe",
+            "snapshot_id": "a18f3f5f115b5731fdeef1dfe7f0ecbae2f52ebb0771e382525ab5f366443b34",
+            "payload_sha256": "88f2fcc5c4a09dbcfbbf68432d1a69bbf95184b8f37f241833a96405021cfa94"
+          },
+          "tool": "analysis.get_published",
+          "scope_json": "{\"sources\":{\"ctd\":{\"enabled\":false,\"filters\":{}},\"edna_metabarcoding\":{\"analysis_id\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\",\"enabled\":true,\"filters\":{\"assignment_method\":\"qcauto_target\",\"is_control\":false,\"sample_kind\":\"environmental\",\"time_from\":\"2020-01-01\",\"time_to\":\"2023-12-31\"}},\"metagenome\":{\"enabled\":false,\"filters\":{}},\"remote_sensing\":{\"enabled\":false,\"filters\":{}}},\"version\":1}",
+          "full_payload_ref": "c19:evidence:dce174f3e3c957140bef1c89cf2b606e642490880e53ad4a07773fb6455b8246",
+          "full_payload_sha256": "dce174f3e3c957140bef1c89cf2b606e642490880e53ad4a07773fb6455b8246",
+          "operation_id": "c13.table",
+          "operation_version": "c13-v1",
+          "parameters_sha256": "37b27f4d61303fb68900a77249ab6367069cd208aa02d56e243b5530de30ade1",
+          "target_ids": [
+            "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0"
+          ],
+          "input_count": 3,
+          "input_sha256": "91a2efbf31cbd045acb0f726cba8e4d8e9ffe12b16615c1ca10e0925b44b0d0d",
+          "availability": "available",
+          "source_completeness": "complete",
+          "query_completion": "complete",
+          "qualifications": [
+            "The CTD source family is an immutable index storage carrier only; it does not assert CTD measurements, a raw dataset, or scientific source eligibility.",
+            "Hand-authored synthetic fixture, no real scientific review, approval or model quality",
+            "Analysis method: synthetic:method/v1",
+            "explicit_user_accepted_operational_publication",
+            "Published status is separate from independent scientific approval or provider endorsement",
+            "Descriptive operations do not execute experiments or grant scientific approval; current access applies to every frozen input",
+            "{\"columns.0.key\":\"result_id\"}",
+            "{\"columns.0.title.en\":\"result_id\"}",
+            "{\"columns.0.title.ja\":\"result_id\"}",
+            "{\"columns.0.unit\":null}",
+            "{\"columns.1.key\":\"species\"}",
+            "{\"columns.1.title.en\":\"species\"}",
+            "{\"columns.1.title.ja\":\"species\"}",
+            "{\"columns.1.unit\":null}",
+            "{\"columns.2.key\":\"value\"}",
+            "{\"columns.2.title.en\":\"value\"}",
+            "{\"columns.2.title.ja\":\"value\"}",
+            "{\"columns.2.unit\":null}",
+            "{\"columns.3.key\":\"period_kind\"}",
+            "{\"columns.3.title.en\":\"period_kind\"}",
+            "{\"columns.3.title.ja\":\"period_kind\"}",
+            "{\"columns.3.unit\":null}",
+            "{\"columns.4.key\":\"period\"}",
+            "{\"columns.4.title.en\":\"period\"}",
+            "{\"columns.4.title.ja\":\"period\"}",
+            "{\"columns.4.unit\":null}",
+            "{\"scope_compatibility.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.reason\":\"All explicit qualifiers match the registered publication.\"}",
+            "{\"scope_compatibility.workflow\":\"fish_frequency\"}",
+            "{\"scope_compatibility.analysis_id\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\"}",
+            "{\"scope_compatibility.evidence.0.field\":\"rank\"}",
+            "{\"scope_compatibility.evidence.0.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.0.requested\":\"species\"}",
+            "{\"scope_compatibility.evidence.0.registered\":\"species\"}",
+            "{\"scope_compatibility.evidence.0.quote\":null}",
+            "{\"scope_compatibility.evidence.0.source\":\"publication\"}",
+            "{\"scope_compatibility.evidence.0.reason\":\"The requested rank matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.1.field\":\"workflow\"}",
+            "{\"scope_compatibility.evidence.1.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.1.requested\":\"fish_frequency\"}",
+            "{\"scope_compatibility.evidence.1.registered\":\"fish_frequency\"}",
+            "{\"scope_compatibility.evidence.1.quote\":\"Show the top 10 fish by detection frequency, with yearly and seasonal changes\"}",
+            "{\"scope_compatibility.evidence.1.source\":\"question\"}",
+            "{\"scope_compatibility.evidence.1.reason\":\"The requested workflow matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.2.field\":\"protocol_id\"}",
+            "{\"scope_compatibility.evidence.2.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.2.requested\":\"302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495\"}",
+            "{\"scope_compatibility.evidence.2.registered\":\"302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495\"}",
+            "{\"scope_compatibility.evidence.2.quote\":null}",
+            "{\"scope_compatibility.evidence.2.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.2.reason\":\"The requested protocol_id matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.3.field\":\"analysis_id\"}",
+            "{\"scope_compatibility.evidence.3.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.3.requested\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\"}",
+            "{\"scope_compatibility.evidence.3.registered\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\"}",
+            "{\"scope_compatibility.evidence.3.quote\":null}",
+            "{\"scope_compatibility.evidence.3.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.3.reason\":\"The requested analysis_id matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.4.field\":\"time_from\"}",
+            "{\"scope_compatibility.evidence.4.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.4.requested\":\"2020-01-01\"}",
+            "{\"scope_compatibility.evidence.4.registered\":\"2020-01-01\"}",
+            "{\"scope_compatibility.evidence.4.quote\":null}",
+            "{\"scope_compatibility.evidence.4.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.4.reason\":\"The requested time_from matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.5.field\":\"time_to\"}",
+            "{\"scope_compatibility.evidence.5.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.5.requested\":\"2023-12-31\"}",
+            "{\"scope_compatibility.evidence.5.registered\":\"2023-12-31\"}",
+            "{\"scope_compatibility.evidence.5.quote\":null}",
+            "{\"scope_compatibility.evidence.5.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.5.reason\":\"The requested time_to matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.6.field\":\"assignment_method\"}",
+            "{\"scope_compatibility.evidence.6.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.6.requested\":\"qcauto_target\"}",
+            "{\"scope_compatibility.evidence.6.registered\":\"qcauto_target\"}",
+            "{\"scope_compatibility.evidence.6.quote\":null}",
+            "{\"scope_compatibility.evidence.6.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.6.reason\":\"The requested assignment_method matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.7.field\":\"sample_kind\"}",
+            "{\"scope_compatibility.evidence.7.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.7.requested\":\"environmental\"}",
+            "{\"scope_compatibility.evidence.7.registered\":\"environmental\"}",
+            "{\"scope_compatibility.evidence.7.quote\":null}",
+            "{\"scope_compatibility.evidence.7.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.7.reason\":\"The requested sample_kind matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.8.field\":\"is_control\"}",
+            "{\"scope_compatibility.evidence.8.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.8.requested\":\"False\"}",
+            "{\"scope_compatibility.evidence.8.registered\":\"False\"}",
+            "{\"scope_compatibility.evidence.8.quote\":null}",
+            "{\"scope_compatibility.evidence.8.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.8.reason\":\"The requested is_control matches the registered publication.\"}",
+            "{\"scope_compatibility.version\":\"publication-scope-v1\"}"
+          ],
+          "counts": [],
+          "objects": [],
+          "known_fields": [
+            "period",
+            "period_kind",
+            "result_id",
+            "species",
+            "value"
+          ],
+          "output_fields": [
+            "result_id",
+            "species",
+            "value",
+            "period_kind",
+            "period"
+          ],
+          "analysis_id": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+          "workflow_kind": "fish_frequency",
+          "protocol_id": "302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495",
+          "table_names": [
+            "ranking"
+          ],
+          "question_compatibility_sha256": "3359a064275c6ba95d7150b606c66666e45d3423407d9fa40db27df745f4ba5e",
+          "authority": "published",
+          "result_content_sha256": "c92db6f916a61f66783e3eda14073389c6ba89ec12de2138eaa0e50f65ad4978",
+          "page_offset": 0,
+          "page_returned_count": 1,
+          "page_total_rows": 2,
+          "next_offset": 1,
+          "preview_truncated": true,
+          "preview_json": "[{\"period\":\"2020\",\"period_kind\":\"year\",\"result_id\":\"ranking:A\",\"species\":\"Synthetic fish A\",\"value\":1}]"
+        },
+        {
+          "observation_id": "c19:observation:4:60494b3f00ae9d56",
+          "binding": {
+            "investigation_id": "28b174bd-9d1a-4433-828c-4e67fdc0f615",
+            "conversation_id": "29b77174-5b13-43ab-af4b-0c648a9b3502",
+            "revision_id": "e1bad6e9-2c45-4e0e-a707-333af2f2febe",
+            "snapshot_id": "a18f3f5f115b5731fdeef1dfe7f0ecbae2f52ebb0771e382525ab5f366443b34",
+            "payload_sha256": "88f2fcc5c4a09dbcfbbf68432d1a69bbf95184b8f37f241833a96405021cfa94"
+          },
+          "tool": "analysis.get_published",
+          "scope_json": "{\"sources\":{\"ctd\":{\"enabled\":false,\"filters\":{}},\"edna_metabarcoding\":{\"analysis_id\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\",\"enabled\":true,\"filters\":{\"assignment_method\":\"qcauto_target\",\"is_control\":false,\"sample_kind\":\"environmental\",\"time_from\":\"2020-01-01\",\"time_to\":\"2023-12-31\"}},\"metagenome\":{\"enabled\":false,\"filters\":{}},\"remote_sensing\":{\"enabled\":false,\"filters\":{}}},\"version\":1}",
+          "full_payload_ref": "c19:evidence:60494b3f00ae9d5649f099cc2e6a6c3e77049041c62e6890e6f160917ca34537",
+          "full_payload_sha256": "60494b3f00ae9d5649f099cc2e6a6c3e77049041c62e6890e6f160917ca34537",
+          "operation_id": "c13.table",
+          "operation_version": "c13-v1",
+          "parameters_sha256": "37b27f4d61303fb68900a77249ab6367069cd208aa02d56e243b5530de30ade1",
+          "target_ids": [
+            "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0"
+          ],
+          "input_count": 3,
+          "input_sha256": "91a2efbf31cbd045acb0f726cba8e4d8e9ffe12b16615c1ca10e0925b44b0d0d",
+          "availability": "available",
+          "source_completeness": "complete",
+          "query_completion": "complete",
+          "qualifications": [
+            "The CTD source family is an immutable index storage carrier only; it does not assert CTD measurements, a raw dataset, or scientific source eligibility.",
+            "Hand-authored synthetic fixture, no real scientific review, approval or model quality",
+            "Analysis method: synthetic:method/v1",
+            "explicit_user_accepted_operational_publication",
+            "Published status is separate from independent scientific approval or provider endorsement",
+            "Descriptive operations do not execute experiments or grant scientific approval; current access applies to every frozen input",
+            "{\"columns.0.key\":\"result_id\"}",
+            "{\"columns.0.title.en\":\"result_id\"}",
+            "{\"columns.0.title.ja\":\"result_id\"}",
+            "{\"columns.0.unit\":null}",
+            "{\"columns.1.key\":\"species\"}",
+            "{\"columns.1.title.en\":\"species\"}",
+            "{\"columns.1.title.ja\":\"species\"}",
+            "{\"columns.1.unit\":null}",
+            "{\"columns.2.key\":\"value\"}",
+            "{\"columns.2.title.en\":\"value\"}",
+            "{\"columns.2.title.ja\":\"value\"}",
+            "{\"columns.2.unit\":null}",
+            "{\"columns.3.key\":\"period_kind\"}",
+            "{\"columns.3.title.en\":\"period_kind\"}",
+            "{\"columns.3.title.ja\":\"period_kind\"}",
+            "{\"columns.3.unit\":null}",
+            "{\"columns.4.key\":\"period\"}",
+            "{\"columns.4.title.en\":\"period\"}",
+            "{\"columns.4.title.ja\":\"period\"}",
+            "{\"columns.4.unit\":null}",
+            "{\"scope_compatibility.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.reason\":\"All explicit qualifiers match the registered publication.\"}",
+            "{\"scope_compatibility.workflow\":\"fish_frequency\"}",
+            "{\"scope_compatibility.analysis_id\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\"}",
+            "{\"scope_compatibility.evidence.0.field\":\"rank\"}",
+            "{\"scope_compatibility.evidence.0.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.0.requested\":\"species\"}",
+            "{\"scope_compatibility.evidence.0.registered\":\"species\"}",
+            "{\"scope_compatibility.evidence.0.quote\":null}",
+            "{\"scope_compatibility.evidence.0.source\":\"publication\"}",
+            "{\"scope_compatibility.evidence.0.reason\":\"The requested rank matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.1.field\":\"workflow\"}",
+            "{\"scope_compatibility.evidence.1.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.1.requested\":\"fish_frequency\"}",
+            "{\"scope_compatibility.evidence.1.registered\":\"fish_frequency\"}",
+            "{\"scope_compatibility.evidence.1.quote\":\"Show the top 10 fish by detection frequency, with yearly and seasonal changes\"}",
+            "{\"scope_compatibility.evidence.1.source\":\"question\"}",
+            "{\"scope_compatibility.evidence.1.reason\":\"The requested workflow matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.2.field\":\"protocol_id\"}",
+            "{\"scope_compatibility.evidence.2.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.2.requested\":\"302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495\"}",
+            "{\"scope_compatibility.evidence.2.registered\":\"302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495\"}",
+            "{\"scope_compatibility.evidence.2.quote\":null}",
+            "{\"scope_compatibility.evidence.2.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.2.reason\":\"The requested protocol_id matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.3.field\":\"analysis_id\"}",
+            "{\"scope_compatibility.evidence.3.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.3.requested\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\"}",
+            "{\"scope_compatibility.evidence.3.registered\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\"}",
+            "{\"scope_compatibility.evidence.3.quote\":null}",
+            "{\"scope_compatibility.evidence.3.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.3.reason\":\"The requested analysis_id matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.4.field\":\"time_from\"}",
+            "{\"scope_compatibility.evidence.4.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.4.requested\":\"2020-01-01\"}",
+            "{\"scope_compatibility.evidence.4.registered\":\"2020-01-01\"}",
+            "{\"scope_compatibility.evidence.4.quote\":null}",
+            "{\"scope_compatibility.evidence.4.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.4.reason\":\"The requested time_from matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.5.field\":\"time_to\"}",
+            "{\"scope_compatibility.evidence.5.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.5.requested\":\"2023-12-31\"}",
+            "{\"scope_compatibility.evidence.5.registered\":\"2023-12-31\"}",
+            "{\"scope_compatibility.evidence.5.quote\":null}",
+            "{\"scope_compatibility.evidence.5.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.5.reason\":\"The requested time_to matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.6.field\":\"assignment_method\"}",
+            "{\"scope_compatibility.evidence.6.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.6.requested\":\"qcauto_target\"}",
+            "{\"scope_compatibility.evidence.6.registered\":\"qcauto_target\"}",
+            "{\"scope_compatibility.evidence.6.quote\":null}",
+            "{\"scope_compatibility.evidence.6.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.6.reason\":\"The requested assignment_method matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.7.field\":\"sample_kind\"}",
+            "{\"scope_compatibility.evidence.7.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.7.requested\":\"environmental\"}",
+            "{\"scope_compatibility.evidence.7.registered\":\"environmental\"}",
+            "{\"scope_compatibility.evidence.7.quote\":null}",
+            "{\"scope_compatibility.evidence.7.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.7.reason\":\"The requested sample_kind matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.8.field\":\"is_control\"}",
+            "{\"scope_compatibility.evidence.8.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.8.requested\":\"False\"}",
+            "{\"scope_compatibility.evidence.8.registered\":\"False\"}",
+            "{\"scope_compatibility.evidence.8.quote\":null}",
+            "{\"scope_compatibility.evidence.8.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.8.reason\":\"The requested is_control matches the registered publication.\"}",
+            "{\"scope_compatibility.version\":\"publication-scope-v1\"}"
+          ],
+          "counts": [],
+          "objects": [],
+          "known_fields": [
+            "period",
+            "period_kind",
+            "result_id",
+            "species",
+            "value"
+          ],
+          "output_fields": [
+            "result_id",
+            "species",
+            "value",
+            "period_kind",
+            "period"
+          ],
+          "analysis_id": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+          "workflow_kind": "fish_frequency",
+          "protocol_id": "302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495",
+          "table_names": [
+            "ranking"
+          ],
+          "question_compatibility_sha256": "3359a064275c6ba95d7150b606c66666e45d3423407d9fa40db27df745f4ba5e",
+          "authority": "published",
+          "result_content_sha256": "c92db6f916a61f66783e3eda14073389c6ba89ec12de2138eaa0e50f65ad4978",
+          "page_offset": 1,
+          "page_returned_count": 1,
+          "page_total_rows": 2,
+          "next_offset": null,
+          "preview_truncated": true,
+          "preview_json": "[{\"period\":\"2023\",\"period_kind\":\"year\",\"result_id\":\"ranking:B\",\"species\":\"Synthetic fish B\",\"value\":2}]"
+        },
+        {
+          "observation_id": "c19:observation:5:c25445b903484715",
+          "binding": {
+            "investigation_id": "28b174bd-9d1a-4433-828c-4e67fdc0f615",
+            "conversation_id": "29b77174-5b13-43ab-af4b-0c648a9b3502",
+            "revision_id": "e1bad6e9-2c45-4e0e-a707-333af2f2febe",
+            "snapshot_id": "a18f3f5f115b5731fdeef1dfe7f0ecbae2f52ebb0771e382525ab5f366443b34",
+            "payload_sha256": "88f2fcc5c4a09dbcfbbf68432d1a69bbf95184b8f37f241833a96405021cfa94"
+          },
+          "tool": "analysis.get_published",
+          "scope_json": "{\"sources\":{\"ctd\":{\"enabled\":false,\"filters\":{}},\"edna_metabarcoding\":{\"analysis_id\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\",\"enabled\":true,\"filters\":{\"assignment_method\":\"qcauto_target\",\"is_control\":false,\"sample_kind\":\"environmental\",\"time_from\":\"2020-01-01\",\"time_to\":\"2023-12-31\"}},\"metagenome\":{\"enabled\":false,\"filters\":{}},\"remote_sensing\":{\"enabled\":false,\"filters\":{}}},\"version\":1}",
+          "full_payload_ref": "c19:evidence:c25445b903484715b2310690d07e2d65e3429ff14853cba38fc904616f07202c",
+          "full_payload_sha256": "c25445b903484715b2310690d07e2d65e3429ff14853cba38fc904616f07202c",
+          "operation_id": "c13.table",
+          "operation_version": "c13-v1",
+          "parameters_sha256": "8a6000deb751fd2080fc5013d437b4f46ab1b0e159b89892560baa6f98cba9ae",
+          "target_ids": [
+            "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0"
+          ],
+          "input_count": 3,
+          "input_sha256": "28eb75e27c4c654db31e3d7c24a3c88a096377dd08d2cd0c9ac2ed36aa6413b0",
+          "availability": "available",
+          "source_completeness": "complete",
+          "query_completion": "complete",
+          "qualifications": [
+            "The CTD source family is an immutable index storage carrier only; it does not assert CTD measurements, a raw dataset, or scientific source eligibility.",
+            "Hand-authored synthetic fixture, no real scientific review, approval or model quality",
+            "Analysis method: synthetic:method/v1",
+            "explicit_user_accepted_operational_publication",
+            "Published status is separate from independent scientific approval or provider endorsement",
+            "Descriptive operations do not execute experiments or grant scientific approval; current access applies to every frozen input",
+            "{\"columns.0.key\":\"result_id\"}",
+            "{\"columns.0.title.en\":\"result_id\"}",
+            "{\"columns.0.title.ja\":\"result_id\"}",
+            "{\"columns.0.unit\":null}",
+            "{\"columns.1.key\":\"species\"}",
+            "{\"columns.1.title.en\":\"species\"}",
+            "{\"columns.1.title.ja\":\"species\"}",
+            "{\"columns.1.unit\":null}",
+            "{\"columns.2.key\":\"value\"}",
+            "{\"columns.2.title.en\":\"value\"}",
+            "{\"columns.2.title.ja\":\"value\"}",
+            "{\"columns.2.unit\":null}",
+            "{\"columns.3.key\":\"period_kind\"}",
+            "{\"columns.3.title.en\":\"period_kind\"}",
+            "{\"columns.3.title.ja\":\"period_kind\"}",
+            "{\"columns.3.unit\":null}",
+            "{\"columns.4.key\":\"period\"}",
+            "{\"columns.4.title.en\":\"period\"}",
+            "{\"columns.4.title.ja\":\"period\"}",
+            "{\"columns.4.unit\":null}",
+            "{\"scope_compatibility.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.reason\":\"All explicit qualifiers match the registered publication.\"}",
+            "{\"scope_compatibility.workflow\":\"fish_frequency\"}",
+            "{\"scope_compatibility.analysis_id\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\"}",
+            "{\"scope_compatibility.evidence.0.field\":\"rank\"}",
+            "{\"scope_compatibility.evidence.0.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.0.requested\":\"species\"}",
+            "{\"scope_compatibility.evidence.0.registered\":\"species\"}",
+            "{\"scope_compatibility.evidence.0.quote\":null}",
+            "{\"scope_compatibility.evidence.0.source\":\"publication\"}",
+            "{\"scope_compatibility.evidence.0.reason\":\"The requested rank matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.1.field\":\"workflow\"}",
+            "{\"scope_compatibility.evidence.1.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.1.requested\":\"fish_frequency\"}",
+            "{\"scope_compatibility.evidence.1.registered\":\"fish_frequency\"}",
+            "{\"scope_compatibility.evidence.1.quote\":\"Show the top 10 fish by detection frequency, with yearly and seasonal changes\"}",
+            "{\"scope_compatibility.evidence.1.source\":\"question\"}",
+            "{\"scope_compatibility.evidence.1.reason\":\"The requested workflow matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.2.field\":\"protocol_id\"}",
+            "{\"scope_compatibility.evidence.2.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.2.requested\":\"302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495\"}",
+            "{\"scope_compatibility.evidence.2.registered\":\"302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495\"}",
+            "{\"scope_compatibility.evidence.2.quote\":null}",
+            "{\"scope_compatibility.evidence.2.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.2.reason\":\"The requested protocol_id matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.3.field\":\"analysis_id\"}",
+            "{\"scope_compatibility.evidence.3.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.3.requested\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\"}",
+            "{\"scope_compatibility.evidence.3.registered\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\"}",
+            "{\"scope_compatibility.evidence.3.quote\":null}",
+            "{\"scope_compatibility.evidence.3.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.3.reason\":\"The requested analysis_id matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.4.field\":\"time_from\"}",
+            "{\"scope_compatibility.evidence.4.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.4.requested\":\"2020-01-01\"}",
+            "{\"scope_compatibility.evidence.4.registered\":\"2020-01-01\"}",
+            "{\"scope_compatibility.evidence.4.quote\":null}",
+            "{\"scope_compatibility.evidence.4.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.4.reason\":\"The requested time_from matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.5.field\":\"time_to\"}",
+            "{\"scope_compatibility.evidence.5.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.5.requested\":\"2023-12-31\"}",
+            "{\"scope_compatibility.evidence.5.registered\":\"2023-12-31\"}",
+            "{\"scope_compatibility.evidence.5.quote\":null}",
+            "{\"scope_compatibility.evidence.5.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.5.reason\":\"The requested time_to matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.6.field\":\"assignment_method\"}",
+            "{\"scope_compatibility.evidence.6.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.6.requested\":\"qcauto_target\"}",
+            "{\"scope_compatibility.evidence.6.registered\":\"qcauto_target\"}",
+            "{\"scope_compatibility.evidence.6.quote\":null}",
+            "{\"scope_compatibility.evidence.6.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.6.reason\":\"The requested assignment_method matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.7.field\":\"sample_kind\"}",
+            "{\"scope_compatibility.evidence.7.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.7.requested\":\"environmental\"}",
+            "{\"scope_compatibility.evidence.7.registered\":\"environmental\"}",
+            "{\"scope_compatibility.evidence.7.quote\":null}",
+            "{\"scope_compatibility.evidence.7.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.7.reason\":\"The requested sample_kind matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.8.field\":\"is_control\"}",
+            "{\"scope_compatibility.evidence.8.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.8.requested\":\"False\"}",
+            "{\"scope_compatibility.evidence.8.registered\":\"False\"}",
+            "{\"scope_compatibility.evidence.8.quote\":null}",
+            "{\"scope_compatibility.evidence.8.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.8.reason\":\"The requested is_control matches the registered publication.\"}",
+            "{\"scope_compatibility.version\":\"publication-scope-v1\"}"
+          ],
+          "counts": [],
+          "objects": [],
+          "known_fields": [
+            "period",
+            "period_kind",
+            "result_id",
+            "species",
+            "value"
+          ],
+          "output_fields": [
+            "result_id",
+            "species",
+            "value",
+            "period_kind",
+            "period"
+          ],
+          "analysis_id": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+          "workflow_kind": "fish_frequency",
+          "protocol_id": "302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495",
+          "table_names": [
+            "series"
+          ],
+          "question_compatibility_sha256": "3359a064275c6ba95d7150b606c66666e45d3423407d9fa40db27df745f4ba5e",
+          "authority": "published",
+          "result_content_sha256": "93b4a708c85e0671ff27f64394e23f3305c7456f356b8890c275ef0f0c02f708",
+          "page_offset": 0,
+          "page_returned_count": 1,
+          "page_total_rows": 2,
+          "next_offset": 1,
+          "preview_truncated": true,
+          "preview_json": "[{\"period\":\"2020\",\"period_kind\":\"year\",\"result_id\":\"series:A\",\"species\":\"Synthetic fish A\",\"value\":1}]"
+        },
+        {
+          "observation_id": "c19:observation:6:c40ac61931ce3dd5",
+          "binding": {
+            "investigation_id": "28b174bd-9d1a-4433-828c-4e67fdc0f615",
+            "conversation_id": "29b77174-5b13-43ab-af4b-0c648a9b3502",
+            "revision_id": "e1bad6e9-2c45-4e0e-a707-333af2f2febe",
+            "snapshot_id": "a18f3f5f115b5731fdeef1dfe7f0ecbae2f52ebb0771e382525ab5f366443b34",
+            "payload_sha256": "88f2fcc5c4a09dbcfbbf68432d1a69bbf95184b8f37f241833a96405021cfa94"
+          },
+          "tool": "analysis.get_published",
+          "scope_json": "{\"sources\":{\"ctd\":{\"enabled\":false,\"filters\":{}},\"edna_metabarcoding\":{\"analysis_id\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\",\"enabled\":true,\"filters\":{\"assignment_method\":\"qcauto_target\",\"is_control\":false,\"sample_kind\":\"environmental\",\"time_from\":\"2020-01-01\",\"time_to\":\"2023-12-31\"}},\"metagenome\":{\"enabled\":false,\"filters\":{}},\"remote_sensing\":{\"enabled\":false,\"filters\":{}}},\"version\":1}",
+          "full_payload_ref": "c19:evidence:c40ac61931ce3dd5ecbe98a8cddc1f37e734634a08454d9c0311f65caa44089c",
+          "full_payload_sha256": "c40ac61931ce3dd5ecbe98a8cddc1f37e734634a08454d9c0311f65caa44089c",
+          "operation_id": "c13.table",
+          "operation_version": "c13-v1",
+          "parameters_sha256": "8a6000deb751fd2080fc5013d437b4f46ab1b0e159b89892560baa6f98cba9ae",
+          "target_ids": [
+            "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0"
+          ],
+          "input_count": 3,
+          "input_sha256": "28eb75e27c4c654db31e3d7c24a3c88a096377dd08d2cd0c9ac2ed36aa6413b0",
+          "availability": "available",
+          "source_completeness": "complete",
+          "query_completion": "complete",
+          "qualifications": [
+            "The CTD source family is an immutable index storage carrier only; it does not assert CTD measurements, a raw dataset, or scientific source eligibility.",
+            "Hand-authored synthetic fixture, no real scientific review, approval or model quality",
+            "Analysis method: synthetic:method/v1",
+            "explicit_user_accepted_operational_publication",
+            "Published status is separate from independent scientific approval or provider endorsement",
+            "Descriptive operations do not execute experiments or grant scientific approval; current access applies to every frozen input",
+            "{\"columns.0.key\":\"result_id\"}",
+            "{\"columns.0.title.en\":\"result_id\"}",
+            "{\"columns.0.title.ja\":\"result_id\"}",
+            "{\"columns.0.unit\":null}",
+            "{\"columns.1.key\":\"species\"}",
+            "{\"columns.1.title.en\":\"species\"}",
+            "{\"columns.1.title.ja\":\"species\"}",
+            "{\"columns.1.unit\":null}",
+            "{\"columns.2.key\":\"value\"}",
+            "{\"columns.2.title.en\":\"value\"}",
+            "{\"columns.2.title.ja\":\"value\"}",
+            "{\"columns.2.unit\":null}",
+            "{\"columns.3.key\":\"period_kind\"}",
+            "{\"columns.3.title.en\":\"period_kind\"}",
+            "{\"columns.3.title.ja\":\"period_kind\"}",
+            "{\"columns.3.unit\":null}",
+            "{\"columns.4.key\":\"period\"}",
+            "{\"columns.4.title.en\":\"period\"}",
+            "{\"columns.4.title.ja\":\"period\"}",
+            "{\"columns.4.unit\":null}",
+            "{\"scope_compatibility.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.reason\":\"All explicit qualifiers match the registered publication.\"}",
+            "{\"scope_compatibility.workflow\":\"fish_frequency\"}",
+            "{\"scope_compatibility.analysis_id\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\"}",
+            "{\"scope_compatibility.evidence.0.field\":\"rank\"}",
+            "{\"scope_compatibility.evidence.0.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.0.requested\":\"species\"}",
+            "{\"scope_compatibility.evidence.0.registered\":\"species\"}",
+            "{\"scope_compatibility.evidence.0.quote\":null}",
+            "{\"scope_compatibility.evidence.0.source\":\"publication\"}",
+            "{\"scope_compatibility.evidence.0.reason\":\"The requested rank matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.1.field\":\"workflow\"}",
+            "{\"scope_compatibility.evidence.1.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.1.requested\":\"fish_frequency\"}",
+            "{\"scope_compatibility.evidence.1.registered\":\"fish_frequency\"}",
+            "{\"scope_compatibility.evidence.1.quote\":\"Show the top 10 fish by detection frequency, with yearly and seasonal changes\"}",
+            "{\"scope_compatibility.evidence.1.source\":\"question\"}",
+            "{\"scope_compatibility.evidence.1.reason\":\"The requested workflow matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.2.field\":\"protocol_id\"}",
+            "{\"scope_compatibility.evidence.2.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.2.requested\":\"302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495\"}",
+            "{\"scope_compatibility.evidence.2.registered\":\"302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495\"}",
+            "{\"scope_compatibility.evidence.2.quote\":null}",
+            "{\"scope_compatibility.evidence.2.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.2.reason\":\"The requested protocol_id matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.3.field\":\"analysis_id\"}",
+            "{\"scope_compatibility.evidence.3.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.3.requested\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\"}",
+            "{\"scope_compatibility.evidence.3.registered\":\"e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0\"}",
+            "{\"scope_compatibility.evidence.3.quote\":null}",
+            "{\"scope_compatibility.evidence.3.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.3.reason\":\"The requested analysis_id matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.4.field\":\"time_from\"}",
+            "{\"scope_compatibility.evidence.4.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.4.requested\":\"2020-01-01\"}",
+            "{\"scope_compatibility.evidence.4.registered\":\"2020-01-01\"}",
+            "{\"scope_compatibility.evidence.4.quote\":null}",
+            "{\"scope_compatibility.evidence.4.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.4.reason\":\"The requested time_from matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.5.field\":\"time_to\"}",
+            "{\"scope_compatibility.evidence.5.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.5.requested\":\"2023-12-31\"}",
+            "{\"scope_compatibility.evidence.5.registered\":\"2023-12-31\"}",
+            "{\"scope_compatibility.evidence.5.quote\":null}",
+            "{\"scope_compatibility.evidence.5.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.5.reason\":\"The requested time_to matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.6.field\":\"assignment_method\"}",
+            "{\"scope_compatibility.evidence.6.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.6.requested\":\"qcauto_target\"}",
+            "{\"scope_compatibility.evidence.6.registered\":\"qcauto_target\"}",
+            "{\"scope_compatibility.evidence.6.quote\":null}",
+            "{\"scope_compatibility.evidence.6.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.6.reason\":\"The requested assignment_method matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.7.field\":\"sample_kind\"}",
+            "{\"scope_compatibility.evidence.7.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.7.requested\":\"environmental\"}",
+            "{\"scope_compatibility.evidence.7.registered\":\"environmental\"}",
+            "{\"scope_compatibility.evidence.7.quote\":null}",
+            "{\"scope_compatibility.evidence.7.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.7.reason\":\"The requested sample_kind matches the registered publication.\"}",
+            "{\"scope_compatibility.evidence.8.field\":\"is_control\"}",
+            "{\"scope_compatibility.evidence.8.outcome\":\"compatible\"}",
+            "{\"scope_compatibility.evidence.8.requested\":\"False\"}",
+            "{\"scope_compatibility.evidence.8.registered\":\"False\"}",
+            "{\"scope_compatibility.evidence.8.quote\":null}",
+            "{\"scope_compatibility.evidence.8.source\":\"selection\"}",
+            "{\"scope_compatibility.evidence.8.reason\":\"The requested is_control matches the registered publication.\"}",
+            "{\"scope_compatibility.version\":\"publication-scope-v1\"}"
+          ],
+          "counts": [],
+          "objects": [],
+          "known_fields": [
+            "period",
+            "period_kind",
+            "result_id",
+            "species",
+            "value"
+          ],
+          "output_fields": [
+            "result_id",
+            "species",
+            "value",
+            "period_kind",
+            "period"
+          ],
+          "analysis_id": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+          "workflow_kind": "fish_frequency",
+          "protocol_id": "302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495",
+          "table_names": [
+            "series"
+          ],
+          "question_compatibility_sha256": "3359a064275c6ba95d7150b606c66666e45d3423407d9fa40db27df745f4ba5e",
+          "authority": "published",
+          "result_content_sha256": "93b4a708c85e0671ff27f64394e23f3305c7456f356b8890c275ef0f0c02f708",
+          "page_offset": 1,
+          "page_returned_count": 1,
+          "page_total_rows": 2,
+          "next_offset": null,
+          "preview_truncated": true,
+          "preview_json": "[{\"period\":\"2023-MAM\",\"period_kind\":\"season\",\"result_id\":\"series:B\",\"species\":\"Synthetic fish B\",\"value\":2}]"
+        }
+      ],
+      "evidence_refs": [
+        "c19:evidence:7a672be5c0cd317ed8da64acb12004809c6fe831ab1082f2b2d5d9cccc039f28",
+        "c19:evidence:f66b62c073727365fc9c2730c6413db48926156d6e1e9fdce5f959ac6cee4d5b",
+        "c19:evidence:dce174f3e3c957140bef1c89cf2b606e642490880e53ad4a07773fb6455b8246",
+        "c19:evidence:60494b3f00ae9d5649f099cc2e6a6c3e77049041c62e6890e6f160917ca34537",
+        "c19:evidence:c25445b903484715b2310690d07e2d65e3429ff14853cba38fc904616f07202c",
+        "c19:evidence:c40ac61931ce3dd5ecbe98a8cddc1f37e734634a08454d9c0311f65caa44089c"
+      ],
+      "reason": null
+    }
+  },
+  "shared_publication": {
+    "version": "c26-shared-publication-fixture-v1",
+    "workflow_kind": "fish_frequency",
+    "recipe": {
+      "assignment_method": "qcauto_target",
+      "calendar": "Asia/Tokyo",
+      "fish_classes": [
+        "Actinopteri"
+      ],
+      "rank": "species",
+      "region_id": "miyagi-regional-demo",
+      "time_from": "2020-01-01",
+      "time_to": "2023-12-31"
+    },
+    "protocol": {
+      "library_layout": "PAIRED",
+      "pcr": {},
+      "primer_set": "Synthetic-MiFish",
+      "sequencing_method": "synthetic-amplicon-sequencing",
+      "target_gene": "12S"
+    },
+    "protocol_id": "302f19f58f97b5b1d2b6b91d27ef63fff6ab1d9a2e9c6476dbab069d9f93e495",
+    "tables": {
+      "ranking": [
+        {
+          "result_id": "ranking:A",
+          "species": "Synthetic fish A",
+          "value": 1,
+          "period_kind": "year",
+          "period": "2020"
+        },
+        {
+          "result_id": "ranking:B",
+          "species": "Synthetic fish B",
+          "value": 2,
+          "period_kind": "year",
+          "period": "2023"
+        }
+      ],
+      "series": [
+        {
+          "result_id": "series:A",
+          "species": "Synthetic fish A",
+          "value": 1,
+          "period_kind": "year",
+          "period": "2020"
+        },
+        {
+          "result_id": "series:B",
+          "species": "Synthetic fish B",
+          "value": 2,
+          "period_kind": "season",
+          "period": "2023-MAM"
+        }
+      ]
+    },
+    "source_snapshots": [
+      {
+        "dataset_id": "synthetic:ctd:campaign-a",
+        "source_family": "ctd",
+        "source_id": "synthetic-ctd",
+        "snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0"
+      },
+      {
+        "dataset_id": "synthetic:metagenome:collection-a",
+        "source_family": "metagenome",
+        "source_id": "synthetic-metagenome",
+        "snapshot_id": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0"
+      },
+      {
+        "dataset_id": "synthetic:sst:mur-final",
+        "source_family": "remote_sensing",
+        "source_id": "synthetic-sst",
+        "snapshot_id": "a5f02b96c2c90fc74b777c2c4144c035b64c7a381dd5a1a3b9693b11593b8203"
+      },
+      {
+        "dataset_id": "synthetic:edna:project-a",
+        "source_family": "edna_metabarcoding",
+        "source_id": "synthetic-edna",
+        "snapshot_id": "3bb77edad9199f88796f524e3214bdbfd342ee129fef9b3270609120e38309d8"
+      }
+    ],
+    "qualification": "Hand-authored synthetic fixture, no real scientific review, approval or model quality"
+  },
+  "native_bindings": {
+    "shared_source_snapshot_id": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+    "legacy_analysis_id": "e5b576380c52abb01addf244fc0cec2b6ee12cf15050ad2f69fb66485b7f76d0",
+    "v1_registry_snapshot_id": "a18f3f5f115b5731fdeef1dfe7f0ecbae2f52ebb0771e382525ab5f366443b34",
+    "v1_controller_snapshot_id": "a18f3f5f115b5731fdeef1dfe7f0ecbae2f52ebb0771e382525ab5f366443b34",
+    "identical_native_wrapper_ids_claimed": false
+  },
+  "legacy_count_probe": {
+    "status": "blocked",
+    "reason": "aggregate_scope_required",
+    "answer": "Choose one of the six published research workflows. This question contains an unsupported or conflicting qualifier, so no statistics were inferred.",
+    "model_invoked": false,
+    "native_snapshot_compatible": false
+  },
+  "model_calls": {
+    "legacy": 0,
+    "v1_scripted_fixture": 4
+  },
+  "qualification": "Hand-authored synthetic fixture, no real scientific review, approval or model quality"
+}

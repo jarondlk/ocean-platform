@@ -304,6 +304,7 @@ class ResearchAnswerService:
             raise ResearchAnswerError('conflict', 409)
         rows = session.scalars(select(ResearchAnswerEvent).where(
             ResearchAnswerEvent.job_id == job.id, ResearchAnswerEvent.cursor > after,
+            ResearchAnswerEvent.cursor <= job.event_cursor,
         ).order_by(ResearchAnswerEvent.cursor).limit(data['limit'])).all()
         next_cursor = rows[-1].cursor if rows else after
         return {'version': 'research-answers-v1', 'access_revision': self._access_revision(actor, run),

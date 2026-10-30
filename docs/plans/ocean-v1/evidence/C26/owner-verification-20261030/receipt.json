@@ -1,0 +1,304 @@
+{
+  "version": "c26-owner-interop-amendment-v1",
+  "date_jst": "2026-10-30",
+  "classification": "local actual synthetic services, isolated native PostgreSQL application journal, no physical/production execution",
+  "base_commit": "a683ee863886832029208887207e473ecb8c198b",
+  "source_revision": "sha256:79059c699828bb4e15767eef13e735370ed3ebe32e6f488bbe3e846186ce976f",
+  "selected_source_files": {
+    "api/investigation_routes.py": "5aea71bbab8ab7e247522b8edea7042cffea18a7feb65f9b74d1ee3594e9e8c6",
+    "db/app_models.py": "3c61bec6fb134f26e05efd304f5d6c84cd7ef4b715cc6a356d2519e57536c1e3",
+    "orchestration/catalogue_service.py": "9b29032a9dd604bf7694cf7373f79bf71a967bed4634bb0f4f1f12f64aacec2a",
+    "orchestration/investigations.py": "6a2238fa6f3ef654cf5f71d43a4820cfd883f43f364b43bbfe271dc11f7b7aa2",
+    "orchestration/research_controller.py": "3b612ccec487ea771357c04b89c9bf90f51a78314242d61fec8b0e1f2abbc2d0",
+    "orchestration/research_runs.py": "0d8e652684005489612eee5e56d53d5a80559c0a62ca34484aef157dc65d89e4",
+    "orchestration/research_evidence.py": "89e62649bb6fdb3b9b60a1f98dda7973683c1c5180c56483d520834184ee63ca",
+    "orchestration/research_answers.py": "82e7578743906d7e0911c6faf496188c23d51e26a77e3c130c1ced7471db0bfd",
+    "orchestration/research_experiments.py": "ef7e1aa14e0a0f362a866e88cff694e9367613a50a5daf00f5746ac9884f31b6",
+    "orchestration/experiment_workspace.py": "48bc16715557da6580f251e13d56eee411d93a2ca685362b821acbc442eb2f24",
+    "orchestration/retained_artifacts.py": "4f96d31e8ad8f82c944acfffeee5d2123e19b6b2f9fbfadcfd4f90ab488ccc80",
+    "orchestration/experiment_artifacts.py": "e6e0b1c369956163fb4cdf1f1eabb86f2a29d06946b34220d52b17d9e7a93177",
+    "tests/experiment_workspace_support.py": "bd96544e49e9a638cd64f60dd6d0b421b63143b9a5a76bc159ff5e36a137139d",
+    "tests/research_experiment_support.py": "fb881711350462c9bf0c3efa8a4460741aa354a4d7269f72384aef7476e1e4c1",
+    "tests/investigation_support.py": "69d38a10e0b2255a9cd93b3d0cf44feab701e84b1422edb57dbb2e8c2ff41dce",
+    "tests/system_acceptance_support.py": "01d384e8a0b8990a6ea9c21e5d3db49b3bfd4fb014a1e8f122ddc2e29362b640"
+  },
+  "owned_source_files": {
+    "orchestration/retained_artifacts.py": "4f96d31e8ad8f82c944acfffeee5d2123e19b6b2f9fbfadcfd4f90ab488ccc80",
+    "orchestration/experiment_artifacts.py": "e6e0b1c369956163fb4cdf1f1eabb86f2a29d06946b34220d52b17d9e7a93177",
+    "orchestration/research_evidence.py": "89e62649bb6fdb3b9b60a1f98dda7973683c1c5180c56483d520834184ee63ca",
+    "orchestration/research_answers.py": "82e7578743906d7e0911c6faf496188c23d51e26a77e3c130c1ced7471db0bfd",
+    "tests/test_experimental_artifact_integration.py": "096adfd2ced4a7cec039b33a93a3a03d9e76f2893cad10668c00602f1ec0ac72",
+    "tests/integration/test_experimental_artifact_postgres.py": "7024c2d5b5e675b8f76acd22c172ccac031992e72265fd1de84597ea6bfb25d9"
+  },
+  "changes": [
+    "One combined foreign artifact lookup returns an exact binding after safe-byte, immutable committed-pin and current closing-authority checks.",
+    "Selected provider is reverified after other providers callbacks when multiple providers are configured.",
+    "C21 answer event pages are bounded to their captured job high-water; newly committed events remain available to the next poll."
+  ],
+  "verified_results": {
+    "combined_guard_covered": {
+      "passed": 15,
+      "seconds": 329.11,
+      "core": "sysmon",
+      "coverage_percent": 78
+    },
+    "event_race_and_existing_answers_covered": {
+      "passed": 21,
+      "seconds": 93.04,
+      "core": "sysmon",
+      "coverage_percent": 84
+    },
+    "native_postgresql": {
+      "passed": 2,
+      "seconds": 122.99
+    },
+    "ruff": "passed"
+  },
+  "coverage_qualification": "Normal local pytest-cov startup raised a NumPy native import error before collection. NumPy was preloaded before pytest-cov activation; the same sysmon core covered the actual application modules. Initial startup failures and intermediate overstrong citation test expectations remain preserved. No engine switch.",
+  "performance": {
+    "before_source_revision": "sha256:828e4238ddfb3fca1b083f5827dde2c0e8c289af824271a737d33a8b1c93472f",
+    "after_source_revision": "sha256:79059c699828bb4e15767eef13e735370ed3ebe32e6f488bbe3e846186ce976f",
+    "before_first_unprofiled_seconds": 11.60919304098934,
+    "after_first_unprofiled_seconds": 4.8372072502970695,
+    "before_second_profiled_seconds": 21.33587970910594,
+    "after_second_profiled_seconds": 9.285210458096117,
+    "after_response_equal": true,
+    "receipts": 2,
+    "before_access_calls": 30,
+    "after_access_calls": 12,
+    "before_safe_lookup_calls": 12,
+    "after_safe_lookup_calls": 6,
+    "context_verification_calls_before_and_after": 6
+  },
+  "native_identity_after": {
+    "database": "ocean_c23_acceptance_b2fa6cfd",
+    "data_directory": "/private/tmp/ocean-c23-postgres-20261027-d36c3d15f2d7/data",
+    "server_address": "127.0.0.1",
+    "server_port": 51358,
+    "version": "18.3 (Homebrew)",
+    "fixture_schemas": 0,
+    "ephemeral_roles": 0
+  },
+  "native_cleanup": {
+    "tcp_refused": true,
+    "pidfile_absent": true,
+    "pg_ctl_status_exit": 3
+  },
+  "scope_limits": [
+    "No client timeout, generated schema, authorization cache, production port, cloud or scientific approval change.",
+    "No commits or pushes by owner agent; source-bound hosted CI and root delivery remain required.",
+    "Original negative API/deadline/race and profile receipts are immutable; final browser acceptance is handled separately."
+  ],
+  "artifacts": {
+    "ocean-c26-retention-combined-covered-20261030.log": {
+      "path": "ocean-c26-retention-combined-covered-20261030.log.gz",
+      "raw_bytes": 690,
+      "raw_sha256": "96695a6c4bd4c3616785501221a0fc7fbf16d98261914614e3048757268de44d",
+      "gzip_sha256": "d704b794686499afc7683bb1ffd29eab22415367af272c4592179e7b4c391ed5"
+    },
+    "ocean-c26-retention-combined-covered-preload-20261030.log": {
+      "path": "ocean-c26-retention-combined-covered-preload-20261030.log.gz",
+      "raw_bytes": 1542,
+      "raw_sha256": "95af1f6c7327b7246d8a9c40453a4049a3bc05b97c6f24beacee107db748d6a7",
+      "gzip_sha256": "d5060c7eda7c581c4f5b713f5a06ea4ba71c8054deb72da7aef168fe4627d4cd"
+    },
+    "ocean-c26-retention-combined-covered-preload-20261030.xml": {
+      "path": "ocean-c26-retention-combined-covered-preload-20261030.xml.gz",
+      "raw_bytes": 3356,
+      "raw_sha256": "4022ad609df1116126e9658d7b4a1c9ea3330405dc248aef27d704b176bf7b20",
+      "gzip_sha256": "617e5ea1a04a6e407a08251eaeb26b48d2fd380ff717544023fed1d1daa1597d",
+      "junit": {
+        "cases": 14,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "ocean-c26-retention-combined-final-20261030.log": {
+      "path": "ocean-c26-retention-combined-final-20261030.log.gz",
+      "raw_bytes": 694,
+      "raw_sha256": "1ff972a82c733746a54edcbadf79349f9bf1389a492b7818e9b474f450daa7ba",
+      "gzip_sha256": "8fd833b780dec2fb81bc541e6e1a4a67bce4ea5682e08177e30a4bdfbb3a323b"
+    },
+    "ocean-c26-retention-combined-final-20261030.xml": {
+      "path": "ocean-c26-retention-combined-final-20261030.xml.gz",
+      "raw_bytes": 2782,
+      "raw_sha256": "bd900d05001500110c22d6a4b5b11f51c2cd9f5eaf622ab4f779b8cb549088cb",
+      "gzip_sha256": "510bd430a2c0b3db5cc51c6949aa7f2c790e5a23e436529ba38a560ddc578441",
+      "junit": {
+        "cases": 15,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "ocean-c26-retention-native-combined-20261030.log": {
+      "path": "ocean-c26-retention-native-combined-20261030.log.gz",
+      "raw_bytes": 954,
+      "raw_sha256": "e83f1d44c64d2d4f34f1633a3fba9de1a4c38cb3df3c1bb84a819f53d6a05290",
+      "gzip_sha256": "cbfc8e0bbc7a786388c8fc4d3c066a3a5b0d45072e67ba9dd41afde5d3694f44"
+    },
+    "ocean-c26-retention-native-combined-20261030.xml": {
+      "path": "ocean-c26-retention-native-combined-20261030.xml.gz",
+      "raw_bytes": 1341,
+      "raw_sha256": "4ce249e955e468ecf337d2f0bfd06f831b3e1651bc5af636a822e641fd7a0f5e",
+      "gzip_sha256": "2e9461cc522eb0fc66717b51d1cd4d69cea4d1c871a9d71a975fc113887f3477",
+      "junit": {
+        "cases": 2,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "ocean-c26-retention-native-final-20261030.log": {
+      "path": "ocean-c26-retention-native-final-20261030.log.gz",
+      "raw_bytes": 110,
+      "raw_sha256": "600ecc2a686ee214f8fe0458ba4fda903e8e4386ea5fbaeada56f64fdcaf2dc4",
+      "gzip_sha256": "9b4e228b06c0e6b9d6ef433c6ef0af4c63144d24ac825af88966aaba58d2f5ab"
+    },
+    "ocean-c26-retention-native-final-20261030.xml": {
+      "path": "ocean-c26-retention-native-final-20261030.xml.gz",
+      "raw_bytes": 603,
+      "raw_sha256": "b3cc693e191d5251fd9e44cf2b72aac92afc586ba1088622ed983adf2cb9b283",
+      "gzip_sha256": "247273e7b377cb94563c9e0dfe1204e81e6d5d0954ab3c9a4d48b9e1c98f5522",
+      "junit": {
+        "cases": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "ocean-c26-answer-event-race-positive-20261030.log": {
+      "path": "ocean-c26-answer-event-race-positive-20261030.log.gz",
+      "raw_bytes": 553,
+      "raw_sha256": "fafe847a4d60b56fe786046dcff778d21efe552b2352bbfd795e3681f56b1a38",
+      "gzip_sha256": "8c89611c011c67f2414ba704d8b8d1fef36bf277489e88ede794d8b8908c8be5"
+    },
+    "ocean-c26-answer-event-race-positive-20261030.xml": {
+      "path": "ocean-c26-answer-event-race-positive-20261030.xml.gz",
+      "raw_bytes": 3274,
+      "raw_sha256": "35a07c85b52c8470a4b5b90168d94f56cfcd3c38336f22d1c91c1df0d4839ce9",
+      "gzip_sha256": "e63344aecabbc0d67e482a14aa71d9e319fb7e7e1cd4da842a320a8f5a3b5a84",
+      "junit": {
+        "cases": 21,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "ocean-c26-answer-event-race-negative-test-20261030.log": {
+      "path": "ocean-c26-answer-event-race-negative-test-20261030.log.gz",
+      "raw_bytes": 1674,
+      "raw_sha256": "497847b4d7b1c03fa9bc82f5f48a4516ffd18be3264ba3be82b24a13e4bd6ee0",
+      "gzip_sha256": "e18d8a8814bb192d39e8e6eac74edfed0ac10e58d1991eb595adbf08f59f55ed"
+    },
+    "ocean-c26-answer-event-race-20261030.json": {
+      "path": "ocean-c26-answer-event-race-20261030.json.gz",
+      "raw_bytes": 6997,
+      "raw_sha256": "b9ab22937961a21406faa761690986ef353533205423cf9e56f1206e86e8b2f4",
+      "gzip_sha256": "aa91a5bf2f655c7a53d977bf64abb3804bcd7b151abb68b83397ab7b7725a3a8"
+    },
+    "ocean-c26-answer-event-race-20261030.log": {
+      "path": "ocean-c26-answer-event-race-20261030.log.gz",
+      "raw_bytes": 1228,
+      "raw_sha256": "382bbeca6245ac025bd159e7495ef2e6f5a41ed0cd23143984894d5ed28f3db7",
+      "gzip_sha256": "9cbc5d2f8fd67e56dbb7cc4d07e1dccbf7074780e481802a6c5d2d74db2f09c7"
+    },
+    "ocean-c26-mixed-evidence-profile-20261029.json": {
+      "path": "ocean-c26-mixed-evidence-profile-20261029.json.gz",
+      "raw_bytes": 34270,
+      "raw_sha256": "3753873beb246a794f7d634290e623d107b7f646f659a2449ded92ed0787b014",
+      "gzip_sha256": "83e5c328205bb4d09103eb7dc50d5717bc124b75d95b6e210feb44eb9af9163b"
+    },
+    "ocean-c26-mixed-evidence-profile-20261029.pstats": {
+      "path": "ocean-c26-mixed-evidence-profile-20261029.pstats.gz",
+      "raw_bytes": 250832,
+      "raw_sha256": "f0ac70a35f1fb97b1c06236d86c9143703bd2694cd6b5ca299bb039ca4bc8d74",
+      "gzip_sha256": "9c08faba76a4a8a68295cd6fcef774b5bfa96f167c45f2cdaa870f3a61b02006"
+    },
+    "ocean-c26-mixed-evidence-profile-20261029.log": {
+      "path": "ocean-c26-mixed-evidence-profile-20261029.log.gz",
+      "raw_bytes": 9338,
+      "raw_sha256": "7b3244938e6e2915956058e638b97f0e7ace7e00e9389f6530170187a7fe1208",
+      "gzip_sha256": "15d31c21347ac8a4553e9c63650b13b6a00f43b63135eff00d23a5ad3a8c81ae"
+    },
+    "ocean-c26-mixed-evidence-profile-20261030.json": {
+      "path": "ocean-c26-mixed-evidence-profile-20261030.json.gz",
+      "raw_bytes": 34360,
+      "raw_sha256": "6891a4a498bf15cc7a5cfc06881615c4a1635380e6ca60c839084a2f09c46c63",
+      "gzip_sha256": "4d770145a8e02ae6441c50d90391e401dda114112fb08428bf651709984e426b"
+    },
+    "ocean-c26-mixed-evidence-profile-20261030.pstats": {
+      "path": "ocean-c26-mixed-evidence-profile-20261030.pstats.gz",
+      "raw_bytes": 250715,
+      "raw_sha256": "459cc934002ed864ee6a2bca6d6b89147397aa9a2ee9ec0e0e252fbbed1afb0f",
+      "gzip_sha256": "20205a81ed7c3ae36fd45535def1aafc87a2811f8ad73601a37829a89d9a2720"
+    },
+    "ocean-c26-mixed-evidence-profile-20261030.log": {
+      "path": "ocean-c26-mixed-evidence-profile-20261030.log.gz",
+      "raw_bytes": 9282,
+      "raw_sha256": "35ecde4ab2b812fd46b0e890936c7e91cce365ec77a1b0c948a13496a8a773c2",
+      "gzip_sha256": "89cc88e2d81f3463ec7c34dfd94b53e7eee8a71079d4c9f686f6bc29332f011d"
+    },
+    "ocean-c26-mixed-evidence-profile-final-20261030.json": {
+      "path": "ocean-c26-mixed-evidence-profile-final-20261030.json.gz",
+      "raw_bytes": 34330,
+      "raw_sha256": "e70629b88a15d2c4d88dc747dcf9d08523ccfacf83585bd7de08bacf1d070d72",
+      "gzip_sha256": "7387ee8982be2ab8c102b702986cab8e82f94fe7ca02a017b39eb240ce94943d"
+    },
+    "ocean-c26-mixed-evidence-profile-final-20261030.pstats": {
+      "path": "ocean-c26-mixed-evidence-profile-final-20261030.pstats.gz",
+      "raw_bytes": 250715,
+      "raw_sha256": "a9bff8f4191f835dc676901c53803b92437d084bdd622287850b771608c77a0d",
+      "gzip_sha256": "a81dea23be942e74797c9826ecbe1131ddae4a1e7c9b893800b424c8d8b3018e"
+    },
+    "ocean-c26-mixed-evidence-profile-final-20261030.log": {
+      "path": "ocean-c26-mixed-evidence-profile-final-20261030.log.gz",
+      "raw_bytes": 9275,
+      "raw_sha256": "60e7662b1f3ad380d43b80ac190ff52d274acfb992e4b4919e5afeb007495f8d",
+      "gzip_sha256": "84868c549c6f19dbe0234cda1a824d56c6a9a13af68db387fe99e17c9c8659cf"
+    },
+    "ocean-c26-mixed-evidence-contract-20261030.json": {
+      "path": "ocean-c26-mixed-evidence-contract-20261030.json.gz",
+      "raw_bytes": 55782,
+      "raw_sha256": "3c63391e4f25906209a86a2ee61c64b75baab95c81741977d5deb8d9ebcfd607",
+      "gzip_sha256": "864ce494c5feab60840141786b6f0ebae101a0415d6e95f98f8c633835f59eab"
+    },
+    "ocean-c26-mixed-prepared-answer-contract-20261030.json": {
+      "path": "ocean-c26-mixed-prepared-answer-contract-20261030.json.gz",
+      "raw_bytes": 96902,
+      "raw_sha256": "e366c093b9a9ec17a247a818d1c47e2eab196ff151b563c10670f12298622c08",
+      "gzip_sha256": "f24aa849b615e75f4fb61becbde1cbbfab7e410fe33cef91076fb369c2eda0ea"
+    },
+    "ocean-c26-mixed-prepared-answer-contract-20261030.log": {
+      "path": "ocean-c26-mixed-prepared-answer-contract-20261030.log.gz",
+      "raw_bytes": 3505,
+      "raw_sha256": "9e1f79b2fadc70a1459a30e7fef01313faf5b7c0dd5485c4037b8822d4d63293",
+      "gzip_sha256": "2e1f3a06a7861fe5d110d202b1aba34676f96766a988ccc78da7a59c4b63eb2b"
+    },
+    "ocean-c26-postgres-after-20261030.json": {
+      "path": "ocean-c26-postgres-after-20261030.json.gz",
+      "raw_bytes": 260,
+      "raw_sha256": "3fe80748fc098c048c1b6a9657c70f7ed5816283e2e858b976325e6a3f5868de",
+      "gzip_sha256": "71660c5701b986998a571c5aab90a0414d9e0c87607ef8bb45f226db36431190"
+    },
+    "ocean-c26-postgres-stopped-20261030.json": {
+      "path": "ocean-c26-postgres-stopped-20261030.json.gz",
+      "raw_bytes": 51,
+      "raw_sha256": "15b7483e450c886564b249ee97648f33508a6b5f735b37c38f8842abfb4c2901",
+      "gzip_sha256": "d4c018922604ccfc5458f19acbc2ea7ef737b581c9e1d673035d917423895a6e"
+    },
+    "ocean-c26-profile-mixed-20261029.py": {
+      "path": "ocean-c26-profile-mixed-20261029.py.gz",
+      "raw_bytes": 3489,
+      "raw_sha256": "e18c08476e8f903a8815c19875caa3366b22d5d2c11ec0c457fe07ae642e2903",
+      "gzip_sha256": "08932d3192ff6aee035319fafdf1f3111d38849e0dca7b545ea13c84fd93cdb7"
+    },
+    "ocean-c26-profile-mixed-final-20261030.py": {
+      "path": "ocean-c26-profile-mixed-final-20261030.py.gz",
+      "raw_bytes": 3501,
+      "raw_sha256": "bc71950241a2b170af590a7d42e9ec2a2087024eaee373641fc05b4ec82cb001",
+      "gzip_sha256": "10d284d30eefe88495f796b9e371ed1198a6583d71bec691d9f4a2b8caabefeb"
+    }
+  }
+}

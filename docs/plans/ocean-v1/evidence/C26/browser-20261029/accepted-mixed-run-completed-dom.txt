@@ -1,0 +1,174 @@
+- complementary "Development controls":
+  - strong: Local C26 acceptance · synthetic TEST accounts and observations · no live models or Python execution
+- link "Skip to content":
+  - /url: "#main-content"
+- banner:
+  - button "OCEAN Platform":
+    - text: OCEAN
+    - generic: Platform
+  - navigation "Primary navigation":
+    - link "Research":
+      - /url: /?view=research
+      - generic: Research
+    - link "Context Catalog":
+      - /url: /?view=catalogue
+      - generic: Context Catalog
+    - link "Tools":
+      - /url: /?view=tools
+      - generic: Tools
+  - 'button "Account: Internal account, Researcher"':
+    - strong: Internal account
+    - text: Researcher
+  - button "Switch language":
+    - generic: EN
+  - button "Dark theme":
+  - button "Refresh access":
+- complementary "Application navigation":
+  - generic: OCEAN / v1
+  - navigation "Destinations":
+    - link "Research":
+      - /url: /?view=research
+      - generic: Research
+    - link "Context Catalog":
+      - /url: /?view=catalogue
+      - generic: Context Catalog
+    - link "Tools":
+      - /url: /?view=tools
+      - generic: Tools
+  - paragraph: Your access is checked by the v1 service.
+  - navigation "Account and support":
+    - link "Settings":
+      - /url: /?view=settings
+      - generic: Settings
+    - link "About":
+      - /url: /about
+      - generic: About
+    - link "Feedback":
+      - /url: /feedback
+      - generic: Feedback
+- main:
+  - generic: OCEAN / v1
+  - heading "Research" [level=1]
+  - paragraph: Private investigations · shared context · separate conversations
+  - navigation "Investigations and conversations":
+    - heading "Investigations" [level=2]
+    - list:
+      - button "C26 integrated synthetic investigation": C26 integrated synthetic investigation
+    - generic "New investigation":
+      - text: New investigation
+    - option "Choose snapshot" [selected]
+    - option "C26 synthetic snapshot 1"
+    - option "C26 synthetic snapshot 2"
+    - heading "Conversations" [level=3]
+    - list:
+      - button "C26 shared research and experiment" [active]
+      - button "C26 independent conversation"
+    - text: New conversation name
+    - textbox "New conversation name"
+    - button "New conversation" [disabled]:
+      - text: New conversation
+    - generic "Manage investigation"
+  - generic: Chat
+  - button "Close Workspace" [expanded]:
+  - region "Chat":
+    - heading "C26 shared research and experiment" [level=2]
+    - strong: Context for the next question
+    - generic: CTD · Metagenome · SST · eDNA
+    - generic: 2 attachments · 0 pinned restrictions
+    - generic "Snapshot and revision"
+    - region "Conversation activity":
+      - list:
+        - article:
+          - heading "Count all datasets" [level=3]
+          - status: Completed
+          - text: "Active elapsed time:"
+          - time: 0:01
+          - code: b9b29ec4-60d5-44d8-a9a4-1cf207d47c41
+          - paragraph: Exploration finished. An answer is not available yet.
+          - generic "Submitted context — fixed for this run"
+          - generic "Public activity (4)"
+          - button "Check status"
+          - button "Check activity"
+        - article:
+          - heading "Count all datasets" [level=3]
+          - status: Completed
+          - text: "Active elapsed time:"
+          - time: 0:23
+          - code: d4635e49-73f2-4876-8ce5-63c9d22a7024
+          - paragraph: Exploration finished. An answer is not available yet.
+          - generic "Submitted context — fixed for this run"
+          - generic "Public activity (4)"
+          - button "Check status"
+          - button "Check activity"
+        - article:
+          - heading "Count all datasets" [level=3]
+          - status: Completed
+          - text: "Active elapsed time:"
+          - time: 0:00
+          - code: db8648a9-171b-4720-ae0a-a2641cf85500
+          - paragraph: Exploration finished. An answer is not available yet.
+          - generic "Submitted context — fixed for this run"
+          - generic "Public activity (4)"
+          - button "Check status"
+          - button "Check activity"
+    - button "Review answers and retained evidence"
+    - generic: Your question
+    - textbox "Your question":
+      - /placeholder: Ask about the selected data…
+    - button "Submit question" [disabled]:
+      - text: Submit question
+    - generic "Rename conversation"
+  - separator "Resize Workspace"
+  - region "Workspace":
+    - heading "Workspace" [level=2]
+    - button "Close Workspace":
+    - tablist "Workspace sections":
+      - tab "Context" [selected]
+      - tab "Results"
+      - tab "Experiments"
+      - tab "Evidence"
+    - tabpanel "Context":
+      - strong: Context for the next question
+      - generic: CTD · Metagenome · SST · eDNA
+      - generic: 2 attachments · 0 pinned restrictions
+      - generic "Snapshot and revision"
+      - paragraph: Attachments add context. Pins restrict the investigation. Chats share these settings, not each other’s narrative.
+      - heading "Attached context" [level=3]
+      - list:
+        - code: synthetic:70933dce-a453-4e16-ac71-ea34d0b69382:8eb89c5872b56466
+        - generic: available
+        - button "Remove"
+        - code: c21:receipt:7e466ff5b9a6f85c470830d8300e41006e1a2e542cf420cf9f416b0b6aa99e60
+        - generic: available
+        - button "Remove"
+      - heading "Pinned restrictions" [level=3]
+      - paragraph: None selected
+      - list
+      - button "Browse context catalogue":
+        - text: Browse context catalogue
+      - generic "Edit source scope"
+      - option "Any" [selected]
+      - option "O"
+      - option "I"
+      - option "M"
+      - option "Any" [selected]
+      - option "O"
+      - option "I"
+      - option "M"
+      - option "Any" [selected]
+      - option "environmental"
+      - option "negative_control"
+      - option "positive_control"
+      - option "mock_community"
+      - option "unknown"
+      - option "Any" [selected]
+      - option "qcauto_target"
+      - option "qcauto_95pct_3nn_target"
+      - option "Any" [selected]
+      - option "true"
+      - option "false"
+      - generic "Refresh into a new branch"
+      - option "Choose snapshot" [selected]
+      - option "C26 synthetic snapshot 2"
+- button "Open Next.js Dev Tools":
+- alert: OCEAN · Research

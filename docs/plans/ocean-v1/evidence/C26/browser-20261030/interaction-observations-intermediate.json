@@ -1,0 +1,30 @@
+{
+  "version": "c26-browser-interactions-v1",
+  "classification": "intermediate-source-superseded",
+  "source_revision": "sha256:52d42d47696a457f15024bfdf12ee0ad01966f429df8c92760f0372858d8624e",
+  "catalogue": {
+    "methods": "http://127.0.0.1:3100/?view=catalogue&snapshot=14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37&node=synthetic%3Asst%3Amur-final&search=synthetic%3Asst%3Amur-final&section=methods",
+    "back": "http://127.0.0.1:3100/?view=catalogue&snapshot=14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37&node=synthetic%3Asst%3Amur-final&search=synthetic%3Asst%3Amur-final",
+    "forward": "http://127.0.0.1:3100/?view=catalogue&snapshot=14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37&node=synthetic%3Asst%3Amur-final&search=synthetic%3Asst%3Amur-final&section=methods",
+    "narrow": {
+      "documentWidth": 390,
+      "focusedRole": "tab",
+      "focusedSelected": "true",
+      "focusedText": "来歴",
+      "language": "ja",
+      "theme": "dark",
+      "width": 390
+    },
+    "escape": {
+      "dialogOpen": false,
+      "focus": "ディレクトリ"
+    }
+  },
+  "mixedRun": "a2fc204f-1019-4eb2-abe4-d70915e44dc8",
+  "observed": {
+    "emptyAnswerHistory": "2 receipts rendered with enabled Prepare answer; no timeout",
+    "preparedAnswer": "backend completed, then HTTP503 at answers/events prevented UI hydration"
+  },
+  "real_screen_reader_user_study": "not_run",
+  "live_calls_performed": false
+}

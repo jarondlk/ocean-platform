@@ -36,7 +36,13 @@ class RetainedArtifactProvider(ABC):
 
     @abstractmethod
     def verify_context(self, session, revision_id, reference, expected_sha256, user):
-        """Verify current authorization and a committed immutable context pin."""
+        """Return a current exact binding after verifying the committed pin.
+
+        Return None only if this provider does not own the reference. Known but
+        invalid, unavailable or unauthorized references must raise. Validate the
+        full safe bytes, immutable context and pin, then close authority after
+        all outward callbacks; callers must not need a second resolve pass.
+        """
 
 
 class SessionAttachmentResolver:

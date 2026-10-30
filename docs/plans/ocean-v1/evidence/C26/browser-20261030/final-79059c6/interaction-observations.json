@@ -1,0 +1,38 @@
+{
+  "version": "c26-browser-interactions-v1",
+  "source_revision": "sha256:79059c699828bb4e15767eef13e735370ed3ebe32e6f488bbe3e846186ce976f",
+  "fixture": "synthetic-local-actual-services",
+  "live_calls_performed": false,
+  "catalogue": {
+    "methods": "http://127.0.0.1:3100/?view=catalogue&snapshot=14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37&node=synthetic%3Asst%3Amur-final&search=synthetic%3Asst%3Amur-final&section=methods",
+    "back": "http://127.0.0.1:3100/?view=catalogue&snapshot=14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37&node=synthetic%3Asst%3Amur-final&search=synthetic%3Asst%3Amur-final",
+    "forward": "http://127.0.0.1:3100/?view=catalogue&snapshot=14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37&node=synthetic%3Asst%3Amur-final&search=synthetic%3Asst%3Amur-final&section=methods",
+    "narrow": {
+      "documentWidth": 390,
+      "focusedRole": "tab",
+      "focusedSelected": "true",
+      "focusedText": "来歴",
+      "language": "ja",
+      "theme": "dark",
+      "width": 390
+    },
+    "escape": {
+      "dialogOpen": false,
+      "focus": "ディレクトリ"
+    }
+  },
+  "research": {
+    "run_id": "9d1cf1e8-2bbe-4977-8b46-38fe8b707d01",
+    "native_first_foreign_second": true,
+    "prepared_answer_visible": true,
+    "independent_expected_datasets": 4,
+    "actual_answer_text": "Answers\nExploration\nChoose an exploration\nCount all datasets\nCount all datasets\nPrepare answer\nAnswer · EN\nCompleted\n\nAnswer preparation active time: 19s\n\nComplete against the retained requested evidence.\n\nDescriptive query\n\nDescriptive result: datasets: 4 (Distinct permitted canonical input datasets across complete matching descendants and cross-root links).\n\nOpen evidence 1\nRetained values\n\nStructured evidence selection is traceability, not independent scientific verification. The CTD source family is an immutable index storage carrier only; it does not assert CTD measurements, a raw dataset, or scientific source eligibility. Descriptive operations do not execute experiments or grant scientific approval; current access applies to every frozen input {\"columns.0.key\":\"entity\"} {\"columns.0.title.en\":\"entity\"} {\"columns.0.title.ja\":\"entity\"} {\"columns.0.unit\":null} {\"columns.1.key\":\"count\"} {\"columns.1.title.en\":\"count\"} {\"columns.1.title.ja\":\"count\"} {\"columns.1.unit\":null} {\"columns.2.key\":\"denominator\"} {\"columns.2.title.en\":\"denominator\"} {\"columns.2.title.ja\":\"denominator\"} {\"columns.2.unit\":null} {\"scope_compatibility\":null} Explicitly attached retained receipt c21:receipt:a6f946dd298d126898d57710a771e90a9f6d7d7274263ac1c926e786475f1034 from snapshot 14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37 is supplementary; it does not establish current-run inventory or completion. Attached experimental context is retained but is not independently verified scientific evidence: synthetic:48f2060a-5056-49ca-b536-14e1ae838d28:8eb89c5872b56466\n\nStructured evidence selection is traceability, not independent scientific verification.\n\nThe CTD source family is an immutable index storage carrier only; it does not assert CTD measurements, a raw dataset, or scientific source eligibility.\n\nDescriptive operations do not execute experiments or grant scientific approval; current access applies to every frozen input\n\n{\"columns.0.key\":\"entity\"}\n\n{\"columns.0.title.en\":\"entity\"}\n\n{\"columns.0.title.ja\":\"entity\"}\n\n{\"columns.0.unit\":null}\n\n{\"columns.1.key\":\"count\"}\n\n{\"columns.1.title.en\":\"count\"}\n\n{\"columns.1.title.ja\":\"count\"}\n\n{\"columns.1.unit\":null}\n\n{\"columns.2.key\":\"denominator\"}\n\n{\"columns.2.title.en\":\"denominator\"}\n\n{\"columns.2.title.ja\":\"denominator\"}\n\n{\"columns.2.unit\":null}\n\n{\"scope_compatibility\":null}\n\nExplicitly attached retained receipt c21:receipt:a6f946dd298d126898d57710a771e90a9f6d7d7274263ac1c926e786475f1034 from snapshot 14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37 is supplementary; it does not establish current-run inventory or completion.\n\nAttached experimental context is retained but is not independently verified scientific evidence: synthetic:48f2060a-5056-49ca-b536-14e1ae838d28:8eb89c5872b56466\n\nStructured source selections are not independent scientific verification.\n\nSubmitted context and shared budget\nAnswer preparation activity (3/3)\nRetained evidence\nc13.inventory · descriptive\nc13.inventory · descriptive",
+    "prepared_answer_reload_verified": true,
+    "transient_history_notice_recovered_by_explicit_reload": true
+  },
+  "denial": {
+    "other_account_retained_content": false,
+    "revoked_account_retained_content": false
+  },
+  "real_screen_reader_user_study": "not_run"
+}

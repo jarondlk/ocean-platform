@@ -1,0 +1,1988 @@
+{
+  "master_sha256": "c367ff8545226c5b5456653f8dad0373cfc0243484df8377fbd44908a4997074",
+  "matrix": [
+    {
+      "id": "R01",
+      "description": "One scope validator rejects incompatible geography, date, taxa/panel and method in exact and synthesis routes; include English/Japanese Hokkaido and shark counterexamples.",
+      "owner": "C01, C19, C21",
+      "gates": "G1",
+      "preparation_status": "passed",
+      "check_ids": [
+        "english-japanese-incompatible-geo-taxa-clarify",
+        "regression-scope"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R02",
+      "description": "Reliability tiers require passing checks; top-ten omission is not zero; SST matching respects geography, product, time and resolution. Invalid derived artifacts are corrected or quarantined before exposure.",
+      "owner": "C02, C10, C11, C13",
+      "gates": "G1",
+      "preparation_status": "passed",
+      "check_ids": [
+        "sst-independent-numerical-oracle",
+        "four-source-physical-method-assay-semantics",
+        "regression-publication"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R03",
+      "description": "Legal holds, retention and concurrent cleanup preserve protected artifacts; current authorization governs historical snapshots and receipts.",
+      "owner": "C03, C09, C17, C21",
+      "gates": "G2",
+      "preparation_status": "passed",
+      "check_ids": [
+        "owner-role-source-revocation-and-held-history",
+        "regression-retention"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R04",
+      "description": "Authentication avoids blocking asynchronous requests and preserves roles/session behavior under concurrency.",
+      "owner": "C04, C14, C20",
+      "gates": "G2",
+      "preparation_status": "passed",
+      "check_ids": [
+        "regression-auth"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R05",
+      "description": "Legacy retrieval uses the correct embedding identity and complete relevant document fields; model truncation cannot become a successful answer.",
+      "owner": "C05, C06, C19, C21",
+      "gates": "G1, G4",
+      "preparation_status": "passed",
+      "check_ids": [
+        "regression-model"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R06",
+      "description": "CSV/table downloads are safe for spreadsheet consumers without corrupting legitimate numeric data; all new exports use the shared policy.",
+      "owner": "C07, C21, C22",
+      "gates": "G2",
+      "preparation_status": "passed",
+      "check_ids": [
+        "regression-csv"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R07",
+      "description": "Five roots and all four source families use canonical identities; aliases and cross-links do not duplicate counts.",
+      "owner": "C08–C14",
+      "gates": "G3",
+      "preparation_status": "passed",
+      "check_ids": [
+        "shared-context-inventory-answer",
+        "four-source-physical-method-assay-semantics",
+        "regression-catalogue"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R08",
+      "description": "On a 100,000-object fixture, objects at legacy rank 26 and beyond initial pages are reachable; no top-k cutoff limits catalogue membership.",
+      "owner": "C08, C14, C16, C19",
+      "gates": "G3",
+      "preparation_status": "passed",
+      "check_ids": [
+        "catalogue-full-scale-parity"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R09",
+      "description": "Global and scoped counts cover the complete authorized matching population, report entity/denominator and stay identical when preview size changes.",
+      "owner": "C08–C14, C19, C21",
+      "gates": "G3",
+      "preparation_status": "passed",
+      "check_ids": [
+        "catalogue-full-scale-parity",
+        "shared-context-inventory-answer",
+        "sst-independent-numerical-oracle"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R10",
+      "description": "UI and agent list/open/query the same IDs and totals under identical permissions, filters and snapshot; no hidden names or counts leak.",
+      "owner": "C14, C16, C19",
+      "gates": "G2, G3",
+      "preparation_status": "passed",
+      "check_ids": [
+        "catalogue-full-scale-parity",
+        "owner-role-source-revocation-and-held-history"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R11",
+      "description": "Immutable snapshots bind source, publication, classification, relationship and operation versions; frozen adapters match exact-service reference answers.",
+      "owner": "C09–C14",
+      "gates": "G1, G3",
+      "preparation_status": "passed",
+      "check_ids": [
+        "durable-ack-cancel-continuation-rollover",
+        "regression-frozen"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R12",
+      "description": "Query readiness is independent of embeddings. Empty, zero, unknown, unavailable, incomplete source, truncated preview and query failure remain distinguishable.",
+      "owner": "C08–C16, C21",
+      "gates": "G3",
+      "preparation_status": "passed",
+      "check_ids": [
+        "known-zero-unknown-and-forged-snapshot",
+        "regression-catalogue"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R13",
+      "description": "CTD casts/measurements, SST products/grids, full metagenome abundance semantics and eDNA protocols/controls/assignments remain scientifically distinct.",
+      "owner": "C10–C13",
+      "gates": "G1",
+      "preparation_status": "passed",
+      "check_ids": [
+        "four-source-physical-method-assay-semantics",
+        "sst-independent-numerical-oracle",
+        "regression-frozen"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R14",
+      "description": "Physical sample identity, source occurrence and candidate overlap remain distinct. Published result, available workflow and experiment authority cannot be conflated.",
+      "owner": "C12, C13, C21–C23, C25",
+      "gates": "G1, G5",
+      "preparation_status": "passed",
+      "check_ids": [
+        "four-source-physical-method-assay-semantics",
+        "experimental-bytes-and-approval",
+        "research-and-experiment-attachment-composition"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R15",
+      "description": "A separate Context Catalog tab exposes every authorized directory and leaf through tree, listing and inspector; paging/virtualization never hides membership. Deep links and history restore the node and snapshot.",
+      "owner": "C15, C16",
+      "gates": "G3, G6",
+      "preparation_status": "not_run",
+      "check_ids": [
+        "browser-catalogue",
+        "catalogue-full-scale-parity",
+        "regression-browser"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R16",
+      "description": "Research presents Chat and Workspace, named private investigations, multiple separate chats, resizable desktop panels and narrow-screen alternatives.",
+      "owner": "C15, C17, C18",
+      "gates": "G6",
+      "preparation_status": "not_run",
+      "check_ids": [
+        "browser-research"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R17",
+      "description": "Browse/filter has no context side effect; Attach supplements, Pin restricts; every run freezes its effective revision. Explicit refresh branches and preserves original evidence.",
+      "owner": "C09, C16–C20",
+      "gates": "G3, G4, G6",
+      "preparation_status": "not_run",
+      "check_ids": [
+        "explicit-attach-pin-multichat-and-experiment-history",
+        "durable-ack-cancel-continuation-rollover",
+        "browser-catalogue"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R18",
+      "description": "All live Chat actions work: submit, status/events, cancel, clarify and continue; reload/reconnect recovers persisted progress. C18 owns controls/boundary, C20 owns live transport.",
+      "owner": "C18–C20",
+      "gates": "G4, G6",
+      "preparation_status": "not_run",
+      "check_ids": [
+        "durable-ack-cancel-continuation-rollover",
+        "browser-research"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R19",
+      "description": "Typed provider-independent actions use permitted catalogue operations; no unrestricted SQL/admin tools. Malformed actions and hostile source text cannot bypass scope.",
+      "owner": "C06, C14, C19",
+      "gates": "G1, G4",
+      "preparation_status": "failed",
+      "check_ids": [
+        "known-zero-unknown-and-forged-snapshot",
+        "regression-controller"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R20",
+      "description": "Deterministic completion accounts for relevant inventory and unresolved work. Enforce 180 active seconds, 12 actions and one repair; retain explicit partial outcomes and linked continuation.",
+      "owner": "C19, C20",
+      "gates": "G4",
+      "preparation_status": "failed",
+      "check_ids": [
+        "durable-ack-cancel-continuation-rollover",
+        "regression-controller"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R21",
+      "description": "Queue retries, crashes, leases, outbox and cancellation preserve committed steps, snapshots and budgets; no claim of exactly-once provider billing.",
+      "owner": "C17, C20",
+      "gates": "G4",
+      "preparation_status": "passed",
+      "check_ids": [
+        "interrupted-committed-step-replays-without-duplicate-effect",
+        "durable-ack-cancel-continuation-rollover",
+        "regression-runs"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R22",
+      "description": "Evidence receipts can be reopened with original parameters/hashes/scope. Only supplied evidence can be cited; generated narrative from other chats is not implicit evidence.",
+      "owner": "C17, C21",
+      "gates": "G1, G4",
+      "preparation_status": "passed",
+      "check_ids": [
+        "shared-context-inventory-answer",
+        "research-and-experiment-attachment-composition",
+        "regression-evidence"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R23",
+      "description": "Experiment approval binds concrete question/cohort/method/code/input hashes. Revision, tampering or revocation invalidates dispatch. No unpublished inputs or silent sampling.",
+      "owner": "C22",
+      "gates": "G2, G5",
+      "preparation_status": "passed",
+      "check_ids": [
+        "experimental-bytes-and-approval",
+        "explicit-attach-pin-multichat-and-experiment-history",
+        "regression-experiments"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R24",
+      "description": "Real Linux/gVisor containment denies network, credentials, host files/sockets and package installation; whole-process-tree termination and resource/output limits are enforced. Mocks cannot prove this.",
+      "owner": "C23, C24",
+      "gates": "G5",
+      "preparation_status": "passed",
+      "check_ids": [
+        "original-c23-physical-evidence"
+      ],
+      "qualification": "Historical C23 physical observations at their original source/host; no current rerun",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R25",
+      "description": "Reproducible experiments retain image/code/input identities, declared seeds, logs and validated outputs. Enforce 1 active/user and 2 globally; experimental labels persist in every surface/export.",
+      "owner": "C22–C25",
+      "gates": "G5, G6",
+      "preparation_status": "not_run",
+      "check_ids": [
+        "experimental-bytes-and-approval",
+        "research-and-experiment-attachment-composition",
+        "regression-experiments",
+        "browser-experiments"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R26",
+      "description": "Light/dark, English/Japanese, keyboard and screen-reader operation, long labels, narrow layouts and useful error/empty/partial states work across all new surfaces.",
+      "owner": "C15, C16, C18, C25",
+      "gates": "G6",
+      "preparation_status": "not_run",
+      "check_ids": [
+        "browser-accessibility"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R27",
+      "description": "Legacy endpoints/history/links remain on the unchanged legacy site. Reused code retains appropriate regressions; independent v1 flags/rollback preserve its investigations/evidence without shared sessions or automatic history import.",
+      "owner": "C05, C06, C15, C17, C21, C27",
+      "gates": "G7, G9",
+      "preparation_status": "passed",
+      "check_ids": [
+        "regression-legacy",
+        "isolation-legacy-denial"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R28",
+      "description": "Compare actual controller and legacy Chat with matched scope/permission/snapshot. Report numerical parity, factual errors, completion, latency, tool use, tokens and cost separately from citation validity.",
+      "owner": "C26",
+      "gates": "G1, G3, G4",
+      "preparation_status": "failed",
+      "check_ids": [
+        "matched-controller-comparison",
+        "regression-framework",
+        "regression-command"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R29",
+      "description": "Independent v1 release preparation has isolated-site/worker configuration, migration rehearsal, flags, rollback triggers and outstanding gates. Preparation neither provisions/deploys nor changes the main domain.",
+      "owner": "C24, C27",
+      "gates": "G7, G9",
+      "preparation_status": "passed",
+      "check_ids": [
+        "isolation-offline-contract"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R30",
+      "description": "Every component can resume from a file-based handoff with revision, completed checkpoints, validation and exact next action; no automatic advancement or fabricated completion.",
+      "owner": "All components; planning package",
+      "gates": "G0",
+      "preparation_status": "passed",
+      "check_ids": [
+        "planning-and-original-receipts"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R31",
+      "description": "P00 provides working synthetic local journeys, clear preview labels, recoverable actions and recorded user feedback/accepted UX direction before backend implementation. Prototype evidence cannot complete later integration components.",
+      "owner": "P00; C15, C16, C18, C20, C21, C25 integrate",
+      "gates": "G8, G6",
+      "preparation_status": "not_run",
+      "check_ids": [
+        "planning-and-original-receipts",
+        "browser-catalogue",
+        "browser-research",
+        "browser-experiments"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R32",
+      "description": "V1 has independent serving, project/resource targets, database, storage, credentials, sessions and queues; no legacy runtime access, fallback or main-domain cutover.",
+      "owner": "C09, C17, C20, C24, C26, C27",
+      "gates": "G9",
+      "preparation_status": "passed",
+      "check_ids": [
+        "isolation-offline-contract",
+        "isolation-legacy-denial"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "R33",
+      "description": "Approved data enters through explicit one-way copies with authorization/eligibility checks, source/hash manifests, quarantine validation and origin provenance. Withdrawal handling is documented; no silent sync or account/history/credential copy.",
+      "owner": "C09–C13, C24, C26, C27",
+      "gates": "G1, G2, G9",
+      "preparation_status": "passed",
+      "check_ids": [
+        "transfer-independent",
+        "transfer-rejections",
+        "transfer-withdrawal"
+      ],
+      "qualification": "Local deterministic preparation only; full operational wording is retained above",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G0",
+      "requirement_ids": [
+        "R30"
+      ],
+      "preparation_status": "passed",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G1",
+      "requirement_ids": [
+        "R01",
+        "R02",
+        "R05",
+        "R11",
+        "R13",
+        "R14",
+        "R19",
+        "R22",
+        "R28",
+        "R33"
+      ],
+      "preparation_status": "failed",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G2",
+      "requirement_ids": [
+        "R03",
+        "R04",
+        "R06",
+        "R10",
+        "R23",
+        "R33"
+      ],
+      "preparation_status": "passed",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G3",
+      "requirement_ids": [
+        "R07",
+        "R08",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R15",
+        "R17",
+        "R28"
+      ],
+      "preparation_status": "failed",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G4",
+      "requirement_ids": [
+        "R05",
+        "R17",
+        "R18",
+        "R19",
+        "R20",
+        "R21",
+        "R22",
+        "R28"
+      ],
+      "preparation_status": "failed",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G5",
+      "requirement_ids": [
+        "R14",
+        "R23",
+        "R24",
+        "R25"
+      ],
+      "preparation_status": "not_run",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G6",
+      "requirement_ids": [
+        "R15",
+        "R16",
+        "R17",
+        "R18",
+        "R25",
+        "R26",
+        "R31"
+      ],
+      "preparation_status": "not_run",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G7",
+      "requirement_ids": [
+        "R27",
+        "R29"
+      ],
+      "preparation_status": "passed",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G8",
+      "requirement_ids": [
+        "R31"
+      ],
+      "preparation_status": "not_run",
+      "full_operational_acceptance": "not_run"
+    },
+    {
+      "id": "G9",
+      "requirement_ids": [
+        "R27",
+        "R29",
+        "R32",
+        "R33"
+      ],
+      "preparation_status": "passed",
+      "full_operational_acceptance": "not_run"
+    }
+  ],
+  "acceptance_report": {
+    "version": "system-acceptance-v1",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+    "requirements": [
+      {
+        "id": "R01.preparation",
+        "phase": "preparation",
+        "owner": "C01, C19, C21",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R02.preparation",
+        "phase": "preparation",
+        "owner": "C02, C10, C11, C13",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R03.preparation",
+        "phase": "preparation",
+        "owner": "C03, C09, C17, C21",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R04.preparation",
+        "phase": "preparation",
+        "owner": "C04, C14, C20",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R05.preparation",
+        "phase": "preparation",
+        "owner": "C05, C06, C19, C21",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R06.preparation",
+        "phase": "preparation",
+        "owner": "C07, C21, C22",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R07.preparation",
+        "phase": "preparation",
+        "owner": "C08–C14",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R08.preparation",
+        "phase": "preparation",
+        "owner": "C08, C14, C16, C19",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R09.preparation",
+        "phase": "preparation",
+        "owner": "C08–C14, C19, C21",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R10.preparation",
+        "phase": "preparation",
+        "owner": "C14, C16, C19",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R11.preparation",
+        "phase": "preparation",
+        "owner": "C09–C14",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R12.preparation",
+        "phase": "preparation",
+        "owner": "C08–C16, C21",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R13.preparation",
+        "phase": "preparation",
+        "owner": "C10–C13",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R14.preparation",
+        "phase": "preparation",
+        "owner": "C12, C13, C21–C23, C25",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R15.preparation",
+        "phase": "preparation",
+        "owner": "C15, C16",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R16.preparation",
+        "phase": "preparation",
+        "owner": "C15, C17, C18",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R17.preparation",
+        "phase": "preparation",
+        "owner": "C09, C16–C20",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R18.preparation",
+        "phase": "preparation",
+        "owner": "C18–C20",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R19.preparation",
+        "phase": "preparation",
+        "owner": "C06, C14, C19",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R20.preparation",
+        "phase": "preparation",
+        "owner": "C19, C20",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R21.preparation",
+        "phase": "preparation",
+        "owner": "C17, C20",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R22.preparation",
+        "phase": "preparation",
+        "owner": "C17, C21",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R23.preparation",
+        "phase": "preparation",
+        "owner": "C22",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R24.preparation",
+        "phase": "preparation",
+        "owner": "C23, C24",
+        "evidence_kind": "original-physical"
+      },
+      {
+        "id": "R25.preparation",
+        "phase": "preparation",
+        "owner": "C22–C25",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R26.preparation",
+        "phase": "preparation",
+        "owner": "C15, C16, C18, C25",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R27.preparation",
+        "phase": "preparation",
+        "owner": "C05, C06, C15, C17, C21, C27",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R28.preparation",
+        "phase": "preparation",
+        "owner": "C26",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R29.preparation",
+        "phase": "preparation",
+        "owner": "C24, C27",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R30.preparation",
+        "phase": "preparation",
+        "owner": "All components; planning package",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R31.preparation",
+        "phase": "preparation",
+        "owner": "P00; C15, C16, C18, C20, C21, C25 integrate",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R32.preparation",
+        "phase": "preparation",
+        "owner": "C09, C17, C20, C24, C26, C27",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "R33.preparation",
+        "phase": "preparation",
+        "owner": "C09–C13, C24, C26, C27",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "G0.preparation",
+        "phase": "preparation",
+        "owner": "C26",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "G1.preparation",
+        "phase": "preparation",
+        "owner": "C26",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "G2.preparation",
+        "phase": "preparation",
+        "owner": "C26",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "G3.preparation",
+        "phase": "preparation",
+        "owner": "C26",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "G4.preparation",
+        "phase": "preparation",
+        "owner": "C26",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "G5.preparation",
+        "phase": "preparation",
+        "owner": "C26",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "G6.preparation",
+        "phase": "preparation",
+        "owner": "C26",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "G7.preparation",
+        "phase": "preparation",
+        "owner": "C26",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "G8.preparation",
+        "phase": "preparation",
+        "owner": "C26",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "G9.preparation",
+        "phase": "preparation",
+        "owner": "C26",
+        "evidence_kind": "actual-service-synthetic"
+      },
+      {
+        "id": "authenticated-beta",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "cloud-queue",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "production-worker-port",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "iam-network-isolation",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "backup-recovery",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "dns-tls",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "real-data-science",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "live-model-evaluation",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "release-rehearsal",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "C24.whole_site_target_and_live_action_authorization",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "C24.authenticated_v1_host_proxy_and_bootstrap",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "C24.real_cloud_tasks_adapter_outbox_and_private_invocation",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "C24.production_experiment_supervisor_health_and_drain",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "C24.worker_boot_image_unique_id_and_disk_sourceImageId",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "C24.DNS_TLS_Host_OAuth_cookie_and_cross_origin_validation",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "C24.inherited_IAM_and_network_legacy_access_denials",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "C24.two_simultaneous_sandboxes_and_measured_host_capacity",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "C24.crash_reboot_uncertain_ACK_recovery_and_physical_proof_release",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "C24.independent_backup_restore_retention_budget_and_alert_readbacks",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      },
+      {
+        "id": "C24.C26_C27_integrated_acceptance_and_release_promotion",
+        "phase": "release",
+        "owner": "C24/C27/operator",
+        "evidence_kind": "live-service"
+      }
+    ],
+    "results": [
+      {
+        "requirement_id": "R01.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "english-japanese-incompatible-geo-taxa-clarify",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-scope",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R02.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "sst-independent-numerical-oracle",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "four-source-physical-method-assay-semantics",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-publication",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R03.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "owner-role-source-revocation-and-held-history",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-retention",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R04.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "regression-auth",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R05.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "regression-model",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R06.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "regression-csv",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R07.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "shared-context-inventory-answer",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "four-source-physical-method-assay-semantics",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-catalogue",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R08.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "catalogue-full-scale-parity",
+            "sha256": "cfaa971ffd9a6daeaf114415e3c4465bf60c7e8cc1a6238b4b7c327fbdd53862",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R09.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "catalogue-full-scale-parity",
+            "sha256": "cfaa971ffd9a6daeaf114415e3c4465bf60c7e8cc1a6238b4b7c327fbdd53862",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "shared-context-inventory-answer",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "sst-independent-numerical-oracle",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R10.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "catalogue-full-scale-parity",
+            "sha256": "cfaa971ffd9a6daeaf114415e3c4465bf60c7e8cc1a6238b4b7c327fbdd53862",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "owner-role-source-revocation-and-held-history",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R11.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "durable-ack-cancel-continuation-rollover",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-frozen",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R12.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "known-zero-unknown-and-forged-snapshot",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-catalogue",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R13.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "four-source-physical-method-assay-semantics",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "sst-independent-numerical-oracle",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-frozen",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R14.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "four-source-physical-method-assay-semantics",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "experimental-bytes-and-approval",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "research-and-experiment-attachment-composition",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R15.preparation",
+        "status": "not_run",
+        "reason": "No attributable current observation supplied",
+        "evidence": [
+          {
+            "id": "catalogue-full-scale-parity",
+            "sha256": "cfaa971ffd9a6daeaf114415e3c4465bf60c7e8cc1a6238b4b7c327fbdd53862",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-browser",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R16.preparation",
+        "status": "not_run",
+        "reason": "No attributable current observation supplied",
+        "evidence": []
+      },
+      {
+        "requirement_id": "R17.preparation",
+        "status": "not_run",
+        "reason": "No attributable current observation supplied",
+        "evidence": [
+          {
+            "id": "explicit-attach-pin-multichat-and-experiment-history",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "durable-ack-cancel-continuation-rollover",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R18.preparation",
+        "status": "not_run",
+        "reason": "No attributable current observation supplied",
+        "evidence": [
+          {
+            "id": "durable-ack-cancel-continuation-rollover",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R19.preparation",
+        "status": "failed",
+        "reason": "Failures, skipped or missing requested regression cases",
+        "evidence": [
+          {
+            "id": "known-zero-unknown-and-forged-snapshot",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-controller",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R20.preparation",
+        "status": "failed",
+        "reason": "Failures, skipped or missing requested regression cases",
+        "evidence": [
+          {
+            "id": "durable-ack-cancel-continuation-rollover",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-controller",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R21.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "interrupted-committed-step-replays-without-duplicate-effect",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "durable-ack-cancel-continuation-rollover",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-runs",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R22.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "shared-context-inventory-answer",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "research-and-experiment-attachment-composition",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-evidence",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R23.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "experimental-bytes-and-approval",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "explicit-attach-pin-multichat-and-experiment-history",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-experiments",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R24.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "original-c23-physical-evidence",
+            "sha256": "4f19178dcf13555d0a360903ca6c8dd3b4325cb85e6c6ace2d0b4d32a412bc58",
+            "source_revision": "501c80b7e5ee07f0990539baea3d8243f71d184a",
+            "kind": "original-physical"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R25.preparation",
+        "status": "not_run",
+        "reason": "No attributable current observation supplied",
+        "evidence": [
+          {
+            "id": "experimental-bytes-and-approval",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "research-and-experiment-attachment-composition",
+            "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-experiments",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R26.preparation",
+        "status": "not_run",
+        "reason": "No attributable current observation supplied",
+        "evidence": []
+      },
+      {
+        "requirement_id": "R27.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "regression-legacy",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "isolation-legacy-denial",
+            "sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R28.preparation",
+        "status": "failed",
+        "reason": "The actual requested regression process returned nonzero",
+        "evidence": [
+          {
+            "id": "matched-controller-comparison",
+            "sha256": "e3d2f01f5faad296cb97a6f7a58664d8e50c148906e06610da5b28378fb8bf9f",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-framework",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "regression-command",
+            "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R29.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "isolation-offline-contract",
+            "sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R30.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "planning-and-original-receipts",
+            "sha256": "b8453840b170c571c3e26f69a95d61be3be7ef9d82d411a77ad1aa88b069331f",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R31.preparation",
+        "status": "not_run",
+        "reason": "No attributable current observation supplied; No attributable current observation supplied; No attributable current observation supplied",
+        "evidence": [
+          {
+            "id": "planning-and-original-receipts",
+            "sha256": "b8453840b170c571c3e26f69a95d61be3be7ef9d82d411a77ad1aa88b069331f",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R32.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "isolation-offline-contract",
+            "sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "isolation-legacy-denial",
+            "sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "R33.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "transfer-independent",
+            "sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "transfer-rejections",
+            "sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          },
+          {
+            "id": "transfer-withdrawal",
+            "sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "G0.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "G0-accounting",
+            "sha256": "88745ab9a8f43d490b0ca8b18bc4fbaa04a3019e9d2dda74449a5dcaf23cdfcf",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "G1.preparation",
+        "status": "failed",
+        "reason": "One or more mapped local checks or the declared G3 lab budget remain open",
+        "evidence": [
+          {
+            "id": "G1-accounting",
+            "sha256": "2957ecd2ce40bb612fecf116f2cfe59e096ec628f9d63737abc5f37a1ba93a61",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "G2.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "G2-accounting",
+            "sha256": "46db9a33a2071afc08e7a50c3e6d9fc015d835c1f93c071bb1e75624d1f9f110",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "G3.preparation",
+        "status": "failed",
+        "reason": "One or more mapped local checks or the declared G3 lab budget remain open",
+        "evidence": [
+          {
+            "id": "G3-accounting",
+            "sha256": "bf6afdc0cdbf7df1407f9e7895f43e133a1885e05a719b514d9af1fac7226ffc",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "G4.preparation",
+        "status": "failed",
+        "reason": "One or more mapped local checks or the declared G3 lab budget remain open",
+        "evidence": [
+          {
+            "id": "G4-accounting",
+            "sha256": "bae65a6656722bc1a6d9588bde46bbf9b883ef5ab077a09fdf6b661b64df285d",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "G5.preparation",
+        "status": "not_run",
+        "reason": "One or more mapped local checks or the declared G3 lab budget remain open",
+        "evidence": [
+          {
+            "id": "G5-accounting",
+            "sha256": "4c68d79e7590231e01bef537b88c8e008cb9f6a8d297c5faeab3719f70dbf157",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "G6.preparation",
+        "status": "not_run",
+        "reason": "One or more mapped local checks or the declared G3 lab budget remain open",
+        "evidence": [
+          {
+            "id": "G6-accounting",
+            "sha256": "280b37c72b162c1baf5683779f9a64dbfa887d6ff53605984792d7dd04d396df",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "G7.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "G7-accounting",
+            "sha256": "9812796a5feae6ec52c2d0664a801bd1db472fbb22f785c68e725aa0d65e1cb9",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "G8.preparation",
+        "status": "not_run",
+        "reason": "One or more mapped local checks or the declared G3 lab budget remain open",
+        "evidence": [
+          {
+            "id": "G8-accounting",
+            "sha256": "2c3affe8696d8d41658b96619ebf93b0e8362451baa0758a87f1812f517ec6be",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "G9.preparation",
+        "status": "passed",
+        "reason": null,
+        "evidence": [
+          {
+            "id": "G9-accounting",
+            "sha256": "cbcb6283d79b16cdafe292d3aa4aa2ef51302e5292d23217f36b3980b168d112",
+            "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d",
+            "kind": "actual-service-synthetic"
+          }
+        ]
+      },
+      {
+        "requirement_id": "authenticated-beta",
+        "status": "not_run",
+        "reason": "Authenticated beta serving, independent sessions and exact-origin behavior; local synthetic observations cannot establish this gate",
+        "evidence": []
+      },
+      {
+        "requirement_id": "cloud-queue",
+        "status": "not_run",
+        "reason": "Actual Cloud Tasks, durable outbox, leases and private invocation; local synthetic observations cannot establish this gate",
+        "evidence": []
+      },
+      {
+        "requirement_id": "production-worker-port",
+        "status": "not_run",
+        "reason": "Production retained execution port and supervisor, current containment/admission lifecycle; local synthetic observations cannot establish this gate",
+        "evidence": []
+      },
+      {
+        "requirement_id": "iam-network-isolation",
+        "status": "not_run",
+        "reason": "Actual IAM/network/resource isolation and legacy denial; local synthetic observations cannot establish this gate",
+        "evidence": []
+      },
+      {
+        "requirement_id": "backup-recovery",
+        "status": "not_run",
+        "reason": "Current live database/storage backup, restore and uncertain-state recovery; local synthetic observations cannot establish this gate",
+        "evidence": []
+      },
+      {
+        "requirement_id": "dns-tls",
+        "status": "not_run",
+        "reason": "Authorized beta domain DNS/TLS and origin validation; local synthetic observations cannot establish this gate",
+        "evidence": []
+      },
+      {
+        "requirement_id": "real-data-science",
+        "status": "not_run",
+        "reason": "Separately authorized real data transfer, regeneration and scientific approval; local synthetic observations cannot establish this gate",
+        "evidence": []
+      },
+      {
+        "requirement_id": "live-model-evaluation",
+        "status": "not_run",
+        "reason": "Paid/live provider comparison with exact matched inputs and telemetry; local synthetic observations cannot establish this gate",
+        "evidence": []
+      },
+      {
+        "requirement_id": "release-rehearsal",
+        "status": "not_run",
+        "reason": "C27 independent migration/rollback/promotion rehearsal and operator acceptance; local synthetic observations cannot establish this gate",
+        "evidence": []
+      },
+      {
+        "requirement_id": "C24.whole_site_target_and_live_action_authorization",
+        "status": "not_run",
+        "reason": "Original C24 live gate remains unrun: whole_site_target_and_live_action_authorization",
+        "evidence": []
+      },
+      {
+        "requirement_id": "C24.authenticated_v1_host_proxy_and_bootstrap",
+        "status": "not_run",
+        "reason": "Original C24 live gate remains unrun: authenticated_v1_host_proxy_and_bootstrap",
+        "evidence": []
+      },
+      {
+        "requirement_id": "C24.real_cloud_tasks_adapter_outbox_and_private_invocation",
+        "status": "not_run",
+        "reason": "Original C24 live gate remains unrun: real_cloud_tasks_adapter_outbox_and_private_invocation",
+        "evidence": []
+      },
+      {
+        "requirement_id": "C24.production_experiment_supervisor_health_and_drain",
+        "status": "not_run",
+        "reason": "Original C24 live gate remains unrun: production_experiment_supervisor_health_and_drain",
+        "evidence": []
+      },
+      {
+        "requirement_id": "C24.worker_boot_image_unique_id_and_disk_sourceImageId",
+        "status": "not_run",
+        "reason": "Original C24 live gate remains unrun: worker_boot_image_unique_id_and_disk_sourceImageId",
+        "evidence": []
+      },
+      {
+        "requirement_id": "C24.DNS_TLS_Host_OAuth_cookie_and_cross_origin_validation",
+        "status": "not_run",
+        "reason": "Original C24 live gate remains unrun: DNS_TLS_Host_OAuth_cookie_and_cross_origin_validation",
+        "evidence": []
+      },
+      {
+        "requirement_id": "C24.inherited_IAM_and_network_legacy_access_denials",
+        "status": "not_run",
+        "reason": "Original C24 live gate remains unrun: inherited_IAM_and_network_legacy_access_denials",
+        "evidence": []
+      },
+      {
+        "requirement_id": "C24.two_simultaneous_sandboxes_and_measured_host_capacity",
+        "status": "not_run",
+        "reason": "Original C24 live gate remains unrun: two_simultaneous_sandboxes_and_measured_host_capacity",
+        "evidence": []
+      },
+      {
+        "requirement_id": "C24.crash_reboot_uncertain_ACK_recovery_and_physical_proof_release",
+        "status": "not_run",
+        "reason": "Original C24 live gate remains unrun: crash_reboot_uncertain_ACK_recovery_and_physical_proof_release",
+        "evidence": []
+      },
+      {
+        "requirement_id": "C24.independent_backup_restore_retention_budget_and_alert_readbacks",
+        "status": "not_run",
+        "reason": "Original C24 live gate remains unrun: independent_backup_restore_retention_budget_and_alert_readbacks",
+        "evidence": []
+      },
+      {
+        "requirement_id": "C24.C26_C27_integrated_acceptance_and_release_promotion",
+        "status": "not_run",
+        "reason": "Original C24 live gate remains unrun: C26_C27_integrated_acceptance_and_release_promotion",
+        "evidence": []
+      }
+    ],
+    "comparisons": [
+      {
+        "version": "system-controller-comparison-v1",
+        "status": "passed",
+        "reason": null,
+        "input_sha256": "6f0543382238efd0a8c8a4f6127ba44cca2229e753a51731135e2363102346d8",
+        "oracle_sha256": "256c94b8011e0eb1376fea3280a473dd573ee99c4854bb2e47301e979be3b88c",
+        "legacy_observation_sha256": "b346669e1322d364649b306a41707184eb26d7c830ecb7309b3dc3a0ac849786",
+        "v1_observation_sha256": "668717f8b5a3c2f3af4e5a09acf62ab6ca6e9eea5ae68d180f71230700f1e273",
+        "legacy": {
+          "controller": "legacy",
+          "inventory": {
+            "status": "passed",
+            "reason": null,
+            "details": {
+              "expected_count": 4,
+              "observed_count": 4,
+              "matched_count": 4,
+              "missing_count": 0,
+              "unexpected_count": 0,
+              "state": "complete",
+              "missing_preview": [],
+              "unexpected_preview": [],
+              "diagnostics_truncated": false
+            }
+          },
+          "numerical": {
+            "status": "passed",
+            "reason": null,
+            "details": {
+              "expected_count": 4,
+              "mismatched_keys": [],
+              "missing_keys": [],
+              "unexpected_keys": [],
+              "unknown_reference_keys": []
+            }
+          },
+          "unsupported_claims": {
+            "status": "passed",
+            "reason": null,
+            "details": {
+              "unsupported_count": 0,
+              "unsupported_claim_ids": [],
+              "structured_claim_audit_complete": true,
+              "scientific_approval_established": false
+            }
+          },
+          "completion": {
+            "status": "passed",
+            "reason": null,
+            "details": {
+              "expected_outcome": "completed",
+              "observed_outcome": "completed",
+              "missing_tasks": []
+            }
+          },
+          "citations": {
+            "status": "passed",
+            "reason": null,
+            "details": {
+              "cited_count": 2,
+              "valid_count": 2,
+              "invalid_ids": [],
+              "validity_fraction": 1.0
+            }
+          },
+          "telemetry": {
+            "timing": {
+              "basis": "measured",
+              "value": 0.0039745839312672615
+            },
+            "tool_calls": {
+              "basis": "measured",
+              "value": 0
+            },
+            "input_tokens": {
+              "basis": "unknown",
+              "value": null
+            },
+            "output_tokens": {
+              "basis": "unknown",
+              "value": null
+            },
+            "cost": {
+              "basis": "unknown",
+              "value": null
+            }
+          }
+        },
+        "v1": {
+          "controller": "v1",
+          "inventory": {
+            "status": "passed",
+            "reason": null,
+            "details": {
+              "expected_count": 4,
+              "observed_count": 4,
+              "matched_count": 4,
+              "missing_count": 0,
+              "unexpected_count": 0,
+              "state": "complete",
+              "missing_preview": [],
+              "unexpected_preview": [],
+              "diagnostics_truncated": false
+            }
+          },
+          "numerical": {
+            "status": "passed",
+            "reason": null,
+            "details": {
+              "expected_count": 4,
+              "mismatched_keys": [],
+              "missing_keys": [],
+              "unexpected_keys": [],
+              "unknown_reference_keys": []
+            }
+          },
+          "unsupported_claims": {
+            "status": "passed",
+            "reason": null,
+            "details": {
+              "unsupported_count": 0,
+              "unsupported_claim_ids": [],
+              "structured_claim_audit_complete": true,
+              "scientific_approval_established": false
+            }
+          },
+          "completion": {
+            "status": "passed",
+            "reason": null,
+            "details": {
+              "expected_outcome": "completed",
+              "observed_outcome": "completed",
+              "missing_tasks": []
+            }
+          },
+          "citations": {
+            "status": "passed",
+            "reason": null,
+            "details": {
+              "cited_count": 6,
+              "valid_count": 6,
+              "invalid_ids": [],
+              "validity_fraction": 1.0
+            }
+          },
+          "telemetry": {
+            "timing": {
+              "basis": "measured",
+              "value": 6.383336207829416
+            },
+            "tool_calls": {
+              "basis": "measured",
+              "value": 6
+            },
+            "input_tokens": {
+              "basis": "unknown",
+              "value": null
+            },
+            "output_tokens": {
+              "basis": "unknown",
+              "value": null
+            },
+            "cost": {
+              "basis": "unknown",
+              "value": null
+            }
+          }
+        },
+        "live_quality_established": false
+      }
+    ],
+    "preparation_status": "failed",
+    "release_status": "failed",
+    "preparation_complete": false,
+    "release_accepted": false
+  }
+}

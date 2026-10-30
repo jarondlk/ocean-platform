@@ -168,10 +168,8 @@ class ResearchEvidenceService:
                 if reference["kind"] != "artifact" or reference["id"].startswith("c21:receipt:"):
                     continue
                 expected = frozen["context"].get("artifact_bindings", {}).get(canonical_hash(reference))
-                provider, binding = self._external_artifact(session, actor, reference)
-                if binding.sha256 != expected:
-                    raise ValueError("Retained experimental context changed")
-                provider.verify_context(session, run.revision_id, reference, expected, actor)
+                self._external_artifact(session, actor, reference,
+                    revision_id=run.revision_id, expected_sha256=expected)
         except Exception:
             raise ResearchEvidenceError("access_denied", 403) from None
         return frozen
@@ -291,10 +289,8 @@ class ResearchEvidenceService:
                         attached.append(receipt)
                         attached_payloads[receipt.id] = attached_payload
                 else:
-                    provider, binding = self._external_artifact(session, actor, reference)
-                    if binding.sha256 != expected:
-                        raise ResearchEvidenceError("access_denied", 403)
-                    provider.verify_context(session, run.revision_id, reference, expected, actor)
+                    self._external_artifact(session, actor, reference,
+                        revision_id=run.revision_id, expected_sha256=expected)
                     external_qualifications.append("Attached experimental context is retained but is not independently verified scientific evidence: " + reference["id"])
         anchor = RunEvidenceAnchor(run_id=str(run.id), input_version=input_version, owner_id=str(actor.id),
             binding=result.binding, effective_question=run.effective_question,
@@ -484,24 +480,42 @@ class ResearchEvidenceService:
         memo[identity] = (receipt, payload, inputs)
         return memo[identity]
 
-    def _external_artifact(self, session, user, reference):
+    def _external_artifact(self, session, user, reference, *, revision_id=None, expected_sha256=None):
+        if revision_id is None:
+            if expected_sha256 is not None:
+                raise ResearchEvidenceError()
+        elif (not isinstance(expected_sha256, str) or len(expected_sha256) != 64
+                or any(c not in "0123456789abcdef" for c in expected_sha256)):
+            raise ResearchEvidenceError()
         matches = []
-        for provider in self.external_artifact_providers:
+        providers = self.external_artifact_providers
+        for provider in providers:
             if (not isinstance(provider, RetainedArtifactProvider)
                     or provider.investigations is not self.investigations
                     or provider.site_id != self.site_id or provider.session_factory is not self.session_factory):
                 raise ResearchEvidenceError()
-            binding = provider.resolve(session, user, reference)
+            binding = (provider.resolve(session, user, reference) if revision_id is None else
+                provider.verify_context(session, revision_id, reference, expected_sha256, user))
             if binding is not None:
                 if (not isinstance(binding, RetainedArtifactBinding) or binding.owner_user_id != user.id
                         or binding.id != reference["id"] or binding.snapshot_id != reference["snapshot_id"]
-                        or len(binding.sha256) != 64 or any(c not in "0123456789abcdef" for c in binding.sha256)):
+                        or len(binding.sha256) != 64 or any(c not in "0123456789abcdef" for c in binding.sha256)
+                        or revision_id is not None and binding.sha256 != expected_sha256):
                     raise ResearchEvidenceError()
                 matches.append((provider, binding))
         # Unknown, unavailable and ambiguous ownership fail closed. A C21
         # namespace always follows native receipt verification, never providers.
         if len(matches) != 1:
             raise ResearchEvidenceError()
+        # Another provider's unknown-reference callback may change the selected
+        # provider's authority after its first closing fence. Close the selected
+        # binding last in that case. The normal single-provider path requires
+        # only its one combined safe-byte/pin/closing-authority verification.
+        if revision_id is not None and len(providers) > 1:
+            provider, binding = matches[0]
+            final = provider.verify_context(session, revision_id, reference, expected_sha256, user)
+            if not isinstance(final, RetainedArtifactBinding) or final != binding:
+                raise ResearchEvidenceError()
         return matches[0]
 
     def authorize_attachment_owner(self, session, user):

@@ -1,0 +1,158 @@
+{
+  "advanced": true,
+  "worker_result": {
+    "id": "afaff194-4d24-48b3-a642-f17e969f7907",
+    "run_id": "23a8000e-057f-4ae5-be89-a733512b966c",
+    "input_version": 1,
+    "binding": {
+      "investigation_id": "11f0d808-98fe-4270-af4e-439b7691531f",
+      "conversation_id": "530dd86d-7b2f-42a9-a56c-5ff9f05612d6",
+      "revision_id": "98a1f213-8e3d-4f5e-a6c2-97dc3508c4d8",
+      "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+      "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+    },
+    "locale": "en",
+    "status": "completed",
+    "active_elapsed_ms": 575,
+    "budget": {
+      "active_elapsed_seconds": 0.575,
+      "tool_actions": 1,
+      "model_calls": 0,
+      "malformed_repairs": 0,
+      "cancellation_requested": false
+    },
+    "event_cursor": 0,
+    "latest_event_cursor": 3,
+    "activity": [],
+    "answer": {
+      "id": "ac12e6b5-137f-5498-83c9-715fc8bc637e",
+      "locale": "en",
+      "completion": "complete",
+      "blocks": [
+        {
+          "id": "c21:block:1",
+          "kind": "fact",
+          "text": "Descriptive result: datasets: 4 (Distinct permitted canonical input datasets across complete matching descendants and cross-root links).",
+          "receipt_ids": [
+            "c21:receipt:ffbabdf28ce27577f7f9d81aa1fad0e612a533fb013ba15d5da55657debf283c"
+          ],
+          "fact_id": "requested:1",
+          "data": {
+            "value": {
+              "basis": "complete_scope",
+              "denominator": "Distinct permitted canonical input datasets across complete matching descendants and cross-root links",
+              "entity": "datasets",
+              "reason": null,
+              "state": "known",
+              "value": 4
+            },
+            "authorities": [
+              "descriptive"
+            ],
+            "operation_outputs": []
+          }
+        },
+        {
+          "id": "c21:block:2",
+          "kind": "limitation",
+          "text": "Structured evidence selection is traceability, not independent scientific verification.\nThe CTD source family is an immutable index storage carrier only; it does not assert CTD measurements, a raw dataset, or scientific source eligibility.\nDescriptive operations do not execute experiments or grant scientific approval; current access applies to every frozen input\n{\"columns.0.key\":\"entity\"}\n{\"columns.0.title.en\":\"entity\"}\n{\"columns.0.title.ja\":\"entity\"}\n{\"columns.0.unit\":null}\n{\"columns.1.key\":\"count\"}\n{\"columns.1.title.en\":\"count\"}\n{\"columns.1.title.ja\":\"count\"}\n{\"columns.1.unit\":null}\n{\"columns.2.key\":\"denominator\"}\n{\"columns.2.title.en\":\"denominator\"}\n{\"columns.2.title.ja\":\"denominator\"}\n{\"columns.2.unit\":null}\n{\"scope_compatibility\":null}",
+          "receipt_ids": [],
+          "fact_id": null,
+          "data": null
+        }
+      ],
+      "receipt_ids": [
+        "c21:receipt:ffbabdf28ce27577f7f9d81aa1fad0e612a533fb013ba15d5da55657debf283c"
+      ],
+      "qualifications": [
+        "Structured evidence selection is traceability, not independent scientific verification.",
+        "The CTD source family is an immutable index storage carrier only; it does not assert CTD measurements, a raw dataset, or scientific source eligibility.",
+        "Descriptive operations do not execute experiments or grant scientific approval; current access applies to every frozen input",
+        "{\"columns.0.key\":\"entity\"}",
+        "{\"columns.0.title.en\":\"entity\"}",
+        "{\"columns.0.title.ja\":\"entity\"}",
+        "{\"columns.0.unit\":null}",
+        "{\"columns.1.key\":\"count\"}",
+        "{\"columns.1.title.en\":\"count\"}",
+        "{\"columns.1.title.ja\":\"count\"}",
+        "{\"columns.1.unit\":null}",
+        "{\"columns.2.key\":\"denominator\"}",
+        "{\"columns.2.title.en\":\"denominator\"}",
+        "{\"columns.2.title.ja\":\"denominator\"}",
+        "{\"columns.2.unit\":null}",
+        "{\"scope_compatibility\":null}"
+      ],
+      "pack_sha256": "30b2df7918c8fcf90b9adf08fbaa276fd1f926c0ac9dbaab83ad17bdb32b8ead",
+      "model_used": false,
+      "scientific_verification": "not_independently_verified"
+    },
+    "error": null,
+    "synthetic": false
+  },
+  "event_page": {
+    "version": "research-answers-v1",
+    "access_revision": "7e30fca0adc8b6a67bf692cf6d12abd07bc2c72aa422cc10a0e418a266cda7ef",
+    "job_id": "afaff194-4d24-48b3-a642-f17e969f7907",
+    "binding": {
+      "investigation_id": "11f0d808-98fe-4270-af4e-439b7691531f",
+      "conversation_id": "530dd86d-7b2f-42a9-a56c-5ff9f05612d6",
+      "revision_id": "98a1f213-8e3d-4f5e-a6c2-97dc3508c4d8",
+      "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+      "payload_sha256": "9d0d99b1724ea54f5180f71be54ca2f5bb0b7c4061fde74ba27114e2c5519ee3"
+    },
+    "after_cursor": 0,
+    "next_cursor": 3,
+    "latest_event_cursor": 1,
+    "has_more": false,
+    "events": [
+      {
+        "cursor": 1,
+        "job_id": "afaff194-4d24-48b3-a642-f17e969f7907",
+        "elapsed_ms": 574,
+        "kind": "accepted",
+        "summary": {
+          "en": "Answer requested",
+          "ja": "\u56de\u7b54\u3092\u4f9d\u983c\u3057\u307e\u3057\u305f"
+        }
+      },
+      {
+        "cursor": 2,
+        "job_id": "afaff194-4d24-48b3-a642-f17e969f7907",
+        "elapsed_ms": 574,
+        "kind": "started",
+        "summary": {
+          "en": "Preparing retained evidence",
+          "ja": "\u4fdd\u6301\u3055\u308c\u305f\u6839\u62e0\u3092\u6e96\u5099\u3057\u3066\u3044\u307e\u3059"
+        }
+      },
+      {
+        "cursor": 3,
+        "job_id": "afaff194-4d24-48b3-a642-f17e969f7907",
+        "elapsed_ms": 575,
+        "kind": "completed",
+        "summary": {
+          "en": "Traceable answer ready",
+          "ja": "\u51fa\u5178\u4ed8\u304d\u306e\u56de\u7b54\u3092\u6e96\u5099\u3057\u307e\u3057\u305f"
+        }
+      }
+    ]
+  },
+  "version": "c26-actual-sqlite-answer-event-race-v1",
+  "classification": "synthetic-local-actual-services",
+  "source_revision": "sha256:1f26e0784774128929d8d0c88dc7844ce83a5fb75c2795bf57b4f9a3a8af02db",
+  "request": {
+    "run_id": "23a8000e-057f-4ae5-be89-a733512b966c",
+    "investigation_id": "11f0d808-98fe-4270-af4e-439b7691531f",
+    "conversation_id": "530dd86d-7b2f-42a9-a56c-5ff9f05612d6",
+    "job_id": "afaff194-4d24-48b3-a642-f17e969f7907",
+    "after_cursor": 0,
+    "limit": 100
+  },
+  "status": 503,
+  "response_text": "{\"error\":{\"code\":\"answers_unavailable\",\"message\":\"Research evidence is unavailable\"}}",
+  "live_calls_performed": false,
+  "validation_error": {
+    "type": "ValidationError",
+    "message": "1 validation error for AnswerEventsResponse\n  Value error, Answer event high water is inconsistent [type=value_error, input_value={'version': 'research-ans...\u6e96\u5099\u3057\u307e\u3057\u305f'}}]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+  }
+}

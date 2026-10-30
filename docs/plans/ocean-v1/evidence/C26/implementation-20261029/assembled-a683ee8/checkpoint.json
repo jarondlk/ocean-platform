@@ -1,0 +1,68 @@
+{
+  "version": "c26-interim-assembled-outcome-v1",
+  "source_commit": "a683ee863886832029208887207e473ecb8c198b",
+  "qualification": "Actual final03 source-bound run retained unchanged. 1598 passed and one runner ENV-contamination default-disabled regression failed; this is not accepted preparation. Browser findings are separately retained and browser-research failed its unchanged15s hydration budget. All11 integration scenarios, full100000scale and matchedcomparison ran; no release acceptance.",
+  "subsequent_runner_repair": "Clear ENABLE_V1_* from pytest child environment; keep required feature settings only for scale helper",
+  "artifacts": [
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/assembled-a683ee8/checks.json",
+      "raw_sha256": "af4063457f1b56c1bcfd8bd9e44563f8683418e4b00a95cecb8407f6cf85f133",
+      "retained_sha256": "af4063457f1b56c1bcfd8bd9e44563f8683418e4b00a95cecb8407f6cf85f133"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/assembled-a683ee8/comparison.json",
+      "raw_sha256": "e3d2f01f5faad296cb97a6f7a58664d8e50c148906e06610da5b28378fb8bf9f",
+      "retained_sha256": "e3d2f01f5faad296cb97a6f7a58664d8e50c148906e06610da5b28378fb8bf9f"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/assembled-a683ee8/integrated.json",
+      "raw_sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+      "retained_sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/assembled-a683ee8/isolation.json",
+      "raw_sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+      "retained_sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/assembled-a683ee8/originals-audit.json",
+      "raw_sha256": "b8453840b170c571c3e26f69a95d61be3be7ef9d82d411a77ad1aa88b069331f",
+      "retained_sha256": "b8453840b170c571c3e26f69a95d61be3be7ef9d82d411a77ad1aa88b069331f"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/assembled-a683ee8/regression-checks.json",
+      "raw_sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+      "retained_sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/assembled-a683ee8/regressions.txt.gz",
+      "raw_sha256": "103717723b6ee6fa983449c3a45f0829b94fedfb536acf6684d5d5e1bf7a6730",
+      "retained_sha256": "5feeb38b6cdb0fa4c9dc8ea9b3da2e211991e51f09e9d3b93fce22760b8d7001"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/assembled-a683ee8/regressions.xml.gz",
+      "raw_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+      "retained_sha256": "61decf375f2dbeef968bb26b30f7d6ab261240e2455ca1610b2a9385a1d8192e"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/assembled-a683ee8/report.json",
+      "raw_sha256": "4de360c0cc0e73b611b33046fd42b7c4b4d25bc6b508590f648fff3b846d7db5",
+      "retained_sha256": "4de360c0cc0e73b611b33046fd42b7c4b4d25bc6b508590f648fff3b846d7db5"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/assembled-a683ee8/run.json",
+      "raw_sha256": "7debd03c2013ce335ff36dd02b1ac10dc7ee220b33d7ff10e1ba0e5ea0af744b",
+      "retained_sha256": "7debd03c2013ce335ff36dd02b1ac10dc7ee220b33d7ff10e1ba0e5ea0af744b"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/assembled-a683ee8/scale.json",
+      "raw_sha256": "cfaa971ffd9a6daeaf114415e3c4465bf60c7e8cc1a6238b4b7c327fbdd53862",
+      "retained_sha256": "cfaa971ffd9a6daeaf114415e3c4465bf60c7e8cc1a6238b4b7c327fbdd53862"
+    },
+    {
+      "path": "docs/plans/ocean-v1/evidence/C26/implementation-20261029/assembled-a683ee8/source-manifest.json",
+      "raw_sha256": "07954f998525cd911cf71e334a3080f035b9bd3237d11e1bbf4bb162370c2b53",
+      "retained_sha256": "07954f998525cd911cf71e334a3080f035b9bd3237d11e1bbf4bb162370c2b53"
+    }
+  ]
+}

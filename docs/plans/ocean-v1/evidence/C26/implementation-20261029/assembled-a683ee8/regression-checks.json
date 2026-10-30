@@ -1,0 +1,380 @@
+{
+  "command": [
+    "/Users/jaronchai/Documents/GitHub/provenance-eco-rag/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_auth.py",
+    "tests/test_catalogue_browser.py",
+    "tests/test_catalogue_browser_api.py",
+    "tests/test_catalogue_service.py",
+    "tests/test_chat_source_scope.py",
+    "tests/test_csv_serialization.py",
+    "tests/test_experiment_workspace.py",
+    "tests/test_experimental_artifact_integration.py",
+    "tests/test_frozen_catalogue_adapters.py",
+    "tests/test_frozen_edna_catalogue.py",
+    "tests/test_frozen_scientific_catalogue.py",
+    "tests/test_frozen_sst_catalogue.py",
+    "tests/test_generation_contract.py",
+    "tests/test_hybrid_retrieval_contract.py",
+    "tests/test_metagenome_document_contract.py",
+    "tests/test_model_runtime.py",
+    "tests/test_publication_scope_contract.py",
+    "tests/test_research_answers.py",
+    "tests/test_research_chat.py",
+    "tests/test_research_controller.py",
+    "tests/test_research_controller_contracts.py",
+    "tests/test_research_controller_scope.py",
+    "tests/test_research_evidence_api.py",
+    "tests/test_research_evidence_runtime.py",
+    "tests/test_research_evidence_store.py",
+    "tests/test_research_experiments.py",
+    "tests/test_research_runs.py",
+    "tests/test_retention.py",
+    "tests/test_system_acceptance.py",
+    "tests/test_system_acceptance_integration.py",
+    "tests/test_system_acceptance_matrix.py",
+    "-q",
+    "--tb=short",
+    "--junitxml=/private/tmp/ocean-c26-acceptance-final03-20261029/regressions.xml"
+  ],
+  "returncode": 1,
+  "checks": [
+    {
+      "id": "regression-auth",
+      "status": "passed",
+      "reason": null,
+      "expected": {
+        "files": [
+          "test_auth.py"
+        ],
+        "all_requested_cases_pass": true
+      },
+      "observed": {
+        "cases_by_file": {
+          "test_auth.py": 66
+        },
+        "failures": [],
+        "skipped": []
+      },
+      "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3"
+    },
+    {
+      "id": "regression-retention",
+      "status": "passed",
+      "reason": null,
+      "expected": {
+        "files": [
+          "test_retention.py"
+        ],
+        "all_requested_cases_pass": true
+      },
+      "observed": {
+        "cases_by_file": {
+          "test_retention.py": 27
+        },
+        "failures": [],
+        "skipped": []
+      },
+      "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3"
+    },
+    {
+      "id": "regression-model",
+      "status": "passed",
+      "reason": null,
+      "expected": {
+        "files": [
+          "test_model_runtime.py",
+          "test_metagenome_document_contract.py",
+          "test_hybrid_retrieval_contract.py",
+          "test_generation_contract.py"
+        ],
+        "all_requested_cases_pass": true
+      },
+      "observed": {
+        "cases_by_file": {
+          "test_model_runtime.py": 119,
+          "test_metagenome_document_contract.py": 52,
+          "test_hybrid_retrieval_contract.py": 15,
+          "test_generation_contract.py": 24
+        },
+        "failures": [],
+        "skipped": []
+      },
+      "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3"
+    },
+    {
+      "id": "regression-csv",
+      "status": "passed",
+      "reason": null,
+      "expected": {
+        "files": [
+          "test_csv_serialization.py"
+        ],
+        "all_requested_cases_pass": true
+      },
+      "observed": {
+        "cases_by_file": {
+          "test_csv_serialization.py": 173
+        },
+        "failures": [],
+        "skipped": []
+      },
+      "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3"
+    },
+    {
+      "id": "regression-scope",
+      "status": "passed",
+      "reason": null,
+      "expected": {
+        "files": [
+          "test_chat_source_scope.py",
+          "test_research_controller_scope.py"
+        ],
+        "all_requested_cases_pass": true
+      },
+      "observed": {
+        "cases_by_file": {
+          "test_chat_source_scope.py": 38,
+          "test_research_controller_scope.py": 131
+        },
+        "failures": [],
+        "skipped": []
+      },
+      "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3"
+    },
+    {
+      "id": "regression-publication",
+      "status": "passed",
+      "reason": null,
+      "expected": {
+        "files": [
+          "test_publication_scope_contract.py"
+        ],
+        "all_requested_cases_pass": true
+      },
+      "observed": {
+        "cases_by_file": {
+          "test_publication_scope_contract.py": 145
+        },
+        "failures": [],
+        "skipped": []
+      },
+      "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3"
+    },
+    {
+      "id": "regression-catalogue",
+      "status": "passed",
+      "reason": null,
+      "expected": {
+        "files": [
+          "test_catalogue_service.py"
+        ],
+        "all_requested_cases_pass": true
+      },
+      "observed": {
+        "cases_by_file": {
+          "test_catalogue_service.py": 64
+        },
+        "failures": [],
+        "skipped": []
+      },
+      "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3"
+    },
+    {
+      "id": "regression-frozen",
+      "status": "passed",
+      "reason": null,
+      "expected": {
+        "files": [
+          "test_frozen_catalogue_adapters.py",
+          "test_frozen_sst_catalogue.py",
+          "test_frozen_edna_catalogue.py",
+          "test_frozen_scientific_catalogue.py"
+        ],
+        "all_requested_cases_pass": true
+      },
+      "observed": {
+        "cases_by_file": {
+          "test_frozen_catalogue_adapters.py": 66,
+          "test_frozen_sst_catalogue.py": 73,
+          "test_frozen_edna_catalogue.py": 72,
+          "test_frozen_scientific_catalogue.py": 61
+        },
+        "failures": [],
+        "skipped": []
+      },
+      "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3"
+    },
+    {
+      "id": "regression-browser",
+      "status": "passed",
+      "reason": null,
+      "expected": {
+        "files": [
+          "test_catalogue_browser.py",
+          "test_catalogue_browser_api.py"
+        ],
+        "all_requested_cases_pass": true
+      },
+      "observed": {
+        "cases_by_file": {
+          "test_catalogue_browser.py": 42,
+          "test_catalogue_browser_api.py": 22
+        },
+        "failures": [],
+        "skipped": []
+      },
+      "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3"
+    },
+    {
+      "id": "regression-controller",
+      "status": "failed",
+      "reason": "Failures, skipped or missing requested regression cases",
+      "expected": {
+        "files": [
+          "test_research_controller.py",
+          "test_research_controller_scope.py",
+          "test_research_controller_contracts.py"
+        ],
+        "all_requested_cases_pass": true
+      },
+      "observed": {
+        "cases_by_file": {
+          "test_research_controller.py": 38,
+          "test_research_controller_scope.py": 131,
+          "test_research_controller_contracts.py": 144
+        },
+        "failures": [
+          "tests.test_research_controller:test_disabled_controller_never_reads_context_or_calls_model"
+        ],
+        "skipped": []
+      },
+      "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3"
+    },
+    {
+      "id": "regression-runs",
+      "status": "passed",
+      "reason": null,
+      "expected": {
+        "files": [
+          "test_research_runs.py"
+        ],
+        "all_requested_cases_pass": true
+      },
+      "observed": {
+        "cases_by_file": {
+          "test_research_runs.py": 31
+        },
+        "failures": [],
+        "skipped": []
+      },
+      "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3"
+    },
+    {
+      "id": "regression-evidence",
+      "status": "passed",
+      "reason": null,
+      "expected": {
+        "files": [
+          "test_research_evidence_store.py",
+          "test_research_evidence_runtime.py",
+          "test_research_evidence_api.py",
+          "test_research_answers.py"
+        ],
+        "all_requested_cases_pass": true
+      },
+      "observed": {
+        "cases_by_file": {
+          "test_research_evidence_store.py": 16,
+          "test_research_evidence_runtime.py": 15,
+          "test_research_evidence_api.py": 21,
+          "test_research_answers.py": 20
+        },
+        "failures": [],
+        "skipped": []
+      },
+      "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3"
+    },
+    {
+      "id": "regression-experiments",
+      "status": "passed",
+      "reason": null,
+      "expected": {
+        "files": [
+          "test_research_experiments.py",
+          "test_experiment_workspace.py",
+          "test_experimental_artifact_integration.py"
+        ],
+        "all_requested_cases_pass": true
+      },
+      "observed": {
+        "cases_by_file": {
+          "test_research_experiments.py": 18,
+          "test_experiment_workspace.py": 26,
+          "test_experimental_artifact_integration.py": 11
+        },
+        "failures": [],
+        "skipped": []
+      },
+      "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3"
+    },
+    {
+      "id": "regression-legacy",
+      "status": "passed",
+      "reason": null,
+      "expected": {
+        "files": [
+          "test_research_chat.py",
+          "test_chat_source_scope.py",
+          "test_generation_contract.py"
+        ],
+        "all_requested_cases_pass": true
+      },
+      "observed": {
+        "cases_by_file": {
+          "test_research_chat.py": 7,
+          "test_chat_source_scope.py": 38,
+          "test_generation_contract.py": 24
+        },
+        "failures": [],
+        "skipped": []
+      },
+      "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3"
+    },
+    {
+      "id": "regression-framework",
+      "status": "passed",
+      "reason": null,
+      "expected": {
+        "files": [
+          "test_system_acceptance.py",
+          "test_system_acceptance_matrix.py",
+          "test_system_acceptance_integration.py"
+        ],
+        "all_requested_cases_pass": true
+      },
+      "observed": {
+        "cases_by_file": {
+          "test_system_acceptance.py": 57,
+          "test_system_acceptance_matrix.py": 4,
+          "test_system_acceptance_integration.py": 1
+        },
+        "failures": [],
+        "skipped": []
+      },
+      "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3"
+    },
+    {
+      "id": "regression-command",
+      "status": "failed",
+      "reason": "The actual requested regression process returned nonzero",
+      "expected": {
+        "returncode": 0
+      },
+      "observed": {
+        "returncode": 1
+      }
+    }
+  ]
+}

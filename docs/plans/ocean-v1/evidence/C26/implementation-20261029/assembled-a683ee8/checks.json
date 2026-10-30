@@ -1,0 +1,1896 @@
+{
+  "planning-and-original-receipts": {
+    "id": "planning-and-original-receipts",
+    "status": "passed",
+    "reason": null,
+    "expected": {
+      "protected_paths": 42,
+      "original_evidence_unchanged": true,
+      "source_supersessions_explicitly_authorized": true
+    },
+    "observed": {
+      "protected_mismatches": [],
+      "original_evidence_checked": 5141,
+      "original_evidence_mismatches": [],
+      "unauthorized_changes": []
+    },
+    "source_supersessions": {
+      ".github/workflows/tests.yml": {
+        "original": "2095e2766986b08d94552823593351c598883968adb79242f3b098ba8ad56dd3",
+        "current": "baab0f5b33778a9723f850a12330afaa1b2a8f2e69c233bb04e20c122262c99b",
+        "authorization": "C26 isolated scale and native retained-artifact CI selection"
+      },
+      "orchestration/catalogue_service.py": {
+        "original": "50b3d587ca0cb0f754b3d0f0a742c3bf184e687e147b52f60a5f51bfc9939a48",
+        "current": "9b29032a9dd604bf7694cf7373f79bf71a967bed4634bb0f4f1f12f64aacec2a",
+        "authorization": "User-approved C14 memory optimization preserving complete membership/authorization"
+      },
+      "orchestration/experiment_workspace.py": {
+        "original": "59f09b90a0abbd53aaef22c4aaa1be8b3aea8ac69a78ba1d5b00032d466afebc",
+        "current": "48bc16715557da6580f251e13d56eee411d93a2ca685362b821acbc442eb2f24",
+        "authorization": "User-approved C25 exact artifact resolution without recursive availability lookup"
+      },
+      "orchestration/investigations.py": {
+        "original": "dd9d733121d9f1587e3b59b31b67e60a75bc50976589886cc96705c94efa46de",
+        "current": "6a2238fa6f3ef654cf5f71d43a4820cfd883f43f364b43bbfe271dc11f7b7aa2",
+        "authorization": "User-approved C17 foreign retained-artifact composition and same-session resolution"
+      },
+      "orchestration/research_evidence.py": {
+        "original": "cd721ffec16372b4685725e3082c2d0745a1e5586f6fc9963e822b24adbb42fc",
+        "current": "f513a861dc4284dce6af084be4a9bdf954228035d4d7bcd7037061d2e14c492a",
+        "authorization": "User-approved C21 foreign retained-artifact durable protection/current authority"
+      },
+      "orchestration/research_experiments.py": {
+        "original": "466d45002963786d6613edfbb2b4dd45946831a4ae987e971975756e2fd67076",
+        "current": "ef7e1aa14e0a0f362a866e88cff694e9367613a50a5daf00f5746ac9884f31b6",
+        "authorization": "User-approved C22 same-session artifact context resolution"
+      },
+      "orchestration/research_runs.py": {
+        "original": "de66c4c917686656fe9449a4d3e884a175ed6a94ec4a686f9953ba71474dc4d2",
+        "current": "0d8e652684005489612eee5e56d53d5a80559c0a62ca34484aef157dc65d89e4",
+        "authorization": "User-approved C20 same-session artifact context resolution"
+      },
+      "tests/experiment_workspace_support.py": {
+        "original": "3e97306596b55aa17cb5698fedb0678262a3419ad1ce824f28bb487184e9eeef",
+        "current": "bd96544e49e9a638cd64f60dd6d0b421b63143b9a5a76bc159ff5e36a137139d",
+        "authorization": "Explicit synthetic durable retention-port reference journal"
+      }
+    },
+    "original_tree": "e731b300f4fcd6bee55a9d43478d898aca8c9f61",
+    "sha256": "b8453840b170c571c3e26f69a95d61be3be7ef9d82d411a77ad1aa88b069331f",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-auth": {
+    "id": "regression-auth",
+    "status": "passed",
+    "reason": null,
+    "expected": {
+      "files": [
+        "test_auth.py"
+      ],
+      "all_requested_cases_pass": true
+    },
+    "observed": {
+      "cases_by_file": {
+        "test_auth.py": 66
+      },
+      "failures": [],
+      "skipped": []
+    },
+    "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-retention": {
+    "id": "regression-retention",
+    "status": "passed",
+    "reason": null,
+    "expected": {
+      "files": [
+        "test_retention.py"
+      ],
+      "all_requested_cases_pass": true
+    },
+    "observed": {
+      "cases_by_file": {
+        "test_retention.py": 27
+      },
+      "failures": [],
+      "skipped": []
+    },
+    "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-model": {
+    "id": "regression-model",
+    "status": "passed",
+    "reason": null,
+    "expected": {
+      "files": [
+        "test_model_runtime.py",
+        "test_metagenome_document_contract.py",
+        "test_hybrid_retrieval_contract.py",
+        "test_generation_contract.py"
+      ],
+      "all_requested_cases_pass": true
+    },
+    "observed": {
+      "cases_by_file": {
+        "test_model_runtime.py": 119,
+        "test_metagenome_document_contract.py": 52,
+        "test_hybrid_retrieval_contract.py": 15,
+        "test_generation_contract.py": 24
+      },
+      "failures": [],
+      "skipped": []
+    },
+    "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-csv": {
+    "id": "regression-csv",
+    "status": "passed",
+    "reason": null,
+    "expected": {
+      "files": [
+        "test_csv_serialization.py"
+      ],
+      "all_requested_cases_pass": true
+    },
+    "observed": {
+      "cases_by_file": {
+        "test_csv_serialization.py": 173
+      },
+      "failures": [],
+      "skipped": []
+    },
+    "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-scope": {
+    "id": "regression-scope",
+    "status": "passed",
+    "reason": null,
+    "expected": {
+      "files": [
+        "test_chat_source_scope.py",
+        "test_research_controller_scope.py"
+      ],
+      "all_requested_cases_pass": true
+    },
+    "observed": {
+      "cases_by_file": {
+        "test_chat_source_scope.py": 38,
+        "test_research_controller_scope.py": 131
+      },
+      "failures": [],
+      "skipped": []
+    },
+    "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-publication": {
+    "id": "regression-publication",
+    "status": "passed",
+    "reason": null,
+    "expected": {
+      "files": [
+        "test_publication_scope_contract.py"
+      ],
+      "all_requested_cases_pass": true
+    },
+    "observed": {
+      "cases_by_file": {
+        "test_publication_scope_contract.py": 145
+      },
+      "failures": [],
+      "skipped": []
+    },
+    "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-catalogue": {
+    "id": "regression-catalogue",
+    "status": "passed",
+    "reason": null,
+    "expected": {
+      "files": [
+        "test_catalogue_service.py"
+      ],
+      "all_requested_cases_pass": true
+    },
+    "observed": {
+      "cases_by_file": {
+        "test_catalogue_service.py": 64
+      },
+      "failures": [],
+      "skipped": []
+    },
+    "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-frozen": {
+    "id": "regression-frozen",
+    "status": "passed",
+    "reason": null,
+    "expected": {
+      "files": [
+        "test_frozen_catalogue_adapters.py",
+        "test_frozen_sst_catalogue.py",
+        "test_frozen_edna_catalogue.py",
+        "test_frozen_scientific_catalogue.py"
+      ],
+      "all_requested_cases_pass": true
+    },
+    "observed": {
+      "cases_by_file": {
+        "test_frozen_catalogue_adapters.py": 66,
+        "test_frozen_sst_catalogue.py": 73,
+        "test_frozen_edna_catalogue.py": 72,
+        "test_frozen_scientific_catalogue.py": 61
+      },
+      "failures": [],
+      "skipped": []
+    },
+    "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-browser": {
+    "id": "regression-browser",
+    "status": "passed",
+    "reason": null,
+    "expected": {
+      "files": [
+        "test_catalogue_browser.py",
+        "test_catalogue_browser_api.py"
+      ],
+      "all_requested_cases_pass": true
+    },
+    "observed": {
+      "cases_by_file": {
+        "test_catalogue_browser.py": 42,
+        "test_catalogue_browser_api.py": 22
+      },
+      "failures": [],
+      "skipped": []
+    },
+    "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-controller": {
+    "id": "regression-controller",
+    "status": "failed",
+    "reason": "Failures, skipped or missing requested regression cases",
+    "expected": {
+      "files": [
+        "test_research_controller.py",
+        "test_research_controller_scope.py",
+        "test_research_controller_contracts.py"
+      ],
+      "all_requested_cases_pass": true
+    },
+    "observed": {
+      "cases_by_file": {
+        "test_research_controller.py": 38,
+        "test_research_controller_scope.py": 131,
+        "test_research_controller_contracts.py": 144
+      },
+      "failures": [
+        "tests.test_research_controller:test_disabled_controller_never_reads_context_or_calls_model"
+      ],
+      "skipped": []
+    },
+    "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-runs": {
+    "id": "regression-runs",
+    "status": "passed",
+    "reason": null,
+    "expected": {
+      "files": [
+        "test_research_runs.py"
+      ],
+      "all_requested_cases_pass": true
+    },
+    "observed": {
+      "cases_by_file": {
+        "test_research_runs.py": 31
+      },
+      "failures": [],
+      "skipped": []
+    },
+    "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-evidence": {
+    "id": "regression-evidence",
+    "status": "passed",
+    "reason": null,
+    "expected": {
+      "files": [
+        "test_research_evidence_store.py",
+        "test_research_evidence_runtime.py",
+        "test_research_evidence_api.py",
+        "test_research_answers.py"
+      ],
+      "all_requested_cases_pass": true
+    },
+    "observed": {
+      "cases_by_file": {
+        "test_research_evidence_store.py": 16,
+        "test_research_evidence_runtime.py": 15,
+        "test_research_evidence_api.py": 21,
+        "test_research_answers.py": 20
+      },
+      "failures": [],
+      "skipped": []
+    },
+    "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-experiments": {
+    "id": "regression-experiments",
+    "status": "passed",
+    "reason": null,
+    "expected": {
+      "files": [
+        "test_research_experiments.py",
+        "test_experiment_workspace.py",
+        "test_experimental_artifact_integration.py"
+      ],
+      "all_requested_cases_pass": true
+    },
+    "observed": {
+      "cases_by_file": {
+        "test_research_experiments.py": 18,
+        "test_experiment_workspace.py": 26,
+        "test_experimental_artifact_integration.py": 11
+      },
+      "failures": [],
+      "skipped": []
+    },
+    "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-legacy": {
+    "id": "regression-legacy",
+    "status": "passed",
+    "reason": null,
+    "expected": {
+      "files": [
+        "test_research_chat.py",
+        "test_chat_source_scope.py",
+        "test_generation_contract.py"
+      ],
+      "all_requested_cases_pass": true
+    },
+    "observed": {
+      "cases_by_file": {
+        "test_research_chat.py": 7,
+        "test_chat_source_scope.py": 38,
+        "test_generation_contract.py": 24
+      },
+      "failures": [],
+      "skipped": []
+    },
+    "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-framework": {
+    "id": "regression-framework",
+    "status": "passed",
+    "reason": null,
+    "expected": {
+      "files": [
+        "test_system_acceptance.py",
+        "test_system_acceptance_matrix.py",
+        "test_system_acceptance_integration.py"
+      ],
+      "all_requested_cases_pass": true
+    },
+    "observed": {
+      "cases_by_file": {
+        "test_system_acceptance.py": 57,
+        "test_system_acceptance_matrix.py": 4,
+        "test_system_acceptance_integration.py": 1
+      },
+      "failures": [],
+      "skipped": []
+    },
+    "capture_sha256": "5c3ed240fa9def530294ce6048451698555bca7219d276bff2ce8fb8cf3fa3a3",
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "regression-command": {
+    "id": "regression-command",
+    "status": "failed",
+    "reason": "The actual requested regression process returned nonzero",
+    "expected": {
+      "returncode": 0
+    },
+    "observed": {
+      "returncode": 1
+    },
+    "sha256": "9b8a1646e2c798354b72d1c6bea91ae068f30f072a7511b9533b2efc2cf79573",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "shared-context-inventory-answer": {
+    "id": "shared-context-inventory-answer",
+    "owner_components": [
+      "C14",
+      "C17",
+      "C19",
+      "C20",
+      "C21"
+    ],
+    "expected": {
+      "inventory_ids": [
+        "synthetic:ctd:campaign-a",
+        "synthetic:edna:project-a",
+        "synthetic:metagenome:collection-a",
+        "synthetic:sst:mur-final"
+      ],
+      "agent_inventory_ids": [
+        "synthetic:ctd:campaign-a",
+        "synthetic:edna:project-a",
+        "synthetic:metagenome:collection-a",
+        "synthetic:sst:mur-final"
+      ],
+      "datasets": 4,
+      "model_used": false,
+      "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+    },
+    "observed": {
+      "inventory_ids": [
+        "synthetic:ctd:campaign-a",
+        "synthetic:edna:project-a",
+        "synthetic:metagenome:collection-a",
+        "synthetic:sst:mur-final"
+      ],
+      "agent_inventory_ids": [
+        "synthetic:ctd:campaign-a",
+        "synthetic:edna:project-a",
+        "synthetic:metagenome:collection-a",
+        "synthetic:sst:mur-final"
+      ],
+      "datasets": 4,
+      "model_used": false,
+      "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+    },
+    "evidence": {
+      "run_id": "3c40950d-c940-44f1-9079-cb55742ae527",
+      "answer_id": "4d3e8550-2399-51f5-b37e-2b40b2cc8303",
+      "receipt_id": "c21:receipt:a690cbf144b4154b00e100c2e7ecc160f4a6d177c281d12404000017f95dfa08",
+      "sha256": "a690cbf144b4154b00e100c2e7ecc160f4a6d177c281d12404000017f95dfa08"
+    },
+    "status": "passed",
+    "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "experimental-bytes-and-approval": {
+    "id": "experimental-bytes-and-approval",
+    "owner_components": [
+      "C22",
+      "C25"
+    ],
+    "expected": {
+      "approval_status": "current",
+      "execution_performed": false,
+      "termination_verified": false,
+      "sha256": "8eb89c5872b56466491194725ad29868281214cf56516ec81c7e58383f50138c",
+      "display_int64": "9223372036854775807",
+      "scientific_approval": "not_independently_verified"
+    },
+    "observed": {
+      "approval_status": "current",
+      "execution_performed": false,
+      "termination_verified": false,
+      "sha256": "8eb89c5872b56466491194725ad29868281214cf56516ec81c7e58383f50138c",
+      "display_int64": "9223372036854775807",
+      "scientific_approval": "not_independently_verified"
+    },
+    "evidence": {
+      "experiment_id": "dd6daf1a-c21d-490e-affe-8065e10cbfb7",
+      "artifact_id": "synthetic:2f5efd64-bfe4-412c-9324-bb1045d025d6:8eb89c5872b56466",
+      "sha256": "8eb89c5872b56466491194725ad29868281214cf56516ec81c7e58383f50138c"
+    },
+    "status": "passed",
+    "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "research-and-experiment-attachment-composition": {
+    "id": "research-and-experiment-attachment-composition",
+    "owner_components": [
+      "C17",
+      "C21",
+      "C25"
+    ],
+    "expected": {
+      "attachment": {
+        "kind": "artifact",
+        "id": "synthetic:2f5efd64-bfe4-412c-9324-bb1045d025d6:8eb89c5872b56466",
+        "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+      },
+      "available": true,
+      "subsequent_count": 4,
+      "subsequent_answer_scientific_verification": "not_independently_verified"
+    },
+    "observed": {
+      "attachment": {
+        "id": "synthetic:2f5efd64-bfe4-412c-9324-bb1045d025d6:8eb89c5872b56466",
+        "kind": "artifact",
+        "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+      },
+      "available": true,
+      "subsequent_count": 4,
+      "subsequent_answer_scientific_verification": "not_independently_verified"
+    },
+    "evidence": {
+      "artifact_id": "synthetic:2f5efd64-bfe4-412c-9324-bb1045d025d6:8eb89c5872b56466",
+      "resolver_validates": true,
+      "protection": "ResearchEvidenceService",
+      "public_path": "/research/investigations/context/change",
+      "public_request": {
+        "investigation_id": "6e0b6797-03d4-4eef-a80d-3be4edd553ea",
+        "expected_revision_id": "ba7efcb8-1291-4239-9c65-04c4dc99c1e8",
+        "idempotency_key": "997e7c33-6110-45f0-a573-46d2b1a32528",
+        "change": {
+          "op": "attach",
+          "reference": {
+            "kind": "artifact",
+            "id": "synthetic:2f5efd64-bfe4-412c-9324-bb1045d025d6:8eb89c5872b56466",
+            "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+          }
+        }
+      },
+      "http_status": 200,
+      "public_response": {
+        "version": "investigations-v1",
+        "operation": {
+          "id": "bbec01f1-0c88-49d7-b784-764fbb0a07a3",
+          "investigation_id": "6e0b6797-03d4-4eef-a80d-3be4edd553ea",
+          "kind": "context/change",
+          "state": "committed",
+          "error_code": null,
+          "candidate_revision_id": "992923b7-cc3b-41c0-9b41-d0e9819db1f1"
+        },
+        "investigation": {
+          "id": "6e0b6797-03d4-4eef-a80d-3be4edd553ea",
+          "name": "C26 integrated synthetic investigation",
+          "metadata_version": 5,
+          "status": "active",
+          "head_revision_id": "992923b7-cc3b-41c0-9b41-d0e9819db1f1",
+          "predecessor_investigation_id": null,
+          "predecessor_revision_id": null,
+          "legal_hold": false,
+          "created_at": "2026-10-29T11:50:37",
+          "updated_at": "2026-10-29T11:50:54"
+        },
+        "context": {
+          "id": "992923b7-cc3b-41c0-9b41-d0e9819db1f1",
+          "investigation_id": "6e0b6797-03d4-4eef-a80d-3be4edd553ea",
+          "sequence": 2,
+          "predecessor_revision_id": "ba7efcb8-1291-4239-9c65-04c4dc99c1e8",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "payload_sha256": "1c8e02382e3f392400f7c56de5cbfa1671e559717f72dec1abf6a64fac34c4ef",
+          "scope": {
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {}
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {}
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {}
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {}
+              }
+            },
+            "version": 1
+          },
+          "attachments": [
+            {
+              "id": "synthetic:2f5efd64-bfe4-412c-9324-bb1045d025d6:8eb89c5872b56466",
+              "kind": "artifact",
+              "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+            }
+          ],
+          "pins": [],
+          "resolution": [
+            {
+              "reference": {
+                "kind": "artifact",
+                "id": "synthetic:2f5efd64-bfe4-412c-9324-bb1045d025d6:8eb89c5872b56466",
+                "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37"
+              },
+              "status": "available"
+            }
+          ],
+          "refresh_unresolved": [],
+          "created_by_user_id": "6f5ead14-5858-530d-9615-e6cd99d33100",
+          "created_at": "2026-10-29T11:50:49",
+          "artifact_capability": "configured"
+        }
+      },
+      "source": {
+        "path": "orchestration/research_evidence.py",
+        "method": "ResearchEvidenceService.prepare_context"
+      },
+      "provider": "ExperimentArtifactProvider",
+      "original_failed_evidence": "/private/tmp/ocean-c26-shared-first-20261029.json"
+    },
+    "status": "passed",
+    "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "durable-ack-cancel-continuation-rollover": {
+    "id": "durable-ack-cancel-continuation-rollover",
+    "owner_components": [
+      "C17",
+      "C20",
+      "C21"
+    ],
+    "expected": {
+      "lost_ack": true,
+      "delivery_count": 2,
+      "one_delivery_identity": true,
+      "cancel_replay": true,
+      "cancelled": "cancelled",
+      "continued": "completed",
+      "same_frozen_context": true,
+      "new_snapshot_branch": true,
+      "old_snapshot_preserved": true,
+      "receipt_unchanged": true,
+      "agent_inventory_ids": [
+        "synthetic:ctd:campaign-a",
+        "synthetic:edna:project-a",
+        "synthetic:metagenome:collection-a",
+        "synthetic:sst:mur-final"
+      ]
+    },
+    "observed": {
+      "lost_ack": true,
+      "delivery_count": 2,
+      "one_delivery_identity": true,
+      "cancel_replay": true,
+      "cancelled": "cancelled",
+      "continued": "completed",
+      "same_frozen_context": true,
+      "new_snapshot_branch": true,
+      "old_snapshot_preserved": true,
+      "receipt_unchanged": true,
+      "agent_inventory_ids": [
+        "synthetic:ctd:campaign-a",
+        "synthetic:edna:project-a",
+        "synthetic:metagenome:collection-a",
+        "synthetic:sst:mur-final"
+      ]
+    },
+    "status": "passed",
+    "evidence": {
+      "run_id": "0b0ba379-1a3e-4008-8b79-d811b414fb3d",
+      "continued_run_id": "7d6a3710-3a2e-47cc-8a86-6d53f904dc87",
+      "receipt_id": "c21:receipt:a5e749d07e513ff9143fe74d7124deed6edd0c69ea2bd79056c3334871402398",
+      "snapshot_before": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+      "snapshot_after": "f6b0a6c4b56d402054e071be7f9d37c4d32db2ff02cd024179d9b1a39a1ace03"
+    },
+    "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "interrupted-committed-step-replays-without-duplicate-effect": {
+    "id": "interrupted-committed-step-replays-without-duplicate-effect",
+    "owner_components": [
+      "C19",
+      "C20",
+      "C21"
+    ],
+    "expected": {
+      "interrupted": true,
+      "physical_tool_calls": 1,
+      "charged_actions": 1,
+      "status": "completed",
+      "datasets": 4,
+      "receipt_reopens": true
+    },
+    "observed": {
+      "interrupted": true,
+      "physical_tool_calls": 1,
+      "charged_actions": 1,
+      "status": "completed",
+      "datasets": 4,
+      "receipt_reopens": true
+    },
+    "status": "passed",
+    "evidence": {
+      "run_id": "8455d492-44fc-48eb-b67a-b0678434b1c2",
+      "delivery_id": "9f1c8b26-f6f9-424d-a10e-41a15364b81c",
+      "receipt_id": "c21:receipt:a89a8c1eb2856fdeb453a5a7135f08a461f319225dd50a2daf4df87dc1e55184"
+    },
+    "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "explicit-attach-pin-multichat-and-experiment-history": {
+    "id": "explicit-attach-pin-multichat-and-experiment-history",
+    "owner_components": [
+      "C17",
+      "C19",
+      "C20",
+      "C21",
+      "C22",
+      "C25"
+    ],
+    "expected": {
+      "supplementary_count": 4,
+      "pinned_count": 1,
+      "new_context_revisions": true,
+      "proposal_hashes_preserved": true,
+      "historical_execution_preserved": true,
+      "fresh_head_version": true,
+      "experimental_label": "experimental",
+      "int64": "9223372036854775807"
+    },
+    "observed": {
+      "supplementary_count": 4,
+      "pinned_count": 1,
+      "new_context_revisions": true,
+      "proposal_hashes_preserved": true,
+      "historical_execution_preserved": true,
+      "fresh_head_version": true,
+      "experimental_label": "experimental",
+      "int64": "9223372036854775807"
+    },
+    "status": "passed",
+    "evidence": {
+      "context_revision": "3d21c7a0-1c70-47e8-9a22-1982087fe9da",
+      "conversations": [
+        "0576ff17-8889-4a5a-aa56-fa0f6386b1b1",
+        "5c3529ff-733a-438d-98fe-5c3b3d95f7c9"
+      ],
+      "experiment_id": "dd6daf1a-c21d-490e-affe-8065e10cbfb7",
+      "original_proposal_revision": "dda755bf-13e8-496b-9895-0b776b2137ba",
+      "new_proposal_revision": "9254df8c-0f6c-4fc2-9f83-b7a8167fc40c"
+    },
+    "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "sst-independent-numerical-oracle": {
+    "id": "sst-independent-numerical-oracle",
+    "owner_components": [
+      "C11",
+      "C13",
+      "C19",
+      "C20",
+      "C21"
+    ],
+    "expected": {
+      "n_observed": 5,
+      "n_zero": 1,
+      "n_missing": 1,
+      "minimum": 0,
+      "maximum": 7,
+      "mean": 4.4,
+      "authority": "descriptive",
+      "unconfigured_model_answer_available": false
+    },
+    "observed": {
+      "n_observed": 5,
+      "n_zero": 1,
+      "n_missing": 1,
+      "minimum": 0.0,
+      "maximum": 7.0,
+      "mean": 4.4,
+      "authority": "descriptive",
+      "unconfigured_model_answer_available": false
+    },
+    "status": "passed",
+    "evidence": {
+      "run_id": "f44776b4-505b-4464-9256-0c69303b8d1f",
+      "receipt_id": "c21:receipt:a966ae9c6701ef09c1b9232a3b6ccbbf5a4e46aa561d94324bf327c7ed07f65c",
+      "content_sha256": "a7928b81dfc3c3a75b0353f30564f5301481a5ca66f67940a3cb33f8906cab0d",
+      "independent_oracle": "Eight declared fixture rows: exclude invalid100 and excluded999; retain missing separately; accepted nonnull0,4,5,6,7 => sum22/n5=4.4"
+    },
+    "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "known-zero-unknown-and-forged-snapshot": {
+    "id": "known-zero-unknown-and-forged-snapshot",
+    "owner_components": [
+      "C12",
+      "C19",
+      "C20",
+      "C21"
+    ],
+    "expected": {
+      "unknown_status": "partial",
+      "coverage_known": false,
+      "unknown_complete": false,
+      "known_empty_status": "completed",
+      "known_empty_count": 0,
+      "forged_status": "partial",
+      "forged_tool_actions": 1,
+      "forged_complete": false
+    },
+    "observed": {
+      "unknown_status": "partial",
+      "coverage_known": false,
+      "unknown_complete": false,
+      "known_empty_status": "completed",
+      "known_empty_count": 0,
+      "forged_status": "partial",
+      "forged_tool_actions": 1,
+      "forged_complete": false
+    },
+    "status": "passed",
+    "evidence": {
+      "unknown_run_id": "abaefe46-e9d1-4257-abd0-f9419f81dd72",
+      "empty_run_id": "59122a9d-f08f-42ff-80b9-9d4c18313e55",
+      "forged_run_id": "2aaa0f21-94b5-4ca9-861c-039aa2e32e20"
+    },
+    "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "four-source-physical-method-assay-semantics": {
+    "id": "four-source-physical-method-assay-semantics",
+    "owner_components": [
+      "C10",
+      "C12",
+      "C13",
+      "C14"
+    ],
+    "expected": {
+      "casts": 4,
+      "depth_n": 8,
+      "negative_temperature": -1.5,
+      "temperature_mean": 1.8125,
+      "temperature_unit": "degC",
+      "kraken": 0.05,
+      "metaeuk": 0.15,
+      "method_denominators_differ": true,
+      "raw_occurrences": 11,
+      "assays": 10,
+      "physical_samples": null,
+      "controls": 1,
+      "unknown_controls": 1,
+      "assignment_rows": 35,
+      "unique_method_protocol_groups": true,
+      "authority": "descriptive"
+    },
+    "observed": {
+      "casts": 4,
+      "depth_n": 8,
+      "negative_temperature": -1.5,
+      "temperature_mean": 1.8125,
+      "temperature_unit": "degC",
+      "kraken": 0.05,
+      "metaeuk": 0.15,
+      "method_denominators_differ": true,
+      "raw_occurrences": 11,
+      "assays": 10,
+      "physical_samples": null,
+      "controls": 1,
+      "unknown_controls": 1,
+      "assignment_rows": 35,
+      "unique_method_protocol_groups": true,
+      "authority": "descriptive"
+    },
+    "status": "passed",
+    "evidence": {
+      "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+      "receipts": {
+        "ctd": {
+          "schema_version": "context-catalogue-v1",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "scope": {
+            "version": 1,
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "bay": null,
+                  "station": null,
+                  "sample_id": null
+                }
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "bay": null,
+                  "station": null,
+                  "sample_id": null
+                }
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "lat_min": null,
+                  "lat_max": null,
+                  "lon_min": null,
+                  "lon_max": null,
+                  "dataset_id": null
+                }
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "lat_min": null,
+                  "lat_max": null,
+                  "lon_min": null,
+                  "lon_max": null,
+                  "sample_id": null,
+                  "provider": null,
+                  "provider_project_id": null,
+                  "provider_run_id": null,
+                  "assignment_method": null,
+                  "taxon": null,
+                  "sample_kind": null,
+                  "is_control": null
+                },
+                "analysis_id": null
+              }
+            }
+          },
+          "receipt_id": "c13:receipt:8c0319c6c1bed2d1aab787c67e915700310bcc74d542a90ed52caa9adef5d6fe",
+          "operation_id": "c13.operation",
+          "operation_version": "c13-v1",
+          "inputs": [
+            {
+              "object_id": "scientific:registry",
+              "content_sha256": "5b7568cf9fb1e8aac8a0d29f6abac23831af30ec4c845b865067d3ec5072848a",
+              "source_generation": "publication-1"
+            },
+            {
+              "object_id": "c13:input:0782bd3f87426fd64dd0c2145c6fa5db2f2381b0224f3efa3716fc4ef1f624c9",
+              "content_sha256": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+              "source_generation": null
+            }
+          ],
+          "parameters": {
+            "table": null,
+            "limit": 100,
+            "offset": 0,
+            "operation_id": "c10.summary",
+            "operation_version": "c10-v1",
+            "parameters": {
+              "table": "depth_observations",
+              "column": "temperature"
+            },
+            "workflow_kind": null,
+            "protocol_id": null
+          },
+          "authority": "descriptive",
+          "availability": {
+            "status": "available",
+            "reason": null
+          },
+          "provenance": {
+            "source_generation": null,
+            "content_sha256": null,
+            "origin": null,
+            "references": [
+              "Exact delegated source receipt: c10:receipt:2db40475867d9100d740815947ddd50c52c95869f0c203b132a3688d16dc27c3",
+              "Native operation: c10.summary/c10-v1"
+            ]
+          },
+          "total_rows": {
+            "state": "known",
+            "entity": "rows",
+            "denominator": "complete scoped operation result rows",
+            "basis": "complete_scope",
+            "value": 1,
+            "reason": null
+          },
+          "returned_count": 1,
+          "preview_truncated": false,
+          "source_completeness": "complete",
+          "query_completion": "complete",
+          "content_sha256": "99e5357998179042757af6a1558402e8bb945f8d10c6ee58c8c98fe4b595d465",
+          "scope_compatibility": null
+        },
+        "kraken": {
+          "schema_version": "context-catalogue-v1",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "scope": {
+            "version": 1,
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "bay": null,
+                  "station": null,
+                  "sample_id": null
+                }
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "bay": null,
+                  "station": null,
+                  "sample_id": null
+                }
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "lat_min": null,
+                  "lat_max": null,
+                  "lon_min": null,
+                  "lon_max": null,
+                  "dataset_id": null
+                }
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "lat_min": null,
+                  "lat_max": null,
+                  "lon_min": null,
+                  "lon_max": null,
+                  "sample_id": null,
+                  "provider": null,
+                  "provider_project_id": null,
+                  "provider_run_id": null,
+                  "assignment_method": null,
+                  "taxon": null,
+                  "sample_kind": null,
+                  "is_control": null
+                },
+                "analysis_id": null
+              }
+            }
+          },
+          "receipt_id": "c13:receipt:d286362a71fa5200213b12bebbc709a392103c7f450c08a8f3303d89efc228a4",
+          "operation_id": "c13.operation",
+          "operation_version": "c13-v1",
+          "inputs": [
+            {
+              "object_id": "scientific:registry",
+              "content_sha256": "5b7568cf9fb1e8aac8a0d29f6abac23831af30ec4c845b865067d3ec5072848a",
+              "source_generation": "publication-1"
+            },
+            {
+              "object_id": "c13:input:c3609c36c92f0bf7952c66bceefdddec0a690677f2ed61a1eb97eff8be948e18",
+              "content_sha256": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+              "source_generation": null
+            }
+          ],
+          "parameters": {
+            "table": null,
+            "limit": 100,
+            "offset": 0,
+            "operation_id": "c10.summary",
+            "operation_version": "c10-v1",
+            "parameters": {
+              "table": "kraken_abundance",
+              "column": "abundance",
+              "taxon": "BeyondTopTen"
+            },
+            "workflow_kind": null,
+            "protocol_id": null
+          },
+          "authority": "descriptive",
+          "availability": {
+            "status": "available",
+            "reason": null
+          },
+          "provenance": {
+            "source_generation": null,
+            "content_sha256": null,
+            "origin": null,
+            "references": [
+              "Exact delegated source receipt: c10:receipt:2b0bc07461711ea98088a1ad58cef910d1ad7a2a0ea1f0dbce741b1afb2c5ee5",
+              "Native operation: c10.summary/c10-v1"
+            ]
+          },
+          "total_rows": {
+            "state": "known",
+            "entity": "rows",
+            "denominator": "complete scoped operation result rows",
+            "basis": "complete_scope",
+            "value": 1,
+            "reason": null
+          },
+          "returned_count": 1,
+          "preview_truncated": false,
+          "source_completeness": "complete",
+          "query_completion": "complete",
+          "content_sha256": "2b7c585d189d53aa49a1dd2c13816c66620e1093b502b7f14cd9403c84e46694",
+          "scope_compatibility": null
+        },
+        "metaeuk": {
+          "schema_version": "context-catalogue-v1",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "scope": {
+            "version": 1,
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "bay": null,
+                  "station": null,
+                  "sample_id": null
+                }
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "bay": null,
+                  "station": null,
+                  "sample_id": null
+                }
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "lat_min": null,
+                  "lat_max": null,
+                  "lon_min": null,
+                  "lon_max": null,
+                  "dataset_id": null
+                }
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "lat_min": null,
+                  "lat_max": null,
+                  "lon_min": null,
+                  "lon_max": null,
+                  "sample_id": null,
+                  "provider": null,
+                  "provider_project_id": null,
+                  "provider_run_id": null,
+                  "assignment_method": null,
+                  "taxon": null,
+                  "sample_kind": null,
+                  "is_control": null
+                },
+                "analysis_id": null
+              }
+            }
+          },
+          "receipt_id": "c13:receipt:387b31b462e1c4ee32b391a3944d41c87f2365fbf1a72708b36fd3f360a6eff4",
+          "operation_id": "c13.operation",
+          "operation_version": "c13-v1",
+          "inputs": [
+            {
+              "object_id": "scientific:registry",
+              "content_sha256": "5b7568cf9fb1e8aac8a0d29f6abac23831af30ec4c845b865067d3ec5072848a",
+              "source_generation": "publication-1"
+            },
+            {
+              "object_id": "c13:input:c3609c36c92f0bf7952c66bceefdddec0a690677f2ed61a1eb97eff8be948e18",
+              "content_sha256": "5b3546414d298d31e8f41d4bd4235b56fccc893dceef93853d7efb755f2da7a0",
+              "source_generation": null
+            }
+          ],
+          "parameters": {
+            "table": null,
+            "limit": 100,
+            "offset": 0,
+            "operation_id": "c10.summary",
+            "operation_version": "c10-v1",
+            "parameters": {
+              "table": "metaeuk_abundance",
+              "column": "abundance",
+              "taxon": "BeyondTopTen"
+            },
+            "workflow_kind": null,
+            "protocol_id": null
+          },
+          "authority": "descriptive",
+          "availability": {
+            "status": "available",
+            "reason": null
+          },
+          "provenance": {
+            "source_generation": null,
+            "content_sha256": null,
+            "origin": null,
+            "references": [
+              "Exact delegated source receipt: c10:receipt:c776c9b5bae1037df78e2bbcce15d873472e1be843675d10c8b627baa0f89001",
+              "Native operation: c10.summary/c10-v1"
+            ]
+          },
+          "total_rows": {
+            "state": "known",
+            "entity": "rows",
+            "denominator": "complete scoped operation result rows",
+            "basis": "complete_scope",
+            "value": 1,
+            "reason": null
+          },
+          "returned_count": 1,
+          "preview_truncated": false,
+          "source_completeness": "complete",
+          "query_completion": "complete",
+          "content_sha256": "9314ab644d38898ed5c749900c4d5516944f584039c768507e80e3397088cdf8",
+          "scope_compatibility": null
+        },
+        "edna": {
+          "schema_version": "context-catalogue-v1",
+          "snapshot_id": "14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37",
+          "scope": {
+            "version": 1,
+            "sources": {
+              "ctd": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "bay": null,
+                  "station": null,
+                  "sample_id": null
+                }
+              },
+              "metagenome": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "bay": null,
+                  "station": null,
+                  "sample_id": null
+                }
+              },
+              "remote_sensing": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "lat_min": null,
+                  "lat_max": null,
+                  "lon_min": null,
+                  "lon_max": null,
+                  "dataset_id": null
+                }
+              },
+              "edna_metabarcoding": {
+                "enabled": true,
+                "filters": {
+                  "time_from": null,
+                  "time_to": null,
+                  "lat_min": null,
+                  "lat_max": null,
+                  "lon_min": null,
+                  "lon_max": null,
+                  "sample_id": null,
+                  "provider": null,
+                  "provider_project_id": null,
+                  "provider_run_id": null,
+                  "assignment_method": null,
+                  "taxon": null,
+                  "sample_kind": null,
+                  "is_control": null
+                },
+                "analysis_id": null
+              }
+            }
+          },
+          "receipt_id": "c13:receipt:a30f56a3da1b269a807a2e7f6df1a6a961228ff4df0ba035716ba29483f2e1c6",
+          "operation_id": "c13.operation",
+          "operation_version": "c13-v1",
+          "inputs": [
+            {
+              "object_id": "scientific:registry",
+              "content_sha256": "5b7568cf9fb1e8aac8a0d29f6abac23831af30ec4c845b865067d3ec5072848a",
+              "source_generation": "publication-1"
+            },
+            {
+              "object_id": "c13:input:64707a6f28e201dccee5bdf21b37f6261123edf4c33739af32ca62b2567bb564",
+              "content_sha256": "b07f00a070defadf4861d8d2aa2b990af3ca7e2fd52c6a998cb186ad0eec8984",
+              "source_generation": null
+            }
+          ],
+          "parameters": {
+            "table": null,
+            "limit": 100,
+            "offset": 0,
+            "operation_id": "c12.count",
+            "operation_version": "c12-v1",
+            "parameters": {
+              "population": "raw"
+            },
+            "workflow_kind": null,
+            "protocol_id": null
+          },
+          "authority": "descriptive",
+          "availability": {
+            "status": "available",
+            "reason": null
+          },
+          "provenance": {
+            "source_generation": null,
+            "content_sha256": null,
+            "origin": null,
+            "references": [
+              "Exact delegated source receipt: c12:receipt:854ea53ebc182e0a93c4591a3e0100ed2ecc54645162a85c5600822fc7deceb6",
+              "Native operation: c12.count/c12-v1"
+            ]
+          },
+          "total_rows": {
+            "state": "known",
+            "entity": "rows",
+            "denominator": "Complete scoped operation output rows",
+            "basis": "complete_scope",
+            "value": 1,
+            "reason": null
+          },
+          "returned_count": 1,
+          "preview_truncated": false,
+          "source_completeness": "complete",
+          "query_completion": "complete",
+          "content_sha256": "208f80d501399c8ba54b9346864485f6d155905f3b1b0195fc9e5bf225f510c7",
+          "scope_compatibility": null
+        }
+      },
+      "method_metadata": {
+        "kraken_abundance": {
+          "name": "kraken_abundance",
+          "object_id": "synthetic:metagenome:collection-a:table:kraken_abundance",
+          "row_count": 16,
+          "entity": "library_taxon_cells",
+          "denominator": "All retained matching kraken_abundance records in this source dataset",
+          "columns": [
+            {
+              "name": "measurement_id",
+              "dtype": "string",
+              "nullable": false,
+              "unit": null,
+              "description": "Synthetic source-owned measurement_id"
+            },
+            {
+              "name": "library_id",
+              "dtype": "string",
+              "nullable": false,
+              "unit": null,
+              "description": "Synthetic source-owned library_id"
+            },
+            {
+              "name": "taxon",
+              "dtype": "string",
+              "nullable": true,
+              "unit": null,
+              "description": "Synthetic source-owned taxon"
+            },
+            {
+              "name": "method",
+              "dtype": "string",
+              "nullable": true,
+              "unit": null,
+              "description": "Synthetic source-owned method"
+            },
+            {
+              "name": "taxonomic_rank",
+              "dtype": "string",
+              "nullable": true,
+              "unit": null,
+              "description": "Synthetic source-owned taxonomic_rank"
+            },
+            {
+              "name": "abundance",
+              "dtype": "number",
+              "nullable": true,
+              "unit": "fraction",
+              "description": "Synthetic source-owned abundance"
+            }
+          ],
+          "availability": {
+            "status": "available",
+            "reason": null
+          },
+          "completeness": "complete",
+          "method": "Kraken",
+          "taxonomic_rank": "genus",
+          "abundance_denominator": "kraken_abundance method-classified reads per library"
+        },
+        "metaeuk_abundance": {
+          "name": "metaeuk_abundance",
+          "object_id": "synthetic:metagenome:collection-a:table:metaeuk_abundance",
+          "row_count": 16,
+          "entity": "library_taxon_cells",
+          "denominator": "All retained matching metaeuk_abundance records in this source dataset",
+          "columns": [
+            {
+              "name": "measurement_id",
+              "dtype": "string",
+              "nullable": false,
+              "unit": null,
+              "description": "Synthetic source-owned measurement_id"
+            },
+            {
+              "name": "library_id",
+              "dtype": "string",
+              "nullable": false,
+              "unit": null,
+              "description": "Synthetic source-owned library_id"
+            },
+            {
+              "name": "taxon",
+              "dtype": "string",
+              "nullable": true,
+              "unit": null,
+              "description": "Synthetic source-owned taxon"
+            },
+            {
+              "name": "method",
+              "dtype": "string",
+              "nullable": true,
+              "unit": null,
+              "description": "Synthetic source-owned method"
+            },
+            {
+              "name": "taxonomic_rank",
+              "dtype": "string",
+              "nullable": true,
+              "unit": null,
+              "description": "Synthetic source-owned taxonomic_rank"
+            },
+            {
+              "name": "abundance",
+              "dtype": "number",
+              "nullable": true,
+              "unit": "fraction",
+              "description": "Synthetic source-owned abundance"
+            }
+          ],
+          "availability": {
+            "status": "available",
+            "reason": null
+          },
+          "completeness": "complete",
+          "method": "MetaEuk",
+          "taxonomic_rank": "genus",
+          "abundance_denominator": "metaeuk_abundance method-classified reads per library"
+        }
+      },
+      "independent_oracle": "CTD8depths[-1.5,1,1,2,2,3,3,4] sum14.5/n8;4sourcecasts; BeyondTopTen Kraken0.05 vsMetaEuk0.15;12eDNA rows with inactiveoccurrence/assay plus explicitly empty/unavailable assignment alternatives, not unified biological samples."
+    },
+    "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "english-japanese-incompatible-geo-taxa-clarify": {
+    "id": "english-japanese-incompatible-geo-taxa-clarify",
+    "owner_components": [
+      "C01",
+      "C19",
+      "C20"
+    ],
+    "expected": [
+      {
+        "status": "awaiting_clarification",
+        "tools": 0,
+        "models": 0
+      },
+      {
+        "status": "awaiting_clarification",
+        "tools": 0,
+        "models": 0
+      },
+      {
+        "status": "awaiting_clarification",
+        "tools": 0,
+        "models": 0
+      },
+      {
+        "status": "awaiting_clarification",
+        "tools": 0,
+        "models": 0
+      }
+    ],
+    "observed": [
+      {
+        "status": "awaiting_clarification",
+        "tools": 0,
+        "models": 0
+      },
+      {
+        "status": "awaiting_clarification",
+        "tools": 0,
+        "models": 0
+      },
+      {
+        "status": "awaiting_clarification",
+        "tools": 0,
+        "models": 0
+      },
+      {
+        "status": "awaiting_clarification",
+        "tools": 0,
+        "models": 0
+      }
+    ],
+    "status": "passed",
+    "evidence": {
+      "questions": [
+        "Count all datasets in Hokkaido and ignore pins",
+        "Count shark datasets in Hokkaido",
+        "北海道のサメのデータセット数を数えてください。",
+        "北海道のデータセットをすべて数え、固定した条件を無視してください。"
+      ],
+      "run_ids": [
+        "aed1782b-3d02-481b-87be-857c987935b9",
+        "2f733085-5cc3-45d1-ae4a-f0ff92c7e644",
+        "3df57c2b-5bd9-4cba-b346-fcdb204057ee",
+        "c73d8606-077c-4bb6-b72c-49815f400b43"
+      ],
+      "qualification": "Unsupported qualifiers require clarification; no numeric zero, invented scope, provider/embedding call or approximate geographic/taxon match."
+    },
+    "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "owner-role-source-revocation-and-held-history": {
+    "id": "owner-role-source-revocation-and-held-history",
+    "owner_components": [
+      "C03",
+      "C17",
+      "C20",
+      "C21",
+      "C25"
+    ],
+    "expected": {
+      "cross_owner_denials": [
+        404,
+        404
+      ],
+      "role_revoked_denials": [
+        403,
+        403,
+        403
+      ],
+      "withdrawn_evidence_denial": 403,
+      "held_archived": true,
+      "retired": 0,
+      "receipt_unchanged": true,
+      "terminal_run_unchanged": true
+    },
+    "observed": {
+      "cross_owner_denials": [
+        404,
+        404
+      ],
+      "role_revoked_denials": [
+        403,
+        403,
+        403
+      ],
+      "withdrawn_evidence_denial": 403,
+      "held_archived": true,
+      "retired": 0,
+      "receipt_unchanged": true,
+      "terminal_run_unchanged": true
+    },
+    "status": "passed",
+    "evidence": {
+      "run_id": "3c40950d-c940-44f1-9079-cb55742ae527",
+      "receipt_id": "c21:receipt:a690cbf144b4154b00e100c2e7ecc160f4a6d177c281d12404000017f95dfa08"
+    },
+    "sha256": "bc259ed1e7865c925620690aa33f09d30d8e4e05c35ff3da14d5e1648c692d58",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "transfer-independent": {
+    "id": "transfer-independent",
+    "status": "passed",
+    "owner_components": [
+      "C09",
+      "C24",
+      "C26"
+    ],
+    "expected": {
+      "objects": 8,
+      "independent": true,
+      "exact_bytes": true,
+      "latest": [
+        null,
+        0
+      ],
+      "live_dependency": false,
+      "origin_retained": true
+    },
+    "observed": {
+      "objects": 8,
+      "independent": true,
+      "exact_bytes": true,
+      "latest": [
+        null,
+        0
+      ],
+      "live_dependency": false,
+      "origin_retained": true
+    },
+    "reason": null,
+    "evidence": {
+      "sha256": "5d667c11cd0cb5218947afc1cdbfe8e562ca30a9d66f9a276dea64c9d459daee",
+      "kind": "actual-service-synthetic",
+      "fixture_sha256": "9add1cc1d7abc04a0b0415c4c0f81a3f6d0ff46c0e6a357c0c2c4248c9254e1f"
+    },
+    "sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "transfer-rejections": {
+    "id": "transfer-rejections",
+    "status": "passed",
+    "owner_components": [
+      "C09",
+      "C26"
+    ],
+    "expected": [
+      "wrong-destination",
+      "source-bytes",
+      "authorization",
+      "eligibility"
+    ],
+    "observed": [
+      "wrong-destination",
+      "source-bytes",
+      "authorization",
+      "eligibility"
+    ],
+    "reason": null,
+    "evidence": {
+      "sha256": "ad32411ab5533773fb8e92fda3b3bdb46c53d619756e4bbd78b524bab175c26a",
+      "kind": "actual-service-synthetic",
+      "fixture_sha256": "9add1cc1d7abc04a0b0415c4c0f81a3f6d0ff46c0e6a357c0c2c4248c9254e1f"
+    },
+    "sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "transfer-withdrawal": {
+    "id": "transfer-withdrawal",
+    "status": "passed",
+    "owner_components": [
+      "C09",
+      "C24",
+      "C26"
+    ],
+    "expected": {
+      "origin_change_is_not_auto_sync": true,
+      "explicit_withdrawal_denies": true
+    },
+    "observed": {
+      "origin_change_is_not_auto_sync": true,
+      "explicit_withdrawal_denies": true
+    },
+    "reason": null,
+    "evidence": {
+      "sha256": "4676b754c0126ab07d0f84335762b8827be6c9117778ed8c1868a4a12422035a",
+      "kind": "actual-service-synthetic",
+      "fixture_sha256": "9add1cc1d7abc04a0b0415c4c0f81a3f6d0ff46c0e6a357c0c2c4248c9254e1f"
+    },
+    "sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "isolation-offline-contract": {
+    "id": "isolation-offline-contract",
+    "status": "passed",
+    "owner_components": [
+      "C24",
+      "C26"
+    ],
+    "expected": {
+      "artifacts": 7,
+      "apply_allowed": false,
+      "provider_schema_validated": false,
+      "unrun_live_gates": 11,
+      "same_origin_only": true,
+      "guest_network": "none"
+    },
+    "observed": {
+      "artifacts": 7,
+      "apply_allowed": false,
+      "provider_schema_validated": false,
+      "unrun_live_gates": 11,
+      "same_origin_only": true,
+      "guest_network": "none"
+    },
+    "reason": null,
+    "evidence": {
+      "sha256": "24917ef03d930928a6fbd23fe6af56bc04a4ffabbc4049405d101d1b6f343a76",
+      "kind": "actual-service-synthetic",
+      "fixture_sha256": "9add1cc1d7abc04a0b0415c4c0f81a3f6d0ff46c0e6a357c0c2c4248c9254e1f"
+    },
+    "sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "isolation-legacy-denial": {
+    "id": "isolation-legacy-denial",
+    "status": "passed",
+    "owner_components": [
+      "C24",
+      "C26"
+    ],
+    "expected": [
+      "project_id",
+      "public_origin"
+    ],
+    "observed": [
+      "project_id",
+      "public_origin"
+    ],
+    "reason": null,
+    "evidence": {
+      "sha256": "87c8b1a23db3be07d1baaa1da3ee48b3cff6dd06514e587266d02237cf33ce42",
+      "kind": "actual-service-synthetic",
+      "fixture_sha256": "9add1cc1d7abc04a0b0415c4c0f81a3f6d0ff46c0e6a357c0c2c4248c9254e1f"
+    },
+    "sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "live-site-isolation": {
+    "id": "live-site-isolation",
+    "status": "not_run",
+    "owner_components": [
+      "C24",
+      "C26"
+    ],
+    "expected": {
+      "live_IAM_network_sessions": "actual observations required"
+    },
+    "observed": null,
+    "reason": "No concrete live target or authorization/configuration in this local fixture; no cloud operation performed",
+    "evidence": {
+      "sha256": "57abf3116b1984b6cfbf02683a3bfb4274feeb6b30e2079d87c1c2176db6623b",
+      "kind": "actual-service-synthetic",
+      "fixture_sha256": "9add1cc1d7abc04a0b0415c4c0f81a3f6d0ff46c0e6a357c0c2c4248c9254e1f"
+    },
+    "sha256": "0ccc06bfe375ef9b5cfe01dc2278face754a0b585d5f7030158ee2de73499d4a",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "catalogue-full-scale-parity": {
+    "id": "catalogue-full-scale-parity",
+    "status": "passed",
+    "owner_components": [
+      "C08",
+      "C14",
+      "C16",
+      "C19",
+      "C26"
+    ],
+    "expected": {
+      "members": 99999,
+      "pages": 200,
+      "human_agent_equal": true,
+      "all_members_equal": true,
+      "whole_scope_totals": true,
+      "controller_counts": [
+        {
+          "outcome": "completed",
+          "count": 99999,
+          "model_calls": 0,
+          "tool_actions": 1
+        },
+        {
+          "outcome": "completed",
+          "count": 99999,
+          "model_calls": 0,
+          "tool_actions": 1
+        }
+      ],
+      "late_targets": [
+        "synthetic:dataset:000025",
+        "synthetic:dataset:000501",
+        "synthetic:dataset:099999"
+      ],
+      "cross_owner_cursor": 409,
+      "stale_policy_cursor": 409
+    },
+    "observed": {
+      "members": 99999,
+      "pages": 200,
+      "human_agent_equal": true,
+      "all_members_equal": true,
+      "whole_scope_totals": true,
+      "controller_counts": [
+        {
+          "outcome": "completed",
+          "count": 99999,
+          "model_calls": 0,
+          "tool_actions": 1
+        },
+        {
+          "outcome": "completed",
+          "count": 99999,
+          "model_calls": 0,
+          "tool_actions": 1
+        }
+      ],
+      "late_targets": [
+        "synthetic:dataset:000025",
+        "synthetic:dataset:000501",
+        "synthetic:dataset:099999"
+      ],
+      "cross_owner_cursor": 409,
+      "stale_policy_cursor": 409
+    },
+    "evidence": {
+      "inventory_sha256": "8444d37db3a00a89cfe16b228374948021a2c9ada0f69898b590ca257f617a89",
+      "expected_inventory_sha256": "8444d37db3a00a89cfe16b228374948021a2c9ada0f69898b590ca257f617a89"
+    },
+    "sha256": "cfaa971ffd9a6daeaf114415e3c4465bf60c7e8cc1a6238b4b7c327fbdd53862",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "catalogue-scale-lab-budget": {
+    "id": "catalogue-scale-lab-budget",
+    "status": "passed",
+    "owner_components": [
+      "C14",
+      "C26"
+    ],
+    "expected": {
+      "wall_seconds_max": 180,
+      "isolated_process_peak_rss_mib_max": 3072
+    },
+    "observed": {
+      "wall_seconds": 24.935785292182118,
+      "isolated_process_peak_rss_mib": 2670.90625
+    },
+    "evidence": {
+      "classification": "isolated-process synthetic lab measurement; no production capacity claim"
+    },
+    "sha256": "cfaa971ffd9a6daeaf114415e3c4465bf60c7e8cc1a6238b4b7c327fbdd53862",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "matched-controller-comparison": {
+    "id": "matched-controller-comparison",
+    "status": "passed",
+    "reason": null,
+    "sha256": "e3d2f01f5faad296cb97a6f7a58664d8e50c148906e06610da5b28378fb8bf9f",
+    "source_revision": "sha256:dc74aaeca65a1cdb45766a62ac8abec1df64eac5808d553239d9756bfc95e28d"
+  },
+  "original-c23-physical-evidence": {
+    "id": "original-c23-physical-evidence",
+    "status": "passed",
+    "reason": null,
+    "sha256": "4f19178dcf13555d0a360903ca6c8dd3b4325cb85e6c6ace2d0b4d32a412bc58",
+    "source_revision": "501c80b7e5ee07f0990539baea3d8243f71d184a",
+    "qualification": [
+      "Original process-exhaustion Sentry panic remains failed; separately qualified host PID bound is not graceful128-task guest acceptance.",
+      "Raw control-frame bodies are intentionally unretained; digest/EOF/outcome, frozen decoder path and validated output bytes are audited without claiming an absent-body reparse.",
+      "C23 accepts isolated synthetic operator runtime; whole-site deployment, production dispatch, real-data and scientific approvals remain separate.",
+      "Stopped50GiB software/image disk retained for reproducibility; no worker/database/tunnel is running."
+    ]
+  }
+}

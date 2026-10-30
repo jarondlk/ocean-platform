@@ -1,0 +1,30 @@
+{
+  "version": "c26-browser-interactions-v1",
+  "fixture": "synthetic-local-actual-services",
+  "live_calls_performed": false,
+  "catalogue": {
+    "methods": "http://127.0.0.1:3100/?view=catalogue&snapshot=14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37&node=synthetic%3Asst%3Amur-final&search=synthetic%3Asst%3Amur-final&section=methods",
+    "back": "http://127.0.0.1:3100/?view=catalogue&snapshot=14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37&node=synthetic%3Asst%3Amur-final&search=synthetic%3Asst%3Amur-final",
+    "forward": "http://127.0.0.1:3100/?view=catalogue&snapshot=14c764b22bbe59f7f41b8ef7b79f2e693497a93647f27474ca1f9b3b783fce37&node=synthetic%3Asst%3Amur-final&search=synthetic%3Asst%3Amur-final&section=methods",
+    "narrow": {
+      "documentWidth": 390,
+      "focusedRole": "tab",
+      "focusedSelected": "true",
+      "focusedText": "来歴",
+      "language": "ja",
+      "theme": "dark",
+      "width": 390
+    },
+    "escape": {
+      "dialogOpen": false,
+      "focus": "ディレクトリ"
+    }
+  },
+  "negative": {
+    "mixed_answer_notice": "The answer or evidence could not be verified",
+    "retry_same_notice": true,
+    "other_account": "This investigation or conversation is unavailable; no investigation names, context, result or experiment details remain",
+    "suspended_owner": "Access is restricted; no destinations or retained workspace remain"
+  },
+  "real_screen_reader_user_study": "not_run"
+}
