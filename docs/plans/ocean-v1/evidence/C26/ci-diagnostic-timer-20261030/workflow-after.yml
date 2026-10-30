@@ -1,0 +1,527 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, gcp, overhaul, 'codex/**']
+  pull_request:
+    branches: [main, master, overhaul]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend tests and security boundary
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            requirements/runtime.in
+            requirements/runtime.txt
+            requirements/dev.in
+            requirements/dev.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --require-hashes -r requirements/dev.txt
+
+      - name: Lint active Python code
+        run: |
+          python -m ruff check \
+            api \
+            config.py \
+            db \
+            evaluation \
+            ingestion \
+            orchestration \
+            preprocessing \
+            retrieval \
+            schema \
+            scripts \
+            tests
+
+      - name: Check generated chat scope contract
+        run: python scripts/export_chat_scope.py --check
+
+      - name: Check C21 evidence and answer wire contract
+        run: python docs/plans/ocean-v1/evidence/C21/frontend-export-contract.py --check
+
+      - name: Check frozen catalogue contracts and examples
+        run: |
+          python scripts/export_context_catalogue.py --check
+          python scripts/export_catalogue_examples.py --check
+          python scripts/export_catalogue_types.py --check
+          python scripts/export_catalogue_snapshot.py --check
+
+      - name: Run isolated C26 complete 100000-object traversal and lab budget
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_C26_SCALE_ACCEPTANCE: "1"
+        run: python -m pytest tests/test_system_acceptance_scale.py -q --tb=short
+
+      - name: Run C26 shared-service integration with fresh-process coverage
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          ENABLE_MOCK_LOGIN: "false"
+          PERSIST_LOCAL_CHAT: "false"
+          COVERAGE_CORE: sysmon
+        run: |
+          python -m pytest tests/test_experimental_artifact_integration.py \
+            tests/test_system_acceptance_integration.py -x -vv --tb=short \
+            -o faulthandler_timeout=0 \
+            --junitxml=c26-integration-coverage.xml \
+            --cov=api --cov=config --cov=db --cov=preprocessing --cov=ingestion \
+            --cov=orchestration --cov=schema --cov=evaluation \
+            --cov-report= --cov-fail-under=0
+
+      - name: Run remaining tests and enforce combined coverage
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          ENABLE_MOCK_LOGIN: "false"
+          PERSIST_LOCAL_CHAT: "false"
+          COVERAGE_CORE: sysmon
+        run: |
+          python -m pytest tests/ -x -vv --tb=short -o faulthandler_timeout=120 \
+            --ignore=tests/test_experimental_artifact_integration.py \
+            --ignore=tests/test_system_acceptance_integration.py \
+            --cov-append \
+            --cov=api \
+            --cov=config \
+            --cov=db \
+            --cov=preprocessing \
+            --cov=ingestion \
+            --cov=orchestration \
+            --cov=schema \
+            --cov=evaluation \
+            --cov-report=term-missing \
+            --cov-fail-under=70
+
+  frontend:
+    name: Frontend typecheck and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Audit production frontend dependencies
+        working-directory: frontend
+        run: npm audit --omit=dev --audit-level=moderate
+
+      - name: Test frontend
+        working-directory: frontend
+        run: npm test
+
+      - name: Typecheck frontend
+        working-directory: frontend
+        run: npm run typecheck
+
+      - name: Build frontend
+        working-directory: frontend
+        env:
+          DEPLOYMENT_ENV: test
+          AUTH_MODE: required
+          ENABLE_MOCK_LOGIN: "false"
+          AUTH_SECRET: ci-only-auth-secret-that-is-long-enough
+          INTERNAL_AUTH_SECRET: ci-only-internal-secret-that-is-long-enough
+        run: npm run build
+
+  frontend-v1:
+    name: OCEAN v1 prototype tests and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend-v1/package-lock.json
+
+      - name: Install prototype dependencies
+        working-directory: frontend-v1
+        run: npm ci
+
+      - name: Audit production prototype dependencies
+        working-directory: frontend-v1
+        run: npm audit --omit=dev --audit-level=moderate
+
+      - name: Test prototype
+        working-directory: frontend-v1
+        run: npm test
+
+      - name: Typecheck prototype
+        working-directory: frontend-v1
+        run: npm run typecheck
+
+      - name: Build prototype
+        working-directory: frontend-v1
+        run: npm run build
+
+  postgres-integration:
+    name: PostgreSQL migration and metadata integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: ocean
+          POSTGRES_PASSWORD: integration-only-password
+          POSTGRES_DB: ocean_platform
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ocean -d ocean_platform"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            requirements/runtime.in
+            requirements/runtime.txt
+            requirements/dev.in
+            requirements/dev.txt
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --require-hashes -r requirements/dev.txt
+
+      - name: Apply application migrations
+        env:
+          DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform
+        run: python -m alembic upgrade head
+
+      - name: Verify invite acceptance and metadata persistence
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform
+          RUN_POSTGRES_INTEGRATION: "1"
+        run: >-
+          python -m pytest
+          tests/integration/test_app_metadata_postgres.py
+          tests/integration/test_classification_application_postgres.py
+          tests/integration/test_classification_preview_postgres.py
+          tests/integration/test_operational_postgres.py
+          tests/integration/test_anemone_postgres.py
+          tests/integration/test_anemone_catalogue_postgres.py
+          tests/integration/test_edna_catalogue_postgres.py
+          tests/integration/test_edna_aggregate_postgres.py
+          tests/integration/test_edna_analysis_postgres.py
+          tests/integration/test_chat_source_scope_postgres.py
+          tests/integration/test_chat_filter_options_postgres.py
+          tests/integration/test_research_registry_postgres.py
+          -q
+
+      - name: Verify transactional corpus upsert is idempotent
+        env:
+          DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform
+        run: |
+          python scripts/load_db.py --upsert --json
+          python scripts/load_db.py --upsert --json
+
+      - name: Create isolated C03 retention test database
+        run: |
+          python - <<'PY'
+          from sqlalchemy import create_engine, text
+          # This job owns the ephemeral service above; never inherit DATABASE_URL.
+          engine = create_engine(
+              "postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform",
+              isolation_level="AUTOCOMMIT",
+          )
+          with engine.connect() as connection:
+              connection.execute(text("CREATE DATABASE ocean_c03_retention_test"))
+          engine.dispose()
+          PY
+
+      - name: Identify the job-owned PostgreSQL container address
+        id: c03-postgres-identity
+        env:
+          POSTGRES_TEST_CONTAINER_ID: ${{ job.services.postgres.id }}
+        run: |
+          container_address="$(docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$POSTGRES_TEST_CONTAINER_ID")"
+          python -c 'import ipaddress, sys; ipaddress.IPv4Address(sys.argv[1])' "$container_address"
+          printf 'address=%s\n' "$container_address" >> "$GITHUB_OUTPUT"
+
+      - name: Verify C03 retention transaction ordering in isolated schemas
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_POSTGRES_INTEGRATION: "1"
+          C03_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c03_retention_test
+          C03_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
+        run: >-
+          python -m pytest tests/integration/test_retention_concurrency_postgres.py
+          -q -s --tb=short
+
+      - name: Create isolated C05 retrieval test database
+        run: |
+          python - <<'PY'
+          from sqlalchemy import create_engine, text
+          # The URL and database are owned by this job, never inherited from the app.
+          engine = create_engine(
+              "postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform",
+              isolation_level="AUTOCOMMIT",
+          )
+          with engine.connect() as connection:
+              connection.execute(text("CREATE DATABASE ocean_c05_retrieval_test"))
+          engine.dispose()
+          engine = create_engine(
+              "postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c05_retrieval_test"
+          )
+          with engine.begin() as connection:
+              connection.execute(text("CREATE EXTENSION vector"))
+          engine.dispose()
+          PY
+
+      - name: Verify C05 vector identity and metagenome replacement history
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_POSTGRES_INTEGRATION: "1"
+          C05_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c05_retrieval_test
+          C05_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
+        run: >-
+          python -m pytest tests/integration/test_retrieval_identity_postgres.py
+          -q -s --tb=short
+
+      - name: Create isolated C09 snapshot test database
+        run: |
+          python - <<'PY'
+          from sqlalchemy import create_engine, text
+          # This job owns the service and test database; never inherit app config.
+          engine = create_engine(
+              "postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform",
+              isolation_level="AUTOCOMMIT",
+          )
+          with engine.connect() as connection:
+              connection.execute(text("CREATE DATABASE ocean_c09_snapshot_test"))
+          engine.dispose()
+          PY
+
+      - name: Verify C09 snapshot capture and publication boundaries
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_POSTGRES_INTEGRATION: "1"
+          C09_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c09_snapshot_test
+          C09_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
+        run: >-
+          python -m pytest tests/integration/test_catalogue_snapshot_capture_postgres.py
+          -q -s --tb=short
+
+      - name: Create isolated C17 investigation test database
+        run: |
+          python - <<'PY'
+          from sqlalchemy import create_engine, text
+          # Dedicated database in this job's ephemeral service; no ambient URL.
+          engine = create_engine(
+              "postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform",
+              isolation_level="AUTOCOMMIT",
+          )
+          with engine.connect() as connection:
+              connection.execute(text("CREATE DATABASE ocean_c17_investigation_test"))
+          engine.dispose()
+          PY
+
+      - name: Verify C17 investigation migrations and retained context history
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_POSTGRES_INTEGRATION: "1"
+          C17_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c17_investigation_test
+          C17_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
+        run: >-
+          python -m pytest tests/integration/test_investigation_postgres.py
+          tests/integration/test_investigation_service_postgres.py
+          -q -s --tb=short
+
+      - name: Create isolated C20 durable execution test database
+        run: |
+          python - <<'PY'
+          from sqlalchemy import create_engine, text
+          engine = create_engine(
+              "postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform",
+              isolation_level="AUTOCOMMIT",
+          )
+          with engine.connect() as connection:
+              connection.execute(text("CREATE DATABASE ocean_c20_execution_test"))
+          engine.dispose()
+          PY
+
+      - name: Verify C20 durable execution races and immutable replay
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_POSTGRES_INTEGRATION: "1"
+          C20_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c20_execution_test
+          C20_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
+        run: >-
+          python -m pytest tests/integration/test_research_runs_postgres.py
+          -q -s --tb=short
+
+      - name: Create isolated C21 evidence and synthesis test database
+        run: |
+          python - <<'PY'
+          from sqlalchemy import create_engine, text
+          engine = create_engine(
+              "postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform",
+              isolation_level="AUTOCOMMIT",
+          )
+          with engine.connect() as connection:
+              connection.execute(text("CREATE DATABASE ocean_c21_evidence_test"))
+          engine.dispose()
+          PY
+
+      - name: Verify C21 retained evidence and durable synthesis fences
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_POSTGRES_INTEGRATION: "1"
+          C21_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c21_evidence_test
+          C21_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
+        run: >-
+          python -m pytest tests/integration/test_research_evidence_postgres.py
+          -q -s --tb=short
+
+      - name: Create isolated C22 experiment proposal test database
+        run: |
+          python - <<'PY'
+          from sqlalchemy import create_engine, text
+          engine = create_engine(
+              "postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform",
+              isolation_level="AUTOCOMMIT",
+          )
+          with engine.connect() as connection:
+              connection.execute(text("CREATE DATABASE ocean_c22_experiments_test"))
+          engine.dispose()
+          PY
+
+      - name: Verify C22 immutable proposals and transactional reservations
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_POSTGRES_INTEGRATION: "1"
+          C22_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c22_experiments_test
+          C22_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
+        run: >-
+          python -m pytest tests/integration/test_research_experiments_postgres.py
+          -q -s --tb=short
+
+      - name: Create isolated C23 execution ledger test database
+        run: |
+          python - <<'PY'
+          from sqlalchemy import create_engine, text
+          engine = create_engine(
+              "postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform",
+              isolation_level="AUTOCOMMIT",
+          )
+          with engine.connect() as connection:
+              connection.execute(text("CREATE DATABASE ocean_c23_execution_test"))
+          engine.dispose()
+          PY
+
+      - name: Verify C23 execution fences, restricted proof release and C25 public read compatibility
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          RUN_C23_POSTGRES_INTEGRATION: "1"
+          C23_TEST_DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_c23_execution_test
+          C23_TEST_SERVER_ADDRESS: ${{ steps.c03-postgres-identity.outputs.address }}
+        run: >-
+          python -m pytest tests/integration/test_experiment_execution_postgres.py
+          tests/integration/test_experiment_workspace_postgres.py
+          tests/integration/test_experimental_artifact_postgres.py
+          tests/integration/test_experiment_execution_offline_postgres.py
+          tests/integration/test_retained_reserve_postgres.py
+          tests/integration/test_retained_admission_postgres.py
+          tests/integration/test_retained_admission_edges_postgres.py
+          tests/integration/test_retained_acceptance_helpers_postgres.py
+          -x -vv -s --tb=short -o faulthandler_timeout=120
+
+      - name: Verify database backup and isolated restore
+        env:
+          DATABASE_URL: postgresql://ocean:integration-only-password@127.0.0.1:5432/ocean_platform
+          DATABASE_BACKUP_CONTAINER: ""
+        run: >-
+          python scripts/database_backup.py create
+          --output-dir "${RUNNER_TEMP}/database-backup"
+          --label ci
+          --restore-test
+
+  dependency-review:
+    name: Dependency review
+    if: >-
+      github.event_name == 'pull_request' &&
+      (github.event.repository.private == false ||
+      vars.GH_CODE_SECURITY_ENABLED == 'true')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Review dependency changes
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          fail-on-severity: high
+          fail-on-scopes: runtime

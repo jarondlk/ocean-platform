@@ -1,0 +1,26 @@
+{
+  "version": "c26-ci-diagnostic-timer-plan-v1",
+  "original_functional_source_commit": "e0874e0aaf138eef762b38fdd0b225551ced1bf5",
+  "previous_failed_source_commit": "8ddd2a4aa960db559174f659036a6a0fb5f6e316",
+  "from_sha256": "baab0f5b33778a9723f850a12330afaa1b2a8f2e69c233bb04e20c122262c99b",
+  "previous_diagnostic_sha256": "dc256f5275fa7872ce91368c6567bc42f1fe6f8ac1dc5d9ef159c91ebaac0dc3",
+  "to_sha256": "b697bb0e028d7be8ac1c22954df001e046854c579859330319f2f586ebc8a95a",
+  "changed_source_paths": [
+    ".github/workflows/tests.yml"
+  ],
+  "first_cases": 17,
+  "coverage_core": "sysmon",
+  "coverage_append_second": true,
+  "final_combined_coverage_gate": 70,
+  "no_tests_dropped": true,
+  "diagnostic_dump_first_seconds": 0,
+  "diagnostic_dump_remaining_seconds": 120,
+  "fatal_crash_handling_enabled": true,
+  "job_timeout_minutes": 60,
+  "scope": "Only the first covered group diagnostic timer changes; assertions, source targets, test partition, engine and combined gate remain unchanged",
+  "hypothesis": "Three native exits followed scheduled stack dumps by6-8s. This is correlation, not confirmed causation; setting the timer to its default0 is a controlled diagnostic",
+  "primary_sources": [
+    "https://docs.pytest.org/en/latest/reference/reference.html#confval-faulthandler_timeout",
+    "https://docs.pytest.org/en/stable/how-to/failures.html#fault-handler"
+  ]
+}

@@ -1,0 +1,9 @@
+# Controlled C26 diagnostic-timer test
+
+Fresh-process isolation alone did not pass: source8ddd2a4's first11cases passed, then the mixed-context case reached the scheduled120s traceback dump and the process exited139 about6s later. The remaining suite correctly did not run. Both earlier failures also followed scheduled dumps. This temporal correlation is not proof of a cause.
+
+This follow-up changes exactly one workflow value: `faulthandler_timeout=0` for the17-case covered integration group. Pytest's documented default0 removes scheduled dumps; fatal fault handling remains enabled. This option did not enforce a test deadline (`faulthandler_exit_on_timeout` defaultsfalse). All assertions, sysmon,8coverage targets, exact17/rest partition, coverage append, final70% threshold and60-minute job bound remain unchanged. The remaining suite retains its120s diagnostic timer. Application, browser and scientific source bytes are unchanged.
+
+Primary sources: [pytest timer option](https://docs.pytest.org/en/latest/reference/reference.html#confval-faulthandler_timeout), [automatic fatal handler](https://docs.pytest.org/en/stable/how-to/failures.html#fault-handler). Relevant CPython reports describe unsafe concurrent frame/code inspection by traceback dump handlers: [#158200](https://github.com/python/cpython/issues/158200) and [#116008](https://github.com/python/cpython/issues/116008). Their versions/reproducers differ; they justify this controlled diagnostic but do not establish our exact interpreter cause or a production fix.
+
+Preserve all original failures, e087/0345 local report and843non-workflow source pins. A new explicit workflow-only overlay and all four new hosted jobs are required before delivery. No dependency, Python version, coverage engine, permission check, UI deadline or acceptance gate is changed.

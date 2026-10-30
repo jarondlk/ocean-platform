@@ -86,7 +86,7 @@ jobs:
         run: |
           python -m pytest tests/test_experimental_artifact_integration.py \
             tests/test_system_acceptance_integration.py -x -vv --tb=short \
-            -o faulthandler_timeout=120 \
+            -o faulthandler_timeout=0 \
             --junitxml=c26-integration-coverage.xml \
             --cov=api --cov=config --cov=db --cov=preprocessing --cov=ingestion \
             --cov=orchestration --cov=schema --cov=evaluation \
