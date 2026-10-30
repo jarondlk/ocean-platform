@@ -1,0 +1,9 @@
+# C26 CI process-isolation amendment
+
+Two full Linux/sysmon coverage runs ended in native Python exit139 during late C26 shared-service cases. No matching interpreter cause is established. Preserve both failed job logs under hosted-a683ee8 and hosted-e0874e0. Local1604functional tests, four browser journeys,318hosted PostgreSQL cases and both frontends passed on e0874e0; the failed backend run is not accepted delivery.
+
+Only `.github/workflows/tests.yml` changes. It executes the16retained-artifact cases plus1shared-stack case in a fresh coverage process, then every remaining case with exactly those two files excluded and `--cov-append`. Both processes retain identical test environment, sysmon core and8coverage targets. The first partial collection uses no partial threshold; the final combined result still must reach70%. Either process failure fails the job. No assertion, test, scope, authorization guard or application byte is removed or relaxed.
+
+The original local report/source/artifact identities remain e0874e0 / sha256:0345bb271e4510877a89169fc824afa4232a5333ba4b64c36ace689f33a828ca. The delivery manifest composes an explicit workflow-only supersession and verifies every other843source bytes unchanged. Its effective manifest identity is distinct from the original functional evidence identity; it is not a retargeted report. All four required hosted jobs must run against the new commit. Browser204pins and original physical receipts retain their own original source identities.
+
+Static YAML checks confirm exact coverage target/environment equality,17first cases, exact2file partition, append preservation and70% final threshold. Independent review checked pytest-cov7.1.0's save/append behavior. This is a mitigation awaiting new hosted evidence, not a claim that the interpreter defect is fixed. No unchanged functional suite was repeated for this workflow-only edit.

@@ -76,7 +76,23 @@ jobs:
           RUN_C26_SCALE_ACCEPTANCE: "1"
         run: python -m pytest tests/test_system_acceptance_scale.py -q --tb=short
 
-      - name: Run tests with coverage
+      - name: Run C26 shared-service integration with fresh-process coverage
+        env:
+          AUTH_MODE: disabled
+          DEPLOYMENT_ENV: test
+          ENABLE_MOCK_LOGIN: "false"
+          PERSIST_LOCAL_CHAT: "false"
+          COVERAGE_CORE: sysmon
+        run: |
+          python -m pytest tests/test_experimental_artifact_integration.py \
+            tests/test_system_acceptance_integration.py -x -vv --tb=short \
+            -o faulthandler_timeout=120 \
+            --junitxml=c26-integration-coverage.xml \
+            --cov=api --cov=config --cov=db --cov=preprocessing --cov=ingestion \
+            --cov=orchestration --cov=schema --cov=evaluation \
+            --cov-report= --cov-fail-under=0
+
+      - name: Run remaining tests and enforce combined coverage
         env:
           AUTH_MODE: disabled
           DEPLOYMENT_ENV: test
@@ -85,6 +101,9 @@ jobs:
           COVERAGE_CORE: sysmon
         run: |
           python -m pytest tests/ -x -vv --tb=short -o faulthandler_timeout=120 \
+            --ignore=tests/test_experimental_artifact_integration.py \
+            --ignore=tests/test_system_acceptance_integration.py \
+            --cov-append \
             --cov=api \
             --cov=config \
             --cov=db \

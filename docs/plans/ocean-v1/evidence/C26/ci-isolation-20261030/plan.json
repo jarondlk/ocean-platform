@@ -1,0 +1,35 @@
+{
+  "version": "c26-ci-process-isolation-plan-v1",
+  "original_functional_source_commit": "e0874e0aaf138eef762b38fdd0b225551ced1bf5",
+  "original_functional_source_revision": "sha256:0345bb271e4510877a89169fc824afa4232a5333ba4b64c36ace689f33a828ca",
+  "changed_source_paths": [
+    ".github/workflows/tests.yml"
+  ],
+  "from_sha256": "baab0f5b33778a9723f850a12330afaa1b2a8f2e69c233bb04e20c122262c99b",
+  "to_sha256": "dc256f5275fa7872ce91368c6567bc42f1fe6f8ac1dc5d9ef159c91ebaac0dc3",
+  "reason": "Two full sysmon coverage processes ended in native Python exit139 during late C26 integration cases; bounded fresh-process isolation is a mitigation under test, not a confirmed interpreter fix",
+  "test_files_first": [
+    "tests/test_experimental_artifact_integration.py",
+    "tests/test_system_acceptance_integration.py"
+  ],
+  "first_cases": 17,
+  "remaining_excludes_exactly_first_files": true,
+  "coverage_scope": [
+    "api",
+    "config",
+    "db",
+    "evaluation",
+    "ingestion",
+    "orchestration",
+    "preprocessing",
+    "schema"
+  ],
+  "coverage_core": "sysmon",
+  "first_partial_coverage_gate": 0,
+  "final_combined_coverage_gate": 70,
+  "coverage_append_second": true,
+  "test_failure_stops_job": true,
+  "local_functional_receipts_reused_unchanged": true,
+  "no_tests_dropped": true,
+  "new_hosted_delivery_required": true
+}
